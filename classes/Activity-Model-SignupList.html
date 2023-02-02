@@ -399,12 +399,15 @@
             implements
                             <a href="classes/User-Permissions-Resource-OrganResourceInterface.html"><abbr title="\User\Permissions\Resource\OrganResourceInterface">OrganResourceInterface</abbr></a>,                             <a href="classes/User-Permissions-Resource-CreatorResourceInterface.html"><abbr title="\User\Permissions\Resource\CreatorResourceInterface">CreatorResourceInterface</abbr></a>                    </span>
     
+            <span class="phpdocumentor-element__extends">
+            Uses
+                            <a href="classes/Application-Model-Traits-IdentifiableTrait.html"><abbr title="\Application\Model\Traits\IdentifiableTrait">IdentifiableTrait</abbr></a>                    </span>
     </h2>
 
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">31</span>
+    <span class="phpdocumentor-element-found-in__line">30</span>
 
     </aside>
 
@@ -468,11 +471,12 @@ when the user is NOT logged in.</dd>
 <dd>All additional fields belonging to the activity.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Activity-Model-SignupList.html#property_id">$id</a>
+    <a href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id">$id</a>
     <span>
                         &nbsp;: int|null            </span>
 </dt>
-<dd>ID for the SignupList.</dd>
+<dd>The default value must be `null` to prevent issues with auto generating the value. The column is strictly not
+nullable.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Activity-Model-SignupList.html#property_limitedCapacity">$limitedCapacity</a>
@@ -546,11 +550,11 @@ when the user is not logged in.</dd>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Activity-Model-SignupList.html#method_getId">getId()</a>
+    <a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_getId">getId()</a>
     <span>
                                 &nbsp;: int|null    </span>
 </dt>
-<dd></dd>
+<dd>Get the identifier of the object.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Activity-Model-SignupList.html#method_getLimitedCapacity">getLimitedCapacity()</a>
@@ -638,6 +642,13 @@ signed up when the user is not logged in.</dd>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_setId">setId()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>Setting the identifier manually will, in most instances, result in undefined behaviour. Use with caution!</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Activity-Model-SignupList.html#method_setLimitedCapacity">setLimitedCapacity()</a>
     <span>
                                 &nbsp;: void    </span>
@@ -707,7 +718,7 @@ signed up when the user is not logged in.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">45</span>
+    <span class="phpdocumentor-element-found-in__line">38</span>
 
     </aside>
 
@@ -741,7 +752,7 @@ signed up when the user is not logged in.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">81</span>
+    <span class="phpdocumentor-element-found-in__line">74</span>
 
     </aside>
 
@@ -775,7 +786,7 @@ signed up when the user is not logged in.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">94</span>
+    <span class="phpdocumentor-element-found-in__line">87</span>
 
     </aside>
 
@@ -810,7 +821,7 @@ when the user is NOT logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">106</span>
+    <span class="phpdocumentor-element-found-in__line">99</span>
 
     </aside>
 
@@ -837,18 +848,19 @@ when the user is NOT logged in.</p>
 >
     <h4 class="phpdocumentor-element__name" id="property_id">
         $id
-        <a href="classes/Activity-Model-SignupList.html#property_id" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/IdentifiableTrait.php"><a href="files/module-application-src-model-traits-identifiabletrait.html"><abbr title="module/Application/src/Model/Traits/IdentifiableTrait.php">IdentifiableTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">37</span>
+    <span class="phpdocumentor-element-found-in__line">20</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">ID for the SignupList.</p>
+        <p class="phpdocumentor-summary">The default value must be `null` to prevent issues with auto generating the value. The column is strictly not
+nullable.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
@@ -878,7 +890,7 @@ when the user is NOT logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">100</span>
+    <span class="phpdocumentor-element-found-in__line">93</span>
 
     </aside>
 
@@ -912,7 +924,7 @@ when the user is NOT logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">60</span>
+    <span class="phpdocumentor-element-found-in__line">53</span>
 
     </aside>
 
@@ -946,7 +958,7 @@ when the user is NOT logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">87</span>
+    <span class="phpdocumentor-element-found-in__line">80</span>
 
     </aside>
 
@@ -980,7 +992,7 @@ when the user is NOT logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">75</span>
+    <span class="phpdocumentor-element-found-in__line">68</span>
 
     </aside>
 
@@ -1014,7 +1026,7 @@ when the user is NOT logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">116</span>
+    <span class="phpdocumentor-element-found-in__line">109</span>
 
     </aside>
 
@@ -1052,7 +1064,7 @@ when the user is NOT logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">124</span>
+    <span class="phpdocumentor-element-found-in__line">117</span>
 
     </aside>
 
@@ -1085,7 +1097,7 @@ when the user is NOT logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">288</span>
+    <span class="phpdocumentor-element-found-in__line">273</span>
 
     </aside>
 
@@ -1118,7 +1130,7 @@ when the user is NOT logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">210</span>
+    <span class="phpdocumentor-element-found-in__line">195</span>
 
     </aside>
 
@@ -1151,7 +1163,7 @@ when the user is NOT logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">251</span>
+    <span class="phpdocumentor-element-found-in__line">236</span>
 
     </aside>
 
@@ -1185,7 +1197,7 @@ when the user is not logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">156</span>
+    <span class="phpdocumentor-element-found-in__line">141</span>
 
     </aside>
 
@@ -1212,16 +1224,17 @@ when the user is not logged in.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_getId">
         getId()
-        <a href="classes/Activity-Model-SignupList.html#method_getId" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_getId" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/IdentifiableTrait.php"><a href="files/module-application-src-model-traits-identifiabletrait.html"><abbr title="module/Application/src/Model/Traits/IdentifiableTrait.php">IdentifiableTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">132</span>
+    <span class="phpdocumentor-element-found-in__line">30</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Get the identifier of the object.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getId</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int|null</span></code>
@@ -1229,6 +1242,19 @@ when the user is not logged in.</p>
     
     
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">psalm-ignore-nullable-return</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                             
+                                    </dd>
+                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">int|null</span>
@@ -1249,7 +1275,7 @@ when the user is not logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">270</span>
+    <span class="phpdocumentor-element-found-in__line">255</span>
 
     </aside>
 
@@ -1282,7 +1308,7 @@ when the user is not logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">172</span>
+    <span class="phpdocumentor-element-found-in__line">157</span>
 
     </aside>
 
@@ -1314,7 +1340,7 @@ when the user is not logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">230</span>
+    <span class="phpdocumentor-element-found-in__line">215</span>
 
     </aside>
 
@@ -1347,7 +1373,7 @@ when the user is not logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">190</span>
+    <span class="phpdocumentor-element-found-in__line">175</span>
 
     </aside>
 
@@ -1380,7 +1406,7 @@ when the user is not logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">353</span>
+    <span class="phpdocumentor-element-found-in__line">338</span>
 
     </aside>
 
@@ -1413,7 +1439,7 @@ when the user is not logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">333</span>
+    <span class="phpdocumentor-element-found-in__line">318</span>
 
     </aside>
 
@@ -1446,7 +1472,7 @@ when the user is not logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">343</span>
+    <span class="phpdocumentor-element-found-in__line">328</span>
 
     </aside>
 
@@ -1479,7 +1505,7 @@ when the user is not logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">140</span>
+    <span class="phpdocumentor-element-found-in__line">125</span>
 
     </aside>
 
@@ -1511,7 +1537,7 @@ when the user is not logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">298</span>
+    <span class="phpdocumentor-element-found-in__line">283</span>
 
     </aside>
 
@@ -1554,7 +1580,7 @@ when the user is not logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">220</span>
+    <span class="phpdocumentor-element-found-in__line">205</span>
 
     </aside>
 
@@ -1597,7 +1623,7 @@ when the user is not logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">262</span>
+    <span class="phpdocumentor-element-found-in__line">247</span>
 
     </aside>
 
@@ -1641,7 +1667,7 @@ signed up when the user is not logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">164</span>
+    <span class="phpdocumentor-element-found-in__line">149</span>
 
     </aside>
 
@@ -1676,6 +1702,50 @@ signed up when the user is not logged in.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_setId">
+        setId()
+        <a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_setId" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/IdentifiableTrait.php"><a href="files/module-application-src-model-traits-identifiabletrait.html"><abbr title="module/Application/src/Model/Traits/IdentifiableTrait.php">IdentifiableTrait.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">38</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Setting the identifier manually will, in most instances, result in undefined behaviour. Use with caution!</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">setId</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$id</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$id</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int|null</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">void</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_setLimitedCapacity">
         setLimitedCapacity()
         <a href="classes/Activity-Model-SignupList.html#method_setLimitedCapacity" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1683,7 +1753,7 @@ signed up when the user is not logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">278</span>
+    <span class="phpdocumentor-element-found-in__line">263</span>
 
     </aside>
 
@@ -1727,7 +1797,7 @@ signed up when the user is not logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">180</span>
+    <span class="phpdocumentor-element-found-in__line">165</span>
 
     </aside>
 
@@ -1769,7 +1839,7 @@ signed up when the user is not logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">240</span>
+    <span class="phpdocumentor-element-found-in__line">225</span>
 
     </aside>
 
@@ -1812,7 +1882,7 @@ signed up when the user is not logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">200</span>
+    <span class="phpdocumentor-element-found-in__line">185</span>
 
     </aside>
 
@@ -1855,7 +1925,7 @@ signed up when the user is not logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">148</span>
+    <span class="phpdocumentor-element-found-in__line">133</span>
 
     </aside>
 
@@ -1897,7 +1967,7 @@ signed up when the user is not logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">308</span>
+    <span class="phpdocumentor-element-found-in__line">293</span>
 
     </aside>
 

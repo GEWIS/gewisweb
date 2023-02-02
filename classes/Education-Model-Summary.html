@@ -453,11 +453,12 @@
 <dd>Filename of the exam.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Education-Model-CourseDocument.html#property_id">$id</a>
+    <a href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id">$id</a>
     <span>
                         &nbsp;: int|null            </span>
 </dt>
-<dd></dd>
+<dd>The default value must be `null` to prevent issues with auto generating the value. The column is strictly not
+nullable.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Education-Model-CourseDocument.html#property_language">$language</a>
@@ -495,11 +496,11 @@
 <dd>Get the filename.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Education-Model-CourseDocument.html#method_getId">getId()</a>
+    <a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_getId">getId()</a>
     <span>
                                 &nbsp;: int|null    </span>
 </dt>
-<dd>Get the ID.</dd>
+<dd>Get the identifier of the object.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Education-Model-CourseDocument.html#method_getLanguage">getLanguage()</a>
@@ -542,6 +543,13 @@
                                 &nbsp;: void    </span>
 </dt>
 <dd>Set the filename.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_setId">setId()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>Setting the identifier manually will, in most instances, result in undefined behaviour. Use with caution!</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Education-Model-CourseDocument.html#method_setLanguage">setLanguage()</a>
@@ -612,7 +620,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/CourseDocument.php"><a href="files/module-education-src-model-coursedocument.html"><abbr title="module/Education/src/Model/CourseDocument.php">CourseDocument.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">63</span>
+    <span class="phpdocumentor-element-found-in__line">59</span>
 
     </aside>
 
@@ -646,7 +654,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/CourseDocument.php"><a href="files/module-education-src-model-coursedocument.html"><abbr title="module/Education/src/Model/CourseDocument.php">CourseDocument.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">42</span>
+    <span class="phpdocumentor-element-found-in__line">38</span>
 
     </aside>
 
@@ -680,7 +688,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/CourseDocument.php"><a href="files/module-education-src-model-coursedocument.html"><abbr title="module/Education/src/Model/CourseDocument.php">CourseDocument.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">57</span>
+    <span class="phpdocumentor-element-found-in__line">53</span>
 
     </aside>
 
@@ -707,26 +715,27 @@
 >
     <h4 class="phpdocumentor-element__name" id="property_id">
         $id
-        <a href="classes/Education-Model-CourseDocument.html#property_id" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/CourseDocument.php"><a href="files/module-education-src-model-coursedocument.html"><abbr title="module/Education/src/Model/CourseDocument.php">CourseDocument.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/IdentifiableTrait.php"><a href="files/module-application-src-model-traits-identifiabletrait.html"><abbr title="module/Application/src/Model/Traits/IdentifiableTrait.php">IdentifiableTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">34</span>
+    <span class="phpdocumentor-element-found-in__line">20</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">The default value must be `null` to prevent issues with auto generating the value. The column is strictly not
+nullable.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">int|null</span>
     <span class="phpdocumentor-signature__name">$id</span>
      = <span class="phpdocumentor-signature__default-value">null</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -748,7 +757,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/CourseDocument.php"><a href="files/module-education-src-model-coursedocument.html"><abbr title="module/Education/src/Model/CourseDocument.php">CourseDocument.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">48</span>
+    <span class="phpdocumentor-element-found-in__line">44</span>
 
     </aside>
 
@@ -819,7 +828,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/CourseDocument.php"><a href="files/module-education-src-model-coursedocument.html"><abbr title="module/Education/src/Model/CourseDocument.php">CourseDocument.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">133</span>
+    <span class="phpdocumentor-element-found-in__line">121</span>
 
     </aside>
 
@@ -852,7 +861,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/CourseDocument.php"><a href="files/module-education-src-model-coursedocument.html"><abbr title="module/Education/src/Model/CourseDocument.php">CourseDocument.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">85</span>
+    <span class="phpdocumentor-element-found-in__line">73</span>
 
     </aside>
 
@@ -885,7 +894,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/CourseDocument.php"><a href="files/module-education-src-model-coursedocument.html"><abbr title="module/Education/src/Model/CourseDocument.php">CourseDocument.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">117</span>
+    <span class="phpdocumentor-element-found-in__line">105</span>
 
     </aside>
 
@@ -913,16 +922,16 @@
 >
     <h4 class="phpdocumentor-element__name" id="method_getId">
         getId()
-        <a href="classes/Education-Model-CourseDocument.html#method_getId" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_getId" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/CourseDocument.php"><a href="files/module-education-src-model-coursedocument.html"><abbr title="module/Education/src/Model/CourseDocument.php">CourseDocument.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/IdentifiableTrait.php"><a href="files/module-application-src-model-traits-identifiabletrait.html"><abbr title="module/Application/src/Model/Traits/IdentifiableTrait.php">IdentifiableTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">77</span>
+    <span class="phpdocumentor-element-found-in__line">30</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Get the ID.</p>
+        <p class="phpdocumentor-summary">Get the identifier of the object.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -931,6 +940,19 @@
     
     
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">psalm-ignore-nullable-return</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                             
+                                    </dd>
+                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">int|null</span>
@@ -951,7 +973,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/CourseDocument.php"><a href="files/module-education-src-model-coursedocument.html"><abbr title="module/Education/src/Model/CourseDocument.php">CourseDocument.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">101</span>
+    <span class="phpdocumentor-element-found-in__line">89</span>
 
     </aside>
 
@@ -984,7 +1006,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/CourseDocument.php"><a href="files/module-education-src-model-coursedocument.html"><abbr title="module/Education/src/Model/CourseDocument.php">CourseDocument.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">149</span>
+    <span class="phpdocumentor-element-found-in__line">137</span>
 
     </aside>
 
@@ -1073,7 +1095,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/CourseDocument.php"><a href="files/module-education-src-model-coursedocument.html"><abbr title="module/Education/src/Model/CourseDocument.php">CourseDocument.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">141</span>
+    <span class="phpdocumentor-element-found-in__line">129</span>
 
     </aside>
 
@@ -1117,7 +1139,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/CourseDocument.php"><a href="files/module-education-src-model-coursedocument.html"><abbr title="module/Education/src/Model/CourseDocument.php">CourseDocument.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">93</span>
+    <span class="phpdocumentor-element-found-in__line">81</span>
 
     </aside>
 
@@ -1161,7 +1183,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/CourseDocument.php"><a href="files/module-education-src-model-coursedocument.html"><abbr title="module/Education/src/Model/CourseDocument.php">CourseDocument.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">125</span>
+    <span class="phpdocumentor-element-found-in__line">113</span>
 
     </aside>
 
@@ -1198,6 +1220,50 @@
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_setId">
+        setId()
+        <a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_setId" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/IdentifiableTrait.php"><a href="files/module-application-src-model-traits-identifiabletrait.html"><abbr title="module/Application/src/Model/Traits/IdentifiableTrait.php">IdentifiableTrait.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">38</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Setting the identifier manually will, in most instances, result in undefined behaviour. Use with caution!</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">setId</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$id</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$id</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int|null</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">void</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_setLanguage">
         setLanguage()
         <a href="classes/Education-Model-CourseDocument.html#method_setLanguage" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1205,7 +1271,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/CourseDocument.php"><a href="files/module-education-src-model-coursedocument.html"><abbr title="module/Education/src/Model/CourseDocument.php">CourseDocument.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">109</span>
+    <span class="phpdocumentor-element-found-in__line">97</span>
 
     </aside>
 

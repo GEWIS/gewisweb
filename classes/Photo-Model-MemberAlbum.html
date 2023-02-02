@@ -451,11 +451,12 @@ album count.</dd>
 <dd>End date of photos in album.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Photo-Model-Album.html#property_id">$id</a>
+    <a href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id">$id</a>
     <span>
                         &nbsp;: int|null            </span>
 </dt>
-<dd>Album ID.</dd>
+<dd>The default value must be `null` to prevent issues with auto generating the value. The column is strictly not
+nullable.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Photo-Model-Album.html#property_name">$name</a>
@@ -549,11 +550,11 @@ album count.</dd>
 <dd>Get the end date.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Photo-Model-Album.html#method_getId">getId()</a>
+    <a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_getId">getId()</a>
     <span>
                                 &nbsp;: int|null    </span>
 </dt>
-<dd>Get the ID.</dd>
+<dd>Get the identifier of the object.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Photo-Model-MemberAlbum.html#method_getMember">getMember()</a>
@@ -626,6 +627,13 @@ album count.</dd>
 <dd>Set the end date.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_setId">setId()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>Setting the identifier manually will, in most instances, result in undefined behaviour. Use with caution!</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Photo-Model-Album.html#method_setName">setName()</a>
     <span>
                                 &nbsp;: void    </span>
@@ -689,7 +697,7 @@ including all child objects.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Album.php"><a href="files/module-photo-src-model-album.html"><abbr title="module/Photo/src/Model/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">79</span>
+    <span class="phpdocumentor-element-found-in__line">72</span>
 
     </aside>
 
@@ -725,7 +733,7 @@ album count.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Album.php"><a href="files/module-photo-src-model-album.html"><abbr title="module/Photo/src/Model/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">104</span>
+    <span class="phpdocumentor-element-found-in__line">97</span>
 
     </aside>
 
@@ -759,7 +767,7 @@ album count.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Album.php"><a href="files/module-photo-src-model-album.html"><abbr title="module/Photo/src/Model/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">49</span>
+    <span class="phpdocumentor-element-found-in__line">42</span>
 
     </aside>
 
@@ -786,18 +794,19 @@ album count.</p>
 >
     <h4 class="phpdocumentor-element__name" id="property_id">
         $id
-        <a href="classes/Photo-Model-Album.html#property_id" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Album.php"><a href="files/module-photo-src-model-album.html"><abbr title="module/Photo/src/Model/Album.php">Album.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/IdentifiableTrait.php"><a href="files/module-application-src-model-traits-identifiabletrait.html"><abbr title="module/Application/src/Model/Traits/IdentifiableTrait.php">IdentifiableTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">32</span>
+    <span class="phpdocumentor-element-found-in__line">20</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Album ID.</p>
+        <p class="phpdocumentor-summary">The default value must be `null` to prevent issues with auto generating the value. The column is strictly not
+nullable.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
@@ -827,7 +836,7 @@ album count.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Album.php"><a href="files/module-photo-src-model-album.html"><abbr title="module/Photo/src/Model/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">58</span>
+    <span class="phpdocumentor-element-found-in__line">51</span>
 
     </aside>
 
@@ -861,7 +870,7 @@ album count.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Album.php"><a href="files/module-photo-src-model-album.html"><abbr title="module/Photo/src/Model/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">64</span>
+    <span class="phpdocumentor-element-found-in__line">57</span>
 
     </aside>
 
@@ -895,7 +904,7 @@ album count.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Album.php"><a href="files/module-photo-src-model-album.html"><abbr title="module/Photo/src/Model/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">92</span>
+    <span class="phpdocumentor-element-found-in__line">85</span>
 
     </aside>
 
@@ -932,7 +941,7 @@ photo count.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Album.php"><a href="files/module-photo-src-model-album.html"><abbr title="module/Photo/src/Model/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">40</span>
+    <span class="phpdocumentor-element-found-in__line">33</span>
 
     </aside>
 
@@ -1056,7 +1065,7 @@ photo count.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Album.php"><a href="files/module-photo-src-model-album.html"><abbr title="module/Photo/src/Model/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">152</span>
+    <span class="phpdocumentor-element-found-in__line">145</span>
 
     </aside>
 
@@ -1099,7 +1108,7 @@ photo count.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Album.php"><a href="files/module-photo-src-model-album.html"><abbr title="module/Photo/src/Model/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">141</span>
+    <span class="phpdocumentor-element-found-in__line">134</span>
 
     </aside>
 
@@ -1184,7 +1193,7 @@ photo count.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Album.php"><a href="files/module-photo-src-model-album.html"><abbr title="module/Photo/src/Model/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">348</span>
+    <span class="phpdocumentor-element-found-in__line">331</span>
 
     </aside>
 
@@ -1217,7 +1226,7 @@ photo count.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Album.php"><a href="files/module-photo-src-model-album.html"><abbr title="module/Photo/src/Model/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">121</span>
+    <span class="phpdocumentor-element-found-in__line">114</span>
 
     </aside>
 
@@ -1250,7 +1259,7 @@ photo count.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Album.php"><a href="files/module-photo-src-model-album.html"><abbr title="module/Photo/src/Model/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">308</span>
+    <span class="phpdocumentor-element-found-in__line">291</span>
 
     </aside>
 
@@ -1283,7 +1292,7 @@ photo count.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Album.php"><a href="files/module-photo-src-model-album.html"><abbr title="module/Photo/src/Model/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">248</span>
+    <span class="phpdocumentor-element-found-in__line">231</span>
 
     </aside>
 
@@ -1311,16 +1320,16 @@ photo count.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_getId">
         getId()
-        <a href="classes/Photo-Model-Album.html#method_getId" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_getId" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Album.php"><a href="files/module-photo-src-model-album.html"><abbr title="module/Photo/src/Model/Album.php">Album.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/IdentifiableTrait.php"><a href="files/module-application-src-model-traits-identifiabletrait.html"><abbr title="module/Application/src/Model/Traits/IdentifiableTrait.php">IdentifiableTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">218</span>
+    <span class="phpdocumentor-element-found-in__line">30</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Get the ID.</p>
+        <p class="phpdocumentor-summary">Get the identifier of the object.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -1329,6 +1338,19 @@ photo count.</p>
     
     
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">psalm-ignore-nullable-return</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                             
+                                    </dd>
+                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">int|null</span>
@@ -1382,7 +1404,7 @@ photo count.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Album.php"><a href="files/module-photo-src-model-album.html"><abbr title="module/Photo/src/Model/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">268</span>
+    <span class="phpdocumentor-element-found-in__line">251</span>
 
     </aside>
 
@@ -1417,7 +1439,7 @@ photo count.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Album.php"><a href="files/module-photo-src-model-album.html"><abbr title="module/Photo/src/Model/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">288</span>
+    <span class="phpdocumentor-element-found-in__line">271</span>
 
     </aside>
 
@@ -1452,7 +1474,7 @@ photo count.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Album.php"><a href="files/module-photo-src-model-album.html"><abbr title="module/Photo/src/Model/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">330</span>
+    <span class="phpdocumentor-element-found-in__line">313</span>
 
     </aside>
 
@@ -1495,7 +1517,7 @@ photo count.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Album.php"><a href="files/module-photo-src-model-album.html"><abbr title="module/Photo/src/Model/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">131</span>
+    <span class="phpdocumentor-element-found-in__line">124</span>
 
     </aside>
 
@@ -1528,7 +1550,7 @@ photo count.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Album.php"><a href="files/module-photo-src-model-album.html"><abbr title="module/Photo/src/Model/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">358</span>
+    <span class="phpdocumentor-element-found-in__line">341</span>
 
     </aside>
 
@@ -1561,7 +1583,7 @@ photo count.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Album.php"><a href="files/module-photo-src-model-album.html"><abbr title="module/Photo/src/Model/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">228</span>
+    <span class="phpdocumentor-element-found-in__line">211</span>
 
     </aside>
 
@@ -1594,7 +1616,7 @@ photo count.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Album.php"><a href="files/module-photo-src-model-album.html"><abbr title="module/Photo/src/Model/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">163</span>
+    <span class="phpdocumentor-element-found-in__line">156</span>
 
     </aside>
 
@@ -1637,7 +1659,7 @@ photo count.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Album.php"><a href="files/module-photo-src-model-album.html"><abbr title="module/Photo/src/Model/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">318</span>
+    <span class="phpdocumentor-element-found-in__line">301</span>
 
     </aside>
 
@@ -1680,7 +1702,7 @@ photo count.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Album.php"><a href="files/module-photo-src-model-album.html"><abbr title="module/Photo/src/Model/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">258</span>
+    <span class="phpdocumentor-element-found-in__line">241</span>
 
     </aside>
 
@@ -1716,6 +1738,50 @@ photo count.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_setId">
+        setId()
+        <a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_setId" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/IdentifiableTrait.php"><a href="files/module-application-src-model-traits-identifiabletrait.html"><abbr title="module/Application/src/Model/Traits/IdentifiableTrait.php">IdentifiableTrait.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">38</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Setting the identifier manually will, in most instances, result in undefined behaviour. Use with caution!</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">setId</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$id</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$id</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int|null</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">void</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_setName">
         setName()
         <a href="classes/Photo-Model-Album.html#method_setName" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1723,7 +1789,7 @@ photo count.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Album.php"><a href="files/module-photo-src-model-album.html"><abbr title="module/Photo/src/Model/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">278</span>
+    <span class="phpdocumentor-element-found-in__line">261</span>
 
     </aside>
 
@@ -1766,7 +1832,7 @@ photo count.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Album.php"><a href="files/module-photo-src-model-album.html"><abbr title="module/Photo/src/Model/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">298</span>
+    <span class="phpdocumentor-element-found-in__line">281</span>
 
     </aside>
 
@@ -1809,7 +1875,7 @@ photo count.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Album.php"><a href="files/module-photo-src-model-album.html"><abbr title="module/Photo/src/Model/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">238</span>
+    <span class="phpdocumentor-element-found-in__line">221</span>
 
     </aside>
 
@@ -1852,7 +1918,7 @@ photo count.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Album.php"><a href="files/module-photo-src-model-album.html"><abbr title="module/Photo/src/Model/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">196</span>
+    <span class="phpdocumentor-element-found-in__line">189</span>
 
     </aside>
 
@@ -1885,7 +1951,7 @@ photo count.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Album.php"><a href="files/module-photo-src-model-album.html"><abbr title="module/Photo/src/Model/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">178</span>
+    <span class="phpdocumentor-element-found-in__line">171</span>
 
     </aside>
 

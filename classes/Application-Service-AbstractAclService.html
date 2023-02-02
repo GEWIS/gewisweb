@@ -401,7 +401,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Service/AbstractAclService.php"><a href="files/module-application-src-service-abstractaclservice.html"><abbr title="module/Application/src/Service/AbstractAclService.php">AbstractAclService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">9</span>
+    <span class="phpdocumentor-element-found-in__line">10</span>
 
     </aside>
 
@@ -422,6 +422,20 @@
 
 <dl class="phpdocumentor-table-of-contents">
                         <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Application-Service-AbstractAclService.html#method_getIdentity">getIdentity()</a>
+    <span>
+                                &nbsp;: <a href="classes/Application-Model-IdentityInterface.html"><abbr title="\Application\Model\IdentityInterface">IdentityInterface</abbr></a>|null    </span>
+</dt>
+<dd>Gets the user identity if logged in or null otherwise</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Application-Service-AbstractAclService.html#method_hasIdentity">hasIdentity()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+<dd>Checks whether the user is logged in</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Application-Service-AbstractAclService.html#method_isAllowed">isAllowed()</a>
     <span>
                                 &nbsp;: bool    </span>
@@ -459,6 +473,76 @@
         class="phpdocumentor-element
             -method
             -public
+                        -abstract                                "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getIdentity">
+        getIdentity()
+        <a href="classes/Application-Service-AbstractAclService.html#method_getIdentity" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Service/AbstractAclService.php"><a href="files/module-application-src-service-abstractaclservice.html"><abbr title="module/Application/src/Service/AbstractAclService.php">AbstractAclService.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">50</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Gets the user identity if logged in or null otherwise</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+    <span class="phpdocumentor-signature__abstract">abstract</span>                <span class="phpdocumentor-signature__name">getIdentity</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Application-Model-IdentityInterface.html"><abbr title="\Application\Model\IdentityInterface">IdentityInterface</abbr></a>|null</span></code>
+
+    
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Application-Model-IdentityInterface.html"><abbr title="\Application\Model\IdentityInterface">IdentityInterface</abbr></a>|null</span>
+            &mdash;
+            <section class="phpdocumentor-description"><p>the current logged in user</p>
+</section>
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_hasIdentity">
+        hasIdentity()
+        <a href="classes/Application-Service-AbstractAclService.html#method_hasIdentity" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Service/AbstractAclService.php"><a href="files/module-application-src-service-abstractaclservice.html"><abbr title="module/Application/src/Service/AbstractAclService.php">AbstractAclService.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">57</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Checks whether the user is logged in</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">hasIdentity</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+    
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">bool</span>
+            &mdash;
+            <section class="phpdocumentor-description"><p>true if the user is logged in, false otherwise</p>
+</section>
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
                                                         "
 >
     <h4 class="phpdocumentor-element__name" id="method_isAllowed">
@@ -468,7 +552,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Service/AbstractAclService.php"><a href="files/module-application-src-service-abstractaclservice.html"><abbr title="module/Application/src/Service/AbstractAclService.php">AbstractAclService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">33</span>
+    <span class="phpdocumentor-element-found-in__line">34</span>
 
     </aside>
 
@@ -522,7 +606,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Service/AbstractAclService.php"><a href="files/module-application-src-service-abstractaclservice.html"><abbr title="module/Application/src/Service/AbstractAclService.php">AbstractAclService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">16</span>
+    <span class="phpdocumentor-element-found-in__line">17</span>
 
     </aside>
 
@@ -555,7 +639,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Service/AbstractAclService.php"><a href="files/module-application-src-service-abstractaclservice.html"><abbr title="module/Application/src/Service/AbstractAclService.php">AbstractAclService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">23</span>
+    <span class="phpdocumentor-element-found-in__line">24</span>
 
     </aside>
 

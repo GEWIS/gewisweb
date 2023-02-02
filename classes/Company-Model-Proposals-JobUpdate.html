@@ -379,14 +379,14 @@
 
             <div class="phpdocumentor-column -eight phpdocumentor-content">
                     <ul class="phpdocumentor-breadcrumbs">
-            <li class="phpdocumentor-breadcrumb"><a href="namespaces/user.html">User</a></li>
-            <li class="phpdocumentor-breadcrumb"><a href="namespaces/user-authentication.html">Authentication</a></li>
-            <li class="phpdocumentor-breadcrumb"><a href="namespaces/user-authentication-adapter.html">Adapter</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/company.html">Company</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/company-model.html">Model</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/company-model-proposals.html">Proposals</a></li>
     </ul>
 
     <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    Mapper
+    JobUpdate
 
     
             <div class="phpdocumentor-element__package">
@@ -396,14 +396,14 @@
                             </ul>
         </div>
     
-            <span class="phpdocumentor-element__implements">
-            implements
-                            <abbr title="\Laminas\Authentication\Adapter\AdapterInterface">AdapterInterface</abbr>                    </span>
     
+            <span class="phpdocumentor-element__extends">
+            Uses
+                            <a href="classes/Application-Model-Traits-IdentifiableTrait.html"><abbr title="\Application\Model\Traits\IdentifiableTrait">IdentifiableTrait</abbr></a>                    </span>
     </h2>
 
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/Adapter/Mapper.php"><a href="files/module-user-src-authentication-adapter-mapper.html"><abbr title="module/User/src/Authentication/Adapter/Mapper.php">Mapper.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Proposals/JobUpdate.php"><a href="files/module-company-src-model-proposals-jobupdate.html"><abbr title="module/Company/src/Model/Proposals/JobUpdate.php">JobUpdate.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">14</span>
 
@@ -417,18 +417,6 @@
 
 
 
-<h3 id="interfaces_class_traits">
-    Interfaces, Classes, Traits and Enums
-    <a href="#interfaces_class_traits" class="headerlink"><i class="fas fa-link"></i></a>
-</h3>
-
-<dl class="phpdocumentor-table-of-contents">
-            <dt class="phpdocumentor-table-of-contents__entry -interface"><abbr title="\Laminas\Authentication\Adapter\AdapterInterface">AdapterInterface</abbr></dt>
-        <dd></dd>
-    
-    
-    
-    </dl>
 
 
 <h3 id="toc">
@@ -437,75 +425,69 @@
 </h3>
 
 <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -property -private">
-    <a href="classes/User-Authentication-Adapter-Mapper.html#property_bcrypt">$bcrypt</a>
+                    <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id">$id</a>
     <span>
-                        &nbsp;: <abbr title="\Laminas\Crypt\Password\Bcrypt">Bcrypt</abbr>            </span>
+                        &nbsp;: int|null            </span>
 </dt>
-<dd></dd>
+<dd>The default value must be `null` to prevent issues with auto generating the value. The column is strictly not
+nullable.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -private">
-    <a href="classes/User-Authentication-Adapter-Mapper.html#property_login">$login</a>
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a href="classes/Company-Model-Proposals-JobUpdate.html#property_original">$original</a>
     <span>
-                        &nbsp;: string            </span>
+                        &nbsp;: <a href="classes/Company-Model-Job.html"><abbr title="\Company\Model\Job">Job</abbr></a>            </span>
 </dt>
-<dd></dd>
+<dd>The current job, to which an update is proposed.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -private">
-    <a href="classes/User-Authentication-Adapter-Mapper.html#property_loginAttemptService">$loginAttemptService</a>
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a href="classes/Company-Model-Proposals-JobUpdate.html#property_proposal">$proposal</a>
     <span>
-                        &nbsp;: <a href="classes/User-Authentication-Service-LoginAttempt.html"><abbr title="\User\Authentication\Service\LoginAttempt">LoginAttempt</abbr></a>            </span>
+                        &nbsp;: <a href="classes/Company-Model-Job.html"><abbr title="\Company\Model\Job">Job</abbr></a>            </span>
 </dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -private">
-    <a href="classes/User-Authentication-Adapter-Mapper.html#property_mapper">$mapper</a>
-    <span>
-                        &nbsp;: <a href="classes/User-Mapper-User.html"><abbr title="\User\Mapper\User">User</abbr></a>            </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -private">
-    <a href="classes/User-Authentication-Adapter-Mapper.html#property_password">$password</a>
-    <span>
-                        &nbsp;: string            </span>
-</dt>
-<dd></dd>
+<dd>The proposed update of the company.</dd>
 
                 <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/User-Authentication-Adapter-Mapper.html#method___construct">__construct()</a>
+    <a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_getId">getId()</a>
     <span>
-                                &nbsp;: mixed    </span>
+                                &nbsp;: int|null    </span>
 </dt>
-<dd></dd>
+<dd>Get the identifier of the object.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/User-Authentication-Adapter-Mapper.html#method_authenticate">authenticate()</a>
+    <a href="classes/Company-Model-Proposals-JobUpdate.html#method_getOriginal">getOriginal()</a>
     <span>
-                                &nbsp;: <abbr title="\Laminas\Authentication\Result">Result</abbr>    </span>
+                                &nbsp;: <a href="classes/Company-Model-Job.html"><abbr title="\Company\Model\Job">Job</abbr></a>    </span>
 </dt>
-<dd>Try to authenticate.</dd>
+<dd>Get the original `Job`.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/User-Authentication-Adapter-Mapper.html#method_getMapper">getMapper()</a>
+    <a href="classes/Company-Model-Proposals-JobUpdate.html#method_getProposal">getProposal()</a>
     <span>
-                                &nbsp;: <a href="classes/User-Mapper-User.html"><abbr title="\User\Mapper\User">User</abbr></a>    </span>
+                                &nbsp;: <a href="classes/Company-Model-Job.html"><abbr title="\Company\Model\Job">Job</abbr></a>    </span>
 </dt>
-<dd>Get the mapper.</dd>
+<dd>Get the proposed update of `$original`.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/User-Authentication-Adapter-Mapper.html#method_setCredentials">setCredentials()</a>
+    <a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_setId">setId()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd>Sets the credentials used to authenticate.</dd>
+<dd>Setting the identifier manually will, in most instances, result in undefined behaviour. Use with caution!</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/User-Authentication-Adapter-Mapper.html#method_verifyPassword">verifyPassword()</a>
+    <a href="classes/Company-Model-Proposals-JobUpdate.html#method_setOriginal">setOriginal()</a>
     <span>
-                                &nbsp;: bool    </span>
+                                &nbsp;: void    </span>
 </dt>
-<dd>Verify a password.</dd>
+<dd>Set the original `Job`.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Company-Model-Proposals-JobUpdate.html#method_setProposal">setProposal()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>Set the proposed update for `$original`.</dd>
 
         </dl>
 
@@ -517,71 +499,38 @@
     <section class="phpdocumentor-properties">
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
-            <a href="classes/User-Authentication-Adapter-Mapper.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Company-Model-Proposals-JobUpdate.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
         </h3>
                     <article
         class="
             phpdocumentor-element
             -property
-            -private
-                                                -read-only        "
->
-    <h4 class="phpdocumentor-element__name" id="property_bcrypt">
-        $bcrypt
-        <a href="classes/User-Authentication-Adapter-Mapper.html#property_bcrypt" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/Adapter/Mapper.php"><a href="files/module-user-src-authentication-adapter-mapper.html"><abbr title="module/User/src/Authentication/Adapter/Mapper.php">Mapper.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">21</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
-        <span class="phpdocumentor-signature__type"><abbr title="\Laminas\Crypt\Password\Bcrypt">Bcrypt</abbr></span>
-    <span class="phpdocumentor-signature__name">$bcrypt</span>
-    </code>
-
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -private
+            -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_login">
-        $login
-        <a href="classes/User-Authentication-Adapter-Mapper.html#property_login" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_id">
+        $id
+        <a href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/Adapter/Mapper.php"><a href="files/module-user-src-authentication-adapter-mapper.html"><abbr title="module/User/src/Authentication/Adapter/Mapper.php">Mapper.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/IdentifiableTrait.php"><a href="files/module-application-src-model-traits-identifiabletrait.html"><abbr title="module/Application/src/Model/Traits/IdentifiableTrait.php">IdentifiableTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">16</span>
+    <span class="phpdocumentor-element-found-in__line">20</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">The default value must be `null` to prevent issues with auto generating the value. The column is strictly not
+nullable.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
-        <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$login</span>
-    </code>
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type">int|null</span>
+    <span class="phpdocumentor-signature__name">$id</span>
+     = <span class="phpdocumentor-signature__default-value">null</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -591,31 +540,31 @@
         class="
             phpdocumentor-element
             -property
-            -private
-                                                -read-only        "
+            -protected
+                                                        "
 >
-    <h4 class="phpdocumentor-element__name" id="property_loginAttemptService">
-        $loginAttemptService
-        <a href="classes/User-Authentication-Adapter-Mapper.html#property_loginAttemptService" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_original">
+        $original
+        <a href="classes/Company-Model-Proposals-JobUpdate.html#property_original" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
-                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
+                                </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/Adapter/Mapper.php"><a href="files/module-user-src-authentication-adapter-mapper.html"><abbr title="module/User/src/Authentication/Adapter/Mapper.php">Mapper.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Proposals/JobUpdate.php"><a href="files/module-company-src-model-proposals-jobupdate.html"><abbr title="module/Company/src/Model/Proposals/JobUpdate.php">JobUpdate.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">22</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">The current job, to which an update is proposed.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/User-Authentication-Service-LoginAttempt.html"><abbr title="\User\Authentication\Service\LoginAttempt">LoginAttempt</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$loginAttemptService</span>
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Company-Model-Job.html"><abbr title="\Company\Model\Job">Job</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$original</span>
     </code>
 
-        <section class="phpdocumentor-description"></section>
-
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -625,65 +574,31 @@
         class="
             phpdocumentor-element
             -property
-            -private
-                                                -read-only        "
->
-    <h4 class="phpdocumentor-element__name" id="property_mapper">
-        $mapper
-        <a href="classes/User-Authentication-Adapter-Mapper.html#property_mapper" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/Adapter/Mapper.php"><a href="files/module-user-src-authentication-adapter-mapper.html"><abbr title="module/User/src/Authentication/Adapter/Mapper.php">Mapper.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">23</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/User-Mapper-User.html"><abbr title="\User\Mapper\User">User</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$mapper</span>
-    </code>
-
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -private
+            -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_password">
-        $password
-        <a href="classes/User-Authentication-Adapter-Mapper.html#property_password" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_proposal">
+        $proposal
+        <a href="classes/Company-Model-Proposals-JobUpdate.html#property_proposal" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/Adapter/Mapper.php"><a href="files/module-user-src-authentication-adapter-mapper.html"><abbr title="module/User/src/Authentication/Adapter/Mapper.php">Mapper.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Proposals/JobUpdate.php"><a href="files/module-company-src-model-proposals-jobupdate.html"><abbr title="module/Company/src/Model/Proposals/JobUpdate.php">JobUpdate.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">18</span>
+    <span class="phpdocumentor-element-found-in__line">35</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">The proposed update of the company.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
-        <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$password</span>
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Company-Model-Job.html"><abbr title="\Company\Model\Job">Job</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$proposal</span>
     </code>
 
-        <section class="phpdocumentor-description"></section>
-
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -694,7 +609,7 @@
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/User-Authentication-Adapter-Mapper.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Company-Model-Proposals-JobUpdate.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
         </h3>
                     <article
         class="phpdocumentor-element
@@ -702,56 +617,42 @@
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method___construct">
-        __construct()
-        <a href="classes/User-Authentication-Adapter-Mapper.html#method___construct" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_getId">
+        getId()
+        <a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_getId" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/Adapter/Mapper.php"><a href="files/module-user-src-authentication-adapter-mapper.html"><abbr title="module/User/src/Authentication/Adapter/Mapper.php">Mapper.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/IdentifiableTrait.php"><a href="files/module-application-src-model-traits-identifiabletrait.html"><abbr title="module/Application/src/Model/Traits/IdentifiableTrait.php">IdentifiableTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">20</span>
+    <span class="phpdocumentor-element-found-in__line">30</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Get the identifier of the object.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Crypt\Password\Bcrypt">Bcrypt</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$bcrypt</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Authentication-Service-LoginAttempt.html"><abbr title="\User\Authentication\Service\LoginAttempt">LoginAttempt</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$loginAttemptService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Mapper-User.html"><abbr title="\User\Mapper\User">User</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$mapper</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
-
-        <section class="phpdocumentor-description"></section>
-
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$bcrypt</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Crypt\Password\Bcrypt">Bcrypt</abbr></span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$loginAttemptService</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Authentication-Service-LoginAttempt.html"><abbr title="\User\Authentication\Service\LoginAttempt">LoginAttempt</abbr></a></span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$mapper</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Mapper-User.html"><abbr title="\User\Mapper\User">User</abbr></a></span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
-            </dd>
-            </dl>
+                    <span class="phpdocumentor-signature__name">getId</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int|null</span></code>
 
     
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">psalm-ignore-nullable-return</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                             
+                                    </dd>
+                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">mixed</span>
+    <span class="phpdocumentor-signature__response_type">int|null</span>
             &mdash;
         
     
@@ -762,29 +663,29 @@
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_authenticate">
-        authenticate()
-        <a href="classes/User-Authentication-Adapter-Mapper.html#method_authenticate" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_getOriginal">
+        getOriginal()
+        <a href="classes/Company-Model-Proposals-JobUpdate.html#method_getOriginal" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/Adapter/Mapper.php"><a href="files/module-user-src-authentication-adapter-mapper.html"><abbr title="module/User/src/Authentication/Adapter/Mapper.php">Mapper.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Proposals/JobUpdate.php"><a href="files/module-company-src-model-proposals-jobupdate.html"><abbr title="module/Company/src/Model/Proposals/JobUpdate.php">JobUpdate.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">32</span>
+    <span class="phpdocumentor-element-found-in__line">48</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Try to authenticate.</p>
+        <p class="phpdocumentor-summary">Get the original `Job`.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">authenticate</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Laminas\Authentication\Result">Result</abbr></span></code>
+                    <span class="phpdocumentor-signature__name">getOriginal</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Company-Model-Job.html"><abbr title="\Company\Model\Job">Job</abbr></a></span></code>
 
     
     
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\Laminas\Authentication\Result">Result</abbr></span>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Company-Model-Job.html"><abbr title="\Company\Model\Job">Job</abbr></a></span>
             &mdash;
         
     
@@ -795,29 +696,29 @@
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getMapper">
-        getMapper()
-        <a href="classes/User-Authentication-Adapter-Mapper.html#method_getMapper" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_getProposal">
+        getProposal()
+        <a href="classes/Company-Model-Proposals-JobUpdate.html#method_getProposal" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/Adapter/Mapper.php"><a href="files/module-user-src-authentication-adapter-mapper.html"><abbr title="module/User/src/Authentication/Adapter/Mapper.php">Mapper.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Proposals/JobUpdate.php"><a href="files/module-company-src-model-proposals-jobupdate.html"><abbr title="module/Company/src/Model/Proposals/JobUpdate.php">JobUpdate.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">113</span>
+    <span class="phpdocumentor-element-found-in__line">64</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Get the mapper.</p>
+        <p class="phpdocumentor-summary">Get the proposed update of `$original`.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getMapper</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/User-Mapper-User.html"><abbr title="\User\Mapper\User">User</abbr></a></span></code>
+                    <span class="phpdocumentor-signature__name">getProposal</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Company-Model-Job.html"><abbr title="\Company\Model\Job">Job</abbr></a></span></code>
 
     
     
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/User-Mapper-User.html"><abbr title="\User\Mapper\User">User</abbr></a></span>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Company-Model-Job.html"><abbr title="\Company\Model\Job">Job</abbr></a></span>
             &mdash;
         
     
@@ -828,39 +729,33 @@
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_setCredentials">
-        setCredentials()
-        <a href="classes/User-Authentication-Adapter-Mapper.html#method_setCredentials" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_setId">
+        setId()
+        <a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_setId" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/Adapter/Mapper.php"><a href="files/module-user-src-authentication-adapter-mapper.html"><abbr title="module/User/src/Authentication/Adapter/Mapper.php">Mapper.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/IdentifiableTrait.php"><a href="files/module-application-src-model-traits-identifiabletrait.html"><abbr title="module/Application/src/Model/Traits/IdentifiableTrait.php">IdentifiableTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">100</span>
+    <span class="phpdocumentor-element-found-in__line">38</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Sets the credentials used to authenticate.</p>
+        <p class="phpdocumentor-summary">Setting the identifier manually will, in most instances, result in undefined behaviour. Use with caution!</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setCredentials</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$login</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$password</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">setId</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$id</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$login</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                <span class="phpdocumentor-signature__argument__name">$id</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int|null</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$password</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
             </dl>
 
@@ -878,46 +773,84 @@
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_verifyPassword">
-        verifyPassword()
-        <a href="classes/User-Authentication-Adapter-Mapper.html#method_verifyPassword" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_setOriginal">
+        setOriginal()
+        <a href="classes/Company-Model-Proposals-JobUpdate.html#method_setOriginal" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/Adapter/Mapper.php"><a href="files/module-user-src-authentication-adapter-mapper.html"><abbr title="module/User/src/Authentication/Adapter/Mapper.php">Mapper.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Proposals/JobUpdate.php"><a href="files/module-company-src-model-proposals-jobupdate.html"><abbr title="module/Company/src/Model/Proposals/JobUpdate.php">JobUpdate.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">83</span>
+    <span class="phpdocumentor-element-found-in__line">56</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Verify a password.</p>
+        <p class="phpdocumentor-summary">Set the original `Job`.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">verifyPassword</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$password</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$hash</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+                    <span class="phpdocumentor-signature__name">setOriginal</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Model-Job.html"><abbr title="\Company\Model\Job">Job</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$original</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$password</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                <span class="phpdocumentor-signature__argument__name">$original</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Model-Job.html"><abbr title="\Company\Model\Job">Job</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$hash</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
             </dl>
 
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">bool</span>
+    <span class="phpdocumentor-signature__response_type">void</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_setProposal">
+        setProposal()
+        <a href="classes/Company-Model-Proposals-JobUpdate.html#method_setProposal" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Proposals/JobUpdate.php"><a href="files/module-company-src-model-proposals-jobupdate.html"><abbr title="module/Company/src/Model/Proposals/JobUpdate.php">JobUpdate.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">72</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Set the proposed update for `$original`.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">setProposal</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Model-Job.html"><abbr title="\Company\Model\Job">Job</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$proposal</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$proposal</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Model-Job.html"><abbr title="\Company\Model\Job">Job</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
         
     
@@ -1000,7 +933,7 @@
 </section>
             </div>
         </div>
-        <a href="classes/User-Authentication-Adapter-Mapper.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/Company-Model-Proposals-JobUpdate.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 

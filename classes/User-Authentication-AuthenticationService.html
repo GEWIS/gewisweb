@@ -404,14 +404,37 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/AuthenticationService.php"><a href="files/module-user-src-authentication-authenticationservice.html"><abbr title="module/User/src/Authentication/AuthenticationService.php">AuthenticationService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">16</span>
+    <span class="phpdocumentor-element-found-in__line">30</span>
 
     </aside>
 
         
-    <section class="phpdocumentor-description"></section>
 
 
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">template</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>TStorage of CompanyUserSession|UserSession</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">template</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>TAdapter of CompanyUserAdapter|UserAdapter</p>
+</section>
+
+                                    </dd>
+                        </dl>
 
 
 
@@ -436,17 +459,17 @@
 </h3>
 
 <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+                    <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a href="classes/User-Authentication-AuthenticationService.html#property_adapter">$adapter</a>
     <span>
-                        &nbsp;: <a href="classes/User-Authentication-Adapter-Mapper.html"><abbr title="\User\Authentication\Adapter\Mapper">Mapper</abbr></a>            </span>
+                        &nbsp;: <a href="classes/User-Authentication-Adapter-CompanyUserAdapter.html"><abbr title="\User\Authentication\Adapter\CompanyUserAdapter">CompanyUserAdapter</abbr></a>|<a href="classes/User-Authentication-Adapter-UserAdapter.html"><abbr title="\User\Authentication\Adapter\UserAdapter">UserAdapter</abbr></a>            </span>
 </dt>
 <dd></dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a href="classes/User-Authentication-AuthenticationService.html#property_storage">$storage</a>
     <span>
-                        &nbsp;: <a href="classes/User-Authentication-Storage-Session.html"><abbr title="\User\Authentication\Storage\Session">Session</abbr></a>            </span>
+                        &nbsp;: <a href="classes/User-Authentication-Storage-CompanyUserSession.html"><abbr title="\User\Authentication\Storage\CompanyUserSession">CompanyUserSession</abbr></a>|<a href="classes/User-Authentication-Storage-UserSession.html"><abbr title="\User\Authentication\Storage\UserSession">UserSession</abbr></a>            </span>
 </dt>
 <dd></dd>
 
@@ -470,26 +493,26 @@
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd>Clears the identity from persistent storage</dd>
+<dd>Clears the identity from persistent storage.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/User-Authentication-AuthenticationService.html#method_getAdapter">getAdapter()</a>
     <span>
-                                &nbsp;: <a href="classes/User-Authentication-Adapter-Mapper.html"><abbr title="\User\Authentication\Adapter\Mapper">Mapper</abbr></a>    </span>
+                                &nbsp;: <a href="classes/User-Authentication-Adapter-CompanyUserAdapter.html"><abbr title="\User\Authentication\Adapter\CompanyUserAdapter">CompanyUserAdapter</abbr></a>|<a href="classes/User-Authentication-Adapter-UserAdapter.html"><abbr title="\User\Authentication\Adapter\UserAdapter">UserAdapter</abbr></a>    </span>
 </dt>
 <dd>Returns the authentication adapter.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/User-Authentication-AuthenticationService.html#method_getIdentity">getIdentity()</a>
     <span>
-                                &nbsp;: <a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a>|null    </span>
+                                &nbsp;: <a href="classes/Application-Model-IdentityInterface.html"><abbr title="\Application\Model\IdentityInterface">IdentityInterface</abbr></a>|null    </span>
 </dt>
-<dd>Returns the authenticated User or null if no identity is available.</dd>
+<dd>Returns the authenticated CompanyUser|User or null if no identity is available.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/User-Authentication-AuthenticationService.html#method_getStorage">getStorage()</a>
     <span>
-                                &nbsp;: <a href="classes/User-Authentication-Storage-Session.html"><abbr title="\User\Authentication\Storage\Session">Session</abbr></a>    </span>
+                                &nbsp;: <a href="classes/User-Authentication-Storage-CompanyUserSession.html"><abbr title="\User\Authentication\Storage\CompanyUserSession">CompanyUserSession</abbr></a>|<a href="classes/User-Authentication-Storage-UserSession.html"><abbr title="\User\Authentication\Storage\UserSession">UserSession</abbr></a>    </span>
 </dt>
 <dd>Returns the persistent storage handler.</dd>
 
@@ -537,7 +560,7 @@
         class="
             phpdocumentor-element
             -property
-            -protected
+            -private
                                                         "
 >
     <h4 class="phpdocumentor-element__name" id="property_adapter">
@@ -549,29 +572,43 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/AuthenticationService.php"><a href="files/module-user-src-authentication-authenticationservice.html"><abbr title="module/User/src/Authentication/AuthenticationService.php">AuthenticationService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">20</span>
+    <span class="phpdocumentor-element-found-in__line">36</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/User-Authentication-Adapter-Mapper.html"><abbr title="\User\Authentication\Adapter\Mapper">Mapper</abbr></a></span>
+    <span class="phpdocumentor-signature__visibility">private</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/User-Authentication-Adapter-CompanyUserAdapter.html"><abbr title="\User\Authentication\Adapter\CompanyUserAdapter">CompanyUserAdapter</abbr></a>|<a href="classes/User-Authentication-Adapter-UserAdapter.html"><abbr title="\User\Authentication\Adapter\UserAdapter">UserAdapter</abbr></a></span>
     <span class="phpdocumentor-signature__name">$adapter</span>
     </code>
 
-        <section class="phpdocumentor-description"></section>
-
+    
         <section class="phpdocumentor-description"></section>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">psalm-var</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>TAdapter $storage</p>
+</section>
+
+                                    </dd>
+                        </dl>
 
 </article>
                     <article
         class="
             phpdocumentor-element
             -property
-            -protected
+            -private
                                                         "
 >
     <h4 class="phpdocumentor-element__name" id="property_storage">
@@ -583,22 +620,36 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/AuthenticationService.php"><a href="files/module-user-src-authentication-authenticationservice.html"><abbr title="module/User/src/Authentication/AuthenticationService.php">AuthenticationService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">18</span>
+    <span class="phpdocumentor-element-found-in__line">33</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/User-Authentication-Storage-Session.html"><abbr title="\User\Authentication\Storage\Session">Session</abbr></a></span>
+    <span class="phpdocumentor-signature__visibility">private</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/User-Authentication-Storage-CompanyUserSession.html"><abbr title="\User\Authentication\Storage\CompanyUserSession">CompanyUserSession</abbr></a>|<a href="classes/User-Authentication-Storage-UserSession.html"><abbr title="\User\Authentication\Storage\UserSession">UserSession</abbr></a></span>
     <span class="phpdocumentor-signature__name">$storage</span>
     </code>
 
-        <section class="phpdocumentor-description"></section>
-
+    
         <section class="phpdocumentor-description"></section>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">psalm-var</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>TStorage $storage</p>
+</section>
+
+                                    </dd>
+                        </dl>
 
 </article>
             </section>
@@ -621,22 +672,21 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/AuthenticationService.php"><a href="files/module-user-src-authentication-authenticationservice.html"><abbr title="module/User/src/Authentication/AuthenticationService.php">AuthenticationService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">22</span>
+    <span class="phpdocumentor-element-found-in__line">42</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Authentication\Storage\StorageInterface">StorageInterface</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$storage</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Authentication\Adapter\AdapterInterface">AdapterInterface</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$adapter</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Authentication-Storage-CompanyUserSession.html"><abbr title="\User\Authentication\Storage\CompanyUserSession">CompanyUserSession</abbr></a>|<a href="classes/User-Authentication-Storage-UserSession.html"><abbr title="\User\Authentication\Storage\UserSession">UserSession</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$storage</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Authentication-Adapter-CompanyUserAdapter.html"><abbr title="\User\Authentication\Adapter\CompanyUserAdapter">CompanyUserAdapter</abbr></a>|<a href="classes/User-Authentication-Adapter-UserAdapter.html"><abbr title="\User\Authentication\Adapter\UserAdapter">UserAdapter</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$adapter</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$storage</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Authentication\Storage\StorageInterface">StorageInterface</abbr></span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Authentication-Storage-CompanyUserSession.html"><abbr title="\User\Authentication\Storage\CompanyUserSession">CompanyUserSession</abbr></a>|<a href="classes/User-Authentication-Storage-UserSession.html"><abbr title="\User\Authentication\Storage\UserSession">UserSession</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"></section>
@@ -644,7 +694,7 @@
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$adapter</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Authentication\Adapter\AdapterInterface">AdapterInterface</abbr></span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Authentication-Adapter-CompanyUserAdapter.html"><abbr title="\User\Authentication\Adapter\CompanyUserAdapter">CompanyUserAdapter</abbr></a>|<a href="classes/User-Authentication-Adapter-UserAdapter.html"><abbr title="\User\Authentication\Adapter\UserAdapter">UserAdapter</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"></section>
@@ -653,6 +703,30 @@
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">psalm-param</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>TStorage $storage</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">psalm-param</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>TAdapter $adapter</p>
+</section>
+
+                                    </dd>
+                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">mixed</span>
@@ -673,7 +747,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/AuthenticationService.php"><a href="files/module-user-src-authentication-authenticationservice.html"><abbr title="module/User/src/Authentication/AuthenticationService.php">AuthenticationService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">101</span>
+    <span class="phpdocumentor-element-found-in__line">98</span>
 
     </aside>
 
@@ -692,32 +766,20 @@
                 : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
                  = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$securityCode</span>
                 : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
                  = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                <span class="phpdocumentor-tag-link"><abbr title="\RuntimeException">RuntimeException</abbr></span>
-                                                            
-                                             
-                                    </dd>
-                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type"><abbr title="\Laminas\Authentication\Result">Result</abbr></span>
@@ -738,11 +800,11 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/AuthenticationService.php"><a href="files/module-user-src-authentication-authenticationservice.html"><abbr title="module/User/src/Authentication/AuthenticationService.php">AuthenticationService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">159</span>
+    <span class="phpdocumentor-element-found-in__line">154</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Clears the identity from persistent storage</p>
+        <p class="phpdocumentor-summary">Clears the identity from persistent storage.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -771,7 +833,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/AuthenticationService.php"><a href="files/module-user-src-authentication-authenticationservice.html"><abbr title="module/User/src/Authentication/AuthenticationService.php">AuthenticationService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">35</span>
+    <span class="phpdocumentor-element-found-in__line">55</span>
 
     </aside>
 
@@ -779,14 +841,29 @@
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getAdapter</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/User-Authentication-Adapter-Mapper.html"><abbr title="\User\Authentication\Adapter\Mapper">Mapper</abbr></a></span></code>
+                    <span class="phpdocumentor-signature__name">getAdapter</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/User-Authentication-Adapter-CompanyUserAdapter.html"><abbr title="\User\Authentication\Adapter\CompanyUserAdapter">CompanyUserAdapter</abbr></a>|<a href="classes/User-Authentication-Adapter-UserAdapter.html"><abbr title="\User\Authentication\Adapter\UserAdapter">UserAdapter</abbr></a></span></code>
 
     
     
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">psalm-return</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>TAdapter</p>
+</section>
+
+                                    </dd>
+                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/User-Authentication-Adapter-Mapper.html"><abbr title="\User\Authentication\Adapter\Mapper">Mapper</abbr></a></span>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/User-Authentication-Adapter-CompanyUserAdapter.html"><abbr title="\User\Authentication\Adapter\CompanyUserAdapter">CompanyUserAdapter</abbr></a>|<a href="classes/User-Authentication-Adapter-UserAdapter.html"><abbr title="\User\Authentication\Adapter\UserAdapter">UserAdapter</abbr></a></span>
             &mdash;
         
     
@@ -804,22 +881,37 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/AuthenticationService.php"><a href="files/module-user-src-authentication-authenticationservice.html"><abbr title="module/User/src/Authentication/AuthenticationService.php">AuthenticationService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">144</span>
+    <span class="phpdocumentor-element-found-in__line">139</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Returns the authenticated User or null if no identity is available.</p>
+        <p class="phpdocumentor-summary">Returns the authenticated CompanyUser|User or null if no identity is available.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getIdentity</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a>|null</span></code>
+                    <span class="phpdocumentor-signature__name">getIdentity</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Application-Model-IdentityInterface.html"><abbr title="\Application\Model\IdentityInterface">IdentityInterface</abbr></a>|null</span></code>
 
     
     
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">psalm-return</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>(TAdapter is CompanyUserAdapter ? CompanyUser|null : User|null)</p>
+</section>
+
+                                    </dd>
+                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a>|null</span>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Application-Model-IdentityInterface.html"><abbr title="\Application\Model\IdentityInterface">IdentityInterface</abbr></a>|null</span>
             &mdash;
         
     
@@ -837,7 +929,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/AuthenticationService.php"><a href="files/module-user-src-authentication-authenticationservice.html"><abbr title="module/User/src/Authentication/AuthenticationService.php">AuthenticationService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">65</span>
+    <span class="phpdocumentor-element-found-in__line">77</span>
 
     </aside>
 
@@ -845,14 +937,29 @@
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getStorage</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/User-Authentication-Storage-Session.html"><abbr title="\User\Authentication\Storage\Session">Session</abbr></a></span></code>
+                    <span class="phpdocumentor-signature__name">getStorage</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/User-Authentication-Storage-CompanyUserSession.html"><abbr title="\User\Authentication\Storage\CompanyUserSession">CompanyUserSession</abbr></a>|<a href="classes/User-Authentication-Storage-UserSession.html"><abbr title="\User\Authentication\Storage\UserSession">UserSession</abbr></a></span></code>
 
     
     
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">psalm-return</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>TStorage</p>
+</section>
+
+                                    </dd>
+                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/User-Authentication-Storage-Session.html"><abbr title="\User\Authentication\Storage\Session">Session</abbr></a></span>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/User-Authentication-Storage-CompanyUserSession.html"><abbr title="\User\Authentication\Storage\CompanyUserSession">CompanyUserSession</abbr></a>|<a href="classes/User-Authentication-Storage-UserSession.html"><abbr title="\User\Authentication\Storage\UserSession">UserSession</abbr></a></span>
             &mdash;
         
     
@@ -870,7 +977,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/AuthenticationService.php"><a href="files/module-user-src-authentication-authenticationservice.html"><abbr title="module/User/src/Authentication/AuthenticationService.php">AuthenticationService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">134</span>
+    <span class="phpdocumentor-element-found-in__line">129</span>
 
     </aside>
 
@@ -903,7 +1010,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/AuthenticationService.php"><a href="files/module-user-src-authentication-authenticationservice.html"><abbr title="module/User/src/Authentication/AuthenticationService.php">AuthenticationService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">47</span>
+    <span class="phpdocumentor-element-found-in__line">65</span>
 
     </aside>
 
@@ -911,28 +1018,42 @@
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setAdapter</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Authentication\Adapter\AdapterInterface">AdapterInterface</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$adapter</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
+                    <span class="phpdocumentor-signature__name">setAdapter</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Authentication-Adapter-CompanyUserAdapter.html"><abbr title="\User\Authentication\Adapter\CompanyUserAdapter">CompanyUserAdapter</abbr></a>|<a href="classes/User-Authentication-Adapter-UserAdapter.html"><abbr title="\User\Authentication\Adapter\UserAdapter">UserAdapter</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$adapter</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$adapter</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Authentication\Adapter\AdapterInterface">AdapterInterface</abbr></span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Authentication-Adapter-CompanyUserAdapter.html"><abbr title="\User\Authentication\Adapter\CompanyUserAdapter">CompanyUserAdapter</abbr></a>|<a href="classes/User-Authentication-Adapter-UserAdapter.html"><abbr title="\User\Authentication\Adapter\UserAdapter">UserAdapter</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">psalm-param</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>TAdapter $adapter</p>
+</section>
+
+                                    </dd>
+                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">self</span>
             &mdash;
-            <section class="phpdocumentor-description"><p>Provides a fluent interface</p>
-</section>
-
+        
     
 </article>
                     <article
@@ -948,7 +1069,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/AuthenticationService.php"><a href="files/module-user-src-authentication-authenticationservice.html"><abbr title="module/User/src/Authentication/AuthenticationService.php">AuthenticationService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">169</span>
+    <span class="phpdocumentor-element-found-in__line">162</span>
 
     </aside>
 
@@ -966,7 +1087,8 @@
                 : <span class="phpdocumentor-signature__argument__return-type">bool</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
             </dl>
 
@@ -991,7 +1113,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/AuthenticationService.php"><a href="files/module-user-src-authentication-authenticationservice.html"><abbr title="module/User/src/Authentication/AuthenticationService.php">AuthenticationService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">77</span>
+    <span class="phpdocumentor-element-found-in__line">87</span>
 
     </aside>
 
@@ -999,28 +1121,42 @@
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setStorage</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Authentication\Storage\StorageInterface">StorageInterface</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$storage</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
+                    <span class="phpdocumentor-signature__name">setStorage</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Authentication-Storage-CompanyUserSession.html"><abbr title="\User\Authentication\Storage\CompanyUserSession">CompanyUserSession</abbr></a>|<a href="classes/User-Authentication-Storage-UserSession.html"><abbr title="\User\Authentication\Storage\UserSession">UserSession</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$storage</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$storage</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Authentication\Storage\StorageInterface">StorageInterface</abbr></span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Authentication-Storage-CompanyUserSession.html"><abbr title="\User\Authentication\Storage\CompanyUserSession">CompanyUserSession</abbr></a>|<a href="classes/User-Authentication-Storage-UserSession.html"><abbr title="\User\Authentication\Storage\UserSession">UserSession</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">psalm-param</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>TStorage $storage</p>
+</section>
+
+                                    </dd>
+                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">self</span>
             &mdash;
-            <section class="phpdocumentor-description"><p>Provides a fluent interface</p>
-</section>
-
+        
     
 </article>
             </section>

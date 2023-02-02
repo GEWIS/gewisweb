@@ -404,7 +404,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/CompanyJobPackage.php"><a href="files/module-company-src-model-companyjobpackage.html"><abbr title="module/Company/src/Model/CompanyJobPackage.php">CompanyJobPackage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">18</span>
+    <span class="phpdocumentor-element-found-in__line">20</span>
 
     </aside>
 
@@ -432,6 +432,13 @@
 <dd>The package&#039;s company.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a href="classes/Company-Model-CompanyPackage.html#property_contractNumber">$contractNumber</a>
+    <span>
+                        &nbsp;: string|null            </span>
+</dt>
+<dd>An alphanumeric strings which identifies to which contract this package belongs.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Company-Model-CompanyPackage.html#property_expires">$expires</a>
     <span>
                         &nbsp;: <abbr title="\DateTime">DateTime</abbr>            </span>
@@ -439,11 +446,12 @@
 <dd>The package&#039;s expiration date.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Company-Model-CompanyPackage.html#property_id">$id</a>
+    <a href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id">$id</a>
     <span>
                         &nbsp;: int|null            </span>
 </dt>
-<dd>The package&#039;s id.</dd>
+<dd>The default value must be `null` to prevent issues with auto generating the value. The column is strictly not
+nullable.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Company-Model-CompanyJobPackage.html#property_jobs">$jobs</a>
@@ -457,7 +465,7 @@
     <span>
                         &nbsp;: bool            </span>
 </dt>
-<dd>The package&#039;s pusblish state.</dd>
+<dd>The package&#039;s published state.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Company-Model-CompanyPackage.html#property_starts">$starts</a>
@@ -495,6 +503,13 @@
 <dd>Get the package&#039;s company.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Company-Model-CompanyPackage.html#method_getContractNumber">getContractNumber()</a>
+    <span>
+                                &nbsp;: string|null    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Company-Model-CompanyPackage.html#method_getExpirationDate">getExpirationDate()</a>
     <span>
                                 &nbsp;: <abbr title="\DateTime">DateTime</abbr>    </span>
@@ -502,11 +517,11 @@
 <dd>Get the package&#039;s expiration date.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Company-Model-CompanyPackage.html#method_getId">getId()</a>
+    <a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_getId">getId()</a>
     <span>
                                 &nbsp;: int|null    </span>
 </dt>
-<dd>Get the package&#039;s id.</dd>
+<dd>Get the identifier of the object.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Company-Model-CompanyJobPackage.html#method_getJobs">getJobs()</a>
@@ -523,6 +538,13 @@
 <dd>Get the jobs that are part of the given category.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Company-Model-CompanyJobPackage.html#method_getJobsWithoutProposals">getJobsWithoutProposals()</a>
+    <span>
+                                &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>    </span>
+</dt>
+<dd>Get the jobs in the package, but without any that are actually update proposals.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Company-Model-CompanyJobPackage.html#method_getNumberOfActiveJobs">getNumberOfActiveJobs()</a>
     <span>
                                 &nbsp;: int    </span>
@@ -537,9 +559,9 @@
 <dd>Get the package&#039;s starting date.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Company-Model-CompanyPackage.html#method_getType">getType()</a>
+    <a href="classes/Company-Model-CompanyJobPackage.html#method_getType">getType()</a>
     <span>
-                                &nbsp;: string    </span>
+                                &nbsp;: <a href="classes/Company-Model-Enums-CompanyPackageTypes.html"><abbr title="\Company\Model\Enums\CompanyPackageTypes">CompanyPackageTypes</abbr></a>    </span>
 </dt>
 <dd>Gets the type of the package.</dd>
 
@@ -555,7 +577,7 @@
     <span>
                                 &nbsp;: bool    </span>
 </dt>
-<dd></dd>
+<dd>Check whether this package is expired.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Company-Model-CompanyPackage.html#method_isPublished">isPublished()</a>
@@ -579,11 +601,25 @@
 <dd>Set the package&#039;s company.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Company-Model-CompanyPackage.html#method_setContractNumber">setContractNumber()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Company-Model-CompanyPackage.html#method_setExpirationDate">setExpirationDate()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
 <dd>Set the package&#039;s expiration date.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_setId">setId()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>Setting the identifier manually will, in most instances, result in undefined behaviour. Use with caution!</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Company-Model-CompanyPackage.html#method_setPublished">setPublished()</a>
@@ -634,7 +670,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/CompanyPackage.php"><a href="files/module-company-src-model-companypackage.html"><abbr title="module/Company/src/Model/CompanyPackage.php">CompanyPackage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">67</span>
+    <span class="phpdocumentor-element-found-in__line">70</span>
 
     </aside>
 
@@ -659,6 +695,40 @@
             -protected
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="property_contractNumber">
+        $contractNumber
+        <a href="classes/Company-Model-CompanyPackage.html#property_contractNumber" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/CompanyPackage.php"><a href="files/module-company-src-model-companypackage.html"><abbr title="module/Company/src/Model/CompanyPackage.php">CompanyPackage.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">43</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">An alphanumeric strings which identifies to which contract this package belongs.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type">string|null</span>
+    <span class="phpdocumentor-signature__name">$contractNumber</span>
+     = <span class="phpdocumentor-signature__default-value">null</span></code>
+
+    
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="property_expires">
         $expires
         <a href="classes/Company-Model-CompanyPackage.html#property_expires" class="headerlink"><i class="fas fa-link"></i></a>
@@ -668,7 +738,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/CompanyPackage.php"><a href="files/module-company-src-model-companypackage.html"><abbr title="module/Company/src/Model/CompanyPackage.php">CompanyPackage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">55</span>
+    <span class="phpdocumentor-element-found-in__line">58</span>
 
     </aside>
 
@@ -695,18 +765,19 @@
 >
     <h4 class="phpdocumentor-element__name" id="property_id">
         $id
-        <a href="classes/Company-Model-CompanyPackage.html#property_id" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/CompanyPackage.php"><a href="files/module-company-src-model-companypackage.html"><abbr title="module/Company/src/Model/CompanyPackage.php">CompanyPackage.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/IdentifiableTrait.php"><a href="files/module-application-src-model-traits-identifiabletrait.html"><abbr title="module/Application/src/Model/Traits/IdentifiableTrait.php">IdentifiableTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">41</span>
+    <span class="phpdocumentor-element-found-in__line">20</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">The package&#039;s id.</p>
+        <p class="phpdocumentor-summary">The default value must be `null` to prevent issues with auto generating the value. The column is strictly not
+nullable.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
@@ -736,7 +807,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/CompanyJobPackage.php"><a href="files/module-company-src-model-companyjobpackage.html"><abbr title="module/Company/src/Model/CompanyJobPackage.php">CompanyJobPackage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">24</span>
+    <span class="phpdocumentor-element-found-in__line">26</span>
 
     </aside>
 
@@ -770,11 +841,11 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/CompanyPackage.php"><a href="files/module-company-src-model-companypackage.html"><abbr title="module/Company/src/Model/CompanyPackage.php">CompanyPackage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">61</span>
+    <span class="phpdocumentor-element-found-in__line">64</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">The package&#039;s pusblish state.</p>
+        <p class="phpdocumentor-summary">The package&#039;s published state.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
@@ -804,7 +875,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/CompanyPackage.php"><a href="files/module-company-src-model-companypackage.html"><abbr title="module/Company/src/Model/CompanyPackage.php">CompanyPackage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">49</span>
+    <span class="phpdocumentor-element-found-in__line">52</span>
 
     </aside>
 
@@ -842,7 +913,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/CompanyJobPackage.php"><a href="files/module-company-src-model-companyjobpackage.html"><abbr title="module/Company/src/Model/CompanyJobPackage.php">CompanyJobPackage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">31</span>
+    <span class="phpdocumentor-element-found-in__line">34</span>
 
     </aside>
 
@@ -875,7 +946,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/CompanyJobPackage.php"><a href="files/module-company-src-model-companyjobpackage.html"><abbr title="module/Company/src/Model/CompanyJobPackage.php">CompanyJobPackage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">84</span>
+    <span class="phpdocumentor-element-found-in__line">97</span>
 
     </aside>
 
@@ -920,7 +991,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/CompanyPackage.php"><a href="files/module-company-src-model-companypackage.html"><abbr title="module/Company/src/Model/CompanyPackage.php">CompanyPackage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">248</span>
+    <span class="phpdocumentor-element-found-in__line">231</span>
 
     </aside>
 
@@ -976,7 +1047,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/CompanyPackage.php"><a href="files/module-company-src-model-companypackage.html"><abbr title="module/Company/src/Model/CompanyPackage.php">CompanyPackage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">165</span>
+    <span class="phpdocumentor-element-found-in__line">161</span>
 
     </aside>
 
@@ -1002,6 +1073,38 @@
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_getContractNumber">
+        getContractNumber()
+        <a href="classes/Company-Model-CompanyPackage.html#method_getContractNumber" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/CompanyPackage.php"><a href="files/module-company-src-model-companypackage.html"><abbr title="module/Company/src/Model/CompanyPackage.php">CompanyPackage.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">83</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getContractNumber</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
+
+    
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">string|null</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_getExpirationDate">
         getExpirationDate()
         <a href="classes/Company-Model-CompanyPackage.html#method_getExpirationDate" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1009,7 +1112,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/CompanyPackage.php"><a href="files/module-company-src-model-companypackage.html"><abbr title="module/Company/src/Model/CompanyPackage.php">CompanyPackage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">112</span>
+    <span class="phpdocumentor-element-found-in__line">121</span>
 
     </aside>
 
@@ -1037,16 +1140,16 @@
 >
     <h4 class="phpdocumentor-element__name" id="method_getId">
         getId()
-        <a href="classes/Company-Model-CompanyPackage.html#method_getId" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_getId" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/CompanyPackage.php"><a href="files/module-company-src-model-companypackage.html"><abbr title="module/Company/src/Model/CompanyPackage.php">CompanyPackage.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/IdentifiableTrait.php"><a href="files/module-application-src-model-traits-identifiabletrait.html"><abbr title="module/Application/src/Model/Traits/IdentifiableTrait.php">IdentifiableTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">82</span>
+    <span class="phpdocumentor-element-found-in__line">30</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Get the package&#039;s id.</p>
+        <p class="phpdocumentor-summary">Get the identifier of the object.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -1055,6 +1158,19 @@
     
     
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">psalm-ignore-nullable-return</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                             
+                                    </dd>
+                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">int|null</span>
@@ -1075,7 +1191,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/CompanyJobPackage.php"><a href="files/module-company-src-model-companyjobpackage.html"><abbr title="module/Company/src/Model/CompanyJobPackage.php">CompanyJobPackage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">42</span>
+    <span class="phpdocumentor-element-found-in__line">45</span>
 
     </aside>
 
@@ -1110,7 +1226,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/CompanyJobPackage.php"><a href="files/module-company-src-model-companyjobpackage.html"><abbr title="module/Company/src/Model/CompanyJobPackage.php">CompanyJobPackage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">66</span>
+    <span class="phpdocumentor-element-found-in__line">79</span>
 
     </aside>
 
@@ -1146,6 +1262,39 @@
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_getJobsWithoutProposals">
+        getJobsWithoutProposals()
+        <a href="classes/Company-Model-CompanyJobPackage.html#method_getJobsWithoutProposals" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/CompanyJobPackage.php"><a href="files/module-company-src-model-companyjobpackage.html"><abbr title="module/Company/src/Model/CompanyJobPackage.php">CompanyJobPackage.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">53</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Get the jobs in the package, but without any that are actually update proposals.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getJobsWithoutProposals</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr></span></code>
+
+    
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr></span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_getNumberOfActiveJobs">
         getNumberOfActiveJobs()
         <a href="classes/Company-Model-CompanyJobPackage.html#method_getNumberOfActiveJobs" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1153,7 +1302,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/CompanyJobPackage.php"><a href="files/module-company-src-model-companyjobpackage.html"><abbr title="module/Company/src/Model/CompanyJobPackage.php">CompanyJobPackage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">54</span>
+    <span class="phpdocumentor-element-found-in__line">67</span>
 
     </aside>
 
@@ -1198,7 +1347,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/CompanyPackage.php"><a href="files/module-company-src-model-companypackage.html"><abbr title="module/Company/src/Model/CompanyPackage.php">CompanyPackage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">92</span>
+    <span class="phpdocumentor-element-found-in__line">101</span>
 
     </aside>
 
@@ -1226,12 +1375,12 @@
 >
     <h4 class="phpdocumentor-element__name" id="method_getType">
         getType()
-        <a href="classes/Company-Model-CompanyPackage.html#method_getType" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Company-Model-CompanyJobPackage.html#method_getType" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/CompanyPackage.php"><a href="files/module-company-src-model-companypackage.html"><abbr title="module/Company/src/Model/CompanyPackage.php">CompanyPackage.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/CompanyJobPackage.php"><a href="files/module-company-src-model-companyjobpackage.html"><abbr title="module/Company/src/Model/CompanyJobPackage.php">CompanyJobPackage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">187</span>
+    <span class="phpdocumentor-element-found-in__line">115</span>
 
     </aside>
 
@@ -1239,28 +1388,14 @@
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getType</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+                    <span class="phpdocumentor-signature__name">getType</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Company-Model-Enums-CompanyPackageTypes.html"><abbr title="\Company\Model\Enums\CompanyPackageTypes">CompanyPackageTypes</abbr></a></span></code>
 
     
     
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
-                                                            
-                                             
-                                    </dd>
-                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string</span>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Company-Model-Enums-CompanyPackageTypes.html"><abbr title="\Company\Model\Enums\CompanyPackageTypes">CompanyPackageTypes</abbr></a></span>
             &mdash;
         
     
@@ -1278,7 +1413,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/CompanyPackage.php"><a href="files/module-company-src-model-companypackage.html"><abbr title="module/Company/src/Model/CompanyPackage.php">CompanyPackage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">214</span>
+    <span class="phpdocumentor-element-found-in__line">196</span>
 
     </aside>
 
@@ -1310,27 +1445,18 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/CompanyPackage.php"><a href="files/module-company-src-model-companypackage.html"><abbr title="module/Company/src/Model/CompanyPackage.php">CompanyPackage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">202</span>
+    <span class="phpdocumentor-element-found-in__line">184</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Check whether this package is expired.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">isExpired</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTime">DateTime</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$now</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+                    <span class="phpdocumentor-signature__name">isExpired</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
     
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$now</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTime">DateTime</abbr></span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
+    
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
@@ -1352,7 +1478,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/CompanyPackage.php"><a href="files/module-company-src-model-companypackage.html"><abbr title="module/Company/src/Model/CompanyPackage.php">CompanyPackage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">132</span>
+    <span class="phpdocumentor-element-found-in__line">141</span>
 
     </aside>
 
@@ -1385,7 +1511,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/CompanyJobPackage.php"><a href="files/module-company-src-model-companyjobpackage.html"><abbr title="module/Company/src/Model/CompanyJobPackage.php">CompanyJobPackage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">94</span>
+    <span class="phpdocumentor-element-found-in__line">107</span>
 
     </aside>
 
@@ -1430,7 +1556,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/CompanyPackage.php"><a href="files/module-company-src-model-companypackage.html"><abbr title="module/Company/src/Model/CompanyPackage.php">CompanyPackage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">175</span>
+    <span class="phpdocumentor-element-found-in__line">171</span>
 
     </aside>
 
@@ -1466,6 +1592,48 @@
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_setContractNumber">
+        setContractNumber()
+        <a href="classes/Company-Model-CompanyPackage.html#method_setContractNumber" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/CompanyPackage.php"><a href="files/module-company-src-model-companypackage.html"><abbr title="module/Company/src/Model/CompanyPackage.php">CompanyPackage.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">91</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">setContractNumber</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$contractNumber</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$contractNumber</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">void</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_setExpirationDate">
         setExpirationDate()
         <a href="classes/Company-Model-CompanyPackage.html#method_setExpirationDate" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1473,7 +1641,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/CompanyPackage.php"><a href="files/module-company-src-model-companypackage.html"><abbr title="module/Company/src/Model/CompanyPackage.php">CompanyPackage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">122</span>
+    <span class="phpdocumentor-element-found-in__line">131</span>
 
     </aside>
 
@@ -1509,6 +1677,50 @@
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_setId">
+        setId()
+        <a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_setId" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/IdentifiableTrait.php"><a href="files/module-application-src-model-traits-identifiabletrait.html"><abbr title="module/Application/src/Model/Traits/IdentifiableTrait.php">IdentifiableTrait.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">38</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Setting the identifier manually will, in most instances, result in undefined behaviour. Use with caution!</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">setId</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$id</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$id</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int|null</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">void</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_setPublished">
         setPublished()
         <a href="classes/Company-Model-CompanyPackage.html#method_setPublished" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1516,7 +1728,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/CompanyPackage.php"><a href="files/module-company-src-model-companypackage.html"><abbr title="module/Company/src/Model/CompanyPackage.php">CompanyPackage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">155</span>
+    <span class="phpdocumentor-element-found-in__line">151</span>
 
     </aside>
 
@@ -1559,7 +1771,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/CompanyPackage.php"><a href="files/module-company-src-model-companypackage.html"><abbr title="module/Company/src/Model/CompanyPackage.php">CompanyPackage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">102</span>
+    <span class="phpdocumentor-element-found-in__line">111</span>
 
     </aside>
 
@@ -1602,7 +1814,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/CompanyPackage.php"><a href="files/module-company-src-model-companypackage.html"><abbr title="module/Company/src/Model/CompanyPackage.php">CompanyPackage.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">234</span>
+    <span class="phpdocumentor-element-found-in__line">216</span>
 
     </aside>
 

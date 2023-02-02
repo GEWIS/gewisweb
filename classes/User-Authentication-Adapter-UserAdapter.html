@@ -386,7 +386,7 @@
 
     <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    ApiMapper
+    UserAdapter
 
     
             <div class="phpdocumentor-element__package">
@@ -403,9 +403,9 @@
     </h2>
 
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/Adapter/ApiMapper.php"><a href="files/module-user-src-authentication-adapter-apimapper.html"><abbr title="module/User/src/Authentication/Adapter/ApiMapper.php">ApiMapper.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/Adapter/UserAdapter.php"><a href="files/module-user-src-authentication-adapter-useradapter.html"><abbr title="module/User/src/Authentication/Adapter/UserAdapter.php">UserAdapter.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">9</span>
+    <span class="phpdocumentor-element-found-in__line">13</span>
 
     </aside>
 
@@ -438,46 +438,74 @@
 
 <dl class="phpdocumentor-table-of-contents">
                     <dt class="phpdocumentor-table-of-contents__entry -property -private">
-    <a href="classes/User-Authentication-Adapter-ApiMapper.html#property_mapper">$mapper</a>
+    <a href="classes/User-Authentication-Adapter-UserAdapter.html#property_bcrypt">$bcrypt</a>
     <span>
-                        &nbsp;: <a href="classes/User-Mapper-ApiUser.html"><abbr title="\User\Mapper\ApiUser">ApiUser</abbr></a>            </span>
+                        &nbsp;: <abbr title="\Laminas\Crypt\Password\Bcrypt">Bcrypt</abbr>            </span>
 </dt>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -private">
-    <a href="classes/User-Authentication-Adapter-ApiMapper.html#property_token">$token</a>
+    <a href="classes/User-Authentication-Adapter-UserAdapter.html#property_login">$login</a>
+    <span>
+                        &nbsp;: string            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a href="classes/User-Authentication-Adapter-UserAdapter.html#property_loginAttemptService">$loginAttemptService</a>
+    <span>
+                        &nbsp;: <a href="classes/User-Authentication-Service-LoginAttempt.html"><abbr title="\User\Authentication\Service\LoginAttempt">LoginAttempt</abbr></a>            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a href="classes/User-Authentication-Adapter-UserAdapter.html#property_mapper">$mapper</a>
+    <span>
+                        &nbsp;: <a href="classes/User-Mapper-User.html"><abbr title="\User\Mapper\User">User</abbr></a>            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a href="classes/User-Authentication-Adapter-UserAdapter.html#property_password">$password</a>
     <span>
                         &nbsp;: string            </span>
 </dt>
 <dd></dd>
 
                 <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/User-Authentication-Adapter-ApiMapper.html#method___construct">__construct()</a>
+    <a href="classes/User-Authentication-Adapter-UserAdapter.html#method___construct">__construct()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/User-Authentication-Adapter-ApiMapper.html#method_authenticate">authenticate()</a>
+    <a href="classes/User-Authentication-Adapter-UserAdapter.html#method_authenticate">authenticate()</a>
     <span>
                                 &nbsp;: <abbr title="\Laminas\Authentication\Result">Result</abbr>    </span>
 </dt>
 <dd>Try to authenticate.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/User-Authentication-Adapter-ApiMapper.html#method_getMapper">getMapper()</a>
+    <a href="classes/User-Authentication-Adapter-UserAdapter.html#method_getMapper">getMapper()</a>
     <span>
-                                &nbsp;: <a href="classes/User-Mapper-ApiUser.html"><abbr title="\User\Mapper\ApiUser">ApiUser</abbr></a>    </span>
+                                &nbsp;: <a href="classes/User-Mapper-User.html"><abbr title="\User\Mapper\User">User</abbr></a>    </span>
 </dt>
 <dd>Get the mapper.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/User-Authentication-Adapter-ApiMapper.html#method_setCredentials">setCredentials()</a>
+    <a href="classes/User-Authentication-Adapter-UserAdapter.html#method_setCredentials">setCredentials()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
 <dd>Sets the credentials used to authenticate.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/User-Authentication-Adapter-UserAdapter.html#method_verifyPassword">verifyPassword()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+<dd>Verify a password.</dd>
 
         </dl>
 
@@ -489,8 +517,110 @@
     <section class="phpdocumentor-properties">
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
-            <a href="classes/User-Authentication-Adapter-ApiMapper.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/User-Authentication-Adapter-UserAdapter.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
         </h3>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+                                                -read-only        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_bcrypt">
+        $bcrypt
+        <a href="classes/User-Authentication-Adapter-UserAdapter.html#property_bcrypt" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/Adapter/UserAdapter.php"><a href="files/module-user-src-authentication-adapter-useradapter.html"><abbr title="module/User/src/Authentication/Adapter/UserAdapter.php">UserAdapter.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">20</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+        <span class="phpdocumentor-signature__type"><abbr title="\Laminas\Crypt\Password\Bcrypt">Bcrypt</abbr></span>
+    <span class="phpdocumentor-signature__name">$bcrypt</span>
+    </code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_login">
+        $login
+        <a href="classes/User-Authentication-Adapter-UserAdapter.html#property_login" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/Adapter/UserAdapter.php"><a href="files/module-user-src-authentication-adapter-useradapter.html"><abbr title="module/User/src/Authentication/Adapter/UserAdapter.php">UserAdapter.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">15</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+        <span class="phpdocumentor-signature__type">string</span>
+    <span class="phpdocumentor-signature__name">$login</span>
+    </code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+                                                -read-only        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_loginAttemptService">
+        $loginAttemptService
+        <a href="classes/User-Authentication-Adapter-UserAdapter.html#property_loginAttemptService" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/Adapter/UserAdapter.php"><a href="files/module-user-src-authentication-adapter-useradapter.html"><abbr title="module/User/src/Authentication/Adapter/UserAdapter.php">UserAdapter.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">21</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/User-Authentication-Service-LoginAttempt.html"><abbr title="\User\Authentication\Service\LoginAttempt">LoginAttempt</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$loginAttemptService</span>
+    </code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
                     <article
         class="
             phpdocumentor-element
@@ -500,21 +630,21 @@
 >
     <h4 class="phpdocumentor-element__name" id="property_mapper">
         $mapper
-        <a href="classes/User-Authentication-Adapter-ApiMapper.html#property_mapper" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/User-Authentication-Adapter-UserAdapter.html#property_mapper" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                         <small class="phpdocumentor-element__modifier">read-only</small>        </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/Adapter/ApiMapper.php"><a href="files/module-user-src-authentication-adapter-apimapper.html"><abbr title="module/User/src/Authentication/Adapter/ApiMapper.php">ApiMapper.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/Adapter/UserAdapter.php"><a href="files/module-user-src-authentication-adapter-useradapter.html"><abbr title="module/User/src/Authentication/Adapter/UserAdapter.php">UserAdapter.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">13</span>
+    <span class="phpdocumentor-element-found-in__line">22</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">private</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/User-Mapper-ApiUser.html"><abbr title="\User\Mapper\ApiUser">ApiUser</abbr></a></span>
+        <span class="phpdocumentor-signature__type"><a href="classes/User-Mapper-User.html"><abbr title="\User\Mapper\User">User</abbr></a></span>
     <span class="phpdocumentor-signature__name">$mapper</span>
     </code>
 
@@ -532,16 +662,16 @@
             -private
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_token">
-        $token
-        <a href="classes/User-Authentication-Adapter-ApiMapper.html#property_token" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_password">
+        $password
+        <a href="classes/User-Authentication-Adapter-UserAdapter.html#property_password" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/Adapter/ApiMapper.php"><a href="files/module-user-src-authentication-adapter-apimapper.html"><abbr title="module/User/src/Authentication/Adapter/ApiMapper.php">ApiMapper.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/Adapter/UserAdapter.php"><a href="files/module-user-src-authentication-adapter-useradapter.html"><abbr title="module/User/src/Authentication/Adapter/UserAdapter.php">UserAdapter.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">11</span>
+    <span class="phpdocumentor-element-found-in__line">17</span>
 
     </aside>
 
@@ -549,7 +679,7 @@
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">private</span>
         <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$token</span>
+    <span class="phpdocumentor-signature__name">$password</span>
     </code>
 
         <section class="phpdocumentor-description"></section>
@@ -564,7 +694,7 @@
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/User-Authentication-Adapter-ApiMapper.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/User-Authentication-Adapter-UserAdapter.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
         </h3>
                     <article
         class="phpdocumentor-element
@@ -574,27 +704,43 @@
 >
     <h4 class="phpdocumentor-element__name" id="method___construct">
         __construct()
-        <a href="classes/User-Authentication-Adapter-ApiMapper.html#method___construct" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/User-Authentication-Adapter-UserAdapter.html#method___construct" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/Adapter/ApiMapper.php"><a href="files/module-user-src-authentication-adapter-apimapper.html"><abbr title="module/User/src/Authentication/Adapter/ApiMapper.php">ApiMapper.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/Adapter/UserAdapter.php"><a href="files/module-user-src-authentication-adapter-useradapter.html"><abbr title="module/User/src/Authentication/Adapter/UserAdapter.php">UserAdapter.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">13</span>
+    <span class="phpdocumentor-element-found-in__line">19</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Mapper-ApiUser.html"><abbr title="\User\Mapper\ApiUser">ApiUser</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$mapper</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Crypt\Password\Bcrypt">Bcrypt</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$bcrypt</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Authentication-Service-LoginAttempt.html"><abbr title="\User\Authentication\Service\LoginAttempt">LoginAttempt</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$loginAttemptService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Mapper-User.html"><abbr title="\User\Mapper\User">User</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$mapper</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
         <section class="phpdocumentor-description"></section>
 
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$bcrypt</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Crypt\Password\Bcrypt">Bcrypt</abbr></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$loginAttemptService</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Authentication-Service-LoginAttempt.html"><abbr title="\User\Authentication\Service\LoginAttempt">LoginAttempt</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$mapper</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Mapper-ApiUser.html"><abbr title="\User\Mapper\ApiUser">ApiUser</abbr></a></span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Mapper-User.html"><abbr title="\User\Mapper\User">User</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"></section>
@@ -618,12 +764,12 @@
 >
     <h4 class="phpdocumentor-element__name" id="method_authenticate">
         authenticate()
-        <a href="classes/User-Authentication-Adapter-ApiMapper.html#method_authenticate" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/User-Authentication-Adapter-UserAdapter.html#method_authenticate" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/Adapter/ApiMapper.php"><a href="files/module-user-src-authentication-adapter-apimapper.html"><abbr title="module/User/src/Authentication/Adapter/ApiMapper.php">ApiMapper.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/Adapter/UserAdapter.php"><a href="files/module-user-src-authentication-adapter-useradapter.html"><abbr title="module/User/src/Authentication/Adapter/UserAdapter.php">UserAdapter.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">22</span>
+    <span class="phpdocumentor-element-found-in__line">31</span>
 
     </aside>
 
@@ -651,12 +797,12 @@
 >
     <h4 class="phpdocumentor-element__name" id="method_getMapper">
         getMapper()
-        <a href="classes/User-Authentication-Adapter-ApiMapper.html#method_getMapper" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/User-Authentication-Adapter-UserAdapter.html#method_getMapper" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/Adapter/ApiMapper.php"><a href="files/module-user-src-authentication-adapter-apimapper.html"><abbr title="module/User/src/Authentication/Adapter/ApiMapper.php">ApiMapper.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/Adapter/UserAdapter.php"><a href="files/module-user-src-authentication-adapter-useradapter.html"><abbr title="module/User/src/Authentication/Adapter/UserAdapter.php">UserAdapter.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">51</span>
+    <span class="phpdocumentor-element-found-in__line">112</span>
 
     </aside>
 
@@ -664,14 +810,14 @@
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getMapper</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/User-Mapper-ApiUser.html"><abbr title="\User\Mapper\ApiUser">ApiUser</abbr></a></span></code>
+                    <span class="phpdocumentor-signature__name">getMapper</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/User-Mapper-User.html"><abbr title="\User\Mapper\User">User</abbr></a></span></code>
 
     
     
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/User-Mapper-ApiUser.html"><abbr title="\User\Mapper\ApiUser">ApiUser</abbr></a></span>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/User-Mapper-User.html"><abbr title="\User\Mapper\User">User</abbr></a></span>
             &mdash;
         
     
@@ -684,12 +830,12 @@
 >
     <h4 class="phpdocumentor-element__name" id="method_setCredentials">
         setCredentials()
-        <a href="classes/User-Authentication-Adapter-ApiMapper.html#method_setCredentials" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/User-Authentication-Adapter-UserAdapter.html#method_setCredentials" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/Adapter/ApiMapper.php"><a href="files/module-user-src-authentication-adapter-apimapper.html"><abbr title="module/User/src/Authentication/Adapter/ApiMapper.php">ApiMapper.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/Adapter/UserAdapter.php"><a href="files/module-user-src-authentication-adapter-useradapter.html"><abbr title="module/User/src/Authentication/Adapter/UserAdapter.php">UserAdapter.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">41</span>
+    <span class="phpdocumentor-element-found-in__line">99</span>
 
     </aside>
 
@@ -697,13 +843,20 @@
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setCredentials</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$token</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">setCredentials</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$login</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$password</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$token</span>
+                <span class="phpdocumentor-signature__argument__name">$login</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$password</span>
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
@@ -715,6 +868,56 @@
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">void</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_verifyPassword">
+        verifyPassword()
+        <a href="classes/User-Authentication-Adapter-UserAdapter.html#method_verifyPassword" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/Adapter/UserAdapter.php"><a href="files/module-user-src-authentication-adapter-useradapter.html"><abbr title="module/User/src/Authentication/Adapter/UserAdapter.php">UserAdapter.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">82</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Verify a password.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">verifyPassword</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$password</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$hash</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$password</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$hash</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">bool</span>
             &mdash;
         
     
@@ -797,7 +1000,7 @@
 </section>
             </div>
         </div>
-        <a href="classes/User-Authentication-Adapter-ApiMapper.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/User-Authentication-Adapter-UserAdapter.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 

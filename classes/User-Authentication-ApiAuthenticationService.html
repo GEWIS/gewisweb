@@ -436,10 +436,10 @@
 </h3>
 
 <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+                    <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a href="classes/User-Authentication-ApiAuthenticationService.html#property_adapter">$adapter</a>
     <span>
-                        &nbsp;: <a href="classes/User-Authentication-Adapter-ApiMapper.html"><abbr title="\User\Authentication\Adapter\ApiMapper">ApiMapper</abbr></a>            </span>
+                        &nbsp;: <a href="classes/User-Authentication-Adapter-ApiUserAdapter.html"><abbr title="\User\Authentication\Adapter\ApiUserAdapter">ApiUserAdapter</abbr></a>            </span>
 </dt>
 <dd></dd>
 
@@ -462,19 +462,20 @@
     <span>
                                 &nbsp;: <abbr title="\Laminas\Authentication\Result">Result</abbr>    </span>
 </dt>
-<dd></dd>
+<dd>Authenticates against the authentication adapter. The default values must be `null` to be compatible with the
+`AuthenticationServiceInterface`.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/User-Authentication-ApiAuthenticationService.html#method_clearIdentity">clearIdentity()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
+<dd>Clears the identity.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/User-Authentication-ApiAuthenticationService.html#method_getAdapter">getAdapter()</a>
     <span>
-                                &nbsp;: <a href="classes/User-Authentication-Adapter-ApiMapper.html"><abbr title="\User\Authentication\Adapter\ApiMapper">ApiMapper</abbr></a>    </span>
+                                &nbsp;: <a href="classes/User-Authentication-Adapter-ApiUserAdapter.html"><abbr title="\User\Authentication\Adapter\ApiUserAdapter">ApiUserAdapter</abbr></a>    </span>
 </dt>
 <dd>Returns the authentication adapter.</dd>
 
@@ -483,14 +484,14 @@
     <span>
                                 &nbsp;: <a href="classes/User-Model-ApiUser.html"><abbr title="\User\Model\ApiUser">ApiUser</abbr></a>|null    </span>
 </dt>
-<dd></dd>
+<dd>Returns the authenticated ApiUser or null if no identity is available.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/User-Authentication-ApiAuthenticationService.html#method_hasIdentity">hasIdentity()</a>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
-<dd></dd>
+<dd>Returns true if and only if an identity is available.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/User-Authentication-ApiAuthenticationService.html#method_setAdapter">setAdapter()</a>
@@ -515,7 +516,7 @@
         class="
             phpdocumentor-element
             -property
-            -protected
+            -private
                                                         "
 >
     <h4 class="phpdocumentor-element__name" id="property_adapter">
@@ -533,8 +534,8 @@
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/User-Authentication-Adapter-ApiMapper.html"><abbr title="\User\Authentication\Adapter\ApiMapper">ApiMapper</abbr></a></span>
+    <span class="phpdocumentor-signature__visibility">private</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/User-Authentication-Adapter-ApiUserAdapter.html"><abbr title="\User\Authentication\Adapter\ApiUserAdapter">ApiUserAdapter</abbr></a></span>
     <span class="phpdocumentor-signature__name">$adapter</span>
     </code>
 
@@ -606,7 +607,7 @@
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Authentication\Adapter\AdapterInterface">AdapterInterface</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$adapter</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Authentication-Adapter-ApiUserAdapter.html"><abbr title="\User\Authentication\Adapter\ApiUserAdapter">ApiUserAdapter</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$adapter</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
         <section class="phpdocumentor-description"></section>
 
@@ -614,7 +615,7 @@
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$adapter</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Authentication\Adapter\AdapterInterface">AdapterInterface</abbr></span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Authentication-Adapter-ApiUserAdapter.html"><abbr title="\User\Authentication\Adapter\ApiUserAdapter">ApiUserAdapter</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"></section>
@@ -643,11 +644,13 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/ApiAuthenticationService.php"><a href="files/module-user-src-authentication-apiauthenticationservice.html"><abbr title="module/User/src/Authentication/ApiAuthenticationService.php">ApiAuthenticationService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">63</span>
+    <span class="phpdocumentor-element-found-in__line">50</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Authenticates against the authentication adapter. The default values must be `null` to be compatible with the
+`AuthenticationServiceInterface`.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">authenticate</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$token</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Laminas\Authentication\Result">Result</abbr></span></code>
@@ -660,7 +663,8 @@
                 : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
                  = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
             </dl>
 
@@ -685,17 +689,17 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/ApiAuthenticationService.php"><a href="files/module-user-src-authentication-apiauthenticationservice.html"><abbr title="module/User/src/Authentication/ApiAuthenticationService.php">ApiAuthenticationService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">91</span>
+    <span class="phpdocumentor-element-found-in__line">81</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Clears the identity.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">clearIdentity</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    
     
     
 
@@ -718,7 +722,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/ApiAuthenticationService.php"><a href="files/module-user-src-authentication-apiauthenticationservice.html"><abbr title="module/User/src/Authentication/ApiAuthenticationService.php">ApiAuthenticationService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">33</span>
+    <span class="phpdocumentor-element-found-in__line">31</span>
 
     </aside>
 
@@ -726,14 +730,14 @@
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getAdapter</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/User-Authentication-Adapter-ApiMapper.html"><abbr title="\User\Authentication\Adapter\ApiMapper">ApiMapper</abbr></a></span></code>
+                    <span class="phpdocumentor-signature__name">getAdapter</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/User-Authentication-Adapter-ApiUserAdapter.html"><abbr title="\User\Authentication\Adapter\ApiUserAdapter">ApiUserAdapter</abbr></a></span></code>
 
     
     
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/User-Authentication-Adapter-ApiMapper.html"><abbr title="\User\Authentication\Adapter\ApiMapper">ApiMapper</abbr></a></span>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/User-Authentication-Adapter-ApiUserAdapter.html"><abbr title="\User\Authentication\Adapter\ApiUserAdapter">ApiUserAdapter</abbr></a></span>
             &mdash;
         
     
@@ -751,11 +755,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/ApiAuthenticationService.php"><a href="files/module-user-src-authentication-apiauthenticationservice.html"><abbr title="module/User/src/Authentication/ApiAuthenticationService.php">ApiAuthenticationService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">86</span>
+    <span class="phpdocumentor-element-found-in__line">73</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Returns the authenticated ApiUser or null if no identity is available.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getIdentity</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/User-Model-ApiUser.html"><abbr title="\User\Model\ApiUser">ApiUser</abbr></a>|null</span></code>
@@ -783,11 +788,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/ApiAuthenticationService.php"><a href="files/module-user-src-authentication-apiauthenticationservice.html"><abbr title="module/User/src/Authentication/ApiAuthenticationService.php">ApiAuthenticationService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">78</span>
+    <span class="phpdocumentor-element-found-in__line">65</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Returns true if and only if an identity is available.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">hasIdentity</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
@@ -815,7 +821,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authentication/ApiAuthenticationService.php"><a href="files/module-user-src-authentication-apiauthenticationservice.html"><abbr title="module/User/src/Authentication/ApiAuthenticationService.php">ApiAuthenticationService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">45</span>
+    <span class="phpdocumentor-element-found-in__line">39</span>
 
     </aside>
 
@@ -823,17 +829,18 @@
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setAdapter</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Authentication\Adapter\AdapterInterface">AdapterInterface</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$adapter</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
+                    <span class="phpdocumentor-signature__name">setAdapter</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Authentication-Adapter-ApiUserAdapter.html"><abbr title="\User\Authentication\Adapter\ApiUserAdapter">ApiUserAdapter</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$adapter</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$adapter</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Authentication\Adapter\AdapterInterface">AdapterInterface</abbr></span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Authentication-Adapter-ApiUserAdapter.html"><abbr title="\User\Authentication\Adapter\ApiUserAdapter">ApiUserAdapter</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
             </dl>
 
@@ -842,9 +849,7 @@
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">self</span>
             &mdash;
-            <section class="phpdocumentor-description"><p>Provides a fluent interface</p>
-</section>
-
+        
     
 </article>
             </section>

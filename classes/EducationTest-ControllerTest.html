@@ -424,6 +424,13 @@
 
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -constant -protected">
+    <a href="classes/ApplicationTest-BaseControllerTest.html#constant_COMPANY_ID">COMPANY_ID</a>
+    <span>
+        &nbsp;= 42                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -protected">
     <a href="classes/ApplicationTest-BaseControllerTest.html#constant_LIDNR">LIDNR</a>
     <span>
         &nbsp;= 8000                            </span>
@@ -438,7 +445,35 @@
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/ApplicationTest-BaseControllerTest.html#property_authService">$authService</a>
+    <a href="classes/ApplicationTest-BaseControllerTest.html#property_company">$company</a>
+    <span>
+                        &nbsp;: <a href="classes/Company-Model-Company.html"><abbr title="\Company\Model\Company">Company</abbr></a>            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a href="classes/ApplicationTest-BaseControllerTest.html#property_companyMapper">$companyMapper</a>
+    <span>
+                        &nbsp;: <abbr title="\PHPUnit\Framework\MockObject\MockObject">MockObject</abbr>            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a href="classes/ApplicationTest-BaseControllerTest.html#property_companyUser">$companyUser</a>
+    <span>
+                        &nbsp;: <a href="classes/User-Model-CompanyUser.html"><abbr title="\User\Model\CompanyUser">CompanyUser</abbr></a>            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a href="classes/ApplicationTest-BaseControllerTest.html#property_companyUserAuthService">$companyUserAuthService</a>
+    <span>
+                        &nbsp;: <abbr title="\PHPUnit\Framework\MockObject\MockObject">MockObject</abbr>            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a href="classes/ApplicationTest-BaseControllerTest.html#property_companyUserMapper">$companyUserMapper</a>
     <span>
                         &nbsp;: <abbr title="\PHPUnit\Framework\MockObject\MockObject">MockObject</abbr>            </span>
 </dt>
@@ -459,6 +494,13 @@
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a href="classes/ApplicationTest-BaseControllerTest.html#property_newCompanyUser">$newCompanyUser</a>
+    <span>
+                        &nbsp;: <a href="classes/User-Model-NewCompanyUser.html"><abbr title="\User\Model\NewCompanyUser">NewCompanyUser</abbr></a>            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/ApplicationTest-BaseControllerTest.html#property_serviceManager">$serviceManager</a>
     <span>
                         &nbsp;: <abbr title="\Laminas\ServiceManager\ServiceManager">ServiceManager</abbr>            </span>
@@ -469,6 +511,13 @@
     <a href="classes/ApplicationTest-BaseControllerTest.html#property_user">$user</a>
     <span>
                         &nbsp;: <a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a>            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a href="classes/ApplicationTest-BaseControllerTest.html#property_userAuthService">$userAuthService</a>
+    <span>
+                        &nbsp;: <abbr title="\PHPUnit\Framework\MockObject\MockObject">MockObject</abbr>            </span>
 </dt>
 <dd></dd>
 
@@ -557,6 +606,20 @@
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockCompany">setUpMockCompany()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockCompanyUser">setUpMockCompanyUser()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockedServices">setUpMockedServices()</a>
     <span>
                                 &nbsp;: void    </span>
@@ -565,6 +628,13 @@
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockMember">setUpMockMember()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockNewCompanyUser">setUpMockNewCompanyUser()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
@@ -599,7 +669,21 @@
 <dd>Variation of {@link Application::init} but without initial bootstrapping.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
-    <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockAuthService">setUpMockAuthService()</a>
+    <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockCompanyMapper">setUpMockCompanyMapper()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -private">
+    <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockCompanyUserAuthService">setUpMockCompanyUserAuthService()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -private">
+    <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockCompanyUserMapper">setUpMockCompanyUserMapper()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
@@ -608,12 +692,19 @@
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockIdentity">setUpMockIdentity()</a>
     <span>
-                                &nbsp;: <a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a>|null    </span>
+                                &nbsp;: <a href="classes/User-Model-CompanyUser.html"><abbr title="\User\Model\CompanyUser">CompanyUser</abbr></a>|<a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a>|null    </span>
 </dt>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockMemberMapper">setUpMockMemberMapper()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -private">
+    <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockUserAuthService">setUpMockUserAuthService()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
@@ -637,6 +728,35 @@
             <a href="classes/EducationTest-ControllerTest.html#constants" class="headerlink"><i class="fas fa-link"></i></a>
         </h3>
                     <article class="phpdocumentor-element -constant -protected ">
+    <h4 class="phpdocumentor-element__name" id="constant_COMPANY_ID">
+        COMPANY_ID
+        <a href="classes/ApplicationTest-BaseControllerTest.html#constant_COMPANY_ID" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">47</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">COMPANY_ID</span>
+    = <span class="phpdocumentor-signature__default-value">42</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -protected ">
     <h4 class="phpdocumentor-element__name" id="constant_LIDNR">
         LIDNR
         <a href="classes/ApplicationTest-BaseControllerTest.html#constant_LIDNR" class="headerlink"><i class="fas fa-link"></i></a>
@@ -645,7 +765,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">32</span>
+    <span class="phpdocumentor-element-found-in__line">43</span>
 
     </aside>
 
@@ -689,7 +809,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">28</span>
+    <span class="phpdocumentor-element-found-in__line">33</span>
 
     </aside>
 
@@ -714,16 +834,50 @@
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_authService">
-        $authService
-        <a href="classes/ApplicationTest-BaseControllerTest.html#property_authService" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_company">
+        $company
+        <a href="classes/ApplicationTest-BaseControllerTest.html#property_company" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">27</span>
+    <span class="phpdocumentor-element-found-in__line">48</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Company-Model-Company.html"><abbr title="\Company\Model\Company">Company</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$company</span>
+    </code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_companyMapper">
+        $companyMapper
+        <a href="classes/ApplicationTest-BaseControllerTest.html#property_companyMapper" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">37</span>
 
     </aside>
 
@@ -731,7 +885,109 @@
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type"><abbr title="\PHPUnit\Framework\MockObject\MockObject">MockObject</abbr></span>
-    <span class="phpdocumentor-signature__name">$authService</span>
+    <span class="phpdocumentor-signature__name">$companyMapper</span>
+    </code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_companyUser">
+        $companyUser
+        <a href="classes/ApplicationTest-BaseControllerTest.html#property_companyUser" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">49</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/User-Model-CompanyUser.html"><abbr title="\User\Model\CompanyUser">CompanyUser</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$companyUser</span>
+    </code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_companyUserAuthService">
+        $companyUserAuthService
+        <a href="classes/ApplicationTest-BaseControllerTest.html#property_companyUserAuthService" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">34</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type"><abbr title="\PHPUnit\Framework\MockObject\MockObject">MockObject</abbr></span>
+    <span class="phpdocumentor-signature__name">$companyUserAuthService</span>
+    </code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_companyUserMapper">
+        $companyUserMapper
+        <a href="classes/ApplicationTest-BaseControllerTest.html#property_companyUserMapper" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">38</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type"><abbr title="\PHPUnit\Framework\MockObject\MockObject">MockObject</abbr></span>
+    <span class="phpdocumentor-signature__name">$companyUserMapper</span>
     </code>
 
         <section class="phpdocumentor-description"></section>
@@ -757,7 +1013,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">34</span>
+    <span class="phpdocumentor-element-found-in__line">45</span>
 
     </aside>
 
@@ -791,7 +1047,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">30</span>
+    <span class="phpdocumentor-element-found-in__line">41</span>
 
     </aside>
 
@@ -800,6 +1056,40 @@
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type"><abbr title="\PHPUnit\Framework\MockObject\MockObject">MockObject</abbr></span>
     <span class="phpdocumentor-signature__name">$memberMapper</span>
+    </code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_newCompanyUser">
+        $newCompanyUser
+        <a href="classes/ApplicationTest-BaseControllerTest.html#property_newCompanyUser" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">50</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/User-Model-NewCompanyUser.html"><abbr title="\User\Model\NewCompanyUser">NewCompanyUser</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$newCompanyUser</span>
     </code>
 
         <section class="phpdocumentor-description"></section>
@@ -825,7 +1115,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">25</span>
+    <span class="phpdocumentor-element-found-in__line">31</span>
 
     </aside>
 
@@ -859,7 +1149,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">33</span>
+    <span class="phpdocumentor-element-found-in__line">44</span>
 
     </aside>
 
@@ -868,6 +1158,40 @@
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type"><a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a></span>
     <span class="phpdocumentor-signature__name">$user</span>
+    </code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_userAuthService">
+        $userAuthService
+        <a href="classes/ApplicationTest-BaseControllerTest.html#property_userAuthService" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">35</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type"><abbr title="\PHPUnit\Framework\MockObject\MockObject">MockObject</abbr></span>
+    <span class="phpdocumentor-signature__name">$userAuthService</span>
     </code>
 
         <section class="phpdocumentor-description"></section>
@@ -893,7 +1217,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">29</span>
+    <span class="phpdocumentor-element-found-in__line">40</span>
 
     </aside>
 
@@ -931,7 +1255,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">50</span>
+    <span class="phpdocumentor-element-found-in__line">69</span>
 
     </aside>
 
@@ -964,7 +1288,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">36</span>
+    <span class="phpdocumentor-element-found-in__line">52</span>
 
     </aside>
 
@@ -1287,6 +1611,72 @@
             -protected
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_setUpMockCompany">
+        setUpMockCompany()
+        <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockCompany" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">277</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">setUpMockCompany</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">void</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_setUpMockCompanyUser">
+        setUpMockCompanyUser()
+        <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockCompanyUser" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">303</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">setUpMockCompanyUser</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">void</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_setUpMockedServices">
         setUpMockedServices()
         <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockedServices" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1294,7 +1684,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">43</span>
+    <span class="phpdocumentor-element-found-in__line">59</span>
 
     </aside>
 
@@ -1327,7 +1717,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">189</span>
+    <span class="phpdocumentor-element-found-in__line">260</span>
 
     </aside>
 
@@ -1353,6 +1743,39 @@
             -protected
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_setUpMockNewCompanyUser">
+        setUpMockNewCompanyUser()
+        <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockNewCompanyUser" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">296</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">setUpMockNewCompanyUser</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">void</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_setUpMockUser">
         setUpMockUser()
         <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockUser" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1360,7 +1783,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">180</span>
+    <span class="phpdocumentor-element-found-in__line">251</span>
 
     </aside>
 
@@ -1404,7 +1827,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">141</span>
+    <span class="phpdocumentor-element-found-in__line">196</span>
 
     </aside>
 
@@ -1448,7 +1871,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">92</span>
+    <span class="phpdocumentor-element-found-in__line">111</span>
 
     </aside>
 
@@ -1500,7 +1923,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">76</span>
+    <span class="phpdocumentor-element-found-in__line">95</span>
 
     </aside>
 
@@ -1537,21 +1960,87 @@
             -private
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_setUpMockAuthService">
-        setUpMockAuthService()
-        <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockAuthService" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_setUpMockCompanyMapper">
+        setUpMockCompanyMapper()
+        <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockCompanyMapper" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">105</span>
+    <span class="phpdocumentor-element-found-in__line">136</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">private</span>
-                    <span class="phpdocumentor-signature__name">setUpMockAuthService</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">setUpMockCompanyMapper</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">void</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -private
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_setUpMockCompanyUserAuthService">
+        setUpMockCompanyUserAuthService()
+        <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockCompanyUserAuthService" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">124</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+                    <span class="phpdocumentor-signature__name">setUpMockCompanyUserAuthService</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">void</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -private
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_setUpMockCompanyUserMapper">
+        setUpMockCompanyUserMapper()
+        <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockCompanyUserMapper" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">148</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+                    <span class="phpdocumentor-signature__name">setUpMockCompanyUserMapper</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
         <section class="phpdocumentor-description"></section>
 
@@ -1577,14 +2066,14 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">152</span>
+    <span class="phpdocumentor-element-found-in__line">212</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">private</span>
-                    <span class="phpdocumentor-signature__name">setUpMockIdentity</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$role</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a>|null</span></code>
+                    <span class="phpdocumentor-signature__name">setUpMockIdentity</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$role</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/User-Model-CompanyUser.html"><abbr title="\User\Model\CompanyUser">CompanyUser</abbr></a>|<a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a>|null</span></code>
 
         <section class="phpdocumentor-description"></section>
 
@@ -1603,7 +2092,7 @@
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a>|null</span>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/User-Model-CompanyUser.html"><abbr title="\User\Model\CompanyUser">CompanyUser</abbr></a>|<a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a>|null</span>
             &mdash;
         
     
@@ -1621,7 +2110,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">129</span>
+    <span class="phpdocumentor-element-found-in__line">184</span>
 
     </aside>
 
@@ -1647,6 +2136,39 @@
             -private
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_setUpMockUserAuthService">
+        setUpMockUserAuthService()
+        <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockUserAuthService" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">160</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+                    <span class="phpdocumentor-signature__name">setUpMockUserAuthService</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">void</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -private
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_setUpMockUserMapper">
         setUpMockUserMapper()
         <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockUserMapper" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1654,7 +2176,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">117</span>
+    <span class="phpdocumentor-element-found-in__line">172</span>
 
     </aside>
 

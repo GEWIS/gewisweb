@@ -701,21 +701,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Activity-Form-MaxActivities.html#method___construct"
         },                {
-            "fqsen": "\\Activity\\Form\\ModifyRequest",
-            "name": "ModifyRequest",
-            "summary": "Specifies\u0020a\u0020form\u0020that\u0020is\u0020used\u0020to\u0020let\u0020an\u0020user\u0020do\u0020a\u0020modification\u0020request\u0020that\ndoes\u0020not\u0020require\u0020any\u0020other\u0020data,\u0020such\u0020as\u0020signing\u0020off\u0020for\u0020activities\u0020or\napproving\u0020or\u0020disapproving\u0020them.",
-            "url": "classes/Activity-Form-ModifyRequest.html"
-        },                {
-            "fqsen": "\\Activity\\Form\\ModifyRequest\u003A\u003A__construct\u0028\u0029",
-            "name": "__construct",
-            "summary": "",
-            "url": "classes/Activity-Form-ModifyRequest.html#method___construct"
-        },                {
-            "fqsen": "\\Activity\\Form\\ModifyRequest\u003A\u003AgetInputFilterSpecification\u0028\u0029",
-            "name": "getInputFilterSpecification",
-            "summary": "",
-            "url": "classes/Activity-Form-ModifyRequest.html#method_getInputFilterSpecification"
-        },                {
             "fqsen": "\\Activity\\Form\\Signup",
             "name": "Signup",
             "summary": "",
@@ -1141,11 +1126,6 @@ Search.appendIndex(
             "summary": "Returns\u0020an\u0020Collection\u0020of\u0020SignupLists\u0020associated\u0020with\u0020this\u0020activity.",
             "url": "classes/Activity-Model-Activity.html#method_getSignupLists"
         },                {
-            "fqsen": "\\Activity\\Model\\Activity\u003A\u003AgetId\u0028\u0029",
-            "name": "getId",
-            "summary": "",
-            "url": "classes/Activity-Model-Activity.html#method_getId"
-        },                {
             "fqsen": "\\Activity\\Model\\Activity\u003A\u003AgetName\u0028\u0029",
             "name": "getName",
             "summary": "",
@@ -1301,11 +1281,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Activity-Model-Activity.html#constant_STATUS_UPDATE"
         },                {
-            "fqsen": "\\Activity\\Model\\Activity\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "ID\u0020for\u0020the\u0020activity.",
-            "url": "classes/Activity-Model-Activity.html#property_id"
-        },                {
             "fqsen": "\\Activity\\Model\\Activity\u003A\u003A\u0024name",
             "name": "name",
             "summary": "Name\u0020for\u0020the\u0020activity.",
@@ -1446,11 +1421,6 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020string\u0020identifier\u0020of\u0020the\u0020Resource.",
             "url": "classes/Activity-Model-ActivityCalendarOption.html#method_getResourceId"
         },                {
-            "fqsen": "\\Activity\\Model\\ActivityCalendarOption\u003A\u003AgetId\u0028\u0029",
-            "name": "getId",
-            "summary": "",
-            "url": "classes/Activity-Model-ActivityCalendarOption.html#method_getId"
-        },                {
             "fqsen": "\\Activity\\Model\\ActivityCalendarOption\u003A\u003AgetCreatorAlt\u0028\u0029",
             "name": "getCreatorAlt",
             "summary": "Returns\u0020in\u0020order\u0020of\u0020presense\u003A\n1.\u0020The\u0020abbreviation\u0020of\u0020the\u0020related\u0020organ\n2.\u0020The\u0020alternative\u0020for\u0020an\u0020organ,\u0020other\u0020organising\u0020parties\n3.\u0020The\u0020full\u0020name\u0020of\u0020the\u0020member\u0020who\u0020created\u0020the\u0020proposal.",
@@ -1465,11 +1435,6 @@ Search.appendIndex(
             "name": "setProposal",
             "summary": "",
             "url": "classes/Activity-Model-ActivityCalendarOption.html#method_setProposal"
-        },                {
-            "fqsen": "\\Activity\\Model\\ActivityCalendarOption\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "ID\u0020for\u0020the\u0020option.",
-            "url": "classes/Activity-Model-ActivityCalendarOption.html#property_id"
         },                {
             "fqsen": "\\Activity\\Model\\ActivityCalendarOption\u003A\u003A\u0024type",
             "name": "type",
@@ -1521,11 +1486,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Activity-Model-ActivityCategory.html#method_removeActivity"
         },                {
-            "fqsen": "\\Activity\\Model\\ActivityCategory\u003A\u003AgetId\u0028\u0029",
-            "name": "getId",
-            "summary": "",
-            "url": "classes/Activity-Model-ActivityCategory.html#method_getId"
-        },                {
             "fqsen": "\\Activity\\Model\\ActivityCategory\u003A\u003AgetName\u0028\u0029",
             "name": "getName",
             "summary": "",
@@ -1545,11 +1505,6 @@ Search.appendIndex(
             "name": "toArray",
             "summary": "",
             "url": "classes/Activity-Model-ActivityCategory.html#method_toArray"
-        },                {
-            "fqsen": "\\Activity\\Model\\ActivityCategory\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "Id\u0020for\u0020the\u0020Category.",
-            "url": "classes/Activity-Model-ActivityCategory.html#property_id"
         },                {
             "fqsen": "\\Activity\\Model\\ActivityCategory\u003A\u003A\u0024activities",
             "name": "activities",
@@ -1575,11 +1530,6 @@ Search.appendIndex(
             "name": "__construct",
             "summary": "",
             "url": "classes/Activity-Model-ActivityOptionCreationPeriod.html#method___construct"
-        },                {
-            "fqsen": "\\Activity\\Model\\ActivityOptionCreationPeriod\u003A\u003AgetId\u0028\u0029",
-            "name": "getId",
-            "summary": "",
-            "url": "classes/Activity-Model-ActivityOptionCreationPeriod.html#method_getId"
         },                {
             "fqsen": "\\Activity\\Model\\ActivityOptionCreationPeriod\u003A\u003AgetBeginPlanningTime\u0028\u0029",
             "name": "getBeginPlanningTime",
@@ -1630,11 +1580,6 @@ Search.appendIndex(
             "name": "toArray",
             "summary": "Returns\u0020an\u0020associative\u0020array\u0020representation\u0020of\u0020this\u0020object.",
             "url": "classes/Activity-Model-ActivityOptionCreationPeriod.html#method_toArray"
-        },                {
-            "fqsen": "\\Activity\\Model\\ActivityOptionCreationPeriod\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "ID\u0020for\u0020the\u0020field.",
-            "url": "classes/Activity-Model-ActivityOptionCreationPeriod.html#property_id"
         },                {
             "fqsen": "\\Activity\\Model\\ActivityOptionCreationPeriod\u003A\u003A\u0024beginPlanningTime",
             "name": "beginPlanningTime",
@@ -1721,11 +1666,6 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020string\u0020identifier\u0020of\u0020the\u0020Resource.",
             "url": "classes/Activity-Model-ActivityOptionProposal.html#method_getResourceId"
         },                {
-            "fqsen": "\\Activity\\Model\\ActivityOptionProposal\u003A\u003AgetId\u0028\u0029",
-            "name": "getId",
-            "summary": "",
-            "url": "classes/Activity-Model-ActivityOptionProposal.html#method_getId"
-        },                {
             "fqsen": "\\Activity\\Model\\ActivityOptionProposal\u003A\u003AgetCreatorAlt\u0028\u0029",
             "name": "getCreatorAlt",
             "summary": "Returns\u0020in\u0020order\u0020of\u0020presense\u003A\n1.\u0020The\u0020abbreviation\u0020of\u0020the\u0020related\u0020organ\n2.\u0020The\u0020alternative\u0020for\u0020an\u0020organ,\u0020other\u0020organising\u0020parties\n3.\u0020The\u0020full\u0020name\u0020of\u0020the\u0020member\u0020who\u0020created\u0020the\u0020proposal.",
@@ -1750,11 +1690,6 @@ Search.appendIndex(
             "name": "setCreator",
             "summary": "",
             "url": "classes/Activity-Model-ActivityOptionProposal.html#method_setCreator"
-        },                {
-            "fqsen": "\\Activity\\Model\\ActivityOptionProposal\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "ID\u0020for\u0020the\u0020option.",
-            "url": "classes/Activity-Model-ActivityOptionProposal.html#property_id"
         },                {
             "fqsen": "\\Activity\\Model\\ActivityOptionProposal\u003A\u003A\u0024name",
             "name": "name",
@@ -1791,11 +1726,6 @@ Search.appendIndex(
             "summary": "Update\u0020prop\u0020model.",
             "url": "classes/Activity-Model-ActivityUpdateProposal.html"
         },                {
-            "fqsen": "\\Activity\\Model\\ActivityUpdateProposal\u003A\u003AgetId\u0028\u0029",
-            "name": "getId",
-            "summary": "",
-            "url": "classes/Activity-Model-ActivityUpdateProposal.html#method_getId"
-        },                {
             "fqsen": "\\Activity\\Model\\ActivityUpdateProposal\u003A\u003AgetOld\u0028\u0029",
             "name": "getOld",
             "summary": "",
@@ -1815,11 +1745,6 @@ Search.appendIndex(
             "name": "setNew",
             "summary": "",
             "url": "classes/Activity-Model-ActivityUpdateProposal.html#method_setNew"
-        },                {
-            "fqsen": "\\Activity\\Model\\ActivityUpdateProposal\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "ID\u0020for\u0020the\u0020proposal.",
-            "url": "classes/Activity-Model-ActivityUpdateProposal.html#property_id"
         },                {
             "fqsen": "\\Activity\\Model\\ActivityUpdateProposal\u003A\u003A\u0024old",
             "name": "old",
@@ -1881,11 +1806,6 @@ Search.appendIndex(
             "summary": "Set\u0020the\u0020period.",
             "url": "classes/Activity-Model-MaxActivities.html#method_setPeriod"
         },                {
-            "fqsen": "\\Activity\\Model\\MaxActivities\u003A\u003AgetId\u0028\u0029",
-            "name": "getId",
-            "summary": "",
-            "url": "classes/Activity-Model-MaxActivities.html#method_getId"
-        },                {
             "fqsen": "\\Activity\\Model\\MaxActivities\u003A\u003AgetOrgan\u0028\u0029",
             "name": "getOrgan",
             "summary": "",
@@ -1910,11 +1830,6 @@ Search.appendIndex(
             "name": "toArray",
             "summary": "Returns\u0020an\u0020associative\u0020array\u0020representation\u0020of\u0020this\u0020object.",
             "url": "classes/Activity-Model-MaxActivities.html#method_toArray"
-        },                {
-            "fqsen": "\\Activity\\Model\\MaxActivities\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "ID\u0020for\u0020the\u0020field.",
-            "url": "classes/Activity-Model-MaxActivities.html#property_id"
         },                {
             "fqsen": "\\Activity\\Model\\MaxActivities\u003A\u003A\u0024organ",
             "name": "organ",
@@ -1941,11 +1856,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Activity-Model-Signup.html#method___construct"
         },                {
-            "fqsen": "\\Activity\\Model\\Signup\u003A\u003AgetId\u0028\u0029",
-            "name": "getId",
-            "summary": "Get\u0020the\u0020signup\u0020id.",
-            "url": "classes/Activity-Model-Signup.html#method_getId"
-        },                {
             "fqsen": "\\Activity\\Model\\Signup\u003A\u003AgetSignupList\u0028\u0029",
             "name": "getSignupList",
             "summary": "Get\u0020the\u0020SignupList\u0020which\u0020the\u0020user\u0020is\u0020signed\u0020up\u0020for.",
@@ -1970,11 +1880,6 @@ Search.appendIndex(
             "name": "getEmail",
             "summary": "Get\u0020the\u0020email\u0020address\u0020of\u0020the\u0020user\u0020whom\u0020signed\u0020up\u0020for\u0020the\u0020SignupList.",
             "url": "classes/Activity-Model-Signup.html#method_getEmail"
-        },                {
-            "fqsen": "\\Activity\\Model\\Signup\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "ID\u0020for\u0020the\u0020signup.",
-            "url": "classes/Activity-Model-Signup.html#property_id"
         },                {
             "fqsen": "\\Activity\\Model\\Signup\u003A\u003A\u0024signupList",
             "name": "signupList",
@@ -2010,11 +1915,6 @@ Search.appendIndex(
             "name": "getOptions",
             "summary": "",
             "url": "classes/Activity-Model-SignupField.html#method_getOptions"
-        },                {
-            "fqsen": "\\Activity\\Model\\SignupField\u003A\u003AgetId\u0028\u0029",
-            "name": "getId",
-            "summary": "",
-            "url": "classes/Activity-Model-SignupField.html#method_getId"
         },                {
             "fqsen": "\\Activity\\Model\\SignupField\u003A\u003AgetName\u0028\u0029",
             "name": "getName",
@@ -2061,11 +1961,6 @@ Search.appendIndex(
             "summary": "Returns\u0020an\u0020associative\u0020array\u0020representation\u0020of\u0020this\u0020object.",
             "url": "classes/Activity-Model-SignupField.html#method_toArray"
         },                {
-            "fqsen": "\\Activity\\Model\\SignupField\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "ID\u0020for\u0020the\u0020field.",
-            "url": "classes/Activity-Model-SignupField.html#property_id"
-        },                {
             "fqsen": "\\Activity\\Model\\SignupField\u003A\u003A\u0024signupList",
             "name": "signupList",
             "summary": "Activity\u0020that\u0020the\u0020SignupField\u0020belongs\u0020to.",
@@ -2100,11 +1995,6 @@ Search.appendIndex(
             "name": "SignupFieldValue",
             "summary": "SignupFieldValue\u0020model.",
             "url": "classes/Activity-Model-SignupFieldValue.html"
-        },                {
-            "fqsen": "\\Activity\\Model\\SignupFieldValue\u003A\u003AgetId\u0028\u0029",
-            "name": "getId",
-            "summary": "",
-            "url": "classes/Activity-Model-SignupFieldValue.html#method_getId"
         },                {
             "fqsen": "\\Activity\\Model\\SignupFieldValue\u003A\u003AgetField\u0028\u0029",
             "name": "getField",
@@ -2146,11 +2036,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Activity-Model-SignupFieldValue.html#method_setOption"
         },                {
-            "fqsen": "\\Activity\\Model\\SignupFieldValue\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "ID\u0020for\u0020the\u0020field\u0020value.",
-            "url": "classes/Activity-Model-SignupFieldValue.html#property_id"
-        },                {
             "fqsen": "\\Activity\\Model\\SignupFieldValue\u003A\u003A\u0024field",
             "name": "field",
             "summary": "Field\u0020which\u0020the\u0020value\u0020belongs\u0020to.",
@@ -2180,11 +2065,6 @@ Search.appendIndex(
             "name": "__construct",
             "summary": "",
             "url": "classes/Activity-Model-SignupList.html#method___construct"
-        },                {
-            "fqsen": "\\Activity\\Model\\SignupList\u003A\u003AgetId\u0028\u0029",
-            "name": "getId",
-            "summary": "",
-            "url": "classes/Activity-Model-SignupList.html#method_getId"
         },                {
             "fqsen": "\\Activity\\Model\\SignupList\u003A\u003AgetSignUps\u0028\u0029",
             "name": "getSignUps",
@@ -2296,11 +2176,6 @@ Search.appendIndex(
             "summary": "Get\u0020the\u0020creator\u0020of\u0020this\u0020resource.",
             "url": "classes/Activity-Model-SignupList.html#method_getResourceCreator"
         },                {
-            "fqsen": "\\Activity\\Model\\SignupList\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "ID\u0020for\u0020the\u0020SignupList.",
-            "url": "classes/Activity-Model-SignupList.html#property_id"
-        },                {
             "fqsen": "\\Activity\\Model\\SignupList\u003A\u003A\u0024activity",
             "name": "activity",
             "summary": "The\u0020Activity\u0020this\u0020SignupList\u0020belongs\u0020to.",
@@ -2351,11 +2226,6 @@ Search.appendIndex(
             "summary": "SignupOption\u0020model.",
             "url": "classes/Activity-Model-SignupOption.html"
         },                {
-            "fqsen": "\\Activity\\Model\\SignupOption\u003A\u003AgetId\u0028\u0029",
-            "name": "getId",
-            "summary": "",
-            "url": "classes/Activity-Model-SignupOption.html#method_getId"
-        },                {
             "fqsen": "\\Activity\\Model\\SignupOption\u003A\u003AgetField\u0028\u0029",
             "name": "getField",
             "summary": "",
@@ -2380,11 +2250,6 @@ Search.appendIndex(
             "name": "toArray",
             "summary": "Returns\u0020an\u0020associative\u0020array\u0020representation\u0020of\u0020this\u0020object.",
             "url": "classes/Activity-Model-SignupOption.html#method_toArray"
-        },                {
-            "fqsen": "\\Activity\\Model\\SignupOption\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "ID\u0020for\u0020the\u0020field.",
-            "url": "classes/Activity-Model-SignupOption.html#property_id"
         },                {
             "fqsen": "\\Activity\\Model\\SignupOption\u003A\u003A\u0024field",
             "name": "field",
@@ -3326,6 +3191,21 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Application-Form-Localisable.html#property_translator"
         },                {
+            "fqsen": "\\Application\\Form\\ModifyRequest",
+            "name": "ModifyRequest",
+            "summary": "Specifies\u0020a\u0020form\u0020that\u0020is\u0020used\u0020to\u0020let\u0020a\u0020user\u0020do\u0020a\u0020modification\u0020request\u0020that\u0020does\u0020not\u0020require\u0020any\u0020other\u0020data,\u0020such\u0020as\nsigning\u0020off\u0020for\u0020activities,\u0020\u0028dis\u0029approving\u0020entities\u0020with\u0020an\u0020\u007B\u0040see\u0020\\Application\\Model\\Traits\\ApprovableTrait\u007D.",
+            "url": "classes/Application-Form-ModifyRequest.html"
+        },                {
+            "fqsen": "\\Application\\Form\\ModifyRequest\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Application-Form-ModifyRequest.html#method___construct"
+        },                {
+            "fqsen": "\\Application\\Form\\ModifyRequest\u003A\u003AgetInputFilterSpecification\u0028\u0029",
+            "name": "getInputFilterSpecification",
+            "summary": "",
+            "url": "classes/Application-Form-ModifyRequest.html#method_getInputFilterSpecification"
+        },                {
             "fqsen": "\\Application\\Hydrator\\Strategy\\LanguageHydratorStrategy",
             "name": "LanguageHydratorStrategy",
             "summary": "",
@@ -3441,6 +3321,51 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Application-Mapper-BaseMapper.html#property_em"
         },                {
+            "fqsen": "\\Application\\Model\\ApprovableText",
+            "name": "ApprovableText",
+            "summary": "",
+            "url": "classes/Application-Model-ApprovableText.html"
+        },                {
+            "fqsen": "\\Application\\Model\\ApprovableText\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Application-Model-ApprovableText.html#method___construct"
+        },                {
+            "fqsen": "\\Application\\Model\\ApprovableText\u003A\u003AgetMessage\u0028\u0029",
+            "name": "getMessage",
+            "summary": "",
+            "url": "classes/Application-Model-ApprovableText.html#method_getMessage"
+        },                {
+            "fqsen": "\\Application\\Model\\ApprovableText\u003A\u003AsetMessage\u0028\u0029",
+            "name": "setMessage",
+            "summary": "",
+            "url": "classes/Application-Model-ApprovableText.html#method_setMessage"
+        },                {
+            "fqsen": "\\Application\\Model\\ApprovableText\u003A\u003A\u0024message",
+            "name": "message",
+            "summary": "The\u0020message\u0020accompanying\u0020the\u0020state\u0020of\u0020the\u0020approval.",
+            "url": "classes/Application-Model-ApprovableText.html#property_message"
+        },                {
+            "fqsen": "\\Application\\Model\\Enums\\ApprovableStatus",
+            "name": "ApprovableStatus",
+            "summary": "Enum\u0020for\u0020keeping\u0020track\u0020of\u0020the\u0020status\u0020of\u0020an\u0020approval.\u0020An\u0020approval\u0020can\u0020be\u0020either\u0020\u0027unapproved\u0027\u0020\u0028the\u0020default\u0020state\u0029,\n\u0027approved\u0027,\u0020or\u0020\u0027rejected\u0027.",
+            "url": "classes/Application-Model-Enums-ApprovableStatus.html"
+        },                {
+            "fqsen": "\\Application\\Model\\Enums\\ApprovableStatus\u003A\u003AUnapproved",
+            "name": "Unapproved",
+            "summary": "",
+            "url": ""
+        },                {
+            "fqsen": "\\Application\\Model\\Enums\\ApprovableStatus\u003A\u003AApproved",
+            "name": "Approved",
+            "summary": "",
+            "url": ""
+        },                {
+            "fqsen": "\\Application\\Model\\Enums\\ApprovableStatus\u003A\u003ARejected",
+            "name": "Rejected",
+            "summary": "",
+            "url": ""
+        },                {
             "fqsen": "\\Application\\Model\\Enums\\Languages",
             "name": "Languages",
             "summary": "The\u0020different\u0020languages\u0020supported\u0020by\u0020the\u0020website.",
@@ -3466,6 +3391,11 @@ Search.appendIndex(
             "summary": "",
             "url": ""
         },                {
+            "fqsen": "\\Application\\Model\\IdentityInterface",
+            "name": "IdentityInterface",
+            "summary": "",
+            "url": "classes/Application-Model-IdentityInterface.html"
+        },                {
             "fqsen": "\\Application\\Model\\LocalisedText",
             "name": "LocalisedText",
             "summary": "Class\u0020LocalisedText\u003A\u0020stores\u0020Dutch\u0020and\u0020English\u0020versions\u0020of\u0020text\u0020fields.",
@@ -3475,11 +3405,6 @@ Search.appendIndex(
             "name": "__construct",
             "summary": "",
             "url": "classes/Application-Model-LocalisedText.html#method___construct"
-        },                {
-            "fqsen": "\\Application\\Model\\LocalisedText\u003A\u003AgetId\u0028\u0029",
-            "name": "getId",
-            "summary": "",
-            "url": "classes/Application-Model-LocalisedText.html#method_getId"
         },                {
             "fqsen": "\\Application\\Model\\LocalisedText\u003A\u003AgetValueEN\u0028\u0029",
             "name": "getValueEN",
@@ -3521,11 +3446,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Application-Model-LocalisedText.html#method_getExactText"
         },                {
-            "fqsen": "\\Application\\Model\\LocalisedText\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "ID\u0020for\u0020the\u0020LocalisedText.",
-            "url": "classes/Application-Model-LocalisedText.html#property_id"
-        },                {
             "fqsen": "\\Application\\Model\\LocalisedText\u003A\u003A\u0024valueEN",
             "name": "valueEN",
             "summary": "",
@@ -3535,6 +3455,161 @@ Search.appendIndex(
             "name": "valueNL",
             "summary": "",
             "url": "classes/Application-Model-LocalisedText.html#property_valueNL"
+        },                {
+            "fqsen": "\\Application\\Model\\Traits\\ApprovableTrait",
+            "name": "ApprovableTrait",
+            "summary": "A\u0020trait\u0020which\u0020provides\u0020basic\u0020\u0028repeated\u0029\u0020functionality\u0020for\u0020approvable\u0020entities.",
+            "url": "classes/Application-Model-Traits-ApprovableTrait.html"
+        },                {
+            "fqsen": "\\Application\\Model\\Traits\\ApprovableTrait\u003A\u003AgetApproved\u0028\u0029",
+            "name": "getApproved",
+            "summary": "",
+            "url": "classes/Application-Model-Traits-ApprovableTrait.html#method_getApproved"
+        },                {
+            "fqsen": "\\Application\\Model\\Traits\\ApprovableTrait\u003A\u003AisApproved\u0028\u0029",
+            "name": "isApproved",
+            "summary": "",
+            "url": "classes/Application-Model-Traits-ApprovableTrait.html#method_isApproved"
+        },                {
+            "fqsen": "\\Application\\Model\\Traits\\ApprovableTrait\u003A\u003AsetApproved\u0028\u0029",
+            "name": "setApproved",
+            "summary": "",
+            "url": "classes/Application-Model-Traits-ApprovableTrait.html#method_setApproved"
+        },                {
+            "fqsen": "\\Application\\Model\\Traits\\ApprovableTrait\u003A\u003AgetApprovedAt\u0028\u0029",
+            "name": "getApprovedAt",
+            "summary": "",
+            "url": "classes/Application-Model-Traits-ApprovableTrait.html#method_getApprovedAt"
+        },                {
+            "fqsen": "\\Application\\Model\\Traits\\ApprovableTrait\u003A\u003AsetApprovedAt\u0028\u0029",
+            "name": "setApprovedAt",
+            "summary": "",
+            "url": "classes/Application-Model-Traits-ApprovableTrait.html#method_setApprovedAt"
+        },                {
+            "fqsen": "\\Application\\Model\\Traits\\ApprovableTrait\u003A\u003AgetApprover\u0028\u0029",
+            "name": "getApprover",
+            "summary": "",
+            "url": "classes/Application-Model-Traits-ApprovableTrait.html#method_getApprover"
+        },                {
+            "fqsen": "\\Application\\Model\\Traits\\ApprovableTrait\u003A\u003AsetApprover\u0028\u0029",
+            "name": "setApprover",
+            "summary": "",
+            "url": "classes/Application-Model-Traits-ApprovableTrait.html#method_setApprover"
+        },                {
+            "fqsen": "\\Application\\Model\\Traits\\ApprovableTrait\u003A\u003AgetApprovableText\u0028\u0029",
+            "name": "getApprovableText",
+            "summary": "",
+            "url": "classes/Application-Model-Traits-ApprovableTrait.html#method_getApprovableText"
+        },                {
+            "fqsen": "\\Application\\Model\\Traits\\ApprovableTrait\u003A\u003AsetApprovableText\u0028\u0029",
+            "name": "setApprovableText",
+            "summary": "",
+            "url": "classes/Application-Model-Traits-ApprovableTrait.html#method_setApprovableText"
+        },                {
+            "fqsen": "\\Application\\Model\\Traits\\ApprovableTrait\u003A\u003A\u0024approved",
+            "name": "approved",
+            "summary": "State\u0020of\u0020the\u0020approval.",
+            "url": "classes/Application-Model-Traits-ApprovableTrait.html#property_approved"
+        },                {
+            "fqsen": "\\Application\\Model\\Traits\\ApprovableTrait\u003A\u003A\u0024approvedAt",
+            "name": "approvedAt",
+            "summary": "The\u0020date\u0020when\u0020the\u0020entity\u0020was\u0020approved.",
+            "url": "classes/Application-Model-Traits-ApprovableTrait.html#property_approvedAt"
+        },                {
+            "fqsen": "\\Application\\Model\\Traits\\ApprovableTrait\u003A\u003A\u0024approver",
+            "name": "approver",
+            "summary": "Who\u0020\u0028dis\u0029approved\u0020the\u0020entity\u0020using\u0020this\u0020trait\u003F",
+            "url": "classes/Application-Model-Traits-ApprovableTrait.html#property_approver"
+        },                {
+            "fqsen": "\\Application\\Model\\Traits\\ApprovableTrait\u003A\u003A\u0024approvableText",
+            "name": "approvableText",
+            "summary": "When\u0020the\u0020entity\u0020has\u0020been\u0020approved\/rejected\u0020a\u0020message\u0020can\u0020be\u0020attached.\u0020Since\u0020we\u0020do\u0020not\u0020always\u0020need\u0020this\u0020message\u0020it\nhas\u0020been\u0020replaced\u0020with\u0020another\u0020entity\u0020which\u0020we\u0020can\u0020EXTRA_LAZY\u0020load\u0020to\u0020ensure\u0020it\u0020is\u0020not\u0020always\u0020included.",
+            "url": "classes/Application-Model-Traits-ApprovableTrait.html#property_approvableText"
+        },                {
+            "fqsen": "\\Application\\Model\\Traits\\IdentifiableTrait",
+            "name": "IdentifiableTrait",
+            "summary": "A\u0020trait\u0020which\u0020provides\u0020an\u0020\u0060id\u0060\u0020column\u0020for\u0020entities.",
+            "url": "classes/Application-Model-Traits-IdentifiableTrait.html"
+        },                {
+            "fqsen": "\\Application\\Model\\Traits\\IdentifiableTrait\u003A\u003AgetId\u0028\u0029",
+            "name": "getId",
+            "summary": "Get\u0020the\u0020identifier\u0020of\u0020the\u0020object.",
+            "url": "classes/Application-Model-Traits-IdentifiableTrait.html#method_getId"
+        },                {
+            "fqsen": "\\Application\\Model\\Traits\\IdentifiableTrait\u003A\u003AsetId\u0028\u0029",
+            "name": "setId",
+            "summary": "Setting\u0020the\u0020identifier\u0020manually\u0020will,\u0020in\u0020most\u0020instances,\u0020result\u0020in\u0020undefined\u0020behaviour.\u0020Use\u0020with\u0020caution\u0021",
+            "url": "classes/Application-Model-Traits-IdentifiableTrait.html#method_setId"
+        },                {
+            "fqsen": "\\Application\\Model\\Traits\\IdentifiableTrait\u003A\u003A\u0024id",
+            "name": "id",
+            "summary": "The\u0020default\u0020value\u0020must\u0020be\u0020\u0060null\u0060\u0020to\u0020prevent\u0020issues\u0020with\u0020auto\u0020generating\u0020the\u0020value.\u0020The\u0020column\u0020is\u0020strictly\u0020not\nnullable.",
+            "url": "classes/Application-Model-Traits-IdentifiableTrait.html#property_id"
+        },                {
+            "fqsen": "\\Application\\Model\\Traits\\TimestampableTrait",
+            "name": "TimestampableTrait",
+            "summary": "A\u0020trait\u0020which\u0020can\u0020be\u0020used\u0020to\u0020keep\u0020track\u0020of\u0020when\u0020changes\u0020where\u0020made\u0020to\u0020an\u0020entity.",
+            "url": "classes/Application-Model-Traits-TimestampableTrait.html"
+        },                {
+            "fqsen": "\\Application\\Model\\Traits\\TimestampableTrait\u003A\u003AgetCreatedAt\u0028\u0029",
+            "name": "getCreatedAt",
+            "summary": "",
+            "url": "classes/Application-Model-Traits-TimestampableTrait.html#method_getCreatedAt"
+        },                {
+            "fqsen": "\\Application\\Model\\Traits\\TimestampableTrait\u003A\u003AsetCreatedAt\u0028\u0029",
+            "name": "setCreatedAt",
+            "summary": "",
+            "url": "classes/Application-Model-Traits-TimestampableTrait.html#method_setCreatedAt"
+        },                {
+            "fqsen": "\\Application\\Model\\Traits\\TimestampableTrait\u003A\u003AgetUpdatedAt\u0028\u0029",
+            "name": "getUpdatedAt",
+            "summary": "",
+            "url": "classes/Application-Model-Traits-TimestampableTrait.html#method_getUpdatedAt"
+        },                {
+            "fqsen": "\\Application\\Model\\Traits\\TimestampableTrait\u003A\u003AsetUpdatedAt\u0028\u0029",
+            "name": "setUpdatedAt",
+            "summary": "",
+            "url": "classes/Application-Model-Traits-TimestampableTrait.html#method_setUpdatedAt"
+        },                {
+            "fqsen": "\\Application\\Model\\Traits\\TimestampableTrait\u003A\u003AprePersist\u0028\u0029",
+            "name": "prePersist",
+            "summary": "Automatically\u0020fill\u0020in\u0020the\u0020\u0060DateTime\u0060s\u0020before\u0020the\u0020initial\u0020call\u0020to\u0020\u0060persist\u0028\u0029\u0060.",
+            "url": "classes/Application-Model-Traits-TimestampableTrait.html#method_prePersist"
+        },                {
+            "fqsen": "\\Application\\Model\\Traits\\TimestampableTrait\u003A\u003ApreUpdate\u0028\u0029",
+            "name": "preUpdate",
+            "summary": "Automatically\u0020update\u0020the\u0020\u0060updatedAt\u0060\u0020\u0060DateTime\u0060\u0020when\u0020doing\u0020an\u0020update\u0020to\u0020the\u0020entity.",
+            "url": "classes/Application-Model-Traits-TimestampableTrait.html#method_preUpdate"
+        },                {
+            "fqsen": "\\Application\\Model\\Traits\\TimestampableTrait\u003A\u003A\u0024createdAt",
+            "name": "createdAt",
+            "summary": "The\u0020date\u0020at\u0020which\u0020the\u0020entity\u0020was\u0020created.",
+            "url": "classes/Application-Model-Traits-TimestampableTrait.html#property_createdAt"
+        },                {
+            "fqsen": "\\Application\\Model\\Traits\\TimestampableTrait\u003A\u003A\u0024updatedAt",
+            "name": "updatedAt",
+            "summary": "The\u0020date\u0020at\u0020which\u0020the\u0020entity\u0020was\u0020updated.",
+            "url": "classes/Application-Model-Traits-TimestampableTrait.html#property_updatedAt"
+        },                {
+            "fqsen": "\\Application\\Model\\Traits\\UpdateProposableTrait",
+            "name": "UpdateProposableTrait",
+            "summary": "A\u0020trait\u0020which\u0020provides\u0020basic\u0020\u0028repeated\u0029\u0020functionality\u0020for\u0020proposed\u0020update\u0020entities.",
+            "url": "classes/Application-Model-Traits-UpdateProposableTrait.html"
+        },                {
+            "fqsen": "\\Application\\Model\\Traits\\UpdateProposableTrait\u003A\u003AgetIsUpdate\u0028\u0029",
+            "name": "getIsUpdate",
+            "summary": "Get\u0020whether\u0020this\u0020is\u0020a\u0020proposed\u0020update.",
+            "url": "classes/Application-Model-Traits-UpdateProposableTrait.html#method_getIsUpdate"
+        },                {
+            "fqsen": "\\Application\\Model\\Traits\\UpdateProposableTrait\u003A\u003A\u0024isUpdate",
+            "name": "isUpdate",
+            "summary": "Whether\u0020this\u0020entity\u0020is\u0020a\u0020proposed\u0020update\u0020for\u0020another\u0020entity.",
+            "url": "classes/Application-Model-Traits-UpdateProposableTrait.html#property_isUpdate"
+        },                {
+            "fqsen": "\\Application\\Model\\Traits\\UpdateProposableTrait\u003A\u003AsetIsUpdate\u0028\u0029",
+            "name": "setIsUpdate",
+            "summary": "Set\u0020whether\u0020this\u0020is\u0020a\u0020proposed\u0020update.",
+            "url": "classes/Application-Model-Traits-UpdateProposableTrait.html#method_setIsUpdate"
         },                {
             "fqsen": "\\Application\\Module",
             "name": "Module",
@@ -3595,6 +3670,16 @@ Search.appendIndex(
             "name": "isAllowed",
             "summary": "Check\u0020if\u0020a\u0020operation\u0020is\u0020allowed\u0020for\u0020the\u0020current\u0020role.",
             "url": "classes/Application-Service-AbstractAclService.html#method_isAllowed"
+        },                {
+            "fqsen": "\\Application\\Service\\AbstractAclService\u003A\u003AgetIdentity\u0028\u0029",
+            "name": "getIdentity",
+            "summary": "Gets\u0020the\u0020user\u0020identity\u0020if\u0020logged\u0020in\u0020or\u0020null\u0020otherwise",
+            "url": "classes/Application-Service-AbstractAclService.html#method_getIdentity"
+        },                {
+            "fqsen": "\\Application\\Service\\AbstractAclService\u003A\u003AhasIdentity\u0028\u0029",
+            "name": "hasIdentity",
+            "summary": "Checks\u0020whether\u0020the\u0020user\u0020is\u0020logged\u0020in",
+            "url": "classes/Application-Service-AbstractAclService.html#method_hasIdentity"
         },                {
             "fqsen": "\\Application\\Service\\Email",
             "name": "Email",
@@ -3826,11 +3911,6 @@ Search.appendIndex(
             "summary": "Helper\u0020for\u0020setting\u0020and\u0020retrieving\u0020breadcrumbs.",
             "url": "classes/Application-View-Helper-Breadcrumbs.html"
         },                {
-            "fqsen": "\\Application\\View\\Helper\\Breadcrumbs\u003A\u003A__construct\u0028\u0029",
-            "name": "__construct",
-            "summary": "",
-            "url": "classes/Application-View-Helper-Breadcrumbs.html#method___construct"
-        },                {
             "fqsen": "\\Application\\View\\Helper\\Breadcrumbs\u003A\u003AaddBreadcrumb\u0028\u0029",
             "name": "addBreadcrumb",
             "summary": "Add\u0020a\u0020breadcrumb\u0020to\u0020the\u0020container.\u0020By\u0020default,\u0020the\u0020breadcrumb\u0020is\u0020placed\u0020after\u0020the\u0020last\u0020breadcrumb\u0020\u0028or\u0020first\u0020if\u0020no\nother\u0020breadcrumbs\u0020have\u0020been\u0020added\u0029.\u0020This\u0020behaviour\u0020can\u0020be\u0020changed\u0020by\u0020setting\u0020\u0060\u0024setType\u0060.",
@@ -3855,6 +3935,26 @@ Search.appendIndex(
             "name": "toString",
             "summary": "",
             "url": "classes/Application-View-Helper-Breadcrumbs.html#method_toString"
+        },                {
+            "fqsen": "\\Application\\View\\Helper\\CompanyIdentity",
+            "name": "CompanyIdentity",
+            "summary": "View\u0020helper\u0020plugin\u0020which\u0020can\u0020fetch\u0020authenticated\u0020company\u0020identities.\u0020Essentially\u0020an\u0020extension\u0020of\n\u007B\u0040link\u0020LaminasIdentity\u007D\u0020to\u0020support\u0020company\u0020users.",
+            "url": "classes/Application-View-Helper-CompanyIdentity.html"
+        },                {
+            "fqsen": "\\Application\\View\\Helper\\CompanyIdentity\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Application-View-Helper-CompanyIdentity.html#method___construct"
+        },                {
+            "fqsen": "\\Application\\View\\Helper\\CompanyIdentity\u003A\u003A__invoke\u0028\u0029",
+            "name": "__invoke",
+            "summary": "",
+            "url": "classes/Application-View-Helper-CompanyIdentity.html#method___invoke"
+        },                {
+            "fqsen": "\\Application\\View\\Helper\\CompanyIdentity\u003A\u003A\u0024companyUserAuthService",
+            "name": "companyUserAuthService",
+            "summary": "",
+            "url": "classes/Application-View-Helper-CompanyIdentity.html#property_companyUserAuthService"
         },                {
             "fqsen": "\\Application\\View\\Helper\\FeaturedCompanyPackage",
             "name": "FeaturedCompanyPackage",
@@ -4116,10 +4216,25 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/ApplicationTest-BaseControllerTest.html#method_bootstrapApplication"
         },                {
-            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003AsetUpMockAuthService\u0028\u0029",
-            "name": "setUpMockAuthService",
+            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003AsetUpMockCompanyUserAuthService\u0028\u0029",
+            "name": "setUpMockCompanyUserAuthService",
             "summary": "",
-            "url": "classes/ApplicationTest-BaseControllerTest.html#method_setUpMockAuthService"
+            "url": "classes/ApplicationTest-BaseControllerTest.html#method_setUpMockCompanyUserAuthService"
+        },                {
+            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003AsetUpMockCompanyMapper\u0028\u0029",
+            "name": "setUpMockCompanyMapper",
+            "summary": "",
+            "url": "classes/ApplicationTest-BaseControllerTest.html#method_setUpMockCompanyMapper"
+        },                {
+            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003AsetUpMockCompanyUserMapper\u0028\u0029",
+            "name": "setUpMockCompanyUserMapper",
+            "summary": "",
+            "url": "classes/ApplicationTest-BaseControllerTest.html#method_setUpMockCompanyUserMapper"
+        },                {
+            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003AsetUpMockUserAuthService\u0028\u0029",
+            "name": "setUpMockUserAuthService",
+            "summary": "",
+            "url": "classes/ApplicationTest-BaseControllerTest.html#method_setUpMockUserAuthService"
         },                {
             "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003AsetUpMockUserMapper\u0028\u0029",
             "name": "setUpMockUserMapper",
@@ -4151,25 +4266,60 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/ApplicationTest-BaseControllerTest.html#method_setUpMockMember"
         },                {
+            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003AsetUpMockCompany\u0028\u0029",
+            "name": "setUpMockCompany",
+            "summary": "",
+            "url": "classes/ApplicationTest-BaseControllerTest.html#method_setUpMockCompany"
+        },                {
+            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003AsetUpMockNewCompanyUser\u0028\u0029",
+            "name": "setUpMockNewCompanyUser",
+            "summary": "",
+            "url": "classes/ApplicationTest-BaseControllerTest.html#method_setUpMockNewCompanyUser"
+        },                {
+            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003AsetUpMockCompanyUser\u0028\u0029",
+            "name": "setUpMockCompanyUser",
+            "summary": "",
+            "url": "classes/ApplicationTest-BaseControllerTest.html#method_setUpMockCompanyUser"
+        },                {
             "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003ALIDNR",
             "name": "LIDNR",
             "summary": "",
             "url": "classes/ApplicationTest-BaseControllerTest.html#constant_LIDNR"
+        },                {
+            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003ACOMPANY_ID",
+            "name": "COMPANY_ID",
+            "summary": "",
+            "url": "classes/ApplicationTest-BaseControllerTest.html#constant_COMPANY_ID"
         },                {
             "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003A\u0024serviceManager",
             "name": "serviceManager",
             "summary": "",
             "url": "classes/ApplicationTest-BaseControllerTest.html#property_serviceManager"
         },                {
-            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003A\u0024authService",
-            "name": "authService",
-            "summary": "",
-            "url": "classes/ApplicationTest-BaseControllerTest.html#property_authService"
-        },                {
             "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003A\u0024aclService",
             "name": "aclService",
             "summary": "",
             "url": "classes/ApplicationTest-BaseControllerTest.html#property_aclService"
+        },                {
+            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003A\u0024companyUserAuthService",
+            "name": "companyUserAuthService",
+            "summary": "",
+            "url": "classes/ApplicationTest-BaseControllerTest.html#property_companyUserAuthService"
+        },                {
+            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003A\u0024userAuthService",
+            "name": "userAuthService",
+            "summary": "",
+            "url": "classes/ApplicationTest-BaseControllerTest.html#property_userAuthService"
+        },                {
+            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003A\u0024companyMapper",
+            "name": "companyMapper",
+            "summary": "",
+            "url": "classes/ApplicationTest-BaseControllerTest.html#property_companyMapper"
+        },                {
+            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003A\u0024companyUserMapper",
+            "name": "companyUserMapper",
+            "summary": "",
+            "url": "classes/ApplicationTest-BaseControllerTest.html#property_companyUserMapper"
         },                {
             "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003A\u0024userMapper",
             "name": "userMapper",
@@ -4190,6 +4340,21 @@ Search.appendIndex(
             "name": "member",
             "summary": "",
             "url": "classes/ApplicationTest-BaseControllerTest.html#property_member"
+        },                {
+            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003A\u0024company",
+            "name": "company",
+            "summary": "",
+            "url": "classes/ApplicationTest-BaseControllerTest.html#property_company"
+        },                {
+            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003A\u0024companyUser",
+            "name": "companyUser",
+            "summary": "",
+            "url": "classes/ApplicationTest-BaseControllerTest.html#property_companyUser"
+        },                {
+            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003A\u0024newCompanyUser",
+            "name": "newCompanyUser",
+            "summary": "",
+            "url": "classes/ApplicationTest-BaseControllerTest.html#property_newCompanyUser"
         },                {
             "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTest",
             "name": "BaseMapperTest",
@@ -4346,6 +4511,66 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/ApplicationTest-TestConfigProvider.html#method_overrideConfig"
         },                {
+            "fqsen": "\\Company\\Controller\\AdminApprovalController",
+            "name": "AdminApprovalController",
+            "summary": "",
+            "url": "classes/Company-Controller-AdminApprovalController.html"
+        },                {
+            "fqsen": "\\Company\\Controller\\AdminApprovalController\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Company-Controller-AdminApprovalController.html#method___construct"
+        },                {
+            "fqsen": "\\Company\\Controller\\AdminApprovalController\u003A\u003AindexAction\u0028\u0029",
+            "name": "indexAction",
+            "summary": "",
+            "url": "classes/Company-Controller-AdminApprovalController.html#method_indexAction"
+        },                {
+            "fqsen": "\\Company\\Controller\\AdminApprovalController\u003A\u003AjobApprovalAction\u0028\u0029",
+            "name": "jobApprovalAction",
+            "summary": "",
+            "url": "classes/Company-Controller-AdminApprovalController.html#method_jobApprovalAction"
+        },                {
+            "fqsen": "\\Company\\Controller\\AdminApprovalController\u003A\u003AchangeJobApprovalStatusAction\u0028\u0029",
+            "name": "changeJobApprovalStatusAction",
+            "summary": "",
+            "url": "classes/Company-Controller-AdminApprovalController.html#method_changeJobApprovalStatusAction"
+        },                {
+            "fqsen": "\\Company\\Controller\\AdminApprovalController\u003A\u003AjobProposalAction\u0028\u0029",
+            "name": "jobProposalAction",
+            "summary": "",
+            "url": "classes/Company-Controller-AdminApprovalController.html#method_jobProposalAction"
+        },                {
+            "fqsen": "\\Company\\Controller\\AdminApprovalController\u003A\u003AchangeJobProposalStatusAction\u0028\u0029",
+            "name": "changeJobProposalStatusAction",
+            "summary": "",
+            "url": "classes/Company-Controller-AdminApprovalController.html#method_changeJobProposalStatusAction"
+        },                {
+            "fqsen": "\\Company\\Controller\\AdminApprovalController\u003A\u003A\u0024aclService",
+            "name": "aclService",
+            "summary": "",
+            "url": "classes/Company-Controller-AdminApprovalController.html#property_aclService"
+        },                {
+            "fqsen": "\\Company\\Controller\\AdminApprovalController\u003A\u003A\u0024translator",
+            "name": "translator",
+            "summary": "",
+            "url": "classes/Company-Controller-AdminApprovalController.html#property_translator"
+        },                {
+            "fqsen": "\\Company\\Controller\\AdminApprovalController\u003A\u003A\u0024companyMapper",
+            "name": "companyMapper",
+            "summary": "",
+            "url": "classes/Company-Controller-AdminApprovalController.html#property_companyMapper"
+        },                {
+            "fqsen": "\\Company\\Controller\\AdminApprovalController\u003A\u003A\u0024jobMapper",
+            "name": "jobMapper",
+            "summary": "",
+            "url": "classes/Company-Controller-AdminApprovalController.html#property_jobMapper"
+        },                {
+            "fqsen": "\\Company\\Controller\\AdminApprovalController\u003A\u003A\u0024companyService",
+            "name": "companyService",
+            "summary": "",
+            "url": "classes/Company-Controller-AdminApprovalController.html#property_companyService"
+        },                {
             "fqsen": "\\Company\\Controller\\AdminController",
             "name": "AdminController",
             "summary": "",
@@ -4360,6 +4585,16 @@ Search.appendIndex(
             "name": "indexAction",
             "summary": "Action\u0020that\u0020displays\u0020the\u0020main\u0020page.",
             "url": "classes/Company-Controller-AdminController.html#method_indexAction"
+        },                {
+            "fqsen": "\\Company\\Controller\\AdminController\u003A\u003AindexCategoriesAction\u0028\u0029",
+            "name": "indexCategoriesAction",
+            "summary": "",
+            "url": "classes/Company-Controller-AdminController.html#method_indexCategoriesAction"
+        },                {
+            "fqsen": "\\Company\\Controller\\AdminController\u003A\u003AindexLabelsAction\u0028\u0029",
+            "name": "indexLabelsAction",
+            "summary": "",
+            "url": "classes/Company-Controller-AdminController.html#method_indexLabelsAction"
         },                {
             "fqsen": "\\Company\\Controller\\AdminController\u003A\u003AaddCompanyAction\u0028\u0029",
             "name": "addCompanyAction",
@@ -4446,6 +4681,96 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Company-Controller-AdminController.html#property_companyQueryService"
         },                {
+            "fqsen": "\\Company\\Controller\\CompanyAccountController",
+            "name": "CompanyAccountController",
+            "summary": "",
+            "url": "classes/Company-Controller-CompanyAccountController.html"
+        },                {
+            "fqsen": "\\Company\\Controller\\CompanyAccountController\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "CompanyAccountController\u0020constructor.",
+            "url": "classes/Company-Controller-CompanyAccountController.html#method___construct"
+        },                {
+            "fqsen": "\\Company\\Controller\\CompanyAccountController\u003A\u003AselfAction\u0028\u0029",
+            "name": "selfAction",
+            "summary": "",
+            "url": "classes/Company-Controller-CompanyAccountController.html#method_selfAction"
+        },                {
+            "fqsen": "\\Company\\Controller\\CompanyAccountController\u003A\u003AsettingsAction\u0028\u0029",
+            "name": "settingsAction",
+            "summary": "",
+            "url": "classes/Company-Controller-CompanyAccountController.html#method_settingsAction"
+        },                {
+            "fqsen": "\\Company\\Controller\\CompanyAccountController\u003A\u003AjobsAction\u0028\u0029",
+            "name": "jobsAction",
+            "summary": "",
+            "url": "classes/Company-Controller-CompanyAccountController.html#method_jobsAction"
+        },                {
+            "fqsen": "\\Company\\Controller\\CompanyAccountController\u003A\u003AaddJobAction\u0028\u0029",
+            "name": "addJobAction",
+            "summary": "",
+            "url": "classes/Company-Controller-CompanyAccountController.html#method_addJobAction"
+        },                {
+            "fqsen": "\\Company\\Controller\\CompanyAccountController\u003A\u003AeditJobAction\u0028\u0029",
+            "name": "editJobAction",
+            "summary": "",
+            "url": "classes/Company-Controller-CompanyAccountController.html#method_editJobAction"
+        },                {
+            "fqsen": "\\Company\\Controller\\CompanyAccountController\u003A\u003AdeleteJobAction\u0028\u0029",
+            "name": "deleteJobAction",
+            "summary": "",
+            "url": "classes/Company-Controller-CompanyAccountController.html#method_deleteJobAction"
+        },                {
+            "fqsen": "\\Company\\Controller\\CompanyAccountController\u003A\u003AstatusJobAction\u0028\u0029",
+            "name": "statusJobAction",
+            "summary": "",
+            "url": "classes/Company-Controller-CompanyAccountController.html#method_statusJobAction"
+        },                {
+            "fqsen": "\\Company\\Controller\\CompanyAccountController\u003A\u003AtransferJobsAction\u0028\u0029",
+            "name": "transferJobsAction",
+            "summary": "",
+            "url": "classes/Company-Controller-CompanyAccountController.html#method_transferJobsAction"
+        },                {
+            "fqsen": "\\Company\\Controller\\CompanyAccountController\u003A\u003AhighlightsAction\u0028\u0029",
+            "name": "highlightsAction",
+            "summary": "",
+            "url": "classes/Company-Controller-CompanyAccountController.html#method_highlightsAction"
+        },                {
+            "fqsen": "\\Company\\Controller\\CompanyAccountController\u003A\u003AbannerAction\u0028\u0029",
+            "name": "bannerAction",
+            "summary": "",
+            "url": "classes/Company-Controller-CompanyAccountController.html#method_bannerAction"
+        },                {
+            "fqsen": "\\Company\\Controller\\CompanyAccountController\u003A\u003A\u0024aclService",
+            "name": "aclService",
+            "summary": "",
+            "url": "classes/Company-Controller-CompanyAccountController.html#property_aclService"
+        },                {
+            "fqsen": "\\Company\\Controller\\CompanyAccountController\u003A\u003A\u0024translator",
+            "name": "translator",
+            "summary": "",
+            "url": "classes/Company-Controller-CompanyAccountController.html#property_translator"
+        },                {
+            "fqsen": "\\Company\\Controller\\CompanyAccountController\u003A\u003A\u0024jobMapper",
+            "name": "jobMapper",
+            "summary": "",
+            "url": "classes/Company-Controller-CompanyAccountController.html#property_jobMapper"
+        },                {
+            "fqsen": "\\Company\\Controller\\CompanyAccountController\u003A\u003A\u0024jobPackageMapper",
+            "name": "jobPackageMapper",
+            "summary": "",
+            "url": "classes/Company-Controller-CompanyAccountController.html#property_jobPackageMapper"
+        },                {
+            "fqsen": "\\Company\\Controller\\CompanyAccountController\u003A\u003A\u0024jobsTransferForm",
+            "name": "jobsTransferForm",
+            "summary": "",
+            "url": "classes/Company-Controller-CompanyAccountController.html#property_jobsTransferForm"
+        },                {
+            "fqsen": "\\Company\\Controller\\CompanyAccountController\u003A\u003A\u0024companyService",
+            "name": "companyService",
+            "summary": "",
+            "url": "classes/Company-Controller-CompanyAccountController.html#property_companyService"
+        },                {
             "fqsen": "\\Company\\Controller\\CompanyController",
             "name": "CompanyController",
             "summary": "",
@@ -4491,6 +4816,16 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Company-Controller-CompanyController.html#property_companyQueryService"
         },                {
+            "fqsen": "\\Company\\Controller\\Factory\\AdminApprovalControllerFactory",
+            "name": "AdminApprovalControllerFactory",
+            "summary": "",
+            "url": "classes/Company-Controller-Factory-AdminApprovalControllerFactory.html"
+        },                {
+            "fqsen": "\\Company\\Controller\\Factory\\AdminApprovalControllerFactory\u003A\u003A__invoke\u0028\u0029",
+            "name": "__invoke",
+            "summary": "",
+            "url": "classes/Company-Controller-Factory-AdminApprovalControllerFactory.html#method___invoke"
+        },                {
             "fqsen": "\\Company\\Controller\\Factory\\AdminControllerFactory",
             "name": "AdminControllerFactory",
             "summary": "",
@@ -4500,6 +4835,16 @@ Search.appendIndex(
             "name": "__invoke",
             "summary": "",
             "url": "classes/Company-Controller-Factory-AdminControllerFactory.html#method___invoke"
+        },                {
+            "fqsen": "\\Company\\Controller\\Factory\\CompanyAccountControllerFactory",
+            "name": "CompanyAccountControllerFactory",
+            "summary": "",
+            "url": "classes/Company-Controller-Factory-CompanyAccountControllerFactory.html"
+        },                {
+            "fqsen": "\\Company\\Controller\\Factory\\CompanyAccountControllerFactory\u003A\u003A__invoke\u0028\u0029",
+            "name": "__invoke",
+            "summary": "",
+            "url": "classes/Company-Controller-Factory-CompanyAccountControllerFactory.html#method___invoke"
         },                {
             "fqsen": "\\Company\\Controller\\Factory\\CompanyControllerFactory",
             "name": "CompanyControllerFactory",
@@ -4536,15 +4881,30 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Company-Form-Company.html#method_setCurrentSlug"
         },                {
+            "fqsen": "\\Company\\Form\\Company\u003A\u003AsetCurrentRepresentativeEmail\u0028\u0029",
+            "name": "setCurrentRepresentativeEmail",
+            "summary": "",
+            "url": "classes/Company-Form-Company.html#method_setCurrentRepresentativeEmail"
+        },                {
             "fqsen": "\\Company\\Form\\Company\u003A\u003AisSlugNameUnique\u0028\u0029",
             "name": "isSlugNameUnique",
             "summary": "Determine\u0020if\u0020the\u0020slug\u0020is\u0020unique.",
             "url": "classes/Company-Form-Company.html#method_isSlugNameUnique"
         },                {
+            "fqsen": "\\Company\\Form\\Company\u003A\u003AisRepresentativeEmailUnique\u0028\u0029",
+            "name": "isRepresentativeEmailUnique",
+            "summary": "",
+            "url": "classes/Company-Form-Company.html#method_isRepresentativeEmailUnique"
+        },                {
             "fqsen": "\\Company\\Form\\Company\u003A\u003A\u0024currentSlug",
             "name": "currentSlug",
             "summary": "",
             "url": "classes/Company-Form-Company.html#property_currentSlug"
+        },                {
+            "fqsen": "\\Company\\Form\\Company\u003A\u003A\u0024currentRepresentativeEmail",
+            "name": "currentRepresentativeEmail",
+            "summary": "",
+            "url": "classes/Company-Form-Company.html#property_currentRepresentativeEmail"
         },                {
             "fqsen": "\\Company\\Form\\Company\u003A\u003A\u0024mapper",
             "name": "mapper",
@@ -4661,6 +5021,31 @@ Search.appendIndex(
             "summary": "Create\u0020an\u0020\u007B\u0040link\u0020\\Laminas\\InputFilter\\InputFilter\u007D\u0020for\u0020a\u0020specific\u0020language.",
             "url": "classes/Company-Form-JobLabel.html#method_createLocalisedInputFilterSpecification"
         },                {
+            "fqsen": "\\Company\\Form\\JobsTransfer",
+            "name": "JobsTransfer",
+            "summary": "",
+            "url": "classes/Company-Form-JobsTransfer.html"
+        },                {
+            "fqsen": "\\Company\\Form\\JobsTransfer\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Company-Form-JobsTransfer.html#method___construct"
+        },                {
+            "fqsen": "\\Company\\Form\\JobsTransfer\u003A\u003ApopulateValueOptions\u0028\u0029",
+            "name": "populateValueOptions",
+            "summary": "",
+            "url": "classes/Company-Form-JobsTransfer.html#method_populateValueOptions"
+        },                {
+            "fqsen": "\\Company\\Form\\JobsTransfer\u003A\u003AgetInputFilterSpecification\u0028\u0029",
+            "name": "getInputFilterSpecification",
+            "summary": "",
+            "url": "classes/Company-Form-JobsTransfer.html#method_getInputFilterSpecification"
+        },                {
+            "fqsen": "\\Company\\Form\\JobsTransfer\u003A\u003A\u0024translator",
+            "name": "translator",
+            "summary": "",
+            "url": "classes/Company-Form-JobsTransfer.html#property_translator"
+        },                {
             "fqsen": "\\Company\\Form\\Package",
             "name": "Package",
             "summary": "A\u0020form\u0020which\u0020provides\u0020the\u0020basic\u0020structure\u0020for\u0020forms\u0020that\u0020utilise\u0020a\u0020model\u0027s\u0020\u007B\u0040link\u0020\\Application\\Model\\LocalisedText\u007D.",
@@ -4716,6 +5101,11 @@ Search.appendIndex(
             "summary": "Searches\u0020for\u0020a\u0020JobCategory\u0020based\u0020on\u0020its\u0020slug.\u0020The\u0020value\u0020is\u0020always\u0020converted\u0020to\u0020lowercase\u0020to\u0020ensure\u0020no\u0020weird\nrouting\u0020issues\u0020occur.",
             "url": "classes/Company-Mapper-Category.html#method_findCategoryBySlug"
         },                {
+            "fqsen": "\\Company\\Mapper\\Category\u003A\u003AfindVisibleCategoryById\u0028\u0029",
+            "name": "findVisibleCategoryById",
+            "summary": "",
+            "url": "classes/Company-Mapper-Category.html#method_findVisibleCategoryById"
+        },                {
             "fqsen": "\\Company\\Mapper\\Category\u003A\u003AgetRepositoryName\u0028\u0029",
             "name": "getRepositoryName",
             "summary": "",
@@ -4735,6 +5125,16 @@ Search.appendIndex(
             "name": "findCompanyBySlugName",
             "summary": "Return\u0020the\u0020company\u0020with\u0020the\u0020given\u0020slug.",
             "url": "classes/Company-Mapper-Company.html#method_findCompanyBySlugName"
+        },                {
+            "fqsen": "\\Company\\Mapper\\Company\u003A\u003AfindCompanyByRepresentativeEmail\u0028\u0029",
+            "name": "findCompanyByRepresentativeEmail",
+            "summary": "Return\u0020a\u0020company\u0020by\u0020a\u0020given\u0020representative\u0027s\u0020e\u002Dmail\u0020address.",
+            "url": "classes/Company-Mapper-Company.html#method_findCompanyByRepresentativeEmail"
+        },                {
+            "fqsen": "\\Company\\Mapper\\Company\u003A\u003AfindUpdateProposals\u0028\u0029",
+            "name": "findUpdateProposals",
+            "summary": "",
+            "url": "classes/Company-Mapper-Company.html#method_findUpdateProposals"
         },                {
             "fqsen": "\\Company\\Mapper\\Company\u003A\u003AgetRepositoryName\u0028\u0029",
             "name": "getRepositoryName",
@@ -4771,6 +5171,26 @@ Search.appendIndex(
             "summary": "Find\u0020all\u0020jobs\u0020identified\u0020by\u0020\u0024jobSlugName\u0020that\u0020are\u0020owned\u0020by\u0020a\u0020company\nidentified\u0020with\u0020\u0024companySlugName.",
             "url": "classes/Company-Mapper-Job.html#method_findJob"
         },                {
+            "fqsen": "\\Company\\Mapper\\Job\u003A\u003AfindByPackageAndCompany\u0028\u0029",
+            "name": "findByPackageAndCompany",
+            "summary": "",
+            "url": "classes/Company-Mapper-Job.html#method_findByPackageAndCompany"
+        },                {
+            "fqsen": "\\Company\\Mapper\\Job\u003A\u003AfindRecentByApprovedStatus\u0028\u0029",
+            "name": "findRecentByApprovedStatus",
+            "summary": "Get\u0020the\u0020\u0060\u0024count\u0060\u0020most\u0020recent\u0020jobs\u0020for\u0020a\u0020company\u0020with\u0020a\u0020specific\u0020status.",
+            "url": "classes/Company-Mapper-Job.html#method_findRecentByApprovedStatus"
+        },                {
+            "fqsen": "\\Company\\Mapper\\Job\u003A\u003AfindProposals\u0028\u0029",
+            "name": "findProposals",
+            "summary": "",
+            "url": "classes/Company-Mapper-Job.html#method_findProposals"
+        },                {
+            "fqsen": "\\Company\\Mapper\\Job\u003A\u003AfindProposal\u0028\u0029",
+            "name": "findProposal",
+            "summary": "",
+            "url": "classes/Company-Mapper-Job.html#method_findProposal"
+        },                {
             "fqsen": "\\Company\\Mapper\\Job\u003A\u003AgetRepositoryName\u0028\u0029",
             "name": "getRepositoryName",
             "summary": "",
@@ -4780,11 +5200,6 @@ Search.appendIndex(
             "name": "Label",
             "summary": "Mappers\u0020for\u0020labels.",
             "url": "classes/Company-Mapper-Label.html"
-        },                {
-            "fqsen": "\\Company\\Mapper\\Label\u003A\u003AfindVisibleLabels\u0028\u0029",
-            "name": "findVisibleLabels",
-            "summary": "",
-            "url": "classes/Company-Mapper-Label.html#method_findVisibleLabels"
         },                {
             "fqsen": "\\Company\\Mapper\\Label\u003A\u003AgetRepositoryName\u0028\u0029",
             "name": "getRepositoryName",
@@ -4821,6 +5236,16 @@ Search.appendIndex(
             "summary": "Find\u0020all\u0020packages,\u0020and\u0020returns\u0020an\u0020editable\u0020version\u0020of\u0020them.",
             "url": "classes/Company-Mapper-Package.html#method_findEditablePackage"
         },                {
+            "fqsen": "\\Company\\Mapper\\Package\u003A\u003AfindJobPackagesByCompany\u0028\u0029",
+            "name": "findJobPackagesByCompany",
+            "summary": "Get\u0020all\u0020job\u0020packages\u0020for\u0020a\u0020specific\u0020company.",
+            "url": "classes/Company-Mapper-Package.html#method_findJobPackagesByCompany"
+        },                {
+            "fqsen": "\\Company\\Mapper\\Package\u003A\u003AfindNonExpiredPackages\u0028\u0029",
+            "name": "findNonExpiredPackages",
+            "summary": "Get\u0020non\u002Dexpired\u0020packages\u0020for\u0020a\u0020specific\u0020company.",
+            "url": "classes/Company-Mapper-Package.html#method_findNonExpiredPackages"
+        },                {
             "fqsen": "\\Company\\Mapper\\Package\u003A\u003AcreatePackage\u0028\u0029",
             "name": "createPackage",
             "summary": "",
@@ -4838,13 +5263,8 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Company\\Model\\Company\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "",
+            "summary": "Constructor.",
             "url": "classes/Company-Model-Company.html#method___construct"
-        },                {
-            "fqsen": "\\Company\\Model\\Company\u003A\u003AgetId\u0028\u0029",
-            "name": "getId",
-            "summary": "Get\u0020the\u0020company\u0027s\u0020id.",
-            "url": "classes/Company-Model-Company.html#method_getId"
         },                {
             "fqsen": "\\Company\\Model\\Company\u003A\u003AgetName\u0028\u0029",
             "name": "getName",
@@ -4865,6 +5285,26 @@ Search.appendIndex(
             "name": "setSlugName",
             "summary": "Sets\u0020the\u0020company\u0027s\u0020slug\u0020name.",
             "url": "classes/Company-Model-Company.html#method_setSlugName"
+        },                {
+            "fqsen": "\\Company\\Model\\Company\u003A\u003AgetRepresentativeName\u0028\u0029",
+            "name": "getRepresentativeName",
+            "summary": "Get\u0020the\u0020name\u0020of\u0020the\u0020person\u0020representing\u0020the\u0020company.",
+            "url": "classes/Company-Model-Company.html#method_getRepresentativeName"
+        },                {
+            "fqsen": "\\Company\\Model\\Company\u003A\u003AsetRepresentativeName\u0028\u0029",
+            "name": "setRepresentativeName",
+            "summary": "Set\u0020the\u0020name\u0020of\u0020the\u0020person\u0020representing\u0020the\u0020company.",
+            "url": "classes/Company-Model-Company.html#method_setRepresentativeName"
+        },                {
+            "fqsen": "\\Company\\Model\\Company\u003A\u003AgetRepresentativeEmail\u0028\u0029",
+            "name": "getRepresentativeEmail",
+            "summary": "Get\u0020the\u0020email\u0020address\u0020of\u0020the\u0020person\u0020representing\u0020the\u0020company.",
+            "url": "classes/Company-Model-Company.html#method_getRepresentativeEmail"
+        },                {
+            "fqsen": "\\Company\\Model\\Company\u003A\u003AsetRepresentativeEmail\u0028\u0029",
+            "name": "setRepresentativeEmail",
+            "summary": "Set\u0020the\u0020email\u0020address\u0020of\u0020the\u0020person\u0020representing\u0020the\u0020company.",
+            "url": "classes/Company-Model-Company.html#method_setRepresentativeEmail"
         },                {
             "fqsen": "\\Company\\Model\\Company\u003A\u003AgetContactName\u0028\u0029",
             "name": "getContactName",
@@ -4971,6 +5411,11 @@ Search.appendIndex(
             "summary": "Get\u0020the\u0020number\u0020of\u0020packages.",
             "url": "classes/Company-Model-Company.html#method_getNumberOfPackages"
         },                {
+            "fqsen": "\\Company\\Model\\Company\u003A\u003AgetUpdateProposals\u0028\u0029",
+            "name": "getUpdateProposals",
+            "summary": "",
+            "url": "classes/Company-Model-Company.html#method_getUpdateProposals"
+        },                {
             "fqsen": "\\Company\\Model\\Company\u003A\u003AgetNumberOfJobs\u0028\u0029",
             "name": "getNumberOfJobs",
             "summary": "Returns\u0020the\u0020number\u0020of\u0020jobs\u0020that\u0020are\u0020contained\u0020in\u0020all\u0020packages\u0020of\u0020this\ncompany.",
@@ -5006,10 +5451,10 @@ Search.appendIndex(
             "summary": "Returns\u0020an\u0020array\u0020copy\u0020with\u0020all\u0020attributes.",
             "url": "classes/Company-Model-Company.html#method_toArray"
         },                {
-            "fqsen": "\\Company\\Model\\Company\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "The\u0020company\u0020id.",
-            "url": "classes/Company-Model-Company.html#property_id"
+            "fqsen": "\\Company\\Model\\Company\u003A\u003AgetResourceId\u0028\u0029",
+            "name": "getResourceId",
+            "summary": "",
+            "url": "classes/Company-Model-Company.html#method_getResourceId"
         },                {
             "fqsen": "\\Company\\Model\\Company\u003A\u003A\u0024name",
             "name": "name",
@@ -5021,6 +5466,16 @@ Search.appendIndex(
             "summary": "The\u0020company\u0027s\u0020slug\u0020version\u0020of\u0020the\u0020name.\u0020\u0028username\u0029.",
             "url": "classes/Company-Model-Company.html#property_slugName"
         },                {
+            "fqsen": "\\Company\\Model\\Company\u003A\u003A\u0024representativeName",
+            "name": "representativeName",
+            "summary": "The\u0020name\u0020of\u0020the\u0020person\u0020representing\u0020the\u0020company.\u0020Is\u0020used\u0020for\u0020communications\u0020with\u0020the\u0020company.",
+            "url": "classes/Company-Model-Company.html#property_representativeName"
+        },                {
+            "fqsen": "\\Company\\Model\\Company\u003A\u003A\u0024representativeEmail",
+            "name": "representativeEmail",
+            "summary": "The\u0020email\u0020address\u0020of\u0020the\u0020person\u0020representing\u0020the\u0020company.\u0020Is\u0020used\u0020for\u0020communications\u0020with\u0020the\u0020company.",
+            "url": "classes/Company-Model-Company.html#property_representativeEmail"
+        },                {
             "fqsen": "\\Company\\Model\\Company\u003A\u003A\u0024contactName",
             "name": "contactName",
             "summary": "The\u0020company\u0027s\u0020contact\u0027s\u0020name.",
@@ -5028,17 +5483,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Company\\Model\\Company\u003A\u003A\u0024contactAddress",
             "name": "contactAddress",
-            "summary": "The\u0020company\u0027s\u0020address.",
+            "summary": "The\u0020company\u0027s\u0020contact\u0020address.",
             "url": "classes/Company-Model-Company.html#property_contactAddress"
         },                {
             "fqsen": "\\Company\\Model\\Company\u003A\u003A\u0024contactEmail",
             "name": "contactEmail",
-            "summary": "The\u0020company\u0027s\u0020email.",
+            "summary": "The\u0020company\u0027s\u0020contact\u0020email\u0020address.",
             "url": "classes/Company-Model-Company.html#property_contactEmail"
         },                {
             "fqsen": "\\Company\\Model\\Company\u003A\u003A\u0024contactPhone",
             "name": "contactPhone",
-            "summary": "The\u0020company\u0027s\u0020phone.",
+            "summary": "The\u0020company\u0027s\u0020contact\u0020phone.",
             "url": "classes/Company-Model-Company.html#property_contactPhone"
         },                {
             "fqsen": "\\Company\\Model\\Company\u003A\u003A\u0024slogan",
@@ -5070,6 +5525,11 @@ Search.appendIndex(
             "name": "packages",
             "summary": "The\u0020company\u0027s\u0020packages.",
             "url": "classes/Company-Model-Company.html#property_packages"
+        },                {
+            "fqsen": "\\Company\\Model\\Company\u003A\u003A\u0024updateProposals",
+            "name": "updateProposals",
+            "summary": "Proposed\u0020updates\u0020to\u0020this\u0020company.",
+            "url": "classes/Company-Model-Company.html#property_updateProposals"
         },                {
             "fqsen": "\\Company\\Model\\CompanyBannerPackage",
             "name": "CompanyBannerPackage",
@@ -5116,6 +5576,11 @@ Search.appendIndex(
             "summary": "Set\u0020the\u0020featured\u0020package\u0027s\u0020article\u0020text.",
             "url": "classes/Company-Model-CompanyFeaturedPackage.html#method_setArticle"
         },                {
+            "fqsen": "\\Company\\Model\\CompanyFeaturedPackage\u003A\u003AgetType\u0028\u0029",
+            "name": "getType",
+            "summary": "Gets\u0020the\u0020type\u0020of\u0020the\u0020package.",
+            "url": "classes/Company-Model-CompanyFeaturedPackage.html#method_getType"
+        },                {
             "fqsen": "\\Company\\Model\\CompanyFeaturedPackage\u003A\u003AtoArray\u0028\u0029",
             "name": "toArray",
             "summary": "",
@@ -5146,6 +5611,11 @@ Search.appendIndex(
             "summary": "Get\u0020the\u0020jobs\u0020in\u0020the\u0020package.",
             "url": "classes/Company-Model-CompanyJobPackage.html#method_getJobs"
         },                {
+            "fqsen": "\\Company\\Model\\CompanyJobPackage\u003A\u003AgetJobsWithoutProposals\u0028\u0029",
+            "name": "getJobsWithoutProposals",
+            "summary": "Get\u0020the\u0020jobs\u0020in\u0020the\u0020package,\u0020but\u0020without\u0020any\u0020that\u0020are\u0020actually\u0020update\u0020proposals.",
+            "url": "classes/Company-Model-CompanyJobPackage.html#method_getJobsWithoutProposals"
+        },                {
             "fqsen": "\\Company\\Model\\CompanyJobPackage\u003A\u003AgetNumberOfActiveJobs\u0028\u0029",
             "name": "getNumberOfActiveJobs",
             "summary": "Get\u0020the\u0020number\u0020of\u0020jobs\u0020in\u0020the\u0020package.",
@@ -5165,6 +5635,11 @@ Search.appendIndex(
             "name": "removeJob",
             "summary": "Removes\u0020a\u0020job\u0020from\u0020the\u0020package.",
             "url": "classes/Company-Model-CompanyJobPackage.html#method_removeJob"
+        },                {
+            "fqsen": "\\Company\\Model\\CompanyJobPackage\u003A\u003AgetType\u0028\u0029",
+            "name": "getType",
+            "summary": "Gets\u0020the\u0020type\u0020of\u0020the\u0020package.",
+            "url": "classes/Company-Model-CompanyJobPackage.html#method_getType"
         },                {
             "fqsen": "\\Company\\Model\\CompanyJobPackage\u003A\u003A\u0024jobs",
             "name": "jobs",
@@ -5186,10 +5661,15 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Company-Model-CompanyPackage.html#method___construct"
         },                {
-            "fqsen": "\\Company\\Model\\CompanyPackage\u003A\u003AgetId\u0028\u0029",
-            "name": "getId",
-            "summary": "Get\u0020the\u0020package\u0027s\u0020id.",
-            "url": "classes/Company-Model-CompanyPackage.html#method_getId"
+            "fqsen": "\\Company\\Model\\CompanyPackage\u003A\u003AgetContractNumber\u0028\u0029",
+            "name": "getContractNumber",
+            "summary": "",
+            "url": "classes/Company-Model-CompanyPackage.html#method_getContractNumber"
+        },                {
+            "fqsen": "\\Company\\Model\\CompanyPackage\u003A\u003AsetContractNumber\u0028\u0029",
+            "name": "setContractNumber",
+            "summary": "",
+            "url": "classes/Company-Model-CompanyPackage.html#method_setContractNumber"
         },                {
             "fqsen": "\\Company\\Model\\CompanyPackage\u003A\u003AgetStartingDate\u0028\u0029",
             "name": "getStartingDate",
@@ -5216,11 +5696,6 @@ Search.appendIndex(
             "summary": "Get\u0020the\u0020package\u0027s\u0020publish\u0020state.",
             "url": "classes/Company-Model-CompanyPackage.html#method_isPublished"
         },                {
-            "fqsen": "\\Company\\Model\\CompanyPackage\u003A\u003AgetNumberOfActiveJobs\u0028\u0029",
-            "name": "getNumberOfActiveJobs",
-            "summary": "Get\u0020the\u0020number\u0020of\u0020jobs\u0020in\u0020the\u0020package.",
-            "url": "classes/Company-Model-CompanyPackage.html#method_getNumberOfActiveJobs"
-        },                {
             "fqsen": "\\Company\\Model\\CompanyPackage\u003A\u003AsetPublished\u0028\u0029",
             "name": "setPublished",
             "summary": "Set\u0020the\u0020package\u0027s\u0020publish\u0020state.",
@@ -5243,7 +5718,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Company\\Model\\CompanyPackage\u003A\u003AisExpired\u0028\u0029",
             "name": "isExpired",
-            "summary": "",
+            "summary": "Check\u0020whether\u0020this\u0020package\u0020is\u0020expired.",
             "url": "classes/Company-Model-CompanyPackage.html#method_isExpired"
         },                {
             "fqsen": "\\Company\\Model\\CompanyPackage\u003A\u003AisActive\u0028\u0029",
@@ -5261,10 +5736,10 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Company-Model-CompanyPackage.html#method_exchangeArray"
         },                {
-            "fqsen": "\\Company\\Model\\CompanyPackage\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "The\u0020package\u0027s\u0020id.",
-            "url": "classes/Company-Model-CompanyPackage.html#property_id"
+            "fqsen": "\\Company\\Model\\CompanyPackage\u003A\u003A\u0024contractNumber",
+            "name": "contractNumber",
+            "summary": "An\u0020alphanumeric\u0020strings\u0020which\u0020identifies\u0020to\u0020which\u0020contract\u0020this\u0020package\u0020belongs.",
+            "url": "classes/Company-Model-CompanyPackage.html#property_contractNumber"
         },                {
             "fqsen": "\\Company\\Model\\CompanyPackage\u003A\u003A\u0024starts",
             "name": "starts",
@@ -5278,13 +5753,33 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Company\\Model\\CompanyPackage\u003A\u003A\u0024published",
             "name": "published",
-            "summary": "The\u0020package\u0027s\u0020pusblish\u0020state.",
+            "summary": "The\u0020package\u0027s\u0020published\u0020state.",
             "url": "classes/Company-Model-CompanyPackage.html#property_published"
         },                {
             "fqsen": "\\Company\\Model\\CompanyPackage\u003A\u003A\u0024company",
             "name": "company",
             "summary": "The\u0020package\u0027s\u0020company.",
             "url": "classes/Company-Model-CompanyPackage.html#property_company"
+        },                {
+            "fqsen": "\\Company\\Model\\Enums\\CompanyPackageTypes",
+            "name": "CompanyPackageTypes",
+            "summary": "Enum\u0020for\u0020the\u0020different\u0020types\u0020of\u0020company\u0020packages\u0020that\u0020exist.",
+            "url": "classes/Company-Model-Enums-CompanyPackageTypes.html"
+        },                {
+            "fqsen": "\\Company\\Model\\Enums\\CompanyPackageTypes\u003A\u003ABanner",
+            "name": "Banner",
+            "summary": "",
+            "url": ""
+        },                {
+            "fqsen": "\\Company\\Model\\Enums\\CompanyPackageTypes\u003A\u003AFeatured",
+            "name": "Featured",
+            "summary": "",
+            "url": ""
+        },                {
+            "fqsen": "\\Company\\Model\\Enums\\CompanyPackageTypes\u003A\u003AJob",
+            "name": "Job",
+            "summary": "",
+            "url": ""
         },                {
             "fqsen": "\\Company\\Model\\Job",
             "name": "Job",
@@ -5293,13 +5788,8 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Company\\Model\\Job\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "",
+            "summary": "Constructor.",
             "url": "classes/Company-Model-Job.html#method___construct"
-        },                {
-            "fqsen": "\\Company\\Model\\Job\u003A\u003AgetId\u0028\u0029",
-            "name": "getId",
-            "summary": "Get\u0020the\u0020job\u0027s\u0020id.",
-            "url": "classes/Company-Model-Job.html#method_getId"
         },                {
             "fqsen": "\\Company\\Model\\Job\u003A\u003AgetName\u0028\u0029",
             "name": "getName",
@@ -5396,16 +5886,6 @@ Search.appendIndex(
             "summary": "Set\u0020the\u0020job\u0027s\u0020contact\u0027s\u0020email.",
             "url": "classes/Company-Model-Job.html#method_setContactEmail"
         },                {
-            "fqsen": "\\Company\\Model\\Job\u003A\u003AgetTimestamp\u0028\u0029",
-            "name": "getTimestamp",
-            "summary": "Get\u0020the\u0020job\u0027s\u0020timestamp.",
-            "url": "classes/Company-Model-Job.html#method_getTimestamp"
-        },                {
-            "fqsen": "\\Company\\Model\\Job\u003A\u003AsetTimeStamp\u0028\u0029",
-            "name": "setTimeStamp",
-            "summary": "Set\u0020the\u0020job\u0027s\u0020timestamp.",
-            "url": "classes/Company-Model-Job.html#method_setTimeStamp"
-        },                {
             "fqsen": "\\Company\\Model\\Job\u003A\u003AgetDescription\u0028\u0029",
             "name": "getDescription",
             "summary": "Get\u0020the\u0020job\u0027s\u0020description.",
@@ -5466,15 +5946,20 @@ Search.appendIndex(
             "summary": "Sets\u0020the\u0020job\u0027s\u0020location.",
             "url": "classes/Company-Model-Job.html#method_setLocation"
         },                {
+            "fqsen": "\\Company\\Model\\Job\u003A\u003AgetUpdateProposals\u0028\u0029",
+            "name": "getUpdateProposals",
+            "summary": "",
+            "url": "classes/Company-Model-Job.html#method_getUpdateProposals"
+        },                {
             "fqsen": "\\Company\\Model\\Job\u003A\u003AtoArray\u0028\u0029",
             "name": "toArray",
             "summary": "",
             "url": "classes/Company-Model-Job.html#method_toArray"
         },                {
-            "fqsen": "\\Company\\Model\\Job\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "The\u0020job\u0020id.",
-            "url": "classes/Company-Model-Job.html#property_id"
+            "fqsen": "\\Company\\Model\\Job\u003A\u003AgetResourceId\u0028\u0029",
+            "name": "getResourceId",
+            "summary": "",
+            "url": "classes/Company-Model-Job.html#method_getResourceId"
         },                {
             "fqsen": "\\Company\\Model\\Job\u003A\u003A\u0024slugName",
             "name": "slugName",
@@ -5526,11 +6011,6 @@ Search.appendIndex(
             "summary": "The\u0020location\u0028url\u0029\u0020of\u0020an\u0020attachment\u0020describing\u0020the\u0020job.",
             "url": "classes/Company-Model-Job.html#property_attachment"
         },                {
-            "fqsen": "\\Company\\Model\\Job\u003A\u003A\u0024timestamp",
-            "name": "timestamp",
-            "summary": "The\u0020job\u0027s\u0020timestamp.",
-            "url": "classes/Company-Model-Job.html#property_timestamp"
-        },                {
             "fqsen": "\\Company\\Model\\Job\u003A\u003A\u0024package",
             "name": "package",
             "summary": "The\u0020job\u0027s\u0020package.",
@@ -5546,6 +6026,11 @@ Search.appendIndex(
             "summary": "Job\u0020labels.",
             "url": "classes/Company-Model-Job.html#property_labels"
         },                {
+            "fqsen": "\\Company\\Model\\Job\u003A\u003A\u0024updateProposals",
+            "name": "updateProposals",
+            "summary": "Proposed\u0020updates\u0020to\u0020this\u0020job.",
+            "url": "classes/Company-Model-Job.html#property_updateProposals"
+        },                {
             "fqsen": "\\Company\\Model\\JobCategory",
             "name": "JobCategory",
             "summary": "Job\u0020Category\u0020model.",
@@ -5560,16 +6045,6 @@ Search.appendIndex(
             "name": "setHidden",
             "summary": "Set\u0027s\u0020the\u0020id.",
             "url": "classes/Company-Model-JobCategory.html#method_setHidden"
-        },                {
-            "fqsen": "\\Company\\Model\\JobCategory\u003A\u003AgetId\u0028\u0029",
-            "name": "getId",
-            "summary": "Gets\u0020the\u0020id.",
-            "url": "classes/Company-Model-JobCategory.html#method_getId"
-        },                {
-            "fqsen": "\\Company\\Model\\JobCategory\u003A\u003AsetId\u0028\u0029",
-            "name": "setId",
-            "summary": "Sets\u0020the\u0020id.",
-            "url": "classes/Company-Model-JobCategory.html#method_setId"
         },                {
             "fqsen": "\\Company\\Model\\JobCategory\u003A\u003AgetName\u0028\u0029",
             "name": "getName",
@@ -5606,11 +6081,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Company-Model-JobCategory.html#method_toArray"
         },                {
-            "fqsen": "\\Company\\Model\\JobCategory\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "The\u0020category\u0020id.",
-            "url": "classes/Company-Model-JobCategory.html#property_id"
-        },                {
             "fqsen": "\\Company\\Model\\JobCategory\u003A\u003A\u0024name",
             "name": "name",
             "summary": "The\u0020name\u0020of\u0020the\u0020category.",
@@ -5640,16 +6110,6 @@ Search.appendIndex(
             "name": "__construct",
             "summary": "",
             "url": "classes/Company-Model-JobLabel.html#method___construct"
-        },                {
-            "fqsen": "\\Company\\Model\\JobLabel\u003A\u003AgetId\u0028\u0029",
-            "name": "getId",
-            "summary": "Gets\u0020the\u0020id.",
-            "url": "classes/Company-Model-JobLabel.html#method_getId"
-        },                {
-            "fqsen": "\\Company\\Model\\JobLabel\u003A\u003AsetId\u0028\u0029",
-            "name": "setId",
-            "summary": "Sets\u0020the\u0020id.",
-            "url": "classes/Company-Model-JobLabel.html#method_setId"
         },                {
             "fqsen": "\\Company\\Model\\JobLabel\u003A\u003AgetName\u0028\u0029",
             "name": "getName",
@@ -5691,11 +6151,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Company-Model-JobLabel.html#method_toArray"
         },                {
-            "fqsen": "\\Company\\Model\\JobLabel\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "The\u0020label\u0020id.",
-            "url": "classes/Company-Model-JobLabel.html#property_id"
-        },                {
             "fqsen": "\\Company\\Model\\JobLabel\u003A\u003A\u0024name",
             "name": "name",
             "summary": "The\u0020name\u0020of\u0020the\u0020label.",
@@ -5710,6 +6165,76 @@ Search.appendIndex(
             "name": "jobs",
             "summary": "The\u0020Assignments\u0020this\u0020Label\u0020belongs\u0020to.",
             "url": "classes/Company-Model-JobLabel.html#property_jobs"
+        },                {
+            "fqsen": "\\Company\\Model\\Proposals\\CompanyUpdate",
+            "name": "CompanyUpdate",
+            "summary": "",
+            "url": "classes/Company-Model-Proposals-CompanyUpdate.html"
+        },                {
+            "fqsen": "\\Company\\Model\\Proposals\\CompanyUpdate\u003A\u003AgetOriginal\u0028\u0029",
+            "name": "getOriginal",
+            "summary": "",
+            "url": "classes/Company-Model-Proposals-CompanyUpdate.html#method_getOriginal"
+        },                {
+            "fqsen": "\\Company\\Model\\Proposals\\CompanyUpdate\u003A\u003AsetOriginal\u0028\u0029",
+            "name": "setOriginal",
+            "summary": "",
+            "url": "classes/Company-Model-Proposals-CompanyUpdate.html#method_setOriginal"
+        },                {
+            "fqsen": "\\Company\\Model\\Proposals\\CompanyUpdate\u003A\u003AgetProposal\u0028\u0029",
+            "name": "getProposal",
+            "summary": "",
+            "url": "classes/Company-Model-Proposals-CompanyUpdate.html#method_getProposal"
+        },                {
+            "fqsen": "\\Company\\Model\\Proposals\\CompanyUpdate\u003A\u003AsetProposal\u0028\u0029",
+            "name": "setProposal",
+            "summary": "",
+            "url": "classes/Company-Model-Proposals-CompanyUpdate.html#method_setProposal"
+        },                {
+            "fqsen": "\\Company\\Model\\Proposals\\CompanyUpdate\u003A\u003A\u0024original",
+            "name": "original",
+            "summary": "The\u0020current\u0020company,\u0020to\u0020which\u0020an\u0020update\u0020is\u0020proposed.",
+            "url": "classes/Company-Model-Proposals-CompanyUpdate.html#property_original"
+        },                {
+            "fqsen": "\\Company\\Model\\Proposals\\CompanyUpdate\u003A\u003A\u0024proposal",
+            "name": "proposal",
+            "summary": "The\u0020proposed\u0020update\u0020of\u0020the\u0020company.",
+            "url": "classes/Company-Model-Proposals-CompanyUpdate.html#property_proposal"
+        },                {
+            "fqsen": "\\Company\\Model\\Proposals\\JobUpdate",
+            "name": "JobUpdate",
+            "summary": "",
+            "url": "classes/Company-Model-Proposals-JobUpdate.html"
+        },                {
+            "fqsen": "\\Company\\Model\\Proposals\\JobUpdate\u003A\u003AgetOriginal\u0028\u0029",
+            "name": "getOriginal",
+            "summary": "Get\u0020the\u0020original\u0020\u0060Job\u0060.",
+            "url": "classes/Company-Model-Proposals-JobUpdate.html#method_getOriginal"
+        },                {
+            "fqsen": "\\Company\\Model\\Proposals\\JobUpdate\u003A\u003AsetOriginal\u0028\u0029",
+            "name": "setOriginal",
+            "summary": "Set\u0020the\u0020original\u0020\u0060Job\u0060.",
+            "url": "classes/Company-Model-Proposals-JobUpdate.html#method_setOriginal"
+        },                {
+            "fqsen": "\\Company\\Model\\Proposals\\JobUpdate\u003A\u003AgetProposal\u0028\u0029",
+            "name": "getProposal",
+            "summary": "Get\u0020the\u0020proposed\u0020update\u0020of\u0020\u0060\u0024original\u0060.",
+            "url": "classes/Company-Model-Proposals-JobUpdate.html#method_getProposal"
+        },                {
+            "fqsen": "\\Company\\Model\\Proposals\\JobUpdate\u003A\u003AsetProposal\u0028\u0029",
+            "name": "setProposal",
+            "summary": "Set\u0020the\u0020proposed\u0020update\u0020for\u0020\u0060\u0024original\u0060.",
+            "url": "classes/Company-Model-Proposals-JobUpdate.html#method_setProposal"
+        },                {
+            "fqsen": "\\Company\\Model\\Proposals\\JobUpdate\u003A\u003A\u0024original",
+            "name": "original",
+            "summary": "The\u0020current\u0020job,\u0020to\u0020which\u0020an\u0020update\u0020is\u0020proposed.",
+            "url": "classes/Company-Model-Proposals-JobUpdate.html#property_original"
+        },                {
+            "fqsen": "\\Company\\Model\\Proposals\\JobUpdate\u003A\u003A\u0024proposal",
+            "name": "proposal",
+            "summary": "The\u0020proposed\u0020update\u0020of\u0020the\u0020company.",
+            "url": "classes/Company-Model-Proposals-JobUpdate.html#property_proposal"
         },                {
             "fqsen": "\\Company\\Module",
             "name": "Module",
@@ -5893,8 +6418,28 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Company\\Service\\Company\u003A\u003AdeleteJob\u0028\u0029",
             "name": "deleteJob",
-            "summary": "Deletes\u0020the\u0020given\u0020job.",
+            "summary": "Deletes\u0020the\u0020given\u0020job\u0020and\u0020its\u0020associated\u0020data.",
             "url": "classes/Company-Service-Company.html#method_deleteJob"
+        },                {
+            "fqsen": "\\Company\\Service\\Company\u003A\u003AdeleteJobAttachments\u0028\u0029",
+            "name": "deleteJobAttachments",
+            "summary": "Remove\u0020the\u0020actual\u0020attachments\u0020from\u0020a\u0020job.",
+            "url": "classes/Company-Service-Company.html#method_deleteJobAttachments"
+        },                {
+            "fqsen": "\\Company\\Service\\Company\u003A\u003AtransferJobs\u0028\u0029",
+            "name": "transferJobs",
+            "summary": "Move\u0020jobs\u0020from\u0020an\u0020expired\u0020package\u0020to\u0020a\u0020non\u002Dexpired\u0020package.",
+            "url": "classes/Company-Service-Company.html#method_transferJobs"
+        },                {
+            "fqsen": "\\Company\\Service\\Company\u003A\u003AapplyJobProposal\u0028\u0029",
+            "name": "applyJobProposal",
+            "summary": "",
+            "url": "classes/Company-Service-Company.html#method_applyJobProposal"
+        },                {
+            "fqsen": "\\Company\\Service\\Company\u003A\u003AcancelJobProposal\u0028\u0029",
+            "name": "cancelJobProposal",
+            "summary": "",
+            "url": "classes/Company-Service-Company.html#method_cancelJobProposal"
         },                {
             "fqsen": "\\Company\\Service\\Company\u003A\u003AdeleteCompanyBySlug\u0028\u0029",
             "name": "deleteCompanyBySlug",
@@ -5950,6 +6495,16 @@ Search.appendIndex(
             "name": "getCompanyForm",
             "summary": "",
             "url": "classes/Company-Service-Company.html#method_getCompanyForm"
+        },                {
+            "fqsen": "\\Company\\Service\\Company\u003A\u003AsetJobApproval\u0028\u0029",
+            "name": "setJobApproval",
+            "summary": "",
+            "url": "classes/Company-Service-Company.html#method_setJobApproval"
+        },                {
+            "fqsen": "\\Company\\Service\\Company\u003A\u003AresetJobApproval\u0028\u0029",
+            "name": "resetJobApproval",
+            "summary": "",
+            "url": "classes/Company-Service-Company.html#method_resetJobApproval"
         },                {
             "fqsen": "\\Company\\Service\\Company\u003A\u003A\u0024aclService",
             "name": "aclService",
@@ -6035,6 +6590,11 @@ Search.appendIndex(
             "name": "editLabelForm",
             "summary": "",
             "url": "classes/Company-Service-Company.html#property_editLabelForm"
+        },                {
+            "fqsen": "\\Company\\Service\\Company\u003A\u003A\u0024userService",
+            "name": "userService",
+            "summary": "",
+            "url": "classes/Company-Service-Company.html#property_userService"
         },                {
             "fqsen": "\\Company\\Service\\CompanyQuery",
             "name": "CompanyQuery",
@@ -6135,6 +6695,16 @@ Search.appendIndex(
             "name": "testAdminCareerActionCanBeAccessedAsAdmin",
             "summary": "",
             "url": "classes/CompanyTest-ControllerTest.html#method_testAdminCareerActionCanBeAccessedAsAdmin"
+        },                {
+            "fqsen": "\\CompanyTest\\ControllerTest\u003A\u003AtestCompanyAccountSelfActionCannotBeAccessed\u0028\u0029",
+            "name": "testCompanyAccountSelfActionCannotBeAccessed",
+            "summary": "",
+            "url": "classes/CompanyTest-ControllerTest.html#method_testCompanyAccountSelfActionCannotBeAccessed"
+        },                {
+            "fqsen": "\\CompanyTest\\ControllerTest\u003A\u003AtestCompanyAccountSelfActionCanBeAccessedAsCompany\u0028\u0029",
+            "name": "testCompanyAccountSelfActionCanBeAccessedAsCompany",
+            "summary": "",
+            "url": "classes/CompanyTest-ControllerTest.html#method_testCompanyAccountSelfActionCanBeAccessedAsCompany"
         },                {
             "fqsen": "\\Decision\\Controller\\AdminController",
             "name": "AdminController",
@@ -7061,11 +7631,6 @@ Search.appendIndex(
             "summary": "Authorization\u0020model.",
             "url": "classes/Decision-Model-Authorization.html"
         },                {
-            "fqsen": "\\Decision\\Model\\Authorization\u003A\u003AgetId\u0028\u0029",
-            "name": "getId",
-            "summary": "",
-            "url": "classes/Decision-Model-Authorization.html#method_getId"
-        },                {
             "fqsen": "\\Decision\\Model\\Authorization\u003A\u003AgetAuthorizer\u0028\u0029",
             "name": "getAuthorizer",
             "summary": "",
@@ -7116,11 +7681,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Decision-Model-Authorization.html#method_setRevokedAt"
         },                {
-            "fqsen": "\\Decision\\Model\\Authorization\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "Authorization\u0020ID.",
-            "url": "classes/Decision-Model-Authorization.html#property_id"
-        },                {
             "fqsen": "\\Decision\\Model\\Authorization\u003A\u003A\u0024authorizer",
             "name": "authorizer",
             "summary": "Member\u0020submitting\u0020this\u0020authorization.",
@@ -7150,11 +7710,6 @@ Search.appendIndex(
             "name": "BoardMember",
             "summary": "Board\u0020member\u0020entity.",
             "url": "classes/Decision-Model-BoardMember.html"
-        },                {
-            "fqsen": "\\Decision\\Model\\BoardMember\u003A\u003AgetId\u0028\u0029",
-            "name": "getId",
-            "summary": "Get\u0020the\u0020ID.",
-            "url": "classes/Decision-Model-BoardMember.html#method_getId"
         },                {
             "fqsen": "\\Decision\\Model\\BoardMember\u003A\u003AgetMember\u0028\u0029",
             "name": "getMember",
@@ -7215,11 +7770,6 @@ Search.appendIndex(
             "name": "setDischargeDate",
             "summary": "Set\u0020the\u0020discharge\u0020date.",
             "url": "classes/Decision-Model-BoardMember.html#method_setDischargeDate"
-        },                {
-            "fqsen": "\\Decision\\Model\\BoardMember\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "Id.",
-            "url": "classes/Decision-Model-BoardMember.html#property_id"
         },                {
             "fqsen": "\\Decision\\Model\\BoardMember\u003A\u003A\u0024member",
             "name": "member",
@@ -7721,11 +8271,6 @@ Search.appendIndex(
             "summary": "Meeting\u0020document\u0020model.",
             "url": "classes/Decision-Model-MeetingDocument.html"
         },                {
-            "fqsen": "\\Decision\\Model\\MeetingDocument\u003A\u003AgetId\u0028\u0029",
-            "name": "getId",
-            "summary": "Get\u0020the\u0020document\u0020id.",
-            "url": "classes/Decision-Model-MeetingDocument.html#method_getId"
-        },                {
             "fqsen": "\\Decision\\Model\\MeetingDocument\u003A\u003AgetMeeting\u0028\u0029",
             "name": "getMeeting",
             "summary": "Get\u0020the\u0020meeting.",
@@ -7765,11 +8310,6 @@ Search.appendIndex(
             "name": "setDisplayPosition",
             "summary": "",
             "url": "classes/Decision-Model-MeetingDocument.html#method_setDisplayPosition"
-        },                {
-            "fqsen": "\\Decision\\Model\\MeetingDocument\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "Document\u0020id.",
-            "url": "classes/Decision-Model-MeetingDocument.html#property_id"
         },                {
             "fqsen": "\\Decision\\Model\\MeetingDocument\u003A\u003A\u0024meeting",
             "name": "meeting",
@@ -8261,16 +8801,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Decision-Model-Organ.html#method___construct"
         },                {
-            "fqsen": "\\Decision\\Model\\Organ\u003A\u003AgetId\u0028\u0029",
-            "name": "getId",
-            "summary": "Get\u0020the\u0020ID.",
-            "url": "classes/Decision-Model-Organ.html#method_getId"
-        },                {
-            "fqsen": "\\Decision\\Model\\Organ\u003A\u003AsetId\u0028\u0029",
-            "name": "setId",
-            "summary": "Set\u0020the\u0020ID.",
-            "url": "classes/Decision-Model-Organ.html#method_setId"
-        },                {
             "fqsen": "\\Decision\\Model\\Organ\u003A\u003AgetAbbr\u0028\u0029",
             "name": "getAbbr",
             "summary": "Get\u0020the\u0020abbreviation.",
@@ -8366,11 +8896,6 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020approved\u0020information\u0020for\u0020an\u0020organ.",
             "url": "classes/Decision-Model-Organ.html#method_getApprovedOrganInformation"
         },                {
-            "fqsen": "\\Decision\\Model\\Organ\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "Id.",
-            "url": "classes/Decision-Model-Organ.html#property_id"
-        },                {
             "fqsen": "\\Decision\\Model\\Organ\u003A\u003A\u0024abbr",
             "name": "abbr",
             "summary": "Abbreviation\u0020\u0028only\u0020for\u0020when\u0020organs\u0020are\u0020created\u0029.",
@@ -8420,11 +8945,6 @@ Search.appendIndex(
             "name": "OrganInformation",
             "summary": "Organ\u0020information.",
             "url": "classes/Decision-Model-OrganInformation.html"
-        },                {
-            "fqsen": "\\Decision\\Model\\OrganInformation\u003A\u003AgetId\u0028\u0029",
-            "name": "getId",
-            "summary": "",
-            "url": "classes/Decision-Model-OrganInformation.html#method_getId"
         },                {
             "fqsen": "\\Decision\\Model\\OrganInformation\u003A\u003AgetOrgan\u0028\u0029",
             "name": "getOrgan",
@@ -8531,11 +9051,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Decision-Model-OrganInformation.html#method___clone"
         },                {
-            "fqsen": "\\Decision\\Model\\OrganInformation\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "Organ\u0020information\u0020ID.",
-            "url": "classes/Decision-Model-OrganInformation.html#property_id"
-        },                {
             "fqsen": "\\Decision\\Model\\OrganInformation\u003A\u003A\u0024organ",
             "name": "organ",
             "summary": "",
@@ -8553,22 +9068,22 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Decision\\Model\\OrganInformation\u003A\u003A\u0024shortDutchDescription",
             "name": "shortDutchDescription",
-            "summary": "A\u0020short\u0020description\u0020of\u0020the\u0020organ\u0020in\u0020dutch.",
+            "summary": "A\u0020short\u0020description\u0020of\u0020the\u0020organ\u0020in\u0020Dutch.",
             "url": "classes/Decision-Model-OrganInformation.html#property_shortDutchDescription"
         },                {
             "fqsen": "\\Decision\\Model\\OrganInformation\u003A\u003A\u0024dutchDescription",
             "name": "dutchDescription",
-            "summary": "A\u0020description\u0020of\u0020the\u0020organ\u0020in\u0020dutch.",
+            "summary": "A\u0020description\u0020of\u0020the\u0020organ\u0020in\u0020Dutch.",
             "url": "classes/Decision-Model-OrganInformation.html#property_dutchDescription"
         },                {
             "fqsen": "\\Decision\\Model\\OrganInformation\u003A\u003A\u0024shortEnglishDescription",
             "name": "shortEnglishDescription",
-            "summary": "A\u0020short\u0020description\u0020of\u0020the\u0020organ\u0020in\u0020english.",
+            "summary": "A\u0020short\u0020description\u0020of\u0020the\u0020organ\u0020in\u0020English.",
             "url": "classes/Decision-Model-OrganInformation.html#property_shortEnglishDescription"
         },                {
             "fqsen": "\\Decision\\Model\\OrganInformation\u003A\u003A\u0024englishDescription",
             "name": "englishDescription",
-            "summary": "A\u0020description\u0020of\u0020the\u0020organ\u0020in\u0020english.",
+            "summary": "A\u0020description\u0020of\u0020the\u0020organ\u0020in\u0020English.",
             "url": "classes/Decision-Model-OrganInformation.html#property_englishDescription"
         },                {
             "fqsen": "\\Decision\\Model\\OrganInformation\u003A\u003A\u0024coverPath",
@@ -8590,11 +9105,6 @@ Search.appendIndex(
             "name": "OrganMember",
             "summary": "Organ\u0020member\u0020entity.",
             "url": "classes/Decision-Model-OrganMember.html"
-        },                {
-            "fqsen": "\\Decision\\Model\\OrganMember\u003A\u003AgetId\u0028\u0029",
-            "name": "getId",
-            "summary": "",
-            "url": "classes/Decision-Model-OrganMember.html#method_getId"
         },                {
             "fqsen": "\\Decision\\Model\\OrganMember\u003A\u003AsetOrgan\u0028\u0029",
             "name": "setOrgan",
@@ -8655,11 +9165,6 @@ Search.appendIndex(
             "name": "getDischargeDate",
             "summary": "Get\u0020the\u0020discharge\u0020date.",
             "url": "classes/Decision-Model-OrganMember.html#method_getDischargeDate"
-        },                {
-            "fqsen": "\\Decision\\Model\\OrganMember\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "Id.",
-            "url": "classes/Decision-Model-OrganMember.html#property_id"
         },                {
             "fqsen": "\\Decision\\Model\\OrganMember\u003A\u003A\u0024organ",
             "name": "organ",
@@ -10196,11 +10701,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Education-Model-CourseDocument.html"
         },                {
-            "fqsen": "\\Education\\Model\\CourseDocument\u003A\u003AgetId\u0028\u0029",
-            "name": "getId",
-            "summary": "Get\u0020the\u0020ID.",
-            "url": "classes/Education-Model-CourseDocument.html#method_getId"
-        },                {
             "fqsen": "\\Education\\Model\\CourseDocument\u003A\u003AgetDate\u0028\u0029",
             "name": "getDate",
             "summary": "Get\u0020the\u0020date.",
@@ -10245,11 +10745,6 @@ Search.appendIndex(
             "name": "getResourceId",
             "summary": "",
             "url": "classes/Education-Model-CourseDocument.html#method_getResourceId"
-        },                {
-            "fqsen": "\\Education\\Model\\CourseDocument\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "",
-            "url": "classes/Education-Model-CourseDocument.html#property_id"
         },                {
             "fqsen": "\\Education\\Model\\CourseDocument\u003A\u003A\u0024date",
             "name": "date",
@@ -11231,11 +11726,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Frontpage-Model-NewsItem.html#method_setPinned"
         },                {
-            "fqsen": "\\Frontpage\\Model\\NewsItem\u003A\u003AgetId\u0028\u0029",
-            "name": "getId",
-            "summary": "",
-            "url": "classes/Frontpage-Model-NewsItem.html#method_getId"
-        },                {
             "fqsen": "\\Frontpage\\Model\\NewsItem\u003A\u003AgetDate\u0028\u0029",
             "name": "getDate",
             "summary": "",
@@ -11291,11 +11781,6 @@ Search.appendIndex(
             "summary": "Get\u0020the\u0020resource\u0020ID.",
             "url": "classes/Frontpage-Model-NewsItem.html#method_getResourceId"
         },                {
-            "fqsen": "\\Frontpage\\Model\\NewsItem\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "News\u0020item\u0020ID.",
-            "url": "classes/Frontpage-Model-NewsItem.html#property_id"
-        },                {
             "fqsen": "\\Frontpage\\Model\\NewsItem\u003A\u003A\u0024date",
             "name": "date",
             "summary": "The\u0020date\u0020the\u0020news\u0020item\u0020was\u0020written.",
@@ -11330,11 +11815,6 @@ Search.appendIndex(
             "name": "Page",
             "summary": "Page.",
             "url": "classes/Frontpage-Model-Page.html"
-        },                {
-            "fqsen": "\\Frontpage\\Model\\Page\u003A\u003AgetId\u0028\u0029",
-            "name": "getId",
-            "summary": "",
-            "url": "classes/Frontpage-Model-Page.html#method_getId"
         },                {
             "fqsen": "\\Frontpage\\Model\\Page\u003A\u003AgetDutchTitle\u0028\u0029",
             "name": "getDutchTitle",
@@ -11375,11 +11855,6 @@ Search.appendIndex(
             "name": "getRequiredRole",
             "summary": "",
             "url": "classes/Frontpage-Model-Page.html#method_getRequiredRole"
-        },                {
-            "fqsen": "\\Frontpage\\Model\\Page\u003A\u003AsetId\u0028\u0029",
-            "name": "setId",
-            "summary": "",
-            "url": "classes/Frontpage-Model-Page.html#method_setId"
         },                {
             "fqsen": "\\Frontpage\\Model\\Page\u003A\u003AsetDutchTitle\u0028\u0029",
             "name": "setDutchTitle",
@@ -11425,11 +11900,6 @@ Search.appendIndex(
             "name": "getResourceId",
             "summary": "Get\u0020the\u0020resource\u0020ID.",
             "url": "classes/Frontpage-Model-Page.html#method_getResourceId"
-        },                {
-            "fqsen": "\\Frontpage\\Model\\Page\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "Tag\u0020ID.",
-            "url": "classes/Frontpage-Model-Page.html#property_id"
         },                {
             "fqsen": "\\Frontpage\\Model\\Page\u003A\u003A\u0024category",
             "name": "category",
@@ -11480,11 +11950,6 @@ Search.appendIndex(
             "name": "__construct",
             "summary": "",
             "url": "classes/Frontpage-Model-Poll.html#method___construct"
-        },                {
-            "fqsen": "\\Frontpage\\Model\\Poll\u003A\u003AgetId\u0028\u0029",
-            "name": "getId",
-            "summary": "",
-            "url": "classes/Frontpage-Model-Poll.html#method_getId"
         },                {
             "fqsen": "\\Frontpage\\Model\\Poll\u003A\u003AgetExpiryDate\u0028\u0029",
             "name": "getExpiryDate",
@@ -11581,11 +12046,6 @@ Search.appendIndex(
             "summary": "Check\u0020to\u0020see\u0020if\u0020the\u0020poll\u0020is\u0020currently\u0020displayed.",
             "url": "classes/Frontpage-Model-Poll.html#method_isActive"
         },                {
-            "fqsen": "\\Frontpage\\Model\\Poll\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "Poll\u0020ID.",
-            "url": "classes/Frontpage-Model-Poll.html#property_id"
-        },                {
             "fqsen": "\\Frontpage\\Model\\Poll\u003A\u003A\u0024expiryDate",
             "name": "expiryDate",
             "summary": "The\u0020date\u0020the\u0020poll\u0020expires.",
@@ -11625,11 +12085,6 @@ Search.appendIndex(
             "name": "PollComment",
             "summary": "Poll\u0020comment.",
             "url": "classes/Frontpage-Model-PollComment.html"
-        },                {
-            "fqsen": "\\Frontpage\\Model\\PollComment\u003A\u003AgetId\u0028\u0029",
-            "name": "getId",
-            "summary": "Get\u0020the\u0020comment\u0020ID.",
-            "url": "classes/Frontpage-Model-PollComment.html#method_getId"
         },                {
             "fqsen": "\\Frontpage\\Model\\PollComment\u003A\u003AgetPoll\u0028\u0029",
             "name": "getPoll",
@@ -11686,11 +12141,6 @@ Search.appendIndex(
             "summary": "Get\u0020the\u0020resource\u0020ID.",
             "url": "classes/Frontpage-Model-PollComment.html#method_getResourceId"
         },                {
-            "fqsen": "\\Frontpage\\Model\\PollComment\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "Poll\u0020comment\u0020ID.",
-            "url": "classes/Frontpage-Model-PollComment.html#property_id"
-        },                {
             "fqsen": "\\Frontpage\\Model\\PollComment\u003A\u003A\u0024poll",
             "name": "poll",
             "summary": "Referenced\u0020poll.",
@@ -11720,11 +12170,6 @@ Search.appendIndex(
             "name": "PollOption",
             "summary": "Poll\u0020Option.",
             "url": "classes/Frontpage-Model-PollOption.html"
-        },                {
-            "fqsen": "\\Frontpage\\Model\\PollOption\u003A\u003AgetId\u0028\u0029",
-            "name": "getId",
-            "summary": "",
-            "url": "classes/Frontpage-Model-PollOption.html#method_getId"
         },                {
             "fqsen": "\\Frontpage\\Model\\PollOption\u003A\u003AgetPoll\u0028\u0029",
             "name": "getPoll",
@@ -11780,11 +12225,6 @@ Search.appendIndex(
             "name": "getResourceId",
             "summary": "Get\u0020the\u0020resource\u0020ID.",
             "url": "classes/Frontpage-Model-PollOption.html#method_getResourceId"
-        },                {
-            "fqsen": "\\Frontpage\\Model\\PollOption\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "Poll\u0020Option\u0020ID.",
-            "url": "classes/Frontpage-Model-PollOption.html#property_id"
         },                {
             "fqsen": "\\Frontpage\\Model\\PollOption\u003A\u003A\u0024poll",
             "name": "poll",
@@ -13121,11 +13561,6 @@ Search.appendIndex(
             "summary": "Returns\u0020an\u0020associative\u0020array\u0020representation\u0020of\u0020this\u0020object.",
             "url": "classes/Photo-Model-Album.html#method_toArray"
         },                {
-            "fqsen": "\\Photo\\Model\\Album\u003A\u003AgetId\u0028\u0029",
-            "name": "getId",
-            "summary": "Get\u0020the\u0020ID.",
-            "url": "classes/Photo-Model-Album.html#method_getId"
-        },                {
             "fqsen": "\\Photo\\Model\\Album\u003A\u003AgetStartDateTime\u0028\u0029",
             "name": "getStartDateTime",
             "summary": "Get\u0020the\u0020start\u0020date.",
@@ -13191,11 +13626,6 @@ Search.appendIndex(
             "summary": "Get\u0020the\u0020resource\u0020ID.",
             "url": "classes/Photo-Model-Album.html#method_getResourceId"
         },                {
-            "fqsen": "\\Photo\\Model\\Album\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "Album\u0020ID.",
-            "url": "classes/Photo-Model-Album.html#property_id"
-        },                {
             "fqsen": "\\Photo\\Model\\Album\u003A\u003A\u0024startDateTime",
             "name": "startDateTime",
             "summary": "First\u0020date\u0020of\u0020photos\u0020in\u0020album.",
@@ -13260,11 +13690,6 @@ Search.appendIndex(
             "name": "__construct",
             "summary": "",
             "url": "classes/Photo-Model-Photo.html#method___construct"
-        },                {
-            "fqsen": "\\Photo\\Model\\Photo\u003A\u003AgetId\u0028\u0029",
-            "name": "getId",
-            "summary": "Get\u0020the\u0020ID.",
-            "url": "classes/Photo-Model-Photo.html#method_getId"
         },                {
             "fqsen": "\\Photo\\Model\\Photo\u003A\u003AgetDateTime\u0028\u0029",
             "name": "getDateTime",
@@ -13496,11 +13921,6 @@ Search.appendIndex(
             "summary": "Get\u0020the\u0020resource\u0020ID.",
             "url": "classes/Photo-Model-Photo.html#method_getResourceId"
         },                {
-            "fqsen": "\\Photo\\Model\\Photo\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "Photo\u0020ID.",
-            "url": "classes/Photo-Model-Photo.html#property_id"
-        },                {
             "fqsen": "\\Photo\\Model\\Photo\u003A\u003A\u0024dateTime",
             "name": "dateTime",
             "summary": "Date\u0020and\u0020time\u0020when\u0020the\u0020photo\u0020was\u0020taken.",
@@ -13606,11 +14026,6 @@ Search.appendIndex(
             "summary": "ProfilePhoto.",
             "url": "classes/Photo-Model-ProfilePhoto.html"
         },                {
-            "fqsen": "\\Photo\\Model\\ProfilePhoto\u003A\u003AgetId\u0028\u0029",
-            "name": "getId",
-            "summary": "",
-            "url": "classes/Photo-Model-ProfilePhoto.html#method_getId"
-        },                {
             "fqsen": "\\Photo\\Model\\ProfilePhoto\u003A\u003AgetPhoto\u0028\u0029",
             "name": "getPhoto",
             "summary": "",
@@ -13630,11 +14045,6 @@ Search.appendIndex(
             "name": "isExplicit",
             "summary": "Get\u0020the\u0020explicit\u0020bool.",
             "url": "classes/Photo-Model-ProfilePhoto.html#method_isExplicit"
-        },                {
-            "fqsen": "\\Photo\\Model\\ProfilePhoto\u003A\u003AsetId\u0028\u0029",
-            "name": "setId",
-            "summary": "",
-            "url": "classes/Photo-Model-ProfilePhoto.html#method_setId"
         },                {
             "fqsen": "\\Photo\\Model\\ProfilePhoto\u003A\u003AsetPhoto\u0028\u0029",
             "name": "setPhoto",
@@ -13661,11 +14071,6 @@ Search.appendIndex(
             "summary": "Get\u0020the\u0020resource\u0020Id.",
             "url": "classes/Photo-Model-ProfilePhoto.html#method_getResourceId"
         },                {
-            "fqsen": "\\Photo\\Model\\ProfilePhoto\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "Tag\u0020ID.",
-            "url": "classes/Photo-Model-ProfilePhoto.html#property_id"
-        },                {
             "fqsen": "\\Photo\\Model\\ProfilePhoto\u003A\u003A\u0024photo",
             "name": "photo",
             "summary": "",
@@ -13691,11 +14096,6 @@ Search.appendIndex(
             "summary": "Tag.",
             "url": "classes/Photo-Model-Tag.html"
         },                {
-            "fqsen": "\\Photo\\Model\\Tag\u003A\u003AgetId\u0028\u0029",
-            "name": "getId",
-            "summary": "",
-            "url": "classes/Photo-Model-Tag.html#method_getId"
-        },                {
             "fqsen": "\\Photo\\Model\\Tag\u003A\u003AgetPhoto\u0028\u0029",
             "name": "getPhoto",
             "summary": "",
@@ -13705,11 +14105,6 @@ Search.appendIndex(
             "name": "getMember",
             "summary": "",
             "url": "classes/Photo-Model-Tag.html#method_getMember"
-        },                {
-            "fqsen": "\\Photo\\Model\\Tag\u003A\u003AsetId\u0028\u0029",
-            "name": "setId",
-            "summary": "",
-            "url": "classes/Photo-Model-Tag.html#method_setId"
         },                {
             "fqsen": "\\Photo\\Model\\Tag\u003A\u003AsetPhoto\u0028\u0029",
             "name": "setPhoto",
@@ -13730,11 +14125,6 @@ Search.appendIndex(
             "name": "getResourceId",
             "summary": "Get\u0020the\u0020resource\u0020ID.",
             "url": "classes/Photo-Model-Tag.html#method_getResourceId"
-        },                {
-            "fqsen": "\\Photo\\Model\\Tag\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "Tag\u0020ID.",
-            "url": "classes/Photo-Model-Tag.html#property_id"
         },                {
             "fqsen": "\\Photo\\Model\\Tag\u003A\u003A\u0024photo",
             "name": "photo",
@@ -13821,11 +14211,6 @@ Search.appendIndex(
             "summary": "Vote\u0020constructor.",
             "url": "classes/Photo-Model-Vote.html#method___construct"
         },                {
-            "fqsen": "\\Photo\\Model\\Vote\u003A\u003AgetId\u0028\u0029",
-            "name": "getId",
-            "summary": "",
-            "url": "classes/Photo-Model-Vote.html#method_getId"
-        },                {
             "fqsen": "\\Photo\\Model\\Vote\u003A\u003AsetPhoto\u0028\u0029",
             "name": "setPhoto",
             "summary": "",
@@ -13835,11 +14220,6 @@ Search.appendIndex(
             "name": "getPhoto",
             "summary": "",
             "url": "classes/Photo-Model-Vote.html#method_getPhoto"
-        },                {
-            "fqsen": "\\Photo\\Model\\Vote\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "Vote\u0020ID.",
-            "url": "classes/Photo-Model-Vote.html#property_id"
         },                {
             "fqsen": "\\Photo\\Model\\Vote\u003A\u003A\u0024dateTime",
             "name": "dateTime",
@@ -13881,11 +14261,6 @@ Search.appendIndex(
             "summary": "Maintains\u0020a\u0020list\u0020of\u0020the\u0020\u0022Foto\u0020of\u0020the\u0020week\u0022.",
             "url": "classes/Photo-Model-WeeklyPhoto.html"
         },                {
-            "fqsen": "\\Photo\\Model\\WeeklyPhoto\u003A\u003AgetId\u0028\u0029",
-            "name": "getId",
-            "summary": "",
-            "url": "classes/Photo-Model-WeeklyPhoto.html#method_getId"
-        },                {
             "fqsen": "\\Photo\\Model\\WeeklyPhoto\u003A\u003AgetWeek\u0028\u0029",
             "name": "getWeek",
             "summary": "",
@@ -13895,11 +14270,6 @@ Search.appendIndex(
             "name": "getPhoto",
             "summary": "",
             "url": "classes/Photo-Model-WeeklyPhoto.html#method_getPhoto"
-        },                {
-            "fqsen": "\\Photo\\Model\\WeeklyPhoto\u003A\u003AsetId\u0028\u0029",
-            "name": "setId",
-            "summary": "",
-            "url": "classes/Photo-Model-WeeklyPhoto.html#method_setId"
         },                {
             "fqsen": "\\Photo\\Model\\WeeklyPhoto\u003A\u003AsetWeek\u0028\u0029",
             "name": "setWeek",
@@ -13915,11 +14285,6 @@ Search.appendIndex(
             "name": "getResourceId",
             "summary": "Get\u0020the\u0020resource\u0020ID.",
             "url": "classes/Photo-Model-WeeklyPhoto.html#method_getResourceId"
-        },                {
-            "fqsen": "\\Photo\\Model\\WeeklyPhoto\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "Week\u0020Id.",
-            "url": "classes/Photo-Model-WeeklyPhoto.html#property_id"
         },                {
             "fqsen": "\\Photo\\Model\\WeeklyPhoto\u003A\u003A\u0024week",
             "name": "week",
@@ -14566,95 +14931,150 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/PhotoTest-ControllerTest.html#method_testAdminPhotoActionCanBeAccessedAsAdmin"
         },                {
-            "fqsen": "\\User\\Authentication\\Adapter\\ApiMapper",
-            "name": "ApiMapper",
+            "fqsen": "\\User\\Authentication\\Adapter\\ApiUserAdapter",
+            "name": "ApiUserAdapter",
             "summary": "",
-            "url": "classes/User-Authentication-Adapter-ApiMapper.html"
+            "url": "classes/User-Authentication-Adapter-ApiUserAdapter.html"
         },                {
-            "fqsen": "\\User\\Authentication\\Adapter\\ApiMapper\u003A\u003A__construct\u0028\u0029",
+            "fqsen": "\\User\\Authentication\\Adapter\\ApiUserAdapter\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
             "summary": "",
-            "url": "classes/User-Authentication-Adapter-ApiMapper.html#method___construct"
+            "url": "classes/User-Authentication-Adapter-ApiUserAdapter.html#method___construct"
         },                {
-            "fqsen": "\\User\\Authentication\\Adapter\\ApiMapper\u003A\u003Aauthenticate\u0028\u0029",
+            "fqsen": "\\User\\Authentication\\Adapter\\ApiUserAdapter\u003A\u003Aauthenticate\u0028\u0029",
             "name": "authenticate",
             "summary": "Try\u0020to\u0020authenticate.",
-            "url": "classes/User-Authentication-Adapter-ApiMapper.html#method_authenticate"
+            "url": "classes/User-Authentication-Adapter-ApiUserAdapter.html#method_authenticate"
         },                {
-            "fqsen": "\\User\\Authentication\\Adapter\\ApiMapper\u003A\u003AsetCredentials\u0028\u0029",
+            "fqsen": "\\User\\Authentication\\Adapter\\ApiUserAdapter\u003A\u003AsetCredentials\u0028\u0029",
             "name": "setCredentials",
             "summary": "Sets\u0020the\u0020credentials\u0020used\u0020to\u0020authenticate.",
-            "url": "classes/User-Authentication-Adapter-ApiMapper.html#method_setCredentials"
+            "url": "classes/User-Authentication-Adapter-ApiUserAdapter.html#method_setCredentials"
         },                {
-            "fqsen": "\\User\\Authentication\\Adapter\\ApiMapper\u003A\u003AgetMapper\u0028\u0029",
+            "fqsen": "\\User\\Authentication\\Adapter\\ApiUserAdapter\u003A\u003AgetMapper\u0028\u0029",
             "name": "getMapper",
             "summary": "Get\u0020the\u0020mapper.",
-            "url": "classes/User-Authentication-Adapter-ApiMapper.html#method_getMapper"
+            "url": "classes/User-Authentication-Adapter-ApiUserAdapter.html#method_getMapper"
         },                {
-            "fqsen": "\\User\\Authentication\\Adapter\\ApiMapper\u003A\u003A\u0024token",
+            "fqsen": "\\User\\Authentication\\Adapter\\ApiUserAdapter\u003A\u003A\u0024token",
             "name": "token",
             "summary": "",
-            "url": "classes/User-Authentication-Adapter-ApiMapper.html#property_token"
+            "url": "classes/User-Authentication-Adapter-ApiUserAdapter.html#property_token"
         },                {
-            "fqsen": "\\User\\Authentication\\Adapter\\ApiMapper\u003A\u003A\u0024mapper",
+            "fqsen": "\\User\\Authentication\\Adapter\\ApiUserAdapter\u003A\u003A\u0024mapper",
             "name": "mapper",
             "summary": "",
-            "url": "classes/User-Authentication-Adapter-ApiMapper.html#property_mapper"
+            "url": "classes/User-Authentication-Adapter-ApiUserAdapter.html#property_mapper"
         },                {
-            "fqsen": "\\User\\Authentication\\Adapter\\Mapper",
-            "name": "Mapper",
+            "fqsen": "\\User\\Authentication\\Adapter\\CompanyUserAdapter",
+            "name": "CompanyUserAdapter",
             "summary": "",
-            "url": "classes/User-Authentication-Adapter-Mapper.html"
+            "url": "classes/User-Authentication-Adapter-CompanyUserAdapter.html"
         },                {
-            "fqsen": "\\User\\Authentication\\Adapter\\Mapper\u003A\u003A__construct\u0028\u0029",
+            "fqsen": "\\User\\Authentication\\Adapter\\CompanyUserAdapter\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
             "summary": "",
-            "url": "classes/User-Authentication-Adapter-Mapper.html#method___construct"
+            "url": "classes/User-Authentication-Adapter-CompanyUserAdapter.html#method___construct"
         },                {
-            "fqsen": "\\User\\Authentication\\Adapter\\Mapper\u003A\u003Aauthenticate\u0028\u0029",
+            "fqsen": "\\User\\Authentication\\Adapter\\CompanyUserAdapter\u003A\u003Aauthenticate\u0028\u0029",
             "name": "authenticate",
             "summary": "Try\u0020to\u0020authenticate.",
-            "url": "classes/User-Authentication-Adapter-Mapper.html#method_authenticate"
+            "url": "classes/User-Authentication-Adapter-CompanyUserAdapter.html#method_authenticate"
         },                {
-            "fqsen": "\\User\\Authentication\\Adapter\\Mapper\u003A\u003AverifyPassword\u0028\u0029",
+            "fqsen": "\\User\\Authentication\\Adapter\\CompanyUserAdapter\u003A\u003AverifyPassword\u0028\u0029",
             "name": "verifyPassword",
             "summary": "Verify\u0020a\u0020password.",
-            "url": "classes/User-Authentication-Adapter-Mapper.html#method_verifyPassword"
+            "url": "classes/User-Authentication-Adapter-CompanyUserAdapter.html#method_verifyPassword"
         },                {
-            "fqsen": "\\User\\Authentication\\Adapter\\Mapper\u003A\u003AsetCredentials\u0028\u0029",
+            "fqsen": "\\User\\Authentication\\Adapter\\CompanyUserAdapter\u003A\u003AsetCredentials\u0028\u0029",
             "name": "setCredentials",
             "summary": "Sets\u0020the\u0020credentials\u0020used\u0020to\u0020authenticate.",
-            "url": "classes/User-Authentication-Adapter-Mapper.html#method_setCredentials"
+            "url": "classes/User-Authentication-Adapter-CompanyUserAdapter.html#method_setCredentials"
         },                {
-            "fqsen": "\\User\\Authentication\\Adapter\\Mapper\u003A\u003AgetMapper\u0028\u0029",
+            "fqsen": "\\User\\Authentication\\Adapter\\CompanyUserAdapter\u003A\u003AgetMapper\u0028\u0029",
             "name": "getMapper",
             "summary": "Get\u0020the\u0020mapper.",
-            "url": "classes/User-Authentication-Adapter-Mapper.html#method_getMapper"
+            "url": "classes/User-Authentication-Adapter-CompanyUserAdapter.html#method_getMapper"
         },                {
-            "fqsen": "\\User\\Authentication\\Adapter\\Mapper\u003A\u003A\u0024login",
-            "name": "login",
+            "fqsen": "\\User\\Authentication\\Adapter\\CompanyUserAdapter\u003A\u003A\u0024email",
+            "name": "email",
             "summary": "",
-            "url": "classes/User-Authentication-Adapter-Mapper.html#property_login"
+            "url": "classes/User-Authentication-Adapter-CompanyUserAdapter.html#property_email"
         },                {
-            "fqsen": "\\User\\Authentication\\Adapter\\Mapper\u003A\u003A\u0024password",
+            "fqsen": "\\User\\Authentication\\Adapter\\CompanyUserAdapter\u003A\u003A\u0024password",
             "name": "password",
             "summary": "",
-            "url": "classes/User-Authentication-Adapter-Mapper.html#property_password"
+            "url": "classes/User-Authentication-Adapter-CompanyUserAdapter.html#property_password"
         },                {
-            "fqsen": "\\User\\Authentication\\Adapter\\Mapper\u003A\u003A\u0024bcrypt",
+            "fqsen": "\\User\\Authentication\\Adapter\\CompanyUserAdapter\u003A\u003A\u0024bcrypt",
             "name": "bcrypt",
             "summary": "",
-            "url": "classes/User-Authentication-Adapter-Mapper.html#property_bcrypt"
+            "url": "classes/User-Authentication-Adapter-CompanyUserAdapter.html#property_bcrypt"
         },                {
-            "fqsen": "\\User\\Authentication\\Adapter\\Mapper\u003A\u003A\u0024loginAttemptService",
+            "fqsen": "\\User\\Authentication\\Adapter\\CompanyUserAdapter\u003A\u003A\u0024loginAttemptService",
             "name": "loginAttemptService",
             "summary": "",
-            "url": "classes/User-Authentication-Adapter-Mapper.html#property_loginAttemptService"
+            "url": "classes/User-Authentication-Adapter-CompanyUserAdapter.html#property_loginAttemptService"
         },                {
-            "fqsen": "\\User\\Authentication\\Adapter\\Mapper\u003A\u003A\u0024mapper",
+            "fqsen": "\\User\\Authentication\\Adapter\\CompanyUserAdapter\u003A\u003A\u0024mapper",
             "name": "mapper",
             "summary": "",
-            "url": "classes/User-Authentication-Adapter-Mapper.html#property_mapper"
+            "url": "classes/User-Authentication-Adapter-CompanyUserAdapter.html#property_mapper"
+        },                {
+            "fqsen": "\\User\\Authentication\\Adapter\\UserAdapter",
+            "name": "UserAdapter",
+            "summary": "",
+            "url": "classes/User-Authentication-Adapter-UserAdapter.html"
+        },                {
+            "fqsen": "\\User\\Authentication\\Adapter\\UserAdapter\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/User-Authentication-Adapter-UserAdapter.html#method___construct"
+        },                {
+            "fqsen": "\\User\\Authentication\\Adapter\\UserAdapter\u003A\u003Aauthenticate\u0028\u0029",
+            "name": "authenticate",
+            "summary": "Try\u0020to\u0020authenticate.",
+            "url": "classes/User-Authentication-Adapter-UserAdapter.html#method_authenticate"
+        },                {
+            "fqsen": "\\User\\Authentication\\Adapter\\UserAdapter\u003A\u003AverifyPassword\u0028\u0029",
+            "name": "verifyPassword",
+            "summary": "Verify\u0020a\u0020password.",
+            "url": "classes/User-Authentication-Adapter-UserAdapter.html#method_verifyPassword"
+        },                {
+            "fqsen": "\\User\\Authentication\\Adapter\\UserAdapter\u003A\u003AsetCredentials\u0028\u0029",
+            "name": "setCredentials",
+            "summary": "Sets\u0020the\u0020credentials\u0020used\u0020to\u0020authenticate.",
+            "url": "classes/User-Authentication-Adapter-UserAdapter.html#method_setCredentials"
+        },                {
+            "fqsen": "\\User\\Authentication\\Adapter\\UserAdapter\u003A\u003AgetMapper\u0028\u0029",
+            "name": "getMapper",
+            "summary": "Get\u0020the\u0020mapper.",
+            "url": "classes/User-Authentication-Adapter-UserAdapter.html#method_getMapper"
+        },                {
+            "fqsen": "\\User\\Authentication\\Adapter\\UserAdapter\u003A\u003A\u0024login",
+            "name": "login",
+            "summary": "",
+            "url": "classes/User-Authentication-Adapter-UserAdapter.html#property_login"
+        },                {
+            "fqsen": "\\User\\Authentication\\Adapter\\UserAdapter\u003A\u003A\u0024password",
+            "name": "password",
+            "summary": "",
+            "url": "classes/User-Authentication-Adapter-UserAdapter.html#property_password"
+        },                {
+            "fqsen": "\\User\\Authentication\\Adapter\\UserAdapter\u003A\u003A\u0024bcrypt",
+            "name": "bcrypt",
+            "summary": "",
+            "url": "classes/User-Authentication-Adapter-UserAdapter.html#property_bcrypt"
+        },                {
+            "fqsen": "\\User\\Authentication\\Adapter\\UserAdapter\u003A\u003A\u0024loginAttemptService",
+            "name": "loginAttemptService",
+            "summary": "",
+            "url": "classes/User-Authentication-Adapter-UserAdapter.html#property_loginAttemptService"
+        },                {
+            "fqsen": "\\User\\Authentication\\Adapter\\UserAdapter\u003A\u003A\u0024mapper",
+            "name": "mapper",
+            "summary": "",
+            "url": "classes/User-Authentication-Adapter-UserAdapter.html#property_mapper"
         },                {
             "fqsen": "\\User\\Authentication\\ApiAuthenticationService",
             "name": "ApiAuthenticationService",
@@ -14678,22 +15098,22 @@ Search.appendIndex(
         },                {
             "fqsen": "\\User\\Authentication\\ApiAuthenticationService\u003A\u003Aauthenticate\u0028\u0029",
             "name": "authenticate",
-            "summary": "",
+            "summary": "Authenticates\u0020against\u0020the\u0020authentication\u0020adapter.\u0020The\u0020default\u0020values\u0020must\u0020be\u0020\u0060null\u0060\u0020to\u0020be\u0020compatible\u0020with\u0020the\n\u0060AuthenticationServiceInterface\u0060.",
             "url": "classes/User-Authentication-ApiAuthenticationService.html#method_authenticate"
         },                {
             "fqsen": "\\User\\Authentication\\ApiAuthenticationService\u003A\u003AhasIdentity\u0028\u0029",
             "name": "hasIdentity",
-            "summary": "",
+            "summary": "Returns\u0020true\u0020if\u0020and\u0020only\u0020if\u0020an\u0020identity\u0020is\u0020available.",
             "url": "classes/User-Authentication-ApiAuthenticationService.html#method_hasIdentity"
         },                {
             "fqsen": "\\User\\Authentication\\ApiAuthenticationService\u003A\u003AgetIdentity\u0028\u0029",
             "name": "getIdentity",
-            "summary": "",
+            "summary": "Returns\u0020the\u0020authenticated\u0020ApiUser\u0020or\u0020null\u0020if\u0020no\u0020identity\u0020is\u0020available.",
             "url": "classes/User-Authentication-ApiAuthenticationService.html#method_getIdentity"
         },                {
             "fqsen": "\\User\\Authentication\\ApiAuthenticationService\u003A\u003AclearIdentity\u0028\u0029",
             "name": "clearIdentity",
-            "summary": "",
+            "summary": "Clears\u0020the\u0020identity.",
             "url": "classes/User-Authentication-ApiAuthenticationService.html#method_clearIdentity"
         },                {
             "fqsen": "\\User\\Authentication\\ApiAuthenticationService\u003A\u003A\u0024adapter",
@@ -14748,12 +15168,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\User\\Authentication\\AuthenticationService\u003A\u003AgetIdentity\u0028\u0029",
             "name": "getIdentity",
-            "summary": "Returns\u0020the\u0020authenticated\u0020User\u0020or\u0020null\u0020if\u0020no\u0020identity\u0020is\u0020available.",
+            "summary": "Returns\u0020the\u0020authenticated\u0020CompanyUser\u007CUser\u0020or\u0020null\u0020if\u0020no\u0020identity\u0020is\u0020available.",
             "url": "classes/User-Authentication-AuthenticationService.html#method_getIdentity"
         },                {
             "fqsen": "\\User\\Authentication\\AuthenticationService\u003A\u003AclearIdentity\u0028\u0029",
             "name": "clearIdentity",
-            "summary": "Clears\u0020the\u0020identity\u0020from\u0020persistent\u0020storage",
+            "summary": "Clears\u0020the\u0020identity\u0020from\u0020persistent\u0020storage.",
             "url": "classes/User-Authentication-AuthenticationService.html#method_clearIdentity"
         },                {
             "fqsen": "\\User\\Authentication\\AuthenticationService\u003A\u003AsetRememberMe\u0028\u0029",
@@ -14783,7 +15203,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\User\\Authentication\\Service\\LoginAttempt\u003A\u003AlogFailedLogin\u0028\u0029",
             "name": "logFailedLogin",
-            "summary": "",
+            "summary": "Log\u0020a\u0020failed\u0020login\u0020attempt.",
             "url": "classes/User-Authentication-Service-LoginAttempt.html#method_logFailedLogin"
         },                {
             "fqsen": "\\User\\Authentication\\Service\\LoginAttempt\u003A\u003AdetachUser\u0028\u0029",
@@ -14793,7 +15213,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\User\\Authentication\\Service\\LoginAttempt\u003A\u003AloginAttemptsExceeded\u0028\u0029",
             "name": "loginAttemptsExceeded",
-            "summary": "",
+            "summary": "Check\u0020if\u0020there\u0020are\u0020too\u0020many\u0020login\u0020tries\u0020for\u0020a\u0020specific\u0020account.",
             "url": "classes/User-Authentication-Service-LoginAttempt.html#method_loginAttemptsExceeded"
         },                {
             "fqsen": "\\User\\Authentication\\Service\\LoginAttempt\u003A\u003A\u0024remoteAddress",
@@ -14806,6 +15226,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/User-Authentication-Service-LoginAttempt.html#property_loginAttemptMapper"
         },                {
+            "fqsen": "\\User\\Authentication\\Service\\LoginAttempt\u003A\u003A\u0024companyUserMapper",
+            "name": "companyUserMapper",
+            "summary": "",
+            "url": "classes/User-Authentication-Service-LoginAttempt.html#property_companyUserMapper"
+        },                {
             "fqsen": "\\User\\Authentication\\Service\\LoginAttempt\u003A\u003A\u0024userMapper",
             "name": "userMapper",
             "summary": "",
@@ -14816,100 +15241,110 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/User-Authentication-Service-LoginAttempt.html#property_rateLimitConfig"
         },                {
-            "fqsen": "\\User\\Authentication\\Storage\\Session",
-            "name": "Session",
+            "fqsen": "\\User\\Authentication\\Storage\\CompanyUserSession",
+            "name": "CompanyUserSession",
             "summary": "",
-            "url": "classes/User-Authentication-Storage-Session.html"
+            "url": "classes/User-Authentication-Storage-CompanyUserSession.html"
         },                {
-            "fqsen": "\\User\\Authentication\\Storage\\Session\u003A\u003A__construct\u0028\u0029",
+            "fqsen": "\\User\\Authentication\\Storage\\CompanyUserSession\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Construct\u0020the\u0020session\u0020storage\u0020for\u0020companies.\u0020Use\u0020a\u0020separate\u0020namespace\u0020for\u0020the\u0020session\u0020container\u0020to\u0020ensure\u0020users\nand\u0020company\u0020users\u0020are\u0020separated.",
+            "url": "classes/User-Authentication-Storage-CompanyUserSession.html#method___construct"
+        },                {
+            "fqsen": "\\User\\Authentication\\Storage\\UserSession",
+            "name": "UserSession",
+            "summary": "",
+            "url": "classes/User-Authentication-Storage-UserSession.html"
+        },                {
+            "fqsen": "\\User\\Authentication\\Storage\\UserSession\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
             "summary": "",
-            "url": "classes/User-Authentication-Storage-Session.html#method___construct"
+            "url": "classes/User-Authentication-Storage-UserSession.html#method___construct"
         },                {
-            "fqsen": "\\User\\Authentication\\Storage\\Session\u003A\u003AsetRememberMe\u0028\u0029",
+            "fqsen": "\\User\\Authentication\\Storage\\UserSession\u003A\u003AsetRememberMe\u0028\u0029",
             "name": "setRememberMe",
             "summary": "Set\u0020whether\u0020we\u0020should\u0020remember\u0020this\u0020session\u0020or\u0020not.",
-            "url": "classes/User-Authentication-Storage-Session.html#method_setRememberMe"
+            "url": "classes/User-Authentication-Storage-UserSession.html#method_setRememberMe"
         },                {
-            "fqsen": "\\User\\Authentication\\Storage\\Session\u003A\u003AisEmpty\u0028\u0029",
+            "fqsen": "\\User\\Authentication\\Storage\\UserSession\u003A\u003AisEmpty\u0028\u0029",
             "name": "isEmpty",
             "summary": "Defined\u0020by\u0020Laminas\\Authentication\\Storage\\StorageInterface.",
-            "url": "classes/User-Authentication-Storage-Session.html#method_isEmpty"
+            "url": "classes/User-Authentication-Storage-UserSession.html#method_isEmpty"
         },                {
-            "fqsen": "\\User\\Authentication\\Storage\\Session\u003A\u003AvalidateSession\u0028\u0029",
+            "fqsen": "\\User\\Authentication\\Storage\\UserSession\u003A\u003AvalidateSession\u0028\u0029",
             "name": "validateSession",
             "summary": "Check\u0020if\u0020there\u0020is\u0020a\u0020session\u0020stored\u0020in\u0020the\u0020database\u0020and\u0020load\u0020it\u0020when\u0020possible.",
-            "url": "classes/User-Authentication-Storage-Session.html#method_validateSession"
+            "url": "classes/User-Authentication-Storage-UserSession.html#method_validateSession"
         },                {
-            "fqsen": "\\User\\Authentication\\Storage\\Session\u003A\u003Awrite\u0028\u0029",
+            "fqsen": "\\User\\Authentication\\Storage\\UserSession\u003A\u003Awrite\u0028\u0029",
             "name": "write",
             "summary": "Defined\u0020by\u0020Laminas\\Authentication\\Storage\\StorageInterface.",
-            "url": "classes/User-Authentication-Storage-Session.html#method_write"
+            "url": "classes/User-Authentication-Storage-UserSession.html#method_write"
         },                {
-            "fqsen": "\\User\\Authentication\\Storage\\Session\u003A\u003AsaveSession\u0028\u0029",
+            "fqsen": "\\User\\Authentication\\Storage\\UserSession\u003A\u003AsaveSession\u0028\u0029",
             "name": "saveSession",
             "summary": "Store\u0020the\u0020current\u0020session.",
-            "url": "classes/User-Authentication-Storage-Session.html#method_saveSession"
+            "url": "classes/User-Authentication-Storage-UserSession.html#method_saveSession"
         },                {
-            "fqsen": "\\User\\Authentication\\Storage\\Session\u003A\u003Aclear\u0028\u0029",
+            "fqsen": "\\User\\Authentication\\Storage\\UserSession\u003A\u003Aclear\u0028\u0029",
             "name": "clear",
             "summary": "Defined\u0020by\u0020Laminas\\Authentication\\Storage\\StorageInterface.",
-            "url": "classes/User-Authentication-Storage-Session.html#method_clear"
+            "url": "classes/User-Authentication-Storage-UserSession.html#method_clear"
         },                {
-            "fqsen": "\\User\\Authentication\\Storage\\Session\u003A\u003AsaveCookie\u0028\u0029",
+            "fqsen": "\\User\\Authentication\\Storage\\UserSession\u003A\u003AsaveCookie\u0028\u0029",
             "name": "saveCookie",
             "summary": "Store\u0020the\u0020session\u0020token\u0020as\u0020a\u0020cookie.",
-            "url": "classes/User-Authentication-Storage-Session.html#method_saveCookie"
+            "url": "classes/User-Authentication-Storage-UserSession.html#method_saveCookie"
         },                {
-            "fqsen": "\\User\\Authentication\\Storage\\Session\u003A\u003AclearCookie\u0028\u0029",
+            "fqsen": "\\User\\Authentication\\Storage\\UserSession\u003A\u003AclearCookie\u0028\u0029",
             "name": "clearCookie",
             "summary": "Destroy\u0020the\u0020cookie\u0020holding\u0020the\u0020stored\u0020session.",
-            "url": "classes/User-Authentication-Storage-Session.html#method_clearCookie"
+            "url": "classes/User-Authentication-Storage-UserSession.html#method_clearCookie"
         },                {
-            "fqsen": "\\User\\Authentication\\Storage\\Session\u003A\u003AsetCookieParameters\u0028\u0029",
+            "fqsen": "\\User\\Authentication\\Storage\\UserSession\u003A\u003AsetCookieParameters\u0028\u0029",
             "name": "setCookieParameters",
-            "summary": "",
-            "url": "classes/User-Authentication-Storage-Session.html#method_setCookieParameters"
+            "summary": "Set\u0020specific\u0020cookie\u0020parameters.",
+            "url": "classes/User-Authentication-Storage-UserSession.html#method_setCookieParameters"
         },                {
-            "fqsen": "\\User\\Authentication\\Storage\\Session\u003A\u003AgetPrivateKey\u0028\u0029",
+            "fqsen": "\\User\\Authentication\\Storage\\UserSession\u003A\u003AgetPrivateKey\u0028\u0029",
             "name": "getPrivateKey",
             "summary": "Get\u0020the\u0020private\u0020key\u0020to\u0020use\u0020for\u0020JWT.",
-            "url": "classes/User-Authentication-Storage-Session.html#method_getPrivateKey"
+            "url": "classes/User-Authentication-Storage-UserSession.html#method_getPrivateKey"
         },                {
-            "fqsen": "\\User\\Authentication\\Storage\\Session\u003A\u003AgetPublicKey\u0028\u0029",
+            "fqsen": "\\User\\Authentication\\Storage\\UserSession\u003A\u003AgetPublicKey\u0028\u0029",
             "name": "getPublicKey",
             "summary": "Get\u0020the\u0020public\u0020key\u0020to\u0020use\u0020for\u0020JWT.",
-            "url": "classes/User-Authentication-Storage-Session.html#method_getPublicKey"
+            "url": "classes/User-Authentication-Storage-UserSession.html#method_getPublicKey"
         },                {
-            "fqsen": "\\User\\Authentication\\Storage\\Session\u003A\u003AJWT_COOKIE_NAME",
+            "fqsen": "\\User\\Authentication\\Storage\\UserSession\u003A\u003AJWT_COOKIE_NAME",
             "name": "JWT_COOKIE_NAME",
             "summary": "",
-            "url": "classes/User-Authentication-Storage-Session.html#constant_JWT_COOKIE_NAME"
+            "url": "classes/User-Authentication-Storage-UserSession.html#constant_JWT_COOKIE_NAME"
         },                {
-            "fqsen": "\\User\\Authentication\\Storage\\Session\u003A\u003AJWT_KEY_ALGORITHM",
+            "fqsen": "\\User\\Authentication\\Storage\\UserSession\u003A\u003AJWT_KEY_ALGORITHM",
             "name": "JWT_KEY_ALGORITHM",
             "summary": "",
-            "url": "classes/User-Authentication-Storage-Session.html#constant_JWT_KEY_ALGORITHM"
+            "url": "classes/User-Authentication-Storage-UserSession.html#constant_JWT_KEY_ALGORITHM"
         },                {
-            "fqsen": "\\User\\Authentication\\Storage\\Session\u003A\u003A\u0024rememberMe",
+            "fqsen": "\\User\\Authentication\\Storage\\UserSession\u003A\u003A\u0024rememberMe",
             "name": "rememberMe",
             "summary": "",
-            "url": "classes/User-Authentication-Storage-Session.html#property_rememberMe"
+            "url": "classes/User-Authentication-Storage-UserSession.html#property_rememberMe"
         },                {
-            "fqsen": "\\User\\Authentication\\Storage\\Session\u003A\u003A\u0024request",
+            "fqsen": "\\User\\Authentication\\Storage\\UserSession\u003A\u003A\u0024request",
             "name": "request",
             "summary": "",
-            "url": "classes/User-Authentication-Storage-Session.html#property_request"
+            "url": "classes/User-Authentication-Storage-UserSession.html#property_request"
         },                {
-            "fqsen": "\\User\\Authentication\\Storage\\Session\u003A\u003A\u0024response",
+            "fqsen": "\\User\\Authentication\\Storage\\UserSession\u003A\u003A\u0024response",
             "name": "response",
             "summary": "",
-            "url": "classes/User-Authentication-Storage-Session.html#property_response"
+            "url": "classes/User-Authentication-Storage-UserSession.html#property_response"
         },                {
-            "fqsen": "\\User\\Authentication\\Storage\\Session\u003A\u003A\u0024config",
+            "fqsen": "\\User\\Authentication\\Storage\\UserSession\u003A\u003A\u0024config",
             "name": "config",
             "summary": "",
-            "url": "classes/User-Authentication-Storage-Session.html#property_config"
+            "url": "classes/User-Authentication-Storage-UserSession.html#property_config"
         },                {
             "fqsen": "\\User\\Authorization\\AclServiceFactory",
             "name": "AclServiceFactory",
@@ -14936,20 +15371,30 @@ Search.appendIndex(
             "summary": "Get\u0020the\u0020current\u0020user\u0027s\u0020role.",
             "url": "classes/User-Authorization-GenericAclService.html#method_getRole"
         },                {
-            "fqsen": "\\User\\Authorization\\GenericAclService\u003A\u003AgetIdentityOrThrowException\u0028\u0029",
-            "name": "getIdentityOrThrowException",
-            "summary": "Gets\u0020the\u0020user\u0020identity,\u0020or\u0020gives\u0020a\u0020403\u0020if\u0020the\u0020user\u0020is\u0020not\u0020logged\u0020in",
-            "url": "classes/User-Authorization-GenericAclService.html#method_getIdentityOrThrowException"
-        },                {
             "fqsen": "\\User\\Authorization\\GenericAclService\u003A\u003AgetIdentity\u0028\u0029",
             "name": "getIdentity",
             "summary": "Gets\u0020the\u0020user\u0020identity\u0020if\u0020logged\u0020in\u0020or\u0020null\u0020otherwise",
             "url": "classes/User-Authorization-GenericAclService.html#method_getIdentity"
         },                {
-            "fqsen": "\\User\\Authorization\\GenericAclService\u003A\u003AhasIdentity\u0028\u0029",
-            "name": "hasIdentity",
-            "summary": "Checks\u0020whether\u0020the\u0020user\u0020is\u0020logged\u0020in",
-            "url": "classes/User-Authorization-GenericAclService.html#method_hasIdentity"
+            "fqsen": "\\User\\Authorization\\GenericAclService\u003A\u003AgetCompanyUserIdentity\u0028\u0029",
+            "name": "getCompanyUserIdentity",
+            "summary": "Get\u0020the\u0020company\u0020user\u0020identity\u0020or\u0020\u0060null\u0060\u0020if\u0020no\u0020\u0060CompanyUser\u0060\u0020is\u0020logged\u0020in.",
+            "url": "classes/User-Authorization-GenericAclService.html#method_getCompanyUserIdentity"
+        },                {
+            "fqsen": "\\User\\Authorization\\GenericAclService\u003A\u003AgetCompanyUserIdentityOrThrowException\u0028\u0029",
+            "name": "getCompanyUserIdentityOrThrowException",
+            "summary": "Gets\u0020the\u0020company\u0020user\u0020identity\u0020or\u0020gives\u0020a\u0020403\u0020if\u0020the\u0020company\u0020user\u0020is\u0020not\u0020logged\u0020in.",
+            "url": "classes/User-Authorization-GenericAclService.html#method_getCompanyUserIdentityOrThrowException"
+        },                {
+            "fqsen": "\\User\\Authorization\\GenericAclService\u003A\u003AgetUserIdentity\u0028\u0029",
+            "name": "getUserIdentity",
+            "summary": "Get\u0020the\u0020user\u0020identity\u0020or\u0020\u0060null\u0060\u0020if\u0020no\u0020\u0060User\u0060\u0020is\u0020logged\u0020in.",
+            "url": "classes/User-Authorization-GenericAclService.html#method_getUserIdentity"
+        },                {
+            "fqsen": "\\User\\Authorization\\GenericAclService\u003A\u003AgetUserIdentityOrThrowException\u0028\u0029",
+            "name": "getUserIdentityOrThrowException",
+            "summary": "Gets\u0020the\u0020user\u0020identity\u0020or\u0020gives\u0020a\u0020403\u0020if\u0020the\u0020user\u0020is\u0020not\u0020logged\u0020in.",
+            "url": "classes/User-Authorization-GenericAclService.html#method_getUserIdentityOrThrowException"
         },                {
             "fqsen": "\\User\\Authorization\\GenericAclService\u003A\u003AfromTueNetwork\u0028\u0029",
             "name": "fromTueNetwork",
@@ -14966,15 +15411,20 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/User-Authorization-GenericAclService.html#property_translator"
         },                {
-            "fqsen": "\\User\\Authorization\\GenericAclService\u003A\u003A\u0024authService",
-            "name": "authService",
+            "fqsen": "\\User\\Authorization\\GenericAclService\u003A\u003A\u0024userAuthService",
+            "name": "userAuthService",
             "summary": "",
-            "url": "classes/User-Authorization-GenericAclService.html#property_authService"
+            "url": "classes/User-Authorization-GenericAclService.html#property_userAuthService"
         },                {
-            "fqsen": "\\User\\Authorization\\GenericAclService\u003A\u003A\u0024apiAuthService",
-            "name": "apiAuthService",
+            "fqsen": "\\User\\Authorization\\GenericAclService\u003A\u003A\u0024companyUserAuthService",
+            "name": "companyUserAuthService",
             "summary": "",
-            "url": "classes/User-Authorization-GenericAclService.html#property_apiAuthService"
+            "url": "classes/User-Authorization-GenericAclService.html#property_companyUserAuthService"
+        },                {
+            "fqsen": "\\User\\Authorization\\GenericAclService\u003A\u003A\u0024apiUserAuthService",
+            "name": "apiUserAuthService",
+            "summary": "",
+            "url": "classes/User-Authorization-GenericAclService.html#property_apiUserAuthService"
         },                {
             "fqsen": "\\User\\Authorization\\GenericAclService\u003A\u003A\u0024tueRanges",
             "name": "tueRanges",
@@ -15061,31 +15511,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/User-Controller-ApiAuthenticationController.html#property_apiAppAuthorisationReminderForm"
         },                {
-            "fqsen": "\\User\\Controller\\ApiController",
-            "name": "ApiController",
-            "summary": "",
-            "url": "classes/User-Controller-ApiController.html"
-        },                {
-            "fqsen": "\\User\\Controller\\ApiController\u003A\u003A__construct\u0028\u0029",
-            "name": "__construct",
-            "summary": "",
-            "url": "classes/User-Controller-ApiController.html#method___construct"
-        },                {
-            "fqsen": "\\User\\Controller\\ApiController\u003A\u003AvalidateAction\u0028\u0029",
-            "name": "validateAction",
-            "summary": "",
-            "url": "classes/User-Controller-ApiController.html#method_validateAction"
-        },                {
-            "fqsen": "\\User\\Controller\\ApiController\u003A\u003A\u0024aclService",
-            "name": "aclService",
-            "summary": "",
-            "url": "classes/User-Controller-ApiController.html#property_aclService"
-        },                {
-            "fqsen": "\\User\\Controller\\ApiController\u003A\u003A\u0024memberInfoService",
-            "name": "memberInfoService",
-            "summary": "",
-            "url": "classes/User-Controller-ApiController.html#property_memberInfoService"
-        },                {
             "fqsen": "\\User\\Controller\\Factory\\ApiAdminControllerFactory",
             "name": "ApiAdminControllerFactory",
             "summary": "",
@@ -15105,16 +15530,6 @@ Search.appendIndex(
             "name": "__invoke",
             "summary": "",
             "url": "classes/User-Controller-Factory-ApiAuthenticationControllerFactory.html#method___invoke"
-        },                {
-            "fqsen": "\\User\\Controller\\Factory\\ApiControllerFactory",
-            "name": "ApiControllerFactory",
-            "summary": "",
-            "url": "classes/User-Controller-Factory-ApiControllerFactory.html"
-        },                {
-            "fqsen": "\\User\\Controller\\Factory\\ApiControllerFactory\u003A\u003A__invoke\u0028\u0029",
-            "name": "__invoke",
-            "summary": "",
-            "url": "classes/User-Controller-Factory-ApiControllerFactory.html#method___invoke"
         },                {
             "fqsen": "\\User\\Controller\\Factory\\UserControllerFactory",
             "name": "UserControllerFactory",
@@ -15136,10 +15551,10 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/User-Controller-UserController.html#method___construct"
         },                {
-            "fqsen": "\\User\\Controller\\UserController\u003A\u003AindexAction\u0028\u0029",
-            "name": "indexAction",
+            "fqsen": "\\User\\Controller\\UserController\u003A\u003AloginAction\u0028\u0029",
+            "name": "loginAction",
             "summary": "User\u0020login\u0020action.",
-            "url": "classes/User-Controller-UserController.html#method_indexAction"
+            "url": "classes/User-Controller-UserController.html#method_loginAction"
         },                {
             "fqsen": "\\User\\Controller\\UserController\u003A\u003AhandleRedirect\u0028\u0029",
             "name": "handleRedirect",
@@ -15156,20 +15571,30 @@ Search.appendIndex(
             "summary": "User\u0020register\u0020action.",
             "url": "classes/User-Controller-UserController.html#method_registerAction"
         },                {
-            "fqsen": "\\User\\Controller\\UserController\u003A\u003ApasswordAction\u0028\u0029",
-            "name": "passwordAction",
+            "fqsen": "\\User\\Controller\\UserController\u003A\u003AchangePasswordAction\u0028\u0029",
+            "name": "changePasswordAction",
             "summary": "Action\u0020to\u0020change\u0020password.",
-            "url": "classes/User-Controller-UserController.html#method_passwordAction"
+            "url": "classes/User-Controller-UserController.html#method_changePasswordAction"
         },                {
-            "fqsen": "\\User\\Controller\\UserController\u003A\u003AresetAction\u0028\u0029",
-            "name": "resetAction",
+            "fqsen": "\\User\\Controller\\UserController\u003A\u003AresetPasswordAction\u0028\u0029",
+            "name": "resetPasswordAction",
             "summary": "Action\u0020to\u0020reset\u0020password.",
-            "url": "classes/User-Controller-UserController.html#method_resetAction"
+            "url": "classes/User-Controller-UserController.html#method_resetPasswordAction"
         },                {
             "fqsen": "\\User\\Controller\\UserController\u003A\u003AactivateAction\u0028\u0029",
             "name": "activateAction",
             "summary": "User\u0020activation\u0020action.",
             "url": "classes/User-Controller-UserController.html#method_activateAction"
+        },                {
+            "fqsen": "\\User\\Controller\\UserController\u003A\u003A\u0024aclService",
+            "name": "aclService",
+            "summary": "",
+            "url": "classes/User-Controller-UserController.html#property_aclService"
+        },                {
+            "fqsen": "\\User\\Controller\\UserController\u003A\u003A\u0024translator",
+            "name": "translator",
+            "summary": "",
+            "url": "classes/User-Controller-UserController.html#property_translator"
         },                {
             "fqsen": "\\User\\Controller\\UserController\u003A\u003A\u0024userService",
             "name": "userService",
@@ -15190,6 +15615,16 @@ Search.appendIndex(
             "name": "getInputFilterSpecification",
             "summary": "",
             "url": "classes/User-Form-Activate.html#method_getInputFilterSpecification"
+        },                {
+            "fqsen": "\\User\\Form\\Activate\u003A\u003A\u0024translator",
+            "name": "translator",
+            "summary": "",
+            "url": "classes/User-Form-Activate.html#property_translator"
+        },                {
+            "fqsen": "\\User\\Form\\Activate\u003A\u003A\u0024passwordLength",
+            "name": "passwordLength",
+            "summary": "",
+            "url": "classes/User-Form-Activate.html#property_passwordLength"
         },                {
             "fqsen": "\\User\\Form\\ApiAppAuthorisation",
             "name": "ApiAppAuthorisation",
@@ -15221,30 +15656,55 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/User-Form-ApiToken.html#method_getInputFilterSpecification"
         },                {
-            "fqsen": "\\User\\Form\\Login",
-            "name": "Login",
+            "fqsen": "\\User\\Form\\CompanyUserLogin",
+            "name": "CompanyUserLogin",
             "summary": "",
-            "url": "classes/User-Form-Login.html"
+            "url": "classes/User-Form-CompanyUserLogin.html"
         },                {
-            "fqsen": "\\User\\Form\\Login\u003A\u003A__construct\u0028\u0029",
+            "fqsen": "\\User\\Form\\CompanyUserLogin\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
             "summary": "",
-            "url": "classes/User-Form-Login.html#method___construct"
+            "url": "classes/User-Form-CompanyUserLogin.html#method___construct"
         },                {
-            "fqsen": "\\User\\Form\\Login\u003A\u003AsetResult\u0028\u0029",
+            "fqsen": "\\User\\Form\\CompanyUserLogin\u003A\u003AsetResult\u0028\u0029",
             "name": "setResult",
             "summary": "Set\u0020authentication\u0020result.",
-            "url": "classes/User-Form-Login.html#method_setResult"
+            "url": "classes/User-Form-CompanyUserLogin.html#method_setResult"
         },                {
-            "fqsen": "\\User\\Form\\Login\u003A\u003AgetInputSpecification\u0028\u0029",
+            "fqsen": "\\User\\Form\\CompanyUserLogin\u003A\u003AgetInputSpecification\u0028\u0029",
             "name": "getInputSpecification",
             "summary": "",
-            "url": "classes/User-Form-Login.html#method_getInputSpecification"
+            "url": "classes/User-Form-CompanyUserLogin.html#method_getInputSpecification"
         },                {
-            "fqsen": "\\User\\Form\\Login\u003A\u003A\u0024translate",
+            "fqsen": "\\User\\Form\\CompanyUserLogin\u003A\u003A\u0024translate",
             "name": "translate",
             "summary": "",
-            "url": "classes/User-Form-Login.html#property_translate"
+            "url": "classes/User-Form-CompanyUserLogin.html#property_translate"
+        },                {
+            "fqsen": "\\User\\Form\\CompanyUserLogin\u003A\u003A\u0024passwordLength",
+            "name": "passwordLength",
+            "summary": "",
+            "url": "classes/User-Form-CompanyUserLogin.html#property_passwordLength"
+        },                {
+            "fqsen": "\\User\\Form\\CompanyUserReset",
+            "name": "CompanyUserReset",
+            "summary": "",
+            "url": "classes/User-Form-CompanyUserReset.html"
+        },                {
+            "fqsen": "\\User\\Form\\CompanyUserReset\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/User-Form-CompanyUserReset.html#method___construct"
+        },                {
+            "fqsen": "\\User\\Form\\CompanyUserReset\u003A\u003AgetInputSpecification\u0028\u0029",
+            "name": "getInputSpecification",
+            "summary": "",
+            "url": "classes/User-Form-CompanyUserReset.html#method_getInputSpecification"
+        },                {
+            "fqsen": "\\User\\Form\\CompanyUserReset\u003A\u003A\u0024translate",
+            "name": "translate",
+            "summary": "",
+            "url": "classes/User-Form-CompanyUserReset.html#property_translate"
         },                {
             "fqsen": "\\User\\Form\\Password",
             "name": "Password",
@@ -15260,6 +15720,16 @@ Search.appendIndex(
             "name": "getInputFilterSpecification",
             "summary": "",
             "url": "classes/User-Form-Password.html#method_getInputFilterSpecification"
+        },                {
+            "fqsen": "\\User\\Form\\Password\u003A\u003A\u0024translator",
+            "name": "translator",
+            "summary": "",
+            "url": "classes/User-Form-Password.html#property_translator"
+        },                {
+            "fqsen": "\\User\\Form\\Password\u003A\u003A\u0024passwordLength",
+            "name": "passwordLength",
+            "summary": "",
+            "url": "classes/User-Form-Password.html#property_passwordLength"
         },                {
             "fqsen": "\\User\\Form\\Register",
             "name": "Register",
@@ -15326,6 +15796,31 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/User-Form-Reset.html#property_translator"
         },                {
+            "fqsen": "\\User\\Form\\UserLogin",
+            "name": "UserLogin",
+            "summary": "",
+            "url": "classes/User-Form-UserLogin.html"
+        },                {
+            "fqsen": "\\User\\Form\\UserLogin\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/User-Form-UserLogin.html#method___construct"
+        },                {
+            "fqsen": "\\User\\Form\\UserLogin\u003A\u003AsetResult\u0028\u0029",
+            "name": "setResult",
+            "summary": "Set\u0020authentication\u0020result.",
+            "url": "classes/User-Form-UserLogin.html#method_setResult"
+        },                {
+            "fqsen": "\\User\\Form\\UserLogin\u003A\u003AgetInputSpecification\u0028\u0029",
+            "name": "getInputSpecification",
+            "summary": "",
+            "url": "classes/User-Form-UserLogin.html#method_getInputSpecification"
+        },                {
+            "fqsen": "\\User\\Form\\UserLogin\u003A\u003A\u0024translate",
+            "name": "translate",
+            "summary": "",
+            "url": "classes/User-Form-UserLogin.html#property_translate"
+        },                {
             "fqsen": "\\User\\Mapper\\ApiApp",
             "name": "ApiApp",
             "summary": "",
@@ -15376,6 +15871,21 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/User-Mapper-ApiUser.html#method_getRepositoryName"
         },                {
+            "fqsen": "\\User\\Mapper\\CompanyUser",
+            "name": "CompanyUser",
+            "summary": "",
+            "url": "classes/User-Mapper-CompanyUser.html"
+        },                {
+            "fqsen": "\\User\\Mapper\\CompanyUser\u003A\u003AfindByLogin\u0028\u0029",
+            "name": "findByLogin",
+            "summary": "Find\u0020a\u0020company\u0020by\u0020its\u0020login.",
+            "url": "classes/User-Mapper-CompanyUser.html#method_findByLogin"
+        },                {
+            "fqsen": "\\User\\Mapper\\CompanyUser\u003A\u003AgetRepositoryName\u0028\u0029",
+            "name": "getRepositoryName",
+            "summary": "",
+            "url": "classes/User-Mapper-CompanyUser.html#method_getRepositoryName"
+        },                {
             "fqsen": "\\User\\Mapper\\Factory\\ApiAppFactory",
             "name": "ApiAppFactory",
             "summary": "",
@@ -15400,6 +15910,26 @@ Search.appendIndex(
             "name": "getRepositoryName",
             "summary": "",
             "url": "classes/User-Mapper-LoginAttempt.html#method_getRepositoryName"
+        },                {
+            "fqsen": "\\User\\Mapper\\NewCompanyUser",
+            "name": "NewCompanyUser",
+            "summary": "",
+            "url": "classes/User-Mapper-NewCompanyUser.html"
+        },                {
+            "fqsen": "\\User\\Mapper\\NewCompanyUser\u003A\u003AgetByCode\u0028\u0029",
+            "name": "getByCode",
+            "summary": "Get\u0020the\u0020new\u0020company\u0020user\u0020by\u0020code.",
+            "url": "classes/User-Mapper-NewCompanyUser.html#method_getByCode"
+        },                {
+            "fqsen": "\\User\\Mapper\\NewCompanyUser\u003A\u003AdeleteByCompany\u0028\u0029",
+            "name": "deleteByCompany",
+            "summary": "Delete\u0020the\u0020existing\u0020activation\u0020code\u0020for\u0020a\u0020company.",
+            "url": "classes/User-Mapper-NewCompanyUser.html#method_deleteByCompany"
+        },                {
+            "fqsen": "\\User\\Mapper\\NewCompanyUser\u003A\u003AgetRepositoryName\u0028\u0029",
+            "name": "getRepositoryName",
+            "summary": "",
+            "url": "classes/User-Mapper-NewCompanyUser.html#method_getRepositoryName"
         },                {
             "fqsen": "\\User\\Mapper\\NewUser",
             "name": "NewUser",
@@ -15431,20 +15961,10 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/User-Mapper-User.html"
         },                {
-            "fqsen": "\\User\\Mapper\\User\u003A\u003AfindByLidnr\u0028\u0029",
-            "name": "findByLidnr",
-            "summary": "Find\u0020a\u0020user\u0020by\u0020its\u0020membership\u0020number.",
-            "url": "classes/User-Mapper-User.html#method_findByLidnr"
-        },                {
             "fqsen": "\\User\\Mapper\\User\u003A\u003AfindByLogin\u0028\u0029",
             "name": "findByLogin",
             "summary": "Find\u0020a\u0020user\u0020by\u0020its\u0020login.",
             "url": "classes/User-Mapper-User.html#method_findByLogin"
-        },                {
-            "fqsen": "\\User\\Mapper\\User\u003A\u003AcreateUser\u0028\u0029",
-            "name": "createUser",
-            "summary": "Finish\u0020user\u0020creation.",
-            "url": "classes/User-Mapper-User.html#method_createUser"
         },                {
             "fqsen": "\\User\\Mapper\\User\u003A\u003AgetRepositoryName\u0028\u0029",
             "name": "getRepositoryName",
@@ -15455,11 +15975,6 @@ Search.appendIndex(
             "name": "ApiApp",
             "summary": "ApiApp\u0020model.",
             "url": "classes/User-Model-ApiApp.html"
-        },                {
-            "fqsen": "\\User\\Model\\ApiApp\u003A\u003AgetId\u0028\u0029",
-            "name": "getId",
-            "summary": "",
-            "url": "classes/User-Model-ApiApp.html#method_getId"
         },                {
             "fqsen": "\\User\\Model\\ApiApp\u003A\u003AgetAppId\u0028\u0029",
             "name": "getAppId",
@@ -15496,11 +16011,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/User-Model-ApiApp.html#method_getClaims"
         },                {
-            "fqsen": "\\User\\Model\\ApiApp\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "Id.",
-            "url": "classes/User-Model-ApiApp.html#property_id"
-        },                {
             "fqsen": "\\User\\Model\\ApiApp\u003A\u003A\u0024appId",
             "name": "appId",
             "summary": "Application\u0020ID.",
@@ -15530,16 +16040,6 @@ Search.appendIndex(
             "name": "ApiAppAuthentication",
             "summary": "Log\u0020when\u0020a\u0020member\u0020has\u0020authenticated\u0020for\u0020an\u0020external\u0020app.",
             "url": "classes/User-Model-ApiAppAuthentication.html"
-        },                {
-            "fqsen": "\\User\\Model\\ApiAppAuthentication\u003A\u003AgetId\u0028\u0029",
-            "name": "getId",
-            "summary": "",
-            "url": "classes/User-Model-ApiAppAuthentication.html#method_getId"
-        },                {
-            "fqsen": "\\User\\Model\\ApiAppAuthentication\u003A\u003AsetId\u0028\u0029",
-            "name": "setId",
-            "summary": "",
-            "url": "classes/User-Model-ApiAppAuthentication.html#method_setId"
         },                {
             "fqsen": "\\User\\Model\\ApiAppAuthentication\u003A\u003AgetUser\u0028\u0029",
             "name": "getUser",
@@ -15571,11 +16071,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/User-Model-ApiAppAuthentication.html#method_setTime"
         },                {
-            "fqsen": "\\User\\Model\\ApiAppAuthentication\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "Id.",
-            "url": "classes/User-Model-ApiAppAuthentication.html#property_id"
-        },                {
             "fqsen": "\\User\\Model\\ApiAppAuthentication\u003A\u003A\u0024user",
             "name": "user",
             "summary": "The\u0020user\u0020who\u0020was\u0020authenticated.",
@@ -15595,11 +16090,6 @@ Search.appendIndex(
             "name": "ApiUser",
             "summary": "User\u0020model.",
             "url": "classes/User-Model-ApiUser.html"
-        },                {
-            "fqsen": "\\User\\Model\\ApiUser\u003A\u003AgetId\u0028\u0029",
-            "name": "getId",
-            "summary": "Get\u0020the\u0020id.",
-            "url": "classes/User-Model-ApiUser.html#method_getId"
         },                {
             "fqsen": "\\User\\Model\\ApiUser\u003A\u003AgetName\u0028\u0029",
             "name": "getName",
@@ -15631,11 +16121,6 @@ Search.appendIndex(
             "summary": "Get\u0020the\u0020API\u0020user\u0027s\u0020resource\u0020ID.",
             "url": "classes/User-Model-ApiUser.html#method_getResourceId"
         },                {
-            "fqsen": "\\User\\Model\\ApiUser\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "Id.",
-            "url": "classes/User-Model-ApiUser.html#property_id"
-        },                {
             "fqsen": "\\User\\Model\\ApiUser\u003A\u003A\u0024name",
             "name": "name",
             "summary": "Application\u0020name.",
@@ -15645,6 +16130,66 @@ Search.appendIndex(
             "name": "token",
             "summary": "Authentication\u0020token.",
             "url": "classes/User-Model-ApiUser.html#property_token"
+        },                {
+            "fqsen": "\\User\\Model\\CompanyUser",
+            "name": "CompanyUser",
+            "summary": "CompanyUser\u0020model.",
+            "url": "classes/User-Model-CompanyUser.html"
+        },                {
+            "fqsen": "\\User\\Model\\CompanyUser\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/User-Model-CompanyUser.html#method___construct"
+        },                {
+            "fqsen": "\\User\\Model\\CompanyUser\u003A\u003AgetId\u0028\u0029",
+            "name": "getId",
+            "summary": "Get\u0020the\u0020internal\u0020identifier\u0020for\u0020this\u0020company.",
+            "url": "classes/User-Model-CompanyUser.html#method_getId"
+        },                {
+            "fqsen": "\\User\\Model\\CompanyUser\u003A\u003AgetCompany\u0028\u0029",
+            "name": "getCompany",
+            "summary": "Get\u0020the\u0020company.",
+            "url": "classes/User-Model-CompanyUser.html#method_getCompany"
+        },                {
+            "fqsen": "\\User\\Model\\CompanyUser\u003A\u003AgetEmail\u0028\u0029",
+            "name": "getEmail",
+            "summary": "Get\u0020the\u0020email\u0020address\u0020of\u0020the\u0020company\u0027s\u0020representative.",
+            "url": "classes/User-Model-CompanyUser.html#method_getEmail"
+        },                {
+            "fqsen": "\\User\\Model\\CompanyUser\u003A\u003AgetPassword\u0028\u0029",
+            "name": "getPassword",
+            "summary": "Get\u0020the\u0020password\u0020hash.",
+            "url": "classes/User-Model-CompanyUser.html#method_getPassword"
+        },                {
+            "fqsen": "\\User\\Model\\CompanyUser\u003A\u003AsetPassword\u0028\u0029",
+            "name": "setPassword",
+            "summary": "Set\u0020the\u0020password\u0020hash.",
+            "url": "classes/User-Model-CompanyUser.html#method_setPassword"
+        },                {
+            "fqsen": "\\User\\Model\\CompanyUser\u003A\u003AgetRoleId\u0028\u0029",
+            "name": "getRoleId",
+            "summary": "",
+            "url": "classes/User-Model-CompanyUser.html#method_getRoleId"
+        },                {
+            "fqsen": "\\User\\Model\\CompanyUser\u003A\u003AgetResourceId\u0028\u0029",
+            "name": "getResourceId",
+            "summary": "Get\u0020the\u0020user\u0027s\u0020resource\u0020ID.",
+            "url": "classes/User-Model-CompanyUser.html#method_getResourceId"
+        },                {
+            "fqsen": "\\User\\Model\\CompanyUser\u003A\u003A\u0024id",
+            "name": "id",
+            "summary": "The\u0020internal\u0020identifier\u0020for\u0020this\u0020company.",
+            "url": "classes/User-Model-CompanyUser.html#property_id"
+        },                {
+            "fqsen": "\\User\\Model\\CompanyUser\u003A\u003A\u0024password",
+            "name": "password",
+            "summary": "The\u0020company\u0027s\u0020password.",
+            "url": "classes/User-Model-CompanyUser.html#property_password"
+        },                {
+            "fqsen": "\\User\\Model\\CompanyUser\u003A\u003A\u0024company",
+            "name": "company",
+            "summary": "The\u0020company\u0020for\u0020this\u0020company\u0020user.",
+            "url": "classes/User-Model-CompanyUser.html#property_company"
         },                {
             "fqsen": "\\User\\Model\\Enums\\JWTClaims",
             "name": "JWTClaims",
@@ -15701,11 +16246,6 @@ Search.appendIndex(
             "summary": "A\u0020failed\u0020login\u0020attempt.",
             "url": "classes/User-Model-LoginAttempt.html"
         },                {
-            "fqsen": "\\User\\Model\\LoginAttempt\u003A\u003AgetId\u0028\u0029",
-            "name": "getId",
-            "summary": "",
-            "url": "classes/User-Model-LoginAttempt.html#method_getId"
-        },                {
             "fqsen": "\\User\\Model\\LoginAttempt\u003A\u003AgetUser\u0028\u0029",
             "name": "getUser",
             "summary": "",
@@ -15715,6 +16255,16 @@ Search.appendIndex(
             "name": "setUser",
             "summary": "",
             "url": "classes/User-Model-LoginAttempt.html#method_setUser"
+        },                {
+            "fqsen": "\\User\\Model\\LoginAttempt\u003A\u003AgetCompanyUser\u0028\u0029",
+            "name": "getCompanyUser",
+            "summary": "",
+            "url": "classes/User-Model-LoginAttempt.html#method_getCompanyUser"
+        },                {
+            "fqsen": "\\User\\Model\\LoginAttempt\u003A\u003AsetCompanyUser\u0028\u0029",
+            "name": "setCompanyUser",
+            "summary": "",
+            "url": "classes/User-Model-LoginAttempt.html#method_setCompanyUser"
         },                {
             "fqsen": "\\User\\Model\\LoginAttempt\u003A\u003AgetIp\u0028\u0029",
             "name": "getIp",
@@ -15736,15 +16286,15 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/User-Model-LoginAttempt.html#method_setTime"
         },                {
-            "fqsen": "\\User\\Model\\LoginAttempt\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "Id.",
-            "url": "classes/User-Model-LoginAttempt.html#property_id"
-        },                {
             "fqsen": "\\User\\Model\\LoginAttempt\u003A\u003A\u0024user",
             "name": "user",
             "summary": "The\u0020user\u0020for\u0020which\u0020the\u0020login\u0020was\u0020attempted.",
             "url": "classes/User-Model-LoginAttempt.html#property_user"
+        },                {
+            "fqsen": "\\User\\Model\\LoginAttempt\u003A\u003A\u0024companyUser",
+            "name": "companyUser",
+            "summary": "The\u0020user\u0020for\u0020which\u0020the\u0020login\u0020was\u0020attempted.",
+            "url": "classes/User-Model-LoginAttempt.html#property_companyUser"
         },                {
             "fqsen": "\\User\\Model\\LoginAttempt\u003A\u003A\u0024ip",
             "name": "ip",
@@ -15755,6 +16305,71 @@ Search.appendIndex(
             "name": "time",
             "summary": "Attempt\u0020timestamp.",
             "url": "classes/User-Model-LoginAttempt.html#property_time"
+        },                {
+            "fqsen": "\\User\\Model\\NewCompanyUser",
+            "name": "NewCompanyUser",
+            "summary": "Temporary\u0020\u007B\u0040link\u0020CompanyUser\u007D\u0020model\u0020to\u0020facilitate\u0020registration\u0020and\u0020password\u0020resets.",
+            "url": "classes/User-Model-NewCompanyUser.html"
+        },                {
+            "fqsen": "\\User\\Model\\NewCompanyUser\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/User-Model-NewCompanyUser.html#method___construct"
+        },                {
+            "fqsen": "\\User\\Model\\NewCompanyUser\u003A\u003AgetId\u0028\u0029",
+            "name": "getId",
+            "summary": "Get\u0020the\u0020internal\u0020identifier\u0020for\u0020this\u0020company.",
+            "url": "classes/User-Model-NewCompanyUser.html#method_getId"
+        },                {
+            "fqsen": "\\User\\Model\\NewCompanyUser\u003A\u003AgetCompany\u0028\u0029",
+            "name": "getCompany",
+            "summary": "Get\u0020the\u0020company.",
+            "url": "classes/User-Model-NewCompanyUser.html#method_getCompany"
+        },                {
+            "fqsen": "\\User\\Model\\NewCompanyUser\u003A\u003AgetEmail\u0028\u0029",
+            "name": "getEmail",
+            "summary": "Get\u0020the\u0020email\u0020address\u0020of\u0020the\u0020company\u0027s\u0020representative.",
+            "url": "classes/User-Model-NewCompanyUser.html#method_getEmail"
+        },                {
+            "fqsen": "\\User\\Model\\NewCompanyUser\u003A\u003AgetCode\u0028\u0029",
+            "name": "getCode",
+            "summary": "Get\u0020the\u0020activation\/reset\u0020code.",
+            "url": "classes/User-Model-NewCompanyUser.html#method_getCode"
+        },                {
+            "fqsen": "\\User\\Model\\NewCompanyUser\u003A\u003AsetCode\u0028\u0029",
+            "name": "setCode",
+            "summary": "Set\u0020the\u0020activation\/reset\u0020code.",
+            "url": "classes/User-Model-NewCompanyUser.html#method_setCode"
+        },                {
+            "fqsen": "\\User\\Model\\NewCompanyUser\u003A\u003AgetTime\u0028\u0029",
+            "name": "getTime",
+            "summary": "Get\u0020the\u0020activation\/reset\u0020time.",
+            "url": "classes/User-Model-NewCompanyUser.html#method_getTime"
+        },                {
+            "fqsen": "\\User\\Model\\NewCompanyUser\u003A\u003AsetTime\u0028\u0029",
+            "name": "setTime",
+            "summary": "Set\u0020the\u0020activation\/reset\u0020time.",
+            "url": "classes/User-Model-NewCompanyUser.html#method_setTime"
+        },                {
+            "fqsen": "\\User\\Model\\NewCompanyUser\u003A\u003A\u0024id",
+            "name": "id",
+            "summary": "The\u0020company.",
+            "url": "classes/User-Model-NewCompanyUser.html#property_id"
+        },                {
+            "fqsen": "\\User\\Model\\NewCompanyUser\u003A\u003A\u0024code",
+            "name": "code",
+            "summary": "The\u0020company\u0027s\u0020activation\/reset\u0020code.",
+            "url": "classes/User-Model-NewCompanyUser.html#property_code"
+        },                {
+            "fqsen": "\\User\\Model\\NewCompanyUser\u003A\u003A\u0024time",
+            "name": "time",
+            "summary": "Date\u0020and\u0020time\u0020at\u0020which\u0020the\u0020activation\u0020or\u0020password\u0020reset\u0020was\u0020requested.",
+            "url": "classes/User-Model-NewCompanyUser.html#property_time"
+        },                {
+            "fqsen": "\\User\\Model\\NewCompanyUser\u003A\u003A\u0024company",
+            "name": "company",
+            "summary": "The\u0020company\u0020for\u0020this\u0020company\u0020user.",
+            "url": "classes/User-Model-NewCompanyUser.html#property_company"
         },                {
             "fqsen": "\\User\\Model\\NewUser",
             "name": "NewUser",
@@ -15830,6 +16445,11 @@ Search.appendIndex(
             "name": "__construct",
             "summary": "",
             "url": "classes/User-Model-User.html#method___construct"
+        },                {
+            "fqsen": "\\User\\Model\\User\u003A\u003AgetId\u0028\u0029",
+            "name": "getId",
+            "summary": "Return\u0020the\u0020\u0060lidnr\u0060\u0020of\u0020this\u0020user,\u0020generalised\u0020to\u0020\u0060id\u0060\u0020for\u0020the\u0020\u007B\u0040link\u0020AuthenticationService\u007D.",
+            "url": "classes/User-Model-User.html#method_getId"
         },                {
             "fqsen": "\\User\\Model\\User\u003A\u003AgetLidnr\u0028\u0029",
             "name": "getLidnr",
@@ -15921,11 +16541,6 @@ Search.appendIndex(
             "summary": "User\u0020role\u0020model.",
             "url": "classes/User-Model-UserRole.html"
         },                {
-            "fqsen": "\\User\\Model\\UserRole\u003A\u003AgetId\u0028\u0029",
-            "name": "getId",
-            "summary": "Get\u0020the\u0020id.",
-            "url": "classes/User-Model-UserRole.html#method_getId"
-        },                {
             "fqsen": "\\User\\Model\\UserRole\u003A\u003AgetLidnr\u0028\u0029",
             "name": "getLidnr",
             "summary": "Get\u0020the\u0020membership\u0020number.",
@@ -15945,11 +16560,6 @@ Search.appendIndex(
             "name": "setRole",
             "summary": "Set\u0020the\u0020role.",
             "url": "classes/User-Model-UserRole.html#method_setRole"
-        },                {
-            "fqsen": "\\User\\Model\\UserRole\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "Id.",
-            "url": "classes/User-Model-UserRole.html#property_id"
         },                {
             "fqsen": "\\User\\Model\\UserRole\u003A\u003A\u0024lidnr",
             "name": "lidnr",
@@ -16181,10 +16791,20 @@ Search.appendIndex(
             "summary": "Send\u0020registration\u0020email.",
             "url": "classes/User-Service-Email.html#method_sendRegisterEmail"
         },                {
+            "fqsen": "\\User\\Service\\Email\u003A\u003AsendCompanyRegisterMail\u0028\u0029",
+            "name": "sendCompanyRegisterMail",
+            "summary": "",
+            "url": "classes/User-Service-Email.html#method_sendCompanyRegisterMail"
+        },                {
             "fqsen": "\\User\\Service\\Email\u003A\u003AsendPasswordLostMail\u0028\u0029",
             "name": "sendPasswordLostMail",
             "summary": "Send\u0020password\u0020lost\u0020email.",
             "url": "classes/User-Service-Email.html#method_sendPasswordLostMail"
+        },                {
+            "fqsen": "\\User\\Service\\Email\u003A\u003AsendCompanyPasswordLostMail\u0028\u0029",
+            "name": "sendCompanyPasswordLostMail",
+            "summary": "",
+            "url": "classes/User-Service-Email.html#method_sendCompanyPasswordLostMail"
         },                {
             "fqsen": "\\User\\Service\\Email\u003A\u003Arender\u0028\u0029",
             "name": "render",
@@ -16241,20 +16861,35 @@ Search.appendIndex(
             "summary": "Register\u0020a\u0020user.",
             "url": "classes/User-Service-User.html#method_register"
         },                {
-            "fqsen": "\\User\\Service\\User\u003A\u003Areset\u0028\u0029",
-            "name": "reset",
-            "summary": "Request\u0020a\u0020password\u0020reset.",
-            "url": "classes/User-Service-User.html#method_reset"
+            "fqsen": "\\User\\Service\\User\u003A\u003AregisterCompanyUser\u0028\u0029",
+            "name": "registerCompanyUser",
+            "summary": "Register\u0020a\u0020company.",
+            "url": "classes/User-Service-User.html#method_registerCompanyUser"
+        },                {
+            "fqsen": "\\User\\Service\\User\u003A\u003AresetMember\u0028\u0029",
+            "name": "resetMember",
+            "summary": "Request\u0020a\u0020password\u0020reset\u0020for\u0020a\u0020member.",
+            "url": "classes/User-Service-User.html#method_resetMember"
+        },                {
+            "fqsen": "\\User\\Service\\User\u003A\u003AresetCompany\u0028\u0029",
+            "name": "resetCompany",
+            "summary": "Request\u0020a\u0020password\u0020reset\u0020for\u0020a\u0020company.",
+            "url": "classes/User-Service-User.html#method_resetCompany"
         },                {
             "fqsen": "\\User\\Service\\User\u003A\u003AchangePassword\u0028\u0029",
             "name": "changePassword",
             "summary": "Change\u0020the\u0020password\u0020of\u0020a\u0020user.",
             "url": "classes/User-Service-User.html#method_changePassword"
         },                {
-            "fqsen": "\\User\\Service\\User\u003A\u003Alogin\u0028\u0029",
-            "name": "login",
+            "fqsen": "\\User\\Service\\User\u003A\u003AuserLogin\u0028\u0029",
+            "name": "userLogin",
             "summary": "Log\u0020the\u0020user\u0020in.",
-            "url": "classes/User-Service-User.html#method_login"
+            "url": "classes/User-Service-User.html#method_userLogin"
+        },                {
+            "fqsen": "\\User\\Service\\User\u003A\u003AcompanyLogin\u0028\u0029",
+            "name": "companyLogin",
+            "summary": "Log\u0020the\u0020company\u0020in.",
+            "url": "classes/User-Service-User.html#method_companyLogin"
         },                {
             "fqsen": "\\User\\Service\\User\u003A\u003Alogout\u0028\u0029",
             "name": "logout",
@@ -16265,6 +16900,11 @@ Search.appendIndex(
             "name": "getNewUser",
             "summary": "Get\u0020the\u0020new\u0020user.",
             "url": "classes/User-Service-User.html#method_getNewUser"
+        },                {
+            "fqsen": "\\User\\Service\\User\u003A\u003AgetNewCompanyUser\u0028\u0029",
+            "name": "getNewCompanyUser",
+            "summary": "Get\u0020the\u0020new\u0020company\u0020user.",
+            "url": "classes/User-Service-User.html#method_getNewCompanyUser"
         },                {
             "fqsen": "\\User\\Service\\User\u003A\u003AgenerateCode\u0028\u0029",
             "name": "generateCode",
@@ -16291,10 +16931,20 @@ Search.appendIndex(
             "summary": "Get\u0020the\u0020reset\u0020form.",
             "url": "classes/User-Service-User.html#method_getResetForm"
         },                {
-            "fqsen": "\\User\\Service\\User\u003A\u003AgetLoginForm\u0028\u0029",
-            "name": "getLoginForm",
+            "fqsen": "\\User\\Service\\User\u003A\u003AgetUserLoginForm\u0028\u0029",
+            "name": "getUserLoginForm",
             "summary": "Get\u0020the\u0020login\u0020form.",
-            "url": "classes/User-Service-User.html#method_getLoginForm"
+            "url": "classes/User-Service-User.html#method_getUserLoginForm"
+        },                {
+            "fqsen": "\\User\\Service\\User\u003A\u003AgetCompanyUserLoginForm\u0028\u0029",
+            "name": "getCompanyUserLoginForm",
+            "summary": "",
+            "url": "classes/User-Service-User.html#method_getCompanyUserLoginForm"
+        },                {
+            "fqsen": "\\User\\Service\\User\u003A\u003AgetCompanyUserResetForm\u0028\u0029",
+            "name": "getCompanyUserResetForm",
+            "summary": "",
+            "url": "classes/User-Service-User.html#method_getCompanyUserResetForm"
         },                {
             "fqsen": "\\User\\Service\\User\u003A\u003A\u0024aclService",
             "name": "aclService",
@@ -16311,10 +16961,15 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/User-Service-User.html#property_bcrypt"
         },                {
-            "fqsen": "\\User\\Service\\User\u003A\u003A\u0024authService",
-            "name": "authService",
+            "fqsen": "\\User\\Service\\User\u003A\u003A\u0024userAuthService",
+            "name": "userAuthService",
             "summary": "",
-            "url": "classes/User-Service-User.html#property_authService"
+            "url": "classes/User-Service-User.html#property_userAuthService"
+        },                {
+            "fqsen": "\\User\\Service\\User\u003A\u003A\u0024companyUserAuthService",
+            "name": "companyUserAuthService",
+            "summary": "",
+            "url": "classes/User-Service-User.html#property_companyUserAuthService"
         },                {
             "fqsen": "\\User\\Service\\User\u003A\u003A\u0024emailService",
             "name": "emailService",
@@ -16331,6 +16986,16 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/User-Service-User.html#property_newUserMapper"
         },                {
+            "fqsen": "\\User\\Service\\User\u003A\u003A\u0024newCompanyUserMapper",
+            "name": "newCompanyUserMapper",
+            "summary": "",
+            "url": "classes/User-Service-User.html#property_newCompanyUserMapper"
+        },                {
+            "fqsen": "\\User\\Service\\User\u003A\u003A\u0024companyMapper",
+            "name": "companyMapper",
+            "summary": "",
+            "url": "classes/User-Service-User.html#property_companyMapper"
+        },                {
             "fqsen": "\\User\\Service\\User\u003A\u003A\u0024memberMapper",
             "name": "memberMapper",
             "summary": "",
@@ -16341,20 +17006,40 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/User-Service-User.html#property_registerForm"
         },                {
-            "fqsen": "\\User\\Service\\User\u003A\u003A\u0024activateForm",
-            "name": "activateForm",
+            "fqsen": "\\User\\Service\\User\u003A\u003A\u0024activateFormCompanyUser",
+            "name": "activateFormCompanyUser",
             "summary": "",
-            "url": "classes/User-Service-User.html#property_activateForm"
+            "url": "classes/User-Service-User.html#property_activateFormCompanyUser"
         },                {
-            "fqsen": "\\User\\Service\\User\u003A\u003A\u0024loginForm",
-            "name": "loginForm",
+            "fqsen": "\\User\\Service\\User\u003A\u003A\u0024activateFormUser",
+            "name": "activateFormUser",
             "summary": "",
-            "url": "classes/User-Service-User.html#property_loginForm"
+            "url": "classes/User-Service-User.html#property_activateFormUser"
         },                {
-            "fqsen": "\\User\\Service\\User\u003A\u003A\u0024passwordForm",
-            "name": "passwordForm",
+            "fqsen": "\\User\\Service\\User\u003A\u003A\u0024userLoginForm",
+            "name": "userLoginForm",
             "summary": "",
-            "url": "classes/User-Service-User.html#property_passwordForm"
+            "url": "classes/User-Service-User.html#property_userLoginForm"
+        },                {
+            "fqsen": "\\User\\Service\\User\u003A\u003A\u0024companyUserLoginForm",
+            "name": "companyUserLoginForm",
+            "summary": "",
+            "url": "classes/User-Service-User.html#property_companyUserLoginForm"
+        },                {
+            "fqsen": "\\User\\Service\\User\u003A\u003A\u0024companyUserResetForm",
+            "name": "companyUserResetForm",
+            "summary": "",
+            "url": "classes/User-Service-User.html#property_companyUserResetForm"
+        },                {
+            "fqsen": "\\User\\Service\\User\u003A\u003A\u0024passwordFormCompanyUser",
+            "name": "passwordFormCompanyUser",
+            "summary": "",
+            "url": "classes/User-Service-User.html#property_passwordFormCompanyUser"
+        },                {
+            "fqsen": "\\User\\Service\\User\u003A\u003A\u0024passwordFormUser",
+            "name": "passwordFormUser",
+            "summary": "",
+            "url": "classes/User-Service-User.html#property_passwordFormUser"
         },                {
             "fqsen": "\\User\\Service\\User\u003A\u003A\u0024resetForm",
             "name": "resetForm",
@@ -16366,15 +17051,25 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/UserTest-ControllerTest.html"
         },                {
-            "fqsen": "\\UserTest\\ControllerTest\u003A\u003AtestUserActionCanBeAccessed\u0028\u0029",
-            "name": "testUserActionCanBeAccessed",
+            "fqsen": "\\UserTest\\ControllerTest\u003A\u003AtestCompanyLoginActionCanBeAccessed\u0028\u0029",
+            "name": "testCompanyLoginActionCanBeAccessed",
             "summary": "",
-            "url": "classes/UserTest-ControllerTest.html#method_testUserActionCanBeAccessed"
+            "url": "classes/UserTest-ControllerTest.html#method_testCompanyLoginActionCanBeAccessed"
+        },                {
+            "fqsen": "\\UserTest\\ControllerTest\u003A\u003AtestMemberLoginActionCanBeAccessed\u0028\u0029",
+            "name": "testMemberLoginActionCanBeAccessed",
+            "summary": "",
+            "url": "classes/UserTest-ControllerTest.html#method_testMemberLoginActionCanBeAccessed"
         },                {
             "fqsen": "\\UserTest\\ControllerTest\u003A\u003AtestUserRegisterActionCanBeAccessed\u0028\u0029",
             "name": "testUserRegisterActionCanBeAccessed",
             "summary": "",
             "url": "classes/UserTest-ControllerTest.html#method_testUserRegisterActionCanBeAccessed"
+        },                {
+            "fqsen": "\\UserTest\\ControllerTest\u003A\u003AtestCompanyUserResetActionCanBeAccessed\u0028\u0029",
+            "name": "testCompanyUserResetActionCanBeAccessed",
+            "summary": "",
+            "url": "classes/UserTest-ControllerTest.html#method_testCompanyUserResetActionCanBeAccessed"
         },                {
             "fqsen": "\\UserTest\\ControllerTest\u003A\u003AtestUserResetActionCanBeAccessed\u0028\u0029",
             "name": "testUserResetActionCanBeAccessed",
@@ -16491,15 +17186,20 @@ Search.appendIndex(
             "summary": "",
             "url": "namespaces/application-mapper.html"
         },                {
+            "fqsen": "\\Application\\Model",
+            "name": "Model",
+            "summary": "",
+            "url": "namespaces/application-model.html"
+        },                {
             "fqsen": "\\Application\\Model\\Enums",
             "name": "Enums",
             "summary": "",
             "url": "namespaces/application-model-enums.html"
         },                {
-            "fqsen": "\\Application\\Model",
-            "name": "Model",
+            "fqsen": "\\Application\\Model\\Traits",
+            "name": "Traits",
             "summary": "",
-            "url": "namespaces/application-model.html"
+            "url": "namespaces/application-model-traits.html"
         },                {
             "fqsen": "\\Application\\Service",
             "name": "Service",
@@ -16555,6 +17255,16 @@ Search.appendIndex(
             "name": "Model",
             "summary": "",
             "url": "namespaces/company-model.html"
+        },                {
+            "fqsen": "\\Company\\Model\\Enums",
+            "name": "Enums",
+            "summary": "",
+            "url": "namespaces/company-model-enums.html"
+        },                {
+            "fqsen": "\\Company\\Model\\Proposals",
+            "name": "Proposals",
+            "summary": "",
+            "url": "namespaces/company-model-proposals.html"
         },                {
             "fqsen": "\\Company\\Service",
             "name": "Service",

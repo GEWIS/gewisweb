@@ -392,6 +392,8 @@
 </h3>
 
 <dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -interface"><a href="classes/Application-Model-IdentityInterface.html"><abbr title="\Application\Model\IdentityInterface">IdentityInterface</abbr></a></dt>
+        <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -interface"><a href="classes/Decision-Controller-FileBrowser-FileReader.html"><abbr title="\Decision\Controller\FileBrowser\FileReader">FileReader</abbr></a></dt>
         <dd>Interface describing the operations required for reading browsing files (read-only).</dd>
             <dt class="phpdocumentor-table-of-contents__entry -interface"><a href="classes/User-Permissions-Resource-CreatorResourceInterface.html"><abbr title="\User\Permissions\Resource\CreatorResourceInterface">CreatorResourceInterface</abbr></a></dt>
@@ -442,10 +444,6 @@ or an export function specially tailored for the organizer.</dd>
         <dd>A form which provides the basic structure for forms that utilise a model&#039;s {@link \Application\Model\LocalisedText}.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Activity-Form-MaxActivities.html"><abbr title="\Activity\Form\MaxActivities">MaxActivities</abbr></a></dt>
         <dd></dd>
-            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Activity-Form-ModifyRequest.html"><abbr title="\Activity\Form\ModifyRequest">ModifyRequest</abbr></a></dt>
-        <dd>Specifies a form that is used to let an user do a modification request that
-does not require any other data, such as signing off for activities or
-approving or disapproving them.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Activity-Form-Signup.html"><abbr title="\Activity\Form\Signup">Signup</abbr></a></dt>
         <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Activity-Form-SignupList.html"><abbr title="\Activity\Form\SignupList">SignupList</abbr></a></dt>
@@ -538,9 +536,14 @@ database entries.</dd>
         <dd>YearFunction ::= &quot;YEAR&quot; &quot;(&quot; ArithmeticPrimary &quot;)&quot;</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Application-Form-Localisable.html"><abbr title="\Application\Form\Localisable">Localisable</abbr></a></dt>
         <dd>A form which provides the basic structure for forms that utilise a model&#039;s {@link \Application\Model\LocalisedText}.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Application-Form-ModifyRequest.html"><abbr title="\Application\Form\ModifyRequest">ModifyRequest</abbr></a></dt>
+        <dd>Specifies a form that is used to let a user do a modification request that does not require any other data, such as
+signing off for activities, (dis)approving entities with an {@see \Application\Model\Traits\ApprovableTrait}.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Application-Hydrator-Strategy-LanguageHydratorStrategy.html"><abbr title="\Application\Hydrator\Strategy\LanguageHydratorStrategy">LanguageHydratorStrategy</abbr></a></dt>
         <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Application-Mapper-BaseMapper.html"><abbr title="\Application\Mapper\BaseMapper">BaseMapper</abbr></a></dt>
+        <dd></dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Application-Model-ApprovableText.html"><abbr title="\Application\Model\ApprovableText">ApprovableText</abbr></a></dt>
         <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Application-Model-LocalisedText.html"><abbr title="\Application\Model\LocalisedText">LocalisedText</abbr></a></dt>
         <dd>Class LocalisedText: stores Dutch and English versions of text fields.</dd>
@@ -563,6 +566,9 @@ having to worry about file names.</dd>
         <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Application-View-Helper-Breadcrumbs.html"><abbr title="\Application\View\Helper\Breadcrumbs">Breadcrumbs</abbr></a></dt>
         <dd>Helper for setting and retrieving breadcrumbs.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Application-View-Helper-CompanyIdentity.html"><abbr title="\Application\View\Helper\CompanyIdentity">CompanyIdentity</abbr></a></dt>
+        <dd>View helper plugin which can fetch authenticated company identities. Essentially an extension of
+{@link LaminasIdentity} to support company users.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Application-View-Helper-FeaturedCompanyPackage.html"><abbr title="\Application\View\Helper\FeaturedCompanyPackage">FeaturedCompanyPackage</abbr></a></dt>
         <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Application-View-Helper-FileUrl.html"><abbr title="\Application\View\Helper\FileUrl">FileUrl</abbr></a></dt>
@@ -587,11 +593,19 @@ having to worry about file names.</dd>
         <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/ApplicationTest-TestConfigProvider.html"><abbr title="\ApplicationTest\TestConfigProvider">TestConfigProvider</abbr></a></dt>
         <dd></dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Company-Controller-AdminApprovalController.html"><abbr title="\Company\Controller\AdminApprovalController">AdminApprovalController</abbr></a></dt>
+        <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Company-Controller-AdminController.html"><abbr title="\Company\Controller\AdminController">AdminController</abbr></a></dt>
+        <dd></dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Company-Controller-CompanyAccountController.html"><abbr title="\Company\Controller\CompanyAccountController">CompanyAccountController</abbr></a></dt>
         <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Company-Controller-CompanyController.html"><abbr title="\Company\Controller\CompanyController">CompanyController</abbr></a></dt>
         <dd></dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Company-Controller-Factory-AdminApprovalControllerFactory.html"><abbr title="\Company\Controller\Factory\AdminApprovalControllerFactory">AdminApprovalControllerFactory</abbr></a></dt>
+        <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Company-Controller-Factory-AdminControllerFactory.html"><abbr title="\Company\Controller\Factory\AdminControllerFactory">AdminControllerFactory</abbr></a></dt>
+        <dd></dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Company-Controller-Factory-CompanyAccountControllerFactory.html"><abbr title="\Company\Controller\Factory\CompanyAccountControllerFactory">CompanyAccountControllerFactory</abbr></a></dt>
         <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Company-Controller-Factory-CompanyControllerFactory.html"><abbr title="\Company\Controller\Factory\CompanyControllerFactory">CompanyControllerFactory</abbr></a></dt>
         <dd></dd>
@@ -603,6 +617,8 @@ having to worry about file names.</dd>
         <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Company-Form-JobLabel.html"><abbr title="\Company\Form\JobLabel">JobLabel</abbr></a></dt>
         <dd>A form which provides the basic structure for forms that utilise a model&#039;s {@link \Application\Model\LocalisedText}.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Company-Form-JobsTransfer.html"><abbr title="\Company\Form\JobsTransfer">JobsTransfer</abbr></a></dt>
+        <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Company-Form-Package.html"><abbr title="\Company\Form\Package">Package</abbr></a></dt>
         <dd>A form which provides the basic structure for forms that utilise a model&#039;s {@link \Application\Model\LocalisedText}.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Company-Mapper-BannerPackage.html"><abbr title="\Company\Mapper\BannerPackage">BannerPackage</abbr></a></dt>
@@ -637,6 +653,10 @@ having to worry about file names.</dd>
         <dd>Job Category model.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Company-Model-JobLabel.html"><abbr title="\Company\Model\JobLabel">JobLabel</abbr></a></dt>
         <dd>Job Label model.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Company-Model-Proposals-CompanyUpdate.html"><abbr title="\Company\Model\Proposals\CompanyUpdate">CompanyUpdate</abbr></a></dt>
+        <dd></dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Company-Model-Proposals-JobUpdate.html"><abbr title="\Company\Model\Proposals\JobUpdate">JobUpdate</abbr></a></dt>
+        <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Company-Module.html"><abbr title="\Company\Module">Module</abbr></a></dt>
         <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Company-Service-AclService.html"><abbr title="\Company\Service\AclService">AclService</abbr></a></dt>
@@ -977,9 +997,11 @@ gathering metadata about photos.</dd>
 Usage: $this-&gt;glideUrl()-&gt;getUrl(&#039;path to image&#039;, [&#039;parameters&#039;]);.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/PhotoTest-ControllerTest.html"><abbr title="\PhotoTest\ControllerTest">ControllerTest</abbr></a></dt>
         <dd></dd>
-            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/User-Authentication-Adapter-ApiMapper.html"><abbr title="\User\Authentication\Adapter\ApiMapper">ApiMapper</abbr></a></dt>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/User-Authentication-Adapter-ApiUserAdapter.html"><abbr title="\User\Authentication\Adapter\ApiUserAdapter">ApiUserAdapter</abbr></a></dt>
         <dd></dd>
-            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/User-Authentication-Adapter-Mapper.html"><abbr title="\User\Authentication\Adapter\Mapper">Mapper</abbr></a></dt>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/User-Authentication-Adapter-CompanyUserAdapter.html"><abbr title="\User\Authentication\Adapter\CompanyUserAdapter">CompanyUserAdapter</abbr></a></dt>
+        <dd></dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/User-Authentication-Adapter-UserAdapter.html"><abbr title="\User\Authentication\Adapter\UserAdapter">UserAdapter</abbr></a></dt>
         <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/User-Authentication-ApiAuthenticationService.html"><abbr title="\User\Authentication\ApiAuthenticationService">ApiAuthenticationService</abbr></a></dt>
         <dd></dd>
@@ -987,7 +1009,9 @@ Usage: $this-&gt;glideUrl()-&gt;getUrl(&#039;path to image&#039;, [&#039;paramet
         <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/User-Authentication-Service-LoginAttempt.html"><abbr title="\User\Authentication\Service\LoginAttempt">LoginAttempt</abbr></a></dt>
         <dd></dd>
-            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/User-Authentication-Storage-Session.html"><abbr title="\User\Authentication\Storage\Session">Session</abbr></a></dt>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/User-Authentication-Storage-CompanyUserSession.html"><abbr title="\User\Authentication\Storage\CompanyUserSession">CompanyUserSession</abbr></a></dt>
+        <dd></dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/User-Authentication-Storage-UserSession.html"><abbr title="\User\Authentication\Storage\UserSession">UserSession</abbr></a></dt>
         <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/User-Authorization-AclServiceFactory.html"><abbr title="\User\Authorization\AclServiceFactory">AclServiceFactory</abbr></a></dt>
         <dd></dd>
@@ -997,13 +1021,9 @@ Usage: $this-&gt;glideUrl()-&gt;getUrl(&#039;path to image&#039;, [&#039;paramet
         <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/User-Controller-ApiAuthenticationController.html"><abbr title="\User\Controller\ApiAuthenticationController">ApiAuthenticationController</abbr></a></dt>
         <dd></dd>
-            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/User-Controller-ApiController.html"><abbr title="\User\Controller\ApiController">ApiController</abbr></a></dt>
-        <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/User-Controller-Factory-ApiAdminControllerFactory.html"><abbr title="\User\Controller\Factory\ApiAdminControllerFactory">ApiAdminControllerFactory</abbr></a></dt>
         <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/User-Controller-Factory-ApiAuthenticationControllerFactory.html"><abbr title="\User\Controller\Factory\ApiAuthenticationControllerFactory">ApiAuthenticationControllerFactory</abbr></a></dt>
-        <dd></dd>
-            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/User-Controller-Factory-ApiControllerFactory.html"><abbr title="\User\Controller\Factory\ApiControllerFactory">ApiControllerFactory</abbr></a></dt>
         <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/User-Controller-Factory-UserControllerFactory.html"><abbr title="\User\Controller\Factory\UserControllerFactory">UserControllerFactory</abbr></a></dt>
         <dd></dd>
@@ -1015,7 +1035,9 @@ Usage: $this-&gt;glideUrl()-&gt;getUrl(&#039;path to image&#039;, [&#039;paramet
         <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/User-Form-ApiToken.html"><abbr title="\User\Form\ApiToken">ApiToken</abbr></a></dt>
         <dd></dd>
-            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/User-Form-Login.html"><abbr title="\User\Form\Login">Login</abbr></a></dt>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/User-Form-CompanyUserLogin.html"><abbr title="\User\Form\CompanyUserLogin">CompanyUserLogin</abbr></a></dt>
+        <dd></dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/User-Form-CompanyUserReset.html"><abbr title="\User\Form\CompanyUserReset">CompanyUserReset</abbr></a></dt>
         <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/User-Form-Password.html"><abbr title="\User\Form\Password">Password</abbr></a></dt>
         <dd></dd>
@@ -1023,15 +1045,21 @@ Usage: $this-&gt;glideUrl()-&gt;getUrl(&#039;path to image&#039;, [&#039;paramet
         <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/User-Form-Reset.html"><abbr title="\User\Form\Reset">Reset</abbr></a></dt>
         <dd></dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/User-Form-UserLogin.html"><abbr title="\User\Form\UserLogin">UserLogin</abbr></a></dt>
+        <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/User-Mapper-ApiApp.html"><abbr title="\User\Mapper\ApiApp">ApiApp</abbr></a></dt>
         <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/User-Mapper-ApiAppAuthentication.html"><abbr title="\User\Mapper\ApiAppAuthentication">ApiAppAuthentication</abbr></a></dt>
         <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/User-Mapper-ApiUser.html"><abbr title="\User\Mapper\ApiUser">ApiUser</abbr></a></dt>
         <dd></dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/User-Mapper-CompanyUser.html"><abbr title="\User\Mapper\CompanyUser">CompanyUser</abbr></a></dt>
+        <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/User-Mapper-Factory-ApiAppFactory.html"><abbr title="\User\Mapper\Factory\ApiAppFactory">ApiAppFactory</abbr></a></dt>
         <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/User-Mapper-LoginAttempt.html"><abbr title="\User\Mapper\LoginAttempt">LoginAttempt</abbr></a></dt>
+        <dd></dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/User-Mapper-NewCompanyUser.html"><abbr title="\User\Mapper\NewCompanyUser">NewCompanyUser</abbr></a></dt>
         <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/User-Mapper-NewUser.html"><abbr title="\User\Mapper\NewUser">NewUser</abbr></a></dt>
         <dd></dd>
@@ -1043,8 +1071,12 @@ Usage: $this-&gt;glideUrl()-&gt;getUrl(&#039;path to image&#039;, [&#039;paramet
         <dd>Log when a member has authenticated for an external app.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/User-Model-ApiUser.html"><abbr title="\User\Model\ApiUser">ApiUser</abbr></a></dt>
         <dd>User model.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/User-Model-CompanyUser.html"><abbr title="\User\Model\CompanyUser">CompanyUser</abbr></a></dt>
+        <dd>CompanyUser model.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/User-Model-LoginAttempt.html"><abbr title="\User\Model\LoginAttempt">LoginAttempt</abbr></a></dt>
         <dd>A failed login attempt.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/User-Model-NewCompanyUser.html"><abbr title="\User\Model\NewCompanyUser">NewCompanyUser</abbr></a></dt>
+        <dd>Temporary {@link CompanyUser} model to facilitate registration and password resets.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/User-Model-NewUser.html"><abbr title="\User\Model\NewUser">NewUser</abbr></a></dt>
         <dd>User model.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a></dt>
@@ -1080,6 +1112,14 @@ member of the organ tied to the resource.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/UserTest-ControllerTest.html"><abbr title="\UserTest\ControllerTest">ControllerTest</abbr></a></dt>
         <dd></dd>
     
+            <dt class="phpdocumentor-table-of-contents__entry -trait"><a href="classes/Application-Model-Traits-ApprovableTrait.html"><abbr title="\Application\Model\Traits\ApprovableTrait">ApprovableTrait</abbr></a></dt>
+        <dd>A trait which provides basic (repeated) functionality for approvable entities.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -trait"><a href="classes/Application-Model-Traits-IdentifiableTrait.html"><abbr title="\Application\Model\Traits\IdentifiableTrait">IdentifiableTrait</abbr></a></dt>
+        <dd>A trait which provides an `id` column for entities.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -trait"><a href="classes/Application-Model-Traits-TimestampableTrait.html"><abbr title="\Application\Model\Traits\TimestampableTrait">TimestampableTrait</abbr></a></dt>
+        <dd>A trait which can be used to keep track of when changes where made to an entity.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -trait"><a href="classes/Application-Model-Traits-UpdateProposableTrait.html"><abbr title="\Application\Model\Traits\UpdateProposableTrait">UpdateProposableTrait</abbr></a></dt>
+        <dd>A trait which provides basic (repeated) functionality for proposed update entities.</dd>
     
     </dl>
 

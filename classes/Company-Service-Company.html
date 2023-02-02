@@ -401,7 +401,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">44</span>
+    <span class="phpdocumentor-element-found-in__line">51</span>
 
     </aside>
 
@@ -540,10 +540,31 @@
 </dt>
 <dd></dd>
 
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a href="classes/Company-Service-Company.html#property_userService">$userService</a>
+    <span>
+                        &nbsp;: <a href="classes/User-Service-User.html"><abbr title="\User\Service\User">User</abbr></a>            </span>
+</dt>
+<dd></dd>
+
                 <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Company-Service-Company.html#method___construct">__construct()</a>
     <span>
                                 &nbsp;: mixed    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Company-Service-Company.html#method_applyJobProposal">applyJobProposal()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Company-Service-Company.html#method_cancelJobProposal">cancelJobProposal()</a>
+    <span>
+                                &nbsp;: void    </span>
 </dt>
 <dd></dd>
 
@@ -557,7 +578,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Company-Service-Company.html#method_createJob">createJob()</a>
     <span>
-                                &nbsp;: bool    </span>
+                                &nbsp;: <a href="classes/Company-Model-Job.html"><abbr title="\Company\Model\Job">Job</abbr></a>|bool    </span>
 </dt>
 <dd>Creates a new job and adds it to the specified package.</dd>
 
@@ -594,7 +615,7 @@
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd>Deletes the given job.</dd>
+<dd>Deletes the given job and its associated data.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Company-Service-Company.html#method_deletePackage">deletePackage()</a>
@@ -759,6 +780,27 @@ $companySlugName.</dd>
 <dd>Saves all modified packages.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Company-Service-Company.html#method_resetJobApproval">resetJobApproval()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Company-Service-Company.html#method_setJobApproval">setJobApproval()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Company-Service-Company.html#method_transferJobs">transferJobs()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+<dd>Move jobs from an expired package to a non-expired package.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Company-Service-Company.html#method_updateCompany">updateCompany()</a>
     <span>
                                 &nbsp;: bool    </span>
@@ -792,6 +834,13 @@ $companySlugName.</dd>
                                 &nbsp;: bool    </span>
 </dt>
 <dd>Updates the package.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -private">
+    <a href="classes/Company-Service-Company.html#method_deleteJobAttachments">deleteJobAttachments()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>Remove the actual attachments from a job.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a href="classes/Company-Service-Company.html#method_getFuturePackageExpiresBeforeDate">getFuturePackageExpiresBeforeDate()</a>
@@ -844,7 +893,7 @@ file.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">47</span>
+    <span class="phpdocumentor-element-found-in__line">54</span>
 
     </aside>
 
@@ -878,7 +927,7 @@ file.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">52</span>
+    <span class="phpdocumentor-element-found-in__line">59</span>
 
     </aside>
 
@@ -912,7 +961,7 @@ file.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">55</span>
+    <span class="phpdocumentor-element-found-in__line">62</span>
 
     </aside>
 
@@ -946,7 +995,7 @@ file.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">57</span>
+    <span class="phpdocumentor-element-found-in__line">64</span>
 
     </aside>
 
@@ -980,7 +1029,7 @@ file.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">50</span>
+    <span class="phpdocumentor-element-found-in__line">57</span>
 
     </aside>
 
@@ -1014,7 +1063,7 @@ file.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">59</span>
+    <span class="phpdocumentor-element-found-in__line">66</span>
 
     </aside>
 
@@ -1048,7 +1097,7 @@ file.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">62</span>
+    <span class="phpdocumentor-element-found-in__line">69</span>
 
     </aside>
 
@@ -1082,7 +1131,7 @@ file.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">60</span>
+    <span class="phpdocumentor-element-found-in__line">67</span>
 
     </aside>
 
@@ -1116,7 +1165,7 @@ file.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">61</span>
+    <span class="phpdocumentor-element-found-in__line">68</span>
 
     </aside>
 
@@ -1150,7 +1199,7 @@ file.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">63</span>
+    <span class="phpdocumentor-element-found-in__line">70</span>
 
     </aside>
 
@@ -1184,7 +1233,7 @@ file.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">58</span>
+    <span class="phpdocumentor-element-found-in__line">65</span>
 
     </aside>
 
@@ -1218,7 +1267,7 @@ file.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">53</span>
+    <span class="phpdocumentor-element-found-in__line">60</span>
 
     </aside>
 
@@ -1252,7 +1301,7 @@ file.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">54</span>
+    <span class="phpdocumentor-element-found-in__line">61</span>
 
     </aside>
 
@@ -1286,7 +1335,7 @@ file.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">56</span>
+    <span class="phpdocumentor-element-found-in__line">63</span>
 
     </aside>
 
@@ -1320,7 +1369,7 @@ file.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">51</span>
+    <span class="phpdocumentor-element-found-in__line">58</span>
 
     </aside>
 
@@ -1354,7 +1403,7 @@ file.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">49</span>
+    <span class="phpdocumentor-element-found-in__line">56</span>
 
     </aside>
 
@@ -1388,7 +1437,7 @@ file.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">48</span>
+    <span class="phpdocumentor-element-found-in__line">55</span>
 
     </aside>
 
@@ -1397,6 +1446,40 @@ file.</dd>
     <span class="phpdocumentor-signature__visibility">private</span>
         <span class="phpdocumentor-signature__type"><abbr title="\Laminas\Mvc\I18n\Translator">Translator</abbr></span>
     <span class="phpdocumentor-signature__name">$translator</span>
+    </code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+                                                -read-only        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_userService">
+        $userService
+        <a href="classes/Company-Service-Company.html#property_userService" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">71</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/User-Service-User.html"><abbr title="\User\Service\User">User</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$userService</span>
     </code>
 
         <section class="phpdocumentor-description"></section>
@@ -1426,14 +1509,14 @@ file.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">46</span>
+    <span class="phpdocumentor-element-found-in__line">53</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Service-AclService.html"><abbr title="\Company\Service\AclService">AclService</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$aclService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Mvc\I18n\Translator">Translator</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$translator</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Application-Service-FileStorage.html"><abbr title="\Application\Service\FileStorage">FileStorage</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$storageService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Mapper-Company.html"><abbr title="\Company\Mapper\Company">Company</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$companyMapper</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Mapper-Package.html"><abbr title="\Company\Mapper\Package">Package</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$packageMapper</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Mapper-BannerPackage.html"><abbr title="\Company\Mapper\BannerPackage">BannerPackage</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$bannerPackageMapper</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Mapper-FeaturedPackage.html"><abbr title="\Company\Mapper\FeaturedPackage">FeaturedPackage</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$featuredPackageMapper</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Mapper-Job.html"><abbr title="\Company\Mapper\Job">Job</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$jobMapper</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Mapper-Category.html"><abbr title="\Company\Mapper\Category">Category</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$categoryMapper</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Mapper-Label.html"><abbr title="\Company\Mapper\Label">Label</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$labelMapper</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Form-Company.html"><abbr title="\Company\Form\Company">Company</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$companyForm</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Form-Package.html"><abbr title="\Company\Form\Package">Package</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$editPackageForm</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Form-Package.html"><abbr title="\Company\Form\Package">Package</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$editBannerPackageForm</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Form-Package.html"><abbr title="\Company\Form\Package">Package</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$editFeaturedPackageForm</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Form-Job.html"><abbr title="\Company\Form\Job">Job</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$editJobForm</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Form-JobCategory.html"><abbr title="\Company\Form\JobCategory">JobCategory</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$editCategoryForm</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Form-JobLabel.html"><abbr title="\Company\Form\JobLabel">JobLabel</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$editLabelForm</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Service-AclService.html"><abbr title="\Company\Service\AclService">AclService</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$aclService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Mvc\I18n\Translator">Translator</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$translator</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Application-Service-FileStorage.html"><abbr title="\Application\Service\FileStorage">FileStorage</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$storageService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Mapper-Company.html"><abbr title="\Company\Mapper\Company">Company</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$companyMapper</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Mapper-Package.html"><abbr title="\Company\Mapper\Package">Package</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$packageMapper</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Mapper-BannerPackage.html"><abbr title="\Company\Mapper\BannerPackage">BannerPackage</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$bannerPackageMapper</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Mapper-FeaturedPackage.html"><abbr title="\Company\Mapper\FeaturedPackage">FeaturedPackage</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$featuredPackageMapper</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Mapper-Job.html"><abbr title="\Company\Mapper\Job">Job</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$jobMapper</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Mapper-Category.html"><abbr title="\Company\Mapper\Category">Category</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$categoryMapper</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Mapper-Label.html"><abbr title="\Company\Mapper\Label">Label</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$labelMapper</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Form-Company.html"><abbr title="\Company\Form\Company">Company</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$companyForm</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Form-Package.html"><abbr title="\Company\Form\Package">Package</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$editPackageForm</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Form-Package.html"><abbr title="\Company\Form\Package">Package</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$editBannerPackageForm</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Form-Package.html"><abbr title="\Company\Form\Package">Package</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$editFeaturedPackageForm</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Form-Job.html"><abbr title="\Company\Form\Job">Job</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$editJobForm</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Form-JobCategory.html"><abbr title="\Company\Form\JobCategory">JobCategory</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$editCategoryForm</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Form-JobLabel.html"><abbr title="\Company\Form\JobLabel">JobLabel</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$editLabelForm</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Service-User.html"><abbr title="\User\Service\User">User</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$userService</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
         <section class="phpdocumentor-description"></section>
 
@@ -1575,12 +1658,116 @@ file.</dd>
                     <section class="phpdocumentor-description"></section>
 
             </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$userService</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Service-User.html"><abbr title="\User\Service\User">User</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
             </dl>
 
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">mixed</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_applyJobProposal">
+        applyJobProposal()
+        <a href="classes/Company-Service-Company.html#method_applyJobProposal" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">813</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">applyJobProposal</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Model-Proposals-JobUpdate.html"><abbr title="\Company\Model\Proposals\JobUpdate">JobUpdate</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$jobUpdate</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$jobUpdate</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Model-Proposals-JobUpdate.html"><abbr title="\Company\Model\Proposals\JobUpdate">JobUpdate</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">void</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_cancelJobProposal">
+        cancelJobProposal()
+        <a href="classes/Company-Service-Company.html#method_cancelJobProposal" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">832</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">cancelJobProposal</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Model-Proposals-JobUpdate.html"><abbr title="\Company\Model\Proposals\JobUpdate">JobUpdate</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$jobUpdate</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$message</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$jobUpdate</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Model-Proposals-JobUpdate.html"><abbr title="\Company\Model\Proposals\JobUpdate">JobUpdate</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$message</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
         
     
@@ -1598,7 +1785,7 @@ file.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">307</span>
+    <span class="phpdocumentor-element-found-in__line">315</span>
 
     </aside>
 
@@ -1655,7 +1842,7 @@ file.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">542</span>
+    <span class="phpdocumentor-element-found-in__line">587</span>
 
     </aside>
 
@@ -1663,7 +1850,7 @@ file.</dd>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">createJob</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Model-CompanyJobPackage.html"><abbr title="\Company\Model\CompanyJobPackage">CompanyJobPackage</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$package</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+                    <span class="phpdocumentor-signature__name">createJob</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Model-CompanyJobPackage.html"><abbr title="\Company\Model\CompanyJobPackage">CompanyJobPackage</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$package</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Company-Model-Job.html"><abbr title="\Company\Model\Job">Job</abbr></a>|bool</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -1701,7 +1888,7 @@ file.</dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">bool</span>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Company-Model-Job.html"><abbr title="\Company\Model\Job">Job</abbr></a>|bool</span>
             &mdash;
         
     
@@ -1719,7 +1906,7 @@ file.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">233</span>
+    <span class="phpdocumentor-element-found-in__line">241</span>
 
     </aside>
 
@@ -1764,7 +1951,7 @@ file.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">270</span>
+    <span class="phpdocumentor-element-found-in__line">278</span>
 
     </aside>
 
@@ -1809,7 +1996,7 @@ file.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">486</span>
+    <span class="phpdocumentor-element-found-in__line">531</span>
 
     </aside>
 
@@ -1817,7 +2004,7 @@ file.</dd>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">createPackage</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Model-Company.html"><abbr title="\Company\Model\Company">Company</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$company</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$type</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;job&#039;</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+                    <span class="phpdocumentor-signature__name">createPackage</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Model-Company.html"><abbr title="\Company\Model\Company">Company</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$company</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Model-Enums-CompanyPackageTypes.html"><abbr title="\Company\Model\Enums\CompanyPackageTypes">CompanyPackageTypes</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$type</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">CompanyPackageTypes::Job</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -1838,8 +2025,8 @@ file.</dd>
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$type</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">&#039;job&#039;</span>            </dt>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Model-Enums-CompanyPackageTypes.html"><abbr title="\Company\Model\Enums\CompanyPackageTypes">CompanyPackageTypes</abbr></a></span>
+                 = <span class="phpdocumentor-signature__argument__default-value">CompanyPackageTypes::Job</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
             </dd>
@@ -1880,7 +2067,7 @@ file.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">703</span>
+    <span class="phpdocumentor-element-found-in__line">850</span>
 
     </aside>
 
@@ -1937,11 +2124,11 @@ file.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">687</span>
+    <span class="phpdocumentor-element-found-in__line">763</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Deletes the given job.</p>
+        <p class="phpdocumentor-summary">Deletes the given job and its associated data.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -1994,7 +2181,7 @@ file.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">671</span>
+    <span class="phpdocumentor-element-found-in__line">747</span>
 
     </aside>
 
@@ -2051,7 +2238,7 @@ file.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">805</span>
+    <span class="phpdocumentor-element-found-in__line">956</span>
 
     </aside>
 
@@ -2086,7 +2273,7 @@ file.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">206</span>
+    <span class="phpdocumentor-element-found-in__line">214</span>
 
     </aside>
 
@@ -2129,7 +2316,7 @@ file.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">720</span>
+    <span class="phpdocumentor-element-found-in__line">867</span>
 
     </aside>
 
@@ -2172,7 +2359,7 @@ file.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">865</span>
+    <span class="phpdocumentor-element-found-in__line">1025</span>
 
     </aside>
 
@@ -2204,7 +2391,7 @@ file.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">174</span>
+    <span class="phpdocumentor-element-found-in__line">182</span>
 
     </aside>
 
@@ -2237,7 +2424,7 @@ file.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">72</span>
+    <span class="phpdocumentor-element-found-in__line">80</span>
 
     </aside>
 
@@ -2270,7 +2457,7 @@ file.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">84</span>
+    <span class="phpdocumentor-element-found-in__line">92</span>
 
     </aside>
 
@@ -2302,7 +2489,7 @@ file.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">188</span>
+    <span class="phpdocumentor-element-found-in__line">196</span>
 
     </aside>
 
@@ -2335,7 +2522,7 @@ file.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">791</span>
+    <span class="phpdocumentor-element-found-in__line">942</span>
 
     </aside>
 
@@ -2379,7 +2566,7 @@ $companySlugName.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">732</span>
+    <span class="phpdocumentor-element-found-in__line">879</span>
 
     </aside>
 
@@ -2422,7 +2609,7 @@ $companySlugName.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">221</span>
+    <span class="phpdocumentor-element-found-in__line">229</span>
 
     </aside>
 
@@ -2478,7 +2665,7 @@ $companySlugName.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">853</span>
+    <span class="phpdocumentor-element-found-in__line">1008</span>
 
     </aside>
 
@@ -2513,7 +2700,7 @@ $companySlugName.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">748</span>
+    <span class="phpdocumentor-element-found-in__line">899</span>
 
     </aside>
 
@@ -2556,7 +2743,7 @@ $companySlugName.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">819</span>
+    <span class="phpdocumentor-element-found-in__line">973</span>
 
     </aside>
 
@@ -2591,7 +2778,7 @@ $companySlugName.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">764</span>
+    <span class="phpdocumentor-element-found-in__line">915</span>
 
     </aside>
 
@@ -2634,7 +2821,7 @@ $companySlugName.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">154</span>
+    <span class="phpdocumentor-element-found-in__line">162</span>
 
     </aside>
 
@@ -2681,7 +2868,7 @@ $companySlugName.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">835</span>
+    <span class="phpdocumentor-element-found-in__line">990</span>
 
     </aside>
 
@@ -2689,17 +2876,18 @@ $companySlugName.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getPackageForm</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$type</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;job&#039;</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Company-Form-Package.html"><abbr title="\Company\Form\Package">Package</abbr></a></span></code>
+                    <span class="phpdocumentor-signature__name">getPackageForm</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Model-Enums-CompanyPackageTypes.html"><abbr title="\Company\Model\Enums\CompanyPackageTypes">CompanyPackageTypes</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$type</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">CompanyPackageTypes::Job</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Company-Form-Package.html"><abbr title="\Company\Form\Package">Package</abbr></a></span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$type</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">&#039;job&#039;</span>            </dt>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Model-Enums-CompanyPackageTypes.html"><abbr title="\Company\Model\Enums\CompanyPackageTypes">CompanyPackageTypes</abbr></a></span>
+                 = <span class="phpdocumentor-signature__argument__default-value">CompanyPackageTypes::Job</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
             </dl>
 
@@ -2726,7 +2914,7 @@ $companySlugName.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">458</span>
+    <span class="phpdocumentor-element-found-in__line">503</span>
 
     </aside>
 
@@ -2782,7 +2970,7 @@ $companySlugName.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">448</span>
+    <span class="phpdocumentor-element-found-in__line">493</span>
 
     </aside>
 
@@ -2839,7 +3027,7 @@ $companySlugName.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">426</span>
+    <span class="phpdocumentor-element-found-in__line">471</span>
 
     </aside>
 
@@ -2882,7 +3070,7 @@ $companySlugName.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">436</span>
+    <span class="phpdocumentor-element-found-in__line">481</span>
 
     </aside>
 
@@ -2925,7 +3113,7 @@ $companySlugName.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">470</span>
+    <span class="phpdocumentor-element-found-in__line">515</span>
 
     </aside>
 
@@ -2975,6 +3163,154 @@ $companySlugName.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_resetJobApproval">
+        resetJobApproval()
+        <a href="classes/Company-Service-Company.html#method_resetJobApproval" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">1062</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">resetJobApproval</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Model-Job.html"><abbr title="\Company\Model\Job">Job</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$job</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$job</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Model-Job.html"><abbr title="\Company\Model\Job">Job</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">void</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_setJobApproval">
+        setJobApproval()
+        <a href="classes/Company-Service-Company.html#method_setJobApproval" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">1038</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">setJobApproval</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Model-Job.html"><abbr title="\Company\Model\Job">Job</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$job</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Application-Model-Enums-ApprovableStatus.html"><abbr title="\Application\Model\Enums\ApprovableStatus">ApprovableStatus</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$status</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$message</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$job</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Model-Job.html"><abbr title="\Company\Model\Job">Job</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$status</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Application-Model-Enums-ApprovableStatus.html"><abbr title="\Application\Model\Enums\ApprovableStatus">ApprovableStatus</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$message</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">void</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_transferJobs">
+        transferJobs()
+        <a href="classes/Company-Service-Company.html#method_transferJobs" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">792</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Move jobs from an expired package to a non-expired package.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">transferJobs</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$data</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">bool</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_updateCompany">
         updateCompany()
         <a href="classes/Company-Service-Company.html#method_updateCompany" class="headerlink"><i class="fas fa-link"></i></a>
@@ -2982,7 +3318,7 @@ $companySlugName.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">345</span>
+    <span class="phpdocumentor-element-found-in__line">368</span>
 
     </aside>
 
@@ -3046,14 +3382,14 @@ $companySlugName.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">603</span>
+    <span class="phpdocumentor-element-found-in__line">655</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">updateJob</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Model-Job.html"><abbr title="\Company\Model\Job">Job</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$job</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+                    <span class="phpdocumentor-signature__name">updateJob</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Model-Job.html"><abbr title="\Company\Model\Job">Job</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$job</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$applyProposal</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">false</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -3071,6 +3407,14 @@ $companySlugName.</p>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$applyProposal</span>
+                : <span class="phpdocumentor-signature__argument__return-type">bool</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">false</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
             </dl>
 
@@ -3109,7 +3453,7 @@ $companySlugName.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">251</span>
+    <span class="phpdocumentor-element-found-in__line">259</span>
 
     </aside>
 
@@ -3162,7 +3506,7 @@ $companySlugName.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">288</span>
+    <span class="phpdocumentor-element-found-in__line">296</span>
 
     </aside>
 
@@ -3214,7 +3558,7 @@ $companySlugName.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">516</span>
+    <span class="phpdocumentor-element-found-in__line">561</span>
 
     </aside>
 
@@ -3271,6 +3615,50 @@ $companySlugName.</p>
             -private
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_deleteJobAttachments">
+        deleteJobAttachments()
+        <a href="classes/Company-Service-Company.html#method_deleteJobAttachments" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">778</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Remove the actual attachments from a job.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+                    <span class="phpdocumentor-signature__name">deleteJobAttachments</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Model-Job.html"><abbr title="\Company\Model\Job">Job</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$job</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$job</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Model-Job.html"><abbr title="\Company\Model\Job">Job</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">void</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -private
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_getFuturePackageExpiresBeforeDate">
         getFuturePackageExpiresBeforeDate()
         <a href="classes/Company-Service-Company.html#method_getFuturePackageExpiresBeforeDate" class="headerlink"><i class="fas fa-link"></i></a>
@@ -3278,7 +3666,7 @@ $companySlugName.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">126</span>
+    <span class="phpdocumentor-element-found-in__line">134</span>
 
     </aside>
 
@@ -3320,7 +3708,7 @@ $companySlugName.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">100</span>
+    <span class="phpdocumentor-element-found-in__line">108</span>
 
     </aside>
 
@@ -3362,7 +3750,7 @@ $companySlugName.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Service/Company.php"><a href="files/module-company-src-service-company.html"><abbr title="module/Company/src/Service/Company.php">Company.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">374</span>
+    <span class="phpdocumentor-element-found-in__line">419</span>
 
     </aside>
 

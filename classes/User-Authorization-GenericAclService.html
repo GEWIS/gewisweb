@@ -404,7 +404,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authorization/GenericAclService.php"><a href="files/module-user-src-authorization-genericaclservice.html"><abbr title="module/User/src/Authorization/GenericAclService.php">GenericAclService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">15</span>
+    <span class="phpdocumentor-element-found-in__line">24</span>
 
     </aside>
 
@@ -425,16 +425,9 @@
 
 <dl class="phpdocumentor-table-of-contents">
                     <dt class="phpdocumentor-table-of-contents__entry -property -private">
-    <a href="classes/User-Authorization-GenericAclService.html#property_apiAuthService">$apiAuthService</a>
+    <a href="classes/User-Authorization-GenericAclService.html#property_apiUserAuthService">$apiUserAuthService</a>
     <span>
                         &nbsp;: <a href="classes/User-Authentication-ApiAuthenticationService.html"><abbr title="\User\Authentication\ApiAuthenticationService">ApiAuthenticationService</abbr></a>            </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -private">
-    <a href="classes/User-Authorization-GenericAclService.html#property_authService">$authService</a>
-    <span>
-                        &nbsp;: <a href="classes/User-Authentication-AuthenticationService.html"><abbr title="\User\Authentication\AuthenticationService">AuthenticationService</abbr></a>            </span>
 </dt>
 <dd></dd>
 
@@ -442,6 +435,13 @@
     <a href="classes/User-Authorization-GenericAclService.html#property_checkedIps">$checkedIps</a>
     <span>
                         &nbsp;: array&lt;string|int, mixed&gt;            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a href="classes/User-Authorization-GenericAclService.html#property_companyUserAuthService">$companyUserAuthService</a>
+    <span>
+                        &nbsp;: <a href="classes/User-Authentication-AuthenticationService.html"><abbr title="\User\Authentication\AuthenticationService">AuthenticationService</abbr></a>            </span>
 </dt>
 <dd></dd>
 
@@ -466,6 +466,13 @@
 </dt>
 <dd></dd>
 
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a href="classes/User-Authorization-GenericAclService.html#property_userAuthService">$userAuthService</a>
+    <span>
+                        &nbsp;: <a href="classes/User-Authentication-AuthenticationService.html"><abbr title="\User\Authentication\AuthenticationService">AuthenticationService</abbr></a>            </span>
+</dt>
+<dd></dd>
+
                 <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/User-Authorization-GenericAclService.html#method___construct">__construct()</a>
     <span>
@@ -474,21 +481,42 @@
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/User-Authorization-GenericAclService.html#method_getCompanyUserIdentity">getCompanyUserIdentity()</a>
+    <span>
+                                &nbsp;: <a href="classes/User-Model-CompanyUser.html"><abbr title="\User\Model\CompanyUser">CompanyUser</abbr></a>|null    </span>
+</dt>
+<dd>Get the company user identity or `null` if no `CompanyUser` is logged in.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/User-Authorization-GenericAclService.html#method_getCompanyUserIdentityOrThrowException">getCompanyUserIdentityOrThrowException()</a>
+    <span>
+                                &nbsp;: <a href="classes/User-Model-CompanyUser.html"><abbr title="\User\Model\CompanyUser">CompanyUser</abbr></a>    </span>
+</dt>
+<dd>Gets the company user identity or gives a 403 if the company user is not logged in.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/User-Authorization-GenericAclService.html#method_getIdentity">getIdentity()</a>
     <span>
-                                &nbsp;: <a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a>|null    </span>
+                                &nbsp;: <a href="classes/Application-Model-IdentityInterface.html"><abbr title="\Application\Model\IdentityInterface">IdentityInterface</abbr></a>|null    </span>
 </dt>
 <dd>Gets the user identity if logged in or null otherwise</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/User-Authorization-GenericAclService.html#method_getIdentityOrThrowException">getIdentityOrThrowException()</a>
+    <a href="classes/User-Authorization-GenericAclService.html#method_getUserIdentity">getUserIdentity()</a>
     <span>
                                 &nbsp;: <a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a>|null    </span>
 </dt>
-<dd>Gets the user identity, or gives a 403 if the user is not logged in</dd>
+<dd>Get the user identity or `null` if no `User` is logged in.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/User-Authorization-GenericAclService.html#method_hasIdentity">hasIdentity()</a>
+    <a href="classes/User-Authorization-GenericAclService.html#method_getUserIdentityOrThrowException">getUserIdentityOrThrowException()</a>
+    <span>
+                                &nbsp;: <a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a>    </span>
+</dt>
+<dd>Gets the user identity or gives a 403 if the user is not logged in.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Application-Service-AbstractAclService.html#method_hasIdentity">hasIdentity()</a>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
@@ -542,16 +570,16 @@ CIDR notation.</dd>
             -private
                                                 -read-only        "
 >
-    <h4 class="phpdocumentor-element__name" id="property_apiAuthService">
-        $apiAuthService
-        <a href="classes/User-Authorization-GenericAclService.html#property_apiAuthService" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_apiUserAuthService">
+        $apiUserAuthService
+        <a href="classes/User-Authorization-GenericAclService.html#property_apiUserAuthService" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                         <small class="phpdocumentor-element__modifier">read-only</small>        </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authorization/GenericAclService.php"><a href="files/module-user-src-authorization-genericaclservice.html"><abbr title="module/User/src/Authorization/GenericAclService.php">GenericAclService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">22</span>
+    <span class="phpdocumentor-element-found-in__line">36</span>
 
     </aside>
 
@@ -559,41 +587,7 @@ CIDR notation.</dd>
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">private</span>
         <span class="phpdocumentor-signature__type"><a href="classes/User-Authentication-ApiAuthenticationService.html"><abbr title="\User\Authentication\ApiAuthenticationService">ApiAuthenticationService</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$apiAuthService</span>
-    </code>
-
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -private
-                                                -read-only        "
->
-    <h4 class="phpdocumentor-element__name" id="property_authService">
-        $authService
-        <a href="classes/User-Authorization-GenericAclService.html#property_authService" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authorization/GenericAclService.php"><a href="files/module-user-src-authorization-genericaclservice.html"><abbr title="module/User/src/Authorization/GenericAclService.php">GenericAclService.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">21</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/User-Authentication-AuthenticationService.html"><abbr title="\User\Authentication\AuthenticationService">AuthenticationService</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$authService</span>
+    <span class="phpdocumentor-signature__name">$apiUserAuthService</span>
     </code>
 
         <section class="phpdocumentor-description"></section>
@@ -619,7 +613,7 @@ CIDR notation.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authorization/GenericAclService.php"><a href="files/module-user-src-authorization-genericaclservice.html"><abbr title="module/User/src/Authorization/GenericAclService.php">GenericAclService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">17</span>
+    <span class="phpdocumentor-element-found-in__line">26</span>
 
     </aside>
 
@@ -644,6 +638,40 @@ CIDR notation.</dd>
             -private
                                                 -read-only        "
 >
+    <h4 class="phpdocumentor-element__name" id="property_companyUserAuthService">
+        $companyUserAuthService
+        <a href="classes/User-Authorization-GenericAclService.html#property_companyUserAuthService" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authorization/GenericAclService.php"><a href="files/module-user-src-authorization-genericaclservice.html"><abbr title="module/User/src/Authorization/GenericAclService.php">GenericAclService.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">35</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/User-Authentication-AuthenticationService.html"><abbr title="\User\Authentication\AuthenticationService">AuthenticationService</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$companyUserAuthService</span>
+    </code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+                                                -read-only        "
+>
     <h4 class="phpdocumentor-element__name" id="property_remoteAddress">
         $remoteAddress
         <a href="classes/User-Authorization-GenericAclService.html#property_remoteAddress" class="headerlink"><i class="fas fa-link"></i></a>
@@ -653,7 +681,7 @@ CIDR notation.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authorization/GenericAclService.php"><a href="files/module-user-src-authorization-genericaclservice.html"><abbr title="module/User/src/Authorization/GenericAclService.php">GenericAclService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">24</span>
+    <span class="phpdocumentor-element-found-in__line">38</span>
 
     </aside>
 
@@ -687,7 +715,7 @@ CIDR notation.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authorization/GenericAclService.php"><a href="files/module-user-src-authorization-genericaclservice.html"><abbr title="module/User/src/Authorization/GenericAclService.php">GenericAclService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">20</span>
+    <span class="phpdocumentor-element-found-in__line">33</span>
 
     </aside>
 
@@ -721,7 +749,7 @@ CIDR notation.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authorization/GenericAclService.php"><a href="files/module-user-src-authorization-genericaclservice.html"><abbr title="module/User/src/Authorization/GenericAclService.php">GenericAclService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">23</span>
+    <span class="phpdocumentor-element-found-in__line">37</span>
 
     </aside>
 
@@ -730,6 +758,40 @@ CIDR notation.</dd>
     <span class="phpdocumentor-signature__visibility">private</span>
         <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$tueRanges</span>
+    </code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+                                                -read-only        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_userAuthService">
+        $userAuthService
+        <a href="classes/User-Authorization-GenericAclService.html#property_userAuthService" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authorization/GenericAclService.php"><a href="files/module-user-src-authorization-genericaclservice.html"><abbr title="module/User/src/Authorization/GenericAclService.php">GenericAclService.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">34</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/User-Authentication-AuthenticationService.html"><abbr title="\User\Authentication\AuthenticationService">AuthenticationService</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$userAuthService</span>
     </code>
 
         <section class="phpdocumentor-description"></section>
@@ -759,17 +821,16 @@ CIDR notation.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authorization/GenericAclService.php"><a href="files/module-user-src-authorization-genericaclservice.html"><abbr title="module/User/src/Authorization/GenericAclService.php">GenericAclService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">19</span>
+    <span class="phpdocumentor-element-found-in__line">32</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Mvc\I18n\Translator">Translator</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$translator</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Authentication-AuthenticationService.html"><abbr title="\User\Authentication\AuthenticationService">AuthenticationService</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$authService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Authentication-ApiAuthenticationService.html"><abbr title="\User\Authentication\ApiAuthenticationService">ApiAuthenticationService</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$apiAuthService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$tueRanges</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$remoteAddress</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Mvc\I18n\Translator">Translator</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$translator</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Authentication-AuthenticationService.html"><abbr title="\User\Authentication\AuthenticationService">AuthenticationService</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$userAuthService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Authentication-AuthenticationService.html"><abbr title="\User\Authentication\AuthenticationService">AuthenticationService</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$companyUserAuthService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Authentication-ApiAuthenticationService.html"><abbr title="\User\Authentication\ApiAuthenticationService">ApiAuthenticationService</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$apiUserAuthService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$tueRanges</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$remoteAddress</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -781,7 +842,7 @@ CIDR notation.</dd>
 
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$authService</span>
+                <span class="phpdocumentor-signature__argument__name">$userAuthService</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Authentication-AuthenticationService.html"><abbr title="\User\Authentication\AuthenticationService">AuthenticationService</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
@@ -789,7 +850,15 @@ CIDR notation.</dd>
 
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$apiAuthService</span>
+                <span class="phpdocumentor-signature__argument__name">$companyUserAuthService</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Authentication-AuthenticationService.html"><abbr title="\User\Authentication\AuthenticationService">AuthenticationService</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$apiUserAuthService</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Authentication-ApiAuthenticationService.html"><abbr title="\User\Authentication\ApiAuthenticationService">ApiAuthenticationService</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
@@ -815,9 +884,113 @@ CIDR notation.</dd>
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">psalm-param</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>UserAuthenticationService&lt;UserSession, UserAdapter&gt; $userAuthService</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">psalm-param</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>CompanyUserAuthenticationService&lt;CompanyUserSession, CompanyUserAdapter&gt; $companyUserAuthService</p>
+</section>
+
+                                    </dd>
+                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">mixed</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getCompanyUserIdentity">
+        getCompanyUserIdentity()
+        <a href="classes/User-Authorization-GenericAclService.html#method_getCompanyUserIdentity" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authorization/GenericAclService.php"><a href="files/module-user-src-authorization-genericaclservice.html"><abbr title="module/User/src/Authorization/GenericAclService.php">GenericAclService.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">81</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Get the company user identity or `null` if no `CompanyUser` is logged in.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getCompanyUserIdentity</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/User-Model-CompanyUser.html"><abbr title="\User\Model\CompanyUser">CompanyUser</abbr></a>|null</span></code>
+
+    
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/User-Model-CompanyUser.html"><abbr title="\User\Model\CompanyUser">CompanyUser</abbr></a>|null</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getCompanyUserIdentityOrThrowException">
+        getCompanyUserIdentityOrThrowException()
+        <a href="classes/User-Authorization-GenericAclService.html#method_getCompanyUserIdentityOrThrowException" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authorization/GenericAclService.php"><a href="files/module-user-src-authorization-genericaclservice.html"><abbr title="module/User/src/Authorization/GenericAclService.php">GenericAclService.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">91</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Gets the company user identity or gives a 403 if the company user is not logged in.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getCompanyUserIdentityOrThrowException</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/User-Model-CompanyUser.html"><abbr title="\User\Model\CompanyUser">CompanyUser</abbr></a></span></code>
+
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><a href="classes/User-Permissions-NotAllowedException.html"><abbr title="\User\Permissions\NotAllowedException">NotAllowedException</abbr></a></span>
+                                                            
+                                             
+                                    </dd>
+                        </dl>
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/User-Model-CompanyUser.html"><abbr title="\User\Model\CompanyUser">CompanyUser</abbr></a></span>
             &mdash;
         
     
@@ -835,7 +1008,7 @@ CIDR notation.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authorization/GenericAclService.php"><a href="files/module-user-src-authorization-genericaclservice.html"><abbr title="module/User/src/Authorization/GenericAclService.php">GenericAclService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">71</span>
+    <span class="phpdocumentor-element-found-in__line">61</span>
 
     </aside>
 
@@ -843,49 +1016,14 @@ CIDR notation.</dd>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getIdentity</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a>|null</span></code>
+                    <span class="phpdocumentor-signature__name">getIdentity</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Application-Model-IdentityInterface.html"><abbr title="\Application\Model\IdentityInterface">IdentityInterface</abbr></a>|null</span></code>
 
     
     
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a>|null</span>
-            &mdash;
-            <section class="phpdocumentor-description"><p>the current logged-in user</p>
-</section>
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getIdentityOrThrowException">
-        getIdentityOrThrowException()
-        <a href="classes/User-Authorization-GenericAclService.html#method_getIdentityOrThrowException" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authorization/GenericAclService.php"><a href="files/module-user-src-authorization-genericaclservice.html"><abbr title="module/User/src/Authorization/GenericAclService.php">GenericAclService.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">56</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Gets the user identity, or gives a 403 if the user is not logged in</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getIdentityOrThrowException</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a>|null</span></code>
-
-    
-    
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a>|null</span>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Application-Model-IdentityInterface.html"><abbr title="\Application\Model\IdentityInterface">IdentityInterface</abbr></a>|null</span>
             &mdash;
             <section class="phpdocumentor-description"><p>the current logged in user</p>
 </section>
@@ -898,14 +1036,94 @@ CIDR notation.</dd>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_hasIdentity">
-        hasIdentity()
-        <a href="classes/User-Authorization-GenericAclService.html#method_hasIdentity" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_getUserIdentity">
+        getUserIdentity()
+        <a href="classes/User-Authorization-GenericAclService.html#method_getUserIdentity" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authorization/GenericAclService.php"><a href="files/module-user-src-authorization-genericaclservice.html"><abbr title="module/User/src/Authorization/GenericAclService.php">GenericAclService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">81</span>
+    <span class="phpdocumentor-element-found-in__line">105</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Get the user identity or `null` if no `User` is logged in.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getUserIdentity</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a>|null</span></code>
+
+    
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a>|null</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getUserIdentityOrThrowException">
+        getUserIdentityOrThrowException()
+        <a href="classes/User-Authorization-GenericAclService.html#method_getUserIdentityOrThrowException" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authorization/GenericAclService.php"><a href="files/module-user-src-authorization-genericaclservice.html"><abbr title="module/User/src/Authorization/GenericAclService.php">GenericAclService.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">115</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Gets the user identity or gives a 403 if the user is not logged in.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getUserIdentityOrThrowException</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a></span></code>
+
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><a href="classes/User-Permissions-NotAllowedException.html"><abbr title="\User\Permissions\NotAllowedException">NotAllowedException</abbr></a></span>
+                                                            
+                                             
+                                    </dd>
+                        </dl>
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a></span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_hasIdentity">
+        hasIdentity()
+        <a href="classes/Application-Service-AbstractAclService.html#method_hasIdentity" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Service/AbstractAclService.php"><a href="files/module-application-src-service-abstractaclservice.html"><abbr title="module/Application/src/Service/AbstractAclService.php">AbstractAclService.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">57</span>
 
     </aside>
 
@@ -940,7 +1158,7 @@ CIDR notation.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Service/AbstractAclService.php"><a href="files/module-application-src-service-abstractaclservice.html"><abbr title="module/Application/src/Service/AbstractAclService.php">AbstractAclService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">33</span>
+    <span class="phpdocumentor-element-found-in__line">34</span>
 
     </aside>
 
@@ -994,7 +1212,7 @@ CIDR notation.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Service/AbstractAclService.php"><a href="files/module-application-src-service-abstractaclservice.html"><abbr title="module/Application/src/Service/AbstractAclService.php">AbstractAclService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">16</span>
+    <span class="phpdocumentor-element-found-in__line">17</span>
 
     </aside>
 
@@ -1027,7 +1245,7 @@ CIDR notation.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authorization/GenericAclService.php"><a href="files/module-user-src-authorization-genericaclservice.html"><abbr title="module/User/src/Authorization/GenericAclService.php">GenericAclService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">34</span>
+    <span class="phpdocumentor-element-found-in__line">48</span>
 
     </aside>
 
@@ -1076,7 +1294,7 @@ This is because of the behaviour of <a href="%5CLaminas%5CPermissions%5CAcl%5CRo
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Authorization/GenericAclService.php"><a href="files/module-user-src-authorization-genericaclservice.html"><abbr title="module/User/src/Authorization/GenericAclService.php">GenericAclService.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">90</span>
+    <span class="phpdocumentor-element-found-in__line">130</span>
 
     </aside>
 
