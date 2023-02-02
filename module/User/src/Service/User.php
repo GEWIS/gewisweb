@@ -171,16 +171,19 @@ class User
 
     /**
      * Register a company.
+     *
+     * TODO: Re-enable functionality once company module overhaul is finished.
      */
     public function registerCompanyUser(CompanyModel $company): void
     {
-        $newCompanyUser = new NewCompanyUserModel($company);
-        $newCompanyUser->setCode($this->generateCode());
-        $newCompanyUser->setTime(new DateTime());
+        // TODO: Re-enable functionality once company module overhaul is finished.
+        // $newCompanyUser = new NewCompanyUserModel($company);
+        // $newCompanyUser->setCode($this->generateCode());
+        // $newCompanyUser->setTime(new DateTime());
 
-        $this->newCompanyUserMapper->persist($newCompanyUser);
+        // $this->newCompanyUserMapper->persist($newCompanyUser);
 
-        $this->emailService->sendCompanyRegisterMail($newCompanyUser, $company);
+        // $this->emailService->sendCompanyRegisterMail($newCompanyUser, $company);
     }
 
     /**
