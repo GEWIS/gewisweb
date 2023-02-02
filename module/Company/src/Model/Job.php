@@ -194,6 +194,8 @@ class Job implements ResourceInterface
     #[OneToMany(
         targetEntity: JobUpdateProposalModel::class,
         mappedBy: "original",
+        cascade: ["persist", "remove"],
+        orphanRemoval: true,
         fetch: "EXTRA_LAZY",
     )]
     protected Collection $updateProposals;

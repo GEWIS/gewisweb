@@ -754,13 +754,28 @@ class Company
     }
 
     /**
-     * Deletes the given job.
+     * Deletes the given job and its associated data.
      *
      * @param JobModel $job
      *
      * @throws ORMException
      */
     public function deleteJob(JobModel $job): void
+    {
+        $this->deleteJobAttachments($job);
+
+        /** @var JobUpdateProposalModel $jobUpdateProposal */
+        foreach ($job->getUpdateProposals() as $jobUpdateProposal) {
+            $this->deleteJobAttachments($jobUpdateProposal->getProposal());
+        }
+
+        $this->jobMapper->remove($job);
+    }
+
+    /**
+     * Remove the actual attachments from a job.
+     */
+    private function deleteJobAttachments(JobModel $job): void
     {
         if (null !== ($dutchAttachment = $job->getAttachment()->getValueNL())) {
             $this->storageService->removeFile($dutchAttachment);
@@ -769,13 +784,6 @@ class Company
         if (null !== ($englishAttachment = $job->getAttachment()->getValueEN())) {
             $this->storageService->removeFile($englishAttachment);
         }
-
-        /** @var JobUpdateProposalModel $jobUpdateProposal */
-        foreach ($job->getUpdateProposals() as $jobUpdateProposal) {
-            $this->deleteJob($jobUpdateProposal->getProposal());
-        }
-
-        $this->jobMapper->remove($job);
     }
 
     /**
