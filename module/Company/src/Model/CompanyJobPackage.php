@@ -11,6 +11,7 @@ use Doctrine\Common\Collections\{
 use Doctrine\ORM\Mapping\{
     Entity,
     OneToMany,
+    OrderBy,
 };
 
 /**
@@ -27,6 +28,7 @@ class CompanyJobPackage extends CompanyPackage
         mappedBy: "package",
         cascade: ["persist", "remove"],
     )]
+    #[OrderBy(["updatedAt" => "DESC"])]
     protected Collection $jobs;
 
     public function __construct()
