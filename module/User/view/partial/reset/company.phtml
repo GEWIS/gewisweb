@@ -12,6 +12,8 @@ $form->setAttribute('class', 'form-horizontal');
 $email = $form->get('email');
 $email->setAttribute('id', 'email');
 $email->setAttribute('class', 'form-control');
+// TODO: Re-enable reset after re-enabling the creation of company accounts.
+$email->setAttribute('disabled', 'disabled');
 ?>
 <div class="form-group <?= $this->bootstrapElementError($email) ?>">
     <label for="<?= $email->getAttribute('id') ?>"
@@ -29,6 +31,8 @@ $email->setAttribute('class', 'form-control');
         $submit = $form->get('submit');
         $submit->setAttribute('class', 'btn btn-primary');
         $submit->setValue($this->translate('Reset password'));
+        // TODO: Re-enable login after re-enabling the creation of company accounts.
+        $submit->setAttribute('disabled', 'disabled');
         ?>
         <?= $this->formRow($submit); ?>
     </div>
