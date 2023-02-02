@@ -224,6 +224,15 @@ $this->breadcrumbs()
         <h2><?= $this->translate('Approval') ?></h2>
     </div>
     <?php if (ApprovableStatus::Unapproved === $job->getApproved()): ?>
+        <div class="col-md-12">
+            <p>
+                <?php if ($job->isPublished()): ?>
+                    <?= $this->translate('If approved, this job will be <strong>published</strong>, however, its actual visiblity depends on the company and associated job package.') ?>
+                <?php else: ?>
+                    <?= $this->translate('If approved, this job will be <strong>hidden</strong>.') ?>
+                <?php endif; ?>
+            </p>
+        </div>
         <div class="col-md-2">
             <?php
             $approvalForm->setAttribute('action', $this->url(
@@ -285,20 +294,10 @@ $this->breadcrumbs()
     <?php elseif (ApprovableStatus::Approved === $job->getApproved()): ?>
         <div class="col-md-12">
             <p>
-                <?php
-                if (null !== ($text = $job->getApprovableText())) {
-                    echo sprintf(
-                        $this->translate('This job was approved by <strong>%s</strong> with the message "%s".'),
-                        $this->escapeHtml($job->getApprover()->getFullName()),
-                        $this->escapeHtml($text->getMessage()),
-                    );
-                } else {
-                    echo sprintf(
-                        $this->translate('This job was approved by <strong>%s</strong>.'),
-                        $this->escapeHtml($job->getApprover()->getFullName()),
-                    );
-                }
-                ?>
+                <?= sprintf(
+                    $this->translate('This job was approved by <strong>%s</strong>.'),
+                    $this->escapeHtml($job->getApprover()->getFullName()),
+                ) ?>
             </p>
         </div>
         <div class="col-md-2">

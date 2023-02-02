@@ -19,7 +19,7 @@ $this->breadcrumbs()
                 <?php if (0 === count($companies)): ?>
                     <tr class="text-center">
                         <td colspan="2">
-                            <?= $this->translate('There are no companies that require your approval.') ?>
+                            <?= $this->translate('There is no company or update proposal that requires your approval.') ?>
                         </td>
                     </tr>
                 <?php else: ?>
@@ -47,7 +47,7 @@ $this->breadcrumbs()
                 <?php if (0 === count($jobs)): ?>
                     <tr class="text-center">
                         <td colspan="5">
-                            <?= $this->translate('There are no jobs that require your approval.') ?>
+                            <?= $this->translate('There is no job or update proposal that requires your approval.') ?>
                         </td>
                     </tr>
                 <?php else: ?>
@@ -71,7 +71,7 @@ $this->breadcrumbs()
                                            'company_admin_approval/job_approval',
                                            ['jobId' => $job->getId()],
                                        ) ?>">
-                                        <?= $this->translate('Details') ?>
+                                        <?= $this->translate('View Proposal') ?>
                                     </a>
                                 <?php endif; ?>
                             </td>
