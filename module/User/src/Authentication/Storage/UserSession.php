@@ -179,10 +179,10 @@ class UserSession extends SessionStorage
     {
         // Use secure cookies in production
         if (APP_ENV === 'production') {
-            $sessionToken->setSecure(true)->setHttponly(true);
+            $sessionToken->setSecure(true)
+                ->setHttponly(true)
+                ->setSameSite(SetCookie::SAME_SITE_LAX);
         }
-
-        $sessionToken->setDomain($this->config['cookie_domain']);
 
         return $sessionToken;
     }
