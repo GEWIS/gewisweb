@@ -270,11 +270,21 @@ class CompanyAccountController extends AbstractActionController
             )
         );
 
+        $isJobRejected = false;
+        $jobRejectedMessage = null;
+        if (ApprovableStatus::Rejected === $job->getApproved()) {
+            $isJobRejected = true;
+            $jobRejectedMessage = $job->getApprovableText()?->getMessage();
+        }
+
         // Initialize the view
         return new ViewModel(
             [
                 'form' => $jobForm,
                 'attachments' => $job->getAttachment(),
+                'isJobRejected' => $isJobRejected,
+                'isJobUpdate' => $job->getIsUpdate(),
+                'jobRejectedMessage' => $jobRejectedMessage,
             ]
         );
     }

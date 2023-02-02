@@ -20,6 +20,37 @@ $form->setAttribute('class', 'form-company');
     <div class="col-md-12">
         <h1><?= $this->translate('Edit Job') ?></h1>
     </div>
+    <?php if (isset($isJobRejected) && $isJobRejected): ?>
+        <div class="col-md-12">
+            <div class="alert alert-info">
+                <p>
+                    <?php if ($isJobUpdate && null !== $jobRejectedMessage): ?>
+                        <?= sprintf(
+                            $this->translate(
+                                'You are currently updating an update proposal that was previously rejected for the following reason: %s'
+                            ),
+                            $this->escapeHtml($jobRejectedMessage),
+                        ) ?>
+                    <?php elseif ($isJobUpdate && null === $jobRejectedMessage): ?>
+                        <?= $this->translate(
+                            'You are currently updating an update proposal that was previously rejected, however, no reason was provided.'
+                        ) ?>
+                    <?php elseif (!$isJobUpdate && null !== $jobRejectedMessage): ?>
+                        <?= sprintf(
+                            $this->translate(
+                                'You are currently updating a job that was previously rejected for the following reason: %s'
+                            ),
+                            $this->escapeHtml($jobRejectedMessage),
+                        ) ?>
+                    <?php else: ?>
+                        <?= $this->translate(
+                            'You are currently updating a job that was previously rejected, however, no reason for this was provided.'
+                        ) ?>
+                    <?php endif; ?>
+                </p>
+            </div>
+        </div>
+    <?php endif; ?>
 </div>
 <hr>
 <?= $this->form()->openTag($form) ?>
