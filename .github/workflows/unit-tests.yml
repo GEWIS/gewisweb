@@ -7,6 +7,11 @@ on:
             - master
     pull_request:
 
+# Cancel running jobs that have become stale through updates to the ref (e.g., pushes to a pull request).
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
 jobs:
     phpunit:
         name: PHPUnit

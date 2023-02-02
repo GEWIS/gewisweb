@@ -3,6 +3,11 @@ name: PHP Static Analysis with PHPStan
 # Only run this action on pull requests (creation, synchronisation, and reopening).
 on: [pull_request]
 
+# Cancel running jobs that have become stale through updates to the ref (e.g., pushes to a pull request).
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
 jobs:
     phpstan:
         name: PHPStan
