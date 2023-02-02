@@ -395,7 +395,7 @@ class Activity
         array $data,
     ): bool {
         if (!$this->aclService->isAllowed('create', 'activity_calendar_proposal')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to create a proposal'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to create activity option proposals'));
         }
 
         // Find the creator
