@@ -144,7 +144,7 @@ privacy_widget_checkbox.addEventListener('change', (event) => {
 
 privacy_widget_dismiss.addEventListener('click', () => {
     document.cookie = "privacyWidgetDismissed=1; Domain=" + window.location.host
-        + "; Max-Age=31536000; SameSite=Lax; Secure";
+        + "; Path=/; Max-Age=31536000; SameSite=Lax; Secure";
     privacy_widget.classList.replace('open', 'closed');
 }, false);
 
