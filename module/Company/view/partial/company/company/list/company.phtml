@@ -1,4 +1,7 @@
 <?php
+
+use Company\Model\Enums\CompanyPackageTypes;
+
 $escaper = new Laminas\Escaper\Escaper('utf-8');
 
 // If multiple companies are on display, the title should redirect to the company page, else, it should redirect to the website
@@ -55,7 +58,7 @@ $companyURL = $escaper->escapeHtmlAttr($this->localiseText($company->getWebsite(
                         <ul class="company-jobs-list">
                             <?php // TODO: jobs sorted by package, which is not useful for visitor, possibly change sorting here to be useful
                             foreach ($company->getPackages() as $package):
-                                if ($package->getType() === 'job'):
+                                if (CompanyPackageTypes::Job === $package->getType()):
                                     $jobs = $package->getJobsInCategory($category);
 
                                     foreach ($jobs as $job):
