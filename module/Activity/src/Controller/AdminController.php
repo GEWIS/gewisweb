@@ -255,6 +255,8 @@ class AdminController extends AbstractActionController
             unset($activityAdminSession->message);
         }
 
+        $result['canSeeTimeOfSignup'] = $this->aclService->isAllowed('viewParticipantDetails', 'activity');
+
         return new ViewModel($result);
     }
 

@@ -12,6 +12,9 @@ use Decision\Model\Member;
         <th><?= $this->translate('Email') ?></th>
         <th><?= $this->translate('Type') ?></th>
         <th><?= $this->translate('Generation') ?></th>
+        <?php if (isset($canSeeTimeOfSignup) && $canSeeTimeOfSignup): ?>
+            <th><?= $this->translate('Date and time') ?></th>
+        <?php endif; ?>
         <?php if (!isset($signupList)): ?>
             <th><?= $this->translate('Sign-up List') ?></th>
         <?php endif; ?>
@@ -82,6 +85,9 @@ use Decision\Model\Member;
                     <?php endif; ?>
                 </td>
                 <td><?= $this->translate('N/A') ?></td>
+            <?php endif; ?>
+            <?php if (isset($canSeeTimeOfSignup) && $canSeeTimeOfSignup): ?>
+                <td><?= $signup->getCreatedAt()->format('Y-m-d H:i:s') ?></td>
             <?php endif; ?>
             <?php if (!isset($signupList)): ?>
                 <td><?= $this->escapeHtml($this->localiseText($signup->getSignupList()->getName())) ?></td>
