@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-02 16:00+0100\n"
-"PO-Revision-Date: 2023-02-02 16:01+0100\n"
+"POT-Creation-Date: 2023-02-03 16:28+0100\n"
+"PO-Revision-Date: 2023-02-03 16:28+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: nl\n"
@@ -30,8 +30,8 @@ msgstr "Maak nieuwe activiteit"
 
 #: module/Activity/src/Controller/ActivityController.php:266
 #: module/Activity/src/Controller/ActivityController.php:363
-#: module/Activity/src/Controller/AdminController.php:293
-#: module/Activity/src/Controller/AdminController.php:386
+#: module/Activity/src/Controller/AdminController.php:295
+#: module/Activity/src/Controller/AdminController.php:388
 msgid "Invalid form"
 msgstr "De ingevulde gegevens zijn niet geldig"
 
@@ -55,7 +55,7 @@ msgstr "Succesvol geregistreerd"
 
 #: module/Activity/src/Controller/ActivityController.php:305
 #: module/Activity/src/Controller/ActivityController.php:398
-#: module/Activity/src/Controller/AdminController.php:317
+#: module/Activity/src/Controller/AdminController.php:319
 msgid "Use the form to subscribe"
 msgstr "Gebruik het formulier om in te schrijven"
 
@@ -160,29 +160,29 @@ msgstr ""
 "Je hebt niet de rechten om de deelnemers van deze activiteit te bekijken"
 
 #: module/Activity/src/Controller/AdminController.php:235
-#: module/Activity/src/Controller/AdminController.php:377
+#: module/Activity/src/Controller/AdminController.php:379
 #: module/User/view/user/api-admin/index.phtml:23
 msgid "Remove"
 msgstr "Verwijder"
 
-#: module/Activity/src/Controller/AdminController.php:272
-#: module/Activity/src/Controller/AdminController.php:369
+#: module/Activity/src/Controller/AdminController.php:274
+#: module/Activity/src/Controller/AdminController.php:371
 msgid "You are not allowed to use this form"
 msgstr "Je hebt niet de rechten om dit formulier te gebruiken"
 
-#: module/Activity/src/Controller/AdminController.php:309
+#: module/Activity/src/Controller/AdminController.php:311
 msgid "Successfully subscribed external participant"
 msgstr "Succesvol geregistreerd"
 
-#: module/Activity/src/Controller/AdminController.php:396
+#: module/Activity/src/Controller/AdminController.php:398
 msgid "Successfully removed external participant"
 msgstr "Deelnemer succesvol verwijderd"
 
-#: module/Activity/src/Controller/AdminController.php:404
+#: module/Activity/src/Controller/AdminController.php:406
 msgid "Use the form to unsubscribe an external participant"
 msgstr "Gebruik het formulier om iemand uit te schrijven"
 
-#: module/Activity/src/Controller/AdminController.php:414
+#: module/Activity/src/Controller/AdminController.php:416
 msgid "You are not allowed to administer activities"
 msgstr "Je hebt niet de rechten om activiteiten te beheren"
 
@@ -890,6 +890,7 @@ msgid "Company"
 msgstr "Bedrijf"
 
 #: module/Activity/view/activity/activity/create.phtml:74
+#: module/Activity/view/activity/admin/participantsTable.phtml:16
 msgid "Date and time"
 msgstr "Datum en tijd"
 
@@ -1164,7 +1165,7 @@ msgstr "Update voorstel"
 #: module/Company/view/partial/company/admin/editors/job.phtml:119
 #: module/Company/view/partial/company/admin/editors/label.phtml:3
 #: module/Company/view/partial/company/admin/editors/package.phtml:9
-#: module/Photo/view/photo/album/index.phtml:504
+#: module/Photo/view/photo/album/index.phtml:510
 msgid "Information"
 msgstr "Informatie"
 
@@ -1197,9 +1198,10 @@ msgstr "oud"
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:55
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:68
 #: module/Activity/view/activity/admin-approval/view.phtml:26
+#: module/Activity/view/partial/signupForm.phtml:72
 #: module/Photo/view/partial/tags.phtml:40
-#: module/Photo/view/photo/album/index.phtml:327
-#: module/Photo/view/photo/album/index.phtml:672
+#: module/Photo/view/photo/album/index.phtml:333
+#: module/Photo/view/photo/album/index.phtml:678
 msgid "and"
 msgstr "en"
 
@@ -1510,11 +1512,11 @@ msgstr "Email"
 msgid "Generation"
 msgstr "Generatie"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:16
+#: module/Activity/view/activity/admin/participantsTable.phtml:19
 msgid "Sign-up List"
 msgstr "Inschrijflijst"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:58
+#: module/Activity/view/activity/admin/participantsTable.phtml:61
 #: module/Decision/view/decision/member/self.phtml:41
 #: module/Decision/view/decision/member/view.phtml:24
 #: module/Photo/view/partial/metadata.phtml:8
@@ -1528,22 +1530,22 @@ msgstr "Inschrijflijst"
 msgid "Unknown"
 msgstr "Onbekend"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:64
+#: module/Activity/view/activity/admin/participantsTable.phtml:67
 #, php-format
 msgid "User (%s)"
 msgstr "Gebruiker (%s)"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:71
+#: module/Activity/view/activity/admin/participantsTable.phtml:74
 #: module/Decision/src/Model/Enums/MembershipTypes.php:21
 msgid "External"
 msgstr "Extern"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:84
+#: module/Activity/view/activity/admin/participantsTable.phtml:87
 #: module/Education/view/education/admin/course-documents.phtml:123
 msgid "N/A"
 msgstr "N.V.T."
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:101
+#: module/Activity/view/activity/admin/participantsTable.phtml:107
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:49
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:52
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:60
@@ -1561,7 +1563,7 @@ msgstr "N.V.T."
 msgid "Yes"
 msgstr "Ja"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:103
+#: module/Activity/view/activity/admin/participantsTable.phtml:109
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:49
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:52
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:60
@@ -1578,11 +1580,11 @@ msgstr "Ja"
 msgid "No"
 msgstr "Nee"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:126
+#: module/Activity/view/activity/admin/participantsTable.phtml:132
 msgid "Additional actions"
 msgstr "Aanvullende acties"
 
-#: module/Activity/view/activity/admin/participantsTable.phtml:130
+#: module/Activity/view/activity/admin/participantsTable.phtml:136
 msgid "Mail everybody"
 msgstr "E-mail iedereen"
 
@@ -1721,10 +1723,15 @@ msgstr "E-mail adres:"
 msgid "Please fill in this CAPTCHA:"
 msgstr "CAPTCHA:"
 
-#: module/Activity/view/partial/signupForm.phtml:71
+#: module/Activity/view/partial/signupForm.phtml:72
 #: module/Decision/view/decision/member/index.phtml:219
 msgid "Activity Policy"
 msgstr "Activiteitenbeleid"
+
+#: module/Activity/view/partial/signupForm.phtml:74
+#: module/Decision/view/decision/member/index.phtml:224
+msgid "Alcohol Policy"
+msgstr "Alcoholreglement"
 
 #: module/Activity/view/partial/signuplist-fields.phtml:86
 msgid "Please note that numbers are not dependant on the selected language(s)."
@@ -2306,12 +2313,12 @@ msgid "My photo's"
 msgstr "Mijn foto’s"
 
 #: module/Application/view/partial/paginator.phtml:8
-#: module/Photo/view/photo/album/index.phtml:422
+#: module/Photo/view/photo/album/index.phtml:428
 msgid "Previous"
 msgstr "Vorige"
 
 #: module/Application/view/partial/paginator.phtml:22
-#: module/Photo/view/photo/album/index.phtml:423
+#: module/Photo/view/photo/album/index.phtml:429
 msgid "Next"
 msgstr "Volgende"
 
@@ -2437,7 +2444,7 @@ msgid "You are not allowed to edit companies"
 msgstr "Je hebt niet de rechten om bedrijven te wijzigen"
 
 #: module/Company/src/Controller/AdminController.php:187
-#: module/Company/src/Service/Company.php:845
+#: module/Company/src/Service/Company.php:853
 msgid "You are not allowed to delete companies"
 msgstr "Je hebt niet de rechten om bedrijven te verwijderen"
 
@@ -2446,7 +2453,7 @@ msgid "You are not allowed to create packages"
 msgstr "Je hebt niet de rechten om pakketten toe te voegen"
 
 #: module/Company/src/Controller/AdminController.php:281
-#: module/Company/src/Service/Company.php:910
+#: module/Company/src/Service/Company.php:918
 msgid "You are not allowed to edit packages"
 msgstr "Je hebt niet de rechten om pakketten te wijzigen"
 
@@ -2466,8 +2473,8 @@ msgstr "Vacature succesvol aangemaakt!"
 
 #: module/Company/src/Controller/AdminController.php:487
 #: module/Company/src/Controller/CompanyAccountController.php:193
-#: module/Company/src/Service/Company.php:937
-#: module/Company/src/Service/Company.php:1008
+#: module/Company/src/Service/Company.php:945
+#: module/Company/src/Service/Company.php:1016
 msgid "You are not allowed to edit jobs"
 msgstr "Je hebt niet de rechten om vacatures te wijzigen"
 
@@ -2489,7 +2496,7 @@ msgid "Job category successfully created!"
 msgstr "Vacaturecategorie succesvol aangemaakt!"
 
 #: module/Company/src/Controller/AdminController.php:658
-#: module/Company/src/Service/Company.php:878
+#: module/Company/src/Service/Company.php:886
 msgid "You are not allowed to edit job categories"
 msgstr "Je hebt niet de rechten om vacature categorieën te wijzigen"
 
@@ -2502,7 +2509,7 @@ msgid "Job label successfully created!"
 msgstr "Vacature-label succesvol aangemaakt!"
 
 #: module/Company/src/Controller/AdminController.php:751
-#: module/Company/src/Service/Company.php:894
+#: module/Company/src/Service/Company.php:902
 msgid "You are not allowed to edit job labels"
 msgstr "Je hebt niet de rechten om vacature-labels te wijzigen"
 
@@ -2733,15 +2740,15 @@ msgstr "Je hebt niet de rechten om de lijst met bedrijven te zien"
 msgid "You are not allowed to access the admin interface"
 msgstr "Je hebt niet de rechten om de admin interface te zien"
 
-#: module/Company/src/Service/Company.php:954
+#: module/Company/src/Service/Company.php:962
 msgid "You are not allowed to edit categories"
 msgstr "Je hebt niet de rechten om alle categorieën te wijzigen"
 
-#: module/Company/src/Service/Company.php:971
+#: module/Company/src/Service/Company.php:979
 msgid "You are not allowed to edit labels"
 msgstr "Je hebt niet de rechten om labels te wijzigen"
 
-#: module/Company/src/Service/Company.php:1024
+#: module/Company/src/Service/Company.php:1032
 msgid "You are not allowed to create a company"
 msgstr "Je hebt niet de rechten om een bedrijf toe te voegen"
 
@@ -3962,10 +3969,6 @@ msgstr "Huisstijl"
 msgid "Administrator"
 msgstr "Administrator"
 
-#: module/Decision/view/decision/member/index.phtml:224
-msgid "Alcohol Policy"
-msgstr "Alcoholreglement"
-
 #: module/Decision/view/decision/member/index.phtml:229
 msgid "Board Policies"
 msgstr "Beleidsnota's"
@@ -4018,6 +4021,10 @@ msgid ""
 msgstr ""
 "Er zijn teveel resultaten om weer te geven. Probeer te filteren om andere "
 "resultaten te zien."
+
+#: module/Decision/view/decision/member/self.phtml:6
+msgid "My Information"
+msgstr "Mijn informatie"
 
 #: module/Decision/view/decision/member/self.phtml:15
 #: module/User/src/Form/Register.php:34 module/User/src/Form/Reset.php:31
@@ -5190,18 +5197,18 @@ msgid "View on map"
 msgstr "Toon op kaart"
 
 #: module/Photo/view/partial/tags.phtml:10
-#: module/Photo/view/photo/album/index.phtml:659
+#: module/Photo/view/photo/album/index.phtml:665
 msgid "In this photo:"
 msgstr "In deze foto:"
 
 #: module/Photo/view/partial/tags.phtml:11
-#: module/Photo/view/photo/album/index.phtml:660
+#: module/Photo/view/photo/album/index.phtml:666
 msgid ""
 "No one has been tagged in this photo yet. Tag someone you recognise now!"
 msgstr "Er is nog niemand getagd in deze foto. Tag nu iemand die je herkent!"
 
 #: module/Photo/view/partial/tags.phtml:49
-#: module/Photo/view/photo/album/index.phtml:688
+#: module/Photo/view/photo/album/index.phtml:694
 msgid "Tag someone"
 msgstr "Tag iemand"
 
@@ -5285,7 +5292,7 @@ msgid "Regenerate"
 msgstr "Genereer opnieuw"
 
 #: module/Photo/view/photo/album-admin/index.phtml:162
-#: module/Photo/view/photo/album/index.phtml:420
+#: module/Photo/view/photo/album/index.phtml:426
 msgid "Close"
 msgstr "Sluiten"
 
@@ -5370,84 +5377,89 @@ msgstr "Bekijk profiel"
 msgid "No date"
 msgstr "Geen datum"
 
-#: module/Photo/view/photo/album/index.phtml:210
+#: module/Photo/view/photo/album/index.phtml:192
+#: module/Photo/view/photo/photo/index.phtml:57
+msgid "NEW"
+msgstr "NIEUW"
+
+#: module/Photo/view/photo/album/index.phtml:216
 msgid "This album does not contain any photos."
 msgstr "Dit album bevat geen foto's."
 
-#: module/Photo/view/photo/album/index.phtml:383
+#: module/Photo/view/photo/album/index.phtml:389
 msgid "Already voted!"
 msgstr "Je hebt al gestemd!"
 
-#: module/Photo/view/photo/album/index.phtml:386
-#: module/Photo/view/photo/album/index.phtml:557
+#: module/Photo/view/photo/album/index.phtml:392
+#: module/Photo/view/photo/album/index.phtml:563
 msgid "Vote for photo of the week"
 msgstr "Stem voor de foto van de week"
 
-#: module/Photo/view/photo/album/index.phtml:421
+#: module/Photo/view/photo/album/index.phtml:427
 msgid "Zoom (z)"
 msgstr "Zoom (z)"
 
-#: module/Photo/view/photo/album/index.phtml:424
+#: module/Photo/view/photo/album/index.phtml:430
 msgid "The image could not be loaded."
 msgstr "De foto kan niet worden geladen."
 
-#: module/Photo/view/photo/album/index.phtml:437
+#: module/Photo/view/photo/album/index.phtml:443
 msgid "Download"
 msgstr "Downloaden"
 
-#: module/Photo/view/photo/album/index.phtml:461
+#: module/Photo/view/photo/album/index.phtml:467
 msgid "Share"
 msgstr "Delen"
 
-#: module/Photo/view/photo/album/index.phtml:472
+#: module/Photo/view/photo/album/index.phtml:478
 msgid "Copied URL!"
 msgstr "URL gekopieerd!"
 
-#: module/Photo/view/photo/album/index.phtml:483
+#: module/Photo/view/photo/album/index.phtml:489
 msgid "Go to album"
 msgstr "Ga naar album"
 
-#: module/Photo/view/photo/album/index.phtml:526
+#: module/Photo/view/photo/album/index.phtml:532
 msgid "Set as profile picture"
 msgstr "Kies deze foto als jouw profielfoto"
 
-#: module/Photo/view/photo/album/index.phtml:543
+#: module/Photo/view/photo/album/index.phtml:549
 msgid "Set as profile picture!"
 msgstr "Gekozen als profielfoto!"
 
-#: module/Photo/view/photo/album/index.phtml:546
+#: module/Photo/view/photo/album/index.phtml:552
 msgid "Could not set as profile photo, try again"
 msgstr "Profielfoto instellen mislukt, probeer het nog een keer"
 
-#: module/Photo/view/photo/album/index.phtml:579
+#: module/Photo/view/photo/album/index.phtml:585
 msgid "Cannot load vote"
 msgstr "Kan stem niet laden"
 
-#: module/Photo/view/photo/album/index.phtml:599
+#: module/Photo/view/photo/album/index.phtml:605
 msgid "Voted!"
 msgstr "Gestemd!"
 
-#: module/Photo/view/photo/album/index.phtml:611
+#: module/Photo/view/photo/album/index.phtml:617
 msgid "Could not vote, try again"
 msgstr "Stemmen mislukt, probeer het nog een keer"
 
-#: module/Photo/view/photo/album/index.phtml:626
+#: module/Photo/view/photo/album/index.phtml:632
 msgid "Loading tags..."
 msgstr "Tags aan het laden..."
 
-#: module/Photo/view/photo/album/index.phtml:647
+#: module/Photo/view/photo/album/index.phtml:653
 msgid "Cannot load tags"
 msgstr "Kan tags niet laden"
 
-#: module/Photo/view/photo/album/index.phtml:742
+#: module/Photo/view/photo/album/index.phtml:748
 msgid "Cannot load metadata"
 msgstr "Kan metadata niet laden"
 
-#: module/Photo/view/photo/album/index.phtml:768
+#: module/Photo/view/photo/album/index.phtml:774
 msgid "Photo of the Week:<br> Week"
 msgstr "Foto van de week<br> Week"
 
-#: module/Photo/view/photo/album/index.phtml:768
+#: module/Photo/view/photo/album/index.phtml:774
 msgid "of"
 msgstr "van"
 
@@ -5489,7 +5501,7 @@ msgstr "Wacht terwijl de foto verwijderd wordt."
 msgid "The photo has been deleted"
 msgstr "De foto is verwijderd"
 
-#: module/Photo/view/photo/photo/index.phtml:61
+#: module/Photo/view/photo/photo/index.phtml:67
 msgid "There are no photos in this year."
 msgstr "Er zijn geen foto's in dit jaar."
 

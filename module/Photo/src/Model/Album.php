@@ -2,7 +2,10 @@
 
 namespace Photo\Model;
 
-use Application\Model\Traits\IdentifiableTrait;
+use Application\Model\Traits\{
+    IdentifiableTrait,
+    TimestampableTrait,
+};
 use DateTime;
 use Doctrine\Common\Collections\{
     ArrayCollection,
@@ -26,6 +29,7 @@ use Laminas\Permissions\Acl\Resource\ResourceInterface;
 class Album implements ResourceInterface
 {
     use IdentifiableTrait;
+    use TimestampableTrait;
 
     /**
      * First date of photos in album.
