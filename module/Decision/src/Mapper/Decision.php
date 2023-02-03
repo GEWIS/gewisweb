@@ -22,7 +22,7 @@ class Decision extends BaseMapper
             ->where('d.content LIKE :query')
             ->join('d.meeting', 'm')
             ->orderBy('m.date', 'DESC')
-            ->setMaxResults(50);
+            ->setMaxResults(100);
 
         $qb->setParameter('query', "%" . addcslashes($query, '%_') . "%");
 
