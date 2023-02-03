@@ -1,0 +1,26 @@
+@import '../_bootstrap-variables.scss';
+@import '../_variables.scss';
+
+.decision-meeting {
+    display: inline-block;
+    width: 100%;
+    color: $brand-primary;
+
+    @media (min-width: $screen-md-min) {
+        & {
+            display: inline-block;
+            text-align: right;
+            width: 130px;
+        }
+    }
+}
+
+.decision-content {
+    @media (min-width: $screen-md-min) {
+        & {
+            display: inline-block;
+            vertical-align: top;
+            width: calc(100% - 135px);
+        }
+    }
+}

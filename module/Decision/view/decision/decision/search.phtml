@@ -35,26 +35,29 @@ $this->headTitle($this->translate('Search for decision')); ?>
         <?= $this->form()->closeTag() ?>
 
         <?php if (isset($result)): ?>
-            <ul>
+            <ul class="list-unstyled">
                 <?php foreach ($result as $decision): ?>
                     <?php $type = $decision->getMeeting()->getType()->value; ?>
                     <?php $number = $decision->getMeeting()->getNumber(); ?>
                     <li>
-                        <a href="<?= $this->url(
-                            'decision/meeting',
-                            [
-                                'type' => $type,
-                                'number' => $number,
-                            ],
-                        ) ?>">
-                            <?= sprintf(
-                                '%s %d.%d.%d',
-                                $type,
-                                $number,
-                                $decision->getPoint(),
-                                $decision->getNumber(),
-                            ) ?>
-                        </a> <?= $decision->getContent() ?>
+                        <strong class="decision-meeting">
+                            <a href="<?= $this->url(
+                                'decision/meeting',
+                                [
+                                    'type' => $type,
+                                    'number' => $number,
+                                ],
+                            ) ?>">
+                                <?= sprintf(
+                                    '%s %d.%d.%d',
+                                    $type,
+                                    $number,
+                                    $decision->getPoint(),
+                                    $decision->getNumber(),
+                                ) ?>
+                            </a>
+                        </strong>
+                        <span class="decision-content"><?= $this->escapeHtml($decision->getContent()) ?></span>
                     </li>
                 <?php endforeach ?>
             </ul>

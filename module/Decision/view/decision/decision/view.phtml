@@ -57,7 +57,7 @@ $this->headTitle($meetingName);
             <div class="row">
                 <div class="col-md-12">
                     <h3><?= $this->translate('Decisions') ?></h3>
-                    <ul>
+                    <ul class="list-unstyled">
                         <?php foreach ($meeting->getDecisions() as $decision): ?>
                             <?php
                             $id = vsprintf('%s %s.%s.%s', [
@@ -68,10 +68,13 @@ $this->headTitle($meetingName);
                             ]);
                             ?>
                             <li id="<?= urlencode($id) ?>" class="link-permalink-container">
-                                <?= sprintf('%s %s', $id, $decision->getContent()) ?>
-                                <a href="#<?= urlencode($id) ?>" class="link-permalink">
-                                    <span class="fa fa-link"></span>
-                                </a>
+                                <strong class="decision-meeting"><?= $id ?></strong>
+                                <span class="decision-content">
+                                    <?= $this->escapeHtml($decision->getContent()) ?>
+                                    <a href="#<?= urlencode($id) ?>" class="link-permalink">
+                                        <span class="fa fa-link"></span>
+                                    </a>
+                                </span>
                             </li>
                         <?php endforeach ?>
                     </ul>
