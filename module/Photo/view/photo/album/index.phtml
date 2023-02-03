@@ -151,6 +151,7 @@ $this->scriptUrl()->requireUrl('member/search')
         $shownAlbums = 0;
         if ($album->getAlbumCount() > 0):
         ?>
+            <?php $lastWeek = (new DateTime('now'))->sub(new DateInterval('P7D')); ?>
             <div class="row">
                 <?php foreach ($album->getChildren() as $item): ?>
                     <?php
@@ -186,6 +187,11 @@ $this->scriptUrl()->requireUrl('member/search')
                                     <img class="img-responsive" src="/img/missing_cover.svg" alt="">
                                 <?php endif; ?>
                                 <div class="caption">
+                                    <?php if ($album->getCreatedAt() >= $lastWeek): ?>
+                                        <span class="label label-primary job-label">
+                                            <?= $this->translate('NEW') ?>
+                                        </span>&nbsp;
+                                    <?php endif; ?>
                                     <?= $this->escapeHtml($item->getName()); ?>
                                 </div>
                             </a>

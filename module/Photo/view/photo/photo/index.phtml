@@ -40,6 +40,7 @@ $this->headTitle($this->translate('Photos')); ?>
         <div class="container">
             <div class="row">
                 <?php if (0 !== count($albums)): ?>
+                    <?php $lastWeek = (new DateTime('now'))->sub(new DateInterval('P7D')); ?>
                     <?php foreach ($albums as $album): ?>
                         <?php if ($album->getPhotoCount() > 0): ?>
                             <div class="col-lg-3 col-md-4 col-xs-6 thumb">
@@ -51,7 +52,12 @@ $this->headTitle($this->translate('Photos')); ?>
                                         <img class="img-responsive" src="/img/missing_cover.svg" alt="">
                                     <?php endif; ?>
                                     <div class="caption">
-                                        <p><?= $this->escapeHtml($album->getName()) ?></p>
+                                        <?php if ($album->getCreatedAt() >= $lastWeek): ?>
+                                            <span class="label label-primary job-label">
+                                                <?= $this->translate('NEW') ?>
+                                            </span>&nbsp;
+                                        <?php endif; ?>
+                                        <?= $this->escapeHtml($album->getName()) ?>
                                     </div>
                                 </a>
                             </div>
