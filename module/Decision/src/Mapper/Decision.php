@@ -23,7 +23,7 @@ class Decision extends BaseMapper
             ->orderBy('m.date', 'DESC')
             ->setMaxResults(50);
 
-        $qb->setParameter('query', "%$query%");
+        $qb->setParameter('query', "%" . addcslashes($query, '%_') . "%");
 
         return $qb->getQuery()->getResult();
     }
