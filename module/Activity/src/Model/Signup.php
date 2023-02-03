@@ -2,7 +2,10 @@
 
 namespace Activity\Model;
 
-use Application\Model\Traits\IdentifiableTrait;
+use Application\Model\Traits\{
+    IdentifiableTrait,
+    TimestampableTrait,
+};
 use Doctrine\Common\Collections\{
     ArrayCollection,
     Collection,
@@ -11,6 +14,7 @@ use Doctrine\ORM\Mapping\{
     DiscriminatorColumn,
     DiscriminatorMap,
     Entity,
+    HasLifecycleCallbacks,
     InheritanceType,
     JoinColumn,
     ManyToOne,
@@ -32,9 +36,11 @@ use Doctrine\ORM\Mapping\{
         "external" => ExternalSignup::class,
     ],
 )]
+#[HasLifecycleCallbacks]
 abstract class Signup
 {
     use IdentifiableTrait;
+    use TimestampableTrait;
 
     /**
      * The SignupList the signup is for.
