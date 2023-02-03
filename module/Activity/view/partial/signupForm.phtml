@@ -67,8 +67,12 @@ echo $this->form()->openTag($form);
     ) ?>
 <?php endforeach; ?>
 
-<p><?= $agreementText ?> <a href="https://gewis.nl/data/regulations/activity-policy.pdf"
-                            target="_blank"><?= $this->translate('Activity Policy') ?></a>.</p>
+<p>
+    <?= $agreementText ?> <a href="https://gewis.nl/data/regulations/activity-policy.pdf" target="_blank">
+        <?= $this->translate('Activity Policy') ?></a> <?= $this->translate('and') ?>
+    <a href="https://gewis.nl/data/regulations/alcohol-policy.pdf" target="_blank">
+        <?= $this->translate('Alcohol Policy') ?></a>.
+</p>
 
 <?php
 $submit = $form->get('submit');
