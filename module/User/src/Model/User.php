@@ -61,6 +61,12 @@ class User implements IdentityInterface
     )]
     protected MemberModel $member;
 
+    /**
+     * A user may be forced to change their password before doing anything else.
+     */
+    #[Column(type: "boolean")]
+    protected bool $mustChangePassword = false;
+
     // phpcs:ignore Gewis.General.RequireConstructorPromotion -- not possible
     public function __construct(NewUser $newUser = null)
     {
@@ -215,6 +221,22 @@ class User implements IdentityInterface
     public function setMember(MemberModel $member): void
     {
         $this->member = $member;
+    }
+
+    /**
+     * Get whether the user must be forced to change their password.
+     */
+    public function getMustChangePassword(): bool
+    {
+        return $this->mustChangePassword;
+    }
+
+    /**
+     * Set whether the user must be forced to change their password.
+     */
+    public function setMustChangePassword(bool $mustChangePassword): void
+    {
+        $this->mustChangePassword = $mustChangePassword;
     }
 
     /**

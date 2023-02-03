@@ -124,6 +124,7 @@ class Module
                     $userAuthService = $container->get('user_auth_user_service');
                     $companyUserAuthService = $container->get('user_auth_companyUser_service');
                     $emailService = $container->get('user_service_email');
+                    $companyUserMapper = $container->get('user_mapper_companyUser');
                     $userMapper = $container->get('user_mapper_user');
                     $newUserMapper = $container->get('user_mapper_newUser');
                     $newCompanyUserMapper = $container->get('user_mapper_newCompanyUser');
@@ -138,6 +139,7 @@ class Module
                     $passwordFormCompanyUser = $container->get('user_form_password_companyUser');
                     $passwordFormUser = $container->get('user_form_password_user');
                     $resetForm = $container->get('user_form_reset');
+                    $pwnedPasswordsHost = $container->get('config')['passwords']['pwned_passwords_host'];
 
                     return new UserService(
                         $aclService,
@@ -146,6 +148,7 @@ class Module
                         $userAuthService,
                         $companyUserAuthService,
                         $emailService,
+                        $companyUserMapper,
                         $userMapper,
                         $newUserMapper,
                         $newCompanyUserMapper,
@@ -160,6 +163,7 @@ class Module
                         $passwordFormCompanyUser,
                         $passwordFormUser,
                         $resetForm,
+                        $pwnedPasswordsHost,
                     );
                 },
                 'user_service_loginattempt' => function (ContainerInterface $container) {

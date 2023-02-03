@@ -38,6 +38,7 @@ return [
         'bcrypt_cost' => 13,
         'min_length_user' => 12,
         'min_length_companyUser' => 16,
+        'pwned_passwords_host' => getenv('PWNED_PASSWORDS_HOST'),
     ],
 
     /*
