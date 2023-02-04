@@ -2,6 +2,7 @@
 
 namespace User\Service;
 
+use Exception;
 use Laminas\Http\{
     Client,
     Request,

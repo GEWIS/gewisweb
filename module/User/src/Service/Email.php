@@ -12,7 +12,6 @@ use Laminas\Mime\{
     Part as MimePart,
     Message as MimeMessage,
 };
-use Laminas\Mvc\I18n\Translator;
 use Laminas\View\Model\ViewModel;
 use Laminas\View\Renderer\PhpRenderer;
 use User\Model\{
@@ -23,7 +22,6 @@ use User\Model\{
 class Email
 {
     public function __construct(
-        private readonly Translator $translator,
         private readonly PhpRenderer $renderer,
         private readonly TransportInterface $transport,
         private readonly array $emailConfig,

@@ -195,13 +195,11 @@ class Module
                     );
                 },
                 'user_service_email' => function (ContainerInterface $container) {
-                    $translator = $container->get(MvcTranslator::class);
                     $renderer = $container->get('ViewRenderer');
                     $transport = $container->get('user_mail_transport');
                     $emailConfig = $container->get('config')['email'];
 
                     return new EmailService(
-                        $translator,
                         $renderer,
                         $transport,
                         $emailConfig,

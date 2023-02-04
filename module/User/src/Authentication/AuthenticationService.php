@@ -129,7 +129,7 @@ class AuthenticationService implements AuthenticationServiceInterface
     /**
      * Returns the authenticated CompanyUser|User or null if no identity is available.
      *
-     * @psalm-return (TAdapter is CompanyUserAdapter ? CompanyUser|null : User|null)
+     * @psalm-return (TAdapter is CompanyUserAdapter ? \User\Model\CompanyUser|null : \User\Model\User|null)
      */
     public function getIdentity(): ?IdentityInterface
     {

@@ -36,3 +36,7 @@ parameters:
         - '#Return type \(array\) of method [a-zA-Z0-9_]+\\Form\\[a-zA-Z0-9_]+\:\:getInputFilterSpecification\(\) should be compatible with return type \(\*NEVER\*\) of method Laminas\\InputFilter\\InputFilterProviderInterface\:\:getInputFilterSpecification\(\)$#'
         - '#Return type \(array\) of method [a-zA-Z0-9_]+\\Form\\Fieldset\\[a-zA-Z0-9_]+\:\:getInputFilterSpecification\(\) should be compatible with return type \(\*NEVER\*\) of method Laminas\\InputFilter\\InputFilterProviderInterface\:\:getInputFilterSpecification\(\)$#'
         - '#^Conditional return type uses subject type TAdapter of User\\Authentication\\Adapter\\CompanyUserAdapter\|User\\Authentication\\Adapter\\UserAdapter which is not part of PHPDoc \@template tags.$#'
+        -
+            message: "#^Property User\\\\Service\\\\User\\:\\:\\$companyMapper is never read, only written.$#"
+            count: 1
+            path: ../module/User/src/Service/User.php

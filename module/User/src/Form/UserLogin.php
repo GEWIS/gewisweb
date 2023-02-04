@@ -30,7 +30,7 @@ class UserLogin extends Form implements InputFilterProviderInterface
                 'name' => 'login',
                 'type' => Text::class,
                 'options' => [
-                    'label' => $translator->translate('Membership number or email address'),
+                    'label' => $this->translator->translate('Membership number or email address'),
                 ],
             ]
         );
@@ -40,7 +40,7 @@ class UserLogin extends Form implements InputFilterProviderInterface
                 'name' => 'password',
                 'type' => Password::class,
                 'options' => [
-                    'label' => $translator->translate('Your password'),
+                    'label' => $this->translator->translate('Your password'),
                 ],
             ]
         );
@@ -50,7 +50,7 @@ class UserLogin extends Form implements InputFilterProviderInterface
                 'name' => 'submit',
                 'type' => Submit::class,
                 'attributes' => [
-                    'value' => $translator->translate('Log in as member'),
+                    'value' => $this->translator->translate('Log in as member'),
                 ],
             ]
         );
@@ -60,7 +60,7 @@ class UserLogin extends Form implements InputFilterProviderInterface
                 'name' => 'remember',
                 'type' => Checkbox::class,
                 'options' => [
-                    'label' => $translator->translate('Remember me'),
+                    'label' => $this->translator->translate('Remember me'),
                     'checked_value' => '1',
                     'unchecked_value' => '0',
                     'checked' => true,
