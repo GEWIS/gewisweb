@@ -45,8 +45,6 @@ class CompanyUserAdapter implements AdapterInterface
             );
         }
 
-        $this->mapper->detach($company);
-
         if ($this->loginAttemptService->loginAttemptsExceeded($company)) {
             return new Result(
                 Result::FAILURE,

@@ -173,15 +173,11 @@ class Module
                 'user_service_loginattempt' => function (ContainerInterface $container) {
                     $remoteAddress = $container->get('user_remoteaddress');
                     $loginAttemptMapper = $container->get('user_mapper_loginAttempt');
-                    $companyUserMapper = $container->get('user_mapper_companyUser');
-                    $userMapper = $container->get('user_mapper_user');
                     $rateLimitConfig = $container->get('config')['login_rate_limits'];
 
                     return new LoginAttemptService(
                         $remoteAddress,
                         $loginAttemptMapper,
-                        $companyUserMapper,
-                        $userMapper,
                         $rateLimitConfig,
                     );
                 },

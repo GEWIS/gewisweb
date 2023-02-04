@@ -59,8 +59,6 @@ class UserAdapter implements AdapterInterface
             );
         }
 
-        $this->mapper->detach($user);
-
         if ($this->loginAttemptService->loginAttemptsExceeded($user)) {
             return new Result(
                 Result::FAILURE,
