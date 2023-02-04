@@ -12,7 +12,7 @@ use Laminas\Form\Element\{
 };
 use Laminas\Filter\StringTrim;
 use Laminas\Form\Form;
-use Laminas\InputFilter\InputProviderInterface;
+use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\{
     EmailAddress,
@@ -20,7 +20,7 @@ use Laminas\Validator\{
     StringLength,
 };
 
-class CompanyUserLogin extends Form implements InputProviderInterface
+class CompanyUserLogin extends Form implements InputFilterProviderInterface
 {
     public function __construct(
         private readonly Translator $translator,
@@ -81,6 +81,8 @@ class CompanyUserLogin extends Form implements InputProviderInterface
     public function setResult(Result $result): void
     {
         if (!$result->isValid()) {
+            $this->isValid = false;
+
             switch ($result->getCode()) {
                 case Result::FAILURE:
                 case Result::FAILURE_IDENTITY_NOT_FOUND:
@@ -104,7 +106,7 @@ class CompanyUserLogin extends Form implements InputProviderInterface
     /**
      * @return array
      */
-    public function getInputSpecification(): array
+    public function getInputFilterSpecification(): array
     {
         return [
             'email' => [

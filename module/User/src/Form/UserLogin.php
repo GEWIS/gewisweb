@@ -12,14 +12,14 @@ use Laminas\Form\Element\{
     Text,
 };
 use Laminas\Form\Form;
-use Laminas\InputFilter\InputProviderInterface;
+use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\{
     NotEmpty,
     StringLength,
 };
 
-class UserLogin extends Form implements InputProviderInterface
+class UserLogin extends Form implements InputFilterProviderInterface
 {
     public function __construct(private readonly Translator $translator)
     {
@@ -91,6 +91,8 @@ class UserLogin extends Form implements InputProviderInterface
     public function setResult(Result $result): void
     {
         if (!$result->isValid()) {
+            $this->isValid = false;
+
             switch ($result->getCode()) {
                 case Result::FAILURE_UNCATEGORIZED:
                 case Result::FAILURE:
@@ -115,7 +117,7 @@ class UserLogin extends Form implements InputProviderInterface
     /**
      * @return array
      */
-    public function getInputSpecification(): array
+    public function getInputFilterSpecification(): array
     {
         return [
             'login' => [
