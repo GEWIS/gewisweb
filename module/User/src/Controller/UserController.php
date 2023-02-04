@@ -2,12 +2,15 @@
 
 namespace User\Controller;
 
+use DateInterval;
+use DateTime;
 use Laminas\Http\{
     Request,
     Response,
 };
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
+use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
 use Laminas\View\Model\ViewModel;
 use User\Form\{
     CompanyUserLogin as CompanyLoginForm,
@@ -19,6 +22,9 @@ use User\Service\{
     User as UserService,
 };
 
+/**
+ * @method FlashMessenger flashMessenger()
+ */
 class UserController extends AbstractActionController
 {
     public function __construct(
@@ -244,6 +250,13 @@ class UserController extends AbstractActionController
             return $this->redirect()->toRoute('home');
         }
 
+        // Links are only valid for 24 hours.
+        if (((new DateTime('now'))->sub(new DateInterval('P1D'))) >= $newUser->getTime()) {
+            $this->userService->removeActivation($newUser);
+
+            return $this->redirect()->toRoute('home');
+        }
+
         /** @var Request $request */
         $request = $this->getRequest();
         $form = $this->userService->getActivateForm($userType);
@@ -252,7 +265,7 @@ class UserController extends AbstractActionController
             $form->setData($request->getPost()->toArray());
 
             if ($form->isValid()) {
-                if ($this->userService->activate($form->getData(), $newUser)) {
+                if ($this->userService->activate($form->getData(), $newUser, $userType)) {
                     return new ViewModel(
                         [
                             'activated' => true,

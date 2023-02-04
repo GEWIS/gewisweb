@@ -15,12 +15,12 @@ $form->setAttribute('class', 'form-horizontal');
     $element->setAttribute('id', 'login');
     $element->setAttribute('class', 'form-control');
     ?>
-    <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+    <div class="form-group <?= $this->bootstrapElementError($element) ?>">
         <label for="<?= $element->getAttribute('id') ?>"
                class="control-label col-sm-5"><?= $element->getLabel() ?></label>
         <div class="col-sm-7">
             <?= $this->formText($element) ?>
-            <?= $this->formElementErrors($element, array('class' => 'help-block')); ?>
+            <?= $this->formElementErrors($element, ['class' => 'help-block']); ?>
         </div>
     </div>
     <?php
@@ -28,12 +28,12 @@ $form->setAttribute('class', 'form-horizontal');
     $element->setAttribute('id', 'password');
     $element->setAttribute('class', 'form-control');
     ?>
-    <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+    <div class="form-group <?= $this->bootstrapElementError($element) ?>">
         <label for="<?= $element->getAttribute('id') ?>"
                class="control-label col-sm-5"><?= $element->getLabel() ?></label>
         <div class="col-sm-7">
             <?= $this->formPassword($element) ?>
-            <?= $this->formElementErrors($element, array('class' => 'help-block')); ?>
+            <?= $this->formElementErrors($element, ['class' => 'help-block']); ?>
         </div>
     </div>
     <?php

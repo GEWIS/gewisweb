@@ -12,7 +12,7 @@ use Laminas\Form\Element\{
 };
 use Laminas\Filter\StringTrim;
 use Laminas\Form\Form;
-use Laminas\InputFilter\InputProviderInterface;
+use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\{
     EmailAddress,
@@ -20,10 +20,10 @@ use Laminas\Validator\{
     StringLength,
 };
 
-class CompanyUserLogin extends Form implements InputProviderInterface
+class CompanyUserLogin extends Form implements InputFilterProviderInterface
 {
     public function __construct(
-        private readonly Translator $translate,
+        private readonly Translator $translator,
         private readonly int $passwordLength,
     ) {
         parent::__construct();
@@ -33,7 +33,7 @@ class CompanyUserLogin extends Form implements InputProviderInterface
                 'name' => 'email',
                 'type' => Email::class,
                 'options' => [
-                    'label' => $translate->translate('Email address'),
+                    'label' => $translator->translate('Email address'),
                 ],
             ]
         );
@@ -43,7 +43,7 @@ class CompanyUserLogin extends Form implements InputProviderInterface
                 'name' => 'password',
                 'type' => Password::class,
                 'options' => [
-                    'label' => $translate->translate('Password'),
+                    'label' => $translator->translate('Password'),
                 ],
             ]
         );
@@ -53,7 +53,7 @@ class CompanyUserLogin extends Form implements InputProviderInterface
                 'name' => 'submit',
                 'type' => Submit::class,
                 'attributes' => [
-                    'value' => $translate->translate('Log in as company'),
+                    'value' => $translator->translate('Log in as company'),
                 ],
             ]
         );
@@ -81,31 +81,21 @@ class CompanyUserLogin extends Form implements InputProviderInterface
     public function setResult(Result $result): void
     {
         if (!$result->isValid()) {
+            $this->isValid = false;
+
             switch ($result->getCode()) {
+                case Result::FAILURE:
                 case Result::FAILURE_IDENTITY_NOT_FOUND:
                     $this->setMessages(
                         [
-                            'login' => [
-                                $this->translate->translate('This company could not be found.'),
-                            ],
+                            'login' => $result->getMessages(),
                         ]
                     );
                     break;
                 case Result::FAILURE_CREDENTIAL_INVALID:
                     $this->setMessages(
                         [
-                            'password' => [
-                                $this->translate->translate('Wrong password provided.'),
-                            ],
-                        ]
-                    );
-                    break;
-                case Result::FAILURE:
-                    $this->setMessages(
-                        [
-                            'password' => [
-                                $this->translate->translate('Too many login attempts, try again later.'),
-                            ],
+                            'password' => $result->getMessages(),
                         ]
                     );
                     break;
@@ -116,7 +106,7 @@ class CompanyUserLogin extends Form implements InputProviderInterface
     /**
      * @return array
      */
-    public function getInputSpecification(): array
+    public function getInputFilterSpecification(): array
     {
         return [
             'email' => [
@@ -126,7 +116,7 @@ class CompanyUserLogin extends Form implements InputProviderInterface
                         'name' => EmailAddress::class,
                         'options' => [
                             'messages' => [
-                                'emailAddressInvalidFormat' => $this->translate->translate(
+                                'emailAddressInvalidFormat' => $this->translator->translate(
                                     'E-mail address format is not valid'
                                 ),
                             ],

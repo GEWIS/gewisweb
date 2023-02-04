@@ -48,8 +48,12 @@ use User\Service\{
     ApiApp as ApiAppService,
     ApiUser as ApiUserService,
     Email as EmailService,
-    Factory\ApiAppFactory as ApiAppServiceFactory,
+    PwnedPasswords as PwnedPasswordsService,
     User as UserService,
+};
+use User\Service\Factory\{
+    ApiAppFactory as ApiAppServiceFactory,
+    PwnedPasswordsFactory as PwnedPasswordsServiceFactory,
 };
 
 class Module
@@ -124,6 +128,8 @@ class Module
                     $userAuthService = $container->get('user_auth_user_service');
                     $companyUserAuthService = $container->get('user_auth_companyUser_service');
                     $emailService = $container->get('user_service_email');
+                    $pwnedPasswordsService = $container->get(PwnedPasswordsService::class);
+                    $companyUserMapper = $container->get('user_mapper_companyUser');
                     $userMapper = $container->get('user_mapper_user');
                     $newUserMapper = $container->get('user_mapper_newUser');
                     $newCompanyUserMapper = $container->get('user_mapper_newCompanyUser');
@@ -146,6 +152,8 @@ class Module
                         $userAuthService,
                         $companyUserAuthService,
                         $emailService,
+                        $pwnedPasswordsService,
+                        $companyUserMapper,
                         $userMapper,
                         $newUserMapper,
                         $newCompanyUserMapper,
@@ -165,15 +173,11 @@ class Module
                 'user_service_loginattempt' => function (ContainerInterface $container) {
                     $remoteAddress = $container->get('user_remoteaddress');
                     $loginAttemptMapper = $container->get('user_mapper_loginAttempt');
-                    $companyUserMapper = $container->get('user_mapper_companyUser');
-                    $userMapper = $container->get('user_mapper_user');
                     $rateLimitConfig = $container->get('config')['login_rate_limits'];
 
                     return new LoginAttemptService(
                         $remoteAddress,
                         $loginAttemptMapper,
-                        $companyUserMapper,
-                        $userMapper,
                         $rateLimitConfig,
                     );
                 },
@@ -191,13 +195,11 @@ class Module
                     );
                 },
                 'user_service_email' => function (ContainerInterface $container) {
-                    $translator = $container->get(MvcTranslator::class);
                     $renderer = $container->get('ViewRenderer');
                     $transport = $container->get('user_mail_transport');
                     $emailConfig = $container->get('config')['email'];
 
                     return new EmailService(
-                        $translator,
                         $renderer,
                         $transport,
                         $emailConfig,
@@ -205,6 +207,7 @@ class Module
                 },
                 ApiAppMapper::class => ApiAppMapperFactory::class,
                 ApiAppService::class => ApiAppServiceFactory::class,
+                PwnedPasswordsService::class => PwnedPasswordsServiceFactory::class,
                 'user_auth_user_storage' => function (ContainerInterface $container) {
                     $request = $container->get('Request');
                     $response = $container->get('Response');
@@ -350,15 +353,19 @@ class Module
                 },
                 'user_auth_user_adapter' => function (ContainerInterface $container) {
                     return new UserAdapter(
+                        $container->get(MvcTranslator::class),
                         $container->get('user_bcrypt'),
                         $container->get('user_service_loginattempt'),
+                        $container->get(PwnedPasswordsService::class),
                         $container->get('user_mapper_user'),
                     );
                 },
                 'user_auth_companyUser_adapter' => function (ContainerInterface $container) {
                     return new CompanyUserAdapter(
+                        $container->get(MvcTranslator::class),
                         $container->get('user_bcrypt'),
                         $container->get('user_service_loginattempt'),
+                        $container->get(PwnedPasswordsService::class),
                         $container->get('user_mapper_companyUser'),
                     );
                 },

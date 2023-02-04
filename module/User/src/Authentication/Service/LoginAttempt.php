@@ -21,8 +21,6 @@ class LoginAttempt
     public function __construct(
         private readonly string $remoteAddress,
         private readonly LoginAttemptMapper $loginAttemptMapper,
-        private readonly CompanyUserMapper $companyUserMapper,
-        private readonly UserMapper $userMapper,
         private readonly array $rateLimitConfig,
     ) {
     }
@@ -37,8 +35,6 @@ class LoginAttempt
         $attempt->setIp($this->remoteAddress);
         $attempt->setTime(new DateTime());
 
-        $user = $this->detachUser($user);
-
         if ($user instanceof CompanyUserModel) {
             $attempt->setCompanyUser($user);
         } elseif ($user instanceof UserModel) {
@@ -46,25 +42,6 @@ class LoginAttempt
         }
 
         $this->loginAttemptMapper->persist($attempt);
-    }
-
-    public function detachUser(IdentityInterface $user): ?IdentityInterface
-    {
-        /*
-         * TODO: This probably shouldn't be neccessary
-         * Yes, this is some sort of horrible hack to make the entity manager happy again. If anyone wants to waste
-         * their day figuring out what kind of dark magic is upsetting the entity manager here, be my guest.
-         * This hack only is needed when we want to flush the entity manager during login.
-         */
-        $this->userMapper->getEntityManager()->clear();
-
-        if ($user instanceof CompanyUserModel) {
-            return $this->companyUserMapper->find($user->getId());
-        } elseif ($user instanceof UserModel) {
-            return $this->userMapper->find($user->getId());
-        }
-
-        return null;
     }
 
     /**

@@ -1,0 +1,35 @@
+# This is a GEWIS mailings template
+# Account registration confirmation
+---
+# All mailings require some settings. These can be set here. Don't forget to set the title ("Algemene mededeling; tekst zelf invoeren")
+version: 1.1
+settings:
+    title: "Request to reset password"
+    email: "web@gewis.nl"
+    lang: en-UK
+    follow: false
+
+# A mailing consists of a series of messageblocks, each with their own type
+# The available types are "header", "topblock", "activities", "activityfooter", "extramessage" and "tinyfooter"
+messageblocks:
+
+    # Each mailing must have a header to make the template shine! It contains the title and the date.
+    - type: "header"
+      title: "Reset Your Password"
+      date: 2023-02-04 # Note that this date needs to be updated
+
+    # This is the first block which is shown on top of the message. Recommended for most messages
+    - type: topblock
+      title: "Reset your password for the GEWIS website"
+      contentHTML: "</p>
+
+      <p>Dear {{MEMBER_FULL_NAME}},</p>
+
+      <p>We have received a request to reset your password. You can reset it using the following link (valid for 24 hours):<br><a href='{{RESET_URL}}'>{{RESET_URL}}</a></p>
+
+      <p>If you have previously requested to reset your password, only the link contained in this e-mail is valid.</p>
+
+      <p>If you have not requested a password reset, do not worry! Your account is safe and secure. You can ignore this e-mail and log in to the GEWIS website using your old password.</p>
+
+      With kind regards,<br/>
+      The ApplicatieBeheerCommissie"

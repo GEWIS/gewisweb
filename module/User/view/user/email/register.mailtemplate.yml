@@ -1,0 +1,34 @@
+# This is a GEWIS mailings template
+# Account registration confirmation
+---
+# All mailings require some settings. These can be set here. Don't forget to set the title ("Algemene mededeling; tekst zelf invoeren")
+version: 1.1
+settings:
+    title: "Your account for the GEWIS website"
+    email: "web@gewis.nl"
+    lang: en-UK
+    follow: true
+
+# A mailing consists of a series of messageblocks, each with their own type
+# The available types are "header", "topblock", "activities", "activityfooter", "extramessage" and "tinyfooter"
+messageblocks:
+
+    # Each mailing must have a header to make the template shine! It contains the title and the date.
+    - type: "header"
+      title: "Registration Confirmation"
+      date: 2023-02-04 # Note that this date needs to be updated
+
+    # This is the first block which is shown on top of the message. Recommended for most messages
+    - type: topblock
+      title: "Your account for the GEWIS website requires activation"
+      contentHTML: "</p>
+
+      <p>Dear {{MEMBER_FULL_NAME}},</p>
+
+      <p>Your account for the GEWIS website has been created, however, before you are able to use it you need to activate your account.</p>
+      <p>You can activate your account by creating password using the following link (valid for 24 hours):<br><a href='{{ACTIVATION_URL}}'>{{ACTIVATION_URL}}</a></p>
+
+      <p>After activation, you can log in using the following details:<br><strong>E-mail address:</strong> {{MEMBER_EMAIL}}<br><strong>Membership number:</strong> {{MEMBER_LIDNR}}</p>
+
+      With kind regards,<br/>
+      The ApplicatieBeheerCommissie"
