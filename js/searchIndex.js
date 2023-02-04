@@ -15006,6 +15006,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/User-Authentication-Adapter-CompanyUserAdapter.html#property_password"
         },                {
+            "fqsen": "\\User\\Authentication\\Adapter\\CompanyUserAdapter\u003A\u003A\u0024translator",
+            "name": "translator",
+            "summary": "",
+            "url": "classes/User-Authentication-Adapter-CompanyUserAdapter.html#property_translator"
+        },                {
             "fqsen": "\\User\\Authentication\\Adapter\\CompanyUserAdapter\u003A\u003A\u0024bcrypt",
             "name": "bcrypt",
             "summary": "",
@@ -15015,6 +15020,11 @@ Search.appendIndex(
             "name": "loginAttemptService",
             "summary": "",
             "url": "classes/User-Authentication-Adapter-CompanyUserAdapter.html#property_loginAttemptService"
+        },                {
+            "fqsen": "\\User\\Authentication\\Adapter\\CompanyUserAdapter\u003A\u003A\u0024pwnedPasswordsService",
+            "name": "pwnedPasswordsService",
+            "summary": "",
+            "url": "classes/User-Authentication-Adapter-CompanyUserAdapter.html#property_pwnedPasswordsService"
         },                {
             "fqsen": "\\User\\Authentication\\Adapter\\CompanyUserAdapter\u003A\u003A\u0024mapper",
             "name": "mapper",
@@ -15061,6 +15071,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/User-Authentication-Adapter-UserAdapter.html#property_password"
         },                {
+            "fqsen": "\\User\\Authentication\\Adapter\\UserAdapter\u003A\u003A\u0024translator",
+            "name": "translator",
+            "summary": "",
+            "url": "classes/User-Authentication-Adapter-UserAdapter.html#property_translator"
+        },                {
             "fqsen": "\\User\\Authentication\\Adapter\\UserAdapter\u003A\u003A\u0024bcrypt",
             "name": "bcrypt",
             "summary": "",
@@ -15070,6 +15085,11 @@ Search.appendIndex(
             "name": "loginAttemptService",
             "summary": "",
             "url": "classes/User-Authentication-Adapter-UserAdapter.html#property_loginAttemptService"
+        },                {
+            "fqsen": "\\User\\Authentication\\Adapter\\UserAdapter\u003A\u003A\u0024pwnedPasswordsService",
+            "name": "pwnedPasswordsService",
+            "summary": "",
+            "url": "classes/User-Authentication-Adapter-UserAdapter.html#property_pwnedPasswordsService"
         },                {
             "fqsen": "\\User\\Authentication\\Adapter\\UserAdapter\u003A\u003A\u0024mapper",
             "name": "mapper",
@@ -15206,11 +15226,6 @@ Search.appendIndex(
             "summary": "Log\u0020a\u0020failed\u0020login\u0020attempt.",
             "url": "classes/User-Authentication-Service-LoginAttempt.html#method_logFailedLogin"
         },                {
-            "fqsen": "\\User\\Authentication\\Service\\LoginAttempt\u003A\u003AdetachUser\u0028\u0029",
-            "name": "detachUser",
-            "summary": "",
-            "url": "classes/User-Authentication-Service-LoginAttempt.html#method_detachUser"
-        },                {
             "fqsen": "\\User\\Authentication\\Service\\LoginAttempt\u003A\u003AloginAttemptsExceeded\u0028\u0029",
             "name": "loginAttemptsExceeded",
             "summary": "Check\u0020if\u0020there\u0020are\u0020too\u0020many\u0020login\u0020tries\u0020for\u0020a\u0020specific\u0020account.",
@@ -15225,16 +15240,6 @@ Search.appendIndex(
             "name": "loginAttemptMapper",
             "summary": "",
             "url": "classes/User-Authentication-Service-LoginAttempt.html#property_loginAttemptMapper"
-        },                {
-            "fqsen": "\\User\\Authentication\\Service\\LoginAttempt\u003A\u003A\u0024companyUserMapper",
-            "name": "companyUserMapper",
-            "summary": "",
-            "url": "classes/User-Authentication-Service-LoginAttempt.html#property_companyUserMapper"
-        },                {
-            "fqsen": "\\User\\Authentication\\Service\\LoginAttempt\u003A\u003A\u0024userMapper",
-            "name": "userMapper",
-            "summary": "",
-            "url": "classes/User-Authentication-Service-LoginAttempt.html#property_userMapper"
         },                {
             "fqsen": "\\User\\Authentication\\Service\\LoginAttempt\u003A\u003A\u0024rateLimitConfig",
             "name": "rateLimitConfig",
@@ -15671,15 +15676,15 @@ Search.appendIndex(
             "summary": "Set\u0020authentication\u0020result.",
             "url": "classes/User-Form-CompanyUserLogin.html#method_setResult"
         },                {
-            "fqsen": "\\User\\Form\\CompanyUserLogin\u003A\u003AgetInputSpecification\u0028\u0029",
-            "name": "getInputSpecification",
+            "fqsen": "\\User\\Form\\CompanyUserLogin\u003A\u003AgetInputFilterSpecification\u0028\u0029",
+            "name": "getInputFilterSpecification",
             "summary": "",
-            "url": "classes/User-Form-CompanyUserLogin.html#method_getInputSpecification"
+            "url": "classes/User-Form-CompanyUserLogin.html#method_getInputFilterSpecification"
         },                {
-            "fqsen": "\\User\\Form\\CompanyUserLogin\u003A\u003A\u0024translate",
-            "name": "translate",
+            "fqsen": "\\User\\Form\\CompanyUserLogin\u003A\u003A\u0024translator",
+            "name": "translator",
             "summary": "",
-            "url": "classes/User-Form-CompanyUserLogin.html#property_translate"
+            "url": "classes/User-Form-CompanyUserLogin.html#property_translator"
         },                {
             "fqsen": "\\User\\Form\\CompanyUserLogin\u003A\u003A\u0024passwordLength",
             "name": "passwordLength",
@@ -15811,15 +15816,15 @@ Search.appendIndex(
             "summary": "Set\u0020authentication\u0020result.",
             "url": "classes/User-Form-UserLogin.html#method_setResult"
         },                {
-            "fqsen": "\\User\\Form\\UserLogin\u003A\u003AgetInputSpecification\u0028\u0029",
-            "name": "getInputSpecification",
+            "fqsen": "\\User\\Form\\UserLogin\u003A\u003AgetInputFilterSpecification\u0028\u0029",
+            "name": "getInputFilterSpecification",
             "summary": "",
-            "url": "classes/User-Form-UserLogin.html#method_getInputSpecification"
+            "url": "classes/User-Form-UserLogin.html#method_getInputFilterSpecification"
         },                {
-            "fqsen": "\\User\\Form\\UserLogin\u003A\u003A\u0024translate",
-            "name": "translate",
+            "fqsen": "\\User\\Form\\UserLogin\u003A\u003A\u0024translator",
+            "name": "translator",
             "summary": "",
-            "url": "classes/User-Form-UserLogin.html#property_translate"
+            "url": "classes/User-Form-UserLogin.html#property_translator"
         },                {
             "fqsen": "\\User\\Mapper\\ApiApp",
             "name": "ApiApp",
@@ -16811,11 +16816,6 @@ Search.appendIndex(
             "summary": "Render\u0020a\u0020template\u0020with\u0020given\u0020variables.",
             "url": "classes/User-Service-Email.html#method_render"
         },                {
-            "fqsen": "\\User\\Service\\Email\u003A\u003A\u0024translator",
-            "name": "translator",
-            "summary": "",
-            "url": "classes/User-Service-Email.html#property_translator"
-        },                {
             "fqsen": "\\User\\Service\\Email\u003A\u003A\u0024renderer",
             "name": "renderer",
             "summary": "",
@@ -16841,6 +16841,16 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/User-Service-Factory-ApiAppFactory.html#method___invoke"
         },                {
+            "fqsen": "\\User\\Service\\Factory\\PwnedPasswordsFactory",
+            "name": "PwnedPasswordsFactory",
+            "summary": "",
+            "url": "classes/User-Service-Factory-PwnedPasswordsFactory.html"
+        },                {
+            "fqsen": "\\User\\Service\\Factory\\PwnedPasswordsFactory\u003A\u003A__invoke\u0028\u0029",
+            "name": "__invoke",
+            "summary": "",
+            "url": "classes/User-Service-Factory-PwnedPasswordsFactory.html#method___invoke"
+        },                {
             "fqsen": "\\User\\Service\\User",
             "name": "User",
             "summary": "User\u0020service.",
@@ -16855,6 +16865,11 @@ Search.appendIndex(
             "name": "activate",
             "summary": "Activate\u0020a\u0020user.",
             "url": "classes/User-Service-User.html#method_activate"
+        },                {
+            "fqsen": "\\User\\Service\\User\u003A\u003AremoveActivation\u0028\u0029",
+            "name": "removeActivation",
+            "summary": "Remove\u0020an\u0020activation\u0020request.",
+            "url": "classes/User-Service-User.html#method_removeActivation"
         },                {
             "fqsen": "\\User\\Service\\User\u003A\u003Aregister\u0028\u0029",
             "name": "register",
@@ -16975,6 +16990,16 @@ Search.appendIndex(
             "name": "emailService",
             "summary": "",
             "url": "classes/User-Service-User.html#property_emailService"
+        },                {
+            "fqsen": "\\User\\Service\\User\u003A\u003A\u0024pwnedPasswordsService",
+            "name": "pwnedPasswordsService",
+            "summary": "",
+            "url": "classes/User-Service-User.html#property_pwnedPasswordsService"
+        },                {
+            "fqsen": "\\User\\Service\\User\u003A\u003A\u0024companyUserMapper",
+            "name": "companyUserMapper",
+            "summary": "",
+            "url": "classes/User-Service-User.html#property_companyUserMapper"
         },                {
             "fqsen": "\\User\\Service\\User\u003A\u003A\u0024userMapper",
             "name": "userMapper",
