@@ -7,6 +7,11 @@ use Decision\Model\Member as MemberModel;
 use Laminas\Mail\Header\MessageId;
 use Laminas\Mail\Message;
 use Laminas\Mail\Transport\TransportInterface;
+use Laminas\Mime\{
+    Mime,
+    Part as MimePart,
+    Message as MimeMessage,
+};
 use Laminas\Mvc\I18n\Translator;
 use Laminas\View\Model\ViewModel;
 use Laminas\View\Renderer\PhpRenderer;
@@ -43,13 +48,18 @@ class Email
             ]
         );
 
+        $html = new MimePart($body);
+        $html->setType(Mime::TYPE_HTML);
+
+        $mimeMessage = new MimeMessage();
+        $mimeMessage->addPart($html);
+
         $message = new Message();
         $message->getHeaders()->addHeader((new MessageId())->setId());
-
         $message->addFrom($this->emailConfig['from']);
         $message->addTo($member->getEmail());
-        $message->setSubject($this->translator->translate('Account activation code for the GEWIS Website'));
-        $message->setBody($body);
+        $message->setSubject('Your account for the GEWIS website');
+        $message->setBody($mimeMessage);
 
         $this->transport->send($message);
     }
@@ -66,12 +76,18 @@ class Email
             ]
         );
 
-        $message = new Message();
+        $html = new MimePart($body);
+        $html->setType(Mime::TYPE_HTML);
 
+        $mimeMessage = new MimeMessage();
+        $mimeMessage->addPart($html);
+
+        $message = new Message();
+        $message->getHeaders()->addHeader((new MessageId())->setId());
         $message->addFrom($this->emailConfig['from']);
         $message->addTo($newCompanyUser->getEmail());
-        $message->setSubject($this->translator->translate('Company account for the GEWIS website'));
-        $message->setBody($body);
+        $message->setSubject('Your company account for the GEWIS Career Platform');
+        $message->setBody($mimeMessage);
 
         $this->transport->send($message);
     }
@@ -94,13 +110,18 @@ class Email
             ]
         );
 
+        $html = new MimePart($body);
+        $html->setType(Mime::TYPE_HTML);
+
+        $mimeMessage = new MimeMessage();
+        $mimeMessage->addPart($html);
+
         $message = new Message();
         $message->getHeaders()->addHeader((new MessageId())->setId());
-
         $message->addFrom($this->emailConfig['from']);
         $message->addTo($member->getEmail());
-        $message->setSubject($this->translator->translate('Password reset code for the GEWIS Website'));
-        $message->setBody($body);
+        $message->setSubject('Password reset request for the GEWIS website');
+        $message->setBody($mimeMessage);
 
         $this->transport->send($message);
     }
@@ -117,12 +138,18 @@ class Email
             ]
         );
 
-        $message = new Message();
+        $html = new MimePart($body);
+        $html->setType(Mime::TYPE_HTML);
 
+        $mimeMessage = new MimeMessage();
+        $mimeMessage->addPart($html);
+
+        $message = new Message();
+        $message->getHeaders()->addHeader((new MessageId())->setId());
         $message->addFrom($this->emailConfig['from']);
         $message->addTo($newCompanyUser->getEmail());
-        $message->setSubject($this->translator->translate('Password reset code for the GEWIS website'));
-        $message->setBody($body);
+        $message->setSubject('Password reset request for the GEWIS Career Platform');
+        $message->setBody($mimeMessage);
 
         $this->transport->send($message);
     }

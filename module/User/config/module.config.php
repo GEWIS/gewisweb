@@ -41,6 +41,7 @@ return [
                             ],
                             'defaults' => [
                                 'action' => 'activate',
+                                'user_type' => 'member',
                             ],
                         ],
                     ],
