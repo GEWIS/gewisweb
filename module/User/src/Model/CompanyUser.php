@@ -45,12 +45,6 @@ class CompanyUser implements IdentityInterface
     )]
     protected CompanyModel $company;
 
-    /**
-     * A company user may be forced to change their password before doing anything else.
-     */
-    #[Column(type: "boolean")]
-    protected bool $mustChangePassword = false;
-
     // phpcs:ignore Gewis.General.RequireConstructorPromotion -- not possible
     public function __construct(NewCompanyUserModel $newCompanyUser)
     {
@@ -104,22 +98,6 @@ class CompanyUser implements IdentityInterface
     public function setPassword(string $password): void
     {
         $this->password = $password;
-    }
-
-    /**
-     * Get whether the company user must be forced to change their password.
-     */
-    public function getMustChangePassword(): bool
-    {
-        return $this->mustChangePassword;
-    }
-
-    /**
-     * Set whether the company user must be forced to change their password.
-     */
-    public function setMustChangePassword(bool $mustChangePassword): void
-    {
-        $this->mustChangePassword = $mustChangePassword;
     }
 
     /**

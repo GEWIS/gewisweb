@@ -3,8 +3,6 @@
 namespace User\Authentication;
 
 use Application\Model\IdentityInterface;
-use Laminas\Authentication\Adapter\AdapterInterface;
-use Laminas\Authentication\Storage\StorageInterface;
 use RuntimeException;
 use Laminas\Authentication\{
     AuthenticationServiceInterface,
@@ -18,10 +16,7 @@ use User\Authentication\Storage\{
     CompanyUserSession,
     UserSession,
 };
-use User\Model\{
-    CompanyUser,
-    User,
-};
+use SensitiveParameter;
 
 /**
  * @template TStorage of CompanyUserSession|UserSession
@@ -97,7 +92,7 @@ class AuthenticationService implements AuthenticationServiceInterface
      */
     public function authenticate(
         ?string $login = null,
-        ?string $securityCode = null,
+        #[SensitiveParameter] ?string $securityCode = null,
     ): Result {
         if (
             null === $login

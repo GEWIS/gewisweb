@@ -21,7 +21,7 @@ use Laminas\Validator\{
 
 class UserLogin extends Form implements InputProviderInterface
 {
-    public function __construct(private readonly Translator $translate)
+    public function __construct(private readonly Translator $translator)
     {
         parent::__construct();
 
@@ -30,7 +30,7 @@ class UserLogin extends Form implements InputProviderInterface
                 'name' => 'login',
                 'type' => Text::class,
                 'options' => [
-                    'label' => $translate->translate('Membership number or email address'),
+                    'label' => $translator->translate('Membership number or email address'),
                 ],
             ]
         );
@@ -40,7 +40,7 @@ class UserLogin extends Form implements InputProviderInterface
                 'name' => 'password',
                 'type' => Password::class,
                 'options' => [
-                    'label' => $translate->translate('Your password'),
+                    'label' => $translator->translate('Your password'),
                 ],
             ]
         );
@@ -50,7 +50,7 @@ class UserLogin extends Form implements InputProviderInterface
                 'name' => 'submit',
                 'type' => Submit::class,
                 'attributes' => [
-                    'value' => $translate->translate('Log in as member'),
+                    'value' => $translator->translate('Log in as member'),
                 ],
             ]
         );
@@ -60,7 +60,7 @@ class UserLogin extends Form implements InputProviderInterface
                 'name' => 'remember',
                 'type' => Checkbox::class,
                 'options' => [
-                    'label' => $translate->translate('Remember me'),
+                    'label' => $translator->translate('Remember me'),
                     'checked_value' => '1',
                     'unchecked_value' => '0',
                     'checked' => true,
@@ -92,39 +92,19 @@ class UserLogin extends Form implements InputProviderInterface
     {
         if (!$result->isValid()) {
             switch ($result->getCode()) {
+                case Result::FAILURE_UNCATEGORIZED:
+                case Result::FAILURE:
                 case Result::FAILURE_IDENTITY_NOT_FOUND:
                     $this->setMessages(
                         [
-                            'login' => [
-                                $this->translate->translate('This user could not be found.'),
-                            ],
-                        ]
-                    );
-                    break;
-                case Result::FAILURE_UNCATEGORIZED:
-                    $this->setMessages(
-                        [
-                            'login' => [
-                                $this->translate->translate('You cannot sign in to this account at this moment.'),
-                            ],
+                            'login' => $result->getMessages(),
                         ]
                     );
                     break;
                 case Result::FAILURE_CREDENTIAL_INVALID:
                     $this->setMessages(
                         [
-                            'password' => [
-                                $this->translate->translate('Wrong password provided.'),
-                            ],
-                        ]
-                    );
-                    break;
-                case Result::FAILURE:
-                    $this->setMessages(
-                        [
-                            'password' => [
-                                $this->translate->translate('Too many login attempts, try again later.'),
-                            ],
+                            'password' => $result->getMessages(),
                         ]
                     );
                     break;
