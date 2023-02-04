@@ -83,11 +83,13 @@ class User
     ): bool {
         if ($newUser instanceof NewCompanyUserModel) {
             $adapter = $this->companyUserAuthService->getAdapter();
+            $id = $newUser->getId();
         } else {
             $adapter = $this->userAuthService->getAdapter();
+            $id = $newUser->getLidnr();
         }
 
-        $user = $adapter->getMapper()->find($newUser->getId());
+        $user = $adapter->getMapper()->find($id);
         if (null === $user) {
             // The user does not yet exist.
             if ($newUser instanceof NewCompanyUserModel) {
