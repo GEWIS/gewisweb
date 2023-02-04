@@ -20,7 +20,7 @@ $email->setAttribute('disabled', 'disabled');
            class="control-label col-sm-5"><?= $email->getLabel() ?></label>
     <div class="col-sm-7">
         <?= $this->formInput($email) ?>
-        <?= $this->formElementErrors($email); ?>
+        <?= $this->formElementErrors($email, ['class' => 'help-block']); ?>
     </div>
 </div>
 

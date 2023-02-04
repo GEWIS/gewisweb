@@ -22,7 +22,7 @@ $form->setAttribute('class', 'form-horizontal');
                class="control-label col-sm-5"><?= $email->getLabel() ?></label>
         <div class="col-sm-7">
             <?= $this->formEmail($email) ?>
-            <?= $this->formElementErrors($email); ?>
+            <?= $this->formElementErrors($email, ['class' => 'help-block']); ?>
         </div>
     </div>
     <?php
@@ -37,7 +37,7 @@ $form->setAttribute('class', 'form-horizontal');
                class="control-label col-sm-5"><?= $password->getLabel() ?></label>
         <div class="col-sm-7">
             <?= $this->formPassword($password) ?>
-            <?= $this->formElementErrors($password); ?>
+            <?= $this->formElementErrors($password, ['class' => 'help-block']); ?>
         </div>
     </div>
 
