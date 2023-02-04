@@ -15826,6 +15826,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/User-Form-UserLogin.html#property_translator"
         },                {
+            "fqsen": "\\User\\Form\\UserLogin\u003A\u003A\u0024passwordLength",
+            "name": "passwordLength",
+            "summary": "",
+            "url": "classes/User-Form-UserLogin.html#property_passwordLength"
+        },                {
             "fqsen": "\\User\\Mapper\\ApiApp",
             "name": "ApiApp",
             "summary": "",
