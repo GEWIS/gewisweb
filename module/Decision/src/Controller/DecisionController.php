@@ -8,8 +8,7 @@ use Decision\Service\{
     AclService,
     Decision as DecisionService,
 };
-use Laminas\Http\Request;
-use Laminas\Http\Response;
+use Laminas\Http\{Request, Response};
 use Laminas\Http\Response\Stream;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;

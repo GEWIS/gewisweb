@@ -588,7 +588,6 @@ class Company
         CompanyJobPackageModel $package,
         array $data,
     ): JobModel|bool {
-
         $category = $this->categoryMapper->find($data['category']);
         if (null === $category) {
             return false;

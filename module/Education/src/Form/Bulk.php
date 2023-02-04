@@ -60,7 +60,7 @@ class Bulk extends Form implements InputFilterProviderInterface
                     ],
                 );
                 $valid = false;
-            } else if (null === $this->courseMapper->findByCode($document->get('course')->getValue())) {
+            } elseif (null === $this->courseMapper->findByCode($document->get('course')->getValue())) {
                 $document->get('course')->setMessages(
                     [
                         $this->translator->translate('Course does not exist'),

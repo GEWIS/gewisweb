@@ -132,7 +132,7 @@ class Exam
                     // finalize document upload
                     if ('exam' === $type) {
                         $document = new ExamModel();
-                    } else if ('summary' === $type) {
+                    } elseif ('summary' === $type) {
                         $document = new SummaryModel();
                     } else {
                         throw new InvalidArgumentException('Course document does not have proper type');
