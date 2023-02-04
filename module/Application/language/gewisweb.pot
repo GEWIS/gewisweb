@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-03 16:28+0100\n"
+"POT-Creation-Date: 2023-02-04 18:53+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -129,7 +129,7 @@ msgstr ""
 #: module/Company/src/Form/JobLabel.php:32
 #: module/Company/src/Form/JobLabel.php:42 module/Company/src/Form/Job.php:102
 #: module/Company/src/Form/Job.php:133 module/Company/src/Form/Job.php:143
-#: module/Education/src/Form/Course.php:43 module/User/src/Form/ApiToken.php:25
+#: module/Education/src/Form/Course.php:42 module/User/src/Form/ApiToken.php:25
 msgid "Name"
 msgstr ""
 
@@ -3137,7 +3137,7 @@ msgid "Found %d course(s) matching your description"
 msgstr ""
 
 #: module/Education/view/education/education/index.phtml:65
-#: module/Education/src/Form/Course.php:33
+#: module/Education/src/Form/Course.php:32
 #: module/Education/src/Form/Fieldset/Exam.php:47
 #: module/Education/src/Form/Fieldset/Summary.php:49
 msgid "Course code"
@@ -4569,7 +4569,7 @@ msgid "You are not allowed to edit companies"
 msgstr ""
 
 #: module/Company/src/Controller/AdminController.php:187
-#: module/Company/src/Service/Company.php:853
+#: module/Company/src/Service/Company.php:852
 msgid "You are not allowed to delete companies"
 msgstr ""
 
@@ -4578,12 +4578,12 @@ msgid "You are not allowed to create packages"
 msgstr ""
 
 #: module/Company/src/Controller/AdminController.php:281
-#: module/Company/src/Service/Company.php:918
+#: module/Company/src/Service/Company.php:917
 msgid "You are not allowed to edit packages"
 msgstr ""
 
 #: module/Company/src/Controller/AdminController.php:366
-#: module/Company/src/Service/Company.php:750
+#: module/Company/src/Service/Company.php:749
 msgid "You are not allowed to delete packages"
 msgstr ""
 
@@ -4598,8 +4598,8 @@ msgstr ""
 
 #: module/Company/src/Controller/AdminController.php:487
 #: module/Company/src/Controller/CompanyAccountController.php:193
-#: module/Company/src/Service/Company.php:945
-#: module/Company/src/Service/Company.php:1016
+#: module/Company/src/Service/Company.php:944
+#: module/Company/src/Service/Company.php:1015
 msgid "You are not allowed to edit jobs"
 msgstr ""
 
@@ -4621,7 +4621,7 @@ msgid "Job category successfully created!"
 msgstr ""
 
 #: module/Company/src/Controller/AdminController.php:658
-#: module/Company/src/Service/Company.php:886
+#: module/Company/src/Service/Company.php:885
 msgid "You are not allowed to edit job categories"
 msgstr ""
 
@@ -4634,7 +4634,7 @@ msgid "Job label successfully created!"
 msgstr ""
 
 #: module/Company/src/Controller/AdminController.php:751
-#: module/Company/src/Service/Company.php:902
+#: module/Company/src/Service/Company.php:901
 msgid "You are not allowed to edit job labels"
 msgstr ""
 
@@ -4733,7 +4733,7 @@ msgid "The e-mail address must be unique across companies."
 msgstr ""
 
 #: module/Company/src/Form/Company.php:392 module/Company/src/Form/Job.php:339
-#: module/User/src/Form/CompanyUserLogin.php:130
+#: module/User/src/Form/CompanyUserLogin.php:120
 #: module/User/src/Form/CompanyUserReset.php:71
 msgid "E-mail address format is not valid"
 msgstr ""
@@ -4790,15 +4790,15 @@ msgstr ""
 msgid "You are not allowed to access the admin interface"
 msgstr ""
 
-#: module/Company/src/Service/Company.php:962
+#: module/Company/src/Service/Company.php:961
 msgid "You are not allowed to edit categories"
 msgstr ""
 
-#: module/Company/src/Service/Company.php:979
+#: module/Company/src/Service/Company.php:978
 msgid "You are not allowed to edit labels"
 msgstr ""
 
-#: module/Company/src/Service/Company.php:1032
+#: module/Company/src/Service/Company.php:1031
 msgid "You are not allowed to create a company"
 msgstr ""
 
@@ -4822,16 +4822,16 @@ msgstr ""
 msgid "Meeting minutes uploaded"
 msgstr ""
 
-#: module/Decision/src/Controller/DecisionController.php:103
+#: module/Decision/src/Controller/DecisionController.php:102
 msgid "You are not allowed to search decisions."
 msgstr ""
 
-#: module/Decision/src/Controller/DecisionController.php:181
+#: module/Decision/src/Controller/DecisionController.php:180
 #: module/Decision/src/Service/Decision.php:569
 msgid "You are not allowed to revoke authorizations."
 msgstr ""
 
-#: module/Decision/src/Controller/DecisionController.php:209
+#: module/Decision/src/Controller/DecisionController.php:208
 msgid "You are not allowed to browse files."
 msgstr ""
 
@@ -5105,11 +5105,11 @@ msgstr ""
 msgid "Course does not exist"
 msgstr ""
 
-#: module/Education/src/Form/Course.php:53
+#: module/Education/src/Form/Course.php:52
 msgid "Add course"
 msgstr ""
 
-#: module/Education/src/Form/Course.php:84
+#: module/Education/src/Form/Course.php:83
 msgid "There already exists a course with this code"
 msgstr ""
 
@@ -5381,6 +5381,34 @@ msgstr ""
 msgid "Not allowed to view tags."
 msgstr ""
 
+#: module/User/src/Authentication/Adapter/CompanyUserAdapter.php:43
+#: module/User/src/Authentication/Adapter/UserAdapter.php:43
+msgid "This user could not be found."
+msgstr ""
+
+#: module/User/src/Authentication/Adapter/CompanyUserAdapter.php:53
+#: module/User/src/Authentication/Adapter/UserAdapter.php:67
+msgid "Too many login attempts, try again later."
+msgstr ""
+
+#: module/User/src/Authentication/Adapter/CompanyUserAdapter.php:65
+#: module/User/src/Authentication/Adapter/UserAdapter.php:79
+msgid "Wrong password provided."
+msgstr ""
+
+#: module/User/src/Authentication/Adapter/CompanyUserAdapter.php:77
+#: module/User/src/Authentication/Adapter/UserAdapter.php:91
+msgid ""
+"Your password was found in a public data breach and is therefore considered "
+"insecure. Please request a password reset before continuing. We recommend "
+"using a password generated by a good password manager, such as Bitwarden or "
+"1Password."
+msgstr ""
+
+#: module/User/src/Authentication/Adapter/UserAdapter.php:57
+msgid "You cannot sign in to this account at this moment."
+msgstr ""
+
 #: module/User/src/Authorization/GenericAclService.php:98
 #: module/User/src/Authorization/GenericAclService.php:122
 msgid ""
@@ -5389,7 +5417,7 @@ msgid ""
 "require you to login in with a different account."
 msgstr ""
 
-#: module/User/src/Controller/UserController.php:162
+#: module/User/src/Controller/UserController.php:168
 msgid "You are not allowed to change passwords"
 msgstr ""
 
@@ -5412,20 +5440,6 @@ msgstr ""
 
 #: module/User/src/Form/CompanyUserLogin.php:56
 msgid "Log in as company"
-msgstr ""
-
-#: module/User/src/Form/CompanyUserLogin.php:89
-msgid "This company could not be found."
-msgstr ""
-
-#: module/User/src/Form/CompanyUserLogin.php:98
-#: module/User/src/Form/UserLogin.php:117
-msgid "Wrong password provided."
-msgstr ""
-
-#: module/User/src/Form/CompanyUserLogin.php:107
-#: module/User/src/Form/UserLogin.php:126
-msgid "Too many login attempts, try again later."
 msgstr ""
 
 #: module/User/src/Form/CompanyUserReset.php:44
@@ -5476,14 +5490,6 @@ msgstr ""
 msgid "Remember me"
 msgstr ""
 
-#: module/User/src/Form/UserLogin.php:99
-msgid "This user could not be found."
-msgstr ""
-
-#: module/User/src/Form/UserLogin.php:108
-msgid "You cannot sign in to this account at this moment."
-msgstr ""
-
 #: module/User/src/Model/Enums/JWTClaims.php:38
 msgid "Family name"
 msgstr ""
@@ -5513,27 +5519,18 @@ msgstr ""
 msgid "You are not allowed to add API tokens"
 msgstr ""
 
-#: module/User/src/Service/Email.php:51
-msgid "Account activation code for the GEWIS Website"
+#: module/User/src/Service/User.php:105 module/User/src/Service/User.php:327
+msgid ""
+"You cannot use this password, it was found in a public data breach and is "
+"therefore considered insecure. We recommend using a password generated by a "
+"good password manager, such as Bitwarden or 1Password."
 msgstr ""
 
-#: module/User/src/Service/Email.php:73
-msgid "Company account for the GEWIS website"
-msgstr ""
-
-#: module/User/src/Service/Email.php:102
-msgid "Password reset code for the GEWIS Website"
-msgstr ""
-
-#: module/User/src/Service/Email.php:124
-msgid "Password reset code for the GEWIS website"
-msgstr ""
-
-#: module/User/src/Service/User.php:270
+#: module/User/src/Service/User.php:316
 msgid "Password incorrect"
 msgstr ""
 
-#: module/User/src/Service/User.php:416
+#: module/User/src/Service/User.php:475
 msgid "You are not allowed to change your password"
 msgstr ""
 

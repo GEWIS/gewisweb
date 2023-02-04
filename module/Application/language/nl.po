@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-03 16:28+0100\n"
-"PO-Revision-Date: 2023-02-03 16:28+0100\n"
+"POT-Creation-Date: 2023-02-04 18:53+0100\n"
+"PO-Revision-Date: 2023-02-04 18:56+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: nl\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: module/Activity/src/Controller/ActivityCalendarController.php:79
 msgid "You are not allowed to create activity proposals"
@@ -411,7 +411,7 @@ msgstr "De activiteit heeft geen acceptabel aantal opties"
 #: module/Decision/view/decision/member/birthdays.phtml:12
 #: module/Decision/view/decision/organ-admin/index.phtml:12
 #: module/Decision/view/decision/organ/index.phtml:14
-#: module/Education/src/Form/Course.php:43
+#: module/Education/src/Form/Course.php:42
 #: module/Education/view/education/admin/course.phtml:32
 #: module/Photo/view/photo/album-admin/edit.phtml:23
 #: module/User/src/Form/ApiToken.php:25
@@ -1213,8 +1213,8 @@ msgid ""
 "it will start on <strong>%s</strong> and end on <strong>%s</strong>."
 msgstr ""
 "Dit is activiteit <strong>#%d</strong>, georganiseerd door <strong>%s</"
-"strong>, en deze zal beginnen op <strong>%s</strong> en eindigen op <strong>"
-"%s</strong>."
+"strong>, en deze zal beginnen op <strong>%s</strong> en eindigen op "
+"<strong>%s</strong>."
 
 #: module/Activity/view/activity/admin-approval/view-proposal.phtml:92
 #: module/Activity/view/activity/admin-approval/view.phtml:44
@@ -2444,7 +2444,7 @@ msgid "You are not allowed to edit companies"
 msgstr "Je hebt niet de rechten om bedrijven te wijzigen"
 
 #: module/Company/src/Controller/AdminController.php:187
-#: module/Company/src/Service/Company.php:853
+#: module/Company/src/Service/Company.php:852
 msgid "You are not allowed to delete companies"
 msgstr "Je hebt niet de rechten om bedrijven te verwijderen"
 
@@ -2453,12 +2453,12 @@ msgid "You are not allowed to create packages"
 msgstr "Je hebt niet de rechten om pakketten toe te voegen"
 
 #: module/Company/src/Controller/AdminController.php:281
-#: module/Company/src/Service/Company.php:918
+#: module/Company/src/Service/Company.php:917
 msgid "You are not allowed to edit packages"
 msgstr "Je hebt niet de rechten om pakketten te wijzigen"
 
 #: module/Company/src/Controller/AdminController.php:366
-#: module/Company/src/Service/Company.php:750
+#: module/Company/src/Service/Company.php:749
 msgid "You are not allowed to delete packages"
 msgstr "Je hebt niet de rechten om pakketten te verwijderen"
 
@@ -2473,8 +2473,8 @@ msgstr "Vacature succesvol aangemaakt!"
 
 #: module/Company/src/Controller/AdminController.php:487
 #: module/Company/src/Controller/CompanyAccountController.php:193
-#: module/Company/src/Service/Company.php:945
-#: module/Company/src/Service/Company.php:1016
+#: module/Company/src/Service/Company.php:944
+#: module/Company/src/Service/Company.php:1015
 msgid "You are not allowed to edit jobs"
 msgstr "Je hebt niet de rechten om vacatures te wijzigen"
 
@@ -2496,7 +2496,7 @@ msgid "Job category successfully created!"
 msgstr "Vacaturecategorie succesvol aangemaakt!"
 
 #: module/Company/src/Controller/AdminController.php:658
-#: module/Company/src/Service/Company.php:886
+#: module/Company/src/Service/Company.php:885
 msgid "You are not allowed to edit job categories"
 msgstr "Je hebt niet de rechten om vacature categorieën te wijzigen"
 
@@ -2509,7 +2509,7 @@ msgid "Job label successfully created!"
 msgstr "Vacature-label succesvol aangemaakt!"
 
 #: module/Company/src/Controller/AdminController.php:751
-#: module/Company/src/Service/Company.php:902
+#: module/Company/src/Service/Company.php:901
 msgid "You are not allowed to edit job labels"
 msgstr "Je hebt niet de rechten om vacature-labels te wijzigen"
 
@@ -2639,7 +2639,7 @@ msgid "The e-mail address must be unique across companies."
 msgstr "Het e-mailadres moet uniek zijn onder alle bedrijven."
 
 #: module/Company/src/Form/Company.php:392 module/Company/src/Form/Job.php:339
-#: module/User/src/Form/CompanyUserLogin.php:130
+#: module/User/src/Form/CompanyUserLogin.php:120
 #: module/User/src/Form/CompanyUserReset.php:71
 msgid "E-mail address format is not valid"
 msgstr "E-mailadres formaat is niet geldig"
@@ -2740,15 +2740,15 @@ msgstr "Je hebt niet de rechten om de lijst met bedrijven te zien"
 msgid "You are not allowed to access the admin interface"
 msgstr "Je hebt niet de rechten om de admin interface te zien"
 
-#: module/Company/src/Service/Company.php:962
+#: module/Company/src/Service/Company.php:961
 msgid "You are not allowed to edit categories"
 msgstr "Je hebt niet de rechten om alle categorieën te wijzigen"
 
-#: module/Company/src/Service/Company.php:979
+#: module/Company/src/Service/Company.php:978
 msgid "You are not allowed to edit labels"
 msgstr "Je hebt niet de rechten om labels te wijzigen"
 
-#: module/Company/src/Service/Company.php:1032
+#: module/Company/src/Service/Company.php:1031
 msgid "You are not allowed to create a company"
 msgstr "Je hebt niet de rechten om een bedrijf toe te voegen"
 
@@ -3375,16 +3375,16 @@ msgstr "Er zijn momenteel geen vacature-labels..."
 msgid "Meeting minutes uploaded"
 msgstr "Notulen geupload"
 
-#: module/Decision/src/Controller/DecisionController.php:103
+#: module/Decision/src/Controller/DecisionController.php:102
 msgid "You are not allowed to search decisions."
 msgstr "Het is niet toegestaan om besluiten te doorzoeken."
 
-#: module/Decision/src/Controller/DecisionController.php:181
+#: module/Decision/src/Controller/DecisionController.php:180
 #: module/Decision/src/Service/Decision.php:569
 msgid "You are not allowed to revoke authorizations."
 msgstr "Je hebt niet de rechten om machtigingen in te trekken."
 
-#: module/Decision/src/Controller/DecisionController.php:209
+#: module/Decision/src/Controller/DecisionController.php:208
 msgid "You are not allowed to browse files."
 msgstr "Je hebt niet de rechten om door bestanden te bladeren."
 
@@ -4264,18 +4264,18 @@ msgstr "Rond uploaden af"
 msgid "Course does not exist"
 msgstr "Vak bestaat niet"
 
-#: module/Education/src/Form/Course.php:33
+#: module/Education/src/Form/Course.php:32
 #: module/Education/src/Form/Fieldset/Exam.php:47
 #: module/Education/src/Form/Fieldset/Summary.php:49
 #: module/Education/view/education/education/index.phtml:65
 msgid "Course code"
 msgstr "Vakcode"
 
-#: module/Education/src/Form/Course.php:53
+#: module/Education/src/Form/Course.php:52
 msgid "Add course"
 msgstr "Vak toevoegen"
 
-#: module/Education/src/Form/Course.php:84
+#: module/Education/src/Form/Course.php:83
 msgid "There already exists a course with this code"
 msgstr "Er bestaat al een vak met deze code"
 
@@ -5517,6 +5517,38 @@ msgstr "Huidige foto van de week"
 msgid "Old photos of the week"
 msgstr "Oude foto's van de week"
 
+#: module/User/src/Authentication/Adapter/CompanyUserAdapter.php:43
+#: module/User/src/Authentication/Adapter/UserAdapter.php:43
+msgid "This user could not be found."
+msgstr "Deze gebruiker kon niet gevonden worden."
+
+#: module/User/src/Authentication/Adapter/CompanyUserAdapter.php:53
+#: module/User/src/Authentication/Adapter/UserAdapter.php:67
+msgid "Too many login attempts, try again later."
+msgstr "Te veel login pogingen, probeer het later nog eens."
+
+#: module/User/src/Authentication/Adapter/CompanyUserAdapter.php:65
+#: module/User/src/Authentication/Adapter/UserAdapter.php:79
+msgid "Wrong password provided."
+msgstr "Verkeerd wachtwoord ingevoerd."
+
+#: module/User/src/Authentication/Adapter/CompanyUserAdapter.php:77
+#: module/User/src/Authentication/Adapter/UserAdapter.php:91
+msgid ""
+"Your password was found in a public data breach and is therefore considered "
+"insecure. Please request a password reset before continuing. We recommend "
+"using a password generated by a good password manager, such as Bitwarden or "
+"1Password."
+msgstr ""
+"Je wachtwoord is gevonden in een openbaar datalek en wordt daarom als "
+"onveilig beschouwd. Vraag een nieuw wachtwoord aan voordat je verder gaat. "
+"Wij raden aan een wachtwoord te gebruiken dat is gegenereerd door een goede "
+"wachtwoordmanager, zoals Bitwarden of 1Password."
+
+#: module/User/src/Authentication/Adapter/UserAdapter.php:57
+msgid "You cannot sign in to this account at this moment."
+msgstr "Je kunt momenteel niet inloggen op dit account."
+
 #: module/User/src/Authorization/GenericAclService.php:98
 #: module/User/src/Authorization/GenericAclService.php:122
 msgid ""
@@ -5528,7 +5560,7 @@ msgstr ""
 "ingelogd, doe dat dan eerst voordat je verder gaat. Als je al bent ingelogd "
 "kan het zijn dat je voor deze actie moet inloggen met een ander account."
 
-#: module/User/src/Controller/UserController.php:162
+#: module/User/src/Controller/UserController.php:168
 msgid "You are not allowed to change passwords"
 msgstr "Je hebt niet de rechten om een wachtwoord te wijzigen"
 
@@ -5568,20 +5600,6 @@ msgstr "Wachtwoord"
 #: module/User/src/Form/CompanyUserLogin.php:56
 msgid "Log in as company"
 msgstr "Inloggen als bedrijf"
-
-#: module/User/src/Form/CompanyUserLogin.php:89
-msgid "This company could not be found."
-msgstr "Dit bedrijf kon niet worden gevonden."
-
-#: module/User/src/Form/CompanyUserLogin.php:98
-#: module/User/src/Form/UserLogin.php:117
-msgid "Wrong password provided."
-msgstr "Verkeerd wachtwoord ingevoerd."
-
-#: module/User/src/Form/CompanyUserLogin.php:107
-#: module/User/src/Form/UserLogin.php:126
-msgid "Too many login attempts, try again later."
-msgstr "Te veel login pogingen, probeer het later nog eens."
 
 #: module/User/src/Form/CompanyUserReset.php:44
 msgid "Request password reset"
@@ -5649,14 +5667,6 @@ msgstr "Inloggen als lid"
 msgid "Remember me"
 msgstr "Onthoud mij"
 
-#: module/User/src/Form/UserLogin.php:99
-msgid "This user could not be found."
-msgstr "Deze gebruiker kon niet gevonden worden."
-
-#: module/User/src/Form/UserLogin.php:108
-msgid "You cannot sign in to this account at this moment."
-msgstr "Je kunt momenteel niet inloggen op dit account."
-
 #: module/User/src/Model/Enums/JWTClaims.php:38
 msgid "Family name"
 msgstr "Achternaam"
@@ -5686,27 +5696,22 @@ msgstr "Je hebt niet de rechten om API tokens te verwijderen"
 msgid "You are not allowed to add API tokens"
 msgstr "Je hebt niet de rechten om API tokens toe te voegen"
 
-#: module/User/src/Service/Email.php:51
-msgid "Account activation code for the GEWIS Website"
-msgstr "Activatiecode voor je account op de GEWIS Website"
+#: module/User/src/Service/User.php:105 module/User/src/Service/User.php:327
+msgid ""
+"You cannot use this password, it was found in a public data breach and is "
+"therefore considered insecure. We recommend using a password generated by a "
+"good password manager, such as Bitwarden or 1Password."
+msgstr ""
+"Je kunt dit wachtwoord niet gebruiken, het is gevonden in een openbaar "
+"datalek en wordt daarom als onveilig beschouwd. Wij raden aan een wachtwoord "
+"te gebruiken dat is gegenereerd door een goede wachtwoordmanager, zoals "
+"Bitwarden of 1Password."
 
-#: module/User/src/Service/Email.php:73
-msgid "Company account for the GEWIS website"
-msgstr "Bedrijfsaccount voor de GEWIS website"
-
-#: module/User/src/Service/Email.php:102
-msgid "Password reset code for the GEWIS Website"
-msgstr "Wachtwoord reset code voor de GEWIS Website"
-
-#: module/User/src/Service/Email.php:124
-msgid "Password reset code for the GEWIS website"
-msgstr "Wachtwoord reset code voor de GEWIS website"
-
-#: module/User/src/Service/User.php:270
+#: module/User/src/Service/User.php:316
 msgid "Password incorrect"
 msgstr "Wachtwoord incorrect"
 
-#: module/User/src/Service/User.php:416
+#: module/User/src/Service/User.php:475
 msgid "You are not allowed to change your password"
 msgstr "Je hebt niet de rechten om een wachtwoord te wijzigen"
 
