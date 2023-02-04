@@ -199,7 +199,7 @@ class Module
                         sprintf(
                             'Expected service of type %s, got service of type %s',
                             AclService::class,
-                            get_class($aclService)
+                            $aclService::class
                         )
                     );
                 },

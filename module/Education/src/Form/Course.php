@@ -4,7 +4,6 @@ namespace Education\Form;
 
 use Education\Mapper\Course as CourseMapper;
 use Laminas\Filter\StringToUpper;
-use Laminas\Validator\Callback;
 use Laminas\Form\Element\{
     Submit,
     Text,
@@ -13,7 +12,7 @@ use Laminas\Form\Form;
 use Laminas\I18n\Validator\Alnum;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Validator\StringLength;
+use Laminas\Validator\{Callback, StringLength};
 
 class Course extends Form implements InputFilterProviderInterface
 {

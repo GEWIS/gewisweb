@@ -64,7 +64,7 @@ class AutomaticControllerTest extends BaseControllerTest
                 throw new RuntimeException(
                     sprintf(
                         'Unexpected type in parsePriorityList: %s',
-                        get_class($element),
+                        $element::class,
                     )
                 );
             }
@@ -86,7 +86,7 @@ class AutomaticControllerTest extends BaseControllerTest
             throw new RuntimeException(
                 sprintf(
                     'Unexpected type in parsePart: %s',
-                    get_class($routes),
+                    $routes::class,
                 )
             );
         }
@@ -137,7 +137,7 @@ class AutomaticControllerTest extends BaseControllerTest
             throw new RuntimeException(
                 sprintf(
                     'Unexpected type in parseUrl: %s',
-                    get_class($url),
+                    $url::class,
                 )
             );
         }
