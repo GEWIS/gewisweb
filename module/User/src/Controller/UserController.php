@@ -2,6 +2,8 @@
 
 namespace User\Controller;
 
+use DateInterval;
+use DateTime;
 use Laminas\Http\{
     Request,
     Response,
@@ -245,6 +247,13 @@ class UserController extends AbstractActionController
         }
 
         if (null === $newUser) {
+            return $this->redirect()->toRoute('home');
+        }
+
+        // Links are only valid for 24 hours.
+        if (((new DateTime('now'))->sub(new DateInterval('P1D'))) >= $newUser->getTime()) {
+            $this->userService->removeActivation($newUser);
+
             return $this->redirect()->toRoute('home');
         }
 

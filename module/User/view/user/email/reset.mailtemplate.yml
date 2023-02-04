@@ -25,7 +25,7 @@ messageblocks:
 
       <p>Dear {{MEMBER_FULL_NAME}},</p>
 
-      <p>We have received a request to reset your password. You can reset it using the following link:<br><a href='{{RESET_URL}}'>{{RESET_URL}}</a></p>
+      <p>We have received a request to reset your password. You can reset it using the following link (valid for 24 hours):<br><a href='{{RESET_URL}}'>{{RESET_URL}}</a></p>
 
       <p>If you have previously requested to reset your password, only the link contained in this e-mail is valid.</p>
 

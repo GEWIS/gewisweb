@@ -119,6 +119,20 @@ class User
     }
 
     /**
+     * Remove an activation request.
+     */
+    public function removeActivation(NewCompanyUserModel|NewUserModel $newUser): void
+    {
+        if ($newUser instanceof NewCompanyUserModel) {
+            $adapter = $this->companyUserAuthService->getAdapter();
+        } else {
+            $adapter = $this->userAuthService->getAdapter();
+        }
+
+        $adapter->getMapper()->remove($newUser);
+    }
+
+    /**
      * Register a user.
      *
      * Will also send an email to the user.

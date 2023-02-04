@@ -26,7 +26,7 @@ messageblocks:
       <p>Dear {{MEMBER_FULL_NAME}},</p>
 
       <p>Your account for the GEWIS website has been created, however, before you are able to use it you need to activate your account.</p>
-      <p>You can activate your account by creating password using the following link:<br><a href='{{ACTIVATION_URL}}'>{{ACTIVATION_URL}}</a></p>
+      <p>You can activate your account by creating password using the following link (valid for 24 hours):<br><a href='{{ACTIVATION_URL}}'>{{ACTIVATION_URL}}</a></p>
 
       <p>After activation, you can log in using the following details:<br><strong>E-mail address:</strong> {{MEMBER_EMAIL}}<br><strong>Membership number:</strong> {{MEMBER_LIDNR}}</p>
 
