@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-04 18:53+0100\n"
-"PO-Revision-Date: 2023-02-04 18:56+0100\n"
+"POT-Creation-Date: 2023-02-04 21:48+0100\n"
+"PO-Revision-Date: 2023-02-04 21:49+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: nl\n"
@@ -5564,7 +5564,7 @@ msgstr ""
 msgid "You are not allowed to change passwords"
 msgstr "Je hebt niet de rechten om een wachtwoord te wijzigen"
 
-#: module/User/src/Form/Activate.php:31 module/User/src/Form/UserLogin.php:43
+#: module/User/src/Form/Activate.php:31 module/User/src/Form/UserLogin.php:45
 msgid "Your password"
 msgstr "Wachtwoord"
 
@@ -5655,15 +5655,15 @@ msgstr "Dit lid heeft al een account."
 msgid "Reset password"
 msgstr "Reset wachtwoord"
 
-#: module/User/src/Form/UserLogin.php:33
+#: module/User/src/Form/UserLogin.php:35
 msgid "Membership number or email address"
 msgstr "Lidnummer of email adres"
 
-#: module/User/src/Form/UserLogin.php:53
+#: module/User/src/Form/UserLogin.php:55
 msgid "Log in as member"
 msgstr "Inloggen als lid"
 
-#: module/User/src/Form/UserLogin.php:63
+#: module/User/src/Form/UserLogin.php:65
 msgid "Remember me"
 msgstr "Onthoud mij"
 
@@ -5716,13 +5716,28 @@ msgid "You are not allowed to change your password"
 msgstr "Je hebt niet de rechten om een wachtwoord te wijzigen"
 
 #: module/User/view/partial/login/company.phtml:64
-#: module/User/view/partial/login/member.phtml:74
+#: module/User/view/partial/login/member.phtml:79
 #, php-format
 msgid "If you forgot your password, go to the %sPassword reset page%s"
 msgstr ""
 "Als je je wachtwoord bent vergeten, ga naar de %sWachtwoord reset pagina %s"
 
-#: module/User/view/partial/login/member.phtml:70
+#: module/User/view/partial/login/member.phtml:14
+msgid ""
+"The requirements on passwords changed on February 20, 2023. Your password "
+"must be at least 12 characters and should not have appeared in a public data "
+"breach. If this is the case, you must reset your password before you are "
+"able to log in. We recommend using a randomly generated password from a good "
+"password manager, such as Bitwarden or 1Password."
+msgstr ""
+"De wachtwoordeisen zijn veranderd op 20 februari 2023. Je wachtwoord moet "
+"uit minstens 12 tekens bestaan en mag niet voorkomen in een openbaar "
+"datalek. Als dit wel het geval is, moet je jouw wachtwoord opnieuw instellen "
+"voordat je kunt inloggen. Wij raden aan een willekeurig gegenereerd "
+"wachtwoord te gebruiken van een goede wachtwoordmanager, zoals Bitwarden of "
+"1Password."
+
+#: module/User/view/partial/login/member.phtml:75
 #, php-format
 msgid "If you don't have an account yet, go to the %sRegistration page%s"
 msgstr "Als je nog geen account hebt, ga naar de %sRegistratie pagina%s"

@@ -261,6 +261,7 @@ class Module
                 'user_form_userLogin' => function (ContainerInterface $container) {
                     return new UserLoginForm(
                         $container->get(MvcTranslator::class),
+                        $container->get('config')['passwords']['min_length_user'],
                     );
                 },
                 'user_form_companyUserReset' => function (ContainerInterface $container) {
