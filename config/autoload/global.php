@@ -53,9 +53,9 @@ return [
     ],
 
     'login_rate_limits' => [
-        'user' => 10,
-        'company' => 10,
-        'ip' => 100,
+        'user' => 5,
+        'company' => 5,
+        'ip' => 50,
         'lockout_time' => 10,
     ],
     'storage' => [
