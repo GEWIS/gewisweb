@@ -34,7 +34,7 @@ use Laminas\View\Model\ViewModel;
 use User\Permissions\NotAllowedException;
 
 /**
- * Controller that gives some additional details for activities, such as a list of email adresses
+ * Controller that gives some additional details for activities, such as a list of email addresses
  * or an export function specially tailored for the organizer.
  *
  * @method FlashMessenger flashMessenger()
