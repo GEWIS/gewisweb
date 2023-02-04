@@ -129,6 +129,7 @@ class Module
                     $companyUserAuthService = $container->get('user_auth_companyUser_service');
                     $emailService = $container->get('user_service_email');
                     $pwnedPasswordsService = $container->get(PwnedPasswordsService::class);
+                    $companyUserMapper = $container->get('user_mapper_companyUser');
                     $userMapper = $container->get('user_mapper_user');
                     $newUserMapper = $container->get('user_mapper_newUser');
                     $newCompanyUserMapper = $container->get('user_mapper_newCompanyUser');
@@ -152,6 +153,7 @@ class Module
                         $companyUserAuthService,
                         $emailService,
                         $pwnedPasswordsService,
+                        $companyUserMapper,
                         $userMapper,
                         $newUserMapper,
                         $newCompanyUserMapper,

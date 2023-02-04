@@ -25,6 +25,7 @@ use User\Form\{
     Reset as ResetForm,
 };
 use User\Mapper\{
+    CompanyUser as CompanyUserMapper,
     NewCompanyUser as NewCompanyUserMapper,
     NewUser as NewUserMapper,
     User as UserMapper,
@@ -54,6 +55,7 @@ class User
         private readonly AuthenticationService $companyUserAuthService,
         private readonly EmailService $emailService,
         private readonly PwnedPasswordsService $pwnedPasswordsService,
+        private readonly CompanyUserMapper $companyUserMapper,
         private readonly UserMapper $userMapper,
         private readonly NewUserMapper $newUserMapper,
         private readonly NewCompanyUserMapper $newCompanyUserMapper,
@@ -208,36 +210,36 @@ class User
      */
     public function resetMember(array $data): void
     {
-        $user = $this->userMapper->find($data['lidnr']);
+        $lidnr = (int) $data['lidnr'];
+        $user = $this->userMapper->find($lidnr);
 
-        if (null !== $user) {
-            $member = $user->getMember();
-
-            if (strtolower($member->getEmail()) === strtolower($data['email'])) {
-                $newUser = $this->newUserMapper->getByLidnr($data['lidnr']);
-
-                if (null !== $newUser) {
-                    // Ensure that we only send the password reset e-mail every 20 minutes at most.
-                    $time = $newUser->getTime();
-                    $requiredInterval = (new DateTime())->sub(new DateInterval('PT1200S'));
-
-                    if ($time > $requiredInterval) {
-                        return;
-                    }
-
-                    $this->newUserMapper->deleteByMember($member);
-                }
-
-                // create new activation
-                $newUser = new NewUserModel($member);
-                $newUser->setCode($this->generateCode());
-                $newUser->setTime(new DateTime());
-
-                $this->newUserMapper->persist($newUser);
-
-                $this->emailService->sendPasswordLostMail($newUser, $member);
-            }
+        if (null === $user) {
+            return;
         }
+
+        $member = $user->getMember();
+        $newUser = $this->newUserMapper->getByLidnr($lidnr);
+
+        if (null !== $newUser) {
+            // Ensure that we only send the password reset e-mail every 20 minutes at most.
+            $time = $newUser->getTime();
+            $requiredInterval = (new DateTime())->sub(new DateInterval('PT1200S'));
+
+            if ($time > $requiredInterval) {
+                return;
+            }
+
+            $this->newUserMapper->deleteByMember($member);
+        }
+
+        // create new activation
+        $newUser = new NewUserModel($member);
+        $newUser->setCode($this->generateCode());
+        $newUser->setTime(new DateTime());
+
+        $this->newUserMapper->persist($newUser);
+
+        $this->emailService->sendPasswordLostMail($newUser, $member);
     }
 
     /**
@@ -245,13 +247,26 @@ class User
      */
     public function resetCompany(array $data): void
     {
-        $company = $this->companyMapper->findCompanyByRepresentativeEmail($data['email']);
+        $companyUser = $this->companyUserMapper->findByLogin($data['email']);
 
-        if (null === $company) {
+        if (null === $companyUser) {
             return;
         }
 
-        $this->newCompanyUserMapper->deleteByCompany($company);
+        $company = $companyUser->getCompany();
+        $newCompanyUser = $this->newCompanyUserMapper->find($companyUser->getId());
+
+        if (null !== $newCompanyUser) {
+            // Ensure that we only send the password reset e-mail every 20 minutes at most.
+            $time = $newCompanyUser->getTime();
+            $requiredInterval = (new DateTime())->sub(new DateInterval('PT1200S'));
+
+            if ($time > $requiredInterval) {
+                return;
+            }
+
+            $this->newCompanyUserMapper->deleteByCompany($company);
+        }
 
         $newCompanyUser = new NewCompanyUserModel($company);
         $newCompanyUser->setCode($this->generateCode());
