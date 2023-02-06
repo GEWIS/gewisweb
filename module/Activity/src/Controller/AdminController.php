@@ -214,6 +214,15 @@ class AdminController extends AbstractActionController
             $activity = $this->activityQueryService->getActivity($activityId);
         }
 
+        if (
+            $activity->getEndTime() <= new DateTime('now')
+            && !$this->aclService->isAllowed('viewParticipantDetails', 'activity')
+        ) {
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to view the participants of this activity')
+            );
+        }
+
         $result = [
             'activity' => $activity,
         ];
