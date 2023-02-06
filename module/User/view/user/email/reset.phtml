@@ -175,7 +175,7 @@ Request&nbsp;to&nbsp;reset&nbsp;password
                                                             <div style="font-family: sans-serif">
                                                                 <div style="font-size: 18px; color: #333333; line-height: 1.4; font-family: Roboto, Tahoma, Verdana, Segoe, sans-serif;">
                                                                     <p style="margin: 0; font-size: 18px;">
-                                                                    <p>Dear <?= $member->getFullName() ?>,</p>
+                                                                    <p>Dear <?= $this->escapeHtml($member->getFullName()) ?>,</p>
                                                                     <p>We have received a request to reset your password. You can reset it using the following link (valid for 24 hours):<br><a href="<?= $this->serverUrl($this->url('user/activate', ['user_type' => 'member', 'code' => $user->getCode()])) ?>" style="color: #C40000; text-decoration: none;" target="_blank" rel="noopener nofollow"><?= $this->serverUrl($this->url('user/activate', ['user_type' => 'member', 'code' => $user->getCode()])) ?></a></p>
                                                                     <p>If you have previously requested to reset your password, only the link contained in this e-mail is valid.</p>
                                                                     <p>If you have not requested a password reset, do not worry! Your account is safe and secure. You can ignore this e-mail and log in to the GEWIS website using your old password.</p>

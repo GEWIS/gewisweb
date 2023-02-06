@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:v="urn:schemas-microsoft-com:vml">
 <head>
-    <title>GMM authorization from <?= $grantor->getFullName() ?></title>
+    <title>GMM authorization from <?= $this->escapeHtml($grantor->getFullName()) ?></title>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <!--[if mso]>
@@ -92,7 +92,7 @@
     </style>
 </head>
 <body style="background-color: #DDDDDD; margin: 0; padding: 0; text-align: center;">
-GMM&nbsp;authorization&nbsp;from&nbsp;<?= $grantor->getFullName() ?>
+GMM&nbsp;authorization&nbsp;from&nbsp;<?= $this->escapeHtml($grantor->getFullName()) ?>
 <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #DDDDDD;" width="100%">
     <tbody>
     <tr>
@@ -175,8 +175,8 @@ GMM&nbsp;authorization&nbsp;from&nbsp;<?= $grantor->getFullName() ?>
                                                             <div style="font-family: sans-serif">
                                                                 <div style="font-size: 18px; color: #333333; line-height: 1.4; font-family: Roboto, Tahoma, Verdana, Segoe, sans-serif;">
                                                                     <p style="margin: 0; font-size: 18px;">
-                                                                    <p>Dear <?= $grantee->getFullName() ?>,</p>
-                                                                    <p>You have been granted an authorization for the <strong><?= $meetingNumber ?> GMM</strong> (<?= $meetingDate ?>) by <i><?= $grantor->getFullName() ?></i>.</p>
+                                                                    <p>Dear <?= $this->escapeHtml($grantee->getFullName()) ?>,</p>
+                                                                    <p>You have been granted an authorization for the <strong><?= $meetingNumber ?> GMM</strong> (<?= $meetingDate ?>) by <i><?= $this->escapeHtml($grantor->getFullName()) ?></i>.</p>
                                                                     With kind regards,<br> The ApplicatieBeheerCommissie
                                                                     </p>
                                                                 </div>
