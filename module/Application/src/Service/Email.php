@@ -12,7 +12,8 @@ use Laminas\Mail\Transport\TransportInterface;
 use Laminas\Mime\{
     Message as MimeMessage,
     Mime,
-    Part as MimePart};
+    Part as MimePart,
+};
 use Laminas\View\Model\ViewModel;
 use Laminas\View\Renderer\PhpRenderer;
 
