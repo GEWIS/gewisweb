@@ -1,0 +1,31 @@
+# This is a GEWIS mailings template
+# Account registration confirmation
+---
+# All mailings require some settings. These can be set here. Don't forget to set the title ("Algemene mededeling; tekst zelf invoeren")
+version: 1.1
+settings:
+    title: "GMM authorization for {{GRANTEE_FULL_NAME}}"
+    email: "web@gewis.nl"
+    lang: en-UK
+    follow: false
+
+# A mailing consists of a series of messageblocks, each with their own type
+# The available types are "header", "topblock", "activities", "activityfooter", "extramessage" and "tinyfooter"
+messageblocks:
+
+    # Each mailing must have a header to make the template shine! It contains the title and the date.
+    - type: "header"
+      title: "GMM Authorization"
+      date: 2023-02-06 # Note that this date needs to be updated
+
+    # This is the first block which is shown on top of the message. Recommended for most messages
+    - type: topblock
+      title: "Granted authorization for {{MEETING_NUMBER}} GMM"
+      contentHTML: "</p>
+
+      <p>Dear {{GRANTOR_FULL_NAME}},</p>
+
+      <p>You have granted an authorization for the <strong>{{MEETING_NUMBER}} GMM</strong> ({{MEETING_DATE}}) to <i>{{GRANTEE_FULL_NAME}}</i>.</p>
+
+      With kind regards,<br/>
+      The ApplicatieBeheerCommissie"

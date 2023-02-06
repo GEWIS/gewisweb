@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:v="urn:schemas-microsoft-com:vml">
 <head>
-    <title>Request to reset password</title>
+    <title><?= $this->escapeHtml($organ->getName()) ?> updated their profile</title>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <!--[if mso]>
@@ -92,7 +92,7 @@
     </style>
 </head>
 <body style="background-color: #DDDDDD; margin: 0; padding: 0; text-align: center;">
-Request&nbsp;to&nbsp;reset&nbsp;password
+<?= $this->escapeHtml($organ->getName()) ?>&nbsp;updated&nbsp;their&nbsp;profile
 <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #DDDDDD;" width="100%">
     <tbody>
     <tr>
@@ -115,7 +115,7 @@ Request&nbsp;to&nbsp;reset&nbsp;password
                                             </td>
                                             <td style="padding-bottom:25px;width:50%;padding-right:0px;padding-left:0px;">
                                                 <div align="left" style="font-size: 26px; font-family: 'Roboto Slab', Arial, 'Helvetica Neue', Helvetica, sans-serif; color: #ffffff; line-height: 1.5em;">
-                                                    Reset Your Password
+                                                    Organ Profile Update
                                                 </div>
                                             </td>
                                             <td style="padding-bottom:25px;width:50%;padding-right:0px;padding-left:0px;">
@@ -145,7 +145,7 @@ Request&nbsp;to&nbsp;reset&nbsp;password
                                                 <table border="0" cellpadding="0" cellspacing="0" class="heading_block" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
                                                     <tr>
                                                         <td style="padding-bottom:10px;text-align:center;width:100%; color: black; font-family: 'Roboto Slab', Arial, 'Helvetica Neue', Helvetica, sans-serif; font-size: 28px; font-weight: bold; letter-spacing: normal; line-height: 120%; text-align: center; ">
-                                                            Reset your password for the GEWIS Career Platform
+                                                            Update proposal for organ profile
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -175,10 +175,9 @@ Request&nbsp;to&nbsp;reset&nbsp;password
                                                             <div style="font-family: sans-serif">
                                                                 <div style="font-size: 18px; color: #333333; line-height: 1.4; font-family: Roboto, Tahoma, Verdana, Segoe, sans-serif;">
                                                                     <p style="margin: 0; font-size: 18px;">
-                                                                    <p>Dear <?= $this->escapeHtml($company->getRepresentativeName()) ?>,</p>
-                                                                    <p>We have received a request to reset for the company account of <i><?= $this->escapeHtml($company->getName()) ?></i> that you manage. You can reset it using the following link (valid for 24 hours):<br><a href="<?= $this->serverUrl($this->url('user/activate', ['user_type' => 'company', 'code' => $user->getCode()])) ?>" target="_blank" style="color: #C40000; text-decoration: none;" rel="noopener nofollow"><?= $this->serverUrl($this->url('user/activate', ['user_type' => 'company', 'code' => $user->getCode()])) ?></a></p>
-                                                                    <p>If you have previously requested to reset your password, only the link contained in this e-mail is valid.</p>
-                                                                    <p>If you have not requested a password reset, do not worry! Your account is safe and secure. You can ignore this e-mail and log in to the GEWIS website using your old password.</p>
+                                                                    <p>Dear board member,</p>
+                                                                    <p>The organ <i>"<?= $this->escapeHtml($organ->getName()) ?>"</i> has proposed updates to their organ profile. It requires your review before it will appear on the website.</p>
+                                                                    <p><a href="<?= $this->serverUrl($this->url('admin_organ')) ?>" style="color: #C40000; text-decoration: none;" target="_blank" rel="noopener nofollow">Click here</a> to view this update proposal.</p>
                                                                     With kind regards,<br> The ApplicatieBeheerCommissie
                                                                     </p>
                                                                 </div>

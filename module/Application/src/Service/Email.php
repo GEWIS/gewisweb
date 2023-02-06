@@ -11,6 +11,7 @@ use Laminas\Mail\Message;
 use Laminas\Mail\Transport\TransportInterface;
 use Laminas\Mime\{
     Message as MimeMessage,
+    Mime,
     Part as MimePart,
 };
 use Laminas\View\Model\ViewModel;
@@ -144,7 +145,7 @@ class Email
         $body = $this->render($view, $data);
 
         $html = new MimePart($body);
-        $html->type = 'text/html';
+        $html->setType(Mime::TYPE_HTML);
 
         $mimeMessage = new MimeMessage();
         $mimeMessage->setParts([$html]);
