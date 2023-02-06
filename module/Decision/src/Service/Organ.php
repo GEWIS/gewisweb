@@ -234,9 +234,9 @@ class Organ
 
         $this->emailService->sendEmail(
             'organ_update',
-            'email/organUpdate',
-            'Een orgaan heeft een update doorgevoerd | An organ has updated her page',
-            ['organInfo' => $organInformation]
+            'email/organ-update',
+            'Organ Profile Update',
+            ['organ' => $organInformation->getOrgan()],
         );
 
         return true;
