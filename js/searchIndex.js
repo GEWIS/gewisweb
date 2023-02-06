@@ -16176,6 +16176,16 @@ Search.appendIndex(
             "summary": "Set\u0020the\u0020password\u0020hash.",
             "url": "classes/User-Model-CompanyUser.html#method_setPassword"
         },                {
+            "fqsen": "\\User\\Model\\CompanyUser\u003A\u003AgetPasswordChangedOn\u0028\u0029",
+            "name": "getPasswordChangedOn",
+            "summary": "",
+            "url": "classes/User-Model-CompanyUser.html#method_getPasswordChangedOn"
+        },                {
+            "fqsen": "\\User\\Model\\CompanyUser\u003A\u003AsetPasswordChangedOn\u0028\u0029",
+            "name": "setPasswordChangedOn",
+            "summary": "",
+            "url": "classes/User-Model-CompanyUser.html#method_setPasswordChangedOn"
+        },                {
             "fqsen": "\\User\\Model\\CompanyUser\u003A\u003AgetRoleId\u0028\u0029",
             "name": "getRoleId",
             "summary": "",
@@ -16200,6 +16210,11 @@ Search.appendIndex(
             "name": "company",
             "summary": "The\u0020company\u0020for\u0020this\u0020company\u0020user.",
             "url": "classes/User-Model-CompanyUser.html#property_company"
+        },                {
+            "fqsen": "\\User\\Model\\CompanyUser\u003A\u003A\u0024passwordChangedOn",
+            "name": "passwordChangedOn",
+            "summary": "Timestamp\u0020when\u0020the\u0020password\u0020was\u0020last\u0020changed.",
+            "url": "classes/User-Model-CompanyUser.html#property_passwordChangedOn"
         },                {
             "fqsen": "\\User\\Model\\Enums\\JWTClaims",
             "name": "JWTClaims",
@@ -16516,6 +16531,16 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/User-Model-User.html#method_setMember"
         },                {
+            "fqsen": "\\User\\Model\\User\u003A\u003AgetPasswordChangedOn\u0028\u0029",
+            "name": "getPasswordChangedOn",
+            "summary": "",
+            "url": "classes/User-Model-User.html#method_getPasswordChangedOn"
+        },                {
+            "fqsen": "\\User\\Model\\User\u003A\u003AsetPasswordChangedOn\u0028\u0029",
+            "name": "setPasswordChangedOn",
+            "summary": "",
+            "url": "classes/User-Model-User.html#method_setPasswordChangedOn"
+        },                {
             "fqsen": "\\User\\Model\\User\u003A\u003AtoArray\u0028\u0029",
             "name": "toArray",
             "summary": "",
@@ -16545,6 +16570,11 @@ Search.appendIndex(
             "name": "member",
             "summary": "The\u0020corresponding\u0020member\u0020for\u0020this\u0020user.",
             "url": "classes/User-Model-User.html#property_member"
+        },                {
+            "fqsen": "\\User\\Model\\User\u003A\u003A\u0024passwordChangedOn",
+            "name": "passwordChangedOn",
+            "summary": "Timestamp\u0020when\u0020the\u0020password\u0020was\u0020last\u0020changed.",
+            "url": "classes/User-Model-User.html#property_passwordChangedOn"
         },                {
             "fqsen": "\\User\\Model\\UserRole",
             "name": "UserRole",
