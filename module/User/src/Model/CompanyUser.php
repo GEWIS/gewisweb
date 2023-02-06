@@ -4,7 +4,9 @@ namespace User\Model;
 
 use Application\Model\IdentityInterface;
 use Company\Model\Company as CompanyModel;
-use Doctrine\ORM\Mapping\{Column,
+use DateTime;
+use Doctrine\ORM\Mapping\{
+    Column,
     Entity,
     Id,
     JoinColumn,
@@ -44,6 +46,15 @@ class CompanyUser implements IdentityInterface
         nullable: false,
     )]
     protected CompanyModel $company;
+
+    /**
+     * Timestamp when the password was last changed.
+     */
+    #[Column(
+        type: "datetime",
+        nullable: true,
+    )]
+    protected ?DateTime $passwordChangedOn = null;
 
     // phpcs:ignore Gewis.General.RequireConstructorPromotion -- not possible
     public function __construct(NewCompanyUserModel $newCompanyUser)
@@ -98,6 +109,22 @@ class CompanyUser implements IdentityInterface
     public function setPassword(string $password): void
     {
         $this->password = $password;
+    }
+
+    /**
+     * @return DateTime|null
+     */
+    public function getPasswordChangedOn(): ?DateTime
+    {
+        return $this->passwordChangedOn;
+    }
+
+    /**
+     * @param DateTime $passwordChangedOn
+     */
+    public function setPasswordChangedOn(DateTime $passwordChangedOn): void
+    {
+        $this->passwordChangedOn = $passwordChangedOn;
     }
 
     /**

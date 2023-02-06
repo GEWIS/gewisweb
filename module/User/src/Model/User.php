@@ -3,6 +3,7 @@
 namespace User\Model;
 
 use Application\Model\IdentityInterface;
+use DateTime;
 use Decision\Model\Enums\MembershipTypes;
 use Decision\Model\Member as MemberModel;
 use Doctrine\Common\Collections\{
@@ -60,6 +61,15 @@ class User implements IdentityInterface
         nullable: false,
     )]
     protected MemberModel $member;
+
+    /**
+     * Timestamp when the password was last changed.
+     */
+    #[Column(
+        type: "datetime",
+        nullable: true,
+    )]
+    protected ?DateTime $passwordChangedOn = null;
 
     // phpcs:ignore Gewis.General.RequireConstructorPromotion -- not possible
     public function __construct(NewUser $newUser = null)
@@ -215,6 +225,22 @@ class User implements IdentityInterface
     public function setMember(MemberModel $member): void
     {
         $this->member = $member;
+    }
+
+    /**
+     * @return DateTime|null
+     */
+    public function getPasswordChangedOn(): ?DateTime
+    {
+        return $this->passwordChangedOn;
+    }
+
+    /**
+     * @param DateTime $passwordChangedOn
+     */
+    public function setPasswordChangedOn(DateTime $passwordChangedOn): void
+    {
+        $this->passwordChangedOn = $passwordChangedOn;
     }
 
     /**
