@@ -200,6 +200,8 @@ class AutomaticControllerTest extends BaseControllerTest
         $params['course'] = '2IABS0';
         $params['document'] = 1;
 
+        $params['document_id'] = 42;
+
         return $params;
     }
 }
