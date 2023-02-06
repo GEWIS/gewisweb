@@ -38,6 +38,7 @@ use Exception;
 use InvalidArgumentException;
 use Laminas\Http\Response\Stream;
 use Laminas\Mvc\I18n\Translator;
+use NumberFormatter;
 use User\Permissions\NotAllowedException;
 
 /**
@@ -456,21 +457,33 @@ class Decision
         $authorization->setCreatedAt(new DateTime());
         $this->authorizationMapper->persist($authorization);
 
+        $nf = new NumberFormatter('en_GB', NumberFormatter::ORDINAL);
+
         // Send an email to the recipient
         $this->emailService->sendEmailAsUserToUser(
             $recipient,
-            'email/authorization_received',
-            'Machtiging ontvangen | Authorization received',
-            ['authorization' => $authorization],
+            'email/authorization-grantee',
+            'GMM Authorization Granted',
+            [
+                'grantor' => $authorizer,
+                'grantee' => $recipient,
+                'meetingNumber' => $nf->format($meeting->getNumber()),
+                'meetingDate' => $meeting->getDate()->format('l, F j, Y'),
+            ],
             $authorizer,
         );
 
         // Send a confirmation email to the authorizing member
         $this->emailService->sendEmailAsUserToUser(
             $authorizer,
-            'email/authorization_sent',
-            'Machtiging verstuurd | Authorization sent',
-            ['authorization' => $authorization],
+            'email/authorization-grantor',
+            'GMM Authorization Granted',
+            [
+                'grantor' => $authorizer,
+                'grantee' => $recipient,
+                'meetingNumber' => $nf->format($meeting->getNumber()),
+                'meetingDate' => $meeting->getDate()->format('l, F j, Y'),
+            ],
             $recipient,
         );
 
@@ -480,14 +493,19 @@ class Decision
     public function revokeAuthorization(AuthorizationModel $authorization): void
     {
         $authorization->setRevokedAt(new DateTime());
-
         $this->authorizationMapper->persist($authorization);
+
+        $nf = new NumberFormatter('en_GB', NumberFormatter::ORDINAL);
 
         $this->emailService->sendEmailAsUserToUser(
             $authorization->getRecipient(),
-            'email/authorization_revoked',
-            'Machtiging ingetrokken | Authorization revoked',
-            ['authorization' => $authorization],
+            'email/authorization-revoked',
+            'GMM Authorization Revoked',
+            [
+                'grantor' => $authorization->getAuthorizer(),
+                'grantee' => $authorization->getRecipient(),
+                'meetingNumber' => $nf->format($authorization->getMeetingNumber()),
+            ],
             $authorization->getAuthorizer(),
         );
     }
