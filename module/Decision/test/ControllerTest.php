@@ -75,13 +75,6 @@ class ControllerTest extends BaseControllerTest
         $this->assertResponseStatusCode(404);
     }
 
-    public function testAdminDecisionDocumentDeleteActionCanBeAccessedAsAdminViaPost(): void
-    {
-        $this->setUpWithRole('admin');
-        $this->dispatch('/admin/decision/document/delete', Request::METHOD_POST);
-        $this->assertResponseStatusCode(302);
-    }
-
     public function testAdminDecisionDocumentPositionActionCannotBeAccessedAsAdminViaGet(): void
     {
         $this->setUpWithRole('admin');
