@@ -170,21 +170,14 @@ return [
                         ],
                     ],
                     'delete_document' => [
-                        'type' => Literal::class,
+                        'type' => Segment::class,
                         'options' => [
-                            'route' => '/document/delete',
-                        ],
-                        'may_terminate' => false,
-                        'child_routes' => [
-                            'post' => [
-                                'type' => Method::class,
-                                'options' => [
-                                    'verb' => Request::METHOD_POST,
-                                    'route' => '/document/delete',
-                                    'defaults' => [
-                                        'action' => 'deleteDocument',
-                                    ],
-                                ],
+                            'route' => '/document/delete/:document_id',
+                            'constraints' => [
+                                'document_id' => '[0-9]+',
+                            ],
+                            'defaults' => [
+                                'action' => 'deleteDocument',
                             ],
                         ],
                     ],
@@ -203,6 +196,18 @@ return [
                                         'action' => 'changePositionDocument',
                                     ],
                                 ],
+                            ],
+                        ],
+                    ],
+                    'rename_document' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/document/rename/:document_id',
+                            'constraints' => [
+                                'document_id' => '[0-9]+',
+                            ],
+                            'defaults' => [
+                                'action' => 'renameDocument',
                             ],
                         ],
                     ],

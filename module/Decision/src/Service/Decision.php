@@ -282,11 +282,11 @@ class Decision
     }
 
     /**
-     * @param array $data
+     * @param MeetingDocumentModel $meetingDocument
      *
      * @throws ORMException
      */
-    public function deleteDocument(array $data): void
+    public function deleteDocument(MeetingDocumentModel $meetingDocument): void
     {
         if (!$this->aclService->isAllowed('delete_document', 'meeting')) {
             throw new NotAllowedException(
@@ -295,11 +295,23 @@ class Decision
         }
 
         // TODO: The actual file is never deleted.
-        if (isset($data['document'])) {
-            $document = $this->getMeetingDocument($data['document']);
-            $this->meetingMapper->remove($document);
-        }
+        $this->meetingMapper->remove($meetingDocument);
     }
+
+    /**
+     * @param MeetingDocumentModel $meetingDocument
+     * @param array $data
+     *
+     * @throws ORMException
+     */
+    public function renameDocument(
+        MeetingDocumentModel $meetingDocument,
+        array $data,
+    ): void {
+        $meetingDocument->setName($data['name']);
+        $this->meetingMapper->persist($meetingDocument);
+    }
+
 
     /**
      * Changes a document's position in the ordering.

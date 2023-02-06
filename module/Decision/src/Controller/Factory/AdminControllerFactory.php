@@ -22,6 +22,7 @@ class AdminControllerFactory implements FactoryInterface
         ?array $options = null,
     ): AdminController {
         return new AdminController(
+            $container->get('decision_service_acl'),
             $container->get(MvcTranslator::class),
             $container->get('decision_service_decision'),
         );
