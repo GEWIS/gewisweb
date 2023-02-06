@@ -110,6 +110,7 @@ class User
         }
 
         $user->setPassword($this->bcrypt->create($data['password']));
+        $user->setPasswordChangedOn(new DateTime('now'));
 
         // this will also save a user with a lost password
         $adapter->getMapper()->persist($user);
@@ -332,6 +333,7 @@ class User
         }
 
         $user->setPassword($this->bcrypt->create($data['password']));
+        $user->setPasswordChangedOn(new DateTime('now'));
         $adapter->getMapper()->persist($user);
 
         return true;
