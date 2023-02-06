@@ -284,7 +284,7 @@ class Poll
         $this->emailService->sendEmail(
             'poll_creation',
             'email/poll',
-            'Er is een nieuwe poll aangevraagd | A new poll has been requested',
+            'A new poll has been requested',
             ['poll' => $poll]
         );
 
