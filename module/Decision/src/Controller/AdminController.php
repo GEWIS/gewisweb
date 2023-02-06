@@ -3,7 +3,10 @@
 namespace Decision\Controller;
 
 use Decision\Model\Enums\MeetingTypes;
-use Decision\Service\Decision as DecisionService;
+use Decision\Service\{
+    AclService,
+    Decision as DecisionService,
+};
 use Laminas\Http\{
     PhpEnvironment\Response as EnvironmentResponse,
     Request,
@@ -14,6 +17,7 @@ use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
 use Laminas\View\Model\ViewModel;
+use User\Permissions\NotAllowedException;
 
 /**
  * @method FlashMessenger flashMessenger()
@@ -21,6 +25,7 @@ use Laminas\View\Model\ViewModel;
 class AdminController extends AbstractActionController
 {
     public function __construct(
+        private readonly AclService $aclService,
         private readonly Translator $translator,
         private readonly DecisionService $decisionService,
     ) {
@@ -115,17 +120,64 @@ class AdminController extends AbstractActionController
                 'meetings' => $meetings,
                 'meeting' => $meeting,
                 'number' => $number,
+                'type' => $type,
                 'success' => $success,
                 'reorderDocumentForm' => $this->decisionService->getReorderDocumentForm(),
             ]
         );
     }
 
-    public function deleteDocumentAction(): Response
+    public function renameDocumentAction(): Response|ViewModel
     {
+        if (!$this->aclService->isAllowed('rename_document', 'meeting')) {
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to rename meeting documents')
+            );
+        }
+
         /** @var Request $request */
         $request = $this->getRequest();
-        $this->decisionService->deleteDocument($request->getPost()->toArray());
+        if ($request->isPost()) {
+            $document = $this->decisionService->getMeetingDocument((int) $this->params()->fromRoute('document_id'));
+
+            if (null !== $document) {
+                $form = $this->decisionService->getDocumentForm();
+                $form->setData($request->getPost()->toArray());
+                $form->setValidationGroup(['name']);
+
+                if ($form->isValid()) {
+                    $this->decisionService->renameDocument(
+                        $document,
+                        $form->getData(),
+                    );
+                }
+
+                return $this->redirect()->toRoute('admin_decision/document');
+            }
+
+            return $this->notFoundAction();
+        }
+
+        return $this->notFoundAction();
+    }
+
+    public function deleteDocumentAction(): Response
+    {
+        if (!$this->aclService->isAllowed('delete_document', 'meeting')) {
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to delete meeting documents.')
+            );
+        }
+
+        /** @var Request $request */
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $document = $this->decisionService->getMeetingDocument((int) $this->params()->fromRoute('document_id'));
+
+            if (null !== $document) {
+                $this->decisionService->deleteDocument($document);
+            }
+        }
 
         return $this->redirect()->toRoute('admin_decision/document');
     }
