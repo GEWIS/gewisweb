@@ -6726,6 +6726,11 @@ Search.appendIndex(
             "summary": "Document\u0020upload\u0020action.",
             "url": "classes/Decision-Controller-AdminController.html#method_documentAction"
         },                {
+            "fqsen": "\\Decision\\Controller\\AdminController\u003A\u003ArenameDocumentAction\u0028\u0029",
+            "name": "renameDocumentAction",
+            "summary": "",
+            "url": "classes/Decision-Controller-AdminController.html#method_renameDocumentAction"
+        },                {
             "fqsen": "\\Decision\\Controller\\AdminController\u003A\u003AdeleteDocumentAction\u0028\u0029",
             "name": "deleteDocumentAction",
             "summary": "",
@@ -6740,6 +6745,11 @@ Search.appendIndex(
             "name": "authorizationsAction",
             "summary": "",
             "url": "classes/Decision-Controller-AdminController.html#method_authorizationsAction"
+        },                {
+            "fqsen": "\\Decision\\Controller\\AdminController\u003A\u003A\u0024aclService",
+            "name": "aclService",
+            "summary": "",
+            "url": "classes/Decision-Controller-AdminController.html#property_aclService"
         },                {
             "fqsen": "\\Decision\\Controller\\AdminController\u003A\u003A\u0024translator",
             "name": "translator",
@@ -9826,6 +9836,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Decision-Service-Decision.html#method_deleteDocument"
         },                {
+            "fqsen": "\\Decision\\Service\\Decision\u003A\u003ArenameDocument\u0028\u0029",
+            "name": "renameDocument",
+            "summary": "",
+            "url": "classes/Decision-Service-Decision.html#method_renameDocument"
+        },                {
             "fqsen": "\\Decision\\Service\\Decision\u003A\u003AchangePositionDocument\u0028\u0029",
             "name": "changePositionDocument",
             "summary": "Changes\u0020a\u0020document\u0027s\u0020position\u0020in\u0020the\u0020ordering.",
@@ -10255,11 +10270,6 @@ Search.appendIndex(
             "name": "testAdminDecisionDocumentDeleteActionCannotBeAccessedAsAdminViaGet",
             "summary": "",
             "url": "classes/DecisionTest-ControllerTest.html#method_testAdminDecisionDocumentDeleteActionCannotBeAccessedAsAdminViaGet"
-        },                {
-            "fqsen": "\\DecisionTest\\ControllerTest\u003A\u003AtestAdminDecisionDocumentDeleteActionCanBeAccessedAsAdminViaPost\u0028\u0029",
-            "name": "testAdminDecisionDocumentDeleteActionCanBeAccessedAsAdminViaPost",
-            "summary": "",
-            "url": "classes/DecisionTest-ControllerTest.html#method_testAdminDecisionDocumentDeleteActionCanBeAccessedAsAdminViaPost"
         },                {
             "fqsen": "\\DecisionTest\\ControllerTest\u003A\u003AtestAdminDecisionDocumentPositionActionCannotBeAccessedAsAdminViaGet\u0028\u0029",
             "name": "testAdminDecisionDocumentPositionActionCannotBeAccessedAsAdminViaGet",
