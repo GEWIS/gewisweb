@@ -528,14 +528,24 @@ class Activity
             foreach ($proposal['signupLists'] as $keyOuter => $signupList) {
                 if (isset($signupList['fields'])) {
                     foreach ($signupList['fields'] as $keyInner => $field) {
-                        if (array_key_exists('options', $field)) {
+                        // Make sure that if `options` is defined in the field it is not `null` (because passing `null`
+                        // to `explode()` is deprecated).
+                        if (
+                            array_key_exists('options', $field)
+                            && null !== $field['options']
+                        ) {
                             $proposal['signupLists'][$keyOuter]['fields'][$keyInner]['options'] = explode(
                                 ',',
                                 $field['options'],
                             );
                         }
 
-                        if (array_key_exists('optionsEn', $field)) {
+                        // Make sure that if `optionsEn` is defined in the field it is not `null` (because passing
+                        // `null` to `explode()` is deprecated).
+                        if (
+                            array_key_exists('optionsEn', $field)
+                            && null !== $field['optionsEn']
+                        ) {
                             $proposal['signupLists'][$keyOuter]['fields'][$keyInner]['optionsEn'] = explode(
                                 ',',
                                 $field['optionsEn'],
@@ -677,7 +687,7 @@ class Activity
         $new = $proposal->getNew();
 
         // If the old activity was already approved, keep it approved.
-        // Otherwise the status of the new Activity becomes
+        // Otherwise, the status of the new Activity becomes
         // ActivityModel::STATUS_TO_APPROVE.
         if (ActivityModel::STATUS_APPROVED !== $old->getStatus()) {
             $new->setStatus(ActivityModel::STATUS_TO_APPROVE);

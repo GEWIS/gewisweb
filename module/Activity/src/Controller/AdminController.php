@@ -34,7 +34,7 @@ use Laminas\View\Model\ViewModel;
 use User\Permissions\NotAllowedException;
 
 /**
- * Controller that gives some additional details for activities, such as a list of email adresses
+ * Controller that gives some additional details for activities, such as a list of email addresses
  * or an export function specially tailored for the organizer.
  *
  * @method FlashMessenger flashMessenger()
@@ -212,6 +212,15 @@ class AdminController extends AbstractActionController
             }
 
             $activity = $this->activityQueryService->getActivity($activityId);
+        }
+
+        if (
+            $activity->getEndTime() <= new DateTime('now')
+            && !$this->aclService->isAllowed('viewParticipantDetails', 'activity')
+        ) {
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to view the participants of this activity')
+            );
         }
 
         $result = [
