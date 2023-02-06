@@ -293,7 +293,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Activity\\Controller\\AdminController",
             "name": "AdminController",
-            "summary": "Controller\u0020that\u0020gives\u0020some\u0020additional\u0020details\u0020for\u0020activities,\u0020such\u0020as\u0020a\u0020list\u0020of\u0020email\u0020adresses\nor\u0020an\u0020export\u0020function\u0020specially\u0020tailored\u0020for\u0020the\u0020organizer.",
+            "summary": "Controller\u0020that\u0020gives\u0020some\u0020additional\u0020details\u0020for\u0020activities,\u0020such\u0020as\u0020a\u0020list\u0020of\u0020email\u0020addresses\nor\u0020an\u0020export\u0020function\u0020specially\u0020tailored\u0020for\u0020the\u0020organizer.",
             "url": "classes/Activity-Controller-AdminController.html"
         },                {
             "fqsen": "\\Activity\\Controller\\AdminController\u003A\u003A__construct\u0028\u0029",
