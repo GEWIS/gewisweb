@@ -204,7 +204,7 @@ class UserController extends AbstractActionController
         if ('company' === $userType) {
             $form = $this->userService->getCompanyUserResetForm();
         } else {
-            $form = $this->userService->getRegisterForm();
+            $form = $this->userService->getUserResetForm();
         }
 
         if ($request->isPost()) {

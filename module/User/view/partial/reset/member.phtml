@@ -22,6 +22,20 @@ $element->setAttribute('class', 'form-control');
     </div>
 </div>
 
+<?php
+$element = $form->get('email');
+$element->setAttribute('id', 'email');
+$element->setAttribute('class', 'form-control');
+?>
+<div class="form-group <?= $this->bootstrapElementError($element) ?>">
+    <label for="<?= $element->getAttribute('id') ?>"
+           class="control-label col-sm-5"><?= $element->getLabel() ?></label>
+    <div class="col-sm-7">
+        <?= $this->formEmail($element) ?>
+        <?= $this->formElementErrors($element, ['class' => 'help-block']); ?>
+    </div>
+</div>
+
 <div class="form-group">
     <div class="col-sm-offset-5 col-sm-7">
         <?= $this->formElement($form->get('security')) ?>

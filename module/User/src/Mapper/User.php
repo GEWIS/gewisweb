@@ -3,6 +3,8 @@
 namespace User\Mapper;
 
 use Application\Mapper\BaseMapper;
+use DateTime;
+use Decision\Model\Member as MemberModel;
 use User\Model\User as UserModel;
 
 class User extends BaseMapper
@@ -33,6 +35,30 @@ class User extends BaseMapper
         $res = $qb->getQuery()->getResult();
 
         return empty($res) ? null : $res[0];
+    }
+
+    /**
+     * Used for password resets, does not include members who are hidden, expired, and/or deleted. These requirements
+     * are also used during the login process.
+     */
+    public function findForReset(
+        string $email,
+        int $lidnr,
+    ): ?UserModel {
+        $qb = $this->getRepository()->createQueryBuilder('u');
+        $qb->innerJoin(MemberModel::class, 'm', 'WITH', 'u.lidnr = m.lidnr')
+            ->where('u.lidnr = :lidnr')
+            ->andWhere('LOWER(m.email) = :email')
+            ->andWhere('m.deleted = :false')
+            ->andWhere('m.hidden = :false')
+            ->andWhere('m.expiration > :now');
+
+        $qb->setParameter('lidnr', $lidnr)
+            ->setParameter('email', strtolower($email))
+            ->setParameter('false', false)
+            ->setParameter('now', new DateTime('now'));
+
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
     /**

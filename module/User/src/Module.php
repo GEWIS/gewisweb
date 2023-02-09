@@ -29,7 +29,7 @@ use User\Form\{
     CompanyUserReset as CompanyUserResetForm,
     Password as PasswordForm,
     Register as RegisterForm,
-    Reset as ResetForm,
+    UserReset as ResetForm,
     UserLogin as UserLoginForm,
 };
 use User\Mapper\{
@@ -142,7 +142,7 @@ class Module
                     $companyUserResetForm = $container->get('user_form_companyUserReset');
                     $passwordFormCompanyUser = $container->get('user_form_password_companyUser');
                     $passwordFormUser = $container->get('user_form_password_user');
-                    $resetForm = $container->get('user_form_reset');
+                    $userResetForm = $container->get('user_form_reset');
 
                     return new UserService(
                         $aclService,
@@ -165,7 +165,7 @@ class Module
                         $companyUserResetForm,
                         $passwordFormCompanyUser,
                         $passwordFormUser,
-                        $resetForm,
+                        $userResetForm,
                     );
                 },
                 'user_service_loginattempt' => function (ContainerInterface $container) {
