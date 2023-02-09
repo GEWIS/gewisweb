@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-04 21:48+0100\n"
-"PO-Revision-Date: 2023-02-04 21:49+0100\n"
+"POT-Creation-Date: 2023-02-09 18:56+0100\n"
+"PO-Revision-Date: 2023-02-09 19:00+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: nl\n"
@@ -30,8 +30,8 @@ msgstr "Maak nieuwe activiteit"
 
 #: module/Activity/src/Controller/ActivityController.php:266
 #: module/Activity/src/Controller/ActivityController.php:363
-#: module/Activity/src/Controller/AdminController.php:295
-#: module/Activity/src/Controller/AdminController.php:388
+#: module/Activity/src/Controller/AdminController.php:304
+#: module/Activity/src/Controller/AdminController.php:397
 msgid "Invalid form"
 msgstr "De ingevulde gegevens zijn niet geldig"
 
@@ -55,7 +55,7 @@ msgstr "Succesvol geregistreerd"
 
 #: module/Activity/src/Controller/ActivityController.php:305
 #: module/Activity/src/Controller/ActivityController.php:398
-#: module/Activity/src/Controller/AdminController.php:319
+#: module/Activity/src/Controller/AdminController.php:328
 msgid "Use the form to subscribe"
 msgstr "Gebruik het formulier om in te schrijven"
 
@@ -155,34 +155,35 @@ msgstr "Activiteit bijwerken"
 
 #: module/Activity/src/Controller/AdminController.php:198
 #: module/Activity/src/Controller/AdminController.php:210
+#: module/Activity/src/Controller/AdminController.php:222
 msgid "You are not allowed to view the participants of this activity"
 msgstr ""
 "Je hebt niet de rechten om de deelnemers van deze activiteit te bekijken"
 
-#: module/Activity/src/Controller/AdminController.php:235
-#: module/Activity/src/Controller/AdminController.php:379
+#: module/Activity/src/Controller/AdminController.php:244
+#: module/Activity/src/Controller/AdminController.php:388
 #: module/User/view/user/api-admin/index.phtml:23
 msgid "Remove"
 msgstr "Verwijder"
 
-#: module/Activity/src/Controller/AdminController.php:274
-#: module/Activity/src/Controller/AdminController.php:371
+#: module/Activity/src/Controller/AdminController.php:283
+#: module/Activity/src/Controller/AdminController.php:380
 msgid "You are not allowed to use this form"
 msgstr "Je hebt niet de rechten om dit formulier te gebruiken"
 
-#: module/Activity/src/Controller/AdminController.php:311
+#: module/Activity/src/Controller/AdminController.php:320
 msgid "Successfully subscribed external participant"
 msgstr "Succesvol geregistreerd"
 
-#: module/Activity/src/Controller/AdminController.php:398
+#: module/Activity/src/Controller/AdminController.php:407
 msgid "Successfully removed external participant"
 msgstr "Deelnemer succesvol verwijderd"
 
-#: module/Activity/src/Controller/AdminController.php:406
+#: module/Activity/src/Controller/AdminController.php:415
 msgid "Use the form to unsubscribe an external participant"
 msgstr "Gebruik het formulier om iemand uit te schrijven"
 
-#: module/Activity/src/Controller/AdminController.php:416
+#: module/Activity/src/Controller/AdminController.php:425
 msgid "You are not allowed to administer activities"
 msgstr "Je hebt niet de rechten om activiteiten te beheren"
 
@@ -407,7 +408,7 @@ msgstr "De activiteit heeft geen acceptabel aantal opties"
 #: module/Company/view/company/admin/index.phtml:109
 #: module/Company/view/company/admin/index.phtml:195
 #: module/Company/view/company/company-account/jobs.phtml:177
-#: module/Decision/view/decision/admin/document.phtml:47
+#: module/Decision/view/decision/admin/document.phtml:57
 #: module/Decision/view/decision/member/birthdays.phtml:12
 #: module/Decision/view/decision/organ-admin/index.phtml:12
 #: module/Decision/view/decision/organ/index.phtml:14
@@ -506,9 +507,9 @@ msgstr "Je hebt niet de rechten om een activiteit aan te maken voor dit orgaan"
 msgid "You are not allowed to create activity option proposals"
 msgstr "Je hebt niet de rechten om opties voor activiteiten te maken"
 
-#: module/Activity/src/Service/Activity.php:720
-#: module/Activity/src/Service/Activity.php:738
-#: module/Activity/src/Service/Activity.php:756
+#: module/Activity/src/Service/Activity.php:730
+#: module/Activity/src/Service/Activity.php:748
+#: module/Activity/src/Service/Activity.php:766
 msgid "You are not allowed to change the status of the activity"
 msgstr "Je hebt niet de rechten om de status van deze activiteit te wijzigen"
 
@@ -781,7 +782,8 @@ msgstr "Einde"
 #: module/Company/view/company/admin/edit-package.phtml:112
 #: module/Company/view/company/admin/index.phtml:187
 #: module/Company/view/company/company-account/jobs.phtml:235
-#: module/Decision/view/decision/admin/document.phtml:115
+#: module/Decision/view/decision/admin/document.phtml:136
+#: module/Decision/view/decision/admin/document.phtml:167
 #: module/Education/view/education/admin/course-documents.phtml:82
 #: module/Education/view/education/admin/course-documents.phtml:131
 #: module/Education/view/education/admin/course-documents.phtml:166
@@ -822,6 +824,8 @@ msgstr "Weet je zeker dat je deze optie wil verwijderen?"
 #: module/Company/view/company/admin/edit-package.phtml:146
 #: module/Company/view/company/admin/index.phtml:227
 #: module/Company/view/company/company-account/jobs.phtml:285
+#: module/Decision/view/decision/admin/document.phtml:164
+#: module/Decision/view/decision/admin/document.phtml:191
 #: module/Decision/view/decision/decision/authorizations.phtml:167
 #: module/Education/view/education/admin/course-documents.phtml:163
 #: module/Education/view/education/admin/course.phtml:90
@@ -2018,7 +2022,7 @@ msgstr "Upload samenvattingen"
 
 #: module/Application/view/partial/admin.phtml:123
 #: module/Decision/view/decision/admin/authorizations.phtml:3
-#: module/Decision/view/decision/admin/document.phtml:4
+#: module/Decision/view/decision/admin/document.phtml:14
 #: module/Decision/view/decision/admin/minutes.phtml:3
 #: module/Decision/view/decision/decision/index.phtml:3
 #: module/Decision/view/decision/member/index.phtml:89
@@ -2032,7 +2036,7 @@ msgid "Minutes"
 msgstr "Notulen"
 
 #: module/Application/view/partial/admin.phtml:130
-#: module/Decision/view/decision/admin/document.phtml:5
+#: module/Decision/view/decision/admin/document.phtml:15
 #: module/Decision/view/decision/decision/view.phtml:19
 #: module/Education/view/education/admin/course.phtml:48
 msgid "Documents"
@@ -2641,6 +2645,7 @@ msgstr "Het e-mailadres moet uniek zijn onder alle bedrijven."
 #: module/Company/src/Form/Company.php:392 module/Company/src/Form/Job.php:339
 #: module/User/src/Form/CompanyUserLogin.php:120
 #: module/User/src/Form/CompanyUserReset.php:71
+#: module/User/src/Form/UserReset.php:95
 msgid "E-mail address format is not valid"
 msgstr "E-mailadres formaat is niet geldig"
 
@@ -2819,7 +2824,7 @@ msgstr "Telefoonnummer"
 #: module/Company/view/company/admin-approval/job-approval.phtml:78
 #: module/Company/view/company/admin-approval/job-proposal.phtml:115
 #: module/Company/view/company/admin-approval/job-proposal.phtml:119
-#: module/User/src/Form/Reset.php:41
+#: module/User/src/Form/UserReset.php:42
 #: module/User/src/Model/Enums/JWTClaims.php:37
 msgid "E-mail address"
 msgstr "E-mail adres"
@@ -3154,6 +3159,7 @@ msgid "Featured in language"
 msgstr "Uitgelicht in taal"
 
 #: module/Company/view/company/admin/index.phtml:217
+#: module/Decision/view/decision/admin/document.phtml:155
 #, php-format
 msgid "Are you sure you want to delete %s?"
 msgstr "Weet je zeker dat je %s wil verwijderen?"
@@ -3371,16 +3377,25 @@ msgstr ""
 msgid "There are currently no job labels..."
 msgstr "Er zijn momenteel geen vacature-labels..."
 
-#: module/Decision/src/Controller/AdminController.php:48
+#: module/Decision/src/Controller/AdminController.php:53
 msgid "Meeting minutes uploaded"
 msgstr "Notulen geupload"
 
+#: module/Decision/src/Controller/AdminController.php:134
+msgid "You are not allowed to rename meeting documents"
+msgstr "Je hebt niet de rechten om vergaderstukken te hernoemen"
+
+#: module/Decision/src/Controller/AdminController.php:168
+#: module/Decision/src/Service/Decision.php:293
+msgid "You are not allowed to delete meeting documents."
+msgstr "Je hebt niet de rechten om vergaderstukken te verwijderen."
+
 #: module/Decision/src/Controller/DecisionController.php:102
 msgid "You are not allowed to search decisions."
-msgstr "Het is niet toegestaan om besluiten te doorzoeken."
+msgstr "Je hebt niet de rechten om besluiten te doorzoeken."
 
 #: module/Decision/src/Controller/DecisionController.php:180
-#: module/Decision/src/Service/Decision.php:569
+#: module/Decision/src/Service/Decision.php:599
 msgid "You are not allowed to revoke authorizations."
 msgstr "Je hebt niet de rechten om machtigingen in te trekken."
 
@@ -3572,49 +3587,45 @@ msgstr "ALV-Werkgroep"
 msgid "Advisory Board"
 msgstr "Raad van Advies"
 
-#: module/Decision/src/Service/Decision.php:86
-#: module/Decision/src/Service/Decision.php:105
-#: module/Decision/src/Service/Decision.php:119
+#: module/Decision/src/Service/Decision.php:87
+#: module/Decision/src/Service/Decision.php:106
+#: module/Decision/src/Service/Decision.php:120
 msgid "You are not allowed to list meetings."
 msgstr "Het is niet toegestaan om de lijst van vergaderingen te zien."
 
-#: module/Decision/src/Service/Decision.php:139
+#: module/Decision/src/Service/Decision.php:140
 msgid "You are not allowed to view meetings."
 msgstr "Het is niet toegestaan om vergaderingen te zien."
 
-#: module/Decision/src/Service/Decision.php:190
+#: module/Decision/src/Service/Decision.php:191
 msgid "You are not allowed to view meeting documents."
 msgstr "Het is niet toegestaan om vergaderstukken te zien."
 
-#: module/Decision/src/Service/Decision.php:211
+#: module/Decision/src/Service/Decision.php:212
 msgid "You are not allowed to view meeting minutes."
 msgstr "Het is niet toegestaan om notulen te zien."
 
-#: module/Decision/src/Service/Decision.php:292
-msgid "You are not allowed to delete meeting documents."
-msgstr "Het is niet toegestaan om vergaderstukken te verwijderen."
-
-#: module/Decision/src/Service/Decision.php:386
+#: module/Decision/src/Service/Decision.php:399
 msgid "You are not allowed to view all authorizations."
 msgstr "Je hebt niet de rechten om alle machtigingen te bekijken."
 
-#: module/Decision/src/Service/Decision.php:406
+#: module/Decision/src/Service/Decision.php:419
 msgid "You are not allowed to view authorizations."
 msgstr "Je hebt niet de rechten om all machtigingen te bekijken."
 
-#: module/Decision/src/Service/Decision.php:424
+#: module/Decision/src/Service/Decision.php:437
 msgid "You are not allowed to authorize someone."
 msgstr "Je hebt niet de rechten om iemand te machtigen."
 
-#: module/Decision/src/Service/Decision.php:503
+#: module/Decision/src/Service/Decision.php:533
 msgid "You are not allowed to upload meeting minutes."
 msgstr "Het is niet toegestaan om notulen te uploaden."
 
-#: module/Decision/src/Service/Decision.php:518
+#: module/Decision/src/Service/Decision.php:548
 msgid "You are not allowed to upload meeting documents."
 msgstr "Het is niet toegestaan om vergaderstukken te uploaden."
 
-#: module/Decision/src/Service/Decision.php:555
+#: module/Decision/src/Service/Decision.php:585
 msgid "You are not allowed authorize people."
 msgstr "Je hebt niet de rechten om iemand te machtigen."
 
@@ -3697,25 +3708,43 @@ msgstr "Er zijn geen ingetrokken machtigingen voor deze ALV."
 msgid "Please select a GMM to view authorizations."
 msgstr "Selecteer een ALV om machtigingen te bekijken."
 
-#: module/Decision/view/decision/admin/document.phtml:8
+#: module/Decision/view/decision/admin/document.phtml:18
 msgid "There are no meetings for which you can upload documents."
 msgstr "Er zijn geen vergaderingen waarvoor je documenten kunt uploaden."
 
-#: module/Decision/view/decision/admin/document.phtml:12
+#: module/Decision/view/decision/admin/document.phtml:22
 msgid "Meeting document uploaded"
 msgstr "Vergaderstuk geupload"
 
-#: module/Decision/view/decision/admin/document.phtml:38
+#: module/Decision/view/decision/admin/document.phtml:48
 msgid "No meeting available."
 msgstr "Geen vergaderingen beschikbaar."
 
-#: module/Decision/view/decision/admin/document.phtml:79
+#: module/Decision/view/decision/admin/document.phtml:89
 msgid "Documents for this meeting"
 msgstr "Documenten voor deze vergadering"
 
-#: module/Decision/view/decision/admin/document.phtml:82
+#: module/Decision/view/decision/admin/document.phtml:92
 msgid "This meeting does not have any associated documents."
 msgstr "Voor deze vergadering zijn geen documenten beschikbaar."
+
+#: module/Decision/view/decision/admin/document.phtml:131
+#: module/Decision/view/decision/admin/document.phtml:194
+msgid "Rename"
+msgstr "Hernoem"
+
+#: module/Decision/view/decision/admin/document.phtml:149
+#: module/Education/view/education/admin/course-documents.phtml:153
+msgid "Delete Document"
+msgstr "Verwijder document"
+
+#: module/Decision/view/decision/admin/document.phtml:181
+msgid "Rename Meeting Document"
+msgstr "Hernoem vergaderstuk"
+
+#: module/Decision/view/decision/admin/document.phtml:184
+msgid "Enter a new name for this document:"
+msgstr "Voor een nieuwe naam in voor dit document:"
 
 #: module/Decision/view/decision/admin/minutes.phtml:44
 msgid "Upload"
@@ -4027,7 +4056,7 @@ msgid "My Information"
 msgstr "Mijn informatie"
 
 #: module/Decision/view/decision/member/self.phtml:15
-#: module/User/src/Form/Register.php:34 module/User/src/Form/Reset.php:31
+#: module/User/src/Form/Register.php:34 module/User/src/Form/UserReset.php:32
 msgid "Membership number"
 msgstr "Lidmaatschapsnummer"
 
@@ -4376,10 +4405,6 @@ msgstr "Deze cursus heeft geen examens."
 #: module/Education/view/education/admin/course-documents.phtml:98
 msgid "Summaries"
 msgstr "Samenvattingen"
-
-#: module/Education/view/education/admin/course-documents.phtml:153
-msgid "Delete Document"
-msgstr "Verwijder document"
 
 #: module/Education/view/education/admin/course-documents.phtml:157
 msgid "Are you sure you want to delete this document?"
@@ -5647,14 +5672,6 @@ msgstr ""
 msgid "This member already has an account."
 msgstr "Dit lid heeft al een account."
 
-#: module/User/src/Form/Reset.php:51
-#: module/User/view/partial/reset/company.phtml:33
-#: module/User/view/partial/reset/member.phtml:31
-#: module/User/view/user/user/reset-password.phtml:2
-#: module/User/view/user/user/reset-password.phtml:13
-msgid "Reset password"
-msgstr "Reset wachtwoord"
-
 #: module/User/src/Form/UserLogin.php:35
 msgid "Membership number or email address"
 msgstr "Lidnummer of email adres"
@@ -5666,6 +5683,14 @@ msgstr "Inloggen als lid"
 #: module/User/src/Form/UserLogin.php:65
 msgid "Remember me"
 msgstr "Onthoud mij"
+
+#: module/User/src/Form/UserReset.php:52
+#: module/User/view/partial/reset/company.phtml:33
+#: module/User/view/partial/reset/member.phtml:47
+#: module/User/view/user/user/reset-password.phtml:2
+#: module/User/view/user/user/reset-password.phtml:13
+msgid "Reset password"
+msgstr "Reset wachtwoord"
 
 #: module/User/src/Model/Enums/JWTClaims.php:38
 msgid "Family name"
@@ -5696,7 +5721,7 @@ msgstr "Je hebt niet de rechten om API tokens te verwijderen"
 msgid "You are not allowed to add API tokens"
 msgstr "Je hebt niet de rechten om API tokens toe te voegen"
 
-#: module/User/src/Service/User.php:105 module/User/src/Service/User.php:327
+#: module/User/src/Service/User.php:104 module/User/src/Service/User.php:327
 msgid ""
 "You cannot use this password, it was found in a public data breach and is "
 "therefore considered insecure. We recommend using a password generated by a "
@@ -5711,7 +5736,7 @@ msgstr ""
 msgid "Password incorrect"
 msgstr "Wachtwoord incorrect"
 
-#: module/User/src/Service/User.php:475
+#: module/User/src/Service/User.php:476
 msgid "You are not allowed to change your password"
 msgstr "Je hebt niet de rechten om een wachtwoord te wijzigen"
 
@@ -5741,6 +5766,15 @@ msgstr ""
 #, php-format
 msgid "If you don't have an account yet, go to the %sRegistration page%s"
 msgstr "Als je nog geen account hebt, ga naar de %sRegistratie pagina%s"
+
+#: module/User/view/partial/reset/member.phtml:39
+msgid ""
+"Have you forgotten your e-mail address and do you want to change it? Ask the "
+"secretary by going to GEWIS (preferred) or by sending an e-mail."
+msgstr ""
+"Ben je jouw e-mailadres vergeten en wil je het wijzigen? Vraag het aan de "
+"secretaris door naar GEWIS te komen (aanbevolen) of door een e-mail te "
+"sturen."
 
 #: module/User/view/user/api-admin/add.phtml:3
 #: module/User/view/user/api-admin/index.phtml:3

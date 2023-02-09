@@ -35,7 +35,9 @@ $element->setAttribute('class', 'form-control');
         <?= $this->formElementErrors($element, ['class' => 'help-block']); ?>
     </div>
 </div>
-
+<p>
+    <?= $this->translate('Have you forgotten your e-mail address and do you want to change it? Ask the secretary by going to GEWIS (preferred) or by sending an e-mail.') ?>
+</p>
 <div class="form-group">
     <div class="col-sm-offset-5 col-sm-7">
         <?= $this->formElement($form->get('security')) ?>
