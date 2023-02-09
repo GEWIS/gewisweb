@@ -133,7 +133,6 @@ class Module
                     $userMapper = $container->get('user_mapper_user');
                     $newUserMapper = $container->get('user_mapper_newUser');
                     $newCompanyUserMapper = $container->get('user_mapper_newCompanyUser');
-                    $companyMapper = $container->get('company_mapper_company');
                     $memberMapper = $container->get('decision_mapper_member');
                     $registerForm = $container->get('user_form_register');
                     $activateFormCompanyUser = $container->get('user_form_activate_companyUser');
@@ -157,7 +156,6 @@ class Module
                         $userMapper,
                         $newUserMapper,
                         $newCompanyUserMapper,
-                        $companyMapper,
                         $memberMapper,
                         $registerForm,
                         $activateFormCompanyUser,

@@ -59,7 +59,6 @@ class User
         private readonly UserMapper $userMapper,
         private readonly NewUserMapper $newUserMapper,
         private readonly NewCompanyUserMapper $newCompanyUserMapper,
-        private readonly CompanyMapper $companyMapper,
         private readonly MemberMapper $memberMapper,
         private readonly RegisterForm $registerForm,
         private readonly ActivateForm $activateFormCompanyUser,
