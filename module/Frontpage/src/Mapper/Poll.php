@@ -32,13 +32,13 @@ class Poll extends BaseMapper
      * Find the vote of a certain user on a poll.
      *
      * @param int $pollId
-     * @param int $lidnr
+     * @param int|null $lidnr
      *
      * @return PollVoteModel|null
      */
     public function findVote(
         int $pollId,
-        int $lidnr,
+        ?int $lidnr,
     ): ?PollVoteModel {
         return $this->getEntityManager()->getRepository(PollVoteModel::class)->findOneBy(
             [

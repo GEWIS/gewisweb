@@ -20,9 +20,9 @@ use Frontpage\Model\{
     PollComment as PollCommentModel,
     PollOption as PollOptionModel,
     PollOption,
-    PollVote as PollVoteModel};
+    PollVote as PollVoteModel,
+};
 use Laminas\Mvc\I18n\Translator;
-use User\Model\User as UserModel;
 use User\Permissions\NotAllowedException;
 
 /**
@@ -168,7 +168,7 @@ class Poll
     {
         return $this->pollMapper->findVote(
             $poll->getId(),
-            $this->aclService->getUserIdentityOrThrowException()->getLidnr(),
+            $this->aclService->getUserIdentity()?->getLidnr(),
         );
     }
 
