@@ -91,7 +91,7 @@ class UserReset extends Form implements InputProviderInterface
                         'name' => EmailAddress::class,
                         'options' => [
                             'messages' => [
-                                'emailAddressInvalidFormat' => $this->translate->translate(
+                                'emailAddressInvalidFormat' => $this->translator->translate(
                                     'E-mail address format is not valid'
                                 ),
                             ],
