@@ -2,22 +2,26 @@
 
 namespace Decision\Model;
 
+use Application\Model\Traits\TimestampableTrait;
 use Decision\Model\Enums\MeetingTypes;
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
+    HasLifecycleCallbacks,
     Id,
     JoinColumn,
-    OneToOne,
-};
+    OneToOne};
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 /**
  * Meeting minutes.
  */
 #[Entity]
+#[HasLifecycleCallbacks]
 class MeetingMinutes implements ResourceInterface
 {
+    use TimestampableTrait;
+
     /**
      * Meeting type.
      */
