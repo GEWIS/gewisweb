@@ -1,3 +1,52 @@
+## [v2.3](https://github.com/GEWIS/gewisweb/tree/v2.3) (2023-02-10)
+
+* Added support for marking sign-up lists as having limited capacity.
+* Added support for adding a representative to a company (this is different from a company contact).
+* Added `CompanyUser`s (i.e. representatives) that can manage company profiles.
+* Added the GEWIS Career Platform where company representatives can log in to manage their company.
+* Added support for company representatives to propose new jobs in the company's job package(s).
+* Added support for company representatives to propose updates to existing jobs in the company's job package(s).
+* Added support for company representatives to transfer jobs from expired job packages to non-expired job packages.
+* Added support for company representatives to delete jobs.
+* Added elementary support for company representatives to update their company's profile.
+* Added the option to add a contract number to company packages.
+* Added an approval queue for company profile and job (update) proposals.
+* Added support for approving or rejecting job proposals (rejections may include a message that is shown to the company representative).
+* Added support for applying or cancelling job update proposals (cancellations may include a message that is shown to the company representative).
+* Added checks for passwords against the [GEWIS-hosted version of Pwned Passwords](https://pwned-passwords.gewis.nl). If a password is leaked in a public data breach, the user must reset their password before they can log in. When (re)setting passwords, this check is also performed and "pwned" passwords cannot be used.
+* Added the Alcohol Policy to publicly available policies.
+* Added timestamps to `SignUp`s to track when people signed up to a sign-up list.
+* Added support for searching for specific decisions.
+* Added timestamps to `Album`s to add a "NEW"-tag to recently uploaded albums.
+* Added support for recording when a user has changed their password, this is used to see which users comply with new password requirements.
+* Added support for renaming `MeetingDocument`s after being uploaded.
+* Added timestamps to `MeetingDocument`s and `MeetingMinutes` to track when they are uploaded.
+* Changed `AV` to `ALV` to adhere to the terminology from the bylaws.
+* Changed the minimum required length of passwords to `12` for `User`s.
+* Changed the career admin to move job categories and labels to separate sections, leaving more space to interact with companies.
+* Changed most of the e-mail templates to use the new e-mail template from Stijl.
+* Changed the default state of new jobs to be `published` (when approved).
+* Changed the agreement text when subscribing to an activity to include the Alcohol Policy in accordance with changes to the Activity Policy.
+* Changed the maximum number of decisions returned when searching to `100` (from `50`).
+* Changed how decisions are displayed after searching or on meeting pages to improve readability.
+* Changed the default duration of activation and password reset links to `24h` (from `∞`).
+* Changed the default cookie `SameSite` directive to `Lax`.
+* Improved several translations.
+* Upgraded to PHP 8.2.
+* Fixed issue where exams and summaries would still be inaccessible from the university's NAT'd Wi-Fi network.
+* Fixed issue where the Content Security Policy was too lenient on what content was allowed.
+* Fixed issue where cookies where incorrectly shared with sub-domains.
+* Fixed issue where the privacy widget could appear after it was already dismissed.
+* Fixed issue where a (limited) SQL injection was possible through the decision search field.
+* Fixed issue where searching for decisions using only a meeting number would not return any decisions.
+* Fixed issue where form validation on the login form was not applied.
+* Fixed issue where proposing an update to an activity could silently fail.
+* Fixed issue where selecting a meeting that shares its meeting number with another meeting of another type would prevent uploads of `MeetingDocument`s.
+* Fixed issue where `deleted`, `expired`, or `hidden` members could still request a password reset.
+* Updated dependencies.
+
+---
+
 ## [v2.9.1](https://github.com/GEWIS/gewisweb/tree/v2.9.1) (2022-12-18)
 
 * Added generation of members to the admin sign-up list participants overview.
