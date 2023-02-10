@@ -1,4 +1,4 @@
-## [v2.3](https://github.com/GEWIS/gewisweb/tree/v2.3) (2023-02-10)
+## [v3.0](https://github.com/GEWIS/gewisweb/tree/v3.0) (2023-02-10)
 
 * Added support for marking sign-up lists as having limited capacity.
 * Added support for adding a representative to a company (this is different from a company contact).
