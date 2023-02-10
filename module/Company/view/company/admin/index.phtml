@@ -1,4 +1,7 @@
 <?php
+
+use Company\Model\Enums\CompanyPackageTypes;
+
 $this->breadcrumbs()
     ->addBreadcrumb($this->translate('Career'), true, $this->url('company_admin'))
     ->addBreadcrumb($this->translate('Companies'));
@@ -29,13 +32,13 @@ $this->scriptUrl()->requireUrls(
                     <?php
                     $type = $package->getType();
                     switch ($type) {
-                        case "banner":
+                        case CompanyPackageTypes::Banner:
                             $packageType = $this->translate("Banner Package");
                             break;
-                        case "featured":
+                        case CompanyPackageTypes::Featured:
                             $packageType = $this->translate("Featured Package");
                             break;
-                        case "job":
+                        case CompanyPackageTypes::Job:
                             $packageType = sprintf($this->translate("Job Package (%s active)"), $package->getNumberOfActiveJobs());
                             break;
                     }
@@ -43,7 +46,7 @@ $this->scriptUrl()->requireUrls(
                     $companySlugName = $company->getSlugName();
                     ?>
                     <?= sprintf(
-                        $this->translate("%s for company %s will start at %s"),
+                        $this->translate("%s for company %s will start on %s"),
                         "<a href='" . $this->url('company_admin/company/edit/package/edit', ['companySlugName' => $companySlugName, 'packageId' => $package->getId()]) . "'> " . $packageType . "</a>",
                         "<a href=" . $this->url('company_admin/company/edit', ['companySlugName' => $companySlugName]) . ">" . $this->escapeHtml($package->getCompany()->getName()) . "</a>",
                         $this->dateFormat($package->getStartingDate(), IntlDateFormatter::LONG, IntlDateFormatter::NONE),
@@ -61,13 +64,13 @@ $this->scriptUrl()->requireUrls(
                     <?php
                     $type = $package->getType();
                     switch ($type) {
-                        case "banner":
+                        case CompanyPackageTypes::Banner:
                             $packageType = $this->translate("Banner Package");
                             break;
-                        case "featured":
+                        case CompanyPackageTypes::Featured:
                             $packageType = $this->translate("Featured Package");
                             break;
-                        case "job":
+                        case CompanyPackageTypes::Job:
                             $packageType = sprintf($this->translate("Job Package (%s active)"), $package->getNumberOfActiveJobs());
                             break;
                     }
@@ -75,7 +78,7 @@ $this->scriptUrl()->requireUrls(
                     $companySlugName = $company->getSlugName();
                     ?>
                     <?= sprintf(
-                        $this->translate("%s for company %s will expire at %s"),
+                        $this->translate("%s for company %s will expire on %s"),
                         "<a href='" . $this->url('company_admin/company/edit/package/edit', ['companySlugName' => $companySlugName, 'packageId' => $package->getId()]) . "'> " . $packageType . "</a>",
                         "<a href=" . $this->url('company_admin/company/edit', ['companySlugName' => $companySlugName]) . ">" . $this->escapeHtml($package->getCompany()->getName()) . "</a>",
                         $this->dateFormat($package->getExpirationDate(), IntlDateFormatter::LONG, IntlDateFormatter::NONE),
