@@ -2,10 +2,14 @@
 
 namespace Decision\Model;
 
-use Application\Model\Traits\IdentifiableTrait;
+use Application\Model\Traits\{
+    IdentifiableTrait,
+    TimestampableTrait,
+};
 use Doctrine\ORM\Mapping\{
     Column,
     Entity,
+    HasLifecycleCallbacks,
     JoinColumn,
     ManyToOne,
 };
@@ -14,9 +18,11 @@ use Doctrine\ORM\Mapping\{
  * Meeting document model.
  */
 #[Entity]
+#[HasLifecycleCallbacks]
 class MeetingDocument
 {
     use IdentifiableTrait;
+    use TimestampableTrait;
 
     /**
      * Meeting.
