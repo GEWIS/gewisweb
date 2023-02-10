@@ -52,12 +52,14 @@ $this->headTitle($this->translate('Photos')); ?>
                                         <img class="img-responsive" src="/img/missing_cover.svg" alt="">
                                     <?php endif; ?>
                                     <div class="caption">
-                                        <?php if ($album->getCreatedAt() >= $lastWeek): ?>
-                                            <span class="label label-primary job-label">
-                                                <?= $this->translate('NEW') ?>
-                                            </span>&nbsp;
-                                        <?php endif; ?>
-                                        <?= $this->escapeHtml($album->getName()) ?>
+                                        <p>
+                                            <?php if ($album->getCreatedAt() >= $lastWeek): ?>
+                                                <span class="label label-primary">
+                                                    <?= $this->translate('NEW') ?>
+                                                </span>&nbsp;
+                                            <?php endif; ?>
+                                            <?= $this->escapeHtml($album->getName()) ?>
+                                        </p>
                                     </div>
                                 </a>
                             </div>
