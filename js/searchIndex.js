@@ -15791,26 +15791,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/User-Form-Register.html#property_translator"
         },                {
-            "fqsen": "\\User\\Form\\Reset",
-            "name": "Reset",
-            "summary": "",
-            "url": "classes/User-Form-Reset.html"
-        },                {
-            "fqsen": "\\User\\Form\\Reset\u003A\u003A__construct\u0028\u0029",
-            "name": "__construct",
-            "summary": "",
-            "url": "classes/User-Form-Reset.html#method___construct"
-        },                {
-            "fqsen": "\\User\\Form\\Reset\u003A\u003AgetInputSpecification\u0028\u0029",
-            "name": "getInputSpecification",
-            "summary": "",
-            "url": "classes/User-Form-Reset.html#method_getInputSpecification"
-        },                {
-            "fqsen": "\\User\\Form\\Reset\u003A\u003A\u0024translator",
-            "name": "translator",
-            "summary": "",
-            "url": "classes/User-Form-Reset.html#property_translator"
-        },                {
             "fqsen": "\\User\\Form\\UserLogin",
             "name": "UserLogin",
             "summary": "",
@@ -15840,6 +15820,26 @@ Search.appendIndex(
             "name": "passwordLength",
             "summary": "",
             "url": "classes/User-Form-UserLogin.html#property_passwordLength"
+        },                {
+            "fqsen": "\\User\\Form\\UserReset",
+            "name": "UserReset",
+            "summary": "",
+            "url": "classes/User-Form-UserReset.html"
+        },                {
+            "fqsen": "\\User\\Form\\UserReset\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/User-Form-UserReset.html#method___construct"
+        },                {
+            "fqsen": "\\User\\Form\\UserReset\u003A\u003AgetInputSpecification\u0028\u0029",
+            "name": "getInputSpecification",
+            "summary": "",
+            "url": "classes/User-Form-UserReset.html#method_getInputSpecification"
+        },                {
+            "fqsen": "\\User\\Form\\UserReset\u003A\u003A\u0024translator",
+            "name": "translator",
+            "summary": "",
+            "url": "classes/User-Form-UserReset.html#property_translator"
         },                {
             "fqsen": "\\User\\Mapper\\ApiApp",
             "name": "ApiApp",
@@ -15985,6 +15985,11 @@ Search.appendIndex(
             "name": "findByLogin",
             "summary": "Find\u0020a\u0020user\u0020by\u0020its\u0020login.",
             "url": "classes/User-Mapper-User.html#method_findByLogin"
+        },                {
+            "fqsen": "\\User\\Mapper\\User\u003A\u003AfindForReset\u0028\u0029",
+            "name": "findForReset",
+            "summary": "Used\u0020for\u0020password\u0020resets,\u0020does\u0020not\u0020include\u0020members\u0020who\u0020are\u0020hidden,\u0020expired,\u0020and\/or\u0020deleted.\u0020These\u0020requirements\nare\u0020also\u0020used\u0020during\u0020the\u0020login\u0020process.",
+            "url": "classes/User-Mapper-User.html#method_findForReset"
         },                {
             "fqsen": "\\User\\Mapper\\User\u003A\u003AgetRepositoryName\u0028\u0029",
             "name": "getRepositoryName",
@@ -16986,10 +16991,10 @@ Search.appendIndex(
             "summary": "Get\u0020the\u0020password\u0020form.",
             "url": "classes/User-Service-User.html#method_getPasswordForm"
         },                {
-            "fqsen": "\\User\\Service\\User\u003A\u003AgetResetForm\u0028\u0029",
-            "name": "getResetForm",
+            "fqsen": "\\User\\Service\\User\u003A\u003AgetUserResetForm\u0028\u0029",
+            "name": "getUserResetForm",
             "summary": "Get\u0020the\u0020reset\u0020form.",
-            "url": "classes/User-Service-User.html#method_getResetForm"
+            "url": "classes/User-Service-User.html#method_getUserResetForm"
         },                {
             "fqsen": "\\User\\Service\\User\u003A\u003AgetUserLoginForm\u0028\u0029",
             "name": "getUserLoginForm",
@@ -17061,11 +17066,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/User-Service-User.html#property_newCompanyUserMapper"
         },                {
-            "fqsen": "\\User\\Service\\User\u003A\u003A\u0024companyMapper",
-            "name": "companyMapper",
-            "summary": "",
-            "url": "classes/User-Service-User.html#property_companyMapper"
-        },                {
             "fqsen": "\\User\\Service\\User\u003A\u003A\u0024memberMapper",
             "name": "memberMapper",
             "summary": "",
@@ -17111,10 +17111,10 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/User-Service-User.html#property_passwordFormUser"
         },                {
-            "fqsen": "\\User\\Service\\User\u003A\u003A\u0024resetForm",
-            "name": "resetForm",
+            "fqsen": "\\User\\Service\\User\u003A\u003A\u0024userResetForm",
+            "name": "userResetForm",
             "summary": "",
-            "url": "classes/User-Service-User.html#property_resetForm"
+            "url": "classes/User-Service-User.html#property_userResetForm"
         },                {
             "fqsen": "\\UserTest\\ControllerTest",
             "name": "ControllerTest",
