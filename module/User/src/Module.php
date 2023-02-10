@@ -29,7 +29,7 @@ use User\Form\{
     CompanyUserReset as CompanyUserResetForm,
     Password as PasswordForm,
     Register as RegisterForm,
-    Reset as ResetForm,
+    UserReset as ResetForm,
     UserLogin as UserLoginForm,
 };
 use User\Mapper\{
@@ -133,7 +133,6 @@ class Module
                     $userMapper = $container->get('user_mapper_user');
                     $newUserMapper = $container->get('user_mapper_newUser');
                     $newCompanyUserMapper = $container->get('user_mapper_newCompanyUser');
-                    $companyMapper = $container->get('company_mapper_company');
                     $memberMapper = $container->get('decision_mapper_member');
                     $registerForm = $container->get('user_form_register');
                     $activateFormCompanyUser = $container->get('user_form_activate_companyUser');
@@ -143,7 +142,7 @@ class Module
                     $companyUserResetForm = $container->get('user_form_companyUserReset');
                     $passwordFormCompanyUser = $container->get('user_form_password_companyUser');
                     $passwordFormUser = $container->get('user_form_password_user');
-                    $resetForm = $container->get('user_form_reset');
+                    $userResetForm = $container->get('user_form_reset');
 
                     return new UserService(
                         $aclService,
@@ -157,7 +156,6 @@ class Module
                         $userMapper,
                         $newUserMapper,
                         $newCompanyUserMapper,
-                        $companyMapper,
                         $memberMapper,
                         $registerForm,
                         $activateFormCompanyUser,
@@ -167,7 +165,7 @@ class Module
                         $companyUserResetForm,
                         $passwordFormCompanyUser,
                         $passwordFormUser,
-                        $resetForm,
+                        $userResetForm,
                     );
                 },
                 'user_service_loginattempt' => function (ContainerInterface $container) {

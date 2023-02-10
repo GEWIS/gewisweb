@@ -22,7 +22,7 @@ use User\Form\{
     UserLogin as UserLoginForm,
     Password as PasswordForm,
     Register as RegisterForm,
-    Reset as ResetForm,
+    UserReset as UserResetForm,
 };
 use User\Mapper\{
     CompanyUser as CompanyUserMapper,
@@ -59,7 +59,6 @@ class User
         private readonly UserMapper $userMapper,
         private readonly NewUserMapper $newUserMapper,
         private readonly NewCompanyUserMapper $newCompanyUserMapper,
-        private readonly CompanyMapper $companyMapper,
         private readonly MemberMapper $memberMapper,
         private readonly RegisterForm $registerForm,
         private readonly ActivateForm $activateFormCompanyUser,
@@ -69,7 +68,7 @@ class User
         private readonly CompanyUserResetForm $companyUserResetForm,
         private readonly PasswordForm $passwordFormCompanyUser,
         private readonly PasswordForm $passwordFormUser,
-        private readonly ResetForm $resetForm,
+        private readonly UserResetForm $userResetForm,
     ) {
     }
 
@@ -228,7 +227,7 @@ class User
     public function resetMember(array $data): void
     {
         $lidnr = (int) $data['lidnr'];
-        $user = $this->userMapper->find($lidnr);
+        $user = $this->userMapper->findForReset($data['email'], $data['lidnr']);
 
         if (null === $user) {
             return;
@@ -488,11 +487,11 @@ class User
     /**
      * Get the reset form.
      *
-     * @return ResetForm
+     * @return UserResetForm
      */
-    public function getResetForm(): ResetForm
+    public function getUserResetForm(): UserResetForm
     {
-        return $this->resetForm;
+        return $this->userResetForm;
     }
 
     /**

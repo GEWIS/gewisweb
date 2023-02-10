@@ -8,6 +8,7 @@ use Laminas\Form\Element\{
     Number,
     Submit,
 };
+use Laminas\Filter\StringTrim;
 use Laminas\Form\Form;
 use Laminas\InputFilter\InputProviderInterface;
 use Laminas\Mvc\I18n\Translator;
@@ -17,7 +18,7 @@ use Laminas\Validator\{
     NotEmpty,
 };
 
-class Reset extends Form implements InputProviderInterface
+class UserReset extends Form implements InputProviderInterface
 {
     public function __construct(private readonly Translator $translator)
     {
@@ -77,15 +78,29 @@ class Reset extends Form implements InputProviderInterface
                         'name' => Digits::class,
                     ],
                 ],
+                'filters' => [
+                    [
+                        'name' => StringTrim::class,
+                    ],
+                ],
             ],
             'email' => [
                 'required' => true,
                 'validators' => [
                     [
-                        'name' => NotEmpty::class,
-                    ],
-                    [
                         'name' => EmailAddress::class,
+                        'options' => [
+                            'messages' => [
+                                'emailAddressInvalidFormat' => $this->translator->translate(
+                                    'E-mail address format is not valid'
+                                ),
+                            ],
+                        ],
+                    ],
+                ],
+                'filters' => [
+                    [
+                        'name' => StringTrim::class,
                     ],
                 ],
             ],
