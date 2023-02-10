@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-09 18:56+0100\n"
-"PO-Revision-Date: 2023-02-09 19:00+0100\n"
+"POT-Creation-Date: 2023-02-10 14:48+0100\n"
+"PO-Revision-Date: 2023-02-10 14:49+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: nl\n"
@@ -405,8 +405,8 @@ msgstr "De activiteit heeft geen acceptabel aantal opties"
 #: module/Company/view/company/admin-approval/job-proposal.phtml:154
 #: module/Company/view/company/admin-approval/job-proposal.phtml:164
 #: module/Company/view/company/admin/edit-package.phtml:69
-#: module/Company/view/company/admin/index.phtml:109
-#: module/Company/view/company/admin/index.phtml:195
+#: module/Company/view/company/admin/index.phtml:112
+#: module/Company/view/company/admin/index.phtml:198
 #: module/Company/view/company/company-account/jobs.phtml:177
 #: module/Decision/view/decision/admin/document.phtml:57
 #: module/Decision/view/decision/member/birthdays.phtml:12
@@ -780,7 +780,7 @@ msgstr "Einde"
 #: module/Activity/view/activity/admin-option/index.phtml:130
 #: module/Company/view/company/admin/edit-company.phtml:150
 #: module/Company/view/company/admin/edit-package.phtml:112
-#: module/Company/view/company/admin/index.phtml:187
+#: module/Company/view/company/admin/index.phtml:190
 #: module/Company/view/company/company-account/jobs.phtml:235
 #: module/Decision/view/decision/admin/document.phtml:136
 #: module/Decision/view/decision/admin/document.phtml:167
@@ -822,7 +822,7 @@ msgstr "Weet je zeker dat je deze optie wil verwijderen?"
 #: module/Activity/view/activity/admin-option/index.phtml:127
 #: module/Company/view/company/admin/edit-company.phtml:202
 #: module/Company/view/company/admin/edit-package.phtml:146
-#: module/Company/view/company/admin/index.phtml:227
+#: module/Company/view/company/admin/index.phtml:230
 #: module/Company/view/company/company-account/jobs.phtml:285
 #: module/Decision/view/decision/admin/document.phtml:164
 #: module/Decision/view/decision/admin/document.phtml:191
@@ -1291,7 +1291,7 @@ msgstr "Nieuwe categorie"
 #: module/Activity/view/activity/admin-category/index.phtml:45
 #: module/Company/view/company/admin/edit-company.phtml:191
 #: module/Company/view/company/admin/edit-package.phtml:137
-#: module/Company/view/company/admin/index.phtml:214
+#: module/Company/view/company/admin/index.phtml:217
 #: module/Company/view/company/company-account/jobs.phtml:275
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:160
 #: module/Photo/view/photo/album-admin/index.phtml:202
@@ -1366,8 +1366,8 @@ msgstr "Actieve optieplanningsperioden"
 #: module/Company/view/company/admin-approval/index.phtml:43
 #: module/Company/view/company/admin/edit-company.phtml:104
 #: module/Company/view/company/admin/edit-package.phtml:72
-#: module/Company/view/company/admin/index.phtml:160
-#: module/Company/view/company/admin/index.phtml:201
+#: module/Company/view/company/admin/index.phtml:163
+#: module/Company/view/company/admin/index.phtml:204
 #: module/Company/view/company/company-account/jobs.phtml:47
 #: module/Company/view/company/company-account/jobs.phtml:180
 #: module/Education/view/education/admin/course-documents.phtml:64
@@ -1559,8 +1559,8 @@ msgstr "N.V.T."
 #: module/Application/language/additional-strings:12
 #: module/Company/view/company/admin/edit-company.phtml:114
 #: module/Company/view/company/admin/edit-package.phtml:78
-#: module/Company/view/company/admin/index.phtml:180
-#: module/Company/view/company/admin/index.phtml:181
+#: module/Company/view/company/admin/index.phtml:183
+#: module/Company/view/company/admin/index.phtml:184
 #: module/Company/view/company/company-account/jobs.phtml:195
 #: module/Company/view/company/company-account/jobs.phtml:203
 #: module/Photo/view/partial/metadata.phtml:29
@@ -1577,8 +1577,8 @@ msgstr "Ja"
 #: module/Application/language/additional-strings:13
 #: module/Company/view/company/admin/edit-company.phtml:114
 #: module/Company/view/company/admin/edit-package.phtml:78
-#: module/Company/view/company/admin/index.phtml:180
-#: module/Company/view/company/admin/index.phtml:181
+#: module/Company/view/company/admin/index.phtml:183
+#: module/Company/view/company/admin/index.phtml:184
 #: module/Company/view/company/company-account/jobs.phtml:195
 #: module/Photo/view/partial/metadata.phtml:29
 msgid "No"
@@ -1956,12 +1956,12 @@ msgstr "Categorieën"
 #: module/Company/view/company/admin-approval/job-approval.phtml:10
 #: module/Company/view/company/admin-approval/job-proposal.phtml:16
 #: module/Company/view/company/admin/edit-company.phtml:7
-#: module/Company/view/company/admin/index.phtml:3
+#: module/Company/view/company/admin/index.phtml:6
 msgid "Career"
 msgstr "Carrière"
 
 #: module/Application/view/partial/admin.phtml:61
-#: module/Company/view/company/admin/index.phtml:4
+#: module/Company/view/company/admin/index.phtml:7
 #: module/Company/view/company/company/job-list.phtml:22
 #: module/Company/view/company/company/jobs.phtml:22
 #: module/Company/view/company/company/list.phtml:4
@@ -2113,8 +2113,8 @@ msgstr "Home"
 #: module/Application/view/partial/company.phtml:28
 #: module/Company/src/Form/JobsTransfer.php:29
 #: module/Company/view/company/admin/edit-package.phtml:65
-#: module/Company/view/company/admin/index.phtml:118
-#: module/Company/view/company/admin/index.phtml:196
+#: module/Company/view/company/admin/index.phtml:121
+#: module/Company/view/company/admin/index.phtml:199
 #: module/Company/view/company/company-account/jobs.phtml:7
 #: module/Company/view/company/company-account/jobs.phtml:11
 #: module/Company/view/company/company-account/jobs.phtml:14
@@ -2286,7 +2286,7 @@ msgid "Housing"
 msgstr "Huisvesting"
 
 #: module/Application/view/partial/main-nav.phtml:321
-#: module/Company/view/company/admin/index.phtml:144
+#: module/Company/view/company/admin/index.phtml:147
 msgid "Featured"
 msgstr "Uitgelicht"
 
@@ -3007,14 +3007,14 @@ msgid "Jobs (Active) / Type"
 msgstr "Vacatures (Actief) / Type"
 
 #: module/Company/view/company/admin/edit-company.phtml:124
-#: module/Company/view/company/admin/index.phtml:33
-#: module/Company/view/company/admin/index.phtml:65
+#: module/Company/view/company/admin/index.phtml:36
+#: module/Company/view/company/admin/index.phtml:68
 msgid "Banner Package"
 msgstr "Bannerpakket"
 
 #: module/Company/view/company/admin/edit-company.phtml:127
-#: module/Company/view/company/admin/index.phtml:36
-#: module/Company/view/company/admin/index.phtml:68
+#: module/Company/view/company/admin/index.phtml:39
+#: module/Company/view/company/admin/index.phtml:71
 msgid "Featured Package"
 msgstr "Uitgelicht pakket"
 
@@ -3105,66 +3105,66 @@ msgstr "Weet je zeker dat je deze vacature wilt verwijderen?"
 msgid "Delete job"
 msgstr "Verwijder vacature"
 
-#: module/Company/view/company/admin/index.phtml:19
+#: module/Company/view/company/admin/index.phtml:22
 #: module/Company/view/company/company-account/jobs.phtml:20
 msgid "Notifications"
 msgstr "Meldingen"
 
-#: module/Company/view/company/admin/index.phtml:21
+#: module/Company/view/company/admin/index.phtml:24
 msgid "No notifications"
 msgstr "Geen meldingen"
 
-#: module/Company/view/company/admin/index.phtml:39
-#: module/Company/view/company/admin/index.phtml:71
+#: module/Company/view/company/admin/index.phtml:42
+#: module/Company/view/company/admin/index.phtml:74
 #, php-format
 msgid "Job Package (%s active)"
 msgstr "Vacaturepakket (%s actief)"
 
-#: module/Company/view/company/admin/index.phtml:46
+#: module/Company/view/company/admin/index.phtml:49
 #, php-format
-msgid "%s for company %s will start at %s"
+msgid "%s for company %s will start on %s"
 msgstr "%s voor bedrijf %s begint op %s"
 
-#: module/Company/view/company/admin/index.phtml:78
+#: module/Company/view/company/admin/index.phtml:81
 #, php-format
-msgid "%s for company %s will expire at %s"
+msgid "%s for company %s will expire on %s"
 msgstr "%s voor bedrijf %s verloopt op %s"
 
-#: module/Company/view/company/admin/index.phtml:93
+#: module/Company/view/company/admin/index.phtml:96
 #: module/Education/view/education/admin/course.phtml:15
 msgid "Filter..."
 msgstr "Filter..."
 
-#: module/Company/view/company/admin/index.phtml:98
+#: module/Company/view/company/admin/index.phtml:101
 msgid "Add Company"
 msgstr "Voeg bedrijf toe"
 
-#: module/Company/view/company/admin/index.phtml:127
-#: module/Company/view/company/admin/index.phtml:197
+#: module/Company/view/company/admin/index.phtml:130
+#: module/Company/view/company/admin/index.phtml:200
 msgid "Active jobs"
 msgstr "Actieve vacatures"
 
-#: module/Company/view/company/admin/index.phtml:135
-#: module/Company/view/company/admin/index.phtml:198
+#: module/Company/view/company/admin/index.phtml:138
+#: module/Company/view/company/admin/index.phtml:201
 msgid "Banner active"
 msgstr "Banner actief"
 
-#: module/Company/view/company/admin/index.phtml:152
-#: module/Company/view/company/admin/index.phtml:200
+#: module/Company/view/company/admin/index.phtml:155
+#: module/Company/view/company/admin/index.phtml:203
 msgid "Expired packages"
 msgstr "Verlopen pakketten"
 
-#: module/Company/view/company/admin/index.phtml:199
+#: module/Company/view/company/admin/index.phtml:202
 msgid "Featured in language"
 msgstr "Uitgelicht in taal"
 
-#: module/Company/view/company/admin/index.phtml:217
+#: module/Company/view/company/admin/index.phtml:220
 #: module/Decision/view/decision/admin/document.phtml:155
 #, php-format
 msgid "Are you sure you want to delete %s?"
 msgstr "Weet je zeker dat je %s wil verwijderen?"
 
-#: module/Company/view/company/admin/index.phtml:224
+#: module/Company/view/company/admin/index.phtml:227
 msgid "Delete company"
 msgstr "Verwijder bedrijf"
 
