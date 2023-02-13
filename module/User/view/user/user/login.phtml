@@ -16,7 +16,7 @@ $isMember = ('member' === $userType);
                                 </a>
                             </li>
                             <li role="presentation" class="<?= !$isMember ? 'active' : '' ?>">
-                                <a href="<?= $this->url('user/login', ['user_type' => 'company']) ?>">
+                                <a href="<?= $this->url('user/login', ['user_type' => 'company'], true) ?>">
                                     <?= $this->translate('Company') ?></a>
                             </li>
                         </ul>
