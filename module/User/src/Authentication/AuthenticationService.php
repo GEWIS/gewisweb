@@ -92,7 +92,8 @@ class AuthenticationService implements AuthenticationServiceInterface
      */
     public function authenticate(
         ?string $login = null,
-        #[SensitiveParameter] ?string $securityCode = null,
+        #[SensitiveParameter]
+        ?string $securityCode = null,
     ): Result {
         if (
             null === $login

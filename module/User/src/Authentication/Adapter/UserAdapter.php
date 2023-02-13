@@ -105,8 +105,10 @@ class UserAdapter implements AdapterInterface
      * @return bool
      */
     public function verifyPassword(
-        #[SensitiveParameter] string $password,
-        #[SensitiveParameter] string $hash,
+        #[SensitiveParameter]
+        string $password,
+        #[SensitiveParameter]
+        string $hash,
     ): bool {
         if ($this->bcrypt->verify($password, $hash)) {
             return true;
@@ -123,7 +125,8 @@ class UserAdapter implements AdapterInterface
      */
     public function setCredentials(
         string $login,
-        #[SensitiveParameter] string $password,
+        #[SensitiveParameter]
+        string $password,
     ): void {
         $this->login = $login;
         $this->password = $password;
