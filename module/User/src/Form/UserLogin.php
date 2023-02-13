@@ -98,10 +98,17 @@ class UserLogin extends Form implements InputFilterProviderInterface
             switch ($result->getCode()) {
                 case Result::FAILURE_UNCATEGORIZED:
                 case Result::FAILURE:
+                    $this->setMessages(
+                        [
+                            'login' => $result->getMessages(),
+                        ]
+                    );
+                    break;
                 case Result::FAILURE_IDENTITY_NOT_FOUND:
                     $this->setMessages(
                         [
                             'login' => $result->getMessages(),
+                            'password' => $result->getMessages(),
                         ]
                     );
                     break;

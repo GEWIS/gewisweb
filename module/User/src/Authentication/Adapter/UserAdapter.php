@@ -40,7 +40,7 @@ class UserAdapter implements AdapterInterface
                 Result::FAILURE_IDENTITY_NOT_FOUND,
                 null,
                 [
-                    $this->translator->translate('This user could not be found.'),
+                    $this->translator->translate('The login and password combination is incorrect.'),
                 ],
             );
         }
@@ -73,10 +73,10 @@ class UserAdapter implements AdapterInterface
             $this->loginAttemptService->logFailedLogin($user);
 
             return new Result(
-                Result::FAILURE_CREDENTIAL_INVALID,
+                Result::FAILURE_IDENTITY_NOT_FOUND,
                 null,
                 [
-                    $this->translator->translate('Wrong password provided.'),
+                    $this->translator->translate('The login and password combination is incorrect.'),
                 ],
             );
         }
