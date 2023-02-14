@@ -69,6 +69,12 @@
       <code>$bits</code>
     </PossiblyUndefinedArrayOffset>
   </file>
+  <file src="module/User/src/Controller/UserController.php">
+    <PossiblyUndefinedArrayOffset>
+      <code>$_SERVER['HTTP_X_FORWARDED_PROTO']</code>
+      <code>$_SERVER['HTTP_HOST']</code>
+    </PossiblyUndefinedArrayOffset>
+  </file>
   <file src="public/index.php">
     <PossiblyUndefinedArrayOffset>
       <code>$_SERVER['REQUEST_URI']</code>

@@ -31,8 +31,10 @@ readonly class PwnedPasswords
      * This function returns `true` iff the password is known to be leaked. All other cases, including failures to make
      * the request will return `false`.
      */
-    public function isPasswordLeaked(#[SensitiveParameter] string $password): bool
-    {
+    public function isPasswordLeaked(
+        #[SensitiveParameter]
+        string $password,
+    ): bool {
         $client = new Client();
         $request = new Request();
 

@@ -44,7 +44,7 @@ class UserController extends AbstractActionController
         }
 
         $userType = $this->params()->fromRoute('user_type');
-        $referer = $this->getRequest()->getServer('HTTP_REFERER');
+        $redirectTo = $this->params()->fromRoute('redirect_to');
         /** @var Request $request */
         $request = $this->getRequest();
 
@@ -66,18 +66,16 @@ class UserController extends AbstractActionController
                 }
 
                 if (null !== $login) {
-                    if (empty($data['redirect'])) {
-                        return $this->redirect()->toUrl($referer);
-                    }
-
-                    return $this->redirect()->toUrl($data['redirect']);
+                    return $this->redirect()->toUrl(
+                        $this->decodeRedirect((empty($data['redirect'])) ? $redirectTo : $data['redirect'])
+                    );
                 }
             }
         }
 
         return new ViewModel(
             [
-                'form' => $this->handleRedirect($userType, $referer),
+                'form' => $this->handleRedirect($userType, $redirectTo),
                 'userType' => $userType,
             ]
         );
@@ -99,25 +97,43 @@ class UserController extends AbstractActionController
             $form = $this->userService->getUserLoginForm();
         }
 
-        if (is_null($form->get('redirect')->getValue())) {
-            $redirect = $this->params()->fromQuery('redirect');
-
-            if (isset($redirect)) {
-                $form->get('redirect')->setValue($redirect);
-
-                return $form;
-            }
-
+        if (null === $form->get('redirect')->getValue()) {
             if (null !== $referer) {
                 $form->get('redirect')->setValue($referer);
 
                 return $form;
             }
 
-            $form->get('redirect')->setValue($this->url()->fromRoute('home'));
+            $form->get('redirect')->setValue(
+                base64_encode(
+                    $this->url()->fromRoute(
+                        route: 'home',
+                        options: ['force_canonical' => true],
+                    )
+                )
+            );
         }
 
         return $form;
+    }
+
+    /**
+     * Decode the base64 encoded referer, if it is not valid always return the home page.
+     */
+    private function decodeRedirect(?string $redirectTo): string
+    {
+        if (null !== $redirectTo) {
+            if (false !== ($url = base64_decode($redirectTo))) {
+                if (str_starts_with($url, $_SERVER['HTTP_X_FORWARDED_PROTO'] . '://' . $_SERVER['HTTP_HOST'] . '/')) {
+                    return $url;
+                }
+            }
+        }
+
+        return $this->url()->fromRoute(
+            route: 'home',
+            options: ['force_canonical' => true],
+        );
     }
 
     /**

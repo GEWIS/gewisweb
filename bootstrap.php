@@ -9,6 +9,11 @@ if (APP_ENV === 'production') {
             "Could not find `NONCE_REPLACEMENT_STRING`.\n"
         );
     }
+} else {
+    // This is necessary, otherwise the open redirect protection does not work locally.
+    if (isset($_SERVER['SERVER_PORT'])) {
+        unset($_SERVER['SERVER_PORT']);
+    }
 }
 
 define('NONCE_REPLACEMENT_STRING', getenv('NONCE_REPLACEMENT_STRING') ?: '');

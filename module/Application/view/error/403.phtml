@@ -7,7 +7,10 @@
         <?php endif; ?>
         <?php if ($this->identity() === null): ?>
             <p><?= $this->translate('You might be able to view this page by logging in') ?></p>
-            <a href="<?= $this->url('user/login') ?>">
+            <a href="<?= $this->url(
+                'user/login',
+                ['redirect_to' => base64_encode($this->serverUrl(true))],
+            ) ?>">
                 <span class="fas fa-user"></span>
                 <?= $this->translate('Login') ?>
             </a>
