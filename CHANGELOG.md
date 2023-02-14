@@ -1,3 +1,12 @@
+## [v3.0.1](https://github.com/GEWIS/gewisweb/tree/v3.0.1) (2023-02-14)
+
+* Changed title of the "My Information"-page to prevent being able to track users through collected analytics.
+* Changed login form validation messages to prevent account enumeration attacks.
+* Changed login form redirects to prevent open redirects.
+* Fixed issue where `graduate`s could be incorrectly assigned `active_member` privileges.
+
+---
+
 ## [v3.0](https://github.com/GEWIS/gewisweb/tree/v3.0) (2023-02-10)
 
 * Added support for marking sign-up lists as having limited capacity.
