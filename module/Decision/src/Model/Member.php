@@ -671,7 +671,7 @@ class Member
                 $dischargeDate = $organ->getDischargeDate();
 
                 // Keep installation if not discharged or discharged in the future
-                return is_null($dischargeDate) || $dischargeDate >= $today;
+                return null === $dischargeDate || $dischargeDate >= $today;
             }
         );
     }
