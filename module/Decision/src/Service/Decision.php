@@ -433,10 +433,6 @@ class Decision
      */
     public function createAuthorization(array $data): ?AuthorizationModel
     {
-        if (!$this->aclService->isAllowed('create', 'authorization')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to authorize someone.'));
-        }
-
         $authorizer = $this->aclService->getUserIdentityOrThrowException()->getMember();
         $recipient = $this->memberMapper->findByLidnr($data['recipient']);
 

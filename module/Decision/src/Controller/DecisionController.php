@@ -133,6 +133,10 @@ class DecisionController extends AbstractActionController
 
     public function authorizationsAction(): ViewModel
     {
+        if (!$this->aclService->isAllowed('create', 'authorization')) {
+            throw new NotAllowedException($this->translator->translate('You are not allowed to authorize someone'));
+        }
+
         $meeting = $this->decisionService->getLatestALV();
         $authorization = null;
 

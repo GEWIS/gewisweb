@@ -182,13 +182,13 @@ class User implements IdentityInterface
             return 'company_admin';
         }
 
-        if (count($this->getMember()->getCurrentOrganInstallations()) > 0) {
-            return 'active_member';
-        }
-
         if (empty($roleNames)) {
             if (MembershipTypes::Graduate === $this->getMember()->getType()) {
                 return 'graduate';
+            }
+
+            if (count($this->getMember()->getCurrentOrganInstallations()) > 0) {
+                return 'active_member';
             }
 
             return 'user';
