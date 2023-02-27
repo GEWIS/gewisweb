@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-27 16:41+0100\n"
+"POT-Creation-Date: 2023-02-27 16:51+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2326,7 +2326,7 @@ msgid "Still haven't found what you're looking for? Take a look at %s."
 msgstr ""
 
 #: module/Company/view/company/company/jobs.phtml:64
-msgid "job_at_company"
+msgid "at"
 msgstr ""
 
 #: module/Company/view/company/company/jobs.phtml:114

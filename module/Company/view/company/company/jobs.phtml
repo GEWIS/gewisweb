@@ -61,7 +61,7 @@ $this->headScript()
                         'category' => $this->localiseText($job->getCategory()->getSlug()),
                     ]
                 ) ?>"><?= $this->escapeHtml($this->localiseText($job->getName())) ?></a>
-                <small><?= $this->translate('job_at_company') ?>
+                <small><?= $this->translate('at') ?>
                     <a href="<?= $this->url(
                         'company/companyItem',
                         [

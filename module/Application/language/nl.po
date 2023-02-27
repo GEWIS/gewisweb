@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-27 16:41+0100\n"
-"PO-Revision-Date: 2023-02-27 16:42+0100\n"
+"POT-Creation-Date: 2023-02-27 16:51+0100\n"
+"PO-Revision-Date: 2023-02-27 16:52+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: nl\n"
@@ -3291,7 +3291,7 @@ msgid "Still haven't found what you're looking for? Take a look at %s."
 msgstr "Niet gevonden wat je zoekt? Bekijk ook %s."
 
 #: module/Company/view/company/company/jobs.phtml:64
-msgid "job_at_company"
+msgid "at"
 msgstr "bij"
 
 #: module/Company/view/company/company/jobs.phtml:114

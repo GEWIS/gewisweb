@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-27 16:41+0100\n"
-"PO-Revision-Date: 2023-02-27 16:41+0100\n"
+"POT-Creation-Date: 2023-02-27 16:51+0100\n"
+"PO-Revision-Date: 2023-02-27 16:52+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: en\n"
@@ -1760,47 +1760,47 @@ msgstr "Add a sign-up list field"
 
 #: module/Application/language/additional-strings:1
 msgid "Lid"
-msgstr "Lid"
+msgstr "Member"
 
 #: module/Application/language/additional-strings:2
 msgid "Voorzitter"
-msgstr "Voorzitter"
+msgstr "Chair"
 
 #: module/Application/language/additional-strings:3
 msgid "Onderwijscommissaris"
-msgstr "Onderwijscommissaris"
+msgstr "Educational Officer"
 
 #: module/Application/language/additional-strings:4
 msgid "PR-Functionaris"
-msgstr "PR-Functionaris"
+msgstr "PR Officer"
 
 #: module/Application/language/additional-strings:5
 msgid "Vice-Voorzitter"
-msgstr "Vice-Voorzitter"
+msgstr "Vice Chair"
 
 #: module/Application/language/additional-strings:6
 msgid "Penningmeester"
-msgstr "Penningmeester"
+msgstr "Treasurer"
 
 #: module/Application/language/additional-strings:7
 msgid "Secretaris"
-msgstr "Secretaris"
+msgstr "Secretary"
 
 #: module/Application/language/additional-strings:8
 msgid "Vicevoorzitter"
-msgstr "Vicevoorzitter"
+msgstr "Vice Chair"
 
 #: module/Application/language/additional-strings:9
 msgid "Tafelvoetbalcoordinator"
-msgstr "Tafelvoetbalcoordinator"
+msgstr "Table Soccer Coordinator"
 
 #: module/Application/language/additional-strings:10
 msgid "Inkoper"
-msgstr "Inkoper"
+msgstr "Purchaser"
 
 #: module/Application/language/additional-strings:11
 msgid "Inactief Lid"
-msgstr "Inactief Lid"
+msgstr "Inactive Member"
 
 #: module/Application/src/Service/FileStorage.php:62
 msgid "An unknown error occurred during uploading (%i)"
@@ -2289,7 +2289,7 @@ msgstr "Photo of the week"
 #: module/Application/view/partial/main-nav.phtml:433
 #: module/Decision/view/decision/member/index.phtml:41
 msgid "My photo's"
-msgstr "My photo's"
+msgstr "My photos"
 
 #: module/Application/view/partial/paginator.phtml:8
 #: module/Photo/view/photo/album/index.phtml:428
@@ -3253,8 +3253,8 @@ msgid "Still haven't found what you're looking for? Take a look at %s."
 msgstr "Still haven't found what you're looking for? Take a look at %s."
 
 #: module/Company/view/company/company/jobs.phtml:64
-msgid "job_at_company"
-msgstr "job_at_company"
+msgid "at"
+msgstr "at"
 
 #: module/Company/view/company/company/jobs.phtml:114
 msgid "View Website"
@@ -3987,27 +3987,27 @@ msgstr "Organ Regulations"
 #: module/Decision/view/decision/member/search.phtml:3
 #: module/Decision/view/decision/member/search.phtml:9
 msgid "Zoeken op lid"
-msgstr "Zoeken op lid"
+msgstr "Search for a member"
 
 #: module/Decision/view/decision/member/search.phtml:13
 msgid "Zoek"
-msgstr "Zoek"
+msgstr "Search"
 
 #: module/Decision/view/decision/member/search.phtml:23
 msgid "Naam"
-msgstr "Naam"
+msgstr "Name"
 
 #: module/Decision/view/decision/member/search.phtml:24
 msgid "Generatie"
-msgstr "Generatie"
+msgstr "Generation"
 
 #: module/Decision/view/decision/member/search.phtml:31
 msgid ""
 "Er zijn teveel resultaten om weer te geven. Probeer te filteren om andere "
 "resultaten te zien."
 msgstr ""
-"Er zijn teveel resultaten om weer te geven. Probeer te filteren om andere "
-"resultaten te zien."
+"There are too many results to display. Try filtering in order to display "
+"other results."
 
 #: module/Decision/view/decision/member/self.phtml:6
 msgid "My Information"
@@ -4746,7 +4746,7 @@ msgstr "Recent changes"
 
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:29
 msgid "Studievereniging GEWIS"
-msgstr "Studievereniging GEWIS"
+msgstr "Study Association GEWIS"
 
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:31
 msgid ""
@@ -4760,12 +4760,12 @@ msgstr ""
 
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:130
 msgid "Verjaardagen"
-msgstr "Verjaardagen"
+msgstr "Birthdays"
 
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:135
 #, php-format
 msgid "%s wil be %s years old today!"
-msgstr "%s wil be %s years old today!"
+msgstr "%s will be %s years old today!"
 
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:150
 msgid "Agenda"
@@ -4774,7 +4774,7 @@ msgstr "Agenda"
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:167
 #, php-format
 msgid "Donderdags is er %sborrel%s van 16.30 tot 19.00 uur."
-msgstr "Donderdags is er %sborrel%s van 16.30 tot 19.00 uur."
+msgstr "Thursdays there is a %ssocial drink%s from 16.30 till 19.00."
 
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:176
 #: module/Frontpage/view/frontpage/organ/organ.phtml:120
