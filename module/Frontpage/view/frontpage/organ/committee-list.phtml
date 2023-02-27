@@ -20,10 +20,12 @@ $this->headTitle($this->translate('Committees')); ?>
         </div>
         <div class="row">
 
-            <?php foreach ($committees as $committee) {
+            <?php
+            $lang = $this->plugin('translate')->getTranslator()->getLocale();
+            foreach ($committees as $committee) {
                 echo $this->partial('partial/organ-card.phtml', [
                     'organ' => $committee,
-                    'lang' => $this->plugin('translate')->getTranslator()->getLocale()
+                    'lang' => $lang,
                 ]);
             }
 
