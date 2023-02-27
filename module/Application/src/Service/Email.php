@@ -45,7 +45,7 @@ class Email
     ): void {
         $message = $this->createMessageFromView($view, $data);
 
-        $message->addFrom($this->emailConfig['from']);
+        $message->setFrom($this->emailConfig['from'], $this->emailConfig['from_name']);
         $message->addTo($this->emailConfig['to'][$type]);
         $message->setSubject($subject);
 
@@ -70,7 +70,7 @@ class Email
     ): void {
         $message = $this->createMessageFromView($view, $data);
 
-        $message->addFrom($this->emailConfig['from']);
+        $message->setFrom($this->emailConfig['from'], $this->emailConfig['from_name']);
         $message->addTo($this->emailConfig['to'][$type]);
         $message->setSubject($subject);
         $message->setReplyTo($user->getEmail());
@@ -96,7 +96,7 @@ class Email
     ): void {
         $message = $this->createMessageFromView($view, $data);
 
-        $message->addFrom($this->emailConfig['from']);
+        $message->setFrom($this->emailConfig['from'], $this->emailConfig['from_name']);
         $message->addTo($recipient->getEmail());
         $message->setSubject($subject);
         $message->setReplyTo($user->getEmail());
@@ -122,7 +122,7 @@ class Email
     ): void {
         $message = $this->createMessageFromView($view, $data);
 
-        $message->addFrom($this->emailConfig['from']);
+        $message->setFrom($this->emailConfig['from'], $this->emailConfig['from_name']);
         $message->addTo($this->emailConfig['to'][$type]);
         $message->setSubject($subject);
         $message->setReplyTo($organ->getEmail());
