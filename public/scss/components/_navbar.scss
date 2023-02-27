@@ -376,6 +376,14 @@ a.navbar-brand  {
     }
 }
 
+@media (max-width: $screen-xs-max) {
+    .nav.nav-justified.nav-login > li,
+    .nav.nav-tabs.nav-justified.nav-login > li {
+        float: left;
+        width: 50%;
+    }
+}
+
 @media (max-width: $grid-float-breakpoint - 1px) {
     .navbar-collapse {
         clear: both;
