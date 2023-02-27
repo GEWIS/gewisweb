@@ -54,7 +54,7 @@ class Email
 
         $message = new Message();
         $message->getHeaders()->addHeader((new MessageId())->setId());
-        $message->addFrom($this->emailConfig['from']);
+        $message->setFrom($this->emailConfig['from'], $this->emailConfig['from_name']);
         $message->addTo($member->getEmail());
         $message->setSubject('Your account for the GEWIS website');
         $message->setBody($mimeMessage);
@@ -82,7 +82,7 @@ class Email
 
         $message = new Message();
         $message->getHeaders()->addHeader((new MessageId())->setId());
-        $message->addFrom($this->emailConfig['from']);
+        $message->setFrom($this->emailConfig['from'], $this->emailConfig['from_name']);
         $message->addTo($newCompanyUser->getEmail());
         $message->setSubject('Your company account for the GEWIS Career Platform');
         $message->setBody($mimeMessage);
@@ -116,7 +116,7 @@ class Email
 
         $message = new Message();
         $message->getHeaders()->addHeader((new MessageId())->setId());
-        $message->addFrom($this->emailConfig['from']);
+        $message->setFrom($this->emailConfig['from'], $this->emailConfig['from_name']);
         $message->addTo($member->getEmail());
         $message->setSubject('Password reset request for the GEWIS website');
         $message->setBody($mimeMessage);
@@ -144,7 +144,7 @@ class Email
 
         $message = new Message();
         $message->getHeaders()->addHeader((new MessageId())->setId());
-        $message->addFrom($this->emailConfig['from']);
+        $message->setFrom($this->emailConfig['from'], $this->emailConfig['from_name']);
         $message->addTo($newCompanyUser->getEmail());
         $message->setSubject('Password reset request for the GEWIS Career Platform');
         $message->setBody($mimeMessage);

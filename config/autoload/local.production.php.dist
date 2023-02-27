@@ -33,6 +33,7 @@ return [
             'port' => '25'
         ],
         'from' => 'web@gewis.nl',
+        'from_name' => 'Study Association GEWIS',
         'to' => [
             'activity_creation' => 'cib@gewis.nl',
             'activity_calendar' => 'cib@gewis.nl',
