@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-10 19:04+0100\n"
+"POT-Creation-Date: 2023-02-27 16:51+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1250,7 +1250,7 @@ msgstr ""
 msgid "You might be able to view this page by logging in"
 msgstr ""
 
-#: module/Application/view/error/403.phtml:12
+#: module/Application/view/error/403.phtml:15
 #: module/Application/view/partial/admin.phtml:24
 #: module/Application/view/partial/main-nav.phtml:74
 #: module/User/view/user/user/login.phtml:25
@@ -1342,7 +1342,7 @@ msgid "No Exception available"
 msgstr ""
 
 #: module/Application/view/layout/layout.phtml:6
-msgid "GEWIS Website"
+msgid "Study Association GEWIS"
 msgstr ""
 
 #: module/Application/view/partial/admin.phtml:40
@@ -2326,7 +2326,7 @@ msgid "Still haven't found what you're looking for? Take a look at %s."
 msgstr ""
 
 #: module/Company/view/company/company/jobs.phtml:64
-msgid "job_at_company"
+msgid "at"
 msgstr ""
 
 #: module/Company/view/company/company/jobs.phtml:114
@@ -3396,11 +3396,11 @@ msgstr ""
 msgid "The currently active fraternities of GEWIS (in arbitrary order)"
 msgstr ""
 
-#: module/Frontpage/view/frontpage/organ/fraternity-list.phtml:22
+#: module/Frontpage/view/frontpage/organ/fraternity-list.phtml:24
 msgid "Retired fraternities"
 msgstr ""
 
-#: module/Frontpage/view/frontpage/organ/fraternity-list.phtml:23
+#: module/Frontpage/view/frontpage/organ/fraternity-list.phtml:25
 msgid "The following fraternities have retired:"
 msgstr ""
 
@@ -4767,7 +4767,7 @@ msgid "The e-mail address must be unique across companies."
 msgstr ""
 
 #: module/Company/src/Form/Company.php:392 module/Company/src/Form/Job.php:339
-#: module/User/src/Form/CompanyUserLogin.php:120
+#: module/User/src/Form/CompanyUserLogin.php:127
 #: module/User/src/Form/CompanyUserReset.php:71
 #: module/User/src/Form/UserReset.php:95
 msgid "E-mail address format is not valid"
@@ -4870,12 +4870,16 @@ msgstr ""
 msgid "You are not allowed to search decisions."
 msgstr ""
 
-#: module/Decision/src/Controller/DecisionController.php:180
-#: module/Decision/src/Service/Decision.php:599
+#: module/Decision/src/Controller/DecisionController.php:137
+msgid "You are not allowed to authorize someone"
+msgstr ""
+
+#: module/Decision/src/Controller/DecisionController.php:184
+#: module/Decision/src/Service/Decision.php:595
 msgid "You are not allowed to revoke authorizations."
 msgstr ""
 
-#: module/Decision/src/Controller/DecisionController.php:208
+#: module/Decision/src/Controller/DecisionController.php:212
 msgid "You are not allowed to browse files."
 msgstr ""
 
@@ -5053,19 +5057,15 @@ msgstr ""
 msgid "You are not allowed to view authorizations."
 msgstr ""
 
-#: module/Decision/src/Service/Decision.php:437
-msgid "You are not allowed to authorize someone."
-msgstr ""
-
-#: module/Decision/src/Service/Decision.php:533
+#: module/Decision/src/Service/Decision.php:529
 msgid "You are not allowed to upload meeting minutes."
 msgstr ""
 
-#: module/Decision/src/Service/Decision.php:548
+#: module/Decision/src/Service/Decision.php:544
 msgid "You are not allowed to upload meeting documents."
 msgstr ""
 
-#: module/Decision/src/Service/Decision.php:585
+#: module/Decision/src/Service/Decision.php:581
 msgid "You are not allowed authorize people."
 msgstr ""
 
@@ -5422,18 +5422,15 @@ msgid "Not allowed to view tags."
 msgstr ""
 
 #: module/User/src/Authentication/Adapter/CompanyUserAdapter.php:43
+#: module/User/src/Authentication/Adapter/CompanyUserAdapter.php:65
 #: module/User/src/Authentication/Adapter/UserAdapter.php:43
-msgid "This user could not be found."
+#: module/User/src/Authentication/Adapter/UserAdapter.php:79
+msgid "The login and password combination is incorrect."
 msgstr ""
 
 #: module/User/src/Authentication/Adapter/CompanyUserAdapter.php:53
 #: module/User/src/Authentication/Adapter/UserAdapter.php:67
 msgid "Too many login attempts, try again later."
-msgstr ""
-
-#: module/User/src/Authentication/Adapter/CompanyUserAdapter.php:65
-#: module/User/src/Authentication/Adapter/UserAdapter.php:79
-msgid "Wrong password provided."
 msgstr ""
 
 #: module/User/src/Authentication/Adapter/CompanyUserAdapter.php:77
@@ -5457,7 +5454,7 @@ msgid ""
 "require you to login in with a different account."
 msgstr ""
 
-#: module/User/src/Controller/UserController.php:168
+#: module/User/src/Controller/UserController.php:184
 msgid "You are not allowed to change passwords"
 msgstr ""
 

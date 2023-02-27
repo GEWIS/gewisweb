@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-10 19:04+0100\n"
-"PO-Revision-Date: 2023-02-10 19:05+0100\n"
+"POT-Creation-Date: 2023-02-27 16:51+0100\n"
+"PO-Revision-Date: 2023-02-27 16:52+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: en\n"
@@ -722,9 +722,9 @@ msgstr ""
 "first dibs to let the activity take place on this date. Five weeks before "
 "the activity takes place, the budget must have been presented to the board. "
 "When this has not been done, the option will only stay in the calendar for "
-"one more week. In case the entity involved does not present their budget "
-"within this week nontheless, the option lapses and the next one in line gets "
-"the chance to use this date for an activity."
+"two more weeks. In case the entity involved does not present their budget "
+"within these two weeks nontheless, the option lapses and the next one in "
+"line gets the chance to use this date for an activity."
 
 #: module/Activity/view/activity/activity-calendar/index.phtml:27
 msgid ""
@@ -1590,7 +1590,7 @@ msgstr "Upcoming Activities"
 
 #: module/Activity/view/activity/admin/view.phtml:37
 msgid "Old activities"
-msgstr "Past activities"
+msgstr "Old activities"
 
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:24
 #: module/Activity/view/partial/signuplist.phtml:12
@@ -1768,11 +1768,11 @@ msgstr "Chair"
 
 #: module/Application/language/additional-strings:3
 msgid "Onderwijscommissaris"
-msgstr "Educational officer"
+msgstr "Educational Officer"
 
 #: module/Application/language/additional-strings:4
 msgid "PR-Functionaris"
-msgstr "PR-Officer"
+msgstr "PR Officer"
 
 #: module/Application/language/additional-strings:5
 msgid "Vice-Voorzitter"
@@ -1788,11 +1788,11 @@ msgstr "Secretary"
 
 #: module/Application/language/additional-strings:8
 msgid "Vicevoorzitter"
-msgstr "Vice Chairman"
+msgstr "Vice Chair"
 
 #: module/Application/language/additional-strings:9
 msgid "Tafelvoetbalcoordinator"
-msgstr "Table soccer coordinator"
+msgstr "Table Soccer Coordinator"
 
 #: module/Application/language/additional-strings:10
 msgid "Inkoper"
@@ -1820,7 +1820,7 @@ msgstr "You do not have the required privileges to view this page"
 msgid "You might be able to view this page by logging in"
 msgstr "You might be able to view this page by logging in"
 
-#: module/Application/view/error/403.phtml:12
+#: module/Application/view/error/403.phtml:15
 #: module/Application/view/partial/admin.phtml:24
 #: module/Application/view/partial/main-nav.phtml:74
 #: module/User/view/user/user/login.phtml:25
@@ -1913,8 +1913,8 @@ msgid "No Exception available"
 msgstr "No Exception available"
 
 #: module/Application/view/layout/layout.phtml:6
-msgid "GEWIS Website"
-msgstr "GEWIS Website"
+msgid "Study Association GEWIS"
+msgstr "Study Association GEWIS"
 
 #: module/Application/view/partial/admin.phtml:40
 #: module/Application/view/partial/admin.phtml:80
@@ -2096,7 +2096,7 @@ msgstr "Home"
 #: module/Company/view/company/company-account/jobs.phtml:169
 #: module/Company/view/company/company-account/transfer-jobs.phtml:5
 msgid "Jobs"
-msgstr "Vacancies"
+msgstr "Jobs"
 
 #: module/Application/view/partial/company.phtml:33
 #: module/Company/view/company/company-account/highlights.phtml:2
@@ -2450,7 +2450,7 @@ msgstr "Job successfully created!"
 #: module/Company/src/Service/Company.php:944
 #: module/Company/src/Service/Company.php:1015
 msgid "You are not allowed to edit jobs"
-msgstr "You are not allowed to edit vacancies"
+msgstr "You are not allowed to edit jobs"
 
 #: module/Company/src/Controller/AdminController.php:526
 msgid "Job successfully edited!"
@@ -2611,7 +2611,7 @@ msgid "The e-mail address must be unique across companies."
 msgstr "The e-mail address must be unique across companies."
 
 #: module/Company/src/Form/Company.php:392 module/Company/src/Form/Job.php:339
-#: module/User/src/Form/CompanyUserLogin.php:120
+#: module/User/src/Form/CompanyUserLogin.php:127
 #: module/User/src/Form/CompanyUserReset.php:71
 #: module/User/src/Form/UserReset.php:95
 msgid "E-mail address format is not valid"
@@ -3106,7 +3106,7 @@ msgstr "Add Company"
 #: module/Company/view/company/admin/index.phtml:130
 #: module/Company/view/company/admin/index.phtml:200
 msgid "Active jobs"
-msgstr "Active vacancies"
+msgstr "Active jobs"
 
 #: module/Company/view/company/admin/index.phtml:138
 #: module/Company/view/company/admin/index.phtml:201
@@ -3253,7 +3253,7 @@ msgid "Still haven't found what you're looking for? Take a look at %s."
 msgstr "Still haven't found what you're looking for? Take a look at %s."
 
 #: module/Company/view/company/company/jobs.phtml:64
-msgid "job_at_company"
+msgid "at"
 msgstr "at"
 
 #: module/Company/view/company/company/jobs.phtml:114
@@ -3355,14 +3355,18 @@ msgstr "You are not allowed to delete meeting documents."
 msgid "You are not allowed to search decisions."
 msgstr "You are not allowed to search decisions."
 
-#: module/Decision/src/Controller/DecisionController.php:180
-#: module/Decision/src/Service/Decision.php:599
+#: module/Decision/src/Controller/DecisionController.php:137
+msgid "You are not allowed to authorize someone"
+msgstr "You are not allowed to authorize someone"
+
+#: module/Decision/src/Controller/DecisionController.php:184
+#: module/Decision/src/Service/Decision.php:595
 msgid "You are not allowed to revoke authorizations."
 msgstr "You are not allowed to revoke authorizations."
 
-#: module/Decision/src/Controller/DecisionController.php:208
+#: module/Decision/src/Controller/DecisionController.php:212
 msgid "You are not allowed to browse files."
-msgstr "You are not allowed to approve polls."
+msgstr "You are not allowed to browse files."
 
 #: module/Decision/src/Controller/MemberController.php:95
 msgid "Not allowed to search for members."
@@ -3574,19 +3578,15 @@ msgstr "You are not allowed to view all authorizations."
 msgid "You are not allowed to view authorizations."
 msgstr "You are not allowed to view authorizations."
 
-#: module/Decision/src/Service/Decision.php:437
-msgid "You are not allowed to authorize someone."
-msgstr "You are not allowed to authorize someone."
-
-#: module/Decision/src/Service/Decision.php:533
+#: module/Decision/src/Service/Decision.php:529
 msgid "You are not allowed to upload meeting minutes."
 msgstr "You are not allowed to upload meeting minutes."
 
-#: module/Decision/src/Service/Decision.php:548
+#: module/Decision/src/Service/Decision.php:544
 msgid "You are not allowed to upload meeting documents."
 msgstr "You are not allowed to upload meeting documents."
 
-#: module/Decision/src/Service/Decision.php:585
+#: module/Decision/src/Service/Decision.php:581
 msgid "You are not allowed authorize people."
 msgstr "You are not allowed authorize people."
 
@@ -3803,7 +3803,7 @@ msgstr "Confirm authorization"
 #: module/Decision/view/decision/decision/authorizations.phtml:193
 #, php-format
 msgid "Are you sure you would like to authorize %s"
-msgstr "Are you Are you sure you would like to authorize %s"
+msgstr "Are you sure you would like to authorize %s"
 
 #: module/Decision/view/decision/decision/files.phtml:14
 #: module/Decision/view/decision/decision/files.phtml:16
@@ -4171,7 +4171,7 @@ msgstr ""
 
 #: module/Decision/view/decision/organ-admin/edit.phtml:155
 msgid "To optimally display your image your page, please crop it below"
-msgstr "To optimally display your image on your page, please crop it below"
+msgstr "To optimally display your image your page, please crop it below"
 
 #: module/Decision/view/decision/organ-admin/index.phtml:6
 msgid ""
@@ -4195,7 +4195,7 @@ msgstr "Inactive members"
 
 #: module/Decision/view/decision/organ/show.phtml:43
 msgid "Old members"
-msgstr "Previous members"
+msgstr "Old members"
 
 #: module/Decision/view/decision/organ/show.phtml:52
 msgid "Organ mutations"
@@ -4746,7 +4746,7 @@ msgstr "Recent changes"
 
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:29
 msgid "Studievereniging GEWIS"
-msgstr "Study association GEWIS"
+msgstr "Study Association GEWIS"
 
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:31
 msgid ""
@@ -4774,7 +4774,7 @@ msgstr "Agenda"
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:167
 #, php-format
 msgid "Donderdags is er %sborrel%s van 16.30 tot 19.00 uur."
-msgstr "Thursdays there is a %ssocial drink%s from 16.30 until 19.00."
+msgstr "Thursdays there is a %ssocial drink%s from 16.30 till 19.00."
 
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:176
 #: module/Frontpage/view/frontpage/organ/organ.phtml:120
@@ -4849,11 +4849,11 @@ msgstr ""
 msgid "The currently active fraternities of GEWIS (in arbitrary order)"
 msgstr "The currently active fraternities of GEWIS (in arbitrary order)"
 
-#: module/Frontpage/view/frontpage/organ/fraternity-list.phtml:22
+#: module/Frontpage/view/frontpage/organ/fraternity-list.phtml:24
 msgid "Retired fraternities"
 msgstr "Retired fraternities"
 
-#: module/Frontpage/view/frontpage/organ/fraternity-list.phtml:23
+#: module/Frontpage/view/frontpage/organ/fraternity-list.phtml:25
 msgid "The following fraternities have retired:"
 msgstr "The following fraternities have retired:"
 
@@ -5491,19 +5491,16 @@ msgid "Old photos of the week"
 msgstr "Old photos of the week"
 
 #: module/User/src/Authentication/Adapter/CompanyUserAdapter.php:43
+#: module/User/src/Authentication/Adapter/CompanyUserAdapter.php:65
 #: module/User/src/Authentication/Adapter/UserAdapter.php:43
-msgid "This user could not be found."
-msgstr "This user could not be found."
+#: module/User/src/Authentication/Adapter/UserAdapter.php:79
+msgid "The login and password combination is incorrect."
+msgstr "The login and password combination is incorrect."
 
 #: module/User/src/Authentication/Adapter/CompanyUserAdapter.php:53
 #: module/User/src/Authentication/Adapter/UserAdapter.php:67
 msgid "Too many login attempts, try again later."
 msgstr "Too many login attempts, try again later."
-
-#: module/User/src/Authentication/Adapter/CompanyUserAdapter.php:65
-#: module/User/src/Authentication/Adapter/UserAdapter.php:79
-msgid "Wrong password provided."
-msgstr "Wrong password provided."
 
 #: module/User/src/Authentication/Adapter/CompanyUserAdapter.php:77
 #: module/User/src/Authentication/Adapter/UserAdapter.php:91
@@ -5533,7 +5530,7 @@ msgstr ""
 "do so before continuing. If you are already logged in this action may "
 "require you to login in with a different account."
 
-#: module/User/src/Controller/UserController.php:168
+#: module/User/src/Controller/UserController.php:184
 msgid "You are not allowed to change passwords"
 msgstr "You are not allowed to change passwords"
 
