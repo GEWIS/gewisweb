@@ -84,7 +84,7 @@ class ApiAuthenticationController extends AbstractActionController
 
             if ($form->isValid()) {
                 // Check against `cancel` such that we can work with confirm and continue.
-                if (null === $form->getData()['cancel']) {
+                if (isset($form->getData()['cancel'])) {
                     $url = $this->apiAppService->callbackWithToken($app, $identity);
                 } else {
                     // If the user does not want to continue, let them navigate back to the application.
