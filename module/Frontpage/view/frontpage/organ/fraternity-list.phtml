@@ -9,11 +9,13 @@ $this->headTitle($this->translate('Fraternities')); ?>
         <p><?= $this->translate('The currently active fraternities of GEWIS (in arbitrary order)') ?></p>
         <div class="row">
             <?php
+            $lang = $this->plugin('translate')->getTranslator()->getLocale();
+
             shuffle($activeFraternities);
             foreach ($activeFraternities as $fraternity) {
                 echo $this->partial('partial/organ-card.phtml', [
                     'organ' => $fraternity,
-                    'lang' => $this->plugin('translate')->getTranslator()->getLocale()
+                    'lang' => $lang,
                 ]);
             }
             ?>
@@ -23,9 +25,11 @@ $this->headTitle($this->translate('Fraternities')); ?>
         <p><?= $this->translate('The following fraternities have retired:') ?></p>
         <div class="row">
             <?php
+            $lang = $this->plugin('translate')->getTranslator()->getLocale();
             foreach ($abrogatedFraternities as $fraternity) {
                 echo $this->partial('partial/organ-card.phtml', [
-                    'organ' => $fraternity
+                    'organ' => $fraternity,
+                    'lang' => $lang,
                 ]);
             }
             ?>
