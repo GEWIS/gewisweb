@@ -194,10 +194,6 @@ class User implements IdentityInterface
             return 'user';
         }
 
-        if (in_array('photo_guest', $roleNames)) {
-            return 'photo_guest';
-        }
-
         throw new RuntimeException(
             sprintf('Could not determine user role unambiguously for user %s', $this->getLidnr())
         );
