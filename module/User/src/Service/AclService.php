@@ -69,7 +69,6 @@ class AclService extends GenericAclService
          * - company: a company which uses the career section of the website
          * - apiuser: Automated tool given access by an admin
          * - admin: Defined administrators
-         * - photo_guest: Special role for non-members but friends of GEWIS nonetheless
          */
         $this->acl->addRole(new Role('guest'));
         $this->acl->addRole(new Role('tueguest'), 'guest');
@@ -80,7 +79,6 @@ class AclService extends GenericAclService
         $this->acl->addRole(new Role('graduate'), 'user');
         $this->acl->addrole(new Role('company_admin'), 'active_member');
         $this->acl->addRole(new Role('admin'));
-        $this->acl->addRole(new Role('photo_guest'), 'guest');
 
         // admins (this includes board members) are allowed to do everything
         $this->acl->allow('admin');
@@ -91,6 +89,5 @@ class AclService extends GenericAclService
 
         $this->acl->allow('user', 'user', ['password_change']);
         $this->acl->allow('company', 'user', ['password_change']);
-        $this->acl->allow('photo_guest', 'user', ['password_change']);
     }
 }

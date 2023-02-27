@@ -27,10 +27,6 @@ class AclService extends \User\Service\AclService
         $this->acl->allow('user', 'tag', ['view', 'add', 'remove']);
         $this->acl->allow('user', 'vote', ['view', 'add']);
 
-        $this->acl->allow('photo_guest', 'photo', 'view');
-        $this->acl->allow('photo_guest', 'album', 'view');
-        $this->acl->allow('photo_guest', 'photo', ['download', 'view_metadata']);
-
         // Graduates may not view photos/albums that were made after their membership ended.
         $this->acl->deny('graduate', 'album', 'view', new IsAfterMembershipEndedAndNotTagged());
         $this->acl->deny('graduate', 'photo', ['view', 'download', 'view_metadata'], new IsAfterMembershipEndedAndNotTagged());
