@@ -1,3 +1,15 @@
+## [v3.0.2](https://github.com/GEWIS/gewisweb/tree/v3.0.2) (2023-02-28)
+
+* Added support for keyholders.
+* Added `base-uri` to Content Security Policy to prevent hijacking of relative URLs.
+* Changed website title from `GEWIS Website` to `Study Association GEWIS` (`Studievereniging GEWIS` when Dutch is selected as language).
+* Changed sender of e-mails to `Study Association GEWIS`.
+* Removed unused `photo_guest` role.
+* Fixed issue where viewing retired fraternities could result in an error in certain cases.
+* Fixed issue where going to an external application would fail if the 90-day reminder dialog was shown.
+
+---
+
 ## [v3.0.1](https://github.com/GEWIS/gewisweb/tree/v3.0.1) (2023-02-14)
 
 * Changed title of the "My Information"-page to prevent being able to track users through collected analytics.
