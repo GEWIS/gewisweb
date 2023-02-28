@@ -14,6 +14,8 @@ use Decision\Model\SubDecision\{
     Foundation,
     FoundationReference,
     Installation,
+    Key\Granting as KeyGranting,
+    Key\Withdrawal as KeyWithdrawal,
     Other,
     Reckoning,
 };
@@ -51,6 +53,8 @@ use Doctrine\ORM\Mapping\{
         "board_release" => BoardRelease::class,
         "board_discharge" => BoardDischarge::class,
         "foundationreference" => FoundationReference::class,
+        "key_granting" => KeyGranting::class,
+        "key_withdraw" => KeyWithdrawal::class,
     ],
 )]
 abstract class SubDecision

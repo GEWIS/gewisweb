@@ -254,6 +254,15 @@ class Member
     )]
     protected Collection $tags;
 
+    /**
+     * Keyholdership.
+     */
+    #[OneToMany(
+        targetEntity: Keyholder::class,
+        mappedBy: "member",
+    )]
+    protected Collection $keyGrantings;
+
     public function __construct()
     {
         $this->addresses = new ArrayCollection();
@@ -262,6 +271,7 @@ class Member
         $this->boardInstallations = new ArrayCollection();
         $this->tags = new ArrayCollection();
         $this->lists = new ArrayCollection();
+        $this->keyGrantings = new ArrayCollection();
     }
 
     /**
