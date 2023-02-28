@@ -523,6 +523,13 @@ happens either automatically or has to be done manually, as set forth in the byl
 <dd>Installations of this member.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a href="classes/Decision-Model-Member.html#property_keyGrantings">$keyGrantings</a>
+    <span>
+                        &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>            </span>
+</dt>
+<dd>Keyholdership.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Decision-Model-Member.html#property_lastName">$lastName</a>
     <span>
                         &nbsp;: string            </span>
@@ -763,6 +770,13 @@ still meets the requirements as set forth in the bylaws and internal regulations
 <dd>Get the installations.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Decision-Model-Member.html#method_getKeyGrantings">getKeyGrantings()</a>
+    <span>
+                                &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>    </span>
+</dt>
+<dd>Get keyholderships.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-Member.html#method_getLastName">getLastName()</a>
     <span>
                                 &nbsp;: string    </span>
@@ -859,6 +873,13 @@ still meets the requirements as set forth in the bylaws and internal regulations
                                 &nbsp;: bool    </span>
 </dt>
 <dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Decision-Model-Member.html#method_isKeyholder">isKeyholder()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+<dd>Returns true if the member is currently granted a key code (that is not withdrawn prematurely).</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-Member.html#method_setAuthenticationKey">setAuthenticationKey()</a>
@@ -1506,6 +1527,40 @@ deleted members and members that are deceased but whose profile should be kept.<
             -protected
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="property_keyGrantings">
+        $keyGrantings
+        <a href="classes/Decision-Model-Member.html#property_keyGrantings" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">260</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Keyholdership.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr></span>
+    <span class="phpdocumentor-signature__name">$keyGrantings</span>
+    </code>
+
+    
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="property_lastName">
         $lastName
         <a href="classes/Decision-Model-Member.html#property_lastName" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1871,7 +1926,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">257</span>
+    <span class="phpdocumentor-element-found-in__line">266</span>
 
     </aside>
 
@@ -1904,7 +1959,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">794</span>
+    <span class="phpdocumentor-element-found-in__line">804</span>
 
     </aside>
 
@@ -1947,7 +2002,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">782</span>
+    <span class="phpdocumentor-element-found-in__line">792</span>
 
     </aside>
 
@@ -1990,7 +2045,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">817</span>
+    <span class="phpdocumentor-element-found-in__line">827</span>
 
     </aside>
 
@@ -2035,7 +2090,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">828</span>
+    <span class="phpdocumentor-element-found-in__line">838</span>
 
     </aside>
 
@@ -2078,7 +2133,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">772</span>
+    <span class="phpdocumentor-element-found-in__line">782</span>
 
     </aside>
 
@@ -2111,7 +2166,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">838</span>
+    <span class="phpdocumentor-element-found-in__line">848</span>
 
     </aside>
 
@@ -2144,7 +2199,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">764</span>
+    <span class="phpdocumentor-element-found-in__line">774</span>
 
     </aside>
 
@@ -2179,7 +2234,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">614</span>
+    <span class="phpdocumentor-element-found-in__line">624</span>
 
     </aside>
 
@@ -2212,7 +2267,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">469</span>
+    <span class="phpdocumentor-element-found-in__line">479</span>
 
     </aside>
 
@@ -2245,7 +2300,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">694</span>
+    <span class="phpdocumentor-element-found-in__line">704</span>
 
     </aside>
 
@@ -2278,7 +2333,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">489</span>
+    <span class="phpdocumentor-element-found-in__line">499</span>
 
     </aside>
 
@@ -2311,7 +2366,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">714</span>
+    <span class="phpdocumentor-element-found-in__line">724</span>
 
     </aside>
 
@@ -2344,7 +2399,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">660</span>
+    <span class="phpdocumentor-element-found-in__line">670</span>
 
     </aside>
 
@@ -2377,7 +2432,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">630</span>
+    <span class="phpdocumentor-element-found-in__line">640</span>
 
     </aside>
 
@@ -2410,7 +2465,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">282</span>
+    <span class="phpdocumentor-element-found-in__line">292</span>
 
     </aside>
 
@@ -2443,7 +2498,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">449</span>
+    <span class="phpdocumentor-element-found-in__line">459</span>
 
     </aside>
 
@@ -2476,7 +2531,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">322</span>
+    <span class="phpdocumentor-element-found-in__line">332</span>
 
     </aside>
 
@@ -2509,7 +2564,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">392</span>
+    <span class="phpdocumentor-element-found-in__line">402</span>
 
     </aside>
 
@@ -2542,7 +2597,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">409</span>
+    <span class="phpdocumentor-element-found-in__line">419</span>
 
     </aside>
 
@@ -2575,7 +2630,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">589</span>
+    <span class="phpdocumentor-element-found-in__line">599</span>
 
     </aside>
 
@@ -2608,7 +2663,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">549</span>
+    <span class="phpdocumentor-element-found-in__line">559</span>
 
     </aside>
 
@@ -2641,7 +2696,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">312</span>
+    <span class="phpdocumentor-element-found-in__line">322</span>
 
     </aside>
 
@@ -2674,7 +2729,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">609</span>
+    <span class="phpdocumentor-element-found-in__line">619</span>
 
     </aside>
 
@@ -2700,6 +2755,39 @@ still meets the requirements as set forth in the bylaws and internal regulations
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_getKeyGrantings">
+        getKeyGrantings()
+        <a href="classes/Decision-Model-Member.html#method_getKeyGrantings" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">856</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Get keyholderships.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getKeyGrantings</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr></span></code>
+
+    
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr></span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_getLastName">
         getLastName()
         <a href="classes/Decision-Model-Member.html#method_getLastName" class="headerlink"><i class="fas fa-link"></i></a>
@@ -2707,7 +2795,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">292</span>
+    <span class="phpdocumentor-element-found-in__line">302</span>
 
     </aside>
 
@@ -2740,7 +2828,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">272</span>
+    <span class="phpdocumentor-element-found-in__line">282</span>
 
     </aside>
 
@@ -2773,7 +2861,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">805</span>
+    <span class="phpdocumentor-element-found-in__line">815</span>
 
     </aside>
 
@@ -2806,7 +2894,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">509</span>
+    <span class="phpdocumentor-element-found-in__line">519</span>
 
     </aside>
 
@@ -2839,7 +2927,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">302</span>
+    <span class="phpdocumentor-element-found-in__line">312</span>
 
     </aside>
 
@@ -2872,7 +2960,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">650</span>
+    <span class="phpdocumentor-element-found-in__line">660</span>
 
     </aside>
 
@@ -2905,7 +2993,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">529</span>
+    <span class="phpdocumentor-element-found-in__line">539</span>
 
     </aside>
 
@@ -2938,7 +3026,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">569</span>
+    <span class="phpdocumentor-element-found-in__line">579</span>
 
     </aside>
 
@@ -2971,7 +3059,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">704</span>
+    <span class="phpdocumentor-element-found-in__line">714</span>
 
     </aside>
 
@@ -3004,7 +3092,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">429</span>
+    <span class="phpdocumentor-element-found-in__line">439</span>
 
     </aside>
 
@@ -3037,7 +3125,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">893</span>
+    <span class="phpdocumentor-element-found-in__line">940</span>
 
     </aside>
 
@@ -3070,7 +3158,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">684</span>
+    <span class="phpdocumentor-element-found-in__line">694</span>
 
     </aside>
 
@@ -3103,7 +3191,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">848</span>
+    <span class="phpdocumentor-element-found-in__line">895</span>
 
     </aside>
 
@@ -3136,7 +3224,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">898</span>
+    <span class="phpdocumentor-element-found-in__line">945</span>
 
     </aside>
 
@@ -3162,6 +3250,39 @@ still meets the requirements as set forth in the bylaws and internal regulations
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_isKeyholder">
+        isKeyholder()
+        <a href="classes/Decision-Model-Member.html#method_isKeyholder" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">864</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns true if the member is currently granted a key code (that is not withdrawn prematurely).</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">isKeyholder</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+    
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">bool</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_setAuthenticationKey">
         setAuthenticationKey()
         <a href="classes/Decision-Model-Member.html#method_setAuthenticationKey" class="headerlink"><i class="fas fa-link"></i></a>
@@ -3169,7 +3290,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">619</span>
+    <span class="phpdocumentor-element-found-in__line">629</span>
 
     </aside>
 
@@ -3213,7 +3334,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">479</span>
+    <span class="phpdocumentor-element-found-in__line">489</span>
 
     </aside>
 
@@ -3256,7 +3377,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">499</span>
+    <span class="phpdocumentor-element-found-in__line">509</span>
 
     </aside>
 
@@ -3299,7 +3420,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">640</span>
+    <span class="phpdocumentor-element-found-in__line">650</span>
 
     </aside>
 
@@ -3342,7 +3463,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">342</span>
+    <span class="phpdocumentor-element-found-in__line">352</span>
 
     </aside>
 
@@ -3385,7 +3506,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">459</span>
+    <span class="phpdocumentor-element-found-in__line">469</span>
 
     </aside>
 
@@ -3428,7 +3549,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">382</span>
+    <span class="phpdocumentor-element-found-in__line">392</span>
 
     </aside>
 
@@ -3471,7 +3592,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">419</span>
+    <span class="phpdocumentor-element-found-in__line">429</span>
 
     </aside>
 
@@ -3514,7 +3635,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">599</span>
+    <span class="phpdocumentor-element-found-in__line">609</span>
 
     </aside>
 
@@ -3557,7 +3678,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">559</span>
+    <span class="phpdocumentor-element-found-in__line">569</span>
 
     </aside>
 
@@ -3600,7 +3721,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">372</span>
+    <span class="phpdocumentor-element-found-in__line">382</span>
 
     </aside>
 
@@ -3643,7 +3764,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">352</span>
+    <span class="phpdocumentor-element-found-in__line">362</span>
 
     </aside>
 
@@ -3686,7 +3807,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">332</span>
+    <span class="phpdocumentor-element-found-in__line">342</span>
 
     </aside>
 
@@ -3729,7 +3850,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">519</span>
+    <span class="phpdocumentor-element-found-in__line">529</span>
 
     </aside>
 
@@ -3772,7 +3893,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">362</span>
+    <span class="phpdocumentor-element-found-in__line">372</span>
 
     </aside>
 
@@ -3815,7 +3936,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">539</span>
+    <span class="phpdocumentor-element-found-in__line">549</span>
 
     </aside>
 
@@ -3858,7 +3979,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">579</span>
+    <span class="phpdocumentor-element-found-in__line">589</span>
 
     </aside>
 
@@ -3901,7 +4022,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">439</span>
+    <span class="phpdocumentor-element-found-in__line">449</span>
 
     </aside>
 
@@ -3944,7 +4065,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">741</span>
+    <span class="phpdocumentor-element-found-in__line">751</span>
 
     </aside>
 
@@ -3977,7 +4098,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">866</span>
+    <span class="phpdocumentor-element-found-in__line">913</span>
 
     </aside>
 

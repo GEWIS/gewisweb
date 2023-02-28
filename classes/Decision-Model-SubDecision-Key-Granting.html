@@ -382,12 +382,12 @@
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/decision.html">Decision</a></li>
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/decision-model.html">Model</a></li>
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/decision-model-subdecision.html">SubDecision</a></li>
-            <li class="phpdocumentor-breadcrumb"><a href="namespaces/decision-model-subdecision-board.html">Board</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/decision-model-subdecision-key.html">Key</a></li>
     </ul>
 
     <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    Installation
+    Granting
 
         <span class="phpdocumentor-element__extends">
         extends <a href="classes/Decision-Model-SubDecision.html"><abbr title="\Decision\Model\SubDecision">SubDecision</abbr></a>
@@ -404,13 +404,13 @@
     </h2>
 
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Board/Installation.php"><a href="files/module-decision-src-model-subdecision-board-installation.html"><abbr title="module/Decision/src/Model/SubDecision/Board/Installation.php">Installation.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Key/Granting.php"><a href="files/module-decision-src-model-subdecision-key-granting.html"><abbr title="module/Decision/src/Model/SubDecision/Key/Granting.php">Granting.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">22</span>
+    <span class="phpdocumentor-element-found-in__line">19</span>
 
     </aside>
 
-            <p class="phpdocumentor-summary">Installation as board member.</p>
+            <p class="phpdocumentor-summary">SubDecision model.</p>
 
 
 
@@ -427,25 +427,11 @@
 
 <dl class="phpdocumentor-table-of-contents">
                     <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Decision-Model-SubDecision-Board-Installation.html#property_boardMember">$boardMember</a>
-    <span>
-                        &nbsp;: <a href="classes/Decision-Model-BoardMember.html"><abbr title="\Decision\Model\BoardMember">BoardMember</abbr></a>            </span>
-</dt>
-<dd>Board member reference.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Decision-Model-SubDecision.html#property_content">$content</a>
     <span>
                         &nbsp;: string            </span>
 </dt>
 <dd>Content.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Decision-Model-SubDecision-Board-Installation.html#property_date">$date</a>
-    <span>
-                        &nbsp;: <abbr title="\DateTime">DateTime</abbr>            </span>
-</dt>
-<dd>The date at which the installation is in effect.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Decision-Model-SubDecision.html#property_decision">$decision</a>
@@ -469,18 +455,18 @@
 <dd>Decision point.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Decision-Model-SubDecision-Board-Installation.html#property_discharge">$discharge</a>
+    <a href="classes/Decision-Model-SubDecision-Key-Granting.html#property_grantee">$grantee</a>
     <span>
-                        &nbsp;: <a href="classes/Decision-Model-SubDecision-Board-Discharge.html"><abbr title="\Decision\Model\SubDecision\Board\Discharge">Discharge</abbr></a>|null            </span>
+                        &nbsp;: <a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>|null            </span>
 </dt>
-<dd>Discharge.</dd>
+<dd>The member who is granted a keycode of GEWIS.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Decision-Model-SubDecision-Board-Installation.html#property_function">$function</a>
+    <a href="classes/Decision-Model-SubDecision-Key-Granting.html#property_keyholder">$keyholder</a>
     <span>
-                        &nbsp;: string            </span>
+                        &nbsp;: <a href="classes/Decision-Model-Keyholder.html"><abbr title="\Decision\Model\Keyholder">Keyholder</abbr></a>            </span>
 </dt>
-<dd>Function in the board.</dd>
+<dd>Keyholder reference.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Decision-Model-SubDecision.html#property_meeting_number">$meeting_number</a>
@@ -497,13 +483,6 @@
 <dd>Meeting type.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Decision-Model-SubDecision-Board-Installation.html#property_member">$member</a>
-    <span>
-                        &nbsp;: <a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>            </span>
-</dt>
-<dd>Member.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Decision-Model-SubDecision.html#property_number">$number</a>
     <span>
                         &nbsp;: int            </span>
@@ -511,18 +490,25 @@
 <dd>Sub decision number.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Decision-Model-SubDecision-Board-Installation.html#property_release">$release</a>
+    <a href="classes/Decision-Model-SubDecision-Key-Granting.html#property_until">$until</a>
     <span>
-                        &nbsp;: <a href="classes/Decision-Model-SubDecision-Board-Release.html"><abbr title="\Decision\Model\SubDecision\Board\Release">Release</abbr></a>|null            </span>
+                        &nbsp;: <abbr title="\DateTime">DateTime</abbr>            </span>
 </dt>
-<dd>Release.</dd>
+<dd>Till when the keycode is granted.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a href="classes/Decision-Model-SubDecision-Key-Granting.html#property_withdrawal">$withdrawal</a>
+    <span>
+                        &nbsp;: <a href="classes/Decision-Model-SubDecision-Key-Withdrawal.html"><abbr title="\Decision\Model\SubDecision\Key\Withdrawal">Withdrawal</abbr></a>|null            </span>
+</dt>
+<dd>Discharges.</dd>
 
                 <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Decision-Model-SubDecision-Board-Installation.html#method_getBoardMember">getBoardMember()</a>
+    <a href="classes/Decision-Model-SubDecision-Key-Granting.html#method_clearWithdrawal">clearWithdrawal()</a>
     <span>
-                                &nbsp;: <a href="classes/Decision-Model-BoardMember.html"><abbr title="\Decision\Model\BoardMember">BoardMember</abbr></a>    </span>
+                                &nbsp;: void    </span>
 </dt>
-<dd>Get the board member decision.</dd>
+<dd>Clears the withdrawal, if it exists.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-SubDecision.html#method_getContent">getContent()</a>
@@ -530,13 +516,6 @@
                                 &nbsp;: string    </span>
 </dt>
 <dd>Get the content.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Decision-Model-SubDecision-Board-Installation.html#method_getDate">getDate()</a>
-    <span>
-                                &nbsp;: <abbr title="\DateTime">DateTime</abbr>    </span>
-</dt>
-<dd>Get the date.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-SubDecision.html#method_getDecision">getDecision()</a>
@@ -560,18 +539,18 @@
 <dd>Get the decision point number.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Decision-Model-SubDecision-Board-Installation.html#method_getDischarge">getDischarge()</a>
+    <a href="classes/Decision-Model-SubDecision-Key-Granting.html#method_getGrantee">getGrantee()</a>
     <span>
-                                &nbsp;: <a href="classes/Decision-Model-SubDecision-Board-Discharge.html"><abbr title="\Decision\Model\SubDecision\Board\Discharge">Discharge</abbr></a>|null    </span>
+                                &nbsp;: <a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>|null    </span>
 </dt>
-<dd>Get the discharge.</dd>
+<dd>Get the grantee.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Decision-Model-SubDecision-Board-Installation.html#method_getFunction">getFunction()</a>
+    <a href="classes/Decision-Model-SubDecision-Key-Granting.html#method_getKeyholder">getKeyholder()</a>
     <span>
-                                &nbsp;: string    </span>
+                                &nbsp;: <a href="classes/Decision-Model-Keyholder.html"><abbr title="\Decision\Model\Keyholder">Keyholder</abbr></a>    </span>
 </dt>
-<dd>Get the function.</dd>
+<dd>Get the keyholder decision.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-SubDecision.html#method_getMeetingNumber">getMeetingNumber()</a>
@@ -588,13 +567,6 @@
 <dd>Get the meeting type.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Decision-Model-SubDecision-Board-Installation.html#method_getMember">getMember()</a>
-    <span>
-                                &nbsp;: <a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>    </span>
-</dt>
-<dd>Get the member.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-SubDecision.html#method_getNumber">getNumber()</a>
     <span>
                                 &nbsp;: int    </span>
@@ -602,11 +574,18 @@
 <dd>Get the number.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Decision-Model-SubDecision-Board-Installation.html#method_getRelease">getRelease()</a>
+    <a href="classes/Decision-Model-SubDecision-Key-Granting.html#method_getUntil">getUntil()</a>
     <span>
-                                &nbsp;: <a href="classes/Decision-Model-SubDecision-Board-Release.html"><abbr title="\Decision\Model\SubDecision\Board\Release">Release</abbr></a>|null    </span>
+                                &nbsp;: <abbr title="\DateTime">DateTime</abbr>    </span>
 </dt>
-<dd>Get the release.</dd>
+<dd>Get the date.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Decision-Model-SubDecision-Key-Granting.html#method_getWithdrawal">getWithdrawal()</a>
+    <span>
+                                &nbsp;: <a href="classes/Decision-Model-SubDecision-Key-Withdrawal.html"><abbr title="\Decision\Model\SubDecision\Key\Withdrawal">Withdrawal</abbr></a>|null    </span>
+</dt>
+<dd>Get the withdrawal decision.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-SubDecision.html#method_setContent">setContent()</a>
@@ -616,13 +595,6 @@
 <dd>Set the content.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Decision-Model-SubDecision-Board-Installation.html#method_setDate">setDate()</a>
-    <span>
-                                &nbsp;: void    </span>
-</dt>
-<dd>Set the date.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-SubDecision.html#method_setDecision">setDecision()</a>
     <span>
                                 &nbsp;: void    </span>
@@ -630,18 +602,11 @@
 <dd>Set the decision.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Decision-Model-SubDecision-Board-Installation.html#method_setFunction">setFunction()</a>
+    <a href="classes/Decision-Model-SubDecision-Key-Granting.html#method_setGrantee">setGrantee()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd>Set the function.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Decision-Model-SubDecision-Board-Installation.html#method_setMember">setMember()</a>
-    <span>
-                                &nbsp;: void    </span>
-</dt>
-<dd>Set the member.</dd>
+<dd>Set the grantee.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-SubDecision.html#method_setNumber">setNumber()</a>
@@ -649,6 +614,13 @@
                                 &nbsp;: void    </span>
 </dt>
 <dd>Set the number.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Decision-Model-SubDecision-Key-Granting.html#method_setUntil">setUntil()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>Set the date.</dd>
 
         </dl>
 
@@ -660,42 +632,8 @@
     <section class="phpdocumentor-properties">
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
-            <a href="classes/Decision-Model-SubDecision-Board-Installation.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Decision-Model-SubDecision-Key-Granting.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
         </h3>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_boardMember">
-        $boardMember
-        <a href="classes/Decision-Model-SubDecision-Board-Installation.html#property_boardMember" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Board/Installation.php"><a href="files/module-decision-src-model-subdecision-board-installation.html"><abbr title="module/Decision/src/Model/SubDecision/Board/Installation.php">Installation.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">73</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Board member reference.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/Decision-Model-BoardMember.html"><abbr title="\Decision\Model\BoardMember">BoardMember</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$boardMember</span>
-    </code>
-
-    
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
                     <article
         class="
             phpdocumentor-element
@@ -722,40 +660,6 @@
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">string</span>
     <span class="phpdocumentor-signature__name">$content</span>
-    </code>
-
-    
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_date">
-        $date
-        <a href="classes/Decision-Model-SubDecision-Board-Installation.html#property_date" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Board/Installation.php"><a href="files/module-decision-src-model-subdecision-board-installation.html"><abbr title="module/Decision/src/Model/SubDecision/Board/Installation.php">Installation.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">49</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">The date at which the installation is in effect.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type"><abbr title="\DateTime">DateTime</abbr></span>
-    <span class="phpdocumentor-signature__name">$date</span>
     </code>
 
     
@@ -877,25 +781,25 @@
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_discharge">
-        $discharge
-        <a href="classes/Decision-Model-SubDecision-Board-Installation.html#property_discharge" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_grantee">
+        $grantee
+        <a href="classes/Decision-Model-SubDecision-Key-Granting.html#property_grantee" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Board/Installation.php"><a href="files/module-decision-src-model-subdecision-board-installation.html"><abbr title="module/Decision/src/Model/SubDecision/Board/Installation.php">Installation.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Key/Granting.php"><a href="files/module-decision-src-model-subdecision-key-granting.html"><abbr title="module/Decision/src/Model/SubDecision/Key/Granting.php">Granting.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">55</span>
+    <span class="phpdocumentor-element-found-in__line">25</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Discharge.</p>
+        <p class="phpdocumentor-summary">The member who is granted a keycode of GEWIS.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/Decision-Model-SubDecision-Board-Discharge.html"><abbr title="\Decision\Model\SubDecision\Board\Discharge">Discharge</abbr></a>|null</span>
-    <span class="phpdocumentor-signature__name">$discharge</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>|null</span>
+    <span class="phpdocumentor-signature__name">$grantee</span>
      = <span class="phpdocumentor-signature__default-value">null</span></code>
 
     
@@ -911,25 +815,25 @@
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_function">
-        $function
-        <a href="classes/Decision-Model-SubDecision-Board-Installation.html#property_function" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_keyholder">
+        $keyholder
+        <a href="classes/Decision-Model-SubDecision-Key-Granting.html#property_keyholder" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Board/Installation.php"><a href="files/module-decision-src-model-subdecision-board-installation.html"><abbr title="module/Decision/src/Model/SubDecision/Board/Installation.php">Installation.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Key/Granting.php"><a href="files/module-decision-src-model-subdecision-key-granting.html"><abbr title="module/Decision/src/Model/SubDecision/Key/Granting.php">Granting.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">28</span>
+    <span class="phpdocumentor-element-found-in__line">51</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Function in the board.</p>
+        <p class="phpdocumentor-summary">Keyholder reference.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$function</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Decision-Model-Keyholder.html"><abbr title="\Decision\Model\Keyholder">Keyholder</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$keyholder</span>
     </code>
 
     
@@ -1017,44 +921,6 @@
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_member">
-        $member
-        <a href="classes/Decision-Model-SubDecision-Board-Installation.html#property_member" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Board/Installation.php"><a href="files/module-decision-src-model-subdecision-board-installation.html"><abbr title="module/Decision/src/Model/SubDecision/Board/Installation.php">Installation.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">39</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Member.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$member</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>Note that only members that are older than 18 years can be board members.
-Also, honorary, external and extraordinary members cannot be board members.
-(See the Statuten, Art. 13 Lid 2.</p>
-</section>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                        "
->
     <h4 class="phpdocumentor-element__name" id="property_number">
         $number
         <a href="classes/Decision-Model-SubDecision.html#property_number" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1089,25 +955,59 @@ Also, honorary, external and extraordinary members cannot be board members.
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_release">
-        $release
-        <a href="classes/Decision-Model-SubDecision-Board-Installation.html#property_release" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_until">
+        $until
+        <a href="classes/Decision-Model-SubDecision-Key-Granting.html#property_until" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Board/Installation.php"><a href="files/module-decision-src-model-subdecision-board-installation.html"><abbr title="module/Decision/src/Model/SubDecision/Board/Installation.php">Installation.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Key/Granting.php"><a href="files/module-decision-src-model-subdecision-key-granting.html"><abbr title="module/Decision/src/Model/SubDecision/Key/Granting.php">Granting.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">64</span>
+    <span class="phpdocumentor-element-found-in__line">36</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Release.</p>
+        <p class="phpdocumentor-summary">Till when the keycode is granted.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/Decision-Model-SubDecision-Board-Release.html"><abbr title="\Decision\Model\SubDecision\Board\Release">Release</abbr></a>|null</span>
-    <span class="phpdocumentor-signature__name">$release</span>
+        <span class="phpdocumentor-signature__type"><abbr title="\DateTime">DateTime</abbr></span>
+    <span class="phpdocumentor-signature__name">$until</span>
+    </code>
+
+    
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_withdrawal">
+        $withdrawal
+        <a href="classes/Decision-Model-SubDecision-Key-Granting.html#property_withdrawal" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Key/Granting.php"><a href="files/module-decision-src-model-subdecision-key-granting.html"><abbr title="module/Decision/src/Model/SubDecision/Key/Granting.php">Granting.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">42</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Discharges.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Decision-Model-SubDecision-Key-Withdrawal.html"><abbr title="\Decision\Model\SubDecision\Key\Withdrawal">Withdrawal</abbr></a>|null</span>
+    <span class="phpdocumentor-signature__name">$withdrawal</span>
      = <span class="phpdocumentor-signature__default-value">null</span></code>
 
     
@@ -1121,7 +1021,7 @@ Also, honorary, external and extraordinary members cannot be board members.
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/Decision-Model-SubDecision-Board-Installation.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Decision-Model-SubDecision-Key-Granting.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
         </h3>
                     <article
         class="phpdocumentor-element
@@ -1129,29 +1029,29 @@ Also, honorary, external and extraordinary members cannot be board members.
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getBoardMember">
-        getBoardMember()
-        <a href="classes/Decision-Model-SubDecision-Board-Installation.html#method_getBoardMember" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_clearWithdrawal">
+        clearWithdrawal()
+        <a href="classes/Decision-Model-SubDecision-Key-Granting.html#method_clearWithdrawal" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Board/Installation.php"><a href="files/module-decision-src-model-subdecision-board-installation.html"><abbr title="module/Decision/src/Model/SubDecision/Board/Installation.php">Installation.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Key/Granting.php"><a href="files/module-decision-src-model-subdecision-key-granting.html"><abbr title="module/Decision/src/Model/SubDecision/Key/Granting.php">Granting.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">164</span>
+    <span class="phpdocumentor-element-found-in__line">110</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Get the board member decision.</p>
+        <p class="phpdocumentor-summary">Clears the withdrawal, if it exists.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getBoardMember</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-BoardMember.html"><abbr title="\Decision\Model\BoardMember">BoardMember</abbr></a></span></code>
+                    <span class="phpdocumentor-signature__name">clearWithdrawal</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
     
     
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-BoardMember.html"><abbr title="\Decision\Model\BoardMember">BoardMember</abbr></a></span>
+    <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
         
     
@@ -1185,39 +1085,6 @@ Also, honorary, external and extraordinary members cannot be board members.
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">string</span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getDate">
-        getDate()
-        <a href="classes/Decision-Model-SubDecision-Board-Installation.html#method_getDate" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Board/Installation.php"><a href="files/module-decision-src-model-subdecision-board-installation.html"><abbr title="module/Decision/src/Model/SubDecision/Board/Installation.php">Installation.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">124</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Get the date.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getDate</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\DateTime">DateTime</abbr></span></code>
-
-    
-    
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\DateTime">DateTime</abbr></span>
             &mdash;
         
     
@@ -1327,29 +1194,29 @@ Also, honorary, external and extraordinary members cannot be board members.
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getDischarge">
-        getDischarge()
-        <a href="classes/Decision-Model-SubDecision-Board-Installation.html#method_getDischarge" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_getGrantee">
+        getGrantee()
+        <a href="classes/Decision-Model-SubDecision-Key-Granting.html#method_getGrantee" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Board/Installation.php"><a href="files/module-decision-src-model-subdecision-board-installation.html"><abbr title="module/Decision/src/Model/SubDecision/Board/Installation.php">Installation.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Key/Granting.php"><a href="files/module-decision-src-model-subdecision-key-granting.html"><abbr title="module/Decision/src/Model/SubDecision/Key/Granting.php">Granting.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">144</span>
+    <span class="phpdocumentor-element-found-in__line">62</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Get the discharge.</p>
+        <p class="phpdocumentor-summary">Get the grantee.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getDischarge</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-SubDecision-Board-Discharge.html"><abbr title="\Decision\Model\SubDecision\Board\Discharge">Discharge</abbr></a>|null</span></code>
+                    <span class="phpdocumentor-signature__name">getGrantee</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>|null</span></code>
 
     
     
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-SubDecision-Board-Discharge.html"><abbr title="\Decision\Model\SubDecision\Board\Discharge">Discharge</abbr></a>|null</span>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>|null</span>
             &mdash;
         
     
@@ -1360,29 +1227,29 @@ Also, honorary, external and extraordinary members cannot be board members.
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getFunction">
-        getFunction()
-        <a href="classes/Decision-Model-SubDecision-Board-Installation.html#method_getFunction" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_getKeyholder">
+        getKeyholder()
+        <a href="classes/Decision-Model-SubDecision-Key-Granting.html#method_getKeyholder" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Board/Installation.php"><a href="files/module-decision-src-model-subdecision-board-installation.html"><abbr title="module/Decision/src/Model/SubDecision/Board/Installation.php">Installation.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Key/Granting.php"><a href="files/module-decision-src-model-subdecision-key-granting.html"><abbr title="module/Decision/src/Model/SubDecision/Key/Granting.php">Granting.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">84</span>
+    <span class="phpdocumentor-element-found-in__line">120</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Get the function.</p>
+        <p class="phpdocumentor-summary">Get the keyholder decision.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getFunction</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+                    <span class="phpdocumentor-signature__name">getKeyholder</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-Keyholder.html"><abbr title="\Decision\Model\Keyholder">Keyholder</abbr></a></span></code>
 
     
     
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string</span>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-Keyholder.html"><abbr title="\Decision\Model\Keyholder">Keyholder</abbr></a></span>
             &mdash;
         
     
@@ -1459,39 +1326,6 @@ Also, honorary, external and extraordinary members cannot be board members.
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getMember">
-        getMember()
-        <a href="classes/Decision-Model-SubDecision-Board-Installation.html#method_getMember" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Board/Installation.php"><a href="files/module-decision-src-model-subdecision-board-installation.html"><abbr title="module/Decision/src/Model/SubDecision/Board/Installation.php">Installation.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">104</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Get the member.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getMember</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a></span></code>
-
-    
-    
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a></span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
     <h4 class="phpdocumentor-element__name" id="method_getNumber">
         getNumber()
         <a href="classes/Decision-Model-SubDecision.html#method_getNumber" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1525,29 +1359,62 @@ Also, honorary, external and extraordinary members cannot be board members.
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getRelease">
-        getRelease()
-        <a href="classes/Decision-Model-SubDecision-Board-Installation.html#method_getRelease" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_getUntil">
+        getUntil()
+        <a href="classes/Decision-Model-SubDecision-Key-Granting.html#method_getUntil" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Board/Installation.php"><a href="files/module-decision-src-model-subdecision-board-installation.html"><abbr title="module/Decision/src/Model/SubDecision/Board/Installation.php">Installation.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Key/Granting.php"><a href="files/module-decision-src-model-subdecision-key-granting.html"><abbr title="module/Decision/src/Model/SubDecision/Key/Granting.php">Granting.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">154</span>
+    <span class="phpdocumentor-element-found-in__line">82</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Get the release.</p>
+        <p class="phpdocumentor-summary">Get the date.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getRelease</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-SubDecision-Board-Release.html"><abbr title="\Decision\Model\SubDecision\Board\Release">Release</abbr></a>|null</span></code>
+                    <span class="phpdocumentor-signature__name">getUntil</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\DateTime">DateTime</abbr></span></code>
 
     
     
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-SubDecision-Board-Release.html"><abbr title="\Decision\Model\SubDecision\Board\Release">Release</abbr></a>|null</span>
+    <span class="phpdocumentor-signature__response_type"><abbr title="\DateTime">DateTime</abbr></span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getWithdrawal">
+        getWithdrawal()
+        <a href="classes/Decision-Model-SubDecision-Key-Granting.html#method_getWithdrawal" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Key/Granting.php"><a href="files/module-decision-src-model-subdecision-key-granting.html"><abbr title="module/Decision/src/Model/SubDecision/Key/Granting.php">Granting.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">102</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Get the withdrawal decision.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getWithdrawal</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-SubDecision-Key-Withdrawal.html"><abbr title="\Decision\Model\SubDecision\Key\Withdrawal">Withdrawal</abbr></a>|null</span></code>
+
+    
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-SubDecision-Key-Withdrawal.html"><abbr title="\Decision\Model\SubDecision\Key\Withdrawal">Withdrawal</abbr></a>|null</span>
             &mdash;
         
     
@@ -1581,49 +1448,6 @@ Also, honorary, external and extraordinary members cannot be board members.
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$content</span>
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_setDate">
-        setDate()
-        <a href="classes/Decision-Model-SubDecision-Board-Installation.html#method_setDate" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Board/Installation.php"><a href="files/module-decision-src-model-subdecision-board-installation.html"><abbr title="module/Decision/src/Model/SubDecision/Board/Installation.php">Installation.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">134</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Set the date.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setDate</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTime">DateTime</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$date</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
-
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$date</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTime">DateTime</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
@@ -1687,71 +1511,28 @@ Also, honorary, external and extraordinary members cannot be board members.
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_setFunction">
-        setFunction()
-        <a href="classes/Decision-Model-SubDecision-Board-Installation.html#method_setFunction" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_setGrantee">
+        setGrantee()
+        <a href="classes/Decision-Model-SubDecision-Key-Granting.html#method_setGrantee" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Board/Installation.php"><a href="files/module-decision-src-model-subdecision-board-installation.html"><abbr title="module/Decision/src/Model/SubDecision/Board/Installation.php">Installation.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Key/Granting.php"><a href="files/module-decision-src-model-subdecision-key-granting.html"><abbr title="module/Decision/src/Model/SubDecision/Key/Granting.php">Granting.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">94</span>
+    <span class="phpdocumentor-element-found-in__line">72</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Set the function.</p>
+        <p class="phpdocumentor-summary">Set the grantee.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setFunction</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$function</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">setGrantee</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$grantee</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$function</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_setMember">
-        setMember()
-        <a href="classes/Decision-Model-SubDecision-Board-Installation.html#method_setMember" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Board/Installation.php"><a href="files/module-decision-src-model-subdecision-board-installation.html"><abbr title="module/Decision/src/Model/SubDecision/Board/Installation.php">Installation.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">114</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Set the member.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setMember</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$member</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
-
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$member</span>
+                <span class="phpdocumentor-signature__argument__name">$grantee</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
@@ -1796,6 +1577,49 @@ Also, honorary, external and extraordinary members cannot be board members.
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$number</span>
                 : <span class="phpdocumentor-signature__argument__return-type">int</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">void</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_setUntil">
+        setUntil()
+        <a href="classes/Decision-Model-SubDecision-Key-Granting.html#method_setUntil" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Key/Granting.php"><a href="files/module-decision-src-model-subdecision-key-granting.html"><abbr title="module/Decision/src/Model/SubDecision/Key/Granting.php">Granting.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">92</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Set the date.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">setUntil</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTime">DateTime</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$until</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$until</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTime">DateTime</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
@@ -1888,7 +1712,7 @@ Also, honorary, external and extraordinary members cannot be board members.
 </section>
             </div>
         </div>
-        <a href="classes/Decision-Model-SubDecision-Board-Installation.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/Decision-Model-SubDecision-Key-Granting.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 

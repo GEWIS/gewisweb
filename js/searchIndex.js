@@ -8061,6 +8061,81 @@ Search.appendIndex(
             "summary": "",
             "url": ""
         },                {
+            "fqsen": "\\Decision\\Model\\Keyholder",
+            "name": "Keyholder",
+            "summary": "keyholder\u0020entity.",
+            "url": "classes/Decision-Model-Keyholder.html"
+        },                {
+            "fqsen": "\\Decision\\Model\\Keyholder\u003A\u003AgetId\u0028\u0029",
+            "name": "getId",
+            "summary": "Get\u0020the\u0020ID.",
+            "url": "classes/Decision-Model-Keyholder.html#method_getId"
+        },                {
+            "fqsen": "\\Decision\\Model\\Keyholder\u003A\u003AgetMember\u0028\u0029",
+            "name": "getMember",
+            "summary": "Get\u0020the\u0020member.",
+            "url": "classes/Decision-Model-Keyholder.html#method_getMember"
+        },                {
+            "fqsen": "\\Decision\\Model\\Keyholder\u003A\u003AsetMember\u0028\u0029",
+            "name": "setMember",
+            "summary": "Set\u0020the\u0020member.",
+            "url": "classes/Decision-Model-Keyholder.html#method_setMember"
+        },                {
+            "fqsen": "\\Decision\\Model\\Keyholder\u003A\u003AgetExpirationDate\u0028\u0029",
+            "name": "getExpirationDate",
+            "summary": "Get\u0020the\u0020expiration\u0020date.",
+            "url": "classes/Decision-Model-Keyholder.html#method_getExpirationDate"
+        },                {
+            "fqsen": "\\Decision\\Model\\Keyholder\u003A\u003AsetExpirationDate\u0028\u0029",
+            "name": "setExpirationDate",
+            "summary": "Set\u0020the\u0020expiration\u0020date.",
+            "url": "classes/Decision-Model-Keyholder.html#method_setExpirationDate"
+        },                {
+            "fqsen": "\\Decision\\Model\\Keyholder\u003A\u003AgetGrantingDec\u0028\u0029",
+            "name": "getGrantingDec",
+            "summary": "Get\u0020the\u0020granting\u0020decision.",
+            "url": "classes/Decision-Model-Keyholder.html#method_getGrantingDec"
+        },                {
+            "fqsen": "\\Decision\\Model\\Keyholder\u003A\u003AsetGrantingDec\u0028\u0029",
+            "name": "setGrantingDec",
+            "summary": "Set\u0020the\u0020granting\u0020decision.",
+            "url": "classes/Decision-Model-Keyholder.html#method_setGrantingDec"
+        },                {
+            "fqsen": "\\Decision\\Model\\Keyholder\u003A\u003AgetWithdrawnDate\u0028\u0029",
+            "name": "getWithdrawnDate",
+            "summary": "Get\u0020the\u0020withdrawn\u0020date.",
+            "url": "classes/Decision-Model-Keyholder.html#method_getWithdrawnDate"
+        },                {
+            "fqsen": "\\Decision\\Model\\Keyholder\u003A\u003AsetWithdrawnDate\u0028\u0029",
+            "name": "setWithdrawnDate",
+            "summary": "Set\u0020the\u0020withdrawn\u0020date.",
+            "url": "classes/Decision-Model-Keyholder.html#method_setWithdrawnDate"
+        },                {
+            "fqsen": "\\Decision\\Model\\Keyholder\u003A\u003A\u0024id",
+            "name": "id",
+            "summary": "Id.",
+            "url": "classes/Decision-Model-Keyholder.html#property_id"
+        },                {
+            "fqsen": "\\Decision\\Model\\Keyholder\u003A\u003A\u0024member",
+            "name": "member",
+            "summary": "Member\u0020lidnr.",
+            "url": "classes/Decision-Model-Keyholder.html#property_member"
+        },                {
+            "fqsen": "\\Decision\\Model\\Keyholder\u003A\u003A\u0024expirationDate",
+            "name": "expirationDate",
+            "summary": "Expiration\u0020date.",
+            "url": "classes/Decision-Model-Keyholder.html#property_expirationDate"
+        },                {
+            "fqsen": "\\Decision\\Model\\Keyholder\u003A\u003A\u0024grantingDec",
+            "name": "grantingDec",
+            "summary": "Installation.",
+            "url": "classes/Decision-Model-Keyholder.html#property_grantingDec"
+        },                {
+            "fqsen": "\\Decision\\Model\\Keyholder\u003A\u003A\u0024withdrawnDate",
+            "name": "withdrawnDate",
+            "summary": "Release\u0020date.",
+            "url": "classes/Decision-Model-Keyholder.html#property_withdrawnDate"
+        },                {
             "fqsen": "\\Decision\\Model\\MailingList",
             "name": "MailingList",
             "summary": "Mailing\u0020List\u0020model.",
@@ -8661,6 +8736,16 @@ Search.appendIndex(
             "summary": "Clear\u0020the\u0020lists.",
             "url": "classes/Decision-Model-Member.html#method_clearLists"
         },                {
+            "fqsen": "\\Decision\\Model\\Member\u003A\u003AgetKeyGrantings\u0028\u0029",
+            "name": "getKeyGrantings",
+            "summary": "Get\u0020keyholderships.",
+            "url": "classes/Decision-Model-Member.html#method_getKeyGrantings"
+        },                {
+            "fqsen": "\\Decision\\Model\\Member\u003A\u003AisKeyholder\u0028\u0029",
+            "name": "isKeyholder",
+            "summary": "Returns\u0020true\u0020if\u0020the\u0020member\u0020is\u0020currently\u0020granted\u0020a\u0020key\u0020code\u0020\u0028that\u0020is\u0020not\u0020withdrawn\u0020prematurely\u0029.",
+            "url": "classes/Decision-Model-Member.html#method_isKeyholder"
+        },                {
             "fqsen": "\\Decision\\Model\\Member\u003A\u003AisBoardMember\u0028\u0029",
             "name": "isBoardMember",
             "summary": "Returns\u0020true\u0020the\u0020member\u0020is\u0020currently\u0020installed\u0020as\u0020a\u0020board\u0020member\u0020and\u0020false\u0020otherwise.",
@@ -8800,6 +8885,11 @@ Search.appendIndex(
             "name": "tags",
             "summary": "Member\u0020tags.",
             "url": "classes/Decision-Model-Member.html#property_tags"
+        },                {
+            "fqsen": "\\Decision\\Model\\Member\u003A\u003A\u0024keyGrantings",
+            "name": "keyGrantings",
+            "summary": "Keyholdership.",
+            "url": "classes/Decision-Model-Member.html#property_keyGrantings"
         },                {
             "fqsen": "\\Decision\\Model\\Organ",
             "name": "Organ",
@@ -9635,6 +9725,101 @@ Search.appendIndex(
             "name": "organMember",
             "summary": "The\u0020organmember\u0020reference.",
             "url": "classes/Decision-Model-SubDecision-Installation.html#property_organMember"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\Key\\Granting",
+            "name": "Granting",
+            "summary": "SubDecision\u0020model.",
+            "url": "classes/Decision-Model-SubDecision-Key-Granting.html"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\Key\\Granting\u003A\u003AgetGrantee\u0028\u0029",
+            "name": "getGrantee",
+            "summary": "Get\u0020the\u0020grantee.",
+            "url": "classes/Decision-Model-SubDecision-Key-Granting.html#method_getGrantee"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\Key\\Granting\u003A\u003AsetGrantee\u0028\u0029",
+            "name": "setGrantee",
+            "summary": "Set\u0020the\u0020grantee.",
+            "url": "classes/Decision-Model-SubDecision-Key-Granting.html#method_setGrantee"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\Key\\Granting\u003A\u003AgetUntil\u0028\u0029",
+            "name": "getUntil",
+            "summary": "Get\u0020the\u0020date.",
+            "url": "classes/Decision-Model-SubDecision-Key-Granting.html#method_getUntil"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\Key\\Granting\u003A\u003AsetUntil\u0028\u0029",
+            "name": "setUntil",
+            "summary": "Set\u0020the\u0020date.",
+            "url": "classes/Decision-Model-SubDecision-Key-Granting.html#method_setUntil"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\Key\\Granting\u003A\u003AgetWithdrawal\u0028\u0029",
+            "name": "getWithdrawal",
+            "summary": "Get\u0020the\u0020withdrawal\u0020decision.",
+            "url": "classes/Decision-Model-SubDecision-Key-Granting.html#method_getWithdrawal"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\Key\\Granting\u003A\u003AclearWithdrawal\u0028\u0029",
+            "name": "clearWithdrawal",
+            "summary": "Clears\u0020the\u0020withdrawal,\u0020if\u0020it\u0020exists.",
+            "url": "classes/Decision-Model-SubDecision-Key-Granting.html#method_clearWithdrawal"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\Key\\Granting\u003A\u003AgetKeyholder\u0028\u0029",
+            "name": "getKeyholder",
+            "summary": "Get\u0020the\u0020keyholder\u0020decision.",
+            "url": "classes/Decision-Model-SubDecision-Key-Granting.html#method_getKeyholder"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\Key\\Granting\u003A\u003A\u0024grantee",
+            "name": "grantee",
+            "summary": "The\u0020member\u0020who\u0020is\u0020granted\u0020a\u0020keycode\u0020of\u0020GEWIS.",
+            "url": "classes/Decision-Model-SubDecision-Key-Granting.html#property_grantee"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\Key\\Granting\u003A\u003A\u0024until",
+            "name": "until",
+            "summary": "Till\u0020when\u0020the\u0020keycode\u0020is\u0020granted.",
+            "url": "classes/Decision-Model-SubDecision-Key-Granting.html#property_until"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\Key\\Granting\u003A\u003A\u0024withdrawal",
+            "name": "withdrawal",
+            "summary": "Discharges.",
+            "url": "classes/Decision-Model-SubDecision-Key-Granting.html#property_withdrawal"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\Key\\Granting\u003A\u003A\u0024keyholder",
+            "name": "keyholder",
+            "summary": "Keyholder\u0020reference.",
+            "url": "classes/Decision-Model-SubDecision-Key-Granting.html#property_keyholder"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\Key\\Withdrawal",
+            "name": "Withdrawal",
+            "summary": "SubDecision\u0020model.",
+            "url": "classes/Decision-Model-SubDecision-Key-Withdrawal.html"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\Key\\Withdrawal\u003A\u003AgetGranting\u0028\u0029",
+            "name": "getGranting",
+            "summary": "Get\u0020the\u0020granting\u0020of\u0020the\u0020keycode.",
+            "url": "classes/Decision-Model-SubDecision-Key-Withdrawal.html#method_getGranting"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\Key\\Withdrawal\u003A\u003AsetGranting\u0028\u0029",
+            "name": "setGranting",
+            "summary": "Set\u0020the\u0020granting\u0020of\u0020the\u0020keycode.",
+            "url": "classes/Decision-Model-SubDecision-Key-Withdrawal.html#method_setGranting"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\Key\\Withdrawal\u003A\u003AgetWithdrawnOn\u0028\u0029",
+            "name": "getWithdrawnOn",
+            "summary": "Get\u0020the\u0020date.",
+            "url": "classes/Decision-Model-SubDecision-Key-Withdrawal.html#method_getWithdrawnOn"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\Key\\Withdrawal\u003A\u003AsetWithdrawnOn\u0028\u0029",
+            "name": "setWithdrawnOn",
+            "summary": "Set\u0020the\u0020date.",
+            "url": "classes/Decision-Model-SubDecision-Key-Withdrawal.html#method_setWithdrawnOn"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\Key\\Withdrawal\u003A\u003A\u0024granting",
+            "name": "granting",
+            "summary": "Reference\u0020to\u0020the\u0020granting\u0020of\u0020a\u0020keycode.",
+            "url": "classes/Decision-Model-SubDecision-Key-Withdrawal.html#property_granting"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\Key\\Withdrawal\u003A\u003A\u0024withdrawnOn",
+            "name": "withdrawnOn",
+            "summary": "When\u0020the\u0020granted\u0020keycode\u0020is\u0020prematurely\u0020revoked.",
+            "url": "classes/Decision-Model-SubDecision-Key-Withdrawal.html#property_withdrawnOn"
         },                {
             "fqsen": "\\Decision\\Model\\SubDecision\\Other",
             "name": "Other",
@@ -17400,6 +17585,11 @@ Search.appendIndex(
             "name": "Board",
             "summary": "",
             "url": "namespaces/decision-model-subdecision-board.html"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\Key",
+            "name": "Key",
+            "summary": "",
+            "url": "namespaces/decision-model-subdecision-key.html"
         },                {
             "fqsen": "\\Decision\\Service",
             "name": "Service",

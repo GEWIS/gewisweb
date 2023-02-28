@@ -381,16 +381,12 @@
                     <ul class="phpdocumentor-breadcrumbs">
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/decision.html">Decision</a></li>
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/decision-model.html">Model</a></li>
-            <li class="phpdocumentor-breadcrumb"><a href="namespaces/decision-model-subdecision.html">SubDecision</a></li>
     </ul>
 
     <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    Destroy
+    Keyholder
 
-        <span class="phpdocumentor-element__extends">
-        extends <a href="classes/Decision-Model-SubDecision.html"><abbr title="\Decision\Model\SubDecision">SubDecision</abbr></a>
-    </span>
     
             <div class="phpdocumentor-element__package">
             in package
@@ -403,38 +399,18 @@
     </h2>
 
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Destroy.php"><a href="files/module-decision-src-model-subdecision-destroy.html"><abbr title="module/Decision/src/Model/SubDecision/Destroy.php">Destroy.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Keyholder.php"><a href="files/module-decision-src-model-keyholder.html"><abbr title="module/Decision/src/Model/Keyholder.php">Keyholder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">29</span>
+    <span class="phpdocumentor-element-found-in__line">22</span>
 
     </aside>
 
-            <p class="phpdocumentor-summary">Destroying a decision.</p>
+            <p class="phpdocumentor-summary">keyholder entity.</p>
 
-    <section class="phpdocumentor-description"><p>This decision references to a different decision. The given decision is
-destroyed, as if it did never exist.</p>
-<p>Note that this behaviour might not always work flawlessly. It is very
-complicated, and thus there might be edge cases that I didn't completely
-catch. If that is the case, let me know!</p>
-<p>Also note that destroying decisions that destroy is undefined behaviour!</p>
+    <section class="phpdocumentor-description"><p>Note that this entity is derived from the decisions themselves.</p>
 </section>
 
 
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">author</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>Pieter Kokx <a href="mailto:kokx@gewis.nl">kokx@gewis.nl</a></p>
-</section>
-
-                                    </dd>
-                        </dl>
 
 
 
@@ -448,144 +424,102 @@ catch. If that is the case, let me know!</p>
 
 <dl class="phpdocumentor-table-of-contents">
                     <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Decision-Model-SubDecision.html#property_content">$content</a>
+    <a href="classes/Decision-Model-Keyholder.html#property_expirationDate">$expirationDate</a>
     <span>
-                        &nbsp;: string            </span>
+                        &nbsp;: <abbr title="\DateTime">DateTime</abbr>            </span>
 </dt>
-<dd>Content.</dd>
+<dd>Expiration date.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Decision-Model-SubDecision.html#property_decision">$decision</a>
+    <a href="classes/Decision-Model-Keyholder.html#property_grantingDec">$grantingDec</a>
     <span>
-                        &nbsp;: <a href="classes/Decision-Model-Decision.html"><abbr title="\Decision\Model\Decision">Decision</abbr></a>            </span>
+                        &nbsp;: <a href="classes/Decision-Model-SubDecision-Key-Granting.html"><abbr title="\Decision\Model\SubDecision\Key\Granting">Granting</abbr></a>            </span>
 </dt>
-<dd>Decision.</dd>
+<dd>Installation.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Decision-Model-SubDecision.html#property_decision_number">$decision_number</a>
+    <a href="classes/Decision-Model-Keyholder.html#property_id">$id</a>
     <span>
-                        &nbsp;: int            </span>
+                        &nbsp;: int|null            </span>
 </dt>
-<dd>Decision number.</dd>
+<dd>Id.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Decision-Model-SubDecision.html#property_decision_point">$decision_point</a>
+    <a href="classes/Decision-Model-Keyholder.html#property_member">$member</a>
     <span>
-                        &nbsp;: int            </span>
+                        &nbsp;: <a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>            </span>
 </dt>
-<dd>Decision point.</dd>
+<dd>Member lidnr.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Decision-Model-SubDecision.html#property_meeting_number">$meeting_number</a>
+    <a href="classes/Decision-Model-Keyholder.html#property_withdrawnDate">$withdrawnDate</a>
     <span>
-                        &nbsp;: int            </span>
+                        &nbsp;: <abbr title="\DateTime">DateTime</abbr>|null            </span>
 </dt>
-<dd>Meeting number.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Decision-Model-SubDecision.html#property_meeting_type">$meeting_type</a>
-    <span>
-                        &nbsp;: <a href="classes/Decision-Model-Enums-MeetingTypes.html"><abbr title="\Decision\Model\Enums\MeetingTypes">MeetingTypes</abbr></a>            </span>
-</dt>
-<dd>Meeting type.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Decision-Model-SubDecision.html#property_number">$number</a>
-    <span>
-                        &nbsp;: int            </span>
-</dt>
-<dd>Sub decision number.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Decision-Model-SubDecision-Destroy.html#property_target">$target</a>
-    <span>
-                        &nbsp;: <a href="classes/Decision-Model-Decision.html"><abbr title="\Decision\Model\Decision">Decision</abbr></a>            </span>
-</dt>
-<dd>Reference to the destruction of a decision.</dd>
+<dd>Release date.</dd>
 
                 <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Decision-Model-SubDecision.html#method_getContent">getContent()</a>
+    <a href="classes/Decision-Model-Keyholder.html#method_getExpirationDate">getExpirationDate()</a>
     <span>
-                                &nbsp;: string    </span>
+                                &nbsp;: <abbr title="\DateTime">DateTime</abbr>    </span>
 </dt>
-<dd>Get the content.</dd>
+<dd>Get the expiration date.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Decision-Model-SubDecision.html#method_getDecision">getDecision()</a>
+    <a href="classes/Decision-Model-Keyholder.html#method_getGrantingDec">getGrantingDec()</a>
     <span>
-                                &nbsp;: <a href="classes/Decision-Model-Decision.html"><abbr title="\Decision\Model\Decision">Decision</abbr></a>    </span>
+                                &nbsp;: <a href="classes/Decision-Model-SubDecision-Key-Granting.html"><abbr title="\Decision\Model\SubDecision\Key\Granting">Granting</abbr></a>    </span>
 </dt>
-<dd>Get the decision.</dd>
+<dd>Get the granting decision.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Decision-Model-SubDecision.html#method_getDecisionNumber">getDecisionNumber()</a>
+    <a href="classes/Decision-Model-Keyholder.html#method_getId">getId()</a>
     <span>
-                                &nbsp;: int    </span>
+                                &nbsp;: int|null    </span>
 </dt>
-<dd>Get the decision number.</dd>
+<dd>Get the ID.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Decision-Model-SubDecision.html#method_getDecisionPoint">getDecisionPoint()</a>
+    <a href="classes/Decision-Model-Keyholder.html#method_getMember">getMember()</a>
     <span>
-                                &nbsp;: int    </span>
+                                &nbsp;: <a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>    </span>
 </dt>
-<dd>Get the decision point number.</dd>
+<dd>Get the member.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Decision-Model-SubDecision.html#method_getMeetingNumber">getMeetingNumber()</a>
+    <a href="classes/Decision-Model-Keyholder.html#method_getWithdrawnDate">getWithdrawnDate()</a>
     <span>
-                                &nbsp;: int    </span>
+                                &nbsp;: <abbr title="\DateTime">DateTime</abbr>|null    </span>
 </dt>
-<dd>Get the meeting number.</dd>
+<dd>Get the withdrawn date.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Decision-Model-SubDecision.html#method_getMeetingType">getMeetingType()</a>
-    <span>
-                                &nbsp;: <a href="classes/Decision-Model-Enums-MeetingTypes.html"><abbr title="\Decision\Model\Enums\MeetingTypes">MeetingTypes</abbr></a>    </span>
-</dt>
-<dd>Get the meeting type.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Decision-Model-SubDecision.html#method_getNumber">getNumber()</a>
-    <span>
-                                &nbsp;: int    </span>
-</dt>
-<dd>Get the number.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Decision-Model-SubDecision-Destroy.html#method_getTarget">getTarget()</a>
-    <span>
-                                &nbsp;: <a href="classes/Decision-Model-Decision.html"><abbr title="\Decision\Model\Decision">Decision</abbr></a>    </span>
-</dt>
-<dd>Get the target.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Decision-Model-SubDecision.html#method_setContent">setContent()</a>
+    <a href="classes/Decision-Model-Keyholder.html#method_setExpirationDate">setExpirationDate()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd>Set the content.</dd>
+<dd>Set the expiration date.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Decision-Model-SubDecision.html#method_setDecision">setDecision()</a>
+    <a href="classes/Decision-Model-Keyholder.html#method_setGrantingDec">setGrantingDec()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd>Set the decision.</dd>
+<dd>Set the granting decision.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Decision-Model-SubDecision.html#method_setNumber">setNumber()</a>
+    <a href="classes/Decision-Model-Keyholder.html#method_setMember">setMember()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd>Set the number.</dd>
+<dd>Set the member.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Decision-Model-SubDecision-Destroy.html#method_setTarget">setTarget()</a>
+    <a href="classes/Decision-Model-Keyholder.html#method_setWithdrawnDate">setWithdrawnDate()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd>Set the target.</dd>
+<dd>Set the withdrawn date.</dd>
 
         </dl>
 
@@ -597,7 +531,7 @@ catch. If that is the case, let me know!</p>
     <section class="phpdocumentor-properties">
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
-            <a href="classes/Decision-Model-SubDecision-Destroy.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Decision-Model-Keyholder.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
         </h3>
                     <article
         class="
@@ -606,25 +540,25 @@ catch. If that is the case, let me know!</p>
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_content">
-        $content
-        <a href="classes/Decision-Model-SubDecision.html#property_content" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_expirationDate">
+        $expirationDate
+        <a href="classes/Decision-Model-Keyholder.html#property_expirationDate" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Keyholder.php"><a href="files/module-decision-src-model-keyholder.html"><abbr title="module/Decision/src/Model/Keyholder.php">Keyholder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">136</span>
+    <span class="phpdocumentor-element-found-in__line">50</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Content.</p>
+        <p class="phpdocumentor-summary">Expiration date.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$content</span>
+        <span class="phpdocumentor-signature__type"><abbr title="\DateTime">DateTime</abbr></span>
+    <span class="phpdocumentor-signature__name">$expirationDate</span>
     </code>
 
     
@@ -640,25 +574,25 @@ catch. If that is the case, let me know!</p>
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_decision">
-        $decision
-        <a href="classes/Decision-Model-SubDecision.html#property_decision" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_grantingDec">
+        $grantingDec
+        <a href="classes/Decision-Model-Keyholder.html#property_grantingDec" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Keyholder.php"><a href="files/module-decision-src-model-keyholder.html"><abbr title="module/Decision/src/Model/Keyholder.php">Keyholder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">65</span>
+    <span class="phpdocumentor-element-found-in__line">56</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Decision.</p>
+        <p class="phpdocumentor-summary">Installation.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/Decision-Model-Decision.html"><abbr title="\Decision\Model\Decision">Decision</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$decision</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Decision-Model-SubDecision-Key-Granting.html"><abbr title="\Decision\Model\SubDecision\Key\Granting">Granting</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$grantingDec</span>
     </code>
 
     
@@ -674,30 +608,28 @@ catch. If that is the case, let me know!</p>
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_decision_number">
-        $decision_number
-        <a href="classes/Decision-Model-SubDecision.html#property_decision_number" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_id">
+        $id
+        <a href="classes/Decision-Model-Keyholder.html#property_id" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Keyholder.php"><a href="files/module-decision-src-model-keyholder.html"><abbr title="module/Decision/src/Model/Keyholder.php">Keyholder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">122</span>
+    <span class="phpdocumentor-element-found-in__line">28</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Decision number.</p>
+        <p class="phpdocumentor-summary">Id.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">int</span>
-    <span class="phpdocumentor-signature__name">$decision_number</span>
-    </code>
+        <span class="phpdocumentor-signature__type">int|null</span>
+    <span class="phpdocumentor-signature__name">$id</span>
+     = <span class="phpdocumentor-signature__default-value">null</span></code>
 
-        <section class="phpdocumentor-description"><p>NOTE: This is a hack to make the decision a primary key here.</p>
-</section>
-
+    
         <section class="phpdocumentor-description"></section>
 
     
@@ -710,133 +642,25 @@ catch. If that is the case, let me know!</p>
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_decision_point">
-        $decision_point
-        <a href="classes/Decision-Model-SubDecision.html#property_decision_point" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_member">
+        $member
+        <a href="classes/Decision-Model-Keyholder.html#property_member" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Keyholder.php"><a href="files/module-decision-src-model-keyholder.html"><abbr title="module/Decision/src/Model/Keyholder.php">Keyholder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">113</span>
+    <span class="phpdocumentor-element-found-in__line">36</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Decision point.</p>
+        <p class="phpdocumentor-summary">Member lidnr.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">int</span>
-    <span class="phpdocumentor-signature__name">$decision_point</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>NOTE: This is a hack to make the decision a primary key here.</p>
-</section>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_meeting_number">
-        $meeting_number
-        <a href="classes/Decision-Model-SubDecision.html#property_meeting_number" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">104</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Meeting number.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">int</span>
-    <span class="phpdocumentor-signature__name">$meeting_number</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>NOTE: This is a hack to make the decision a primary key here.</p>
-</section>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_meeting_type">
-        $meeting_type
-        <a href="classes/Decision-Model-SubDecision.html#property_meeting_type" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">92</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Meeting type.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/Decision-Model-Enums-MeetingTypes.html"><abbr title="\Decision\Model\Enums\MeetingTypes">MeetingTypes</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$meeting_type</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>NOTE: This is a hack to make the decision a primary key here.</p>
-</section>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_number">
-        $number
-        <a href="classes/Decision-Model-SubDecision.html#property_number" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">129</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Sub decision number.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">int</span>
-    <span class="phpdocumentor-signature__name">$number</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$member</span>
     </code>
 
     
@@ -852,26 +676,26 @@ catch. If that is the case, let me know!</p>
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_target">
-        $target
-        <a href="classes/Decision-Model-SubDecision-Destroy.html#property_target" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_withdrawnDate">
+        $withdrawnDate
+        <a href="classes/Decision-Model-Keyholder.html#property_withdrawnDate" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Destroy.php"><a href="files/module-decision-src-model-subdecision-destroy.html"><abbr title="module/Decision/src/Model/SubDecision/Destroy.php">Destroy.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Keyholder.php"><a href="files/module-decision-src-model-keyholder.html"><abbr title="module/Decision/src/Model/Keyholder.php">Keyholder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">35</span>
+    <span class="phpdocumentor-element-found-in__line">85</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Reference to the destruction of a decision.</p>
+        <p class="phpdocumentor-summary">Release date.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/Decision-Model-Decision.html"><abbr title="\Decision\Model\Decision">Decision</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$target</span>
-    </code>
+        <span class="phpdocumentor-signature__type"><abbr title="\DateTime">DateTime</abbr>|null</span>
+    <span class="phpdocumentor-signature__name">$withdrawnDate</span>
+     = <span class="phpdocumentor-signature__default-value">null</span></code>
 
     
         <section class="phpdocumentor-description"></section>
@@ -884,7 +708,7 @@ catch. If that is the case, let me know!</p>
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/Decision-Model-SubDecision-Destroy.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Decision-Model-Keyholder.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
         </h3>
                     <article
         class="phpdocumentor-element
@@ -892,29 +716,29 @@ catch. If that is the case, let me know!</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getContent">
-        getContent()
-        <a href="classes/Decision-Model-SubDecision.html#method_getContent" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_getExpirationDate">
+        getExpirationDate()
+        <a href="classes/Decision-Model-Keyholder.html#method_getExpirationDate" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Keyholder.php"><a href="files/module-decision-src-model-keyholder.html"><abbr title="module/Decision/src/Model/Keyholder.php">Keyholder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">229</span>
+    <span class="phpdocumentor-element-found-in__line">126</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Get the content.</p>
+        <p class="phpdocumentor-summary">Get the expiration date.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getContent</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+                    <span class="phpdocumentor-signature__name">getExpirationDate</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\DateTime">DateTime</abbr></span></code>
 
     
     
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string</span>
+    <span class="phpdocumentor-signature__response_type"><abbr title="\DateTime">DateTime</abbr></span>
             &mdash;
         
     
@@ -925,29 +749,29 @@ catch. If that is the case, let me know!</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getDecision">
-        getDecision()
-        <a href="classes/Decision-Model-SubDecision.html#method_getDecision" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_getGrantingDec">
+        getGrantingDec()
+        <a href="classes/Decision-Model-Keyholder.html#method_getGrantingDec" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Keyholder.php"><a href="files/module-decision-src-model-keyholder.html"><abbr title="module/Decision/src/Model/Keyholder.php">Keyholder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">144</span>
+    <span class="phpdocumentor-element-found-in__line">146</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Get the decision.</p>
+        <p class="phpdocumentor-summary">Get the granting decision.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getDecision</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-Decision.html"><abbr title="\Decision\Model\Decision">Decision</abbr></a></span></code>
+                    <span class="phpdocumentor-signature__name">getGrantingDec</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-SubDecision-Key-Granting.html"><abbr title="\Decision\Model\SubDecision\Key\Granting">Granting</abbr></a></span></code>
 
     
     
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-Decision.html"><abbr title="\Decision\Model\Decision">Decision</abbr></a></span>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-SubDecision-Key-Granting.html"><abbr title="\Decision\Model\SubDecision\Key\Granting">Granting</abbr></a></span>
             &mdash;
         
     
@@ -958,29 +782,29 @@ catch. If that is the case, let me know!</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getDecisionNumber">
-        getDecisionNumber()
-        <a href="classes/Decision-Model-SubDecision.html#method_getDecisionNumber" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_getId">
+        getId()
+        <a href="classes/Decision-Model-Keyholder.html#method_getId" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Keyholder.php"><a href="files/module-decision-src-model-keyholder.html"><abbr title="module/Decision/src/Model/Keyholder.php">Keyholder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">199</span>
+    <span class="phpdocumentor-element-found-in__line">96</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Get the decision number.</p>
+        <p class="phpdocumentor-summary">Get the ID.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getDecisionNumber</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
+                    <span class="phpdocumentor-signature__name">getId</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int|null</span></code>
 
     
     
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">int</span>
+    <span class="phpdocumentor-signature__response_type">int|null</span>
             &mdash;
         
     
@@ -991,29 +815,29 @@ catch. If that is the case, let me know!</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getDecisionPoint">
-        getDecisionPoint()
-        <a href="classes/Decision-Model-SubDecision.html#method_getDecisionPoint" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_getMember">
+        getMember()
+        <a href="classes/Decision-Model-Keyholder.html#method_getMember" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Keyholder.php"><a href="files/module-decision-src-model-keyholder.html"><abbr title="module/Decision/src/Model/Keyholder.php">Keyholder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">189</span>
+    <span class="phpdocumentor-element-found-in__line">106</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Get the decision point number.</p>
+        <p class="phpdocumentor-summary">Get the member.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getDecisionPoint</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
+                    <span class="phpdocumentor-signature__name">getMember</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a></span></code>
 
     
     
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">int</span>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a></span>
             &mdash;
         
     
@@ -1024,29 +848,29 @@ catch. If that is the case, let me know!</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getMeetingNumber">
-        getMeetingNumber()
-        <a href="classes/Decision-Model-SubDecision.html#method_getMeetingNumber" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_getWithdrawnDate">
+        getWithdrawnDate()
+        <a href="classes/Decision-Model-Keyholder.html#method_getWithdrawnDate" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Keyholder.php"><a href="files/module-decision-src-model-keyholder.html"><abbr title="module/Decision/src/Model/Keyholder.php">Keyholder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">179</span>
+    <span class="phpdocumentor-element-found-in__line">164</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Get the meeting number.</p>
+        <p class="phpdocumentor-summary">Get the withdrawn date.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getMeetingNumber</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
+                    <span class="phpdocumentor-signature__name">getWithdrawnDate</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\DateTime">DateTime</abbr>|null</span></code>
 
     
     
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">int</span>
+    <span class="phpdocumentor-signature__response_type"><abbr title="\DateTime">DateTime</abbr>|null</span>
             &mdash;
         
     
@@ -1057,128 +881,29 @@ catch. If that is the case, let me know!</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getMeetingType">
-        getMeetingType()
-        <a href="classes/Decision-Model-SubDecision.html#method_getMeetingType" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_setExpirationDate">
+        setExpirationDate()
+        <a href="classes/Decision-Model-Keyholder.html#method_setExpirationDate" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Keyholder.php"><a href="files/module-decision-src-model-keyholder.html"><abbr title="module/Decision/src/Model/Keyholder.php">Keyholder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">169</span>
+    <span class="phpdocumentor-element-found-in__line">136</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Get the meeting type.</p>
+        <p class="phpdocumentor-summary">Set the expiration date.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getMeetingType</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-Enums-MeetingTypes.html"><abbr title="\Decision\Model\Enums\MeetingTypes">MeetingTypes</abbr></a></span></code>
-
-    
-    
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-Enums-MeetingTypes.html"><abbr title="\Decision\Model\Enums\MeetingTypes">MeetingTypes</abbr></a></span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getNumber">
-        getNumber()
-        <a href="classes/Decision-Model-SubDecision.html#method_getNumber" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">209</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Get the number.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getNumber</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
-
-    
-    
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">int</span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getTarget">
-        getTarget()
-        <a href="classes/Decision-Model-SubDecision-Destroy.html#method_getTarget" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Destroy.php"><a href="files/module-decision-src-model-subdecision-destroy.html"><abbr title="module/Decision/src/Model/SubDecision/Destroy.php">Destroy.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">62</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Get the target.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getTarget</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-Decision.html"><abbr title="\Decision\Model\Decision">Decision</abbr></a></span></code>
-
-    
-    
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-Decision.html"><abbr title="\Decision\Model\Decision">Decision</abbr></a></span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_setContent">
-        setContent()
-        <a href="classes/Decision-Model-SubDecision.html#method_setContent" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">239</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Set the content.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setContent</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$content</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">setExpirationDate</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTime">DateTime</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$expirationDate</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$content</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                <span class="phpdocumentor-signature__argument__name">$expirationDate</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTime">DateTime</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
@@ -1199,29 +924,73 @@ catch. If that is the case, let me know!</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_setDecision">
-        setDecision()
-        <a href="classes/Decision-Model-SubDecision.html#method_setDecision" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_setGrantingDec">
+        setGrantingDec()
+        <a href="classes/Decision-Model-Keyholder.html#method_setGrantingDec" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Keyholder.php"><a href="files/module-decision-src-model-keyholder.html"><abbr title="module/Decision/src/Model/Keyholder.php">Keyholder.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">154</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Set the decision.</p>
+        <p class="phpdocumentor-summary">Set the granting decision.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setDecision</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Decision.html"><abbr title="\Decision\Model\Decision">Decision</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$decision</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">setGrantingDec</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-SubDecision-Key-Granting.html"><abbr title="\Decision\Model\SubDecision\Key\Granting">Granting</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$grantingDec</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$decision</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Decision.html"><abbr title="\Decision\Model\Decision">Decision</abbr></a></span>
+                <span class="phpdocumentor-signature__argument__name">$grantingDec</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-SubDecision-Key-Granting.html"><abbr title="\Decision\Model\SubDecision\Key\Granting">Granting</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">void</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_setMember">
+        setMember()
+        <a href="classes/Decision-Model-Keyholder.html#method_setMember" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Keyholder.php"><a href="files/module-decision-src-model-keyholder.html"><abbr title="module/Decision/src/Model/Keyholder.php">Keyholder.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">116</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Set the member.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">setMember</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$member</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$member</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
@@ -1242,72 +1011,29 @@ catch. If that is the case, let me know!</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_setNumber">
-        setNumber()
-        <a href="classes/Decision-Model-SubDecision.html#method_setNumber" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_setWithdrawnDate">
+        setWithdrawnDate()
+        <a href="classes/Decision-Model-Keyholder.html#method_setWithdrawnDate" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Keyholder.php"><a href="files/module-decision-src-model-keyholder.html"><abbr title="module/Decision/src/Model/Keyholder.php">Keyholder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">219</span>
+    <span class="phpdocumentor-element-found-in__line">174</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Set the number.</p>
+        <p class="phpdocumentor-summary">Set the withdrawn date.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setNumber</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$number</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">setWithdrawnDate</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTime">DateTime</abbr>|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$withdrawnDate</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$number</span>
-                : <span class="phpdocumentor-signature__argument__return-type">int</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_setTarget">
-        setTarget()
-        <a href="classes/Decision-Model-SubDecision-Destroy.html#method_setTarget" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Destroy.php"><a href="files/module-decision-src-model-subdecision-destroy.html"><abbr title="module/Decision/src/Model/SubDecision/Destroy.php">Destroy.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">72</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Set the target.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setTarget</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Decision.html"><abbr title="\Decision\Model\Decision">Decision</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$target</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
-
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$target</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Decision.html"><abbr title="\Decision\Model\Decision">Decision</abbr></a></span>
+                <span class="phpdocumentor-signature__argument__name">$withdrawnDate</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTime">DateTime</abbr>|null</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
@@ -1400,7 +1126,7 @@ catch. If that is the case, let me know!</p>
 </section>
             </div>
         </div>
-        <a href="classes/Decision-Model-SubDecision-Destroy.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/Decision-Model-Keyholder.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 
