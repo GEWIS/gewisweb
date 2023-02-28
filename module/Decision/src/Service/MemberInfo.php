@@ -64,8 +64,6 @@ class MemberInfo
 
         $memberships = $this->getOrganMemberships($member);
 
-        $tags = $this->photoService->getTagsForMember($member);
-
         // Base directory for retrieving photos
         $basedir = $this->photoService->getBaseDirectory();
 
@@ -75,7 +73,6 @@ class MemberInfo
         return [
             'member' => $member,
             'memberships' => $memberships,
-            'tags' => $tags,
             'profilePhoto' => $profilePhoto,
             'isExplicitProfilePhoto' => $isExplicitProfilePhoto,
             'basedir' => $basedir,

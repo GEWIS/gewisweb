@@ -851,6 +851,43 @@ class Member
     }
 
     /**
+     * Get keyholderships.
+     */
+    public function getKeyGrantings(): Collection
+    {
+        return $this->keyGrantings;
+    }
+
+    /**
+     * Returns true if the member is currently granted a key code (that is not withdrawn prematurely).
+     */
+    public function isKeyholder(): bool
+    {
+        if ($this->getKeyGrantings()->isEmpty()) {
+            return false;
+        }
+
+        $today = new DateTime('today');
+
+        $keyGrantings = $this->getKeyGrantings()->filter(
+            function (Keyholder $keyholder) use ($today) {
+                $withdrawnOn = $keyholder->getWithdrawnDate();
+
+                if (
+                    null !== $withdrawnOn
+                    && $withdrawnOn <= $today
+                ) {
+                    return false;
+                }
+
+                return $today <= $keyholder->getExpirationDate();
+            }
+        );
+
+        return !$keyGrantings->isEmpty();
+    }
+
+    /**
      * Returns true the member is currently installed as a board member and false otherwise.
      *
      * @return bool

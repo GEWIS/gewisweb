@@ -39,6 +39,10 @@ $this->headTitle($this->translate('Members'));
                             <th><?= $this->translate('Membership type') ?></th>
                             <td><?= $member->getType()->getName($this->plugin('translate')->getTranslator()) ?></td>
                         </tr>
+                        <tr>
+                            <th><?= $this->translate('Has key code?') ?></th>
+                            <td><?= $member->isKeyholder() ? $this->translate('Yes') : $this->translate('No') ?></td>
+                        </tr>
                     <?php endif; ?>
                 </table>
                 <h3><?= $this->translate('Memberships of committees and fraternities') ?></h3>
