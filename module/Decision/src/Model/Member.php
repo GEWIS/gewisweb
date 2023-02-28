@@ -254,6 +254,15 @@ class Member
     )]
     protected Collection $tags;
 
+    /**
+     * Keyholdership.
+     */
+    #[OneToMany(
+        targetEntity: Keyholder::class,
+        mappedBy: "member",
+    )]
+    protected Collection $keyGrantings;
+
     public function __construct()
     {
         $this->addresses = new ArrayCollection();
@@ -262,6 +271,7 @@ class Member
         $this->boardInstallations = new ArrayCollection();
         $this->tags = new ArrayCollection();
         $this->lists = new ArrayCollection();
+        $this->keyGrantings = new ArrayCollection();
     }
 
     /**
@@ -838,6 +848,43 @@ class Member
     public function clearLists(): void
     {
         $this->lists = new ArrayCollection();
+    }
+
+    /**
+     * Get keyholderships.
+     */
+    public function getKeyGrantings(): Collection
+    {
+        return $this->keyGrantings;
+    }
+
+    /**
+     * Returns true if the member is currently granted a key code (that is not withdrawn prematurely).
+     */
+    public function isKeyholder(): bool
+    {
+        if ($this->getKeyGrantings()->isEmpty()) {
+            return false;
+        }
+
+        $today = new DateTime('today');
+
+        $keyGrantings = $this->getKeyGrantings()->filter(
+            function (Keyholder $keyholder) use ($today) {
+                $withdrawnOn = $keyholder->getWithdrawnDate();
+
+                if (
+                    null !== $withdrawnOn
+                    && $withdrawnOn <= $today
+                ) {
+                    return false;
+                }
+
+                return $today <= $keyholder->getExpirationDate();
+            }
+        );
+
+        return !$keyGrantings->isEmpty();
     }
 
     /**
