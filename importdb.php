@@ -35,6 +35,7 @@ try {
         'Meeting',
         'Member',
         'members_mailinglists',
+        'Keyholder',
         'Organ',
         'OrganMember',
         'organs_subdecisions',
