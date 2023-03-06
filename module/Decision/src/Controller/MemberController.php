@@ -34,7 +34,7 @@ class MemberController extends AbstractActionController
     {
         if (!$this->aclService->isAllowed('view', 'meeting')) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to create an activity category')
+                $this->translator->translate('You are not allowed to view meetings.')
             );
         }
 
