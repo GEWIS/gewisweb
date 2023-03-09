@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-27 16:51+0100\n"
-"PO-Revision-Date: 2023-02-27 16:52+0100\n"
+"POT-Creation-Date: 2023-03-09 18:13+0100\n"
+"PO-Revision-Date: 2023-03-09 18:14+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: nl\n"
@@ -95,7 +95,6 @@ msgstr ""
 
 #: module/Activity/src/Controller/AdminCategoryController.php:52
 #: module/Activity/src/Service/ActivityCategory.php:82
-#: module/Decision/src/Controller/MemberController.php:37
 msgid "You are not allowed to create an activity category"
 msgstr "Je hebt niet de rechten om een activiteitencategorie te maken"
 
@@ -1563,6 +1562,7 @@ msgstr "N.V.T."
 #: module/Company/view/company/admin/index.phtml:184
 #: module/Company/view/company/company-account/jobs.phtml:195
 #: module/Company/view/company/company-account/jobs.phtml:203
+#: module/Decision/view/decision/member/view.phtml:44
 #: module/Photo/view/partial/metadata.phtml:29
 msgid "Yes"
 msgstr "Ja"
@@ -1580,6 +1580,7 @@ msgstr "Ja"
 #: module/Company/view/company/admin/index.phtml:183
 #: module/Company/view/company/admin/index.phtml:184
 #: module/Company/view/company/company-account/jobs.phtml:195
+#: module/Decision/view/decision/member/view.phtml:44
 #: module/Photo/view/partial/metadata.phtml:29
 msgid "No"
 msgstr "Nee"
@@ -3407,6 +3408,11 @@ msgstr "Je hebt niet de rechten om machtigingen in te trekken."
 msgid "You are not allowed to browse files."
 msgstr "Je hebt niet de rechten om door bestanden te bladeren."
 
+#: module/Decision/src/Controller/MemberController.php:37
+#: module/Decision/src/Service/Decision.php:140
+msgid "You are not allowed to view meetings."
+msgstr "Het is niet toegestaan om vergaderingen te zien."
+
 #: module/Decision/src/Controller/MemberController.php:95
 msgid "Not allowed to search for members."
 msgstr "Het is niet toegestaan om te zoeken op leden."
@@ -3596,10 +3602,6 @@ msgstr "Raad van Advies"
 #: module/Decision/src/Service/Decision.php:120
 msgid "You are not allowed to list meetings."
 msgstr "Het is niet toegestaan om de lijst van vergaderingen te zien."
-
-#: module/Decision/src/Service/Decision.php:140
-msgid "You are not allowed to view meetings."
-msgstr "Het is niet toegestaan om vergaderingen te zien."
 
 #: module/Decision/src/Service/Decision.php:191
 msgid "You are not allowed to view meeting documents."
@@ -4117,7 +4119,7 @@ msgid "the secretary of GEWIS"
 msgstr "de secretaris van GEWIS"
 
 #: module/Decision/view/decision/member/self.phtml:75
-#: module/Decision/view/decision/member/view.phtml:44
+#: module/Decision/view/decision/member/view.phtml:48
 msgid "Memberships of committees and fraternities"
 msgstr "Lidmaatschappen van commissies en disputen"
 
@@ -4134,22 +4136,22 @@ msgid "You were a member of:"
 msgstr "Je was een lid van:"
 
 #: module/Decision/view/decision/member/self.phtml:125
-#: module/Decision/view/decision/member/view.phtml:109
+#: module/Decision/view/decision/member/view.phtml:113
 msgid "Addresses"
 msgstr "Adressen"
 
 #: module/Decision/view/decision/member/self.phtml:130
-#: module/Decision/view/decision/member/view.phtml:114
+#: module/Decision/view/decision/member/view.phtml:118
 msgid "Country"
 msgstr "Land"
 
 #: module/Decision/view/decision/member/self.phtml:134
-#: module/Decision/view/decision/member/view.phtml:118
+#: module/Decision/view/decision/member/view.phtml:122
 msgid "Street and number"
 msgstr "Straat en huisnummer"
 
 #: module/Decision/view/decision/member/self.phtml:138
-#: module/Decision/view/decision/member/view.phtml:122
+#: module/Decision/view/decision/member/view.phtml:126
 msgid "City and postal code"
 msgstr "Woonplaats en postcode"
 
@@ -4181,22 +4183,26 @@ msgstr "Jouw profiel foto wordt in plaats hiervan automatisch gekozen."
 msgid "More of my photo's"
 msgstr "Meer van mijn foto’s"
 
-#: module/Decision/view/decision/member/view.phtml:51
+#: module/Decision/view/decision/member/view.phtml:43
+msgid "Has key code?"
+msgstr "Heeft sleutelcode?"
+
+#: module/Decision/view/decision/member/view.phtml:55
 #, php-format
 msgid "%s has never been part of a committee or fraternity."
 msgstr "%s is geen lid geweest van een commissie of dispuut."
 
-#: module/Decision/view/decision/member/view.phtml:59
+#: module/Decision/view/decision/member/view.phtml:63
 #, php-format
 msgid "%s is currently a member of:"
 msgstr "%s is momenteel lid van:"
 
-#: module/Decision/view/decision/member/view.phtml:85
+#: module/Decision/view/decision/member/view.phtml:89
 #, php-format
 msgid "%s was a member of:"
 msgstr "%s is lid geweest van:"
 
-#: module/Decision/view/decision/member/view.phtml:171
+#: module/Decision/view/decision/member/view.phtml:175
 #, php-format
 msgid "Photo's of %s"
 msgstr "Foto's van %s"
@@ -5888,3 +5894,11 @@ msgid ""
 msgstr ""
 "Er is een e-mail verzonden met instructies om je wachtwoord te resetten. Als "
 "je geen e-mail hebt ontvangen, probeer het dan over 20 minuten opnieuw."
+
+#: module/User/view/user/user/reset-password.phtml:18
+msgid ""
+"Are you not seeing a confirmation message when requesting a password reset? "
+"Clear your cookies for *.gewis.nl and try again."
+msgstr ""
+"Zie je geen bevestigingsbericht bij het aanvragen van een wachtwoord reset? "
+"Wis de cookies voor *.gewis.nl en probeer het opnieuw."
