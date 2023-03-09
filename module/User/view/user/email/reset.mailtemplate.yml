@@ -5,7 +5,7 @@
 version: 1.1
 settings:
     title: "Request to reset password"
-    email: "web@gewis.nl"
+    email: "gewisweb@gewis.nl"
     lang: en-UK
     follow: false
 

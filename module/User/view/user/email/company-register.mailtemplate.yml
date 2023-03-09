@@ -5,7 +5,7 @@
 version: 1.1
 settings:
     title: "Your company account for the GEWIS Career Platform"
-    email: "web@gewis.nl"
+    email: "gewisweb@gewis.nl"
     lang: en-UK
     follow: true
 

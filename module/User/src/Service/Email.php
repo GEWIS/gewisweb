@@ -54,8 +54,8 @@ class Email
 
         $message = new Message();
         $message->getHeaders()->addHeader((new MessageId())->setId());
-        $message->setFrom($this->emailConfig['from'], $this->emailConfig['from_name']);
-        $message->addTo($member->getEmail());
+        $message->setFrom($this->emailConfig['from']['address'], $this->emailConfig['from']['name']);
+        $message->setTo($member->getEmail(), $member->getFullName());
         $message->setSubject('Your account for the GEWIS website');
         $message->setBody($mimeMessage);
 
@@ -82,8 +82,8 @@ class Email
 
         $message = new Message();
         $message->getHeaders()->addHeader((new MessageId())->setId());
-        $message->setFrom($this->emailConfig['from'], $this->emailConfig['from_name']);
-        $message->addTo($newCompanyUser->getEmail());
+        $message->setFrom($this->emailConfig['from']['address'], $this->emailConfig['from']['name']);
+        $message->setTo($newCompanyUser->getEmail(), $newCompanyUser->getCompany()->getRepresentativeName());
         $message->setSubject('Your company account for the GEWIS Career Platform');
         $message->setBody($mimeMessage);
 
@@ -116,8 +116,8 @@ class Email
 
         $message = new Message();
         $message->getHeaders()->addHeader((new MessageId())->setId());
-        $message->setFrom($this->emailConfig['from'], $this->emailConfig['from_name']);
-        $message->addTo($member->getEmail());
+        $message->setFrom($this->emailConfig['from']['address'], $this->emailConfig['from']['name']);
+        $message->setTo($member->getEmail(), $member->getFullName());
         $message->setSubject('Password reset request for the GEWIS website');
         $message->setBody($mimeMessage);
 
@@ -144,8 +144,8 @@ class Email
 
         $message = new Message();
         $message->getHeaders()->addHeader((new MessageId())->setId());
-        $message->setFrom($this->emailConfig['from'], $this->emailConfig['from_name']);
-        $message->addTo($newCompanyUser->getEmail());
+        $message->setFrom($this->emailConfig['from']['address'], $this->emailConfig['from']['name']);
+        $message->setTo($newCompanyUser->getEmail(), $newCompanyUser->getCompany()->getRepresentativeName());
         $message->setSubject('Password reset request for the GEWIS Career Platform');
         $message->setBody($mimeMessage);
 

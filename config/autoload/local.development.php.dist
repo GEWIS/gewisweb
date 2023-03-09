@@ -32,15 +32,32 @@ return [
             'host' => 'postfix',
             'port' => '25'
         ],
-        'from' => 'web@gewis.nl',
-        'from_name' => 'Study Association GEWIS',
+        'from' => [
+            'address' => getenv('MAIL_FROM_ADDRESS'),
+            'name' => getenv('MAIL_FROM_NAME'),
+        ],
         'to' => [
-            'activity_creation' => 'web@gewis.nl',
-            'activity_calendar' => 'web@gewis.nl',
-            'poll_creation' => 'web@gewis.nl',
-            'organ_update' => 'web@gewis.nl',
-            'activity_creation_require_GEFLITST' => 'web@gewis.nl'
-        ]
+            'activity_creation' => [
+                'address' => getenv('MAIL_TO_ACTIVITY_CREATION_ADDRESS'),
+                'name' => getenv('MAIL_TO_ACTIVITY_CREATION_NAME'),
+            ],
+            'activity_calendar' => [
+                'address' => getenv('MAIL_TO_ACTIVITY_CALENDAR_ADDRESS'),
+                'name' => getenv('MAIL_TO_ACTIVITY_CALENDAR_NAME'),
+            ],
+            'poll_creation' => [
+                'address' => getenv('MAIL_TO_POLL_CREATION_ADDRESS'),
+                'name' => getenv('MAIL_TO_POLL_CREATION_NAME'),
+            ],
+            'organ_update' => [
+                'address' => getenv('MAIL_TO_ORGAN_UPDATE_ADDRESS'),
+                'name' => getenv('MAIL_TO_ORGAN_UPDATE_NAME'),
+            ],
+            'activity_creation_require_GEFLITST' => [
+                'address' => getenv('MAIL_TO_ACTIVITY_CREATION_REQUIRE_GEFLITST_ADDRESS'),
+                'name' => getenv('MAIL_TO_ACTIVITY_CREATION_REQUIRE_GEFLITST_NAME'),
+            ],
+        ],
     ],
 
     /*

@@ -45,8 +45,8 @@ class Email
     ): void {
         $message = $this->createMessageFromView($view, $data);
 
-        $message->setFrom($this->emailConfig['from'], $this->emailConfig['from_name']);
-        $message->addTo($this->emailConfig['to'][$type]);
+        $message->setFrom($this->emailConfig['from']['address'], $this->emailConfig['from']['name']);
+        $message->setTo($this->emailConfig['to'][$type]['address'], $this->emailConfig['to'][$type]['name']);
         $message->setSubject($subject);
 
         $this->transport->send($message);
@@ -70,8 +70,8 @@ class Email
     ): void {
         $message = $this->createMessageFromView($view, $data);
 
-        $message->setFrom($this->emailConfig['from'], $this->emailConfig['from_name']);
-        $message->addTo($this->emailConfig['to'][$type]);
+        $message->setFrom($this->emailConfig['from']['address'], $this->emailConfig['from']['name']);
+        $message->setTo($this->emailConfig['to'][$type]['address'], $this->emailConfig['to'][$type]['name']);
         $message->setSubject($subject);
         $message->setReplyTo($user->getEmail());
 
@@ -96,8 +96,8 @@ class Email
     ): void {
         $message = $this->createMessageFromView($view, $data);
 
-        $message->setFrom($this->emailConfig['from'], $this->emailConfig['from_name']);
-        $message->addTo($recipient->getEmail());
+        $message->setFrom($this->emailConfig['from']['address'], $this->emailConfig['from']['name']);
+        $message->setTo($recipient->getEmail(), $recipient->getFullName());
         $message->setSubject($subject);
         $message->setReplyTo($user->getEmail());
 
@@ -122,10 +122,10 @@ class Email
     ): void {
         $message = $this->createMessageFromView($view, $data);
 
-        $message->setFrom($this->emailConfig['from'], $this->emailConfig['from_name']);
-        $message->addTo($this->emailConfig['to'][$type]);
+        $message->setFrom($this->emailConfig['from']['address'], $this->emailConfig['from']['name']);
+        $message->setTo($this->emailConfig['to'][$type]['address'], $this->emailConfig['to'][$type]['name']);
         $message->setSubject($subject);
-        $message->setReplyTo($organ->getEmail());
+        $message->setReplyTo($organ->getEmail(), $organ->getOrgan()->getAbbr());
 
         $this->transport->send($message);
     }
