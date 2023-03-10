@@ -686,13 +686,14 @@ class Activity
         $old = $proposal->getOld();
         $new = $proposal->getNew();
 
-        // If the old activity was already approved, keep it approved.
-        // Otherwise, the status of the new Activity becomes
-        // ActivityModel::STATUS_TO_APPROVE.
+        // If the old activity was already approved, keep it approved but update who approved it.
+        // Otherwise, the status of the new Activity becomes ActivityModel::STATUS_TO_APPROVE without an approver.
         if (ActivityModel::STATUS_APPROVED !== $old->getStatus()) {
             $new->setStatus(ActivityModel::STATUS_TO_APPROVE);
+            $new->setApprover(null);
         } else {
             $new->setStatus(ActivityModel::STATUS_APPROVED);
+            $new->setApprover($this->aclService->getUserIdentityOrThrowException()->getMember());
         }
 
         $em = $this->entityManager;
