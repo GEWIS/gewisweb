@@ -17,6 +17,8 @@ use Laminas\Mime\{
 use Laminas\View\Model\ViewModel;
 use Laminas\View\Renderer\PhpRenderer;
 
+use function mb_encode_mimeheader;
+
 /**
  * This service is used for sending emails.
  */
@@ -97,7 +99,15 @@ class Email
         $message = $this->createMessageFromView($view, $data);
 
         $message->setFrom($this->emailConfig['from']['address'], $this->emailConfig['from']['name']);
-        $message->setTo($recipient->getEmail(), $recipient->getFullName());
+        $message->setTo(
+            $recipient->getEmail(),
+            mb_encode_mimeheader(
+                $recipient->getFullName(),
+                'UTF-8',
+                'Q',
+                '',
+            ),
+        );
         $message->setSubject($subject);
         $message->setReplyTo($user->getEmail());
 
