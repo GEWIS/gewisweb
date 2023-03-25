@@ -19,6 +19,8 @@ use User\Model\{
     NewUser as NewUserModel,
 };
 
+use function mb_encode_mimeheader;
+
 class Email
 {
     public function __construct(
@@ -55,7 +57,15 @@ class Email
         $message = new Message();
         $message->getHeaders()->addHeader((new MessageId())->setId());
         $message->setFrom($this->emailConfig['from']['address'], $this->emailConfig['from']['name']);
-        $message->setTo($member->getEmail(), $member->getFullName());
+        $message->setTo(
+            $member->getEmail(),
+            mb_encode_mimeheader(
+                $member->getFullName(),
+                'UTF-8',
+                'Q',
+                '',
+            ),
+        );
         $message->setSubject('Your account for the GEWIS website');
         $message->setBody($mimeMessage);
 
@@ -83,7 +93,15 @@ class Email
         $message = new Message();
         $message->getHeaders()->addHeader((new MessageId())->setId());
         $message->setFrom($this->emailConfig['from']['address'], $this->emailConfig['from']['name']);
-        $message->setTo($newCompanyUser->getEmail(), $newCompanyUser->getCompany()->getRepresentativeName());
+        $message->setTo(
+            $newCompanyUser->getEmail(),
+            mb_encode_mimeheader(
+                $newCompanyUser->getCompany()->getRepresentativeName(),
+                'UTF-8',
+                'Q',
+                '',
+            ),
+        );
         $message->setSubject('Your company account for the GEWIS Career Platform');
         $message->setBody($mimeMessage);
 
@@ -117,7 +135,15 @@ class Email
         $message = new Message();
         $message->getHeaders()->addHeader((new MessageId())->setId());
         $message->setFrom($this->emailConfig['from']['address'], $this->emailConfig['from']['name']);
-        $message->setTo($member->getEmail(), $member->getFullName());
+        $message->setTo(
+            $member->getEmail(),
+            mb_encode_mimeheader(
+                $member->getFullName(),
+                'UTF-8',
+                'Q',
+                '',
+            ),
+        );
         $message->setSubject('Password reset request for the GEWIS website');
         $message->setBody($mimeMessage);
 
@@ -145,7 +171,15 @@ class Email
         $message = new Message();
         $message->getHeaders()->addHeader((new MessageId())->setId());
         $message->setFrom($this->emailConfig['from']['address'], $this->emailConfig['from']['name']);
-        $message->setTo($newCompanyUser->getEmail(), $newCompanyUser->getCompany()->getRepresentativeName());
+        $message->setTo(
+            $newCompanyUser->getEmail(),
+            mb_encode_mimeheader(
+                $newCompanyUser->getCompany()->getRepresentativeName(),
+                'UTF-8',
+                'Q',
+                '',
+            ),
+        );
         $message->setSubject('Password reset request for the GEWIS Career Platform');
         $message->setBody($mimeMessage);
 
