@@ -1,3 +1,13 @@
+## [v3.0.3](https://github.com/GEWIS/gewisweb/tree/v3.0.3) (2023-03-25)
+
+* Added sender and recipient names to e-mails.
+* Fixed issue where keyholders were not correctly synced.
+* Fixed issue where the 90-day reminder logic was inverted preventing external authentication.
+* Fixed issue where the approver of an activity would be lost preventing being able to reset the approval status of the activity.
+* Fixed issue where e-mails would not be sent if the recipient's name contains unicode characters.
+
+---
+
 ## [v3.0.2](https://github.com/GEWIS/gewisweb/tree/v3.0.2) (2023-02-28)
 
 * Added support for keyholders.
