@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-09 18:13+0100\n"
+"POT-Creation-Date: 2023-03-27 18:46+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1198,12 +1198,12 @@ msgid "Please fill in this CAPTCHA:"
 msgstr ""
 
 #: module/Activity/view/partial/signupForm.phtml:72
-#: module/Decision/view/decision/member/index.phtml:219
+#: module/Decision/view/decision/member/index.phtml:243
 msgid "Activity Policy"
 msgstr ""
 
 #: module/Activity/view/partial/signupForm.phtml:74
-#: module/Decision/view/decision/member/index.phtml:224
+#: module/Decision/view/decision/member/index.phtml:248
 msgid "Alcohol Policy"
 msgstr ""
 
@@ -1765,7 +1765,7 @@ msgid "unavailable"
 msgstr ""
 
 #: module/Application/view/partial/privacy-widget.phtml:17
-#: module/Decision/view/decision/member/index.phtml:259
+#: module/Decision/view/decision/member/index.phtml:283
 msgid "Privacy Policy"
 msgstr ""
 
@@ -2746,31 +2746,39 @@ msgstr ""
 msgid "Administrator"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:229
+#: module/Decision/view/decision/member/index.phtml:226
+msgid "Bylaws"
+msgstr ""
+
+#: module/Decision/view/decision/member/index.phtml:238
+msgid "Internal Regulations"
+msgstr ""
+
+#: module/Decision/view/decision/member/index.phtml:253
 msgid "Board Policies"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:234
+#: module/Decision/view/decision/member/index.phtml:258
 msgid "Borrel Policy"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:239
+#: module/Decision/view/decision/member/index.phtml:263
 msgid "House Rules"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:244
+#: module/Decision/view/decision/member/index.phtml:268
 msgid "ICT Policy"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:249
+#: module/Decision/view/decision/member/index.phtml:273
 msgid "Key Policy"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:254
+#: module/Decision/view/decision/member/index.phtml:278
 msgid "Poster Policy"
 msgstr ""
 
-#: module/Decision/view/decision/member/index.phtml:265
+#: module/Decision/view/decision/member/index.phtml:289
 msgid "Organ Regulations"
 msgstr ""
 
@@ -4463,9 +4471,9 @@ msgstr ""
 msgid "You are not allowed to create activity option proposals"
 msgstr ""
 
-#: module/Activity/src/Service/Activity.php:730
-#: module/Activity/src/Service/Activity.php:748
-#: module/Activity/src/Service/Activity.php:766
+#: module/Activity/src/Service/Activity.php:731
+#: module/Activity/src/Service/Activity.php:749
+#: module/Activity/src/Service/Activity.php:767
 msgid "You are not allowed to change the status of the activity"
 msgstr ""
 
