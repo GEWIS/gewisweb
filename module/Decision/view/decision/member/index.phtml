@@ -215,6 +215,30 @@ $meetings = $this->meetings;
                     <h2><?= $this->translate('Regulations') ?></h2>
                     <ul>
                         <li>
+                            <a href="<?= $this->url(
+                                'home/page',
+                                [
+                                    'category' => 'vereniging',
+                                    'sub_category' => 'statuten',
+                                    'name' => 'statuten',
+                                ],
+                            ) ?>">
+                                <?= $this->translate('Bylaws') ?>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<?= $this->url(
+                                'home/page',
+                                [
+                                    'category' => 'vereniging',
+                                    'sub_category' => 'statuten',
+                                    'name' => 'hr',
+                                ],
+                            ) ?>">
+                                <?= $this->translate('Internal Regulations') ?>
+                            </a>
+                        </li>
+                        <li>
                             <a href="<?= $this->url('member/regulations', ['regulation' => 'activity-policy']) ?>">
                                 <?= $this->translate('Activity Policy') ?>
                             </a>
