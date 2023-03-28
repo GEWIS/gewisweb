@@ -40,7 +40,7 @@ else:
                 <?php if (!empty($meetings)): ?>
                     <?php foreach ($meetings as $m): ?>
                         <option value="<?= $m->getType()->value ?>/<?= $m->getNumber() ?>"
-                            <?= ($m->getNumber() === intval($number) && $m->getType()->value === $type) ? 'selected' : '' ?>>
+                            <?= ($m->getNumber() === intval($number) && $m->getType()->value === $type->value) ? 'selected' : '' ?>>
                             <?= $m->getType()->value ?> <?= $m->getNumber() ?> (<?= $m->getDate()->format('Y-m-d') ?>)
                         </option>
                     <?php endforeach; ?>
