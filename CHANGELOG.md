@@ -1,3 +1,10 @@
+## [v3.0.4](https://github.com/GEWIS/gewisweb/tree/v3.0.4) (2023-03-28)
+
+* Added bylaws and internal regulations to list of policies on the members page.
+* Fixed issue where uploading a meeting document for a specific meeting would be uploaded to another meeting.
+
+---
+
 ## [v3.0.3](https://github.com/GEWIS/gewisweb/tree/v3.0.3) (2023-03-25)
 
 * Added sender and recipient names to e-mails.
