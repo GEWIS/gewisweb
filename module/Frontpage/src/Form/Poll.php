@@ -8,6 +8,7 @@ use Laminas\Form\Element\{
     Submit,
     Text,
 };
+use Laminas\Filter\StringTrim;
 use Laminas\Form\Form;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\InputFilter\InputFilterProviderInterface;
@@ -76,6 +77,11 @@ class Poll extends Form implements InputFilterProviderInterface
         return [
             'dutchQuestion' => [
                 'required' => true,
+                'filters' => [
+                    [
+                        'name' => StringTrim::class,
+                    ],
+                ],
                 'validators' => [
                     [
                         'name' => StringLength::class,
@@ -88,6 +94,11 @@ class Poll extends Form implements InputFilterProviderInterface
             ],
             'englishQuestion' => [
                 'required' => true,
+                'filters' => [
+                    [
+                        'name' => StringTrim::class,
+                    ],
+                ],
                 'validators' => [
                     [
                         'name' => StringLength::class,
