@@ -450,3 +450,12 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
         </div>
     </div>
 </nav>
+<?php if (in_array('admin', $this->identity()?->getRoleNames() ?? [])): ?>
+    <section class="section section-admin-notice">
+        <p class="text-center">
+            <strong>
+                <?= $this->translate('You are currently using administrator privileges to use the website!') ?>
+            </strong>
+        </p>
+    </section>
+<?php endif; ?>
