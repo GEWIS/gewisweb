@@ -234,12 +234,21 @@
       <path value="$PROJECT_DIR$/vendor/symfony/property-access" />
       <path value="$PROJECT_DIR$/vendor/symfony/property-info" />
       <path value="$PROJECT_DIR$/vendor/symfony/var-exporter" />
+      <path value="$PROJECT_DIR$/docker/glide/vendor/composer" />
+      <path value="$PROJECT_DIR$/docker/glide/vendor/ralouphie/getallheaders" />
+      <path value="$PROJECT_DIR$/docker/glide/vendor/intervention/image" />
+      <path value="$PROJECT_DIR$/docker/glide/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/docker/glide/vendor/guzzlehttp/psr7" />
+      <path value="$PROJECT_DIR$/docker/glide/vendor/psr/http-factory" />
+      <path value="$PROJECT_DIR$/docker/glide/vendor/league/mime-type-detection" />
+      <path value="$PROJECT_DIR$/docker/glide/vendor/league/glide" />
+      <path value="$PROJECT_DIR$/docker/glide/vendor/league/flysystem" />
     </include_path>
   </component>
   <component name="PhpInterpreters">
     <interpreters>
-      <interpreter id="b6502dad-7c78-4cdb-b177-76e9f54dbca6" name="web.docker-registry.gewis.nl/gewisweb_web:development" home="docker://DATA" debugger_id="php.debugger.XDebug">
-        <remote_data INTERPRETER_PATH="php" HELPERS_PATH="/opt/.phpstorm_helpers" INITIALIZED="false" VALID="true" RUN_AS_ROOT_VIA_SUDO="false" DOCKER_ACCOUNT_NAME="Docker" DOCKER_IMAGE_NAME="web.docker-registry.gewis.nl/gewisweb_web:development" DOCKER_REMOTE_PROJECT_PATH="/opt/project" />
+      <interpreter id="b6502dad-7c78-4cdb-b177-76e9f54dbca6" name="web.docker-registry.gewis.nl/gewisweb_web:development" home="docker://DATA" false="false" debugger_id="php.debugger.XDebug">
+        <remote_data INTERPRETER_PATH="php" HELPERS_PATH="/opt/.phpstorm_helpers" VALID="true" RUN_AS_ROOT_VIA_SUDO="false" DOCKER_ACCOUNT_NAME="Docker" DOCKER_IMAGE_NAME="web.docker-registry.gewis.nl/gewisweb_web:development" DOCKER_REMOTE_PROJECT_PATH="/opt/project" />
       </interpreter>
     </interpreters>
   </component>
