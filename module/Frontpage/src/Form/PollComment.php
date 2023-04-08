@@ -2,6 +2,7 @@
 
 namespace Frontpage\Form;
 
+use Laminas\Filter\StringTrim;
 use Laminas\Form\Element\{
     Submit,
     Text,
@@ -60,6 +61,11 @@ class PollComment extends Form implements InputFilterProviderInterface
         return [
             'author' => [
                 'required' => true,
+                'filters' => [
+                    [
+                        'name' => StringTrim::class,
+                    ],
+                ],
                 'validators' => [
                     [
                         'name' => StringLength::class,
@@ -72,6 +78,11 @@ class PollComment extends Form implements InputFilterProviderInterface
             ],
             'content' => [
                 'required' => true,
+                'filters' => [
+                    [
+                        'name' => StringTrim::class,
+                    ],
+                ],
                 'validators' => [
                     [
                         'name' => StringLength::class,

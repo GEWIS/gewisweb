@@ -3,6 +3,7 @@
 namespace Frontpage\Form;
 
 use Frontpage\Model\PollOption as PollOptionModel;
+use Laminas\Filter\StringTrim;
 use Laminas\Form\Element\Text;
 use Laminas\Form\Fieldset;
 use Laminas\Hydrator\ClassMethodsHydrator;
@@ -47,6 +48,11 @@ class PollOption extends Fieldset implements InputFilterProviderInterface
         return [
             'dutchText' => [
                 'required' => true,
+                'filters' => [
+                    [
+                        'name' => StringTrim::class,
+                    ],
+                ],
                 'validators' => [
                     [
                         'name' => StringLength::class,
@@ -59,6 +65,11 @@ class PollOption extends Fieldset implements InputFilterProviderInterface
             ],
             'englishText' => [
                 'required' => true,
+                'filters' => [
+                    [
+                        'name' => StringTrim::class,
+                    ],
+                ],
                 'validators' => [
                     [
                         'name' => StringLength::class,
