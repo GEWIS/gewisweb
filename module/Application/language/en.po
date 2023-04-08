@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-08 12:59+0200\n"
-"PO-Revision-Date: 2023-04-08 13:00+0200\n"
+"PO-Revision-Date: 2023-04-08 14:28+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: en\n"
@@ -4805,7 +4805,7 @@ msgstr "Poll"
 
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:277
 msgid "View details"
-msgstr "View detailss"
+msgstr "View details"
 
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:282
 msgid "There currently is no poll."
