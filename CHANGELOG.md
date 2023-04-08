@@ -1,3 +1,11 @@
+## [v3.0.5](https://github.com/GEWIS/gewisweb/tree/v3.0.5) (2023-04-08)
+
+* Changed text under active polls on the frontpage to be more descriptive.
+* Removed notices regarding the changed password requirements.
+* Fixed issue where adding spaces around poll content (e.g., comments) would circumvent length checks.
+
+---
+
 ## [v3.0.4](https://github.com/GEWIS/gewisweb/tree/v3.0.4) (2023-03-28)
 
 * Added bylaws and internal regulations to list of policies on the members page.
