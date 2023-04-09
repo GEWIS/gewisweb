@@ -1,0 +1,49 @@
+/** Make sure body is larger than viewport to allow sticky to go past 100vh. */
+body {
+    height: auto !important;
+    min-height: 100%;
+}
+
+.section-admin-notice {
+    background-color: #005AB4;
+    color: #FFFFFF;
+    font-size: 1.25rem;
+    height: 32.5px;
+    padding: 0.5rem 1.5rem;
+    position: sticky;
+    top: 0;
+    z-index: ($zindex-navbar - 1);
+
+    /** Fix text align in complex situations */
+    align-items: center;
+    display: flex;
+    justify-content: center;
+
+    @media (max-width: $screen-xs) {
+        height: 55px;
+    }
+
+    > p {
+        margin: 0;
+    }
+
+    + .admin-container {
+        > .content-container > .section-breadcrumb,
+        > .navbar-fixed-left > .container {
+            top: 32.5px;
+
+            @media (max-width: $screen-xs) {
+                top: 55px;
+            }
+        }
+
+        > .navbar-fixed-left {
+            min-height: calc(100vh - 81px - 32.5px); // The main navbar is 81px high, admin notice 32.5px.
+            z-index: ($zindex-navbar - 2);
+
+            @media (max-width: $screen-xs) {
+                min-height: calc(100vh - 81px - 55px);
+            }
+        }
+    }
+}

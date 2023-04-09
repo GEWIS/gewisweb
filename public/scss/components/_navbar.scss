@@ -398,7 +398,7 @@ a.navbar-brand  {
     border-radius: 0;
     box-shadow: inset 0 1px 5px -3px rgba(0, 0, 0, 0.3), -1px 0 5px -3px rgba(0, 0, 0, 0.3);
     min-height: calc(100vh - 81px); // The main navbar is 81px high.
-    height: 100%;
+    height: auto;
 
     > .container {
         position: sticky;
