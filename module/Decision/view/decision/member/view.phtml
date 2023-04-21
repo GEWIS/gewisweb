@@ -8,6 +8,7 @@ use Decision\Model\Member;
 // set title
 $this->headTitle($member->getFullName());
 $this->headTitle($this->translate('Members'));
+
 function getStartAssociationYear(DateTime $installDate): int
 {
     $year = $installDate->format('Y');
@@ -77,46 +78,47 @@ function getStartAssociationYear(DateTime $installDate): int
                 ?>
                     <h3>Board</h3>
                     <ul class="list-unstyled">
-                    <?php foreach ($boardInstalls as $boardInstall): ?>
-                        <?php $installDate = clone $boardInstall->getInstallDate(); ?>
-                        <?php if ($now < $installDate): ?>
-                            <li>
-                                <?= sprintf(
-                                    $this->translate('%s is the upcoming <strong>%s</strong>.'),
-                                    $this->escapeHtml($member->getFirstName()),
-                                    $this->escapeHtml($this->translate($boardInstall->getFunction())),
-                                )?>
-                            </li>
-                        <?php elseif (
-                            $start <= $installDate
-                            && $now < $end
-                            && (
-                                null === $boardInstall->getReleaseDate()
-                                || null === $boardInstall->getDischargeDate()
-                            )
-                        ):
-                        ?>
-                            <li>
-                                <?= sprintf(
-                                    $this->translate('%s is currently the <strong>%s</strong>.'),
-                                    $this->escapeHtml($member->getFirstName()),
-                                    $this->escapeHtml($this->translate($boardInstall->getFunction())),
-                                ) ?>
-                            </li>
-                        <?php else: ?>
-                            <?php $startAssociationYear = getStartAssociationYear($installDate); ?>
-                            <li>
-                                <?= sprintf(
-                                    // phpcs:ignore -- user-visible strings should not be split
-                                    $this->translate('%s was the <strong>%s</strong> during the association year %d/%d.'),
-                                    $this->escapeHtml($member->getFirstName()),
-                                    $this->escapeHtml($this->translate($boardInstall->getFunction())),
-                                    $startAssociationYear,
-                                    $startAssociationYear + 1,
-                                ) ?>
-                            </li>
-                        <?php endif; ?>
-                    <?php endforeach; ?>
+                        <?php foreach ($boardInstalls as $boardInstall): ?>
+                            <?php $installDate = clone $boardInstall->getInstallDate(); ?>
+                            <?php if ($now < $installDate): ?>
+                                <li>
+                                    <?= sprintf(
+                                        $this->translate('%s is the upcoming <strong>%s</strong>.'),
+                                        $this->escapeHtml($member->getFirstName()),
+                                        $this->escapeHtml($this->translate($boardInstall->getFunction())),
+                                    )?>
+                                </li>
+                            <?php elseif (
+                                $start <= $installDate
+                                && $now < $end
+                                && (
+                                    null === $boardInstall->getReleaseDate()
+                                    || null === $boardInstall->getDischargeDate()
+                                )
+                            ):
+                            ?>
+                                <li>
+                                    <?= sprintf(
+                                        $this->translate('%s is currently the <strong>%s</strong>.'),
+                                        $this->escapeHtml($member->getFirstName()),
+                                        $this->escapeHtml($this->translate($boardInstall->getFunction())),
+                                    ) ?>
+                                </li>
+                            <?php else: ?>
+                                <?php $startAssociationYear = getStartAssociationYear($installDate); ?>
+                                <li>
+                                    <?= sprintf(
+                                        // phpcs:ignore -- user-visible strings should not be split
+                                        $this->translate('%s was the <strong>%s</strong> during the association year %d/%d.'),
+                                        $this->escapeHtml($member->getFirstName()),
+                                        $this->escapeHtml($this->translate($boardInstall->getFunction())),
+                                        $startAssociationYear,
+                                        $startAssociationYear + 1,
+                                    ) ?>
+                                </li>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    </ul>
                 <br>
                 <?php endif; ?>
                 <h3><?= $this->translate('Memberships of committees and fraternities') ?></h3>
