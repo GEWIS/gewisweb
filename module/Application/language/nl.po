@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-08 12:59+0200\n"
-"PO-Revision-Date: 2023-04-08 12:59+0200\n"
+"POT-Creation-Date: 2023-04-21 21:04+0200\n"
+"PO-Revision-Date: 2023-04-21 21:11+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: nl\n"
@@ -1504,14 +1504,14 @@ msgstr ""
 #: module/Activity/view/activity/admin/participantsTable.phtml:12
 #: module/Decision/src/Form/OrganInformation.php:34
 #: module/Decision/view/decision/member/self.phtml:35
-#: module/Decision/view/decision/member/view.phtml:18
+#: module/Decision/view/decision/member/view.phtml:30
 #: module/Frontpage/view/frontpage/organ/organ.phtml:83
 msgid "Email"
 msgstr "Email"
 
 #: module/Activity/view/activity/admin/participantsTable.phtml:14
 #: module/Decision/view/decision/member/self.phtml:50
-#: module/Decision/view/decision/member/view.phtml:34
+#: module/Decision/view/decision/member/view.phtml:46
 msgid "Generation"
 msgstr "Generatie"
 
@@ -1521,7 +1521,7 @@ msgstr "Inschrijflijst"
 
 #: module/Activity/view/activity/admin/participantsTable.phtml:61
 #: module/Decision/view/decision/member/self.phtml:41
-#: module/Decision/view/decision/member/view.phtml:24
+#: module/Decision/view/decision/member/view.phtml:36
 #: module/Photo/view/partial/metadata.phtml:8
 #: module/Photo/view/partial/metadata.phtml:15
 #: module/Photo/view/partial/metadata.phtml:36
@@ -1562,7 +1562,7 @@ msgstr "N.V.T."
 #: module/Company/view/company/admin/index.phtml:184
 #: module/Company/view/company/company-account/jobs.phtml:195
 #: module/Company/view/company/company-account/jobs.phtml:203
-#: module/Decision/view/decision/member/view.phtml:44
+#: module/Decision/view/decision/member/view.phtml:56
 #: module/Photo/view/partial/metadata.phtml:29
 msgid "Yes"
 msgstr "Ja"
@@ -1580,7 +1580,7 @@ msgstr "Ja"
 #: module/Company/view/company/admin/index.phtml:183
 #: module/Company/view/company/admin/index.phtml:184
 #: module/Company/view/company/company-account/jobs.phtml:195
-#: module/Decision/view/decision/member/view.phtml:44
+#: module/Decision/view/decision/member/view.phtml:56
 #: module/Photo/view/partial/metadata.phtml:29
 msgid "No"
 msgstr "Nee"
@@ -2187,7 +2187,7 @@ msgstr "Taalinstellingen"
 #: module/Decision/view/decision/member/index.phtml:8
 #: module/Decision/view/decision/member/index.phtml:17
 #: module/Decision/view/decision/member/search.phtml:4
-#: module/Decision/view/decision/member/view.phtml:8
+#: module/Decision/view/decision/member/view.phtml:10
 msgid "Members"
 msgstr "Leden"
 
@@ -2316,6 +2316,10 @@ msgstr "Foto van de week"
 #: module/Decision/view/decision/member/index.phtml:41
 msgid "My photo's"
 msgstr "Mijn foto’s"
+
+#: module/Application/view/partial/main-nav.phtml:457
+msgid "You are currently using administrator privileges to use the website!"
+msgstr "Je gebruikt momenteel beheerdersprivileges om de website te gebruiken!"
 
 #: module/Application/view/partial/paginator.phtml:8
 #: module/Photo/view/photo/album/index.phtml:428
@@ -4088,12 +4092,12 @@ msgid "Last name"
 msgstr "Achternaam"
 
 #: module/Decision/view/decision/member/self.phtml:46
-#: module/Decision/view/decision/member/view.phtml:30
+#: module/Decision/view/decision/member/view.phtml:42
 msgid "Birth date"
 msgstr "Geboortedatum"
 
 #: module/Decision/view/decision/member/self.phtml:54
-#: module/Decision/view/decision/member/view.phtml:39
+#: module/Decision/view/decision/member/view.phtml:51
 #: module/User/src/Model/Enums/JWTClaims.php:42
 msgid "Membership type"
 msgstr "Type lidmaatschap"
@@ -4127,7 +4131,7 @@ msgid "the secretary of GEWIS"
 msgstr "de secretaris van GEWIS"
 
 #: module/Decision/view/decision/member/self.phtml:75
-#: module/Decision/view/decision/member/view.phtml:48
+#: module/Decision/view/decision/member/view.phtml:122
 msgid "Memberships of committees and fraternities"
 msgstr "Lidmaatschappen van commissies en disputen"
 
@@ -4144,22 +4148,22 @@ msgid "You were a member of:"
 msgstr "Je was een lid van:"
 
 #: module/Decision/view/decision/member/self.phtml:125
-#: module/Decision/view/decision/member/view.phtml:113
+#: module/Decision/view/decision/member/view.phtml:187
 msgid "Addresses"
 msgstr "Adressen"
 
 #: module/Decision/view/decision/member/self.phtml:130
-#: module/Decision/view/decision/member/view.phtml:118
+#: module/Decision/view/decision/member/view.phtml:192
 msgid "Country"
 msgstr "Land"
 
 #: module/Decision/view/decision/member/self.phtml:134
-#: module/Decision/view/decision/member/view.phtml:122
+#: module/Decision/view/decision/member/view.phtml:196
 msgid "Street and number"
 msgstr "Straat en huisnummer"
 
 #: module/Decision/view/decision/member/self.phtml:138
-#: module/Decision/view/decision/member/view.phtml:126
+#: module/Decision/view/decision/member/view.phtml:200
 msgid "City and postal code"
 msgstr "Woonplaats en postcode"
 
@@ -4191,26 +4195,41 @@ msgstr "Jouw profiel foto wordt in plaats hiervan automatisch gekozen."
 msgid "More of my photo's"
 msgstr "Meer van mijn foto’s"
 
-#: module/Decision/view/decision/member/view.phtml:43
+#: module/Decision/view/decision/member/view.phtml:55
 msgid "Has key code?"
 msgstr "Heeft sleutelcode?"
 
-#: module/Decision/view/decision/member/view.phtml:55
+#: module/Decision/view/decision/member/view.phtml:85
+#, php-format
+msgid "%s is the upcoming <strong>%s</strong>."
+msgstr "%s is de aankomende <strong>%s</strong>."
+
+#: module/Decision/view/decision/member/view.phtml:101
+#, php-format
+msgid "%s is currently the <strong>%s</strong>."
+msgstr "%s is de huidige <strong>%s</strong>."
+
+#: module/Decision/view/decision/member/view.phtml:111
+#, php-format
+msgid "%s was the <strong>%s</strong> during the association year %d/%d."
+msgstr "%s was de <strong>%s</strong> gedurende het verenigingsjaar %d/%d."
+
+#: module/Decision/view/decision/member/view.phtml:129
 #, php-format
 msgid "%s has never been part of a committee or fraternity."
 msgstr "%s is geen lid geweest van een commissie of dispuut."
 
-#: module/Decision/view/decision/member/view.phtml:63
+#: module/Decision/view/decision/member/view.phtml:137
 #, php-format
 msgid "%s is currently a member of:"
 msgstr "%s is momenteel lid van:"
 
-#: module/Decision/view/decision/member/view.phtml:89
+#: module/Decision/view/decision/member/view.phtml:163
 #, php-format
 msgid "%s was a member of:"
 msgstr "%s is lid geweest van:"
 
-#: module/Decision/view/decision/member/view.phtml:175
+#: module/Decision/view/decision/member/view.phtml:249
 #, php-format
 msgid "Photo's of %s"
 msgstr "Foto's van %s"
