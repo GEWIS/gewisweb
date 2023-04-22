@@ -6,6 +6,7 @@ use Application\Model\Enums\Languages;
 use Education\Model\Enums\ExamTypes;
 use Laminas\Filter\StringToUpper;
 use Laminas\Form\Element\{
+    Checkbox,
     Date,
     Hidden,
     Select,
@@ -86,6 +87,16 @@ class Exam extends Fieldset implements InputFilterProviderInterface
                         Languages::EN->value => Languages::EN->getName($this->translator),
                         Languages::NL->value => Languages::NL->getName($this->translator),
                     ],
+                ],
+            ]
+        );
+
+        $this->add(
+            [
+                'name' => 'scanned',
+                'type' => Checkbox::class,
+                'options' => [
+                    'label' => $this->translator->translate('Scanned?'),
                 ],
             ]
         );

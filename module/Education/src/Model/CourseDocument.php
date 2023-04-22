@@ -68,6 +68,12 @@ abstract class CourseDocument implements ResourceInterface
     protected Course $course;
 
     /**
+     * Whether the uploaded document is scanned or not. This influences the quality of the watermarking service.
+     */
+    #[Column(type: "boolean")]
+    protected bool $scanned;
+
+    /**
      * Get the date.
      */
     public function getDate(): DateTime
@@ -129,6 +135,22 @@ abstract class CourseDocument implements ResourceInterface
     public function setCourse(Course $course): void
     {
         $this->course = $course;
+    }
+
+    /**
+     * Get whether the document is scanned or not.
+     */
+    public function getScanned(): bool
+    {
+        return $this->scanned;
+    }
+
+    /**
+     * Set whether the document is scanned or not.
+     */
+    public function setScanned(bool $scanned): void
+    {
+        $this->scanned = $scanned;
     }
 
     /**

@@ -140,6 +140,7 @@ class FileStorage
         string $path,
         string $fileName,
         bool $watermarkPdf = false,
+        bool $scanned = false,
     ): ?Stream {
         $config = $this->storageConfig;
 
@@ -161,6 +162,7 @@ class FileStorage
             $file = $this->watermarkService->watermarkPdf(
                 $file,
                 $fileName,
+                $scanned,
             );
         }
 

@@ -92,13 +92,19 @@ class Exam
             );
         }
 
+        /** @var CourseDocumentModel|null $document */
         $document = $this->courseDocumentMapper->find($id);
 
         if (null === $document) {
             return null;
         }
 
-        return $this->storageService->downloadFile($document->getFilename(), $this->courseDocumentToFilename($document), true);
+        return $this->storageService->downloadFile(
+            $document->getFilename(),
+            $this->courseDocumentToFilename($document),
+            true,
+            $document->getScanned(),
+        );
     }
 
     /**
@@ -150,6 +156,7 @@ class Exam
                     }
 
                     $document->setLanguage(Languages::from($documentData['language']));
+                    $document->setScanned($documentData['scanned']);
                     $localFile = $temporaryEducationConfig['upload_' . $type . '_dir'] . '/' . $documentData['file'];
                     $document->setFilename($storage->storeFile($localFile));
 
