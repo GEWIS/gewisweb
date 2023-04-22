@@ -1,7 +1,11 @@
 <?php
 
 use Decision\Model\Member;
-use Decision\Model\Address;
+use Laminas\I18n\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+
+/** @var PhpRenderer|HelperTrait $this */
+/** @var Member $member */
 
 $this->headTitle($this->translate('My Information'));
 ?>
@@ -9,7 +13,7 @@ $this->headTitle($this->translate('My Information'));
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <h1><?= $member->getFullName() ?></h1>
+                <h1><?= $this->escapeHtml($member->getFullName()) ?></h1>
                 <table class="table table-bordered">
                     <tr>
                         <th><?= $this->translate('Membership number') ?></th>
@@ -17,19 +21,19 @@ $this->headTitle($this->translate('My Information'));
                     </tr>
                     <tr>
                         <th><?= $this->translate('Initials') ?></th>
-                        <td><?= $member->getInitials() ?></td>
+                        <td><?= $this->escapeHtml($member->getInitials()) ?></td>
                     </tr>
                     <tr>
                         <th><?= $this->translate('First name') ?></th>
-                        <td><?= $member->getFirstName() ?></td>
+                        <td><?= $this->escapeHtml($member->getFirstName()) ?></td>
                     </tr>
                     <tr>
                         <th><?= $this->translate('Middle name') ?></th>
-                        <td><?= $member->getMiddleName() ?></td>
+                        <td><?= $this->escapeHtml($member->getMiddleName()) ?></td>
                     </tr>
                     <tr>
                         <th><?= $this->translate('Last name') ?></th>
-                        <td><?= $member->getLastName() ?></td>
+                        <td><?= $this->escapeHtml($member->getLastName()) ?></td>
                     </tr>
                     <tr>
                         <th><?= $this->translate('Email') ?></th>
@@ -91,10 +95,10 @@ $this->headTitle($this->translate('My Information'));
                                         'abbr' => $abbr,
                                     ],
                                 ) ?>">
-                                    <?= $abbr ?>
+                                    <?= $this->escapeHtml($abbr) ?>
                                 </a>
                                 <?php if (!empty($install['functions'])): ?>
-                                    (<?= implode(', ', $install['functions']) ?>)
+                                    (<?= $this->escapeHtml(implode(', ', $install['functions'])) ?>)
                                 <?php endif ?>
                             </li>
                         <?php endforeach; ?>
@@ -112,10 +116,10 @@ $this->headTitle($this->translate('My Information'));
                                         'abbr' => $abbr,
                                     ],
                                 ) ?>">
-                                    <?= $abbr ?>
+                                    <?= $this->escapeHtml($abbr) ?>
                                 </a>
                                 <?php if (!empty($install['functions'])): ?>
-                                    (<?= implode(', ', $install['functions']) ?>)
+                                    (<?= $this->escapeHtml(implode(', ', $install['functions'])) ?>)
                                 <?php endif ?>
                             </li>
                         <?php endforeach; ?>
@@ -132,15 +136,27 @@ $this->headTitle($this->translate('My Information'));
                         </tr>
                         <tr>
                             <th><?= $this->translate('Street and number') ?></th>
-                            <td><?= $address->getStreet() ?> <?= $address->getNumber() ?></td>
+                            <td>
+                                <?= sprintf(
+                                    $this->translate('%s %s'),
+                                    $this->escapeHtml($address->getStreet()),
+                                    $this->escapeHtml($address->getNumber()),
+                                ) ?>
+                            </td>
                         </tr>
                         <tr>
                             <th><?= $this->translate('City and postal code') ?></th>
-                            <td><?= $address->getCity() ?> <?= $address->getPostalCode() ?></td>
+                            <td>
+                                <?= sprintf(
+                                    $this->translate('%s %s'),
+                                    $this->escapeHtml($address->getPostalCode()),
+                                    $this->escapeHtml($address->getCity()),
+                                ) ?>
+                            </td>
                         </tr>
                         <tr>
                             <th><?= $this->translate('Phone number') ?></th>
-                            <td><?= $address->getPhone() ?></td>
+                            <td><?= $this->escapeHtml($address->getPhone()) ?></td>
                         </tr>
                     </table>
                 <?php endforeach ?>
