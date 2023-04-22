@@ -2,11 +2,14 @@
 
 use Decision\Model\BoardMember;
 use Decision\Model\Member;
+use Laminas\I18n\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
 
-/* @var Member $member */
+/** @var PhpRenderer|HelperTrait $this */
+/** @var Member $member */
 
 // set title
-$this->headTitle($member->getFullName());
+$this->headTitle($this->escapeHtml($member->getFullName()));
 $this->headTitle($this->translate('Members'));
 
 function getStartAssociationYear(DateTime $installDate): int
@@ -22,7 +25,7 @@ function getStartAssociationYear(DateTime $installDate): int
 ?>
 <section class="section">
     <div class="container">
-        <h1><?= $member->getFullName() ?></h1>
+        <h1><?= $this->escapeHtml($member->getFullName()) ?></h1>
         <div class="row">
             <div class="col-md-6">
                 <table class="table table-bordered">
@@ -76,7 +79,7 @@ function getStartAssociationYear(DateTime $installDate): int
 
                     $now = new DateTime('now');
                 ?>
-                    <h3>Board</h3>
+                    <h3><?= $this->translate('Board') ?></h3>
                     <ul class="list-unstyled">
                         <?php foreach ($boardInstalls as $boardInstall): ?>
                             <?php $installDate = clone $boardInstall->getInstallDate(); ?>
@@ -129,7 +132,7 @@ function getStartAssociationYear(DateTime $installDate): int
                     <p>
                         <?= sprintf(
                             $this->translate('%s has never been part of a committee or fraternity.'),
-                            $member->getFirstName(),
+                            $this->escapeHtml($member->getFirstName()),
                         ) ?>
                     </p>
                 <?php endif; ?>
@@ -137,7 +140,7 @@ function getStartAssociationYear(DateTime $installDate): int
                     <p>
                         <?= sprintf(
                             $this->translate('%s is currently a member of:'),
-                            $member->getFirstName(),
+                            $this->escapeHtml($member->getFirstName()),
                         ) ?>
                     </p>
                     <ul>
@@ -150,10 +153,10 @@ function getStartAssociationYear(DateTime $installDate): int
                                         'abbr' => $abbr,
                                     ],
                                 ) ?>">
-                                    <?= $abbr ?>
+                                    <?= $this->escapeHtml($abbr) ?>
                                 </a>
                                 <?php if (!empty($install['functions'])): ?>
-                                    (<?= implode(', ', $install['functions']) ?>)
+                                    (<?= $this->escapeHtml(implode(', ', $install['functions'])) ?>)
                                 <?php endif ?>
                             </li>
                         <?php endforeach; ?>
@@ -163,7 +166,7 @@ function getStartAssociationYear(DateTime $installDate): int
                     <p>
                         <?= sprintf(
                             $this->translate('%s was a member of:'),
-                            $member->getFirstName(),
+                            $this->escapeHtml($member->getFirstName()),
                         ) ?>
                     </p>
                     <ul>
@@ -176,10 +179,10 @@ function getStartAssociationYear(DateTime $installDate): int
                                         'abbr' => $abbr,
                                     ],
                                 ) ?>">
-                                    <?= $abbr ?>
+                                    <?= $this->escapeHtml($abbr) ?>
                                 </a>
                                 <?php if (!empty($install['functions'])): ?>
-                                    (<?= implode(', ', $install['functions']) ?>)
+                                    (<?= $this->escapeHtml(implode(', ', $install['functions'])) ?>)
                                 <?php endif ?>
                             </li>
                         <?php endforeach; ?>
@@ -196,11 +199,23 @@ function getStartAssociationYear(DateTime $installDate): int
                             </tr>
                             <tr>
                                 <th><?= $this->translate('Street and number') ?></th>
-                                <td><?= $address->getStreet() ?> <?= $address->getNumber() ?></td>
+                                <td>
+                                    <?= sprintf(
+                                        $this->translate('%s %s'),
+                                        $this->escapeHtml($address->getStreet()),
+                                        $this->escapeHtml($address->getNumber()),
+                                    ) ?>
+                                </td>
                             </tr>
                             <tr>
                                 <th><?= $this->translate('City and postal code') ?></th>
-                                <td><?= $address->getCity() ?> <?= $address->getPostalCode() ?></td>
+                                <td>
+                                    <?= sprintf(
+                                        $this->translate('%s %s'),
+                                        $this->escapeHtml($address->getPostalCode()),
+                                        $this->escapeHtml($address->getCity()),
+                                    ) ?>
+                                </td>
                             </tr>
                         </table>
                     <?php endforeach ?>

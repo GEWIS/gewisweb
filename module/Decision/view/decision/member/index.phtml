@@ -10,8 +10,8 @@ $this->headTitle($this->translate('Members'));
 /** @var Meeting[] $meetings */
 $meetings = $this->meetings;
 ?>
-<div class="container">
-    <section class="section">
+<section class="section">
+    <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <h1><?= $this->translate('Members') ?></h1>
@@ -294,6 +294,5 @@ $meetings = $this->meetings;
                 </div>
             <?php endif; ?>
         </div>
-
-    </section>
-</div>
+    </div>
+</section>

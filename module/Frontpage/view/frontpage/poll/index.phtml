@@ -1,6 +1,16 @@
 <?php
+if (!isset($poll)) {
+    $title = $this->translate('Polls');
+} else {
+    $lang = $this->plugin('translate')->getTranslator()->getLocale();
+    $title = $this->escapeHtml(('en' === $lang) ? $poll->getEnglishQuestion() : $poll->getDutchQuestion());
+    $this->headTitle($title);
+}
+
 // set title
-$this->headTitle($this->translate('Current poll')); ?>
+$this->headTitle($this->translate('Polls'));
+
+?>
 <section class="section">
     <div class="container">
         <div class="page-header">
@@ -12,7 +22,7 @@ $this->headTitle($this->translate('Current poll')); ?>
                 <?= sprintf($this->translate('%sRequest a poll%s'), '<a href="' . $this->url('poll/request') . '" class="btn btn-primary">', '</a>') ?>
             </div>
             <h1>
-                <?= $this->translate('Current poll') ?>
+                <?= $title ?>
             </h1>
         </div>
 

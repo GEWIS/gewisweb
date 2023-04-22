@@ -15,11 +15,10 @@ foreach ($poll->getOptions() as $option) {
 $lang = $this->plugin('translate')->getTranslator()->getLocale();
 ?>
 <h4 style="margin-top: 0; margin-bottom: 15px;">
-    <?php $question = $this->escapeHtml(($lang === 'en') ? $poll->getEnglishQuestion() : $this->poll->getDutchQuestion()); ?>
     <?php if (isset($viewLink) && $viewLink): ?>
-        <a href="<?= $this->url('poll/view', ['poll_id' => $poll->getId()]) ?>"><?= $question ?></a>
-    <?php else: ?>
-        <?= $question ?>
+        <a href="<?= $this->url('poll/view', ['poll_id' => $poll->getId()]) ?>">
+            <?= $this->escapeHtml(($lang === 'en') ? $poll->getEnglishQuestion() : $this->poll->getDutchQuestion()) ?>
+        </a>
     <?php endif ?>
 </h4>
 <form action="<?= $this->url('poll/vote', ['poll_id' => $poll->getId()]) ?>" method="post">
@@ -29,7 +28,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
 
         <?php if ($showResults && $canVote): ?>
             <div class="radio">
-                <label>
+                <label style="word-wrap: break-word;">
                     <input type="radio" value="<?= $option->getId() ?>" name="option">
                     <h5 class="clearfix<?= $voted ? ' text-primary' : '' ?>">
                         <?= $text ?>
@@ -46,7 +45,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
             </div>
         <?php elseif ($showResults || !$canVote): ?>
             <div>
-                <h5 class="clearfix<?= $voted ? ' text-primary' : '' ?>">
+                <h5 class="clearfix<?= $voted ? ' text-primary' : '' ?>" style="word-wrap: break-word;">
                     <?= $text ?>
                     <small class="pull-right"
                            style="margin-top: 0.4em;"><?= $option->getVotesCount() === 1 ? $this->translate('1 vote') : sprintf($this->translate('%d votes'), $option->getVotesCount()) ?></small>
@@ -58,7 +57,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
             </div>
         <?php else: ?>
             <div class="radio">
-                <label>
+                <label style="word-wrap: break-word;">
                     <input type="radio" value="<?= $option->getId() ?>" name="option">
                     <?= $text ?>
                 </label>
