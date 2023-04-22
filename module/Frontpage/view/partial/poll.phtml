@@ -28,7 +28,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
 
         <?php if ($showResults && $canVote): ?>
             <div class="radio">
-                <label>
+                <label style="word-wrap: break-word;">
                     <input type="radio" value="<?= $option->getId() ?>" name="option">
                     <h5 class="clearfix<?= $voted ? ' text-primary' : '' ?>">
                         <?= $text ?>
@@ -45,7 +45,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
             </div>
         <?php elseif ($showResults || !$canVote): ?>
             <div>
-                <h5 class="clearfix<?= $voted ? ' text-primary' : '' ?>">
+                <h5 class="clearfix<?= $voted ? ' text-primary' : '' ?>" style="word-wrap: break-word;">
                     <?= $text ?>
                     <small class="pull-right"
                            style="margin-top: 0.4em;"><?= $option->getVotesCount() === 1 ? $this->translate('1 vote') : sprintf($this->translate('%d votes'), $option->getVotesCount()) ?></small>
@@ -57,7 +57,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
             </div>
         <?php else: ?>
             <div class="radio">
-                <label>
+                <label style="word-wrap: break-word;">
                     <input type="radio" value="<?= $option->getId() ?>" name="option">
                     <?= $text ?>
                 </label>
