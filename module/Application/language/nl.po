@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-21 21:04+0200\n"
-"PO-Revision-Date: 2023-04-21 21:11+0200\n"
+"POT-Creation-Date: 2023-04-22 13:08+0200\n"
+"PO-Revision-Date: 2023-04-22 13:16+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: nl\n"
@@ -455,7 +455,7 @@ msgstr "Keuze"
 #: module/Activity/view/partial/option.phtml:10
 #: module/Decision/view/decision/decision/index.phtml:9
 #: module/Decision/view/decision/organ/index.phtml:15
-#: module/Education/src/Form/Fieldset/Exam.php:68
+#: module/Education/src/Form/Fieldset/Exam.php:69
 #: module/Education/view/education/admin/course-documents.phtml:58
 msgid "Type"
 msgstr "Type"
@@ -788,8 +788,8 @@ msgstr "Einde"
 #: module/Education/view/education/admin/course-documents.phtml:166
 #: module/Education/view/education/admin/course.phtml:58
 #: module/Education/view/education/admin/course.phtml:93
-#: module/Education/view/education/admin/edit-exam.phtml:43
-#: module/Education/view/education/admin/edit-summary.phtml:43
+#: module/Education/view/education/admin/edit-exam.phtml:49
+#: module/Education/view/education/admin/edit-summary.phtml:49
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:73
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:143
 msgid "Delete"
@@ -1503,15 +1503,15 @@ msgstr ""
 
 #: module/Activity/view/activity/admin/participantsTable.phtml:12
 #: module/Decision/src/Form/OrganInformation.php:34
-#: module/Decision/view/decision/member/self.phtml:35
-#: module/Decision/view/decision/member/view.phtml:30
+#: module/Decision/view/decision/member/self.phtml:39
+#: module/Decision/view/decision/member/view.phtml:34
 #: module/Frontpage/view/frontpage/organ/organ.phtml:83
 msgid "Email"
 msgstr "Email"
 
 #: module/Activity/view/activity/admin/participantsTable.phtml:14
-#: module/Decision/view/decision/member/self.phtml:50
-#: module/Decision/view/decision/member/view.phtml:46
+#: module/Decision/view/decision/member/self.phtml:54
+#: module/Decision/view/decision/member/view.phtml:50
 msgid "Generation"
 msgstr "Generatie"
 
@@ -1520,8 +1520,8 @@ msgid "Sign-up List"
 msgstr "Inschrijflijst"
 
 #: module/Activity/view/activity/admin/participantsTable.phtml:61
-#: module/Decision/view/decision/member/self.phtml:41
-#: module/Decision/view/decision/member/view.phtml:36
+#: module/Decision/view/decision/member/self.phtml:45
+#: module/Decision/view/decision/member/view.phtml:40
 #: module/Photo/view/partial/metadata.phtml:8
 #: module/Photo/view/partial/metadata.phtml:15
 #: module/Photo/view/partial/metadata.phtml:36
@@ -1555,14 +1555,14 @@ msgstr "N.V.T."
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:63
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:71
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:74
-#: module/Application/language/additional-strings:12
+#: module/Application/language/additional-strings:20
 #: module/Company/view/company/admin/edit-company.phtml:114
 #: module/Company/view/company/admin/edit-package.phtml:78
 #: module/Company/view/company/admin/index.phtml:183
 #: module/Company/view/company/admin/index.phtml:184
 #: module/Company/view/company/company-account/jobs.phtml:195
 #: module/Company/view/company/company-account/jobs.phtml:203
-#: module/Decision/view/decision/member/view.phtml:56
+#: module/Decision/view/decision/member/view.phtml:60
 #: module/Photo/view/partial/metadata.phtml:29
 msgid "Yes"
 msgstr "Ja"
@@ -1574,13 +1574,13 @@ msgstr "Ja"
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:63
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:71
 #: module/Activity/view/partial/admin-approval/signuplists.phtml:74
-#: module/Application/language/additional-strings:13
+#: module/Application/language/additional-strings:21
 #: module/Company/view/company/admin/edit-company.phtml:114
 #: module/Company/view/company/admin/edit-package.phtml:78
 #: module/Company/view/company/admin/index.phtml:183
 #: module/Company/view/company/admin/index.phtml:184
 #: module/Company/view/company/company-account/jobs.phtml:195
-#: module/Decision/view/decision/member/view.phtml:56
+#: module/Decision/view/decision/member/view.phtml:60
 #: module/Photo/view/partial/metadata.phtml:29
 msgid "No"
 msgstr "Nee"
@@ -1787,42 +1787,74 @@ msgid "Lid"
 msgstr "Lid"
 
 #: module/Application/language/additional-strings:2
-msgid "Voorzitter"
-msgstr "Voorzitter"
+msgid "Brand Manager"
+msgstr "Brand Manager"
 
 #: module/Application/language/additional-strings:3
-msgid "Onderwijscommissaris"
-msgstr "Onderwijscommisaris"
+msgid "Commissaris Carrièreontwikkeling en Externe Betrekkingen"
+msgstr "Commissaris Carrièreontwikkeling en Externe Betrekkingen"
 
 #: module/Application/language/additional-strings:4
-msgid "PR-Functionaris"
-msgstr "PR-Functionaris"
+msgid "Commissaris Externe Betrekkingen"
+msgstr "Commissaris Externe Betrekkingen"
 
 #: module/Application/language/additional-strings:5
-msgid "Vice-Voorzitter"
-msgstr "Vice-Voorzitter"
+msgid "Commissaris Innovatie"
+msgstr "Commissaris Innovatie"
 
 #: module/Application/language/additional-strings:6
+msgid "Commissaris Interne Betrekkingen"
+msgstr "Commissaris Interne Betrekkingen"
+
+#: module/Application/language/additional-strings:7
+msgid "Commissaris Kennisbeheer"
+msgstr "Commissaris Kennisbeheer"
+
+#: module/Application/language/additional-strings:8
+msgid "Commissaris Onderwijs"
+msgstr "Commissaris Onderwijs"
+
+#: module/Application/language/additional-strings:9
+msgid "Digital Infrastructure Officer"
+msgstr "Digital Infrastructure Officer"
+
+#: module/Application/language/additional-strings:10
+msgid "Onderwijscommissaris"
+msgstr "Onderwijscommissaris"
+
+#: module/Application/language/additional-strings:11
 msgid "Penningmeester"
 msgstr "Penningmeester"
 
-#: module/Application/language/additional-strings:7
+#: module/Application/language/additional-strings:12
+msgid "PR-Functionaris"
+msgstr "PR-Functionaris"
+
+#: module/Application/language/additional-strings:13
 msgid "Secretaris"
 msgstr "Secretaris"
 
-#: module/Application/language/additional-strings:8
+#: module/Application/language/additional-strings:14
 msgid "Vicevoorzitter"
+msgstr "Vicevoorzitter"
+
+#: module/Application/language/additional-strings:15
+msgid "Vice-Voorzitter"
 msgstr "Vice-Voorzitter"
 
-#: module/Application/language/additional-strings:9
+#: module/Application/language/additional-strings:16
+msgid "Voorzitter"
+msgstr "Voorzitter"
+
+#: module/Application/language/additional-strings:17
 msgid "Tafelvoetbalcoordinator"
 msgstr "Tafelvoetbalcoordinator"
 
-#: module/Application/language/additional-strings:10
+#: module/Application/language/additional-strings:18
 msgid "Inkoper"
 msgstr "Inkoper"
 
-#: module/Application/language/additional-strings:11
+#: module/Application/language/additional-strings:19
 msgid "Inactief Lid"
 msgstr "Inactief Lid"
 
@@ -1994,8 +2026,8 @@ msgstr "Labels"
 #: module/Education/view/education/admin/course-documents.phtml:17
 #: module/Education/view/education/admin/course.phtml:5
 #: module/Education/view/education/admin/edit-course.phtml:3
-#: module/Education/view/education/admin/edit-exam.phtml:12
-#: module/Education/view/education/admin/edit-summary.phtml:12
+#: module/Education/view/education/admin/edit-exam.phtml:18
+#: module/Education/view/education/admin/edit-summary.phtml:18
 #: module/Education/view/education/admin/index.phtml:3
 #: module/Education/view/education/education/course.phtml:11
 #: module/Education/view/education/education/index.phtml:2
@@ -2090,6 +2122,8 @@ msgstr "Foto's"
 
 #: module/Application/view/partial/admin.phtml:162
 #: module/Frontpage/view/frontpage/poll-admin/list.phtml:17
+#: module/Frontpage/view/frontpage/poll/index.phtml:3
+#: module/Frontpage/view/frontpage/poll/index.phtml:11
 msgid "Polls"
 msgstr "Polls"
 
@@ -2187,7 +2221,7 @@ msgstr "Taalinstellingen"
 #: module/Decision/view/decision/member/index.phtml:8
 #: module/Decision/view/decision/member/index.phtml:17
 #: module/Decision/view/decision/member/search.phtml:4
-#: module/Decision/view/decision/member/view.phtml:10
+#: module/Decision/view/decision/member/view.phtml:13
 msgid "Members"
 msgstr "Leden"
 
@@ -2230,6 +2264,7 @@ msgid "Association"
 msgstr "Vereniging"
 
 #: module/Application/view/partial/main-nav.phtml:191
+#: module/Decision/view/decision/member/view.phtml:82
 msgid "Board"
 msgstr "Bestuur"
 
@@ -2821,7 +2856,7 @@ msgstr ""
 #: module/Company/view/company/admin-approval/job-approval.phtml:67
 #: module/Company/view/company/admin-approval/job-proposal.phtml:101
 #: module/Company/view/company/admin-approval/job-proposal.phtml:105
-#: module/Decision/view/decision/member/self.phtml:142
+#: module/Decision/view/decision/member/self.phtml:158
 msgid "Phone number"
 msgstr "Telefoonnummer"
 
@@ -4065,52 +4100,52 @@ msgstr ""
 "Er zijn teveel resultaten om weer te geven. Probeer te filteren om andere "
 "resultaten te zien."
 
-#: module/Decision/view/decision/member/self.phtml:6
+#: module/Decision/view/decision/member/self.phtml:10
 msgid "My Information"
 msgstr "Mijn informatie"
 
-#: module/Decision/view/decision/member/self.phtml:15
+#: module/Decision/view/decision/member/self.phtml:19
 #: module/User/src/Form/Register.php:34 module/User/src/Form/UserReset.php:32
 msgid "Membership number"
 msgstr "Lidmaatschapsnummer"
 
-#: module/Decision/view/decision/member/self.phtml:19
+#: module/Decision/view/decision/member/self.phtml:23
 msgid "Initials"
 msgstr "Initialen"
 
-#: module/Decision/view/decision/member/self.phtml:23
+#: module/Decision/view/decision/member/self.phtml:27
 msgid "First name"
 msgstr "Voornaam"
 
-#: module/Decision/view/decision/member/self.phtml:27
+#: module/Decision/view/decision/member/self.phtml:31
 #: module/User/src/Model/Enums/JWTClaims.php:43
 msgid "Middle name"
 msgstr "Tussenvoegsels"
 
-#: module/Decision/view/decision/member/self.phtml:31
+#: module/Decision/view/decision/member/self.phtml:35
 msgid "Last name"
 msgstr "Achternaam"
 
-#: module/Decision/view/decision/member/self.phtml:46
-#: module/Decision/view/decision/member/view.phtml:42
+#: module/Decision/view/decision/member/self.phtml:50
+#: module/Decision/view/decision/member/view.phtml:46
 msgid "Birth date"
 msgstr "Geboortedatum"
 
-#: module/Decision/view/decision/member/self.phtml:54
-#: module/Decision/view/decision/member/view.phtml:51
+#: module/Decision/view/decision/member/self.phtml:58
+#: module/Decision/view/decision/member/view.phtml:55
 #: module/User/src/Model/Enums/JWTClaims.php:42
 msgid "Membership type"
 msgstr "Type lidmaatschap"
 
-#: module/Decision/view/decision/member/self.phtml:58
+#: module/Decision/view/decision/member/self.phtml:62
 msgid "Last membership change"
 msgstr "Laatste wijziging lidmaatschap"
 
-#: module/Decision/view/decision/member/self.phtml:62
+#: module/Decision/view/decision/member/self.phtml:66
 msgid "End date of membership"
 msgstr "Einddatum van lidmaatschap"
 
-#: module/Decision/view/decision/member/self.phtml:69
+#: module/Decision/view/decision/member/self.phtml:73
 msgid ""
 "If your information is no longer up to date and you would like to change it, "
 "you can contact the secretary of GEWIS."
@@ -4118,118 +4153,126 @@ msgstr ""
 "Als je gegevens niet meer actueel zijn of je ze wilt ze laten wijzigen, neem "
 "dan contact op met de secretaris van GEWIS."
 
-#: module/Decision/view/decision/member/self.phtml:70
+#: module/Decision/view/decision/member/self.phtml:74
 msgid "Also for data removal requests, you can contact"
 msgstr "Ook als je gegevens wilt laten verwijderen, neem dan contact op met"
 
-#: module/Decision/view/decision/member/self.phtml:71
+#: module/Decision/view/decision/member/self.phtml:75
 msgid "Email the secretary of GEWIS"
 msgstr "Email de secretaris van GEWIS"
 
-#: module/Decision/view/decision/member/self.phtml:71
+#: module/Decision/view/decision/member/self.phtml:75
 msgid "the secretary of GEWIS"
 msgstr "de secretaris van GEWIS"
 
-#: module/Decision/view/decision/member/self.phtml:75
-#: module/Decision/view/decision/member/view.phtml:122
+#: module/Decision/view/decision/member/self.phtml:79
+#: module/Decision/view/decision/member/view.phtml:127
 msgid "Memberships of committees and fraternities"
 msgstr "Lidmaatschappen van commissies en disputen"
 
-#: module/Decision/view/decision/member/self.phtml:80
+#: module/Decision/view/decision/member/self.phtml:84
 msgid "You have not been a member of a committee or fraternity."
 msgstr "Je bent geen lid geweest van een commissie of dispuut."
 
-#: module/Decision/view/decision/member/self.phtml:83
+#: module/Decision/view/decision/member/self.phtml:87
 msgid "You are currently a member of:"
 msgstr "Je bent momenteel lid van:"
 
-#: module/Decision/view/decision/member/self.phtml:104
+#: module/Decision/view/decision/member/self.phtml:108
 msgid "You were a member of:"
 msgstr "Je was een lid van:"
 
-#: module/Decision/view/decision/member/self.phtml:125
-#: module/Decision/view/decision/member/view.phtml:187
+#: module/Decision/view/decision/member/self.phtml:129
+#: module/Decision/view/decision/member/view.phtml:192
 msgid "Addresses"
 msgstr "Adressen"
 
-#: module/Decision/view/decision/member/self.phtml:130
-#: module/Decision/view/decision/member/view.phtml:192
+#: module/Decision/view/decision/member/self.phtml:134
+#: module/Decision/view/decision/member/view.phtml:197
 msgid "Country"
 msgstr "Land"
 
-#: module/Decision/view/decision/member/self.phtml:134
-#: module/Decision/view/decision/member/view.phtml:196
+#: module/Decision/view/decision/member/self.phtml:138
+#: module/Decision/view/decision/member/view.phtml:201
 msgid "Street and number"
 msgstr "Straat en huisnummer"
 
-#: module/Decision/view/decision/member/self.phtml:138
-#: module/Decision/view/decision/member/view.phtml:200
+#: module/Decision/view/decision/member/self.phtml:141
+#: module/Decision/view/decision/member/self.phtml:151
+#: module/Decision/view/decision/member/view.phtml:204
+#: module/Decision/view/decision/member/view.phtml:214
+#, php-format
+msgid "%s %s"
+msgstr "%s %s"
+
+#: module/Decision/view/decision/member/self.phtml:148
+#: module/Decision/view/decision/member/view.phtml:211
 msgid "City and postal code"
 msgstr "Woonplaats en postcode"
 
-#: module/Decision/view/decision/member/self.phtml:148
+#: module/Decision/view/decision/member/self.phtml:164
 msgid "External applications"
 msgstr "Externe applicaties"
 
-#: module/Decision/view/decision/member/self.phtml:151
+#: module/Decision/view/decision/member/self.phtml:167
 msgid "App"
 msgstr "App"
 
-#: module/Decision/view/decision/member/self.phtml:152
+#: module/Decision/view/decision/member/self.phtml:168
 msgid "First authentication"
 msgstr "Eerste authenticatie"
 
-#: module/Decision/view/decision/member/self.phtml:153
+#: module/Decision/view/decision/member/self.phtml:169
 msgid "Last authentication"
 msgstr "Laatste authenticatie"
 
-#: module/Decision/view/decision/member/self.phtml:198
+#: module/Decision/view/decision/member/self.phtml:214
 msgid "Remove this picture as your profile picture"
 msgstr "Verwijder deze foto als profielfoto"
 
-#: module/Decision/view/decision/member/self.phtml:200
+#: module/Decision/view/decision/member/self.phtml:216
 msgid "Your profile picture will be chosen automatically instead."
 msgstr "Jouw profiel foto wordt in plaats hiervan automatisch gekozen."
 
-#: module/Decision/view/decision/member/self.phtml:215
+#: module/Decision/view/decision/member/self.phtml:231
 msgid "More of my photo's"
 msgstr "Meer van mijn foto’s"
 
-#: module/Decision/view/decision/member/view.phtml:55
+#: module/Decision/view/decision/member/view.phtml:59
 msgid "Has key code?"
 msgstr "Heeft sleutelcode?"
 
-#: module/Decision/view/decision/member/view.phtml:85
+#: module/Decision/view/decision/member/view.phtml:89
 #, php-format
 msgid "%s is the upcoming <strong>%s</strong>."
 msgstr "%s is de aankomende <strong>%s</strong>."
 
-#: module/Decision/view/decision/member/view.phtml:101
+#: module/Decision/view/decision/member/view.phtml:105
 #, php-format
 msgid "%s is currently the <strong>%s</strong>."
 msgstr "%s is de huidige <strong>%s</strong>."
 
-#: module/Decision/view/decision/member/view.phtml:111
+#: module/Decision/view/decision/member/view.phtml:115
 #, php-format
 msgid "%s was the <strong>%s</strong> during the association year %d/%d."
 msgstr "%s was de <strong>%s</strong> gedurende het verenigingsjaar %d/%d."
 
-#: module/Decision/view/decision/member/view.phtml:129
+#: module/Decision/view/decision/member/view.phtml:134
 #, php-format
 msgid "%s has never been part of a committee or fraternity."
 msgstr "%s is geen lid geweest van een commissie of dispuut."
 
-#: module/Decision/view/decision/member/view.phtml:137
+#: module/Decision/view/decision/member/view.phtml:142
 #, php-format
 msgid "%s is currently a member of:"
 msgstr "%s is momenteel lid van:"
 
-#: module/Decision/view/decision/member/view.phtml:163
+#: module/Decision/view/decision/member/view.phtml:168
 #, php-format
 msgid "%s was a member of:"
 msgstr "%s is lid geweest van:"
 
-#: module/Decision/view/decision/member/view.phtml:249
+#: module/Decision/view/decision/member/view.phtml:266
 #, php-format
 msgid "Photo's of %s"
 msgstr "Foto's van %s"
@@ -4288,7 +4331,7 @@ msgid "You are not allowed to administer courses"
 msgstr "Je hebt niet de rechten om vakken te beheren"
 
 #: module/Education/src/Controller/AdminController.php:62
-#: module/Education/src/Service/Exam.php:475
+#: module/Education/src/Service/Exam.php:482
 msgid "You are not allowed to add courses"
 msgstr "Je hebt niet de rechten om vakken toe te voegen"
 
@@ -4327,8 +4370,8 @@ msgid "Course does not exist"
 msgstr "Vak bestaat niet"
 
 #: module/Education/src/Form/Course.php:32
-#: module/Education/src/Form/Fieldset/Exam.php:47
-#: module/Education/src/Form/Fieldset/Summary.php:49
+#: module/Education/src/Form/Fieldset/Exam.php:48
+#: module/Education/src/Form/Fieldset/Summary.php:50
 #: module/Education/view/education/education/index.phtml:65
 msgid "Course code"
 msgstr "Vakcode"
@@ -4341,22 +4384,27 @@ msgstr "Vak toevoegen"
 msgid "There already exists a course with this code"
 msgstr "Er bestaat al een vak met deze code"
 
-#: module/Education/src/Form/Fieldset/Exam.php:57
+#: module/Education/src/Form/Fieldset/Exam.php:58
 msgid "Exam date"
 msgstr "Datum tentamen"
 
-#: module/Education/src/Form/Fieldset/Exam.php:84
-#: module/Education/src/Form/Fieldset/Summary.php:80
+#: module/Education/src/Form/Fieldset/Exam.php:85
+#: module/Education/src/Form/Fieldset/Summary.php:81
 #: module/Education/view/education/admin/course-documents.phtml:61
 #: module/Education/view/education/admin/course-documents.phtml:112
 msgid "Language"
 msgstr "Taal"
 
-#: module/Education/src/Form/Fieldset/Summary.php:59
+#: module/Education/src/Form/Fieldset/Exam.php:99
+#: module/Education/src/Form/Fieldset/Summary.php:95
+msgid "Scanned?"
+msgstr "Gescand?"
+
+#: module/Education/src/Form/Fieldset/Summary.php:60
 msgid "Summary date"
 msgstr "Datum van samenvatting"
 
-#: module/Education/src/Form/Fieldset/Summary.php:70
+#: module/Education/src/Form/Fieldset/Summary.php:71
 #: module/Education/view/education/admin/course-documents.phtml:109
 #: module/Frontpage/src/Form/PollComment.php:27
 msgid "Author"
@@ -4386,12 +4434,12 @@ msgstr "Anders"
 msgid "You are not allowed to download course documents"
 msgstr "Je hebt niet de rechten om documenten van vakken te downloaden"
 
-#: module/Education/src/Service/Exam.php:313
+#: module/Education/src/Service/Exam.php:320
 msgid "You are not allowed to delete exams"
 msgstr "Je hebt niet de rechten om tentamens te verwijderen"
 
-#: module/Education/src/Service/Exam.php:332
-#: module/Education/src/Service/Exam.php:457
+#: module/Education/src/Service/Exam.php:339
+#: module/Education/src/Service/Exam.php:464
 msgid "You are not allowed to upload exams"
 msgstr "Het is niet toegestaan om tentamens te uploaden"
 
@@ -4468,29 +4516,41 @@ msgstr ""
 msgid "Edit Course"
 msgstr "Bewerk vak"
 
-#: module/Education/view/education/admin/edit-exam.phtml:13
+#: module/Education/view/education/admin/edit-exam.phtml:19
 msgid "Edit Exam"
 msgstr "Bewerk examen"
 
-#: module/Education/view/education/admin/edit-exam.phtml:16
+#: module/Education/view/education/admin/edit-exam.phtml:22
 msgid "Upload of all exams was finished."
 msgstr "Het uploaden van alle tentamens is klaar."
 
-#: module/Education/view/education/admin/edit-exam.phtml:18
+#: module/Education/view/education/admin/edit-exam.phtml:24
 msgid "There are no exams to be edited. Upload exams to edit them."
 msgstr ""
 "Er zijn geen tentamens om te wijzigen. Upload nieuwe tentamens om deze "
 "correct in de Website te zetten."
 
-#: module/Education/view/education/admin/edit-summary.phtml:13
+#: module/Education/view/education/admin/edit-exam.phtml:115
+#: module/Education/view/education/admin/edit-summary.phtml:117
+msgid ""
+"Check this if the document is scanned, as this will enable higher quality "
+"downloads. Please note that enabling setting this for non-scanned documents "
+"will significantly impact the ability to download the document."
+msgstr ""
+"Vink dit aan als het document gescand is, omdat dit downloads van hogere "
+"kwaliteit mogelijk maakt. Let op dat het inschakelen van deze instelling "
+"voor niet-gescande documenten de mogelijkheid om het document te downloaden "
+"aanzienlijk zal beïnvloeden."
+
+#: module/Education/view/education/admin/edit-summary.phtml:19
 msgid "Edit Summary"
 msgstr "Bewerk samenvatting"
 
-#: module/Education/view/education/admin/edit-summary.phtml:16
+#: module/Education/view/education/admin/edit-summary.phtml:22
 msgid "Upload of all summaries was finished."
 msgstr "Het uploaden van alle tentamens is klaar."
 
-#: module/Education/view/education/admin/edit-summary.phtml:18
+#: module/Education/view/education/admin/edit-summary.phtml:24
 msgid "There are no summaries to be edited. Upload exams to edit them."
 msgstr ""
 "Er zijn geen samenvattingen om te wijzigen. Upload nieuwe samenvattingen om "
@@ -4887,7 +4947,7 @@ msgid "Request poll"
 msgstr "Vraag poll aan"
 
 #: module/Frontpage/view/frontpage/frontpage/home.phtml:289
-#: module/Frontpage/view/frontpage/poll/index.phtml:10
+#: module/Frontpage/view/frontpage/poll/index.phtml:20
 msgid "Old polls"
 msgstr "Oude polls"
 
@@ -5035,29 +5095,24 @@ msgstr "Weet je zeker dat je deze poll wilt goedkeuren?"
 msgid "Poll history"
 msgstr "Poll historie"
 
-#: module/Frontpage/view/frontpage/poll/index.phtml:3
-#: module/Frontpage/view/frontpage/poll/index.phtml:15
-msgid "Current poll"
-msgstr "Huidige polls"
-
-#: module/Frontpage/view/frontpage/poll/index.phtml:12
+#: module/Frontpage/view/frontpage/poll/index.phtml:22
 #, php-format
 msgid "%sRequest a poll%s"
 msgstr "%sVraag een poll aan%s"
 
-#: module/Frontpage/view/frontpage/poll/index.phtml:27
+#: module/Frontpage/view/frontpage/poll/index.phtml:37
 msgid "Unfortunately there currently is no poll :("
 msgstr "Helaas is er op het moment geen poll :("
 
-#: module/Frontpage/view/frontpage/poll/index.phtml:32
+#: module/Frontpage/view/frontpage/poll/index.phtml:42
 msgid "Comments"
 msgstr "Commentaar"
 
-#: module/Frontpage/view/frontpage/poll/index.phtml:34
+#: module/Frontpage/view/frontpage/poll/index.phtml:44
 msgid "This poll has no comments"
 msgstr "Deze poll heeft geen commentaar"
 
-#: module/Frontpage/view/frontpage/poll/index.phtml:55
+#: module/Frontpage/view/frontpage/poll/index.phtml:65
 msgid "Comment on this poll"
 msgstr "Commentaar op deze poll"
 
@@ -5078,14 +5133,14 @@ msgstr "Verwijder optie"
 msgid "Add option"
 msgstr "Voeg optie toe"
 
-#: module/Frontpage/view/partial/poll.phtml:41
-#: module/Frontpage/view/partial/poll.phtml:52
+#: module/Frontpage/view/partial/poll.phtml:40
+#: module/Frontpage/view/partial/poll.phtml:51
 #, php-format
 msgid "%d votes"
 msgstr "%d stemmen"
 
-#: module/Frontpage/view/partial/poll.phtml:41
-#: module/Frontpage/view/partial/poll.phtml:52
+#: module/Frontpage/view/partial/poll.phtml:40
+#: module/Frontpage/view/partial/poll.phtml:51
 msgid "1 vote"
 msgstr "1 stem"
 
