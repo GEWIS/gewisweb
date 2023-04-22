@@ -29,6 +29,7 @@ xgettext module/Application/language/additional-strings \
     --package-version=0.1.0-dev \
     --copyright-holder=GEWIS \
     --join-existing \
+    --from-code=UTF-8 \
     --language=C \
     --extract-all \
 
