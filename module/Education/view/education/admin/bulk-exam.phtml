@@ -1,4 +1,10 @@
 <?php
+
+use Application\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+
+/** @var PhpRenderer|HelperTrait $this */
+
 $this->inlineScript()
     ->appendFile(
         $this->basePath() . '/js/dropzone-min.js',

@@ -1,8 +1,15 @@
 <?php
 
+use Application\View\HelperTrait;
+use Company\Form\Package as PackageForm;
 use Company\Model\Enums\CompanyPackageTypes;
+use Laminas\View\Renderer\PhpRenderer;
 
-/** @var CompanyPackageTypes $type */
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var PackageForm $form
+ * @var CompanyPackageTypes $type
+ */
 ?>
 <div class="row">
     <div class="col-md-12">

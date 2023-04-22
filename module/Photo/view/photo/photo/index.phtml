@@ -1,6 +1,17 @@
 <?php
-// set title
-$this->headTitle($this->translate('Photos')); ?>
+
+use Application\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+use Photo\Model\Album as AlbumModel;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var AlbumModel $albums
+ * @var array $years
+ */
+
+$this->headTitle($this->translate('Photos'));
+?>
 <div class="content-container">
     <section class="section">
         <div class="container">

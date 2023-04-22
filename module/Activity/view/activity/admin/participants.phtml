@@ -1,4 +1,17 @@
 <?php
+
+use Activity\Model\Activity as ActivityModel;
+use Application\Form\ModifyRequest as RequestForm;
+use Application\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var ActivityModel $activity
+ * @var bool $canSeeTimeOfSignup
+ * @var RequestForm $externalSignoffForm
+ */
+
 // set title
 $this->headTitle($this->escapeHtml($this->localiseText($activity->getName())));
 $this->headTitle($this->translate('Participants'));

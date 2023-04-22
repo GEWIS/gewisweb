@@ -1,7 +1,17 @@
 <?php
+
+use Application\View\HelperTrait;
+use Decision\Controller\FileBrowser\FileNode;
+use Laminas\View\Renderer\PhpRenderer;
+
 /**
- * local_vars = [$folderName, $folder, $path, $trailingSlash]
+ * @var PhpRenderer|HelperTrait $this
+ * @var array<array-key, FileNode> $folder
+ * @var string $folderName
+ * @var string $path
+ * @var bool $trailingSlash
  */
+
 $escaper = new Laminas\Escaper\Escaper('utf-8');
 //construct breadcrumbs
 $offset = 0;

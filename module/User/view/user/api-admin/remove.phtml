@@ -1,4 +1,14 @@
 <?php
+
+use Application\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+use User\Model\ApiUser as ApiUserModel;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var ApiUserModel $token
+ */
+
 $this->breadcrumbs()
     ->addBreadcrumb($this->translate('API Tokens'), true, $this->url('user_admin/api'))
     ->addBreadcrumb($this->translate('Remove Token'));
@@ -8,7 +18,7 @@ $this->breadcrumbs()
 ]) ?>">
 
     <p>
-        Are you sure you want to remove the token with name <?= $token->getName() ?>?<br/>
+        Are you sure you want to remove the token with name <?= $this->escapeHtml($token->getName()) ?>?<br/>
     </p>
     <p>
         <button class="btn btn-primary">Yes</button>

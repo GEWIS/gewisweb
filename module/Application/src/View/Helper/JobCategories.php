@@ -2,6 +2,7 @@
 
 namespace Application\View\Helper;
 
+use Company\Model\JobCategory as JobCategoryModel;
 use Company\Service\CompanyQuery as CompanyQueryService;
 use Laminas\View\Helper\AbstractHelper;
 
@@ -14,7 +15,7 @@ class JobCategories extends AbstractHelper
     /**
      * Returns all visible categories.
      *
-     * @return array
+     * @return array<array-key, JobCategoryModel>
      */
     public function __invoke(): array
     {

@@ -1,4 +1,15 @@
 <?php
+
+use Application\View\HelperTrait;
+use Company\Form\Package as PackageForm;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var PackageForm $form
+ * @var string $type
+ */
+
 $this->headTitle($this->translate('Add Package'));
 
 $this->headScript()

@@ -1,4 +1,16 @@
 <?php
+
+use Application\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+use User\Form\CompanyUserLogin as CompanyUserLoginForm;
+use User\Form\UserLogin as UserLoginForm;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var CompanyUserLoginForm|UserLoginForm $form
+ * @var string $userType
+ */
+
 $this->headTitle($this->translate('Log in'));
 
 $isMember = ('member' === $userType);

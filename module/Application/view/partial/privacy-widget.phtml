@@ -1,3 +1,10 @@
+<?php
+
+use Application\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+
+/** @var PhpRenderer|HelperTrait $this */
+?>
 <div class="privacy-widget closed">
     <div class="widget-popout">
         <p><?= $this->translate("S.v. GEWIS uses cookies on this website, these are required for the website to function. Additionally, we may collection information about how you use our website in order to improve your experience. If you do not want your behaviour to be tracked please opt out below.")?></p>
@@ -14,7 +21,9 @@
             </label>
         </div>
         <div class="widget-dismiss">
-            <a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'statuten']) ?>"><?= $this->translate('Privacy Policy') ?></a>
+            <a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'statuten']) ?>">
+                <?= $this->translate('Privacy Policy') ?>
+            </a>
             <button class="btn btn-primary"><?= $this->translate("Continue") ?></button>
         </div>
     </div>

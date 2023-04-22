@@ -1,7 +1,17 @@
 <?php
-// set title
-$this->headTitle($this->translate('Fraternities')); ?>
 
+use Application\View\HelperTrait;
+use Decision\Model\Organ as OrganModel;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var OrganModel[] $activeFraternitites
+ * @var OrganModel[] $abrogatedFraternities
+ */
+
+$this->headTitle($this->translate('Fraternities'));
+?>
 <section class="section">
     <div class="container">
         <h1><?= $this->translate('Fraternities') ?></h1>

@@ -1,5 +1,14 @@
 <?php
-// set title
+
+use Application\View\HelperTrait;
+use Decision\Model\Meeting as MeetingModel;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var MeetingModel[] $meetings
+ */
+
 $this->headTitle($this->translate('Meetings')); ?>
 <section class="section">
     <div class="container">

@@ -1,4 +1,14 @@
 <?php
+
+use Application\View\HelperTrait;
+use Decision\Model\Organ as OrganModel;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var OrganModel[] $organs
+ */
+
 $this->breadcrumbs()
     ->addBreadcrumb($this->translate('Organs'));
 ?>
@@ -17,8 +27,8 @@ $this->breadcrumbs()
         <?php foreach ($organs as $organ): ?>
             <?php $url = $this->url('admin_organ/edit', ['organ_id' => $organ->getId()]) ?>
             <tr>
-                <td><a href="<?= $url ?>"><?= $organ->getAbbr() ?></a></td>
-                <td><a href="<?= $url ?>"><?= $organ->getName() ?></a></td>
+                <td><a href="<?= $url ?>"><?= $this->escapeHtml($organ->getAbbr()) ?></a></td>
+                <td><a href="<?= $url ?>"><?= $this->escapeHtml($organ->getName()) ?></a></td>
                 <td>
                     <?php
                     foreach ($organ->getOrganInformation() as $information) {

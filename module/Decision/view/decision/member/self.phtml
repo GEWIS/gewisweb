@@ -3,9 +3,17 @@
 use Decision\Model\Member;
 use Laminas\I18n\View\HelperTrait;
 use Laminas\View\Renderer\PhpRenderer;
+use Photo\Model\ProfilePhoto as ProfilePhotoModel;
+use User\Model\ApiApp as ApiAppModel;
 
-/** @var PhpRenderer|HelperTrait $this */
-/** @var Member $member */
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var array<array-key, array{0: ApiAppModel, firstAuthentication: DateTime, lastAuthentication: DateTime}> $apps
+ * @var bool $isExplicitProfilePhoto
+ * @var Member $member
+ * @var array $photoConfig
+ * @var ProfilePhotoModel|null $profilePhoto
+ */
 
 $this->headTitle($this->translate('My Information'));
 ?>
@@ -182,7 +190,7 @@ $this->headTitle($this->translate('My Information'));
                 </table>
             </div>
             <div class="col-md-6">
-                <?php if ($profilePhoto != null): ?>
+                <?php if (null !== $profilePhoto): ?>
                     <div class="row">
                         <div class="col-sm-12 col-xs-12">
                             <a class="thumbnail"

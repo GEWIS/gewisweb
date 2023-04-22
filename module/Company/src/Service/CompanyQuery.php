@@ -8,6 +8,7 @@ use Company\Mapper\{
     Job as JobMapper,
     Label as LabelMapper,
 };
+use Company\Model\JobCategory as JobCategoryModel;
 use Laminas\Mvc\I18n\Translator;
 use User\Permissions\NotAllowedException;
 
@@ -99,7 +100,7 @@ class CompanyQuery
      *
      * @param bool $visible
      *
-     * @return array
+     * @return array<array-key, JobCategoryModel>
      */
     public function getCategoryList(bool $visible): array
     {

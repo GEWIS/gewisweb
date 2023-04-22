@@ -1,4 +1,14 @@
 <?php
+
+use Application\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+use User\Form\Register as RegisterForm;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var RegisterForm $form
+ */
+
 $this->headTitle($this->translate('Register'));
 ?>
 <section class="section">
@@ -7,7 +17,6 @@ $this->headTitle($this->translate('Register'));
             <?= $this->translate('Your account for the GEWIS website has been registered, check your inbox for an activation e-mail.') ?>
         <?php else: ?>
             <?php
-            $form = $this->form;
             $form->prepare();
 
             $form->setAttribute('action', $this->url('user/register'));

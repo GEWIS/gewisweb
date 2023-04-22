@@ -1,9 +1,27 @@
 <?php
 
-use Laminas\Mvc\Plugin\FlashMessenger\View\HelperTrait as FlashMessengerHelperTrait;
+use Activity\Form\Signup as SignupForm;
+use Activity\Model\{
+    Activity as ActivityModel,
+    SignupField as SignupFieldModel,
+};
+use Application\Form\ModifyRequest as RequestForm;
+use Application\View\HelperTrait;
 use Laminas\View\Renderer\PhpRenderer;
 
-/** @var PhpRenderer|FlashMessengerHelperTrait $this */
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var ActivityModel $activity
+ * @var SignupFieldModel $fields
+ * @var SignupForm $form
+ * @var bool $isAllowedToSubscribe
+ * @var bool $isArchived
+ * @var bool $isSignedUp
+ * @var int $memberSignups
+ * @var bool $signupOpen
+ * @var RequestForm $signoffForm
+ * @var bool $subscriptionCloseDatePassed
+ */
 
 // set title
 $this->headTitle($this->escapeHtml($this->localiseText($activity->getName())));

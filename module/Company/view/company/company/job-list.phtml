@@ -1,4 +1,16 @@
 <?php
+
+use Application\View\HelperTrait;
+use Company\Model\Company as CompanyModel;
+use Company\Model\JobCategory as JobCategoryModel;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var CompanyModel $company
+ * @var JobCategoryModel $jobCategory
+ */
+
 $escaper = new Laminas\Escaper\Escaper('utf-8');
 
 if (isset($this->company)) {

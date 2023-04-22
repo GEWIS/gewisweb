@@ -1,4 +1,13 @@
 <?php
+
+use Application\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var \Laminas\Paginator\Paginator $paginator
+ */
+
 $this->breadcrumbs()
     ->addBreadcrumb($this->translate('News'));
 ?>

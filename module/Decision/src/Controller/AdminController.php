@@ -75,13 +75,13 @@ class AdminController extends AbstractActionController
             $type = MeetingTypes::from($type);
         }
 
-        $number = $this->params()->fromRoute('number');
+        $number = (int) $this->params()->fromRoute('number');
 
         $meetings = $this->decisionService->getMeetingsByType(MeetingTypes::ALV);
         $meetings = array_merge($meetings, $this->decisionService->getMeetingsByType(MeetingTypes::VV));
 
         if (
-            null === $number
+            0 === $number
             && null === $type
         ) {
             if (!empty($meetings)) {
@@ -210,17 +210,18 @@ class AdminController extends AbstractActionController
     public function authorizationsAction(): ViewModel
     {
         $meetings = $this->decisionService->getMeetingsByType(MeetingTypes::ALV);
-        $number = $this->params()->fromRoute('number');
-
-        if (null === $number && !empty($meetings)) {
-            $number = $meetings[0]->getNumber();
-        }
+        $number = (int) $this->params()->fromRoute('number');
 
         $authorizations = [
             'valid' => [],
             'revoked' => [],
         ];
-        if (null !== $number) {
+
+        if (
+            0 === $number
+            && !empty($meetings)
+        ) {
+            $number = $meetings[0]->getNumber();
             $authorizations = $this->decisionService->getAllAuthorizations($number);
         }
 

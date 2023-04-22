@@ -1,4 +1,17 @@
-<?php $lang = $this->plugin('translate')->getTranslator()->getLocale(); ?>
+<?php
+
+use Application\View\HelperTrait;
+use Frontpage\Model\Page as PageModel;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var PageModel $page
+ * @var array<array-key, PageModel|null> $parents
+ */
+
+$lang = $this->plugin('translate')->getTranslator()->getLocale();
+?>
 <section class="section section-breadcrumb">
     <div class="container">
         <ol class="breadcrumb">

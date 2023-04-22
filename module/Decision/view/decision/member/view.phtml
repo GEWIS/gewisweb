@@ -4,9 +4,14 @@ use Decision\Model\BoardMember;
 use Decision\Model\Member;
 use Laminas\I18n\View\HelperTrait;
 use Laminas\View\Renderer\PhpRenderer;
+use Photo\Model\ProfilePhoto as ProfilePhotoModel;
 
-/** @var PhpRenderer|HelperTrait $this */
-/** @var Member $member */
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var Member $member
+ * @var array $photoConfig
+ * @var ProfilePhotoModel|null $profilePhoto
+ */
 
 // set title
 $this->headTitle($this->escapeHtml($member->getFullName()));
@@ -222,7 +227,7 @@ function getStartAssociationYear(DateTime $installDate): int
                 <?php endif; ?>
             </div>
             <div class="col-md-6">
-                <?php if ($profilePhoto != null): ?>
+                <?php if (null !== $profilePhoto): ?>
                     <div class="row">
                         <div class="col-sm-12 col-xs-12">
                             <a class="thumbnail"

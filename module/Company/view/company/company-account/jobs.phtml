@@ -1,4 +1,21 @@
 <?php
+
+use Application\View\HelperTrait;
+use Company\Model\{
+    CompanyJobPackage as CompanyJobPackageModel,
+    Job as JobModel,
+};
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var JobModel[] $approved
+ * @var CompanyJobPackageModel|null $package - in reality this included or not, not null
+ * @var CompanyJobPackageModel[]|null $packages - in reality this included or not, not null
+ * @var JobModel[] $rejected
+ * @var JobModel[] $unapproved
+ */
+
 $this->scriptUrl()->requireUrls(
     ['company_account/jobs/delete'],
     ['packageId', 'jobId']

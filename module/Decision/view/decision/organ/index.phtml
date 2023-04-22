@@ -1,6 +1,13 @@
 <?php
 
-use Decision\Model\Organ;
+use Application\View\HelperTrait;
+use Decision\Model\Organ as OrganModel;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var OrganModel[] $organs
+ */
 
 // set title
 $this->headTitle($this->translate('Organ list'));
@@ -16,7 +23,7 @@ $this->headTitle($this->translate('Organ list'));
             </tr>
             </thead>
             <tbody>
-            <?php foreach ($this->organs as $organ): ?>
+            <?php foreach ($organs as $organ): ?>
                 <?php $url = $this->url('organ/show', ['organ' => $organ->getId()]) ?>
                 <tr>
                     <td>

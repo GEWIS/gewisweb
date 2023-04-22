@@ -1,4 +1,13 @@
 <?php
+
+use Application\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var array $albumsByYear
+ */
+
 $this->headScript()
     ->appendFile(
         $this->basePath() . '/js/photo.js',

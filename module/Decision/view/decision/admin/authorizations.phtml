@@ -1,4 +1,13 @@
 <?php
+
+use Application\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var int $number
+ */
+
 $this->breadcrumbs()
     ->addBreadcrumb($this->translate('Meetings'))
     ->addBreadcrumb($this->translate('Authorizations'));
@@ -14,7 +23,7 @@ $this->breadcrumbs()
                                 'admin_decision/authorizations',
                                 ['number' => $meeting->getNumber()],
                             ) ?>"
-                            <?= $meeting->getNumber() === intval($number) ? 'selected' : '' ?>
+                            <?= ($meeting->getNumber() === $number) ? 'selected' : '' ?>
                         >
                             <?= sprintf(
                                 $this->translate('GMM %d (%s)'),

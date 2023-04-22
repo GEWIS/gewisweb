@@ -1,4 +1,15 @@
 <?php
+
+use Activity\Form\Activity;
+use Application\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var string $action
+ * @var Activity $form
+ */
+
 $this->headTitle($action);
 $this->headLink()
     ->appendStylesheet($this->basePath() . '/css/bootstrap-markdown.min.css');

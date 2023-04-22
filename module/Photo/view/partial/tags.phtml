@@ -1,16 +1,26 @@
 <?php
+
+use Application\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+use Photo\Model\Photo as PhotoModel;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var PhotoModel $photo
+ */
+
 $this->scriptUrl()->requireUrl('photo/photo/tag/remove', ['photo_id', 'lidnr'])
     ->requireUrl('member/view', ['lidnr']);
 ?>
 <?php if ($this->acl('photo_service_acl')->isAllowed('tag', 'view')): ?>
     <?php
-    $tagCount = $this->photo->getTags()->count();
+    $tagCount = $photo->getTags()->count();
     $i = 1;
     ?>
     <span class="tag-title <?= (0 === $tagCount) ? 'hidden' : '' ?>"><?= $this->translate('In this photo:') ?></span>
     <span class="no-tag-title <?= (0 !== $tagCount) ? 'hidden' : '' ?>"><?= $this->translate('No one has been tagged in this photo yet. Tag someone you recognise now!')?></span>
-    <div class="tagList" data-tag-list="<?= $this->photo->getId() ?>">
-        <?php foreach ($this->photo->getTags() as $tag): ?>
+    <div class="tagList" data-tag-list="<?= $photo->getId() ?>">
+        <?php foreach ($photo->getTags() as $tag): ?>
             <span>
                 <a href="<?= $this->url(
                     'photo/album',
@@ -25,7 +35,7 @@ $this->scriptUrl()->requireUrl('photo/photo/tag/remove', ['photo_id', 'lidnr'])
                    href="<?= $this->url(
                     'photo/photo/tag/remove',
                     [
-                        'photo_id' => $this->photo->getId(),
+                        'photo_id' => $photo->getId(),
                         'lidnr' => $tag->getMember()->getLidnr(),
                     ],
                 ); ?>">
@@ -50,7 +60,7 @@ $this->scriptUrl()->requireUrl('photo/photo/tag/remove', ['photo_id', 'lidnr'])
         <input type="text" data-url="<?= $this->url(
             'photo/photo/tag/add',
             [
-                'photo_id' => $this->photo->getId(),
+                'photo_id' => $photo->getId(),
                 'lidnr' => 'lidnr',
             ],
         ); ?>" id="tagSearch" class="tagSearch" name="tagSearch">

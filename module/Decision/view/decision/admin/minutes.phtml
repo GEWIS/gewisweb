@@ -1,9 +1,18 @@
 <?php
+
+use Application\View\HelperTrait;
+use Decision\Form\Minutes as MinutesForm;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var MinutesForm $form
+ */
+
 $this->breadcrumbs()
     ->addBreadcrumb($this->translate('Meetings'))
     ->addBreadcrumb($this->translate('Minutes'));
 
-$form = $this->form;
 $form->prepare();
 
 $form->setAttribute('action', $this->url('admin_decision/default', ['action' => 'minutes']));

@@ -1,4 +1,18 @@
 <?php
+
+use Application\View\HelperTrait;
+use Company\Model\{
+    Company as CompanyModel,
+    Job as JobModel,
+};
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var CompanyModel[] $companies
+ * @var JobModel[] $jobs
+ */
+
 $this->breadcrumbs()
     ->addBreadcrumb($this->translate('Career'), true, $this->url('company_admin'))
     ->addBreadcrumb($this->translate('Approvals'));

@@ -69,7 +69,7 @@ class Page
      *
      * @param PageModel $page
      *
-     * @return array
+     * @return array<array-key, PageModel|null>
      */
     public function getPageParents(PageModel $page): array
     {

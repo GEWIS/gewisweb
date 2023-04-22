@@ -1,3 +1,14 @@
+<?php
+
+use Application\View\HelperTrait;
+use Company\Model\JobLabel as JobLabelModel;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var JobLabelModel[] $labelList
+ */
+?>
 <div class="row">
     <div class="col-sm-6">
         <a class="btn btn-success" href='<?= $this->url('company_admin/labels/add') ?>'>

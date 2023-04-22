@@ -1,4 +1,20 @@
 <?php
+
+use Application\View\HelperTrait;
+use Frontpage\Model\{
+    Poll as PollModel,
+    PollVote as PollVoteModel,
+};
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var bool $canVote
+ * @var PollModel $poll
+ * @var bool $showResults
+ * @var PollVoteModel $userVote
+ */
+
 $totalVotes = 0;
 foreach ($poll->getOptions() as $option) {
     $totalVotes += $option->getVotesCount();

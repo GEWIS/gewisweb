@@ -1,7 +1,16 @@
 <?php
-// set title
-$this->headTitle($this->translate('Search for decision')); ?>
 
+use Application\View\HelperTrait;
+use Decision\Form\SearchDecision as SearchDecisionForm;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var SearchDecisionForm $form
+ */
+
+$this->headTitle($this->translate('Search for decision'));
+?>
 <section class="section">
     <div class="container">
         <?php

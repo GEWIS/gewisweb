@@ -1,4 +1,14 @@
 <?php
+
+use Application\View\HelperTrait;
+use Education\Form\SearchCourse as SearchCourseForm;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var SearchCourseForm $form
+ */
+
 $this->headTitle($this->translate('Education'));
 ?>
 <style>
@@ -23,7 +33,6 @@ $this->headTitle($this->translate('Education'));
             </div>
             <div class="col-md-8">
                 <?php
-                $form = $this->form;
                 $form->prepare();
 
                 $form->setAttribute('action', $this->url('education'));

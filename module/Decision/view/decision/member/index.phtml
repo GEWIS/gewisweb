@@ -1,14 +1,23 @@
 <?php
-// set title
-use Decision\Model\Meeting;
+
+use Application\View\HelperTrait;
+use Decision\Model\{
+    Meeting as MeetingModel,
+    Member as MemberModel,
+};
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var bool $isActive
+ * @var array<string, array<array-key, MeetingModel>> $meetingsCollection
+ * @var MemberModel $member
+ */
 
 $translator = $this->plugin('translate')->getTranslator();
 $nf = new NumberFormatter($translator->getLocale(), NumberFormatter::ORDINAL);
 
 $this->headTitle($this->translate('Members'));
-
-/** @var Meeting[] $meetings */
-$meetings = $this->meetings;
 ?>
 <section class="section">
     <div class="container">

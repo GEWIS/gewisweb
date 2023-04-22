@@ -1,4 +1,10 @@
 <?php
+
+use Application\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+
+/** @var PhpRenderer|HelperTrait $this */
+
 $this->scriptUrl()->requireUrls(['activity_admin_options/delete'], ['id']);
 
 $this->breadcrumbs()

@@ -1,7 +1,23 @@
 <?php
 
-use Activity\Model\Activity;
+use Activity\Model\Activity as ActivityModel;
+use Application\View\HelperTrait;
+use Company\Model\CompanyBannerPackage as CompanyBannerPackageModel;
+use Frontpage\Model\NewsItem as NewsItemModel;
+use Laminas\View\Renderer\PhpRenderer;
+use Photo\Model\{
+    Photo as PhotoModel,
+    WeeklyPhoto as WeeklyPhotoModel,
+};
 
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var PhotoModel|null $birthdayPhoto
+ * @var CompanyBannerPackageModel|null $companyBanner
+ * @var NewsItemModel[] $news
+ * @var array $photoConfig
+ * @var WeeklyPhotoModel $weeklyPhoto
+ */
 ?>
 <div class="jumbotron jumbotron--panorama">
     <img alt=""
@@ -40,7 +56,7 @@ use Activity\Model\Activity;
                             <h3>
                                 <?php
                                 $lang = $this->plugin('translate')->getTranslator()->getLocale();
-                                if ($item instanceof Activity) {
+                                if ($item instanceof ActivityModel) {
                                     echo ($lang === 'en') ? $item->getName()->getValueEN() : $item->getName()->getValueNL();
                                 } else {
                                     echo ($lang === 'en') ? $item->getEnglishTitle() : $item->getDutchTitle();
@@ -50,7 +66,7 @@ use Activity\Model\Activity;
                             <div style="position: relative; overflow: hidden;">
                                 <div class="reveal reveal-10">
                                     <?php
-                                    if ($item instanceof Activity) {
+                                    if ($item instanceof ActivityModel) {
                                         $content = ($lang === 'en') ? $item->getDescription()->getValueEN() : $item->getDescription()->getValueNL();
                                     } else {
                                         $content = ($lang === 'en') ? $item->getEnglishContent() : $item->getDutchContent();

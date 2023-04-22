@@ -1,4 +1,17 @@
 <?php
+
+use Application\View\HelperTrait;
+use Frontpage\Form\PollApproval as PollApprovalForm;
+use Frontpage\Model\Poll as PollModel;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var PollApprovalForm $form
+ * @var Laminas\Paginator\Paginator $paginator;
+ * @var PollModel[] $unapprovedPolls
+ */
+
 $this->inlineScript()
     ->appendFile(
         $this->basePath() . '/js/poll-admin.js',
@@ -190,7 +203,6 @@ $this->breadcrumbs()
                 <div class="options">
                 </div>
                 <?php
-                $form = $this->approvalForm;
                 $form->prepare();
 
                 $form->setAttribute('method', 'post');

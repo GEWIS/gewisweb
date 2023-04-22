@@ -1,4 +1,14 @@
 <?php
+
+use Application\View\HelperTrait;
+use Company\Form\Company as CompanyForm;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var CompanyForm $form
+ */
+
 $this->headTitle($this->translate('Create Company'));
 
 $this->headScript()

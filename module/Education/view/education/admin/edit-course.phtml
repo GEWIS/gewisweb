@@ -1,4 +1,16 @@
 <?php
+
+use Application\View\HelperTrait;
+use Education\Form\Course as CourseForm;
+use Education\Model\Course as CourseModel;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var CourseModel $course
+ * @var CourseForm $form
+ */
+
 $this->breadcrumbs()
     ->addBreadcrumb($this->translate('Education'), true, $this->url('admin_education'))
     ->addBreadcrumb($this->translate('Courses'), true, $this->url('admin_education/course'))

@@ -1,4 +1,14 @@
 <?php
+
+use Application\View\HelperTrait;
+use Company\Form\JobCategory as JobCategoryForm;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var JobCategoryForm $form
+ */
+
 $this->headTitle($this->translate('Edit Job Category'));
 
 $form->prepare();

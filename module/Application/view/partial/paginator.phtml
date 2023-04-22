@@ -1,4 +1,12 @@
-<?php if ($this->pageCount): ?>
+<?php
+
+use Application\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+
+/** @var PhpRenderer|HelperTrait $this */
+
+if ($this->pageCount):
+?>
     <nav>
         <ul class="pagination">
             <?php if (isset($this->previous)): ?>

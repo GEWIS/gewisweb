@@ -1,4 +1,17 @@
 <?php
+
+use Activity\Model\ActivityUpdateProposal as ActivityUpdateProposalModel;
+use Application\Form\ModifyRequest as RequestForm;
+use Application\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var ActivityUpdateProposalModel $proposal
+ * @var RequestForm $proposalApplyForm
+ * @var RequestForm $proposalRevokeForm
+ */
+
 $old = $proposal->getOld();
 $new = $proposal->getNew();
 

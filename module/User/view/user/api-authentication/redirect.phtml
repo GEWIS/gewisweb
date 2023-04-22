@@ -1,4 +1,10 @@
 <?php
+
+use Application\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+
+/** @var PhpRenderer|HelperTrait $this */
+
 // Use a "manual" refresh to bypass the Chromium CSP enforcer, which does not allow redirects after a POST.
 $this->headMeta()->appendHttpEquiv('refresh', sprintf('0;URL=%s', $this->url));
 ?>
