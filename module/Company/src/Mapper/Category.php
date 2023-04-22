@@ -9,11 +9,13 @@ use Doctrine\ORM\Query\Expr\Join;
 
 /**
  * Mappers for category.
+ *
+ * @template-extends BaseMapper<JobCategoryModel>
  */
 class Category extends BaseMapper
 {
     /**
-     * @return array
+     * @return array<array-key, JobCategoryModel>
      */
     public function findVisibleCategories(): array
     {

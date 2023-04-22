@@ -539,6 +539,8 @@ class Exam
 
     /**
      * Get a specific course document.
+     *
+     * @psalm-suppress MoreSpecificReturnType
      */
     public function getDocument(int $id): ExamModel|SummaryModel|null
     {

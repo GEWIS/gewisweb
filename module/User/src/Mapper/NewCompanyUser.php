@@ -6,6 +6,9 @@ use Application\Mapper\BaseMapper;
 use Company\Model\Company as CompanyModel;
 use User\Model\NewCompanyUser as NewCompanyUserModel;
 
+/**
+ * @template-extends BaseMapper<NewCompanyUserModel>
+ */
 class NewCompanyUser extends BaseMapper
 {
     /**

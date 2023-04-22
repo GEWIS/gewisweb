@@ -11,15 +11,14 @@ use Doctrine\ORM\Query\ResultSetMappingBuilder;
 /**
  * Mappers for companies.
  *
- * NOTE: Companies will be modified externally by a script. Modifications will be
- * overwritten.
+ * @template-extends BaseMapper<CompanyModel>
  */
 class Company extends BaseMapper
 {
     /**
      * Find all public companies, these are companies that are published and have at least one non-expired package.
      *
-     * @return array
+     * @return array<array-key, CompanyModel>
      */
     public function findAllPublic(): array
     {

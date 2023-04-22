@@ -13,21 +13,11 @@ use Frontpage\Model\{
 
 /**
  * Mappers for Polls.
+ *
+ * @template-extends BaseMapper<PollModel>
  */
 class Poll extends BaseMapper
 {
-    /**
-     * Returns a poll based on its id.
-     *
-     * @param int $optionId
-     *
-     * @return PollOptionModel|null
-     */
-    public function findPollOptionById(int $optionId): ?PollOptionModel
-    {
-        return $this->getEntityManager()->getRepository(PollOptionModel::class)->find($optionId);
-    }
-
     /**
      * Find the vote of a certain user on a poll.
      *
@@ -49,7 +39,7 @@ class Poll extends BaseMapper
     }
 
     /**
-     * @return array
+     * @return array<array-key, PollModel>
      */
     public function getUnapprovedPolls(): array
     {

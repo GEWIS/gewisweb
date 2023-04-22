@@ -14,6 +14,8 @@ use Frontpage\Form\{
 };
 use Frontpage\Mapper\{
     Poll as PollMapper,
+    PollComment as PollCommentMapper,
+    PollOption as PollOptionMapper,
 };
 use Frontpage\Model\{
     Poll as PollModel,
@@ -35,6 +37,8 @@ class Poll
         private readonly Translator $translator,
         private readonly EmailService $emailService,
         private readonly PollMapper $pollMapper,
+        private readonly PollCommentMapper $pollCommentMapper,
+        private readonly PollOptionMapper $pollOptionMapper,
         private readonly PollForm $pollForm,
         private readonly PollApprovalForm $pollApprovalForm,
     ) {
@@ -85,7 +89,7 @@ class Poll
      */
     public function getPollOption(int $optionId): ?PollOptionModel
     {
-        return $this->pollMapper->findPollOptionById($optionId);
+        return $this->pollOptionMapper->find($optionId);
     }
 
     /**
@@ -197,8 +201,8 @@ class Poll
         $pollVote->setRespondent($this->aclService->getUserIdentityOrThrowException()->getMember());
         $pollVote->setPoll($poll);
         $pollOption->addVote($pollVote);
-        $this->pollMapper->persist($pollOption);
-        $this->pollMapper->flush();
+        $this->pollOptionMapper->persist($pollOption);
+        $this->pollOptionMapper->flush();
 
         return true;
     }
@@ -252,7 +256,7 @@ class Poll
         $comment->setCreatedOn(new DateTime());
         $comment->setUser($user);
 
-        $this->pollMapper->persist($comment);
+        $this->pollCommentMapper->persist($comment);
 
         return $comment;
     }
@@ -312,7 +316,7 @@ class Poll
 
         foreach ($data['options'] as $option) {
             $pollOption = $this->createPollOption($option, $poll);
-            $this->pollMapper->persist($pollOption);
+            $this->pollOptionMapper->persist($pollOption);
         }
 
         return $poll;

@@ -5,6 +5,9 @@ namespace Activity\Mapper;
 use Activity\Model\MaxActivities as MaxActivitiesModel;
 use Application\Mapper\BaseMapper;
 
+/**
+ * @template-extends BaseMapper<MaxActivitiesModel>
+ */
 class MaxActivities extends BaseMapper
 {
     /**

@@ -6,6 +6,9 @@ use Application\Mapper\BaseMapper;
 use Decision\Model\Member as MemberModel;
 use User\Model\NewUser as NewUserModel;
 
+/**
+ * @template-extends BaseMapper<NewUserModel>
+ */
 class NewUser extends BaseMapper
 {
     /**

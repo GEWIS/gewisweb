@@ -7,6 +7,8 @@ use Company\Model\JobLabel as JobLabelModel;
 
 /**
  * Mappers for labels.
+ *
+ * @template-extends BaseMapper<JobLabelModel>
  */
 class Label extends BaseMapper
 {

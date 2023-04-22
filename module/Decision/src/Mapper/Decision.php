@@ -6,6 +6,9 @@ use Application\Mapper\BaseMapper;
 use Decision\Model\Decision as DecisionModel;
 use Decision\Model\Enums\MeetingTypes;
 
+/**
+ * @template-extends BaseMapper<DecisionModel>
+ */
 class Decision extends BaseMapper
 {
     /**
@@ -13,7 +16,7 @@ class Decision extends BaseMapper
      *
      * @param string $query
      *
-     * @return array
+     * @return array<array-key, DecisionModel>
      */
     public function search(string $query): array
     {

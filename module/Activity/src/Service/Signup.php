@@ -178,12 +178,15 @@ class Signup
 
     /**
      * Creates the generic parts of a signup.
+     * @template T of ExternalSignupModel|UserSignupModel
      *
      * @param ExternalSignupModel|UserSignupModel $signup
      * @param SignupListModel $signupList
      * @param array $fieldResults
+     * @psalm-param T $signup
      *
      * @return ExternalSignupModel|UserSignupModel
+     * @psalm-return T
      *
      * @throws ORMException
      * @throws OptimisticLockException
@@ -350,7 +353,7 @@ class Signup
      */
     public function getNumberOfSubscribedMembers(SignupListModel $signupList): int
     {
-        return $this->signupMapper->getNumberOfSignedUpMembers($signupList)[1];
+        return $this->signupMapper->getNumberOfSignedUpMembers($signupList);
     }
 
     /**

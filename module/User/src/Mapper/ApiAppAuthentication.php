@@ -3,6 +3,7 @@
 namespace User\Mapper;
 
 use Application\Mapper\BaseMapper;
+use DateTime;
 use Decision\Model\Member as MemberModel;
 use User\Model\{
     ApiApp as ApiAppModel,
@@ -10,8 +11,14 @@ use User\Model\{
 };
 use User\Model\ApiAppAuthentication as ApiAppAuthenticationModel;
 
+/**
+ * @template-extends BaseMapper<ApiAppAuthenticationModel>
+ */
 class ApiAppAuthentication extends BaseMapper
 {
+    /**
+     * @return array<array-key, array{0: ApiAppModel, firstAuthentication: DateTime, lastAuthentication: DateTime}>
+     */
     public function getFirstAndLastAuthenticationPerApiApp(MemberModel $member): array
     {
         $qb = $this->getRepository()->createQueryBuilder('a');

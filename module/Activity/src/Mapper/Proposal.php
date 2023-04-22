@@ -5,6 +5,9 @@ namespace Activity\Mapper;
 use Activity\Model\ActivityUpdateProposal as ActivityUpdateProposalModel;
 use Application\Mapper\BaseMapper;
 
+/**
+ * @template-extends BaseMapper<ActivityUpdateProposalModel>
+ */
 class Proposal extends BaseMapper
 {
     /**

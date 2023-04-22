@@ -17,6 +17,8 @@ use Decision\Mapper\{
     Authorization as AuthorizationMapper,
     Decision as DecisionMapper,
     Meeting as MeetingMapper,
+    MeetingDocument as MeetingDocumentMapper,
+    MeetingMinutes as MeetingMinutesMapper,
     Member as MemberMapper,
     Organ as OrganMapper,
 };
@@ -81,6 +83,8 @@ class Module
                     $emailService = $container->get('application_service_email');
                     $memberMapper = $container->get('decision_mapper_member');
                     $meetingMapper = $container->get('decision_mapper_meeting');
+                    $meetingDocumentMapper = $container->get('decision_mapper_meeting_document');
+                    $meetingMinutesMapper = $container->get('decision_mapper_meeting_minutes');
                     $decisionMapper = $container->get('decision_mapper_decision');
                     $authorizationMapper = $container->get('decision_mapper_authorization');
                     $minutesForm = $container->get('decision_form_minutes');
@@ -97,6 +101,8 @@ class Module
                         $emailService,
                         $memberMapper,
                         $meetingMapper,
+                        $meetingDocumentMapper,
+                        $meetingMinutesMapper,
                         $decisionMapper,
                         $authorizationMapper,
                         $minutesForm,
@@ -149,6 +155,16 @@ class Module
                 },
                 'decision_mapper_meeting' => function (ContainerInterface $container) {
                     return new MeetingMapper(
+                        $container->get('doctrine.entitymanager.orm_default'),
+                    );
+                },
+                'decision_mapper_meeting_document' => function (ContainerInterface $container) {
+                    return new MeetingDocumentMapper(
+                        $container->get('doctrine.entitymanager.orm_default'),
+                    );
+                },
+                'decision_mapper_meeting_minutes' => function (ContainerInterface $container) {
+                    return new MeetingMinutesMapper(
                         $container->get('doctrine.entitymanager.orm_default'),
                     );
                 },

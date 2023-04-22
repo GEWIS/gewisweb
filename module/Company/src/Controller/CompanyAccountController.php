@@ -14,7 +14,10 @@ use Company\Service\{
     Company as CompanyService,
 };
 use DateTime;
-use Laminas\Http\Response;
+use Laminas\Http\{
+    Request,
+    Response,
+};
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
@@ -28,6 +31,8 @@ class CompanyAccountController extends AbstractActionController
 {
     /**
      * CompanyAccountController constructor.
+     *
+     * @psalm-param JobPackageMapper<CompanyJobPackageModel> $jobPackageMapper
      */
     public function __construct(
         private readonly AclService $aclService,
@@ -141,6 +146,7 @@ class CompanyAccountController extends AbstractActionController
 
         $jobForm = $this->companyService->getJobForm();
 
+        /** @var Request $request */
         $request = $this->getRequest();
         if ($request->isPost()) {
             $post = array_merge_recursive(
@@ -219,6 +225,7 @@ class CompanyAccountController extends AbstractActionController
         $jobForm = $this->companyService->getJobForm();
         $updateProposals = $job->getUpdateProposals();
 
+        /** @var Request $request */
         $request = $this->getRequest();
         if ($request->isPost()) {
             $post = array_merge_recursive(
@@ -297,7 +304,9 @@ class CompanyAccountController extends AbstractActionController
             );
         }
 
-        if (!$this->getRequest()->isPost()) {
+        /** @var Request $request */
+        $request = $this->getRequest();
+        if (!$request->isPost()) {
             return $this->notFoundAction();
         }
 
@@ -376,6 +385,7 @@ class CompanyAccountController extends AbstractActionController
             $this->jobPackageMapper->findNonExpiredPackages($company),
         );
 
+        /** @var Request $request */
         $request = $this->getRequest();
         if ($request->isPost()) {
             $form->setData($request->getPost()->toArray());

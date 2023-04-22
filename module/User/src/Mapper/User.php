@@ -7,6 +7,9 @@ use DateTime;
 use Decision\Model\Member as MemberModel;
 use User\Model\User as UserModel;
 
+/**
+ * @template-extends BaseMapper<UserModel>
+ */
 class User extends BaseMapper
 {
     /**

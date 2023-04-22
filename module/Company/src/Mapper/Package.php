@@ -17,8 +17,8 @@ use Doctrine\ORM\QueryBuilder;
 /**
  * Mappers for package.
  *
- * NOTE: Packages will be modified externally by a script. Modifications will be
- * overwritten.
+ * @template T0 of object
+ * @template-extends BaseMapper<T0>
  */
 class Package extends BaseMapper
 {
@@ -27,7 +27,7 @@ class Package extends BaseMapper
      *
      * @param DateTime $date The date until where to search
      *
-     * @return array
+     * @return array<array-key, T0>
      */
     public function findFuturePackageExpirationsBeforeDate(DateTime $date): array
     {
@@ -47,7 +47,7 @@ class Package extends BaseMapper
      *
      * @param DateTime $date The date until where to search
      *
-     * @return array
+     * @return array<array-key, T0>
      */
     public function findFuturePackageStartsBeforeDate(DateTime $date): array
     {
@@ -78,7 +78,7 @@ class Package extends BaseMapper
     /**
      * Find all packages that should be visible, and returns an editable version of them.
      *
-     * @return array
+     * @return array<array-key, T0>
      */
     public function findVisiblePackages(): array
     {
@@ -127,7 +127,7 @@ class Package extends BaseMapper
     /**
      * Get non-expired packages for a specific company.
      *
-     * @return array<array-key, CompanyJobPackageModel>
+     * @return array<array-key, T0>
      */
     public function findNonExpiredPackages(CompanyModel $company): array
     {

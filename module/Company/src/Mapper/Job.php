@@ -11,8 +11,7 @@ use Doctrine\ORM\Query\Expr\Join;
 /**
  * Mappers for jobs.
  *
- * NOTE: Jobs will be modified externally by a script. Modifications will be
- * overwritten.
+ * @template-extends BaseMapper<JobModel>
  */
 class Job extends BaseMapper
 {
@@ -50,7 +49,7 @@ class Job extends BaseMapper
      * @param string|null $jobSlugName
      * @param string|null $companySlugName
      *
-     * @return array
+     * @return array<array-key, JobModel>
      */
     public function findJob(
         int $jobCategoryId = null,

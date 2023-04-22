@@ -11,13 +11,16 @@ use User\Model\{
     User as UserModel,
 };
 
+/**
+ * @template-extends BaseMapper<LoginAttemptModel>
+ */
 class LoginAttempt extends BaseMapper
 {
     public function getFailedAttemptCount(
         DateTime $since,
         string $ip,
         ?IdentityInterface $user = null,
-    ): int|string {
+    ): int {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('count(a.id)')
             ->from($this->getRepositoryName(), 'a')

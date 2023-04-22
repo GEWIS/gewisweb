@@ -7,8 +7,7 @@ use Company\Model\CompanyBannerPackage as CompanyBannerPackageModel;
 /**
  * Mappers for package.
  *
- * NOTE: Packages will be modified externally by a script. Modifications will be
- * overwritten.
+ * @template-extends Package<CompanyBannerPackageModel>
  */
 class BannerPackage extends Package
 {

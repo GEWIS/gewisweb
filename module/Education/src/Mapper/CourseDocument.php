@@ -11,7 +11,9 @@ use Education\Model\{
 };
 
 /**
- * Mapper for Exam.
+ * Mapper for course documents.
+ *
+ * @template-extends BaseMapper<CourseDocumentModel>
  */
 class CourseDocument extends BaseMapper
 {

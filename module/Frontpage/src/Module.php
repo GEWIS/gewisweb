@@ -15,6 +15,8 @@ use Frontpage\Mapper\{
     NewsItem as NewsItemMapper,
     Page as PageMapper,
     Poll as PollMapper,
+    PollComment as PollCommentMapper,
+    PollOption as PollOptionMapper,
 };
 use Frontpage\Service\{
     AclService,
@@ -97,6 +99,8 @@ class Module
                     $translator = $container->get(MvcTranslator::class);
                     $emailService = $container->get('application_service_email');
                     $pollMapper = $container->get('frontpage_mapper_poll');
+                    $pollCommentMapper = $container->get('frontpage_mapper_poll_comment');
+                    $pollOptionMapper = $container->get('frontpage_mapper_poll_option');
                     $pollForm = $container->get('frontpage_form_poll');
                     $pollApprovalForm = $container->get('frontpage_form_poll_approval');
 
@@ -105,6 +109,8 @@ class Module
                         $translator,
                         $emailService,
                         $pollMapper,
+                        $pollCommentMapper,
+                        $pollOptionMapper,
                         $pollForm,
                         $pollApprovalForm,
                     );
@@ -174,6 +180,16 @@ class Module
                 },
                 'frontpage_mapper_poll' => function (ContainerInterface $container) {
                     return new PollMapper(
+                        $container->get('doctrine.entitymanager.orm_default')
+                    );
+                },
+                'frontpage_mapper_poll_comment' => function (ContainerInterface $container) {
+                    return new PollCommentMapper(
+                        $container->get('doctrine.entitymanager.orm_default')
+                    );
+                },
+                'frontpage_mapper_poll_option' => function (ContainerInterface $container) {
+                    return new PollOptionMapper(
                         $container->get('doctrine.entitymanager.orm_default')
                     );
                 },

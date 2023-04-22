@@ -18,6 +18,7 @@ use Company\Mapper\{
     Company as CompanyMapper,
     FeaturedPackage as FeaturedPackageMapper,
     Job as JobMapper,
+    JobUpdate as JobUpdateMapper,
     Label as LabelMapper,
     Package as PackageMapper,
 };
@@ -50,6 +51,9 @@ use User\Service\User as UserService;
  */
 class Company
 {
+    /**
+     * @psalm-param PackageMapper<CompanyJobPackageModel> $packageMapper
+     */
     public function __construct(
         private readonly AclService $aclService,
         private readonly Translator $translator,
@@ -59,6 +63,7 @@ class Company
         private readonly BannerPackageMapper $bannerPackageMapper,
         private readonly FeaturedPackageMapper $featuredPackageMapper,
         private readonly JobMapper $jobMapper,
+        private readonly JobUpdateMapper $jobUpdateMapper,
         private readonly CategoryMapper $categoryMapper,
         private readonly LabelMapper $labelMapper,
         private readonly CompanyForm $companyForm,
@@ -726,7 +731,7 @@ class Company
             $jobUpdateProposal->setProposal($updateProposal);
 
             $this->jobMapper->persist($updateProposal);
-            $this->jobMapper->persist($jobUpdateProposal);
+            $this->jobUpdateMapper->persist($jobUpdateProposal);
 
             // TODO: Send e-mail to CEB/C4 about proposed changes.
         }
@@ -824,7 +829,7 @@ class Company
 
         foreach ($job->getUpdateProposals() as $update) {
             // The proposed job is cascade deleted.
-            $this->jobMapper->remove($update);
+            $this->jobUpdateMapper->remove($update);
         }
     }
 

@@ -13,6 +13,8 @@ use Photo\Model\{
 
 /**
  * Mappers for WeeklyPhoto.
+ *
+ * @template-extends BaseMapper<WeeklyPhotoModel>
  */
 class WeeklyPhoto extends BaseMapper
 {
@@ -42,6 +44,9 @@ class WeeklyPhoto extends BaseMapper
         return empty($res) ? null : $res[0];
     }
 
+    /**
+     * @return WeeklyPhotoModel|array<array-key, WeeklyPhotoModel>|null
+     */
     public function getPhotosOfTheWeekInYear(
         int $year,
         bool $onlyLast = false,

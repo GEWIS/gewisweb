@@ -7,6 +7,8 @@ use Frontpage\Model\Page as PageModel;
 
 /**
  * Mappers for Pages.
+ *
+ * @template-extends BaseMapper<PageModel>
  */
 class Page extends BaseMapper
 {

@@ -13,8 +13,9 @@ use Doctrine\ORM\{
 /**
  * Mappers for organs.
  *
- * NOTE: Organs will be modified externally by a script. Modifycations will be
- * overwritten.
+ * NOTE: Organs will be modified externally by a script. Modifications will be overwritten.
+ *
+ * @template-extends BaseMapper<OrganModel>
  */
 class Organ extends BaseMapper
 {
@@ -23,7 +24,7 @@ class Organ extends BaseMapper
      *
      * @param OrganTypes|null $type
      *
-     * @return array
+     * @return array<array-key, OrganModel>
      */
     public function findActive(?OrganTypes $type = null): array
     {
@@ -60,7 +61,7 @@ class Organ extends BaseMapper
      *
      * @param OrganTypes|null $type
      *
-     * @return array
+     * @return array<array-key, OrganModel>
      */
     public function findAbrogated(?OrganTypes $type = null): array
     {

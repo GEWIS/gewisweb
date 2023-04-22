@@ -82,9 +82,11 @@ class User
     ): bool {
         if ($newUser instanceof NewCompanyUserModel) {
             $adapter = $this->companyUserAuthService->getAdapter();
+            $newAdapter = $this->newCompanyUserMapper;
             $id = $newUser->getId();
         } else {
             $adapter = $this->userAuthService->getAdapter();
+            $newAdapter = $this->newUserMapper;
             $id = $newUser->getLidnr();
         }
 
@@ -113,7 +115,7 @@ class User
 
         // this will also save a user with a lost password
         $adapter->getMapper()->persist($user);
-        $adapter->getMapper()->remove($newUser);
+        $newAdapter->remove($newUser);
 
         return true;
     }
@@ -124,12 +126,12 @@ class User
     public function removeActivation(NewCompanyUserModel|NewUserModel $newUser): void
     {
         if ($newUser instanceof NewCompanyUserModel) {
-            $adapter = $this->companyUserAuthService->getAdapter();
+            $adapter = $this->newCompanyUserMapper;
         } else {
-            $adapter = $this->userAuthService->getAdapter();
+            $adapter = $this->newUserMapper;
         }
 
-        $adapter->getMapper()->remove($newUser);
+        $adapter->remove($newUser);
     }
 
     /**

@@ -7,6 +7,8 @@ use Education\Model\Course as CourseModel;
 
 /**
  * Mappers for Courses.
+ *
+ * @template-extends BaseMapper<CourseModel>
  */
 class Course extends BaseMapper
 {
@@ -35,7 +37,7 @@ class Course extends BaseMapper
      *
      * @param string $query
      *
-     * @return array
+     * @return array<array-key, CourseModel>
      */
     public function search(string $query): array
     {

@@ -19,6 +19,8 @@ use Decision\Mapper\{
     Authorization as AuthorizationMapper,
     Decision as DecisionMapper,
     Meeting as MeetingMapper,
+    MeetingDocument as MeetingDocumentMapper,
+    MeetingMinutes as MeetingMinutesMapper,
     Member as MemberMapper,
 };
 use Decision\Model\{
@@ -53,6 +55,8 @@ class Decision
         private readonly EmailService $emailService,
         private readonly MemberMapper $memberMapper,
         private readonly MeetingMapper $meetingMapper,
+        private readonly MeetingDocumentMapper $meetingDocumentMapper,
+        private readonly MeetingMinutesMapper $meetingMinutesMapper,
         private readonly DecisionMapper $decisionMapper,
         private readonly AuthorizationMapper $authorizationMapper,
         private readonly MinutesForm $minutesForm,
@@ -170,11 +174,10 @@ class Decision
      * @param int $id
      *
      * @return MeetingDocumentModel|null
-     * @throws ORMException
      */
     public function getMeetingDocument(int $id): ?MeetingDocumentModel
     {
-        return $this->meetingMapper->findDocument($id);
+        return $this->meetingDocumentMapper->find($id);
     }
 
     /**
@@ -244,8 +247,7 @@ class Decision
 
         $meetingMinutes->setPath($path);
 
-        $mapper = $this->decisionMapper;
-        $mapper->persist($meetingMinutes);
+        $this->meetingMinutesMapper->persist($meetingMinutes);
 
         return true;
     }
@@ -276,7 +278,7 @@ class Decision
 
         $document->setDisplayPosition($position);
 
-        $this->meetingMapper->persist($document);
+        $this->meetingDocumentMapper->persist($document);
 
         return true;
     }
@@ -295,7 +297,7 @@ class Decision
         }
 
         // TODO: The actual file is never deleted.
-        $this->meetingMapper->remove($meetingDocument);
+        $this->meetingDocumentMapper->remove($meetingDocument);
     }
 
     /**
@@ -309,7 +311,7 @@ class Decision
         array $data,
     ): void {
         $meetingDocument->setName($data['name']);
-        $this->meetingMapper->persist($meetingDocument);
+        $this->meetingDocumentMapper->persist($meetingDocument);
     }
 
 
@@ -340,7 +342,7 @@ class Decision
 
         // Documents are ordered because of @OrderBy annotation on the relation
         /** @var PersistentCollection $documents */
-        $documents = $this->meetingMapper
+        $documents = $this->meetingDocumentMapper
             ->findDocumentOrFail($id)
             ->getMeeting()
             ->getDocuments();
@@ -369,7 +371,7 @@ class Decision
 
             $document->setDisplayPosition($position);
 
-            $this->meetingMapper->persist($document);
+            $this->meetingDocumentMapper->persist($document);
         });
     }
 
@@ -526,7 +528,9 @@ class Decision
     public function getMinutesForm(): MinutesForm
     {
         if (!$this->aclService->isAllowed('upload_minutes', 'meeting')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to upload meeting minutes.'));
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to upload meeting minutes.')
+            );
         }
 
         return $this->minutesForm->setMeetings($this->meetingMapper->findAllMeetings());

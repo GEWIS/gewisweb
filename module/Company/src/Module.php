@@ -17,6 +17,7 @@ use Company\Mapper\{
     Company as CompanyMapper,
     FeaturedPackage as FeaturedPackageMapper,
     Job as JobMapper,
+    JobUpdate as JobUpdateMapper,
     Label as LabelMapper,
     Package as PackageMapper,
 };
@@ -110,6 +111,11 @@ class Module
                     $container->get('doctrine.entitymanager.orm_default'),
                 );
             },
+            'company_mapper_job_update' => function (ContainerInterface $container) {
+                return new JobUpdateMapper(
+                    $container->get('doctrine.entitymanager.orm_default'),
+                );
+            },
             'company_mapper_package' => function (ContainerInterface $container) {
                 return new PackageMapper(
                     $container->get('doctrine.entitymanager.orm_default'),
@@ -168,6 +174,7 @@ class Module
                 $bannerPackageMapper = $container->get('company_mapper_bannerpackage');
                 $featuredPackageMapper = $container->get('company_mapper_featuredpackage');
                 $jobMapper = $container->get('company_mapper_job');
+                $jobUpdateMapper = $container->get('company_mapper_job_update');
                 $categoryMapper = $container->get('company_mapper_jobcategory');
                 $labelMapper = $container->get('company_mapper_joblabel');
                 $companyForm = $container->get('company_admin_company_form');
@@ -188,6 +195,7 @@ class Module
                     $bannerPackageMapper,
                     $featuredPackageMapper,
                     $jobMapper,
+                    $jobUpdateMapper,
                     $categoryMapper,
                     $labelMapper,
                     $companyForm,

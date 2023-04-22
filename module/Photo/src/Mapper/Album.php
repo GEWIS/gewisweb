@@ -11,6 +11,8 @@ use Photo\Model\{
 
 /**
  * Mappers for Album.
+ *
+ * @template-extends BaseMapper<AlbumModel>
  */
 class Album extends BaseMapper
 {
@@ -21,7 +23,7 @@ class Album extends BaseMapper
      * @param int $start the result to start at
      * @param int|null $maxResults max amount of results to return, null for infinite
      *
-     * @return array of subalbums or null if there are none
+     * @return array<array-key, AlbumModel>
      */
     public function getSubAlbums(
         AlbumModel $parent,
@@ -44,7 +46,7 @@ class Album extends BaseMapper
     /**
      * return all the sub-albums without a parent.
      *
-     * @return array
+     * @return array<array-key, AlbumModel>
      */
     public function getRootAlbums(): array
     {
@@ -61,7 +63,7 @@ class Album extends BaseMapper
      * @param DateTime $start start date and time
      * @param DateTime $end   end date and time
      *
-     * @return array
+     * @return array<array-key, AlbumModel>
      */
     public function getAlbumsInDateRange(
         DateTime $start,
@@ -81,7 +83,7 @@ class Album extends BaseMapper
      * Retrieves all root albums which do not have a startDateTime specified.
      * This is in most cases analogous to returning all empty albums.
      *
-     * @return array
+     * @return array<array-key, AlbumModel>
      */
     public function getAlbumsWithoutDate(): array
     {

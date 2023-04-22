@@ -5,6 +5,9 @@ namespace User\Mapper;
 use Application\Mapper\BaseMapper;
 use User\Model\ApiApp as ApiAppModel;
 
+/**
+ * @template-extends BaseMapper<ApiAppModel>
+ */
 class ApiApp extends BaseMapper
 {
     /**
