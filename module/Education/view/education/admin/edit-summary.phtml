@@ -5,6 +5,12 @@ $this->inlineScript()
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     );
+$this->headScript()
+    ->appendFile(
+        $this->basePath() . '/js/bootstrap/tooltip.js',
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    );
 
 $this->scriptUrl()->requireUrl('admin_education/delete_temp', ['type', 'filename']);
 
@@ -51,7 +57,7 @@ $this->breadcrumbs()
             $element->setAttribute('class', 'form-control');
             $element->setAttribute('placeholder', $element->getLabel());
             ?>
-            <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+            <div class="form-group <?= $this->bootstrapElementError($element) ?>">
                 <label for="<?= $element->getName() ?>"
                        class="control-label col-sm-2"><?= $element->getLabel() ?></label>
                 <div class="col-sm-10">
@@ -65,7 +71,7 @@ $this->breadcrumbs()
             $element->setAttribute('class', 'form-control');
             $element->setAttribute('placeholder', $element->getLabel());
             ?>
-            <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+            <div class="form-group <?= $this->bootstrapElementError($element) ?>">
                 <label for="<?= $element->getName() ?>"
                        class="control-label col-sm-2"><?= $element->getLabel() ?></label>
                 <div class="col-sm-10">
@@ -79,7 +85,7 @@ $this->breadcrumbs()
             $element->setAttribute('class', 'form-control');
             $element->setAttribute('placeholder', $element->getLabel());
             ?>
-            <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+            <div class="form-group <?= $this->bootstrapElementError($element) ?>">
                 <label for="<?= $element->getName() ?>"
                        class="control-label col-sm-2"><?= $element->getLabel() ?></label>
                 <div class="col-sm-10">
@@ -92,11 +98,27 @@ $this->breadcrumbs()
             $element = $fs->get('language');
             $element->setAttribute('class', 'form-control');
             ?>
-            <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+            <div class="form-group <?= $this->bootstrapElementError($element) ?>">
                 <label for="<?= $element->getName() ?>"
                        class="control-label col-sm-2"><?= $element->getLabel() ?></label>
                 <div class="col-sm-10">
                     <?= $this->formSelect($element) ?>
+                    <?= $this->formElementErrors($element) ?>
+                </div>
+            </div>
+            <?php
+            $element = $fs->get('scanned');
+            $element->setAttribute('class', 'form-control');
+            ?>
+            <div class="form-group <?= $this->bootstrapElementError($element) ?>">
+                <label for="<?= $element->getName() ?>" class="control-label col-sm-2">
+                    <?= $element->getLabel() ?>
+                    <span data-toggle="tooltip" data-placement="right"
+                          title="<?= $this->translate('Check this if the document is scanned, as this will enable higher quality downloads. Please note that enabling setting this for non-scanned documents will significantly impact the ability to download the document.') ?>"
+                          class="fas fa-info-circle" aria-hidden="true"></span>
+                </label>
+                <div class="col-sm-10">
+                    <?= $this->formCheckbox($element) ?>
                     <?= $this->formElementErrors($element) ?>
                 </div>
             </div>

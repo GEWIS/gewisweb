@@ -36,6 +36,7 @@ class WatermarkService
     public function watermarkPdf(
         string $path,
         string $fileName,
+        bool $scanned = false,
     ): string {
         $pdf = new Fpdi();
         $pdf->setTitle($fileName);
@@ -101,7 +102,9 @@ class WatermarkService
         $tempFile = $tempName . '.pdf';
         $tempFlatFile = $tempName . '-flat.pdf';
         $pdf->Output($tempFile, 'F');
-        exec("convert -density 120 " . escapeshellarg($tempFile) . " " . escapeshellarg($tempFlatFile));
+
+        $quality = $scanned ? '170' : '120';
+        exec("convert -density " . escapeshellarg($quality) . " " . escapeshellarg($tempFile) . " " . escapeshellarg($tempFlatFile));
 
         return $tempFlatFile;
     }
