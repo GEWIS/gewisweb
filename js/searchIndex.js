@@ -10936,6 +10936,16 @@ Search.appendIndex(
             "summary": "Set\u0020the\u0020course.",
             "url": "classes/Education-Model-CourseDocument.html#method_setCourse"
         },                {
+            "fqsen": "\\Education\\Model\\CourseDocument\u003A\u003AgetScanned\u0028\u0029",
+            "name": "getScanned",
+            "summary": "Get\u0020whether\u0020the\u0020document\u0020is\u0020scanned\u0020or\u0020not.",
+            "url": "classes/Education-Model-CourseDocument.html#method_getScanned"
+        },                {
+            "fqsen": "\\Education\\Model\\CourseDocument\u003A\u003AsetScanned\u0028\u0029",
+            "name": "setScanned",
+            "summary": "Set\u0020whether\u0020the\u0020document\u0020is\u0020scanned\u0020or\u0020not.",
+            "url": "classes/Education-Model-CourseDocument.html#method_setScanned"
+        },                {
             "fqsen": "\\Education\\Model\\CourseDocument\u003A\u003AgetResourceId\u0028\u0029",
             "name": "getResourceId",
             "summary": "",
@@ -10960,6 +10970,11 @@ Search.appendIndex(
             "name": "course",
             "summary": "The\u0020course\u0020to\u0020which\u0020this\u0020document\u0020belongs.",
             "url": "classes/Education-Model-CourseDocument.html#property_course"
+        },                {
+            "fqsen": "\\Education\\Model\\CourseDocument\u003A\u003A\u0024scanned",
+            "name": "scanned",
+            "summary": "Whether\u0020the\u0020uploaded\u0020document\u0020is\u0020scanned\u0020or\u0020not.\u0020This\u0020influences\u0020the\u0020quality\u0020of\u0020the\u0020watermarking\u0020service.",
+            "url": "classes/Education-Model-CourseDocument.html#property_scanned"
         },                {
             "fqsen": "\\Education\\Model\\Enums\\ExamTypes",
             "name": "ExamTypes",
