@@ -521,7 +521,13 @@ class Company
      */
     public function persistPackage(CompanyPackageModel $package): void
     {
-        $this->packageMapper->persist($package);
+        if ($package instanceof CompanyBannerPackageModel) {
+            $this->bannerPackageMapper->persist($package);
+        } elseif ($package instanceof CompanyFeaturedPackageModel) {
+            $this->featuredPackageMapper->persist($package);
+        } elseif ($package instanceof CompanyJobPackageModel) {
+            $this->packageMapper->persist($package);
+        }
     }
 
     /**
@@ -756,7 +762,13 @@ class Company
             throw new NotAllowedException($this->translator->translate('You are not allowed to delete packages'));
         }
 
-        $this->packageMapper->remove($package);
+        if ($package instanceof CompanyBannerPackageModel) {
+            $this->bannerPackageMapper->remove($package);
+        } elseif ($package instanceof CompanyFeaturedPackageModel) {
+            $this->featuredPackageMapper->remove($package);
+        } elseif ($package instanceof CompanyJobPackageModel) {
+            $this->packageMapper->remove($package);
+        }
     }
 
     /**

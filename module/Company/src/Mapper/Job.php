@@ -73,9 +73,7 @@ class Job extends BaseMapper
             $qb->join('j.category', 'cat')
                 ->andWhere('cat.id = :jobCategoryId')
                 ->setParameter('jobCategoryId', $jobCategoryId);
-        }
-
-        if (null !== $jobCategorySlug) {
+        } elseif (null !== $jobCategorySlug) {
             $qb->innerJoin('j.category', 'cat')
                 ->innerJoin(
                     'cat.slug',

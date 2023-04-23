@@ -345,7 +345,7 @@ class Signup
      */
     protected function removeSignUp(SignupModel $signup): void
     {
-        $this->signupMapper->remove($signup);
+        $this->entityManager->remove($signup);
     }
 
     /**

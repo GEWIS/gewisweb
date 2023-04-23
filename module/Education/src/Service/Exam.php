@@ -541,10 +541,8 @@ class Exam
 
     /**
      * Get a specific course document.
-     *
-     * @psalm-suppress MoreSpecificReturnType
      */
-    public function getDocument(int $id): ExamModel|SummaryModel|null
+    public function getDocument(int $id): CourseDocumentModel|null
     {
         return $this->courseDocumentMapper->find($id);
     }
@@ -552,7 +550,7 @@ class Exam
     /**
      * Delete a course document
      */
-    public function deleteDocument(ExamModel|SummaryModel $document): void
+    public function deleteDocument(CourseDocumentModel $document): void
     {
         $this->storageService->removeFile($document->getFilename());
         $this->courseDocumentMapper->remove($document);

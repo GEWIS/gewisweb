@@ -13,10 +13,6 @@ parameters:
         - '#Property [a-zA-Z0-9\\_]+\:\:\$[a-zA-Z0-9_]+ type mapping mismatch\: database can contain [a-zA-Z0-9\\_]+\|null but property expects [a-zA-Z0-9\\_]+\.$#'
         - '#Call to an undefined method Laminas\\Form\\ElementInterface\:\:(count|getFieldSets|getValueOptions|populateValues|setCount|setValueOptions)\(\).$#'
         -
-            message: "#^Unable to resolve the template type T in call to method Doctrine\\\\ORM\\\\EntityManager\\:\\:getRepository\\(\\)$#"
-            count: 1
-            path: ../module/Application/src/Mapper/BaseMapper.php
-        -
             message: "#^Comparison operation \"\\<\" between '1'\\|'10'\\|'11'\\|'12'\\|'13'\\|'14'\\|'15'\\|'16'\\|'17'\\|'18'\\|'19'\\|'2'\\|'20'\\|'21'\\|'22'\\|'23'\\|'24'\\|'25'\\|'26'\\|'27'\\|'28'\\|'29'\\|'3'\\|'30'\\|'31'\\|'4'\\|'5'\\|'6'\\|'7'\\|'8'\\|'9' and 1 is always false\\.$#"
             count: 1
             path: ../module/Decision/src/Model/AssociationYear.php
@@ -36,3 +32,6 @@ parameters:
         - '#Return type \(array\) of method [a-zA-Z0-9_]+\\Form\\[a-zA-Z0-9_]+\:\:getInputFilterSpecification\(\) should be compatible with return type \(\*NEVER\*\) of method Laminas\\InputFilter\\InputFilterProviderInterface\:\:getInputFilterSpecification\(\)$#'
         - '#Return type \(array\) of method [a-zA-Z0-9_]+\\Form\\Fieldset\\[a-zA-Z0-9_]+\:\:getInputFilterSpecification\(\) should be compatible with return type \(\*NEVER\*\) of method Laminas\\InputFilter\\InputFilterProviderInterface\:\:getInputFilterSpecification\(\)$#'
         - '#^Conditional return type uses subject type TAdapter of User\\Authentication\\Adapter\\CompanyUserAdapter\|User\\Authentication\\Adapter\\UserAdapter which is not part of PHPDoc \@template tags.$#'
+        - '#Method User\\Mapper\\ApiAppAuthentication\:\:getFirstAndLastAuthenticationPerApiApp\(\) should return array\<array\{0\: User\\Model\\ApiApp, firstAuthentication\: DateTime, lastAuthentication\: DateTime\}\> but returns array\<int, array\{0\: User\\Model\\ApiApp\|null, firstAuthentication\: string\|null, lastAuthentication\: string\|null\}\>.$#'
+        - '#Static method ApplicationTest\\BaseControllerTest\:\:initServiceManager\(\) is unused.$#'
+        - '#Method ApplicationTest\\BaseControllerTest\:\:bootstrapApplication\(\) is unused.$#'
