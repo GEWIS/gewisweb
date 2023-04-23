@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace User\Service;
 
 use Company\Mapper\Company as CompanyMapper;
@@ -154,7 +156,7 @@ class User
 
         // get the member
         $data = $form->getData();
-        $member = $this->memberMapper->findByLidnr($data['lidnr']);
+        $member = $this->memberMapper->findByLidnr(intval($data['lidnr']));
 
         if (null === $member) {
             $form->setError(RegisterForm::ERROR_MEMBER_NOT_EXISTS);

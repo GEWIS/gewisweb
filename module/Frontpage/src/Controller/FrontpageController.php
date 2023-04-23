@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Frontpage\Controller;
 
 use Frontpage\Service\Frontpage as FrontpageService;

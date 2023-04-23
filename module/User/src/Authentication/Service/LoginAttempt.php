@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace User\Authentication\Service;
 
 use Application\Model\IdentityInterface;

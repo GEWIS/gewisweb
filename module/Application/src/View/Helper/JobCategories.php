@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Application\View\Helper;
 
 use Company\Model\JobCategory as JobCategoryModel;

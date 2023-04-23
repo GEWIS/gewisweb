@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Frontpage\Controller;
 
 use Frontpage\Form\PollComment as PollCommentForm;
@@ -59,9 +61,9 @@ class PollController extends AbstractActionController
      */
     public function obtainPoll(): ?PollModel
     {
-        $pollId = $this->params()->fromRoute('poll_id');
+        $pollId = (int) $this->params()->fromRoute('poll_id');
 
-        if (is_null($pollId)) {
+        if (0 === $pollId) {
             return $this->pollService->getNewestPoll();
         }
 
@@ -98,7 +100,7 @@ class PollController extends AbstractActionController
             );
         }
 
-        $pollId = $this->params()->fromRoute('poll_id');
+        $pollId = (int) $this->params()->fromRoute('poll_id');
         $poll = $this->pollService->getPoll($pollId);
 
         if (null === $poll) {

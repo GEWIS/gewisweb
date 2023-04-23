@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Company\Service;
 
 use Application\Model\ApprovableText as ApprovableTextModel;
@@ -250,7 +252,7 @@ class Company
         $jobCategory->setName(new CompanyLocalisedText($data['nameEn'], $data['name']));
         $jobCategory->setPluralName(new CompanyLocalisedText($data['pluralNameEn'], $data['pluralName']));
         $jobCategory->setSlug(new CompanyLocalisedText($data['slugEn'], $data['slug']));
-        $jobCategory->setHidden($data['hidden']);
+        $jobCategory->setHidden(boolval($data['hidden']));
 
         $this->persistJobCategory($jobCategory);
 
@@ -268,7 +270,7 @@ class Company
         $jobCategory->getName()->updateValues($data['nameEn'], $data['name']);
         $jobCategory->getPluralName()->updateValues($data['pluralNameEn'], $data['pluralName']);
         $jobCategory->getSlug()->updateValues($data['slugEn'], $data['slug']);
-        $jobCategory->setHidden($data['hidden']);
+        $jobCategory->setHidden(boolval($data['hidden']));
 
         $this->persistJobCategory($jobCategory);
     }
@@ -324,7 +326,7 @@ class Company
         // Set attributes that are not L10n-able.
         $company->setName($data['name']);
         $company->setSlugName($data['slugName']);
-        $company->setPublished($data['published']);
+        $company->setPublished(boolval($data['published']));
 
         $company->setRepresentativeName($data['representativeName']);
         $company->setRepresentativeEmail($data['representativeEmail']);
@@ -601,7 +603,7 @@ class Company
         $job = new JobModel();
         $job->setSlugName($data['slugName']);
         $job->setCategory($category);
-        $job->setPublished($data['published']);
+        $job->setPublished(boolval($data['published']));
         $job->setContactName($data['contactName']);
         $job->setContactEmail($data['contactEmail']);
         $job->setContactPhone($data['contactPhone']);
@@ -674,7 +676,7 @@ class Company
 
             $job->setSlugName($data['slugName']);
             $job->setCategory($category);
-            $job->setPublished($data['published']);
+            $job->setPublished(boolval($data['published']));
             $job->setContactName($data['contactName']);
             $job->setContactEmail($data['contactEmail']);
             $job->setContactPhone($data['contactPhone']);

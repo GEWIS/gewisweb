@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Education\Service;
 
 use Application\Model\Enums\Languages;
@@ -156,7 +158,7 @@ class Exam
                     }
 
                     $document->setLanguage(Languages::from($documentData['language']));
-                    $document->setScanned($documentData['scanned']);
+                    $document->setScanned(boolval($documentData['scanned']));
                     $localFile = $temporaryEducationConfig['upload_' . $type . '_dir'] . '/' . $documentData['file'];
                     $document->setFilename($storage->storeFile($localFile));
 

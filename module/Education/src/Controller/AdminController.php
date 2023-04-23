@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Education\Controller;
 
 use Education\Service\{
@@ -197,7 +199,7 @@ class AdminController extends AbstractActionController
         $request = $this->getRequest();
 
         if ($request->getPost()) {
-            $documentId = $this->params()->fromRoute('document');
+            $documentId = (int) $this->params()->fromRoute('document');
 
             if (null !== ($document = $this->examService->getDocument($documentId))) {
                 $this->examService->deleteDocument($document);

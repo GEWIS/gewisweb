@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace User\Permissions\Resource;
 
 use Decision\Model\Member as MemberModel;

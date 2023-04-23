@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Company\Model;
 
 use Application\Model\Traits\IdentifiableTrait;
@@ -237,6 +239,6 @@ abstract class CompanyPackage
         $this->setExpirationDate(
             (isset($data['expirationDate'])) ? new DateTime($data['expirationDate']) : $this->getExpirationDate()
         );
-        $this->setPublished((isset($data['published'])) ? $data['published'] : $this->isPublished());
+        $this->setPublished((isset($data['published'])) ? boolval($data['published']) : $this->isPublished());
     }
 }

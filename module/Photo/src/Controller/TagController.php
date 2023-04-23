@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Photo\Controller;
 
 use Laminas\Http\Request;
@@ -32,8 +34,8 @@ class TagController extends AbstractActionController
         $result = [];
 
         if ($request->isPost()) {
-            $photoId = $this->params()->fromRoute('photo_id');
-            $lidnr = $this->params()->fromRoute('lidnr');
+            $photoId = (int) $this->params()->fromRoute('photo_id');
+            $lidnr = (int) $this->params()->fromRoute('lidnr');
             $tag = $this->photoService->addTag($photoId, $lidnr);
 
             if (null === $tag) {
@@ -58,8 +60,8 @@ class TagController extends AbstractActionController
         $result = [];
 
         if ($request->isPost()) {
-            $photoId = $this->params()->fromRoute('photo_id');
-            $lidnr = $this->params()->fromRoute('lidnr');
+            $photoId = (int) $this->params()->fromRoute('photo_id');
+            $lidnr = (int) $this->params()->fromRoute('lidnr');
             $result['success'] = $this->photoService->removeTag($photoId, $lidnr);
         }
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace User\Model\Enums;
 
 use Decision\Model\Member as MemberModel;

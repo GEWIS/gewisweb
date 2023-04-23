@@ -8,10 +8,16 @@
 
     <arg name="parallel" value="8"/>
     <arg name="extensions" value="php,dist"/>
-
     <arg name="error-severity" value="1"/>
     <arg name="warning-severity" value="1"/>
+
     <rule ref="PSR1"/>
     <rule ref="PSR12"/>
     <rule ref="./phpcs"/>
+
+    <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes">
+        <properties>
+            <property name="spacesCountAroundEqualsSign" type="int" value="0" />
+        </properties>
+    </rule>
 </ruleset>

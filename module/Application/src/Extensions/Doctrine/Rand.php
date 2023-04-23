@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Application\Extensions\Doctrine;
 
 use Doctrine\ORM\Query\AST\Functions\FunctionNode;

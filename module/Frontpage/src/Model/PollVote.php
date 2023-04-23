@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Frontpage\Model;
 
 use Decision\Model\Member as MemberModel;

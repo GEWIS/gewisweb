@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Photo\Controller;
 
 use Laminas\Http\Request;
@@ -28,7 +30,7 @@ class PhotoAdminController extends AbstractActionController
      */
     public function indexAction(): ViewModel
     {
-        $photoId = $this->params()->fromRoute('photo_id');
+        $photoId = (int) $this->params()->fromRoute('photo_id');
         $data = $this->photoService->getPhotoData($photoId);
 
         if (is_null($data)) {
@@ -55,8 +57,8 @@ class PhotoAdminController extends AbstractActionController
         $result = [];
 
         if ($request->isPost()) {
-            $photoId = $this->params()->fromRoute('photo_id');
-            $albumId = $request->getPost()['album_id'];
+            $photoId = (int) $this->params()->fromRoute('photo_id');
+            $albumId = intval($request->getPost()['album_id']);
             $result['success'] = $this->albumService->movePhoto($photoId, $albumId);
         }
 
@@ -73,7 +75,7 @@ class PhotoAdminController extends AbstractActionController
 
         $result = [];
         if ($request->isPost()) {
-            $photoId = $this->params()->fromRoute('photo_id');
+            $photoId = (int) $this->params()->fromRoute('photo_id');
             $result['success'] = $this->photoService->deletePhoto($photoId);
         }
 

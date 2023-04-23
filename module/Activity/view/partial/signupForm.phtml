@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Activity\Form\Signup as SignupForm;
 use Activity\Model\SignupList as SignupListModel;
 use Application\View\HelperTrait;
@@ -72,7 +74,7 @@ echo $this->form()->openTag($form);
 
 <?php foreach ($signupList->getFields() as $field): ?>
     <?= formElementRender(
-        $form->get($field->getId()),
+        $form->get(strval($field->getId())),
         $this->escapeHtml($this->localiseText($field->getName())),
         $field->getId(),
         $this,

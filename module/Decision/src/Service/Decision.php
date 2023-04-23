@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Decision\Service;
 
 use DateTime;
@@ -436,7 +438,7 @@ class Decision
     public function createAuthorization(array $data): ?AuthorizationModel
     {
         $authorizer = $this->aclService->getUserIdentityOrThrowException()->getMember();
-        $recipient = $this->memberMapper->findByLidnr($data['recipient']);
+        $recipient = $this->memberMapper->findByLidnr(intval($data['recipient']));
 
         if (
             null === $recipient

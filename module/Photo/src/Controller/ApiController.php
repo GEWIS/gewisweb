@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Photo\Controller;
 
 use Laminas\Mvc\Controller\AbstractActionController;
@@ -30,9 +32,10 @@ class ApiController extends AbstractActionController
      */
     public function listAction(): JsonModel|ViewModel
     {
-        $albumId = $this->params()->fromRoute('album_id');
+        $albumId = (int) $this->params()->fromRoute('album_id');
         $album = $this->plugin('AlbumPlugin')->getAlbumAsArray($albumId);
-        if (is_null($albumId)) {
+
+        if (null === $album) {
             return $this->notFoundAction();
         }
 
@@ -48,7 +51,7 @@ class ApiController extends AbstractActionController
             throw new NotAllowedException($this->translator->translate('Not allowed to view photo details'));
         }
 
-        $photoId = $this->params()->fromRoute('photo_id');
+        $photoId = (int) $this->params()->fromRoute('photo_id');
 
         return new JsonModel([
             'tags' => $this->tagMapper->getTagsByPhoto($photoId),

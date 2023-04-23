@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Frontpage\Controller;
 
 use Frontpage\Service\{
@@ -90,7 +92,7 @@ class NewsAdminController extends AbstractActionController
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit news items'));
         }
 
-        $newsItemId = $this->params()->fromRoute('item_id');
+        $newsItemId = (int) $this->params()->fromRoute('item_id');
         $newsItem = $this->newsService->getNewsItemById($newsItemId);
 
         if (null === $newsItem) {
@@ -135,7 +137,7 @@ class NewsAdminController extends AbstractActionController
             throw new NotAllowedException($this->translator->translate('You are not allowed to delete news items'));
         }
 
-        $newsItemId = $this->params()->fromRoute('item_id');
+        $newsItemId = (int) $this->params()->fromRoute('item_id');
         $newsItem = $this->newsService->getNewsItemById($newsItemId);
 
         if (null === $newsItem) {

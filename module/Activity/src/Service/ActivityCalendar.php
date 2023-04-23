@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Activity\Service;
 
 use Activity\Form\{
@@ -101,7 +103,7 @@ class ActivityCalendar
     {
         $proposal = new ProposalModel();
 
-        $organ = $data['organ'];
+        $organ = intval($data['organ']);
         if (!$this->calendarFormService->canOrganCreateProposal($organ)) {
             return false;
         }

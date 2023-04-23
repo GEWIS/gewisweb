@@ -243,6 +243,8 @@
       <path value="$PROJECT_DIR$/docker/glide/vendor/league/mime-type-detection" />
       <path value="$PROJECT_DIR$/docker/glide/vendor/league/glide" />
       <path value="$PROJECT_DIR$/docker/glide/vendor/league/flysystem" />
+      <path value="$PROJECT_DIR$/vendor/slevomat/coding-standard" />
+      <path value="$PROJECT_DIR$/vendor/dealerdirect/phpcodesniffer-composer-installer" />
     </include_path>
   </component>
   <component name="PhpInterpreters">

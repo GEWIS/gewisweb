@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Application\Form;
 
 use Laminas\Form\Element\Checkbox;

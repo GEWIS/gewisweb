@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Company\Mapper;
 
 use Application\Mapper\BaseMapper;
 use Company\Model\Proposals\JobUpdate as JobUpdateModel;
-
 
 /**
  * Mappers for job update proposals.

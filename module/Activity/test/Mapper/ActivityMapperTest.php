@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ActivityTest\Mapper;
 
 use Activity\Mapper\Activity as ActivityMapper;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Photo\Service;
 
 use Application\Service\FileStorage as FileStorageService;
@@ -217,12 +219,12 @@ class AlbumCover
     ): Imagick {
         $imageHeight = $image->getImageGeometry()['height'];
         $imageWidth = $image->getImageGeometry()['width'];
-        $resizeWidth = max($width, floor($imageWidth * $height / $imageHeight));
-        $resizeHeight = max($height, floor($imageHeight * $width / $imageWidth));
+        $resizeWidth = max($width, (int) floor($imageWidth * $height / $imageHeight));
+        $resizeHeight = max($height, (int) floor($imageHeight * $width / $imageWidth));
         $image->resizeImage($resizeWidth, $resizeHeight, Imagick::FILTER_LANCZOS, 1);
         $cropX = 0;
         if ($width < $resizeWidth) {
-            $cropX = floor(($resizeWidth - $width) / 2);
+            $cropX = (int) floor(($resizeWidth - $width) / 2);
         }
         $image->cropImage($width, $height, $cropX, 0);
 

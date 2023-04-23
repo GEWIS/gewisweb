@@ -12,6 +12,8 @@
  * credentials from accidentally being committed into version control.
  */
 
+declare(strict_types=1);
+
 return [
     /**
      * Proxy configuration, used when determining user roles.

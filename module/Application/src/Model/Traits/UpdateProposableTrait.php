@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Application\Model\Traits;
 
 use Doctrine\ORM\Mapping\Column;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Application\View\HelperTrait;
 use Frontpage\Form\PollApproval as PollApprovalForm;
 use Frontpage\Model\Poll as PollModel;
@@ -7,7 +9,7 @@ use Laminas\View\Renderer\PhpRenderer;
 
 /**
  * @var PhpRenderer|HelperTrait $this
- * @var PollApprovalForm $form
+ * @var PollApprovalForm $approvalForm
  * @var Laminas\Paginator\Paginator $paginator;
  * @var PollModel[] $unapprovedPolls
  */
@@ -203,16 +205,16 @@ $this->breadcrumbs()
                 <div class="options">
                 </div>
                 <?php
-                $form->prepare();
+                $approvalForm->prepare();
 
-                $form->setAttribute('method', 'post');
-                $form->setAttribute('id', 'approvalForm');
-                $form->setAttribute('role', 'form');
+                $approvalForm->setAttribute('method', 'post');
+                $approvalForm->setAttribute('id', 'approvalForm');
+                $approvalForm->setAttribute('role', 'form');
                 ?>
-                <?= $this->form()->openTag($form); ?>
+                <?= $this->form()->openTag($approvalForm); ?>
                 <div class="form-group">
                     <?php
-                    $element = $form->get('expiryDate');
+                    $element = $approvalForm->get('expiryDate');
                     ?>
                     <?= $this->formLabel($element); ?>
                     <?= $this->formDate($element); ?>
@@ -221,7 +223,7 @@ $this->breadcrumbs()
             </div>
             <div class="modal-footer">
                 <?php
-                $submit = $form->get('submit');
+                $submit = $approvalForm->get('submit');
                 $submit->setLabel($this->translate('Approve poll'));
                 $submit->setAttribute('class', 'btn btn-success');
                 ?>

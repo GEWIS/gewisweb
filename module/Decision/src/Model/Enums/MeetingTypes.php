@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Decision\Model\Enums;
 
 use Laminas\Mvc\I18n\Translator;

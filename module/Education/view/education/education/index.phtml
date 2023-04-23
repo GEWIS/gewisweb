@@ -1,11 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 use Application\View\HelperTrait;
 use Education\Form\SearchCourse as SearchCourseForm;
+use Education\Model\Course as CourseModel;
 use Laminas\View\Renderer\PhpRenderer;
 
 /**
  * @var PhpRenderer|HelperTrait $this
+ * @var CourseModel[]|null $courses
  * @var SearchCourseForm $form
  */
 
@@ -126,7 +130,7 @@ $this->headTitle($this->translate('Education'));
                     <li><a href="https://www.tsvjapie.nl/education/archive" target="_blank">Jan Pieter Minckelers</a>
                         (<?= $this->translate("Chemical Engineering") ?>)
                     </li>
-                    <li><a href="http://intermate.nl/education/exams-summarries/" target="_blank">Intermate</a>
+                    <li><a href="https://intermate.nl/education/exams-summarries/" target="_blank">Intermate</a>
                         (<?= $this->translate("Innovation Sciences") ?>)
                     </li>
                 </ul>

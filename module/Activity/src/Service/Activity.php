@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Activity\Service;
 
 use Activity\Form\Activity as ActivityForm;
@@ -171,8 +173,8 @@ class Activity
         $activity->setCosts(new ActivityLocalisedText($data['costsEn'], $data['costs']));
         $activity->setDescription(new ActivityLocalisedText($data['descriptionEn'], $data['description']));
 
-        $activity->setIsMyFuture($data['isMyFuture']);
-        $activity->setRequireGEFLITST($data['requireGEFLITST']);
+        $activity->setIsMyFuture(boolval($data['isMyFuture']));
+        $activity->setRequireGEFLITST(boolval($data['requireGEFLITST']));
 
         // Not user provided input
         $activity->setCreator($user);
@@ -237,9 +239,9 @@ class Activity
         $signupList->setOpenDate(new DateTime($data['openDate']));
         $signupList->setCloseDate(new DateTime($data['closeDate']));
 
-        $signupList->setOnlyGEWIS($data['onlyGEWIS']);
-        $signupList->setDisplaySubscribedNumber($data['displaySubscribedNumber']);
-        $signupList->setLimitedCapacity($data['limitedCapacity']);
+        $signupList->setOnlyGEWIS(boolval($data['onlyGEWIS']));
+        $signupList->setDisplaySubscribedNumber(boolval($data['displaySubscribedNumber']));
+        $signupList->setLimitedCapacity(boolval($data['limitedCapacity']));
 
         if (isset($data['fields'])) {
             $em = $this->entityManager;
@@ -272,11 +274,11 @@ class Activity
 
         $field->setSignupList($signupList);
         $field->setName(new ActivityLocalisedText($data['nameEn'], $data['name']));
-        $field->setType($data['type']);
+        $field->setType(intval($data['type']));
 
         if ('2' === $data['type']) {
-            $field->setMinimumValue($data['minimumValue']);
-            $field->setMaximumValue($data['maximumValue']);
+            $field->setMinimumValue(intval($data['minimumValue']));
+            $field->setMaximumValue(intval($data['maximumValue']));
         }
 
         if ('3' === $data['type']) {

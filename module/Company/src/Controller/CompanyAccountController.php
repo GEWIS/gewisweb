@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Company\Controller;
 
 use Application\Model\Enums\ApprovableStatus;
@@ -123,7 +125,7 @@ class CompanyAccountController extends AbstractActionController
         }
 
         // Get the specified package and company user (through ACL, as it is already included).
-        $packageId = $this->params()->fromRoute('packageId');
+        $packageId = (int) $this->params()->fromRoute('packageId');
         /** @var CompanyJobPackageModel|null $package */
         $package = $this->jobPackageMapper->find($packageId);
         $companySlugName = $this->aclService->getCompanyUserIdentityOrThrowException()->getCompany()->getSlugName();
@@ -364,7 +366,7 @@ class CompanyAccountController extends AbstractActionController
         }
 
         // Get the specified package and company user (through ACL, as it is already included).
-        $packageId = $this->params()->fromRoute('packageId');
+        $packageId = (int) $this->params()->fromRoute('packageId');
         /** @var CompanyJobPackageModel|null $package */
         $package = $this->jobPackageMapper->find($packageId);
         $company = $this->aclService->getCompanyUserIdentityOrThrowException()->getCompany();

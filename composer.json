@@ -96,7 +96,8 @@
         "weirdan/doctrine-psalm-plugin": "^2.6.0",
         "psalm/plugin-phpunit": "^0.18.0",
         "maglnet/composer-require-checker": "^4.3.0",
-        "icanhazstring/composer-unused": "^0.8.2"
+        "icanhazstring/composer-unused": "^0.8.2",
+        "slevomat/coding-standard": "^8.9"
     },
     "replace": {
         "laminas/laminas-cache-storage-adapter-apc": "*",
@@ -125,7 +126,8 @@
             "cweagans/composer-patches": true,
             "laminas/laminas-component-installer": true,
             "phpstan/extension-installer": true,
-            "icanhazstring/composer-unused": true
+            "icanhazstring/composer-unused": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
         },
         "discard-changes" : true
     },

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace User\Controller\Factory;
 
 use Laminas\Mvc\I18n\Translator as MvcTranslator;

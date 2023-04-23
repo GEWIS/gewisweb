@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Photo\Controller;
 
 use Laminas\Http\{
@@ -85,7 +87,7 @@ class PhotoController extends AbstractActionController
             throw new NotAllowedException($this->translator->translate('Not allowed to download photos'));
         }
 
-        $photoId = $this->params()->fromRoute('photo_id');
+        $photoId = (int) $this->params()->fromRoute('photo_id');
 
         return $this->photoService->getPhotoDownload($photoId);
     }
@@ -118,7 +120,7 @@ class PhotoController extends AbstractActionController
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-            $photoId = $this->params()->fromRoute('photo_id');
+            $photoId = (int) $this->params()->fromRoute('photo_id');
             $this->photoService->setProfilePhoto($photoId);
 
             return new JsonModel(['success' => true]);
@@ -132,7 +134,7 @@ class PhotoController extends AbstractActionController
      */
     public function removeProfilePhotoAction(): Response
     {
-        $photoId = $this->params()->fromRoute('photo_id');
+        $photoId = (int) $this->params()->fromRoute('photo_id');
         $this->photoService->removeProfilePhoto();
 
         if (null != $photoId) {
@@ -162,7 +164,7 @@ class PhotoController extends AbstractActionController
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-            $photoId = $this->params()->fromRoute('photo_id');
+            $photoId = (int) $this->params()->fromRoute('photo_id');
             $this->photoService->countVote($photoId);
 
             return new JsonModel(['success' => true]);

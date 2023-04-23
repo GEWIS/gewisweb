@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Decision\Controller;
 
 use Decision\Service\Organ as OrganService;
@@ -29,7 +31,7 @@ class OrganController extends AbstractActionController
      */
     public function showAction(): ViewModel
     {
-        $organId = $this->params()->fromRoute('organ');
+        $organId = (int) $this->params()->fromRoute('organ');
         $organ = $this->organService->getOrgan($organId);
 
         if (null === $organ) {

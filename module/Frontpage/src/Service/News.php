@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Frontpage\Service;
 
 use DateTime;
@@ -93,7 +95,7 @@ class News
         $newsItem->setEnglishTitle($data['englishTitle']);
         $newsItem->setDutchContent($data['dutchContent']);
         $newsItem->setDutchTitle($data['dutchTitle']);
-        $newsItem->setPinned($data['pinned']);
+        $newsItem->setPinned(boolval($data['pinned']));
 
         $this->newsItemMapper->persist($newsItem);
 

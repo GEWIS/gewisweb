@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Company\Mapper;
 
 use Company\Model\CompanyFeaturedPackage as CompanyFeaturedPackageModel;

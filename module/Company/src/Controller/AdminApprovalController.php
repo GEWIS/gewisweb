@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Company\Controller;
 
 use Application\Form\ModifyRequest as RequestForm;
