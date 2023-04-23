@@ -2,8 +2,11 @@
 
 declare(strict_types=1);
 
-use Decision\Model\BoardMember;
-use Decision\Model\Member;
+use Decision\Model\{
+    AssociationYear,
+    BoardMember,
+    Member,
+};
 use Laminas\I18n\View\HelperTrait;
 use Laminas\View\Renderer\PhpRenderer;
 use Photo\Model\ProfilePhoto as ProfilePhotoModel;
@@ -18,17 +21,6 @@ use Photo\Model\ProfilePhoto as ProfilePhotoModel;
 // set title
 $this->headTitle($this->escapeHtml($member->getFullName()));
 $this->headTitle($this->translate('Members'));
-
-function getStartAssociationYear(DateTime $installDate): int
-{
-    $year = $installDate->format('Y');
-
-    if ($installDate->format('m') < 7) {
-        $year -= 1;
-    }
-
-    return $year;
-}
 ?>
 <section class="section">
     <div class="container">
@@ -72,19 +64,10 @@ function getStartAssociationYear(DateTime $installDate): int
                 /* @var BoardMember[] $boardInstalls */
                 $boardInstalls = array_reverse($member->getBoardInstallations()->toArray());
                 if (!empty($boardInstalls)):
-                    $start = new DateTime();
-                    $start->setTime(0, 0);
-                    $end = clone $start;
-
-                    if ($start->format('m') >= 7) {;
-                        $start->setDate((int) $start->format('Y'), 7, 1);
-                        $end->setDate((int) $end->format('Y') + 1, 7, 1);
-                    } else {
-                        $start->setDate((int) $start->format('Y') - 1, 7, 1);
-                        $end->setDate((int) $end->format('Y'), 7, 1);
-                    }
-
                     $now = new DateTime('now');
+                    $associationYear = AssociationYear::fromDate($now);
+                    $start = $associationYear->getStartDate();
+                    $end = $associationYear->getEndDate();
                 ?>
                     <h3><?= $this->translate('Board') ?></h3>
                     <ul class="list-unstyled">
@@ -115,7 +98,7 @@ function getStartAssociationYear(DateTime $installDate): int
                                     ) ?>
                                 </li>
                             <?php else: ?>
-                                <?php $startAssociationYear = getStartAssociationYear($installDate); ?>
+                                <?php $startAssociationYear = AssociationYear::fromDate($installDate)->getYear(); ?>
                                 <li>
                                     <?= sprintf(
                                         // phpcs:ignore -- user-visible strings should not be split
