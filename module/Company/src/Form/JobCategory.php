@@ -9,6 +9,7 @@ use Company\Model\CompanyLocalisedText as CompanyLocalisedTextModel;
 use Doctrine\ORM\NonUniqueResultException;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Filter\{
+    StringToLower,
     StringTrim,
     StripTags,
 };
@@ -214,6 +215,9 @@ class JobCategory extends Form implements InputFilterProviderInterface
                     [
                         'name' => StringTrim::class,
                     ],
+                    [
+                        'name' => StringToLower::class,
+                    ],
                 ],
             ];
         }
@@ -245,7 +249,10 @@ class JobCategory extends Form implements InputFilterProviderInterface
         array $context,
         string $languageSuffix,
     ): bool {
-        if ($this->{'currentSlug' . $languageSuffix} === $value) {
+        if (
+            null !== $this->{'currentSlug' . $languageSuffix}
+            && mb_strtolower($this->{'currentSlug' . $languageSuffix}) === mb_strtolower($value)
+        ) {
             return true;
         }
 

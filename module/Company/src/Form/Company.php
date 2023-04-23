@@ -7,6 +7,7 @@ namespace Company\Form;
 use Application\Form\Localisable as LocalisableForm;
 use Company\Mapper\Company as CompanyMapper;
 use Laminas\Filter\{
+    StringToLower,
     StringTrim,
     StripTags,
     ToNull,
@@ -272,6 +273,11 @@ class Company extends LocalisableForm implements InputFilterProviderInterface
                                 Regex::ERROROUS => $this->getTranslator()->translate('This slug contains invalid characters'),
                             ],
                         ],
+                    ],
+                ],
+                'filters' => [
+                    [
+                        'name' => StringToLower::class,
                     ],
                 ],
             ],
