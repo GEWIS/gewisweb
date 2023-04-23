@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Decision\Controller;
 
 use Decision\Controller\FileBrowser\FileReader;
@@ -43,7 +45,7 @@ class DecisionController extends AbstractActionController
     public function minutesAction(): ViewModel|Stream
     {
         $type = MeetingTypes::from($this->params()->fromRoute('type'));
-        $number = $this->params()->fromRoute('number');
+        $number = (int) $this->params()->fromRoute('number');
 
         $meeting = $this->decisionService->getMeeting($type, $number);
         if (null !== $meeting) {
@@ -59,7 +61,7 @@ class DecisionController extends AbstractActionController
 
     public function documentAction(): ViewModel|Stream
     {
-        $id = $this->params()->fromRoute('id');
+        $id = (int) $this->params()->fromRoute('id');
 
         $meetingDocument = $this->decisionService->getMeetingDocument($id);
         if (null !== $meetingDocument) {
@@ -79,7 +81,7 @@ class DecisionController extends AbstractActionController
     public function viewAction(): ViewModel
     {
         $type = MeetingTypes::from($this->params()->fromRoute('type'));
-        $number = $this->params()->fromRoute('number');
+        $number = (int) $this->params()->fromRoute('number');
 
         $meeting = $this->decisionService->getMeeting($type, $number);
         if (null === $meeting) {

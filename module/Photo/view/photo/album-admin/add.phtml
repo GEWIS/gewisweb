@@ -1,4 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+use Photo\Model\Album as AlbumModel;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var AlbumModel $album
+ */
+
 $this->inlineScript()
     ->appendFile(
         $this->basePath() . '/js/dropzone-min.js',

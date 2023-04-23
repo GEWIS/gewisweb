@@ -1,6 +1,22 @@
 <?php
 
-use Decision\Model\Enums\OrganTypes;
+declare(strict_types=1);
+
+use Activity\Model\Activity;
+use Application\View\HelperTrait;
+use Decision\Model\{
+    Enums\OrganTypes,
+    Member as MemberModel,
+    Organ as OrganModel,
+};
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var Activity[] $activities
+ * @var array<array-key, array{member: MemberModel, functions: array<array-key, string>}> $activeMembers
+ * @var OrganModel $organ
+ */
 
 // set title
 $this->headTitle($organ->getName());
@@ -110,7 +126,7 @@ function getOrganDescription($organInformation, $lang)
                             <a class="list-group-item"
                                href="<?= $this->url('activity/view', ['id' => $activity->getId()]) ?>">
 
-                                <h4 class="list-group-item-heading"><?= $this->escapeHtml($activity->getName()->getText($lang)) ?></h4>
+                                <h4 class="list-group-item-heading"><?= $this->localiseText($activity->getName()) ?></h4>
                                 <p class="list-group-item-text text-muted"><?= ucfirst($this->dateFormat($activity->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT)); ?></p>
                             </a>
                         <?php endforeach; ?>

@@ -1,7 +1,11 @@
 <?php
-// set title
+
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
 use Decision\Model\AssociationYear;
 use Laminas\Permissions\Acl\Acl;
+use Laminas\View\Renderer\PhpRenderer;
 use Photo\Model\{
     MemberAlbum,
     VirtualAlbum,
@@ -9,7 +13,12 @@ use Photo\Model\{
 };
 use User\Permissions\Assertion\IsAfterMembershipEndedAndNotTagged;
 
-/** @var MemberAlbum|VirtualAlbum|WeeklyAlbum $album */
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var MemberAlbum|VirtualAlbum|WeeklyAlbum $album
+ * @var array $config
+ * @var bool $hasRecentVote
+ */
 
 $this->headTitle($album->getName());
 $currentAlbum = $album;

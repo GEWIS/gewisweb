@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Activity\Form;
 
 use Activity\Model\SignupField as SignupFieldModel;

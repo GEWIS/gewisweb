@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Activity\Mapper;
 
 use Activity\Model\{
@@ -10,13 +12,16 @@ use Application\Mapper\BaseMapper;
 use DateTime;
 use Exception;
 
+/**
+ * @template-extends BaseMapper<ActivityCalendarOptionModel>
+ */
 class ActivityCalendarOption extends BaseMapper
 {
     /**
      * Gets all options created by the given organs.
      *
      * @param array $organs
-     * @return array
+     * @return array<array-key, ActivityCalendarOptionModel>
      */
     public function getUpcomingOptionsByOrgans(array $organs): array
     {
@@ -38,7 +43,7 @@ class ActivityCalendarOption extends BaseMapper
      *
      * @param bool $withDeleted whether to include deleted results
      *
-     * @return array
+     * @return array<array-key, ActivityCalendarOptionModel>
      *
      * @throws Exception
      */
@@ -62,7 +67,7 @@ class ActivityCalendarOption extends BaseMapper
      *
      * @param DateTime $before the date to get the options before
      *
-     * @return array
+     * @return array<array-key, ActivityCalendarOptionModel>
      */
     public function getOverdueOptions(DateTime $before): array
     {
@@ -83,7 +88,7 @@ class ActivityCalendarOption extends BaseMapper
      * Retrieves options associated with a proposal.
      *
      * @param ActivityOptionProposalModel $proposal
-     * @return array
+     * @return array<array-key, ActivityCalendarOptionModel>
      */
     public function findOptionsByProposal(ActivityOptionProposalModel $proposal): array
     {

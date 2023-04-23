@@ -1,4 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+use User\Model\ApiUser as ApiUserModel;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var ApiUserModel $apiUser
+ */
+
 $this->breadcrumbs()
     ->addBreadcrumb($this->translate('API Tokens'), true, $this->url('user_admin/api'))
     ->addBreadcrumb($this->translate('Add Token'));

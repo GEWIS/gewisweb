@@ -1,4 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+use User\Model\ApiUser as ApiUserModel;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var ApiUserModel[] $tokens
+ */
+
 $this->breadcrumbs()
     ->addBreadcrumb($this->translate('API Tokens'));
 ?>
@@ -16,7 +28,7 @@ $this->breadcrumbs()
     <?php foreach ($tokens as $token): ?>
         <tr>
             <td><?= $token->getId() ?></td>
-            <td><?= $token->getName() ?></td>
+            <td><?= $this->escapeHtml($token->getName()) ?></td>
             <td><?= $token->getToken() ?></td>
             <td><a class="btn btn-xs btn-danger" href="<?= $this->url('user_admin/api/remove', [
                     'id' => $token->getId()

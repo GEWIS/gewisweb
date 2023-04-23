@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     // This should be an array of module namespaces used in the application.
     'modules' => [

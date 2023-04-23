@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Activity\Mapper;
 
 use Activity\Model\{
@@ -10,6 +12,9 @@ use Activity\Model\{
 use Application\Mapper\BaseMapper;
 use User\Model\User as UserModel;
 
+/**
+ * @template-extends BaseMapper<UserSignupModel>
+ */
 class Signup extends BaseMapper
 {
     /**
@@ -58,21 +63,15 @@ class Signup extends BaseMapper
         return $this->getEntityManager()->getRepository(ExternalSignupModel::class)->find($signupId);
     }
 
-    /**
-     * @param SignupListModel $signupList
-     *
-     * @return array
-     */
-    public function getNumberOfSignedUpMembers(SignupListModel $signupList): array
+    public function getNumberOfSignedUpMembers(SignupListModel $signupList): int
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('COUNT(s)')
             ->from($this->getRepositoryName(), 's')
             ->where('s.signupList = :signupList')
             ->setParameter('signupList', $signupList);
-        $result = $qb->getQuery()->getResult();
 
-        return $result[0];
+        return $qb->getQuery()->getSingleScalarResult();
     }
 
     /**

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Activity\Mapper;
 
 use Activity\Model\Activity as ActivityModel;
@@ -12,6 +14,9 @@ use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
 use User\Model\User as UserModel;
 
+/**
+ * @template-extends BaseMapper<ActivityModel>
+ */
 class Activity extends BaseMapper
 {
     /**
@@ -21,7 +26,7 @@ class Activity extends BaseMapper
      * @param OrganModel|null $organ option organ by whom the activities are organized
      * @param string|null $category
      *
-     * @return array
+     * @return array<array-key, ActivityModel>
      */
     public function getUpcomingActivities(
         int $count = null,
@@ -57,7 +62,7 @@ class Activity extends BaseMapper
      *
      * @param UserModel $user Option user that should relate to activity
      *
-     * @return array
+     * @return array<array-key, ActivityModel>
      */
     public function getUpcomingActivitiesForMember(UserModel $user): array
     {
@@ -105,7 +110,7 @@ class Activity extends BaseMapper
      *
      * @param UserModel $user Option user that should relate to activity
      *
-     * @return array
+     * @return array<array-key, ActivityModel>
      */
     public function getUpcomingActivitiesSubscribedBy(UserModel $user): array
     {
@@ -129,7 +134,7 @@ class Activity extends BaseMapper
      *
      * @param UserModel $user Option user that should relate to activity
      *
-     * @return array
+     * @return array<array-key, ActivityModel>
      */
     public function getUpcomingActivitiesCreatedBy(UserModel $user): array
     {
@@ -143,11 +148,11 @@ class Activity extends BaseMapper
     }
 
     /**
-     * Get upcoming activities sorted by date that a organ created.
+     * Get upcoming activities sorted by date that an organ created.
      *
      * @param OrganModel $organ Option organ that should relate to activity
      *
-     * @return array
+     * @return array<array-key, ActivityModel>
      */
     public function getUpcomingActivitiesByOrgan(OrganModel $organ): array
     {
@@ -167,7 +172,7 @@ class Activity extends BaseMapper
      * @param UserModel|null $user
      * @param int|null $status An optional filter for activity status
      *
-     * @return array
+     * @return array<array-key, ActivityModel>
      */
     public function getAllUpcomingActivities(
         ?array $organs = null,
@@ -278,7 +283,7 @@ class Activity extends BaseMapper
      * @param DateTime $start
      * @param DateTime $end
      *
-     * @return array
+     * @return array<array-key, ActivityModel>
      */
     public function getArchivedActivitiesInRange(
         DateTime $start,

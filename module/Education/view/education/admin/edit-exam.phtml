@@ -1,4 +1,17 @@
 <?php
+
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Education\Form\Bulk as BulkForm;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var array $config
+ * @var BulkForm $form
+ */
+
 $this->inlineScript()
     ->appendFile(
         $this->basePath() . '/js/education-admin.js',

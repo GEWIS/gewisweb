@@ -1,4 +1,21 @@
 <?php
+
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Company\Model\{
+    Company as CompanyModel,
+    CompanyFeaturedPackage as CompanyFeaturedPackageModel,
+};
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var CompanyModel[] $companyList
+ * @var CompanyFeaturedPackageModel|null $featuredPackage
+ * @var CompanyModel $featuredCompany
+ */
+
 $escaper = new Laminas\Escaper\Escaper('utf-8');
 
 $this->headTitle($this->translate('Companies'));

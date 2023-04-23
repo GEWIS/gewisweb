@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Company\Controller;
 
 use Application\Form\ModifyRequest as RequestForm;
@@ -12,7 +14,10 @@ use Company\Service\{
     Company as CompanyService,
 };
 use Application\Model\Enums\ApprovableStatus;
-use Laminas\Http\Response;
+use Laminas\Http\{
+    Request,
+    Response,
+};
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
@@ -109,6 +114,7 @@ class AdminApprovalController extends AbstractActionController
             );
         }
 
+        /** @var Request $request */
         $request = $this->getRequest();
         if (!$request->isPost()) {
             return $this->notFoundAction();
@@ -194,6 +200,8 @@ class AdminApprovalController extends AbstractActionController
                 $this->translator->translate('You are not allowed to approve update proposals of jobs')
             );
         }
+
+        /** @var Request $request */
         $request = $this->getRequest();
         if (!$request->isPost()) {
             return $this->notFoundAction();

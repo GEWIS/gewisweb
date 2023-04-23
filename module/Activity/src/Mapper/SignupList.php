@@ -1,10 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Activity\Mapper;
 
 use Activity\Model\SignupList as SignupListModel;
 use Application\Mapper\BaseMapper;
 
+/**
+ * @template-extends BaseMapper<SignupListModel>
+ */
 class SignupList extends BaseMapper
 {
     /**

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'host'     => getenv('DOCKER_DB2_HOST'),
     'port'     => getenv('DOCKER_DB2_PORT'),

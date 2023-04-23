@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Activity;
 
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
@@ -89,6 +91,7 @@ class Module
                     $organService = $container->get('decision_service_organ');
                     $emailService = $container->get('application_service_email');
                     $calendarOptionMapper = $container->get('activity_mapper_calendar_option');
+                    $maxActivitiesMapper = $container->get('activity_mapper_max_activities');
                     $memberMapper = $container->get('decision_mapper_member');
                     $calendarPeriodForm = $container->get('activity_form_calendar_period');
                     $calendarPeriodMapper = $container->get('activity_mapper_period');
@@ -101,6 +104,7 @@ class Module
                         $organService,
                         $emailService,
                         $calendarOptionMapper,
+                        $maxActivitiesMapper,
                         $memberMapper,
                         $calendarPeriodForm,
                         $calendarPeriodMapper,

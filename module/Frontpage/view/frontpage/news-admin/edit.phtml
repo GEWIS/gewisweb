@@ -1,4 +1,18 @@
 <?php
+
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Frontpage\Form\NewsItem as NewsItemForm;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var bool $canDelete
+ * @var NewsItemForm $form
+ * @var int $newsItemId
+ */
+
 $lang = $this->plugin('translate')->getTranslator()->getLocale();
 
 $this->headScript()
@@ -26,7 +40,6 @@ $this->breadcrumbs()
     ->addBreadcrumb($this->translate('Edit'));
 ?>
 <?php
-$form = $this->form;
 $form->prepare();
 
 $form->setAttribute('method', 'post');

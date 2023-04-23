@@ -1,7 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
+use Activity\Model\Activity as ActivityModel;
 use Activity\Model\UserSignup;
-use Decision\Model\Member;
+use Application\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var ActivityModel $activity
+ */
 
 ?>
 <table class="table table-bordered" style="width: 100%" border="1">

@@ -1,4 +1,22 @@
 <?php
+
+declare(strict_types=1);
+
+use Activity\Model\ActivityCalendarOption as ActivityCalendarOptionModel;
+use Application\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var string $APIKey
+ * @var string $calendarKey
+ * @var bool $canApprove
+ * @var bool $canCreate
+ * @var ActivityCalendarOptionModel $editableOptions
+ * @var ActivityCalendarOptionModel $options
+ * @var bool $success
+ */
+
 $this->headScript()
     ->appendFile(
         $this->basePath() . '/js/fullcalendar.min.js',

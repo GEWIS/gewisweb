@@ -1,10 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace User\Mapper;
 
 use Application\Mapper\BaseMapper;
 use User\Model\CompanyUser as CompanyUserModel;
 
+/**
+ * @template-extends BaseMapper<CompanyUserModel>
+ */
 class CompanyUser extends BaseMapper
 {
     /**

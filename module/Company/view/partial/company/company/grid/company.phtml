@@ -1,4 +1,20 @@
 <?php
+
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Company\Model\{
+    Company as CompanyModel,
+    JobCategory as JobCategoryModel,
+};
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var CompanyModel $company
+ * @var JobCategoryModel[] $jobCategories
+ */
+
 $escaper = new Laminas\Escaper\Escaper('utf-8');
 
 // If multiple companies are on display, the title should redirect to the company page, else, it should redirect to the website
@@ -10,7 +26,7 @@ $companyURL = $this->url(
 );
 ?>
 <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
-    <div class="company-grid-item grid-item col-md-12" id="company-<?= $escaper->escapeHtmlAttr($company->getId()) ?>">
+    <div class="company-grid-item grid-item col-md-12" id="company-<?= $escaper->escapeHtmlAttr(strval($company->getId())) ?>">
         <div class="company-grid-content">
             <a href="<?= $companyURL ?>" class="company-grid-logo">
                 <img alt="<?= $this->translate('Logo of') ?> <?= $escaper->escapeHtmlAttr($company->getName()) ?>"

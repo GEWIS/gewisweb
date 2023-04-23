@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Education\Service;
 
 use Application\Model\Enums\Languages;
@@ -156,7 +158,7 @@ class Exam
                     }
 
                     $document->setLanguage(Languages::from($documentData['language']));
-                    $document->setScanned($documentData['scanned']);
+                    $document->setScanned(boolval($documentData['scanned']));
                     $localFile = $temporaryEducationConfig['upload_' . $type . '_dir'] . '/' . $documentData['file'];
                     $document->setFilename($storage->storeFile($localFile));
 
@@ -540,7 +542,7 @@ class Exam
     /**
      * Get a specific course document.
      */
-    public function getDocument(int $id): ExamModel|SummaryModel|null
+    public function getDocument(int $id): CourseDocumentModel|null
     {
         return $this->courseDocumentMapper->find($id);
     }
@@ -548,7 +550,7 @@ class Exam
     /**
      * Delete a course document
      */
-    public function deleteDocument(ExamModel|SummaryModel $document): void
+    public function deleteDocument(CourseDocumentModel $document): void
     {
         $this->storageService->removeFile($document->getFilename());
         $this->courseDocumentMapper->remove($document);

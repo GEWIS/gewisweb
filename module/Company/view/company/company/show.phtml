@@ -1,4 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Company\Model\Company as CompanyModel;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var CompanyModel $company
+ */
+
 $escaper = new Laminas\Escaper\Escaper('utf-8');
 
 $this->headTitle($company->getName());

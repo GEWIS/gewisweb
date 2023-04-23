@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Company\Mapper;
 
 use Application\Mapper\BaseMapper;
@@ -9,11 +11,13 @@ use Doctrine\ORM\Query\Expr\Join;
 
 /**
  * Mappers for category.
+ *
+ * @template-extends BaseMapper<JobCategoryModel>
  */
 class Category extends BaseMapper
 {
     /**
-     * @return array
+     * @return array<array-key, JobCategoryModel>
      */
     public function findVisibleCategories(): array
     {

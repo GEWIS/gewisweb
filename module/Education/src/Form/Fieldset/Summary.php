@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Education\Form\Fieldset;
 
 use Application\Model\Enums\Languages;

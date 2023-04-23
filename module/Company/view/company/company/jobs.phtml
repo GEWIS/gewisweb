@@ -1,4 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Company\Model\Job as JobModel;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var JobModel $job
+ */
+
 $escaper = new Laminas\Escaper\Escaper('utf-8');
 
 $company = $job->getPackage()->getCompany();

@@ -1,7 +1,18 @@
 <?php
-// set title
-$this->headTitle($this->translate('Committees')); ?>
 
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Decision\Model\Organ as OrganModel;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var OrganModel[] $committees
+ */
+
+$this->headTitle($this->translate('Committees'));
+?>
 <section class="section">
     <div class="container">
         <div class="row">

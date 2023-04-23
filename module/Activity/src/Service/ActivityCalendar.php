@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Activity\Service;
 
 use Activity\Form\{
@@ -8,6 +10,7 @@ use Activity\Form\{
 use Activity\Mapper\{
     ActivityCalendarOption as ActivityCalendarOptionMapper,
     ActivityOptionCreationPeriod as ActivityOptionCreationPeriodMapper,
+    MaxActivities as MaxActivitiesMapper,
 };
 use Activity\Model\{
     ActivityCalendarOption as OptionModel,
@@ -35,6 +38,7 @@ class ActivityCalendar
         private readonly OrganService $organService,
         private readonly EmailService $emailService,
         private readonly ActivityCalendarOptionMapper $calendarOptionMapper,
+        private readonly MaxActivitiesMapper $maxActivitiesMapper,
         private readonly MemberMapper $memberMapper,
         private readonly ActivityCalendarPeriodForm $calendarPeriodForm,
         private readonly ActivityOptionCreationPeriodMapper $calendarCreationPeriodMapper,
@@ -99,7 +103,7 @@ class ActivityCalendar
     {
         $proposal = new ProposalModel();
 
-        $organ = $data['organ'];
+        $organ = intval($data['organ']);
         if (!$this->calendarFormService->canOrganCreateProposal($organ)) {
             return false;
         }
@@ -294,7 +298,7 @@ class ActivityCalendar
                 $maxActivities->setOrgan($organ);
                 $maxActivities->setPeriod($activityOptionCreationPeriod);
 
-                $this->calendarCreationPeriodMapper->persist($maxActivities);
+                $this->maxActivitiesMapper->persist($maxActivities);
             }
         }
 

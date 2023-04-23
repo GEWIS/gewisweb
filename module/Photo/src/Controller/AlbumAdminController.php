@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Photo\Controller;
 
 use Exception;
@@ -57,7 +59,7 @@ class AlbumAdminController extends AbstractActionController
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-            $albumId = $this->params()->fromRoute('album_id');
+            $albumId = (int) $this->params()->fromRoute('album_id');
             $form->setData($request->getPost()->toArray());
 
             if ($form->isValid()) {
@@ -79,10 +81,10 @@ class AlbumAdminController extends AbstractActionController
      */
     public function pageAction(): JsonModel|ViewModel
     {
-        $albumId = $this->params()->fromRoute('album_id');
+        $albumId = (int) $this->params()->fromRoute('album_id');
         $activePage = (int) $this->params()->fromRoute('page');
 
-        if (null !== $albumId) {
+        if (0 !== $albumId) {
             $albumPage = $this->plugin('AlbumPlugin')->getAlbumPageAsArray($albumId, $activePage);
 
             if (null !== $albumPage) {
@@ -98,7 +100,7 @@ class AlbumAdminController extends AbstractActionController
      */
     public function editAction(): Response|ViewModel
     {
-        $albumId = $this->params()->fromRoute('album_id');
+        $albumId = (int) $this->params()->fromRoute('album_id');
         $form = $this->albumService->getEditAlbumForm($albumId);
 
         /** @var Request $request */
@@ -125,7 +127,7 @@ class AlbumAdminController extends AbstractActionController
     {
         $this->adminService->checkUploadAllowed();
 
-        $albumId = $this->params()->fromRoute('album_id');
+        $albumId = (int) $this->params()->fromRoute('album_id');
         $album = $this->albumService->getAlbum($albumId);
 
         return new ViewModel(
@@ -146,7 +148,7 @@ class AlbumAdminController extends AbstractActionController
         $result = [];
         $result['success'] = false;
         if ($request->isPost()) {
-            $albumId = $this->params()->fromRoute('album_id');
+            $albumId = (int) $this->params()->fromRoute('album_id');
             $album = $this->albumService->getAlbum($albumId);
 
             try {
@@ -171,7 +173,7 @@ class AlbumAdminController extends AbstractActionController
 
         $result = [];
         if ($request->isPost()) {
-            $albumId = $this->params()->fromRoute('album_id');
+            $albumId = (int) $this->params()->fromRoute('album_id');
             $parentId = (int) $request->getPost()['parent_id'];
 
             if (0 === $parentId) {
@@ -192,7 +194,7 @@ class AlbumAdminController extends AbstractActionController
         /** @var Request $request */
         $request = $this->getRequest();
 
-        $albumId = $this->params()->fromRoute('album_id');
+        $albumId = (int) $this->params()->fromRoute('album_id');
         if ($request->isPost()) {
             $this->albumService->deleteAlbum($albumId);
         }
@@ -209,7 +211,7 @@ class AlbumAdminController extends AbstractActionController
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-            $albumId = $this->params()->fromRoute('album_id');
+            $albumId = (int) $this->params()->fromRoute('album_id');
             if (null !== ($cover = $this->albumService->generateAlbumCover($albumId))) {
                 return new JsonModel([
                     'success' => true,

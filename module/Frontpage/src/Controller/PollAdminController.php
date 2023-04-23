@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Frontpage\Controller;
 
 use Frontpage\Service\{
@@ -70,7 +72,7 @@ class PollAdminController extends AbstractActionController
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-            $pollId = $this->params()->fromRoute('poll_id');
+            $pollId = (int) $this->params()->fromRoute('poll_id');
             $poll = $this->pollService->getPoll($pollId);
 
             if (null !== $poll) {
@@ -102,7 +104,7 @@ class PollAdminController extends AbstractActionController
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-            $pollId = $this->params()->fromRoute('poll_id');
+            $pollId = (int) $this->params()->fromRoute('poll_id');
             $poll = $this->pollService->getPoll($pollId);
 
             if (null !== $poll) {

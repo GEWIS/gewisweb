@@ -1,4 +1,19 @@
-<?php $organInformation = $organ->getApprovedOrganInformation() ?>
+<?php
+
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Decision\Model\Organ as OrganModel;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var string $lang
+ * @var OrganModel $organ
+ */
+
+$organInformation = $organ->getApprovedOrganInformation()
+?>
 <div class="col-md-3 col-sm-4 col-xs-6">
     <a href="<?= $this->url('home/organ', ['abbr' => $organ->getAbbr(), 'type' => $organ->getType()->value]) ?>">
         <div class="card">

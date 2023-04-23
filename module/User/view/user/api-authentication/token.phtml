@@ -1,5 +1,17 @@
 <?php
-$form = $this->form;
+
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+use User\Form\ApiAppAuthorisation as ApiAppAuthorisationForm;
+use User\Model\Enums\JWTClaims;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var ApiAppAuthorisationForm $form
+ * @var JWTClaims[] $claims
+ */
 
 $form->prepare();
 $form->setAttribute('method', 'post');

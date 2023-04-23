@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Decision\Controller\FileBrowser;
 
 use Laminas\Http\Response\Stream;

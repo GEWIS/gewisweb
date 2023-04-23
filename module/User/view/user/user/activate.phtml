@@ -1,4 +1,22 @@
 <?php
+
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+use User\Model\{
+    NewCompanyUser as NewCompanyUserModel,
+    NewUser as NewUserModel,
+};
+use User\Form\Activate as ActivateForm;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var ActivateForm $form
+ * @var NewCompanyUserModel|NewUserModel $user
+ * @var string $userType
+ */
+
 $this->headTitle($this->translate('Activate'));
 ?>
 <section class="section">
@@ -7,7 +25,6 @@ $this->headTitle($this->translate('Activate'));
             <?= $this->translate('Your account has been activated. You are now able to login.') ?>
         <?php else: ?>
             <?php
-            $form = $this->form;
             $form->prepare();
 
             $form->setAttribute('action', $this->url('user/activate', ['user_type' => $userType, 'code' => $this->user->getCode()]));

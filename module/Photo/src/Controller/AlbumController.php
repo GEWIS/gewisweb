@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Photo\Controller;
 
 use Laminas\Mvc\Controller\AbstractActionController;
@@ -31,7 +33,7 @@ class AlbumController extends AbstractActionController
      */
     public function indexAction(): ViewModel
     {
-        $albumId = $this->params()->fromRoute('album_id');
+        $albumId = (int) $this->params()->fromRoute('album_id');
         $albumType = $this->params()->fromRoute('album_type');
 
         $album = $this->albumService->getAlbum($albumId, $albumType);

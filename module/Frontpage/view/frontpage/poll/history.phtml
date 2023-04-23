@@ -1,6 +1,18 @@
 <?php
-// set title
-$this->headTitle($this->translate('Poll history')); ?>
+
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Laminas\Paginator\Paginator;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var Paginator $paginator
+ */
+
+$this->headTitle($this->translate('Poll history'));
+?>
 <section class="section">
     <div class="container">
         <?= $this->paginationControl(

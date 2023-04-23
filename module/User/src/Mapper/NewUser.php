@@ -1,11 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace User\Mapper;
 
 use Application\Mapper\BaseMapper;
 use Decision\Model\Member as MemberModel;
 use User\Model\NewUser as NewUserModel;
 
+/**
+ * @template-extends BaseMapper<NewUserModel>
+ */
 class NewUser extends BaseMapper
 {
     /**

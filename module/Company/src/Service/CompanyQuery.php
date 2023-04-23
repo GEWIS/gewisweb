@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Company\Service;
 
 use Application\Model\Enums\ApprovableStatus;
@@ -8,6 +10,7 @@ use Company\Mapper\{
     Job as JobMapper,
     Label as LabelMapper,
 };
+use Company\Model\JobCategory as JobCategoryModel;
 use Laminas\Mvc\I18n\Translator;
 use User\Permissions\NotAllowedException;
 
@@ -99,7 +102,7 @@ class CompanyQuery
      *
      * @param bool $visible
      *
-     * @return array
+     * @return array<array-key, JobCategoryModel>
      */
     public function getCategoryList(bool $visible): array
     {

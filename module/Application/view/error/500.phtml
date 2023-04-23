@@ -1,6 +1,15 @@
+<?php
+
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+
+/** @var PhpRenderer|HelperTrait $this */
+?>
 <section class="section">
     <div class="container">
-        <h1><?php echo $this->translate('An error occurred') ?></h1>
+        <h1><?= $this->translate('An error occurred') ?></h1>
         <?= $this->translate('If this keeps occurring, please contact the ApplicatieBeheerCommissie.') ?>
     </div>
 </section>

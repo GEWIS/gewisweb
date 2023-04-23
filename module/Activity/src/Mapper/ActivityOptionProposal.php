@@ -1,11 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Activity\Mapper;
 
 use Activity\Model\ActivityOptionProposal as ActivityOptionProposalModel;
 use Application\Mapper\BaseMapper;
 use DateTime;
 
+/**
+ * @template-extends BaseMapper<ActivityOptionProposalModel>
+ */
 class ActivityOptionProposal extends BaseMapper
 {
     /**
@@ -15,7 +20,7 @@ class ActivityOptionProposal extends BaseMapper
      * @param DateTime $end the date to get the options before
      * @param int $organId the organ options have to be associated with
      *
-     * @return array
+     * @return array<array-key, ActivityOptionProposalModel>
      */
     public function getNonClosedProposalsWithinPeriodAndOrgan(
         DateTime $begin,

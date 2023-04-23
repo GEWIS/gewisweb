@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Education\Model\Enums;
 
 use Laminas\Mvc\I18n\Translator;

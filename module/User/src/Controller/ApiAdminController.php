@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace User\Controller;
 
 use Laminas\Http\{
@@ -68,7 +70,7 @@ class ApiAdminController extends AbstractActionController
      */
     public function removeAction(): Response|ViewModel
     {
-        $id = $this->params()->fromRoute('id');
+        $id = (int) $this->params()->fromRoute('id');
         $service = $this->apiUserService;
 
         /** @var Request $request */

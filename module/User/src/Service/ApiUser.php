@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace User\Service;
 
 use Doctrine\ORM\Exception\ORMException;
@@ -67,9 +69,9 @@ class ApiUser
      *
      * @param int $id
      *
-     * @return ApiUserModel Token
+     * @return ApiUserModel|null Token
      */
-    public function getToken(int $id): ApiUserModel
+    public function getToken(int $id): ?ApiUserModel
     {
         if (!$this->aclService->isAllowed('view', 'apiuser')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view API tokens'));

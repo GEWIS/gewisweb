@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Activity\Mapper;
 
 use Activity\Model\{
@@ -8,12 +10,15 @@ use Activity\Model\{
 };
 use Application\Mapper\BaseMapper;
 
+/**
+ * @template-extends BaseMapper<SignupFieldValueModel>
+ */
 class SignupFieldValue extends BaseMapper
 {
     /**
      * Finds all field values associated with the $signup.
      *
-     * @return array of \Activity\Model\ActivityFieldValue
+     * @return array<array-key, SignupFieldValueModel>
      */
     public function getFieldValuesBySignup(SignupModel $signup): array
     {

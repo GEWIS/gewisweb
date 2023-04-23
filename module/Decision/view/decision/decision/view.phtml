@@ -1,4 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Decision\Model\Meeting as MeetingModel;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var MeetingModel $meeting
+ */
+
 $translator = $this->plugin('translate')->getTranslator();
 $nf = new NumberFormatter($translator->getLocale(), NumberFormatter::ORDINAL);
 

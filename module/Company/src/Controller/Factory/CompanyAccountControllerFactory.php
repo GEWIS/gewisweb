@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Company\Controller\Factory;
 
 use Company\Controller\CompanyAccountController;

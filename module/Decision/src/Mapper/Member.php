@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Decision\Mapper;
 
 use Application\Mapper\BaseMapper;
@@ -13,6 +15,9 @@ use Doctrine\ORM\Query\{
     ResultSetMappingBuilder,
 };
 
+/**
+ * @template-extends BaseMapper<MemberModel>
+ */
 class Member extends BaseMapper
 {
     /**
@@ -38,7 +43,7 @@ class Member extends BaseMapper
      * @param string $orderColumn
      * @param string $orderDirection
      *
-     * @return array
+     * @return array<array-key, array{lidnr: int, fullName: string, generation: int}>
      */
     public function searchByName(
         string $name,
@@ -82,7 +87,7 @@ class Member extends BaseMapper
      *
      * @param int $days the number of days to look ahead
      *
-     * @return array Of members sorted by birthday
+     * @return array<array-key, MemberModel> Of members sorted by birthday
      */
     public function findBirthdayMembers(int $days): array
     {
@@ -114,7 +119,7 @@ class Member extends BaseMapper
     /**
      * Find all organs of this member.
      *
-     * @return array Of organs
+     * @return array<array-key, OrganModel>
      */
     public function findOrgans(MemberModel $member): array
     {
@@ -133,6 +138,8 @@ class Member extends BaseMapper
 
     /**
      * Find all active installations of a member.
+     *
+     * @return array<array-key, OrganMemberModel>
      */
     public function findCurrentInstallations(MemberModel $member): array
     {
@@ -150,6 +157,8 @@ class Member extends BaseMapper
 
     /**
      * Find all past installations of a member.
+     *
+     * @return array<array-key, OrganMemberModel>
      */
     public function findHistoricalInstallations(MemberModel $member): array
     {

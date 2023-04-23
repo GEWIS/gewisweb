@@ -1,10 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Activity\Mapper;
 
 use Activity\Model\MaxActivities as MaxActivitiesModel;
 use Application\Mapper\BaseMapper;
 
+/**
+ * @template-extends BaseMapper<MaxActivitiesModel>
+ */
 class MaxActivities extends BaseMapper
 {
     /**

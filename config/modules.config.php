@@ -6,6 +6,8 @@
  * This should be an array of module namespaces used in the application.
  */
 
+declare(strict_types=1);
+
 return [
     'Laminas\I18n',
     'Laminas\Mvc\I18n',

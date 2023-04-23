@@ -1,4 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Education\Model\Course as CourseModel;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var CourseModel[] $courses
+ */
+
 $this->scriptUrl()->requireUrls(['admin_education/course/delete'], ['course']);
 
 $this->breadcrumbs()

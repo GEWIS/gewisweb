@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Application\View\Helper;
 
 use Application\Model\LocalisedText as LocalisedTextModel;

@@ -1,7 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Education\Model\Course as CourseModel;
 use Education\Model\Enums\ExamTypes;
 use Education\Model\Summary as SummaryModel;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var CourseModel $course
+ */
 
 $this->headTitle(sprintf(
     '%s %s',

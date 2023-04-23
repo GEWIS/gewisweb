@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Decision\Controller;
 
 use Decision\Service\Organ as OrganService;
@@ -34,7 +36,7 @@ class OrganAdminController extends AbstractActionController
      */
     public function editAction(): Response|ViewModel
     {
-        $organId = $this->params()->fromRoute('organ_id');
+        $organId = (int) $this->params()->fromRoute('organ_id');
         $organInformation = $this->organService->getEditableOrganInformation($organId);
 
         if (false === $organInformation) {

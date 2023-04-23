@@ -1,3 +1,16 @@
+<?php
+
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Company\Model\CompanyBannerPackage as CompanyBannerPackageModel;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var CompanyBannerPackageModel $banner
+ */
+?>
 <div class="banner">
     <a href="<?= $this->url('company/companyItem', ['companySlugName' => $banner->getCompany()->getSlugName()]); ?>">
         <img src="<?= $this->fileUrl($banner->getImage()) ?>" class="banner__image"/>

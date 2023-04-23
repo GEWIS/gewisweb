@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Decision\Mapper;
 
 use Application\Mapper\BaseMapper;
@@ -10,6 +12,8 @@ use Decision\Model\{
 
 /**
  * Mappers for authorizations.
+ *
+ * @template-extends BaseMapper<AuthorizationModel>
  */
 class Authorization extends BaseMapper
 {
@@ -18,7 +22,7 @@ class Authorization extends BaseMapper
      *
      * @param int $meetingNumber
      *
-     * @return array
+     * @return array<array-key, AuthorizationModel>
      */
     public function findAllByType(
         int $meetingNumber,
@@ -65,7 +69,7 @@ class Authorization extends BaseMapper
      * @param int $meetingNumber
      * @param MemberModel $recipient
      *
-     * @return array
+     * @return array<array-key, AuthorizationModel>
      */
     public function findRecipientAuthorization(
         int $meetingNumber,

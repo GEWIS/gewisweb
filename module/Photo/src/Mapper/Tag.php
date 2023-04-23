@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Photo\Mapper;
 
 use Application\Mapper\BaseMapper;
@@ -11,6 +13,8 @@ use Photo\Model\{
 
 /**
  * Mappers for Tags.
+ *
+ * @template-extends BaseMapper<TagModel>
  */
 class Tag extends BaseMapper
 {
@@ -34,7 +38,7 @@ class Tag extends BaseMapper
 
     /**
      * @param int $lidnr
-     * @return array
+     * @return array<array-key, TagModel>
      */
     public function getTagsByLidnr(int $lidnr): array
     {
@@ -49,7 +53,7 @@ class Tag extends BaseMapper
      * Get all the tags for a photo, but limited to lidnr and full name.
      *
      * @param int $photoId
-     * @return array
+     * @return array<array-key, array{id: int, lidnr: int, fullName: string}>
      */
     public function getTagsByPhoto(int $photoId): array
     {
@@ -59,7 +63,7 @@ class Tag extends BaseMapper
             ->addScalarResult('fullName', 'fullName');
 
         $sql = <<<QUERY
-            SELECT 
+            SELECT
                 `t`.`id`,
                 `m`.`lidnr`,
                 CONCAT_WS(' ', `m`.`firstName`, IF(LENGTH(`m`.`middleName`), `m`.`middleName`, NULL), `m`.`lastName`) as `fullName`
@@ -78,7 +82,7 @@ class Tag extends BaseMapper
      * Get all unique albums a certain member is tagged in
      *
      * @param int $lidnr
-     * @return array
+     * @return array<array-key, array{album_id: int}>
      */
     public function getAlbumsByMember(int $lidnr): array
     {
@@ -100,7 +104,7 @@ class Tag extends BaseMapper
     }
 
     /**
-     * Returns a recent tag for the member whom has the most tags from a set of members.
+     * Returns a recent tag for the member who has the most tags from a set of members.
      *
      * @param array $members
      *

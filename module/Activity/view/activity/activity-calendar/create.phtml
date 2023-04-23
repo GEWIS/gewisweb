@@ -1,6 +1,15 @@
 <?php
 
-use Laminas\Form\Exception\InvalidElementException;
+declare(strict_types=1);
+
+use Activity\Form\ActivityCalendarProposal as ActivityCalendarProposalForm;
+use Application\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var ActivityCalendarProposalForm $form
+ */
 
 $this->headTitle($this->translate('Create activity proposal'));
 $this->headScript()

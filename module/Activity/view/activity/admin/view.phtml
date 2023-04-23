@@ -1,4 +1,20 @@
 <?php
+
+declare(strict_types=1);
+
+use Activity\Model\Activity as ActivityModel;
+use Application\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var bool $admin
+ * @var ActivityModel[] $approvedActivities
+ * @var ActivityModel[] $disapprovedActivities
+ * @var ActivityModel[] $unapprovedActivities
+ * @var ActivityModel[] $upcomingActivities
+ */
+
 $this->breadcrumbs()
     ->addBreadcrumb($this->translate('Activities'), true, $this->url('activity_admin'))
     ->addBreadcrumb($this->translate('Overview'));

@@ -1,5 +1,16 @@
 <?php
-$form = $this->form;
+
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+use User\Form\UserLogin as UserLoginForm;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var UserLoginForm $form
+ */
+
 $form->prepare();
 
 $form->setAttribute('action', $this->url('user/login', ['user_type' => 'member']));

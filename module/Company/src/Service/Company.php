@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Company\Service;
 
 use Application\Model\ApprovableText as ApprovableTextModel;
@@ -18,6 +20,7 @@ use Company\Mapper\{
     Company as CompanyMapper,
     FeaturedPackage as FeaturedPackageMapper,
     Job as JobMapper,
+    JobUpdate as JobUpdateMapper,
     Label as LabelMapper,
     Package as PackageMapper,
 };
@@ -50,6 +53,9 @@ use User\Service\User as UserService;
  */
 class Company
 {
+    /**
+     * @psalm-param PackageMapper<CompanyJobPackageModel> $packageMapper
+     */
     public function __construct(
         private readonly AclService $aclService,
         private readonly Translator $translator,
@@ -59,6 +65,7 @@ class Company
         private readonly BannerPackageMapper $bannerPackageMapper,
         private readonly FeaturedPackageMapper $featuredPackageMapper,
         private readonly JobMapper $jobMapper,
+        private readonly JobUpdateMapper $jobUpdateMapper,
         private readonly CategoryMapper $categoryMapper,
         private readonly LabelMapper $labelMapper,
         private readonly CompanyForm $companyForm,
@@ -245,7 +252,7 @@ class Company
         $jobCategory->setName(new CompanyLocalisedText($data['nameEn'], $data['name']));
         $jobCategory->setPluralName(new CompanyLocalisedText($data['pluralNameEn'], $data['pluralName']));
         $jobCategory->setSlug(new CompanyLocalisedText($data['slugEn'], $data['slug']));
-        $jobCategory->setHidden($data['hidden']);
+        $jobCategory->setHidden(boolval($data['hidden']));
 
         $this->persistJobCategory($jobCategory);
 
@@ -263,7 +270,7 @@ class Company
         $jobCategory->getName()->updateValues($data['nameEn'], $data['name']);
         $jobCategory->getPluralName()->updateValues($data['pluralNameEn'], $data['pluralName']);
         $jobCategory->getSlug()->updateValues($data['slugEn'], $data['slug']);
-        $jobCategory->setHidden($data['hidden']);
+        $jobCategory->setHidden(boolval($data['hidden']));
 
         $this->persistJobCategory($jobCategory);
     }
@@ -319,7 +326,7 @@ class Company
         // Set attributes that are not L10n-able.
         $company->setName($data['name']);
         $company->setSlugName($data['slugName']);
-        $company->setPublished($data['published']);
+        $company->setPublished(boolval($data['published']));
 
         $company->setRepresentativeName($data['representativeName']);
         $company->setRepresentativeEmail($data['representativeEmail']);
@@ -514,7 +521,13 @@ class Company
      */
     public function persistPackage(CompanyPackageModel $package): void
     {
-        $this->packageMapper->persist($package);
+        if ($package instanceof CompanyBannerPackageModel) {
+            $this->bannerPackageMapper->persist($package);
+        } elseif ($package instanceof CompanyFeaturedPackageModel) {
+            $this->featuredPackageMapper->persist($package);
+        } elseif ($package instanceof CompanyJobPackageModel) {
+            $this->packageMapper->persist($package);
+        }
     }
 
     /**
@@ -596,7 +609,7 @@ class Company
         $job = new JobModel();
         $job->setSlugName($data['slugName']);
         $job->setCategory($category);
-        $job->setPublished($data['published']);
+        $job->setPublished(boolval($data['published']));
         $job->setContactName($data['contactName']);
         $job->setContactEmail($data['contactEmail']);
         $job->setContactPhone($data['contactPhone']);
@@ -669,7 +682,7 @@ class Company
 
             $job->setSlugName($data['slugName']);
             $job->setCategory($category);
-            $job->setPublished($data['published']);
+            $job->setPublished(boolval($data['published']));
             $job->setContactName($data['contactName']);
             $job->setContactEmail($data['contactEmail']);
             $job->setContactPhone($data['contactPhone']);
@@ -726,7 +739,7 @@ class Company
             $jobUpdateProposal->setProposal($updateProposal);
 
             $this->jobMapper->persist($updateProposal);
-            $this->jobMapper->persist($jobUpdateProposal);
+            $this->jobUpdateMapper->persist($jobUpdateProposal);
 
             // TODO: Send e-mail to CEB/C4 about proposed changes.
         }
@@ -749,7 +762,13 @@ class Company
             throw new NotAllowedException($this->translator->translate('You are not allowed to delete packages'));
         }
 
-        $this->packageMapper->remove($package);
+        if ($package instanceof CompanyBannerPackageModel) {
+            $this->bannerPackageMapper->remove($package);
+        } elseif ($package instanceof CompanyFeaturedPackageModel) {
+            $this->featuredPackageMapper->remove($package);
+        } elseif ($package instanceof CompanyJobPackageModel) {
+            $this->packageMapper->remove($package);
+        }
     }
 
     /**
@@ -824,7 +843,7 @@ class Company
 
         foreach ($job->getUpdateProposals() as $update) {
             // The proposed job is cascade deleted.
-            $this->jobMapper->remove($update);
+            $this->jobUpdateMapper->remove($update);
         }
     }
 

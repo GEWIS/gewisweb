@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Company\Model;
 
 use Application\Model\Traits\{
@@ -615,7 +617,7 @@ class Company implements ResourceInterface
         $this->setContactAddress($data['contactAddress']);
         $this->setContactEmail($data['contactEmail']);
         $this->setContactPhone($data['contactPhone']);
-        $this->setPublished($data['published']);
+        $this->setPublished(boolval($data['published']));
 
         $this->getSlogan()->updateValues($data['sloganEn'], $data['slogan']);
         $this->getWebsite()->updateValues($data['websiteEn'], $data['website']);

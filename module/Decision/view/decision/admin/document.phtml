@@ -1,6 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Decision\Form\Document as DocumentForm;
+use Decision\Model\Enums\MeetingTypes;
+use Decision\Model\Meeting as MeetingModel;
 use Laminas\Form\Form;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var DocumentForm $form
+ * @var MeetingModel|null $meeting
+ * @var int $number
+ * @var MeetingTypes $type
+ */
 
 $this->scriptUrl()->requireUrls(
     [
@@ -22,7 +37,6 @@ else:
         <?= $this->translate('Meeting document uploaded'); ?>
     <?php endif; ?>
     <?php
-    $form = $this->form;
     $form->prepare();
 
     $form->setAttribute('method', 'post');
@@ -40,7 +54,7 @@ else:
                 <?php if (!empty($meetings)): ?>
                     <?php foreach ($meetings as $m): ?>
                         <option value="<?= $m->getType()->value ?>/<?= $m->getNumber() ?>"
-                            <?= ($m->getNumber() === intval($number) && $m->getType()->value === $type->value) ? 'selected' : '' ?>>
+                            <?= ($m->getNumber() === $number && $m->getType()->value === $type->value) ? 'selected' : '' ?>>
                             <?= $m->getType()->value ?> <?= $m->getNumber() ?> (<?= $m->getDate()->format('Y-m-d') ?>)
                         </option>
                     <?php endforeach; ?>

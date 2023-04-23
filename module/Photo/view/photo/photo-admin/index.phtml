@@ -1,4 +1,22 @@
 <?php
+
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+use Photo\Model\{
+    Album as AlbumModel,
+    Photo as PhotoModel,
+};
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var PhotoModel|null $next
+ * @var AlbumModel[] $path
+ * @var PhotoModel $photo
+ * @var PhotoModel|null $previous
+ */
+
 $this->headScript()
     ->appendFile(
         $this->basePath() . '/js/autocomplete.min.js',

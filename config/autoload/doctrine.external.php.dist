@@ -17,6 +17,9 @@
  * and is licensed under the MIT license. For more information, see
  * <http://www.doctrine-project.org>.
  */
+
+declare(strict_types=1);
+
 return [
     'doctrine' => [
         'connection' => [

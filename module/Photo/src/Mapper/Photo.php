@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Photo\Mapper;
 
 use Application\Mapper\BaseMapper;
@@ -12,6 +14,8 @@ use Photo\Model\{
 
 /**
  * Mappers for Photo.
+ *
+ * @template-extends BaseMapper<PhotoModel>
  */
 class Photo extends BaseMapper
 {
@@ -22,7 +26,7 @@ class Photo extends BaseMapper
      * @param int $start the result to start at
      * @param int|null $maxResults max amount of results to return, null for infinite
      *
-     * @return array of photo's
+     * @return array<array-key, PhotoModel>
      */
     public function getAlbumPhotos(
         AlbumModel $album,

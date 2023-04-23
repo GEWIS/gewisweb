@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Company\Form;
 
 use Application\Form\Localisable as LocalisableForm;

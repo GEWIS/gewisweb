@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Decision\Controller;
 
 use Decision\Service\{
@@ -77,7 +79,7 @@ class MemberController extends AbstractActionController
      */
     public function viewAction(): ViewModel
     {
-        $info = $this->memberInfoService->getMembershipInfo($this->params()->fromRoute('lidnr'));
+        $info = $this->memberInfoService->getMembershipInfo((int) $this->params()->fromRoute('lidnr'));
 
         if (null === $info) {
             return $this->notFoundAction();
@@ -113,7 +115,7 @@ class MemberController extends AbstractActionController
      */
     public function canAuthorizeAction(): JsonModel|ViewModel
     {
-        $lidnr = $this->params()->fromQuery('q');
+        $lidnr = (int) $this->params()->fromQuery('q');
         $meeting = $this->decisionService->getLatestALV();
 
         if (!empty($lidnr) && !empty($meeting)) {

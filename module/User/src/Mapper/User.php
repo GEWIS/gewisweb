@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace User\Mapper;
 
 use Application\Mapper\BaseMapper;
@@ -7,6 +9,9 @@ use DateTime;
 use Decision\Model\Member as MemberModel;
 use User\Model\User as UserModel;
 
+/**
+ * @template-extends BaseMapper<UserModel>
+ */
 class User extends BaseMapper
 {
     /**

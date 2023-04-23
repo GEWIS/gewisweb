@@ -1,3 +1,16 @@
+<?php
+
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Company\Form\JobLabel as JobLabelForm;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var JobLabelForm $form
+ */
+?>
 <div class="row">
     <div class="col-md-12">
         <h2><?= $this->translate('Information') ?></h2>

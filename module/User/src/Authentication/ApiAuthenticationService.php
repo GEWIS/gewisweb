@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace User\Authentication;
 
 use Laminas\Authentication\Adapter\AdapterInterface;

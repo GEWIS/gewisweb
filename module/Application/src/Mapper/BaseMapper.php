@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Application\Mapper;
 
+use Application\Model\LocalisedText as LocalisedTextModel;
 use Closure;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\{
@@ -12,6 +15,13 @@ use Doctrine\ORM\{
     Exception\ORMException,
 };
 
+/**
+ * The base mapper to be used for all other mappers. It helps with preventing duplicate Doctrine code. It uses special
+ * types to ensure that the returned values are as expected. As {@link LocalisedTextModel} does not have its own mapper,
+ * any of such objects can be persisted and/or removed from the base mapper.
+ *
+ * @template T of object
+ */
 abstract class BaseMapper
 {
     public function __construct(private readonly EntityManager $em)
@@ -20,6 +30,8 @@ abstract class BaseMapper
 
     /**
      * @param object $entity
+     * @psalm-param T|LocalisedTextModel $entity
+     *
      * @throws ORMException
      */
     public function persist(object $entity): void
@@ -32,6 +44,8 @@ abstract class BaseMapper
      * Persist multiple studies.
      *
      * @param array $entities
+     * @psalm-param T[] $entities
+     *
      * @throws ORMException
      */
     public function persistMultiple(array $entities): void
@@ -45,6 +59,8 @@ abstract class BaseMapper
 
     /**
      * @param object $entity
+     * @psalm-param T|LocalisedTextModel $entity
+     *
      * @throws ORMException
      */
     public function remove(object $entity): void
@@ -57,6 +73,8 @@ abstract class BaseMapper
      * Removes multiple studies.
      *
      * @param array $entities
+     * @psalm-param T[] $entities
+     *
      * @throws ORMException
      */
     public function removeMultiple(array $entities): void
@@ -100,6 +118,7 @@ abstract class BaseMapper
      * Detaches an entity from the entity manager causing any changed to be made to the object to be unsaved
      *
      * @param object $entity
+     * @psalm-param T $entity
      */
     public function detach(object $entity): void
     {
@@ -120,6 +139,7 @@ abstract class BaseMapper
      * Get the repository for this mapper.
      *
      * @return EntityRepository
+     * @psalm-return EntityRepository<T>
      */
     protected function getRepository(): EntityRepository
     {
@@ -138,9 +158,10 @@ abstract class BaseMapper
 
     /**
      * @param mixed $id The ID of the entity to be retrieved using the primary key
-     * @return mixed The entity corresponding to the provided ID or null of the entity cannot be found
+     * @return null|object The entity corresponding to the provided ID or null of the entity cannot be found
+     * @psalm-return T|null
      */
-    public function find(mixed $id): mixed
+    public function find(mixed $id): null|object
     {
         return $this->getRepository()->find($id);
     }
@@ -148,6 +169,7 @@ abstract class BaseMapper
     /**
      * @param mixed $criteria The criteria that describe the entity to be retrieved
      * @return array The entities corresponding to the provided criteria
+     * @psalm-return T[]
      */
     public function findBy(mixed $criteria): array
     {
@@ -156,15 +178,17 @@ abstract class BaseMapper
 
     /**
      * @param array $criteria The criteria that describe the entity to be retrieved
-     * @return mixed The entity corresponding to the provided criteria or null of the entity cannot be found
+     * @return null|object The entity corresponding to the provided criteria or null of the entity cannot be found
+     * @psalm-return T|null
      */
-    public function findOneBy(array $criteria): mixed
+    public function findOneBy(array $criteria): null|object
     {
         return $this->getRepository()->findOneBy($criteria);
     }
 
     /**
      * @return array All entities in the repository
+     * @psalm-return T[]
      */
     public function findAll(): array
     {
@@ -200,8 +224,8 @@ abstract class BaseMapper
     }
 
     /**
-     * @return string the name of the entity repository
-     * e.g. "User/Model/User"
+     * @return string the name of the entity repository e.g. "User/Model/User"
+     * @psalm-return class-string<T>
      */
     abstract protected function getRepositoryName(): string;
 }

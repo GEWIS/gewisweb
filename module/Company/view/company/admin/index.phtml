@@ -1,6 +1,20 @@
 <?php
 
-use Company\Model\Enums\CompanyPackageTypes;
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Company\Model\{
+    Company as CompanyModel,
+    CompanyPackage as CompanyPackageModel,
+    Enums\CompanyPackageTypes,
+};
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var CompanyModel[] $companyList
+ * @var array{0: CompanyPackageModel[], 1: CompanyPackageModel[]} $packageFuture
+ */
 
 $this->breadcrumbs()
     ->addBreadcrumb($this->translate('Career'), true, $this->url('company_admin'))

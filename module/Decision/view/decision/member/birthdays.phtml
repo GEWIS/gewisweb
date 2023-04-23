@@ -1,8 +1,19 @@
 <?php
-// set title
-$this->headTitle($this->translate('Birthdays'));
-$this->headTitle($this->translate('Members')); ?>
 
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Decision\Model\Member as MemberModel;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var array<array-key, MemberModel> $members
+ */
+
+$this->headTitle($this->translate('Birthdays'));
+$this->headTitle($this->translate('Members'));
+?>
 <section class="section">
     <div class="container">
         <table class="table table-hover">

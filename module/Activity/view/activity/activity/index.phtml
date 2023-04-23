@@ -1,4 +1,17 @@
 <?php
+
+declare(strict_types=1);
+
+use Activity\Model\Activity;
+use Application\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var string $category
+ * @var Activity[] $activities
+ */
+
 $this->headTitle($this->translate('Activities'));
 ?>
 <section class="section">

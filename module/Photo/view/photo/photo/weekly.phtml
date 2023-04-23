@@ -1,5 +1,17 @@
 <?php
-$this->headTitle($this->translate('Photos of the Week')); ?>
+
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var array $config
+ */
+
+$this->headTitle($this->translate('Photos of the Week'));
+?>
 <section class="section">
     <div class="container">
         <?php if (empty($photosOfTheWeek)): ?>

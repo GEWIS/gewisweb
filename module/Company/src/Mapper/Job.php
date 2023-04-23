@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Company\Mapper;
 
 use Application\Mapper\BaseMapper;
@@ -11,8 +13,7 @@ use Doctrine\ORM\Query\Expr\Join;
 /**
  * Mappers for jobs.
  *
- * NOTE: Jobs will be modified externally by a script. Modifications will be
- * overwritten.
+ * @template-extends BaseMapper<JobModel>
  */
 class Job extends BaseMapper
 {
@@ -50,7 +51,7 @@ class Job extends BaseMapper
      * @param string|null $jobSlugName
      * @param string|null $companySlugName
      *
-     * @return array
+     * @return array<array-key, JobModel>
      */
     public function findJob(
         int $jobCategoryId = null,
@@ -72,9 +73,7 @@ class Job extends BaseMapper
             $qb->join('j.category', 'cat')
                 ->andWhere('cat.id = :jobCategoryId')
                 ->setParameter('jobCategoryId', $jobCategoryId);
-        }
-
-        if (null !== $jobCategorySlug) {
+        } elseif (null !== $jobCategorySlug) {
             $qb->innerJoin('j.category', 'cat')
                 ->innerJoin(
                     'cat.slug',

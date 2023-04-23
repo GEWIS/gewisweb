@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Decision\Mapper;
 
 use Application\Mapper\BaseMapper;
@@ -17,6 +19,9 @@ use Doctrine\ORM\{
 };
 use InvalidArgumentException;
 
+/**
+ * @template-extends BaseMapper<MeetingModel>
+ */
 class Meeting extends BaseMapper
 {
     /**
@@ -24,7 +29,7 @@ class Meeting extends BaseMapper
      *
      * @param int|null $limit The amount of results, default is all
      *
-     * @return array Of all meetings
+     * @return array<array-key, MeetingModel>
      */
     public function findAllMeetings(?int $limit = null): array
     {
@@ -47,7 +52,7 @@ class Meeting extends BaseMapper
      *
      * @param MeetingTypes $type ALV|BV|VV|Virt
      *
-     * @return array
+     * @return array<array-key, MeetingModel>
      */
     public function findByType(MeetingTypes $type): array
     {
@@ -65,7 +70,7 @@ class Meeting extends BaseMapper
      * @param int $limit The amount of results
      * @param MeetingTypes $type
      *
-     * @return array Meetings that have taken place
+     * @return array<array-key, MeetingModel> Meetings that have taken place
      */
     public function findPast(
         int $limit,
@@ -118,38 +123,6 @@ class Meeting extends BaseMapper
         $qb->setParameter(':number', $number);
 
         return $qb->getQuery()->getOneOrNullResult();
-    }
-
-    /**
-     * @param int $id
-     *
-     * @return MeetingDocumentModel|null
-     * @throws ORMException
-     */
-    public function findDocument(int $id): ?MeetingDocumentModel
-    {
-        return $this->getEntityManager()->find(MeetingDocumentModel::class, $id);
-    }
-
-    /**
-     * Returns the document with the specified ID.
-     *
-     * @param int $id Document ID
-     *
-     * @return MeetingDocumentModel
-     *
-     * @throws InvalidArgumentException If the document does not exist
-     * @throws ORMException
-     */
-    public function findDocumentOrFail(int $id): MeetingDocumentModel
-    {
-        $document = $this->findDocument($id);
-
-        if (is_null($document)) {
-            throw new InvalidArgumentException(sprintf("A document with the provided ID '%d' does not exist.", $id));
-        }
-
-        return $document;
     }
 
     /**

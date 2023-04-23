@@ -1,4 +1,17 @@
 <?php
+
+declare(strict_types=1);
+
+use Activity\Form\ActivityCategory as ActivityCategoryForm;
+use Application\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var string $action
+ * @var ActivityCategoryForm $form
+ */
+
 $this->headTitle($action);
 $this->breadcrumbs()
     ->addBreadcrumb($this->translate('Activity Categories'), true, $this->url('activity_admin_categories'))

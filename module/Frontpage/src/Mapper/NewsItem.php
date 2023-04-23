@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Frontpage\Mapper;
 
 use Application\Mapper\BaseMapper;
@@ -9,6 +11,8 @@ use Frontpage\Model\NewsItem as NewsItemModel;
 
 /**
  * Mappers for NewsItems.
+ *
+ * @template-extends BaseMapper<NewsItemModel>
  */
 class NewsItem extends BaseMapper
 {
@@ -17,7 +21,7 @@ class NewsItem extends BaseMapper
      *
      * @param int $count
      *
-     * @return array
+     * @return array<array-key, NewsItemModel>
      */
     public function getLatestNewsItems(int $count): array
     {

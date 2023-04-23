@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace User\Controller;
 
 use DateInterval;
@@ -45,9 +47,9 @@ class UserController extends AbstractActionController
 
         $userType = $this->params()->fromRoute('user_type');
         $redirectTo = $this->params()->fromRoute('redirect_to');
+
         /** @var Request $request */
         $request = $this->getRequest();
-
         if ($request->isPost()) {
             if ('company' === $userType) {
                 $form = $this->userService->getCompanyUserLoginForm();
@@ -188,8 +190,8 @@ class UserController extends AbstractActionController
         $userType = $this->params()->fromRoute('user_type');
         $form = $this->userService->getPasswordForm($userType);
 
+        /** @var Request $request */
         $request = $this->getRequest();
-
         if ($request->isPost()) {
             $form->setData($request->getPost()->toArray());
 

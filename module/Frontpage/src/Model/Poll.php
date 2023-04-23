@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Frontpage\Model;
 
 use Application\Model\Traits\IdentifiableTrait;

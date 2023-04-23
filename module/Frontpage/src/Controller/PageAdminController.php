@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Frontpage\Controller;
 
 use Exception;
@@ -81,7 +83,7 @@ class PageAdminController extends AbstractActionController
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit pages.'));
         }
 
-        $pageId = $this->params()->fromRoute('page_id');
+        $pageId = (int) $this->params()->fromRoute('page_id');
         /** @var Request $request */
         $request = $this->getRequest();
 
@@ -108,7 +110,7 @@ class PageAdminController extends AbstractActionController
             throw new NotAllowedException($this->translator->translate('You are not allowed to delete pages.'));
         }
 
-        $pageId = $this->params()->fromRoute('page_id');
+        $pageId = (int) $this->params()->fromRoute('page_id');
         $this->pageService->deletePage($pageId);
 
         return $this->redirect()->toUrl($this->url()->fromRoute('admin_page'));

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Decision\Model\SubDecision\Board;
 
 use Decision\Model\SubDecision;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Activity\Model;
 
 use Application\Model\Traits\IdentifiableTrait;
@@ -146,25 +148,11 @@ class ActivityOptionProposal implements OrganResourceInterface
     }
 
     /**
-     * @return OrganModel|string
-     */
-    public function getOrganOrAlt(): OrganModel|string
-    {
-        if ($this->organ) {
-            return $this->organ;
-        }
-
-        return $this->organAlt;
-    }
-
-    /**
      * Returns the string identifier of the Resource.
-     *
-     * @return int|string
      */
-    public function getResourceId(): int|string
+    public function getResourceId(): string
     {
-        return $this->getId();
+        return (string) $this->getId();
     }
 
     /**
@@ -181,8 +169,8 @@ class ActivityOptionProposal implements OrganResourceInterface
             return $this->getOrgan()->getAbbr();
         }
 
-        if (!is_null($this->getOrganAlt())) {
-            return $this->getOrganAlt();
+        if (null !== ($organAlt = $this->getOrganAlt())) {
+            return $organAlt;
         }
 
         return $this->getCreator()->getFullName();

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Photo\Listener;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;

@@ -1,7 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
+use Application\Form\ModifyRequest as RequestForm;
 use Application\Model\Enums\ApprovableStatus;
+use Application\View\HelperTrait;
+use Company\Model\Job as JobModel;
 use Laminas\Form\Element\Text;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var RequestForm $approvalForm
+ * @var RequestForm $disapprovalForm
+ * @var JobModel $job
+ * @var RequestForm $resetForm
+ */
 
 $this->headTitle($this->escapeHtml($this->localiseText($job->getName())));
 $this->headTitle($this->translate('Approval'));

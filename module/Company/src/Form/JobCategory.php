@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Company\Form;
 
 use Company\Mapper\Category as CategoryMapper;

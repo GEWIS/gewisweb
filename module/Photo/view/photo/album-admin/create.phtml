@@ -1,4 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+use Photo\Form\CreateAlbum as CreateAlbumForm;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var CreateAlbumForm $form
+ */
+
 $this->breadcrumbs()
     ->addBreadcrumb($this->translate('Photos'), true, $this->url('admin_photo'))
     ->addBreadcrumb($this->translate('Create Album'));

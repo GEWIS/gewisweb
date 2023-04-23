@@ -1,10 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
+use Application\Form\ModifyRequest as RequestForm;
 use Application\Model\Enums\ApprovableStatus;
+use Application\View\HelperTrait;
 use Company\Model\Proposals\JobUpdate as JobUpdateModel;
 use Laminas\Form\Element\Text;
+use Laminas\View\Renderer\PhpRenderer;
 
-/** @var JobUpdateModel $proposal */
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var JobUpdateModel $proposal
+ * @var RequestForm $proposalApplyForm
+ * @var RequestForm $proposalRejectForm
+ */
 
 $original = $proposal->getOriginal();
 $proposed = $proposal->getProposal();

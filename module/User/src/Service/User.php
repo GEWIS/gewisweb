@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace User\Service;
 
 use Company\Mapper\Company as CompanyMapper;
@@ -82,9 +84,11 @@ class User
     ): bool {
         if ($newUser instanceof NewCompanyUserModel) {
             $adapter = $this->companyUserAuthService->getAdapter();
+            $newAdapter = $this->newCompanyUserMapper;
             $id = $newUser->getId();
         } else {
             $adapter = $this->userAuthService->getAdapter();
+            $newAdapter = $this->newUserMapper;
             $id = $newUser->getLidnr();
         }
 
@@ -113,7 +117,7 @@ class User
 
         // this will also save a user with a lost password
         $adapter->getMapper()->persist($user);
-        $adapter->getMapper()->remove($newUser);
+        $newAdapter->remove($newUser);
 
         return true;
     }
@@ -124,12 +128,12 @@ class User
     public function removeActivation(NewCompanyUserModel|NewUserModel $newUser): void
     {
         if ($newUser instanceof NewCompanyUserModel) {
-            $adapter = $this->companyUserAuthService->getAdapter();
+            $adapter = $this->newCompanyUserMapper;
         } else {
-            $adapter = $this->userAuthService->getAdapter();
+            $adapter = $this->newUserMapper;
         }
 
-        $adapter->getMapper()->remove($newUser);
+        $adapter->remove($newUser);
     }
 
     /**
@@ -152,7 +156,7 @@ class User
 
         // get the member
         $data = $form->getData();
-        $member = $this->memberMapper->findByLidnr($data['lidnr']);
+        $member = $this->memberMapper->findByLidnr(intval($data['lidnr']));
 
         if (null === $member) {
             $form->setError(RegisterForm::ERROR_MEMBER_NOT_EXISTS);

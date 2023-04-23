@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Company\Mapper;
 
 use Company\Model\CompanyFeaturedPackage as CompanyFeaturedPackageModel;
@@ -7,8 +9,7 @@ use Company\Model\CompanyFeaturedPackage as CompanyFeaturedPackageModel;
 /**
  * Mappers for package.
  *
- * NOTE: Packages will be modified externally by a script. Modifications will be
- * overwritten.
+ * @template-extends Package<CompanyFeaturedPackageModel>
  */
 class FeaturedPackage extends Package
 {

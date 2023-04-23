@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Photo\Mapper;
 
 use Application\Mapper\BaseMapper;
@@ -8,6 +10,8 @@ use Photo\Model\ProfilePhoto as ProfilePhotoModel;
 
 /**
  * Mappers for ProfilePhoto.
+ *
+ * @template-extends BaseMapper<ProfilePhotoModel>
  */
 class ProfilePhoto extends BaseMapper
 {
@@ -15,7 +19,7 @@ class ProfilePhoto extends BaseMapper
      * Checks if the specified photo exists in the database already and returns
      * it if it does.
      *
-     * @param int $lidnr The Id of the user to which the photo is assigned
+     * @param int $lidnr The lidnr of the user to which the photo is assigned
      *
      * @return ProfilePhotoModel|null
      *

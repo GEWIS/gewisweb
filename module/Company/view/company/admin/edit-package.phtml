@@ -1,8 +1,20 @@
 <?php
 
-use Company\Model\Enums\CompanyPackageTypes;
+declare(strict_types=1);
 
-/** @var CompanyPackageTypes $type */
+use Application\View\HelperTrait;
+use Company\Form\Package as PackageForm;
+use Company\Model\CompanyBannerPackage as CompanyBannerPackageModel;
+use Company\Model\CompanyJobPackage as CompanyJobPackageModel;
+use Company\Model\Enums\CompanyPackageTypes;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var string $companySlugName
+ * @var PackageForm $form
+ * @var CompanyPackageTypes $type
+ */
 
 $this->headTitle($this->translate('Edit Package'));
 
@@ -52,6 +64,7 @@ $form->setAttribute('class', 'form-company');
 <?= $this->form()->closeTag() ?>
 <hr>
 <?php if (CompanyPackageTypes::Banner === $type): ?>
+    <?php /** @var CompanyBannerPackageModel $package */ ?>
     <div class="row">
         <div class="col-md-12">
             <h2><?= $this->translate('Banner') ?></h2>
@@ -62,6 +75,7 @@ $form->setAttribute('class', 'form-company');
     </div>
     <hr>
 <?php elseif (CompanyPackageTypes::Job === $type): ?>
+    <?php /** @var CompanyJobPackageModel $package */ ?>
     <h2><?= $this->translate('Jobs') ?></h2>
     <table class="table table-striped">
         <thead>

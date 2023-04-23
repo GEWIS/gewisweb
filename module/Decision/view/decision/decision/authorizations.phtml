@@ -1,12 +1,30 @@
 <?php
-// set title
-$this->headTitle($this->translate('Authorizations')); ?>
-<?php $this->inlineScript()
+
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Decision\Model\{
+    Authorization as AuthorizationModel,
+    Meeting as MeetingModel,
+};
+use Decision\Form\Authorization as AuthorizationForm;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var AuthorizationModel|null $authorization
+ * @var AuthorizationForm $form
+ * @var MeetingModel|null $meeting
+ */
+
+$this->inlineScript()
     ->appendFile(
         $this->basePath() . '/js/autocomplete.min.js',
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     );
+
+$this->headTitle($this->translate('Authorizations'));
 
 $nf = new NumberFormatter($this->plugin('translate')->getTranslator()->getLocale(), NumberFormatter::ORDINAL);
 ?>

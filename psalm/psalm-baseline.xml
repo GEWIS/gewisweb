@@ -1,21 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="5.6.0@e784128902dfe01d489c4123d69918a9f3c1eac5">
-  <file src="module/Activity/src/Model/ActivityOptionProposal.php">
-    <InvalidNullableReturnType>
-      <code>OrganModel|string</code>
-      <code>string</code>
-    </InvalidNullableReturnType>
-  </file>
-  <file src="module/Activity/src/Service/Signup.php">
-    <InvalidReturnStatement>
-      <code>$this-&gt;createSignup($signup, $signupList, $fieldResults)</code>
-      <code>$this-&gt;createSignup($signup, $signupList, $fieldResults)</code>
-    </InvalidReturnStatement>
-    <InvalidReturnType>
-      <code>ExternalSignupModel</code>
-      <code>UserSignupModel</code>
-    </InvalidReturnType>
-  </file>
   <file src="module/Application/src/Service/WatermarkService.php">
     <TypeDoesNotContainNull>
       <code>$this-&gt;remoteAddress</code>
@@ -41,7 +25,7 @@
 
             $document-&gt;setDisplayPosition($position);
 
-            $this-&gt;meetingMapper-&gt;persist($document);
+            $this-&gt;meetingDocumentMapper-&gt;persist($document);
         }</code>
       <code>function (MeetingDocumentModel $document) {
             return $document-&gt;getId();

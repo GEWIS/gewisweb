@@ -1,4 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Decision\Form\OrganInformation as OrganInformationForm;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var OrganInformationForm $form
+ */
+
 $lang = $this->plugin('translate')->getTranslator()->getLocale();
 
 $this->headScript()
@@ -53,7 +65,6 @@ $this->breadcrumbs()
     }
 </style>
 <?php
-$form = $this->form;
 $form->prepare();
 
 $form->setAttribute('method', 'post');

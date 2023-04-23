@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Photo\Controller\Factory\Plugin;
 
 use Psr\Container\ContainerInterface;

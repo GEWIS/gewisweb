@@ -1,3 +1,16 @@
+<?php
+
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Company\Model\JobCategory as JobCategoryModel;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var JobCategoryModel[] $categoryList
+ */
+?>
 <div class="row">
     <div class="col-sm-6">
         <a class="btn btn-success" href='<?= $this->url('company_admin/categories/add') ?>'>

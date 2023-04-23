@@ -1,9 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
 use Education\Model\{
+    Course as CourseModel,
     Exam as ExamModel,
     Summary as SummaryModel,
 };
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var CourseModel $course
+ */
 
 $this->scriptUrl()->requireUrls(
     ['admin_education/course/documents/delete'],

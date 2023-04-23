@@ -1,8 +1,16 @@
 <?php
-/* An activity overview list. Parameters:
- * $header
- * $activities
- * $admin
+
+declare(strict_types=1);
+
+use Activity\Model\Activity as ActivityModel;
+use Application\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var ActivityModel[] $activities
+ * @var bool $admin
+ * @var string $header
  */
 ?>
 <h1><?= $header ?></h1>

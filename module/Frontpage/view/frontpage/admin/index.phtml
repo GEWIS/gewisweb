@@ -1,3 +1,12 @@
+<?php
+
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+
+/** @var PhpRenderer|HelperTrait $this */
+?>
 <?= $this->translate('Welcome to the admin interface of the GEWIS website. If you are experiencing any issues or have a question, please contact the ApplicatieBeheerCommissie.'); ?>
 
 <h2><?= $this->translate('Recent changes') ?></h2>

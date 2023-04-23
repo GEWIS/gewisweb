@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Frontpage\Service;
 
 use Application\Service\FileStorage;
@@ -69,7 +71,7 @@ class Page
      *
      * @param PageModel $page
      *
-     * @return array
+     * @return array<array-key, PageModel|null>
      */
     public function getPageParents(PageModel $page): array
     {

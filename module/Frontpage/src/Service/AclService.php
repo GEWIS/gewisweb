@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Frontpage\Service;
 
 class AclService extends \User\Service\AclService

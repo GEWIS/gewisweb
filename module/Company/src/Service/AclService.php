@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Company\Service;
 
 class AclService extends \User\Service\AclService

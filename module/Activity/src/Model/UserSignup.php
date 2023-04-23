@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Activity\Model;
 
 use Decision\Model\Member as MemberModel;

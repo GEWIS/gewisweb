@@ -1,6 +1,18 @@
 <?php
-// set title
-$this->headTitle($this->translate('Request a poll')); ?>
+
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Frontpage\Form\Poll as PollForm;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var PollForm $form
+ */
+
+$this->headTitle($this->translate('Request a poll'));
+?>
 <section class="section">
     <div class="container">
         <div class="row">

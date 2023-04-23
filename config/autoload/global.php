@@ -12,6 +12,8 @@
  * file.
  */
 
+declare(strict_types=1);
+
 use Application\Extensions\Doctrine\{
     Rand,
     Year,

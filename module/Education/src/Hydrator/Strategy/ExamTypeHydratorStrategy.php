@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Education\Hydrator\Strategy;
 
 use Education\Model\Enums\ExamTypes;

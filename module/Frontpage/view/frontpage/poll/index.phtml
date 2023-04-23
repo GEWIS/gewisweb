@@ -1,4 +1,23 @@
 <?php
+
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Frontpage\Form\PollComment as PollCommentForm;
+use Frontpage\Model\{
+    Poll as PollModel,
+    PollVote as PollVoteModel,
+};
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var bool $canVote
+ * @var PollCommentForm $commentForm
+ * @var PollModel|null $poll
+ * @var PollVoteModel $userVote
+ */
+
 if (!isset($poll)) {
     $title = $this->translate('Polls');
 } else {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace User\Service;
 
 use Company\Model\Company as CompanyModel;

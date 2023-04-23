@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Photo\Mapper;
 
 use Application\Mapper\BaseMapper;
@@ -9,6 +11,8 @@ use Photo\Model\Vote as VoteModel;
 
 /**
  * Mappers for Vote.
+ *
+ * @template-extends BaseMapper<VoteModel>
  */
 class Vote extends BaseMapper
 {
@@ -19,7 +23,7 @@ class Vote extends BaseMapper
      * @param DateTime $startDate
      * @param DateTime $endDate
      *
-     * @return array of array of string
+     * @return array<array-key, array{1: int, 2: int}>
      */
     public function getVotesInRange(
         DateTime $startDate,
@@ -27,7 +31,7 @@ class Vote extends BaseMapper
     ): array {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select('IDENTITY(vote.photo)', 'Count(vote.photo)')
+        $qb->select('IDENTITY(vote.photo)', 'COUNT(vote.photo)')
             ->from($this->getRepositoryName(), 'vote')
             ->where('vote.dateTime BETWEEN ?1 AND ?2')
             ->groupBy('vote.photo')

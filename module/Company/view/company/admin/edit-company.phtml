@@ -1,6 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Company\Form\Company as CompanyForm;
+use Company\Model\Company as CompanyModel;
 use Company\Model\Enums\CompanyPackageTypes;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var CompanyModel $company
+ * @var CompanyForm $form
+ */
 
 $this->headTitle($this->translate('Edit Company'));
 $this->breadcrumbs()

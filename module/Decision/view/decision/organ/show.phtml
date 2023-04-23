@@ -1,10 +1,26 @@
 <?php
-// set title
-$this->headTitle($organ->getName()); ?>
+
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Decision\Model\Member as MemberModel;
+use Decision\Model\Organ as OrganModel;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var array<array-key, array{member: MemberModel, functions: array<array-key, string>}> $activeMembers
+ * @var MemberModel[] $inactiveMembers
+ * @var MemberModel[] $oldMembers
+ * @var OrganModel $organ
+ */
+
+$this->headTitle($organ->getName());
+?>
 <section class="section">
     <div class="container">
         <div class="row">
-            <h1><?= $organ->getName() ?> (<?= $organ->getAbbr() ?>)</h1>
+            <h1><?= $this->escapeHtml($organ->getName()) ?> (<?= $this->escapeHtml($organ->getAbbr()) ?>)</h1>
             <div class="col-md-4">
                 <h2><?= $this->translate('Active members') ?></h2>
                 <ul>
@@ -14,15 +30,17 @@ $this->headTitle($organ->getName()); ?>
                                 'member/view',
                                 ['lidnr' => $membership['member']->getLidnr()],
                             ) ?>">
-                                <?= $membership['member']->getFullName() ?>
+                                <?= $this->escapeHtml($membership['member']->getFullName()) ?>
                             </a>
                             <?php if (!empty($membership['functions'])): ?>
-                                (<?= implode(
-                                    ', ',
-                                    array_map(
-                                        fn (string $value): string => $this->translate($value),
-                                        $membership['functions'],
-                                    ),
+                                (<?= $this->escapeHtml(
+                                    implode(
+                                        ', ',
+                                        array_map(
+                                            fn (string $value): string => $this->translate($value),
+                                            $membership['functions'],
+                                        ),
+                                    )
                                 ) ?>)
                             <?php endif ?>
                         </li>
@@ -34,7 +52,7 @@ $this->headTitle($organ->getName()); ?>
                     <?php foreach ($inactiveMembers as $membership): ?>
                         <li>
                             <a href="<?= $this->url('member/view', ['lidnr' => $membership->getLidnr()]) ?>">
-                                <?= $membership->getFullName() ?>
+                                <?= $this->escapeHtml($membership->getFullName()) ?>
                             </a>
                         </li>
                     <?php endforeach ?>
@@ -43,7 +61,7 @@ $this->headTitle($organ->getName()); ?>
                 <h2><?= $this->translate('Old members') ?></h2>
                 <ul>
                     <?php foreach ($oldMembers as $member): ?>
-                        <li><?= $member->getFullName() ?></li>
+                        <li><?= $this->escapeHtml($member->getFullName()) ?></li>
                     <?php endforeach ?>
                 </ul>
             </div>
@@ -52,7 +70,7 @@ $this->headTitle($organ->getName()); ?>
                 <h2><?= $this->translate('Organ mutations') ?></h2>
                 <ul>
                     <?php foreach ($organ->getOrderedSubdecisions() as $subdecision): ?>
-                        <li><?= $subdecision->getContent() ?></li>
+                        <li><?= $this->escapeHtml($subdecision->getContent()) ?></li>
                     <?php endforeach ?>
                 </ul>
             </div>

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Education\Mapper;
 
 use Application\Mapper\BaseMapper;
@@ -11,7 +13,9 @@ use Education\Model\{
 };
 
 /**
- * Mapper for Exam.
+ * Mapper for course documents.
+ *
+ * @template-extends BaseMapper<CourseDocumentModel>
  */
 class CourseDocument extends BaseMapper
 {

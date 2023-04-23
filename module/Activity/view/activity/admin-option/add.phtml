@@ -1,4 +1,17 @@
 <?php
+
+declare(strict_types=1);
+
+use Activity\Form\ActivityCalendarPeriod as ActivityCalendarPeriodForm;
+use Application\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var string $action
+ * @var ActivityCalendarPeriodForm $form
+ */
+
 $this->breadcrumbs()
     ->addBreadcrumb($this->translate('Option Calendar'), true, $this->url('activity_admin_options'))
     ->addBreadcrumb($action);
