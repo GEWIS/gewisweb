@@ -818,7 +818,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Activity\\Mapper\\Activity",
             "name": "Activity",
-            "summary": "",
+            "summary": "The\u0020base\u0020mapper\u0020to\u0020be\u0020used\u0020for\u0020all\u0020other\u0020mappers.\u0020It\u0020helps\u0020with\u0020preventing\u0020duplicate\u0020Doctrine\u0020code.\u0020It\u0020uses\u0020special\ntypes\u0020to\u0020ensure\u0020that\u0020the\u0020returned\u0020values\u0020are\u0020as\u0020expected.\u0020As\u0020\u007B\u0040link\u0020LocalisedTextModel\u007D\u0020does\u0020not\u0020have\u0020its\u0020own\u0020mapper,\nany\u0020of\u0020such\u0020objects\u0020can\u0020be\u0020persisted\u0020and\/or\u0020removed\u0020from\u0020the\u0020base\u0020mapper.",
             "url": "classes/Activity-Mapper-Activity.html"
         },                {
             "fqsen": "\\Activity\\Mapper\\Activity\u003A\u003AgetUpcomingActivities\u0028\u0029",
@@ -843,7 +843,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Activity\\Mapper\\Activity\u003A\u003AgetUpcomingActivitiesByOrgan\u0028\u0029",
             "name": "getUpcomingActivitiesByOrgan",
-            "summary": "Get\u0020upcoming\u0020activities\u0020sorted\u0020by\u0020date\u0020that\u0020a\u0020organ\u0020created.",
+            "summary": "Get\u0020upcoming\u0020activities\u0020sorted\u0020by\u0020date\u0020that\u0020an\u0020organ\u0020created.",
             "url": "classes/Activity-Mapper-Activity.html#method_getUpcomingActivitiesByOrgan"
         },                {
             "fqsen": "\\Activity\\Mapper\\Activity\u003A\u003AgetAllUpcomingActivities\u0028\u0029",
@@ -878,7 +878,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Activity\\Mapper\\ActivityCalendarOption",
             "name": "ActivityCalendarOption",
-            "summary": "",
+            "summary": "The\u0020base\u0020mapper\u0020to\u0020be\u0020used\u0020for\u0020all\u0020other\u0020mappers.\u0020It\u0020helps\u0020with\u0020preventing\u0020duplicate\u0020Doctrine\u0020code.\u0020It\u0020uses\u0020special\ntypes\u0020to\u0020ensure\u0020that\u0020the\u0020returned\u0020values\u0020are\u0020as\u0020expected.\u0020As\u0020\u007B\u0040link\u0020LocalisedTextModel\u007D\u0020does\u0020not\u0020have\u0020its\u0020own\u0020mapper,\nany\u0020of\u0020such\u0020objects\u0020can\u0020be\u0020persisted\u0020and\/or\u0020removed\u0020from\u0020the\u0020base\u0020mapper.",
             "url": "classes/Activity-Mapper-ActivityCalendarOption.html"
         },                {
             "fqsen": "\\Activity\\Mapper\\ActivityCalendarOption\u003A\u003AgetUpcomingOptionsByOrgans\u0028\u0029",
@@ -908,7 +908,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Activity\\Mapper\\ActivityCategory",
             "name": "ActivityCategory",
-            "summary": "",
+            "summary": "The\u0020base\u0020mapper\u0020to\u0020be\u0020used\u0020for\u0020all\u0020other\u0020mappers.\u0020It\u0020helps\u0020with\u0020preventing\u0020duplicate\u0020Doctrine\u0020code.\u0020It\u0020uses\u0020special\ntypes\u0020to\u0020ensure\u0020that\u0020the\u0020returned\u0020values\u0020are\u0020as\u0020expected.\u0020As\u0020\u007B\u0040link\u0020LocalisedTextModel\u007D\u0020does\u0020not\u0020have\u0020its\u0020own\u0020mapper,\nany\u0020of\u0020such\u0020objects\u0020can\u0020be\u0020persisted\u0020and\/or\u0020removed\u0020from\u0020the\u0020base\u0020mapper.",
             "url": "classes/Activity-Mapper-ActivityCategory.html"
         },                {
             "fqsen": "\\Activity\\Mapper\\ActivityCategory\u003A\u003AgetRepositoryName\u0028\u0029",
@@ -918,7 +918,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Activity\\Mapper\\ActivityOptionCreationPeriod",
             "name": "ActivityOptionCreationPeriod",
-            "summary": "",
+            "summary": "The\u0020base\u0020mapper\u0020to\u0020be\u0020used\u0020for\u0020all\u0020other\u0020mappers.\u0020It\u0020helps\u0020with\u0020preventing\u0020duplicate\u0020Doctrine\u0020code.\u0020It\u0020uses\u0020special\ntypes\u0020to\u0020ensure\u0020that\u0020the\u0020returned\u0020values\u0020are\u0020as\u0020expected.\u0020As\u0020\u007B\u0040link\u0020LocalisedTextModel\u007D\u0020does\u0020not\u0020have\u0020its\u0020own\u0020mapper,\nany\u0020of\u0020such\u0020objects\u0020can\u0020be\u0020persisted\u0020and\/or\u0020removed\u0020from\u0020the\u0020base\u0020mapper.",
             "url": "classes/Activity-Mapper-ActivityOptionCreationPeriod.html"
         },                {
             "fqsen": "\\Activity\\Mapper\\ActivityOptionCreationPeriod\u003A\u003AgetCurrentActivityOptionCreationPeriods\u0028\u0029",
@@ -938,7 +938,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Activity\\Mapper\\ActivityOptionProposal",
             "name": "ActivityOptionProposal",
-            "summary": "",
+            "summary": "The\u0020base\u0020mapper\u0020to\u0020be\u0020used\u0020for\u0020all\u0020other\u0020mappers.\u0020It\u0020helps\u0020with\u0020preventing\u0020duplicate\u0020Doctrine\u0020code.\u0020It\u0020uses\u0020special\ntypes\u0020to\u0020ensure\u0020that\u0020the\u0020returned\u0020values\u0020are\u0020as\u0020expected.\u0020As\u0020\u007B\u0040link\u0020LocalisedTextModel\u007D\u0020does\u0020not\u0020have\u0020its\u0020own\u0020mapper,\nany\u0020of\u0020such\u0020objects\u0020can\u0020be\u0020persisted\u0020and\/or\u0020removed\u0020from\u0020the\u0020base\u0020mapper.",
             "url": "classes/Activity-Mapper-ActivityOptionProposal.html"
         },                {
             "fqsen": "\\Activity\\Mapper\\ActivityOptionProposal\u003A\u003AgetNonClosedProposalsWithinPeriodAndOrgan\u0028\u0029",
@@ -953,7 +953,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Activity\\Mapper\\MaxActivities",
             "name": "MaxActivities",
-            "summary": "",
+            "summary": "The\u0020base\u0020mapper\u0020to\u0020be\u0020used\u0020for\u0020all\u0020other\u0020mappers.\u0020It\u0020helps\u0020with\u0020preventing\u0020duplicate\u0020Doctrine\u0020code.\u0020It\u0020uses\u0020special\ntypes\u0020to\u0020ensure\u0020that\u0020the\u0020returned\u0020values\u0020are\u0020as\u0020expected.\u0020As\u0020\u007B\u0040link\u0020LocalisedTextModel\u007D\u0020does\u0020not\u0020have\u0020its\u0020own\u0020mapper,\nany\u0020of\u0020such\u0020objects\u0020can\u0020be\u0020persisted\u0020and\/or\u0020removed\u0020from\u0020the\u0020base\u0020mapper.",
             "url": "classes/Activity-Mapper-MaxActivities.html"
         },                {
             "fqsen": "\\Activity\\Mapper\\MaxActivities\u003A\u003AgetMaxActivityOptionsByOrganPeriod\u0028\u0029",
@@ -968,7 +968,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Activity\\Mapper\\Proposal",
             "name": "Proposal",
-            "summary": "",
+            "summary": "The\u0020base\u0020mapper\u0020to\u0020be\u0020used\u0020for\u0020all\u0020other\u0020mappers.\u0020It\u0020helps\u0020with\u0020preventing\u0020duplicate\u0020Doctrine\u0020code.\u0020It\u0020uses\u0020special\ntypes\u0020to\u0020ensure\u0020that\u0020the\u0020returned\u0020values\u0020are\u0020as\u0020expected.\u0020As\u0020\u007B\u0040link\u0020LocalisedTextModel\u007D\u0020does\u0020not\u0020have\u0020its\u0020own\u0020mapper,\nany\u0020of\u0020such\u0020objects\u0020can\u0020be\u0020persisted\u0020and\/or\u0020removed\u0020from\u0020the\u0020base\u0020mapper.",
             "url": "classes/Activity-Mapper-Proposal.html"
         },                {
             "fqsen": "\\Activity\\Mapper\\Proposal\u003A\u003AgetRepositoryName\u0028\u0029",
@@ -978,7 +978,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Activity\\Mapper\\Signup",
             "name": "Signup",
-            "summary": "",
+            "summary": "The\u0020base\u0020mapper\u0020to\u0020be\u0020used\u0020for\u0020all\u0020other\u0020mappers.\u0020It\u0020helps\u0020with\u0020preventing\u0020duplicate\u0020Doctrine\u0020code.\u0020It\u0020uses\u0020special\ntypes\u0020to\u0020ensure\u0020that\u0020the\u0020returned\u0020values\u0020are\u0020as\u0020expected.\u0020As\u0020\u007B\u0040link\u0020LocalisedTextModel\u007D\u0020does\u0020not\u0020have\u0020its\u0020own\u0020mapper,\nany\u0020of\u0020such\u0020objects\u0020can\u0020be\u0020persisted\u0020and\/or\u0020removed\u0020from\u0020the\u0020base\u0020mapper.",
             "url": "classes/Activity-Mapper-Signup.html"
         },                {
             "fqsen": "\\Activity\\Mapper\\Signup\u003A\u003AisSignedUp\u0028\u0029",
@@ -1008,7 +1008,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Activity\\Mapper\\SignupFieldValue",
             "name": "SignupFieldValue",
-            "summary": "",
+            "summary": "The\u0020base\u0020mapper\u0020to\u0020be\u0020used\u0020for\u0020all\u0020other\u0020mappers.\u0020It\u0020helps\u0020with\u0020preventing\u0020duplicate\u0020Doctrine\u0020code.\u0020It\u0020uses\u0020special\ntypes\u0020to\u0020ensure\u0020that\u0020the\u0020returned\u0020values\u0020are\u0020as\u0020expected.\u0020As\u0020\u007B\u0040link\u0020LocalisedTextModel\u007D\u0020does\u0020not\u0020have\u0020its\u0020own\u0020mapper,\nany\u0020of\u0020such\u0020objects\u0020can\u0020be\u0020persisted\u0020and\/or\u0020removed\u0020from\u0020the\u0020base\u0020mapper.",
             "url": "classes/Activity-Mapper-SignupFieldValue.html"
         },                {
             "fqsen": "\\Activity\\Mapper\\SignupFieldValue\u003A\u003AgetFieldValuesBySignup\u0028\u0029",
@@ -1023,7 +1023,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Activity\\Mapper\\SignupList",
             "name": "SignupList",
-            "summary": "",
+            "summary": "The\u0020base\u0020mapper\u0020to\u0020be\u0020used\u0020for\u0020all\u0020other\u0020mappers.\u0020It\u0020helps\u0020with\u0020preventing\u0020duplicate\u0020Doctrine\u0020code.\u0020It\u0020uses\u0020special\ntypes\u0020to\u0020ensure\u0020that\u0020the\u0020returned\u0020values\u0020are\u0020as\u0020expected.\u0020As\u0020\u007B\u0040link\u0020LocalisedTextModel\u007D\u0020does\u0020not\u0020have\u0020its\u0020own\u0020mapper,\nany\u0020of\u0020such\u0020objects\u0020can\u0020be\u0020persisted\u0020and\/or\u0020removed\u0020from\u0020the\u0020base\u0020mapper.",
             "url": "classes/Activity-Mapper-SignupList.html"
         },                {
             "fqsen": "\\Activity\\Mapper\\SignupList\u003A\u003AgetSignupListByIdAndActivity\u0028\u0029",
@@ -1038,7 +1038,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Activity\\Mapper\\SignupOption",
             "name": "SignupOption",
-            "summary": "",
+            "summary": "The\u0020base\u0020mapper\u0020to\u0020be\u0020used\u0020for\u0020all\u0020other\u0020mappers.\u0020It\u0020helps\u0020with\u0020preventing\u0020duplicate\u0020Doctrine\u0020code.\u0020It\u0020uses\u0020special\ntypes\u0020to\u0020ensure\u0020that\u0020the\u0020returned\u0020values\u0020are\u0020as\u0020expected.\u0020As\u0020\u007B\u0040link\u0020LocalisedTextModel\u007D\u0020does\u0020not\u0020have\u0020its\u0020own\u0020mapper,\nany\u0020of\u0020such\u0020objects\u0020can\u0020be\u0020persisted\u0020and\/or\u0020removed\u0020from\u0020the\u0020base\u0020mapper.",
             "url": "classes/Activity-Mapper-SignupOption.html"
         },                {
             "fqsen": "\\Activity\\Mapper\\SignupOption\u003A\u003AgetRepositoryName\u0028\u0029",
@@ -1655,11 +1655,6 @@ Search.appendIndex(
             "name": "setOrgan",
             "summary": "",
             "url": "classes/Activity-Model-ActivityOptionProposal.html#method_setOrgan"
-        },                {
-            "fqsen": "\\Activity\\Model\\ActivityOptionProposal\u003A\u003AgetOrganOrAlt\u0028\u0029",
-            "name": "getOrganOrAlt",
-            "summary": "",
-            "url": "classes/Activity-Model-ActivityOptionProposal.html#method_getOrganOrAlt"
         },                {
             "fqsen": "\\Activity\\Model\\ActivityOptionProposal\u003A\u003AgetResourceId\u0028\u0029",
             "name": "getResourceId",
@@ -2576,6 +2571,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Activity-Service-ActivityCalendar.html#property_calendarOptionMapper"
         },                {
+            "fqsen": "\\Activity\\Service\\ActivityCalendar\u003A\u003A\u0024maxActivitiesMapper",
+            "name": "maxActivitiesMapper",
+            "summary": "",
+            "url": "classes/Activity-Service-ActivityCalendar.html#property_maxActivitiesMapper"
+        },                {
             "fqsen": "\\Activity\\Service\\ActivityCalendar\u003A\u003A\u0024memberMapper",
             "name": "memberMapper",
             "summary": "",
@@ -3223,7 +3223,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Application\\Mapper\\BaseMapper",
             "name": "BaseMapper",
-            "summary": "",
+            "summary": "The\u0020base\u0020mapper\u0020to\u0020be\u0020used\u0020for\u0020all\u0020other\u0020mappers.\u0020It\u0020helps\u0020with\u0020preventing\u0020duplicate\u0020Doctrine\u0020code.\u0020It\u0020uses\u0020special\ntypes\u0020to\u0020ensure\u0020that\u0020the\u0020returned\u0020values\u0020are\u0020as\u0020expected.\u0020As\u0020\u007B\u0040link\u0020LocalisedTextModel\u007D\u0020does\u0020not\u0020have\u0020its\u0020own\u0020mapper,\nany\u0020of\u0020such\u0020objects\u0020can\u0020be\u0020persisted\u0020and\/or\u0020removed\u0020from\u0020the\u0020base\u0020mapper.",
             "url": "classes/Application-Mapper-BaseMapper.html"
         },                {
             "fqsen": "\\Application\\Mapper\\BaseMapper\u003A\u003A__construct\u0028\u0029",
@@ -4110,6 +4110,11 @@ Search.appendIndex(
             "name": "__invoke",
             "summary": "",
             "url": "classes/Application-View-Helper-Truncate.html#method___invoke"
+        },                {
+            "fqsen": "\\Application\\View\\HelperTrait",
+            "name": "HelperTrait",
+            "summary": "Helper\u0020trait\u0020for\u0020auto\u002Dcompletion\u0020of\u0020code\u0020in\u0020modern\u0020IDEs.",
+            "url": "classes/Application-View-HelperTrait.html"
         },                {
             "fqsen": "\\ApplicationTest\\AutomaticControllerTest",
             "name": "AutomaticControllerTest",
@@ -5195,6 +5200,16 @@ Search.appendIndex(
             "name": "getRepositoryName",
             "summary": "",
             "url": "classes/Company-Mapper-Job.html#method_getRepositoryName"
+        },                {
+            "fqsen": "\\Company\\Mapper\\JobUpdate",
+            "name": "JobUpdate",
+            "summary": "Mappers\u0020for\u0020job\u0020update\u0020proposals.",
+            "url": "classes/Company-Mapper-JobUpdate.html"
+        },                {
+            "fqsen": "\\Company\\Mapper\\JobUpdate\u003A\u003AgetRepositoryName\u0028\u0029",
+            "name": "getRepositoryName",
+            "summary": "",
+            "url": "classes/Company-Mapper-JobUpdate.html#method_getRepositoryName"
         },                {
             "fqsen": "\\Company\\Mapper\\Label",
             "name": "Label",
@@ -6546,6 +6561,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Company-Service-Company.html#property_jobMapper"
         },                {
+            "fqsen": "\\Company\\Service\\Company\u003A\u003A\u0024jobUpdateMapper",
+            "name": "jobUpdateMapper",
+            "summary": "",
+            "url": "classes/Company-Service-Company.html#property_jobUpdateMapper"
+        },                {
             "fqsen": "\\Company\\Service\\Company\u003A\u003A\u0024categoryMapper",
             "name": "categoryMapper",
             "summary": "",
@@ -7313,7 +7333,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Decision\\Mapper\\Decision",
             "name": "Decision",
-            "summary": "",
+            "summary": "The\u0020base\u0020mapper\u0020to\u0020be\u0020used\u0020for\u0020all\u0020other\u0020mappers.\u0020It\u0020helps\u0020with\u0020preventing\u0020duplicate\u0020Doctrine\u0020code.\u0020It\u0020uses\u0020special\ntypes\u0020to\u0020ensure\u0020that\u0020the\u0020returned\u0020values\u0020are\u0020as\u0020expected.\u0020As\u0020\u007B\u0040link\u0020LocalisedTextModel\u007D\u0020does\u0020not\u0020have\u0020its\u0020own\u0020mapper,\nany\u0020of\u0020such\u0020objects\u0020can\u0020be\u0020persisted\u0020and\/or\u0020removed\u0020from\u0020the\u0020base\u0020mapper.",
             "url": "classes/Decision-Mapper-Decision.html"
         },                {
             "fqsen": "\\Decision\\Mapper\\Decision\u003A\u003Asearch\u0028\u0029",
@@ -7328,7 +7348,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Decision\\Mapper\\Meeting",
             "name": "Meeting",
-            "summary": "",
+            "summary": "The\u0020base\u0020mapper\u0020to\u0020be\u0020used\u0020for\u0020all\u0020other\u0020mappers.\u0020It\u0020helps\u0020with\u0020preventing\u0020duplicate\u0020Doctrine\u0020code.\u0020It\u0020uses\u0020special\ntypes\u0020to\u0020ensure\u0020that\u0020the\u0020returned\u0020values\u0020are\u0020as\u0020expected.\u0020As\u0020\u007B\u0040link\u0020LocalisedTextModel\u007D\u0020does\u0020not\u0020have\u0020its\u0020own\u0020mapper,\nany\u0020of\u0020such\u0020objects\u0020can\u0020be\u0020persisted\u0020and\/or\u0020removed\u0020from\u0020the\u0020base\u0020mapper.",
             "url": "classes/Decision-Mapper-Meeting.html"
         },                {
             "fqsen": "\\Decision\\Mapper\\Meeting\u003A\u003AfindAllMeetings\u0028\u0029",
@@ -7351,16 +7371,6 @@ Search.appendIndex(
             "summary": "Find\u0020a\u0020meeting\u0020with\u0020all\u0020decisions.",
             "url": "classes/Decision-Mapper-Meeting.html#method_findMeeting"
         },                {
-            "fqsen": "\\Decision\\Mapper\\Meeting\u003A\u003AfindDocument\u0028\u0029",
-            "name": "findDocument",
-            "summary": "",
-            "url": "classes/Decision-Mapper-Meeting.html#method_findDocument"
-        },                {
-            "fqsen": "\\Decision\\Mapper\\Meeting\u003A\u003AfindDocumentOrFail\u0028\u0029",
-            "name": "findDocumentOrFail",
-            "summary": "Returns\u0020the\u0020document\u0020with\u0020the\u0020specified\u0020ID.",
-            "url": "classes/Decision-Mapper-Meeting.html#method_findDocumentOrFail"
-        },                {
             "fqsen": "\\Decision\\Mapper\\Meeting\u003A\u003AfindMaxDocumentPosition\u0028\u0029",
             "name": "findMaxDocumentPosition",
             "summary": "Returns\u0020the\u0020maximum\u0020document\u0020position\u0020for\u0020the\u0020given\u0020meeting.",
@@ -7381,9 +7391,34 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Decision-Mapper-Meeting.html#method_getRepositoryName"
         },                {
+            "fqsen": "\\Decision\\Mapper\\MeetingDocument",
+            "name": "MeetingDocument",
+            "summary": "The\u0020base\u0020mapper\u0020to\u0020be\u0020used\u0020for\u0020all\u0020other\u0020mappers.\u0020It\u0020helps\u0020with\u0020preventing\u0020duplicate\u0020Doctrine\u0020code.\u0020It\u0020uses\u0020special\ntypes\u0020to\u0020ensure\u0020that\u0020the\u0020returned\u0020values\u0020are\u0020as\u0020expected.\u0020As\u0020\u007B\u0040link\u0020LocalisedTextModel\u007D\u0020does\u0020not\u0020have\u0020its\u0020own\u0020mapper,\nany\u0020of\u0020such\u0020objects\u0020can\u0020be\u0020persisted\u0020and\/or\u0020removed\u0020from\u0020the\u0020base\u0020mapper.",
+            "url": "classes/Decision-Mapper-MeetingDocument.html"
+        },                {
+            "fqsen": "\\Decision\\Mapper\\MeetingDocument\u003A\u003AfindDocumentOrFail\u0028\u0029",
+            "name": "findDocumentOrFail",
+            "summary": "Returns\u0020the\u0020document\u0020with\u0020the\u0020specified\u0020ID.",
+            "url": "classes/Decision-Mapper-MeetingDocument.html#method_findDocumentOrFail"
+        },                {
+            "fqsen": "\\Decision\\Mapper\\MeetingDocument\u003A\u003AgetRepositoryName\u0028\u0029",
+            "name": "getRepositoryName",
+            "summary": "",
+            "url": "classes/Decision-Mapper-MeetingDocument.html#method_getRepositoryName"
+        },                {
+            "fqsen": "\\Decision\\Mapper\\MeetingMinutes",
+            "name": "MeetingMinutes",
+            "summary": "The\u0020base\u0020mapper\u0020to\u0020be\u0020used\u0020for\u0020all\u0020other\u0020mappers.\u0020It\u0020helps\u0020with\u0020preventing\u0020duplicate\u0020Doctrine\u0020code.\u0020It\u0020uses\u0020special\ntypes\u0020to\u0020ensure\u0020that\u0020the\u0020returned\u0020values\u0020are\u0020as\u0020expected.\u0020As\u0020\u007B\u0040link\u0020LocalisedTextModel\u007D\u0020does\u0020not\u0020have\u0020its\u0020own\u0020mapper,\nany\u0020of\u0020such\u0020objects\u0020can\u0020be\u0020persisted\u0020and\/or\u0020removed\u0020from\u0020the\u0020base\u0020mapper.",
+            "url": "classes/Decision-Mapper-MeetingMinutes.html"
+        },                {
+            "fqsen": "\\Decision\\Mapper\\MeetingMinutes\u003A\u003AgetRepositoryName\u0028\u0029",
+            "name": "getRepositoryName",
+            "summary": "",
+            "url": "classes/Decision-Mapper-MeetingMinutes.html#method_getRepositoryName"
+        },                {
             "fqsen": "\\Decision\\Mapper\\Member",
             "name": "Member",
-            "summary": "",
+            "summary": "The\u0020base\u0020mapper\u0020to\u0020be\u0020used\u0020for\u0020all\u0020other\u0020mappers.\u0020It\u0020helps\u0020with\u0020preventing\u0020duplicate\u0020Doctrine\u0020code.\u0020It\u0020uses\u0020special\ntypes\u0020to\u0020ensure\u0020that\u0020the\u0020returned\u0020values\u0020are\u0020as\u0020expected.\u0020As\u0020\u007B\u0040link\u0020LocalisedTextModel\u007D\u0020does\u0020not\u0020have\u0020its\u0020own\u0020mapper,\nany\u0020of\u0020such\u0020objects\u0020can\u0020be\u0020persisted\u0020and\/or\u0020removed\u0020from\u0020the\u0020base\u0020mapper.",
             "url": "classes/Decision-Mapper-Member.html"
         },                {
             "fqsen": "\\Decision\\Mapper\\Member\u003A\u003AfindByLidnr\u0028\u0029",
@@ -10126,6 +10161,16 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Decision-Service-Decision.html#property_meetingMapper"
         },                {
+            "fqsen": "\\Decision\\Service\\Decision\u003A\u003A\u0024meetingDocumentMapper",
+            "name": "meetingDocumentMapper",
+            "summary": "",
+            "url": "classes/Decision-Service-Decision.html#property_meetingDocumentMapper"
+        },                {
+            "fqsen": "\\Decision\\Service\\Decision\u003A\u003A\u0024meetingMinutesMapper",
+            "name": "meetingMinutesMapper",
+            "summary": "",
+            "url": "classes/Decision-Service-Decision.html#property_meetingMinutesMapper"
+        },                {
             "fqsen": "\\Decision\\Service\\Decision\u003A\u003A\u0024decisionMapper",
             "name": "decisionMapper",
             "summary": "",
@@ -10818,7 +10863,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Education\\Mapper\\CourseDocument",
             "name": "CourseDocument",
-            "summary": "Mapper\u0020for\u0020Exam.",
+            "summary": "Mapper\u0020for\u0020course\u0020documents.",
             "url": "classes/Education-Mapper-CourseDocument.html"
         },                {
             "fqsen": "\\Education\\Mapper\\CourseDocument\u003A\u003AfindDocumentsByCourse\u0028\u0029",
@@ -11891,11 +11936,6 @@ Search.appendIndex(
             "summary": "Mappers\u0020for\u0020Polls.",
             "url": "classes/Frontpage-Mapper-Poll.html"
         },                {
-            "fqsen": "\\Frontpage\\Mapper\\Poll\u003A\u003AfindPollOptionById\u0028\u0029",
-            "name": "findPollOptionById",
-            "summary": "Returns\u0020a\u0020poll\u0020based\u0020on\u0020its\u0020id.",
-            "url": "classes/Frontpage-Mapper-Poll.html#method_findPollOptionById"
-        },                {
             "fqsen": "\\Frontpage\\Mapper\\Poll\u003A\u003AfindVote\u0028\u0029",
             "name": "findVote",
             "summary": "Find\u0020the\u0020vote\u0020of\u0020a\u0020certain\u0020user\u0020on\u0020a\u0020poll.",
@@ -11920,6 +11960,26 @@ Search.appendIndex(
             "name": "getRepositoryName",
             "summary": "",
             "url": "classes/Frontpage-Mapper-Poll.html#method_getRepositoryName"
+        },                {
+            "fqsen": "\\Frontpage\\Mapper\\PollComment",
+            "name": "PollComment",
+            "summary": "Mappers\u0020for\u0020poll\u0020comments.",
+            "url": "classes/Frontpage-Mapper-PollComment.html"
+        },                {
+            "fqsen": "\\Frontpage\\Mapper\\PollComment\u003A\u003AgetRepositoryName\u0028\u0029",
+            "name": "getRepositoryName",
+            "summary": "",
+            "url": "classes/Frontpage-Mapper-PollComment.html#method_getRepositoryName"
+        },                {
+            "fqsen": "\\Frontpage\\Mapper\\PollOption",
+            "name": "PollOption",
+            "summary": "Mappers\u0020for\u0020poll\u0020options.",
+            "url": "classes/Frontpage-Mapper-PollOption.html"
+        },                {
+            "fqsen": "\\Frontpage\\Mapper\\PollOption\u003A\u003AgetRepositoryName\u0028\u0029",
+            "name": "getRepositoryName",
+            "summary": "",
+            "url": "classes/Frontpage-Mapper-PollOption.html#method_getRepositoryName"
         },                {
             "fqsen": "\\Frontpage\\Model\\NewsItem",
             "name": "NewsItem",
@@ -12911,6 +12971,16 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Frontpage-Service-Poll.html#property_pollMapper"
         },                {
+            "fqsen": "\\Frontpage\\Service\\Poll\u003A\u003A\u0024pollCommentMapper",
+            "name": "pollCommentMapper",
+            "summary": "",
+            "url": "classes/Frontpage-Service-Poll.html#property_pollCommentMapper"
+        },                {
+            "fqsen": "\\Frontpage\\Service\\Poll\u003A\u003A\u0024pollOptionMapper",
+            "name": "pollOptionMapper",
+            "summary": "",
+            "url": "classes/Frontpage-Service-Poll.html#property_pollOptionMapper"
+        },                {
             "fqsen": "\\Frontpage\\Service\\Poll\u003A\u003A\u0024pollForm",
             "name": "pollForm",
             "summary": "",
@@ -13658,7 +13728,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Photo\\Mapper\\Tag\u003A\u003AgetMostActiveMemberTag\u0028\u0029",
             "name": "getMostActiveMemberTag",
-            "summary": "Returns\u0020a\u0020recent\u0020tag\u0020for\u0020the\u0020member\u0020whom\u0020has\u0020the\u0020most\u0020tags\u0020from\u0020a\u0020set\u0020of\u0020members.",
+            "summary": "Returns\u0020a\u0020recent\u0020tag\u0020for\u0020the\u0020member\u0020who\u0020has\u0020the\u0020most\u0020tags\u0020from\u0020a\u0020set\u0020of\u0020members.",
             "url": "classes/Photo-Mapper-Tag.html#method_getMostActiveMemberTag"
         },                {
             "fqsen": "\\Photo\\Mapper\\Tag\u003A\u003AgetRepositoryName\u0028\u0029",
@@ -16048,7 +16118,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\User\\Mapper\\ApiApp",
             "name": "ApiApp",
-            "summary": "",
+            "summary": "The\u0020base\u0020mapper\u0020to\u0020be\u0020used\u0020for\u0020all\u0020other\u0020mappers.\u0020It\u0020helps\u0020with\u0020preventing\u0020duplicate\u0020Doctrine\u0020code.\u0020It\u0020uses\u0020special\ntypes\u0020to\u0020ensure\u0020that\u0020the\u0020returned\u0020values\u0020are\u0020as\u0020expected.\u0020As\u0020\u007B\u0040link\u0020LocalisedTextModel\u007D\u0020does\u0020not\u0020have\u0020its\u0020own\u0020mapper,\nany\u0020of\u0020such\u0020objects\u0020can\u0020be\u0020persisted\u0020and\/or\u0020removed\u0020from\u0020the\u0020base\u0020mapper.",
             "url": "classes/User-Mapper-ApiApp.html"
         },                {
             "fqsen": "\\User\\Mapper\\ApiApp\u003A\u003AfindByAppId\u0028\u0029",
@@ -16063,7 +16133,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\User\\Mapper\\ApiAppAuthentication",
             "name": "ApiAppAuthentication",
-            "summary": "",
+            "summary": "The\u0020base\u0020mapper\u0020to\u0020be\u0020used\u0020for\u0020all\u0020other\u0020mappers.\u0020It\u0020helps\u0020with\u0020preventing\u0020duplicate\u0020Doctrine\u0020code.\u0020It\u0020uses\u0020special\ntypes\u0020to\u0020ensure\u0020that\u0020the\u0020returned\u0020values\u0020are\u0020as\u0020expected.\u0020As\u0020\u007B\u0040link\u0020LocalisedTextModel\u007D\u0020does\u0020not\u0020have\u0020its\u0020own\u0020mapper,\nany\u0020of\u0020such\u0020objects\u0020can\u0020be\u0020persisted\u0020and\/or\u0020removed\u0020from\u0020the\u0020base\u0020mapper.",
             "url": "classes/User-Mapper-ApiAppAuthentication.html"
         },                {
             "fqsen": "\\User\\Mapper\\ApiAppAuthentication\u003A\u003AgetFirstAndLastAuthenticationPerApiApp\u0028\u0029",
@@ -16083,7 +16153,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\User\\Mapper\\ApiUser",
             "name": "ApiUser",
-            "summary": "",
+            "summary": "The\u0020base\u0020mapper\u0020to\u0020be\u0020used\u0020for\u0020all\u0020other\u0020mappers.\u0020It\u0020helps\u0020with\u0020preventing\u0020duplicate\u0020Doctrine\u0020code.\u0020It\u0020uses\u0020special\ntypes\u0020to\u0020ensure\u0020that\u0020the\u0020returned\u0020values\u0020are\u0020as\u0020expected.\u0020As\u0020\u007B\u0040link\u0020LocalisedTextModel\u007D\u0020does\u0020not\u0020have\u0020its\u0020own\u0020mapper,\nany\u0020of\u0020such\u0020objects\u0020can\u0020be\u0020persisted\u0020and\/or\u0020removed\u0020from\u0020the\u0020base\u0020mapper.",
             "url": "classes/User-Mapper-ApiUser.html"
         },                {
             "fqsen": "\\User\\Mapper\\ApiUser\u003A\u003AfindByToken\u0028\u0029",
@@ -16098,7 +16168,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\User\\Mapper\\CompanyUser",
             "name": "CompanyUser",
-            "summary": "",
+            "summary": "The\u0020base\u0020mapper\u0020to\u0020be\u0020used\u0020for\u0020all\u0020other\u0020mappers.\u0020It\u0020helps\u0020with\u0020preventing\u0020duplicate\u0020Doctrine\u0020code.\u0020It\u0020uses\u0020special\ntypes\u0020to\u0020ensure\u0020that\u0020the\u0020returned\u0020values\u0020are\u0020as\u0020expected.\u0020As\u0020\u007B\u0040link\u0020LocalisedTextModel\u007D\u0020does\u0020not\u0020have\u0020its\u0020own\u0020mapper,\nany\u0020of\u0020such\u0020objects\u0020can\u0020be\u0020persisted\u0020and\/or\u0020removed\u0020from\u0020the\u0020base\u0020mapper.",
             "url": "classes/User-Mapper-CompanyUser.html"
         },                {
             "fqsen": "\\User\\Mapper\\CompanyUser\u003A\u003AfindByLogin\u0028\u0029",
@@ -16123,7 +16193,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\User\\Mapper\\LoginAttempt",
             "name": "LoginAttempt",
-            "summary": "",
+            "summary": "The\u0020base\u0020mapper\u0020to\u0020be\u0020used\u0020for\u0020all\u0020other\u0020mappers.\u0020It\u0020helps\u0020with\u0020preventing\u0020duplicate\u0020Doctrine\u0020code.\u0020It\u0020uses\u0020special\ntypes\u0020to\u0020ensure\u0020that\u0020the\u0020returned\u0020values\u0020are\u0020as\u0020expected.\u0020As\u0020\u007B\u0040link\u0020LocalisedTextModel\u007D\u0020does\u0020not\u0020have\u0020its\u0020own\u0020mapper,\nany\u0020of\u0020such\u0020objects\u0020can\u0020be\u0020persisted\u0020and\/or\u0020removed\u0020from\u0020the\u0020base\u0020mapper.",
             "url": "classes/User-Mapper-LoginAttempt.html"
         },                {
             "fqsen": "\\User\\Mapper\\LoginAttempt\u003A\u003AgetFailedAttemptCount\u0028\u0029",
@@ -16138,7 +16208,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\User\\Mapper\\NewCompanyUser",
             "name": "NewCompanyUser",
-            "summary": "",
+            "summary": "The\u0020base\u0020mapper\u0020to\u0020be\u0020used\u0020for\u0020all\u0020other\u0020mappers.\u0020It\u0020helps\u0020with\u0020preventing\u0020duplicate\u0020Doctrine\u0020code.\u0020It\u0020uses\u0020special\ntypes\u0020to\u0020ensure\u0020that\u0020the\u0020returned\u0020values\u0020are\u0020as\u0020expected.\u0020As\u0020\u007B\u0040link\u0020LocalisedTextModel\u007D\u0020does\u0020not\u0020have\u0020its\u0020own\u0020mapper,\nany\u0020of\u0020such\u0020objects\u0020can\u0020be\u0020persisted\u0020and\/or\u0020removed\u0020from\u0020the\u0020base\u0020mapper.",
             "url": "classes/User-Mapper-NewCompanyUser.html"
         },                {
             "fqsen": "\\User\\Mapper\\NewCompanyUser\u003A\u003AgetByCode\u0028\u0029",
@@ -16158,7 +16228,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\User\\Mapper\\NewUser",
             "name": "NewUser",
-            "summary": "",
+            "summary": "The\u0020base\u0020mapper\u0020to\u0020be\u0020used\u0020for\u0020all\u0020other\u0020mappers.\u0020It\u0020helps\u0020with\u0020preventing\u0020duplicate\u0020Doctrine\u0020code.\u0020It\u0020uses\u0020special\ntypes\u0020to\u0020ensure\u0020that\u0020the\u0020returned\u0020values\u0020are\u0020as\u0020expected.\u0020As\u0020\u007B\u0040link\u0020LocalisedTextModel\u007D\u0020does\u0020not\u0020have\u0020its\u0020own\u0020mapper,\nany\u0020of\u0020such\u0020objects\u0020can\u0020be\u0020persisted\u0020and\/or\u0020removed\u0020from\u0020the\u0020base\u0020mapper.",
             "url": "classes/User-Mapper-NewUser.html"
         },                {
             "fqsen": "\\User\\Mapper\\NewUser\u003A\u003AgetByLidnr\u0028\u0029",
@@ -16183,7 +16253,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\User\\Mapper\\User",
             "name": "User",
-            "summary": "",
+            "summary": "The\u0020base\u0020mapper\u0020to\u0020be\u0020used\u0020for\u0020all\u0020other\u0020mappers.\u0020It\u0020helps\u0020with\u0020preventing\u0020duplicate\u0020Doctrine\u0020code.\u0020It\u0020uses\u0020special\ntypes\u0020to\u0020ensure\u0020that\u0020the\u0020returned\u0020values\u0020are\u0020as\u0020expected.\u0020As\u0020\u007B\u0040link\u0020LocalisedTextModel\u007D\u0020does\u0020not\u0020have\u0020its\u0020own\u0020mapper,\nany\u0020of\u0020such\u0020objects\u0020can\u0020be\u0020persisted\u0020and\/or\u0020removed\u0020from\u0020the\u0020base\u0020mapper.",
             "url": "classes/User-Mapper-User.html"
         },                {
             "fqsen": "\\User\\Mapper\\User\u003A\u003AfindByLogin\u0028\u0029",

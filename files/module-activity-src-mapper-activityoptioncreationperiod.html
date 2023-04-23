@@ -400,7 +400,9 @@
 <dl class="phpdocumentor-table-of-contents">
     
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Activity-Mapper-ActivityOptionCreationPeriod.html"><abbr title="\Activity\Mapper\ActivityOptionCreationPeriod">ActivityOptionCreationPeriod</abbr></a></dt>
-        <dd></dd>
+        <dd>The base mapper to be used for all other mappers. It helps with preventing duplicate Doctrine code. It uses special
+types to ensure that the returned values are as expected. As {@link LocalisedTextModel} does not have its own mapper,
+any of such objects can be persisted and/or removed from the base mapper.</dd>
     
     
     </dl>

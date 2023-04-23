@@ -404,14 +404,31 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Mapper/Member.php"><a href="files/module-decision-src-mapper-member.html"><abbr title="module/Decision/src/Mapper/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">16</span>
+    <span class="phpdocumentor-element-found-in__line">21</span>
 
     </aside>
 
-        
-    <section class="phpdocumentor-description"></section>
+            <p class="phpdocumentor-summary">The base mapper to be used for all other mappers. It helps with preventing duplicate Doctrine code. It uses special
+types to ensure that the returned values are as expected. As {@link LocalisedTextModel} does not have its own mapper,
+any of such objects can be persisted and/or removed from the base mapper.</p>
 
 
+
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">template-extends</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>BaseMapper&lt;MemberModel&gt;</p>
+</section>
+
+                                    </dd>
+                        </dl>
 
 
 
@@ -455,7 +472,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Application-Mapper-BaseMapper.html#method_find">find()</a>
     <span>
-                                &nbsp;: mixed    </span>
+                                &nbsp;: null|object    </span>
 </dt>
 <dd></dd>
 
@@ -469,7 +486,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Mapper-Member.html#method_findBirthdayMembers">findBirthdayMembers()</a>
     <span>
-                                &nbsp;: array&lt;string|int, mixed&gt;    </span>
+                                &nbsp;: array&lt;array-key, <a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>&gt;    </span>
 </dt>
 <dd>Find all members with a birthday in the next $days days.</dd>
 
@@ -490,28 +507,28 @@
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Mapper-Member.html#method_findCurrentInstallations">findCurrentInstallations()</a>
     <span>
-                                &nbsp;: array&lt;string|int, mixed&gt;    </span>
+                                &nbsp;: array&lt;array-key, <a href="classes/Decision-Model-OrganMember.html"><abbr title="\Decision\Model\OrganMember">OrganMember</abbr></a>&gt;    </span>
 </dt>
 <dd>Find all active installations of a member.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Mapper-Member.html#method_findHistoricalInstallations">findHistoricalInstallations()</a>
     <span>
-                                &nbsp;: array&lt;string|int, mixed&gt;    </span>
+                                &nbsp;: array&lt;array-key, <a href="classes/Decision-Model-OrganMember.html"><abbr title="\Decision\Model\OrganMember">OrganMember</abbr></a>&gt;    </span>
 </dt>
 <dd>Find all past installations of a member.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Application-Mapper-BaseMapper.html#method_findOneBy">findOneBy()</a>
     <span>
-                                &nbsp;: mixed    </span>
+                                &nbsp;: null|object    </span>
 </dt>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Mapper-Member.html#method_findOrgans">findOrgans()</a>
     <span>
-                                &nbsp;: array&lt;string|int, mixed&gt;    </span>
+                                &nbsp;: array&lt;array-key, <a href="classes/Decision-Model-Organ.html"><abbr title="\Decision\Model\Organ">Organ</abbr></a>&gt;    </span>
 </dt>
 <dd>Find all organs of this member.</dd>
 
@@ -627,7 +644,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">17</span>
+    <span class="phpdocumentor-element-found-in__line">27</span>
 
     </aside>
 
@@ -665,7 +682,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">17</span>
+    <span class="phpdocumentor-element-found-in__line">27</span>
 
     </aside>
 
@@ -709,7 +726,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">178</span>
+    <span class="phpdocumentor-element-found-in__line">202</span>
 
     </aside>
 
@@ -755,7 +772,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">104</span>
+    <span class="phpdocumentor-element-found-in__line">123</span>
 
     </aside>
 
@@ -778,6 +795,21 @@
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">psalm-param</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>T $entity</p>
+</section>
+
+                                    </dd>
+                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">void</span>
@@ -798,14 +830,14 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">143</span>
+    <span class="phpdocumentor-element-found-in__line">164</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">find</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$id</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">find</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$id</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">null|object</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -822,9 +854,24 @@
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">psalm-return</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>T|null</p>
+</section>
+
+                                    </dd>
+                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">mixed</span>
+    <span class="phpdocumentor-signature__response_type">null|object</span>
             &mdash;
             <section class="phpdocumentor-description"><p>The entity corresponding to the provided ID or null of the entity cannot be found</p>
 </section>
@@ -844,7 +891,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">169</span>
+    <span class="phpdocumentor-element-found-in__line">193</span>
 
     </aside>
 
@@ -856,6 +903,21 @@
     
     
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">psalm-return</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>T[]</p>
+</section>
+
+                                    </dd>
+                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
@@ -878,7 +940,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Mapper/Member.php"><a href="files/module-decision-src-mapper-member.html"><abbr title="module/Decision/src/Mapper/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">87</span>
+    <span class="phpdocumentor-element-found-in__line">92</span>
 
     </aside>
 
@@ -886,7 +948,7 @@
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">findBirthdayMembers</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$days</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">findBirthdayMembers</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$days</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;array-key, <a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>&gt;</span></code>
 
         <section class="phpdocumentor-description"><p>When $days equals 0 or isn't given, it will give all birthdays of today.
 We do not show members whose membership has expired or who are hidden</p>
@@ -908,7 +970,7 @@ We do not show members whose membership has expired or who are hidden</p>
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
+    <span class="phpdocumentor-signature__response_type">array&lt;array-key, <a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>&gt;</span>
             &mdash;
             <section class="phpdocumentor-description"><p>Of members sorted by birthday</p>
 </section>
@@ -928,7 +990,7 @@ We do not show members whose membership has expired or who are hidden</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">152</span>
+    <span class="phpdocumentor-element-found-in__line">174</span>
 
     </aside>
 
@@ -952,6 +1014,21 @@ We do not show members whose membership has expired or who are hidden</p>
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">psalm-return</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>T[]</p>
+</section>
+
+                                    </dd>
+                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
@@ -974,7 +1051,7 @@ We do not show members whose membership has expired or who are hidden</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Mapper/Member.php"><a href="files/module-decision-src-mapper-member.html"><abbr title="module/Decision/src/Mapper/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">25</span>
+    <span class="phpdocumentor-element-found-in__line">30</span>
 
     </aside>
 
@@ -1019,7 +1096,7 @@ We do not show members whose membership has expired or who are hidden</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Mapper/Member.php"><a href="files/module-decision-src-mapper-member.html"><abbr title="module/Decision/src/Mapper/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">137</span>
+    <span class="phpdocumentor-element-found-in__line">144</span>
 
     </aside>
 
@@ -1027,7 +1104,7 @@ We do not show members whose membership has expired or who are hidden</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">findCurrentInstallations</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$member</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">findCurrentInstallations</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$member</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;array-key, <a href="classes/Decision-Model-OrganMember.html"><abbr title="\Decision\Model\OrganMember">OrganMember</abbr></a>&gt;</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -1045,7 +1122,7 @@ We do not show members whose membership has expired or who are hidden</p>
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
+    <span class="phpdocumentor-signature__response_type">array&lt;array-key, <a href="classes/Decision-Model-OrganMember.html"><abbr title="\Decision\Model\OrganMember">OrganMember</abbr></a>&gt;</span>
             &mdash;
         
     
@@ -1063,7 +1140,7 @@ We do not show members whose membership has expired or who are hidden</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Mapper/Member.php"><a href="files/module-decision-src-mapper-member.html"><abbr title="module/Decision/src/Mapper/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">154</span>
+    <span class="phpdocumentor-element-found-in__line">163</span>
 
     </aside>
 
@@ -1071,7 +1148,7 @@ We do not show members whose membership has expired or who are hidden</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">findHistoricalInstallations</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$member</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">findHistoricalInstallations</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$member</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;array-key, <a href="classes/Decision-Model-OrganMember.html"><abbr title="\Decision\Model\OrganMember">OrganMember</abbr></a>&gt;</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -1089,7 +1166,7 @@ We do not show members whose membership has expired or who are hidden</p>
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
+    <span class="phpdocumentor-signature__response_type">array&lt;array-key, <a href="classes/Decision-Model-OrganMember.html"><abbr title="\Decision\Model\OrganMember">OrganMember</abbr></a>&gt;</span>
             &mdash;
         
     
@@ -1107,14 +1184,14 @@ We do not show members whose membership has expired or who are hidden</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">161</span>
+    <span class="phpdocumentor-element-found-in__line">184</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">findOneBy</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$criteria</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">findOneBy</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$criteria</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">null|object</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -1131,9 +1208,24 @@ We do not show members whose membership has expired or who are hidden</p>
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">psalm-return</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>T|null</p>
+</section>
+
+                                    </dd>
+                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">mixed</span>
+    <span class="phpdocumentor-signature__response_type">null|object</span>
             &mdash;
             <section class="phpdocumentor-description"><p>The entity corresponding to the provided criteria or null of the entity cannot be found</p>
 </section>
@@ -1153,7 +1245,7 @@ We do not show members whose membership has expired or who are hidden</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Mapper/Member.php"><a href="files/module-decision-src-mapper-member.html"><abbr title="module/Decision/src/Mapper/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">119</span>
+    <span class="phpdocumentor-element-found-in__line">124</span>
 
     </aside>
 
@@ -1161,7 +1253,7 @@ We do not show members whose membership has expired or who are hidden</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">findOrgans</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$member</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">findOrgans</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$member</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;array-key, <a href="classes/Decision-Model-Organ.html"><abbr title="\Decision\Model\Organ">Organ</abbr></a>&gt;</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -1179,11 +1271,9 @@ We do not show members whose membership has expired or who are hidden</p>
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
+    <span class="phpdocumentor-signature__response_type">array&lt;array-key, <a href="classes/Decision-Model-Organ.html"><abbr title="\Decision\Model\Organ">Organ</abbr></a>&gt;</span>
             &mdash;
-            <section class="phpdocumentor-description"><p>Of organs</p>
-</section>
-
+        
     
 </article>
                     <article
@@ -1199,7 +1289,7 @@ We do not show members whose membership has expired or who are hidden</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">94</span>
+    <span class="phpdocumentor-element-found-in__line">112</span>
 
     </aside>
 
@@ -1253,7 +1343,7 @@ We do not show members whose membership has expired or who are hidden</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">134</span>
+    <span class="phpdocumentor-element-found-in__line">154</span>
 
     </aside>
 
@@ -1286,7 +1376,7 @@ We do not show members whose membership has expired or who are hidden</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">114</span>
+    <span class="phpdocumentor-element-found-in__line">133</span>
 
     </aside>
 
@@ -1319,7 +1409,7 @@ We do not show members whose membership has expired or who are hidden</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">25</span>
+    <span class="phpdocumentor-element-found-in__line">37</span>
 
     </aside>
 
@@ -1347,6 +1437,15 @@ We do not show members whose membership has expired or who are hidden</p>
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">psalm-param</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>T|LocalisedTextModel $entity</p>
+</section>
+
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">throws</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
@@ -1375,7 +1474,7 @@ We do not show members whose membership has expired or who are hidden</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">37</span>
+    <span class="phpdocumentor-element-found-in__line">51</span>
 
     </aside>
 
@@ -1404,6 +1503,15 @@ We do not show members whose membership has expired or who are hidden</p>
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">psalm-param</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>T[] $entities</p>
+</section>
+
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">throws</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
@@ -1432,7 +1540,7 @@ We do not show members whose membership has expired or who are hidden</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">50</span>
+    <span class="phpdocumentor-element-found-in__line">66</span>
 
     </aside>
 
@@ -1460,6 +1568,15 @@ We do not show members whose membership has expired or who are hidden</p>
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">psalm-param</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>T|LocalisedTextModel $entity</p>
+</section>
+
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">throws</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
@@ -1488,7 +1605,7 @@ We do not show members whose membership has expired or who are hidden</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">79</span>
+    <span class="phpdocumentor-element-found-in__line">97</span>
 
     </aside>
 
@@ -1561,7 +1678,7 @@ We do not show members whose membership has expired or who are hidden</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">62</span>
+    <span class="phpdocumentor-element-found-in__line">80</span>
 
     </aside>
 
@@ -1590,6 +1707,15 @@ We do not show members whose membership has expired or who are hidden</p>
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">psalm-param</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>T[] $entities</p>
+</section>
+
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">throws</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
@@ -1618,7 +1744,7 @@ We do not show members whose membership has expired or who are hidden</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Mapper/Member.php"><a href="files/module-decision-src-mapper-member.html"><abbr title="module/Decision/src/Mapper/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">43</span>
+    <span class="phpdocumentor-element-found-in__line">48</span>
 
     </aside>
 
@@ -1684,7 +1810,7 @@ We do not show members whose membership has expired or who are hidden</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">193</span>
+    <span class="phpdocumentor-element-found-in__line">217</span>
 
     </aside>
 
@@ -1730,7 +1856,7 @@ function.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">124</span>
+    <span class="phpdocumentor-element-found-in__line">144</span>
 
     </aside>
 
@@ -1743,6 +1869,21 @@ function.</p>
     
     
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">psalm-return</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>EntityRepository&lt;T&gt;</p>
+</section>
+
+                                    </dd>
+                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\ORM\EntityRepository">EntityRepository</abbr></span>
@@ -1763,7 +1904,7 @@ function.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Mapper/Member.php"><a href="files/module-decision-src-mapper-member.html"><abbr title="module/Decision/src/Mapper/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">171</span>
+    <span class="phpdocumentor-element-found-in__line">180</span>
 
     </aside>
 
@@ -1792,8 +1933,7 @@ function.</p>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">string</span>
             &mdash;
-            <section class="phpdocumentor-description"><p>the name of the entity repository
-e.g. &quot;User/Model/User&quot;</p>
+            <section class="phpdocumentor-description"><p>the name of the entity repository e.g. &quot;User/Model/User&quot;</p>
 </section>
 
     
