@@ -154,7 +154,13 @@ class AdminController extends AbstractActionController
                     );
                 }
 
-                return $this->redirect()->toRoute('admin_decision/document');
+                return $this->redirect()->toRoute(
+                    'admin_decision/document',
+                    [
+                        'type' => $document->getMeeting()->getType()->value,
+                        'number' => $document->getMeeting()->getNumber(),
+                    ],
+                );
             }
 
             return $this->notFoundAction();
