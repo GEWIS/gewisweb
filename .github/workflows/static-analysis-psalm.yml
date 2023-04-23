@@ -23,17 +23,6 @@ jobs:
                     php-version: '8.2'
                     extensions: calendar, curl, exif, gd, intl, opcache, pgsql, pdo_mysql, pdo_pgsql, zip, imagick, memcached, xdebug
 
-            -   name: Get Composer cache directory
-                id: composer-cache-head
-                run: echo "::set-output name=dir::$(composer config cache-files-dir)"
-
-            -   name: Cache dependencies
-                uses: actions/cache@v2
-                with:
-                    path: ${{ steps.composer-cache-head.outputs.dir }}
-                    key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-                    restore-keys: ${{ runner.os }}-composer-
-
             -   name: Extract configuration files
                 run: |
                     cp config/autoload/doctrine.local.development.php.dist config/autoload/doctrine.local.php
@@ -46,8 +35,8 @@ jobs:
                     git update-ref refs/heads/temp-psalmpr refs/remotes/origin/master
                     git checkout --detach temp-psalmpr
 
-            -   name: Install dependencies
-                run: composer install --no-interaction
+            -   name: Install dependencies with Composer
+                uses: ramsey/composer-install@v2
 
             -   name: Load environment variables
                 uses: c-py/action-dotenv-to-setenv@v3
@@ -66,8 +55,8 @@ jobs:
                     git checkout --theirs -- config/modules.config.php
                     git checkout -
 
-            -   name: Install dependencies
-                run: composer install --no-interaction
+            -   name: Install dependencies with Composer
+                uses: ramsey/composer-install@v2
 
             -   name: Load environment variables
                 uses: c-py/action-dotenv-to-setenv@v3
