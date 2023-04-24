@@ -231,7 +231,7 @@ class User
     public function resetMember(array $data): void
     {
         $lidnr = (int) $data['lidnr'];
-        $user = $this->userMapper->findForReset($data['email'], $data['lidnr']);
+        $user = $this->userMapper->findForReset($data['email'], $lidnr);
 
         if (null === $user) {
             return;
