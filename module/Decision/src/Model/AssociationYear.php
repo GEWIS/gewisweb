@@ -96,7 +96,7 @@ class AssociationYear
         return DateTime::createFromFormat(
             'j-m-Y',
             sprintf('%d-%d-%d', self::ASSOCIATION_YEAR_START_DAY, self::ASSOCIATION_YEAR_START_MONTH, $this->firstYear)
-        );
+        )->setTime(0, 0);
     }
 
     /**
@@ -114,6 +114,6 @@ class AssociationYear
                 self::ASSOCIATION_YEAR_START_MONTH,
                 $this->firstYear + 1
             )
-        )->sub(new DateInterval('P1D'));
+        )->sub(new DateInterval('P1D'))->setTime(23, 59, 59, 999999);
     }
 }

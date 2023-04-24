@@ -83,7 +83,7 @@ $this->headTitle($this->translate('Members'));
                                 </li>
                             <?php elseif (
                                 $start <= $installDate
-                                && $now < $end
+                                && $now <= $end
                                 && (
                                     null === $boardInstall->getReleaseDate()
                                     || null === $boardInstall->getDischargeDate()

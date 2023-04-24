@@ -278,7 +278,7 @@ class ActivityQuery
 
         $associationYear = AssociationYear::fromYear($year);
 
-        $endDate = $associationYear->getEndDate() < new DateTime() ? $associationYear->getEndDate() : new DateTime();
+        $endDate = $associationYear->getEndDate() <= new DateTime() ? $associationYear->getEndDate() : new DateTime();
 
         return $this->activityMapper->getArchivedActivitiesInRange($associationYear->getStartDate(), $endDate);
     }
