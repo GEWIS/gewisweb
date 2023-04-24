@@ -186,7 +186,7 @@ class Activity
 
         if (isset($data['categories'])) {
             foreach ($data['categories'] as $category) {
-                $category = $this->categoryService->getCategoryById($category);
+                $category = $this->categoryService->getCategoryById(intval($category));
 
                 if (!is_null($category)) {
                     $activity->addCategory($category);

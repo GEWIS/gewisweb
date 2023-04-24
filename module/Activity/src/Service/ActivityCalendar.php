@@ -289,7 +289,7 @@ class ActivityCalendar
 
         foreach ($data['maxActivities'] as $maxActivity) {
             // Check if the organ really exists.
-            $organ = $this->organService->findActiveOrganById($maxActivity['id']);
+            $organ = $this->organService->findActiveOrganById(intval($maxActivity['id']));
 
             if (null !== $organ) {
                 $maxActivities = new MaxActivitiesModel();

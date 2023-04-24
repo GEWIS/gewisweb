@@ -622,7 +622,7 @@ class Company
 
         if (isset($data['labels'])) {
             foreach ($data['labels'] as $label) {
-                $label = $this->getJobLabelById($label);
+                $label = $this->getJobLabelById(intval($label));
 
                 if (null !== $label) {
                     $job->addLabel($label);
@@ -693,7 +693,10 @@ class Company
             $job->getDescription()->updateValues($data['descriptionEn'], $data['description']);
 
             if (isset($data['labels'])) {
-                $newLabels = $data['labels'];
+                $newLabels = array_map(
+                    'intval',
+                    $data['labels'],
+                );
                 $currentLabels = $job->getLabels()->map(function ($label) {
                     return $label->getId();
                 })->toArray();
