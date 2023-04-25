@@ -346,6 +346,7 @@ class Signup
     protected function removeSignUp(SignupModel $signup): void
     {
         $this->entityManager->remove($signup);
+        $this->entityManager->flush();
     }
 
     /**
