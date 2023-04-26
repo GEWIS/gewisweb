@@ -179,7 +179,7 @@ class User
             return null;
         }
 
-        $newUser = $this->newUserMapper->getByLidnr($data['lidnr']);
+        $newUser = $this->newUserMapper->getByLidnr(intval($data['lidnr']));
         if (null !== $newUser) {
             // Ensure that we only send the activation email every 20 minutes.
             $time = $newUser->getTime();
