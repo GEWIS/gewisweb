@@ -81,7 +81,7 @@ class PollController extends AbstractActionController
 
         if ($request->isPost()) {
             if (isset($request->getPost()['option'])) {
-                $optionId = $request->getPost()['option'];
+                $optionId = intval($request->getPost()['option']);
                 $this->pollService->submitVote($this->pollService->getPollOption($optionId));
             }
         }
