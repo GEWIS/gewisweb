@@ -25,6 +25,7 @@ $form->setAttribute('class', 'form-horizontal');
     $email = $form->get('email');
     $email->setAttribute('id', 'email');
     $email->setAttribute('class', 'form-control');
+    $email->setAttribute('autocomplete', 'username');
     // TODO: Re-enable login after re-enabling the creation of company accounts.
     $email->setAttribute('disabled', 'disabled');
     ?>
@@ -40,6 +41,7 @@ $form->setAttribute('class', 'form-horizontal');
     $password = $form->get('password');
     $password->setAttribute('id', 'password');
     $password->setAttribute('class', 'form-control');
+    $password->setAttribute('autocomplete', 'current-password');
     // TODO: Re-enable login after re-enabling the creation of company accounts.
     $password->setAttribute('disabled', 'disabled');
     ?>

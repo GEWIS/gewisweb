@@ -24,6 +24,7 @@ $form->setAttribute('class', 'form-horizontal');
 $email = $form->get('email');
 $email->setAttribute('id', 'email');
 $email->setAttribute('class', 'form-control');
+$email->setAttribute('autocomplete', 'username');
 // TODO: Re-enable reset after re-enabling the creation of company accounts.
 $email->setAttribute('disabled', 'disabled');
 ?>
