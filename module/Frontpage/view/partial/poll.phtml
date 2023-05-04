@@ -31,12 +31,15 @@ foreach ($poll->getOptions() as $option) {
     }
 }
 $lang = $this->plugin('translate')->getTranslator()->getLocale();
+$title = $this->escapeHtml(($lang === 'en') ? $poll->getEnglishQuestion() : $this->poll->getDutchQuestion());
 ?>
 <h4 style="margin-top: 0; margin-bottom: 15px;">
     <?php if (isset($viewLink) && $viewLink): ?>
         <a href="<?= $this->url('poll/view', ['poll_id' => $poll->getId()]) ?>">
-            <?= $this->escapeHtml(($lang === 'en') ? $poll->getEnglishQuestion() : $this->poll->getDutchQuestion()) ?>
+            <?= $title ?>
         </a>
+    <?php elseif (isset($showTitle) && $showTitle): ?>
+        <?= $title ?>
     <?php endif ?>
 </h4>
 <form action="<?= $this->url('poll/vote', ['poll_id' => $poll->getId()]) ?>" method="post">
