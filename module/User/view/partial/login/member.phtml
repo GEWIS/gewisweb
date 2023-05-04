@@ -25,6 +25,7 @@ $form->setAttribute('class', 'form-horizontal');
     $element = $form->get('login');
     $element->setAttribute('id', 'login');
     $element->setAttribute('class', 'form-control');
+    $element->setAttribute('autocomplete', 'username');
     ?>
     <div class="form-group <?= $this->bootstrapElementError($element) ?>">
         <label for="<?= $element->getAttribute('id') ?>"
@@ -38,6 +39,7 @@ $form->setAttribute('class', 'form-horizontal');
     $element = $form->get('password');
     $element->setAttribute('id', 'password');
     $element->setAttribute('class', 'form-control');
+    $element->setAttribute('autocomplete', 'current-password');
     ?>
     <div class="form-group <?= $this->bootstrapElementError($element) ?>">
         <label for="<?= $element->getAttribute('id') ?>"

@@ -56,6 +56,7 @@ $this->headTitle($this->translate('Activate'));
                             $element = $form->get('password');
                             $element->setAttribute('class', 'form-control');
                             $element->setAttribute('placeholder', $this->translate('Password'));
+                            $element->setAttribute('autocomplete', 'new-password');
                             ?>
                             <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
                                 <label for="<?= $element->getAttribute('id') ?>"
@@ -69,6 +70,7 @@ $this->headTitle($this->translate('Activate'));
                             $element = $form->get('password_verify');
                             $element->setAttribute('class', 'form-control');
                             $element->setAttribute('placeholder', $this->translate('Verify password'));
+                            $element->setAttribute('autocomplete', 'new-password');
                             ?>
                             <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
                                 <label for="<?= $element->getAttribute('id') ?>"
