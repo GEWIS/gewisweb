@@ -33,6 +33,8 @@ use Laminas\Validator\{
     Uri,
 };
 
+use function intval;
+
 class Job extends LocalisableForm implements InputFilterProviderInterface
 {
     private string $companySlug;
@@ -503,6 +505,6 @@ class Job extends LocalisableForm implements InputFilterProviderInterface
             return true;
         }
 
-        return $this->mapper->isSlugNameUnique($this->companySlug, $value, $category);
+        return $this->mapper->isSlugNameUnique($this->companySlug, $value, intval($category));
     }
 }
