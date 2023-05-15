@@ -98,8 +98,10 @@ class MemberInfo
         ];
 
         foreach ($this->memberMapper->findCurrentInstallations($member) as $install) {
-            if (!isset($memberships['current'][$install->getOrgan()->getAbbr()])) {
-                $memberships['current'][$install->getOrgan()->getAbbr()] = [
+            $foundationHash = $install->getOrgan()->getFoundation()->getHash();
+
+            if (!isset($memberships['current'][$foundationHash])) {
+                $memberships['current'][$foundationHash] = [
                     'organ' => $install->getOrgan(),
                     'functions' => [],
                 ];
@@ -110,13 +112,15 @@ class MemberInfo
                 && 'Inactief Lid' !== $install->getFunction()
             ) {
                 $function = $this->translator->translate($install->getFunction());
-                $memberships['current'][$install->getOrgan()->getAbbr()]['functions'][] = $function;
+                $memberships['current'][$foundationHash]['functions'][] = $function;
             }
         }
 
         foreach ($this->memberMapper->findHistoricalInstallations($member) as $install) {
-            if (!isset($memberships['historical'][$install->getOrgan()->getAbbr()])) {
-                $memberships['historical'][$install->getOrgan()->getAbbr()] = [
+            $foundationHash = $install->getOrgan()->getFoundation()->getHash();
+
+            if (!isset($memberships['historical'][$foundationHash])) {
+                $memberships['historical'][$foundationHash] = [
                     'organ' => $install->getOrgan(),
                     'functions' => [],
                 ];
@@ -127,10 +131,9 @@ class MemberInfo
                 && 'Inactief Lid' !== $install->getFunction()
             ) {
                 $function = $this->translator->translate($install->getFunction());
-                $memberships['historical'][$install->getOrgan()->getAbbr()]['functions'][] = $function;
+                $memberships['historical'][$foundationHash]['functions'][] = $function;
             }
         }
-
 
         return $memberships;
     }
