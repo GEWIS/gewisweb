@@ -151,6 +151,22 @@ class Foundation extends SubDecision
     }
 
     /**
+     * Get a unique identifier for this foundation. It is used to distinguish between organs that share the same name
+     * but are actually distinct.
+     */
+    public function getHash(): string
+    {
+        return sprintf(
+            '%s-%d.%d.%d.%d',
+            $this->getMeetingType()->value,
+            $this->getMeetingNumber(),
+            $this->getDecisionPoint(),
+            $this->getDecisionNumber(),
+            $this->getNumber(),
+        );
+    }
+
+    /**
      * Get an array with all information.
      *
      * Mostly usefull for usage with JSON.

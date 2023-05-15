@@ -96,7 +96,10 @@ $this->headTitle($this->translate('My Information'));
                 <?php if (!empty($memberships['current'])): ?>
                     <p><?= $this->translate('You are currently a member of:') ?></p>
                     <ul>
-                        <?php foreach ($memberships['current'] as $abbr => $install): ?>
+                        <?php foreach ($memberships['current'] as $install): ?>
+                            <?php
+                            $abbr = $install['organ']->getAbbr();
+                            ?>
                             <li>
                                 <a href="<?= $this->url(
                                     'home/organ',
@@ -117,7 +120,10 @@ $this->headTitle($this->translate('My Information'));
                 <?php if (!empty($memberships['historical'])): ?>
                     <p><?= $this->translate('You were a member of:') ?></p>
                     <ul>
-                        <?php foreach ($memberships['historical'] as $abbr => $install): ?>
+                        <?php foreach ($memberships['historical'] as $install): ?>
+                            <?php
+                            $abbr = $install['organ']->getAbbr();
+                            ?>
                             <li>
                                 <a href="<?= $this->url(
                                     'home/organ',

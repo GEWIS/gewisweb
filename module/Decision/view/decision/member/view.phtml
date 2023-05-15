@@ -134,7 +134,10 @@ $this->headTitle($this->translate('Members'));
                         ) ?>
                     </p>
                     <ul>
-                        <?php foreach ($memberships['current'] as $abbr => $install): ?>
+                        <?php foreach ($memberships['current'] as $install): ?>
+                            <?php
+                            $abbr = $install['organ']->getAbbr();
+                            ?>
                             <li>
                                 <a href="<?= $this->url(
                                     'home/organ',
@@ -160,7 +163,10 @@ $this->headTitle($this->translate('Members'));
                         ) ?>
                     </p>
                     <ul>
-                        <?php foreach ($memberships['historical'] as $abbr => $install): ?>
+                        <?php foreach ($memberships['historical'] as $install): ?>
+                            <?php
+                            $abbr = $install['organ']->getAbbr();
+                            ?>
                             <li>
                                 <a href="<?= $this->url(
                                     'home/organ',
