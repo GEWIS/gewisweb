@@ -9656,6 +9656,11 @@ Search.appendIndex(
             "summary": "Get\u0020the\u0020referenced\u0020organ.",
             "url": "classes/Decision-Model-SubDecision-Foundation.html#method_getOrgan"
         },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\Foundation\u003A\u003AgetHash\u0028\u0029",
+            "name": "getHash",
+            "summary": "Get\u0020a\u0020unique\u0020identifier\u0020for\u0020this\u0020foundation.\u0020It\u0020is\u0020used\u0020to\u0020distinguish\u0020between\u0020organs\u0020that\u0020share\u0020the\u0020same\u0020name\nbut\u0020are\u0020actually\u0020distinct.",
+            "url": "classes/Decision-Model-SubDecision-Foundation.html#method_getHash"
+        },                {
             "fqsen": "\\Decision\\Model\\SubDecision\\Foundation\u003A\u003AtoArray\u0028\u0029",
             "name": "toArray",
             "summary": "Get\u0020an\u0020array\u0020with\u0020all\u0020information.",
