@@ -20,7 +20,7 @@ parameters:
             message: "#^Result of && is always false\\.$#"
             count: 1
             path: ../module/Decision/src/Model/AssociationYear.php
-        - '#Property User\\Model\\ApiApp\:\:\$claims type mapping mismatch\: backing type string of enum User\\Model\\Enums\\JWTClaims does not match database type array.$#'
+        - '#Property User\\Model\\ApiApp\:\:\$claims type mapping mismatch\: backing type string of enum User\\Model\\Enums\\JWTClaims does not match database type array\<string\>.$#'
         - '#Property User\\Model\\ApiApp\:\:\$claims type mapping mismatch\: property can contain array but database expects User\\Model\\Enums\\JWTClaims\|null.$#'
         -
             message: '#Unreachable statement \- code above always terminates.$#'
