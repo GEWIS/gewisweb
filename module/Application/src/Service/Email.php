@@ -51,7 +51,14 @@ class Email
 
         $message->setFrom($this->emailConfig['from']['address'], $this->emailConfig['from']['name']);
         $message->setTo($this->emailConfig['to'][$type]['address'], $this->emailConfig['to'][$type]['name']);
-        $message->setSubject($subject);
+        $message->setSubject(
+            mb_encode_mimeheader(
+                $subject,
+                'UTF-8',
+                'Q',
+                '',
+            ),
+        );
 
         $this->transport->send($message);
     }
@@ -76,7 +83,14 @@ class Email
 
         $message->setFrom($this->emailConfig['from']['address'], $this->emailConfig['from']['name']);
         $message->setTo($this->emailConfig['to'][$type]['address'], $this->emailConfig['to'][$type]['name']);
-        $message->setSubject($subject);
+        $message->setSubject(
+            mb_encode_mimeheader(
+                $subject,
+                'UTF-8',
+                'Q',
+                '',
+            ),
+        );
         $message->setReplyTo($user->getEmail());
 
         $this->transport->send($message);
@@ -110,7 +124,14 @@ class Email
                 '',
             ),
         );
-        $message->setSubject($subject);
+        $message->setSubject(
+            mb_encode_mimeheader(
+                $subject,
+                'UTF-8',
+                'Q',
+                '',
+            ),
+        );
         $message->setReplyTo($user->getEmail());
 
         $this->transport->send($message);
@@ -136,7 +157,14 @@ class Email
 
         $message->setFrom($this->emailConfig['from']['address'], $this->emailConfig['from']['name']);
         $message->setTo($this->emailConfig['to'][$type]['address'], $this->emailConfig['to'][$type]['name']);
-        $message->setSubject($subject);
+        $message->setSubject(
+            mb_encode_mimeheader(
+                $subject,
+                'UTF-8',
+                'Q',
+                '',
+            ),
+        );
         $message->setReplyTo($organ->getEmail(), $organ->getOrgan()->getAbbr());
 
         $this->transport->send($message);
