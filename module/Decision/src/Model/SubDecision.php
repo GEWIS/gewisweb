@@ -200,7 +200,7 @@ abstract class SubDecision
      */
     public function getDecisionNumber(): int
     {
-        return $this->number;
+        return $this->decision_number;
     }
 
     /**
