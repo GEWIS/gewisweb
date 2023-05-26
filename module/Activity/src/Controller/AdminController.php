@@ -218,7 +218,7 @@ class AdminController extends AbstractActionController
         }
 
         if (
-            $activity->getEndTime() >= (new DateTime('now'))->sub(new DateInterval('P1M'))
+            $activity->getEndTime() <= (new DateTime('now'))->sub(new DateInterval('P1M'))
             && !$this->aclService->isAllowed('viewParticipantDetails', 'activity')
         ) {
             throw new NotAllowedException(
