@@ -52,6 +52,7 @@ $this->breadcrumbs()
 
 <h1><?= $this->translate('Old activities') ?></h1>
 <?php if (!empty($oldActivityPaginator)): ?>
+    <?php $nowMonthAgo = (new DateTime('now'))->sub(new DateInterval('P1M')); ?>
     <?= $this->paginationControl(
         $oldActivityPaginator,
         // the scrolling style
@@ -72,9 +73,7 @@ $this->breadcrumbs()
             <th><?= $this->translate('Organ') ?></th>
             <th><?= $this->translate('Company') ?></th>
             <th><?= $this->translate('Submitter') ?></th>
-            <?php if ($admin): ?>
-                <th></th>
-            <?php endif; ?>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -92,11 +91,13 @@ $this->breadcrumbs()
                 <td><?= is_null($activity->getOrgan()) ? $this->translate('None') : $this->escapeHtml($activity->getOrgan()->getAbbr()) ?></td>
                 <td><?= is_null($activity->getCompany()) ? $this->translate('None') : $this->escapeHtml($activity->getCompany()->getName()) ?></td>
                 <td><?= $activity->getCreator()->getFullName() ?></td>
-                <?php if ($admin): ?>
+                <?php if (0 !== $activity->getSignupLists()->count() && ($activity->getEndTime() >= $nowMonthAgo || $admin)): ?>
                     <td>
                         <a class="btn btn-primary btn-xs"
                            href="<?= $this->url('activity_admin/participants', ['id' => $activity->getId()]) ?>"><?= $this->translate('Participants') ?></a>
                     </td>
+                <?php else: ?>
+                    <td></td>
                 <?php endif; ?>
             </tr>
         <?php endforeach; ?>
