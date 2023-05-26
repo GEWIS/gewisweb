@@ -82,11 +82,19 @@ use Photo\Model\Photo as PhotoModel;
                 <?= $this->translate('Location') ?>
             </td>
             <td>
-                <?= is_null($photo->getLongitude()) || is_null($photo->getLatitude()) ?
-                    $this->translate('Unknown') : "<a target='_blank'
-                href='https://www.google.com/maps/?q={$photo->getLatitude()},{$photo->getLongitude()}'>"
-                    . $this->translate("View on map") . "</a>"
-                ?>
+                <?php if (null === $photo->getLatitude() || null === $photo->getLongitude()): ?>
+                    <?= $this->translate('Unknown') ?>
+                <?php else: ?>
+                    <a href="<?=
+                        sprintf(
+                            'https://www.openstreetmap.org/?mlat=%1$F&mlon=%2$F#map=17/%1$F/%2$F',
+                            $photo->getLatitude(),
+                            $photo->getLongitude(),
+                        )
+                    ?>">
+                        <?= $this->translate('View on map') ?>
+                    </a>
+                <?php endif; ?>
             </td>
         </tr>
     </tbody>
