@@ -14,6 +14,7 @@ use Activity\Service\{
     SignupListQuery as SignupListQueryService,
 };
 use Application\Form\ModifyRequest as RequestForm;
+use DateInterval;
 use DateTime;
 use Laminas\Form\FormInterface;
 use Laminas\Http\{
@@ -217,7 +218,7 @@ class AdminController extends AbstractActionController
         }
 
         if (
-            $activity->getEndTime() <= new DateTime('now')
+            $activity->getEndTime() >= (new DateTime('now'))->sub(new DateInterval('P1M'))
             && !$this->aclService->isAllowed('viewParticipantDetails', 'activity')
         ) {
             throw new NotAllowedException(
