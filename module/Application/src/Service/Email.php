@@ -91,7 +91,15 @@ class Email
                 '',
             ),
         );
-        $message->setReplyTo($user->getEmail());
+        $message->setReplyTo(
+            $user->getEmail(),
+            mb_encode_mimeheader(
+                $user->getFullName(),
+                'UTF-8',
+                'Q',
+                '',
+            ),
+        );
 
         $this->transport->send($message);
     }
@@ -132,7 +140,15 @@ class Email
                 '',
             ),
         );
-        $message->setReplyTo($user->getEmail());
+        $message->setReplyTo(
+            $user->getEmail(),
+            mb_encode_mimeheader(
+                $user->getFullName(),
+                'UTF-8',
+                'Q',
+                '',
+            ),
+        );
 
         $this->transport->send($message);
     }
@@ -165,7 +181,15 @@ class Email
                 '',
             ),
         );
-        $message->setReplyTo($organ->getEmail(), $organ->getOrgan()->getAbbr());
+        $message->setReplyTo(
+            $organ->getEmail(),
+            mb_encode_mimeheader(
+                $organ->getOrgan()->getAbbr(),
+                'UTF-8',
+                'Q',
+                '',
+            ),
+        );
 
         $this->transport->send($message);
     }
