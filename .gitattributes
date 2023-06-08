@@ -1,2 +1,5 @@
 * text=auto eol=lf
 
+*.po linguist-generated
+*.pot linguist-generated
+

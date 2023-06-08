@@ -32,3 +32,7 @@ phpstan/phpstan-baseline-temp.neon
 phpstan/phpstan-baseline-pr.neon
 psalm/psalm-baseline-pr.xml
 docs/_site/
+
+# Language binaries are created during the docker build process or using 'make compilelang'
+*.mo
+
