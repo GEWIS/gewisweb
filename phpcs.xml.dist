@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="GEWISWEB Coding Standard">
+    <arg name="basepath" value="." />
+    <arg name="colors" />
+    <arg name="error-severity" value="1" />
+    <arg name="extensions" value="php,dist" />
+    <arg name="parallel" value="75" />
+    <arg name="warning-severity" value="1" />
+
+    <arg value="nps" />
+
+    <file>module</file>
+    <file>config</file>
+    <exclude-pattern>*/vendor/*</exclude-pattern>
+
+    <rule ref="GEWISPHPCodingStandards" />
+</ruleset>

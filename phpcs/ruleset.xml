@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ruleset name="GEWISWEB" namespace="Gewis">
-    <description>Sniffs for tailored for GEWISWEB.</description>
-</ruleset>
