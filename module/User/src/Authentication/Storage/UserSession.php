@@ -5,17 +5,19 @@ declare(strict_types=1);
 namespace User\Authentication\Storage;
 
 use DateTime;
-use Firebase\JWT\{
-    JWT,
-    Key,
-};
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 use Laminas\Authentication\Storage\Session as SessionStorage;
-use Laminas\Http\{
-    Header\SetCookie,
-    Request,
-    Response,
-};
+use Laminas\Http\Header\SetCookie;
+use Laminas\Http\Request;
+use Laminas\Http\Response;
 use UnexpectedValueException;
+
+use function bin2hex;
+use function file_get_contents;
+use function is_readable;
+use function openssl_random_pseudo_bytes;
+use function strtotime;
 
 class UserSession extends SessionStorage
 {
@@ -24,6 +26,9 @@ class UserSession extends SessionStorage
 
     private bool $rememberMe;
 
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
+     */
     public function __construct(
         private readonly Request $request,
         private readonly Response $response,
@@ -83,7 +88,7 @@ class UserSession extends SessionStorage
 
         try {
             $session = JWT::decode($cookies[self::JWT_COOKIE_NAME], new Key($key, self::JWT_KEY_ALGORITHM));
-        } catch (UnexpectedValueException $e) {
+        } catch (UnexpectedValueException) {
             // This is a generic exception thrown by the JWT library. To ensure that if something goes wrong while
             // decrypting the cookie, unset it. This ensures that people with the cookie do not end up in a loop.
             $this->clearCookie();
@@ -98,6 +103,7 @@ class UserSession extends SessionStorage
         }
 
         parent::write($session->lidnr);
+
         $this->saveSession($session->lidnr);
 
         return true;
@@ -105,14 +111,18 @@ class UserSession extends SessionStorage
 
     /**
      * Defined by Laminas\Authentication\Storage\StorageInterface.
+     *
+     * @inheritDoc
      */
     public function write($contents): void
     {
         parent::write($contents);
 
-        if ($this->rememberMe) {
-            $this->saveSession($contents);
+        if (!$this->rememberMe) {
+            return;
         }
+
+        $this->saveSession($contents);
     }
 
     /**
@@ -147,8 +157,11 @@ class UserSession extends SessionStorage
     {
         // Clear the session
         $this->setRememberMe(false);
+
         parent::write(null);
+
         parent::clear();
+
         $this->clearCookie();
     }
 
@@ -180,7 +193,7 @@ class UserSession extends SessionStorage
     private function setCookieParameters(SetCookie $sessionToken): SetCookie
     {
         // Use secure cookies in production
-        if (APP_ENV === 'production') {
+        if ('production' === APP_ENV) {
             $sessionToken->setSecure(true)
                 ->setHttponly(true)
                 ->setSameSite(SetCookie::SAME_SITE_LAX);

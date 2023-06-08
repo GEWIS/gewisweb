@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace Application\View\Helper;
 
-use Laminas\View\Helper\{
-    AbstractHelper,
-    Identity as LaminasIdentity,
-};
+use Laminas\View\Helper\AbstractHelper;
 use User\Authentication\AuthenticationService;
 use User\Model\CompanyUser as CompanyUserModel;
 
@@ -21,10 +18,7 @@ class CompanyIdentity extends AbstractHelper
     {
     }
 
-    /**
-     * @return CompanyUserModel|null
-     */
-    public function __invoke(): CompanyUserModel|null
+    public function __invoke(): ?CompanyUserModel
     {
         $identity = $this->companyUserAuthService->getIdentity();
         if ($identity instanceof CompanyUserModel) {

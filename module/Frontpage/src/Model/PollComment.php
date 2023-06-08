@@ -7,12 +7,10 @@ namespace Frontpage\Model;
 use Application\Model\Traits\IdentifiableTrait;
 use DateTime;
 use Decision\Model\Member as MemberModel;
-use Doctrine\ORM\Mapping\{
-    Column,
-    Entity,
-    JoinColumn,
-    ManyToOne,
-};
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 /**
@@ -28,11 +26,11 @@ class PollComment implements ResourceInterface
      */
     #[ManyToOne(
         targetEntity: Poll::class,
-        inversedBy: "comments",
+        inversedBy: 'comments',
     )]
     #[JoinColumn(
-        name: "poll_id",
-        referencedColumnName: "id",
+        name: 'poll_id',
+        referencedColumnName: 'id',
         nullable: false,
     )]
     protected Poll $poll;
@@ -42,8 +40,8 @@ class PollComment implements ResourceInterface
      */
     #[ManyToOne(targetEntity: MemberModel::class)]
     #[JoinColumn(
-        name: "user_lidnr",
-        referencedColumnName: "lidnr",
+        name: 'user_lidnr',
+        referencedColumnName: 'lidnr',
         nullable: false,
     )]
     protected MemberModel $user;
@@ -51,25 +49,23 @@ class PollComment implements ResourceInterface
     /**
      * Author of the comment.
      */
-    #[Column(type: "string")]
+    #[Column(type: 'string')]
     protected string $author;
 
     /**
      * Comment content.
      */
-    #[Column(type: "text")]
+    #[Column(type: 'text')]
     protected string $content;
 
     /**
      * Comment date.
      */
-    #[Column(type: "datetime")]
+    #[Column(type: 'datetime')]
     protected DateTime $createdOn;
 
     /**
      * Get the poll.
-     *
-     * @return Poll
      */
     public function getPoll(): Poll
     {
@@ -86,8 +82,6 @@ class PollComment implements ResourceInterface
 
     /**
      * Get the user.
-     *
-     * @return MemberModel
      */
     public function getUser(): MemberModel
     {
@@ -104,8 +98,6 @@ class PollComment implements ResourceInterface
 
     /**
      * Get the author.
-     *
-     * @return string
      */
     public function getAuthor(): string
     {
@@ -114,8 +106,6 @@ class PollComment implements ResourceInterface
 
     /**
      * Set the author.
-     *
-     * @param string $author
      */
     public function setAuthor(string $author): void
     {
@@ -124,8 +114,6 @@ class PollComment implements ResourceInterface
 
     /**
      * Get the content.
-     *
-     * @return string
      */
     public function getContent(): string
     {
@@ -134,8 +122,6 @@ class PollComment implements ResourceInterface
 
     /**
      * Set the content.
-     *
-     * @param string $content
      */
     public function setContent(string $content): void
     {
@@ -144,8 +130,6 @@ class PollComment implements ResourceInterface
 
     /**
      * Get the creation date.
-     *
-     * @return DateTime
      */
     public function getCreatedOn(): DateTime
     {
@@ -154,8 +138,6 @@ class PollComment implements ResourceInterface
 
     /**
      * Set the creation date.
-     *
-     * @param DateTime $createdOn
      */
     public function setCreatedOn(DateTime $createdOn): void
     {
@@ -164,8 +146,6 @@ class PollComment implements ResourceInterface
 
     /**
      * Get the resource ID.
-     *
-     * @return string
      */
     public function getResourceId(): string
     {

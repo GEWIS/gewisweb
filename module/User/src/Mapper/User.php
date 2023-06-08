@@ -9,6 +9,9 @@ use DateTime;
 use Decision\Model\Member as MemberModel;
 use User\Model\User as UserModel;
 
+use function is_numeric;
+use function strtolower;
+
 /**
  * @template-extends BaseMapper<UserModel>
  */
@@ -66,9 +69,6 @@ class User extends BaseMapper
         return $qb->getQuery()->getOneOrNullResult();
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function getRepositoryName(): string
     {
         return UserModel::class;

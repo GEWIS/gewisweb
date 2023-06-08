@@ -12,10 +12,8 @@ use Frontpage\Model\Page as PageModel;
 use InvalidArgumentException;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Stdlib\Parameters;
-use Laminas\Validator\File\{
-    Extension,
-    IsImage,
-};
+use Laminas\Validator\File\Extension;
+use Laminas\Validator\File\IsImage;
 use User\Permissions\NotAllowedException;
 
 /**
@@ -23,6 +21,9 @@ use User\Permissions\NotAllowedException;
  */
 class Page
 {
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
+     */
     public function __construct(
         private readonly AclService $aclService,
         private readonly Translator $translator,
@@ -35,8 +36,6 @@ class Page
 
     /**
      * Get the translator.
-     *
-     * @return Translator
      */
     public function getTranslator(): Translator
     {
@@ -45,12 +44,6 @@ class Page
 
     /**
      * Returns a single page.
-     *
-     * @param string $category
-     * @param string|null $subCategory
-     * @param string|null $name
-     *
-     * @return PageModel|null
      */
     public function getPage(
         string $category,
@@ -69,18 +62,16 @@ class Page
     /**
      * Returns the parent pages of a page if those exist.
      *
-     * @param PageModel $page
-     *
      * @return array<array-key, PageModel|null>
      */
     public function getPageParents(PageModel $page): array
     {
         $parents = [];
 
-        if (!is_null($page->getSubCategory())) {
+        if (null !== $page->getSubCategory()) {
             $parents[] = $this->pageMapper->findPage($page->getCategory());
 
-            if (!is_null($page->getName())) {
+            if (null !== $page->getName()) {
                 $parents[] = $this->pageMapper->findPage($page->getCategory(), $page->getSubCategory());
             }
         }
@@ -90,10 +81,6 @@ class Page
 
     /**
      * Returns a single page by its id.
-     *
-     * @param int $pageId
-     *
-     * @return PageModel|null
      */
     public function getPageById(int $pageId): ?PageModel
     {
@@ -103,13 +90,21 @@ class Page
     /**
      * Returns an associative array of all pages in a tree-like structure.
      *
-     * @return array
+     * @return array<string, array{
+     *     page?: PageModel,
+     *     children?: array<string, array{
+     *         page?: PageModel,
+     *         children?: array<string, array{
+     *             page: PageModel,
+     *         }>,
+     *     }>,
+     * }>
      */
     public function getPages(): array
     {
         if (!$this->aclService->isAllowed('list', 'page')) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view the list of pages.')
+                $this->translator->translate('You are not allowed to view the list of pages.'),
             );
         }
 
@@ -121,8 +116,8 @@ class Page
             $subCategory = $page->getSubCategory();
             $name = $page->getName();
 
-            if (is_null($name)) {
-                if (is_null($subCategory)) {
+            if (null === $name) {
+                if (null === $subCategory) {
                     // Page url is /$category
                     $pageArray[$category]['page'] = $page;
                 } else {
@@ -142,8 +137,6 @@ class Page
      * Creates a new Page.
      *
      * @param Parameters $data form post data
-     *
-     * @return bool
      *
      * @throws ORMException
      */
@@ -168,7 +161,7 @@ class Page
     /**
      * @param array $data
      *
-     * @return PageModel
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function savePageData(array $data): PageModel
     {
@@ -188,10 +181,7 @@ class Page
     }
 
     /**
-     * @param int $pageId
      * @param Parameters $data form post data
-     *
-     * @return bool
      *
      * @throws ORMException
      */
@@ -229,15 +219,17 @@ class Page
 
     /**
      * Upload an image to be displayed on a page.
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function uploadImage(array $files): string
     {
         $imageValidator = new IsImage(
-            ['magicFile' => false]
+            ['magicFile' => false],
         );
 
         $extensionValidator = new Extension(
-            ['JPEG', 'JPG', 'JFIF', 'TIFF', 'RIF', 'GIF', 'BMP', 'PNG']
+            ['JPEG', 'JPG', 'JFIF', 'TIFF', 'RIF', 'GIF', 'BMP', 'PNG'],
         );
 
         if ($imageValidator->isValid($files['upload']['tmp_name'])) {
@@ -249,33 +241,29 @@ class Page
             }
 
             throw new InvalidArgumentException(
-                $this->translator->translate('The uploaded file does not have a valid extension')
+                $this->translator->translate('The uploaded file does not have a valid extension'),
             );
         }
 
         throw new InvalidArgumentException(
-            $this->translator->translate('The uploaded file is not a valid image')
+            $this->translator->translate('The uploaded file is not a valid image'),
         );
     }
 
     /**
      * Get the Page form.
-     *
-     * @param int|null $pageId
-     *
-     * @return PageForm
      */
     public function getPageForm(?int $pageId = null): PageForm
     {
         if (!$this->aclService->isAllowed('create', 'page')) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to create new pages.')
+                $this->translator->translate('You are not allowed to create new pages.'),
             );
         }
 
         $form = $this->pageForm;
 
-        if (!is_null($pageId)) {
+        if (null !== $pageId) {
             $page = $this->getPageById($pageId);
             $form->bind($page);
         }

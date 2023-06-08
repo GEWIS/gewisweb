@@ -6,12 +6,10 @@ namespace Company\Model\Proposals;
 
 use Application\Model\Traits\IdentifiableTrait;
 use Company\Model\Job as JobModel;
-use Doctrine\ORM\Mapping\{
-    Entity,
-    JoinColumn,
-    ManyToOne,
-    OneToOne,
-};
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToOne;
 
 #[Entity]
 class JobUpdate
@@ -23,10 +21,10 @@ class JobUpdate
      */
     #[ManyToOne(
         targetEntity: JobModel::class,
-        inversedBy: "updateProposals",
+        inversedBy: 'updateProposals',
     )]
     #[JoinColumn(
-        referencedColumnName: "id",
+        referencedColumnName: 'id',
         nullable: false,
     )]
     protected JobModel $original;
@@ -36,10 +34,10 @@ class JobUpdate
      */
     #[OneToOne(
         targetEntity: JobModel::class,
-        cascade: ["remove"],
+        cascade: ['remove'],
     )]
     #[JoinColumn(
-        referencedColumnName: "id",
+        referencedColumnName: 'id',
         nullable: false,
     )]
     protected JobModel $proposal;

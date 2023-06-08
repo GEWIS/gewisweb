@@ -15,28 +15,32 @@ use Exception;
 use Laminas\Http\Response\Stream;
 use Laminas\I18n\Filter\Alnum;
 use Laminas\Mvc\I18n\Translator;
-use Photo\Mapper\{
-    Photo as PhotoMapper,
-    ProfilePhoto as ProfilePhotoMapper,
-    Tag as TagMapper,
-    Vote as VoteMapper,
-    WeeklyPhoto as WeeklyPhotoMapper,
-};
-use Photo\Model\{
-    Album as AlbumModel,
-    Photo as PhotoModel,
-    ProfilePhoto as ProfilePhotoModel,
-    Tag as TagModel,
-    Vote as VoteModel,
-    WeeklyPhoto as WeeklyPhotoModel,
-};
+use Photo\Mapper\Photo as PhotoMapper;
+use Photo\Mapper\ProfilePhoto as ProfilePhotoMapper;
+use Photo\Mapper\Tag as TagMapper;
+use Photo\Mapper\Vote as VoteMapper;
+use Photo\Mapper\WeeklyPhoto as WeeklyPhotoMapper;
+use Photo\Model\Album as AlbumModel;
+use Photo\Model\Photo as PhotoModel;
+use Photo\Model\ProfilePhoto as ProfilePhotoModel;
+use Photo\Model\Tag as TagModel;
+use Photo\Model\Vote as VoteModel;
+use Photo\Model\WeeklyPhoto as WeeklyPhotoModel;
 use User\Permissions\NotAllowedException;
+
+use function count;
+use function str_replace;
+use function strpos;
+use function substr;
 
 /**
  * Photo service.
  */
 class Photo
 {
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
+     */
     public function __construct(
         private readonly AclService $aclService,
         private readonly Translator $translator,
@@ -54,11 +58,11 @@ class Photo
     /**
      * Get all photos in an album.
      *
-     * @param AlbumModel $album the album to get the photos from
-     * @param int $start the result to start at
-     * @param int|null $maxResults max amount of results to return, null for infinite
+     * @param AlbumModel $album      the album to get the photos from
+     * @param int        $start      the result to start at
+     * @param int|null   $maxResults max amount of results to return, null for infinite
      *
-     * @return array of AlbumModel
+     * @return PhotoModel[]
      */
     public function getPhotos(
         AlbumModel $album,
@@ -72,16 +76,12 @@ class Photo
         return $this->photoMapper->getAlbumPhotos(
             $album,
             $start,
-            $maxResults
+            $maxResults,
         );
     }
 
     /**
      * Returns a Laminas response to be used for downloading a photo.
-     *
-     * @param int $photoId
-     *
-     * @return Stream|null
      */
     public function getPhotoDownload(int $photoId): ?Stream
     {
@@ -121,8 +121,6 @@ class Photo
      * Returns a unique file name for a photo.
      *
      * @param PhotoModel $photo the photo to get a name for
-     *
-     * @return string
      */
     public function getPhotoFileName(PhotoModel $photo): string
     {
@@ -141,10 +139,15 @@ class Photo
      * Get the photo data belonging to a certain photo.
      *
      * @param int $photoId the id of the photo to retrieve
-     * @param AlbumModel|null $album
      *
-     * @return array|null of data about the photo, which is useful inside a view
-     *                    or null if the photo was not found
+     * @return ?array{
+     *     photo: PhotoModel,
+     *     next: ?PhotoModel,
+     *     previous: ?PhotoModel,
+     *     isTagged: bool,
+     *     isProfilePhoto: bool,
+     *     isExplicitProfilePhoto: bool,
+     * }
      *
      * @throws Exception
      */
@@ -159,11 +162,11 @@ class Photo
         $photo = $this->getPhoto($photoId);
 
         // photo does not exist
-        if (is_null($photo)) {
+        if (null === $photo) {
             return null;
         }
 
-        if (is_null($album)) {
+        if (null === $album) {
             // Default type for albums is Album.
             $album = new AlbumModel();
         }
@@ -177,9 +180,9 @@ class Photo
         $isProfilePhoto = false;
         $isExplicitProfilePhoto = false;
 
-        if (null != $profilePhoto) {
+        if (null !== $profilePhoto) {
             $isExplicitProfilePhoto = $profilePhoto->isExplicit();
-            if ($photoId == $profilePhoto->getPhoto()->getId()) {
+            if ($photoId === $profilePhoto->getPhoto()->getId()) {
                 $isProfilePhoto = true;
             }
         }
@@ -232,7 +235,8 @@ class Photo
      *
      * @param int $photoId the id of the photo to delete
      *
-     * @return bool indicating whether the delete was successful
+     * @return bool indicating whether the deletion was successful
+     *
      * @throws ORMException
      */
     public function deletePhoto(int $photoId): bool
@@ -242,7 +246,7 @@ class Photo
         }
 
         $photo = $this->getPhoto($photoId);
-        if (is_null($photo)) {
+        if (null === $photo) {
             return false;
         }
 
@@ -254,8 +258,6 @@ class Photo
 
     /**
      * Deletes all files associated with a photo.
-     *
-     * @param PhotoModel $photo
      */
     public function deletePhotoFiles(PhotoModel $photo): void
     {
@@ -266,8 +268,6 @@ class Photo
 
     /**
      * Deletes a stored photo at a given path.
-     *
-     * @param string $path
      *
      * @return bool indicated whether deleting the photo was successful
      */
@@ -281,10 +281,6 @@ class Photo
      * if at least one photo has been viewed in the specified time.
      * The parameters determine the week to check the photos of.
      *
-     * @param DateTime|null $beginDate
-     * @param DateTime|null $endDate
-     *
-     * @return WeeklyPhotoModel|null
      * @throws ORMException
      * @throws Exception
      */
@@ -292,13 +288,16 @@ class Photo
         ?DateTime $beginDate = null,
         ?DateTime $endDate = null,
     ): ?WeeklyPhotoModel {
-        if (is_null($beginDate) || is_null($endDate)) {
+        if (
+            null === $beginDate
+            || null === $endDate
+        ) {
             $beginDate = (new DateTime())->sub(new DateInterval('P1W'));
             $endDate = new DateTime();
         }
 
         $bestPhoto = $this->determinePhotoOfTheWeek($beginDate, $endDate);
-        if (is_null($bestPhoto)) {
+        if (null === $bestPhoto) {
             return null;
         }
 
@@ -315,10 +314,6 @@ class Photo
     /**
      * Determine which photo is the photo of the week.
      *
-     * @param DateTime $beginDate
-     * @param DateTime $endDate
-     *
-     * @return PhotoModel|null
      * @throws Exception
      */
     public function determinePhotoOfTheWeek(
@@ -339,12 +334,14 @@ class Photo
             $rating = $this->ratePhoto($photo, $res[2]);
 
             if (
-                !$this->weeklyPhotoMapper->hasBeenPhotoOfTheWeek($photo)
-                && $rating > $bestRating
+                $this->weeklyPhotoMapper->hasBeenPhotoOfTheWeek($photo)
+                || $rating <= $bestRating
             ) {
-                $bestPhoto = $photo;
-                $bestRating = $rating;
+                continue;
             }
+
+            $bestPhoto = $photo;
+            $bestRating = $rating;
         }
 
         return $bestPhoto;
@@ -352,10 +349,6 @@ class Photo
 
     /**
      * Determine which photo is best suited as profile picture.
-     *
-     * @param int $lidnr
-     *
-     * @return PhotoModel|null
      *
      * @throws Exception
      */
@@ -372,10 +365,6 @@ class Photo
 
     /**
      * Determine which photo is best suited as profile picture.
-     *
-     * @param int $lidnr
-     *
-     * @return ProfilePhotoModel|null
      *
      * @throws Exception
      */
@@ -403,29 +392,26 @@ class Photo
     }
 
     /**
-     * @param ProfilePhotoModel|null $profilePhoto
-     *
      * @throws Exception
      */
     public function removeProfilePhoto(?ProfilePhotoModel $profilePhoto = null): void
     {
         if (null === $profilePhoto) {
             $profilePhoto = $this->getStoredProfilePhoto(
-                $this->aclService->getUserIdentityOrThrowException()->getLidnr()
+                $this->aclService->getUserIdentityOrThrowException()->getLidnr(),
             );
         }
 
-        if (null !== $profilePhoto) {
-            $mapper = $this->profilePhotoMapper;
-            $mapper->remove($profilePhoto);
-            $mapper->flush();
+        if (null === $profilePhoto) {
+            return;
         }
+
+        $mapper = $this->profilePhotoMapper;
+        $mapper->remove($profilePhoto);
+        $mapper->flush();
     }
 
     /**
-     * @param int $lidnr
-     *
-     * @return PhotoModel|null
      * @throws Exception
      */
     private function determineProfilePhoto(int $lidnr): ?PhotoModel
@@ -443,10 +429,12 @@ class Photo
             $photo = $res->getPhoto();
             $rating = $this->ratePhotoForMember($photo);
 
-            if ($rating > $bestRating) {
-                $bestPhoto = $photo;
-                $bestRating = $rating;
+            if ($rating <= $bestRating) {
+                continue;
             }
+
+            $bestPhoto = $photo;
+            $bestRating = $rating;
         }
 
         $this->cacheProfilePhoto($lidnr, $bestPhoto);
@@ -455,9 +443,6 @@ class Photo
     }
 
     /**
-     * @param int $lidnr
-     * @param PhotoModel $photo
-     *
      * @throws ORMException
      */
     private function cacheProfilePhoto(
@@ -477,11 +462,6 @@ class Photo
     }
 
     /**
-     * @param PhotoModel $photo
-     * @param MemberModel $member
-     * @param DateTime $dateTime
-     * @param bool $explicit
-     *
      * @throws ORMException
      */
     private function storeProfilePhoto(
@@ -505,14 +485,12 @@ class Photo
     }
 
     /**
-     * @param int $photoId
-     *
      * @throws ORMException
      */
     public function setProfilePhoto(int $photoId): void
     {
         $photo = $this->getPhoto($photoId);
-        if (is_null($photo)) {
+        if (null === $photo) {
             throw new NoResultException();
         }
 
@@ -529,15 +507,12 @@ class Photo
     }
 
     /**
-     * @param int $lidnr
-     *
-     * @return bool
      * @throws Exception
      */
     public function hasExplicitProfilePhoto(int $lidnr): bool
     {
         $profilePhoto = $this->getStoredProfilePhoto($lidnr);
-        if (null != $profilePhoto) {
+        if (null !== $profilePhoto) {
             return $profilePhoto->isExplicit();
         }
 
@@ -546,11 +521,6 @@ class Photo
 
     /**
      * Determine the preference rating of the photo.
-     *
-     * @param PhotoModel $photo
-     * @param int $occurences
-     *
-     * @return float|int
      */
     public function ratePhoto(
         PhotoModel $photo,
@@ -566,10 +536,6 @@ class Photo
 
     /**
      * Determine the preference rating of the photo.
-     *
-     * @param PhotoModel $photo
-     *
-     * @return float|int
      */
     public function ratePhotoForMember(PhotoModel $photo): float|int
     {
@@ -588,9 +554,6 @@ class Photo
         return $baseRating / $age;
     }
 
-    /**
-     * @return WeeklyPhotoModel|null
-     */
     public function getCurrentPhotoOfTheWeek(): ?WeeklyPhotoModel
     {
         return $this->weeklyPhotoMapper->getCurrentPhotoOfTheWeek();
@@ -598,8 +561,6 @@ class Photo
 
     /**
      * Count a vote for the specified photo.
-     *
-     * @param int $photoId
      *
      * @throws ORMException
      */
@@ -622,10 +583,6 @@ class Photo
     /**
      * Tags a user in the specified photo.
      *
-     * @param int $photoId
-     * @param int $lidnr
-     *
-     * @return TagModel|null
      * @throws ORMException
      */
     public function addTag(
@@ -657,11 +614,6 @@ class Photo
 
     /**
      * Retrieves a tag if it exists.
-     *
-     * @param int $photoId
-     * @param int $lidnr
-     *
-     * @return TagModel|null
      */
     public function findTag(
         int $photoId,
@@ -676,11 +628,6 @@ class Photo
 
     /**
      * Checks whether a user is tagged in a photo.
-     *
-     * @param int $photoId
-     * @param int $lidnr
-     *
-     * @return bool
      */
     public function isTaggedIn(
         int $photoId,
@@ -688,20 +635,14 @@ class Photo
     ): bool {
         $tag = $this->findTag($photoId, $lidnr);
 
-        if (null !== $tag) {
-            return true;
-        }
-
-        return false;
+        return null !== $tag;
     }
 
     /**
      * Removes a tag.
      *
-     * @param int $photoId
-     * @param int $lidnr
-     *
      * @return bool indicating whether removing the tag succeeded
+     *
      * @throws ORMException
      */
     public function removeTag(
@@ -723,9 +664,7 @@ class Photo
     /**
      * Gets all photos in which a member has been tagged.
      *
-     * @param MemberModel $member
-     *
-     * @return array
+     * @return TagModel[]
      */
     public function getTagsForMember(MemberModel $member): array
     {
@@ -738,8 +677,6 @@ class Photo
 
     /**
      * Gets the base directory from which the photo paths should be requested.
-     *
-     * @return string
      */
     public function getBaseDirectory(): string
     {

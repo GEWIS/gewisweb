@@ -6,6 +6,9 @@ namespace Application\Model\Enums;
 
 use Laminas\Mvc\I18n\Translator;
 
+use function array_map;
+use function array_merge;
+
 /**
  * The different languages supported by the website.
  */
@@ -22,11 +25,14 @@ enum Languages: string
         };
     }
 
+    /**
+     * @return array<array-key, Languages|string>
+     */
     public static function values(): array
     {
         return array_merge(
             array_map(
-                fn (self $status) => $status->value,
+                static fn (self $status) => $status->value,
                 self::cases(),
             ),
             self::cases(),

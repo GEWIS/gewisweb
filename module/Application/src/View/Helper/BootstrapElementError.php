@@ -7,6 +7,8 @@ namespace Application\View\Helper;
 use Laminas\Form\ElementInterface;
 use Laminas\View\Helper\AbstractHelper;
 
+use function count;
+
 class BootstrapElementError extends AbstractHelper
 {
     /**

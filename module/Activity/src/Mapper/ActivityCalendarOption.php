@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace Activity\Mapper;
 
-use Activity\Model\{
-    ActivityCalendarOption as ActivityCalendarOptionModel,
-    ActivityOptionProposal as ActivityOptionProposalModel,
-};
+use Activity\Model\ActivityCalendarOption as ActivityCalendarOptionModel;
+use Activity\Model\ActivityOptionProposal as ActivityOptionProposalModel;
 use Application\Mapper\BaseMapper;
 use DateTime;
+use Decision\Model\Organ as OrganModel;
 use Exception;
 
 /**
@@ -20,7 +19,8 @@ class ActivityCalendarOption extends BaseMapper
     /**
      * Gets all options created by the given organs.
      *
-     * @param array $organs
+     * @param OrganModel[] $organs
+     *
      * @return array<array-key, ActivityCalendarOptionModel>
      */
     public function getUpcomingOptionsByOrgans(array $organs): array
@@ -57,6 +57,7 @@ class ActivityCalendarOption extends BaseMapper
             $qb->andWhere('o.modifiedBy IS NULL')
                 ->orWhere("o.status = 'approved'");
         }
+
         $qb->setParameter('now', new DateTime());
 
         return $qb->getQuery()->getResult();
@@ -87,7 +88,6 @@ class ActivityCalendarOption extends BaseMapper
     /**
      * Retrieves options associated with a proposal.
      *
-     * @param ActivityOptionProposalModel $proposal
      * @return array<array-key, ActivityCalendarOptionModel>
      */
     public function findOptionsByProposal(ActivityOptionProposalModel $proposal): array
@@ -99,9 +99,6 @@ class ActivityCalendarOption extends BaseMapper
         return $qb->getQuery()->getResult();
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function getRepositoryName(): string
     {
         return ActivityCalendarOptionModel::class;

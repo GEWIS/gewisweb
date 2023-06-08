@@ -4,18 +4,14 @@ declare(strict_types=1);
 
 namespace Frontpage\Form;
 
-use Laminas\Filter\{
-    StringToLower,
-    ToNull,
-};
-use Laminas\Form\Element\{
-    Submit,
-    Text,
-    Textarea,
-};
+use Laminas\Filter\StringToLower;
+use Laminas\Filter\ToNull;
+use Laminas\Form\Element\Submit;
+use Laminas\Form\Element\Text;
+use Laminas\Form\Element\Textarea;
 use Laminas\Form\Form;
-use Laminas\Mvc\I18n\Translator;
 use Laminas\InputFilter\InputFilterProviderInterface;
+use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\StringLength;
 
 class Page extends Form implements InputFilterProviderInterface
@@ -28,21 +24,21 @@ class Page extends Form implements InputFilterProviderInterface
             [
                 'name' => 'category',
                 'type' => Text::class,
-            ]
+            ],
         );
 
         $this->add(
             [
                 'name' => 'subCategory',
                 'type' => Text::class,
-            ]
+            ],
         );
 
         $this->add(
             [
                 'name' => 'name',
                 'type' => Text::class,
-            ]
+            ],
         );
 
         $this->add(
@@ -52,7 +48,7 @@ class Page extends Form implements InputFilterProviderInterface
                 'options' => [
                     'label' => $translator->translate('Dutch title'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -62,7 +58,7 @@ class Page extends Form implements InputFilterProviderInterface
                 'options' => [
                     'label' => $translator->translate('English title'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -72,7 +68,7 @@ class Page extends Form implements InputFilterProviderInterface
                 'options' => [
                     'label' => $translator->translate('Dutch content'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -82,7 +78,7 @@ class Page extends Form implements InputFilterProviderInterface
                 'options' => [
                     'label' => $translator->translate('English content'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -93,7 +89,7 @@ class Page extends Form implements InputFilterProviderInterface
                     'label' => $translator->translate('Required role'),
                     'value' => 'guest',
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -103,7 +99,7 @@ class Page extends Form implements InputFilterProviderInterface
                 'attributes' => [
                     'value' => $translator->translate('Save'),
                 ],
-            ]
+            ],
         );
     }
 

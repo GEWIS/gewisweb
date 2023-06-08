@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Education\Model;
 
-use Doctrine\ORM\Mapping\{
-    Column,
-    Entity,
-};
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
 
 /**
  * Summary.
@@ -19,7 +17,7 @@ class Summary extends CourseDocument
      * Author of the summary.
      */
     #[Column(
-        type: "string",
+        type: 'string',
         nullable: true,
     )]
     protected ?string $author = null;

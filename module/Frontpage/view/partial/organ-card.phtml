@@ -18,12 +18,12 @@ $organInformation = $organ->getApprovedOrganInformation()
     <a href="<?= $this->url('home/organ', ['abbr' => $organ->getAbbr(), 'type' => $organ->getType()->value]) ?>">
         <div class="card">
             <div class="card-image">
-                <?php if (!is_null($organInformation) && !is_null($organInformation->getThumbnailPath())): ?>
+                <?php if (null !== $organInformation && null !== $organInformation->getThumbnailPath()): ?>
                     <img class="img-responsive" src="<?= $this->fileUrl($organInformation->getThumbnailPath()) ?>">
                 <?php endif ?>
                 <span class="card-title"><?= $organ->getAbbr() ?></span>
                 <div class="card-details">
-                    <?php if (!is_null($organInformation)): ?>
+                    <?php if (null !== $organInformation): ?>
                         <?= $lang === 'en' ? $organInformation->getShortEnglishDescription() : $organInformation->getShortDutchDescription() ?>
                     <?php endif; ?>
                 </div>
@@ -31,12 +31,12 @@ $organInformation = $organ->getApprovedOrganInformation()
 
             <div class="card-content">
                 <span><?= $organ->getName() ?>
-                    <?php if (!is_null($organInformation) && $this->acl('decision_service_acl')->isAllowed('organ', 'view')): ?>
+                    <?php if (null !== $organInformation && $this->acl('decision_service_acl')->isAllowed('organ', 'view')): ?>
                         <a href="mailto:<?= $organInformation->getEmail() ?>" class="pull-right">
                                 <span class="fas fa-envelope"></span>
                             </a> &nbsp;
                     <?php endif; ?>
-                    <?php if (!is_null($organInformation) && strlen($organInformation->getWebsite()) > 0): ?>
+                    <?php if (null !== $organInformation && strlen($organInformation->getWebsite()) > 0): ?>
                         <a href="<?= $organInformation->getWebsite() ?>" class="pull-right">
                                 <span class="fas fa-external-link-alt"></span>
                             </a>

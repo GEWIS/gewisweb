@@ -5,19 +5,23 @@ declare(strict_types=1);
 namespace Company\Model;
 
 use Application\Model\Traits\IdentifiableTrait;
-use Doctrine\Common\Collections\{
-    ArrayCollection,
-    Collection,
-};
-use Doctrine\ORM\Mapping\{
-    Entity,
-    JoinColumn,
-    ManyToMany,
-    OneToOne,
-};
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\OneToOne;
 
 /**
  * Job Label model.
+ *
+ * @psalm-type JobLabelArrayType = array{
+ *     id: int,
+ *     name: ?string,
+ *     nameEn: ?string,
+ *     abbreviation: ?string,
+ *     abbreviationEn: ?string,
+ * }
  */
 #[Entity]
 class JobLabel
@@ -29,12 +33,12 @@ class JobLabel
      */
     #[OneToOne(
         targetEntity: CompanyLocalisedText::class,
-        cascade: ["persist", "remove"],
+        cascade: ['persist', 'remove'],
         orphanRemoval: true,
     )]
     #[JoinColumn(
-        name: "name_id",
-        referencedColumnName: "id",
+        name: 'name_id',
+        referencedColumnName: 'id',
         nullable: false,
     )]
     protected CompanyLocalisedText $name;
@@ -44,23 +48,25 @@ class JobLabel
      */
     #[OneToOne(
         targetEntity: CompanyLocalisedText::class,
-        cascade: ["persist", "remove"],
+        cascade: ['persist', 'remove'],
         orphanRemoval: true,
     )]
     #[JoinColumn(
-        name: "abbreviation_id",
-        referencedColumnName: "id",
+        name: 'abbreviation_id',
+        referencedColumnName: 'id',
         nullable: false,
     )]
     protected CompanyLocalisedText $abbreviation;
 
     /**
      * The Assignments this Label belongs to.
+     *
+     * @var Collection<Job>
      */
     #[ManyToMany(
         targetEntity: Job::class,
-        mappedBy: "labels",
-        cascade: ["persist"],
+        mappedBy: 'labels',
+        cascade: ['persist'],
     )]
     protected Collection $jobs;
 
@@ -71,8 +77,6 @@ class JobLabel
 
     /**
      * Gets the name.
-     *
-     * @return CompanyLocalisedText
      */
     public function getName(): CompanyLocalisedText
     {
@@ -81,8 +85,6 @@ class JobLabel
 
     /**
      * Sets the name.
-     *
-     * @param CompanyLocalisedText $name
      */
     public function setName(CompanyLocalisedText $name): void
     {
@@ -91,8 +93,6 @@ class JobLabel
 
     /**
      * Gets the slug.
-     *
-     * @return CompanyLocalisedText
      */
     public function getAbbreviation(): CompanyLocalisedText
     {
@@ -101,8 +101,6 @@ class JobLabel
 
     /**
      * Sets the slug.
-     *
-     * @param CompanyLocalisedText $slug
      */
     public function setAbbreviation(CompanyLocalisedText $slug): void
     {
@@ -112,16 +110,13 @@ class JobLabel
     /**
      * Gets the jobs associated with this label.
      *
-     * @return Collection
+     * @return Collection<Job>
      */
     public function getJobs(): Collection
     {
         return $this->jobs;
     }
 
-    /**
-     * @param Job $job
-     */
     public function addJob(Job $job): void
     {
         if ($this->jobs->contains($job)) {
@@ -131,9 +126,6 @@ class JobLabel
         $this->jobs->add($job);
     }
 
-    /**
-     * @param Job $job
-     */
     public function removeJob(Job $job): void
     {
         if (!$this->jobs->contains($job)) {
@@ -144,7 +136,7 @@ class JobLabel
     }
 
     /**
-     * @return array
+     * @return JobLabelArrayType
      */
     public function toArray(): array
     {

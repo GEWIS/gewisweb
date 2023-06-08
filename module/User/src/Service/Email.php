@@ -9,22 +9,21 @@ use Decision\Model\Member as MemberModel;
 use Laminas\Mail\Header\MessageId;
 use Laminas\Mail\Message;
 use Laminas\Mail\Transport\TransportInterface;
-use Laminas\Mime\{
-    Mime,
-    Part as MimePart,
-    Message as MimeMessage,
-};
+use Laminas\Mime\Message as MimeMessage;
+use Laminas\Mime\Mime;
+use Laminas\Mime\Part as MimePart;
 use Laminas\View\Model\ViewModel;
 use Laminas\View\Renderer\PhpRenderer;
-use User\Model\{
-    NewCompanyUser as NewCompanyUserModel,
-    NewUser as NewUserModel,
-};
+use User\Model\NewCompanyUser as NewCompanyUserModel;
+use User\Model\NewUser as NewUserModel;
 
 use function mb_encode_mimeheader;
 
 class Email
 {
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
+     */
     public function __construct(
         private readonly PhpRenderer $renderer,
         private readonly TransportInterface $transport,
@@ -34,9 +33,6 @@ class Email
 
     /**
      * Send registration email.
-     *
-     * @param NewUserModel $newUser
-     * @param MemberModel $member
      */
     public function sendRegisterEmail(
         NewUserModel $newUser,
@@ -47,7 +43,7 @@ class Email
             [
                 'user' => $newUser,
                 'member' => $member,
-            ]
+            ],
         );
 
         $html = new MimePart($body);
@@ -83,7 +79,7 @@ class Email
             [
                 'user' => $newCompanyUser,
                 'company' => $company,
-            ]
+            ],
         );
 
         $html = new MimePart($body);
@@ -112,9 +108,6 @@ class Email
 
     /**
      * Send password lost email.
-     *
-     * @param NewUserModel $newUser
-     * @param MemberModel $member
      */
     public function sendPasswordLostMail(
         NewUserModel $newUser,
@@ -125,7 +118,7 @@ class Email
             [
                 'user' => $newUser,
                 'member' => $member,
-            ]
+            ],
         );
 
         $html = new MimePart($body);
@@ -161,7 +154,7 @@ class Email
             [
                 'user' => $newCompanyUser,
                 'company' => $company,
-            ]
+            ],
         );
 
         $html = new MimePart($body);
@@ -191,10 +184,9 @@ class Email
     /**
      * Render a template with given variables.
      *
-     * @param string $template
      * @param array $vars
      *
-     * @return string
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function render(
         string $template,

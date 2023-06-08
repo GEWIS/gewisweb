@@ -8,15 +8,13 @@ use Laminas\Mvc\I18n\Translator;
 use Laminas\Permissions\Acl\Acl;
 use Laminas\Permissions\Acl\Resource\GenericResource as Resource;
 use Laminas\Permissions\Acl\Role\GenericRole as Role;
-use User\Authentication\{
-    Adapter\CompanyUserAdapter,
-    Adapter\UserAdapter,
-    ApiAuthenticationService,
-    AuthenticationService as CompanyUserAuthenticationService,
-    AuthenticationService as UserAuthenticationService,
-    Storage\CompanyUserSession,
-    Storage\UserSession,
-};
+use User\Authentication\Adapter\CompanyUserAdapter;
+use User\Authentication\Adapter\UserAdapter;
+use User\Authentication\ApiAuthenticationService;
+use User\Authentication\AuthenticationService as CompanyUserAuthenticationService;
+use User\Authentication\AuthenticationService as UserAuthenticationService;
+use User\Authentication\Storage\CompanyUserSession;
+use User\Authentication\Storage\UserSession;
 use User\Authorization\GenericAclService;
 
 class AclService extends GenericAclService
@@ -24,6 +22,7 @@ class AclService extends GenericAclService
     protected Acl $acl;
 
     /**
+     * @param string[] $tueRanges
      * @psalm-param UserAuthenticationService<UserSession, UserAdapter> $userAuthService
      * @psalm-param CompanyUserAuthenticationService<CompanyUserSession, CompanyUserAdapter> $companyUserAuthService
      */
@@ -47,9 +46,6 @@ class AclService extends GenericAclService
         $this->createAcl();
     }
 
-    /**
-     * @return Acl
-     */
     protected function getAcl(): Acl
     {
         return $this->acl;

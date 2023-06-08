@@ -4,15 +4,13 @@ declare(strict_types=1);
 
 namespace Decision\Form;
 
-use Laminas\Form\Element\{
-    Checkbox,
-    Csrf,
-    Hidden,
-    Submit,
-};
+use Laminas\Form\Element\Checkbox;
+use Laminas\Form\Element\Csrf;
+use Laminas\Form\Element\Hidden;
+use Laminas\Form\Element\Submit;
 use Laminas\Form\Form;
-use Laminas\Mvc\I18n\Translator;
 use Laminas\InputFilter\InputFilterProviderInterface;
+use Laminas\Mvc\I18n\Translator;
 
 class Authorization extends Form implements InputFilterProviderInterface
 {
@@ -24,7 +22,7 @@ class Authorization extends Form implements InputFilterProviderInterface
             [
                 'name' => 'recipient',
                 'type' => Hidden::class,
-            ]
+            ],
         );
 
         $this->add(
@@ -34,14 +32,14 @@ class Authorization extends Form implements InputFilterProviderInterface
                 'options' => [
                     'use_hidden_element' => false,
                 ],
-            ]
+            ],
         );
 
         $this->add(
             [
                 'name' => 'csrf_token',
                 'type' => Csrf::class,
-            ]
+            ],
         );
 
         $this->add(
@@ -51,7 +49,7 @@ class Authorization extends Form implements InputFilterProviderInterface
                 'attributes' => [
                     'label' => $translate->translate('Authorize'),
                 ],
-            ]
+            ],
         );
     }
 

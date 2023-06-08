@@ -22,7 +22,7 @@ use User\Permissions\Assertion\IsAfterMembershipEndedAndNotTagged;
 
 $this->headTitle($album->getName());
 $currentAlbum = $album;
-while (!is_null($currentAlbum->getParent())) {
+while (null !== $currentAlbum->getParent()) {
     $this->headTitle($currentAlbum->getParent()->getName());
     $currentAlbum = $currentAlbum->getParent();
 }
@@ -89,9 +89,9 @@ $this->scriptUrl()->requireUrl('member/search')
             <?php
             // first we need to get all parents
             $crumbs = [];
-            if (!is_null($album->getParent())) {
+            if (null !== $album->getParent()) {
                 $currentAlbum = $album;
-                while (!is_null($currentAlbum->getParent())) {
+                while (null !== $currentAlbum->getParent()) {
                     // prepend parent to array
                     array_unshift($crumbs, [
                         'url' => $this->url(

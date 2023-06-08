@@ -6,23 +6,21 @@ namespace Photo\Model;
 
 use Application\Model\Traits\IdentifiableTrait;
 use Decision\Model\Member as MemberModel;
-use Doctrine\ORM\Mapping\{
-    Entity,
-    JoinColumn,
-    ManyToOne,
-    Table,
-    UniqueConstraint,
-};
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping\UniqueConstraint;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 /**
  * Tag.
  */
 #[Entity]
-#[Table(name: "Tag")]
+#[Table(name: 'Tag')]
 #[UniqueConstraint(
-    name: "tag_idx",
-    columns: ["photo_id", "member_id"],
+    name: 'tag_idx',
+    columns: ['photo_id', 'member_id'],
 )]
 class Tag implements ResourceInterface
 {
@@ -30,53 +28,41 @@ class Tag implements ResourceInterface
 
     #[ManyToOne(
         targetEntity: Photo::class,
-        inversedBy: "tags",
+        inversedBy: 'tags',
     )]
     #[JoinColumn(
-        name: "photo_id",
-        referencedColumnName: "id",
+        name: 'photo_id',
+        referencedColumnName: 'id',
         nullable: false,
     )]
     protected Photo $photo;
 
     #[ManyToOne(
         targetEntity: MemberModel::class,
-        inversedBy: "tags",
+        inversedBy: 'tags',
     )]
     #[JoinColumn(
-        name: "member_id",
-        referencedColumnName: "lidnr",
+        name: 'member_id',
+        referencedColumnName: 'lidnr',
         nullable: false,
     )]
     protected MemberModel $member;
 
-    /**
-     * @return Photo
-     */
     public function getPhoto(): Photo
     {
         return $this->photo;
     }
 
-    /**
-     * @return MemberModel
-     */
     public function getMember(): MemberModel
     {
         return $this->member;
     }
 
-    /**
-     * @param Photo $photo
-     */
     public function setPhoto(Photo $photo): void
     {
         $this->photo = $photo;
     }
 
-    /**
-     * @param MemberModel $member
-     */
     public function setMember(MemberModel $member): void
     {
         $this->member = $member;
@@ -85,7 +71,11 @@ class Tag implements ResourceInterface
     /**
      * Returns the Tag as an associative array.
      *
-     * @return array
+     * @return array{
+     *     id: int,
+     *     photo_id: int,
+     *     member_id: int,
+     * }
      */
     public function toArray(): array
     {
@@ -98,8 +88,6 @@ class Tag implements ResourceInterface
 
     /**
      * Get the resource ID.
-     *
-     * @return string
      */
     public function getResourceId(): string
     {

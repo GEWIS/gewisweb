@@ -8,22 +8,24 @@ use Application\Model\IdentityInterface;
 use DateTime;
 use Decision\Model\Enums\MembershipTypes;
 use Decision\Model\Member as MemberModel;
-use Doctrine\Common\Collections\{
-    ArrayCollection,
-    Collection,
-};
-use Doctrine\ORM\Mapping\{Column,
-    Entity,
-    Id,
-    JoinColumn,
-    OneToMany,
-    OneToOne,
-};
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\OneToOne;
 use RuntimeException;
-use User\Authentication\AuthenticationService;
+
+use function count;
+use function in_array;
+use function sprintf;
 
 /**
  * User model.
+ *
+ * @psalm-import-type MemberArrayType from MemberModel as ImportedMemberArrayType
  */
 #[Entity]
 class User implements IdentityInterface
@@ -32,21 +34,23 @@ class User implements IdentityInterface
      * The membership number.
      */
     #[Id]
-    #[Column(type: "integer")]
+    #[Column(type: 'integer')]
     protected int $lidnr;
 
     /**
      * The user's password.
      */
-    #[Column(type: "string")]
+    #[Column(type: 'string')]
     protected string $password;
 
     /**
      * User roles.
+     *
+     * @var Collection<UserRole>
      */
     #[OneToMany(
         targetEntity: UserRole::class,
-        mappedBy: "lidnr",
+        mappedBy: 'lidnr',
     )]
     protected Collection $roles;
 
@@ -55,11 +59,11 @@ class User implements IdentityInterface
      */
     #[OneToOne(
         targetEntity: MemberModel::class,
-        fetch: "EAGER",
+        fetch: 'EAGER',
     )]
     #[JoinColumn(
-        name: "lidnr",
-        referencedColumnName: "lidnr",
+        name: 'lidnr',
+        referencedColumnName: 'lidnr',
         nullable: false,
     )]
     protected MemberModel $member;
@@ -68,26 +72,25 @@ class User implements IdentityInterface
      * Timestamp when the password was last changed.
      */
     #[Column(
-        type: "datetime",
+        type: 'datetime',
         nullable: true,
     )]
     protected ?DateTime $passwordChangedOn = null;
 
-    // phpcs:ignore Gewis.General.RequireConstructorPromotion -- not possible
-    public function __construct(NewUser $newUser = null)
+    public function __construct(?NewUser $newUser = null)
     {
         $this->roles = new ArrayCollection();
 
-        if (null !== $newUser) {
-            $this->lidnr = $newUser->getLidnr();
-            $this->member = $newUser->getMember();
+        if (null === $newUser) {
+            return;
         }
+
+        $this->lidnr = $newUser->getLidnr();
+        $this->member = $newUser->getMember();
     }
 
     /**
      * Return the `lidnr` of this user, generalised to `id` for the {@link AuthenticationService}.
-     *
-     * @return int
      */
     public function getId(): int
     {
@@ -96,8 +99,6 @@ class User implements IdentityInterface
 
     /**
      * Get the membership number.
-     *
-     * @return int
      */
     public function getLidnr(): int
     {
@@ -106,18 +107,14 @@ class User implements IdentityInterface
 
     /**
      * Get the user's email address.
-     *
-     * @return string|null
      */
-    public function getEmail(): string|null
+    public function getEmail(): ?string
     {
         return $this->member->getEmail();
     }
 
     /**
      * Get the password hash.
-     *
-     * @return string
      */
     public function getPassword(): string
     {
@@ -126,8 +123,6 @@ class User implements IdentityInterface
 
     /**
      * Set the password hash.
-     *
-     * @param string $password
      */
     public function setPassword(string $password): void
     {
@@ -137,7 +132,7 @@ class User implements IdentityInterface
     /**
      * Get the user's roles.
      *
-     * @return Collection
+     * @return Collection<UserRole>
      */
     public function getRoles(): Collection
     {
@@ -146,8 +141,6 @@ class User implements IdentityInterface
 
     /**
      * Get the member information of this user.
-     *
-     * @return MemberModel
      */
     public function getMember(): MemberModel
     {
@@ -157,7 +150,7 @@ class User implements IdentityInterface
     /**
      * Get the user's role names.
      *
-     * @return array Role names
+     * @return string[] Role names
      */
     public function getRoleNames(): array
     {
@@ -170,9 +163,6 @@ class User implements IdentityInterface
         return $names;
     }
 
-    /**
-     * @return string
-     */
     public function getRoleId(): string
     {
         $roleNames = $this->getRoleNames();
@@ -197,52 +187,40 @@ class User implements IdentityInterface
         }
 
         throw new RuntimeException(
-            sprintf('Could not determine user role unambiguously for user %s', $this->getLidnr())
+            sprintf('Could not determine user role unambiguously for user %s', $this->getLidnr()),
         );
     }
 
-    /**
-     * @param ArrayCollection $roles
-     */
     public function setRoles(ArrayCollection $roles): void
     {
         $this->roles = $roles;
     }
 
-    /**
-     * @param int $lidnr
-     */
     public function setLidnr(int $lidnr): void
     {
         $this->lidnr = $lidnr;
     }
 
-    /**
-     * @param MemberModel $member
-     */
     public function setMember(MemberModel $member): void
     {
         $this->member = $member;
     }
 
-    /**
-     * @return DateTime|null
-     */
     public function getPasswordChangedOn(): ?DateTime
     {
         return $this->passwordChangedOn;
     }
 
-    /**
-     * @param DateTime $passwordChangedOn
-     */
     public function setPasswordChangedOn(DateTime $passwordChangedOn): void
     {
         $this->passwordChangedOn = $passwordChangedOn;
     }
 
     /**
-     * @return array
+     * @return array{
+     *     lidnr: int,
+     *     member: ImportedMemberArrayType,
+     * }
      */
     public function toArray(): array
     {
@@ -254,8 +232,6 @@ class User implements IdentityInterface
 
     /**
      * Get the user's resource ID.
-     *
-     * @return string
      */
     public function getResourceId(): string
     {

@@ -11,27 +11,23 @@ use Decision\Model\AssociationYear;
 use Decision\Service\Member as MemberService;
 use Exception;
 use Laminas\Mvc\I18n\Translator;
-use Photo\Form\{
-    CreateAlbum as CreateAlbumForm,
-    EditAlbum as EditAlbumForm,
-};
-use Photo\Mapper\{
-    Album as AlbumMapper,
-    Tag as TagMapper,
-    WeeklyPhoto as WeeklyPhotoMapper,
-};
-use Photo\Model\{
-    Album as AlbumModel,
-    MemberAlbum as MemberAlbumModel,
-    VirtualAlbum as VirtualAlbumModel,
-    WeeklyAlbum as WeeklyAlbumModel,
-    WeeklyPhoto,
-};
-use Photo\Service\{
-    AlbumCover as AlbumCoverService,
-    Photo as PhotoService,
-};
+use Photo\Form\CreateAlbum as CreateAlbumForm;
+use Photo\Form\EditAlbum as EditAlbumForm;
+use Photo\Mapper\Album as AlbumMapper;
+use Photo\Mapper\Tag as TagMapper;
+use Photo\Mapper\WeeklyPhoto as WeeklyPhotoMapper;
+use Photo\Model\Album as AlbumModel;
+use Photo\Model\MemberAlbum as MemberAlbumModel;
+use Photo\Model\Photo as PhotoModel;
+use Photo\Model\VirtualAlbum as VirtualAlbumModel;
+use Photo\Model\WeeklyAlbum as WeeklyAlbumModel;
+use Photo\Model\WeeklyPhoto;
+use Photo\Service\AlbumCover as AlbumCoverService;
+use Photo\Service\Photo as PhotoService;
 use User\Permissions\NotAllowedException;
+
+use function range;
+use function sprintf;
 
 /**
  * Album service.
@@ -57,11 +53,11 @@ class Album
      * Retrieves all the albums in the root directory or in the specified
      * album.
      *
-     * @param AlbumModel|null $album The album to retrieve sub-albums of
-     * @param int $start the result to start at
-     * @param int|null $maxResults max amount of results to return, null for infinite
+     * @param AlbumModel|null $album      The album to retrieve sub-albums of
+     * @param int             $start      the result to start at
+     * @param int|null        $maxResults max amount of results to return, null for infinite
      *
-     * @return array
+     * @return AlbumModel[]
      */
     public function getAlbums(
         ?AlbumModel $album = null,
@@ -72,17 +68,19 @@ class Album
             throw new NotAllowedException($this->translator->translate('Not allowed to view albums'));
         }
 
-        if (null == $album) {
+        if (null === $album) {
             return $this->albumMapper->getRootAlbums();
-        } elseif ($album instanceof VirtualAlbumModel) {
-            return [];
-        } else {
-            return $this->albumMapper->getSubAlbums(
-                $album,
-                $start,
-                $maxResults
-            );
         }
+
+        if ($album instanceof VirtualAlbumModel) {
+            return [];
+        }
+
+        return $this->albumMapper->getSubAlbums(
+            $album,
+            $start,
+            $maxResults,
+        );
     }
 
     /**
@@ -94,7 +92,7 @@ class Album
      *
      * @param int $year the year in which the albums have been created
      *
-     * @return array
+     * @return AlbumModel[]
      */
     public function getAlbumsByYear(int $year): array
     {
@@ -105,7 +103,7 @@ class Album
         $start = DateTime::createFromFormat(
             'Y-m-d H:i:s',
             $year . '-' . AssociationYear::ASSOCIATION_YEAR_START_MONTH . '-'
-            . AssociationYear::ASSOCIATION_YEAR_START_DAY . ' 0:00:00'
+            . AssociationYear::ASSOCIATION_YEAR_START_DAY . ' 0:00:00',
         );
         $end = clone $start;
         $end->add(new DateInterval('P1Y'));
@@ -117,7 +115,7 @@ class Album
      * Retrieves all root albums which do not have a startDateTime specified.
      * This is in most cases analogous to returning all empty albums.
      *
-     * @return array
+     * @return AlbumModel[]
      */
     public function getAlbumsWithoutDate(): array
     {
@@ -135,7 +133,7 @@ class Album
      *
      * Example: A value of 2010 would represent the association year 2010/2011
      *
-     * @return array of integers representing years
+     * @return int[] representing years
      */
     public function getAlbumYears(): array
     {
@@ -143,10 +141,10 @@ class Album
         $newest = $this->albumMapper->getNewestAlbum();
 
         if (
-            is_null($oldest)
-            || is_null($newest)
-            || is_null($oldest->getStartDateTime())
-            || is_null($newest->getEndDateTime())
+            null === $oldest
+            || null === $newest
+            || null === $oldest->getStartDateTime()
+            || null === $newest->getEndDateTime()
         ) {
             return [];
         }
@@ -165,28 +163,26 @@ class Album
      *
      * Example: A value of 2010 would represent the association year 2010/2011
      *
-     * @param DateTime $date
-     *
      * @return int representing an association year
      */
     public function getAssociationYear(DateTime $date): int
     {
         if ($date->format('n') < AssociationYear::ASSOCIATION_YEAR_START_MONTH) {
             return (int) $date->format('Y') - 1;
-        } else {
-            return (int) $date->format('Y');
         }
+
+        return (int) $date->format('Y');
     }
 
     /**
      * Creates a new album.
      *
      * @param int|null $parentId the id of the parent album
-     * @param array $data The post data to use for the album
-     *
-     * @return AlbumModel
+     * @param array    $data     The post data to use for the album
      *
      * @throws Exception
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function createAlbum(
         ?int $parentId,
@@ -211,8 +207,6 @@ class Album
 
     /**
      * Retrieves the form for creating a new album.
-     *
-     * @return CreateAlbumForm
      */
     public function getCreateAlbumForm(): CreateAlbumForm
     {
@@ -226,12 +220,12 @@ class Album
     /**
      * Gets an album using the album id.
      *
-     * @param int $albumId the id of the album
-     * @param string $type "album"|"member"|"weekly"
+     * @param int    $albumId the id of the album
+     * @param string $type    "album"|"member"|"weekly"
      *
      * @return MemberAlbumModel|AlbumModel|WeeklyAlbumModel|null album matching the given id
      *
-     * @throws Exception If there are not sufficient permissions
+     * @throws Exception If there are no sufficient permissions.
      */
     public function getAlbum(
         int $albumId,
@@ -258,11 +252,6 @@ class Album
         return $album;
     }
 
-    /**
-     * @param int $lidNr
-     *
-     * @return MemberAlbumModel|null
-     */
     private function getMemberAlbum(int $lidNr): ?MemberAlbumModel
     {
         $member = $this->memberService->findMemberByLidnr($lidNr);
@@ -283,7 +272,7 @@ class Album
     /**
      * Retrieves all WeeklyPhotos.
      *
-     * @return array
+     * @return PhotoModel[]
      */
     public function getLastPhotosOfTheWeekPerYear(): array
     {
@@ -303,9 +292,11 @@ class Album
 
         $photos = [];
         foreach ($years as $year) {
-            if (null !== ($photo = $this->weeklyPhotoMapper->getPhotosOfTheWeekInYear($year, true))) {
-                $photos[$year] = $photo;
+            if (null === ($photo = $this->weeklyPhotoMapper->getPhotosOfTheWeekInYear($year, true))) {
+                continue;
             }
+
+            $photos[$year] = $photo;
         }
 
         return $photos;
@@ -329,16 +320,18 @@ class Album
         }
 
         $weeklyAlbum = new WeeklyAlbumModel($year, $dates);
-        $weeklyAlbum->setName(sprintf(
-            $this->translator->translate('Photos of the Week in %d/%d'),
-            $year,
-            $year + 1,
-        ));
+        $weeklyAlbum->setName(
+            sprintf(
+                $this->translator->translate('Photos of the Week in %d/%d'),
+                $year,
+                $year + 1,
+            ),
+        );
 
         $startDate = DateTime::createFromFormat(
             'Y-m-d H:i:s',
             $year . '-' . AssociationYear::ASSOCIATION_YEAR_START_MONTH . '-'
-            . AssociationYear::ASSOCIATION_YEAR_START_DAY . ' 00:00:00'
+            . AssociationYear::ASSOCIATION_YEAR_START_DAY . ' 00:00:00',
         );
         $endDate = clone $startDate;
         $endDate->add(new DateInterval('P1Y'));
@@ -354,6 +347,7 @@ class Album
      * Updates the metadata of an album using post data.
      *
      * @return bool indicating if the update was successful
+     *
      * @throws Exception
      */
     public function updateAlbum(): bool
@@ -372,7 +366,6 @@ class Album
      *
      * @param int $albumId of the album
      *
-     * @return EditAlbumForm
      * @throws Exception
      */
     public function getEditAlbumForm(int $albumId): EditAlbumForm
@@ -391,7 +384,7 @@ class Album
     /**
      * Moves an album to new parent album.
      *
-     * @param int $albumId the id of the album to be moved
+     * @param int      $albumId  the id of the album to be moved
      * @param int|null $parentId the id of the new parent or null if the album should not be a subalbum
      *
      * @return bool indicating if the move was successful
@@ -415,7 +408,7 @@ class Album
             return false;
         }
 
-        $parent = (null === $parentId) ? null : $this->getAlbum($parentId);
+        $parent = null === $parentId ? null : $this->getAlbum($parentId);
 
         // If the current album is already a subalbum, remove it from it's parent's children.
         $album->getParent()?->removeAlbum($album);
@@ -442,16 +435,16 @@ class Album
 
         $album = $this->getAlbum($albumId);
 
-        if (null !== $album) {
-            $this->albumMapper->remove($album);
-            $this->albumMapper->flush();
+        if (null === $album) {
+            return;
         }
+
+        $this->albumMapper->remove($album);
+        $this->albumMapper->flush();
     }
 
     /**
      * Updates the given album with a newly generated cover photo.
-     *
-     * @param int $albumId
      *
      * @throws Exception
      */
@@ -481,14 +474,14 @@ class Album
 
     /**
      * Deletes the file belonging to the album cover for an album.
-     *
-     * @param AlbumModel $album
      */
     public function deleteAlbumCover(AlbumModel $album): void
     {
-        if (null !== ($albumCover = $album->getCoverPath())) {
-            $this->photoService->deletePhotoFile($albumCover);
+        if (null === ($albumCover = $album->getCoverPath())) {
+            return;
         }
+
+        $this->photoService->deletePhotoFile($albumCover);
     }
 
     /**
@@ -528,8 +521,7 @@ class Album
     /**
      * Get all unique albums a certain member is tagged in
      *
-     * @param int $lidnr
-     * @return array
+     * @return array<array-key, array{album_id: int}>
      */
     public function getAlbumsByMember(int $lidnr): array
     {

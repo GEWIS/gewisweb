@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace Photo\Controller\Plugin;
 
 use Laminas\Paginator\Adapter\AdapterInterface;
-use Photo\Model\{
-    Album as AlbumModel,
-    Photo as PhotoModel,
-};
-use Photo\Service\{
-    Album as AlbumService,
-    Photo as PhotoService,
-};
+use Photo\Model\Album as AlbumModel;
+use Photo\Model\Photo as PhotoModel;
+use Photo\Service\Album as AlbumService;
+use Photo\Service\Photo as PhotoService;
+
+use function array_merge;
+use function count;
+use function max;
 
 /**
  * Paginator for album pages.
@@ -23,12 +23,9 @@ class AlbumPaginatorAdapter implements AdapterInterface
 {
     /**
      * Item count.
-     *
-     * @var int|null
      */
     protected ?int $count = null;
 
-    // phpcs:ignore Gewis.General.RequireConstructorPromotion -- not possible
     public function __construct(
         private readonly PhotoService $photoService,
         private readonly AlbumService $albumService,
@@ -40,10 +37,10 @@ class AlbumPaginatorAdapter implements AdapterInterface
     /**
      * Returns an array of items for a page.
      *
-     * @param int $offset Page offset
+     * @param int $offset           Page offset
      * @param int $itemCountPerPage Number of items per page
      *
-     * @return array
+     * @return array<array-key, AlbumModel|PhotoModel>
      */
     public function getItems(
         $offset,
@@ -52,7 +49,7 @@ class AlbumPaginatorAdapter implements AdapterInterface
         $albums = $this->albumService->getAlbums(
             $this->album,
             $offset,
-            $itemCountPerPage
+            $itemCountPerPage,
         );
 
         $photoCount = $itemCountPerPage - count($albums);
@@ -64,8 +61,6 @@ class AlbumPaginatorAdapter implements AdapterInterface
 
     /**
      * Returns the total number of rows in the array.
-     *
-     * @return int
      */
     public function count(): int
     {

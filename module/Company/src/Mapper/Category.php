@@ -9,6 +9,8 @@ use Company\Model\JobCategory as JobCategoryModel;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\Query\Expr\Join;
 
+use function strtolower;
+
 /**
  * Mappers for category.
  *
@@ -32,9 +34,6 @@ class Category extends BaseMapper
      * Searches for a JobCategory based on its slug. The value is always converted to lowercase to ensure no weird
      * routing issues occur.
      *
-     * @param string $value
-     *
-     * @return JobCategoryModel|null
      * @throws NonUniqueResultException
      */
     public function findCategoryBySlug(string $value): ?JobCategoryModel
@@ -47,18 +46,13 @@ class Category extends BaseMapper
             $qb->expr()->orX(
                 'LOWER(loc.valueEN) = :value',
                 'LOWER(loc.valueNL) = :value',
-            )
+            ),
         )
             ->setParameter(':value', strtolower($value));
 
         return $qb->getQuery()->getOneOrNullResult();
     }
 
-    /**
-     * @param int $id
-     *
-     * @return JobCategoryModel|null
-     */
     public function findVisibleCategoryById(int $id): ?JobCategoryModel
     {
         return $this->getRepository()->findOneBy([
@@ -67,9 +61,6 @@ class Category extends BaseMapper
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function getRepositoryName(): string
     {
         return JobCategoryModel::class;

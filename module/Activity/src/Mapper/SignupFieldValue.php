@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Activity\Mapper;
 
-use Activity\Model\{
-    Signup as SignupModel,
-    SignupFieldValue as SignupFieldValueModel,
-};
+use Activity\Model\Signup as SignupModel;
+use Activity\Model\SignupFieldValue as SignupFieldValueModel;
 use Application\Mapper\BaseMapper;
 
 /**
@@ -25,9 +23,6 @@ class SignupFieldValue extends BaseMapper
         return $this->getRepository()->findBy(['signup' => $signup->getId()]);
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function getRepositoryName(): string
     {
         return SignupFieldValueModel::class;

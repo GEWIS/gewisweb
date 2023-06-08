@@ -13,6 +13,9 @@ use Laminas\Stdlib\ArrayUtils;
 
 class TestConfigProvider
 {
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingTraversableTypeHintSpecification
+     */
     public static function getConfig(): array
     {
         return include './config/application.config.php';
@@ -29,7 +32,7 @@ class TestConfigProvider
                     'orm_default' => [
                         'driverClass' => Driver::class,
                         'params' => [
-                            'user'     => 'phpunit',
+                            'user' => 'phpunit',
                             'password' => 'phpunit',
                             'memory' => true,
                             'charset' => 'utf8mb4',
@@ -49,13 +52,13 @@ class TestConfigProvider
         /** @var EntityManager $entityManager */
         $entityManager = $serviceManager->get('doctrine.entitymanager.orm_default');
         $metadatas = $entityManager->getMetadataFactory()->getAllMetadata();
-        if (!empty($metadatas)) {
-            $tool = new SchemaTool($entityManager);
-            $tool->createSchema($metadatas);
-        } else {
+        if (empty($metadatas)) {
             throw new SchemaException(
-                'No metadata classes to process'
+                'No metadata classes to process',
             );
         }
+
+        $tool = new SchemaTool($entityManager);
+        $tool->createSchema($metadatas);
     }
 }

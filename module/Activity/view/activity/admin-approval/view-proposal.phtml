@@ -65,26 +65,32 @@ function diff($oldValue, $newValue)
         <p>
             <?php
             $oldOrganisingParty = "";
-            if (!is_null($old->getOrgan()) && !is_null($old->getCompany())) {
+            if (
+                null !== $old->getOrgan()
+                && null !== $old->getCompany()
+            ) {
                 $oldOrganisingParty = $this->escapeHtml($old->getOrgan()->getName()) . ' ';
                 $oldOrganisingParty .= $this->translate('and') . ' ';
                 $oldOrganisingParty .= $this->escapeHtml($old->getCompany()->getName());
-            } else if (!is_null($old->getOrgan())) {
+            } else if (null !== $old->getOrgan()) {
                 $oldOrganisingParty = $this->escapeHtml($old->getOrgan()->getName());
-            } else if (!is_null($old->getCompany())) {
+            } else if (null !== $old->getCompany()) {
                 $oldOrganisingParty = $this->escapeHtml($old->getCompany()->getName());
             } else {
                 $oldOrganisingParty = $this->escapeHtml($old->getCreator()->getFullName());
             }
 
             $newOrganisingParty = "";
-            if (!is_null($new->getOrgan()) && !is_null($new->getCompany())) {
+            if (
+                null !== $new->getOrgan()
+                && null !== $new->getCompany()
+            ) {
                 $newOrganisingParty = $this->escapeHtml($new->getOrgan()->getName()) . ' ';
                 $newOrganisingParty .= $this->translate('and') . ' ';
                 $newOrganisingParty .= $this->escapeHtml($new->getCompany()->getName());
-            } else if (!is_null($old->getOrgan())) {
+            } else if (null !== $old->getOrgan()) {
                 $newOrganisingParty = $this->escapeHtml($new->getOrgan()->getName());
-            } else if (!is_null($old->getCompany())) {
+            } else if (null !== $old->getCompany()) {
                 $newOrganisingParty = $this->escapeHtml($new->getCompany()->getName());
             } else {
                 $newOrganisingParty = $this->escapeHtml($new->getCreator()->getFullName());

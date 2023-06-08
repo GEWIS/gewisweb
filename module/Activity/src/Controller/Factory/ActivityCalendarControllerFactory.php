@@ -5,18 +5,14 @@ declare(strict_types=1);
 namespace Activity\Controller\Factory;
 
 use Activity\Controller\ActivityCalendarController;
-use Psr\Container\ContainerInterface;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Psr\Container\ContainerInterface;
 
 class ActivityCalendarControllerFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param string $requestedName
-     * @param array|null $options
-     *
-     * @return ActivityCalendarController
      */
     public function __invoke(
         ContainerInterface $container,

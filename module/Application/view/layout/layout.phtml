@@ -34,54 +34,98 @@ use Laminas\View\Renderer\PhpRenderer;
     ?>
 
     <!-- Preload fonts-->
-    <?php $this->headLink([
-        'as' => 'font', 'rel' => 'preload', 'type' => 'font/woff2', 'crossorigin' => 'anonymous',
-        'href' => '/fonts/raleway/raleway-v22-latin-500.woff2'
+    <?php
+    $this->headLink([
+        'as' => 'font',
+        'rel' => 'preload',
+        'type' => 'font/woff2',
+        'crossorigin' => 'anonymous',
+        'href' => '/fonts/raleway/raleway-v22-latin-500.woff2',
     ]); ?>
-    <?php $this->headLink([
-        'as' => 'font', 'rel' => 'preload', 'type' => 'font/woff2', 'crossorigin' => 'anonymous',
-        'href' => '/fonts/raleway/raleway-v22-latin-600.woff2'
+    <?php
+    $this->headLink([
+        'as' => 'font',
+        'rel' => 'preload',
+        'type' => 'font/woff2',
+        'crossorigin' => 'anonymous',
+        'href' => '/fonts/raleway/raleway-v22-latin-600.woff2',
     ]); ?>
-    <?php $this->headLink([
-        'as' => 'font', 'rel' => 'preload', 'type' => 'font/woff2', 'crossorigin' => 'anonymous',
-        'href' => '/fonts/raleway/raleway-v22-latin-regular.woff2'
+    <?php
+    $this->headLink([
+        'as' => 'font',
+        'rel' => 'preload',
+        'type' => 'font/woff2',
+        'crossorigin' => 'anonymous',
+        'href' => '/fonts/raleway/raleway-v22-latin-regular.woff2',
     ]); ?>
-    <?php $this->headLink([
-        'as' => 'font', 'rel' => 'preload', 'type' => 'font/woff2', 'crossorigin' => 'anonymous',
-        'href' => '/fonts/lato/lato-v22-latin-700.woff2'
+    <?php
+    $this->headLink([
+        'as' => 'font',
+        'rel' => 'preload',
+        'type' => 'font/woff2',
+        'crossorigin' => 'anonymous',
+        'href' => '/fonts/lato/lato-v22-latin-700.woff2',
     ]); ?>
-    <?php $this->headLink([
-        'as' => 'font', 'rel' => 'preload', 'type' => 'font/woff2', 'crossorigin' => 'anonymous',
-        'href' => '/fonts/lato/lato-v22-latin-regular.woff2'
+    <?php
+    $this->headLink([
+        'as' => 'font',
+        'rel' => 'preload',
+        'type' => 'font/woff2',
+        'crossorigin' => 'anonymous',
+        'href' => '/fonts/lato/lato-v22-latin-regular.woff2',
     ]); ?>
-    <?php $this->headLink([
-        'as' => 'font', 'rel' => 'preload', 'type' => 'font/woff2', 'crossorigin' => 'anonymous',
-        'href' => '/fonts/lato/lato-v22-latin-italic.woff2'
+    <?php
+    $this->headLink([
+        'as' => 'font',
+        'rel' => 'preload',
+        'type' => 'font/woff2',
+        'crossorigin' => 'anonymous',
+        'href' => '/fonts/lato/lato-v22-latin-italic.woff2',
     ]); ?>
-    <?php $this->headLink([
-        'as' => 'font', 'rel' => 'preload', 'type' => 'font/woff2', 'crossorigin' => 'anonymous',
-        'href' => '/fonts/fontawesome/fa-solid-900.woff2'
+    <?php
+    $this->headLink([
+        'as' => 'font',
+        'rel' => 'preload',
+        'type' => 'font/woff2',
+        'crossorigin' => 'anonymous',
+        'href' => '/fonts/fontawesome/fa-solid-900.woff2',
     ]); ?>
-    <?php $this->headLink([
-        'as' => 'font', 'rel' => 'preload', 'type' => 'font/woff2', 'crossorigin' => 'anonymous',
-        'href' => '/fonts/fontawesome/fa-brands-400.woff2'
+    <?php
+    $this->headLink([
+        'as' => 'font',
+        'rel' => 'preload',
+        'type' => 'font/woff2',
+        'crossorigin' => 'anonymous',
+        'href' => '/fonts/fontawesome/fa-brands-400.woff2',
     ]); ?>
-    <?php $this->headLink([
-        'as' => 'font', 'rel' => 'preload', 'type' => 'font/ttf', 'crossorigin' => 'anonymous',
-        'href' => '/fonts/gewisicons/gewisicons.ttf?37l19n'
+    <?php
+    $this->headLink([
+        'as' => 'font',
+        'rel' => 'preload',
+        'type' => 'font/ttf',
+        'crossorigin' => 'anonymous',
+        'href' => '/fonts/gewisicons/gewisicons.ttf?37l19n',
     ]); ?>
-    <?php $this->headLink([
-        'as' => 'image', 'rel' => 'preload', 'type' => 'image/svg+xml',
-        'href' => '/img/nl.svg'
+    <?php
+    $this->headLink([
+        'as' => 'image',
+        'rel' => 'preload',
+        'type' => 'image/svg+xml',
+        'href' => '/img/nl.svg',
     ]); ?>
-    <?php $this->headLink([
-        'as' => 'image', 'rel' => 'preload', 'type' => 'image/svg+xml',
-        'href' => '/img/en.svg'
+    <?php
+    $this->headLink([
+        'as' => 'image',
+        'rel' => 'preload',
+        'type' => 'image/svg+xml',
+        'href' => '/img/en.svg',
     ]); ?>
 
     <!-- Le styles -->
     <!-- All headLinks are outputted here once. -->
-    <?= $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/x-icon', 'href' => $this->basePath() . '/img/favicon.ico'])
+    <?= $this->headLink(
+        ['rel' => 'shortcut icon', 'type' => 'image/x-icon', 'href' => $this->basePath() . '/img/favicon.ico']
+    )
         ->prependStylesheet($this->basePath() . '/css/gewis-theme.css') ?>
 
     <!-- Scripts -->
@@ -97,7 +141,8 @@ use Laminas\View\Renderer\PhpRenderer;
             ['nonce' => NONCE_REPLACEMENT_STRING],
         ); ?>
 
-    <?php $matomoDomain = getenv('MATOMO_DOMAIN'); ?>
+    <?php
+    $matomoDomain = getenv('MATOMO_DOMAIN'); ?>
     <script type="text/javascript" nonce="<?= NONCE_REPLACEMENT_STRING ?>">
         let matomoDomain = '<?= $matomoDomain ?>';
         var _paq = window._paq = window._paq || [];
@@ -117,14 +162,17 @@ $viewModel = current($this->viewModel()->getCurrent()->getChildren());
 
 if (str_contains($viewModel->getTemplate(), 'admin')): ?>
     <?= $this->partial('partial/admin.phtml', ['content' => $this->content]) ?>
-<?php elseif (str_contains($viewModel->getTemplate(), 'company-account')): ?>
+<?php
+elseif (str_contains($viewModel->getTemplate(), 'company-account')): ?>
     <?= $this->partial('partial/company.phtml', ['content' => $this->content]) ?>
-<?php else: ?>
+<?php
+else: ?>
     <div class="content-container">
         <?= $this->content ?>
     </div>
     <?= $this->partial('partial/footer.phtml') ?>
-<?php endif; ?>
+<?php
+endif; ?>
 
 <?= $this->partial('partial/privacy-widget.phtml') ?>
 

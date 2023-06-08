@@ -11,6 +11,9 @@ use User\Mapper\ApiUser as ApiUserMapper;
 use User\Model\ApiUser as ApiUserModel;
 use User\Permissions\NotAllowedException;
 
+use function base64_encode;
+use function openssl_random_pseudo_bytes;
+
 /**
  * API User service.
  */
@@ -26,8 +29,6 @@ class ApiUser
 
     /**
      * Get the translator.
-     *
-     * @return Translator
      */
     public function getTranslator(): Translator
     {
@@ -37,7 +38,7 @@ class ApiUser
     /**
      * Obtain all tokens.
      *
-     * @return array Of tokens
+     * @return ApiUserModel[] Of tokens
      */
     public function getTokens(): array
     {
@@ -50,8 +51,6 @@ class ApiUser
 
     /**
      * Remove a token by its ID.
-     *
-     * @param int $id
      *
      * @throws ORMException
      */
@@ -66,8 +65,6 @@ class ApiUser
 
     /**
      * Obtain a token by its ID.
-     *
-     * @param int $id
      *
      * @return ApiUserModel|null Token
      */
@@ -85,8 +82,9 @@ class ApiUser
      *
      * @param array $data
      *
-     * @return ApiUserModel
      * @throws ORMException
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function addToken(array $data): ApiUserModel
     {
@@ -102,8 +100,6 @@ class ApiUser
 
     /**
      * Generate a token.
-     *
-     * @return string
      */
     public static function generateToken(): string
     {
@@ -112,8 +108,6 @@ class ApiUser
 
     /**
      * Get the API token form.
-     *
-     * @return ApiTokenForm
      */
     public function getApiTokenForm(): ApiTokenForm
     {

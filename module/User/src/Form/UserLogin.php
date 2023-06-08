@@ -5,21 +5,17 @@ declare(strict_types=1);
 namespace User\Form;
 
 use Laminas\Authentication\Result;
-use Laminas\Form\Element\{
-    Checkbox,
-    Csrf,
-    Hidden,
-    Password,
-    Submit,
-    Text,
-};
+use Laminas\Form\Element\Checkbox;
+use Laminas\Form\Element\Csrf;
+use Laminas\Form\Element\Hidden;
+use Laminas\Form\Element\Password;
+use Laminas\Form\Element\Submit;
+use Laminas\Form\Element\Text;
 use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Validator\{
-    NotEmpty,
-    StringLength,
-};
+use Laminas\Validator\NotEmpty;
+use Laminas\Validator\StringLength;
 
 class UserLogin extends Form implements InputFilterProviderInterface
 {
@@ -36,7 +32,7 @@ class UserLogin extends Form implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->translator->translate('Membership number or email address'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -46,7 +42,7 @@ class UserLogin extends Form implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->translator->translate('Your password'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -56,7 +52,7 @@ class UserLogin extends Form implements InputFilterProviderInterface
                 'attributes' => [
                     'value' => $this->translator->translate('Log in as member'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -69,59 +65,59 @@ class UserLogin extends Form implements InputFilterProviderInterface
                     'unchecked_value' => '0',
                     'checked' => true,
                 ],
-            ]
+            ],
         );
 
         $this->add(
             [
                 'name' => 'redirect',
                 'type' => Hidden::class,
-            ]
+            ],
         );
 
         $this->add(
             [
                 'name' => 'security',
                 'type' => Csrf::class,
-            ]
+            ],
         );
     }
 
     /**
      * Set authentication result.
-     *
-     * @param Result $result
      */
     public function setResult(Result $result): void
     {
-        if (!$result->isValid()) {
-            $this->isValid = false;
+        if ($result->isValid()) {
+            return;
+        }
 
-            switch ($result->getCode()) {
-                case Result::FAILURE_UNCATEGORIZED:
-                case Result::FAILURE:
-                    $this->setMessages(
-                        [
-                            'login' => $result->getMessages(),
-                        ]
-                    );
-                    break;
-                case Result::FAILURE_IDENTITY_NOT_FOUND:
-                    $this->setMessages(
-                        [
-                            'login' => $result->getMessages(),
-                            'password' => $result->getMessages(),
-                        ]
-                    );
-                    break;
-                case Result::FAILURE_CREDENTIAL_INVALID:
-                    $this->setMessages(
-                        [
-                            'password' => $result->getMessages(),
-                        ]
-                    );
-                    break;
-            }
+        $this->isValid = false;
+
+        switch ($result->getCode()) {
+            case Result::FAILURE_UNCATEGORIZED:
+            case Result::FAILURE:
+                $this->setMessages(
+                    [
+                        'login' => $result->getMessages(),
+                    ],
+                );
+                break;
+            case Result::FAILURE_IDENTITY_NOT_FOUND:
+                $this->setMessages(
+                    [
+                        'login' => $result->getMessages(),
+                        'password' => $result->getMessages(),
+                    ],
+                );
+                break;
+            case Result::FAILURE_CREDENTIAL_INVALID:
+                $this->setMessages(
+                    [
+                        'password' => $result->getMessages(),
+                    ],
+                );
+                break;
         }
     }
 

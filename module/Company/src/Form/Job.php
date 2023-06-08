@@ -6,32 +6,28 @@ namespace Company\Form;
 
 use Application\Form\Localisable as LocalisableForm;
 use Company\Mapper\Job as JobMapper;
-use Laminas\Filter\{
-    StringTrim,
-    StripTags,
-    ToNull,
-};
+use Company\Model\JobCategory as JobCategoryModel;
+use Company\Model\JobLabel as JobLabelModel;
+use Laminas\Filter\StringTrim;
+use Laminas\Filter\StripTags;
+use Laminas\Filter\ToNull;
+use Laminas\Form\Element\Checkbox;
+use Laminas\Form\Element\Email;
+use Laminas\Form\Element\File;
+use Laminas\Form\Element\MultiCheckbox;
+use Laminas\Form\Element\Select;
+use Laminas\Form\Element\Submit;
+use Laminas\Form\Element\Text;
+use Laminas\Form\Element\Textarea;
 use Laminas\InputFilter\InputFilterProviderInterface;
-use Laminas\Form\Element\{
-    Checkbox,
-    Email,
-    File,
-    MultiCheckbox,
-    Select,
-    Submit,
-    Text,
-    Textarea,
-};
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Validator\{
-    Callback,
-    EmailAddress,
-    File\Extension,
-    File\MimeType,
-    Regex,
-    StringLength,
-    Uri,
-};
+use Laminas\Validator\Callback;
+use Laminas\Validator\EmailAddress;
+use Laminas\Validator\File\Extension;
+use Laminas\Validator\File\MimeType;
+use Laminas\Validator\Regex;
+use Laminas\Validator\StringLength;
+use Laminas\Validator\Uri;
 
 use function intval;
 
@@ -41,6 +37,10 @@ class Job extends LocalisableForm implements InputFilterProviderInterface
 
     private ?string $currentSlug = null;
 
+    /**
+     * @param JobCategoryModel[] $categories
+     * @param JobLabelModel[]    $labels
+     */
     public function __construct(
         private readonly JobMapper $mapper,
         Translator $translator,
@@ -68,7 +68,7 @@ class Job extends LocalisableForm implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->getTranslator()->translate('Slug'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -80,7 +80,7 @@ class Job extends LocalisableForm implements InputFilterProviderInterface
                     'empty_option' => $this->getTranslator()->translate('Select a job category'),
                     'value_options' => $categoryOptions,
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -95,7 +95,7 @@ class Job extends LocalisableForm implements InputFilterProviderInterface
                 'attributes' => [
                     'value' => '1',
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -105,7 +105,7 @@ class Job extends LocalisableForm implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->getTranslator()->translate('Name'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -115,7 +115,7 @@ class Job extends LocalisableForm implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->getTranslator()->translate('E-mail Address'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -125,7 +125,7 @@ class Job extends LocalisableForm implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->getTranslator()->translate('Phone Number'),
                 ],
-            ]
+            ],
         );
 
         // All language attributes.
@@ -136,7 +136,7 @@ class Job extends LocalisableForm implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->getTranslator()->translate('Name'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -146,7 +146,7 @@ class Job extends LocalisableForm implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->getTranslator()->translate('Name'),
                 ],
-            ]
+            ],
         );
 
         /**
@@ -160,7 +160,7 @@ class Job extends LocalisableForm implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->getTranslator()->translate('Website'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -170,7 +170,7 @@ class Job extends LocalisableForm implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->getTranslator()->translate('Website'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -180,7 +180,7 @@ class Job extends LocalisableForm implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->getTranslator()->translate('Location'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -190,7 +190,7 @@ class Job extends LocalisableForm implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->getTranslator()->translate('Location'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -200,7 +200,7 @@ class Job extends LocalisableForm implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->getTranslator()->translate('Description'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -210,7 +210,7 @@ class Job extends LocalisableForm implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->getTranslator()->translate('Description'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -220,7 +220,7 @@ class Job extends LocalisableForm implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->getTranslator()->translate('Attachment'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -230,7 +230,7 @@ class Job extends LocalisableForm implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->getTranslator()->translate('Attachment'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -241,28 +241,22 @@ class Job extends LocalisableForm implements InputFilterProviderInterface
                     'label' => $this->getTranslator()->translate('Labels'),
                     'value_options' => $labelOptions,
                 ],
-            ]
+            ],
         );
 
         $this->add(
             [
                 'name' => 'submit',
                 'type' => Submit::class,
-            ]
+            ],
         );
     }
 
-    /**
-     * @param string $companySlug
-     */
     public function setCompanySlug(string $companySlug): void
     {
         $this->companySlug = $companySlug;
     }
 
-    /**
-     * @param string $currentSlug
-     */
     public function setCurrentSlug(string $currentSlug): void
     {
         $this->currentSlug = $currentSlug;
@@ -284,7 +278,9 @@ class Job extends LocalisableForm implements InputFilterProviderInterface
                         'options' => [
                             'callback' => [$this, 'isSlugUnique'],
                             'messages' => [
-                                Callback::INVALID_VALUE => $this->getTranslator()->translate('This slug is already taken'),
+                                Callback::INVALID_VALUE => $this->getTranslator()->translate(
+                                    'This slug is already taken',
+                                ),
                             ],
                         ],
                     ],
@@ -293,7 +289,9 @@ class Job extends LocalisableForm implements InputFilterProviderInterface
                         'options' => [
                             'pattern' => '/^[0-9a-zA-Z_\-\.]+$/',
                             'messages' => [
-                                Regex::ERROROUS => $this->getTranslator()->translate('This slug contains invalid characters'),
+                                Regex::ERROROUS => $this->getTranslator()->translate(
+                                    'This slug contains invalid characters',
+                                ),
                             ],
                         ],
                     ],
@@ -340,7 +338,7 @@ class Job extends LocalisableForm implements InputFilterProviderInterface
                         'options' => [
                             'messages' => [
                                 'emailAddressInvalidFormat' => $this->getTranslator()->translate(
-                                    'E-mail address format is not valid'
+                                    'E-mail address format is not valid',
                                 ),
                             ],
                         ],
@@ -484,10 +482,7 @@ class Job extends LocalisableForm implements InputFilterProviderInterface
     /**
      * Checks if a given `slug` is unique. (Callback for validation).
      *
-     * @param string $value
-     * @param array $context
-     *
-     * @return bool
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function isSlugUnique(
         string $value,

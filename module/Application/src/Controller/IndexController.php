@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace Application\Controller;
 
-use Laminas\View\Model\ViewModel;
-use Laminas\Http\{
-    PhpEnvironment\Response as EnvironmentResponse,
-    Response,
-};
+use Laminas\Http\PhpEnvironment\Response as EnvironmentResponse;
+use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Session\Container as SessionContainer;
+use Laminas\View\Model\ViewModel;
 
 class IndexController extends AbstractActionController
 {
@@ -22,7 +20,7 @@ class IndexController extends AbstractActionController
         $session = new SessionContainer('lang');
         $session->lang = $this->params()->fromRoute('lang');
 
-        if ('en' != $session->lang && 'nl' != $session->lang) {
+        if ('en' !== $session->lang && 'nl' !== $session->lang) {
             $session->lang = 'nl';
         }
 

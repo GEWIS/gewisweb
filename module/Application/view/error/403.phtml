@@ -9,12 +9,16 @@ use Laminas\View\Renderer\PhpRenderer;
 ?>
 <section class="section">
     <div class="container">
-        <?php if (!empty($this->exception->getMessage())): ?>
+        <?php
+        if (!empty($this->exception->getMessage())): ?>
             <h2><?= $this->exception->getMessage() ?></h2>
-        <?php else: ?>
+        <?php
+        else: ?>
             <h2><?= $this->translate('You do not have the required privileges to view this page') ?></h2>
-        <?php endif; ?>
-        <?php if ($this->identity() === null): ?>
+        <?php
+        endif; ?>
+        <?php
+        if ($this->identity() === null): ?>
             <p><?= $this->translate('You might be able to view this page by logging in') ?></p>
             <a href="<?= $this->url(
                 'user/login',
@@ -24,6 +28,7 @@ use Laminas\View\Renderer\PhpRenderer;
                 <?= $this->translate('Login') ?>
             </a>
 
-        <?php endif; ?>
+        <?php
+        endif; ?>
     </div>
 </section>

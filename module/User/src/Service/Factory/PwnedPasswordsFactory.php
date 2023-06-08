@@ -4,18 +4,14 @@ declare(strict_types=1);
 
 namespace User\Service\Factory;
 
-use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Psr\Container\ContainerInterface;
 use User\Service\PwnedPasswords;
 
 class PwnedPasswordsFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param string $requestedName
-     * @param array|null $options
-     *
-     * @return PwnedPasswords
      */
     public function __invoke(
         ContainerInterface $container,

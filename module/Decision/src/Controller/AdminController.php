@@ -5,21 +5,20 @@ declare(strict_types=1);
 namespace Decision\Controller;
 
 use Decision\Model\Enums\MeetingTypes;
-use Decision\Service\{
-    AclService,
-    Decision as DecisionService,
-};
-use Laminas\Http\{
-    PhpEnvironment\Response as EnvironmentResponse,
-    Request,
-    Response,
-};
+use Decision\Service\AclService;
+use Decision\Service\Decision as DecisionService;
+use Laminas\Http\PhpEnvironment\Response as EnvironmentResponse;
+use Laminas\Http\Request;
+use Laminas\Http\Response;
 use Laminas\Json\Json;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
 use Laminas\View\Model\ViewModel;
 use User\Permissions\NotAllowedException;
+
+use function array_merge;
+use function array_merge_recursive;
 
 /**
  * @method FlashMessenger flashMessenger()
@@ -52,7 +51,9 @@ class AdminController extends AbstractActionController
 
             if ($form->isValid()) {
                 if ($this->decisionService->uploadMinutes($form->getData())) {
-                    $this->flashMessenger()->addSuccessMessage($this->translator->translate('Meeting minutes uploaded'));
+                    $this->flashMessenger()->addSuccessMessage(
+                        $this->translator->translate('Meeting minutes uploaded'),
+                    );
 
                     return $this->redirect()->toRoute('admin_decision/minutes');
                 }
@@ -62,7 +63,7 @@ class AdminController extends AbstractActionController
         return new ViewModel(
             [
                 'form' => $form,
-            ]
+            ],
         );
     }
 
@@ -86,12 +87,12 @@ class AdminController extends AbstractActionController
             0 === $number
             && null === $type
         ) {
-            if (!empty($meetings)) {
-                $number = $meetings[0]->getNumber();
-                $type = $meetings[0]->getType();
-            } else {
+            if (empty($meetings)) {
                 return new ViewModel(['noMeetings' => true]);
             }
+
+            $number = $meetings[0]->getNumber();
+            $type = $meetings[0]->getType();
         }
 
         $form = $this->decisionService->getDocumentForm();
@@ -125,7 +126,7 @@ class AdminController extends AbstractActionController
                 'type' => $type,
                 'success' => $success,
                 'reorderDocumentForm' => $this->decisionService->getReorderDocumentForm(),
-            ]
+            ],
         );
     }
 
@@ -133,7 +134,7 @@ class AdminController extends AbstractActionController
     {
         if (!$this->aclService->isAllowed('rename_document', 'meeting')) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to rename meeting documents')
+                $this->translator->translate('You are not allowed to rename meeting documents'),
             );
         }
 
@@ -173,7 +174,7 @@ class AdminController extends AbstractActionController
     {
         if (!$this->aclService->isAllowed('delete_document', 'meeting')) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to delete meeting documents.')
+                $this->translator->translate('You are not allowed to delete meeting documents.'),
             );
         }
 
@@ -238,7 +239,7 @@ class AdminController extends AbstractActionController
                 'meetings' => $meetings,
                 ...$authorizations,
                 'number' => $number,
-            ]
+            ],
         );
     }
 }

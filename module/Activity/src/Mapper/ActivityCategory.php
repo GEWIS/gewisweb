@@ -12,9 +12,6 @@ use Application\Mapper\BaseMapper;
  */
 class ActivityCategory extends BaseMapper
 {
-    /**
-     * @inheritDoc
-     */
     protected function getRepositoryName(): string
     {
         return ActivityCategoryModel::class;

@@ -9,28 +9,27 @@ use DateTime;
 use Decision\Model\Member as MemberModel;
 use Doctrine\ORM\Exception\ORMException;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator;
-use Laminas\Stdlib\Parameters;
-use Frontpage\Form\{
-    Poll as PollForm,
-    PollApproval as PollApprovalForm,
-};
-use Frontpage\Mapper\{
-    Poll as PollMapper,
-    PollComment as PollCommentMapper,
-    PollOption as PollOptionMapper,
-};
-use Frontpage\Model\{
-    Poll as PollModel,
-    PollComment as PollCommentModel,
-    PollOption as PollOptionModel,
-    PollOption,
-    PollVote as PollVoteModel,
-};
+use Frontpage\Form\Poll as PollForm;
+use Frontpage\Form\PollApproval as PollApprovalForm;
+use Frontpage\Mapper\Poll as PollMapper;
+use Frontpage\Mapper\PollComment as PollCommentMapper;
+use Frontpage\Mapper\PollOption as PollOptionMapper;
+use Frontpage\Model\Poll as PollModel;
+use Frontpage\Model\PollComment as PollCommentModel;
+use Frontpage\Model\PollOption;
+use Frontpage\Model\PollOption as PollOptionModel;
+use Frontpage\Model\PollVote as PollVoteModel;
 use Laminas\Mvc\I18n\Translator;
+use Laminas\Stdlib\Parameters;
 use User\Permissions\NotAllowedException;
 
 /**
  * Poll service.
+ *
+ * @psalm-type PollDetailsType = array{
+ *     canVote: bool,
+ *     userVote: bool,
+ * }|null
  */
 class Poll
 {
@@ -48,8 +47,6 @@ class Poll
 
     /**
      * Returns the newest approved poll or null if there is none.
-     *
-     * @return PollModel|null
      */
     public function getNewestPoll(): ?PollModel
     {
@@ -61,9 +58,7 @@ class Poll
      *
      * @param int $pollId the id of the poll to retrieve
      *
-     * @return PollModel|null
-     *
-     * @throws NotAllowedException if the user isn't allowed to see unapproved polls
+     * @throws NotAllowedException if the user isn't allowed to see unapproved polls.
      */
     public function getPoll(int $pollId): ?PollModel
     {
@@ -73,9 +68,12 @@ class Poll
             return null;
         }
 
-        if (is_null($poll->getApprover()) && !$this->aclService->isAllowed('view_unapproved', 'poll')) {
+        if (
+            null === $poll->getApprover()
+            && !$this->aclService->isAllowed('view_unapproved', 'poll')
+        ) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view unapproved polls')
+                $this->translator->translate('You are not allowed to view unapproved polls'),
             );
         }
 
@@ -86,8 +84,6 @@ class Poll
      * Retrieves a poll option by its id.
      *
      * @param int $optionId The id of the poll option to retrieve
-     *
-     * @return PollOptionModel|null
      */
     public function getPollOption(int $optionId): ?PollOptionModel
     {
@@ -96,8 +92,6 @@ class Poll
 
     /**
      * Returns a paginator adapter for paging through polls.
-     *
-     * @return DoctrinePaginator
      */
     public function getPaginatorAdapter(): DoctrinePaginator
     {
@@ -107,7 +101,7 @@ class Poll
     /**
      * Returns all polls which are awaiting approval.
      *
-     * @return array
+     * @return PollModel[]
      */
     public function getUnapprovedPolls(): array
     {
@@ -117,13 +111,11 @@ class Poll
     /**
      * Returns details about a poll.
      *
-     * @param PollModel|null $poll
-     *
-     * @return array|null
+     * @return PollDetailsType
      */
     public function getPollDetails(?PollModel $poll): ?array
     {
-        if (is_null($poll)) {
+        if (null === $poll) {
             return null;
         }
 
@@ -138,10 +130,6 @@ class Poll
 
     /**
      * Determines whether the current user can vote on the given poll.
-     *
-     * @param PollModel $poll
-     *
-     * @return bool
      */
     public function canVote(PollModel $poll): bool
     {
@@ -155,20 +143,16 @@ class Poll
         }
 
         // check if poll is approved
-        if (is_null($poll->getApprover())) {
+        if (null === $poll->getApprover()) {
             return false;
         }
 
-        return is_null($this->getVote($poll));
+        return null === $this->getVote($poll);
     }
 
     /**
      * Retrieves the current user's vote for a given poll.
      * Returns null if the user hasn't voted on the poll.
-     *
-     * @param PollModel $poll
-     *
-     * @return PollVoteModel|null
      */
     public function getVote(PollModel $poll): ?PollVoteModel
     {
@@ -189,7 +173,7 @@ class Poll
      */
     public function submitVote(?PollOptionModel $pollOption): bool
     {
-        if (is_null($pollOption)) {
+        if (null === $pollOption) {
             return false;
         }
 
@@ -212,12 +196,11 @@ class Poll
     /**
      * Creates a comment on the given poll.
      *
-     * @param PollModel $poll
      * @param array $data
      *
-     * @return bool
-     *
      * @throws ORMException
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function createComment(
         PollModel $poll,
@@ -238,12 +221,10 @@ class Poll
      * Save data for a poll comment.
      *
      * @param array $data
-     * @param PollModel $poll
-     * @param MemberModel $user
-     *
-     * @return PollCommentModel
      *
      * @throws ORMException
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function saveCommentData(
         array $data,
@@ -265,8 +246,6 @@ class Poll
 
     /**
      * Saves a new poll request.
-     *
-     * @param Parameters $data
      *
      * @return bool indicating whether the request succeeded
      *
@@ -291,7 +270,7 @@ class Poll
             'poll_creation',
             'email/poll',
             'A new poll has been requested',
-            ['poll' => $poll]
+            ['poll' => $poll],
         );
 
         return true;
@@ -299,11 +278,10 @@ class Poll
 
     /**
      * @param array $data
-     * @param MemberModel $user
-     *
-     * @return PollModel
      *
      * @throws ORMException
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function savePollData(
         array $data,
@@ -326,9 +304,8 @@ class Poll
 
     /**
      * @param array $data
-     * @param PollModel $poll
      *
-     * @return PollOptionModel
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function createPollOption(
         array $data,
@@ -344,8 +321,6 @@ class Poll
 
     /**
      * Returns the poll request/creation form.
-     *
-     * @return PollForm
      */
     public function getPollForm(): PollForm
     {
@@ -396,8 +371,6 @@ class Poll
 
     /**
      * Returns the poll approval form.
-     *
-     * @return PollApprovalForm
      */
     public function getPollApprovalForm(): PollApprovalForm
     {

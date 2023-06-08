@@ -12,11 +12,7 @@ use Psr\Container\ContainerInterface;
 class AlbumControllerFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param string $requestedName
-     * @param array|null $options
-     *
-     * @return AlbumController
      */
     public function __invoke(
         ContainerInterface $container,

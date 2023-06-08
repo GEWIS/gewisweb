@@ -4,15 +4,11 @@ declare(strict_types=1);
 
 namespace Company\Form;
 
-use Company\Model\{
-    CompanyJobPackage as CompanyJobPackageModel,
-    Job as JobModel,
-};
-use Laminas\Form\Element\{
-    MultiCheckbox,
-    Select,
-    Submit,
-};
+use Company\Model\CompanyJobPackage as CompanyJobPackageModel;
+use Company\Model\Job as JobModel;
+use Laminas\Form\Element\MultiCheckbox;
+use Laminas\Form\Element\Select;
+use Laminas\Form\Element\Submit;
 use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
@@ -31,7 +27,7 @@ class JobsTransfer extends Form implements InputFilterProviderInterface
                     'label' => $this->translator->translate('Jobs'),
                     'value_options' => [],
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -43,7 +39,7 @@ class JobsTransfer extends Form implements InputFilterProviderInterface
                     'label' => $this->translator->translate('Packages'),
                     'value_options' => [],
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -53,7 +49,7 @@ class JobsTransfer extends Form implements InputFilterProviderInterface
                 'options' => [
                     'value' => $this->translator->translate('Transfer Jobs'),
                 ],
-            ]
+            ],
         );
     }
 

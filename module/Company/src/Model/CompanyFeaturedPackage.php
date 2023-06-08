@@ -5,11 +5,9 @@ declare(strict_types=1);
 namespace Company\Model;
 
 use Company\Model\Enums\CompanyPackageTypes;
-use Doctrine\ORM\Mapping\{
-    Entity,
-    JoinColumn,
-    OneToOne,
-};
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\OneToOne;
 use Exception;
 
 /**
@@ -24,25 +22,24 @@ class CompanyFeaturedPackage extends CompanyPackage
      */
     #[OneToOne(
         targetEntity: CompanyLocalisedText::class,
-        cascade: ["persist", "remove"],
+        cascade: ['persist', 'remove'],
         orphanRemoval: true,
     )]
     #[JoinColumn(
-        name: "article_id",
-        referencedColumnName: "id",
+        name: 'article_id',
+        referencedColumnName: 'id',
     )]
     protected CompanyLocalisedText $article;
 
     public function __construct()
     {
         parent::__construct();
+
         $this->article = new CompanyLocalisedText(null, null);
     }
 
     /**
      * Get the featured package's article text.
-     *
-     * @return CompanyLocalisedText
      */
     public function getArticle(): CompanyLocalisedText
     {
@@ -51,24 +48,26 @@ class CompanyFeaturedPackage extends CompanyPackage
 
     /**
      * Set the featured package's article text.
-     *
-     * @param CompanyLocalisedText $article
      */
     public function setArticle(CompanyLocalisedText $article): void
     {
         $this->article = $article;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getType(): CompanyPackageTypes
     {
         return CompanyPackageTypes::Featured;
     }
 
     /**
-     * @return array
+     * @return array{
+     *     contractNumber: ?string,
+     *     startDate: string,
+     *     expirationDate: string,
+     *     published: bool,
+     *     article: ?string,
+     *     articleEn: ?string,
+     * }
      */
     public function toArray(): array
     {
@@ -81,12 +80,21 @@ class CompanyFeaturedPackage extends CompanyPackage
 
     /**
      * @param array $data
+     * @psalm-param array{
+     *     contractNumber: ?string,
+     *     startDate: string,
+     *     expirationDate: string,
+     *     published: bool,
+     *     article: ?string,
+     *     articleEn: ?string,
+     * } $data
      *
      * @throws Exception
      */
     public function exchangeArray(array $data): void
     {
         parent::exchangeArray($data);
+
         $this->getArticle()->updateValues($data['articleEn'], $data['article']);
     }
 }

@@ -6,23 +6,17 @@ namespace Education;
 
 use Application\Hydrator\Strategy\LanguageHydratorStrategy;
 use Doctrine\Laminas\Hydrator\DoctrineObject;
+use Education\Form\Bulk as BulkForm;
+use Education\Form\Course as CourseForm;
+use Education\Form\Fieldset\Exam as ExamFieldset;
+use Education\Form\Fieldset\Summary as SummaryFieldset;
+use Education\Form\SearchCourse as SearchCourseForm;
+use Education\Form\TempUpload as TempUploadForm;
 use Education\Hydrator\Strategy\ExamTypeHydratorStrategy;
-use Education\Form\{
-    Course as CourseForm,
-    Bulk as BulkForm,
-    Fieldset\Exam as ExamFieldset,
-    Fieldset\Summary as SummaryFieldset,
-    SearchCourse as SearchCourseForm,
-    TempUpload as TempUploadForm,
-};
-use Education\Mapper\{
-    Course as CourseMapper,
-    CourseDocument as CourseDocumentMapper,
-};
-use Education\Model\{
-    Exam as ExamModel,
-    Summary as SummaryModel,
-};
+use Education\Mapper\Course as CourseMapper;
+use Education\Mapper\CourseDocument as CourseDocumentMapper;
+use Education\Model\Exam as ExamModel;
+use Education\Model\Summary as SummaryModel;
 use Education\Service\Exam as ExamService;
 use Education\View\Helper\ExamUrl;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
@@ -50,7 +44,7 @@ class Module
     {
         return [
             'factories' => [
-                'education_service_exam' => function (ContainerInterface $container) {
+                'education_service_exam' => static function (ContainerInterface $container) {
                     $aclService = $container->get('education_service_acl');
                     $translator = $container->get(MvcTranslator::class);
                     $storageService = $container->get('application_service_storage');
@@ -75,12 +69,12 @@ class Module
                         $config,
                     );
                 },
-                'education_form_tempupload' => function (ContainerInterface $container) {
+                'education_form_tempupload' => static function (ContainerInterface $container) {
                     return new TempUploadForm(
-                        $container->get(MvcTranslator::class)
+                        $container->get(MvcTranslator::class),
                     );
                 },
-                'education_form_add_course' => function (ContainerInterface $container) {
+                'education_form_add_course' => static function (ContainerInterface $container) {
                     $courseForm = new CourseForm(
                         $container->get(MvcTranslator::class),
                         $container->get('education_mapper_course'),
@@ -89,28 +83,28 @@ class Module
 
                     return $courseForm;
                 },
-                'education_form_bulk_exam' => function (ContainerInterface $container) {
+                'education_form_bulk_exam' => static function (ContainerInterface $container) {
                     return new BulkForm(
                         $container->get(MvcTranslator::class),
                         $container->get('education_mapper_course'),
-                        $container->get('education_form_fieldset_exam')
+                        $container->get('education_form_fieldset_exam'),
                     );
                 },
-                'education_form_bulk_summary' => function (ContainerInterface $container) {
+                'education_form_bulk_summary' => static function (ContainerInterface $container) {
                     return new BulkForm(
                         $container->get(MvcTranslator::class),
                         $container->get('education_mapper_course'),
-                        $container->get('education_form_fieldset_summary')
+                        $container->get('education_form_fieldset_summary'),
                     );
                 },
-                'education_form_searchcourse' => function (ContainerInterface $container) {
+                'education_form_searchcourse' => static function (ContainerInterface $container) {
                     return new SearchCourseForm(
-                        $container->get(MvcTranslator::class)
+                        $container->get(MvcTranslator::class),
                     );
                 },
-                'education_form_fieldset_exam' => function (ContainerInterface $container) {
+                'education_form_fieldset_exam' => static function (ContainerInterface $container) {
                     $fieldset = new ExamFieldset(
-                        $container->get(MvcTranslator::class)
+                        $container->get(MvcTranslator::class),
                     );
                     $fieldset->setConfig($container->get('config'));
                     $fieldset->setObject(new ExamModel());
@@ -120,9 +114,9 @@ class Module
 
                     return $fieldset;
                 },
-                'education_form_fieldset_summary' => function (ContainerInterface $container) {
+                'education_form_fieldset_summary' => static function (ContainerInterface $container) {
                     $fieldset = new SummaryFieldset(
-                        $container->get(MvcTranslator::class)
+                        $container->get(MvcTranslator::class),
                     );
                     $fieldset->setConfig($container->get('config'));
                     $fieldset->setObject(new SummaryModel());
@@ -130,23 +124,23 @@ class Module
 
                     return $fieldset;
                 },
-                'education_mapper_courseDocument' => function (ContainerInterface $container) {
+                'education_mapper_courseDocument' => static function (ContainerInterface $container) {
                     return new CourseDocumentMapper(
-                        $container->get('doctrine.entitymanager.orm_default')
+                        $container->get('doctrine.entitymanager.orm_default'),
                     );
                 },
-                'education_mapper_course' => function (ContainerInterface $container) {
+                'education_mapper_course' => static function (ContainerInterface $container) {
                     return new CourseMapper(
-                        $container->get('doctrine.entitymanager.orm_default')
+                        $container->get('doctrine.entitymanager.orm_default'),
                     );
                 },
-                'education_hydrator' => function (ContainerInterface $container) {
+                'education_hydrator' => static function (ContainerInterface $container) {
                     return new DoctrineObject(
                         $container->get('doctrine.entitymanager.orm_default'),
                         false,
                     );
                 },
-                'education_hydrator_document' => function (ContainerInterface $container) {
+                'education_hydrator_document' => static function (ContainerInterface $container) {
                     $hydrator = new DoctrineObject(
                         $container->get('doctrine.entitymanager.orm_default'),
                         false,
@@ -169,7 +163,7 @@ class Module
     {
         return [
             'factories' => [
-                'examUrl' => function (ContainerInterface $container) {
+                'examUrl' => static function (ContainerInterface $container) {
                     $config = $container->get('config');
                     $helper = new ExamUrl();
                     $helper->setDir($config['education']['public_dir']);

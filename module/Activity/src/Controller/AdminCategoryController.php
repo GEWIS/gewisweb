@@ -4,14 +4,10 @@ declare(strict_types=1);
 
 namespace Activity\Controller;
 
-use Activity\Service\{
-    AclService,
-    ActivityCategory as ActivityCategoryService,
-};
-use Laminas\Http\{
-    Request,
-    Response,
-};
+use Activity\Service\AclService;
+use Activity\Service\ActivityCategory as ActivityCategoryService;
+use Laminas\Http\Request;
+use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
@@ -40,7 +36,7 @@ class AdminCategoryController extends AbstractActionController
         return new ViewModel(
             [
                 'categories' => $categories,
-            ]
+            ],
         );
     }
 
@@ -51,7 +47,7 @@ class AdminCategoryController extends AbstractActionController
     {
         if (!$this->aclService->isAllowed('addCategory', 'activity')) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to create an activity category')
+                $this->translator->translate('You are not allowed to create an activity category'),
             );
         }
 
@@ -75,16 +71,10 @@ class AdminCategoryController extends AbstractActionController
             [
                 'form' => $form,
                 'action' => $this->translator->translate('Create Activity Category'),
-            ]
+            ],
         );
     }
 
-    /**
-     * @param bool $success
-     * @param string $message
-     *
-     * @return Response
-     */
     protected function redirectWithNotice(
         bool $success,
         string $message,
@@ -129,7 +119,7 @@ class AdminCategoryController extends AbstractActionController
     {
         if (!$this->aclService->isAllowed('editCategory', 'activity')) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to edit an activity category')
+                $this->translator->translate('You are not allowed to edit an activity category'),
             );
         }
 
@@ -167,7 +157,7 @@ class AdminCategoryController extends AbstractActionController
             [
                 'form' => $form,
                 'action' => $this->translator->translate('Update Activity Category'),
-            ]
+            ],
         );
         $viewModel->setTemplate('activity/admin-category/add.phtml');
 

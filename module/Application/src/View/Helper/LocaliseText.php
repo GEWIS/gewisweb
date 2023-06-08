@@ -12,8 +12,6 @@ class LocaliseText extends AbstractHelper
     /**
      * Determines the correct value for an element.
      *
-     * @param LocalisedTextModel $localisedText
-     *
      * @return string|null The localised value of `$localisedText` or null if no translation exists.
      */
     public function __invoke(LocalisedTextModel $localisedText): ?string

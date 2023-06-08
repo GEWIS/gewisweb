@@ -34,7 +34,7 @@ $this->breadcrumbs()
                 <td>
                     <?php
                     foreach ($organ->getOrganInformation() as $information) {
-                        if (is_null($information->getApprover())) {
+                        if (null === $information->getApprover()) {
                             echo '<span class="fas fa-circle-question"></span>&nbsp;';
                         } else {
                             echo '<span class="fas fa-circle-check"></span>&nbsp;';

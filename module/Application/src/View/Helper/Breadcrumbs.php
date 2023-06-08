@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Application\View\Helper;
 
-use Laminas\View\Helper\Placeholder\Container\{
-    AbstractContainer,
-    AbstractStandalone,
-};
+use Laminas\View\Helper\Placeholder\Container\AbstractContainer;
+use Laminas\View\Helper\Placeholder\Container\AbstractStandalone;
+
+use function sprintf;
 
 /**
  * Helper for setting and retrieving breadcrumbs.
@@ -17,11 +17,6 @@ class Breadcrumbs extends AbstractStandalone
     /**
      * Add a breadcrumb to the container. By default, the breadcrumb is placed after the last breadcrumb (or first if no
      * other breadcrumbs have been added). This behaviour can be changed by setting `$setType`.
-     *
-     * @param string $breadcrumb
-     * @param bool $active
-     * @param string $url
-     * @param string|null $setType
      *
      * @return $this
      */
@@ -57,8 +52,7 @@ class Breadcrumbs extends AbstractStandalone
     /**
      * Append
      *
-     * @param array $value
-     * @return AbstractContainer
+     * @param array{name: string, active: bool, url: string} $value
      */
     public function append(array $value): AbstractContainer
     {
@@ -68,8 +62,7 @@ class Breadcrumbs extends AbstractStandalone
     /**
      * Prepend
      *
-     * @param array $value
-     * @return AbstractContainer
+     * @param array{name: string, active: bool, url: string} $value
      */
     public function prepend(array $value): AbstractContainer
     {
@@ -79,32 +72,28 @@ class Breadcrumbs extends AbstractStandalone
     /**
      * Set
      *
-     * @param array $value
-     * @return AbstractContainer
+     * @param array{name: string, active: bool, url: string} $value
      */
     public function set(array $value): AbstractContainer
     {
         return $this->append($value);
     }
 
-    /**
-     * @return string
-     */
     public function toString(): string
     {
         $output = '';
 
         foreach ($this as $item) {
-            $output .= '<li class="' . (($item['active']) ? 'active' : '') . '">';
+            $output .= '<li class="' . ($item['active'] ? 'active' : '') . '">';
 
             if ('' !== $item['url']) {
                 $output .= sprintf(
                     '<a href="%s">%s</a>',
-                    ($this->getAutoEscape()) ? $this->escapeAttribute($item['url']) : $item['url'],
-                    ($this->getAutoEscape()) ? $this->escape($item['name']) : $item['name'],
+                    $this->getAutoEscape() ? $this->escapeAttribute($item['url']) : $item['url'],
+                    $this->getAutoEscape() ? $this->escape($item['name']) : $item['name'],
                 );
             } else {
-                $output .= ($this->getAutoEscape()) ? $this->escape($item['name']) : $item['name'];
+                $output .= $this->getAutoEscape() ? $this->escape($item['name']) : $item['name'];
             }
 
             $output .= '</li>';

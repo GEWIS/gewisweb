@@ -7,17 +7,13 @@ namespace Frontpage\Model;
 use Application\Model\Traits\IdentifiableTrait;
 use DateTime;
 use Decision\Model\Member as MemberModel;
-use Doctrine\Common\Collections\{
-    ArrayCollection,
-    Collection,
-};
-use Doctrine\ORM\Mapping\{
-    Column,
-    Entity,
-    JoinColumn,
-    ManyToOne,
-    OneToMany,
-};
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToMany;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 /**
@@ -31,38 +27,42 @@ class Poll implements ResourceInterface
     /**
      * The date the poll expires.
      */
-    #[Column(type: "date")]
+    #[Column(type: 'date')]
     protected DateTime $expiryDate;
 
     /**
-     * The dutch question for the poll.
+     * The Dutch question for the poll.
      */
-    #[Column(type: "string")]
+    #[Column(type: 'string')]
     protected string $dutchQuestion;
 
     /**
-     * The english question for the poll.
+     * The English question for the poll.
      */
-    #[Column(type: "string")]
+    #[Column(type: 'string')]
     protected string $englishQuestion;
 
     /**
      * Poll options.
+     *
+     * @var Collection<PollOption>
      */
     #[OneToMany(
         targetEntity: PollOption::class,
-        mappedBy: "poll",
-        cascade: ["persist", "remove"],
+        mappedBy: 'poll',
+        cascade: ['persist', 'remove'],
     )]
     protected Collection $options;
 
     /**
      * Poll comments.
+     *
+     * @var Collection<PollComment>
      */
     #[OneToMany(
         targetEntity: PollComment::class,
-        mappedBy: "poll",
-        cascade: ["persist", "remove"],
+        mappedBy: 'poll',
+        cascade: ['persist', 'remove'],
     )]
     protected Collection $comments;
 
@@ -71,7 +71,7 @@ class Poll implements ResourceInterface
      */
     #[ManyToOne(targetEntity: MemberModel::class)]
     #[JoinColumn(
-        referencedColumnName: "lidnr",
+        referencedColumnName: 'lidnr',
         nullable: false,
     )]
     protected MemberModel $creator;
@@ -80,7 +80,7 @@ class Poll implements ResourceInterface
      * Who approved this poll. If null then nobody approved it.
      */
     #[ManyToOne(targetEntity: MemberModel::class)]
-    #[JoinColumn(referencedColumnName: "lidnr")]
+    #[JoinColumn(referencedColumnName: 'lidnr')]
     protected ?MemberModel $approver = null;
 
     public function __construct()
@@ -89,32 +89,23 @@ class Poll implements ResourceInterface
         $this->comments = new ArrayCollection();
     }
 
-    /**
-     * @return DateTime
-     */
     public function getExpiryDate(): DateTime
     {
         return $this->expiryDate;
     }
 
-    /**
-     * @return string
-     */
     public function getDutchQuestion(): string
     {
         return $this->dutchQuestion;
     }
 
-    /**
-     * @return string
-     */
     public function getEnglishQuestion(): string
     {
         return $this->englishQuestion;
     }
 
     /**
-     * @return Collection
+     * @return Collection<PollOption>
      */
     public function getOptions(): Collection
     {
@@ -122,48 +113,33 @@ class Poll implements ResourceInterface
     }
 
     /**
-     * @return Collection
+     * @return Collection<PollComment>
      */
     public function getComments(): Collection
     {
         return $this->comments;
     }
 
-    /**
-     * @return MemberModel|null
-     */
     public function getApprover(): ?MemberModel
     {
         return $this->approver;
     }
 
-    /**
-     * @return MemberModel
-     */
     public function getCreator(): MemberModel
     {
         return $this->creator;
     }
 
-    /**
-     * @param DateTime $expiryDate
-     */
     public function setExpiryDate(DateTime $expiryDate): void
     {
         $this->expiryDate = $expiryDate;
     }
 
-    /**
-     * @param string $englishQuestion
-     */
     public function setEnglishQuestion(string $englishQuestion): void
     {
         $this->englishQuestion = $englishQuestion;
     }
 
-    /**
-     * @param string $dutchQuestion
-     */
     public function setDutchQuestion(string $dutchQuestion): void
     {
         $this->dutchQuestion = $dutchQuestion;
@@ -171,8 +147,6 @@ class Poll implements ResourceInterface
 
     /**
      * Adds options to the poll.
-     *
-     * @param ArrayCollection $options
      */
     public function addOptions(ArrayCollection $options): void
     {
@@ -182,17 +156,11 @@ class Poll implements ResourceInterface
         }
     }
 
-    /**
-     * @param MemberModel $approver
-     */
     public function setApprover(MemberModel $approver): void
     {
         $this->approver = $approver;
     }
 
-    /**
-     * @param MemberModel $creator
-     */
     public function setCreator(MemberModel $creator): void
     {
         $this->creator = $creator;
@@ -200,8 +168,6 @@ class Poll implements ResourceInterface
 
     /**
      * Removes options from the poll.
-     *
-     * @param ArrayCollection $options
      */
     public function removeOptions(ArrayCollection $options): void
     {
@@ -213,8 +179,6 @@ class Poll implements ResourceInterface
 
     /**
      * Add a comment to the poll.
-     *
-     * @param PollComment $comment
      */
     public function addComment(PollComment $comment): void
     {
@@ -225,7 +189,7 @@ class Poll implements ResourceInterface
     /**
      * Add comments to the poll.
      *
-     * @param array $comments
+     * @param PollComment[] $comments
      */
     public function addComments(array $comments): void
     {
@@ -236,8 +200,6 @@ class Poll implements ResourceInterface
 
     /**
      * Get the resource ID.
-     *
-     * @return string
      */
     public function getResourceId(): string
     {

@@ -6,15 +6,14 @@ namespace Education\Form;
 
 use Education\Mapper\Course as CourseMapper;
 use Laminas\Filter\StringToUpper;
-use Laminas\Form\Element\{
-    Submit,
-    Text,
-};
+use Laminas\Form\Element\Submit;
+use Laminas\Form\Element\Text;
 use Laminas\Form\Form;
 use Laminas\I18n\Validator\Alnum;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Validator\{Callback, StringLength};
+use Laminas\Validator\Callback;
+use Laminas\Validator\StringLength;
 
 class Course extends Form implements InputFilterProviderInterface
 {
@@ -33,7 +32,7 @@ class Course extends Form implements InputFilterProviderInterface
                 'options' => [
                     'label' => $translator->translate('Course code'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -43,7 +42,7 @@ class Course extends Form implements InputFilterProviderInterface
                 'options' => [
                     'label' => $translator->translate('Name'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -53,7 +52,7 @@ class Course extends Form implements InputFilterProviderInterface
                 'attributes' => [
                     'value' => $translator->translate('Add course'),
                 ],
-            ]
+            ],
         );
     }
 

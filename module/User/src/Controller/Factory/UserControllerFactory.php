@@ -12,11 +12,7 @@ use User\Controller\UserController;
 class UserControllerFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param string $requestedName
-     * @param array|null $options
-     *
-     * @return UserController
      */
     public function __invoke(
         ContainerInterface $container,

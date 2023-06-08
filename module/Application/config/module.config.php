@@ -4,24 +4,20 @@ declare(strict_types=1);
 
 namespace Application;
 
-use Application\Controller\IndexController;
 use Application\Controller\Factory\IndexControllerFactory;
-use Application\View\Helper\{
-    BootstrapElementError,
-    Breadcrumbs,
-    FeaturedCompanyPackage,
-    CompanyIdentity,
-    LocalisedTextElement,
-    LocaliseText,
-};
+use Application\Controller\IndexController;
+use Application\View\Helper\BootstrapElementError;
+use Application\View\Helper\Breadcrumbs;
+use Application\View\Helper\CompanyIdentity;
+use Application\View\Helper\FeaturedCompanyPackage;
+use Application\View\Helper\LocalisedTextElement;
+use Application\View\Helper\LocaliseText;
 use Doctrine\Common\Cache\MemcachedCache;
 use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Laminas\Cache\Service\StorageCacheAbstractServiceFactory;
 use Laminas\I18n\Translator\Resources;
-use Laminas\Router\Http\{
-    Literal,
-    Segment,
-};
+use Laminas\Router\Http\Literal;
+use Laminas\Router\Http\Segment;
 use Laminas\Session\Config\ConfigInterface;
 use Laminas\Session\Service\SessionConfigFactory;
 use Memcached;
@@ -64,7 +60,7 @@ return [
         ],
         'factories' => [
             ConfigInterface::class => SessionConfigFactory::class,
-            'doctrine.cache.my_memcached' => function () {
+            'doctrine.cache.my_memcached' => static function () {
                 $cache = new MemcachedCache();
                 $memcached = new Memcached();
                 $memcached->addServer('memcached', 11211);
@@ -99,8 +95,8 @@ return [
         'display_not_found_reason' => true,
         'display_exceptions' => true,
         'doctype' => 'HTML5',
-        'not_found_template' => (APP_ENV === 'production' ? 'error/404' : 'error/debug/404'),
-        'exception_template' => (APP_ENV === 'production' ? 'error/500' : 'error/debug/500'),
+        'not_found_template' => ('production' === APP_ENV ? 'error/404' : 'error/debug/404'),
+        'exception_template' => ('production' === APP_ENV ? 'error/500' : 'error/debug/500'),
         'template_map' => [
             'layout/layout' => __DIR__ . '/../view/layout/layout.phtml',
             'application/index/teapot' => __DIR__ . '/../view/error/418.phtml',
@@ -115,37 +111,38 @@ return [
         ],
         'template_path_stack' => [
             'laminas-developer-tools' => __DIR__ . '/../view',
-            __DIR__ . '/../view',
+            0 => __DIR__ . '/../view',
         ],
     ],
     'view_helpers' => [
         'factories' => [
-            'featuredCompanyPackage' => function (ContainerInterface $container) {
+            'featuredCompanyPackage' => static function (ContainerInterface $container) {
                 $companyService = $container->get('company_service_company');
 
                 return new FeaturedCompanyPackage($companyService);
             },
-            'breadcrumbs' => function () {
+            'breadcrumbs' => static function () {
                 return new Breadcrumbs();
             },
-            'bootstrapElementError' => function () {
+            'bootstrapElementError' => static function () {
                 return new BootstrapElementError();
             },
-            'companyIdentity' => function (ContainerInterface $container) {
+            'companyIdentity' => static function (ContainerInterface $container) {
                 return new CompanyIdentity(
                     $container->get('user_auth_companyUser_service'),
                 );
             },
-            'localisedTextElement' => function () {
+            'localisedTextElement' => static function () {
                 return new LocalisedTextElement();
             },
-            'localiseText' => function () {
+            'localiseText' => static function () {
                 return new LocaliseText();
             },
         ],
     ],
     'view_helper_config' => [
         'flashmessenger' => [
+            // phpcs:ignore Generic.Files.LineLength.TooLong -- template string cannot be easily split
             'message_open_format' => '<div%s><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><ul><li>',
             'message_close_string' => '</li></ul></div>',
             'message_separator_string' => '</li><li>',

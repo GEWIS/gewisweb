@@ -6,12 +6,10 @@ namespace Decision\Model\SubDecision\Key;
 
 use DateTime;
 use Decision\Model\SubDecision;
-use Doctrine\ORM\Mapping\{
-    Column,
-    Entity,
-    JoinColumn,
-    OneToOne,
-};
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\OneToOne;
 
 #[Entity]
 class Withdrawal extends SubDecision
@@ -21,40 +19,38 @@ class Withdrawal extends SubDecision
      */
     #[OneToOne(
         targetEntity: Granting::class,
-        inversedBy: "withdrawal",
+        inversedBy: 'withdrawal',
     )]
     #[JoinColumn(
-        name: "r_meeting_type",
-        referencedColumnName: "meeting_type",
+        name: 'r_meeting_type',
+        referencedColumnName: 'meeting_type',
     )]
     #[JoinColumn(
-        name: "r_meeting_number",
-        referencedColumnName: "meeting_number",
+        name: 'r_meeting_number',
+        referencedColumnName: 'meeting_number',
     )]
     #[JoinColumn(
-        name: "r_decision_point",
-        referencedColumnName: "decision_point",
+        name: 'r_decision_point',
+        referencedColumnName: 'decision_point',
     )]
     #[JoinColumn(
-        name: "r_decision_number",
-        referencedColumnName: "decision_number",
+        name: 'r_decision_number',
+        referencedColumnName: 'decision_number',
     )]
     #[JoinColumn(
-        name: "r_number",
-        referencedColumnName: "number",
+        name: 'r_number',
+        referencedColumnName: 'number',
     )]
     protected Granting $granting;
 
     /**
      * When the granted keycode is prematurely revoked.
      */
-    #[Column(type: "date")]
+    #[Column(type: 'date')]
     protected DateTime $withdrawnOn;
 
     /**
      * Get the granting of the keycode.
-     *
-     * @return Granting
      */
     public function getGranting(): Granting
     {
@@ -71,8 +67,6 @@ class Withdrawal extends SubDecision
 
     /**
      * Get the date.
-     *
-     * @return DateTime
      */
     public function getWithdrawnOn(): DateTime
     {
@@ -81,8 +75,6 @@ class Withdrawal extends SubDecision
 
     /**
      * Set the date.
-     *
-     * @param DateTime $withdrawnOn
      */
     public function setWithdrawnOn(DateTime $withdrawnOn): void
     {

@@ -4,17 +4,13 @@ declare(strict_types=1);
 
 namespace Decision\Model;
 
-use Application\Model\Traits\{
-    IdentifiableTrait,
-    TimestampableTrait,
-};
-use Doctrine\ORM\Mapping\{
-    Column,
-    Entity,
-    HasLifecycleCallbacks,
-    JoinColumn,
-    ManyToOne,
-};
+use Application\Model\Traits\IdentifiableTrait;
+use Application\Model\Traits\TimestampableTrait;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
 
 /**
  * Meeting document model.
@@ -31,28 +27,28 @@ class MeetingDocument
      */
     #[ManyToOne(
         targetEntity: Meeting::class,
-        inversedBy: "documents",
+        inversedBy: 'documents',
     )]
     #[JoinColumn(
-        name: "meeting_type",
-        referencedColumnName: "type",
+        name: 'meeting_type',
+        referencedColumnName: 'type',
     )]
     #[JoinColumn(
-        name: "meeting_number",
-        referencedColumnName: "number",
+        name: 'meeting_number',
+        referencedColumnName: 'number',
     )]
     protected Meeting $meeting;
 
     /**
      * Name of the document.
      */
-    #[Column(type: "string")]
+    #[Column(type: 'string')]
     protected string $name;
 
     /**
      * Path of the document, relative to the storage directory.
      */
-    #[Column(type: "string")]
+    #[Column(type: 'string')]
     protected string $path;
 
     /**
@@ -61,15 +57,13 @@ class MeetingDocument
      * The order is determined by sorting the positions in ascending order.
      */
     #[Column(
-        type: "integer",
-        options: ["default" => 0],
+        type: 'integer',
+        options: ['default' => 0],
     )]
     protected int $displayPosition;
 
     /**
      * Get the meeting.
-     *
-     * @return Meeting
      */
     public function getMeeting(): Meeting
     {
@@ -78,8 +72,6 @@ class MeetingDocument
 
     /**
      * Set the meeting.
-     *
-     * @param Meeting $meeting
      */
     public function setMeeting(Meeting $meeting): void
     {
@@ -89,8 +81,6 @@ class MeetingDocument
 
     /**
      * Get the name of the document.
-     *
-     * @return string
      */
     public function getName(): string
     {
@@ -99,8 +89,6 @@ class MeetingDocument
 
     /**
      * Set the name of the document.
-     *
-     * @param string $name
      */
     public function setName(string $name): void
     {
@@ -109,8 +97,6 @@ class MeetingDocument
 
     /**
      * Get the path.
-     *
-     * @return string
      */
     public function getPath(): string
     {
@@ -119,25 +105,17 @@ class MeetingDocument
 
     /**
      * Set the path.
-     *
-     * @param string $path
      */
     public function setPath(string $path): void
     {
         $this->path = $path;
     }
 
-    /**
-     * @return int
-     */
     public function getDisplayPosition(): int
     {
         return $this->displayPosition;
     }
 
-    /**
-     * @param int $position
-     */
     public function setDisplayPosition(int $position): void
     {
         $this->displayPosition = $position;

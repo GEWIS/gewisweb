@@ -18,8 +18,6 @@ class ApiUserAdapter implements AdapterInterface
 
     /**
      * Try to authenticate.
-     *
-     * @return Result
      */
     public function authenticate(): Result
     {
@@ -37,8 +35,6 @@ class ApiUserAdapter implements AdapterInterface
 
     /**
      * Sets the credentials used to authenticate.
-     *
-     * @param string $token
      */
     public function setCredentials(string $token): void
     {
@@ -47,8 +43,6 @@ class ApiUserAdapter implements AdapterInterface
 
     /**
      * Get the mapper.
-     *
-     * @return ApiUserMapper
      */
     public function getMapper(): ApiUserMapper
     {

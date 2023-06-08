@@ -4,20 +4,16 @@ declare(strict_types=1);
 
 namespace Decision\Form;
 
-use Laminas\Form\Element\{
-    File,
-    Hidden,
-    Submit,
-    Text,
-};
+use Laminas\Form\Element\File;
+use Laminas\Form\Element\Hidden;
+use Laminas\Form\Element\Submit;
+use Laminas\Form\Element\Text;
 use Laminas\Form\Form;
-use Laminas\Mvc\I18n\Translator;
 use Laminas\InputFilter\InputFilterProviderInterface;
-use Laminas\Validator\{
-    File\Extension,
-    File\MimeType,
-    StringLength,
-};
+use Laminas\Mvc\I18n\Translator;
+use Laminas\Validator\File\Extension;
+use Laminas\Validator\File\MimeType;
+use Laminas\Validator\StringLength;
 
 class Document extends Form implements InputFilterProviderInterface
 {
@@ -32,7 +28,7 @@ class Document extends Form implements InputFilterProviderInterface
                 'options' => [
                     'label' => $translator->translate('Meeting'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -42,7 +38,7 @@ class Document extends Form implements InputFilterProviderInterface
                 'options' => [
                     'label' => $translator->translate('Document name'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -52,7 +48,7 @@ class Document extends Form implements InputFilterProviderInterface
                 'options' => [
                     'label' => $translator->translate('Document to upload'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -62,7 +58,7 @@ class Document extends Form implements InputFilterProviderInterface
                 'attributes' => [
                     'value' => $translator->translate('Upload document'),
                 ],
-            ]
+            ],
         );
     }
 

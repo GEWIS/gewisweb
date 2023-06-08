@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace Activity\Service;
 
-use Activity\Mapper\{
-    ActivityOptionCreationPeriod as ActivityOptionCreationPeriodMapper,
-    ActivityOptionProposal as ActivityOptionProposalMapper,
-    MaxActivities as MaxActivitiesMapper,
-};
+use Activity\Mapper\ActivityOptionCreationPeriod as ActivityOptionCreationPeriodMapper;
+use Activity\Mapper\ActivityOptionProposal as ActivityOptionProposalMapper;
+use Activity\Mapper\MaxActivities as MaxActivitiesMapper;
 use Activity\Model\ActivityOptionCreationPeriod as ActivityOptionCreationPeriodModel;
 use DateTime;
+use Decision\Model\Organ as OrganModel;
 use Decision\Service\Organ as OrganService;
 use Exception;
+
+use function count;
 
 class ActivityCalendarForm
 {
@@ -27,10 +28,6 @@ class ActivityCalendarForm
 
     /**
      * Returns whether a user may create an option with given start time.
-     *
-     * @param DateTime $beginTime
-     *
-     * @return bool
      *
      * @throws Exception
      */
@@ -55,22 +52,16 @@ class ActivityCalendarForm
             return false;
         }
 
-        if (
-            $period->getBeginOptionTime() > $beginTime
-            || $period->getEndOptionTime() <= $beginTime
-            || $period->getBeginOptionTime() >= $endTime
-            || $period->getEndOptionTime() < $endTime
-        ) {
-            return false;
-        }
-
-        return true;
+        return $period->getBeginOptionTime() <= $beginTime
+            && $period->getEndOptionTime() > $beginTime
+            && $period->getBeginOptionTime() < $endTime
+            && $period->getEndOptionTime() >= $endTime;
     }
 
     /**
      * Get the current ActivityOptionCreationPeriod.
      *
-     * @return array<array-key, ActivityOptionCreationPeriodModel>
+     * @return ActivityOptionCreationPeriodModel[]
      */
     public function getCurrentPeriods(): array
     {
@@ -78,9 +69,9 @@ class ActivityCalendarForm
     }
 
     /**
-     * Retrieves all organs which the current user is allowed to edit and for which the organs can still create proposals.
+     * Retrieves all organs which the current user is allowed to edit and for which the organ can create proposals.
      *
-     * @return array
+     * @return OrganModel[]
      *
      * @throws Exception
      */
@@ -91,9 +82,11 @@ class ActivityCalendarForm
         foreach ($allOrgans as $organ) {
             $organId = $organ->getId();
 
-            if ($this->canOrganCreateProposal($organId)) {
-                $organs[] = $organ;
+            if (!$this->canOrganCreateProposal($organId)) {
+                continue;
             }
+
+            $organs[] = $organ;
         }
 
         return $organs;
@@ -101,10 +94,6 @@ class ActivityCalendarForm
 
     /**
      * Returns whether an organ may create a new activity proposal.
-     *
-     * @param int $organId
-     *
-     * @return bool
      *
      * @throws Exception
      */
@@ -135,11 +124,6 @@ class ActivityCalendarForm
 
     /**
      * Get the current proposal count of an organ for the given period.
-     *
-     * @param ActivityOptionCreationPeriodModel $period
-     * @param int $organId
-     *
-     * @return int
      */
     protected function getCurrentProposalCount(
         ActivityOptionCreationPeriodModel $period,
@@ -154,11 +138,6 @@ class ActivityCalendarForm
 
     /**
      * Get the max number of activity options an organ can create.
-     *
-     * @param int $organId
-     * @param int $periodId
-     *
-     * @return int
      *
      * @throws Exception
      */
@@ -177,12 +156,6 @@ class ActivityCalendarForm
         return $max;
     }
 
-    /**
-     * @param string $value
-     * @param string $format
-     *
-     * @return DateTime
-     */
     public static function toDateTime(
         string $value,
         string $format = 'Y-m-d',

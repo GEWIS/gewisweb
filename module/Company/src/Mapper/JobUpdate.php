@@ -14,9 +14,6 @@ use Company\Model\Proposals\JobUpdate as JobUpdateModel;
  */
 class JobUpdate extends BaseMapper
 {
-    /**
-     * @inheritDoc
-     */
     protected function getRepositoryName(): string
     {
         return JobUpdateModel::class;

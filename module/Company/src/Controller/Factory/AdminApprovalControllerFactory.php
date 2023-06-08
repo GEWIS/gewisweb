@@ -12,11 +12,7 @@ use Psr\Container\ContainerInterface;
 class AdminApprovalControllerFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param string $requestedName
-     * @param array|null $options
-     *
-     * @return AdminApprovalController
      */
     public function __invoke(
         ContainerInterface $container,

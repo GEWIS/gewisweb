@@ -6,10 +6,7 @@ namespace Photo\Mapper;
 
 use Application\Mapper\BaseMapper;
 use DateTime;
-use Photo\Model\{
-    Album as AlbumModel,
-    Tag as TagModel,
-};
+use Photo\Model\Album as AlbumModel;
 
 /**
  * Mappers for Album.
@@ -21,9 +18,9 @@ class Album extends BaseMapper
     /**
      * Returns all the subalbums of a given album.
      *
-     * @param AlbumModel $parent the parent album to retrieve the subalbum from
-     * @param int $start the result to start at
-     * @param int|null $maxResults max amount of results to return, null for infinite
+     * @param AlbumModel $parent     the parent album to retrieve the subalbum from
+     * @param int        $start      the result to start at
+     * @param int|null   $maxResults max amount of results to return, null for infinite
      *
      * @return array<array-key, AlbumModel>
      */
@@ -38,7 +35,7 @@ class Album extends BaseMapper
             ->setFirstResult($start)
             ->orderBy('a.startDateTime', 'ASC');
 
-        if (!is_null($maxResults)) {
+        if (null !== $maxResults) {
             $qb->setMaxResults($maxResults);
         }
 
@@ -98,8 +95,6 @@ class Album extends BaseMapper
 
     /**
      * Returns the root album containing the most recent photos.
-     *
-     * @return AlbumModel|null
      */
     public function getNewestAlbum(): ?AlbumModel
     {
@@ -116,8 +111,6 @@ class Album extends BaseMapper
 
     /**
      * Returns the root album containing the oldest photos.
-     *
-     * @return AlbumModel|null
      */
     public function getOldestAlbum(): ?AlbumModel
     {
@@ -132,9 +125,6 @@ class Album extends BaseMapper
         return empty($res) ? null : $res[0];
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function getRepositoryName(): string
     {
         return AlbumModel::class;

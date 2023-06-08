@@ -4,32 +4,30 @@ declare(strict_types=1);
 
 namespace Company\Model;
 
-use Application\Model\Traits\{
-    ApprovableTrait,
-    IdentifiableTrait,
-    TimestampableTrait,
-    UpdateProposableTrait,
-};
+use Application\Model\Traits\ApprovableTrait;
+use Application\Model\Traits\IdentifiableTrait;
+use Application\Model\Traits\TimestampableTrait;
+use Application\Model\Traits\UpdateProposableTrait;
 use Company\Model\Enums\CompanyPackageTypes;
-use Company\Model\{
-    JobCategory as JobCategoryModel,
-    Proposals\CompanyUpdate as CompanyUpdateProposal,
-};
+use Company\Model\JobCategory as JobCategoryModel;
+use Company\Model\Proposals\CompanyUpdate as CompanyUpdateProposal;
 use DateTime;
-use Doctrine\Common\Collections\{
-    ArrayCollection,
-    Collection,
-};
-use Doctrine\ORM\Mapping\{
-    Column,
-    Entity,
-    HasLifecycleCallbacks,
-    JoinColumn,
-    OneToMany,
-    OneToOne,
-};
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\OneToOne;
 use Exception;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
+
+use function array_filter;
+use function array_map;
+use function array_sum;
+use function boolval;
+use function count;
 
 /**
  * Company model.
@@ -46,32 +44,32 @@ class Company implements ResourceInterface
     /**
      * The company's display name.
      */
-    #[Column(type: "string")]
+    #[Column(type: 'string')]
     protected string $name;
 
     /**
      * The company's slug version of the name. (username).
      */
-    #[Column(type: "string")]
+    #[Column(type: 'string')]
     protected string $slugName;
 
     /**
      * The name of the person representing the company. Is used for communications with the company.
      */
-    #[Column(type: "string")]
+    #[Column(type: 'string')]
     protected string $representativeName;
 
     /**
      * The email address of the person representing the company. Is used for communications with the company.
      */
-    #[Column(type: "string")]
+    #[Column(type: 'string')]
     protected string $representativeEmail;
 
     /**
      * The company's contact's name.
      */
     #[Column(
-        type: "string",
+        type: 'string',
         nullable: true,
     )]
     protected ?string $contactName;
@@ -80,7 +78,7 @@ class Company implements ResourceInterface
      * The company's contact address.
      */
     #[Column(
-        type: "string",
+        type: 'string',
         nullable: true,
     )]
     protected ?string $contactAddress;
@@ -89,7 +87,7 @@ class Company implements ResourceInterface
      * The company's contact email address.
      */
     #[Column(
-        type: "string",
+        type: 'string',
         nullable: true,
     )]
     protected ?string $contactEmail;
@@ -98,7 +96,7 @@ class Company implements ResourceInterface
      * The company's contact phone.
      */
     #[Column(
-        type: "string",
+        type: 'string',
         nullable: true,
     )]
     protected ?string $contactPhone;
@@ -108,12 +106,12 @@ class Company implements ResourceInterface
      */
     #[OneToOne(
         targetEntity: CompanyLocalisedText::class,
-        cascade: ["persist", "remove"],
+        cascade: ['persist', 'remove'],
         orphanRemoval: true,
     )]
     #[JoinColumn(
-        name: "slogan_id",
-        referencedColumnName: "id",
+        name: 'slogan_id',
+        referencedColumnName: 'id',
         nullable: false,
     )]
     protected CompanyLocalisedText $slogan;
@@ -122,7 +120,7 @@ class Company implements ResourceInterface
      * Company logo.
      */
     #[Column(
-        type: "string",
+        type: 'string',
         nullable: true,
     )]
     protected ?string $logo = null;
@@ -132,12 +130,12 @@ class Company implements ResourceInterface
      */
     #[OneToOne(
         targetEntity: CompanyLocalisedText::class,
-        cascade: ["persist", "remove"],
+        cascade: ['persist', 'remove'],
         orphanRemoval: true,
     )]
     #[JoinColumn(
-        name: "description_id",
-        referencedColumnName: "id",
+        name: 'description_id',
+        referencedColumnName: 'id',
         nullable: false,
     )]
     protected CompanyLocalisedText $description;
@@ -147,12 +145,12 @@ class Company implements ResourceInterface
      */
     #[OneToOne(
         targetEntity: CompanyLocalisedText::class,
-        cascade: ["persist", "remove"],
+        cascade: ['persist', 'remove'],
         orphanRemoval: true,
     )]
     #[JoinColumn(
-        name: "website_id",
-        referencedColumnName: "id",
+        name: 'website_id',
+        referencedColumnName: 'id',
         nullable: false,
     )]
     protected CompanyLocalisedText $website;
@@ -160,32 +158,33 @@ class Company implements ResourceInterface
     /**
      * Whether the company is published or not.
      */
-    #[Column(type: "boolean")]
+    #[Column(type: 'boolean')]
     protected bool $published;
 
     /**
      * The company's packages.
+     *
+     * @var Collection<CompanyPackage>
      */
     #[OneToMany(
         targetEntity: CompanyPackage::class,
-        mappedBy: "company",
-        cascade: ["persist", "remove"],
+        mappedBy: 'company',
+        cascade: ['persist', 'remove'],
     )]
     protected Collection $packages;
 
     /**
      * Proposed updates to this company.
+     *
+     * @var Collection<CompanyUpdateProposal>
      */
     #[OneToMany(
         targetEntity: CompanyUpdateProposal::class,
-        mappedBy: "original",
-        fetch: "EXTRA_LAZY",
+        mappedBy: 'original',
+        fetch: 'EXTRA_LAZY',
     )]
     protected Collection $updateProposals;
 
-    /**
-     * Constructor.
-     */
     public function __construct()
     {
         $this->packages = new ArrayCollection();
@@ -194,8 +193,6 @@ class Company implements ResourceInterface
 
     /**
      * Get the company's name.
-     *
-     * @return string
      */
     public function getName(): string
     {
@@ -204,8 +201,6 @@ class Company implements ResourceInterface
 
     /**
      * Set the company's name.
-     *
-     * @param string $name
      */
     public function setName(string $name): void
     {
@@ -234,8 +229,6 @@ class Company implements ResourceInterface
 
     /**
      * Get the name of the person representing the company.
-     *
-     * @return string
      */
     public function getRepresentativeName(): string
     {
@@ -244,8 +237,6 @@ class Company implements ResourceInterface
 
     /**
      * Set the name of the person representing the company.
-     *
-     * @param string $name
      */
     public function setRepresentativeName(string $name): void
     {
@@ -254,8 +245,6 @@ class Company implements ResourceInterface
 
     /**
      * Get the email address of the person representing the company.
-     *
-     * @return string
      */
     public function getRepresentativeEmail(): string
     {
@@ -264,8 +253,6 @@ class Company implements ResourceInterface
 
     /**
      * Set the email address of the person representing the company.
-     *
-     * @param string $email
      */
     public function setRepresentativeEmail(string $email): void
     {
@@ -274,8 +261,6 @@ class Company implements ResourceInterface
 
     /**
      * Get the company's contact's name.
-     *
-     * @return string|null
      */
     public function getContactName(): ?string
     {
@@ -284,8 +269,6 @@ class Company implements ResourceInterface
 
     /**
      * Set the company's contact's name.
-     *
-     * @param string|null $name
      */
     public function setContactName(?string $name): void
     {
@@ -294,8 +277,6 @@ class Company implements ResourceInterface
 
     /**
      * Get the company's address.
-     *
-     * @return string|null
      */
     public function getContactAddress(): ?string
     {
@@ -304,8 +285,6 @@ class Company implements ResourceInterface
 
     /**
      * Set the company's address.
-     *
-     * @param string|null $contactAddress
      */
     public function setContactAddress(?string $contactAddress): void
     {
@@ -314,8 +293,6 @@ class Company implements ResourceInterface
 
     /**
      * Get the company's email.
-     *
-     * @return string|null
      */
     public function getContactEmail(): ?string
     {
@@ -324,8 +301,6 @@ class Company implements ResourceInterface
 
     /**
      * Set the company's email.
-     *
-     * @param string|null $contactEmail
      */
     public function setContactEmail(?string $contactEmail): void
     {
@@ -334,8 +309,6 @@ class Company implements ResourceInterface
 
     /**
      * Get the company's phone.
-     *
-     * @return string|null
      */
     public function getContactPhone(): ?string
     {
@@ -344,8 +317,6 @@ class Company implements ResourceInterface
 
     /**
      * Set the company's phone.
-     *
-     * @param string|null $contactPhone
      */
     public function setContactPhone(?string $contactPhone): void
     {
@@ -354,8 +325,6 @@ class Company implements ResourceInterface
 
     /**
      * Get the company's slogan.
-     *
-     * @return CompanyLocalisedText
      */
     public function getSlogan(): CompanyLocalisedText
     {
@@ -364,8 +333,6 @@ class Company implements ResourceInterface
 
     /**
      * Set the company's slogan.
-     *
-     * @param CompanyLocalisedText $slogan
      */
     public function setSlogan(CompanyLocalisedText $slogan): void
     {
@@ -374,8 +341,6 @@ class Company implements ResourceInterface
 
     /**
      * Get the company's logo.
-     *
-     * @return string|null
      */
     public function getLogo(): ?string
     {
@@ -384,8 +349,6 @@ class Company implements ResourceInterface
 
     /**
      * Set the company's logo.
-     *
-     * @param string|null $logo
      */
     public function setLogo(?string $logo): void
     {
@@ -394,8 +357,6 @@ class Company implements ResourceInterface
 
     /**
      * Get the company's description.
-     *
-     * @return CompanyLocalisedText
      */
     public function getDescription(): CompanyLocalisedText
     {
@@ -404,8 +365,6 @@ class Company implements ResourceInterface
 
     /**
      * Set the company's description.
-     *
-     * @param CompanyLocalisedText $description
      */
     public function setDescription(CompanyLocalisedText $description): void
     {
@@ -414,8 +373,6 @@ class Company implements ResourceInterface
 
     /**
      * Get the company's website.
-     *
-     * @return CompanyLocalisedText
      */
     public function getWebsite(): CompanyLocalisedText
     {
@@ -424,8 +381,6 @@ class Company implements ResourceInterface
 
     /**
      * Set the company's description.
-     *
-     * @param CompanyLocalisedText $website
      */
     public function setWebsite(CompanyLocalisedText $website): void
     {
@@ -434,8 +389,6 @@ class Company implements ResourceInterface
 
     /**
      * Return true if the company should not be visible to the user, and false if it should be visible to the user.
-     *
-     * @return bool
      */
     public function isHidden(): bool
     {
@@ -448,9 +401,11 @@ class Company implements ResourceInterface
 
         // When any packages is not expired, the company should be shown to the user
         foreach ($this->getPackages() as $package) {
-            if (!$package->isExpired(new DateTime())) {
-                $visible = true;
+            if ($package->isExpired(new DateTime())) {
+                continue;
             }
+
+            $visible = true;
         }
 
         // Except when it is explicitly marked as hidden.
@@ -459,8 +414,6 @@ class Company implements ResourceInterface
 
     /**
      * Get the company's hidden status.
-     *
-     * @return bool
      */
     public function isPublished(): bool
     {
@@ -469,8 +422,6 @@ class Company implements ResourceInterface
 
     /**
      * Set the company's hidden status.
-     *
-     * @param bool $published
      */
     public function setPublished(bool $published): void
     {
@@ -480,7 +431,7 @@ class Company implements ResourceInterface
     /**
      * Get the company's packages.
      *
-     * @return Collection of CompanyPackages
+     * @return Collection<CompanyPackage>
      */
     public function getPackages(): Collection
     {
@@ -490,7 +441,7 @@ class Company implements ResourceInterface
     /**
      * Get the number of packages.
      *
-     * @return integer the number of packages
+     * @return int the number of packages
      */
     public function getNumberOfPackages(): int
     {
@@ -498,7 +449,7 @@ class Company implements ResourceInterface
     }
 
     /**
-     * @return Collection
+     * @return Collection<CompanyUpdateProposal>
      */
     public function getUpdateProposals(): Collection
     {
@@ -508,14 +459,12 @@ class Company implements ResourceInterface
     /**
      * Returns the number of jobs that are contained in all packages of this
      * company.
-     *
-     * @return int
      */
     public function getNumberOfJobs(): int
     {
-        $jobCount = function (CompanyPackage $package) {
+        /** @var CompanyJobPackage $package */
+        $jobCount = static function (CompanyPackage $package) {
             if (CompanyPackageTypes::Job === $package->getType()) {
-                /** @var CompanyJobPackage $package */
                 return $package->getJobsWithoutProposals()->count();
             }
 
@@ -528,16 +477,12 @@ class Company implements ResourceInterface
     /**
      * Returns the number of jobs that are contained in all active packages of this
      * company.
-     *
-     * @param JobCategoryModel|null $category
-     *
-     * @return int
      */
     public function getNumberOfActiveJobs(?JobCategoryModel $category = null): int
     {
-        $jobCount = function (CompanyPackage $package) use ($category) {
+        /** @var CompanyJobPackage $package */
+        $jobCount = static function (CompanyPackage $package) use ($category) {
             if (CompanyPackageTypes::Job === $package->getType()) {
-                /** @var CompanyJobPackage $package */
                 return $package->getNumberOfActiveJobs($category);
             }
 
@@ -549,33 +494,29 @@ class Company implements ResourceInterface
 
     /**
      * Returns the number of expired packages.
-     *
-     * @return int
      */
     public function getNumberOfExpiredPackages(): int
     {
         return count(
             array_filter(
                 $this->getPackages()->toArray(),
-                function (CompanyPackage $package) {
+                static function (CompanyPackage $package) {
                     return $package->isExpired();
-                }
-            )
+                },
+            ),
         );
     }
 
     /**
      * Returns true if company is featured.
-     *
-     * @return bool
      */
     public function isFeatured(): bool
     {
         $featuredPackages = array_filter(
             $this->getPackages()->toArray(),
-            function (CompanyPackage $package) {
+            static function (CompanyPackage $package) {
                 return CompanyPackageTypes::Featured === $package->getType() && $package->isActive();
-            }
+            },
         );
 
         return !empty($featuredPackages);
@@ -583,16 +524,14 @@ class Company implements ResourceInterface
 
     /**
      * Returns true if a banner is active, and false when there is no banner active.
-     *
-     * @return bool
      */
     public function isBannerActive(): bool
     {
         $banners = array_filter(
             $this->getPackages()->toArray(),
-            function (CompanyPackage $package) {
+            static function (CompanyPackage $package) {
                 return CompanyPackageTypes::Banner === $package->getType() && $package->isActive();
-            }
+            },
         );
 
         return !empty($banners);
@@ -602,6 +541,23 @@ class Company implements ResourceInterface
      * Updates this object with values in the form of getArrayCopy(). This does not include the logo.
      *
      * @param array $data
+     * @psalm-param array{
+     *     name: string,
+     *     slugName: string,
+     *     representativeName: string,
+     *     representativeEmail: string,
+     *     contactName: ?string,
+     *     contactEmail: ?string,
+     *     contactAddress: ?string,
+     *     contactPhone: ?string,
+     *     published: bool,
+     *     slogan: ?string,
+     *     sloganEn: ?string,
+     *     website: ?string,
+     *     websiteEn: ?string,
+     *     description: ?string,
+     *     descriptionEn: ?string,
+     * } $data
      *
      * @throws Exception
      */
@@ -627,7 +583,24 @@ class Company implements ResourceInterface
     /**
      * Returns an array copy with all attributes.
      *
-     * @return array
+     * @return array{
+     *     name: string,
+     *     slugName: string,
+     *     representativeName: string,
+     *     representativeEmail: string,
+     *     logo: ?string,
+     *     contactName: ?string,
+     *     contactEmail: ?string,
+     *     contactAddress: ?string,
+     *     contactPhone: ?string,
+     *     published: bool,
+     *     slogan: ?string,
+     *     sloganEn: ?string,
+     *     website: ?string,
+     *     websiteEn: ?string,
+     *     description: ?string,
+     *     descriptionEn: ?string,
+     * }
      */
     public function toArray(): array
     {
@@ -657,9 +630,6 @@ class Company implements ResourceInterface
         return $arraycopy;
     }
 
-    /**
-     * @return string
-     */
     public function getResourceId(): string
     {
         return 'company';

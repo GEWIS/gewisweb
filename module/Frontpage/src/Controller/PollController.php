@@ -6,19 +6,18 @@ namespace Frontpage\Controller;
 
 use Frontpage\Form\PollComment as PollCommentForm;
 use Frontpage\Model\Poll as PollModel;
-use Frontpage\Service\{
-    AclService,
-    Poll as PollService,
-};
-use Laminas\Http\{
-    Request,
-    Response,
-};
+use Frontpage\Service\AclService;
+use Frontpage\Service\Poll as PollService;
+use Laminas\Http\Request;
+use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Paginator\Paginator;
 use Laminas\View\Model\ViewModel;
 use User\Permissions\NotAllowedException;
+
+use function array_merge;
+use function intval;
 
 class PollController extends AbstractActionController
 {
@@ -37,7 +36,7 @@ class PollController extends AbstractActionController
     {
         $poll = $this->obtainPoll();
 
-        if (!is_null($poll)) {
+        if (null !== $poll) {
             $details = $this->pollService->getPollDetails($poll);
 
             return new ViewModel(
@@ -46,8 +45,8 @@ class PollController extends AbstractActionController
                     [
                         'poll' => $poll,
                         'commentForm' => $this->pollCommentForm,
-                    ]
-                )
+                    ],
+                ),
             );
         }
 
@@ -56,8 +55,6 @@ class PollController extends AbstractActionController
 
     /**
      * Get the right from the route.
-     *
-     * @return PollModel|null
      */
     public function obtainPoll(): ?PollModel
     {
@@ -96,7 +93,7 @@ class PollController extends AbstractActionController
     {
         if (!$this->aclService->isAllowed('create', 'poll_comment')) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to create comments on this poll')
+                $this->translator->translate('You are not allowed to create comments on this poll'),
             );
         }
 
@@ -144,7 +141,7 @@ class PollController extends AbstractActionController
         return new ViewModel(
             [
                 'paginator' => $paginator,
-            ]
+            ],
         );
     }
 
@@ -163,7 +160,7 @@ class PollController extends AbstractActionController
                 return new ViewModel(
                     [
                         'success' => true,
-                    ]
+                    ],
                 );
             }
         }
@@ -171,7 +168,7 @@ class PollController extends AbstractActionController
         return new ViewModel(
             [
                 'form' => $form,
-            ]
+            ],
         );
     }
 }

@@ -7,15 +7,16 @@ namespace Photo\Controller;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\View\Model\ViewModel;
-use Photo\Service\{
-    AclService,
-    Album as AlbumService,
-    Photo as PhotoService,
-};
+use Photo\Service\AclService;
+use Photo\Service\Album as AlbumService;
+use Photo\Service\Photo as PhotoService;
 use User\Permissions\NotAllowedException;
 
 class AlbumController extends AbstractActionController
 {
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
+     */
     public function __construct(
         private readonly AclService $aclService,
         private readonly Translator $translator,
@@ -28,8 +29,6 @@ class AlbumController extends AbstractActionController
     /**
      * Shows a page with all photos in an album, the album is either an actual
      * album or a member's album.
-     *
-     * @return ViewModel
      */
     public function indexAction(): ViewModel
     {
@@ -59,7 +58,7 @@ class AlbumController extends AbstractActionController
                 'basedir' => '/',
                 'config' => $this->photoConfig,
                 'hasRecentVote' => $hasRecentVote,
-            ]
+            ],
         );
     }
 }

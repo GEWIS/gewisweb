@@ -4,24 +4,23 @@ declare(strict_types=1);
 
 namespace Company\Controller;
 
-use Company\Service\{
-    AclService,
-    Company as CompanyService,
-    CompanyQuery as CompanyQueryService,
-};
 use Company\Model\CompanyJobPackage;
 use Company\Model\Enums\CompanyPackageTypes;
+use Company\Service\AclService;
+use Company\Service\Company as CompanyService;
+use Company\Service\CompanyQuery as CompanyQueryService;
 use DateInterval;
 use DateTime;
-use Laminas\Http\{
-    Request,
-    Response,
-};
+use Laminas\Http\Request;
+use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
 use Laminas\View\Model\ViewModel;
 use User\Permissions\NotAllowedException;
+
+use function array_merge_recursive;
+use function is_object;
 
 /**
  * @method FlashMessenger flashMessenger()
@@ -43,7 +42,7 @@ class AdminController extends AbstractActionController
     {
         if (!$this->aclService->isAllowed('create', 'company')) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to administer career settings')
+                $this->translator->translate('You are not allowed to administer career settings'),
             );
         }
 
@@ -53,10 +52,10 @@ class AdminController extends AbstractActionController
                 'companyList' => $this->companyService->getHiddenCompanyList(),
                 'packageFuture' => $this->companyService->getPackageChangeEvents(
                     (new DateTime())->add(
-                        new DateInterval('P1M')
-                    )
+                        new DateInterval('P1M'),
+                    ),
                 ),
-            ]
+            ],
         );
     }
 
@@ -262,7 +261,7 @@ class AdminController extends AbstractActionController
                     'companySlugName' => $companySlugName,
                     'type' => $type->value,
                 ],
-            )
+            ),
         );
 
         // Initialize the view
@@ -270,7 +269,7 @@ class AdminController extends AbstractActionController
             [
                 'form' => $packageForm,
                 'type' => $type,
-            ]
+            ],
         );
     }
 
@@ -344,8 +343,8 @@ class AdminController extends AbstractActionController
                 [
                     'companySlugName' => $companySlugName,
                     'packageId' => $packageId,
-                ]
-            )
+                ],
+            ),
         );
 
         // Initialize the view
@@ -355,7 +354,7 @@ class AdminController extends AbstractActionController
                 'companySlugName' => $companySlugName,
                 'form' => $packageForm,
                 'type' => $type,
-            ]
+            ],
         );
     }
 
@@ -446,7 +445,7 @@ class AdminController extends AbstractActionController
             if ($jobForm->isValid()) {
                 if (false !== $this->companyService->createJob($package, $jobForm->getData())) {
                     $this->flashMessenger()->addSuccessMessage(
-                        $this->translator->translate('Job successfully created!')
+                        $this->translator->translate('Job successfully created!'),
                     );
 
                     return $this->redirect()->toRoute(
@@ -454,7 +453,7 @@ class AdminController extends AbstractActionController
                         [
                             'companySlugName' => $companySlugName,
                             'packageId' => $packageId,
-                        ]
+                        ],
                     );
                 }
             }
@@ -468,15 +467,15 @@ class AdminController extends AbstractActionController
                 [
                     'companySlugName' => $companySlugName,
                     'packageId' => $packageId,
-                ]
-            )
+                ],
+            ),
         );
 
         // Initialize the view
         return new ViewModel(
             [
                 'form' => $jobForm,
-            ]
+            ],
         );
     }
 
@@ -525,7 +524,7 @@ class AdminController extends AbstractActionController
             if ($jobForm->isValid()) {
                 if ($this->companyService->updateJob($job, $jobForm->getData())) {
                     $this->flashMessenger()->addSuccessMessage(
-                        $this->translator->translate('Job successfully edited!')
+                        $this->translator->translate('Job successfully edited!'),
                     );
 
                     return $this->redirect()->toRoute(
@@ -533,7 +532,7 @@ class AdminController extends AbstractActionController
                         [
                             'companySlugName' => $companySlugName,
                             'packageId' => $packageId,
-                        ]
+                        ],
                     );
                 }
             }
@@ -551,7 +550,7 @@ class AdminController extends AbstractActionController
             [
                 'form' => $jobForm,
                 'attachments' => $job->getAttachment(),
-            ]
+            ],
         );
     }
 
@@ -622,7 +621,7 @@ class AdminController extends AbstractActionController
 
                 if (is_object($jobCategory)) {
                     $this->flashMessenger()->addSuccessMessage(
-                        $this->translator->translate('Job category successfully created!')
+                        $this->translator->translate('Job category successfully created!'),
                     );
 
                     // Redirect to edit page
@@ -643,11 +642,12 @@ class AdminController extends AbstractActionController
             'action',
             $this->url()->fromRoute('company_admin/categories/add'),
         );
+
         // Initialize the view
         return new ViewModel(
             [
                 'form' => $categoryForm,
-            ]
+            ],
         );
     }
 
@@ -716,7 +716,7 @@ class AdminController extends AbstractActionController
 
                 if (is_object($jobLabel)) {
                     $this->flashMessenger()->addSuccessMessage(
-                        $this->translator->translate('Job label successfully created!')
+                        $this->translator->translate('Job label successfully created!'),
                     );
 
                     // Redirect to edit page
@@ -740,7 +740,7 @@ class AdminController extends AbstractActionController
         return new ViewModel(
             [
                 'form' => $labelForm,
-            ]
+            ],
         );
     }
 

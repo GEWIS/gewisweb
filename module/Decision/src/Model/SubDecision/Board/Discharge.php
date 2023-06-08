@@ -5,11 +5,9 @@ declare(strict_types=1);
 namespace Decision\Model\SubDecision\Board;
 
 use Decision\Model\SubDecision;
-use Doctrine\ORM\Mapping\{
-    Entity,
-    JoinColumn,
-    OneToOne,
-};
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\OneToOne;
 
 /**
  * Discharge from board position.
@@ -25,34 +23,32 @@ class Discharge extends SubDecision
      */
     #[OneToOne(
         targetEntity: Installation::class,
-        inversedBy: "discharge",
+        inversedBy: 'discharge',
     )]
     #[JoinColumn(
-        name: "r_meeting_type",
-        referencedColumnName: "meeting_type",
+        name: 'r_meeting_type',
+        referencedColumnName: 'meeting_type',
     )]
     #[JoinColumn(
-        name: "r_meeting_number",
-        referencedColumnName: "meeting_number",
+        name: 'r_meeting_number',
+        referencedColumnName: 'meeting_number',
     )]
     #[JoinColumn(
-        name: "r_decision_point",
-        referencedColumnName: "decision_point",
+        name: 'r_decision_point',
+        referencedColumnName: 'decision_point',
     )]
     #[JoinColumn(
-        name: "r_decision_number",
-        referencedColumnName: "decision_number",
+        name: 'r_decision_number',
+        referencedColumnName: 'decision_number',
     )]
     #[JoinColumn(
-        name: "r_number",
-        referencedColumnName: "number",
+        name: 'r_number',
+        referencedColumnName: 'number',
     )]
     protected Installation $installation;
 
     /**
      * Get installation.
-     *
-     * @return Installation
      */
     public function getInstallation(): Installation
     {
@@ -61,8 +57,6 @@ class Discharge extends SubDecision
 
     /**
      * Set the installation.
-     *
-     * @param Installation $installation
      */
     public function setInstallation(Installation $installation): void
     {

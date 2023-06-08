@@ -4,15 +4,17 @@ declare(strict_types=1);
 
 namespace Company\Service;
 
-use Application\Model\Enums\ApprovableStatus;
-use Company\Mapper\{
-    Category as CategoryMapper,
-    Job as JobMapper,
-    Label as LabelMapper,
-};
+use Company\Mapper\Category as CategoryMapper;
+use Company\Mapper\Job as JobMapper;
+use Company\Mapper\Label as LabelMapper;
+use Company\Model\Job as JobModel;
 use Company\Model\JobCategory as JobCategoryModel;
+use Company\Model\JobLabel as JobLabelModel;
 use Laminas\Mvc\I18n\Translator;
 use User\Permissions\NotAllowedException;
+
+use function array_filter;
+use function count;
 
 /**
  * CompanyQuery service.
@@ -30,8 +32,6 @@ class CompanyQuery
 
     /**
      * Get the translator.
-     *
-     * @return Translator
      */
     public function getTranslator(): Translator
     {
@@ -42,20 +42,14 @@ class CompanyQuery
      * Returns all jobs with a $jobSlugName, owned by a company with a
      * $companySlugName, and a specific $category.
      *
-     * @param int|null $jobCategoryId
-     * @param string|null $jobCategorySlug
-     * @param int|null $jobLabelId
-     * @param string|null $jobSlugName
-     * @param string|null $companySlugName
-     *
-     * @return array
+     * @return JobModel[]
      */
     public function getJobs(
-        int $jobCategoryId = null,
-        string $jobCategorySlug = null,
-        int $jobLabelId = null,
-        string $jobSlugName = null,
-        string $companySlugName = null,
+        ?int $jobCategoryId = null,
+        ?string $jobCategorySlug = null,
+        ?int $jobLabelId = null,
+        ?string $jobSlugName = null,
+        ?string $companySlugName = null,
     ): array {
         return $this->jobMapper->findJob(
             jobCategoryId: $jobCategoryId,
@@ -69,20 +63,14 @@ class CompanyQuery
     /**
      * Returns all jobs that are active.
      *
-     * @param int|null $jobCategoryId
-     * @param string|null $jobCategorySlug
-     * @param int|null $jobLabelId
-     * @param string|null $jobSlugName
-     * @param string|null $companySlugName
-     *
-     * @return array
+     * @return JobModel[]
      */
     public function getActiveJobList(
-        int $jobCategoryId = null,
-        string $jobCategorySlug = null,
-        int $jobLabelId = null,
-        string $jobSlugName = null,
-        string $companySlugName = null,
+        ?int $jobCategoryId = null,
+        ?string $jobCategorySlug = null,
+        ?int $jobLabelId = null,
+        ?string $jobSlugName = null,
+        ?string $companySlugName = null,
     ): array {
         $jobList = $this->getJobs(
             jobCategoryId: $jobCategoryId,
@@ -92,7 +80,7 @@ class CompanyQuery
             companySlugName: $companySlugName,
         );
 
-        return array_filter($jobList, function ($job) {
+        return array_filter($jobList, static function ($job) {
             return $job->isActive() && $job->isApproved();
         });
     }
@@ -100,16 +88,14 @@ class CompanyQuery
     /**
      * Returns all categories if $visible is false, only returns visible categories if $visible is true.
      *
-     * @param bool $visible
-     *
-     * @return array<array-key, JobCategoryModel>
+     * @return JobCategoryModel[]
      */
     public function getCategoryList(bool $visible): array
     {
         if (!$visible) {
             if (!$this->aclService->isAllowed('listAll', 'jobCategory')) {
                 throw new NotAllowedException(
-                    $this->translator->translate('You are not allowed to list all job categories')
+                    $this->translator->translate('You are not allowed to list all job categories'),
                 );
             }
 
@@ -128,18 +114,20 @@ class CompanyQuery
     /**
      * Filters out categories that are not used in active jobs.
      *
-     * @param array $categories
+     * @param JobCategoryModel[] $categories
      *
-     * @return array
+     * @return JobCategoryModel[]
      */
     private function filterCategories(array $categories): array
     {
         $nonEmptyCategories = [];
 
         foreach ($categories as $category) {
-            if (count($this->getActiveJobList(jobCategoryId: $category->getId())) > 0) {
-                $nonEmptyCategories[] = $category;
+            if (count($this->getActiveJobList(jobCategoryId: $category->getId())) <= 0) {
+                continue;
             }
+
+            $nonEmptyCategories[] = $category;
         }
 
         return $nonEmptyCategories;
@@ -148,16 +136,14 @@ class CompanyQuery
     /**
      * Returns all labels if $visible is false, only returns visible labels if $visible is true.
      *
-     * @param bool $visible
-     *
-     * @return array
+     * @return JobLabelModel[]
      */
     public function getLabelList(bool $visible): array
     {
         if (!$visible) {
             if (!$this->aclService->isAllowed('listAll', 'jobLabel')) {
                 throw new NotAllowedException(
-                    $this->translator->translate('You are not allowed to list all job labels')
+                    $this->translator->translate('You are not allowed to list all job labels'),
                 );
             }
 
@@ -174,18 +160,20 @@ class CompanyQuery
     /**
      * Filters out labels that are not used in active jobs.
      *
-     * @param array $labels
+     * @param JobLabelModel[] $labels
      *
-     * @return array
+     * @return JobLabelModel[]
      */
     private function filterLabels(array $labels): array
     {
         $nonEmptyLabels = [];
 
         foreach ($labels as $label) {
-            if (count($this->getActiveJobList(jobLabelId: $label->getId())) > 0) {
-                $nonEmptyLabels[] = $label;
+            if (count($this->getActiveJobList(jobLabelId: $label->getId())) <= 0) {
+                continue;
             }
+
+            $nonEmptyLabels[] = $label;
         }
 
         return $nonEmptyLabels;

@@ -44,7 +44,7 @@ class ControllerTest extends BaseControllerTest
         $this->dispatch(
             '/decision/search',
             'POST',
-            ['query' => 'web']
+            ['query' => 'web'],
         );
         $this->assertResponseStatusCode(200);
     }

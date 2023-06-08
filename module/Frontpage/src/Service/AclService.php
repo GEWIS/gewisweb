@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Frontpage\Service;
 
+use Frontpage\Model\Page as PageModel;
+
 class AclService extends \User\Service\AclService
 {
     /**
-     * @param array $pages
+     * @param PageModel[] $pages
      */
     public function setPages(array $pages): void
     {

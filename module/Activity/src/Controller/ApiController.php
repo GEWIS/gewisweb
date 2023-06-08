@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Activity\Controller;
 
-use Activity\Service\{
-    AclService,
-    ActivityQuery as ActivityQueryService,
-};
+use Activity\Service\AclService;
+use Activity\Service\ActivityQuery as ActivityQueryService;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\JsonModel;
 use User\Permissions\NotAllowedException;
@@ -27,8 +25,9 @@ class ApiController extends AbstractActionController
     {
         if (!$this->aclService->isAllowed('list', 'activityApi')) {
             $translator = $this->activityQueryService->getTranslator();
+
             throw new NotAllowedException(
-                $translator->translate('You are not allowed to access the activities through the API')
+                $translator->translate('You are not allowed to access the activities through the API'),
             );
         }
 

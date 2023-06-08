@@ -7,16 +7,23 @@ namespace Photo\Controller\Plugin;
 use Exception;
 use Laminas\Mvc\Controller\Plugin\AbstractPlugin;
 use Laminas\Paginator;
-use Photo\Service\{
-    Album as AlbumService,
-    Photo as PhotoService,
-};
+use Photo\Model\Album;
+use Photo\Model\Photo;
+use Photo\Service\Album as AlbumService;
+use Photo\Service\Photo as PhotoService;
 
 /**
  * This plugin helps with rendering the pages doing album related stuff.
+ *
+ * @psalm-import-type AlbumArrayType from Album as ImportedAlbumArrayType
+ * @psalm-import-type PagesType from Paginator\Paginator as ImportedPagesType
+ * @psalm-import-type PhotoArrayType from Photo as ImportedPhotoArrayType
  */
 class AlbumPlugin extends AbstractPlugin
 {
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
+     */
     public function __construct(
         private readonly AlbumService $albumService,
         private readonly PhotoService $photoService,
@@ -29,7 +36,12 @@ class AlbumPlugin extends AbstractPlugin
      *
      * @param int $albumId the id of the album
      *
-     * @return array|null Array with data or null if the page does not exist
+     * @return ?array{
+     *     album: ImportedAlbumArrayType,
+     *     basedir: string,
+     *     photos: Photo[],
+     *     albums: Album[],
+     * }
      *
      * @throws Exception
      */
@@ -37,7 +49,7 @@ class AlbumPlugin extends AbstractPlugin
     {
         $album = $this->albumService->getAlbum($albumId);
 
-        if (is_null($album)) {
+        if (null === $album) {
             return null;
         }
 
@@ -60,10 +72,16 @@ class AlbumPlugin extends AbstractPlugin
     /**
      * Gets an album page, but returns all objects as assoc arrays.
      *
-     * @param int $albumId the id of the album
+     * @param int $albumId    the id of the album
      * @param int $activePage the page of the album
      *
-     * @return array|null Array with data or null if the page does not exist
+     * @return ?array{
+     *     album: ImportedAlbumArrayType,
+     *     basedir: string,
+     *     pages: ImportedPagesType,
+     *     photos: ImportedPhotoArrayType[],
+     *     albums: ImportedAlbumArrayType[],
+     * }
      *
      * @throws Exception
      */
@@ -101,11 +119,15 @@ class AlbumPlugin extends AbstractPlugin
     /**
      * Retrieves all data needed to display a page of an album.
      *
-     * @param int $albumId the id of the album
-     * @param int $activePage the page of the album
-     * @param string $type "album"|"member"|"year"
+     * @param int    $albumId    the id of the album
+     * @param int    $activePage the page of the album
+     * @param string $type       "album"|"member"|"year"
      *
-     * @return array|null Array with data or null if the page does not exist
+     * @return ?array{
+     *     album: Album,
+     *     basedir: string,
+     *     paginator: Paginator\Paginator,
+     * }
      *
      * @throws Exception
      */
@@ -125,7 +147,7 @@ class AlbumPlugin extends AbstractPlugin
                 $this->photoService,
                 $this->albumService,
                 $album,
-            )
+            ),
         );
 
         $paginator->setCurrentPageNumber($activePage);

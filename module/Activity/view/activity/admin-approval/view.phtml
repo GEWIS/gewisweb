@@ -34,13 +34,16 @@ $this->breadcrumbs()
         <p>
             <?php
             $organisingParty = "";
-            if (!is_null($activity->getOrgan()) && !is_null($activity->getCompany())) {
+            if (
+                null !== $activity->getOrgan()
+                && null !== $activity->getCompany()
+            ) {
                 $organisingParty = $this->escapeHtml($activity->getOrgan()->getName()) . ' ';
                 $organisingParty .= $this->translate('and') . ' ';
                 $organisingParty .= $this->escapeHtml($activity->getCompany()->getName());
-            } else if (!is_null($activity->getOrgan())) {
+            } else if (null !== $activity->getOrgan()) {
                 $organisingParty = $this->escapeHtml($activity->getOrgan()->getName());
-            } else if (!is_null($activity->getCompany())) {
+            } else if (null !== $activity->getCompany()) {
                 $organisingParty = $this->escapeHtml($activity->getCompany()->getName());
             } else {
                 $organisingParty = $this->escapeHtml($activity->getCreator()->getFullName());

@@ -6,25 +6,21 @@ namespace Company\Controller;
 
 use Application\Model\Enums\ApprovableStatus;
 use Company\Form\JobsTransfer as JobsTransferForm;
-use Company\Mapper\{
-    Package as JobPackageMapper,
-    Job as JobMapper,
-};
+use Company\Mapper\Job as JobMapper;
+use Company\Mapper\Package as JobPackageMapper;
 use Company\Model\CompanyJobPackage as CompanyJobPackageModel;
-use Company\Service\{
-    AclService,
-    Company as CompanyService,
-};
+use Company\Service\AclService;
+use Company\Service\Company as CompanyService;
 use DateTime;
-use Laminas\Http\{
-    Request,
-    Response,
-};
+use Laminas\Http\Request;
+use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
 use Laminas\View\Model\ViewModel;
 use User\Permissions\NotAllowedException;
+
+use function array_merge_recursive;
 
 /**
  * @method FlashMessenger flashMessenger()
@@ -32,8 +28,6 @@ use User\Permissions\NotAllowedException;
 class CompanyAccountController extends AbstractActionController
 {
     /**
-     * CompanyAccountController constructor.
-     *
      * @psalm-param JobPackageMapper<CompanyJobPackageModel> $jobPackageMapper
      */
     public function __construct(
@@ -50,7 +44,7 @@ class CompanyAccountController extends AbstractActionController
     {
         if (!$this->aclService->isAllowed('viewAccount', 'company')) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view the company accounts')
+                $this->translator->translate('You are not allowed to view the company accounts'),
             );
         }
 
@@ -61,7 +55,7 @@ class CompanyAccountController extends AbstractActionController
     {
         if (!$this->aclService->isAllowed('viewAccount', 'company')) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view the company accounts')
+                $this->translator->translate('You are not allowed to view the company accounts'),
             );
         }
 
@@ -72,7 +66,7 @@ class CompanyAccountController extends AbstractActionController
     {
         if (!$this->aclService->isAllowed('viewAccount', 'company')) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view the company accounts')
+                $this->translator->translate('You are not allowed to view the company accounts'),
             );
         }
 
@@ -120,7 +114,7 @@ class CompanyAccountController extends AbstractActionController
     {
         if (!$this->aclService->isAllowed('createOwn', 'job')) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to create jobs')
+                $this->translator->translate('You are not allowed to create jobs'),
             );
         }
 
@@ -140,7 +134,7 @@ class CompanyAccountController extends AbstractActionController
 
         if ((new DateTime()) >= $package->getExpirationDate()) {
             $this->flashMessenger()->addErrorMessage(
-                $this->translator->translate('You cannot create new jobs in expired job packages.')
+                $this->translator->translate('You cannot create new jobs in expired job packages.'),
             );
 
             return $this->redirect()->toRoute('company_account/jobs', ['packageId' => $packageId]);
@@ -162,14 +156,16 @@ class CompanyAccountController extends AbstractActionController
             if ($jobForm->isValid()) {
                 if (false !== $this->companyService->createJob($package, $jobForm->getData())) {
                     $this->flashMessenger()->addSuccessMessage(
-                        $this->translator->translate('Job proposal successfully created! It will become active after it has been approved.')
+                        $this->translator->translate(
+                            'Job proposal successfully created! It will become active after it has been approved.',
+                        ),
                     );
 
                     return $this->redirect()->toRoute(
                         'company_account/jobs',
                         [
                             'packageId' => $packageId,
-                        ]
+                        ],
                     );
                 }
             }
@@ -182,15 +178,15 @@ class CompanyAccountController extends AbstractActionController
                 'company_account/jobs/add',
                 [
                     'packageId' => $packageId,
-                ]
-            )
+                ],
+            ),
         );
 
         // Initialize the view
         return new ViewModel(
             [
                 'form' => $jobForm,
-            ]
+            ],
         );
     }
 
@@ -198,7 +194,7 @@ class CompanyAccountController extends AbstractActionController
     {
         if (!$this->aclService->isAllowed('editOwn', 'job')) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to edit jobs')
+                $this->translator->translate('You are not allowed to edit jobs'),
             );
         }
 
@@ -218,7 +214,7 @@ class CompanyAccountController extends AbstractActionController
 
         if ((new DateTime()) >= $job->getPackage()->getExpirationDate()) {
             $this->flashMessenger()->addErrorMessage(
-                $this->translator->translate('You cannot update jobs in expired job packages.')
+                $this->translator->translate('You cannot update jobs in expired job packages.'),
             );
 
             return $this->redirect()->toRoute('company_account/jobs', ['packageId' => $packageId]);
@@ -242,14 +238,17 @@ class CompanyAccountController extends AbstractActionController
             if ($jobForm->isValid()) {
                 if (false !== $this->companyService->updateJob($job, $jobForm->getData())) {
                     $this->flashMessenger()->addSuccessMessage(
-                        $this->translator->translate('Update proposal for job successfully created! It will become active after it has been approved.')
+                        $this->translator->translate(
+                            // phpcs:ignore Generic.Files.LineLength.TooLong -- user-visible strings should not be split
+                            'Update proposal for job successfully created! It will become active after it has been approved.',
+                        ),
                     );
 
                     return $this->redirect()->toRoute(
                         'company_account/jobs',
                         [
                             'packageId' => $packageId,
-                        ]
+                        ],
                     );
                 }
             }
@@ -275,8 +274,8 @@ class CompanyAccountController extends AbstractActionController
                 [
                     'packageId' => $packageId,
                     'jobId' => $jobId,
-                ]
-            )
+                ],
+            ),
         );
 
         $isJobRejected = false;
@@ -294,7 +293,7 @@ class CompanyAccountController extends AbstractActionController
                 'isJobRejected' => $isJobRejected,
                 'isJobUpdate' => $job->getIsUpdate(),
                 'jobRejectedMessage' => $jobRejectedMessage,
-            ]
+            ],
         );
     }
 
@@ -302,7 +301,7 @@ class CompanyAccountController extends AbstractActionController
     {
         if (!$this->aclService->isAllowed('deleteOwn', 'job')) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to delete jobs')
+                $this->translator->translate('You are not allowed to delete jobs'),
             );
         }
 
@@ -336,7 +335,7 @@ class CompanyAccountController extends AbstractActionController
     {
         if (!$this->aclService->isAllowed('statusOwn', 'job')) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view the status of a job')
+                $this->translator->translate('You are not allowed to view the status of a job'),
             );
         }
 
@@ -361,7 +360,7 @@ class CompanyAccountController extends AbstractActionController
     {
         if (!$this->aclService->isAllowed('transferOwn', 'job')) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to transfer jobs')
+                $this->translator->translate('You are not allowed to transfer jobs'),
             );
         }
 
@@ -395,20 +394,20 @@ class CompanyAccountController extends AbstractActionController
             if ($form->isValid()) {
                 if ($this->companyService->transferJobs($form->getData())) {
                     $this->flashMessenger()->addSuccessMessage(
-                        $this->translator->translate('Jobs successfully transferred')
+                        $this->translator->translate('Jobs successfully transferred'),
                     );
 
                     return $this->redirect()->toRoute(
                         'company_account/jobs',
                         ['packageId' => (int) $form->getData()['packages']],
                     );
-                } else {
-                    $this->flashMessenger()->addErrorMessage(
-                        $this->translator->translate(
-                            'An unknown error occurred while trying to transfer jobs, please try again.'
-                        )
-                    );
                 }
+
+                $this->flashMessenger()->addErrorMessage(
+                    $this->translator->translate(
+                        'An unknown error occurred while trying to transfer jobs, please try again.',
+                    ),
+                );
             }
         }
 

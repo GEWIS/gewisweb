@@ -13,6 +13,8 @@ use Laminas\Mvc\I18n\Translator;
 use User\Permissions\NotAllowedException;
 use User\Service\AclService;
 
+use function boolval;
+
 /**
  * News service.
  */
@@ -28,10 +30,6 @@ class News
 
     /**
      * Returns a single NewsItem by its id.
-     *
-     * @param int $newsItem
-     *
-     * @return NewsItemModel|null
      */
     public function getNewsItemById(int $newsItem): ?NewsItemModel
     {
@@ -40,8 +38,6 @@ class News
 
     /**
      * Returns a paginator adapter for paging through news items.
-     *
-     * @return DoctrinePaginator
      */
     public function getPaginatorAdapter(): DoctrinePaginator
     {
@@ -55,9 +51,7 @@ class News
     /**
      * Retrieves a certain number of news items sorted descending by their date.
      *
-     * @param int $count
-     *
-     * @return array
+     * @return NewsItemModel[]
      */
     public function getLatestNewsItems(int $count): array
     {
@@ -69,7 +63,7 @@ class News
      *
      * @param array $data form post data
      *
-     * @return bool
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function createNewsItem(array $data): bool
     {
@@ -82,10 +76,9 @@ class News
     }
 
     /**
-     * @param NewsItemModel $newsItem
      * @param array $data form post data
      *
-     * @return bool
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function updateNewsItem(
         NewsItemModel $newsItem,
@@ -114,8 +107,7 @@ class News
 
     /**
      * Get the NewsItem form.
-     **
-     * @return NewsItemForm
+     * *
      */
     public function getNewsItemForm(): NewsItemForm
     {

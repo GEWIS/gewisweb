@@ -5,17 +5,13 @@ declare(strict_types=1);
 namespace Company\Controller\Factory;
 
 use Company\Controller\CompanyController;
-use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Psr\Container\ContainerInterface;
 
 class CompanyControllerFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param string $requestedName
-     * @param array|null $options
-     *
-     * @return CompanyController
      */
     public function __invoke(
         ContainerInterface $container,

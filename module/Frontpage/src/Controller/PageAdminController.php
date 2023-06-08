@@ -4,21 +4,15 @@ declare(strict_types=1);
 
 namespace Frontpage\Controller;
 
-use Exception;
-use Frontpage\Service\{
-    AclService,
-    Page as PageService,
-};
-use Laminas\Mvc\I18n\Translator;
-use Laminas\Http\{
-    Request,
-    Response,
-};
+use Frontpage\Service\AclService;
+use Frontpage\Service\Page as PageService;
+use Laminas\Http\Request;
+use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
-use Laminas\View\Model\{
-    JsonModel,
-    ViewModel,
-};
+use Laminas\Mvc\I18n\Translator;
+use Laminas\View\Model\JsonModel;
+use Laminas\View\Model\ViewModel;
+use Throwable;
 use User\Permissions\NotAllowedException;
 
 class PageAdminController extends AbstractActionController
@@ -34,14 +28,14 @@ class PageAdminController extends AbstractActionController
     {
         if (!$this->aclService->isAllowed('list', 'page')) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view the list of pages.')
+                $this->translator->translate('You are not allowed to view the list of pages.'),
             );
         }
 
         return new ViewModel(
             [
                 'pages' => $this->pageService->getPages(),
-            ]
+            ],
         );
     }
 
@@ -49,7 +43,7 @@ class PageAdminController extends AbstractActionController
     {
         if (!$this->aclService->isAllowed('create', 'page')) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to create new pages.')
+                $this->translator->translate('You are not allowed to create new pages.'),
             );
         }
 
@@ -69,7 +63,7 @@ class PageAdminController extends AbstractActionController
                 'form' => $form,
                 // Boolean indicating if the view should show an option to delete a page.
                 'canDelete' => false,
-            ]
+            ],
         );
 
         $view->setTemplate('page-admin/edit');
@@ -100,7 +94,7 @@ class PageAdminController extends AbstractActionController
                 'form' => $form,
                 'canDelete' => true,
                 'pageId' => $pageId,
-            ]
+            ],
         );
     }
 
@@ -135,7 +129,7 @@ class PageAdminController extends AbstractActionController
             try {
                 $path = $this->pageService->uploadImage($request->getFiles()->toArray());
                 $result['url'] = '/' . $path;
-            } catch (Exception $e) {
+            } catch (Throwable $e) {
                 $result['error']['message'] = $e->getMessage();
             }
         }

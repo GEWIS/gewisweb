@@ -7,12 +7,13 @@ namespace Application\View\Helper;
 use Laminas\Form\ElementInterface;
 use Laminas\View\Helper\AbstractHelper;
 
+use function is_string;
+use function str_ends_with;
+
 class LocalisedTextElement extends AbstractHelper
 {
     /**
      * Determines the correct value for an element.
-     *
-     * @param ElementInterface $element
      *
      * @return string The real value of the `$element`
      */
@@ -20,14 +21,16 @@ class LocalisedTextElement extends AbstractHelper
     {
         $currentValue = $element->getValue();
 
-        if (!is_null($currentValue)) {
+        if (null !== $currentValue) {
             if (is_string($currentValue)) {
                 return $currentValue;
             }
 
             if (str_ends_with($currentValue->getAttribute('id'), 'en')) {
                 return $currentValue->getValueEN();
-            } elseif (str_ends_with($currentValue->getAttribute('id'), 'nl')) {
+            }
+
+            if (str_ends_with($currentValue->getAttribute('id'), 'nl')) {
                 return $currentValue->getValueNL();
             }
         }

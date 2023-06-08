@@ -6,12 +6,10 @@ namespace Photo\Model;
 
 use Application\Model\Traits\IdentifiableTrait;
 use DateTime;
-use Doctrine\ORM\Mapping\{
-    Column,
-    Entity,
-    JoinColumn,
-    OneToOne,
-};
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\OneToOne;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 /**
@@ -25,7 +23,7 @@ class WeeklyPhoto implements ResourceInterface
     /**
      * The start date of the week the photo is based on.
      */
-    #[Column(type: "date")]
+    #[Column(type: 'date')]
     protected DateTime $week;
 
     /**
@@ -33,42 +31,30 @@ class WeeklyPhoto implements ResourceInterface
      */
     #[OneToOne(
         targetEntity: Photo::class,
-        inversedBy: "weeklyPhoto",
+        inversedBy: 'weeklyPhoto',
     )]
     #[JoinColumn(
-        name: "photo_id",
-        referencedColumnName: "id",
+        name: 'photo_id',
+        referencedColumnName: 'id',
         nullable: false,
     )]
     protected Photo $photo;
 
-    /**
-     * @return DateTime
-     */
     public function getWeek(): DateTime
     {
         return $this->week;
     }
 
-    /**
-     * @return Photo
-     */
     public function getPhoto(): Photo
     {
         return $this->photo;
     }
 
-    /**
-     * @param DateTime $week
-     */
     public function setWeek(DateTime $week): void
     {
         $this->week = $week;
     }
 
-    /**
-     * @param Photo $photo
-     */
     public function setPhoto(Photo $photo): void
     {
         $this->photo = $photo;
@@ -76,8 +62,6 @@ class WeeklyPhoto implements ResourceInterface
 
     /**
      * Get the resource ID.
-     *
-     * @return string
      */
     public function getResourceId(): string
     {

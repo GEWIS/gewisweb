@@ -5,12 +5,9 @@ declare(strict_types=1);
 namespace Photo\Mapper;
 
 use Application\Mapper\BaseMapper;
-use Doctrine\ORM\Query\ResultSetMapping;
-use Photo\Model\{
-    Album as AlbumModel,
-    MemberAlbum as MemberAlbumModel,
-    Photo as PhotoModel,
-};
+use Photo\Model\Album as AlbumModel;
+use Photo\Model\MemberAlbum as MemberAlbumModel;
+use Photo\Model\Photo as PhotoModel;
 
 /**
  * Mappers for Photo.
@@ -22,11 +19,11 @@ class Photo extends BaseMapper
     /**
      * Returns all the photos in an album.
      *
-     * @param AlbumModel $album The album to retrieve the photos from
-     * @param int $start the result to start at
-     * @param int|null $maxResults max amount of results to return, null for infinite
+     * @param AlbumModel $album      The album to retrieve the photos from
+     * @param int        $start      the result to start at
+     * @param int|null   $maxResults max amount of results to return, null for infinite
      *
-     * @return array<array-key, PhotoModel>
+     * @return PhotoModel[]
      */
     public function getAlbumPhotos(
         AlbumModel $album,
@@ -49,7 +46,8 @@ class Photo extends BaseMapper
             $qb->setFirstResult($start)
                 ->orderBy('p.dateTime', 'ASC');
         }
-        if (!is_null($maxResults)) {
+
+        if (null !== $maxResults) {
             $qb->setMaxResults($maxResults);
         }
 
@@ -60,8 +58,7 @@ class Photo extends BaseMapper
      * Retrieves some random photos from the specified albums. If the amount of available photos is smaller than the
      * requested count, fewer photos will be returned.
      *
-     * @param array $albums
-     * @param int $maxResults
+     * @param AlbumModel[] $albums
      *
      * @return PhotoModel[]
      */
@@ -139,10 +136,8 @@ class Photo extends BaseMapper
     /**
      * Checks if the specified photo exists in the database already and returns it if it does.
      *
-     * @param string $path The storage path of the photo
+     * @param string     $path  The storage path of the photo
      * @param AlbumModel $album the album the photo is in
-     *
-     * @return PhotoModel|null
      */
     public function getPhotoByData(
         string $path,
@@ -152,7 +147,7 @@ class Photo extends BaseMapper
             [
                 'path' => $path,
                 'album' => $album,
-            ]
+            ],
         );
     }
 

@@ -7,13 +7,11 @@ namespace User\Model;
 use Application\Model\IdentityInterface;
 use Company\Model\Company as CompanyModel;
 use DateTime;
-use Doctrine\ORM\Mapping\{
-    Column,
-    Entity,
-    Id,
-    JoinColumn,
-    OneToOne,
-};
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\OneToOne;
 use User\Model\NewCompanyUser as NewCompanyUserModel;
 
 /**
@@ -26,13 +24,13 @@ class CompanyUser implements IdentityInterface
      * The internal identifier for this company.
      */
     #[Id]
-    #[Column(type: "integer")]
+    #[Column(type: 'integer')]
     protected int $id;
 
     /**
      * The company's password.
      */
-    #[Column(type: "string")]
+    #[Column(type: 'string')]
     protected string $password;
 
     /**
@@ -40,11 +38,11 @@ class CompanyUser implements IdentityInterface
      */
     #[OneToOne(
         targetEntity: CompanyModel::class,
-        fetch: "EAGER",
+        fetch: 'EAGER',
     )]
     #[JoinColumn(
-        name: "id",
-        referencedColumnName: "id",
+        name: 'id',
+        referencedColumnName: 'id',
         nullable: false,
     )]
     protected CompanyModel $company;
@@ -53,12 +51,11 @@ class CompanyUser implements IdentityInterface
      * Timestamp when the password was last changed.
      */
     #[Column(
-        type: "datetime",
+        type: 'datetime',
         nullable: true,
     )]
     protected ?DateTime $passwordChangedOn = null;
 
-    // phpcs:ignore Gewis.General.RequireConstructorPromotion -- not possible
     public function __construct(NewCompanyUserModel $newCompanyUser)
     {
         $this->id = $newCompanyUser->getId();
@@ -75,8 +72,6 @@ class CompanyUser implements IdentityInterface
 
     /**
      * Get the company.
-     *
-     * @return CompanyModel
      */
     public function getCompany(): CompanyModel
     {
@@ -85,8 +80,6 @@ class CompanyUser implements IdentityInterface
 
     /**
      * Get the email address of the company's representative.
-     *
-     * @return string
      */
     public function getEmail(): string
     {
@@ -95,8 +88,6 @@ class CompanyUser implements IdentityInterface
 
     /**
      * Get the password hash.
-     *
-     * @return string
      */
     public function getPassword(): string
     {
@@ -105,33 +96,22 @@ class CompanyUser implements IdentityInterface
 
     /**
      * Set the password hash.
-     *
-     * @param string $password
      */
     public function setPassword(string $password): void
     {
         $this->password = $password;
     }
 
-    /**
-     * @return DateTime|null
-     */
     public function getPasswordChangedOn(): ?DateTime
     {
         return $this->passwordChangedOn;
     }
 
-    /**
-     * @param DateTime $passwordChangedOn
-     */
     public function setPasswordChangedOn(DateTime $passwordChangedOn): void
     {
         $this->passwordChangedOn = $passwordChangedOn;
     }
 
-    /**
-     * @return string
-     */
     public function getRoleId(): string
     {
         return 'company';
@@ -139,8 +119,6 @@ class CompanyUser implements IdentityInterface
 
     /**
      * Get the user's resource ID.
-     *
-     * @return string
      */
     public function getResourceId(): string
     {

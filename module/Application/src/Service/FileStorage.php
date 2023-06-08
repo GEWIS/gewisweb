@@ -10,12 +10,34 @@ use Laminas\Http\Response\Stream;
 use Laminas\Mvc\I18n\Translator;
 use RuntimeException;
 
+use function copy;
+use function file_exists;
+use function filesize;
+use function finfo_close;
+use function finfo_file;
+use function finfo_open;
+use function fopen;
+use function mkdir;
+use function move_uploaded_file;
+use function pathinfo;
+use function rename;
+use function sha1_file;
+use function sprintf;
+use function substr;
+use function unlink;
+
+use const FILEINFO_MIME_TYPE;
+use const PATHINFO_EXTENSION;
+
 /**
  * File storage service. This service can be used to safely store files without
  * having to worry about file names.
  */
 class FileStorage
 {
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
+     */
     public function __construct(
         private readonly Translator $translator,
         private readonly array $storageConfig,
@@ -50,6 +72,11 @@ class FileStorage
      * Stores an uploaded file in the content based file system.
      *
      * @param array $file
+     * @psalm-param array{
+     *     name: string,
+     *     tmp_name: string,
+     *     error: int,
+     * } $file
      *
      * @return string The CFS path at which the file was stored
      *
@@ -62,8 +89,8 @@ class FileStorage
             throw new RuntimeException(
                 sprintf(
                     $this->translator->translate('An unknown error occurred during uploading (%i)'),
-                    $file['error']
-                )
+                    $file['error'],
+                ),
             );
         }
 
@@ -83,7 +110,7 @@ class FileStorage
      * Stores files in the content based file system.
      *
      * @param string $source The source file to store
-     * @param bool $move indicating whether the file should be moved or copied
+     * @param bool   $move   indicating whether the file should be moved or copied
      *
      * @return string the path at which the file was stored
      */
@@ -122,9 +149,9 @@ class FileStorage
 
         if (file_exists($fullPath)) {
             return unlink($fullPath);
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
@@ -132,9 +159,9 @@ class FileStorage
      * In most modern browsers this function will cause the browser to display
      * the file and give the user the option to save it.
      *
-     * @param string $path The CFS path of the file to download
-     * @param string $fileName The file name to give the downloaded file
-     * @param bool $watermarkPdf Parameter to require addition of a watermark to the pdf before download. False by default
+     * @param string $path         The CFS path of the file to download
+     * @param string $fileName     The file name to give the downloaded file
+     * @param bool   $watermarkPdf Parameter to require addition of a watermark to the pdf before download
      *
      * @return Stream|null If the given file is not found, null is returned
      */
@@ -157,7 +184,7 @@ class FileStorage
         finfo_close($finfo);
 
         if ($watermarkPdf) {
-            if ($type !== 'application/pdf') {
+            if ('application/pdf' !== $type) {
                 throw new RuntimeException('Cannot watermark file that is not pdf.');
             }
 
@@ -182,7 +209,7 @@ class FileStorage
                 // zf2 parses date as a string for a \DateTime() object:
                 'Expires' => '+1 year',
                 'Pragma' => '',
-            ]
+            ],
         );
         $response->setHeaders($headers);
 

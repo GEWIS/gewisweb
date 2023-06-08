@@ -4,14 +4,10 @@ declare(strict_types=1);
 
 namespace Frontpage\Controller;
 
-use Frontpage\Service\{
-    AclService,
-    Poll as PollService,
-};
-use Laminas\Http\{
-    Request,
-    Response,
-};
+use Frontpage\Service\AclService;
+use Frontpage\Service\Poll as PollService;
+use Laminas\Http\Request;
+use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Paginator\Paginator;
@@ -55,7 +51,7 @@ class PollAdminController extends AbstractActionController
                 'unapprovedPolls' => $unapprovedPolls,
                 'paginator' => $paginator,
                 'approvalForm' => $approvalForm,
-            ]
+            ],
         );
     }
 

@@ -7,19 +7,16 @@ namespace User\Authentication\Service;
 use Application\Model\IdentityInterface;
 use DateInterval;
 use DateTime;
-use User\Mapper\{
-    CompanyUser as CompanyUserMapper,
-    LoginAttempt as LoginAttemptMapper,
-    User as UserMapper,
-};
-use User\Model\{
-    User as UserModel,
-    CompanyUser as CompanyUserModel,
-    LoginAttempt as LoginAttemptModel,
-};
+use User\Mapper\LoginAttempt as LoginAttemptMapper;
+use User\Model\CompanyUser as CompanyUserModel;
+use User\Model\LoginAttempt as LoginAttemptModel;
+use User\Model\User as UserModel;
 
 class LoginAttempt
 {
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
+     */
     public function __construct(
         private readonly string $remoteAddress,
         private readonly LoginAttemptMapper $loginAttemptMapper,
@@ -63,10 +60,6 @@ class LoginAttempt
             $maxLoginAttempts = $this->rateLimitConfig['company'];
         }
 
-        if ($this->loginAttemptMapper->getFailedAttemptCount($since, $ip, $user) > $maxLoginAttempts) {
-            return true;
-        }
-
-        return false;
+        return $this->loginAttemptMapper->getFailedAttemptCount($since, $ip, $user) > $maxLoginAttempts;
     }
 }

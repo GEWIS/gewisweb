@@ -45,7 +45,7 @@ $title = $this->escapeHtml(($lang === 'en') ? $poll->getEnglishQuestion() : $thi
 <form action="<?= $this->url('poll/vote', ['poll_id' => $poll->getId()]) ?>" method="post">
     <?php foreach ($this->poll->getOptions() as $option): ?>
         <?php $text = $this->escapeHtml(($lang === 'en') ? $option->getEnglishText() : $option->getDutchText()); ?>
-        <?php $voted = !is_null($userVote) && $option->getId() === $userVote->getPollOption()->getId(); ?>
+        <?php $voted = null !== $userVote && $option->getId() === $userVote->getPollOption()->getId(); ?>
 
         <?php if ($showResults && $canVote): ?>
             <div class="radio">

@@ -99,7 +99,7 @@ use Photo\Model\{
                 <?php if (!empty($birthdays) && $this->acl('decision_service_acl')->isAllowed('member', 'birthdays')): ?>
                     <section class="content-section">
                         <div class="panel panel-default" style="overflow:hidden;">
-                            <?php if (!is_null($birthdayPhoto)): ?>
+                            <?php if (null !== $birthdayPhoto): ?>
                                 <div class="col-md-6 no-pad">
                                     <a href="<?= $this->url(
                                         'photo/album',
@@ -143,7 +143,7 @@ use Photo\Model\{
                                     </a>
                                 </div>
                             <?php endif; ?>
-                            <div class="col-md-<?= is_null($birthdayPhoto) ? '12' : '6' ?> no-pad">
+                            <div class="col-md-<?= null === $birthdayPhoto ? '12' : '6' ?> no-pad">
                                 <div class="panel-heading">
                                     <h3><?= $this->translate('Verjaardagen') ?></h3>
                                 </div>
@@ -203,7 +203,7 @@ use Photo\Model\{
                     </div>
                 </div>
 
-                <?php if (!is_null($weeklyPhoto)): ?>
+                <?php if (null !== $weeklyPhoto): ?>
                     <div class="panel panel-default">
                         <div class="panel-heading panel-heading--full-height">
                             <h3>

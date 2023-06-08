@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace User\Service;
 
-use Exception;
-use Laminas\Http\{
-    Client,
-    Request,
-};
+use Laminas\Http\Client;
 use Laminas\Http\Client\Adapter\Curl;
+use Laminas\Http\Request;
 use SensitiveParameter;
+use Throwable;
+
+use function sha1;
+use function strtoupper;
 
 /**
  * A service providing a check against a Pwned Passwords API. This is a separate service from the {@link User} service
@@ -48,7 +49,7 @@ readonly class PwnedPasswords
         // If the request fails, we assume it is not breached.
         try {
             $response = $client->send($request);
-        } catch (Exception) {
+        } catch (Throwable) {
             return false;
         }
 

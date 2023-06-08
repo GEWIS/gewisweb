@@ -7,28 +7,25 @@ namespace Education\Form\Fieldset;
 use Application\Model\Enums\Languages;
 use Education\Model\Enums\ExamTypes;
 use Laminas\Filter\StringToUpper;
-use Laminas\Form\Element\{
-    Checkbox,
-    Date,
-    Hidden,
-    Select,
-    Text,
-};
+use Laminas\Form\Element\Checkbox;
+use Laminas\Form\Element\Date;
+use Laminas\Form\Element\Hidden;
+use Laminas\Form\Element\Select;
+use Laminas\Form\Element\Text;
 use Laminas\Form\Fieldset;
 use Laminas\I18n\Validator\Alnum;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Validator\{
-    Callback,
-    Date as DateValidator,
-    File\Exists,
-    InArray,
-    Regex,
-    StringLength,
-};
+use Laminas\Validator\Callback;
+use Laminas\Validator\Date as DateValidator;
+use Laminas\Validator\File\Exists;
+use Laminas\Validator\InArray;
+use Laminas\Validator\Regex;
+use Laminas\Validator\StringLength;
 
 class Exam extends Fieldset implements InputFilterProviderInterface
 {
+    /** @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingTraversableTypeHintSpecification */
     protected array $config;
 
     public function __construct(private readonly Translator $translator)
@@ -39,7 +36,7 @@ class Exam extends Fieldset implements InputFilterProviderInterface
             [
                 'name' => 'file',
                 'type' => Hidden::class,
-            ]
+            ],
         );
 
         $this->add(
@@ -49,7 +46,7 @@ class Exam extends Fieldset implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->translator->translate('Course code'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -60,7 +57,7 @@ class Exam extends Fieldset implements InputFilterProviderInterface
                     'label' => $this->translator->translate('Exam date'),
                     'format' => 'Y-m-d',
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -76,7 +73,7 @@ class Exam extends Fieldset implements InputFilterProviderInterface
                         ExamTypes::Other->value => ExamTypes::Other->getName($this->translator),
                     ],
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -90,7 +87,7 @@ class Exam extends Fieldset implements InputFilterProviderInterface
                         Languages::NL->value => Languages::NL->getName($this->translator),
                     ],
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -100,7 +97,7 @@ class Exam extends Fieldset implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->translator->translate('Scanned?'),
                 ],
-            ]
+            ],
         );
     }
 
@@ -108,6 +105,8 @@ class Exam extends Fieldset implements InputFilterProviderInterface
      * Set the configuration.
      *
      * @param array $config
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function setConfig(array $config): void
     {
@@ -134,11 +133,11 @@ class Exam extends Fieldset implements InputFilterProviderInterface
                     [
                         'name' => Callback::class,
                         'options' => [
-                            'callback' => function ($value) use ($dir) {
+                            'callback' => static function ($value) use ($dir) {
                                 $validator = new Exists(
                                     [
                                         'directory' => $dir,
-                                    ]
+                                    ],
                                 );
 
                                 return $validator->isValid($value);

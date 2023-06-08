@@ -6,10 +6,11 @@ namespace Frontpage\Controller;
 
 use Activity\Service\ActivityQuery as ActivityQueryService;
 use Decision\Model\Enums\OrganTypes;
-use Decision\Model\Organ;
 use Decision\Service\Organ as OrganService;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
+
+use function array_merge;
 
 class OrganController extends AbstractActionController
 {
@@ -26,7 +27,7 @@ class OrganController extends AbstractActionController
         return new ViewModel(
             [
                 'committees' => $committees,
-            ]
+            ],
         );
     }
 
@@ -39,7 +40,7 @@ class OrganController extends AbstractActionController
             [
                 'activeFraternities' => $activeFraternities,
                 'abrogatedFraternities' => $abrogatedFraternities,
-            ]
+            ],
         );
     }
 
@@ -62,8 +63,8 @@ class OrganController extends AbstractActionController
                     'organ' => $organ,
                     'activities' => $activities,
                 ],
-                $organMemberInformation
-            )
+                $organMemberInformation,
+            ),
         );
     }
 }

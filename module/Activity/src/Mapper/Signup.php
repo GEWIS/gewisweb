@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace Activity\Mapper;
 
-use Activity\Model\{
-    ExternalSignup as ExternalSignupModel,
-    SignupList as SignupListModel,
-    UserSignup as UserSignupModel,
-};
+use Activity\Model\ExternalSignup as ExternalSignupModel;
+use Activity\Model\SignupList as SignupListModel;
+use Activity\Model\UserSignup as UserSignupModel;
 use Application\Mapper\BaseMapper;
 use User\Model\User as UserModel;
 
@@ -19,11 +17,6 @@ class Signup extends BaseMapper
 {
     /**
      * Check if a user is signed up for an activity.
-     *
-     * @param SignupListModel $signupList
-     * @param UserModel $user
-     *
-     * @return bool
      */
     public function isSignedUp(
         SignupListModel $signupList,
@@ -34,11 +27,6 @@ class Signup extends BaseMapper
 
     /**
      * Get the signup object if it exists.
-     *
-     * @param SignupListModel $signupList
-     * @param UserModel $user
-     *
-     * @return UserSignupModel|null
      */
     public function getSignUp(
         SignupListModel $signupList,
@@ -51,7 +39,7 @@ class Signup extends BaseMapper
                 [
                     'signupList' => $signupList,
                     'user' => $user,
-                ]
+                ],
             );
         $result = $qb->getQuery()->getResult();
 
@@ -74,9 +62,6 @@ class Signup extends BaseMapper
         return $qb->getQuery()->getSingleScalarResult();
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function getRepositoryName(): string
     {
         return UserSignupModel::class;

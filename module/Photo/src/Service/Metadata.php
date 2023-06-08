@@ -7,6 +7,16 @@ namespace Photo\Service;
 use DateTime;
 use Photo\Model\Photo as PhotoModel;
 
+use function array_map;
+use function count;
+use function exif_read_data;
+use function explode;
+use function floatval;
+use function is_string;
+use function round;
+use function sprintf;
+use function str_contains;
+
 /**
  * Metadata service. This service implements all functionality related to
  * gathering metadata about photos.
@@ -17,7 +27,7 @@ class Metadata
      * Populates the metadata of a photo based on the EXIF data of the photo.
      *
      * @param PhotoModel $photo the photo to add the metadata to
-     * @param string $path The path where the actual image file is stored
+     * @param string     $path  The path where the actual image file is stored
      *
      * @return PhotoModel the photo with the added metadata
      */
@@ -34,7 +44,7 @@ class Metadata
             $photo->setDateTime(new DateTime($exif['DateTimeOriginal'] ?? 'now'));
 
             if (isset($exif['Flash'])) {
-                $photo->setFlash(0 != $exif['Flash']);
+                $photo->setFlash(0 !== $exif['Flash']);
             }
 
             if (isset($exif['FocalLength'])) {
@@ -99,16 +109,15 @@ class Metadata
      * Computes the shutter speed from the exif data.
      *
      * @param string $shutterSpeed the shutter speed as listed in the photo's exif data
-     *
-     * @return string|null
      */
     private function exifGetShutter(string $shutterSpeed): ?string
     {
         $apex = $this->frac2dec($shutterSpeed);
         $shutter = 2 ** (-$apex);
-        if (0 == $shutter) {
+        if (0 === $shutter) {
             return null;
         }
+
         if ($shutter >= 1) {
             return round($shutter) . 's';
         }
@@ -120,14 +129,12 @@ class Metadata
      * Computes the relative aperture from the exif data.
      *
      * @param string $apertureValue the aperture value as listed in the photo's exif data
-     *
-     * @return string|null
      */
     private function exifGetFstop(string $apertureValue): ?string
     {
         $apex = $this->frac2dec($apertureValue);
         $fstop = 2 ** ($apex / 2);
-        if (0 == $fstop) {
+        if (0 === $fstop) {
             return null;
         }
 
@@ -136,11 +143,6 @@ class Metadata
 
     /**
      * Computes the coordinate for a given exif GPS location.
-     *
-     * @param array|string $coordinate
-     * @param string $hemisphere
-     *
-     * @return float|int|null
      */
     private static function exifGpsToCoordinate(
         array|string $coordinate,
@@ -156,18 +158,21 @@ class Metadata
 
         for ($i = 0; $i < 3; ++$i) {
             $part = explode('/', $coordinate[$i]);
-            if (1 == count($part)) {
+            if (1 === count($part)) {
                 $coordinate[$i] = $part[0];
                 continue;
             }
-            if (2 == count($part)) {
+
+            if (2 === count($part)) {
                 $coordinate[$i] = floatval($part[0]) / floatval($part[1]);
                 continue;
             }
+
             $coordinate[$i] = 0;
         }
+
         [$degrees, $minutes, $seconds] = $coordinate;
-        $sign = ('W' == $hemisphere || 'S' == $hemisphere) ? -1 : 1;
+        $sign = 'W' === $hemisphere || 'S' === $hemisphere ? -1 : 1;
 
         return $sign * ($degrees + $minutes / 60 + $seconds / 3600);
     }

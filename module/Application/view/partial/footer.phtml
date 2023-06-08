@@ -16,7 +16,8 @@ use Laminas\View\Renderer\PhpRenderer;
             <div class="col-sm-10 col-md-11">
                 <div class="row">
                     <div class="col-sm-8">
-                        <?php if ($this->acl('frontpage_service_acl')->isAllowed('infimum', 'view')): ?>
+                        <?php
+                        if ($this->acl('frontpage_service_acl')->isAllowed('infimum', 'view')): ?>
                             <h3><?= $this->translate('Infimum') ?></h3>
                             <p id="infimum-footer"><?= $this->translate('Loading an infimum...') ?></p>
                             <script type="text/javascript" nonce="<?= NONCE_REPLACEMENT_STRING ?>">
@@ -30,7 +31,7 @@ use Laminas\View\Renderer\PhpRenderer;
                                             secondInfimum.textContent = data['content'];
                                         }
                                     })
-                                    .catch(function() {
+                                    .catch(function () {
                                         document.getElementById('infimum-footer').textContent =
                                             '<?= $this->translate('Unable to retrieve infimum.') ?>';
 
@@ -41,11 +42,15 @@ use Laminas\View\Renderer\PhpRenderer;
                                         }
                                     });
                             </script>
-                        <?php endif ?>
+                        <?php
+                        endif ?>
                         <p>
                             &copy; 2013
-                            - <?= date('Y') ?> S.v. GEWIS. <?php echo $this->translate('All rights reserved.') ?>
-                            <?= $this->translate('Made with <3 by the ApplicatieBeheerCommissie and Web Commissie (2013 - 2022).')?>
+                            - <?= date('Y') ?> S.v. GEWIS. <?php
+                            echo $this->translate('All rights reserved.') ?>
+                            <?= $this->translate(
+                                'Made with <3 by the ApplicatieBeheerCommissie and Web Commissie (2013 - 2022).'
+                            ) ?>
                         </p>
                     </div>
                     <div class="col-sm-4">
@@ -55,7 +60,8 @@ use Laminas\View\Renderer\PhpRenderer;
                             href="https://www.linkedin.com/company/study-association-gewis/">LinkedIn</a><br>
                         <span class="fab fa-facebook-square"></span> <a
                             href="https://www.facebook.com/svgewis/">Facebook</a><br>
-                        <span class="fab fa-instagram"></span> <a href="https://www.instagram.com/svgewis/">Instagram</a>
+                        <span class="fab fa-instagram"></span> <a
+                            href="https://www.instagram.com/svgewis/">Instagram</a>
                     </div>
                 </div>
             </div>

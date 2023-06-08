@@ -5,14 +5,10 @@ declare(strict_types=1);
 namespace Photo\Listener;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
-use Photo\Model\{
-    Album as AlbumModel,
-    Photo as PhotoModel,
-};
-use Photo\Service\{
-    Album as AlbumService,
-    Photo as PhotoService,
-};
+use Photo\Model\Album as AlbumModel;
+use Photo\Model\Photo as PhotoModel;
+use Photo\Service\Album as AlbumService;
+use Photo\Service\Photo as PhotoService;
 
 /**
  * Doctrine event listener class for Album and Photo entities.
@@ -26,9 +22,6 @@ class Remove
     ) {
     }
 
-    /**
-     * @param LifecycleEventArgs $eventArgs
-     */
     public function preRemove(LifecycleEventArgs $eventArgs): void
     {
         $entity = $eventArgs->getEntity();
@@ -40,17 +33,11 @@ class Remove
         }
     }
 
-    /**
-     * @param PhotoModel $photo
-     */
     protected function photoRemoved(PhotoModel $photo): void
     {
         $this->photoService->deletePhotoFiles($photo);
     }
 
-    /**
-     * @param AlbumModel $album
-     */
     protected function albumRemoved(AlbumModel $album): void
     {
         $this->albumService->deleteAlbumCover($album);

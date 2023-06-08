@@ -5,11 +5,9 @@ declare(strict_types=1);
 namespace Activity\Model;
 
 use Application\Model\Traits\IdentifiableTrait;
-use Doctrine\ORM\Mapping\{
-    Entity,
-    JoinColumn,
-    ManyToOne,
-};
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
 
 /**
  * Update prop model.
@@ -24,10 +22,10 @@ class ActivityUpdateProposal
      */
     #[ManyToOne(
         targetEntity: Activity::class,
-        inversedBy: "updateProposal",
+        inversedBy: 'updateProposal',
     )]
     #[JoinColumn(
-        referencedColumnName: "id",
+        referencedColumnName: 'id',
         nullable: false,
     )]
     protected Activity $old;
@@ -37,38 +35,26 @@ class ActivityUpdateProposal
      */
     #[ManyToOne(targetEntity: Activity::class)]
     #[JoinColumn(
-        referencedColumnName: "id",
+        referencedColumnName: 'id',
         nullable: false,
     )]
     protected Activity $new;
 
-    /**
-     * @return Activity
-     */
     public function getOld(): Activity
     {
         return $this->old;
     }
 
-    /**
-     * @param Activity $old
-     */
     public function setOld(Activity $old): void
     {
         $this->old = $old;
     }
 
-    /**
-     * @return Activity
-     */
     public function getNew(): Activity
     {
         return $this->new;
     }
 
-    /**
-     * @param Activity $new
-     */
     public function setNew(Activity $new): void
     {
         $this->new = $new;

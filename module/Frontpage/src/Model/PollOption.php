@@ -5,14 +5,12 @@ declare(strict_types=1);
 namespace Frontpage\Model;
 
 use Application\Model\Traits\IdentifiableTrait;
-use Doctrine\ORM\Mapping\{
-    Column,
-    Entity,
-    JoinColumn,
-    ManyToOne,
-    OneToMany,
-};
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToMany;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 /**
@@ -28,12 +26,12 @@ class PollOption implements ResourceInterface
      */
     #[ManyToOne(
         targetEntity: Poll::class,
-        inversedBy: "options",
-        cascade: ["persist"],
+        inversedBy: 'options',
+        cascade: ['persist'],
     )]
     #[JoinColumn(
-        name: "poll_id",
-        referencedColumnName: "id",
+        name: 'poll_id',
+        referencedColumnName: 'id',
         nullable: false,
     )]
     protected Poll $poll;
@@ -41,51 +39,44 @@ class PollOption implements ResourceInterface
     /**
      * The dutch text for this option.
      */
-    #[Column(type: "string")]
+    #[Column(type: 'string')]
     protected string $dutchText;
 
     /**
      * The english translation of the option if available.
      */
-    #[Column(type: "string")]
+    #[Column(type: 'string')]
     protected string $englishText;
 
     /**
      * Votes for this option.
+     *
+     * @var Collection<PollVote>
      */
     #[OneToMany(
         targetEntity: PollVote::class,
-        mappedBy: "pollOption",
-        cascade: ["persist", "remove"],
-        fetch: "EXTRA_LAZY",
+        mappedBy: 'pollOption',
+        cascade: ['persist', 'remove'],
+        fetch: 'EXTRA_LAZY',
     )]
     protected Collection $votes;
 
     #[Column(
-        type: "integer",
-        options: ["default" => 0],
+        type: 'integer',
+        options: ['default' => 0],
     )]
     protected int $anonymousVotes = 0;
 
-    /**
-     * @return Poll
-     */
     public function getPoll(): Poll
     {
         return $this->poll;
     }
 
-    /**
-     * @return string
-     */
     public function getDutchText(): string
     {
         return $this->dutchText;
     }
 
-    /**
-     * @return string
-     */
     public function getEnglishText(): string
     {
         return $this->englishText;
@@ -93,8 +84,6 @@ class PollOption implements ResourceInterface
 
     /**
      * Adds a new vote for this poll option.
-     *
-     * @param PollVote $pollVote
      */
     public function addVote(PollVote $pollVote): void
     {
@@ -102,25 +91,16 @@ class PollOption implements ResourceInterface
         $this->votes[] = $pollVote;
     }
 
-    /**
-     * @param Poll $poll
-     */
     public function setPoll(Poll $poll): void
     {
         $this->poll = $poll;
     }
 
-    /**
-     * @param string $dutchText
-     */
     public function setDutchText(string $dutchText): void
     {
         $this->dutchText = $dutchText;
     }
 
-    /**
-     * @param string $englishText
-     */
     public function setEnglishText(string $englishText): void
     {
         $this->englishText = $englishText;
@@ -128,8 +108,6 @@ class PollOption implements ResourceInterface
 
     /**
      * Get the number of votes for this poll option.
-     *
-     * @return int
      */
     public function getVotesCount(): int
     {
@@ -148,8 +126,6 @@ class PollOption implements ResourceInterface
 
     /**
      * Get the resource ID.
-     *
-     * @return string
      */
     public function getResourceId(): string
     {

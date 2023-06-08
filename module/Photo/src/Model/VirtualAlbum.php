@@ -4,19 +4,21 @@ declare(strict_types=1);
 
 namespace Photo\Model;
 
-use Doctrine\Common\Collections\{
-    ArrayCollection,
-    Collection,
-};
+use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Exception;
+
+use function array_merge;
 
 /**
  * VirtualAlbum.
  * Album that will never be stored in the database as such.
+ *
+ * @psalm-import-type PhotoArrayType from Photo as ImportedPhotoArrayType
  */
 class VirtualAlbum extends Album
 {
-    // phpcs:ignore Gewis.General.RequireConstructorPromotion -- not possible
     public function __construct(int $id)
     {
         parent::__construct();
@@ -37,8 +39,6 @@ class VirtualAlbum extends Album
     /**
      * Set the parent of the album.
      *
-     * @param Album $parent
-     *
      * @throws Exception
      */
     public function setParent(?Album $parent): void
@@ -49,7 +49,7 @@ class VirtualAlbum extends Album
     /**
      * Gets an array of all child albums.
      *
-     * @return Collection
+     * @return Collection<Album>
      */
     public function getChildren(): Collection
     {
@@ -57,7 +57,7 @@ class VirtualAlbum extends Album
     }
 
     /**
-     * @return Collection
+     * @return Collection<Photo>
      */
     public function getPhotos(): Collection
     {
@@ -66,8 +66,6 @@ class VirtualAlbum extends Album
 
     /**
      * Add a photo to an album.
-     *
-     * @param Photo $photo
      */
     public function addPhoto(Photo $photo): void
     {
@@ -75,7 +73,7 @@ class VirtualAlbum extends Album
     }
 
     /**
-     * @param array $photos
+     * @param Photo[] $photos
      */
     public function addPhotos(array $photos): void
     {
@@ -83,15 +81,13 @@ class VirtualAlbum extends Album
             = new ArrayCollection(
                 array_merge(
                     $this->photos->toArray(),
-                    $photos
-                )
+                    $photos,
+                ),
             );
     }
 
     /**
      * Add a sub album to an album.
-     *
-     * @param Album $album
      *
      * @throws Exception
      */
@@ -104,7 +100,18 @@ class VirtualAlbum extends Album
      * Returns an associative array representation of this object
      * including all child objects.
      *
-     * @return array
+     * @return array{
+     *     id: int,
+     *     startDateTime: ?DateTime,
+     *     endDateTime: ?DateTime,
+     *     name: string,
+     *     parent: null,
+     *     children: array{},
+     *     photos: ImportedPhotoArrayType[],
+     *     coverPath: ?string,
+     *     photoCount: int,
+     *     albumCount: int,
+     * }
      */
     public function toArrayWithChildren(): array
     {
@@ -112,6 +119,7 @@ class VirtualAlbum extends Album
         foreach ($this->photos as $photo) {
             $array['photos'][] = $photo->toArray();
         }
+
         // TODO: The code below probably never was finished
         foreach ($this->children as $album) {
             $array['children'][] = [];
@@ -123,7 +131,18 @@ class VirtualAlbum extends Album
     /**
      * Returns an associative array representation of this object.
      *
-     * @return array
+     * @return array{
+     *     id: int,
+     *     startDateTime: ?DateTime,
+     *     endDateTime: ?DateTime,
+     *     name: string,
+     *     parent: null,
+     *     children: array{},
+     *     photos: array{},
+     *     coverPath: ?string,
+     *     photoCount: int,
+     *     albumCount: int,
+     * }
      */
     public function toArray(): array
     {
@@ -143,10 +162,6 @@ class VirtualAlbum extends Album
 
     /**
      * Get the amount of photos in the album.
-     *
-     * @param bool $includeSubAlbums
-     *
-     * @return int
      */
     public function getPhotoCount(bool $includeSubAlbums = false): int
     {
@@ -155,8 +170,6 @@ class VirtualAlbum extends Album
 
     /**
      * Get the amount of subalbums in the album.
-     *
-     * @return int
      */
     public function getAlbumCount(): int
     {

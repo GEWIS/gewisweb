@@ -25,7 +25,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
 $organInformation = $organ->getApprovedOrganInformation();
 function getOrganDescription($organInformation, $lang)
 {
-    if (!is_null($organInformation)) {
+    if (null !== $organInformation) {
         if ($lang === 'en') {
             if (strlen($organInformation->getEnglishDescription()) > 0) {
                 return $organInformation->getEnglishDescription();
@@ -82,7 +82,7 @@ function getOrganDescription($organInformation, $lang)
 <?php endif; ?>
 <section class="section">
     <div class="container">
-        <?php if (!is_null($organInformation) && !is_null($organInformation->getCoverPath())): ?>
+        <?php if (null !== $organInformation && null !== $organInformation->getCoverPath()): ?>
             <div class="col-md-12 organ-banner"
                  style="background-image: url('<?= $this->fileUrl($organInformation->getCoverPath()) ?>')">
             </div>
@@ -94,7 +94,7 @@ function getOrganDescription($organInformation, $lang)
             </div>
             <div class="col-md-4">
                 <table class="table">
-                    <?php if (!is_null($organInformation) && $this->acl('decision_service_acl')->isAllowed('organ', 'view')): ?>
+                    <?php if (null !== $organInformation && $this->acl('decision_service_acl')->isAllowed('organ', 'view')): ?>
                         <tr>
                             <td><span class="fas fa-envelope"></span>&nbsp;&nbsp;<?= $this->translate('Email') ?></td>
                             <td>
@@ -104,7 +104,7 @@ function getOrganDescription($organInformation, $lang)
                             </td>
                         </tr>
                     <?php endif; ?>
-                    <?php if (!is_null($organInformation) && strlen($organInformation->getWebsite()) > 0): ?>
+                    <?php if (null !== $organInformation && strlen($organInformation->getWebsite()) > 0): ?>
                         <tr>
                             <td><span
                                     class="fas fa-external-link-alt"></span>&nbsp;&nbsp;<?= $this->translate('Website') ?>

@@ -5,21 +5,19 @@ declare(strict_types=1);
 namespace Activity\Controller;
 
 use Activity\Mapper\ActivityOptionCreationPeriod as ActivityOptionCreationPeriodMapper;
-use Activity\Service\{
-    AclService,
-    ActivityCalendar as ActivityCalendarService,
-};
+use Activity\Service\AclService;
+use Activity\Service\ActivityCalendar as ActivityCalendarService;
 use DateTime;
 use Decision\Service\Organ as OrganService;
-use Laminas\Http\{
-    Request,
-    Response,
-};
+use Laminas\Http\Request;
+use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
 use Laminas\View\Model\ViewModel;
 use User\Permissions\NotAllowedException;
+
+use function count;
 
 /**
  * @method FlashMessenger flashMessenger()
@@ -38,9 +36,11 @@ class AdminOptionController extends AbstractActionController
     public function indexAction(): ViewModel
     {
         if (!$this->aclService->isAllowed('view', 'activity_calendar_period')) {
-            throw new NotAllowedException($this->translator->translate(
-                'You are not allowed to administer option calendar periods',
-            ));
+            throw new NotAllowedException(
+                $this->translator->translate(
+                    'You are not allowed to administer option calendar periods',
+                ),
+            );
         }
 
         return new ViewModel([
@@ -52,9 +52,11 @@ class AdminOptionController extends AbstractActionController
     public function addAction(): Response|ViewModel
     {
         if (!$this->aclService->isAllowed('create', 'activity_calendar_period')) {
-            throw new NotAllowedException($this->translator->translate(
-                'You are not allowed to create option calendar periods',
-            ));
+            throw new NotAllowedException(
+                $this->translator->translate(
+                    'You are not allowed to create option calendar periods',
+                ),
+            );
         }
 
         $form = $this->activityCalendarService->getCalendarPeriodForm();
@@ -138,9 +140,11 @@ class AdminOptionController extends AbstractActionController
     public function editAction(): Response|ViewModel
     {
         if (!$this->aclService->isAllowed('edit', 'activity_calendar_period')) {
-            throw new NotAllowedException($this->translator->translate(
-                'You are not allowed to edit option calendar periods',
-            ));
+            throw new NotAllowedException(
+                $this->translator->translate(
+                    'You are not allowed to edit option calendar periods',
+                ),
+            );
         }
 
         $optionCreationPeriodId = (int) $this->params()->fromRoute('id');
@@ -169,7 +173,12 @@ class AdminOptionController extends AbstractActionController
             $form->setData($request->getPost()->toArray());
 
             if ($form->isValid()) {
-                if ($this->activityCalendarService->updateOptionPlanningPeriod($optionCreationPeriod, $form->getData())) {
+                if (
+                    $this->activityCalendarService->updateOptionPlanningPeriod(
+                        $optionCreationPeriod,
+                        $form->getData(),
+                    )
+                ) {
                     return $this->redirectWithMessage(
                         true,
                         $this->translator->translate(
@@ -202,12 +211,6 @@ class AdminOptionController extends AbstractActionController
         return $viewModel;
     }
 
-    /**
-     * @param bool $success
-     * @param string $message
-     *
-     * @return Response
-     */
     private function redirectWithMessage(
         bool $success,
         string $message,

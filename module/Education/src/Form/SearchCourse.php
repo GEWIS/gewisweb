@@ -22,7 +22,7 @@ class SearchCourse extends Form implements InputFilterProviderInterface
                 'options' => [
                     'label' => $translate->translate('Search query'),
                 ],
-            ]
+            ],
         );
     }
 

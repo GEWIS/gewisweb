@@ -88,8 +88,8 @@ $this->breadcrumbs()
                     <a href="<?= $this->url('activity/view', ['id' => $activity->getId()]) ?>"><?= $activity->getName()->getText("en") ?></a>
                 </td>
                 <td><?= $activity->getBeginTime()->format('Y-m-d') ?></td>
-                <td><?= is_null($activity->getOrgan()) ? $this->translate('None') : $this->escapeHtml($activity->getOrgan()->getAbbr()) ?></td>
-                <td><?= is_null($activity->getCompany()) ? $this->translate('None') : $this->escapeHtml($activity->getCompany()->getName()) ?></td>
+                <td><?= (null === $activity->getOrgan()) ? $this->translate('None') : $this->escapeHtml($activity->getOrgan()->getAbbr()) ?></td>
+                <td><?= (null === $activity->getCompany()) ? $this->translate('None') : $this->escapeHtml($activity->getCompany()->getName()) ?></td>
                 <td><?= $activity->getCreator()->getFullName() ?></td>
                 <?php if (0 !== $activity->getSignupLists()->count() && ($activity->getEndTime() >= $nowMonthAgo || $admin)): ?>
                     <td>

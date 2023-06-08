@@ -4,12 +4,8 @@ declare(strict_types=1);
 
 namespace User\Authentication;
 
-use Laminas\Authentication\Adapter\AdapterInterface;
-use Laminas\Authentication\{
-    AuthenticationServiceInterface,
-    Result,
-};
-use RuntimeException;
+use Laminas\Authentication\AuthenticationServiceInterface;
+use Laminas\Authentication\Result;
 use User\Authentication\Adapter\ApiUserAdapter;
 use User\Model\ApiUser;
 
@@ -66,7 +62,7 @@ class ApiAuthenticationService implements AuthenticationServiceInterface
      */
     public function hasIdentity(): bool
     {
-        return !is_null($this->identity);
+        return null !== $this->identity;
     }
 
     /**

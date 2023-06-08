@@ -5,26 +5,20 @@ declare(strict_types=1);
 namespace Company\Form;
 
 use Application\Form\Localisable as LocalisableForm;
-use Laminas\Form\Element\{
-    Checkbox,
-    Date,
-    File,
-    Submit,
-    Text,
-    Textarea,
-};
-use Laminas\Validator\{
-    Date as DateValidator,
-    Regex,
-    StringLength};
-use Laminas\I18n\Validator\Alnum;
-use Laminas\Filter\{
-    StringTrim,
-    StripTags,
-    ToNull,
-};
+use Laminas\Filter\StringTrim;
+use Laminas\Filter\StripTags;
+use Laminas\Filter\ToNull;
+use Laminas\Form\Element\Checkbox;
+use Laminas\Form\Element\Date;
+use Laminas\Form\Element\File;
+use Laminas\Form\Element\Submit;
+use Laminas\Form\Element\Text;
+use Laminas\Form\Element\Textarea;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
+use Laminas\Validator\Date as DateValidator;
+use Laminas\Validator\Regex;
+use Laminas\Validator\StringLength;
 
 class Package extends LocalisableForm implements InputFilterProviderInterface
 {
@@ -33,6 +27,7 @@ class Package extends LocalisableForm implements InputFilterProviderInterface
         private readonly string $type,
     ) {
         parent::__construct($translator, ('featured' === $type));
+
         $this->setAttribute('method', 'post');
 
         $this->add(
@@ -46,7 +41,7 @@ class Package extends LocalisableForm implements InputFilterProviderInterface
                 'attributes' => [
                     'step' => '1',
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -60,7 +55,7 @@ class Package extends LocalisableForm implements InputFilterProviderInterface
                 'attributes' => [
                     'step' => '1',
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -73,7 +68,7 @@ class Package extends LocalisableForm implements InputFilterProviderInterface
                         '0' => 'Enabled',
                     ],
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -83,7 +78,7 @@ class Package extends LocalisableForm implements InputFilterProviderInterface
                 'options' => [
                     'label' => $translator->translate('Contract Number'),
                 ],
-            ]
+            ],
         );
 
         if ('featured' === $type) {
@@ -94,7 +89,7 @@ class Package extends LocalisableForm implements InputFilterProviderInterface
                     'options' => [
                         'label' => $translator->translate('Article'),
                     ],
-                ]
+                ],
             );
 
             $this->add(
@@ -104,7 +99,7 @@ class Package extends LocalisableForm implements InputFilterProviderInterface
                     'options' => [
                         'label' => $translator->translate('Article'),
                     ],
-                ]
+                ],
             );
         }
 
@@ -116,7 +111,7 @@ class Package extends LocalisableForm implements InputFilterProviderInterface
                     'options' => [
                         'label' => $translator->translate('Banner'),
                     ],
-                ]
+                ],
             );
         }
 
@@ -124,7 +119,7 @@ class Package extends LocalisableForm implements InputFilterProviderInterface
             [
                 'name' => 'submit',
                 'type' => Submit::class,
-            ]
+            ],
         );
     }
 
@@ -181,7 +176,7 @@ class Package extends LocalisableForm implements InputFilterProviderInterface
                             'pattern' => '/^[0-9a-zA-Z_\-\.\s]+$/',
                             'messages' => [
                                 Regex::ERROROUS => $this->getTranslator()->translate(
-                                    'Contract numbers can only contain letters, numbers, _, -, ., and spaces'
+                                    'Contract numbers can only contain letters, numbers, _, -, ., and spaces',
                                 ),
                             ],
                         ],

@@ -4,27 +4,36 @@ declare(strict_types=1);
 
 namespace Photo\Model;
 
-use Application\Model\Traits\{
-    IdentifiableTrait,
-    TimestampableTrait,
-};
+use Application\Model\Traits\IdentifiableTrait;
+use Application\Model\Traits\TimestampableTrait;
 use DateTime;
-use Doctrine\Common\Collections\{
-    ArrayCollection,
-    Collection,
-};
-use Doctrine\ORM\Mapping\{Column,
-    Entity,
-    HasLifecycleCallbacks,
-    JoinColumn,
-    ManyToOne,
-    OneToMany,
-    OrderBy,
-};
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\OrderBy;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 /**
  * Album.
+ *
+ * @psalm-import-type PhotoArrayType from Photo as ImportedPhotoArrayType
+ * @psalm-type AlbumArrayType = array{
+ *     id: int,
+ *     startDateTime: ?DateTime,
+ *     endDateTime: ?DateTime,
+ *     name: string,
+ *     parent: ?array<string, mixed>,
+ *     children: array{},
+ *     photos: array{},
+ *     coverPath: ?string,
+ *     photoCount: int,
+ *     albumCount: int,
+ * }
  */
 #[Entity]
 #[HasLifecycleCallbacks]
@@ -37,7 +46,7 @@ class Album implements ResourceInterface
      * First date of photos in album.
      */
     #[Column(
-        type: "datetime",
+        type: 'datetime',
         nullable: true,
     )]
     protected ?DateTime $startDateTime = null;
@@ -46,7 +55,7 @@ class Album implements ResourceInterface
      * End date of photos in album.
      */
     #[Column(
-        type: "datetime",
+        type: 'datetime',
         nullable: true,
     )]
     protected ?DateTime $endDateTime = null;
@@ -54,19 +63,19 @@ class Album implements ResourceInterface
     /**
      * Name of the album.
      */
-    #[Column(type: "string")]
+    #[Column(type: 'string')]
     protected string $name;
 
     /**
      * Parent album, null if there is no parent album.
      */
     #[ManyToOne(
-        targetEntity: Album::class,
-        inversedBy: "children",
+        targetEntity: self::class,
+        inversedBy: 'children',
     )]
     #[JoinColumn(
-        name: "parent_id",
-        referencedColumnName: "id",
+        name: 'parent_id',
+        referencedColumnName: 'id',
     )]
     protected ?Album $parent = null;
 
@@ -74,12 +83,14 @@ class Album implements ResourceInterface
      * all the subalbums
      * Note: These are fetched extra lazy so we can efficiently retrieve an
      * album count.
+     *
+     * @var Collection<Album>
      */
     #[OneToMany(
-        targetEntity: Album::class,
-        mappedBy: "parent",
-        cascade: ["persist", "remove"],
-        fetch: "EXTRA_LAZY",
+        targetEntity: self::class,
+        mappedBy: 'parent',
+        cascade: ['persist', 'remove'],
+        fetch: 'EXTRA_LAZY',
     )]
     protected Collection $children;
 
@@ -87,21 +98,23 @@ class Album implements ResourceInterface
      * all the photo's in this album.
      * Note: These are fetched extra lazy so we can efficiently retrieve an
      * photo count.
+     *
+     * @var Collection<Photo>
      */
     #[OneToMany(
         targetEntity: Photo::class,
-        mappedBy: "album",
-        cascade: ["persist", "remove"],
-        fetch: "EXTRA_LAZY",
+        mappedBy: 'album',
+        cascade: ['persist', 'remove'],
+        fetch: 'EXTRA_LAZY',
     )]
-    #[OrderBy(value: ["dateTime" => "ASC"])]
+    #[OrderBy(value: ['dateTime' => 'ASC'])]
     protected Collection $photos;
 
     /**
      * The cover photo to display with the album.
      */
     #[Column(
-        type: "string",
+        type: 'string',
         nullable: true,
     )]
     protected ?string $coverPath = null;
@@ -115,7 +128,7 @@ class Album implements ResourceInterface
     /**
      * Gets an array of all child albums.
      *
-     * @return Collection
+     * @return Collection<Album>
      */
     public function getChildren(): Collection
     {
@@ -125,7 +138,7 @@ class Album implements ResourceInterface
     /**
      * Gets an array of all the photos in this album.
      *
-     * @return Collection
+     * @return Collection<Photo>
      */
     public function getPhotos(): Collection
     {
@@ -134,8 +147,6 @@ class Album implements ResourceInterface
 
     /**
      * Add a photo to an album.
-     *
-     * @param Photo $photo
      */
     public function addPhoto(Photo $photo): void
     {
@@ -145,8 +156,6 @@ class Album implements ResourceInterface
 
     /**
      * Add a sub album to an album.
-     *
-     * @param Album $album
      */
     public function addAlbum(Album $album): void
     {
@@ -156,8 +165,6 @@ class Album implements ResourceInterface
 
     /**
      * Remove a subalbum.
-     *
-     * @param Album|null $album
      */
     public function removeAlbum(?Album $album): void
     {
@@ -172,7 +179,18 @@ class Album implements ResourceInterface
      * Returns an associative array representation of this object
      * including all child objects.
      *
-     * @return array
+     * @return array{
+     *     id: int,
+     *     startDateTime: ?DateTime,
+     *     endDateTime: ?DateTime,
+     *     name: string,
+     *     parent: ?array<string, mixed>,
+     *     children: AlbumArrayType[],
+     *     photos: ImportedPhotoArrayType[],
+     *     coverPath: ?string,
+     *     photoCount: int,
+     *     albumCount: int,
+     * }
      */
     public function toArrayWithChildren(): array
     {
@@ -180,6 +198,7 @@ class Album implements ResourceInterface
         foreach ($this->photos as $photo) {
             $array['photos'][] = $photo->toArray();
         }
+
         foreach ($this->children as $album) {
             $array['children'][] = $album->toArray();
         }
@@ -190,7 +209,7 @@ class Album implements ResourceInterface
     /**
      * Returns an associative array representation of this object.
      *
-     * @return array
+     * @return AlbumArrayType
      */
     public function toArray(): array
     {
@@ -199,8 +218,7 @@ class Album implements ResourceInterface
             'startDateTime' => $this->getStartDateTime(),
             'endDateTime' => $this->getEndDateTime(),
             'name' => $this->getName(),
-            'parent' => is_null($this->getParent()) ? null
-                : $this->getParent()->toArray(),
+            'parent' => $this->getParent()?->toArray(),
             'children' => [],
             'photos' => [],
             'coverPath' => $this->getCoverPath(),
@@ -211,8 +229,6 @@ class Album implements ResourceInterface
 
     /**
      * Get the start date.
-     *
-     * @return DateTime|null
      */
     public function getStartDateTime(): ?DateTime
     {
@@ -221,8 +237,6 @@ class Album implements ResourceInterface
 
     /**
      * Set the start date.
-     *
-     * @param DateTime|null $startDateTime
      */
     public function setStartDateTime(?DateTime $startDateTime): void
     {
@@ -231,8 +245,6 @@ class Album implements ResourceInterface
 
     /**
      * Get the end date.
-     *
-     * @return DateTime|null
      */
     public function getEndDateTime(): ?DateTime
     {
@@ -241,8 +253,6 @@ class Album implements ResourceInterface
 
     /**
      * Set the end date.
-     *
-     * @param DateTime|null $endDateTime
      */
     public function setEndDateTime(?DateTime $endDateTime): void
     {
@@ -261,8 +271,6 @@ class Album implements ResourceInterface
 
     /**
      * Set the name of the album.
-     *
-     * @param string $name
      */
     public function setName(string $name): void
     {
@@ -281,8 +289,6 @@ class Album implements ResourceInterface
 
     /**
      * Set the parent of the album.
-     *
-     * @param Album $parent
      */
     public function setParent(?Album $parent): void
     {
@@ -291,8 +297,6 @@ class Album implements ResourceInterface
 
     /**
      * Get the album cover.
-     *
-     * @return string|null
      */
     public function getCoverPath(): ?string
     {
@@ -301,8 +305,6 @@ class Album implements ResourceInterface
 
     /**
      * Set the cover photo for the album.
-     *
-     * @param string|null $photo
      */
     public function setCoverPath(?string $photo): void
     {
@@ -311,10 +313,6 @@ class Album implements ResourceInterface
 
     /**
      * Get the amount of photos in the album.
-     *
-     * @param bool $includeSubAlbums
-     *
-     * @return int
      */
     public function getPhotoCount(bool $includeSubAlbums = true): int
     {
@@ -331,8 +329,6 @@ class Album implements ResourceInterface
 
     /**
      * Get the amount of subalbums in the album.
-     *
-     * @return int
      */
     public function getAlbumCount(): int
     {
@@ -341,8 +337,6 @@ class Album implements ResourceInterface
 
     /**
      * Get the resource ID.
-     *
-     * @return string
      */
     public function getResourceId(): string
     {

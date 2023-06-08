@@ -6,28 +6,26 @@ namespace Education\Model;
 
 use Application\Model\Enums\Languages;
 use Application\Model\Traits\IdentifiableTrait;
-use Doctrine\ORM\Mapping\{
-    Column,
-    DiscriminatorColumn,
-    DiscriminatorMap,
-    Entity,
-    InheritanceType,
-    JoinColumn,
-    ManyToOne,
-};
 use DateTime;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\DiscriminatorColumn;
+use Doctrine\ORM\Mapping\DiscriminatorMap;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\InheritanceType;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 #[Entity]
-#[InheritanceType(value: "SINGLE_TABLE")]
+#[InheritanceType(value: 'SINGLE_TABLE')]
 #[DiscriminatorColumn(
-    name: "type",
-    type: "string",
+    name: 'type',
+    type: 'string',
 )]
 #[DiscriminatorMap(
     value: [
-        "exam" => Exam::class,
-        "summary" => Summary::class,
+        'exam' => Exam::class,
+        'summary' => Summary::class,
     ],
 )]
 abstract class CourseDocument implements ResourceInterface
@@ -37,14 +35,14 @@ abstract class CourseDocument implements ResourceInterface
     /**
      * Date of the exam.
      */
-    #[Column(type: "date")]
+    #[Column(type: 'date')]
     protected DateTime $date;
 
     /**
      * The language of the exam.
      */
     #[Column(
-        type: "string",
+        type: 'string',
         enumType: Languages::class,
     )]
     protected Languages $language;
@@ -52,7 +50,7 @@ abstract class CourseDocument implements ResourceInterface
     /**
      * Filename of the exam.
      */
-    #[Column(type: "string")]
+    #[Column(type: 'string')]
     protected string $filename;
 
     /**
@@ -60,11 +58,11 @@ abstract class CourseDocument implements ResourceInterface
      */
     #[ManyToOne(
         targetEntity: Course::class,
-        inversedBy: "documents",
+        inversedBy: 'documents',
     )]
     #[JoinColumn(
-        name: "course_code",
-        referencedColumnName: "code",
+        name: 'course_code',
+        referencedColumnName: 'code',
         nullable: false,
     )]
     protected Course $course;
@@ -72,7 +70,7 @@ abstract class CourseDocument implements ResourceInterface
     /**
      * Whether the uploaded document is scanned or not. This influences the quality of the watermarking service.
      */
-    #[Column(type: "boolean")]
+    #[Column(type: 'boolean')]
     protected bool $scanned;
 
     /**
@@ -155,9 +153,6 @@ abstract class CourseDocument implements ResourceInterface
         $this->scanned = $scanned;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getResourceId(): string
     {
         return 'course_document';

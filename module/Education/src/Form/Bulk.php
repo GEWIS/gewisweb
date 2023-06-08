@@ -4,17 +4,13 @@ declare(strict_types=1);
 
 namespace Education\Form;
 
-use Laminas\Form\Element\{
-    Collection,
-    Submit,
-};
 use Education\Mapper\Course as CourseMapper;
-use Laminas\Form\{
-    Fieldset,
-    Form,
-};
-use Laminas\Mvc\I18n\Translator;
+use Laminas\Form\Element\Collection;
+use Laminas\Form\Element\Submit;
+use Laminas\Form\Fieldset;
+use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterProviderInterface;
+use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\NotEmpty;
 
 class Bulk extends Form implements InputFilterProviderInterface
@@ -36,7 +32,7 @@ class Bulk extends Form implements InputFilterProviderInterface
                     'allow_remove' => true,
                     'target_element' => $document,
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -46,7 +42,7 @@ class Bulk extends Form implements InputFilterProviderInterface
                 'attributes' => [
                     'value' => $this->translator->translate('Finalize uploads'),
                 ],
-            ]
+            ],
         );
     }
 

@@ -20,7 +20,7 @@ return [
      */
     'proxy' => [
         'enabled' => true,
-        'ip_addresses' => ["131.155.69.202"],
+        'ip_addresses' => ['131.155.69.202'],
         'header' => 'X-Real-IP',
     ],
 
@@ -32,7 +32,7 @@ return [
         'options' => [
             'name' => 'gewis.nl',
             'host' => 'postfix',
-            'port' => '25'
+            'port' => '25',
         ],
         'from' => [
             'address' => getenv('MAIL_FROM_ADDRESS'),
@@ -67,7 +67,7 @@ return [
      */
     'calendar' => [
         'google_api_key' => getenv('DOCKER_GOOGLE_API_KEY'),
-        'google_calendar_key' => getenv('DOCKER_GOOGLE_CALENDAR_KEY')
+        'google_calendar_key' => getenv('DOCKER_GOOGLE_CALENDAR_KEY'),
     ],
 
     /**
@@ -86,6 +86,6 @@ return [
 
     'glide' => [
         'base_url' => getenv('GLIDE_HOST'),
-        'signing_key' => getenv('GLIDE_KEY')
-    ]
+        'signing_key' => getenv('GLIDE_KEY'),
+    ],
 ];

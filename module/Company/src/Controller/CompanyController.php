@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Company\Controller;
 
-use Company\Service\{
-    Company as CompanyService,
-    CompanyQuery as CompanyQueryService,
-};
+use Company\Service\Company as CompanyService;
+use Company\Service\CompanyQuery as CompanyQueryService;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
+
+use function shuffle;
 
 class CompanyController extends AbstractActionController
 {
@@ -30,7 +30,7 @@ class CompanyController extends AbstractActionController
             return new ViewModel(
                 [
                     'companyList' => $this->companyService->getCompanyList(),
-                ]
+                ],
             );
         }
 
@@ -39,7 +39,7 @@ class CompanyController extends AbstractActionController
                 'companyList' => $this->companyService->getCompanyList(),
                 'featuredCompany' => $featuredPackage->getCompany(),
                 'featuredPackage' => $featuredPackage,
-            ]
+            ],
         );
     }
 
@@ -53,7 +53,7 @@ class CompanyController extends AbstractActionController
                 return new ViewModel(
                     [
                         'company' => $company,
-                    ]
+                    ],
                 );
             }
         }
@@ -74,7 +74,7 @@ class CompanyController extends AbstractActionController
                 [
                     'company' => $featuredPackage->getCompany(),
                     'featuredPackage' => $featuredPackage,
-                ]
+                ],
             );
         }
 
@@ -99,7 +99,7 @@ class CompanyController extends AbstractActionController
         $viewModel = new ViewModel(
             [
                 'jobCategory' => $jobCategory,
-            ]
+            ],
         );
 
         if (null !== ($companySlugName = $this->params()->fromRoute('companySlugName'))) {
@@ -113,7 +113,7 @@ class CompanyController extends AbstractActionController
                 [
                     'jobList' => $jobs,
                     'company' => $this->companyService->getCompanyBySlugName($companySlugName),
-                ]
+                ],
             );
         }
 
@@ -128,7 +128,7 @@ class CompanyController extends AbstractActionController
         return $viewModel->setVariables(
             [
                 'jobList' => $jobs,
-            ]
+            ],
         );
     }
 
@@ -152,7 +152,7 @@ class CompanyController extends AbstractActionController
                 return new ViewModel(
                     [
                         'job' => $jobs[0],
-                    ]
+                    ],
                 );
             }
         }

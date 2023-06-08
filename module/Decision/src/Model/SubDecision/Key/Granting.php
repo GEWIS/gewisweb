@@ -5,18 +5,14 @@ declare(strict_types=1);
 namespace Decision\Model\SubDecision\Key;
 
 use DateTime;
-use Decision\Model\{
-    Keyholder,
-    Member,
-    SubDecision,
-};
-use Doctrine\ORM\Mapping\{
-    Column,
-    Entity,
-    JoinColumn,
-    ManyToOne,
-    OneToOne,
-};
+use Decision\Model\Keyholder;
+use Decision\Model\Member;
+use Decision\Model\SubDecision;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToOne;
 
 #[Entity]
 class Granting extends SubDecision
@@ -26,8 +22,8 @@ class Granting extends SubDecision
      */
     #[ManyToOne(targetEntity: Member::class)]
     #[JoinColumn(
-        name: "lidnr",
-        referencedColumnName: "lidnr",
+        name: 'lidnr',
+        referencedColumnName: 'lidnr',
         nullable: true,
     )]
     protected ?Member $grantee = null;
@@ -35,7 +31,7 @@ class Granting extends SubDecision
     /**
      * Till when the keycode is granted.
      */
-    #[Column(type: "date")]
+    #[Column(type: 'date')]
     protected DateTime $until;
 
     /**
@@ -43,7 +39,7 @@ class Granting extends SubDecision
      */
     #[OneToOne(
         targetEntity: Withdrawal::class,
-        mappedBy: "granting",
+        mappedBy: 'granting',
     )]
     protected ?Withdrawal $withdrawal = null;
 
@@ -52,14 +48,12 @@ class Granting extends SubDecision
      */
     #[OneToOne(
         targetEntity: Keyholder::class,
-        mappedBy: "grantingDec",
+        mappedBy: 'grantingDec',
     )]
     protected Keyholder $keyholder;
 
     /**
      * Get the grantee.
-     *
-     * @return Member|null
      */
     public function getGrantee(): ?Member
     {
@@ -68,8 +62,6 @@ class Granting extends SubDecision
 
     /**
      * Set the grantee.
-     *
-     * @param Member $grantee
      */
     public function setGrantee(Member $grantee): void
     {
@@ -78,8 +70,6 @@ class Granting extends SubDecision
 
     /**
      * Get the date.
-     *
-     * @return DateTime
      */
     public function getUntil(): DateTime
     {
@@ -88,8 +78,6 @@ class Granting extends SubDecision
 
     /**
      * Set the date.
-     *
-     * @param DateTime $until
      */
     public function setUntil(DateTime $until): void
     {
@@ -98,8 +86,6 @@ class Granting extends SubDecision
 
     /**
      * Get the withdrawal decision.
-     *
-     * @return Withdrawal|null
      */
     public function getWithdrawal(): ?Withdrawal
     {
@@ -116,8 +102,6 @@ class Granting extends SubDecision
 
     /**
      * Get the keyholder decision.
-     *
-     * @return Keyholder
      */
     public function getKeyholder(): Keyholder
     {

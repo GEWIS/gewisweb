@@ -10,6 +10,8 @@ use Company\Model\Job as JobModel;
 use Company\Model\Proposals\JobUpdate as JobUpdateModel;
 use Doctrine\ORM\Query\Expr\Join;
 
+use function count;
+
 /**
  * Mappers for jobs.
  *
@@ -19,12 +21,6 @@ class Job extends BaseMapper
 {
     /**
      * Checks if $slugName is only used by object identified with $cid.
-     *
-     * @param string $companySlugName
-     * @param string $jobSlugName
-     * @param int $jobCategoryId
-     *
-     * @return bool
      */
     public function isSlugNameUnique(
         string $companySlugName,
@@ -45,20 +41,14 @@ class Job extends BaseMapper
      * Find all jobs identified by $jobSlugName that are owned by a company
      * identified with $companySlugName.
      *
-     * @param int|null $jobCategoryId
-     * @param string|null $jobCategorySlug
-     * @param int|null $jobLabelId
-     * @param string|null $jobSlugName
-     * @param string|null $companySlugName
-     *
-     * @return array<array-key, JobModel>
+     * @return JobModel[]
      */
     public function findJob(
-        int $jobCategoryId = null,
-        string $jobCategorySlug = null,
-        int $jobLabelId = null,
-        string $jobSlugName = null,
-        string $companySlugName = null,
+        ?int $jobCategoryId = null,
+        ?string $jobCategorySlug = null,
+        ?int $jobLabelId = null,
+        ?string $jobSlugName = null,
+        ?string $companySlugName = null,
     ): array {
         $qb = $this->getRepository()->createQueryBuilder('j');
         $qb->join('j.package', 'p')
@@ -82,7 +72,7 @@ class Job extends BaseMapper
                     $qb->expr()->orX(
                         'LOWER(loc.valueEN) = :jobCategorySlug',
                         'LOWER(loc.valueNL) = :jobCategorySlug',
-                    )
+                    ),
                 )
                 ->setParameter('jobCategorySlug', $jobCategorySlug);
         }
@@ -125,7 +115,7 @@ class Job extends BaseMapper
     /**
      * Get the `$count` most recent jobs for a company with a specific status.
      *
-     * @return array<array-key, JobModel>
+     * @return JobModel[]
      */
     public function findRecentByApprovedStatus(
         ApprovableStatus $status,
@@ -150,7 +140,7 @@ class Job extends BaseMapper
     }
 
     /**
-     * @return array<array-key, JobModel>
+     * @return JobModel[]
      */
     public function findProposals(): array
     {
@@ -185,9 +175,6 @@ class Job extends BaseMapper
         return $qb->getQuery()->getOneOrNullResult();
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function getRepositoryName(): string
     {
         return JobModel::class;

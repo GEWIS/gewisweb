@@ -4,27 +4,31 @@ declare(strict_types=1);
 
 namespace Photo\Controller;
 
-use Laminas\Http\{
-    Request,
-    Response,
-    Response\Stream,
-};
+use Laminas\Http\Request;
+use Laminas\Http\Response;
+use Laminas\Http\Response\Stream;
 use Laminas\Mvc\Controller\AbstractActionController;
-use Laminas\View\Model\{
-    JsonModel,
-    ViewModel,
-};
-use Photo\Service\{
-    AclService,
-    Album as AlbumService,
-    Photo as PhotoService,
-};
 use Laminas\Mvc\I18n\Translator;
+use Laminas\View\Model\JsonModel;
+use Laminas\View\Model\ViewModel;
 use Photo\Model\Album;
+use Photo\Service\AclService;
+use Photo\Service\Album as AlbumService;
+use Photo\Service\Photo as PhotoService;
 use User\Permissions\NotAllowedException;
+
+use function array_filter;
+use function array_map;
+use function count;
+use function date;
+use function in_array;
+use function max;
 
 class PhotoController extends AbstractActionController
 {
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
+     */
     public function __construct(
         private readonly Translator $translator,
         private readonly AclService $aclService,
@@ -58,17 +62,17 @@ class PhotoController extends AbstractActionController
 
         // If the membership of the member has ended, only show albums before the end date or in which they are tagged
         if (null !== ($membershipEndsOn = $this->aclService->getUserIdentity()->getMember()->getMembershipEndsOn())) {
-            $member_album_ids = array_map(
-                function ($a) {
+            $memberAlbumIds = array_map(
+                static function ($a) {
                     return $a['album_id'];
                 },
                 $this->albumService->getAlbumsByMember($this->aclService->getUserIdentity()->getMember()->getLidnr()),
             );
             $albums = array_filter(
                 $albums,
-                function (Album $v) use ($membershipEndsOn, $member_album_ids) {
+                static function (Album $v) use ($membershipEndsOn, $memberAlbumIds) {
                     return $membershipEndsOn > $v->getStartDateTime()
-                        || in_array($v->getId(), $member_album_ids);
+                        || in_array($v->getId(), $memberAlbumIds);
                 },
             );
         }
@@ -77,7 +81,7 @@ class PhotoController extends AbstractActionController
             [
                 'years' => $years,
                 'albums' => $albums,
-            ]
+            ],
         );
     }
 
@@ -99,7 +103,7 @@ class PhotoController extends AbstractActionController
     {
         if (!$this->aclService->isAllowed('view', 'photo')) {
             throw new NotAllowedException(
-                $this->translator->translate('Not allowed to view previous photos of the week')
+                $this->translator->translate('Not allowed to view previous photos of the week'),
             );
         }
 
@@ -107,7 +111,7 @@ class PhotoController extends AbstractActionController
             [
                 'config' => $this->photoConfig,
                 'photosOfTheWeek' => $this->albumService->getLastPhotosOfTheWeekPerYear(),
-            ]
+            ],
         );
     }
 
@@ -137,12 +141,12 @@ class PhotoController extends AbstractActionController
         $photoId = (int) $this->params()->fromRoute('photo_id');
         $this->photoService->removeProfilePhoto();
 
-        if (null != $photoId) {
+        if (null !== $photoId) {
             return $this->redirect()->toRoute(
                 'photo/photo',
                 [
                     'photo_id' => $photoId,
-                ]
+                ],
             );
         }
 
@@ -156,7 +160,7 @@ class PhotoController extends AbstractActionController
     {
         if (!$this->aclService->isAllowed('add', 'vote')) {
             throw new NotAllowedException(
-                $this->translator->translate('Not allowed to vote for a photo of the week')
+                $this->translator->translate('Not allowed to vote for a photo of the week'),
             );
         }
 

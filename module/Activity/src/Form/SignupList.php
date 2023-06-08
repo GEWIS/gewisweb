@@ -6,27 +6,24 @@ namespace Activity\Form;
 
 use Activity\Model\SignupList as SignupListModel;
 use DateTime;
-use Exception;
-use Laminas\Form\Element\{
-    Checkbox,
-    Collection,
-    DateTimeLocal,
-    Text,
-};
+use Laminas\Form\Element\Checkbox;
+use Laminas\Form\Element\Collection;
+use Laminas\Form\Element\DateTimeLocal;
+use Laminas\Form\Element\Text;
 use Laminas\Form\Fieldset;
 use Laminas\Hydrator\ClassMethodsHydrator;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Validator\{
-    Callback,
-    StringLength,
-};
+use Laminas\Validator\Callback;
+use Laminas\Validator\StringLength;
+use Throwable;
 
 class SignupList extends Fieldset implements InputFilterProviderInterface
 {
     public function __construct(private readonly Translator $translator)
     {
         parent::__construct('signuplist');
+
         $this->setHydrator(new ClassMethodsHydrator(false))
             ->setObject(new SignupListModel());
 
@@ -37,7 +34,7 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->translator->translate('Name'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -47,7 +44,7 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->translator->translate('Name'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -57,7 +54,7 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
                 'options' => [
                     'format' => 'Y-m-d\TH:i',
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -67,7 +64,7 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
                 'options' => [
                     'format' => 'Y-m-d\TH:i',
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -81,7 +78,7 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
                 'attributes' => [
                     'value' => 1,
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -92,7 +89,7 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
                     'checked_value' => '1',
                     'unchecked_value' => '0',
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -103,7 +100,7 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
                     'checked_value' => '1',
                     'unchecked_value' => '0',
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -117,17 +114,14 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
                     'allow_add' => true,
                     'target_element' => new SignupListField($this->translator),
                 ],
-            ]
+            ],
         );
     }
 
     /**
      * Check if a certain date is before the closing date of the SignupList.
      *
-     * @param string $value
-     * @param array $context
-     *
-     * @return bool
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public static function beforeCloseDate(
         string $value,
@@ -137,7 +131,7 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
             $closeTime = isset($context['closeDate']) ? new DateTime($context['closeDate']) : new DateTime('now');
 
             return new DateTime($value) < $closeTime;
-        } catch (Exception $e) {
+        } catch (Throwable) {
             // An exception is an indication that one of the times was not valid
             return false;
         }
@@ -183,7 +177,7 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
                         'options' => [
                             'messages' => [
                                 Callback::INVALID_VALUE => $this->translator->translate(
-                                    'The sign-up list opening date and time must be before the sign-up list closes.'
+                                    'The sign-up list opening date and time must be before the sign-up list closes.',
                                 ),
                             ],
                             'callback' => [$this, 'beforeCloseDate'],

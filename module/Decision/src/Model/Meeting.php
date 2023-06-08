@@ -6,18 +6,14 @@ namespace Decision\Model;
 
 use DateTime;
 use Decision\Model\Enums\MeetingTypes;
-use Doctrine\Common\Collections\{
-    ArrayCollection,
-    Collection,
-};
-use Doctrine\ORM\Mapping\{
-    Column,
-    Entity,
-    Id,
-    OneToMany,
-    OneToOne,
-    OrderBy,
-};
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\OneToOne;
+use Doctrine\ORM\Mapping\OrderBy;
 
 /**
  * Meeting model.
@@ -30,7 +26,7 @@ class Meeting
      */
     #[Id]
     #[Column(
-        type: "string",
+        type: 'string',
         enumType: MeetingTypes::class,
     )]
     protected MeetingTypes $type;
@@ -39,32 +35,36 @@ class Meeting
      * Meeting number.
      */
     #[Id]
-    #[Column(type: "integer")]
+    #[Column(type: 'integer')]
     protected int $number;
 
     /**
      * Meeting date.
      */
-    #[Column(type: "date")]
+    #[Column(type: 'date')]
     protected DateTime $date;
 
     /**
      * Decisions.
+     *
+     * @var Collection<Decision>
      */
     #[OneToMany(
         targetEntity: Decision::class,
-        mappedBy: "meeting",
+        mappedBy: 'meeting',
     )]
     protected Collection $decisions;
 
     /**
      * Documents.
+     *
+     * @var Collection<MeetingDocument>
      */
     #[OneToMany(
         targetEntity: MeetingDocument::class,
-        mappedBy: "meeting",
+        mappedBy: 'meeting',
     )]
-    #[OrderBy(value: ["displayPosition" => "ASC"])]
+    #[OrderBy(value: ['displayPosition' => 'ASC'])]
     protected Collection $documents;
 
     /**
@@ -72,7 +72,7 @@ class Meeting
      */
     #[OneToOne(
         targetEntity: MeetingMinutes::class,
-        mappedBy: "meeting",
+        mappedBy: 'meeting',
     )]
     protected ?MeetingMinutes $meetingMinutes = null;
 
@@ -84,8 +84,6 @@ class Meeting
 
     /**
      * Get the meeting type.
-     *
-     * @return MeetingTypes
      */
     public function getType(): MeetingTypes
     {
@@ -94,17 +92,12 @@ class Meeting
 
     /**
      * Get the meeting number.
-     *
-     * @return int
      */
     public function getNumber(): int
     {
         return $this->number;
     }
 
-    /**
-     * @return MeetingMinutes|null
-     */
     public function getMinutes(): ?MeetingMinutes
     {
         return $this->meetingMinutes;
@@ -112,8 +105,6 @@ class Meeting
 
     /**
      * Set the meeting type.
-     *
-     * @param MeetingTypes $type
      */
     public function setType(MeetingTypes $type): void
     {
@@ -122,8 +113,6 @@ class Meeting
 
     /**
      * Set the meeting number.
-     *
-     * @param int $number
      */
     public function setNumber(int $number): void
     {
@@ -132,8 +121,6 @@ class Meeting
 
     /**
      * Get the meeting date.
-     *
-     * @return DateTime
      */
     public function getDate(): DateTime
     {
@@ -142,8 +129,6 @@ class Meeting
 
     /**
      * Set the meeting date.
-     *
-     * @param DateTime $date
      */
     public function setDate(DateTime $date): void
     {
@@ -153,7 +138,7 @@ class Meeting
     /**
      * Get the decisions.
      *
-     * @return Collection
+     * @return Collection<Decision>
      */
     public function getDecisions(): Collection
     {
@@ -162,8 +147,6 @@ class Meeting
 
     /**
      * Add a decision.
-     *
-     * @param Decision $decision
      */
     public function addDecision(Decision $decision): void
     {
@@ -173,7 +156,7 @@ class Meeting
     /**
      * Add multiple decisions.
      *
-     * @param array $decisions
+     * @param Decision[] $decisions
      */
     public function addDecisions(array $decisions): void
     {
@@ -185,7 +168,7 @@ class Meeting
     /**
      * Get the documents.
      *
-     * @return Collection
+     * @return Collection<MeetingDocument>
      */
     public function getDocuments(): Collection
     {
@@ -194,8 +177,6 @@ class Meeting
 
     /**
      * Add a document.
-     *
-     * @param MeetingDocument $document
      */
     public function addDocument(MeetingDocument $document): void
     {
@@ -205,7 +186,7 @@ class Meeting
     /**
      * Add multiple documents.
      *
-     * @param array $documents
+     * @param MeetingDocument[] $documents
      */
     public function addDocuments(array $documents): void
     {

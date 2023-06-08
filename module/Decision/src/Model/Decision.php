@@ -7,16 +7,14 @@ namespace Decision\Model;
 use Decision\Model\Enums\MeetingTypes;
 use Decision\Model\SubDecision\Destroy;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping\{
-    Column,
-    Entity,
-    Id,
-    JoinColumn,
-    ManyToOne,
-    OneToMany,
-    OneToOne,
-    OrderBy,
-};
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\OneToOne;
+use Doctrine\ORM\Mapping\OrderBy;
 
 /**
  * Decision model.
@@ -29,16 +27,16 @@ class Decision
      */
     #[ManyToOne(
         targetEntity: Meeting::class,
-        inversedBy: "decisions",
+        inversedBy: 'decisions',
     )]
     #[JoinColumn(
-        name: "meeting_type",
-        referencedColumnName: "type",
+        name: 'meeting_type',
+        referencedColumnName: 'type',
         nullable: false,
     )]
     #[JoinColumn(
-        name: "meeting_number",
-        referencedColumnName: "number",
+        name: 'meeting_number',
+        referencedColumnName: 'number',
         nullable: false,
     )]
     protected Meeting $meeting;
@@ -50,7 +48,7 @@ class Decision
      */
     #[Id]
     #[Column(
-        type: "string",
+        type: 'string',
         enumType: MeetingTypes::class,
     )]
     protected MeetingTypes $meeting_type;
@@ -60,21 +58,21 @@ class Decision
      * NOTE: This is a hack to make the meeting a primary key here.
      */
     #[Id]
-    #[Column(type: "integer")]
+    #[Column(type: 'integer')]
     protected int $meeting_number;
 
     /**
      * Point in the meeting in which the decision was made.
      */
     #[Id]
-    #[Column(type: "integer")]
+    #[Column(type: 'integer')]
     protected int $point;
 
     /**
      * Decision number.
      */
     #[Id]
-    #[Column(type: "integer")]
+    #[Column(type: 'integer')]
     protected int $number;
 
     /**
@@ -82,18 +80,20 @@ class Decision
      *
      * Generated from subdecisions.
      */
-    #[Column(type: "text")]
+    #[Column(type: 'text')]
     protected string $content;
 
     /**
      * Subdecisions.
+     *
+     * @var Collection<SubDecision>
      */
     #[OneToMany(
         targetEntity: SubDecision::class,
-        mappedBy: "decision",
-        cascade: ["persist", "remove"],
+        mappedBy: 'decision',
+        cascade: ['persist', 'remove'],
     )]
-    #[OrderBy(value: ["number" => "ASC"])]
+    #[OrderBy(value: ['number' => 'ASC'])]
     protected Collection $subdecisions;
 
     /**
@@ -101,14 +101,12 @@ class Decision
      */
     #[OneToOne(
         targetEntity: Destroy::class,
-        mappedBy: "target",
+        mappedBy: 'target',
     )]
     protected SubDecision\Destroy $destroyedby;
 
     /**
      * Set the meeting.
-     *
-     * @param Meeting $meeting
      */
     public function setMeeting(Meeting $meeting): void
     {
@@ -120,8 +118,6 @@ class Decision
 
     /**
      * Get the meeting type.
-     *
-     * @return MeetingTypes
      */
     public function getMeetingType(): MeetingTypes
     {
@@ -130,8 +126,6 @@ class Decision
 
     /**
      * Get the meeting number.
-     *
-     * @return int
      */
     public function getMeetingNumber(): int
     {
@@ -140,8 +134,6 @@ class Decision
 
     /**
      * Get the meeting.
-     *
-     * @return Meeting
      */
     public function getMeeting(): Meeting
     {
@@ -150,8 +142,6 @@ class Decision
 
     /**
      * Set the point number.
-     *
-     * @param int $point
      */
     public function setPoint(int $point): void
     {
@@ -160,8 +150,6 @@ class Decision
 
     /**
      * Get the point number.
-     *
-     * @return int
      */
     public function getPoint(): int
     {
@@ -170,8 +158,6 @@ class Decision
 
     /**
      * Set the decision number.
-     *
-     * @param int $number
      */
     public function setNumber(int $number): void
     {
@@ -180,8 +166,6 @@ class Decision
 
     /**
      * Get the decision number.
-     *
-     * @return int
      */
     public function getNumber(): int
     {
@@ -190,8 +174,6 @@ class Decision
 
     /**
      * Get decision content.
-     *
-     * @return string
      */
     public function getContent(): string
     {
@@ -200,8 +182,6 @@ class Decision
 
     /**
      * Set decision content.
-     *
-     * @param string $content
      */
     public function setContent(string $content): void
     {
@@ -211,7 +191,7 @@ class Decision
     /**
      * Get the subdecisions.
      *
-     * @return Collection
+     * @return Collection<SubDecision>
      */
     public function getSubdecisions(): Collection
     {
@@ -220,8 +200,6 @@ class Decision
 
     /**
      * Add a subdecision.
-     *
-     * @param SubDecision $subdecision
      */
     public function addSubdecision(SubDecision $subdecision): void
     {
@@ -231,7 +209,7 @@ class Decision
     /**
      * Add multiple subdecisions.
      *
-     * @param array $subdecisions
+     * @param SubDecision[] $subdecisions
      */
     public function addSubdecisions(array $subdecisions): void
     {
@@ -244,8 +222,6 @@ class Decision
      * Get the subdecision by which this decision is destroyed.
      *
      * Or null, if it wasn't destroyed.
-     *
-     * @return SubDecision\Destroy
      */
     public function getDestroyedBy(): SubDecision\Destroy
     {
@@ -254,8 +230,6 @@ class Decision
 
     /**
      * Check if this decision is destroyed by another decision.
-     *
-     * @return bool
      */
     public function isDestroyed(): bool
     {

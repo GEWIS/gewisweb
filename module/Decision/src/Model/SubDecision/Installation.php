@@ -4,17 +4,13 @@ declare(strict_types=1);
 
 namespace Decision\Model\SubDecision;
 
-use Decision\Model\{
-    Member,
-    OrganMember,
-};
-use Doctrine\ORM\Mapping\{
-    Column,
-    Entity,
-    JoinColumn,
-    ManyToOne,
-    OneToOne,
-};
+use Decision\Model\Member;
+use Decision\Model\OrganMember;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToOne;
 
 /**
  * Installation into organ.
@@ -25,7 +21,7 @@ class Installation extends FoundationReference
     /**
      * Function given.
      */
-    #[Column(type: "string")]
+    #[Column(type: 'string')]
     protected string $function;
 
     /**
@@ -33,11 +29,11 @@ class Installation extends FoundationReference
      */
     #[ManyToOne(
         targetEntity: Member::class,
-        inversedBy: "installations",
+        inversedBy: 'installations',
     )]
     #[JoinColumn(
-        name: "lidnr",
-        referencedColumnName: "lidnr",
+        name: 'lidnr',
+        referencedColumnName: 'lidnr',
     )]
     protected Member $member;
 
@@ -46,7 +42,7 @@ class Installation extends FoundationReference
      */
     #[OneToOne(
         targetEntity: Discharge::class,
-        mappedBy: "installation",
+        mappedBy: 'installation',
     )]
     protected Discharge $discharge;
 
@@ -55,14 +51,12 @@ class Installation extends FoundationReference
      */
     #[OneToOne(
         targetEntity: OrganMember::class,
-        mappedBy: "installation",
+        mappedBy: 'installation',
     )]
     protected OrganMember $organMember;
 
     /**
      * Get the function.
-     *
-     * @return string
      */
     public function getFunction(): string
     {
@@ -71,8 +65,6 @@ class Installation extends FoundationReference
 
     /**
      * Set the function.
-     *
-     * @param string $function
      */
     public function setFunction(string $function): void
     {
@@ -81,8 +73,6 @@ class Installation extends FoundationReference
 
     /**
      * Get the member.
-     *
-     * @return Member
      */
     public function getMember(): Member
     {
@@ -91,8 +81,6 @@ class Installation extends FoundationReference
 
     /**
      * Set the member.
-     *
-     * @param Member $member
      */
     public function setMember(Member $member): void
     {
@@ -101,8 +89,6 @@ class Installation extends FoundationReference
 
     /**
      * Get the discharge, if it exists.
-     *
-     * @return Discharge
      */
     public function getDischarge(): Discharge
     {
@@ -111,8 +97,6 @@ class Installation extends FoundationReference
 
     /**
      * Get the organ member reference.
-     *
-     * @return OrganMember
      */
     public function getOrganMember(): OrganMember
     {

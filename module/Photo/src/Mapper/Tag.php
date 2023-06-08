@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace Photo\Mapper;
 
 use Application\Mapper\BaseMapper;
+use Decision\Model\Member as MemberModel;
 use Doctrine\ORM\Query\ResultSetMapping;
-use Photo\Model\{
-    Photo as PhotoModel,
-    Tag as TagModel,
-};
+use Photo\Model\Photo as PhotoModel;
+use Photo\Model\Tag as TagModel;
 
 /**
  * Mappers for Tags.
@@ -18,12 +17,6 @@ use Photo\Model\{
  */
 class Tag extends BaseMapper
 {
-    /**
-     * @param int $photoId
-     * @param int $lidnr
-     *
-     * @return TagModel|null
-     */
     public function findTag(
         int $photoId,
         int $lidnr,
@@ -32,28 +25,30 @@ class Tag extends BaseMapper
             [
                 'photo' => $photoId,
                 'member' => $lidnr,
-            ]
+            ],
         );
     }
 
     /**
-     * @param int $lidnr
-     * @return array<array-key, TagModel>
+     * @return TagModel[]
      */
     public function getTagsByLidnr(int $lidnr): array
     {
         return $this->getRepository()->findBy(
             [
                 'member' => $lidnr,
-            ]
+            ],
         );
     }
 
     /**
      * Get all the tags for a photo, but limited to lidnr and full name.
      *
-     * @param int $photoId
-     * @return array<array-key, array{id: int, lidnr: int, fullName: string}>
+     * @return array<array-key, array{
+     *     id: int,
+     *     lidnr: int,
+     *     fullName: string,
+     * }>
      */
     public function getTagsByPhoto(int $photoId): array
     {
@@ -62,7 +57,7 @@ class Tag extends BaseMapper
             ->addScalarResult('lidnr', 'lidnr', 'integer')
             ->addScalarResult('fullName', 'fullName');
 
-        $sql = <<<QUERY
+        $sql = <<<'QUERY'
             SELECT
                 `t`.`id`,
                 `m`.`lidnr`,
@@ -81,7 +76,6 @@ class Tag extends BaseMapper
     /**
      * Get all unique albums a certain member is tagged in
      *
-     * @param int $lidnr
      * @return array<array-key, array{album_id: int}>
      */
     public function getAlbumsByMember(int $lidnr): array
@@ -89,7 +83,7 @@ class Tag extends BaseMapper
         $rsm = new ResultSetMapping();
         $rsm->addScalarResult('album_id', 'album_id', 'integer');
 
-        $sql = <<<QUERY
+        $sql = <<<'QUERY'
             SELECT DISTINCT
                 `p`.`album_id` as `album_id`
             FROM `Photo` `p`
@@ -106,9 +100,7 @@ class Tag extends BaseMapper
     /**
      * Returns a recent tag for the member who has the most tags from a set of members.
      *
-     * @param array $members
-     *
-     * @return TagModel|null
+     * @param MemberModel[] $members
      */
     public function getMostActiveMemberTag(array $members): ?TagModel
     {

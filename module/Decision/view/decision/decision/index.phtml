@@ -3,12 +3,15 @@
 declare(strict_types=1);
 
 use Application\View\HelperTrait;
-use Decision\Model\Meeting as MeetingModel;
+use Decision\Mapper\Meeting as MeetingMapper;
 use Laminas\View\Renderer\PhpRenderer;
 
 /**
+ * @psalm-import-type MeetingArrayType from MeetingMapper as ImportedMeetingArrayType
+ *
  * @var PhpRenderer|HelperTrait $this
- * @var MeetingModel[] $meetings
+ * @var array $meetings
+ * @psalm-var ImportedMeetingArrayType $meetings
  */
 
 $this->headTitle($this->translate('Meetings')); ?>

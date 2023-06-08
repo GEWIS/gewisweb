@@ -18,38 +18,28 @@ abstract class LocalisedText
 
     public function __construct(
         #[Column(
-            type: "text",
+            type: 'text',
             nullable: true,
         )]
         protected ?string $valueEN = null,
         #[Column(
-            type: "text",
+            type: 'text',
             nullable: true,
         )]
         protected ?string $valueNL = null,
     ) {
     }
 
-    /**
-     * @return string|null
-     */
     public function getValueEN(): ?string
     {
         return $this->valueEN;
     }
 
-    /**
-     * @return string|null
-     */
     public function getValueNL(): ?string
     {
         return $this->valueNL;
     }
 
-    /**
-     * @param string|null $valueEN
-     * @param string|null $valueNL
-     */
     public function updateValues(
         ?string $valueEN,
         ?string $valueNL,
@@ -58,38 +48,30 @@ abstract class LocalisedText
         $this->updateValueNL($valueNL);
     }
 
-    /**
-     * @param string|null $valueEN
-     */
     public function updateValueEN(?string $valueEN): void
     {
         $this->valueEN = $valueEN;
     }
 
-    /**
-     * @param string|null $valueNL
-     */
     public function updateValueNL(?string $valueNL): void
     {
         $this->valueNL = $valueNL;
     }
 
     /**
-     * @param string|null $locale
-     *
      * @return string|null the localised text or null when there is no localised text
      *
      * @throws InvalidArgumentException
      */
-    public function getText(string $locale = null): ?string
+    public function getText(?string $locale = null): ?string
     {
         if (null === $locale) {
             $locale = $this->getPreferredLocale();
         }
 
         return match ($locale) {
-            'nl' => !is_null($this->valueNL) ? $this->valueNL : $this->valueEN,
-            'en' => !is_null($this->valueEN) ? $this->valueEN : $this->valueNL,
+            'nl' => null !== $this->valueNL ? $this->valueNL : $this->valueEN,
+            'en' => null !== $this->valueEN ? $this->valueEN : $this->valueNL,
             default => throw new InvalidArgumentException('Locale not supported: ' . $locale),
         };
     }
@@ -105,8 +87,6 @@ abstract class LocalisedText
     }
 
     /**
-     * @param string|null $locale
-     *
      * @return string|null the localised text
      *
      * @throws InvalidArgumentException

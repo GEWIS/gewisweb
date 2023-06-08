@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Education\Model;
 
-use Doctrine\ORM\Mapping\{
-    Column,
-    Entity,
-};
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
 use Education\Model\Enums\ExamTypes;
 
 /**
@@ -20,7 +18,7 @@ class Exam extends CourseDocument
      * Type of exam.
      */
     #[Column(
-        type: "string",
+        type: 'string',
         enumType: ExamTypes::class,
     )]
     protected ExamTypes $examType;

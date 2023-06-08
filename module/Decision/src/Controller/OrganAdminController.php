@@ -6,12 +6,12 @@ namespace Decision\Controller;
 
 use Decision\Service\Organ as OrganService;
 use Laminas\Form\FormInterface;
-use Laminas\Http\{
-    Request,
-    Response,
-};
+use Laminas\Http\Request;
+use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
+
+use function array_merge_recursive;
 
 class OrganAdminController extends AbstractActionController
 {
@@ -27,7 +27,7 @@ class OrganAdminController extends AbstractActionController
         return new ViewModel(
             [
                 'organs' => $this->organService->getEditableOrgans(),
-            ]
+            ],
         );
     }
 
@@ -70,7 +70,7 @@ class OrganAdminController extends AbstractActionController
         return new ViewModel(
             [
                 'form' => $form,
-            ]
+            ],
         );
     }
 }

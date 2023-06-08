@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace Decision\Mapper;
 
 use Application\Mapper\BaseMapper;
-use Decision\Model\{
-    Authorization as AuthorizationModel,
-    Member as MemberModel,
-};
+use Decision\Model\Authorization as AuthorizationModel;
+use Decision\Model\Member as MemberModel;
 
 /**
  * Mappers for authorizations.
@@ -20,9 +18,7 @@ class Authorization extends BaseMapper
     /**
      * Find authorizations for a meeting.
      *
-     * @param int $meetingNumber
-     *
-     * @return array<array-key, AuthorizationModel>
+     * @return AuthorizationModel[]
      */
     public function findAllByType(
         int $meetingNumber,
@@ -43,11 +39,6 @@ class Authorization extends BaseMapper
 
     /**
      * Find non-revoked authorizations for a meeting for a user.
-     *
-     * @param int $meetingNumber
-     * @param MemberModel $authorizer
-     *
-     * @return AuthorizationModel|null
      */
     public function findUserAuthorization(
         int $meetingNumber,
@@ -66,10 +57,7 @@ class Authorization extends BaseMapper
     /**
      * Find non-revoked authorizations for a meeting for a recipient.
      *
-     * @param int $meetingNumber
-     * @param MemberModel $recipient
-     *
-     * @return array<array-key, AuthorizationModel>
+     * @return AuthorizationModel[]
      */
     public function findRecipientAuthorization(
         int $meetingNumber,
@@ -85,9 +73,6 @@ class Authorization extends BaseMapper
         return $qb->getQuery()->getResult();
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function getRepositoryName(): string
     {
         return AuthorizationModel::class;

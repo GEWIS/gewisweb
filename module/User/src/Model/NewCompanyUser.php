@@ -6,13 +6,11 @@ namespace User\Model;
 
 use Company\Model\Company as CompanyModel;
 use DateTime;
-use Doctrine\ORM\Mapping\{
-    Column,
-    Entity,
-    Id,
-    JoinColumn,
-    OneToOne,
-};
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\OneToOne;
 
 /**
  * Temporary {@link CompanyUser} model to facilitate registration and password resets.
@@ -24,20 +22,20 @@ class NewCompanyUser
      * The company.
      */
     #[Id]
-    #[Column(type: "integer")]
+    #[Column(type: 'integer')]
     protected int $id;
 
     /**
      * The company's activation/reset code.
      */
-    #[Column(type: "string")]
+    #[Column(type: 'string')]
     protected string $code;
 
     /**
      * Date and time at which the activation or password reset was requested.
      */
     #[Column(
-        type: "datetime",
+        type: 'datetime',
         nullable: true,
     )]
     protected ?DateTime $time = null;
@@ -47,13 +45,12 @@ class NewCompanyUser
      */
     #[OneToOne(targetEntity: CompanyModel::class)]
     #[JoinColumn(
-        name: "id",
-        referencedColumnName: "id",
+        name: 'id',
+        referencedColumnName: 'id',
         nullable: false,
     )]
     protected CompanyModel $company;
 
-    // phpcs:ignore Gewis.General.RequireConstructorPromotion -- not possible
     public function __construct(CompanyModel $company)
     {
         $this->id = $company->getId();
@@ -70,8 +67,6 @@ class NewCompanyUser
 
     /**
      * Get the company.
-     *
-     * @return CompanyModel
      */
     public function getCompany(): CompanyModel
     {
@@ -80,8 +75,6 @@ class NewCompanyUser
 
     /**
      * Get the email address of the company's representative.
-     *
-     * @return string
      */
     public function getEmail(): string
     {
@@ -90,8 +83,6 @@ class NewCompanyUser
 
     /**
      * Get the activation/reset code.
-     *
-     * @return string
      */
     public function getCode(): string
     {
@@ -100,8 +91,6 @@ class NewCompanyUser
 
     /**
      * Set the activation/reset code.
-     *
-     * @param string $code
      */
     public function setCode(string $code): void
     {
@@ -110,8 +99,6 @@ class NewCompanyUser
 
     /**
      * Get the activation/reset time.
-     *
-     * @return DateTime|null
      */
     public function getTime(): ?DateTime
     {
@@ -120,8 +107,6 @@ class NewCompanyUser
 
     /**
      * Set the activation/reset time.
-     *
-     * @param DateTime|null $time
      */
     public function setTime(?DateTime $time): void
     {

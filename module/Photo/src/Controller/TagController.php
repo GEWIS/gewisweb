@@ -8,10 +8,8 @@ use Laminas\Http\Request;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\View\Model\JsonModel;
-use Photo\Service\{
-    AclService,
-    Photo as PhotoService,
-};
+use Photo\Service\AclService;
+use Photo\Service\Photo as PhotoService;
 use User\Permissions\NotAllowedException;
 
 class TagController extends AbstractActionController

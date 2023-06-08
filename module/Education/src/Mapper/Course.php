@@ -16,10 +16,6 @@ class Course extends BaseMapper
 {
     /**
      * Find a course by code.
-     *
-     * @param string $code
-     *
-     * @return CourseModel|null
      */
     public function findByCode(string $code): ?CourseModel
     {
@@ -37,9 +33,7 @@ class Course extends BaseMapper
     /**
      * Search for courses.
      *
-     * @param string $query
-     *
-     * @return array<array-key, CourseModel>
+     * @return CourseModel[]
      */
     public function search(string $query): array
     {
@@ -53,9 +47,6 @@ class Course extends BaseMapper
         return $qb->getQuery()->getResult();
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function getRepositoryName(): string
     {
         return CourseModel::class;

@@ -6,15 +6,14 @@ namespace Company\Model;
 
 use Company\Model\Enums\CompanyPackageTypes;
 use Company\Model\JobCategory as JobCategoryModel;
-use Doctrine\Common\Collections\{
-    ArrayCollection,
-    Collection,
-};
-use Doctrine\ORM\Mapping\{
-    Entity,
-    OneToMany,
-    OrderBy,
-};
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\OrderBy;
+
+use function array_filter;
+use function count;
 
 /**
  * CompanyPackage model.
@@ -24,25 +23,28 @@ class CompanyJobPackage extends CompanyPackage
 {
     /**
      * The package's jobs.
+     *
+     * @var Collection<Job>
      */
     #[OneToMany(
         targetEntity: Job::class,
-        mappedBy: "package",
-        cascade: ["persist", "remove"],
+        mappedBy: 'package',
+        cascade: ['persist', 'remove'],
     )]
-    #[OrderBy(["updatedAt" => "DESC"])]
+    #[OrderBy(['updatedAt' => 'DESC'])]
     protected Collection $jobs;
 
     public function __construct()
     {
         parent::__construct();
+
         $this->jobs = new ArrayCollection();
     }
 
     /**
      * Get the jobs in the package.
      *
-     * @return Collection jobs in the package
+     * @return Collection<Job>
      */
     public function getJobs(): Collection
     {
@@ -51,18 +53,18 @@ class CompanyJobPackage extends CompanyPackage
 
     /**
      * Get the jobs in the package, but without any that are actually update proposals.
+     *
+     * @return Collection<Job>
      */
     public function getJobsWithoutProposals(): Collection
     {
-        return $this->jobs->filter(function (Job $job) {
+        return $this->jobs->filter(static function (Job $job) {
             return !$job->isUpdate();
         });
     }
 
     /**
      * Get the number of jobs in the package.
-     *
-     * @param JobCategoryModel|null $category
      *
      * @return int of jobs in the package
      */
@@ -74,13 +76,11 @@ class CompanyJobPackage extends CompanyPackage
     /**
      * Get the jobs that are part of the given category.
      *
-     * @param JobCategoryModel|null $category
-     *
-     * @return array
+     * @return Job[]
      */
     public function getJobsInCategory(?JobCategoryModel $category = null): array
     {
-        $filter = function (Job $job) use ($category) {
+        $filter = static function (Job $job) use ($category) {
             if (null === $category) {
                 return $job->isActive() && $job->isApproved() && !$job->isUpdate();
             }
@@ -111,9 +111,6 @@ class CompanyJobPackage extends CompanyPackage
         $this->jobs->removeElement($job);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getType(): CompanyPackageTypes
     {
         return CompanyPackageTypes::Job;

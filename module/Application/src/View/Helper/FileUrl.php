@@ -11,17 +11,11 @@ class FileUrl extends AbstractHelper
 {
     /**
      * Service locator.
-     *
-     * @var ContainerInterface
      */
     protected ContainerInterface $locator;
 
     /**
      * Get the file URL.
-     *
-     * @param string $path
-     *
-     * @return string
      */
     public function __invoke(string $path): string
     {
@@ -33,8 +27,6 @@ class FileUrl extends AbstractHelper
 
     /**
      * Get the service locator.
-     *
-     * @return ContainerInterface
      */
     protected function getServiceLocator(): ContainerInterface
     {
@@ -43,8 +35,6 @@ class FileUrl extends AbstractHelper
 
     /**
      * Set the service locator.
-     *
-     * @param ContainerInterface $locator
      */
     public function setServiceLocator(ContainerInterface $locator): void
     {

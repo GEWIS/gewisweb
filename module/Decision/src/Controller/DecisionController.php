@@ -6,16 +6,21 @@ namespace Decision\Controller;
 
 use Decision\Controller\FileBrowser\FileReader;
 use Decision\Model\Enums\MeetingTypes;
-use Decision\Service\{
-    AclService,
-    Decision as DecisionService,
-};
-use Laminas\Http\{Request, Response};
+use Decision\Service\AclService;
+use Decision\Service\Decision as DecisionService;
+use Laminas\Http\Request;
+use Laminas\Http\Response;
 use Laminas\Http\Response\Stream;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\View\Model\ViewModel;
 use User\Permissions\NotAllowedException;
+
+use function end;
+use function explode;
+use function preg_match;
+use function strlen;
+use function substr;
 
 class DecisionController extends AbstractActionController
 {
@@ -35,7 +40,7 @@ class DecisionController extends AbstractActionController
         return new ViewModel(
             [
                 'meetings' => $this->decisionService->getMeetings(),
-            ]
+            ],
         );
     }
 
@@ -91,7 +96,7 @@ class DecisionController extends AbstractActionController
         return new ViewModel(
             [
                 'meeting' => $meeting,
-            ]
+            ],
         );
     }
 
@@ -115,21 +120,19 @@ class DecisionController extends AbstractActionController
             if ($form->isValid()) {
                 $result = $this->decisionService->search($form->getData());
 
-                if (null !== $result) {
-                    return new ViewModel(
-                        [
-                            'result' => $result,
-                            'form' => $form,
-                        ]
-                    );
-                }
+                return new ViewModel(
+                    [
+                        'result' => $result,
+                        'form' => $form,
+                    ],
+                );
             }
         }
 
         return new ViewModel(
             [
                 'form' => $form,
-            ]
+            ],
         );
     }
 
@@ -161,7 +164,7 @@ class DecisionController extends AbstractActionController
                             'meeting' => $meeting,
                             'form' => $this->decisionService->getAuthorizationRevocationForm(),
                             'authorization' => $authorization,
-                        ]
+                        ],
                     );
                 }
             }
@@ -176,14 +179,16 @@ class DecisionController extends AbstractActionController
                 'meeting' => $meeting,
                 'authorization' => $authorization,
                 'form' => $form,
-            ]
+            ],
         );
     }
 
     public function revokeAuthorizationAction(): Response|ViewModel
     {
         if (!$this->aclService->isAllowed('revoke', 'authorization')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to revoke authorizations.'));
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to revoke authorizations.'),
+            );
         }
 
         /** @var Request $request */
@@ -211,11 +216,12 @@ class DecisionController extends AbstractActionController
     {
         if (!$this->decisionService->isAllowedToBrowseFiles()) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to browse files.')
+                $this->translator->translate('You are not allowed to browse files.'),
             );
         }
+
         $path = $this->params()->fromRoute('path');
-        if (is_null($path)) {
+        if (null === $path) {
             $path = '';
         }
 
@@ -227,12 +233,14 @@ class DecisionController extends AbstractActionController
             //This is illegal for security reasons
             return $this->notFoundAction();
         }
+
         if ($this->fileReader->isDir($path)) {
             //display the contents of a dir
             $folder = $this->fileReader->listDir($path);
-            if (is_null($folder)) {
+            if (null === $folder) {
                 return $this->notFoundAction();
             }
+
             $trailingSlash = (strlen($path) > 0 && '/' === $path[strlen($path) - 1]);
             $array = explode('/', substr($path, 0, -1));
             $array1 = explode('/', $path);
@@ -243,13 +251,13 @@ class DecisionController extends AbstractActionController
                     'folder' => $folder,
                     'path' => $path,
                     'trailingSlash' => $trailingSlash,
-                ]
+                ],
             );
         }
 
         //download the file
         $result = $this->fileReader->downloadFile($path);
 
-        return (false === $result) ? $this->notFoundAction() : $result;
+        return false === $result ? $this->notFoundAction() : $result;
     }
 }

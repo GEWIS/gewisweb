@@ -5,15 +5,11 @@ declare(strict_types=1);
 namespace Activity\Controller;
 
 use Activity\Form\ActivityCalendarProposal as ActivityCalendarProposalForm;
-use Activity\Service\{
-    AclService,
-    ActivityCalendar as ActivityCalendarService,
-    ActivityCalendarForm as ActivityCalendarFormService,
-};
-use Laminas\Http\{
-    Request,
-    Response,
-};
+use Activity\Service\AclService;
+use Activity\Service\ActivityCalendar as ActivityCalendarService;
+use Activity\Service\ActivityCalendarForm as ActivityCalendarFormService;
+use Laminas\Http\Request;
+use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\View\Model\ViewModel;
@@ -21,6 +17,9 @@ use User\Permissions\NotAllowedException;
 
 class ActivityCalendarController extends AbstractActionController
 {
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
+     */
     public function __construct(
         private readonly AclService $aclService,
         private readonly Translator $translator,
@@ -44,7 +43,7 @@ class ActivityCalendarController extends AbstractActionController
                 'success' => (bool) $this->params()->fromQuery('success', false),
                 'canCreate' => $this->calendarService->canCreateProposal(),
                 'canApprove' => $this->calendarService->canApproveOption(),
-            ]
+            ],
         );
     }
 
@@ -55,6 +54,7 @@ class ActivityCalendarController extends AbstractActionController
 
         if ($request->isPost()) {
             $this->calendarService->deleteOption((int) $request->getPost()['option_id']);
+
             return $this->redirect()->toRoute('activity_calendar');
         }
 
@@ -68,6 +68,7 @@ class ActivityCalendarController extends AbstractActionController
 
         if ($request->isPost()) {
             $this->calendarService->approveOption((int) $request->getPost()['option_id']);
+
             return $this->redirect()->toRoute('activity_calendar');
         }
 
@@ -78,7 +79,7 @@ class ActivityCalendarController extends AbstractActionController
     {
         if (!$this->aclService->isAllowed('create', 'activity_calendar_proposal')) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to create activity proposals')
+                $this->translator->translate('You are not allowed to create activity proposals'),
             );
         }
 
@@ -113,7 +114,7 @@ class ActivityCalendarController extends AbstractActionController
                 'periods' => $periods,
                 'createAlways' => $createAlways,
                 'form' => $form,
-            ]
+            ],
         );
     }
 }

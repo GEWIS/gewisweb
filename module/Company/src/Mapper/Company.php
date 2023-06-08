@@ -59,8 +59,6 @@ class Company extends BaseMapper
      * Return the company with the given slug.
      *
      * @param string $slugName the slugname to find
-     *
-     * @return CompanyModel|null
      */
     public function findCompanyBySlugName(string $slugName): ?CompanyModel
     {
@@ -69,10 +67,6 @@ class Company extends BaseMapper
 
     /**
      * Return a company by a given representative's e-mail address.
-     *
-     * @param string $email
-     *
-     * @return CompanyModel|null
      */
     public function findCompanyByRepresentativeEmail(string $email): ?CompanyModel
     {
@@ -101,9 +95,6 @@ class Company extends BaseMapper
         return $qb->getQuery()->getResult();
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function getRepositoryName(): string
     {
         return CompanyModel::class;

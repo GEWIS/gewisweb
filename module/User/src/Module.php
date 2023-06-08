@@ -12,58 +12,46 @@ use Laminas\Http\Request as HttpRequest;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\Mvc\MvcEvent;
 use Psr\Container\ContainerInterface;
-use User\Authentication\{
-    Adapter\ApiUserAdapter,
-    Adapter\CompanyUserAdapter,
-    Adapter\UserAdapter,
-    ApiAuthenticationService,
-    AuthenticationService,
-    Service\LoginAttempt as LoginAttemptService,
-    Storage\CompanyUserSession,
-    Storage\UserSession,
-};
+use User\Authentication\Adapter\ApiUserAdapter;
+use User\Authentication\Adapter\CompanyUserAdapter;
+use User\Authentication\Adapter\UserAdapter;
+use User\Authentication\ApiAuthenticationService;
+use User\Authentication\AuthenticationService;
+use User\Authentication\Service\LoginAttempt as LoginAttemptService;
+use User\Authentication\Storage\CompanyUserSession;
+use User\Authentication\Storage\UserSession;
 use User\Authorization\AclServiceFactory;
-use User\Form\{
-    Activate as ActivateForm,
-    ApiAppAuthorisation as ApiAppAuthorisationForm,
-    ApiToken as ApiTokenForm,
-    CompanyUserLogin as CompanyUserLoginForm,
-    CompanyUserReset as CompanyUserResetForm,
-    Password as PasswordForm,
-    Register as RegisterForm,
-    UserReset as ResetForm,
-    UserLogin as UserLoginForm,
-};
-use User\Mapper\{
-    ApiApp as ApiAppMapper,
-    ApiAppAuthentication as ApiAppAuthenticationMapper,
-    ApiUser as ApiUserMapper,
-    CompanyUser as CompanyUserMapper,
-    Factory\ApiAppFactory as ApiAppMapperFactory,
-    LoginAttempt as LoginAttemptMapper,
-    NewCompanyUser as NewCompanyUserMapper,
-    NewUser as NewUserMapper,
-    User as UserMapper,
-};
+use User\Form\Activate as ActivateForm;
+use User\Form\ApiAppAuthorisation as ApiAppAuthorisationForm;
+use User\Form\ApiToken as ApiTokenForm;
+use User\Form\CompanyUserLogin as CompanyUserLoginForm;
+use User\Form\CompanyUserReset as CompanyUserResetForm;
+use User\Form\Password as PasswordForm;
+use User\Form\Register as RegisterForm;
+use User\Form\UserLogin as UserLoginForm;
+use User\Form\UserReset as ResetForm;
+use User\Mapper\ApiApp as ApiAppMapper;
+use User\Mapper\ApiAppAuthentication as ApiAppAuthenticationMapper;
+use User\Mapper\ApiUser as ApiUserMapper;
+use User\Mapper\CompanyUser as CompanyUserMapper;
+use User\Mapper\Factory\ApiAppFactory as ApiAppMapperFactory;
+use User\Mapper\LoginAttempt as LoginAttemptMapper;
+use User\Mapper\NewCompanyUser as NewCompanyUserMapper;
+use User\Mapper\NewUser as NewUserMapper;
+use User\Mapper\User as UserMapper;
 use User\Permissions\NotAllowedException;
-use User\Service\{
-    ApiApp as ApiAppService,
-    ApiUser as ApiUserService,
-    Email as EmailService,
-    PwnedPasswords as PwnedPasswordsService,
-    User as UserService,
-};
-use User\Service\Factory\{
-    ApiAppFactory as ApiAppServiceFactory,
-    PwnedPasswordsFactory as PwnedPasswordsServiceFactory,
-};
+use User\Service\ApiApp as ApiAppService;
+use User\Service\ApiUser as ApiUserService;
+use User\Service\Email as EmailService;
+use User\Service\Factory\ApiAppFactory as ApiAppServiceFactory;
+use User\Service\Factory\PwnedPasswordsFactory as PwnedPasswordsServiceFactory;
+use User\Service\PwnedPasswords as PwnedPasswordsService;
+use User\Service\User as UserService;
 
 class Module
 {
     /**
      * Bootstrap.
-     *
-     * @param MvcEvent $e
      */
     public function onBootstrap(MvcEvent $e): void
     {
@@ -87,17 +75,19 @@ class Module
         // there is a NotAllowedException
         $em->attach(
             MvcEvent::EVENT_DISPATCH_ERROR,
-            function ($e): void {
+            static function ($e): void {
                 if (
-                    'error-exception' == $e->getError()
-                    && null != $e->getParam('exception', null)
-                    && $e->getParam('exception') instanceof NotAllowedException
+                    'error-exception' !== $e->getError()
+                    || null === $e->getParam('exception', null)
+                    || !($e->getParam('exception') instanceof NotAllowedException)
                 ) {
-                    $e->getResult()->setTemplate((APP_ENV === 'production' ? 'error/403' : 'error/debug/403'));
-                    $e->getResponse()->setStatusCode(403);
+                    return;
                 }
+
+                $e->getResult()->setTemplate(('production' === APP_ENV ? 'error/403' : 'error/debug/403'));
+                $e->getResponse()->setStatusCode(403);
             },
-            -100
+            -100,
         );
     }
 
@@ -123,7 +113,7 @@ class Module
                 LaminasAuthenticationService::class => 'user_auth_user_service',
             ],
             'factories' => [
-                'user_service_user' => function (ContainerInterface $container) {
+                'user_service_user' => static function (ContainerInterface $container) {
                     $aclService = $container->get('user_service_acl');
                     $translator = $container->get(MvcTranslator::class);
                     $bcrypt = $container->get('user_bcrypt');
@@ -170,7 +160,7 @@ class Module
                         $userResetForm,
                     );
                 },
-                'user_service_loginattempt' => function (ContainerInterface $container) {
+                'user_service_loginattempt' => static function (ContainerInterface $container) {
                     $remoteAddress = $container->get('user_remoteaddress');
                     $loginAttemptMapper = $container->get('user_mapper_loginAttempt');
                     $rateLimitConfig = $container->get('config')['login_rate_limits'];
@@ -181,7 +171,7 @@ class Module
                         $rateLimitConfig,
                     );
                 },
-                'user_service_apiuser' => function (ContainerInterface $container) {
+                'user_service_apiuser' => static function (ContainerInterface $container) {
                     $aclService = $container->get('user_service_acl');
                     $translator = $container->get(MvcTranslator::class);
                     $apiUserMapper = $container->get('user_mapper_apiUser');
@@ -194,7 +184,7 @@ class Module
                         $apiTokenForm,
                     );
                 },
-                'user_service_email' => function (ContainerInterface $container) {
+                'user_service_email' => static function (ContainerInterface $container) {
                     $renderer = $container->get('ViewRenderer');
                     $transport = $container->get('user_mail_transport');
                     $emailConfig = $container->get('config')['email'];
@@ -208,7 +198,7 @@ class Module
                 ApiAppMapper::class => ApiAppMapperFactory::class,
                 ApiAppService::class => ApiAppServiceFactory::class,
                 PwnedPasswordsService::class => PwnedPasswordsServiceFactory::class,
-                'user_auth_user_storage' => function (ContainerInterface $container) {
+                'user_auth_user_storage' => static function (ContainerInterface $container) {
                     $request = $container->get('Request');
                     $response = $container->get('Response');
                     $config = $container->get('config');
@@ -219,10 +209,10 @@ class Module
                         $config,
                     );
                 },
-                'user_auth_companyUser_storage' => function () {
+                'user_auth_companyUser_storage' => static function () {
                     return new CompanyUserSession();
                 },
-                'user_bcrypt' => function (ContainerInterface $container) {
+                'user_bcrypt' => static function (ContainerInterface $container) {
                     $bcrypt = new Bcrypt();
                     $config = $container->get('config')['passwords'];
                     $bcrypt->setCost($config['bcrypt_cost']);
@@ -230,119 +220,119 @@ class Module
                     return $bcrypt;
                 },
 
-                'user_hydrator' => function (ContainerInterface $container) {
+                'user_hydrator' => static function (ContainerInterface $container) {
                     return new DoctrineObject(
                         $container->get('doctrine.entitymanager.orm_default'),
                     );
                 },
-                'user_form_activate_companyUser' => function (ContainerInterface $container) {
+                'user_form_activate_companyUser' => static function (ContainerInterface $container) {
                     return new ActivateForm(
                         $container->get(MvcTranslator::class),
                         $container->get('config')['passwords']['min_length_companyUser'],
                     );
                 },
-                'user_form_activate_user' => function (ContainerInterface $container) {
+                'user_form_activate_user' => static function (ContainerInterface $container) {
                     return new ActivateForm(
                         $container->get(MvcTranslator::class),
                         $container->get('config')['passwords']['min_length_user'],
                     );
                 },
-                'user_form_register' => function (ContainerInterface $container) {
+                'user_form_register' => static function (ContainerInterface $container) {
                     return new RegisterForm(
                         $container->get(MvcTranslator::class),
                     );
                 },
-                'user_form_companyUserLogin' => function (ContainerInterface $container) {
+                'user_form_companyUserLogin' => static function (ContainerInterface $container) {
                     return new CompanyUserLoginForm(
                         $container->get(MvcTranslator::class),
                         $container->get('config')['passwords']['min_length_companyUser'],
                     );
                 },
-                'user_form_userLogin' => function (ContainerInterface $container) {
+                'user_form_userLogin' => static function (ContainerInterface $container) {
                     return new UserLoginForm(
                         $container->get(MvcTranslator::class),
                         $container->get('config')['passwords']['min_length_user'],
                     );
                 },
-                'user_form_companyUserReset' => function (ContainerInterface $container) {
+                'user_form_companyUserReset' => static function (ContainerInterface $container) {
                     return new CompanyUserResetForm(
                         $container->get(MvcTranslator::class),
                     );
                 },
-                'user_form_password_companyUser' => function (ContainerInterface $container) {
+                'user_form_password_companyUser' => static function (ContainerInterface $container) {
                     return new PasswordForm(
                         $container->get(MvcTranslator::class),
                         $container->get('config')['passwords']['min_length_companyUser'],
                     );
                 },
-                'user_form_password_user' => function (ContainerInterface $container) {
+                'user_form_password_user' => static function (ContainerInterface $container) {
                     return new PasswordForm(
                         $container->get(MvcTranslator::class),
                         $container->get('config')['passwords']['min_length_user'],
                     );
                 },
-                'user_form_reset' => function (ContainerInterface $container) {
+                'user_form_reset' => static function (ContainerInterface $container) {
                     return new ResetForm(
                         $container->get(MvcTranslator::class),
                     );
                 },
-                'user_form_apitoken' => function (ContainerInterface $container) {
+                'user_form_apitoken' => static function (ContainerInterface $container) {
                     $form = new ApiTokenForm(
-                        $container->get(MvcTranslator::class)
+                        $container->get(MvcTranslator::class),
                     );
                     $form->setHydrator($container->get('user_hydrator'));
 
                     return $form;
                 },
-                'user_form_apiappauthorisation_initial' => function (ContainerInterface $container) {
+                'user_form_apiappauthorisation_initial' => static function (ContainerInterface $container) {
                     return new ApiAppAuthorisationForm(
                         $container->get(MvcTranslator::class),
                     );
                 },
-                'user_form_apiappauthorisation_reminder' => function (ContainerInterface $container) {
+                'user_form_apiappauthorisation_reminder' => static function (ContainerInterface $container) {
                     return new ApiAppAuthorisationForm(
                         $container->get(MvcTranslator::class),
                         'reminder',
                     );
                 },
 
-                'user_mapper_apiappauthentication' => function (ContainerInterface $container) {
+                'user_mapper_apiappauthentication' => static function (ContainerInterface $container) {
                     return new ApiAppAuthenticationMapper(
                         $container->get('doctrine.entitymanager.orm_default'),
                     );
                 },
-                'user_mapper_user' => function (ContainerInterface $container) {
+                'user_mapper_user' => static function (ContainerInterface $container) {
                     return new UserMapper(
                         $container->get('doctrine.entitymanager.orm_default'),
                     );
                 },
-                'user_mapper_companyUser' => function (ContainerInterface $container) {
+                'user_mapper_companyUser' => static function (ContainerInterface $container) {
                     return new CompanyUserMapper(
                         $container->get('doctrine.entitymanager.orm_default'),
                     );
                 },
-                'user_mapper_newUser' => function (ContainerInterface $container) {
+                'user_mapper_newUser' => static function (ContainerInterface $container) {
                     return new NewUserMapper(
                         $container->get('doctrine.entitymanager.orm_default'),
                     );
                 },
-                'user_mapper_newCompanyUser' => function (ContainerInterface $container) {
+                'user_mapper_newCompanyUser' => static function (ContainerInterface $container) {
                     return new NewCompanyUserMapper(
                         $container->get('doctrine.entitymanager.orm_default'),
                     );
                 },
-                'user_mapper_apiUser' => function (ContainerInterface $container) {
+                'user_mapper_apiUser' => static function (ContainerInterface $container) {
                     return new ApiUserMapper(
                         $container->get('doctrine.entitymanager.orm_default'),
                     );
                 },
-                'user_mapper_loginAttempt' => function (ContainerInterface $container) {
+                'user_mapper_loginAttempt' => static function (ContainerInterface $container) {
                     return new LoginAttemptMapper(
                         $container->get('doctrine.entitymanager.orm_default'),
                     );
                 },
 
-                'user_mail_transport' => function (ContainerInterface $container) {
+                'user_mail_transport' => static function (ContainerInterface $container) {
                     $config = $container->get('config');
                     $config = $config['email'];
                     $class = '\Laminas\Mail\Transport\\' . $config['transport'];
@@ -352,7 +342,7 @@ class Module
 
                     return $transport;
                 },
-                'user_auth_user_adapter' => function (ContainerInterface $container) {
+                'user_auth_user_adapter' => static function (ContainerInterface $container) {
                     return new UserAdapter(
                         $container->get(MvcTranslator::class),
                         $container->get('user_bcrypt'),
@@ -361,7 +351,7 @@ class Module
                         $container->get('user_mapper_user'),
                     );
                 },
-                'user_auth_companyUser_adapter' => function (ContainerInterface $container) {
+                'user_auth_companyUser_adapter' => static function (ContainerInterface $container) {
                     return new CompanyUserAdapter(
                         $container->get(MvcTranslator::class),
                         $container->get('user_bcrypt'),
@@ -370,29 +360,29 @@ class Module
                         $container->get('user_mapper_companyUser'),
                     );
                 },
-                'user_auth_apiUser_adapter' => function (ContainerInterface $container) {
+                'user_auth_apiUser_adapter' => static function (ContainerInterface $container) {
                     return new ApiUserAdapter(
                         $container->get('user_mapper_apiUser'),
                     );
                 },
-                'user_auth_user_service' => function (ContainerInterface $container) {
+                'user_auth_user_service' => static function (ContainerInterface $container) {
                     return new AuthenticationService(
                         $container->get('user_auth_user_storage'),
                         $container->get('user_auth_user_adapter'),
                     );
                 },
-                'user_auth_companyUser_service' => function (ContainerInterface $container) {
+                'user_auth_companyUser_service' => static function (ContainerInterface $container) {
                     return new AuthenticationService(
                         $container->get('user_auth_companyUser_storage'),
                         $container->get('user_auth_companyUser_adapter'),
                     );
                 },
-                'user_auth_apiUser_service' => function (ContainerInterface $container) {
+                'user_auth_apiUser_service' => static function (ContainerInterface $container) {
                     return new ApiAuthenticationService(
                         $container->get('user_auth_apiUser_adapter'),
                     );
                 },
-                'user_remoteaddress' => function (ContainerInterface $container) {
+                'user_remoteaddress' => static function (ContainerInterface $container) {
                     $remote = new RemoteAddress();
                     $isProxied = $container->get('config')['proxy']['enabled'];
                     $trustedProxies = $container->get('config')['proxy']['ip_addresses'];

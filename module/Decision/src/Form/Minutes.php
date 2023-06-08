@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace Decision\Form;
 
-use Laminas\Form\Element\{
-    File,
-    Select,
-    Submit,
-};
+use Decision\Mapper\Meeting as MeetingMapper;
+use Laminas\Form\Element\File;
+use Laminas\Form\Element\Select;
+use Laminas\Form\Element\Submit;
 use Laminas\Form\Form;
-use Laminas\Mvc\I18n\Translator;
 use Laminas\InputFilter\InputFilterProviderInterface;
-use Laminas\Validator\File\{
-    Extension,
-    MimeType,
-};
+use Laminas\Mvc\I18n\Translator;
+use Laminas\Validator\File\Extension;
+use Laminas\Validator\File\MimeType;
 
+/**
+ * @psalm-import-type MeetingArrayType from MeetingMapper as ImportedMeetingArrayType
+ */
 class Minutes extends Form implements InputFilterProviderInterface
 {
     public const ERROR_FILE_EXISTS = 'file_exists';
@@ -34,7 +34,7 @@ class Minutes extends Form implements InputFilterProviderInterface
                     'empty_option' => $this->translator->translate('Choose a meeting'),
                     'value_options' => [],
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -44,7 +44,7 @@ class Minutes extends Form implements InputFilterProviderInterface
                 'option' => [
                     'label' => $translator->translate('Minutes to upload'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -54,12 +54,13 @@ class Minutes extends Form implements InputFilterProviderInterface
                 'attributes' => [
                     'value' => $translator->translate('Submit'),
                 ],
-            ]
+            ],
         );
     }
 
     /**
      * @param array $meetings
+     * @psalm-param ImportedMeetingArrayType $meetings
      *
      * @return Minutes
      */
@@ -80,20 +81,20 @@ class Minutes extends Form implements InputFilterProviderInterface
 
     /**
      * Set an error.
-     *
-     * @param string $error
      */
     public function setError(string $error): void
     {
-        if (self::ERROR_FILE_EXISTS == $error) {
-            $this->setMessages(
-                [
-                    'meeting' => [
-                        $this->translator->translate('There already are minutes for this meeting'),
-                    ],
-                ]
-            );
+        if (self::ERROR_FILE_EXISTS !== $error) {
+            return;
         }
+
+        $this->setMessages(
+            [
+                'meeting' => [
+                    $this->translator->translate('There already are minutes for this meeting'),
+                ],
+            ],
+        );
     }
 
     /**

@@ -19,7 +19,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
         <ol class="breadcrumb">
             <li class="active"><a href="<?= $this->url('home') ?>"><?= $this->translate('Home') ?></a></li>
             <?php foreach ($parents as $parent): ?>
-                <?php if (is_null($parent)): ?>
+                <?php if (null === $parent): ?>
                     <li>...</li>
                 <?php else: ?>
                     <li><a href="<?= $this->url('home/page', [

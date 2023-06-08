@@ -6,21 +6,19 @@ namespace Decision\Model;
 
 use Application\Model\Traits\IdentifiableTrait;
 use DateTime;
-use Doctrine\ORM\Mapping\{
-    Column,
-    Entity,
-    JoinColumn,
-    ManyToOne,
-    UniqueConstraint,
-};
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\UniqueConstraint;
 
 /**
  * Authorization model.
  */
 #[Entity]
 #[UniqueConstraint(
-    name: "auth_idx",
-    columns: ["authorizer", "recipient", "meetingNumber", "revokedAt"],
+    name: 'auth_idx',
+    columns: ['authorizer', 'recipient', 'meetingNumber', 'revokedAt'],
 )]
 class Authorization
 {
@@ -31,8 +29,8 @@ class Authorization
      */
     #[ManyToOne(targetEntity: Member::class)]
     #[JoinColumn(
-        name: "authorizer",
-        referencedColumnName: "lidnr",
+        name: 'authorizer',
+        referencedColumnName: 'lidnr',
     )]
     protected Member $authorizer;
 
@@ -41,75 +39,57 @@ class Authorization
      */
     #[ManyToOne(targetEntity: Member::class)]
     #[JoinColumn(
-        name: "recipient",
-        referencedColumnName: "lidnr",
+        name: 'recipient',
+        referencedColumnName: 'lidnr',
     )]
     protected Member $recipient;
 
     /**
      * Meeting number.
      */
-    #[Column(type: "integer")]
+    #[Column(type: 'integer')]
     protected int $meetingNumber;
 
     /**
      * When the authorization was made.
      */
-    #[Column(type: "datetime")]
+    #[Column(type: 'datetime')]
     protected DateTime $createdAt;
 
     /**
      * When the authorization was revoked.
      */
     #[Column(
-        type: "datetime",
+        type: 'datetime',
         nullable: true,
     )]
     protected ?DateTime $revokedAt = null;
 
-    /**
-     * @return Member
-     */
     public function getAuthorizer(): Member
     {
         return $this->authorizer;
     }
 
-    /**
-     * @param Member $authorizer
-     */
     public function setAuthorizer(Member $authorizer): void
     {
         $this->authorizer = $authorizer;
     }
 
-    /**
-     * @return Member
-     */
     public function getRecipient(): Member
     {
         return $this->recipient;
     }
 
-    /**
-     * @param Member $recipient
-     */
     public function setRecipient(Member $recipient): void
     {
         $this->recipient = $recipient;
     }
 
-    /**
-     * @return int
-     */
     public function getMeetingNumber(): int
     {
         return $this->meetingNumber;
     }
 
-    /**
-     * @param int $meetingNumber
-     */
     public function setMeetingNumber(int $meetingNumber): void
     {
         $this->meetingNumber = $meetingNumber;

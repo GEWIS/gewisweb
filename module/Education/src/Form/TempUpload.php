@@ -6,12 +6,10 @@ namespace Education\Form;
 
 use Laminas\Form\Element\File;
 use Laminas\Form\Form;
-use Laminas\Mvc\I18n\Translator;
 use Laminas\InputFilter\InputFilterProviderInterface;
-use Laminas\Validator\File\{
-    Extension,
-    MimeType,
-};
+use Laminas\Mvc\I18n\Translator;
+use Laminas\Validator\File\Extension;
+use Laminas\Validator\File\MimeType;
 
 class TempUpload extends Form implements InputFilterProviderInterface
 {
@@ -26,7 +24,7 @@ class TempUpload extends Form implements InputFilterProviderInterface
                 'options' => [
                     'label' => $translator->translate('Exam to upload'),
                 ],
-            ]
+            ],
         );
     }
 

@@ -5,34 +5,23 @@ declare(strict_types=1);
 namespace Application\View\Helper;
 
 use Application\Service\AbstractAclService;
-use Psr\Container\ContainerInterface;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 use Laminas\ServiceManager\Exception\InvalidArgumentException;
 use Laminas\View\Helper\AbstractHelper;
+use Psr\Container\ContainerInterface;
 
 class Acl extends AbstractHelper
 {
     /**
      * Service locator.
-     *
-     * @var ContainerInterface
      */
     protected ContainerInterface $locator;
 
     /**
      * Acl.
-     *
-     * @var AbstractAclService
      */
     protected AbstractAclService $acl;
 
-    /**
-     *
-     * @param ResourceInterface|string $resource
-     * @param string $operation
-     *
-     * @return bool
-     */
     public function isAllowed(
         ResourceInterface|string $resource,
         string $operation,
@@ -53,15 +42,13 @@ class Acl extends AbstractHelper
 
         if ($this->acl instanceof AbstractAclService) {
             return $this;
-        } else {
-            throw new InvalidArgumentException('Provided factory does not exist or does not return an Acl instance');
         }
+
+        throw new InvalidArgumentException('Provided factory does not exist or does not return an Acl instance');
     }
 
     /**
      * Get the service locator.
-     *
-     * @return ContainerInterface
      */
     protected function getServiceLocator(): ContainerInterface
     {
@@ -70,8 +57,6 @@ class Acl extends AbstractHelper
 
     /**
      * Set the service locator.
-     *
-     * @param ContainerInterface $locator
      */
     public function setServiceLocator(ContainerInterface $locator): void
     {

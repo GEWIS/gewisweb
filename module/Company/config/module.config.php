@@ -5,21 +5,17 @@ declare(strict_types=1);
 namespace Company;
 
 use Application\View\Helper\Truncate;
-use Company\Controller\{
-    AdminApprovalController,
-    AdminController,
-    CompanyAccountController,
-    CompanyController};
-use Company\Controller\Factory\{
-    AdminApprovalControllerFactory,
-    AdminControllerFactory,
-    CompanyAccountControllerFactory,
-    CompanyControllerFactory};
+use Company\Controller\AdminApprovalController;
+use Company\Controller\AdminController;
+use Company\Controller\CompanyAccountController;
+use Company\Controller\CompanyController;
+use Company\Controller\Factory\AdminApprovalControllerFactory;
+use Company\Controller\Factory\AdminControllerFactory;
+use Company\Controller\Factory\CompanyAccountControllerFactory;
+use Company\Controller\Factory\CompanyControllerFactory;
 use Doctrine\ORM\Mapping\Driver\AttributeDriver;
-use Laminas\Router\Http\{
-    Literal,
-    Segment,
-};
+use Laminas\Router\Http\Literal;
+use Laminas\Router\Http\Segment;
 
 return [
     'router' => [
@@ -572,7 +568,7 @@ return [
     ],
     'view_helpers' => [
         'factories' => [
-            'truncate' => function () {
+            'truncate' => static function () {
                 return new Truncate();
             },
         ],

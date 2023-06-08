@@ -6,31 +6,27 @@ namespace Company\Form;
 
 use Application\Form\Localisable as LocalisableForm;
 use Company\Mapper\Company as CompanyMapper;
-use Laminas\Filter\{
-    StringToLower,
-    StringTrim,
-    StripTags,
-    ToNull,
-};
-use Laminas\Form\Element\{
-    Checkbox,
-    Email,
-    File,
-    Submit,
-    Text,
-    Textarea,
-};
+use Laminas\Filter\StringToLower;
+use Laminas\Filter\StringTrim;
+use Laminas\Filter\StripTags;
+use Laminas\Filter\ToNull;
+use Laminas\Form\Element\Checkbox;
+use Laminas\Form\Element\Email;
+use Laminas\Form\Element\File;
+use Laminas\Form\Element\Submit;
+use Laminas\Form\Element\Text;
+use Laminas\Form\Element\Textarea;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Validator\{
-    Callback,
-    EmailAddress,
-    File\Extension,
-    File\MimeType,
-    Regex,
-    StringLength,
-    Uri,
-};
+use Laminas\Validator\Callback;
+use Laminas\Validator\EmailAddress;
+use Laminas\Validator\File\Extension;
+use Laminas\Validator\File\MimeType;
+use Laminas\Validator\Regex;
+use Laminas\Validator\StringLength;
+use Laminas\Validator\Uri;
+
+use function mb_strtolower;
 
 class Company extends LocalisableForm implements InputFilterProviderInterface
 {
@@ -54,7 +50,7 @@ class Company extends LocalisableForm implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->getTranslator()->translate('Name'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -64,7 +60,7 @@ class Company extends LocalisableForm implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->getTranslator()->translate('Slug'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -74,7 +70,7 @@ class Company extends LocalisableForm implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->getTranslator()->translate('Logo'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -86,7 +82,7 @@ class Company extends LocalisableForm implements InputFilterProviderInterface
                     'checked_value' => '1',
                     'unchecked_value' => '0',
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -96,7 +92,7 @@ class Company extends LocalisableForm implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->getTranslator()->translate('Name'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -106,7 +102,7 @@ class Company extends LocalisableForm implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->getTranslator()->translate('E-mail Address'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -116,7 +112,7 @@ class Company extends LocalisableForm implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->getTranslator()->translate('Name'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -126,7 +122,7 @@ class Company extends LocalisableForm implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->getTranslator()->translate('Address'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -136,7 +132,7 @@ class Company extends LocalisableForm implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->getTranslator()->translate('E-mail Address'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -146,7 +142,7 @@ class Company extends LocalisableForm implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->getTranslator()->translate('Phone Number'),
                 ],
-            ]
+            ],
         );
 
         // All language attributes.
@@ -157,7 +153,7 @@ class Company extends LocalisableForm implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->getTranslator()->translate('Slogan'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -167,7 +163,7 @@ class Company extends LocalisableForm implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->getTranslator()->translate('Slogan'),
                 ],
-            ]
+            ],
         );
 
         /**
@@ -181,7 +177,7 @@ class Company extends LocalisableForm implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->getTranslator()->translate('Website'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -191,7 +187,7 @@ class Company extends LocalisableForm implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->getTranslator()->translate('Website'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -201,7 +197,7 @@ class Company extends LocalisableForm implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->getTranslator()->translate('Description'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -211,21 +207,21 @@ class Company extends LocalisableForm implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->getTranslator()->translate('Description'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
             [
                 'name' => 'submit',
                 'type' => Submit::class,
-            ]
+            ],
         );
     }
 
     /**
-     * @inheritDoc
-     *
      * @return array
+     *
+     * @inheritDoc
      */
     public function getInputFilterSpecification(): array
     {
@@ -261,7 +257,9 @@ class Company extends LocalisableForm implements InputFilterProviderInterface
                         'options' => [
                             'callback' => [$this, 'isSlugNameUnique'],
                             'messages' => [
-                                Callback::INVALID_VALUE => $this->getTranslator()->translate('This slug is already taken'),
+                                Callback::INVALID_VALUE => $this->getTranslator()->translate(
+                                    'This slug is already taken',
+                                ),
                             ],
                         ],
                     ],
@@ -270,7 +268,9 @@ class Company extends LocalisableForm implements InputFilterProviderInterface
                         'options' => [
                             'pattern' => '/^[0-9a-zA-Z_\-\.]+$/',
                             'messages' => [
-                                Regex::ERROROUS => $this->getTranslator()->translate('This slug contains invalid characters'),
+                                Regex::ERROROUS => $this->getTranslator()->translate(
+                                    'This slug contains invalid characters',
+                                ),
                             ],
                         ],
                     ],
@@ -343,7 +343,7 @@ class Company extends LocalisableForm implements InputFilterProviderInterface
                         'options' => [
                             'messages' => [
                                 'emailAddressInvalidFormat' => $this->getTranslator()->translate(
-                                    'E-mail address format is not valid.'
+                                    'E-mail address format is not valid.',
                                 ),
                             ],
                         ],
@@ -397,7 +397,7 @@ class Company extends LocalisableForm implements InputFilterProviderInterface
                         'options' => [
                             'messages' => [
                                 'emailAddressInvalidFormat' => $this->getTranslator()->translate(
-                                    'E-mail address format is not valid'
+                                    'E-mail address format is not valid',
                                 ),
                             ],
                         ],
@@ -500,9 +500,6 @@ class Company extends LocalisableForm implements InputFilterProviderInterface
         ];
     }
 
-    /**
-     * @param string|null $slugName
-     */
     public function setCurrentSlug(?string $slugName): void
     {
         $this->currentSlug = $slugName;
@@ -515,10 +512,6 @@ class Company extends LocalisableForm implements InputFilterProviderInterface
 
     /**
      * Determine if the slug is unique.
-     *
-     * @param string $slugName
-     *
-     * @return bool
      */
     public function isSlugNameUnique(string $slugName): bool
     {

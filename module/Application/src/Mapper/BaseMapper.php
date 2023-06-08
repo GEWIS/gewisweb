@@ -7,13 +7,11 @@ namespace Application\Mapper;
 use Application\Model\LocalisedText as LocalisedTextModel;
 use Closure;
 use Doctrine\DBAL\Connection;
-use Doctrine\ORM\{
-    EntityManager,
-    EntityNotFoundException,
-    EntityRepository,
-    OptimisticLockException,
-    Exception\ORMException,
-};
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityNotFoundException;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Exception\ORMException;
+use Doctrine\ORM\OptimisticLockException;
 
 /**
  * The base mapper to be used for all other mappers. It helps with preventing duplicate Doctrine code. It uses special
@@ -29,7 +27,6 @@ abstract class BaseMapper
     }
 
     /**
-     * @param object $entity
      * @psalm-param T|LocalisedTextModel $entity
      *
      * @throws ORMException
@@ -58,7 +55,6 @@ abstract class BaseMapper
     }
 
     /**
-     * @param object $entity
      * @psalm-param T|LocalisedTextModel $entity
      *
      * @throws ORMException
@@ -89,7 +85,6 @@ abstract class BaseMapper
     /**
      * Remove an entity by its ID using find
      *
-     * @param mixed $id
      * @throws EntityNotFoundException
      * @throws OptimisticLockException
      * @throws ORMException
@@ -97,12 +92,12 @@ abstract class BaseMapper
     public function removeById(mixed $id): void
     {
         $entity = $this->find($id);
-        if (!is_null($entity)) {
-            $this->em->remove($entity);
-            $this->em->flush();
-        } else {
+        if (null === $entity) {
             throw new EntityNotFoundException('No entity with the given ID could be found.');
         }
+
+        $this->em->remove($entity);
+        $this->em->flush();
     }
 
     /**
@@ -117,7 +112,6 @@ abstract class BaseMapper
     /**
      * Detaches an entity from the entity manager causing any changed to be made to the object to be unsaved
      *
-     * @param object $entity
      * @psalm-param T $entity
      */
     public function detach(object $entity): void
@@ -127,8 +121,6 @@ abstract class BaseMapper
 
     /**
      * Get the entity manager.
-     *
-     * @return EntityManager
      */
     public function getEntityManager(): EntityManager
     {
@@ -138,7 +130,6 @@ abstract class BaseMapper
     /**
      * Get the repository for this mapper.
      *
-     * @return EntityRepository
      * @psalm-return EntityRepository<T>
      */
     protected function getRepository(): EntityRepository
@@ -148,8 +139,6 @@ abstract class BaseMapper
 
     /**
      * Get the entity manager connection.
-     *
-     * @return Connection
      */
     public function getConnection(): Connection
     {
@@ -158,18 +147,18 @@ abstract class BaseMapper
 
     /**
      * @param mixed $id The ID of the entity to be retrieved using the primary key
-     * @return null|object The entity corresponding to the provided ID or null of the entity cannot be found
-     * @psalm-return T|null
+     *
+     * @return T|null The entity corresponding to the provided ID or null of the entity cannot be found
      */
-    public function find(mixed $id): null|object
+    public function find(mixed $id): ?object
     {
         return $this->getRepository()->find($id);
     }
 
     /**
      * @param mixed $criteria The criteria that describe the entity to be retrieved
-     * @return array The entities corresponding to the provided criteria
-     * @psalm-return T[]
+     *
+     * @return T[] The entities corresponding to the provided criteria
      */
     public function findBy(mixed $criteria): array
     {
@@ -178,17 +167,18 @@ abstract class BaseMapper
 
     /**
      * @param array $criteria The criteria that describe the entity to be retrieved
-     * @return null|object The entity corresponding to the provided criteria or null of the entity cannot be found
-     * @psalm-return T|null
+     *
+     * @return T|null The entity corresponding to the provided criteria or null of the entity cannot be found
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
-    public function findOneBy(array $criteria): null|object
+    public function findOneBy(array $criteria): ?object
     {
         return $this->getRepository()->findOneBy($criteria);
     }
 
     /**
-     * @return array All entities in the repository
-     * @psalm-return T[]
+     * @return T[] All entities in the repository
      */
     public function findAll(): array
     {
@@ -197,6 +187,7 @@ abstract class BaseMapper
 
     /**
      * @param mixed $criteria The criteria the objects to be counted should satisfy
+     *
      * @return int The number of entities satisfying the criteria
      */
     public function count(mixed $criteria): int
@@ -209,17 +200,13 @@ abstract class BaseMapper
      *
      * Instead of the EntityManager, this inserts this Mapper into the
      * function.
-     *
-     * @param Closure $func
-     *
-     * @return mixed
      */
     public function transactional(Closure $func): mixed
     {
         return $this->getEntityManager()->wrapInTransaction(
             function ($em) use ($func) {
                 return $func($this);
-            }
+            },
         );
     }
 

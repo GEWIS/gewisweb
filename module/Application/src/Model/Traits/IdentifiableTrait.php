@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace Application\Model\Traits;
 
-use Doctrine\ORM\Mapping\{
-    Column,
-    GeneratedValue,
-    Id,
-};
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\Id;
 
 /**
  * A trait which provides an `id` column for entities.
@@ -20,8 +18,8 @@ trait IdentifiableTrait
      * nullable.
      */
     #[Id]
-    #[Column(type: "integer")]
-    #[GeneratedValue(strategy: "IDENTITY")]
+    #[Column(type: 'integer')]
+    #[GeneratedValue(strategy: 'IDENTITY')]
     protected ?int $id = null;
 
     /**

@@ -12,11 +12,7 @@ use Psr\Container\ContainerInterface;
 class PageAdminControllerFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param string $requestedName
-     * @param array|null $options
-     *
-     * @return PageAdminController
      */
     public function __invoke(
         ContainerInterface $container,

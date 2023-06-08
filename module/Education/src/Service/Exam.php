@@ -8,23 +8,16 @@ use Application\Model\Enums\Languages;
 use Application\Service\FileStorage as FileStorageService;
 use DateTime;
 use DirectoryIterator;
-use Education\Form\{
-    Course as CourseForm,
-    Bulk as BulkForm,
-    TempUpload as TempUploadForm,
-};
-use Education\Mapper\{
-    CourseDocument as CourseDocumentMapper,
-    Course as CourseMapper,
-};
-use Education\Model\{
-    Course as CourseModel,
-    Course,
-    CourseDocument as CourseDocumentModel,
-    Enums\ExamTypes,
-    Exam as ExamModel,
-    Summary as SummaryModel,
-};
+use Education\Form\Bulk as BulkForm;
+use Education\Form\Course as CourseForm;
+use Education\Form\TempUpload as TempUploadForm;
+use Education\Mapper\Course as CourseMapper;
+use Education\Mapper\CourseDocument as CourseDocumentMapper;
+use Education\Model\Course as CourseModel;
+use Education\Model\CourseDocument as CourseDocumentModel;
+use Education\Model\Enums\ExamTypes;
+use Education\Model\Exam as ExamModel;
+use Education\Model\Summary as SummaryModel;
 use Exception;
 use InvalidArgumentException;
 use Laminas\Form\Fieldset;
@@ -34,6 +27,21 @@ use Laminas\Stdlib\Parameters;
 use RuntimeException;
 use User\Permissions\NotAllowedException;
 
+use function array_merge_recursive;
+use function boolval;
+use function explode;
+use function file_exists;
+use function implode;
+use function move_uploaded_file;
+use function preg_match;
+use function preg_match_all;
+use function str_contains;
+use function str_replace;
+use function str_starts_with;
+use function stripslashes;
+use function strlen;
+use function unlink;
+
 /**
  * Exam service.
  */
@@ -41,6 +49,9 @@ class Exam
 {
     protected ?BulkForm $bulkForm = null;
 
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
+     */
     public function __construct(
         private readonly AclService $aclService,
         private readonly Translator $translator,
@@ -60,19 +71,17 @@ class Exam
      *
      * @param array $data
      *
-     * @return array|null Courses, null if form is not valid
+     * @return CourseModel[]
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
-    public function searchCourse(array $data): ?array
+    public function searchCourse(array $data): array
     {
         return $this->courseMapper->search($data['query']);
     }
 
     /**
      * Get a course.
-     *
-     * @param string $code
-     *
-     * @return CourseModel|null
      */
     public function getCourse(string $code): ?CourseModel
     {
@@ -81,16 +90,12 @@ class Exam
 
     /**
      * Get an exam.
-     *
-     * @param int $id
-     *
-     * @return Stream|null
      */
     public function getDocumentDownload(int $id): ?Stream
     {
         if (!$this->aclService->isAllowed('download', 'course_document')) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to download course documents')
+                $this->translator->translate('You are not allowed to download course documents'),
             );
         }
 
@@ -113,10 +118,10 @@ class Exam
      * Finish the bulk edit.
      *
      * @param array $data POST Data
-     * @param string $type
      *
-     * @return bool
      * @throws Exception
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     protected function bulkEdit(
         array $data,
@@ -164,7 +169,7 @@ class Exam
 
                     $mapper->persist($document);
                 }
-            }
+            },
         );
 
         return true;
@@ -173,8 +178,9 @@ class Exam
     /**
      * @param array $data
      *
-     * @return bool
      * @throws Exception
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function bulkExamEdit(array $data): bool
     {
@@ -184,8 +190,9 @@ class Exam
     /**
      * @param array $data
      *
-     * @return bool
      * @throws Exception
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function bulkSummaryEdit(array $data): bool
     {
@@ -197,11 +204,11 @@ class Exam
      *
      * Uploads exams into a temporary folder.
      *
-     * @param array $post POST Data
-     * @param array $files FILES Data
+     * @param array  $post            POST Data
+     * @param array  $files           FILES Data
      * @param string $uploadDirectory the directory to place the exam in
      *
-     * @return bool
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     protected function tempUpload(
         array $post,
@@ -233,12 +240,6 @@ class Exam
         return true;
     }
 
-    /**
-     * @param Parameters $post
-     * @param Parameters $files
-     *
-     * @return bool
-     */
     public function tempExamUpload(
         Parameters $post,
         Parameters $files,
@@ -248,12 +249,6 @@ class Exam
         return $this->tempUpload($post->toArray(), $files->toArray(), $temporaryEducationConfig['upload_exam_dir']);
     }
 
-    /**
-     * @param Parameters $post
-     * @param Parameters $files
-     *
-     * @return bool
-     */
     public function tempSummaryUpload(
         Parameters $post,
         Parameters $files,
@@ -273,8 +268,6 @@ class Exam
      * Summaries have the following format:
      *
      * <code>-<author>-summary-<year>-<month>-<day>.pdf
-     *
-     * @param CourseDocumentModel $document
      *
      * @return string Filename
      */
@@ -299,9 +292,9 @@ class Exam
     /**
      * Get the education config, as used by this service.
      *
-     * @param string $key
-     *
      * @return array
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingTraversableTypeHintSpecification
      */
     public function getConfig(string $key = 'education'): array
     {
@@ -312,7 +305,7 @@ class Exam
      * Deletes a temp uploaded exam or summary.
      *
      * @param string $filename The file to delete
-     * @param string $type The type to delete (exam/summary)
+     * @param string $type     The type to delete (exam/summary)
      */
     public function deleteTempExam(
         string $filename,
@@ -330,9 +323,6 @@ class Exam
     /**
      * Get the bulk edit form.
      *
-     * @param string $type
-     *
-     * @return BulkForm
      * @throws Exception
      */
     protected function getBulkForm(string $type): BulkForm
@@ -360,16 +350,18 @@ class Exam
         $data = [];
 
         foreach ($dir as $file) {
-            if ($file->isFile() && !str_starts_with($file->getFilename(), '.')) {
-                $examData = $this->guessCourseDocumentData($file->getFilename());
-
-                if ('summary' === $type) {
-                    $examData['author'] = $this->guessSummaryAuthor($file->getFilename());
-                }
-
-                $examData['file'] = $file->getFilename();
-                $data[] = $examData;
+            if (!$file->isFile() || str_starts_with($file->getFilename(), '.')) {
+                continue;
             }
+
+            $examData = $this->guessCourseDocumentData($file->getFilename());
+
+            if ('summary' === $type) {
+                $examData['author'] = $this->guessSummaryAuthor($file->getFilename());
+            }
+
+            $examData['file'] = $file->getFilename();
+            $data[] = $examData;
         }
 
         $form = $this->bulkForm->get('documents');
@@ -386,7 +378,6 @@ class Exam
     /**
      * Get the bulk summary edit form.
      *
-     * @return BulkForm
      * @throws Exception
      */
     public function getBulkSummaryForm(): BulkForm
@@ -397,7 +388,6 @@ class Exam
     /**
      * Get the bulk exam edit form.
      *
-     * @return BulkForm
      * @throws Exception
      */
     public function getBulkExamForm(): BulkForm
@@ -408,9 +398,11 @@ class Exam
     /**
      * Guesses the course code and date based on an exam's filename.
      *
-     * @param string $filename
-     *
-     * @return array
+     * @return array{
+     *     course: string,
+     *     date: string,
+     *     language: string,
+     * }
      */
     public function guessCourseDocumentData(string $filename): array
     {
@@ -436,17 +428,13 @@ class Exam
 
     /**
      * Guesses the summary author based on a summary's filename.
-     *
-     * @param string $filename
-     *
-     * @return string
      */
     public static function guessSummaryAuthor(string $filename): string
     {
         $parts = explode('.', $filename);
         foreach ($parts as $part) {
             // We assume names are more than 3 characters and don't contain numbers
-            if (strlen($part) > 3 && 0 == preg_match('/\\d/', $part)) {
+            if (strlen($part) > 3 && 0 === preg_match('/\\d/', $part)) {
                 return $part;
             }
         }
@@ -457,8 +445,7 @@ class Exam
     /**
      * Get the Temporary Upload form.
      *
-     * @return TempUploadForm
-     * @throws NotAllowedException When not allowed to upload
+     * @throws NotAllowedException When not allowed to upload.
      */
     public function getTempUploadForm(): TempUploadForm
     {
@@ -472,8 +459,7 @@ class Exam
     /**
      * Get the add course form.
      *
-     * @return CourseForm
-     * @throws NotAllowedException When not allowed to upload
+     * @throws NotAllowedException When not allowed to upload.
      */
     public function getCourseForm(?CourseModel $course = null): CourseForm
     {
@@ -508,7 +494,7 @@ class Exam
     /**
      * Delete a course and all its documents.
      */
-    public function deleteCourse(Course $course): void
+    public function deleteCourse(CourseModel $course): void
     {
         /** @var ExamModel|SummaryModel $exam */
         foreach ($course->getDocuments() as $exam) {
@@ -521,6 +507,8 @@ class Exam
 
     /**
      * Get all courses.
+     *
+     * @return CourseModel[]
      */
     public function getAllCourses(): array
     {
@@ -531,6 +519,8 @@ class Exam
      * Get all documents of a specific type for a specific course.
      *
      * @psalm-param class-string<ExamModel>|class-string<SummaryModel> $type
+     *
+     * @return CourseDocumentModel[]
      */
     public function getDocumentsForCourse(
         CourseModel $course,
@@ -542,7 +532,7 @@ class Exam
     /**
      * Get a specific course document.
      */
-    public function getDocument(int $id): CourseDocumentModel|null
+    public function getDocument(int $id): ?CourseDocumentModel
     {
         return $this->courseDocumentMapper->find($id);
     }

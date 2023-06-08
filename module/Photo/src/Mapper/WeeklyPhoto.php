@@ -8,10 +8,8 @@ use Application\Mapper\BaseMapper;
 use DateInterval;
 use DateTime;
 use Decision\Model\AssociationYear;
-use Photo\Model\{
-    Photo as PhotoModel,
-    WeeklyPhoto as WeeklyPhotoModel,
-};
+use Photo\Model\Photo as PhotoModel;
+use Photo\Model\WeeklyPhoto as WeeklyPhotoModel;
 
 /**
  * Mappers for WeeklyPhoto.
@@ -22,19 +20,12 @@ class WeeklyPhoto extends BaseMapper
 {
     /**
      * Check whether the given photo has been a photo of the week.
-     *
-     * @param PhotoModel $photo
-     *
-     * @return bool
      */
     public function hasBeenPhotoOfTheWeek(PhotoModel $photo): bool
     {
-        return !is_null($this->getRepository()->findOneBy(['photo' => $photo]));
+        return null !== $this->getRepository()->findOneBy(['photo' => $photo]);
     }
 
-    /**
-     * @return WeeklyPhotoModel|null
-     */
     public function getCurrentPhotoOfTheWeek(): ?WeeklyPhotoModel
     {
         $qb = $this->getRepository()->createQueryBuilder('w');
@@ -56,7 +47,7 @@ class WeeklyPhoto extends BaseMapper
         $startDate = DateTime::createFromFormat(
             'Y-m-d H:i:s',
             $year . '-' . AssociationYear::ASSOCIATION_YEAR_START_MONTH . '-'
-            . AssociationYear::ASSOCIATION_YEAR_START_DAY . ' 00:00:00'
+            . AssociationYear::ASSOCIATION_YEAR_START_DAY . ' 00:00:00',
         );
         $endDate = clone $startDate;
         $endDate->add(new DateInterval('P1Y'));

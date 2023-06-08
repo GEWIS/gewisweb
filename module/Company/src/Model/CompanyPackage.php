@@ -7,32 +7,31 @@ namespace Company\Model;
 use Application\Model\Traits\IdentifiableTrait;
 use Company\Model\Enums\CompanyPackageTypes;
 use DateTime;
-use Doctrine\ORM\Mapping\{
-    Column,
-    DiscriminatorColumn,
-    DiscriminatorMap,
-    Entity,
-    InheritanceType,
-    ManyToOne,
-};
-use Doctrine\Common\Util\ClassUtils;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\DiscriminatorColumn;
+use Doctrine\ORM\Mapping\DiscriminatorMap;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\InheritanceType;
+use Doctrine\ORM\Mapping\ManyToOne;
 use Exception;
+
+use function boolval;
 
 /**
  * CompanyPackage model.
  */
 #[Entity]
-#[InheritanceType(value: "SINGLE_TABLE")]
+#[InheritanceType(value: 'SINGLE_TABLE')]
 #[DiscriminatorColumn(
-    name: "packageType",
-    type: "string",
+    name: 'packageType',
+    type: 'string',
     enumType: CompanyPackageTypes::class,
 )]
 #[DiscriminatorMap(
     value: [
-        "job" => CompanyJobPackage::class,
-        "banner" => CompanyBannerPackage::class,
-        "featured" => CompanyFeaturedPackage::class,
+        'job' => CompanyJobPackage::class,
+        'banner' => CompanyBannerPackage::class,
+        'featured' => CompanyFeaturedPackage::class,
     ],
 )]
 abstract class CompanyPackage
@@ -43,7 +42,7 @@ abstract class CompanyPackage
      * An alphanumeric strings which identifies to which contract this package belongs.
      */
     #[Column(
-        type: "string",
+        type: 'string',
         nullable: true,
     )]
     protected ?string $contractNumber = null;
@@ -51,19 +50,19 @@ abstract class CompanyPackage
     /**
      * The package's starting date.
      */
-    #[Column(type: "date")]
+    #[Column(type: 'date')]
     protected DateTime $starts;
 
     /**
      * The package's expiration date.
      */
-    #[Column(type: "date")]
+    #[Column(type: 'date')]
     protected DateTime $expires;
 
     /**
      * The package's published state.
      */
-    #[Column(type: "boolean")]
+    #[Column(type: 'boolean')]
     protected bool $published;
 
     /**
@@ -71,7 +70,7 @@ abstract class CompanyPackage
      */
     #[ManyToOne(
         targetEntity: Company::class,
-        inversedBy: "packages",
+        inversedBy: 'packages',
     )]
     protected Company $company;
 
@@ -79,17 +78,11 @@ abstract class CompanyPackage
     {
     }
 
-    /**
-     * @return string|null
-     */
     public function getContractNumber(): ?string
     {
         return $this->contractNumber;
     }
 
-    /**
-     * @param string|null $contractNumber
-     */
     public function setContractNumber(?string $contractNumber): void
     {
         $this->contractNumber = $contractNumber;
@@ -97,8 +90,6 @@ abstract class CompanyPackage
 
     /**
      * Get the package's starting date.
-     *
-     * @return DateTime
      */
     public function getStartingDate(): DateTime
     {
@@ -107,8 +98,6 @@ abstract class CompanyPackage
 
     /**
      * Set the package's starting date.
-     *
-     * @param DateTime $starts
      */
     public function setStartingDate(DateTime $starts): void
     {
@@ -117,8 +106,6 @@ abstract class CompanyPackage
 
     /**
      * Get the package's expiration date.
-     *
-     * @return DateTime
      */
     public function getExpirationDate(): DateTime
     {
@@ -127,8 +114,6 @@ abstract class CompanyPackage
 
     /**
      * Set the package's expiration date.
-     *
-     * @param DateTime $expires
      */
     public function setExpirationDate(DateTime $expires): void
     {
@@ -137,8 +122,6 @@ abstract class CompanyPackage
 
     /**
      * Get the package's publish state.
-     *
-     * @return bool
      */
     public function isPublished(): bool
     {
@@ -147,8 +130,6 @@ abstract class CompanyPackage
 
     /**
      * Set the package's publish state.
-     *
-     * @param bool $published
      */
     public function setPublished(bool $published): void
     {
@@ -157,8 +138,6 @@ abstract class CompanyPackage
 
     /**
      * Get the package's company.
-     *
-     * @return Company
      */
     public function getCompany(): Company
     {
@@ -167,8 +146,6 @@ abstract class CompanyPackage
 
     /**
      * Set the package's company.
-     *
-     * @param Company $company
      */
     public function setCompany(Company $company): void
     {
@@ -185,16 +162,9 @@ abstract class CompanyPackage
      */
     public function isExpired(): bool
     {
-        if ((new DateTime()) >= $this->getExpirationDate()) {
-            return true;
-        }
-
-        return false;
+        return (new DateTime()) >= $this->getExpirationDate();
     }
 
-    /**
-     * @return bool
-     */
     public function isActive(): bool
     {
         $now = new DateTime();
@@ -205,15 +175,16 @@ abstract class CompanyPackage
             return false;
         }
 
-        if ($now < $this->getStartingDate() || !$this->isPublished()) {
-            return false;
-        }
-
-        return true;
+        return $now >= $this->getStartingDate() && $this->isPublished();
     }
 
     /**
-     * @return array
+     * @return array{
+     *     contractNumber: ?string,
+     *     startDate: string,
+     *     expirationDate: string,
+     *     published: bool,
+     * }
      */
     public function toArray(): array
     {
@@ -227,6 +198,12 @@ abstract class CompanyPackage
 
     /**
      * @param array $data
+     * @psalm-param array{
+     *     contractNumber: ?string,
+     *     startDate?: string,
+     *     expirationDate?: string,
+     *     published?: bool|string,
+     * } $data
      *
      * @throws Exception
      */
@@ -234,11 +211,11 @@ abstract class CompanyPackage
     {
         $this->setContractNumber($data['contractNumber']);
         $this->setStartingDate(
-            (isset($data['startDate'])) ? new DateTime($data['startDate']) : $this->getStartingDate()
+            isset($data['startDate']) ? new DateTime($data['startDate']) : $this->getStartingDate(),
         );
         $this->setExpirationDate(
-            (isset($data['expirationDate'])) ? new DateTime($data['expirationDate']) : $this->getExpirationDate()
+            isset($data['expirationDate']) ? new DateTime($data['expirationDate']) : $this->getExpirationDate(),
         );
-        $this->setPublished((isset($data['published'])) ? boolval($data['published']) : $this->isPublished());
+        $this->setPublished(isset($data['published']) ? boolval($data['published']) : $this->isPublished());
     }
 }

@@ -7,19 +7,21 @@ namespace Application\View\Helper;
 use Laminas\View\Helper\AbstractHelper;
 use Psr\Container\ContainerInterface;
 
+use function array_map;
+use function explode;
+use function str_replace;
+
 class ModuleIsActive extends AbstractHelper
 {
     /**
      * Service locator.
-     *
-     * @var ContainerInterface
      */
     protected ContainerInterface $locator;
 
     /**
      * Get the active module.
      *
-     * @param array $condition
+     * @param string[] $condition
      *
      * @return bool $condition
      */
@@ -27,7 +29,13 @@ class ModuleIsActive extends AbstractHelper
     {
         $info = $this->getRouteInfo();
         foreach ($condition as $key => $cond) {
-            if (!isset($info[$key]) || (!is_null($cond) && $info[$key] != $cond)) {
+            if (
+                !isset($info[$key])
+                || (
+                    null !== $cond
+                    && $info[$key] !== $cond
+                )
+            ) {
                 return false;
             }
         }
@@ -38,16 +46,16 @@ class ModuleIsActive extends AbstractHelper
     /**
      * Get the module.
      *
-     * @return array
+     * @return string[]
      */
     public function getRouteInfo(): array
     {
-        $match = $this->getServiceLocator()->get('application')
-            ->getMvcEvent()->getRouteMatch();
+        $match = $this->getServiceLocator()->get('application')->getMvcEvent()->getRouteMatch();
 
-        if (is_null($match)) {
+        if (null === $match) {
             return [];
         }
+
         $controller = str_replace('\\Controller', '', $match->getParam('controller'));
 
         return array_map('strtolower', explode('\\', $controller));
@@ -55,8 +63,6 @@ class ModuleIsActive extends AbstractHelper
 
     /**
      * Get the service locator.
-     *
-     * @return ContainerInterface
      */
     protected function getServiceLocator(): ContainerInterface
     {
@@ -65,8 +71,6 @@ class ModuleIsActive extends AbstractHelper
 
     /**
      * Set the service locator.
-     *
-     * @param ContainerInterface $locator
      */
     public function setServiceLocator(ContainerInterface $locator): void
     {

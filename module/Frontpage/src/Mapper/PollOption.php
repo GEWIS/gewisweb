@@ -14,9 +14,6 @@ use Frontpage\Model\PollOption as PollOptionModel;
  */
 class PollOption extends BaseMapper
 {
-    /**
-     * @inheritdoc
-     */
     protected function getRepositoryName(): string
     {
         return PollOptionModel::class;

@@ -4,14 +4,10 @@ declare(strict_types=1);
 
 namespace Frontpage\Controller;
 
-use Frontpage\Service\{
-    AclService,
-    News as NewsService,
-};
-use Laminas\Http\{
-    Request,
-    Response,
-};
+use Frontpage\Service\AclService;
+use Frontpage\Service\News as NewsService;
+use Laminas\Http\Request;
+use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Paginator\Paginator;
@@ -42,7 +38,7 @@ class NewsAdminController extends AbstractActionController
         return new ViewModel(
             [
                 'paginator' => $paginator,
-            ]
+            ],
         );
     }
 
@@ -75,7 +71,7 @@ class NewsAdminController extends AbstractActionController
                 'form' => $form,
                 // Boolean indicating if the view should show an option to delete a news item.
                 'canDelete' => false,
-            ]
+            ],
         );
 
         $view->setTemplate('news-admin/edit');
@@ -122,7 +118,7 @@ class NewsAdminController extends AbstractActionController
                 // Boolean indicating if the view should show an option to delete a news item.
                 'canDelete' => true,
                 'newsItemId' => $newsItemId,
-            ]
+            ],
         );
     }
 
@@ -145,6 +141,7 @@ class NewsAdminController extends AbstractActionController
         }
 
         $this->newsService->deleteNewsItem($newsItem);
+
         return $this->redirect()->toUrl($this->url()->fromRoute('admin_news'));
     }
 }
