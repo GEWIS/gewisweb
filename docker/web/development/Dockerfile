@@ -1,4 +1,17 @@
-FROM php:8.2-fpm-alpine as gewisweb_web_development
+# Compile the language files
+FROM alpine:latest AS gewisweb_translations
+WORKDIR /code
+
+RUN apk add --no-cache --virtual .runtime-deps \
+        gettext
+
+COPY ./module/Application/language/*.po .
+
+RUN msgfmt en.po -o en -c --strict -v \
+    && msgfmt nl.po -o nl -c --strict -v
+
+# Install dependencies and create final image
+FROM php:8.2-fpm-alpine AS gewisweb_web_development
 
 RUN apk add --no-cache --virtual .build-deps \
         $PHPIZE_DEPS \
@@ -96,7 +109,7 @@ COPY --chown=www-data:www-data ./docker/web/development/docker-entrypoint.sh ./d
 RUN chmod 0775 ./docker-entrypoint.sh
 
 COPY --chown=www-data:www-data . /code
-
+COPY --chown=www-data:www-data --from=gewisweb_translations /code/*.mo /code/module/Application/language/
 ENV PHP_IDE_CONFIG="serverName=gewis.nl"
 
 RUN php composer.phar dump-autoload

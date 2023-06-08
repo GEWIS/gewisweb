@@ -1,3 +1,4 @@
+# Compile the SCSS files
 FROM node:lts-alpine as node-build
 WORKDIR /code
 
@@ -9,6 +10,19 @@ RUN mkdir public && mkdir public/scss && mkdir public/css
 COPY ./public/scss ./public/scss/
 RUN npm run scss
 
+# Compile the language files
+FROM alpine:latest AS gewisweb_translations
+WORKDIR /code
+
+RUN apk add --no-cache --virtual .runtime-deps \
+        gettext
+
+COPY ./module/Application/language/*.po .
+
+RUN msgfmt en.po -o en -c --strict -v \
+    && msgfmt nl.po -o nl -c --strict -v
+
+# Install dependencies
 FROM php:8.2-fpm-alpine as php-target
 
 RUN apk add --no-cache --virtual .build-deps \
@@ -64,6 +78,7 @@ RUN apk add --no-cache --virtual .build-deps \
 
 RUN sed -i 's/<policy domain="coder" rights="none" pattern="PDF" \/>/<policy domain="coder" rights="read|write" pattern="PDF" \/>/g' /etc/ImageMagick-7/policy.xml
 
+# Create final image
 FROM php-target as gewisweb_web_production
 WORKDIR /code
 
@@ -89,10 +104,10 @@ COPY --chown=www-data:www-data ./docker/web/production/docker-entrypoint.sh ./do
 RUN chmod 0775 ./docker-entrypoint.sh
 
 COPY --chown=www-data:www-data . /code
+COPY --chown=www-data:www-data --from=gewisweb_translations /code/*.mo /code/module/Application/language/
+COPY --chown=www-data:www-data --from=node-build /code/public/css/gewis-theme.css /code/public/css/gewis-theme.css
 
 RUN php composer.phar dump-autoload -a --no-dev
-
-COPY --chown=www-data:www-data --from=node-build /code/public/css/gewis-theme.css /code/public/css/gewis-theme.css
 
 ARG GIT_COMMIT
 ENV GIT_COMMIT=${GIT_COMMIT}

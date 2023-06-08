@@ -56,3 +56,7 @@ public/data/meeting-notes/
 public/data/photo/
 public/styleguide/
 vendor/
+
+# Language binaries are created during the docker build process or using 'make compilelang'
+*.mo
+
