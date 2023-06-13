@@ -294,7 +294,7 @@ class ActivityCalendar
             if (null !== $organ) {
                 $maxActivities = new MaxActivitiesModel();
 
-                $maxActivities->setValue($maxActivity['value']);
+                $maxActivities->setValue(intval($maxActivity['value']));
                 $maxActivities->setOrgan($organ);
                 $maxActivities->setPeriod($activityOptionCreationPeriod);
 
@@ -334,7 +334,7 @@ class ActivityCalendar
 
             if (array_key_exists($organId, $ids)) {
                 $offset = $ids[$organId];
-                $maxActivity->setValue($data['maxActivities'][$offset]['value']);
+                $maxActivity->setValue(intval($data['maxActivities'][$offset]['value']));
             }
         }
 
