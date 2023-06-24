@@ -54,7 +54,7 @@ class JobsTransfer extends Form implements InputFilterProviderInterface
     }
 
     /**
-     * @param JobModel[] $jobs
+     * @param JobModel[]               $jobs
      * @param CompanyJobPackageModel[] $packages
      */
     public function populateValueOptions(

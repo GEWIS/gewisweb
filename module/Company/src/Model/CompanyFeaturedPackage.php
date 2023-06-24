@@ -12,6 +12,15 @@ use Exception;
 
 /**
  * CompanyFeaturedPackage model.
+ *
+ * @psalm-type CompanyFeaturedPackageArrayType = array{
+ *     contractNumber: ?string,
+ *     startDate: string,
+ *     expirationDate: string,
+ *     published: bool,
+ *     article: ?string,
+ *     articleEn: ?string,
+ * }
  */
 #[Entity]
 class CompanyFeaturedPackage extends CompanyPackage
@@ -60,14 +69,7 @@ class CompanyFeaturedPackage extends CompanyPackage
     }
 
     /**
-     * @return array{
-     *     contractNumber: ?string,
-     *     startDate: string,
-     *     expirationDate: string,
-     *     published: bool,
-     *     article: ?string,
-     *     articleEn: ?string,
-     * }
+     * @return CompanyFeaturedPackageArrayType
      */
     public function toArray(): array
     {

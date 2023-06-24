@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Company\Controller;
 
+use Company\Model\CompanyFeaturedPackage;
 use Company\Model\CompanyJobPackage;
 use Company\Model\Enums\CompanyPackageTypes;
 use Company\Service\AclService;
@@ -24,6 +25,7 @@ use function is_object;
 
 /**
  * @method FlashMessenger flashMessenger()
+ * @psalm-import-type CompanyFeaturedPackageArrayType from CompanyFeaturedPackage as ImportedFeaturedPackageArrayType
  */
 class AdminController extends AbstractActionController
 {
@@ -328,11 +330,14 @@ class AdminController extends AbstractActionController
         }
 
         // Initialize form
-        $packageData = $package->toArray();
-
         if (CompanyPackageTypes::Featured === $type) {
+            /** @var ImportedFeaturedPackageArrayType $packageData */
+            $packageData = $package->toArray();
+
             $packageData['language_dutch'] = null !== $packageData['article'];
             $packageData['language_english'] = null !== $packageData['articleEn'];
+        } else {
+            $packageData = $package->toArray();
         }
 
         $packageForm->setData($packageData);

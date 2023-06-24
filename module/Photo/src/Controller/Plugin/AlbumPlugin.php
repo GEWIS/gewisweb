@@ -39,8 +39,8 @@ class AlbumPlugin extends AbstractPlugin
      * @return ?array{
      *     album: ImportedAlbumArrayType,
      *     basedir: string,
-     *     photos: Photo[],
-     *     albums: Album[],
+     *     photos: ImportedPhotoArrayType[],
+     *     albums: ImportedAlbumArrayType[],
      * }
      *
      * @throws Exception

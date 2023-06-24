@@ -18,10 +18,9 @@ use Photo\Mapper\Tag as TagMapper;
 use Photo\Mapper\WeeklyPhoto as WeeklyPhotoMapper;
 use Photo\Model\Album as AlbumModel;
 use Photo\Model\MemberAlbum as MemberAlbumModel;
-use Photo\Model\Photo as PhotoModel;
 use Photo\Model\VirtualAlbum as VirtualAlbumModel;
 use Photo\Model\WeeklyAlbum as WeeklyAlbumModel;
-use Photo\Model\WeeklyPhoto;
+use Photo\Model\WeeklyPhoto as WeeklyPhotoModel;
 use Photo\Service\AlbumCover as AlbumCoverService;
 use Photo\Service\Photo as PhotoService;
 use User\Permissions\NotAllowedException;
@@ -272,7 +271,7 @@ class Album
     /**
      * Retrieves all WeeklyPhotos.
      *
-     * @return PhotoModel[]
+     * @return WeeklyPhotoModel[]
      */
     public function getLastPhotosOfTheWeekPerYear(): array
     {
@@ -292,7 +291,10 @@ class Album
 
         $photos = [];
         foreach ($years as $year) {
-            if (null === ($photo = $this->weeklyPhotoMapper->getPhotosOfTheWeekInYear($year, true))) {
+            /** @var WeeklyPhotoModel|null $photo */
+            $photo = $this->weeklyPhotoMapper->getPhotosOfTheWeekInYear($year, true);
+
+            if (null === $photo) {
                 continue;
             }
 
@@ -313,7 +315,7 @@ class Album
         $dates = [];
         $actualPhotos = [];
 
-        /** @var WeeklyPhoto $photo */
+        /** @var WeeklyPhotoModel $photo */
         foreach ($photos as $photo) {
             $actualPhotos[] = $photo->getPhoto();
             $dates[] = $photo->getWeek();

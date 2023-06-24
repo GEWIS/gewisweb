@@ -66,7 +66,7 @@ class Course implements ResourceInterface
     /**
      * Get all exams belonging to this study.
      *
-     * @return Collection<Exam|Summary>
+     * @return Collection<CourseDocument>
      */
     public function getDocuments(): Collection
     {

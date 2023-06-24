@@ -903,13 +903,16 @@ class Company
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit packages'));
         }
 
+        /** @var CompanyJobPackageModel|null $package */
         $package = $this->packageMapper->findEditablePackage($packageId);
 
         if (null === $package) {
+            /** @var CompanyBannerPackageModel|null $package */
             $package = $this->bannerPackageMapper->findEditablePackage($packageId);
         }
 
         if (null === $package) {
+            /** @var CompanyFeaturedPackageModel|null $package */
             $package = $this->featuredPackageMapper->findEditablePackage($packageId);
         }
 

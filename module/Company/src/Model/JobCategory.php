@@ -132,7 +132,6 @@ class JobCategory
 
     /**
      * @return array{
-     *     id: int,
      *     name: ?string,
      *     nameEn: ?string,
      *     pluralName: ?string,

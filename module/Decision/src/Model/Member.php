@@ -26,7 +26,7 @@ use User\Model\User as UserModel;
  * Member model.
  *
  * @psalm-type MemberArrayType = array{
- *     id: int,
+ *     lidnr: int,
  *     email: ?string,
  *     fullName: string,
  *     lastName: string,

@@ -16,6 +16,7 @@ use Frontpage\Model\NewsItem as NewsItemModel;
 use Laminas\Mvc\I18n\Translator;
 use Photo\Mapper\Tag as TagMapper;
 use Photo\Model\Photo as PhotoModel;
+use Photo\Model\Tag as TagModel;
 use Photo\Model\WeeklyPhoto as WeeklyPhotoModel;
 use Photo\Service\Photo as PhotoService;
 
@@ -104,7 +105,7 @@ class Frontpage
      *
      * @return array{
      *     birthdays: BirthdaysArrayType,
-     *     tag: ?PhotoModel,
+     *     tag: ?TagModel,
      * }
      */
     public function getBirthdayInfo(): array

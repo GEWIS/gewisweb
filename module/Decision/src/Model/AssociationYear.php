@@ -7,6 +7,7 @@ namespace Decision\Model;
 use DateInterval;
 use DateTime;
 
+use function intval;
 use function sprintf;
 
 class AssociationYear
@@ -55,8 +56,10 @@ class AssociationYear
         $inst = new static();
         if (
             $dateTime->format('n') < self::ASSOCIATION_YEAR_START_MONTH
-            || (self::ASSOCIATION_YEAR_START_MONTH === $dateTime->format('n')
-                && $dateTime->format('j') < self::ASSOCIATION_YEAR_START_DAY)
+            || (
+                self::ASSOCIATION_YEAR_START_MONTH === intval($dateTime->format('n'))
+                && $dateTime->format('j') < self::ASSOCIATION_YEAR_START_DAY
+            )
         ) {
             $inst->firstYear = (int) $dateTime->format('Y') - 1;
         } else {

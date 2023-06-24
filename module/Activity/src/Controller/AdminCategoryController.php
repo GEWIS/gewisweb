@@ -147,7 +147,7 @@ class AdminCategoryController extends AbstractActionController
         }
 
         $categoryData = $category->toArray();
-        unset($categoryData['id'], $categoryData['activities']);
+        unset($categoryData['id']);
 
         $categoryData['language_dutch'] = null !== $categoryData['name'];
         $categoryData['language_english'] = null !== $categoryData['nameEn'];

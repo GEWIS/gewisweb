@@ -97,8 +97,8 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
                                     'The activity must start after today',
                                 ),
                             ],
-                            'callback' => function ($value, $context = []) {
-                                return $this->isFutureTime($value, $context);
+                            'callback' => function ($value) {
+                                return $this->isFutureTime($value);
                             },
                         ],
                     ],

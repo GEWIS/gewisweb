@@ -11,7 +11,6 @@ use Application\Model\Traits\UpdateProposableTrait;
 use Company\Model\Enums\CompanyPackageTypes;
 use Company\Model\JobCategory as JobCategoryModel;
 use Company\Model\Proposals\CompanyUpdate as CompanyUpdateProposal;
-use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\Column;
@@ -399,9 +398,9 @@ class Company implements ResourceInterface
 
         $visible = false;
 
-        // When any packages is not expired, the company should be shown to the user
+        // When any package is not expired, the company should be shown to the user
         foreach ($this->getPackages() as $package) {
-            if ($package->isExpired(new DateTime())) {
+            if ($package->isExpired()) {
                 continue;
             }
 
@@ -462,9 +461,8 @@ class Company implements ResourceInterface
      */
     public function getNumberOfJobs(): int
     {
-        /** @var CompanyJobPackage $package */
         $jobCount = static function (CompanyPackage $package) {
-            if (CompanyPackageTypes::Job === $package->getType()) {
+            if ($package instanceof CompanyJobPackage) {
                 return $package->getJobsWithoutProposals()->count();
             }
 
@@ -480,9 +478,8 @@ class Company implements ResourceInterface
      */
     public function getNumberOfActiveJobs(?JobCategoryModel $category = null): int
     {
-        /** @var CompanyJobPackage $package */
         $jobCount = static function (CompanyPackage $package) use ($category) {
-            if (CompanyPackageTypes::Job === $package->getType()) {
+            if ($package instanceof CompanyJobPackage) {
                 return $package->getNumberOfActiveJobs($category);
             }
 

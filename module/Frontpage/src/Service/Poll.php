@@ -28,7 +28,7 @@ use User\Permissions\NotAllowedException;
  *
  * @psalm-type PollDetailsType = array{
  *     canVote: bool,
- *     userVote: bool,
+ *     userVote: ?PollVoteModel,
  * }|null
  */
 class Poll
