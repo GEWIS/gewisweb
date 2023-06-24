@@ -67,8 +67,21 @@ $this->headTitle($this->translate('Education'));
                 <br/>
 
                 <?php if (isset($courses)): ?>
+                    <?php
+                    $count = count($courses);
+                    ?>
                     <p>
-                        <strong><?= sprintf($this->translate('Found %d course(s) matching your description'), count($courses)) ?></strong>
+                        <strong>
+                            <?= sprintf(
+                                $this->translate('Found %d %s matching your description'),
+                                $count,
+                                $this->translatePlural(
+                                    'course',
+                                    'courses',
+                                    $count,
+                                ),
+                            ) ?>
+                        </strong>
                     </p>
                 <?php endif; ?>
                 <?php if (!empty($courses)): ?>

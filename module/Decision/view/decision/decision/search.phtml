@@ -46,32 +46,43 @@ $this->headTitle($this->translate('Search for decision'));
         <?= $this->form()->closeTag() ?>
 
         <?php if (isset($result)): ?>
-            <ul class="list-unstyled">
-                <?php foreach ($result as $decision): ?>
-                    <?php $type = $decision->getMeeting()->getType()->value; ?>
-                    <?php $number = $decision->getMeeting()->getNumber(); ?>
-                    <li>
-                        <strong class="decision-meeting">
-                            <a href="<?= $this->url(
-                                'decision/meeting',
-                                [
-                                    'type' => $type,
-                                    'number' => $number,
-                                ],
-                            ) ?>">
-                                <?= sprintf(
-                                    '%s %d.%d.%d',
-                                    $type,
-                                    $number,
-                                    $decision->getPoint(),
-                                    $decision->getNumber(),
-                                ) ?>
-                            </a>
-                        </strong>
-                        <span class="decision-content"><?= $this->escapeHtml($decision->getContent()) ?></span>
-                    </li>
-                <?php endforeach ?>
-            </ul>
+            <?php if (empty($result)): ?>
+                <p><?= $this->translate('No decisions were found.') ?></p>
+                <ul>
+                    <li><?= $this->translate('Check the spelling of your search term') ?></li>
+                    <li><?= $this->translate('Try alternate words or selections') ?></li>
+                    <li><?= $this->translate('Try using a more generic search term') ?></li>
+                    <li><?= $this->translate('Try entering fewer keywords') ?></li>
+                    <li><?= $this->translate('Looking for a specific decision but forgot the numbers? Try dropping the decision point and/or number') ?></li>
+                </ul>
+            <?php else: ?>
+                <ul class="list-unstyled">
+                    <?php foreach ($result as $decision): ?>
+                        <?php $type = $decision->getMeeting()->getType()->value; ?>
+                        <?php $number = $decision->getMeeting()->getNumber(); ?>
+                        <li>
+                            <strong class="decision-meeting">
+                                <a href="<?= $this->url(
+                                    'decision/meeting',
+                                    [
+                                        'type' => $type,
+                                        'number' => $number,
+                                    ],
+                                ) ?>">
+                                    <?= sprintf(
+                                        '%s %d.%d.%d',
+                                        $type,
+                                        $number,
+                                        $decision->getPoint(),
+                                        $decision->getNumber(),
+                                    ) ?>
+                                </a>
+                            </strong>
+                            <span class="decision-content"><?= $this->escapeHtml($decision->getContent()) ?></span>
+                        </li>
+                    <?php endforeach ?>
+                </ul>
+            <?php endif; ?>
         <?php endif ?>
     </div>
 </section>
