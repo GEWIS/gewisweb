@@ -6,38 +6,46 @@ cd `dirname $0`
 find ./module -iname "*.phtml" -print0 | sort -z | xargs -r0 xgettext \
     --language=PHP \
     --keyword=translate \
+    --keyword=translatePlural:1,2 \
     --output=./module/Application/language/gewisweb.pot \
     --force-po \
+    --no-location \
+    --sort-output \
     --package-name=GEWISweb \
-    --package-version=0.1.0-dev \
+    --package-version=`git describe --dirty --always` \
     --copyright-holder=GEWIS \
 
 find ./module -iname "*.php" -print0 | sort -z | xargs -r0 xgettext \
     --language=PHP \
     --keyword=translate \
+    --keyword=translatePlural:1,2 \
     --output=./module/Application/language/gewisweb.pot \
     --force-po \
+    --no-location \
+    --sort-output \
     --package-name=GEWISweb \
-    --package-version=0.1.0-dev \
+    --package-version=`git describe --dirty --always` \
     --copyright-holder=GEWIS \
     --join-existing \
 
 xgettext module/Application/language/additional-strings \
+    --language=C \
+    --from-code=UTF-8 \
+    --extract-all \
     --output=./module/Application/language/gewisweb.pot \
     --force-po \
+    --no-location \
+    --sort-output \
     --package-name=GEWISweb \
-    --package-version=0.1.0-dev \
+    --package-version=`git describe --dirty --always` \
     --copyright-holder=GEWIS \
     --join-existing \
-    --from-code=UTF-8 \
-    --language=C \
-    --extract-all \
 
 cd ./module/Application/language/
 
 # merge translation files
-msgmerge --sort-by-file -U nl.po gewisweb.pot
-msgmerge --sort-by-file -U en.po gewisweb.pot
+msgmerge --sort-output -U nl.po gewisweb.pot
+msgmerge --sort-output -U en.po gewisweb.pot
 
 # remove obsolete translations
 msgattrib --no-obsolete -o en.po en.po
