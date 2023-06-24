@@ -25,11 +25,6 @@ use User\Permissions\NotAllowedException;
 
 /**
  * Poll service.
- *
- * @psalm-type PollDetailsType = array{
- *     canVote: bool,
- *     userVote: ?PollVoteModel,
- * }|null
  */
 class Poll
 {
@@ -111,12 +106,18 @@ class Poll
     /**
      * Returns details about a poll.
      *
-     * @return PollDetailsType
+     * @return array{
+     *     canVote: bool,
+     *     userVote: ?PollVoteModel,
+     * }
      */
-    public function getPollDetails(?PollModel $poll): ?array
+    public function getPollDetails(?PollModel $poll): array
     {
         if (null === $poll) {
-            return null;
+            return [
+                'canVote' => false,
+                'userVote' => null,
+            ];
         }
 
         $canVote = $this->canVote($poll);

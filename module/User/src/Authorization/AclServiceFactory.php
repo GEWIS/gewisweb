@@ -35,7 +35,6 @@ class AclServiceFactory implements FactoryInterface
         $requestedName,
         ?array $options = null,
     ): GenericAclService {
-        /** @var MvcTranslator $translator */
         $translator = $container->get(MvcTranslator::class);
         /** @var UserAuthenticationService<UserSession, UserAdapter> $userAuthService */
         $userAuthService = $container->get('user_auth_user_service');

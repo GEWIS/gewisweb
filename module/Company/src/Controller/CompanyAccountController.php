@@ -76,7 +76,10 @@ class CompanyAccountController extends AbstractActionController
         // `packageId` is an optional part of the route and can be used to display jobs specific to that job package. It
         // is null if it was not specified (`jobs_overview` route).
         if (null !== ($packageId = $this->params('packageId'))) {
-            /** @var CompanyJobPackageModel|null $package */
+            /**
+             * @psalm-suppress UnnecessaryVarAnnotation
+             * @var CompanyJobPackageModel|null $package
+             */
             $package = $this->jobPackageMapper->find($packageId);
 
             // Check if the package exists and if it belongs to the company of the company user.
@@ -120,7 +123,10 @@ class CompanyAccountController extends AbstractActionController
 
         // Get the specified package and company user (through ACL, as it is already included).
         $packageId = (int) $this->params()->fromRoute('packageId');
-        /** @var CompanyJobPackageModel|null $package */
+        /**
+         * @psalm-suppress UnnecessaryVarAnnotation
+         * @var CompanyJobPackageModel|null $package
+         */
         $package = $this->jobPackageMapper->find($packageId);
         $companySlugName = $this->aclService->getCompanyUserIdentityOrThrowException()->getCompany()->getSlugName();
 
@@ -366,7 +372,10 @@ class CompanyAccountController extends AbstractActionController
 
         // Get the specified package and company user (through ACL, as it is already included).
         $packageId = (int) $this->params()->fromRoute('packageId');
-        /** @var CompanyJobPackageModel|null $package */
+        /**
+         * @psalm-suppress UnnecessaryVarAnnotation
+         * @var CompanyJobPackageModel|null $package
+         */
         $package = $this->jobPackageMapper->find($packageId);
         $company = $this->aclService->getCompanyUserIdentityOrThrowException()->getCompany();
         $companySlugName = $company->getSlugName();

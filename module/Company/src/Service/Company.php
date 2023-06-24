@@ -759,7 +759,6 @@ class Company
     {
         $this->deleteJobAttachments($job);
 
-        /** @var JobUpdateProposalModel $jobUpdateProposal */
         foreach ($job->getUpdateProposals() as $jobUpdateProposal) {
             $this->deleteJobAttachments($jobUpdateProposal->getProposal());
         }
@@ -797,7 +796,10 @@ class Company
         }
 
         foreach ($data['jobs'] as $formJob) {
-            /** @var JobModel|null $job */
+            /**
+             * @psalm-suppress UnnecessaryVarAnnotation
+             * @var JobModel|null $job
+             */
             $job = $this->jobMapper->find((int) $formJob);
 
             if (null === $job) {
@@ -821,7 +823,7 @@ class Company
         // Fix some attributes.
         $data['category'] = $data['category']->getId();
         foreach ($data['labels'] as $key => $label) {
-            $data['labels'][$key] = $label->getId();
+            $data['labels'][$key] = $label['id'];
         }
 
         $this->updateJob($job, $data, true);

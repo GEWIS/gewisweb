@@ -502,7 +502,7 @@ class Activity
         unset($current['id']);
 
         // Convert all DateTimes in the original Activity to strings.
-        array_walk_recursive($current, static function (&$v, $k): void {
+        array_walk_recursive($current, static function (&$v): void {
             if (!($v instanceof DateTime)) {
                 return;
             }
@@ -522,7 +522,7 @@ class Activity
 
         // We do not need the ActivityCategory models, hence we replace it with the ids of each one. However, it is no
         // longer a model and requires array access to get the id.
-        array_walk($current['categories'], static function (&$v, $k): void {
+        array_walk($current['categories'], static function (&$v): void {
             $v = strval($v['id']);
         });
 

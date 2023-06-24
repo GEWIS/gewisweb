@@ -45,7 +45,10 @@ class ActivityCalendarForm
             return false;
         }
 
-        /** @var ActivityOptionCreationPeriodModel|null $period */
+        /**
+         * @psalm-suppress UnnecessaryVarAnnotation
+         * @var ActivityOptionCreationPeriodModel|null $period
+         */
         $period = $this->periodMapper->find($period);
 
         if (null === $period) {

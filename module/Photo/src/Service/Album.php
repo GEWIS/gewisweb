@@ -306,6 +306,7 @@ class Album
 
     private function getWeeklyAlbum(int $year): ?WeeklyAlbumModel
     {
+        /** @var WeeklyPhotoModel[] $photos */
         $photos = $this->weeklyPhotoMapper->getPhotosOfTheWeekInYear($year);
 
         if (empty($photos)) {
@@ -315,7 +316,6 @@ class Album
         $dates = [];
         $actualPhotos = [];
 
-        /** @var WeeklyPhotoModel $photo */
         foreach ($photos as $photo) {
             $actualPhotos[] = $photo->getPhoto();
             $dates[] = $photo->getWeek();

@@ -46,7 +46,10 @@ class Module
 
         $locale = $this->determineLocale($e);
 
-        /** @var MvcTranslator $mvcTranslator */
+        /**
+         * @psalm-suppress UnnecessaryVarAnnotation
+         * @var MvcTranslator $mvcTranslator
+         */
         $mvcTranslator = $e->getApplication()->getServiceManager()->get(MvcTranslator::class);
         $translator = $mvcTranslator->getTranslator();
         if ($translator instanceof I18nTranslator) {

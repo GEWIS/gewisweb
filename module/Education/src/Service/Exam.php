@@ -99,7 +99,10 @@ class Exam
             );
         }
 
-        /** @var CourseDocumentModel|null $document */
+        /**
+         * @psalm-suppress UnnecessaryVarAnnotation
+         * @var CourseDocumentModel|null $document
+         */
         $document = $this->courseDocumentMapper->find($id);
 
         if (null === $document) {

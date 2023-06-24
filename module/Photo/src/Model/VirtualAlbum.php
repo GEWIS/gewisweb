@@ -121,9 +121,9 @@ class VirtualAlbum extends Album
         }
 
         // TODO: The code below probably never was finished
-        foreach ($this->children as $album) {
-            $array['children'][] = [];
-        }
+        // foreach ($this->children as $album) {
+        //     $array['children'][] = [];
+        // }
 
         return $array;
     }

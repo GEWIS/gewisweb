@@ -13,11 +13,12 @@ use Decision\Model\Member as MemberModel;
 use Decision\Service\AclService;
 use Decision\Service\Member as MemberService;
 use Frontpage\Model\NewsItem as NewsItemModel;
+use Frontpage\Model\Poll as PollModel;
+use Frontpage\Model\PollVote as PollVoteModel;
 use Laminas\Mvc\I18n\Translator;
 use Photo\Mapper\Tag as TagMapper;
 use Photo\Model\Photo as PhotoModel;
 use Photo\Model\Tag as TagModel;
-use Photo\Model\WeeklyPhoto as WeeklyPhotoModel;
 use Photo\Service\Photo as PhotoService;
 
 use function abs;
@@ -28,7 +29,6 @@ use function usort;
 /**
  * Frontpage service.
  *
- * @psalm-import-type PollDetailsType from Poll as ImportedPollDetailsType
  * @psalm-type BirthdaysArrayType = array<array-key, array{
  *     member: MemberModel,
  *     age: int,
@@ -69,8 +69,12 @@ class Frontpage
      *     birthdays: BirthdaysArrayType,
      *     birthdayPhoto: ?PhotoModel,
      *     activities: ActivityModel[],
-     *     weeklyPhoto: ?WeeklyPhotoModel,
-     *     poll: ImportedPollDetailsType,
+     *     weeklyPhoto: ?PhotoModel,
+     *     poll: array{
+     *         canVote: bool,
+     *         poll: ?PollModel,
+     *         userVote: ?PollVoteModel,
+     *     },
      *     news: array<array-key, ActivityModel|NewsItemModel>,
      *     companyBanner: ?CompanyBannerPackageModel,
      *     photoConfig: mixed[],

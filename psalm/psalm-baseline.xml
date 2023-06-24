@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="5.6.0@e784128902dfe01d489c4123d69918a9f3c1eac5">
+  <file src="module/Activity/src/Controller/ActivityController.php">
+    <PossiblyFalseReference>
+      <code>getId</code>
+    </PossiblyFalseReference>
+  </file>
+  <file src="module/Activity/src/Controller/AdminController.php">
+    <PossiblyFalseReference>
+      <code>getNew</code>
+    </PossiblyFalseReference>
+  </file>
+  <file src="module/Activity/src/Service/Activity.php">
+    <PossiblyFalseReference>
+      <code>getNew</code>
+    </PossiblyFalseReference>
+  </file>
   <file src="module/Application/src/Service/WatermarkService.php">
     <TypeDoesNotContainNull>
       <code>$this-&gt;remoteAddress</code>
@@ -13,10 +28,25 @@
       <code>[[$this::LIDNR], $this-&gt;user]</code>
     </InvalidArgument>
   </file>
+  <file src="module/Application/test/Mapper/BaseMapperTest.php">
+    <UnusedMethodCall>
+      <code>getEntityManager</code>
+    </UnusedMethodCall>
+  </file>
   <file src="module/Company/src/Controller/CompanyAccountController.php">
     <PossiblyFalseReference>
       <code>getProposal</code>
     </PossiblyFalseReference>
+  </file>
+  <file src="module/Company/src/Model/CompanyFeaturedPackage.php">
+    <InvalidArgument>
+      <code>$data</code>
+    </InvalidArgument>
+  </file>
+  <file src="module/Company/src/Service/Company.php">
+    <InvalidArgument>
+      <code>$file</code>
+    </InvalidArgument>
   </file>
   <file src="module/Decision/src/Service/Decision.php">
     <InvalidArgument>
@@ -27,26 +57,15 @@
 
             $this-&gt;meetingDocumentMapper-&gt;persist($document);
         }</code>
-      <code>function (MeetingDocumentModel $document) {
+      <code>static function (MeetingDocumentModel $document) {
             return $document-&gt;getId();
         }</code>
     </InvalidArgument>
-    <InvalidScalarArgument>
-      <code>$newPosition</code>
-      <code>$newPosition</code>
-    </InvalidScalarArgument>
   </file>
   <file src="module/Photo/src/Controller/Plugin/AlbumPaginatorAdapter.php">
     <InvalidNullableReturnType>
       <code>int</code>
     </InvalidNullableReturnType>
-  </file>
-  <file src="module/Photo/src/Service/AlbumCover.php">
-    <InvalidScalarArgument>
-      <code>$cropX</code>
-      <code>$resizeHeight</code>
-      <code>$resizeWidth</code>
-    </InvalidScalarArgument>
   </file>
   <file src="module/User/src/Authorization/GenericAclService.php">
     <PossiblyUndefinedArrayOffset>

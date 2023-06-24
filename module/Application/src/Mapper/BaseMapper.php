@@ -204,7 +204,7 @@ abstract class BaseMapper
     public function transactional(Closure $func): mixed
     {
         return $this->getEntityManager()->wrapInTransaction(
-            function ($em) use ($func) {
+            function () use ($func) {
                 return $func($this);
             },
         );
