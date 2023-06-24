@@ -22,7 +22,7 @@ class Organ extends BaseMapper
     /**
      * Find all active organs.
      *
-     * @return array<array-key, OrganModel>
+     * @return OrganModel[]
      */
     public function findActive(?OrganTypes $type = null): array
     {
@@ -53,7 +53,7 @@ class Organ extends BaseMapper
     /**
      * Find all abrogated organs.
      *
-     * @return array<array-key, OrganModel>
+     * @return OrganModel[]
      */
     public function findAbrogated(?OrganTypes $type = null): array
     {

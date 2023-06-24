@@ -20,7 +20,7 @@ class ActivityOptionProposal extends BaseMapper
      * @param DateTime $end     the date to get the options before
      * @param int      $organId the organ options have to be associated with
      *
-     * @return array<array-key, ActivityOptionProposalModel>
+     * @return ActivityOptionProposalModel[]
      */
     public function getNonClosedProposalsWithinPeriodAndOrgan(
         DateTime $begin,

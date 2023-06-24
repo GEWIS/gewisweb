@@ -19,7 +19,7 @@ class NewsItem extends BaseMapper
     /**
      * Retrieves a certain number of news items sorted descending by their date.
      *
-     * @return array<array-key, NewsItemModel>
+     * @return NewsItemModel[]
      */
     public function getLatestNewsItems(int $count): array
     {

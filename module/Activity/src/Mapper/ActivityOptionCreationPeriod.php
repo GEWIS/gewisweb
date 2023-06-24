@@ -16,7 +16,7 @@ class ActivityOptionCreationPeriod extends BaseMapper
     /**
      * Finds the ActivityOptionCreationPeriod model that is currently active.
      *
-     * @return array<array-key, ActivityOptionCreationPeriodModel>
+     * @return ActivityOptionCreationPeriodModel[]
      */
     public function getCurrentActivityOptionCreationPeriods(): array
     {
@@ -32,7 +32,7 @@ class ActivityOptionCreationPeriod extends BaseMapper
     /**
      * Finds the ActivityOptionCreationPeriod model that will be active next.
      *
-     * @return array<array-key, ActivityOptionCreationPeriodModel>
+     * @return ActivityOptionCreationPeriodModel[]
      */
     public function getUpcomingActivityOptionCreationPeriods(): array
     {

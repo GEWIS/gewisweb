@@ -38,7 +38,7 @@ class WeeklyPhoto extends BaseMapper
     }
 
     /**
-     * @return WeeklyPhotoModel|array<array-key, WeeklyPhotoModel>|null
+     * @return WeeklyPhotoModel|WeeklyPhotoModel[]|null
      */
     public function getPhotosOfTheWeekInYear(
         int $year,

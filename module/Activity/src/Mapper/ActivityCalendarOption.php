@@ -21,7 +21,7 @@ class ActivityCalendarOption extends BaseMapper
      *
      * @param OrganModel[] $organs
      *
-     * @return array<array-key, ActivityCalendarOptionModel>
+     * @return ActivityCalendarOptionModel[]
      */
     public function getUpcomingOptionsByOrgans(array $organs): array
     {
@@ -43,7 +43,7 @@ class ActivityCalendarOption extends BaseMapper
      *
      * @param bool $withDeleted whether to include deleted results
      *
-     * @return array<array-key, ActivityCalendarOptionModel>
+     * @return ActivityCalendarOptionModel[]
      *
      * @throws Exception
      */
@@ -68,7 +68,7 @@ class ActivityCalendarOption extends BaseMapper
      *
      * @param DateTime $before the date to get the options before
      *
-     * @return array<array-key, ActivityCalendarOptionModel>
+     * @return ActivityCalendarOptionModel[]
      */
     public function getOverdueOptions(DateTime $before): array
     {
@@ -88,7 +88,7 @@ class ActivityCalendarOption extends BaseMapper
     /**
      * Retrieves options associated with a proposal.
      *
-     * @return array<array-key, ActivityCalendarOptionModel>
+     * @return ActivityCalendarOptionModel[]
      */
     public function findOptionsByProposal(ActivityOptionProposalModel $proposal): array
     {

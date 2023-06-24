@@ -20,7 +20,7 @@ class Company extends BaseMapper
     /**
      * Find all public companies, these are companies that are published and have at least one non-expired package.
      *
-     * @return array<array-key, CompanyModel>
+     * @return CompanyModel[]
      */
     public function findAllPublic(): array
     {
@@ -74,7 +74,7 @@ class Company extends BaseMapper
     }
 
     /**
-     * @return array<array-key, CompanyModel>
+     * @return CompanyModel[]
      */
     public function findUpdateProposals(): array
     {

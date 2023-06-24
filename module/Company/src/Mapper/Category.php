@@ -19,7 +19,7 @@ use function strtolower;
 class Category extends BaseMapper
 {
     /**
-     * @return array<array-key, JobCategoryModel>
+     * @return JobCategoryModel[]
      */
     public function findVisibleCategories(): array
     {

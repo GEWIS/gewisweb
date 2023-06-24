@@ -33,7 +33,7 @@ class Poll extends BaseMapper
     }
 
     /**
-     * @return array<array-key, PollModel>
+     * @return PollModel[]
      */
     public function getUnapprovedPolls(): array
     {

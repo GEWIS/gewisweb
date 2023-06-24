@@ -30,7 +30,7 @@ class Package extends BaseMapper
      *
      * @param DateTime $date The date until where to search
      *
-     * @return array<array-key, T0>
+     * @return T0[]
      */
     public function findFuturePackageExpirationsBeforeDate(DateTime $date): array
     {
@@ -50,7 +50,7 @@ class Package extends BaseMapper
      *
      * @param DateTime $date The date until where to search
      *
-     * @return array<array-key, T0>
+     * @return T0[]
      */
     public function findFuturePackageStartsBeforeDate(DateTime $date): array
     {
@@ -78,7 +78,7 @@ class Package extends BaseMapper
     /**
      * Find all packages that should be visible, and returns an editable version of them.
      *
-     * @return array<array-key, T0>
+     * @return T0[]
      */
     public function findVisiblePackages(): array
     {
@@ -109,7 +109,7 @@ class Package extends BaseMapper
     /**
      * Get all job packages for a specific company.
      *
-     * @return array<array-key, CompanyJobPackageModel>
+     * @return CompanyJobPackageModel[]
      */
     public function findJobPackagesByCompany(CompanyModel $company): array
     {
@@ -123,7 +123,7 @@ class Package extends BaseMapper
     /**
      * Get non-expired packages for a specific company.
      *
-     * @return array<array-key, T0>
+     * @return T0[]
      */
     public function findNonExpiredPackages(CompanyModel $company): array
     {

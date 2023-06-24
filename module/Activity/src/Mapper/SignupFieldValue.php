@@ -16,7 +16,7 @@ class SignupFieldValue extends BaseMapper
     /**
      * Finds all field values associated with the $signup.
      *
-     * @return array<array-key, SignupFieldValueModel>
+     * @return SignupFieldValueModel[]
      */
     public function getFieldValuesBySignup(SignupModel $signup): array
     {

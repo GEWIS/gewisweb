@@ -22,7 +22,7 @@ class Album extends BaseMapper
      * @param int        $start      the result to start at
      * @param int|null   $maxResults max amount of results to return, null for infinite
      *
-     * @return array<array-key, AlbumModel>
+     * @return AlbumModel[]
      */
     public function getSubAlbums(
         AlbumModel $parent,
@@ -45,7 +45,7 @@ class Album extends BaseMapper
     /**
      * return all the sub-albums without a parent.
      *
-     * @return array<array-key, AlbumModel>
+     * @return AlbumModel[]
      */
     public function getRootAlbums(): array
     {
@@ -62,7 +62,7 @@ class Album extends BaseMapper
      * @param DateTime $start start date and time
      * @param DateTime $end   end date and time
      *
-     * @return array<array-key, AlbumModel>
+     * @return AlbumModel[]
      */
     public function getAlbumsInDateRange(
         DateTime $start,
@@ -82,7 +82,7 @@ class Album extends BaseMapper
      * Retrieves all root albums which do not have a startDateTime specified.
      * This is in most cases analogous to returning all empty albums.
      *
-     * @return array<array-key, AlbumModel>
+     * @return AlbumModel[]
      */
     public function getAlbumsWithoutDate(): array
     {
