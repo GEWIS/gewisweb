@@ -1123,7 +1123,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Activity\\Model\\Activity\u003A\u003AgetSignupLists\u0028\u0029",
             "name": "getSignupLists",
-            "summary": "Returns\u0020an\u0020Collection\u0020of\u0020SignupLists\u0020associated\u0020with\u0020this\u0020activity.",
+            "summary": "Returns\u0020a\u0020Collection\u0020of\u0020SignupLists\u0020associated\u0020with\u0020this\u0020activity.",
             "url": "classes/Activity-Model-Activity.html#method_getSignupLists"
         },                {
             "fqsen": "\\Activity\\Model\\Activity\u003A\u003AgetName\u0028\u0029",
@@ -2618,7 +2618,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Activity\\Service\\ActivityCalendarForm\u003A\u003AgetEditableOrgans\u0028\u0029",
             "name": "getEditableOrgans",
-            "summary": "Retrieves\u0020all\u0020organs\u0020which\u0020the\u0020current\u0020user\u0020is\u0020allowed\u0020to\u0020edit\u0020and\u0020for\u0020which\u0020the\u0020organs\u0020can\u0020still\u0020create\u0020proposals.",
+            "summary": "Retrieves\u0020all\u0020organs\u0020which\u0020the\u0020current\u0020user\u0020is\u0020allowed\u0020to\u0020edit\u0020and\u0020for\u0020which\u0020the\u0020organ\u0020can\u0020create\u0020proposals.",
             "url": "classes/Activity-Service-ActivityCalendarForm.html#method_getEditableOrgans"
         },                {
             "fqsen": "\\Activity\\Service\\ActivityCalendarForm\u003A\u003AcanOrganCreateProposal\u0028\u0029",
@@ -2863,7 +2863,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Activity\\Service\\Signup\u003A\u003AgetSignedUpData\u0028\u0029",
             "name": "getSignedUpData",
-            "summary": "Gets\u0020an\u0020array\u0020of\u0020the\u0020signed\u0020up\u0020users\u0020and\u0020the\u0020associated\u0020data.",
+            "summary": "Gets\u0020an\u0020array\u0020of\u0020the\u0020signed\u002Dup\u0020users\u0020and\u0020the\u0020associated\u0020data.",
             "url": "classes/Activity-Service-Signup.html#method_getSignedUpData"
         },                {
             "fqsen": "\\Activity\\Service\\Signup\u003A\u003AisSignedUp\u0028\u0029",
@@ -2923,7 +2923,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Activity\\Service\\Signup\u003A\u003AisAllowedToSubscribe\u0028\u0029",
             "name": "isAllowedToSubscribe",
-            "summary": "Is\u0020the\u0020currently\u0020logged\u0020in\u0020user\u0020allowed\u0020to\u0020signup.",
+            "summary": "Is\u0020the\u0020currently\u0020logged\u002Din\u0020user\u0020allowed\u0020to\u0020signup.",
             "url": "classes/Activity-Service-Signup.html#method_isAllowedToSubscribe"
         },                {
             "fqsen": "\\Activity\\Service\\Signup\u003A\u003AisAllowedToExternalSubscribe\u0028\u0029",
@@ -4693,7 +4693,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Company\\Controller\\CompanyAccountController\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "CompanyAccountController\u0020constructor.",
+            "summary": "",
             "url": "classes/Company-Controller-CompanyAccountController.html#method___construct"
         },                {
             "fqsen": "\\Company\\Controller\\CompanyAccountController\u003A\u003AselfAction\u0028\u0029",
@@ -5278,7 +5278,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Company\\Model\\Company\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "Constructor.",
+            "summary": "",
             "url": "classes/Company-Model-Company.html#method___construct"
         },                {
             "fqsen": "\\Company\\Model\\Company\u003A\u003AgetName\u0028\u0029",
@@ -5803,7 +5803,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Company\\Model\\Job\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "Constructor.",
+            "summary": "",
             "url": "classes/Company-Model-Job.html#method___construct"
         },                {
             "fqsen": "\\Company\\Model\\Job\u003A\u003AgetName\u0028\u0029",
@@ -9013,7 +9013,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Decision\\Model\\Organ\u003A\u003AgetSubdecisions\u0028\u0029",
             "name": "getSubdecisions",
-            "summary": "Get\u0020all\u0020subdecisions.of\u0020this\u0020organ.",
+            "summary": "Get\u0020all\u0020subdecisions\u0020of\u0020this\u0020organ.",
             "url": "classes/Decision-Model-Organ.html#method_getSubdecisions"
         },                {
             "fqsen": "\\Decision\\Model\\Organ\u003A\u003AgetOrderedSubdecisions\u0028\u0029",
@@ -12328,12 +12328,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Frontpage\\Model\\Poll\u003A\u003A\u0024dutchQuestion",
             "name": "dutchQuestion",
-            "summary": "The\u0020dutch\u0020question\u0020for\u0020the\u0020poll.",
+            "summary": "The\u0020Dutch\u0020question\u0020for\u0020the\u0020poll.",
             "url": "classes/Frontpage-Model-Poll.html#property_dutchQuestion"
         },                {
             "fqsen": "\\Frontpage\\Model\\Poll\u003A\u003A\u0024englishQuestion",
             "name": "englishQuestion",
-            "summary": "The\u0020english\u0020question\u0020for\u0020the\u0020poll.",
+            "summary": "The\u0020English\u0020question\u0020for\u0020the\u0020poll.",
             "url": "classes/Frontpage-Model-Poll.html#property_englishQuestion"
         },                {
             "fqsen": "\\Frontpage\\Model\\Poll\u003A\u003A\u0024options",
@@ -13541,10 +13541,10 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Photo-Form-CreateAlbum.html#method___construct"
         },                {
-            "fqsen": "\\Photo\\Form\\CreateAlbum\u003A\u003AgetInputSpecification\u0028\u0029",
-            "name": "getInputSpecification",
+            "fqsen": "\\Photo\\Form\\CreateAlbum\u003A\u003AgetInputFilterSpecification\u0028\u0029",
+            "name": "getInputFilterSpecification",
             "summary": "",
-            "url": "classes/Photo-Form-CreateAlbum.html#method_getInputSpecification"
+            "url": "classes/Photo-Form-CreateAlbum.html#method_getInputFilterSpecification"
         },                {
             "fqsen": "\\Photo\\Form\\EditAlbum",
             "name": "EditAlbum",
@@ -13556,10 +13556,10 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Photo-Form-EditAlbum.html#method___construct"
         },                {
-            "fqsen": "\\Photo\\Form\\EditAlbum\u003A\u003AgetInputSpecification\u0028\u0029",
-            "name": "getInputSpecification",
+            "fqsen": "\\Photo\\Form\\EditAlbum\u003A\u003AgetInputFilterSpecification\u0028\u0029",
+            "name": "getInputFilterSpecification",
             "summary": "",
-            "url": "classes/Photo-Form-EditAlbum.html#method_getInputSpecification"
+            "url": "classes/Photo-Form-EditAlbum.html#method_getInputFilterSpecification"
         },                {
             "fqsen": "\\Photo\\Listener\\AlbumDate",
             "name": "AlbumDate",
@@ -13948,7 +13948,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Photo\\Model\\MemberAlbum",
             "name": "MemberAlbum",
-            "summary": "Class\u0020MemberAlbum\nContains\u0020all\u0020photos\u0020with\u0020tags\u0020of\u0020a\u0020member.",
+            "summary": "Contains\u0020all\u0020photos\u0020with\u0020tags\u0020of\u0020a\u0020member.",
             "url": "classes/Photo-Model-MemberAlbum.html"
         },                {
             "fqsen": "\\Photo\\Model\\MemberAlbum\u003A\u003A__construct\u0028\u0029",
@@ -14493,7 +14493,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Photo\\Model\\Vote\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "Vote\u0020constructor.",
+            "summary": "",
             "url": "classes/Photo-Model-Vote.html#method___construct"
         },                {
             "fqsen": "\\Photo\\Model\\Vote\u003A\u003AsetPhoto\u0028\u0029",
@@ -14853,7 +14853,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Photo\\Service\\AlbumCover\u003A\u003AcreateCover\u0028\u0029",
             "name": "createCover",
-            "summary": "Creates,\u0020stores\u0020and\u0020returns\u0020the\u0020path\u0020to\u0020a\u0020cover\u0020image,\u0020a\u0020mozaic\u0020generated\u0020from\na\u0020random\u0020selection\u0020of\u0020photos\u0020in\u0020the\u0020album\u0020or\u0020sub\u002Dalbums.",
+            "summary": "Creates,\u0020stores\u0020and\u0020returns\u0020the\u0020path\u0020to\u0020a\u0020cover\u0020image,\u0020a\u0020mosaic\u0020generated\u0020from\na\u0020random\u0020selection\u0020of\u0020photos\u0020in\u0020the\u0020album\u0020or\u0020sub\u002Dalbums.",
             "url": "classes/Photo-Service-AlbumCover.html#method_createCover"
         },                {
             "fqsen": "\\Photo\\Service\\AlbumCover\u003A\u003AgenerateCover\u0028\u0029",
@@ -15991,10 +15991,10 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/User-Form-CompanyUserReset.html#method___construct"
         },                {
-            "fqsen": "\\User\\Form\\CompanyUserReset\u003A\u003AgetInputSpecification\u0028\u0029",
-            "name": "getInputSpecification",
+            "fqsen": "\\User\\Form\\CompanyUserReset\u003A\u003AgetInputFilterSpecification\u0028\u0029",
+            "name": "getInputFilterSpecification",
             "summary": "",
-            "url": "classes/User-Form-CompanyUserReset.html#method_getInputSpecification"
+            "url": "classes/User-Form-CompanyUserReset.html#method_getInputFilterSpecification"
         },                {
             "fqsen": "\\User\\Form\\CompanyUserReset\u003A\u003A\u0024translate",
             "name": "translate",
@@ -16041,10 +16041,10 @@ Search.appendIndex(
             "summary": "Set\u0020the\u0020error.",
             "url": "classes/User-Form-Register.html#method_setError"
         },                {
-            "fqsen": "\\User\\Form\\Register\u003A\u003AgetInputSpecification\u0028\u0029",
-            "name": "getInputSpecification",
+            "fqsen": "\\User\\Form\\Register\u003A\u003AgetInputFilterSpecification\u0028\u0029",
+            "name": "getInputFilterSpecification",
             "summary": "",
-            "url": "classes/User-Form-Register.html#method_getInputSpecification"
+            "url": "classes/User-Form-Register.html#method_getInputFilterSpecification"
         },                {
             "fqsen": "\\User\\Form\\Register\u003A\u003AERROR_NO_EMAIL",
             "name": "ERROR_NO_EMAIL",
@@ -16111,10 +16111,10 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/User-Form-UserReset.html#method___construct"
         },                {
-            "fqsen": "\\User\\Form\\UserReset\u003A\u003AgetInputSpecification\u0028\u0029",
-            "name": "getInputSpecification",
+            "fqsen": "\\User\\Form\\UserReset\u003A\u003AgetInputFilterSpecification\u0028\u0029",
+            "name": "getInputFilterSpecification",
             "summary": "",
-            "url": "classes/User-Form-UserReset.html#method_getInputSpecification"
+            "url": "classes/User-Form-UserReset.html#method_getInputFilterSpecification"
         },                {
             "fqsen": "\\User\\Form\\UserReset\u003A\u003A\u0024translator",
             "name": "translator",

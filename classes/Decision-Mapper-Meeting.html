@@ -404,7 +404,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Mapper/Meeting.php"><a href="files/module-decision-src-mapper-meeting.html"><abbr title="module/Decision/src/Mapper/Meeting.php">Meeting.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">25</span>
+    <span class="phpdocumentor-element-found-in__line">24</span>
 
     </aside>
 
@@ -425,6 +425,18 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
                                                  <section class="phpdocumentor-description"><p>BaseMapper&lt;MeetingModel&gt;</p>
+</section>
+
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">psalm-type</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>MeetingArrayType = array&lt;array-key, array{
+0: MeetingModel,
+1: int,
+}&gt;</p>
 </section>
 
                                     </dd>
@@ -472,35 +484,35 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Application-Mapper-BaseMapper.html#method_find">find()</a>
     <span>
-                                &nbsp;: null|object    </span>
+                                &nbsp;: <abbr title="\Application\Mapper\T">T</abbr>|null    </span>
 </dt>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Application-Mapper-BaseMapper.html#method_findAll">findAll()</a>
     <span>
-                                &nbsp;: array&lt;string|int, mixed&gt;    </span>
+                                &nbsp;: array&lt;string|int, <abbr title="\Application\Mapper\T">T</abbr>&gt;    </span>
 </dt>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Mapper-Meeting.html#method_findAllMeetings">findAllMeetings()</a>
     <span>
-                                &nbsp;: array&lt;array-key, <a href="classes/Decision-Model-Meeting.html"><abbr title="\Decision\Model\Meeting">Meeting</abbr></a>&gt;    </span>
+                                &nbsp;: <abbr title="\Decision\Mapper\MeetingArrayType">MeetingArrayType</abbr>    </span>
 </dt>
 <dd>Find all meetings.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Application-Mapper-BaseMapper.html#method_findBy">findBy()</a>
     <span>
-                                &nbsp;: array&lt;string|int, mixed&gt;    </span>
+                                &nbsp;: array&lt;string|int, <abbr title="\Application\Mapper\T">T</abbr>&gt;    </span>
 </dt>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Mapper-Meeting.html#method_findByType">findByType()</a>
     <span>
-                                &nbsp;: array&lt;array-key, <a href="classes/Decision-Model-Meeting.html"><abbr title="\Decision\Model\Meeting">Meeting</abbr></a>&gt;    </span>
+                                &nbsp;: array&lt;string|int, <a href="classes/Decision-Model-Meeting.html"><abbr title="\Decision\Model\Meeting">Meeting</abbr></a>&gt;    </span>
 </dt>
 <dd>Find all meetings which have the given type.</dd>
 
@@ -528,21 +540,21 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Application-Mapper-BaseMapper.html#method_findOneBy">findOneBy()</a>
     <span>
-                                &nbsp;: null|object    </span>
+                                &nbsp;: <abbr title="\Application\Mapper\T">T</abbr>|null    </span>
 </dt>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Mapper-Meeting.html#method_findPast">findPast()</a>
     <span>
-                                &nbsp;: array&lt;array-key, <a href="classes/Decision-Model-Meeting.html"><abbr title="\Decision\Model\Meeting">Meeting</abbr></a>&gt;    </span>
+                                &nbsp;: array&lt;string|int, <a href="classes/Decision-Model-Meeting.html"><abbr title="\Decision\Model\Meeting">Meeting</abbr></a>&gt;    </span>
 </dt>
 <dd>Find all meetings that have taken place.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Mapper-Meeting.html#method_findUpcomingAnnouncedMeetings">findUpcomingAnnouncedMeetings()</a>
     <span>
-                                &nbsp;: array&lt;array-key, <a href="classes/Decision-Model-Meeting.html"><abbr title="\Decision\Model\Meeting">Meeting</abbr></a>&gt;    </span>
+                                &nbsp;: array&lt;string|int, <a href="classes/Decision-Model-Meeting.html"><abbr title="\Decision\Model\Meeting">Meeting</abbr></a>&gt;    </span>
 </dt>
 <dd></dd>
 
@@ -651,7 +663,7 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">27</span>
+    <span class="phpdocumentor-element-found-in__line">25</span>
 
     </aside>
 
@@ -689,7 +701,7 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">27</span>
+    <span class="phpdocumentor-element-found-in__line">25</span>
 
     </aside>
 
@@ -733,7 +745,7 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">202</span>
+    <span class="phpdocumentor-element-found-in__line">193</span>
 
     </aside>
 
@@ -779,7 +791,7 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">123</span>
+    <span class="phpdocumentor-element-found-in__line">117</span>
 
     </aside>
 
@@ -797,7 +809,8 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
                 : <span class="phpdocumentor-signature__argument__return-type">object</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
             </dl>
 
@@ -837,14 +850,14 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">164</span>
+    <span class="phpdocumentor-element-found-in__line">153</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">find</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$id</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">null|object</span></code>
+                    <span class="phpdocumentor-signature__name">find</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$id</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Application\Mapper\T">T</abbr>|null</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -861,24 +874,9 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">psalm-return</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>T|null</p>
-</section>
-
-                                    </dd>
-                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">null|object</span>
+    <span class="phpdocumentor-signature__response_type"><abbr title="\Application\Mapper\T">T</abbr>|null</span>
             &mdash;
             <section class="phpdocumentor-description"><p>The entity corresponding to the provided ID or null of the entity cannot be found</p>
 </section>
@@ -898,36 +896,21 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">193</span>
+    <span class="phpdocumentor-element-found-in__line">183</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">findAll</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">findAll</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, <abbr title="\Application\Mapper\T">T</abbr>&gt;</span></code>
 
     
     
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">psalm-return</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>T[]</p>
-</section>
-
-                                    </dd>
-                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
+    <span class="phpdocumentor-signature__response_type">array&lt;string|int, <abbr title="\Application\Mapper\T">T</abbr>&gt;</span>
             &mdash;
             <section class="phpdocumentor-description"><p>All entities in the repository</p>
 </section>
@@ -947,7 +930,7 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Mapper/Meeting.php"><a href="files/module-decision-src-mapper-meeting.html"><abbr title="module/Decision/src/Mapper/Meeting.php">Meeting.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">34</span>
+    <span class="phpdocumentor-element-found-in__line">33</span>
 
     </aside>
 
@@ -955,7 +938,7 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">findAllMeetings</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">int|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$limit</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;array-key, <a href="classes/Decision-Model-Meeting.html"><abbr title="\Decision\Model\Meeting">Meeting</abbr></a>&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">findAllMeetings</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">int|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$limit</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Decision\Mapper\MeetingArrayType">MeetingArrayType</abbr></span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -974,7 +957,7 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">array&lt;array-key, <a href="classes/Decision-Model-Meeting.html"><abbr title="\Decision\Model\Meeting">Meeting</abbr></a>&gt;</span>
+    <span class="phpdocumentor-signature__response_type"><abbr title="\Decision\Mapper\MeetingArrayType">MeetingArrayType</abbr></span>
             &mdash;
         
     
@@ -992,14 +975,14 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">174</span>
+    <span class="phpdocumentor-element-found-in__line">163</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">findBy</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$criteria</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">findBy</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$criteria</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, <abbr title="\Application\Mapper\T">T</abbr>&gt;</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -1016,24 +999,9 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">psalm-return</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>T[]</p>
-</section>
-
-                                    </dd>
-                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
+    <span class="phpdocumentor-signature__response_type">array&lt;string|int, <abbr title="\Application\Mapper\T">T</abbr>&gt;</span>
             &mdash;
             <section class="phpdocumentor-description"><p>The entities corresponding to the provided criteria</p>
 </section>
@@ -1053,7 +1021,7 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Mapper/Meeting.php"><a href="files/module-decision-src-mapper-meeting.html"><abbr title="module/Decision/src/Mapper/Meeting.php">Meeting.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">57</span>
+    <span class="phpdocumentor-element-found-in__line">56</span>
 
     </aside>
 
@@ -1061,7 +1029,7 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">findByType</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Enums-MeetingTypes.html"><abbr title="\Decision\Model\Enums\MeetingTypes">MeetingTypes</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$type</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;array-key, <a href="classes/Decision-Model-Meeting.html"><abbr title="\Decision\Model\Meeting">Meeting</abbr></a>&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">findByType</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Enums-MeetingTypes.html"><abbr title="\Decision\Model\Enums\MeetingTypes">MeetingTypes</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$type</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Decision-Model-Meeting.html"><abbr title="\Decision\Model\Meeting">Meeting</abbr></a>&gt;</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -1080,7 +1048,7 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">array&lt;array-key, <a href="classes/Decision-Model-Meeting.html"><abbr title="\Decision\Model\Meeting">Meeting</abbr></a>&gt;</span>
+    <span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Decision-Model-Meeting.html"><abbr title="\Decision\Model\Meeting">Meeting</abbr></a>&gt;</span>
             &mdash;
         
     
@@ -1098,7 +1066,7 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Mapper/Meeting.php"><a href="files/module-decision-src-mapper-meeting.html"><abbr title="module/Decision/src/Mapper/Meeting.php">Meeting.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">161</span>
+    <span class="phpdocumentor-element-found-in__line">153</span>
 
     </aside>
 
@@ -1148,7 +1116,7 @@ away is returned.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Mapper/Meeting.php"><a href="files/module-decision-src-mapper-meeting.html"><abbr title="module/Decision/src/Mapper/Meeting.php">Meeting.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">137</span>
+    <span class="phpdocumentor-element-found-in__line">130</span>
 
     </aside>
 
@@ -1166,7 +1134,8 @@ away is returned.</p>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Meeting.html"><abbr title="\Decision\Model\Meeting">Meeting</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
             </dl>
 
@@ -1215,7 +1184,7 @@ away is returned.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Mapper/Meeting.php"><a href="files/module-decision-src-mapper-meeting.html"><abbr title="module/Decision/src/Mapper/Meeting.php">Meeting.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">108</span>
+    <span class="phpdocumentor-element-found-in__line">102</span>
 
     </aside>
 
@@ -1233,14 +1202,16 @@ away is returned.</p>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Enums-MeetingTypes.html"><abbr title="\Decision\Model\Enums\MeetingTypes">MeetingTypes</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$number</span>
                 : <span class="phpdocumentor-signature__argument__return-type">int</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
             </dl>
 
@@ -1279,14 +1250,14 @@ away is returned.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">184</span>
+    <span class="phpdocumentor-element-found-in__line">175</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">findOneBy</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$criteria</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">null|object</span></code>
+                    <span class="phpdocumentor-signature__name">findOneBy</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$criteria</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Application\Mapper\T">T</abbr>|null</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -1309,18 +1280,18 @@ away is returned.</p>
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">psalm-return</span>
+                    <span class="phpdocumentor-tag__name">phpcsSuppress</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"><p>T|null</p>
+                                                 <section class="phpdocumentor-description"><p>SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification</p>
 </section>
 
                                     </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">null|object</span>
+    <span class="phpdocumentor-signature__response_type"><abbr title="\Application\Mapper\T">T</abbr>|null</span>
             &mdash;
             <section class="phpdocumentor-description"><p>The entity corresponding to the provided criteria or null of the entity cannot be found</p>
 </section>
@@ -1340,7 +1311,7 @@ away is returned.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Mapper/Meeting.php"><a href="files/module-decision-src-mapper-meeting.html"><abbr title="module/Decision/src/Mapper/Meeting.php">Meeting.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">75</span>
+    <span class="phpdocumentor-element-found-in__line">73</span>
 
     </aside>
 
@@ -1348,7 +1319,7 @@ away is returned.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">findPast</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$limit</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Enums-MeetingTypes.html"><abbr title="\Decision\Model\Enums\MeetingTypes">MeetingTypes</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$type</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;array-key, <a href="classes/Decision-Model-Meeting.html"><abbr title="\Decision\Model\Meeting">Meeting</abbr></a>&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">findPast</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$limit</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Enums-MeetingTypes.html"><abbr title="\Decision\Model\Enums\MeetingTypes">MeetingTypes</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$type</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Decision-Model-Meeting.html"><abbr title="\Decision\Model\Meeting">Meeting</abbr></a>&gt;</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -1367,14 +1338,15 @@ away is returned.</p>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Enums-MeetingTypes.html"><abbr title="\Decision\Model\Enums\MeetingTypes">MeetingTypes</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
             </dl>
 
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">array&lt;array-key, <a href="classes/Decision-Model-Meeting.html"><abbr title="\Decision\Model\Meeting">Meeting</abbr></a>&gt;</span>
+    <span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Decision-Model-Meeting.html"><abbr title="\Decision\Model\Meeting">Meeting</abbr></a>&gt;</span>
             &mdash;
             <section class="phpdocumentor-description"><p>Meetings that have taken place</p>
 </section>
@@ -1394,21 +1366,21 @@ away is returned.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Mapper/Meeting.php"><a href="files/module-decision-src-mapper-meeting.html"><abbr title="module/Decision/src/Mapper/Meeting.php">Meeting.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">181</span>
+    <span class="phpdocumentor-element-found-in__line">173</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">findUpcomingAnnouncedMeetings</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;array-key, <a href="classes/Decision-Model-Meeting.html"><abbr title="\Decision\Model\Meeting">Meeting</abbr></a>&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">findUpcomingAnnouncedMeetings</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Decision-Model-Meeting.html"><abbr title="\Decision\Model\Meeting">Meeting</abbr></a>&gt;</span></code>
 
     
     
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">array&lt;array-key, <a href="classes/Decision-Model-Meeting.html"><abbr title="\Decision\Model\Meeting">Meeting</abbr></a>&gt;</span>
+    <span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Decision-Model-Meeting.html"><abbr title="\Decision\Model\Meeting">Meeting</abbr></a>&gt;</span>
             &mdash;
         
     
@@ -1426,7 +1398,7 @@ away is returned.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">112</span>
+    <span class="phpdocumentor-element-found-in__line">107</span>
 
     </aside>
 
@@ -1480,7 +1452,7 @@ away is returned.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">154</span>
+    <span class="phpdocumentor-element-found-in__line">143</span>
 
     </aside>
 
@@ -1513,7 +1485,7 @@ away is returned.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">133</span>
+    <span class="phpdocumentor-element-found-in__line">125</span>
 
     </aside>
 
@@ -1546,7 +1518,7 @@ away is returned.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">37</span>
+    <span class="phpdocumentor-element-found-in__line">34</span>
 
     </aside>
 
@@ -1563,7 +1535,8 @@ away is returned.</p>
                 : <span class="phpdocumentor-signature__argument__return-type">object</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
             </dl>
 
@@ -1611,7 +1584,7 @@ away is returned.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">51</span>
+    <span class="phpdocumentor-element-found-in__line">48</span>
 
     </aside>
 
@@ -1677,7 +1650,7 @@ away is returned.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">66</span>
+    <span class="phpdocumentor-element-found-in__line">62</span>
 
     </aside>
 
@@ -1694,7 +1667,8 @@ away is returned.</p>
                 : <span class="phpdocumentor-signature__argument__return-type">object</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
             </dl>
 
@@ -1742,7 +1716,7 @@ away is returned.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">97</span>
+    <span class="phpdocumentor-element-found-in__line">92</span>
 
     </aside>
 
@@ -1760,7 +1734,8 @@ away is returned.</p>
                 : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
             </dl>
 
@@ -1815,7 +1790,7 @@ away is returned.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">80</span>
+    <span class="phpdocumentor-element-found-in__line">76</span>
 
     </aside>
 
@@ -1881,7 +1856,7 @@ away is returned.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">217</span>
+    <span class="phpdocumentor-element-found-in__line">204</span>
 
     </aside>
 
@@ -1902,7 +1877,8 @@ function.</p>
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Closure">Closure</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"></section>
+
             </dd>
             </dl>
 
@@ -1927,7 +1903,7 @@ function.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">144</span>
+    <span class="phpdocumentor-element-found-in__line">135</span>
 
     </aside>
 
@@ -1975,7 +1951,7 @@ function.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Mapper/Meeting.php"><a href="files/module-decision-src-mapper-meeting.html"><abbr title="module/Decision/src/Mapper/Meeting.php">Meeting.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">202</span>
+    <span class="phpdocumentor-element-found-in__line">191</span>
 
     </aside>
 
@@ -1987,19 +1963,6 @@ function.</p>
     
     
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">inheritDoc</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                             
-                                    </dd>
-                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">string</span>
