@@ -6,6 +6,11 @@
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
     errorBaseline="psalm/psalm-baseline.xml"
+    findUnusedBaselineEntry="true"
+    findUnusedCode="false"
+    findUnusedVariablesAndParams="true"
+    useDocblockTypes="true"
+    useDocblockPropertyTypes="true"
 >
     <projectFiles>
         <directory name="config"/>
