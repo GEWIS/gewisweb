@@ -61,7 +61,7 @@ class JobLabel
     /**
      * The Assignments this Label belongs to.
      *
-     * @var Collection<Job>
+     * @var Collection<array-key, Job>
      */
     #[ManyToMany(
         targetEntity: Job::class,
@@ -110,7 +110,7 @@ class JobLabel
     /**
      * Gets the jobs associated with this label.
      *
-     * @return Collection<Job>
+     * @return Collection<array-key, Job>
      */
     public function getJobs(): Collection
     {

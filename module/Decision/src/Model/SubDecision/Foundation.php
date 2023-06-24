@@ -47,7 +47,7 @@ class Foundation extends SubDecision
     /**
      * References from other subdecisions to this organ.
      *
-     * @var Collection<FoundationReference>
+     * @var Collection<array-key, FoundationReference>
      */
     #[OneToMany(
         targetEntity: FoundationReference::class,
@@ -120,7 +120,7 @@ class Foundation extends SubDecision
     /**
      * Get the references.
      *
-     * @return Collection<FoundationReference>
+     * @return Collection<array-key, FoundationReference>
      */
     public function getReferences(): Collection
     {

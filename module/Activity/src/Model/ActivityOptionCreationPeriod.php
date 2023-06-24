@@ -50,7 +50,7 @@ class ActivityOptionCreationPeriod
     /**
      * The number of activities an organ can create in a period.
      *
-     * @var Collection<MaxActivities>
+     * @var Collection<array-key, MaxActivities>
      */
     #[OneToMany(
         targetEntity: MaxActivities::class,
@@ -106,7 +106,7 @@ class ActivityOptionCreationPeriod
     }
 
     /**
-     * @return Collection<MaxActivities>
+     * @return Collection<array-key, MaxActivities>
      */
     public function getMaxActivities(): Collection
     {

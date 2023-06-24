@@ -51,7 +51,7 @@ class PollOption implements ResourceInterface
     /**
      * Votes for this option.
      *
-     * @var Collection<PollVote>
+     * @var Collection<array-key, PollVote>
      */
     #[OneToMany(
         targetEntity: PollVote::class,

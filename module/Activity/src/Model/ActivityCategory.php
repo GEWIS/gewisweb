@@ -29,7 +29,7 @@ class ActivityCategory
     /**
      * The Activities this Category belongs to.
      *
-     * @var Collection<Activity>
+     * @var Collection<array-key, Activity>
      */
     #[ManyToMany(
         targetEntity: Activity::class,

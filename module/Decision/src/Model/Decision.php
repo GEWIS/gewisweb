@@ -86,7 +86,7 @@ class Decision
     /**
      * Subdecisions.
      *
-     * @var Collection<SubDecision>
+     * @var Collection<array-key, SubDecision>
      */
     #[OneToMany(
         targetEntity: SubDecision::class,
@@ -191,7 +191,7 @@ class Decision
     /**
      * Get the subdecisions.
      *
-     * @return Collection<SubDecision>
+     * @return Collection<array-key, SubDecision>
      */
     public function getSubdecisions(): Collection
     {

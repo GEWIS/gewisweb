@@ -99,7 +99,7 @@ class Organ
     /**
      * Reference to members.
      *
-     * @var Collection<OrganMember>
+     * @var Collection<array-key, OrganMember>
      */
     #[OneToMany(
         mappedBy: 'organ',
@@ -110,7 +110,7 @@ class Organ
     /**
      * Reference to subdecisions.
      *
-     * @var Collection<SubDecision>
+     * @var Collection<array-key, SubDecision>
      */
     #[ManyToMany(targetEntity: SubDecision::class)]
     #[JoinTable(name: 'organs_subdecisions')]
@@ -149,7 +149,7 @@ class Organ
     /**
      * All organInformation for this organ.
      *
-     * @var Collection<OrganInformation>
+     * @var Collection<array-key, OrganInformation>
      */
     #[OneToMany(
         mappedBy: 'organ',
@@ -264,7 +264,7 @@ class Organ
     /**
      * Get the members.
      *
-     * @return Collection<OrganMember>
+     * @return Collection<array-key, OrganMember>
      */
     public function getMembers(): Collection
     {
@@ -298,7 +298,7 @@ class Organ
     /**
      * Get all subdecisions of this organ.
      *
-     * @return Collection<SubDecision>
+     * @return Collection<array-key, SubDecision>
      */
     public function getSubdecisions(): Collection
     {
@@ -323,7 +323,7 @@ class Organ
     /**
      * Returns all organ information.
      *
-     * @return Collection<OrganInformation>
+     * @return Collection<array-key, OrganInformation>
      */
     public function getOrganInformation(): Collection
     {

@@ -46,7 +46,7 @@ class User implements IdentityInterface
     /**
      * User roles.
      *
-     * @var Collection<UserRole>
+     * @var Collection<array-key, UserRole>
      */
     #[OneToMany(
         targetEntity: UserRole::class,
@@ -132,7 +132,7 @@ class User implements IdentityInterface
     /**
      * Get the user's roles.
      *
-     * @return Collection<UserRole>
+     * @return Collection<array-key, UserRole>
      */
     public function getRoles(): Collection
     {

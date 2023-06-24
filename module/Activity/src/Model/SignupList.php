@@ -105,7 +105,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
     /**
      * All additional fields belonging to the activity.
      *
-     * @var Collection<SignupField>
+     * @var Collection<array-key, SignupField>
      */
     #[OneToMany(
         targetEntity: SignupField::class,
@@ -117,7 +117,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
     /**
      * All the people who signed up for this SignupList.
      *
-     * @var Collection<Signup>
+     * @var Collection<array-key, Signup>
      */
     #[OneToMany(
         targetEntity: Signup::class,
@@ -133,7 +133,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * @return Collection<Signup>
+     * @return Collection<array-key, Signup>
      */
     public function getSignUps(): Collection
     {
@@ -141,7 +141,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * @param Collection<Signup> $signUps
+     * @param Collection<array-key, Signup> $signUps
      */
     public function setSignUps(Collection $signUps): void
     {
@@ -149,7 +149,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * @return Collection<SignupField>
+     * @return Collection<array-key, SignupField>
      */
     public function getFields(): Collection
     {

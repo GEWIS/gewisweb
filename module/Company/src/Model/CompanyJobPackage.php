@@ -24,7 +24,7 @@ class CompanyJobPackage extends CompanyPackage
     /**
      * The package's jobs.
      *
-     * @var Collection<Job>
+     * @var Collection<array-key, Job>
      */
     #[OneToMany(
         targetEntity: Job::class,
@@ -44,7 +44,7 @@ class CompanyJobPackage extends CompanyPackage
     /**
      * Get the jobs in the package.
      *
-     * @return Collection<Job>
+     * @return Collection<array-key, Job>
      */
     public function getJobs(): Collection
     {
@@ -54,7 +54,7 @@ class CompanyJobPackage extends CompanyPackage
     /**
      * Get the jobs in the package, but without any that are actually update proposals.
      *
-     * @return Collection<Job>
+     * @return Collection<array-key, Job>
      */
     public function getJobsWithoutProposals(): Collection
     {

@@ -34,7 +34,7 @@ class Course implements ResourceInterface
     /**
      * Exams (and summaries) in this course.
      *
-     * @var Collection<CourseDocument>
+     * @var Collection<array-key, CourseDocument>
      */
     #[OneToMany(
         targetEntity: CourseDocument::class,
@@ -66,7 +66,7 @@ class Course implements ResourceInterface
     /**
      * Get all exams belonging to this study.
      *
-     * @return Collection<CourseDocument>
+     * @return Collection<array-key, CourseDocument>
      */
     public function getDocuments(): Collection
     {

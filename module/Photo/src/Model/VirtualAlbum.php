@@ -49,7 +49,7 @@ class VirtualAlbum extends Album
     /**
      * Gets an array of all child albums.
      *
-     * @return Collection<Album>
+     * @return Collection<array-key, Album>
      */
     public function getChildren(): Collection
     {
@@ -57,7 +57,7 @@ class VirtualAlbum extends Album
     }
 
     /**
-     * @return Collection<Photo>
+     * @return Collection<array-key, Photo>
      */
     public function getPhotos(): Collection
     {

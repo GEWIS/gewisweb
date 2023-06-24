@@ -84,7 +84,7 @@ class Album implements ResourceInterface
      * Note: These are fetched extra lazy so we can efficiently retrieve an
      * album count.
      *
-     * @var Collection<Album>
+     * @var Collection<array-key, Album>
      */
     #[OneToMany(
         targetEntity: self::class,
@@ -99,7 +99,7 @@ class Album implements ResourceInterface
      * Note: These are fetched extra lazy so we can efficiently retrieve an
      * photo count.
      *
-     * @var Collection<Photo>
+     * @var Collection<array-key, Photo>
      */
     #[OneToMany(
         targetEntity: Photo::class,
@@ -128,7 +128,7 @@ class Album implements ResourceInterface
     /**
      * Gets an array of all child albums.
      *
-     * @return Collection<Album>
+     * @return Collection<array-key, Album>
      */
     public function getChildren(): Collection
     {
@@ -138,7 +138,7 @@ class Album implements ResourceInterface
     /**
      * Gets an array of all the photos in this album.
      *
-     * @return Collection<Photo>
+     * @return Collection<array-key, Photo>
      */
     public function getPhotos(): Collection
     {

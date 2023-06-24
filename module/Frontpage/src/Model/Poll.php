@@ -45,7 +45,7 @@ class Poll implements ResourceInterface
     /**
      * Poll options.
      *
-     * @var Collection<PollOption>
+     * @var Collection<array-key, PollOption>
      */
     #[OneToMany(
         targetEntity: PollOption::class,
@@ -57,7 +57,7 @@ class Poll implements ResourceInterface
     /**
      * Poll comments.
      *
-     * @var Collection<PollComment>
+     * @var Collection<array-key, PollComment>
      */
     #[OneToMany(
         targetEntity: PollComment::class,
@@ -105,7 +105,7 @@ class Poll implements ResourceInterface
     }
 
     /**
-     * @return Collection<PollOption>
+     * @return Collection<array-key, PollOption>
      */
     public function getOptions(): Collection
     {
@@ -113,7 +113,7 @@ class Poll implements ResourceInterface
     }
 
     /**
-     * @return Collection<PollComment>
+     * @return Collection<array-key, PollComment>
      */
     public function getComments(): Collection
     {

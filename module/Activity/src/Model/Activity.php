@@ -143,7 +143,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * The update proposal associated with this activity.
      *
-     * @var Collection<ActivityUpdateProposal>
+     * @var Collection<array-key, ActivityUpdateProposal>
      */
     #[OneToMany(
         targetEntity: ActivityUpdateProposal::class,
@@ -169,7 +169,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * All additional Categories belonging to this activity.
      *
-     * @var Collection<ActivityCategory>
+     * @var Collection<array-key, ActivityCategory>
      */
     #[ManyToMany(
         targetEntity: ActivityCategory::class,
@@ -182,7 +182,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * All additional SignupLists belonging to this activity.
      *
-     * @var Collection<SignupList>
+     * @var Collection<array-key, SignupList>
      */
     #[OneToMany(
         targetEntity: SignupList::class,
@@ -252,7 +252,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * @return Collection<ActivityUpdateProposal>
+     * @return Collection<array-key, ActivityUpdateProposal>
      */
     public function getUpdateProposal(): Collection
     {
@@ -345,7 +345,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * Returns a Collection of SignupLists associated with this activity.
      *
-     * @return Collection<SignupList>
+     * @return Collection<array-key, SignupList>
      */
     public function getSignupLists(): Collection
     {
@@ -453,7 +453,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * @return Collection<ActivityCategory>
+     * @return Collection<array-key, ActivityCategory>
      */
     public function getCategories(): Collection
     {

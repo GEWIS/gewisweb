@@ -47,7 +47,7 @@ class Meeting
     /**
      * Decisions.
      *
-     * @var Collection<Decision>
+     * @var Collection<array-key, Decision>
      */
     #[OneToMany(
         targetEntity: Decision::class,
@@ -58,7 +58,7 @@ class Meeting
     /**
      * Documents.
      *
-     * @var Collection<MeetingDocument>
+     * @var Collection<array-key, MeetingDocument>
      */
     #[OneToMany(
         targetEntity: MeetingDocument::class,
@@ -138,7 +138,7 @@ class Meeting
     /**
      * Get the decisions.
      *
-     * @return Collection<Decision>
+     * @return Collection<array-key, Decision>
      */
     public function getDecisions(): Collection
     {
@@ -168,7 +168,7 @@ class Meeting
     /**
      * Get the documents.
      *
-     * @return Collection<MeetingDocument>
+     * @return Collection<array-key, MeetingDocument>
      */
     public function getDocuments(): Collection
     {

@@ -182,7 +182,7 @@ class Photo implements ResourceInterface
     /**
      * All the votes for this photo.
      *
-     * @var Collection<Vote>
+     * @var Collection<array-key, Vote>
      */
     #[OneToMany(
         targetEntity: Vote::class,
@@ -194,7 +194,7 @@ class Photo implements ResourceInterface
     /**
      * All the tags for this photo.
      *
-     * @var Collection<Tag>
+     * @var Collection<array-key, Tag>
      */
     #[OneToMany(
         targetEntity: Tag::class,
@@ -206,7 +206,7 @@ class Photo implements ResourceInterface
     /**
      * All the profile photos that use this photo.
      *
-     * @var Collection<ProfilePhoto>
+     * @var Collection<array-key, ProfilePhoto>
      */
     #[OneToMany(
         targetEntity: ProfilePhoto::class,
@@ -363,7 +363,7 @@ class Photo implements ResourceInterface
     }
 
     /**
-     * @return Collection<Tag>
+     * @return Collection<array-key, Tag>
      */
     public function getTags(): Collection
     {
@@ -579,7 +579,7 @@ class Photo implements ResourceInterface
     }
 
     /**
-     * @return Collection<ProfilePhoto>
+     * @return Collection<array-key, ProfilePhoto>
      */
     public function getProfilePhotos(): Collection
     {

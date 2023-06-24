@@ -55,7 +55,7 @@ abstract class Signup
     /**
      * Additional field values for this Signup.
      *
-     * @var Collection<SignupFieldValue>
+     * @var Collection<array-key, SignupFieldValue>
      */
     #[OneToMany(
         targetEntity: SignupFieldValue::class,
@@ -88,7 +88,7 @@ abstract class Signup
     /**
      * Get all the extra field values.
      *
-     * @return Collection<SignupFieldValue>
+     * @return Collection<array-key, SignupFieldValue>
      */
     public function getFieldValues(): Collection
     {

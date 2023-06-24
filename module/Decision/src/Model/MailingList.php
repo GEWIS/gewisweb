@@ -53,7 +53,7 @@ class MailingList
     /**
      * Mailing list members.
      *
-     * @var Collection<Member>
+     * @var Collection<array-key, Member>
      */
     #[ManyToMany(
         targetEntity: Member::class,
@@ -165,7 +165,7 @@ class MailingList
     /**
      * Get subscribed members.
      *
-     * @return Collection<Member>
+     * @return Collection<array-key, Member>
      */
     public function getMembers(): Collection
     {

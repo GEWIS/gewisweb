@@ -186,7 +186,7 @@ class Member
     /**
      * Addresses of this member.
      *
-     * @var Collection<Address>
+     * @var Collection<array-key, Address>
      */
     #[OneToMany(
         targetEntity: Address::class,
@@ -198,7 +198,7 @@ class Member
     /**
      * Installations of this member.
      *
-     * @var Collection<Installation>
+     * @var Collection<array-key, Installation>
      */
     #[OneToMany(
         targetEntity: Installation::class,
@@ -209,7 +209,7 @@ class Member
     /**
      * Memberships of mailing lists.
      *
-     * @var Collection<MailingList>
+     * @var Collection<array-key, MailingList>
      */
     #[ManyToMany(
         targetEntity: MailingList::class,
@@ -229,7 +229,7 @@ class Member
     /**
      * Organ memberships.
      *
-     * @var Collection<OrganMember>
+     * @var Collection<array-key, OrganMember>
      */
     #[OneToMany(
         targetEntity: OrganMember::class,
@@ -240,7 +240,7 @@ class Member
     /**
      * Board memberships.
      *
-     * @var Collection<BoardMember>
+     * @var Collection<array-key, BoardMember>
      */
     #[OneToMany(
         targetEntity: BoardMember::class,
@@ -270,7 +270,7 @@ class Member
     /**
      * Member tags.
      *
-     * @var Collection<TagModel>
+     * @var Collection<array-key, TagModel>
      */
     #[OneToMany(
         targetEntity: TagModel::class,
@@ -282,7 +282,7 @@ class Member
     /**
      * Keyholdership.
      *
-     * @var Collection<Keyholder>
+     * @var Collection<array-key, Keyholder>
      */
     #[OneToMany(
         targetEntity: Keyholder::class,
@@ -575,7 +575,7 @@ class Member
     /**
      * Get the installations.
      *
-     * @return Collection<Installation>
+     * @return Collection<array-key, Installation>
      */
     public function getInstallations(): Collection
     {
@@ -611,7 +611,7 @@ class Member
     /**
      * Get the organ installations.
      *
-     * @return Collection<OrganMember>
+     * @return Collection<array-key, OrganMember>
      */
     public function getOrganInstallations(): Collection
     {
@@ -621,7 +621,7 @@ class Member
     /**
      * Get the organ installations of organs that the member is currently part of.
      *
-     * @return Collection<OrganMember>
+     * @return Collection<array-key, OrganMember>
      */
     public function getCurrentOrganInstallations(): Collection
     {
@@ -653,7 +653,7 @@ class Member
     /**
      * Get the board installations.
      *
-     * @return Collection<BoardMember>
+     * @return Collection<array-key, BoardMember>
      */
     public function getBoardInstallations(): Collection
     {
@@ -663,7 +663,7 @@ class Member
     /**
      * Get the tags.
      *
-     * @return Collection<TagModel>
+     * @return Collection<array-key, TagModel>
      */
     public function getTags(): Collection
     {
@@ -721,7 +721,7 @@ class Member
     /**
      * Get all addresses.
      *
-     * @return Collection<Address>
+     * @return Collection<array-key, Address>
      */
     public function getAddresses(): Collection
     {
@@ -760,7 +760,7 @@ class Member
     /**
      * Get mailing list subscriptions.
      *
-     * @return Collection<MailingList>
+     * @return Collection<array-key, MailingList>
      */
     public function getLists(): Collection
     {
@@ -801,7 +801,7 @@ class Member
     /**
      * Get keyholderships.
      *
-     * @return Collection<Keyholder>
+     * @return Collection<array-key, Keyholder>
      */
     public function getKeyGrantings(): Collection
     {

@@ -90,7 +90,7 @@ class SignupField
     /**
      * The allowed options for the SignupField of the ``option'' type.
      *
-     * @var Collection<SignupOption>
+     * @var Collection<array-key, SignupOption>
      */
     #[OneToMany(
         targetEntity: SignupOption::class,
@@ -115,7 +115,7 @@ class SignupField
     }
 
     /**
-     * @return Collection<SignupOption>
+     * @return Collection<array-key, SignupOption>
      */
     public function getOptions(): Collection
     {

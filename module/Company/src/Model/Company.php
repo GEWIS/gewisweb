@@ -163,7 +163,7 @@ class Company implements ResourceInterface
     /**
      * The company's packages.
      *
-     * @var Collection<CompanyPackage>
+     * @var Collection<array-key, CompanyPackage>
      */
     #[OneToMany(
         targetEntity: CompanyPackage::class,
@@ -175,7 +175,7 @@ class Company implements ResourceInterface
     /**
      * Proposed updates to this company.
      *
-     * @var Collection<CompanyUpdateProposal>
+     * @var Collection<array-key, CompanyUpdateProposal>
      */
     #[OneToMany(
         targetEntity: CompanyUpdateProposal::class,
@@ -430,7 +430,7 @@ class Company implements ResourceInterface
     /**
      * Get the company's packages.
      *
-     * @return Collection<CompanyPackage>
+     * @return Collection<array-key, CompanyPackage>
      */
     public function getPackages(): Collection
     {
@@ -448,7 +448,7 @@ class Company implements ResourceInterface
     }
 
     /**
-     * @return Collection<CompanyUpdateProposal>
+     * @return Collection<array-key, CompanyUpdateProposal>
      */
     public function getUpdateProposals(): Collection
     {

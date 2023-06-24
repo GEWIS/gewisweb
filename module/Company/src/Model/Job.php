@@ -178,7 +178,7 @@ class Job implements ResourceInterface
     /**
      * Job labels.
      *
-     * @var Collection<JobLabel>
+     * @var Collection<array-key, JobLabel>
      */
     #[ManyToMany(
         targetEntity: JobLabel::class,
@@ -191,7 +191,7 @@ class Job implements ResourceInterface
     /**
      * Proposed updates to this job.
      *
-     * @var Collection<JobUpdateProposalModel>
+     * @var Collection<array-key, JobUpdateProposalModel>
      */
     #[OneToMany(
         targetEntity: JobUpdateProposalModel::class,
@@ -398,7 +398,7 @@ class Job implements ResourceInterface
     /**
      * Get the labels. Returns an array of JobLabelAssignments.
      *
-     * @return Collection<JobLabel>
+     * @return Collection<array-key, JobLabel>
      */
     public function getLabels(): Collection
     {
@@ -471,7 +471,7 @@ class Job implements ResourceInterface
     }
 
     /**
-     * @return Collection<JobUpdateProposalModel>
+     * @return Collection<array-key, JobUpdateProposalModel>
      */
     public function getUpdateProposals(): Collection
     {
