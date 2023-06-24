@@ -8,12 +8,10 @@ use Application\Model\ApprovableText as ApprovableTextModel;
 use Application\Model\Enums\ApprovableStatus;
 use DateTime;
 use Decision\Model\Member as MemberModel;
-use Doctrine\ORM\Mapping\{
-    Column,
-    JoinColumn,
-    ManyToOne,
-    OneToOne,
-};
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToOne;
 
 /**
  * A trait which provides basic (repeated) functionality for approvable entities.
@@ -26,7 +24,7 @@ trait ApprovableTrait
      * State of the approval.
      */
     #[Column(
-        type: "integer",
+        type: 'integer',
         enumType: ApprovableStatus::class,
     )]
     protected ApprovableStatus $approved;
@@ -35,7 +33,7 @@ trait ApprovableTrait
      * The date when the entity was approved.
      */
     #[Column(
-        type: "datetime",
+        type: 'datetime',
         nullable: true,
     )]
     protected ?DateTime $approvedAt = null;
@@ -44,7 +42,7 @@ trait ApprovableTrait
      * Who (dis)approved the entity using this trait?
      */
     #[ManyToOne(targetEntity: MemberModel::class)]
-    #[JoinColumn(referencedColumnName: "lidnr")]
+    #[JoinColumn(referencedColumnName: 'lidnr')]
     protected ?MemberModel $approver = null;
 
     /**
@@ -53,84 +51,57 @@ trait ApprovableTrait
      */
     #[OneToOne(
         targetEntity: ApprovableTextModel::class,
-        cascade: ["persist", "remove"],
-        fetch: "EXTRA_LAZY",
+        cascade: ['persist', 'remove'],
+        fetch: 'EXTRA_LAZY',
         orphanRemoval: true,
     )]
     #[JoinColumn(
-        name: "approvableText_id",
-        referencedColumnName: "id",
+        name: 'approvableText_id',
+        referencedColumnName: 'id',
         nullable: true,
     )]
     protected ?ApprovableTextModel $approvableText = null;
 
-    /**
-     * @return ApprovableStatus
-     */
     public function getApproved(): ApprovableStatus
     {
         return $this->approved;
     }
 
-    /**
-     * @return bool
-     */
     public function isApproved(): bool
     {
         return ApprovableStatus::Approved === $this->getApproved();
     }
 
-    /**
-     * @param ApprovableStatus $approved
-     */
     public function setApproved(ApprovableStatus $approved): void
     {
         $this->approved = $approved;
     }
 
-    /**
-     * @return DateTime|null
-     */
     public function getApprovedAt(): ?DateTime
     {
         return $this->approvedAt;
     }
 
-    /**
-     * @param DateTime|null $approvedAt
-     */
     public function setApprovedAt(?DateTime $approvedAt): void
     {
         $this->approvedAt = $approvedAt;
     }
 
-    /**
-     * @return MemberModel|null
-     */
     public function getApprover(): ?MemberModel
     {
         return $this->approver;
     }
 
-    /**
-     * @param MemberModel|null $approver
-     */
     public function setApprover(?MemberModel $approver): void
     {
         $this->approver = $approver;
     }
 
-    /**
-     * @return ApprovableTextModel|null
-     */
     public function getApprovableText(): ?ApprovableTextModel
     {
         return $this->approvableText;
     }
 
-    /**
-     * @param ApprovableTextModel|null $approvableText
-     */
     public function setApprovableText(?ApprovableTextModel $approvableText): void
     {
         $this->approvableText = $approvableText;

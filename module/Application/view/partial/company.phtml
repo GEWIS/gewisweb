@@ -11,7 +11,8 @@ use Laminas\View\Renderer\PhpRenderer;
     <nav class="navbar navbar-gewis-admin navbar-fixed-left rainbow">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" id="admin-collapsable" data-toggle="collapse" data-target="#navbar-admin" aria-expanded="false" aria-controls="navbar">
+                <button type="button" class="navbar-toggle collapsed" id="admin-collapsable" data-toggle="collapse"
+                        data-target="#navbar-admin" aria-expanded="false" aria-controls="navbar">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -62,7 +63,8 @@ use Laminas\View\Renderer\PhpRenderer;
         </section>
         <section class="section">
             <div class="container-admin">
-                <?php // The FlashMessenger config accepts namespaced options, we only need to define the classes. ?>
+                <?php
+                // The FlashMessenger config accepts namespaced options, we only need to define the classes. ?>
                 <?= $this->flashMessenger()->render('default', ['alert', 'alert-dismissible', 'alert-info']) ?>
                 <?= $this->flashMessenger()->render('error', ['alert', 'alert-dismissible', 'alert-danger']) ?>
                 <?= $this->flashMessenger()->render('info', ['alert', 'alert-dismissible', 'alert-info']) ?>

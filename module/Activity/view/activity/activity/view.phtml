@@ -151,7 +151,7 @@ $this->headTitle($this->translate('Activities'));
                 $boardString = "<a href='mailto:cib@gewis.nl'>cib@gewis.nl</a>";
                 $organ = $activity->getOrgan();
 
-                if (!is_null($organ)) {
+                if (null !== $organ) {
                     $organString = "<a href='" . $this->url('home/organ', ['abbr' => $organ->getAbbr(), 'type' => $organ->getType()->value]) . "''>" . $this->escapeHtml($organ->getName()) . "</a>";
                 }
 
@@ -237,7 +237,7 @@ $this->headTitle($this->translate('Activities'));
                             <a href="<?= $this->url('user/login', ['user_type' => 'member']) ?>">
                                 <?= $this->translate('Login to subscribe') ?>
                             </a>
-                            <?php if (!$signupList->getOnlyGEWIS() && !is_null($form)): ?>
+                            <?php if (!$signupList->getOnlyGEWIS() && null !== $form): ?>
                                 <br/>
                                 <?= $this->translate('Or subscribe without a GEWIS membership: ') ?>
                                 <?= $this->partial('partial/signupForm', [
@@ -247,7 +247,7 @@ $this->headTitle($this->translate('Activities'));
                                 ?>
                             <?php endif; ?>
                         <?php endif; ?>
-                        <?php if (!is_null($form) && $signupOpen && !$isSignedUp && $isAllowedToSubscribe): //display the form ?>
+                        <?php if (null !== $form && $signupOpen && !$isSignedUp && $isAllowedToSubscribe): //display the form ?>
                             <h2>
                                 <?= $this->translate('Subscribe yourself') ?>
                             </h2>

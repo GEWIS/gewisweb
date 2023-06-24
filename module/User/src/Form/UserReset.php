@@ -4,23 +4,19 @@ declare(strict_types=1);
 
 namespace User\Form;
 
-use Laminas\Form\Element\{
-    Csrf,
-    Email,
-    Number,
-    Submit,
-};
 use Laminas\Filter\StringTrim;
+use Laminas\Form\Element\Csrf;
+use Laminas\Form\Element\Email;
+use Laminas\Form\Element\Number;
+use Laminas\Form\Element\Submit;
 use Laminas\Form\Form;
-use Laminas\InputFilter\InputProviderInterface;
+use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Validator\{
-    Digits,
-    EmailAddress,
-    NotEmpty,
-};
+use Laminas\Validator\Digits;
+use Laminas\Validator\EmailAddress;
+use Laminas\Validator\NotEmpty;
 
-class UserReset extends Form implements InputProviderInterface
+class UserReset extends Form implements InputFilterProviderInterface
 {
     public function __construct(private readonly Translator $translator)
     {
@@ -33,7 +29,7 @@ class UserReset extends Form implements InputProviderInterface
                 'options' => [
                     'label' => $this->translator->translate('Membership number'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -43,7 +39,7 @@ class UserReset extends Form implements InputProviderInterface
                 'options' => [
                     'label' => $this->translator->translate('E-mail address'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -53,21 +49,21 @@ class UserReset extends Form implements InputProviderInterface
                 'attributes' => [
                     'value' => $this->translator->translate('Reset password'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
             [
                 'name' => 'security',
                 'type' => Csrf::class,
-            ]
+            ],
         );
     }
 
     /**
      * @return array
      */
-    public function getInputSpecification(): array
+    public function getInputFilterSpecification(): array
     {
         return [
             'lidnr' => [
@@ -94,7 +90,7 @@ class UserReset extends Form implements InputProviderInterface
                         'options' => [
                             'messages' => [
                                 'emailAddressInvalidFormat' => $this->translator->translate(
-                                    'E-mail address format is not valid'
+                                    'E-mail address format is not valid',
                                 ),
                             ],
                         ],

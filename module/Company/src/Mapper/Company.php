@@ -20,7 +20,7 @@ class Company extends BaseMapper
     /**
      * Find all public companies, these are companies that are published and have at least one non-expired package.
      *
-     * @return array<array-key, CompanyModel>
+     * @return CompanyModel[]
      */
     public function findAllPublic(): array
     {
@@ -59,8 +59,6 @@ class Company extends BaseMapper
      * Return the company with the given slug.
      *
      * @param string $slugName the slugname to find
-     *
-     * @return CompanyModel|null
      */
     public function findCompanyBySlugName(string $slugName): ?CompanyModel
     {
@@ -69,10 +67,6 @@ class Company extends BaseMapper
 
     /**
      * Return a company by a given representative's e-mail address.
-     *
-     * @param string $email
-     *
-     * @return CompanyModel|null
      */
     public function findCompanyByRepresentativeEmail(string $email): ?CompanyModel
     {
@@ -80,7 +74,7 @@ class Company extends BaseMapper
     }
 
     /**
-     * @return array<array-key, CompanyModel>
+     * @return CompanyModel[]
      */
     public function findUpdateProposals(): array
     {
@@ -101,9 +95,6 @@ class Company extends BaseMapper
         return $qb->getQuery()->getResult();
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function getRepositoryName(): string
     {
         return CompanyModel::class;

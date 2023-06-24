@@ -7,10 +7,8 @@ namespace Decision\Mapper;
 use Application\Mapper\BaseMapper;
 use Decision\Model\Enums\OrganTypes;
 use Decision\Model\Organ as OrganModel;
-use Doctrine\ORM\{
-    NoResultException,
-    NonUniqueResultException,
-};
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 
 /**
  * Mappers for organs.
@@ -24,9 +22,7 @@ class Organ extends BaseMapper
     /**
      * Find all active organs.
      *
-     * @param OrganTypes|null $type
-     *
-     * @return array<array-key, OrganModel>
+     * @return OrganModel[]
      */
     public function findActive(?OrganTypes $type = null): array
     {
@@ -43,10 +39,6 @@ class Organ extends BaseMapper
 
     /**
      * Check if an organ with id `$id` is not abrogated.
-     *
-     * @param int $id
-     *
-     * @return OrganModel|null
      */
     public function findActiveById(int $id): ?OrganModel
     {
@@ -54,16 +46,14 @@ class Organ extends BaseMapper
             [
                 'id' => $id,
                 'abrogationDate' => null,
-            ]
+            ],
         );
     }
 
     /**
      * Find all abrogated organs.
      *
-     * @param OrganTypes|null $type
-     *
-     * @return array<array-key, OrganModel>
+     * @return OrganModel[]
      */
     public function findAbrogated(?OrganTypes $type = null): array
     {
@@ -80,10 +70,6 @@ class Organ extends BaseMapper
 
     /**
      * Find an organ with all information.
-     *
-     * @param int $id
-     *
-     * @return OrganModel|null
      *
      * @throws NonUniqueResultException
      */
@@ -107,11 +93,8 @@ class Organ extends BaseMapper
      * for example, through the reinstatement of a previously abrogated organ.
      * To retrieve the latest occurrence of such an organ use `$latest`.
      *
-     * @param string $abbr
      * @param bool $latest Whether to retrieve the latest occurrence of an organ or not
-     * @param OrganTypes|null $type
      *
-     * @return OrganModel|null
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
@@ -148,9 +131,6 @@ class Organ extends BaseMapper
         return $qb->getQuery()->getSingleResult();
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function getRepositoryName(): string
     {
         return OrganModel::class;

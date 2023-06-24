@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Application\Form;
 
-use Laminas\Form\Element\{
-    Csrf,
-    Submit,
-};
+use Laminas\Form\Element\Csrf;
+use Laminas\Form\Element\Submit;
 use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterProviderInterface;
 
@@ -22,13 +20,14 @@ class ModifyRequest extends Form implements InputFilterProviderInterface
         string $buttonvalue = 'submit',
     ) {
         parent::__construct($name);
+
         $this->setAttribute('method', 'post');
 
         $this->add(
             [
                 'name' => 'security',
                 'type' => Csrf::class,
-            ]
+            ],
         );
 
         $this->add(
@@ -38,7 +37,7 @@ class ModifyRequest extends Form implements InputFilterProviderInterface
                 'attributes' => [
                     'value' => $buttonvalue,
                 ],
-            ]
+            ],
         );
     }
 

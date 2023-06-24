@@ -9,7 +9,8 @@ use Laminas\View\Renderer\PhpRenderer;
 
 $lang = $this->plugin('translate')->getTranslator()->getLocale();
 ?>
-<?php if ($this->identity()?->getMember()->isBoardMember()): ?>
+<?php
+if ($this->identity()?->getMember()->isBoardMember()): ?>
     <?php
     $this->headStyle()->captureStart(
         'APPEND',
@@ -17,23 +18,25 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
         ['nonce' => NONCE_REPLACEMENT_STRING],
     );
     ?>
-        .rainbow {
-            background: linear-gradient(to right bottom, #ff334d, #ff338b);
-            animation: rainbow 6s steps(128, end) infinite;
-        }
+    .rainbow {
+    background: linear-gradient(to right bottom, #ff334d, #ff338b);
+    animation: rainbow 6s steps(128, end) infinite;
+    }
 
-        @keyframes rainbow {
-            from {
-                filter: hue-rotate(0deg);
-            }
+    @keyframes rainbow {
+    from {
+    filter: hue-rotate(0deg);
+    }
 
-            100% {
-                filter: hue-rotate(360deg);
-            }
-        }
-    <?php $this->headStyle()->captureEnd(); ?>
+    100% {
+    filter: hue-rotate(360deg);
+    }
+    }
+    <?php
+    $this->headStyle()->captureEnd(); ?>
     <?= $this->headStyle() ?>
-<?php endif; ?>
+<?php
+endif; ?>
 <nav class="navbar navbar-gewis navbar-static-top rainbow" role="navigation">
     <div class="container">
         <div class="navbar-header navbar-left pull-left">
@@ -69,9 +72,11 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                         </li>
                     </ul>
                 </li>
-                <?php if (null === $this->identity() && null === $this->companyIdentity()): ?>
+                <?php
+                if (null === $this->identity() && null === $this->companyIdentity()): ?>
                     <li class="dropdown pull-right">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">
                             <span class="fas fa-user"></span>
                             <?= $this->translate('Members') ?>
                             <span class="caret"></span>
@@ -95,8 +100,10 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                             </li>
                         </ul>
                     </li>
-                <?php elseif (null !== $this->companyIdentity()): ?>
-                    <?php $company = $this->companyIdentity()->getCompany(); ?>
+                <?php
+                elseif (null !== $this->companyIdentity()): ?>
+                    <?php
+                    $company = $this->companyIdentity()->getCompany(); ?>
                     <li class="dropdown pull-right">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                            aria-expanded="false">
@@ -121,8 +128,10 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                             </li>
                         </ul>
                     </li>
-                <?php else: ?>
-                    <?php $member = $this->identity()->getMember(); ?>
+                <?php
+                else: ?>
+                    <?php
+                    $member = $this->identity()->getMember(); ?>
                     <li class="dropdown pull-right">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                            aria-expanded="false">
@@ -145,13 +154,15 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                                     <?= $this->translate('Change password') ?>
                                 </a>
                             </li>
-                            <?php if ($this->acl('decision_service_acl')->isAllowed('organ', 'edit')): ?>
+                            <?php
+                            if ($this->acl('decision_service_acl')->isAllowed('organ', 'edit')): ?>
                                 <li>
                                     <a href="<?= $this->url('admin') ?>">
                                         <?= $this->translate('Admin') ?>
                                     </a>
                                 </li>
-                            <?php endif; ?>
+                            <?php
+                            endif; ?>
                             <li>
                                 <a href="<?= $this->url('user/logout') ?>">
                                     <?= $this->translate('Logout') ?>
@@ -159,7 +170,8 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                             </li>
                         </ul>
                     </li>
-                <?php endif; ?>
+                <?php
+                endif; ?>
             </ul>
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="sr-only"><?= $this->translate('Toggle navigation') ?></span>
@@ -171,7 +183,8 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
         <div class="visible-xs-block clearfix"></div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-left">
-                <li class="dropdown dropdown-hover <?= $this->moduleIsActive(['frontpage', 'page']) ? 'active default' : '' ?>">
+                <li class="dropdown dropdown-hover <?= $this->moduleIsActive(['frontpage', 'page']
+                ) ? 'active default' : '' ?>">
                     <a href="<?= $this->url('home/page', ['category' => 'vereniging']) ?>" role="button"
                        class="dropdown-toggle visible-sm visible-xs" data-toggle="dropdown" aria-haspopup="true"
                        aria-expanded="false">
@@ -216,8 +229,8 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                                     'category' => 'vereniging',
                                     'sub_category' => 'exceptionalmembers',
                                 ],
-                            )?>">
-                                <?= $this->translate('Exceptional Members')?>
+                            ) ?>">
+                                <?= $this->translate('Exceptional Members') ?>
                             </a>
                         </li>
                         <li>
@@ -289,7 +302,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                                             'sub_category' => 'housing',
                                         ],
                                     ) ?>">
-                                        <?= $this->translate('Housing')?>
+                                        <?= $this->translate('Housing') ?>
                                     </a>
                                 </li>
                             </ul>
@@ -322,7 +335,8 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                                 <?= $this->translate('Career') ?>
                             </a>
                         </li>
-                        <?php if (!is_null($this->featuredCompanyPackage())): ?>
+                        <?php
+                        if (null !== $this->featuredCompanyPackage()): ?>
                             <li>
                                 <a href="<?= $this->url('company/spotlight') ?>">
                                     <span class="fas fa-star"></span>
@@ -330,8 +344,10 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                                     <?= $this->escapeHtml($this->featuredCompanyPackage()->getCompany()->getName()) ?>
                                 </a>
                             </li>
-                        <?php endif; ?>
-                        <?php foreach ($this->jobCategories() as $category):
+                        <?php
+                        endif; ?>
+                        <?php
+                        foreach ($this->jobCategories() as $category):
                             ?>
                             <li>
                                 <a href="<?= $this->url(
@@ -367,34 +383,42 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                                 <?= $this->translate('Activities') ?>
                             </a>
                         </li>
-                        <?php if ($this->acl('activity_service_acl')->isAllowed('myActivities', 'view')): ?>
+                        <?php
+                        if ($this->acl('activity_service_acl')->isAllowed('myActivities', 'view')): ?>
                             <li>
                                 <a href="<?= $this->url('activity/my') ?>">
                                     <?= $this->translate('My activities') ?>
                                 </a>
                             </li>
-                        <?php endif; ?>
-                        <?php if ($this->acl('activity_service_acl')->isAllowed('activity', 'view')): ?>
+                        <?php
+                        endif; ?>
+                        <?php
+                        if ($this->acl('activity_service_acl')->isAllowed('activity', 'view')): ?>
                             <li>
                                 <a href="<?= $this->url('activity/archive') ?>">
                                     <?= $this->translate('Activity Archive') ?>
                                 </a>
                             </li>
-                        <?php endif; ?>
-                        <?php if ($this->acl('activity_service_acl')->isAllowed('activity', 'create')): ?>
+                        <?php
+                        endif; ?>
+                        <?php
+                        if ($this->acl('activity_service_acl')->isAllowed('activity', 'create')): ?>
                             <li>
                                 <a href="<?= $this->url('activity/create') ?>">
                                     <?= $this->translate('Create an activity') ?>
                                 </a>
                             </li>
-                        <?php endif; ?>
-                        <?php if ($this->acl('activity_service_acl')->isAllowed('activity', 'create')): ?>
+                        <?php
+                        endif; ?>
+                        <?php
+                        if ($this->acl('activity_service_acl')->isAllowed('activity', 'create')): ?>
                             <li>
                                 <a href="<?= $this->url('activity_calendar') ?>">
                                     <?= $this->translate('Option calendar') ?>
                                 </a>
                             </li>
-                        <?php endif; ?>
+                        <?php
+                        endif; ?>
                         <li>
                             <a href="<?= $this->url('activity/career') ?>">
                                 <?= $this->translate('Career related') ?>
@@ -403,7 +427,8 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                     </ul>
                 </li>
                 <li class="dropdown dropdown-hover <?= $this->moduleIsActive(['photo']) ? 'active' : '' ?>">
-                    <?php if ($this->acl('photo_service_acl')->isAllowed('photo', 'view')): ?>
+                    <?php
+                    if ($this->acl('photo_service_acl')->isAllowed('photo', 'view')): ?>
                         <a href="<?= $this->url('photo') ?>" role="button" aria-haspopup="true" aria-expanded="false"
                            class="dropdown-toggle visible-sm visible-xs" data-toggle="dropdown">
                             <?= $this->translate('Photos') ?>
@@ -412,12 +437,15 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                         <a href="<?= $this->url('photo') ?>" role="button" class="hidden-sm hidden-xs">
                             <?= $this->translate('Photos') ?>
                         </a>
-                    <?php else: ?>
+                    <?php
+                    else: ?>
                         <a href="<?= $this->url('photo') ?>">
                             <?= $this->translate('Photos') ?>
                         </a>
-                    <?php endif; ?>
-                    <?php if ($this->acl('photo_service_acl')->isAllowed('photo', 'view')): ?>
+                    <?php
+                    endif; ?>
+                    <?php
+                    if ($this->acl('photo_service_acl')->isAllowed('photo', 'view')): ?>
                         <ul class="dropdown-menu">
                             <li class="visible-sm visible-xs">
                                 <a href="<?= $this->url('photo') ?>">
@@ -429,7 +457,8 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                                     <?= $this->translate('Photo of the week') ?>
                                 </a>
                             </li>
-                            <?php if (null != $this->identity()): ?>
+                            <?php
+                            if (null != $this->identity()): ?>
                                 <li>
                                     <a href="<?= $this->url(
                                         'photo/album',
@@ -441,12 +470,15 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                                         <?= $this->translate('My photo\'s') ?>
                                     </a>
                                 </li>
-                            <?php endif; ?>
+                            <?php
+                            endif; ?>
                         </ul>
-                    <?php endif; ?>
+                    <?php
+                    endif; ?>
                 </li>
             </ul>
-            <?php if (null !== $this->identity()): ?>
+            <?php
+            if (null !== $this->identity()): ?>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="<?= $this->moduleIsActive(['decision']) ? 'active' : '' ?>">
                         <a href="<?= $this->url('member') ?>">
@@ -454,11 +486,13 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                         </a>
                     </li>
                 </ul>
-            <?php endif; ?>
+            <?php
+            endif; ?>
         </div>
     </div>
 </nav>
-<?php if (in_array('admin', $this->identity()?->getRoleNames() ?? [])): ?>
+<?php
+if (in_array('admin', $this->identity()?->getRoleNames() ?? [])): ?>
     <section class="section section-admin-notice">
         <p class="text-center">
             <strong>
@@ -466,4 +500,5 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
             </strong>
         </p>
     </section>
-<?php endif; ?>
+<?php
+endif; ?>

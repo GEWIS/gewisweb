@@ -9,6 +9,8 @@ use DateInterval;
 use DateTime;
 use Photo\Model\Vote as VoteModel;
 
+use function count;
+
 /**
  * Mappers for Vote.
  *
@@ -19,9 +21,6 @@ class Vote extends BaseMapper
     /**
      * Get the amount of votes of all photos that have been visited
      * in the specified time range.
-     *
-     * @param DateTime $startDate
-     * @param DateTime $endDate
      *
      * @return array<array-key, array{1: int, 2: int}>
      */
@@ -45,9 +44,7 @@ class Vote extends BaseMapper
      * Check if a vote exists.
      *
      * @param int $photoId The photo
-     * @param int $lidnr The tag
-     *
-     * @return VoteModel|null
+     * @param int $lidnr   The tag
      */
     public function findVote(
         int $photoId,
@@ -57,16 +54,12 @@ class Vote extends BaseMapper
             [
                 'photo' => $photoId,
                 'voter' => $lidnr,
-            ]
+            ],
         );
     }
 
     /**
      * Checks if a member has recently voted.
-     *
-     * @param int $lidnr
-     *
-     * @return bool
      */
     public function hasRecentVote(int $lidnr): bool
     {

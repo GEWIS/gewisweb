@@ -48,7 +48,7 @@ $this->headTitle($meetingName);
                     </p>
                 <?php endif; ?>
             </div>
-            <?php if (!is_null($meeting->getMinutes())): ?>
+            <?php if (null !== $meeting->getMinutes()): ?>
                 <div class="col-md-6">
                     <h3><?= $this->translate('Minutes') ?></h3>
                     <?php

@@ -8,26 +8,32 @@ use Application\Model\IdentityInterface;
 use Application\Service\AbstractAclService;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Permissions\Acl\Role\RoleInterface;
-use User\Authentication\{
-    Adapter\CompanyUserAdapter,
-    Adapter\UserAdapter,
-    ApiAuthenticationService,
-    AuthenticationService as CompanyUserAuthenticationService,
-    AuthenticationService as UserAuthenticationService,
-    Storage\CompanyUserSession,
-    Storage\UserSession,
-};
-use User\Model\{
-    CompanyUser as CompanyUserModel,
-    User as UserModel,
-};
+use User\Authentication\Adapter\CompanyUserAdapter;
+use User\Authentication\Adapter\UserAdapter;
+use User\Authentication\ApiAuthenticationService;
+use User\Authentication\AuthenticationService as CompanyUserAuthenticationService;
+use User\Authentication\AuthenticationService as UserAuthenticationService;
+use User\Authentication\Storage\CompanyUserSession;
+use User\Authentication\Storage\UserSession;
+use User\Model\CompanyUser as CompanyUserModel;
+use User\Model\User as UserModel;
 use User\Permissions\NotAllowedException;
+
+use function explode;
+use function filter_var;
+use function ip2long;
+use function str_contains;
+
+use const FILTER_FLAG_IPV4;
+use const FILTER_VALIDATE_IP;
 
 abstract class GenericAclService extends AbstractAclService
 {
+    /** @var array<string, bool> $checkedIps */
     private array $checkedIps = [];
 
     /**
+     * @param string[] $tueRanges
      * @psalm-param UserAuthenticationService<UserSession, UserAdapter> $userAuthService
      * @psalm-param CompanyUserAuthenticationService<CompanyUserSession, CompanyUserAdapter> $companyUserAuthService
      */
@@ -97,7 +103,10 @@ abstract class GenericAclService extends AbstractAclService
         }
 
         throw new NotAllowedException(
-            $this->translator->translate('You are not allowed to perform this action. If you are not logged in please do so before continuing. If you are already logged in this action may require you to login in with a different account.')
+            $this->translator->translate(
+                // phpcs:ignore Generic.Files.LineLength.TooLong -- user-visible strings should not be split
+                'You are not allowed to perform this action. If you are not logged in please do so before continuing. If you are already logged in this action may require you to login in with a different account.',
+            ),
         );
     }
 
@@ -121,7 +130,10 @@ abstract class GenericAclService extends AbstractAclService
         }
 
         throw new NotAllowedException(
-            $this->translator->translate('You are not allowed to perform this action. If you are not logged in please do so before continuing. If you are already logged in this action may require you to login in with a different account.')
+            $this->translator->translate(
+                // phpcs:ignore Generic.Files.LineLength.TooLong -- user-visible strings should not be split
+                'You are not allowed to perform this action. If you are not logged in please do so before continuing. If you are already logged in this action may require you to login in with a different account.',
+            ),
         );
     }
 
@@ -161,7 +173,7 @@ abstract class GenericAclService extends AbstractAclService
                 }
 
                 // Precompute the netmask to be able to re-align the range (if necessary) and check the remote address.
-                $netmask = -1 << (32 - $bits);
+                $netmask = -1 << 32 - $bits;
                 if ((ip2long($subnet) & $netmask) === (ip2long($this->remoteAddress) & $netmask)) {
                     return $this->checkedIps[$this->remoteAddress] = true;
                 }

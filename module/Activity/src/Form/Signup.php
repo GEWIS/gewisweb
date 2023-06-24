@@ -4,27 +4,23 @@ declare(strict_types=1);
 
 namespace Activity\Form;
 
-use Activity\Model\{
-    SignupField as SignupFieldModel,
-    SignupList as SignupListModel,
-};
+use Activity\Model\SignupField as SignupFieldModel;
+use Activity\Model\SignupList as SignupListModel;
 use Laminas\Captcha\Image as ImageCaptcha;
-use Laminas\Form\Element\{
-    Captcha,
-    Csrf,
-    Email,
-    Number,
-    Radio,
-    Select,
-    Submit,
-    Text,
-};
+use Laminas\Form\Element\Captcha;
+use Laminas\Form\Element\Csrf;
+use Laminas\Form\Element\Email;
+use Laminas\Form\Element\Number;
+use Laminas\Form\Element\Radio;
+use Laminas\Form\Element\Select;
+use Laminas\Form\Element\Submit;
+use Laminas\Form\Element\Text;
 use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterProviderInterface;
-use Laminas\Validator\{
-    EmailAddress,
-    StringLength,
-};
+use Laminas\Validator\EmailAddress;
+use Laminas\Validator\StringLength;
+
+use function strval;
 
 class Signup extends Form implements InputFilterProviderInterface
 {
@@ -39,13 +35,14 @@ class Signup extends Form implements InputFilterProviderInterface
     public function __construct()
     {
         parent::__construct('activitysignup');
+
         $this->setAttribute('method', 'post');
 
         $this->add(
             [
                 'name' => 'security',
                 'type' => Csrf::class,
-            ]
+            ],
         );
 
         $this->add(
@@ -55,21 +52,15 @@ class Signup extends Form implements InputFilterProviderInterface
                 'attributes' => [
                     'value' => 'Subscribe',
                 ],
-            ]
+            ],
         );
     }
 
-    /**
-     * @return int
-     */
     public function getType(): int
     {
         return $this->type;
     }
 
-    /**
-     * @param SignupListModel $signupList
-     */
     public function initialiseExternalForm(SignupListModel $signupList): void
     {
         $this->add(
@@ -82,21 +73,19 @@ class Signup extends Form implements InputFilterProviderInterface
                             'font' => 'public/fonts/bitstream-vera/Vera.ttf',
                             'imgDir' => 'public/img/captcha/',
                             'imgUrl' => '/img/captcha/',
-                        ]
+                        ],
                     ),
                 ],
-            ]
+            ],
         );
 
         $this->initialiseExternalAdminForm($signupList);
-        $this->type = Signup::EXTERNAL_USER;
+        $this->type = self::EXTERNAL_USER;
     }
 
     /**
      * Initialize the form for external subscriptions by admin, i.e. set the language and the fields
      * Add every field in $signupList to the form.
-     *
-     * @param SignupListModel $signupList
      */
     public function initialiseExternalAdminForm(SignupListModel $signupList): void
     {
@@ -104,25 +93,23 @@ class Signup extends Form implements InputFilterProviderInterface
             [
                 'name' => 'fullName',
                 'type' => Text::class,
-            ]
+            ],
         );
 
         $this->add(
             [
                 'name' => 'email',
                 'type' => Email::class,
-            ]
+            ],
         );
 
         $this->initialiseForm($signupList);
-        $this->type = Signup::EXTERNAL_ADMIN;
+        $this->type = self::EXTERNAL_ADMIN;
     }
 
     /**
      * Initialize the form, i.e. set the language and the fields
      * Add every field in $signupList to the form.
-     *
-     * @param SignupListModel $signupList
      */
     public function initialiseForm(SignupListModel $signupList): void
     {
@@ -131,14 +118,12 @@ class Signup extends Form implements InputFilterProviderInterface
         }
 
         $this->signupList = $signupList;
-        $this->type = Signup::USER;
+        $this->type = self::USER;
     }
 
     /**
      * Creates an array of the form element specification for the given $field,
      * to be used by the factory.
-     *
-     * @param SignupFieldModel $field
      *
      * @return array
      */
@@ -174,6 +159,7 @@ class Signup extends Form implements InputFilterProviderInterface
                 foreach ($field->getOptions() as $option) {
                     $values[$option->getId()] = $option->getValue()->getText();
                 }
+
                 $result['type'] = Select::class;
                 $result['options'] = [
                     //'empty_option' => 'Make a choice',
@@ -194,8 +180,8 @@ class Signup extends Form implements InputFilterProviderInterface
     {
         $filter = [];
         if (
-            Signup::EXTERNAL_USER === $this->type ||
-            Signup::EXTERNAL_ADMIN === $this->type
+            self::EXTERNAL_USER === $this->type ||
+            self::EXTERNAL_ADMIN === $this->type
         ) {
             $filter['fullName'] = [
                 'required' => true,

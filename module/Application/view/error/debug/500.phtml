@@ -9,30 +9,46 @@ use Laminas\View\Renderer\PhpRenderer;
 ?>
 <section class="section">
     <div class="container">
-        <h1><?php echo $this->translate('An error occurred') ?></h1>
-        <h2><?php echo $this->message ?></h2>
+        <h1><?php
+            echo $this->translate('An error occurred') ?></h1>
+        <h2><?php
+            echo $this->message ?></h2>
 
-        <?php if (isset($this->display_exceptions) && $this->display_exceptions): ?>
+        <?php
+        if (isset($this->display_exceptions) && $this->display_exceptions): ?>
 
-            <?php if (isset($this->exception) && $this->exception instanceof Exception): ?>
+            <?php
+            if (isset($this->exception) && $this->exception instanceof Exception): ?>
                 <hr/>
-                <h2><?php echo $this->translate('Additional information') ?>:</h2>
-                <h3><?php echo get_class($this->exception); ?></h3>
+                <h2><?php
+                    echo $this->translate('Additional information') ?>:</h2>
+                <h3><?php
+                    echo get_class($this->exception); ?></h3>
                 <dl>
-                    <dt><?php echo $this->translate('File') ?>:</dt>
+                    <dt><?php
+                        echo $this->translate('File') ?>:
+                    </dt>
                     <dd>
-                        <pre class="prettyprint linenums"><?php echo $this->exception->getFile() ?>
-                            :<?php echo $this->exception->getLine() ?></pre>
+                        <pre class="prettyprint linenums"><?php
+                            echo $this->exception->getFile() ?>
+                            :<?php
+                            echo $this->exception->getLine() ?></pre>
                     </dd>
-                    <dt><?php echo $this->translate('Message') ?>:</dt>
+                    <dt><?php
+                        echo $this->translate('Message') ?>:
+                    </dt>
                     <dd>
                         <pre
-                            class="prettyprint linenums"><?php echo $this->escapeHtml($this->exception->getMessage()) ?></pre>
+                            class="prettyprint linenums"><?php
+                            echo $this->escapeHtml($this->exception->getMessage()) ?></pre>
                     </dd>
-                    <dt><?php echo $this->translate('Stack trace') ?>:</dt>
+                    <dt><?php
+                        echo $this->translate('Stack trace') ?>:
+                    </dt>
                     <dd>
                         <pre
-                            class="prettyprint linenums"><?php echo $this->escapeHtml($this->exception->getTraceAsString()) ?></pre>
+                            class="prettyprint linenums"><?php
+                            echo $this->escapeHtml($this->exception->getTraceAsString()) ?></pre>
                     </dd>
                 </dl>
                 <?php
@@ -40,26 +56,39 @@ use Laminas\View\Renderer\PhpRenderer;
                 if ($e) :
                     ?>
                     <hr/>
-                    <h2><?php echo $this->translate('Previous exceptions') ?>:</h2>
+                    <h2><?php
+                        echo $this->translate('Previous exceptions') ?>:</h2>
                     <ul class="unstyled">
-                        <?php while ($e) : ?>
+                        <?php
+                        while ($e) : ?>
                             <li>
-                                <h3><?php echo get_class($e); ?></h3>
+                                <h3><?php
+                                    echo get_class($e); ?></h3>
                                 <dl>
-                                    <dt><?php echo $this->translate('File') ?>:</dt>
+                                    <dt><?php
+                                        echo $this->translate('File') ?>:
+                                    </dt>
                                     <dd>
-                                        <pre class="prettyprint linenums"><?php echo $e->getFile() ?>
-                                            :<?php echo $e->getLine() ?></pre>
+                                        <pre class="prettyprint linenums"><?php
+                                            echo $e->getFile() ?>
+                                            :<?php
+                                            echo $e->getLine() ?></pre>
                                     </dd>
-                                    <dt><?php echo $this->translate('Message') ?>:</dt>
+                                    <dt><?php
+                                        echo $this->translate('Message') ?>:
+                                    </dt>
                                     <dd>
                                         <pre
-                                            class="prettyprint linenums"><?php echo $this->escapeHtml($e->getMessage()) ?></pre>
+                                            class="prettyprint linenums"><?php
+                                            echo $this->escapeHtml($e->getMessage()) ?></pre>
                                     </dd>
-                                    <dt><?php echo $this->translate('Stack trace') ?>:</dt>
+                                    <dt><?php
+                                        echo $this->translate('Stack trace') ?>:
+                                    </dt>
                                     <dd>
                                         <pre
-                                            class="prettyprint linenums"><?php echo $this->escapeHtml($e->getTraceAsString()) ?></pre>
+                                            class="prettyprint linenums"><?php
+                                            echo $this->escapeHtml($e->getTraceAsString()) ?></pre>
                                     </dd>
                                 </dl>
                             </li>
@@ -68,14 +97,19 @@ use Laminas\View\Renderer\PhpRenderer;
                         endwhile;
                         ?>
                     </ul>
-                <?php endif; ?>
+                <?php
+                endif; ?>
 
-            <?php else: ?>
+            <?php
+            else: ?>
 
-                <h3><?php echo $this->translate('No Exception available') ?></h3>
+                <h3><?php
+                    echo $this->translate('No Exception available') ?></h3>
 
-            <?php endif ?>
+            <?php
+            endif ?>
 
-        <?php endif ?>
+        <?php
+        endif ?>
     </div>
 </section>

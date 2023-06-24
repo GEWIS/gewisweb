@@ -4,15 +4,11 @@ declare(strict_types=1);
 
 namespace Decision\Model\SubDecision;
 
-use Decision\Model\{
-    Decision,
-    SubDecision,
-};
-use Doctrine\ORM\Mapping\{
-    Entity,
-    JoinColumn,
-    OneToOne,
-};
+use Decision\Model\Decision;
+use Decision\Model\SubDecision;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\OneToOne;
 
 /**
  * Destroying a decision.
@@ -25,8 +21,6 @@ use Doctrine\ORM\Mapping\{
  * catch. If that is the case, let me know!
  *
  * Also note that destroying decisions that destroy is undefined behaviour!
- *
- * @author Pieter Kokx <kokx@gewis.nl>
  */
 #[Entity]
 class Destroy extends SubDecision
@@ -36,30 +30,28 @@ class Destroy extends SubDecision
      */
     #[OneToOne(
         targetEntity: Decision::class,
-        inversedBy: "destroyedby",
+        inversedBy: 'destroyedby',
     )]
     #[JoinColumn(
-        name: "r_meeting_type",
-        referencedColumnName: "meeting_type",
+        name: 'r_meeting_type',
+        referencedColumnName: 'meeting_type',
     )]
     #[JoinColumn(
-        name: "r_meeting_number",
-        referencedColumnName: "meeting_number",
+        name: 'r_meeting_number',
+        referencedColumnName: 'meeting_number',
     )]
     #[JoinColumn(
-        name: "r_decision_point",
-        referencedColumnName: "point",
+        name: 'r_decision_point',
+        referencedColumnName: 'point',
     )]
     #[JoinColumn(
-        name: "r_decision_number",
-        referencedColumnName: "number",
+        name: 'r_decision_number',
+        referencedColumnName: 'number',
     )]
     protected Decision $target;
 
     /**
      * Get the target.
-     *
-     * @return Decision
      */
     public function getTarget(): Decision
     {
@@ -68,8 +60,6 @@ class Destroy extends SubDecision
 
     /**
      * Set the target.
-     *
-     * @param Decision $target
      */
     public function setTarget(Decision $target): void
     {

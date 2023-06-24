@@ -4,36 +4,30 @@ declare(strict_types=1);
 
 namespace Activity\Controller;
 
+use Activity\Form\Signup as SignupForm;
+use Activity\Model\Activity as ActivityModel;
+use Activity\Model\SignupList as SignupListModel;
+use Activity\Service\AclService;
+use Activity\Service\Activity as ActivityService;
+use Activity\Service\ActivityQuery as ActivityQueryService;
+use Activity\Service\Signup as SignupService;
+use Activity\Service\SignupListQuery as SignupListQueryService;
 use Application\Form\ModifyRequest as RequestForm;
-use Activity\Form\{
-    Signup as SignupForm,
-};
-use Activity\Model\{
-    Activity as ActivityModel,
-    SignupList as SignupListModel,
-};
-use Activity\Service\{
-    AclService,
-    Activity as ActivityService,
-    ActivityQuery as ActivityQueryService,
-    Signup as SignupService,
-    SignupListQuery as SignupListQueryService,
-};
 use DateTime;
 use Laminas\Form\FormInterface;
-use Laminas\Http\{
-    Request,
-    Response,
-};
+use Laminas\Http\Request;
+use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
 use Laminas\Session\Container as SessionContainer;
-use Laminas\Stdlib\{
-    Parameters,
-    ParametersInterface,
-};
+use Laminas\Stdlib\Parameters;
+use Laminas\Stdlib\ParametersInterface;
 use Laminas\View\Model\ViewModel;
+
+use function count;
+use function date;
+use function max;
 
 /**
  * @method FlashMessenger flashMessenger()
@@ -62,13 +56,12 @@ class ActivityController extends AbstractActionController
             [
                 'activities' => $activities,
                 'category' => $category,
-            ]
+            ],
         );
     }
 
     /**
      * View one activity.
-     * @return mixed
      */
     public function viewAction(): mixed
     {
@@ -82,19 +75,19 @@ class ActivityController extends AbstractActionController
         // If the Activity has a sign-up list always display it by redirecting the request.
         if (0 !== $activity->getSignupLists()->count()) {
             return $this->forward()->dispatch(
-                ActivityController::class,
+                self::class,
                 [
                     'action' => 'viewSignupList',
                     'id' => $activityId,
                     'signupList' => $activity->getSignupLists()->first()->getId(),
-                ]
+                ],
             );
         }
 
         return new ViewModel(
             [
                 'activity' => $activity,
-            ]
+            ],
         );
     }
 
@@ -156,7 +149,7 @@ class ActivityController extends AbstractActionController
                 'memberSignups' => $this->signupService->getNumberOfSubscribedMembers($signupList),
                 'subscriptionOpenDatePassed' => $subscriptionOpenDatePassed,
                 'subscriptionCloseDatePassed' => $subscriptionCloseDatePassed,
-            ]
+            ],
         );
         $view->setTemplate('activity/activity/view.phtml');
 
@@ -173,9 +166,6 @@ class ActivityController extends AbstractActionController
 
     /**
      * Get the appropriate signup form.
-     *
-     * @param SignupListModel $signupList
-     * @param SessionContainer $activitySession
      *
      * @return SignupForm|null $form
      */
@@ -237,7 +227,7 @@ class ActivityController extends AbstractActionController
                 'form' => $form,
                 'action' => $this->translator->translate('Create Activity'),
                 'allowSignupList' => true,
-            ]
+            ],
         );
     }
 
@@ -314,11 +304,7 @@ class ActivityController extends AbstractActionController
      * $error message can be displayed if the request was unsuccessful (i.e.
      * $success was false).
      *
-     * @param int $activityId
-     * @param int $signupListId
      * @param bool $success Whether the request was successful
-     * @param string $message
-     * @return Response
      */
     protected function redirectActivityRequest(
         int $activityId,
@@ -337,7 +323,7 @@ class ActivityController extends AbstractActionController
             [
                 'id' => $activityId,
                 'signupList' => $signupListId,
-            ]
+            ],
         );
     }
 
@@ -442,7 +428,7 @@ class ActivityController extends AbstractActionController
                 || ActivityModel::STATUS_APPROVED !== $signupList->getActivity()->getStatus()
             ) {
                 $error = $this->translator->translate(
-                    'You cannot unsubscribe from this activity at this moment in time'
+                    'You cannot unsubscribe from this activity at this moment in time',
                 );
 
                 return $this->redirectActivityRequest($activityId, $signupListId, false, $error);
@@ -470,8 +456,6 @@ class ActivityController extends AbstractActionController
 
     /**
      * Display all the finished activities in a school year.
-     *
-     * @return ViewModel
      */
     public function archiveAction(): ViewModel
     {
@@ -493,7 +477,7 @@ class ActivityController extends AbstractActionController
             [
                 'years' => $years,
                 'activities' => $this->activityQueryService->getFinishedActivitiesByYear($year),
-            ]
+            ],
         );
     }
 }

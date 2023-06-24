@@ -21,8 +21,6 @@ class ProfilePhoto extends BaseMapper
      *
      * @param int $lidnr The lidnr of the user to which the photo is assigned
      *
-     * @return ProfilePhotoModel|null
-     *
      * @throws Exception
      */
     public function getProfilePhotoByLidnr(int $lidnr): ?ProfilePhotoModel
@@ -30,7 +28,7 @@ class ProfilePhoto extends BaseMapper
         return $this->getRepository()->findOneBy(
             [
                 'member' => $lidnr,
-            ]
+            ],
         );
     }
 

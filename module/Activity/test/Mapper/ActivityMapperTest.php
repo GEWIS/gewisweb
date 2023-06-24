@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace ActivityTest\Mapper;
 
 use Activity\Mapper\Activity as ActivityMapper;
-use Activity\Model\{
-    Activity,
-    ActivityLocalisedText,
-};
+use Activity\Model\Activity;
+use Activity\Model\ActivityLocalisedText;
 use Application\Mapper\BaseMapper;
 use ApplicationTest\Mapper\BaseMapperTest;
 use DateTime;
@@ -18,9 +16,7 @@ use User\Model\User;
 
 class ActivityMapperTest extends BaseMapperTest
 {
-    /**
-     * @var ActivityMapper
-     */
+    /** @var ActivityMapper */
     protected BaseMapper $mapper;
     protected User $user;
     protected Member $member;
@@ -29,6 +25,7 @@ class ActivityMapperTest extends BaseMapperTest
     public function setUp(): void
     {
         parent::setUp();
+
         $this->mapper = $this->serviceManager->get('activity_mapper_activity');
 
         $this->setUpUser();

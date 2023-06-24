@@ -7,19 +7,22 @@ namespace User\Mapper;
 use Application\Mapper\BaseMapper;
 use DateTime;
 use Decision\Model\Member as MemberModel;
-use User\Model\{
-    ApiApp as ApiAppModel,
-    User as UserModel,
-};
+use User\Model\ApiApp as ApiAppModel;
 use User\Model\ApiAppAuthentication as ApiAppAuthenticationModel;
+use User\Model\User as UserModel;
 
 /**
  * @template-extends BaseMapper<ApiAppAuthenticationModel>
+ * @psalm-type ApiAppsArrayType = array<array-key, array{
+ *     0: ApiAppModel,
+ *     firstAuthentication: DateTime,
+ *     lastAuthentication: DateTime,
+ * }>
  */
 class ApiAppAuthentication extends BaseMapper
 {
     /**
-     * @return array<array-key, array{0: ApiAppModel, firstAuthentication: DateTime, lastAuthentication: DateTime}>
+     * @return ApiAppsArrayType
      */
     public function getFirstAndLastAuthenticationPerApiApp(MemberModel $member): array
     {
@@ -48,9 +51,6 @@ class ApiAppAuthentication extends BaseMapper
         return $qb->getQuery()->getOneOrNullResult();
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function getRepositoryName(): string
     {
         return ApiAppAuthenticationModel::class;

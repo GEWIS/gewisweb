@@ -6,12 +6,10 @@ namespace Company\Model\Proposals;
 
 use Application\Model\Traits\IdentifiableTrait;
 use Company\Model\Company as CompanyModel;
-use Doctrine\ORM\Mapping\{
-    Entity,
-    JoinColumn,
-    ManyToOne,
-    OneToOne,
-};
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToOne;
 
 #[Entity]
 class CompanyUpdate
@@ -23,10 +21,10 @@ class CompanyUpdate
      */
     #[ManyToOne(
         targetEntity: CompanyModel::class,
-        inversedBy: "updateProposals",
+        inversedBy: 'updateProposals',
     )]
     #[JoinColumn(
-        referencedColumnName: "id",
+        referencedColumnName: 'id',
         nullable: false,
     )]
     protected CompanyModel $original;
@@ -36,41 +34,29 @@ class CompanyUpdate
      */
     #[OneToOne(
         targetEntity: CompanyModel::class,
-        cascade: ["remove"],
+        cascade: ['remove'],
     )]
     #[JoinColumn(
-        referencedColumnName: "id",
+        referencedColumnName: 'id',
         nullable: false,
     )]
     protected CompanyModel $proposal;
 
-    /**
-     * @return CompanyModel
-     */
     public function getOriginal(): CompanyModel
     {
         return $this->original;
     }
 
-    /**
-     * @param CompanyModel $original
-     */
     public function setOriginal(CompanyModel $original): void
     {
         $this->original = $original;
     }
 
-    /**
-     * @return CompanyModel
-     */
     public function getProposal(): CompanyModel
     {
         return $this->proposal;
     }
 
-    /**
-     * @param CompanyModel $proposal
-     */
     public function setProposal(CompanyModel $proposal): void
     {
         $this->proposal = $proposal;

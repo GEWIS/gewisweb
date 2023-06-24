@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Activity\Model;
 
-use Doctrine\ORM\Mapping\{
-    Column,
-    Entity,
-};
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
 
 /**
  * ExternalSignup model.
@@ -18,19 +16,17 @@ class ExternalSignup extends Signup
     /**
      * The full name of the external subscriber.
      */
-    #[Column(type: "string")]
+    #[Column(type: 'string')]
     protected string $fullName;
 
     /**
      * The email address of the external subscriber.
      */
-    #[Column(type: "string")]
+    #[Column(type: 'string')]
     protected string $email;
 
     /**
      * Gets the full name of the user who signed up for the activity.
-     *
-     * @return string
      */
     public function getFullName(): string
     {
@@ -39,8 +35,6 @@ class ExternalSignup extends Signup
 
     /**
      * Sets the full name of the user who signed up for the activity.
-     *
-     * @param string $fullName
      */
     public function setFullName(string $fullName): void
     {
@@ -49,8 +43,6 @@ class ExternalSignup extends Signup
 
     /**
      * Get the email address of the user who signed up for the activity.
-     *
-     * @return string
      */
     public function getEmail(): string
     {
@@ -59,8 +51,6 @@ class ExternalSignup extends Signup
 
     /**
      * Sets the e-mail address of the user who signed up for the activity.
-     *
-     * @param string $email
      */
     public function setEmail(string $email): void
     {

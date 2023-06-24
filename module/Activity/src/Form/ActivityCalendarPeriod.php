@@ -5,19 +5,15 @@ declare(strict_types=1);
 namespace Activity\Form;
 
 use DateTime;
-use Exception;
-use Laminas\Form\Element\{
-    Collection,
-    DateTimeLocal,
-    Submit,
-};
+use Laminas\Form\Element\Collection;
+use Laminas\Form\Element\DateTimeLocal;
+use Laminas\Form\Element\Submit;
 use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Validator\{
-    Callback,
-    Date,
-};
+use Laminas\Validator\Callback;
+use Laminas\Validator\Date;
+use Throwable;
 
 class ActivityCalendarPeriod extends Form implements InputFilterProviderInterface
 {
@@ -33,7 +29,7 @@ class ActivityCalendarPeriod extends Form implements InputFilterProviderInterfac
                     'format' => 'Y-m-d\TH:i',
                     'label' => $this->translator->translate('Start date and time of planning period'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -44,7 +40,7 @@ class ActivityCalendarPeriod extends Form implements InputFilterProviderInterfac
                     'format' => 'Y-m-d\TH:i',
                     'label' => $this->translator->translate('End date and time of planning period'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -55,7 +51,7 @@ class ActivityCalendarPeriod extends Form implements InputFilterProviderInterfac
                     'format' => 'Y-m-d\TH:i',
                     'label' => $this->translator->translate('Start date and time of option period'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -66,7 +62,7 @@ class ActivityCalendarPeriod extends Form implements InputFilterProviderInterfac
                     'format' => 'Y-m-d\TH:i',
                     'label' => $this->translator->translate('End date and time of option period'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -82,7 +78,7 @@ class ActivityCalendarPeriod extends Form implements InputFilterProviderInterfac
                         'type' => MaxActivities::class,
                     ],
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -92,7 +88,7 @@ class ActivityCalendarPeriod extends Form implements InputFilterProviderInterfac
                 'attributes' => [
                     'value' => $this->translator->translate('Create Option Period'),
                 ],
-            ]
+            ],
         );
     }
 
@@ -186,11 +182,7 @@ class ActivityCalendarPeriod extends Form implements InputFilterProviderInterfac
     }
 
     /**
-     * @param string $value
-     * @param array $context
-     * @param string $option
-     *
-     * @return bool
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function afterOtherTime(
         string $value,
@@ -202,7 +194,7 @@ class ActivityCalendarPeriod extends Form implements InputFilterProviderInterfac
             $time = isset($context[$option]) ? new DateTime($context[$option]) : new DateTime('now');
 
             return $value > $time;
-        } catch (Exception $e) {
+        } catch (Throwable) {
             // An exception is an indication that one of the DateTimes was not valid
             return false;
         }

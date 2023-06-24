@@ -6,17 +6,13 @@ namespace Education\Controller\Factory;
 
 use Education\Controller\AdminController;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
-use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Psr\Container\ContainerInterface;
 
 class AdminControllerFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param string $requestedName
-     * @param array|null $options
-     *
-     * @return AdminController
      */
     public function __invoke(
         ContainerInterface $container,

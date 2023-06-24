@@ -5,16 +5,12 @@ declare(strict_types=1);
 namespace Decision\Model\SubDecision;
 
 use DateTime;
-use Decision\Model\{
-    Member,
-    SubDecision,
-};
-use Doctrine\ORM\Mapping\{
-    Column,
-    Entity,
-    JoinColumn,
-    ManyToOne,
-};
+use Decision\Model\Member;
+use Decision\Model\SubDecision;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
 
 /**
  * Budget decision.
@@ -27,22 +23,22 @@ class Budget extends SubDecision
      */
     #[ManyToOne(targetEntity: Member::class)]
     #[JoinColumn(
-        name: "lidnr",
-        referencedColumnName: "lidnr",
+        name: 'lidnr',
+        referencedColumnName: 'lidnr',
     )]
     protected Member $author;
 
     /**
      * Name of the budget.
      */
-    #[Column(type: "string")]
+    #[Column(type: 'string')]
     protected string $name;
 
     /**
      * Version of the budget.
      */
     #[Column(
-        type: "string",
+        type: 'string',
         length: 32,
     )]
     protected string $version;
@@ -50,25 +46,23 @@ class Budget extends SubDecision
     /**
      * Date of the budget.
      */
-    #[Column(type: "date")]
+    #[Column(type: 'date')]
     protected DateTime $date;
 
     /**
      * If the budget was approved.
      */
-    #[Column(type: "boolean")]
+    #[Column(type: 'boolean')]
     protected bool $approval;
 
     /**
      * If there were changes made.
      */
-    #[Column(type: "boolean")]
+    #[Column(type: 'boolean')]
     protected bool $changes;
 
     /**
      * Get the author.
-     *
-     * @return Member
      */
     public function getAuthor(): Member
     {
@@ -77,8 +71,6 @@ class Budget extends SubDecision
 
     /**
      * Set the author.
-     *
-     * @param Member $author
      */
     public function setAuthor(Member $author): void
     {
@@ -87,8 +79,6 @@ class Budget extends SubDecision
 
     /**
      * Get the name.
-     *
-     * @return string
      */
     public function getName(): string
     {
@@ -97,8 +87,6 @@ class Budget extends SubDecision
 
     /**
      * Set the name.
-     *
-     * @param string $name
      */
     public function setName(string $name): void
     {
@@ -107,8 +95,6 @@ class Budget extends SubDecision
 
     /**
      * Get the version.
-     *
-     * @return string
      */
     public function getVersion(): string
     {
@@ -117,8 +103,6 @@ class Budget extends SubDecision
 
     /**
      * Set the version.
-     *
-     * @param string $version
      */
     public function setVersion(string $version): void
     {
@@ -127,8 +111,6 @@ class Budget extends SubDecision
 
     /**
      * Get the date.
-     *
-     * @return DateTime
      */
     public function getDate(): DateTime
     {
@@ -137,8 +119,6 @@ class Budget extends SubDecision
 
     /**
      * Set the date.
-     *
-     * @param DateTime $date
      */
     public function setDate(DateTime $date): void
     {
@@ -147,8 +127,6 @@ class Budget extends SubDecision
 
     /**
      * Get approval status.
-     *
-     * @return bool
      */
     public function getApproval(): bool
     {
@@ -157,8 +135,6 @@ class Budget extends SubDecision
 
     /**
      * Set approval status.
-     *
-     * @param bool $approval
      */
     public function setApproval(bool $approval): void
     {
@@ -167,8 +143,6 @@ class Budget extends SubDecision
 
     /**
      * Get if changes were made.
-     *
-     * @return bool
      */
     public function getChanges(): bool
     {
@@ -177,8 +151,6 @@ class Budget extends SubDecision
 
     /**
      * Set if changes were made.
-     *
-     * @param bool $changes
      */
     public function setChanges(bool $changes): void
     {

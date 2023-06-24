@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Activity\Form;
 
-use Laminas\Form\Element\{
-    Hidden,
-    Number,
-};
+use Laminas\Form\Element\Hidden;
+use Laminas\Form\Element\Number;
 use Laminas\Form\Fieldset;
 
 class MaxActivities extends Fieldset
@@ -20,14 +18,14 @@ class MaxActivities extends Fieldset
             [
                 'name' => 'id',
                 'type' => Hidden::class,
-            ]
+            ],
         );
 
         $this->add(
             [
                 'name' => 'name',
                 'type' => Hidden::class,
-            ]
+            ],
         );
 
         $this->add(
@@ -37,7 +35,7 @@ class MaxActivities extends Fieldset
                 'options' => [
                     'min' => 0,
                 ],
-            ]
+            ],
         );
     }
 }

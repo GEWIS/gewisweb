@@ -5,12 +5,10 @@ declare(strict_types=1);
 namespace User\Model;
 
 use Application\Model\Traits\IdentifiableTrait;
-use Doctrine\ORM\Mapping\{
-    Column,
-    Entity,
-    JoinColumn,
-    ManyToOne,
-};
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
 
 /**
  * User role model.
@@ -27,10 +25,10 @@ class UserRole
      */
     #[ManyToOne(
         targetEntity: User::class,
-        inversedBy: "roles",
+        inversedBy: 'roles',
     )]
     #[JoinColumn(
-        referencedColumnName: "lidnr",
+        referencedColumnName: 'lidnr',
         nullable: false,
     )]
     protected User $lidnr;
@@ -38,13 +36,11 @@ class UserRole
     /**
      * The user's role.
      */
-    #[Column(type: "string")]
+    #[Column(type: 'string')]
     protected string $role;
 
     /**
      * Get the membership number.
-     *
-     * @return User
      */
     public function getLidnr(): User
     {
@@ -53,8 +49,6 @@ class UserRole
 
     /**
      * Set the membership number.
-     *
-     * @param User $lidnr
      */
     public function setLidnr(User $lidnr): void
     {
@@ -63,8 +57,6 @@ class UserRole
 
     /**
      * Get the role.
-     *
-     * @return string
      */
     public function getRole(): string
     {
@@ -73,8 +65,6 @@ class UserRole
 
     /**
      * Set the role.
-     *
-     * @param string $role
      */
     public function setRole(string $role): void
     {

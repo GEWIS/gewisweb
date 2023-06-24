@@ -15,10 +15,6 @@ class NewCompanyUser extends BaseMapper
 {
     /**
      * Get the new company user by code.
-     *
-     * @param string $code
-     *
-     * @return NewCompanyUserModel|null
      */
     public function getByCode(string $code): ?NewCompanyUserModel
     {
@@ -37,8 +33,6 @@ class NewCompanyUser extends BaseMapper
 
     /**
      * Delete the existing activation code for a company.
-     *
-     * @param CompanyModel $company
      */
     public function deleteByCompany(CompanyModel $company): void
     {
@@ -49,9 +43,6 @@ class NewCompanyUser extends BaseMapper
         $qb->getQuery()->execute();
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function getRepositoryName(): string
     {
         return NewCompanyUserModel::class;

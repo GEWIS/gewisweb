@@ -5,12 +5,10 @@ declare(strict_types=1);
 namespace Education\Mapper;
 
 use Application\Mapper\BaseMapper;
-use Education\Model\{
-    Course as CourseModel,
-    CourseDocument as CourseDocumentModel,
-    Exam as ExamModel,
-    Summary as SummaryModel,
-};
+use Education\Model\Course as CourseModel;
+use Education\Model\CourseDocument as CourseDocumentModel;
+use Education\Model\Exam as ExamModel;
+use Education\Model\Summary as SummaryModel;
 
 /**
  * Mapper for course documents.
@@ -21,6 +19,8 @@ class CourseDocument extends BaseMapper
 {
     /**
      * @psalm-param class-string<ExamModel>|class-string<SummaryModel> $type
+     *
+     * @return CourseDocumentModel[]
      */
     public function findDocumentsByCourse(
         CourseModel $course,
@@ -35,9 +35,6 @@ class CourseDocument extends BaseMapper
         return $qb->getQuery()->getResult();
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function getRepositoryName(): string
     {
         return CourseDocumentModel::class;

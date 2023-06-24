@@ -5,12 +5,10 @@ declare(strict_types=1);
 namespace Activity\Model;
 
 use Application\Model\Traits\IdentifiableTrait;
-use Doctrine\ORM\Mapping\{
-    Entity,
-    JoinColumn,
-    ManyToOne,
-    OneToOne,
-};
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToOne;
 
 /**
  * SignupOption model.
@@ -26,12 +24,12 @@ class SignupOption
      */
     #[ManyToOne(
         targetEntity: SignupField::class,
-        cascade: ["persist"],
-        inversedBy: "options",
+        cascade: ['persist'],
+        inversedBy: 'options',
     )]
     #[JoinColumn(
-        name: "field_id",
-        referencedColumnName: "id",
+        name: 'field_id',
+        referencedColumnName: 'id',
         nullable: false,
     )]
     protected SignupField $field;
@@ -41,19 +39,16 @@ class SignupOption
      */
     #[OneToOne(
         targetEntity: ActivityLocalisedText::class,
-        cascade: ["persist"],
+        cascade: ['persist'],
         orphanRemoval: true,
     )]
     #[JoinColumn(
-        name: "value_id",
-        referencedColumnName: "id",
+        name: 'value_id',
+        referencedColumnName: 'id',
         nullable: false,
     )]
     protected ActivityLocalisedText $value;
 
-    /**
-     * @return SignupField
-     */
     public function getField(): SignupField
     {
         return $this->field;
@@ -61,17 +56,12 @@ class SignupOption
 
     /**
      * Set the field the option belongs to.
-     *
-     * @param SignupField $field
      */
     public function setField(SignupField $field): void
     {
         $this->field = $field;
     }
 
-    /**
-     * @return ActivityLocalisedText
-     */
     public function getValue(): ActivityLocalisedText
     {
         return $this->value;
@@ -79,8 +69,6 @@ class SignupOption
 
     /**
      * Set the value of the option.
-     *
-     * @param ActivityLocalisedText $value
      */
     public function setValue(ActivityLocalisedText $value): void
     {
@@ -90,7 +78,11 @@ class SignupOption
     /**
      * Returns an associative array representation of this object.
      *
-     * @return array
+     * @return array{
+     *     id: int,
+     *     value: ?string,
+     *     valueEn: ?string,
+     * }
      */
     public function toArray(): array
     {

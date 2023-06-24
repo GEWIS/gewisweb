@@ -7,13 +7,11 @@ namespace Decision\Model;
 use Application\Model\Traits\IdentifiableTrait;
 use DateTime;
 use Decision\Model\SubDecision\Installation;
-use Doctrine\ORM\Mapping\{
-    Column,
-    Entity,
-    JoinColumn,
-    ManyToOne,
-    OneToOne,
-};
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToOne;
 
 /**
  * Organ member entity.
@@ -30,7 +28,7 @@ class OrganMember
      */
     #[ManyToOne(
         targetEntity: Organ::class,
-        inversedBy: "members",
+        inversedBy: 'members',
     )]
     protected Organ $organ;
 
@@ -39,24 +37,24 @@ class OrganMember
      */
     #[ManyToOne(
         targetEntity: Member::class,
-        inversedBy: "organInstallations",
+        inversedBy: 'organInstallations',
     )]
     #[JoinColumn(
-        name: "lidnr",
-        referencedColumnName: "lidnr",
+        name: 'lidnr',
+        referencedColumnName: 'lidnr',
     )]
     protected Member $member;
 
     /**
      * Function.
      */
-    #[Column(type: "string")]
+    #[Column(type: 'string')]
     protected string $function;
 
     /**
      * Installation date.
      */
-    #[Column(type: "date")]
+    #[Column(type: 'date')]
     protected DateTime $installDate;
 
     /**
@@ -64,27 +62,27 @@ class OrganMember
      */
     #[OneToOne(
         targetEntity: Installation::class,
-        inversedBy: "organMember",
+        inversedBy: 'organMember',
     )]
     #[JoinColumn(
-        name: "r_meeting_type",
-        referencedColumnName: "meeting_type",
+        name: 'r_meeting_type',
+        referencedColumnName: 'meeting_type',
     )]
     #[JoinColumn(
-        name: "r_meeting_number",
-        referencedColumnName: "meeting_number",
+        name: 'r_meeting_number',
+        referencedColumnName: 'meeting_number',
     )]
     #[JoinColumn(
-        name: "r_decision_point",
-        referencedColumnName: "decision_point",
+        name: 'r_decision_point',
+        referencedColumnName: 'decision_point',
     )]
     #[JoinColumn(
-        name: "r_decision_number",
-        referencedColumnName: "decision_number",
+        name: 'r_decision_number',
+        referencedColumnName: 'decision_number',
     )]
     #[JoinColumn(
-        name: "r_number",
-        referencedColumnName: "number",
+        name: 'r_number',
+        referencedColumnName: 'number',
     )]
     protected Installation $installation;
 
@@ -92,15 +90,13 @@ class OrganMember
      * Discharge date.
      */
     #[Column(
-        type: "date",
+        type: 'date',
         nullable: true,
     )]
     protected ?DateTime $dischargeDate = null;
 
     /**
      * Set the organ.
-     *
-     * @param Organ $organ
      */
     public function setOrgan(Organ $organ): void
     {
@@ -109,8 +105,6 @@ class OrganMember
 
     /**
      * Get the organ.
-     *
-     * @return Organ
      */
     public function getOrgan(): Organ
     {
@@ -119,8 +113,6 @@ class OrganMember
 
     /**
      * Set the member.
-     *
-     * @param Member $member
      */
     public function setMember(Member $member): void
     {
@@ -129,8 +121,6 @@ class OrganMember
 
     /**
      * Get the member.
-     *
-     * @return Member
      */
     public function getMember(): Member
     {
@@ -139,8 +129,6 @@ class OrganMember
 
     /**
      * Set the function.
-     *
-     * @param string $function
      */
     public function setFunction(string $function): void
     {
@@ -149,8 +137,6 @@ class OrganMember
 
     /**
      * Get the function.
-     *
-     * @return string
      */
     public function getFunction(): string
     {
@@ -159,8 +145,6 @@ class OrganMember
 
     /**
      * Set the installation date.
-     *
-     * @param DateTime $installDate
      */
     public function setInstallDate(DateTime $installDate): void
     {
@@ -169,8 +153,6 @@ class OrganMember
 
     /**
      * Get the installation date.
-     *
-     * @return DateTime
      */
     public function getInstallDate(): DateTime
     {
@@ -179,8 +161,6 @@ class OrganMember
 
     /**
      * Set the installation.
-     *
-     * @param Installation $installation
      */
     public function setInstallation(Installation $installation): void
     {
@@ -189,8 +169,6 @@ class OrganMember
 
     /**
      * Get the installation.
-     *
-     * @return Installation
      */
     public function getInstallation(): Installation
     {
@@ -199,8 +177,6 @@ class OrganMember
 
     /**
      * Set the discharge date.
-     *
-     * @param DateTime|null $dischargeDate
      */
     public function setDischargeDate(?DateTime $dischargeDate): void
     {
@@ -209,8 +185,6 @@ class OrganMember
 
     /**
      * Get the discharge date.
-     *
-     * @return DateTime|null
      */
     public function getDischargeDate(): ?DateTime
     {

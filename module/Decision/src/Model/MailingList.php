@@ -4,16 +4,12 @@ declare(strict_types=1);
 
 namespace Decision\Model;
 
-use Doctrine\Common\Collections\{
-    ArrayCollection,
-    Collection,
-};
-use Doctrine\ORM\Mapping\{
-    Column,
-    Entity,
-    Id,
-    ManyToMany,
-};
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\ManyToMany;
 
 /**
  * Mailing List model.
@@ -25,25 +21,25 @@ class MailingList
      * Mailman-identifier / name.
      */
     #[Id]
-    #[Column(type: "string")]
+    #[Column(type: 'string')]
     protected string $name;
 
     /**
      * Dutch description of the mailing list.
      */
-    #[Column(type: "text")]
+    #[Column(type: 'text')]
     protected string $nl_description;
 
     /**
      * English description of the mailing list.
      */
-    #[Column(type: "text")]
+    #[Column(type: 'text')]
     protected string $en_description;
 
     /**
      * If the mailing list should be on the form.
      */
-    #[Column(type: "boolean")]
+    #[Column(type: 'boolean')]
     protected bool $onForm;
 
     /**
@@ -51,15 +47,17 @@ class MailingList
      *
      * (when it is on the form, that means that the checkbox is checked by default)
      */
-    #[Column(type: "boolean")]
+    #[Column(type: 'boolean')]
     protected bool $defaultSub;
 
     /**
      * Mailing list members.
+     *
+     * @var Collection<array-key, Member>
      */
     #[ManyToMany(
         targetEntity: Member::class,
-        mappedBy: "lists",
+        mappedBy: 'lists',
     )]
     protected Collection $members;
 
@@ -70,8 +68,6 @@ class MailingList
 
     /**
      * Get the name.
-     *
-     * @return string
      */
     public function getName(): string
     {
@@ -80,8 +76,6 @@ class MailingList
 
     /**
      * Set the name.
-     *
-     * @param string $name
      */
     public function setName(string $name): void
     {
@@ -90,8 +84,6 @@ class MailingList
 
     /**
      * Get the english description.
-     *
-     * @return string
      */
     public function getEnDescription(): string
     {
@@ -100,8 +92,6 @@ class MailingList
 
     /**
      * Set the english description.
-     *
-     * @param string $description
      */
     public function setEnDescription(string $description): void
     {
@@ -110,8 +100,6 @@ class MailingList
 
     /**
      * Get the dutch description.
-     *
-     * @return string
      */
     public function getNlDescription(): string
     {
@@ -120,8 +108,6 @@ class MailingList
 
     /**
      * Set the dutch description.
-     *
-     * @param string $description
      */
     public function setNlDescription(string $description): void
     {
@@ -130,8 +116,6 @@ class MailingList
 
     /**
      * Get the description.
-     *
-     * @return string
      */
     public function getDescription(): string
     {
@@ -140,8 +124,6 @@ class MailingList
 
     /**
      * Set the description.
-     *
-     * @param string $description
      */
     public function setDescription(string $description): void
     {
@@ -150,8 +132,6 @@ class MailingList
 
     /**
      * Get if it should be on the form.
-     *
-     * @return bool
      */
     public function getOnForm(): bool
     {
@@ -160,8 +140,6 @@ class MailingList
 
     /**
      * Set if it should be on the form.
-     *
-     * @param bool $onForm
      */
     public function setOnForm(bool $onForm): void
     {
@@ -170,8 +148,6 @@ class MailingList
 
     /**
      * Get if it is a default list.
-     *
-     * @return bool
      */
     public function getDefaultSub(): bool
     {
@@ -180,8 +156,6 @@ class MailingList
 
     /**
      * Set if it is a default list.
-     *
-     * @param bool $default
      */
     public function setDefaultSub(bool $default): void
     {
@@ -191,7 +165,7 @@ class MailingList
     /**
      * Get subscribed members.
      *
-     * @return Collection of members
+     * @return Collection<array-key, Member>
      */
     public function getMembers(): Collection
     {

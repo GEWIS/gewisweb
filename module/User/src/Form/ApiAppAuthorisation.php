@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace User\Form;
 
-use Laminas\Form\Element\{
-    Csrf,
-    Submit,
-};
+use Laminas\Form\Element\Csrf;
+use Laminas\Form\Element\Submit;
 use Laminas\Form\Form;
 use Laminas\Mvc\I18n\Translator;
 
@@ -28,7 +26,7 @@ class ApiAppAuthorisation extends Form
                         'value' => $translator->translate('Cancel'),
                         'class' => 'btn btn-default',
                     ],
-                ]
+                ],
             );
 
             $this->add(
@@ -39,7 +37,7 @@ class ApiAppAuthorisation extends Form
                         'value' => $translator->translate('Authorise'),
                         'class' => 'btn btn-primary',
                     ],
-                ]
+                ],
             );
         } else {
             $this->add(
@@ -50,7 +48,7 @@ class ApiAppAuthorisation extends Form
                         'value' => $translator->translate('Continue'),
                         'class' => 'btn btn-primary',
                     ],
-                ]
+                ],
             );
         }
 
@@ -58,7 +56,7 @@ class ApiAppAuthorisation extends Form
             [
                 'name' => 'security',
                 'type' => Csrf::class,
-            ]
+            ],
         );
     }
 }

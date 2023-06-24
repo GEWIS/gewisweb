@@ -21,7 +21,7 @@ class PageController extends AbstractActionController
         $name = $this->params()->fromRoute('name');
         $page = $this->pageService->getPage($category, $subCategory, $name);
 
-        if (is_null($page)) {
+        if (null === $page) {
             return $this->notFoundAction();
         }
 
@@ -31,7 +31,7 @@ class PageController extends AbstractActionController
             [
                 'page' => $page,
                 'parents' => $parents,
-            ]
+            ],
         );
     }
 }

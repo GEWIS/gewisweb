@@ -14,9 +14,6 @@ use Frontpage\Model\PollComment as PollCommentModel;
  */
 class PollComment extends BaseMapper
 {
-    /**
-     * @inheritdoc
-     */
     protected function getRepositoryName(): string
     {
         return PollCommentModel::class;

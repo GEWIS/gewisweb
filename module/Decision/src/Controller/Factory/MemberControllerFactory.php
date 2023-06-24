@@ -5,18 +5,14 @@ declare(strict_types=1);
 namespace Decision\Controller\Factory;
 
 use Decision\Controller\MemberController;
-use Psr\Container\ContainerInterface;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Psr\Container\ContainerInterface;
 
 class MemberControllerFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param string $requestedName
-     * @param array|null $options
-     *
-     * @return MemberController
      */
     public function __invoke(
         ContainerInterface $container,

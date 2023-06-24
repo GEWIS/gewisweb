@@ -8,6 +8,12 @@ use Application\Mapper\BaseMapper;
 use Decision\Model\Decision as DecisionModel;
 use Decision\Model\Enums\MeetingTypes;
 
+use function addcslashes;
+use function is_numeric;
+use function preg_match;
+
+use const PREG_UNMATCHED_AS_NULL;
+
 /**
  * @template-extends BaseMapper<DecisionModel>
  */
@@ -16,9 +22,7 @@ class Decision extends BaseMapper
     /**
      * Search decisions.
      *
-     * @param string $query
-     *
-     * @return array<array-key, DecisionModel>
+     * @return DecisionModel[]
      */
     public function search(string $query): array
     {
@@ -29,7 +33,7 @@ class Decision extends BaseMapper
             ->orderBy('m.date', 'DESC')
             ->setMaxResults(100);
 
-        $qb->setParameter('query', "%" . addcslashes($query, '%_') . "%");
+        $qb->setParameter('query', '%' . addcslashes($query, '%_') . '%');
 
         // Start by matching meeting type and meeting number, then we also match additional meeting points and decision
         // numbers.
@@ -48,7 +52,6 @@ class Decision extends BaseMapper
         //     [3]=> string(3) "456"
         //     [4]=> string(3) "789"
         // }
-        //
         $meetingRegex = '/(?:(' . MeetingTypes::ALV->value . '|'
             . MeetingTypes::BV->value . '|'
             . MeetingTypes::VV->value . '|'
@@ -80,9 +83,6 @@ class Decision extends BaseMapper
         return $qb->getQuery()->getResult();
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function getRepositoryName(): string
     {
         return DecisionModel::class;

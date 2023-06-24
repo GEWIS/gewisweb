@@ -5,16 +5,12 @@ declare(strict_types=1);
 namespace Company\Form;
 
 use Application\Form\Localisable as LocalisableForm;
-use Laminas\Mvc\I18n\Translator;
-use Laminas\Filter\{
-    StringTrim,
-    StripTags,
-};
-use Laminas\Form\Element\{
-    Submit,
-    Text,
-};
+use Laminas\Filter\StringTrim;
+use Laminas\Filter\StripTags;
+use Laminas\Form\Element\Submit;
+use Laminas\Form\Element\Text;
 use Laminas\InputFilter\InputFilterProviderInterface;
+use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\StringLength;
 
 class JobLabel extends LocalisableForm implements InputFilterProviderInterface
@@ -23,6 +19,7 @@ class JobLabel extends LocalisableForm implements InputFilterProviderInterface
     {
         // we want to ignore the name passed
         parent::__construct($translator);
+
         $this->setAttribute('method', 'post');
 
         // All language attributes.
@@ -33,7 +30,7 @@ class JobLabel extends LocalisableForm implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->getTranslator()->translate('Name'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -43,7 +40,7 @@ class JobLabel extends LocalisableForm implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->getTranslator()->translate('Name'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -53,7 +50,7 @@ class JobLabel extends LocalisableForm implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->getTranslator()->translate('Abbreviation'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -63,17 +60,16 @@ class JobLabel extends LocalisableForm implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->getTranslator()->translate('Abbreviation'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
             [
                 'name' => 'submit',
                 'type' => Submit::class,
-            ]
+            ],
         );
     }
-
 
     /**
      * @inheritDoc

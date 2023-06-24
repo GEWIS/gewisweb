@@ -4,20 +4,16 @@ declare(strict_types=1);
 
 namespace Photo\Controller;
 
-use Exception;
-use Laminas\Http\{
-    Request,
-    Response,
-};
+use Laminas\Http\Request;
+use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
-use Laminas\View\Model\{
-    JsonModel,
-    ViewModel,
-};
-use Photo\Service\{
-    Admin as AdminService,
-    Album as AlbumService,
-};
+use Laminas\View\Model\JsonModel;
+use Laminas\View\Model\ViewModel;
+use Photo\Service\Admin as AdminService;
+use Photo\Service\Album as AlbumService;
+use Throwable;
+
+use function array_reverse;
 
 class AlbumAdminController extends AbstractActionController
 {
@@ -44,7 +40,7 @@ class AlbumAdminController extends AbstractActionController
             [
                 'albumsByYear' => array_reverse($albumsByYear, true),
                 'albumsWithoutDate' => $albumsWithoutDate,
-            ]
+            ],
         );
     }
 
@@ -72,7 +68,7 @@ class AlbumAdminController extends AbstractActionController
         return new ViewModel(
             [
                 'form' => $form,
-            ]
+            ],
         );
     }
 
@@ -119,7 +115,7 @@ class AlbumAdminController extends AbstractActionController
         return new ViewModel(
             [
                 'form' => $form,
-            ]
+            ],
         );
     }
 
@@ -133,7 +129,7 @@ class AlbumAdminController extends AbstractActionController
         return new ViewModel(
             [
                 'album' => $album,
-            ]
+            ],
         );
     }
 
@@ -154,7 +150,7 @@ class AlbumAdminController extends AbstractActionController
             try {
                 $this->adminService->upload($request->getFiles()->toArray(), $album);
                 $result['success'] = true;
-            } catch (Exception $e) {
+            } catch (Throwable $e) {
                 $this->getResponse()->setStatusCode(500);
                 $result['error'] = $e->getMessage();
             }

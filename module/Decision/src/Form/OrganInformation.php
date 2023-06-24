@@ -4,23 +4,19 @@ declare(strict_types=1);
 
 namespace Decision\Form;
 
-use Laminas\Form\Element\{
-    Email,
-    File,
-    Hidden,
-    Submit,
-    Text,
-    Textarea,
-    Url,
-};
+use Laminas\Form\Element\Email;
+use Laminas\Form\Element\File;
+use Laminas\Form\Element\Hidden;
+use Laminas\Form\Element\Submit;
+use Laminas\Form\Element\Text;
+use Laminas\Form\Element\Textarea;
+use Laminas\Form\Element\Url;
 use Laminas\Form\Form;
-use Laminas\Mvc\I18n\Translator;
 use Laminas\InputFilter\InputFilterProviderInterface;
-use Laminas\Validator\{
-    File\Extension,
-    File\IsImage,
-    StringLength,
-};
+use Laminas\Mvc\I18n\Translator;
+use Laminas\Validator\File\Extension;
+use Laminas\Validator\File\IsImage;
+use Laminas\Validator\StringLength;
 
 class OrganInformation extends Form implements InputFilterProviderInterface
 {
@@ -35,7 +31,7 @@ class OrganInformation extends Form implements InputFilterProviderInterface
                 'options' => [
                     'label' => $translator->translate('Email'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -45,7 +41,7 @@ class OrganInformation extends Form implements InputFilterProviderInterface
                 'options' => [
                     'label' => $translator->translate('Website'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -55,7 +51,7 @@ class OrganInformation extends Form implements InputFilterProviderInterface
                 'options' => [
                     'label' => $translator->translate('Short dutch description'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -65,7 +61,7 @@ class OrganInformation extends Form implements InputFilterProviderInterface
                 'options' => [
                     'label' => $translator->translate('Short english description'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -75,7 +71,7 @@ class OrganInformation extends Form implements InputFilterProviderInterface
                 'options' => [
                     'label' => $translator->translate('Long dutch description'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -85,7 +81,7 @@ class OrganInformation extends Form implements InputFilterProviderInterface
                 'options' => [
                     'label' => $translator->translate('Long english description'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -95,7 +91,7 @@ class OrganInformation extends Form implements InputFilterProviderInterface
                 'options' => [
                     'label' => $translator->translate('Thumbnail photo to upload'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -105,7 +101,7 @@ class OrganInformation extends Form implements InputFilterProviderInterface
                 'options' => [
                     'label' => $translator->translate('Cover photo to upload'),
                 ],
-            ]
+            ],
         );
 
         foreach (['cover', 'thumbnail'] as $type) {
@@ -114,7 +110,7 @@ class OrganInformation extends Form implements InputFilterProviderInterface
                     [
                         'name' => $type . 'Crop' . $param,
                         'type' => Hidden::class,
-                    ]
+                    ],
                 );
             }
         }
@@ -126,7 +122,7 @@ class OrganInformation extends Form implements InputFilterProviderInterface
                 'attributes' => [
                     'value' => $translator->translate('Save'),
                 ],
-            ]
+            ],
         );
     }
 

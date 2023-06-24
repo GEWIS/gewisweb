@@ -5,15 +5,12 @@ declare(strict_types=1);
 namespace Activity\Service;
 
 use Activity\Form\Activity as ActivityForm;
-use Activity\Model\{
-    Activity as ActivityModel,
-    ActivityLocalisedText,
-    ActivityUpdateProposal as ActivityProposalModel,
-    SignupField as SignupFieldModel,
-    SignupList as SignupListModel,
-    SignupOption as SignupOptionModel,
-};
-use Activity\Service\ActivityCategory as ActivityCategoryService;
+use Activity\Model\Activity as ActivityModel;
+use Activity\Model\ActivityLocalisedText;
+use Activity\Model\ActivityUpdateProposal as ActivityProposalModel;
+use Activity\Model\SignupField as SignupFieldModel;
+use Activity\Model\SignupList as SignupListModel;
+use Activity\Model\SignupOption as SignupOptionModel;
 use Application\Service\Email as EmailService;
 use Company\Model\Company as CompanyModel;
 use Company\Service\Company as CompanyService;
@@ -21,14 +18,24 @@ use DateTime;
 use Decision\Model\Member as MemberModel;
 use Decision\Model\Organ as OrganModel;
 use Decision\Service\Organ as OrganService;
-use Doctrine\ORM\{
-    EntityManager,
-    OptimisticLockException,
-    Exception\ORMException,
-};
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Exception\ORMException;
+use Doctrine\ORM\OptimisticLockException;
 use Laminas\Mvc\I18n\Translator;
-use User\Model\User as UserModel;
 use User\Permissions\NotAllowedException;
+
+use function array_key_exists;
+use function array_map;
+use function array_walk;
+use function array_walk_recursive;
+use function boolval;
+use function count;
+use function explode;
+use function in_array;
+use function intval;
+use function is_array;
+use function sprintf;
+use function strval;
 
 class Activity
 {
@@ -47,11 +54,11 @@ class Activity
     /**
      * Create an activity from the creation form.
      *
-     * @pre $params is valid data of Activity\Form\Activity
-     *
      * @param array $data Parameters describing activity
      *
      * @return bool activity that was created
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function createActivity(array $data): bool
     {
@@ -91,8 +98,6 @@ class Activity
 
     /**
      * Return activity creation form.
-     *
-     * @return ActivityForm
      */
     public function getActivityForm(): ActivityForm
     {
@@ -129,7 +134,7 @@ class Activity
      *
      * @return OrganModel The organ associated with the activity, if the user is a member of that organ
      *
-     * @throws NotAllowedException if the user is not a member of the organ specified
+     * @throws NotAllowedException if the user is not a member of the organ specified.
      */
     protected function findOrgan(int $organId): OrganModel
     {
@@ -137,7 +142,7 @@ class Activity
 
         if (!$this->organService->canEditOrgan($organ)) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to create an activity for this organ')
+                $this->translator->translate('You are not allowed to create an activity for this organ'),
             );
         }
 
@@ -147,15 +152,14 @@ class Activity
     /**
      * Create an activity from parameters.
      *
-     * @pre $data is valid data of Activity\Form\Activity
-     *
-     * @param array $data Parameters describing activity
-     * @param MemberModel $user The user that creates this activity
-     * @param OrganModel|null $organ The organ this activity is associated with
+     * @param array             $data    Parameters describing activity
+     * @param MemberModel       $user    The user that creates this activity
+     * @param OrganModel|null   $organ   The organ this activity is associated with
      * @param CompanyModel|null $company The company this activity is associated with
-     * @param int $status
      *
      * @return ActivityModel activity that was created
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     protected function saveActivityData(
         array $data,
@@ -188,9 +192,11 @@ class Activity
             foreach ($data['categories'] as $category) {
                 $category = $this->categoryService->getCategoryById(intval($category));
 
-                if (!is_null($category)) {
-                    $activity->addCategory($category);
+                if (null === $category) {
+                    continue;
                 }
+
+                $activity->addCategory($category);
             }
         }
 
@@ -199,6 +205,7 @@ class Activity
                 $signupList = $this->createSignupList($signupList, $activity);
                 $em->persist($signupList);
             }
+
             $em->flush();
         }
 
@@ -213,7 +220,7 @@ class Activity
                 'activity_creation',
                 'email/activity',
                 'Nieuwe activiteit aangemaakt op de GEWIS website | New activity was created on the GEWIS website',
-                ['activity' => $activity]
+                ['activity' => $activity],
             );
         }
 
@@ -224,9 +231,8 @@ class Activity
      * Creates a SignupList for the specified Activity.
      *
      * @param array $data
-     * @param ActivityModel $activity
      *
-     * @return SignupListModel
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function createSignupList(
         array $data,
@@ -250,6 +256,7 @@ class Activity
                 $field = $this->createSignupField($field, $signupList);
                 $em->persist($field);
             }
+
             $em->flush();
         }
 
@@ -259,12 +266,12 @@ class Activity
     /**
      * Create a new field.
      *
-     * @pre $data is valid data of Activity\Form\SignupListFields
-     *
-     * @param array $data parameters for the new field
+     * @param array           $data       parameters for the new field
      * @param SignupListModel $signupList the SignupList the field belongs to
      *
      * @return SignupFieldModel the new field
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function createSignupField(
         array $data,
@@ -292,11 +299,10 @@ class Activity
      * Creates options for both languages specified and adds it to $field.
      * If no languages are specified, this method does nothing.
      *
-     * @pre The options corresponding to the languages specified are filled in
-     * $params. If both languages are specified, they must have the same amount of options.
-     *
-     * @param array $data the array containing the options strings
+     * @param array            $data  the array containing the options strings
      * @param SignupFieldModel $field the field to add the options to
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     protected function createSignupOption(
         array $data,
@@ -319,10 +325,12 @@ class Activity
 
         for ($i = 0; $i < $numOptions; ++$i) {
             $option = new SignupOptionModel();
-            $option->setValue(new ActivityLocalisedText(
-                isset($optionsEn) ? $optionsEn[$i] : null,
-                isset($options) ? $options[$i] : null
-            ));
+            $option->setValue(
+                new ActivityLocalisedText(
+                    isset($optionsEn) ? $optionsEn[$i] : null,
+                    isset($options) ? $options[$i] : null,
+                ),
+            );
             $option->setField($field);
             $em->persist($option);
         }
@@ -330,11 +338,6 @@ class Activity
         $em->flush();
     }
 
-    /**
-     * @param ActivityModel $activity
-     * @param MemberModel $user
-     * @param OrganModel|null $organ
-     */
     private function requestGEFLITST(
         ActivityModel $activity,
         MemberModel $user,
@@ -385,19 +388,23 @@ class Activity
     /**
      * Create a new update proposal from user form.
      *
-     * @param ActivityModel $currentActivity
      * @param array $data
      *
      * @return bool indicating whether the update was applied or is pending
+     *
      * @throws ORMException
      * @throws OptimisticLockException
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function createUpdateProposal(
         ActivityModel $currentActivity,
         array $data,
     ): bool {
         if (!$this->aclService->isAllowed('create', 'activity_calendar_proposal')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to create activity option proposals'));
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to create activity option proposals'),
+            );
         }
 
         // Find the creator
@@ -422,8 +429,8 @@ class Activity
 
         $currentActivityArray = $currentActivity->toArray();
 
-        $data['company'] = is_null($company) ? null : $company->getId();
-        $data['organ'] = is_null($organ) ? null : $organ->getId();
+        $data['company'] = $company?->getId();
+        $data['organ'] = $organ?->getId();
 
         if (!$this->isUpdateProposalNew($currentActivityArray, $data)) {
             return false;
@@ -434,7 +441,7 @@ class Activity
             $member,
             $organ,
             $company,
-            ActivityModel::STATUS_UPDATE
+            ActivityModel::STATUS_UPDATE,
         );
 
         $em = $this->entityManager;
@@ -451,6 +458,7 @@ class Activity
             $proposal->setNew($newActivity);
             $em->persist($proposal);
         }
+
         $em->flush();
 
         // Try to directly update the proposal.
@@ -462,7 +470,7 @@ class Activity
                 'activity_creation',
                 'email/activity-updated',
                 'Activiteit aangepast op de GEWIS website | Activity was updated on the GEWIS website',
-                ['activity' => $newActivity]
+                ['activity' => $newActivity],
             );
 
             return true;
@@ -473,7 +481,7 @@ class Activity
             'activity_creation',
             'email/activity-update-proposed',
             'Activiteit aanpassingsvoorstel op de GEWIS website | Activity update proposed on the GEWIS website',
-            ['activity' => $newActivity, 'proposal' => $proposal]
+            ['activity' => $newActivity, 'proposal' => $proposal],
         );
 
         return true;
@@ -485,7 +493,7 @@ class Activity
      * @param array $current
      * @param array $proposal
      *
-     * @return bool
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     protected function isUpdateProposalNew(
         array $current,
@@ -494,10 +502,12 @@ class Activity
         unset($current['id']);
 
         // Convert all DateTimes in the original Activity to strings.
-        array_walk_recursive($current, function (&$v, $k): void {
-            if ($v instanceof DateTime) {
-                $v = $v->format('Y/m/d H:i');
+        array_walk_recursive($current, static function (&$v): void {
+            if (!($v instanceof DateTime)) {
+                return;
             }
+
+            $v = $v->format('Y/m/d H:i');
         });
 
         // Change Organs and Companies to be their ids to prevent the form from accidentally submitting, as the Activity
@@ -512,48 +522,54 @@ class Activity
 
         // We do not need the ActivityCategory models, hence we replace it with the ids of each one. However, it is no
         // longer a model and requires array access to get the id.
-        array_walk($current['categories'], function (&$v, $k): void {
+        array_walk($current['categories'], static function (&$v): void {
             $v = strval($v['id']);
         });
 
         // HTML forms do not know anything about booleans, hence we need to
         // convert the strings to something we can use.
-        array_walk_recursive($proposal, function (&$v, $k): void {
-            if (in_array($k, ['isMyFuture', 'requireGEFLITST', 'onlyGEWIS', 'displaySubscribedNumber'], true)) {
-                $v = boolval($v);
+        array_walk_recursive($proposal, static function (&$v, $k): void {
+            if (!in_array($k, ['isMyFuture', 'requireGEFLITST', 'onlyGEWIS', 'displaySubscribedNumber'], true)) {
+                return;
             }
+
+            $v = boolval($v);
         });
 
         // Options are a string after submission, not an array of strings. It is easier to explode the values of
         // `$proposal` instead of having to implode `$current` (which requires an extra `array_filter()`).
         if (isset($proposal['signupLists'])) {
             foreach ($proposal['signupLists'] as $keyOuter => $signupList) {
-                if (isset($signupList['fields'])) {
-                    foreach ($signupList['fields'] as $keyInner => $field) {
-                        // Make sure that if `options` is defined in the field it is not `null` (because passing `null`
-                        // to `explode()` is deprecated).
-                        if (
-                            array_key_exists('options', $field)
-                            && null !== $field['options']
-                        ) {
-                            $proposal['signupLists'][$keyOuter]['fields'][$keyInner]['options'] = explode(
-                                ',',
-                                $field['options'],
-                            );
-                        }
+                if (!isset($signupList['fields'])) {
+                    continue;
+                }
 
-                        // Make sure that if `optionsEn` is defined in the field it is not `null` (because passing
-                        // `null` to `explode()` is deprecated).
-                        if (
-                            array_key_exists('optionsEn', $field)
-                            && null !== $field['optionsEn']
-                        ) {
-                            $proposal['signupLists'][$keyOuter]['fields'][$keyInner]['optionsEn'] = explode(
-                                ',',
-                                $field['optionsEn'],
-                            );
-                        }
+                foreach ($signupList['fields'] as $keyInner => $field) {
+                    // Make sure that if `options` is defined in the field it is not `null` (because passing `null`
+                    // to `explode()` is deprecated).
+                    if (
+                        array_key_exists('options', $field)
+                        && null !== $field['options']
+                    ) {
+                        $proposal['signupLists'][$keyOuter]['fields'][$keyInner]['options'] = explode(
+                            ',',
+                            $field['options'],
+                        );
                     }
+
+                    // Make sure that if `optionsEn` is defined in the field it is not `null` (because passing
+                    // `null` to `explode()` is deprecated).
+                    if (
+                        !array_key_exists('optionsEn', $field)
+                        || null === $field['optionsEn']
+                    ) {
+                        continue;
+                    }
+
+                    $proposal['signupLists'][$keyOuter]['fields'][$keyInner]['optionsEn'] = explode(
+                        ',',
+                        $field['optionsEn'],
+                    );
                 }
             }
         }
@@ -573,14 +589,8 @@ class Activity
 
         // Filter out all empty parts of the differences, if both are empty
         // nothing has changed on form submission.
-        if (
-            empty($this->arrayFilterRecursive($diff1))
-            && empty($this->arrayFilterRecursive($diff2))
-        ) {
-            return false;
-        }
-
-        return true;
+        return !empty($this->arrayFilterRecursive($diff1))
+            || !empty($this->arrayFilterRecursive($diff2));
     }
 
     /**
@@ -593,6 +603,9 @@ class Activity
      * @param array $array2
      *
      * @return array
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingTraversableTypeHintSpecification
      */
     protected function arrayDiffAssocRecursive(
         array $array1,
@@ -623,7 +636,8 @@ class Activity
      * Recursively unset a key in an array (by reference).
      *
      * @param array $array
-     * @param string $key
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     protected function recursiveUnsetKey(
         array &$array,
@@ -632,9 +646,11 @@ class Activity
         unset($array[$key]);
 
         foreach ($array as &$value) {
-            if (is_array($value)) {
-                $this->recursiveUnsetKey($value, $key);
+            if (!is_array($value)) {
+                continue;
             }
+
+            $this->recursiveUnsetKey($value, $key);
         }
     }
 
@@ -645,6 +661,9 @@ class Activity
      * @param array $array
      *
      * @return array
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingTraversableTypeHintSpecification
      */
     protected function arrayFilterRecursive(array $array): array
     {
@@ -653,9 +672,11 @@ class Activity
                 $array[$key] = $this->arrayFilterRecursive($value);
             }
 
-            if (in_array($array[$key], ['', null, []], true)) {
-                unset($array[$key]);
+            if (!in_array($array[$key], ['', null, []], true)) {
+                continue;
             }
+
+            unset($array[$key]);
         }
 
         return $array;
@@ -730,7 +751,7 @@ class Activity
     {
         if (!$this->aclService->isAllowed('approve', 'activity')) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to change the status of the activity')
+                $this->translator->translate('You are not allowed to change the status of the activity'),
             );
         }
 
@@ -748,7 +769,7 @@ class Activity
     {
         if (!$this->aclService->isAllowed('reset', 'activity')) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to change the status of the activity')
+                $this->translator->translate('You are not allowed to change the status of the activity'),
             );
         }
 
@@ -766,7 +787,7 @@ class Activity
     {
         if (!$this->aclService->isAllowed('disapprove', 'activity')) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to change the status of the activity')
+                $this->translator->translate('You are not allowed to change the status of the activity'),
             );
         }
 

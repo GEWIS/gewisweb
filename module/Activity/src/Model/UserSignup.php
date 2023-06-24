@@ -5,11 +5,9 @@ declare(strict_types=1);
 namespace Activity\Model;
 
 use Decision\Model\Member as MemberModel;
-use Doctrine\ORM\Mapping\{
-    Entity,
-    JoinColumn,
-    ManyToOne,
-};
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
 
 /**
  * Signup model.
@@ -22,15 +20,13 @@ class UserSignup extends Signup
      */
     #[ManyToOne(targetEntity: MemberModel::class)]
     #[JoinColumn(
-        name: "user_lidnr",
-        referencedColumnName: "lidnr",
+        name: 'user_lidnr',
+        referencedColumnName: 'lidnr',
     )]
     protected MemberModel $user;
 
     /**
      * Get the full name of the user whom signed up for the activity.
-     *
-     * @return string
      */
     public function getFullName(): string
     {
@@ -39,8 +35,6 @@ class UserSignup extends Signup
 
     /**
      * Get the user that is signed up.
-     *
-     * @return MemberModel
      */
     public function getUser(): MemberModel
     {
@@ -57,8 +51,6 @@ class UserSignup extends Signup
 
     /**
      * Get the email address of the user whom signed up for the activity.
-     *
-     * @return string|null
      */
     public function getEmail(): ?string
     {

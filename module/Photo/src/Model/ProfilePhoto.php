@@ -7,13 +7,11 @@ namespace Photo\Model;
 use Application\Model\Traits\IdentifiableTrait;
 use DateTime;
 use Decision\Model\Member as MemberModel;
-use Doctrine\ORM\Mapping\{
-    Column,
-    Entity,
-    JoinColumn,
-    ManyToOne,
-    OneToOne,
-};
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToOne;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 /**
@@ -26,19 +24,19 @@ class ProfilePhoto implements ResourceInterface
 
     #[ManyToOne(
         targetEntity: Photo::class,
-        inversedBy: "profilePhotos",
+        inversedBy: 'profilePhotos',
     )]
     #[JoinColumn(
-        name: "photo_id",
-        referencedColumnName: "id",
+        name: 'photo_id',
+        referencedColumnName: 'id',
         nullable: false,
     )]
     protected Photo $photo;
 
     #[OneToOne(targetEntity: MemberModel::class)]
     #[JoinColumn(
-        name: "member_id",
-        referencedColumnName: "lidnr",
+        name: 'member_id',
+        referencedColumnName: 'lidnr',
         nullable: false,
     )]
     protected MemberModel $member;
@@ -46,26 +44,20 @@ class ProfilePhoto implements ResourceInterface
     /**
      * Date and time when the photo was taken.
      */
-    #[Column(type: "datetime")]
+    #[Column(type: 'datetime')]
     protected DateTime $dateTime;
 
     /**
      * Date and time when the photo was taken.
      */
-    #[Column(type: "boolean")]
+    #[Column(type: 'boolean')]
     protected bool $explicit;
 
-    /**
-     * @return Photo
-     */
     public function getPhoto(): Photo
     {
         return $this->photo;
     }
 
-    /**
-     * @return MemberModel
-     */
     public function getMember(): MemberModel
     {
         return $this->member;
@@ -73,8 +65,6 @@ class ProfilePhoto implements ResourceInterface
 
     /**
      * Get the date.
-     *
-     * @return DateTime
      */
     public function getDateTime(): DateTime
     {
@@ -83,41 +73,27 @@ class ProfilePhoto implements ResourceInterface
 
     /**
      * Get the explicit bool.
-     *
-     * @return bool
      */
     public function isExplicit(): bool
     {
         return $this->explicit;
     }
 
-    /**
-     * @param Photo $photo
-     */
     public function setPhoto(Photo $photo): void
     {
         $this->photo = $photo;
     }
 
-    /**
-     * @param MemberModel $member
-     */
     public function setMember(MemberModel $member): void
     {
         $this->member = $member;
     }
 
-    /**
-     * @param DateTime $dateTime
-     */
     public function setDateTime(DateTime $dateTime): void
     {
         $this->dateTime = $dateTime;
     }
 
-    /**
-     * @param bool $explicit
-     */
     public function setExplicit(bool $explicit): void
     {
         $this->explicit = $explicit;
@@ -125,8 +101,6 @@ class ProfilePhoto implements ResourceInterface
 
     /**
      * Get the resource Id.
-     *
-     * @return string
      */
     public function getResourceId(): string
     {

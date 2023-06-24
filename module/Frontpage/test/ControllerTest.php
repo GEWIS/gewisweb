@@ -8,6 +8,9 @@ use ApplicationTest\BaseControllerTest;
 
 class ControllerTest extends BaseControllerTest
 {
+    /**
+     * @psalm-suppress UnevaluatedCode
+     */
     public function testIndexActionCanBeAccessed(): void
     {
         $this->markTestSkipped('\Decision\Mapper\Member::findBirthdayMembers() is not supported by SQLite');

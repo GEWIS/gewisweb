@@ -33,7 +33,7 @@ return [
                     'user'     => 'external',
                     'password' => 'password',
                     'dbname'   => 'external',
-                ]
+                ],
             ],
         ],
     ],

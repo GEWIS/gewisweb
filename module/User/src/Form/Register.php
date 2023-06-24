@@ -4,20 +4,16 @@ declare(strict_types=1);
 
 namespace User\Form;
 
-use Laminas\Form\Element\{
-    Csrf,
-    Number,
-    Submit,
-};
+use Laminas\Form\Element\Csrf;
+use Laminas\Form\Element\Number;
+use Laminas\Form\Element\Submit;
 use Laminas\Form\Form;
-use Laminas\InputFilter\InputProviderInterface;
+use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Validator\{
-    Digits,
-    NotEmpty,
-};
+use Laminas\Validator\Digits;
+use Laminas\Validator\NotEmpty;
 
-class Register extends Form implements InputProviderInterface
+class Register extends Form implements InputFilterProviderInterface
 {
     public const ERROR_NO_EMAIL = 'no_email';
     public const ERROR_MEMBER_NOT_EXISTS = 'member_not_exists';
@@ -35,7 +31,7 @@ class Register extends Form implements InputProviderInterface
                 'options' => [
                     'label' => $translator->translate('Membership number'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -45,21 +41,19 @@ class Register extends Form implements InputProviderInterface
                 'attributes' => [
                     'value' => $translator->translate('Register'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
             [
                 'name' => 'security',
                 'type' => Csrf::class,
-            ]
+            ],
         );
     }
 
     /**
      * Set the error.
-     *
-     * @param string $error
      */
     public function setError(string $error): void
     {
@@ -102,7 +96,7 @@ class Register extends Form implements InputProviderInterface
     /**
      * @return array
      */
-    public function getInputSpecification(): array
+    public function getInputFilterSpecification(): array
     {
         return [
             'lidnr' => [

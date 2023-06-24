@@ -5,21 +5,28 @@ declare(strict_types=1);
 namespace Activity\Model;
 
 use Application\Model\Traits\IdentifiableTrait;
-use Doctrine\Common\Collections\{
-    ArrayCollection,
-    Collection,
-};
-use Doctrine\ORM\Mapping\{
-    Column,
-    Entity,
-    JoinColumn,
-    ManyToOne,
-    OneToMany,
-    OneToOne,
-};
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\OneToOne;
 
 /**
  * SignupField model.
+ *
+ * @psalm-type SignupFieldArrayType = array{
+ *     id: int,
+ *     name: ?string,
+ *     nameEn: ?string,
+ *     type: int,
+ *     minimumValue: ?int,
+ *     maximumValue: ?int,
+ *     options: array<array-key, ?string>,
+ *     optionsEn: array<array-key, ?string>,
+ * }
  */
 #[Entity]
 class SignupField
@@ -31,12 +38,12 @@ class SignupField
      */
     #[ManyToOne(
         targetEntity: SignupList::class,
-        cascade: ["persist"],
-        inversedBy: "fields",
+        cascade: ['persist'],
+        inversedBy: 'fields',
     )]
     #[JoinColumn(
-        name: "signuplist_id",
-        referencedColumnName: "id",
+        name: 'signuplist_id',
+        referencedColumnName: 'id',
         nullable: false,
     )]
     protected SignupList $signupList;
@@ -46,12 +53,12 @@ class SignupField
      */
     #[OneToOne(
         targetEntity: ActivityLocalisedText::class,
-        cascade: ["persist"],
+        cascade: ['persist'],
         orphanRemoval: true,
     )]
     #[JoinColumn(
-        name: "name_id",
-        referencedColumnName: "id",
+        name: 'name_id',
+        referencedColumnName: 'id',
         nullable: false,
     )]
     protected ActivityLocalisedText $name;
@@ -59,14 +66,14 @@ class SignupField
     /**
      * The type of the SignupField.
      */
-    #[Column(type: "integer")]
+    #[Column(type: 'integer')]
     protected int $type;
 
     /**
      * The minimal value constraint for the ``number'' type.
      */
     #[Column(
-        type: "integer",
+        type: 'integer',
         nullable: true,
     )]
     protected ?int $minimumValue = null;
@@ -75,17 +82,19 @@ class SignupField
      * The maximal value constraint for the ``number'' type.
      */
     #[Column(
-        type: "integer",
+        type: 'integer',
         nullable: true,
     )]
     protected ?int $maximumValue = null;
 
     /**
      * The allowed options for the SignupField of the ``option'' type.
+     *
+     * @var Collection<array-key, SignupOption>
      */
     #[OneToMany(
         targetEntity: SignupOption::class,
-        mappedBy: "field",
+        mappedBy: 'field',
         orphanRemoval: true,
     )]
     protected Collection $options;
@@ -95,89 +104,59 @@ class SignupField
         $this->options = new ArrayCollection();
     }
 
-    /**
-     * @return SignupList
-     */
     public function getSignupList(): SignupList
     {
         return $this->signupList;
     }
 
-    /**
-     * @param SignupList $signupList
-     */
     public function setSignupList(SignupList $signupList): void
     {
         $this->signupList = $signupList;
     }
 
     /**
-     * @return Collection
+     * @return Collection<array-key, SignupOption>
      */
     public function getOptions(): Collection
     {
         return $this->options;
     }
 
-    /**
-     * @return ActivityLocalisedText
-     */
     public function getName(): ActivityLocalisedText
     {
         return $this->name;
     }
 
-    /**
-     * @param ActivityLocalisedText $name
-     */
     public function setName(ActivityLocalisedText $name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * @return int
-     */
     public function getType(): int
     {
         return $this->type;
     }
 
-    /**
-     * @param int $type
-     */
     public function setType(int $type): void
     {
         $this->type = $type;
     }
 
-    /**
-     * @return int|null
-     */
     public function getMinimumValue(): ?int
     {
         return $this->minimumValue;
     }
 
-    /**
-     * @param int|null $minimumValue
-     */
     public function setMinimumValue(?int $minimumValue): void
     {
         $this->minimumValue = $minimumValue;
     }
 
-    /**
-     * @return int|null
-     */
     public function getMaximumValue(): ?int
     {
         return $this->maximumValue;
     }
 
-    /**
-     * @param int|null $maximumValue
-     */
     public function setMaximumValue(?int $maximumValue): void
     {
         $this->maximumValue = $maximumValue;
@@ -186,7 +165,7 @@ class SignupField
     /**
      * Returns an associative array representation of this object.
      *
-     * @return array
+     * @return SignupFieldArrayType
      */
     public function toArray(): array
     {

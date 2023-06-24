@@ -4,22 +4,36 @@ declare(strict_types=1);
 
 namespace Decision\Service;
 
-use DateTime;
-use Decision\Mapper\{
-    Member as MemberMapper,
-};
+use Decision\Mapper\Member as MemberMapper;
 use Decision\Model\Member as MemberModel;
+use Decision\Model\Organ as OrganModel;
 use Exception;
 use Laminas\Mvc\I18n\Translator;
+use Photo\Model\Photo as PhotoModel;
 use Photo\Service\Photo as PhotoService;
 use User\Mapper\ApiAppAuthentication as ApiAppAuthenticationMapper;
 use User\Permissions\NotAllowedException;
 
 /**
  * Member service.
+ *
+ * @psalm-import-type ApiAppsArrayType from ApiAppAuthenticationMapper as ImportedApiAppsArrayType
+ * @psalm-type OrganMembershipsArrayType = array{
+ *     current: array<string, array{
+ *         organ: OrganModel,
+ *         functions: string[],
+ *     }>,
+ *     historical: array<string, array{
+ *         organ: OrganModel,
+ *         functions: string[],
+ *     }>,
+ * }
  */
 class MemberInfo
 {
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
+     */
     public function __construct(
         private readonly AclService $aclService,
         private readonly Translator $translator,
@@ -33,9 +47,15 @@ class MemberInfo
     /**
      * Obtain information about the current user.
      *
-     * @param int|null $lidnr
-     *
-     * @return array|null
+     * @return ?array{
+     *     member: MemberModel,
+     *     memberships: OrganMembershipsArrayType,
+     *     profilePhoto: ?PhotoModel,
+     *     isExplicitProfilePhoto: bool,
+     *     basedir: string,
+     *     photoConfig: mixed[],
+     *     apps: ImportedApiAppsArrayType,
+     * }
      *
      * @throws Exception
      */
@@ -43,7 +63,9 @@ class MemberInfo
     {
         if (null === $lidnr && !$this->aclService->isAllowed('view_self', 'member')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view membership info.'));
-        } elseif (null !== $lidnr && !$this->aclService->isAllowed('view', 'member')) {
+        }
+
+        if (null !== $lidnr && !$this->aclService->isAllowed('view', 'member')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view members.'));
         }
 
@@ -86,9 +108,7 @@ class MemberInfo
     /**
      * Gets a list of all organs which the member currently is part of.
      *
-     * @param MemberModel $member
-     *
-     * @return array
+     * @return OrganMembershipsArrayType
      */
     public function getOrganMemberships(MemberModel $member): array
     {
@@ -108,12 +128,14 @@ class MemberInfo
             }
 
             if (
-                'Lid' !== $install->getFunction()
-                && 'Inactief Lid' !== $install->getFunction()
+                'Lid' === $install->getFunction()
+                || 'Inactief Lid' === $install->getFunction()
             ) {
-                $function = $this->translator->translate($install->getFunction());
-                $memberships['current'][$foundationHash]['functions'][] = $function;
+                continue;
             }
+
+            $function = $this->translator->translate($install->getFunction());
+            $memberships['current'][$foundationHash]['functions'][] = $function;
         }
 
         foreach ($this->memberMapper->findHistoricalInstallations($member) as $install) {
@@ -127,12 +149,14 @@ class MemberInfo
             }
 
             if (
-                'Lid' !== $install->getFunction()
-                && 'Inactief Lid' !== $install->getFunction()
+                'Lid' === $install->getFunction()
+                || 'Inactief Lid' === $install->getFunction()
             ) {
-                $function = $this->translator->translate($install->getFunction());
-                $memberships['historical'][$foundationHash]['functions'][] = $function;
+                continue;
             }
+
+            $function = $this->translator->translate($install->getFunction());
+            $memberships['historical'][$foundationHash]['functions'][] = $function;
         }
 
         return $memberships;

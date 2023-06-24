@@ -5,17 +5,13 @@ declare(strict_types=1);
 namespace Frontpage\Controller\Factory;
 
 use Frontpage\Controller\FrontpageController;
-use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Psr\Container\ContainerInterface;
 
 class FrontpageControllerFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param string $requestedName
-     * @param array|null $options
-     *
-     * @return FrontpageController
      */
     public function __invoke(
         ContainerInterface $container,

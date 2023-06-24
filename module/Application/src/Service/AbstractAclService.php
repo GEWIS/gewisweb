@@ -13,25 +13,19 @@ abstract class AbstractAclService
 {
     /**
      * Get the ACL.
-     *
-     * @return Acl
      */
     abstract protected function getAcl(): Acl;
 
     /**
      * Get the current user's role.
-     *
-     * @return RoleInterface|string
      */
     abstract protected function getRole(): string|RoleInterface;
 
     /**
      * Check if a operation is allowed for the current role.
      *
-     * @param string $operation operation to be checked
-     * @param string|ResourceInterface $resource Resource to be checked
-     *
-     * @return bool
+     * @param string                   $operation operation to be checked
+     * @param string|ResourceInterface $resource  Resource to be checked
      */
     public function isAllowed(
         string $operation,
@@ -40,7 +34,7 @@ abstract class AbstractAclService
         return $this->getAcl()->isAllowed(
             $this->getRole(),
             $resource,
-            $operation
+            $operation,
         );
     }
 
@@ -60,10 +54,6 @@ abstract class AbstractAclService
     {
         $identity = $this->getIdentity();
 
-        if ($identity === null) {
-            return false;
-        }
-
-        return true;
+        return null !== $identity;
     }
 }

@@ -4,29 +4,26 @@ declare(strict_types=1);
 
 namespace ApplicationTest;
 
-use Company\Model\{
-    Company,
-    CompanyLocalisedText,
-};
+use Company\Model\Company;
+use Company\Model\CompanyLocalisedText;
 use DateTime;
 use Decision\Model\Enums\MembershipTypes;
 use Decision\Model\Member;
 use Doctrine\Common\Collections\ArrayCollection;
-use Laminas\Mvc\{
-    Application,
-    ApplicationInterface,
-};
+use Laminas\Mvc\Application;
+use Laminas\Mvc\ApplicationInterface;
 use Laminas\Mvc\Service\ServiceManagerConfig;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use User\Authentication\AuthenticationService;
-use User\Model\{
-    CompanyUser,
-    NewCompanyUser,
-    User,
-    UserRole,
-};
+use User\Model\CompanyUser;
+use User\Model\NewCompanyUser;
+use User\Model\User;
+use User\Model\UserRole;
+
+use function array_merge;
+use function array_unique;
 
 abstract class BaseControllerTest extends AbstractHttpControllerTestCase
 {
@@ -54,7 +51,9 @@ abstract class BaseControllerTest extends AbstractHttpControllerTestCase
     public function setUp(): void
     {
         $this->setApplicationConfig(TestConfigProvider::getConfig());
+
         parent::setUp();
+
         $this->getApplication();
     }
 
@@ -93,6 +92,8 @@ abstract class BaseControllerTest extends AbstractHttpControllerTestCase
 
     /**
      * Variation of {@link Application::init} but without initial bootstrapping.
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     private static function initServiceManager(array $configuration = []): ServiceManager
     {
@@ -110,6 +111,9 @@ abstract class BaseControllerTest extends AbstractHttpControllerTestCase
         return $serviceManager;
     }
 
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
+     */
     private function bootstrapApplication(
         ServiceManager $serviceManager,
         array $configuration = [],
@@ -120,6 +124,7 @@ abstract class BaseControllerTest extends AbstractHttpControllerTestCase
         $listenersFromConfigService = $config['listeners'] ?? [];
 
         $listeners = array_unique(array_merge($listenersFromConfigService, $listenersFromAppConfig));
+
         return $serviceManager->get('Application')->bootstrap($listeners);
     }
 

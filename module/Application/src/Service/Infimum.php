@@ -6,16 +6,19 @@ namespace Application\Service;
 
 use Laminas\Cache\Exception\ExceptionInterface;
 use Laminas\Cache\Storage\Adapter\AbstractAdapter;
+use Laminas\Http\Client;
 use Laminas\Http\Client\Adapter\Curl;
-use Laminas\Http\{
-    Client,
-    Request,
-};
+use Laminas\Http\Request;
 use Laminas\Json\Json;
 use Laminas\Mvc\I18n\Translator;
 
+use function array_key_exists;
+
 class Infimum
 {
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
+     */
     public function __construct(
         private readonly AbstractAdapter $infimumCache,
         private readonly Translator $translator,
@@ -24,7 +27,6 @@ class Infimum
     }
 
     /**
-     * @return string
      * @throws ExceptionInterface
      */
     public function getInfimum(): string
@@ -41,7 +43,7 @@ class Infimum
         $request->setMethod(Request::METHOD_GET)
             ->setUri($this->infimumConfig['supremum_api_url'])
             ->getHeaders()->addHeaders([
-                    $this->infimumConfig['supremum_api_header'] => $this->infimumConfig['supremum_api_key'],
+                $this->infimumConfig['supremum_api_header'] => $this->infimumConfig['supremum_api_key'],
             ]);
         $client->setAdapter(Curl::class)
             ->setEncType('application/json');

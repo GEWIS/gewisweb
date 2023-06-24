@@ -6,13 +6,12 @@ namespace Decision\Model;
 
 use Application\Model\Traits\TimestampableTrait;
 use Decision\Model\Enums\MeetingTypes;
-use Doctrine\ORM\Mapping\{
-    Column,
-    Entity,
-    HasLifecycleCallbacks,
-    Id,
-    JoinColumn,
-    OneToOne};
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\OneToOne;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 /**
@@ -29,7 +28,7 @@ class MeetingMinutes implements ResourceInterface
      */
     #[Id]
     #[Column(
-        type: "string",
+        type: 'string',
         enumType: MeetingTypes::class,
     )]
     protected MeetingTypes $meeting_type;
@@ -38,7 +37,7 @@ class MeetingMinutes implements ResourceInterface
      * Meeting number.
      */
     #[Id]
-    #[Column(type: "integer")]
+    #[Column(type: 'integer')]
     protected int $meeting_number;
 
     /**
@@ -46,16 +45,16 @@ class MeetingMinutes implements ResourceInterface
      */
     #[OneToOne(
         targetEntity: Meeting::class,
-        inversedBy: "meetingMinutes",
+        inversedBy: 'meetingMinutes',
     )]
     #[JoinColumn(
-        name: "meeting_type",
-        referencedColumnName: "type",
+        name: 'meeting_type',
+        referencedColumnName: 'type',
         nullable: false,
     )]
     #[JoinColumn(
-        name: "meeting_number",
-        referencedColumnName: "number",
+        name: 'meeting_number',
+        referencedColumnName: 'number',
         nullable: false,
     )]
     protected Meeting $meeting;
@@ -63,20 +62,14 @@ class MeetingMinutes implements ResourceInterface
     /**
      * The storage path.
      */
-    #[Column(type: "string")]
+    #[Column(type: 'string')]
     protected string $path;
 
-    /**
-     * @return string
-     */
     public function getPath(): string
     {
         return $this->path;
     }
 
-    /**
-     * @param Meeting $meeting
-     */
     public function setMeeting(Meeting $meeting): void
     {
         $this->meeting = $meeting;
@@ -84,9 +77,6 @@ class MeetingMinutes implements ResourceInterface
         $this->meeting_number = $meeting->getNumber();
     }
 
-    /**
-     * @param string $path
-     */
     public function setPath(string $path): void
     {
         $this->path = $path;
@@ -94,8 +84,6 @@ class MeetingMinutes implements ResourceInterface
 
     /**
      * Get the resource ID.
-     *
-     * @return string
      */
     public function getResourceId(): string
     {

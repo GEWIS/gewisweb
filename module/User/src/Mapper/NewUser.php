@@ -15,10 +15,6 @@ class NewUser extends BaseMapper
 {
     /**
      * Get the new user by lidnr.
-     *
-     * @param int $lidnr
-     *
-     * @return NewUserModel|null
      */
     public function getByLidnr(int $lidnr): ?NewUserModel
     {
@@ -37,10 +33,6 @@ class NewUser extends BaseMapper
 
     /**
      * Get the new user by code.
-     *
-     * @param string $code
-     *
-     * @return NewUserModel|null
      */
     public function getByCode(string $code): ?NewUserModel
     {
@@ -59,8 +51,6 @@ class NewUser extends BaseMapper
 
     /**
      * Delete the existing activation code for a member.
-     *
-     * @param MemberModel $member
      */
     public function deleteByMember(MemberModel $member): void
     {
@@ -71,9 +61,6 @@ class NewUser extends BaseMapper
         $qb->getQuery()->execute();
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function getRepositoryName(): string
     {
         return NewUserModel::class;

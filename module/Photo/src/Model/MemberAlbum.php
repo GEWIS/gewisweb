@@ -7,7 +7,6 @@ namespace Photo\Model;
 use Decision\Model\Member as MemberModel;
 
 /**
- * Class MemberAlbum
  * Contains all photos with tags of a member.
  * This is a VirtualAlbum, meaning that it is not persisted.
  */

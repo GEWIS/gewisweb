@@ -5,18 +5,14 @@ declare(strict_types=1);
 namespace Frontpage\Controller\Factory;
 
 use Frontpage\Controller\InfimumController;
-use Psr\Container\ContainerInterface;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Psr\Container\ContainerInterface;
 
 class InfimumControllerFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param string $requestedName
-     * @param array|null $options
-     *
-     * @return InfimumController
      */
     public function __invoke(
         ContainerInterface $container,

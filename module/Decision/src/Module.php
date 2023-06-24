@@ -4,33 +4,27 @@ declare(strict_types=1);
 
 namespace Decision;
 
-use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Decision\Controller\FileBrowser\LocalFileReader;
-use Decision\Form\{
-    Authorization as AuthorizationForm,
-    AuthorizationRevocation as AuthorizationRevocationForm,
-    Document as DocumentForm,
-    Minutes as MinutesForm,
-    OrganInformation as OrganInformationForm,
-    ReorderDocument as ReorderDocumentForm,
-    SearchDecision as SearchDecisionForm,
-};
-use Decision\Mapper\{
-    Authorization as AuthorizationMapper,
-    Decision as DecisionMapper,
-    Meeting as MeetingMapper,
-    MeetingDocument as MeetingDocumentMapper,
-    MeetingMinutes as MeetingMinutesMapper,
-    Member as MemberMapper,
-    Organ as OrganMapper,
-};
-use Decision\Service\{
-    Decision as DecisionService,
-    Member as MemberService,
-    MemberInfo as MemberInfoService,
-    Organ as OrganService,
-};
+use Decision\Form\Authorization as AuthorizationForm;
+use Decision\Form\AuthorizationRevocation as AuthorizationRevocationForm;
+use Decision\Form\Document as DocumentForm;
+use Decision\Form\Minutes as MinutesForm;
+use Decision\Form\OrganInformation as OrganInformationForm;
+use Decision\Form\ReorderDocument as ReorderDocumentForm;
+use Decision\Form\SearchDecision as SearchDecisionForm;
+use Decision\Mapper\Authorization as AuthorizationMapper;
+use Decision\Mapper\Decision as DecisionMapper;
+use Decision\Mapper\Meeting as MeetingMapper;
+use Decision\Mapper\MeetingDocument as MeetingDocumentMapper;
+use Decision\Mapper\MeetingMinutes as MeetingMinutesMapper;
+use Decision\Mapper\Member as MemberMapper;
+use Decision\Mapper\Organ as OrganMapper;
+use Decision\Service\Decision as DecisionService;
+use Decision\Service\Member as MemberService;
+use Decision\Service\MemberInfo as MemberInfoService;
+use Decision\Service\Organ as OrganService;
 use Doctrine\Laminas\Hydrator\DoctrineObject;
+use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Psr\Container\ContainerInterface;
 use User\Authorization\AclServiceFactory;
 
@@ -55,7 +49,7 @@ class Module
     {
         return [
             'factories' => [
-                'decision_service_organ' => function (ContainerInterface $container) {
+                'decision_service_organ' => static function (ContainerInterface $container) {
                     $aclService = $container->get('decision_service_acl');
                     $translator = $container->get(MvcTranslator::class);
                     $entityManager = $container->get('doctrine.entitymanager.orm_default');
@@ -78,7 +72,7 @@ class Module
                         $organInformationConfig,
                     );
                 },
-                'decision_service_decision' => function (ContainerInterface $container) {
+                'decision_service_decision' => static function (ContainerInterface $container) {
                     $aclService = $container->get('decision_service_acl');
                     $translator = $container->get(MvcTranslator::class);
                     $storageService = $container->get('application_service_storage');
@@ -115,7 +109,7 @@ class Module
                         $authorizationRevocationForm,
                     );
                 },
-                'decision_service_member' => function (ContainerInterface $container) {
+                'decision_service_member' => static function (ContainerInterface $container) {
                     $aclService = $container->get('decision_service_acl');
                     $translator = $container->get(MvcTranslator::class);
                     $memberMapper = $container->get('decision_mapper_member');
@@ -128,7 +122,7 @@ class Module
                         $authorizationMapper,
                     );
                 },
-                'decision_service_memberinfo' => function (ContainerInterface $container) {
+                'decision_service_memberinfo' => static function (ContainerInterface $container) {
                     $aclService = $container->get('decision_service_acl');
                     $translator = $container->get(MvcTranslator::class);
                     $photoService = $container->get('photo_service_photo');
@@ -145,67 +139,67 @@ class Module
                         $photoConfig,
                     );
                 },
-                'decision_mapper_member' => function (ContainerInterface $container) {
+                'decision_mapper_member' => static function (ContainerInterface $container) {
                     return new MemberMapper(
                         $container->get('doctrine.entitymanager.orm_default'),
                     );
                 },
-                'decision_mapper_organ' => function (ContainerInterface $container) {
+                'decision_mapper_organ' => static function (ContainerInterface $container) {
                     return new OrganMapper(
                         $container->get('doctrine.entitymanager.orm_default'),
                     );
                 },
-                'decision_mapper_meeting' => function (ContainerInterface $container) {
+                'decision_mapper_meeting' => static function (ContainerInterface $container) {
                     return new MeetingMapper(
                         $container->get('doctrine.entitymanager.orm_default'),
                     );
                 },
-                'decision_mapper_meeting_document' => function (ContainerInterface $container) {
+                'decision_mapper_meeting_document' => static function (ContainerInterface $container) {
                     return new MeetingDocumentMapper(
                         $container->get('doctrine.entitymanager.orm_default'),
                     );
                 },
-                'decision_mapper_meeting_minutes' => function (ContainerInterface $container) {
+                'decision_mapper_meeting_minutes' => static function (ContainerInterface $container) {
                     return new MeetingMinutesMapper(
                         $container->get('doctrine.entitymanager.orm_default'),
                     );
                 },
-                'decision_mapper_decision' => function (ContainerInterface $container) {
+                'decision_mapper_decision' => static function (ContainerInterface $container) {
                     return new DecisionMapper(
                         $container->get('doctrine.entitymanager.orm_default'),
                     );
                 },
-                'decision_mapper_authorization' => function (ContainerInterface $container) {
+                'decision_mapper_authorization' => static function (ContainerInterface $container) {
                     return new AuthorizationMapper(
                         $container->get('doctrine.entitymanager.orm_default'),
                     );
                 },
-                'decision_form_searchdecision' => function (ContainerInterface $container) {
+                'decision_form_searchdecision' => static function (ContainerInterface $container) {
                     return new SearchDecisionForm(
                         $container->get(MvcTranslator::class),
                     );
                 },
-                'decision_form_document' => function (ContainerInterface $container) {
+                'decision_form_document' => static function (ContainerInterface $container) {
                     return new DocumentForm(
                         $container->get(MvcTranslator::class),
                     );
                 },
-                'decision_form_minutes' => function (ContainerInterface $container) {
+                'decision_form_minutes' => static function (ContainerInterface $container) {
                     return new MinutesForm(
                         $container->get(MvcTranslator::class),
                     );
                 },
-                'decision_form_authorization' => function (ContainerInterface $container) {
+                'decision_form_authorization' => static function (ContainerInterface $container) {
                     return new AuthorizationForm(
                         $container->get(MvcTranslator::class),
                     );
                 },
-                'decision_form_authorization_revocation' => function (ContainerInterface $container) {
+                'decision_form_authorization_revocation' => static function (ContainerInterface $container) {
                     return new AuthorizationRevocationForm(
                         $container->get(MvcTranslator::class),
                     );
                 },
-                'decision_form_organ_information' => function (ContainerInterface $container) {
+                'decision_form_organ_information' => static function (ContainerInterface $container) {
                     $form = new OrganInformationForm(
                         $container->get(MvcTranslator::class),
                     );
@@ -213,14 +207,14 @@ class Module
 
                     return $form;
                 },
-                'decision_form_reorder_document' => function (ContainerInterface $container) {
+                'decision_form_reorder_document' => static function (ContainerInterface $container) {
                     $translator = $container->get(MvcTranslator::class);
 
                     return (new ReorderDocumentForm())
                         ->setTranslator($translator)
                         ->setupElements();
                 },
-                'decision_hydrator' => function (ContainerInterface $container) {
+                'decision_hydrator' => static function (ContainerInterface $container) {
                     return new DoctrineObject(
                         $container->get('doctrine.entitymanager.orm_default'),
                     );

@@ -6,6 +6,8 @@ namespace Company\Mapper;
 
 use Company\Model\CompanyBannerPackage as CompanyBannerPackageModel;
 
+use function array_rand;
+
 /**
  * Mappers for package.
  *
@@ -15,8 +17,6 @@ class BannerPackage extends Package
 {
     /**
      * Returns a random banner from the active banners.
-     *
-     * @return CompanyBannerPackageModel|null
      */
     public function getBannerPackage(): ?CompanyBannerPackageModel
     {
@@ -29,9 +29,6 @@ class BannerPackage extends Package
         return null;
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function getRepositoryName(): string
     {
         return CompanyBannerPackageModel::class;

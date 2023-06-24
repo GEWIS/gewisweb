@@ -4,21 +4,15 @@ declare(strict_types=1);
 
 namespace Activity\Service;
 
-use Activity\Form\{
-    ActivityCalendarPeriod as ActivityCalendarPeriodForm,
-};
-use Activity\Mapper\{
-    ActivityCalendarOption as ActivityCalendarOptionMapper,
-    ActivityOptionCreationPeriod as ActivityOptionCreationPeriodMapper,
-    MaxActivities as MaxActivitiesMapper,
-};
-use Activity\Model\{
-    ActivityCalendarOption as OptionModel,
-    ActivityCalendarOption as ActivityCalendarOptionModel,
-    ActivityOptionCreationPeriod as ActivityOptionCreationPeriodModel,
-    ActivityOptionProposal as ProposalModel,
-    MaxActivities as MaxActivitiesModel,
-};
+use Activity\Form\ActivityCalendarPeriod as ActivityCalendarPeriodForm;
+use Activity\Mapper\ActivityCalendarOption as ActivityCalendarOptionMapper;
+use Activity\Mapper\ActivityOptionCreationPeriod as ActivityOptionCreationPeriodMapper;
+use Activity\Mapper\MaxActivities as MaxActivitiesMapper;
+use Activity\Model\ActivityCalendarOption as ActivityCalendarOptionModel;
+use Activity\Model\ActivityCalendarOption as OptionModel;
+use Activity\Model\ActivityOptionCreationPeriod as ActivityOptionCreationPeriodModel;
+use Activity\Model\ActivityOptionProposal as ProposalModel;
+use Activity\Model\MaxActivities as MaxActivitiesModel;
 use Application\Service\Email as EmailService;
 use DateInterval;
 use DateTime;
@@ -28,6 +22,11 @@ use Doctrine\ORM\EntityManager;
 use Exception;
 use Laminas\Mvc\I18n\Translator;
 use User\Permissions\NotAllowedException;
+
+use function array_flip;
+use function array_key_exists;
+use function array_map;
+use function intval;
 
 class ActivityCalendar
 {
@@ -49,7 +48,7 @@ class ActivityCalendar
     /**
      * Gets all future options.
      *
-     * @return array
+     * @return ActivityCalendarOptionModel[]
      */
     public function getUpcomingOptions(): array
     {
@@ -59,7 +58,7 @@ class ActivityCalendar
     /**
      * Gets all future options which the current user is allowed to edit/delete.
      *
-     * @return array
+     * @return ActivityCalendarOptionModel[]
      */
     public function getEditableUpcomingOptions(): array
     {
@@ -73,7 +72,7 @@ class ActivityCalendar
         }
 
         return $this->calendarOptionMapper->getUpcomingOptionsByOrgans(
-            $this->memberMapper->findOrgans($this->aclService->getUserIdentityOrThrowException()->getMember())
+            $this->memberMapper->findOrgans($this->aclService->getUserIdentityOrThrowException()->getMember()),
         );
     }
 
@@ -82,22 +81,24 @@ class ActivityCalendar
         $date = new DateTime();
         $date->sub(new DateInterval('P3W'));
         $oldOptions = $this->calendarOptionMapper->getOverdueOptions($date);
-        if (!empty($oldOptions)) {
-            $this->emailService->sendEmail(
-                'activity_calendar',
-                'email/options-overdue',
-                'Activiteiten kalender opties verlopen | Activity calendar options expired',
-                ['options' => $oldOptions]
-            );
+        if (empty($oldOptions)) {
+            return;
         }
+
+        $this->emailService->sendEmail(
+            'activity_calendar',
+            'email/options-overdue',
+            'Activiteiten kalender opties verlopen | Activity calendar options expired',
+            ['options' => $oldOptions],
+        );
     }
 
     /**
      * @param array $data
      *
-     * @return ProposalModel|bool
-     *
      * @throws Exception
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function createProposal(array $data): bool|ProposalModel
     {
@@ -118,11 +119,12 @@ class ActivityCalendar
 //        See /Activity/Form/ActivityCalendarProposal for more details on the definition of these options
         if ($organ > -1) {
             $proposal->setOrgan($this->organService->getOrgan($organ));
-        } elseif (-1 == $organ) {
+        } elseif (-1 === $organ) {
             $proposal->setOrganAlt('Board');
-        } elseif (-2 == $organ) {
+        } elseif (-2 === $organ) {
             $proposal->setOrganAlt('Other');
         }
+
         $em->persist($proposal);
         $em->flush();
 
@@ -136,11 +138,10 @@ class ActivityCalendar
 
     /**
      * @param array $data
-     * @param ProposalModel $proposal
-     *
-     * @return OptionModel
      *
      * @throws Exception
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function createOption(
         ProposalModel $proposal,
@@ -162,9 +163,6 @@ class ActivityCalendar
         return $option;
     }
 
-    /**
-     * @param int $id
-     */
     public function approveOption(int $id): void
     {
         if (!$this->canApproveOption()) {
@@ -186,27 +184,19 @@ class ActivityCalendar
 
         foreach ($options as $option) {
             // Can't add two options at the same time
-            if (null == $option->getStatus()) {
-                $this->deleteOption($option->getId());
+            if (null !== $option->getStatus()) {
+                continue;
             }
+
+            $this->deleteOption($option->getId());
         }
     }
 
-    /**
-     * @return bool
-     */
     public function canApproveOption(): bool
     {
-        if ($this->aclService->isAllowed('approve_all', 'activity_calendar_proposal')) {
-            return true;
-        }
-
-        return false;
+        return $this->aclService->isAllowed('approve_all', 'activity_calendar_proposal');
     }
 
-    /**
-     * @param int $id
-     */
     public function deleteOption(int $id): void
     {
         $option = $this->calendarOptionMapper->find($id);
@@ -224,11 +214,6 @@ class ActivityCalendar
         $this->calendarOptionMapper->flush();
     }
 
-    /**
-     * @param ActivityCalendarOptionModel $option
-     *
-     * @return bool
-     */
     protected function canDeleteOption(ActivityCalendarOptionModel $option): bool
     {
         if ($this->aclService->isAllowed('delete_all', 'activity_calendar_proposal')) {
@@ -242,23 +227,18 @@ class ActivityCalendar
         if (
             null === $option->getProposal()->getOrgan()
             && $option->getProposal()->getCreator()->getLidnr()
-                === $this->aclService->getUserIdentityOrThrowException()->getLidnr()
+            === $this->aclService->getUserIdentityOrThrowException()->getLidnr()
         ) {
             return true;
         }
 
         $organ = $option->getProposal()->getOrgan();
-        if (null !== $organ && $this->organService->canEditOrgan($organ)) {
-            return true;
-        }
 
-        return false;
+        return null !== $organ && $this->organService->canEditOrgan($organ);
     }
 
     /**
      * Returns whether a member may create a new activity proposal.
-     *
-     * @return bool
      *
      * @throws Exception
      */
@@ -272,7 +252,7 @@ class ActivityCalendar
     /**
      * @param array $data
      *
-     * @return bool
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function createOptionPlanningPeriod(array $data): bool
     {
@@ -291,15 +271,17 @@ class ActivityCalendar
             // Check if the organ really exists.
             $organ = $this->organService->findActiveOrganById(intval($maxActivity['id']));
 
-            if (null !== $organ) {
-                $maxActivities = new MaxActivitiesModel();
-
-                $maxActivities->setValue(intval($maxActivity['value']));
-                $maxActivities->setOrgan($organ);
-                $maxActivities->setPeriod($activityOptionCreationPeriod);
-
-                $this->maxActivitiesMapper->persist($maxActivities);
+            if (null === $organ) {
+                continue;
             }
+
+            $maxActivities = new MaxActivitiesModel();
+
+            $maxActivities->setValue(intval($maxActivity['value']));
+            $maxActivities->setOrgan($organ);
+            $maxActivities->setPeriod($activityOptionCreationPeriod);
+
+            $this->maxActivitiesMapper->persist($maxActivities);
         }
 
         // Flush all MaxActivitiesModels.
@@ -309,10 +291,9 @@ class ActivityCalendar
     }
 
     /**
-     * @param ActivityOptionCreationPeriodModel $activityOptionCreationPeriod
      * @param array $data
      *
-     * @return bool
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function updateOptionPlanningPeriod(
         ActivityOptionCreationPeriodModel $activityOptionCreationPeriod,
@@ -326,16 +307,20 @@ class ActivityCalendar
         // Update maxActivities, if the form has been altered (by hand) those changes will not be persisted. We get an
         // array indexed by the organ ids, last value is used if organ is present more than once (i.e. someone tampered
         // with the form).
-        $ids = array_flip(array_map(function ($val) {
-            return $val['id'];
-        }, $data['maxActivities']));
+        $ids = array_flip(
+            array_map(static function ($val) {
+                return $val['id'];
+            }, $data['maxActivities']),
+        );
         foreach ($activityOptionCreationPeriod->getMaxActivities() as $maxActivity) {
             $organId = $maxActivity->getOrgan()->getId();
 
-            if (array_key_exists($organId, $ids)) {
-                $offset = $ids[$organId];
-                $maxActivity->setValue(intval($data['maxActivities'][$offset]['value']));
+            if (!array_key_exists($organId, $ids)) {
+                continue;
             }
+
+            $offset = $ids[$organId];
+            $maxActivity->setValue(intval($data['maxActivities'][$offset]['value']));
         }
 
         $this->calendarCreationPeriodMapper->flush();
@@ -343,11 +328,6 @@ class ActivityCalendar
         return true;
     }
 
-    /**
-     * @param int $id
-     *
-     * @return ActivityOptionCreationPeriodModel|null
-     */
     public function getOptionCreationPeriod(int $id): ?ActivityOptionCreationPeriodModel
     {
         return $this->calendarCreationPeriodMapper->find($id);
@@ -356,17 +336,12 @@ class ActivityCalendar
     /**
      * TODO: How do we actually want to delete the OptionCreationPeriod, does this include OptionProposals,
      * MaxActivities, etc.? And should there be a limited with regards to the current time (and the defined periods).
-     *
-     * @param ActivityOptionCreationPeriodModel $activityOptionCreationPeriod
      */
     public function deleteOptionCreationPeriod(ActivityOptionCreationPeriodModel $activityOptionCreationPeriod): void
     {
         $this->calendarCreationPeriodMapper->remove($activityOptionCreationPeriod);
     }
 
-    /**
-     * @return ActivityCalendarPeriodForm
-     */
     public function getCalendarPeriodForm(): ActivityCalendarPeriodForm
     {
         return $this->calendarPeriodForm;

@@ -6,26 +6,39 @@ namespace Frontpage\Service;
 
 use Activity\Mapper\Activity as ActivityMapper;
 use Activity\Model\Activity as ActivityModel;
+use Company\Model\CompanyBannerPackage as CompanyBannerPackageModel;
 use Company\Service\Company as CompanyService;
 use DateTime;
-use Decision\Service\{
-    AclService,
-    Member as MemberService,
-};
+use Decision\Model\Member as MemberModel;
+use Decision\Service\AclService;
+use Decision\Service\Member as MemberService;
 use Frontpage\Model\NewsItem as NewsItemModel;
-use Frontpage\Service\{
-    News as NewsService,
-    Poll as PollService,
-};
+use Frontpage\Model\Poll as PollModel;
+use Frontpage\Model\PollVote as PollVoteModel;
 use Laminas\Mvc\I18n\Translator;
 use Photo\Mapper\Tag as TagMapper;
+use Photo\Model\Photo as PhotoModel;
+use Photo\Model\Tag as TagModel;
 use Photo\Service\Photo as PhotoService;
+
+use function abs;
+use function array_merge;
+use function array_slice;
+use function usort;
 
 /**
  * Frontpage service.
+ *
+ * @psalm-type BirthdaysArrayType = array<array-key, array{
+ *     member: MemberModel,
+ *     age: int,
+ * }>
  */
 class Frontpage
 {
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
+     */
     public function __construct(
         private readonly Translator $translator,
         private readonly AclService $aclService,
@@ -43,8 +56,6 @@ class Frontpage
 
     /**
      * Get the translator.
-     *
-     * @return Translator
      */
     public function getTranslator(): Translator
     {
@@ -54,7 +65,20 @@ class Frontpage
     /**
      * Retrieves all data which is needed on the home page.
      *
-     * @return array
+     * @return array{
+     *     birthdays: BirthdaysArrayType,
+     *     birthdayPhoto: ?PhotoModel,
+     *     activities: ActivityModel[],
+     *     weeklyPhoto: ?PhotoModel,
+     *     poll: array{
+     *         canVote: bool,
+     *         poll: ?PollModel,
+     *         userVote: ?PollVoteModel,
+     *     },
+     *     news: array<array-key, ActivityModel|NewsItemModel>,
+     *     companyBanner: ?CompanyBannerPackageModel,
+     *     photoConfig: mixed[],
+     * }
      */
     public function getHomePageData(): array
     {
@@ -83,7 +107,10 @@ class Frontpage
      * Retrieves all birthdays happening today, which should be shown on the home page.
      * Includes the age and a recent tag of the most active member whom has a birthday.
      *
-     * @return array
+     * @return array{
+     *     birthdays: BirthdaysArrayType,
+     *     tag: ?TagModel,
+     * }
      */
     public function getBirthdayInfo(): array
     {
@@ -118,7 +145,7 @@ class Frontpage
      * Returns a mixed array of news items and activities to display in the
      * news section.
      *
-     * @return array
+     * @return array<array-key, ActivityModel|NewsItemModel>
      */
     public function getNewsItems(): array
     {
@@ -147,10 +174,6 @@ class Frontpage
 
     /**
      * Get a time stamp of a news item or activity for sorting.
-     *
-     * @param ActivityModel|NewsItemModel $item
-     *
-     * @return int
      */
     public function getItemTimestamp(ActivityModel|NewsItemModel $item): int
     {
@@ -164,7 +187,7 @@ class Frontpage
     }
 
     /**
-     * @return array
+     * @return ActivityModel[]
      */
     public function getUpcomingActivities(): array
     {

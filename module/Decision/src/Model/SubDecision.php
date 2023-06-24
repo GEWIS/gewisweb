@@ -5,58 +5,54 @@ declare(strict_types=1);
 namespace Decision\Model;
 
 use Decision\Model\Enums\MeetingTypes;
-use Decision\Model\SubDecision\{
-    Abrogation,
-    Board\Discharge as BoardDischarge,
-    Board\Installation as BoardInstallation,
-    Board\Release as BoardRelease,
-    Budget,
-    Destroy,
-    Discharge,
-    Foundation,
-    FoundationReference,
-    Installation,
-    Key\Granting as KeyGranting,
-    Key\Withdrawal as KeyWithdrawal,
-    Other,
-    Reckoning,
-};
-use Doctrine\ORM\Mapping\{
-    Column,
-    DiscriminatorColumn,
-    DiscriminatorMap,
-    Entity,
-    Id,
-    InheritanceType,
-    JoinColumn,
-    ManyToOne,
-};
+use Decision\Model\SubDecision\Abrogation;
+use Decision\Model\SubDecision\Board\Discharge as BoardDischarge;
+use Decision\Model\SubDecision\Board\Installation as BoardInstallation;
+use Decision\Model\SubDecision\Board\Release as BoardRelease;
+use Decision\Model\SubDecision\Budget;
+use Decision\Model\SubDecision\Destroy;
+use Decision\Model\SubDecision\Discharge;
+use Decision\Model\SubDecision\Foundation;
+use Decision\Model\SubDecision\FoundationReference;
+use Decision\Model\SubDecision\Installation;
+use Decision\Model\SubDecision\Key\Granting as KeyGranting;
+use Decision\Model\SubDecision\Key\Withdrawal as KeyWithdrawal;
+use Decision\Model\SubDecision\Other;
+use Decision\Model\SubDecision\Reckoning;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\DiscriminatorColumn;
+use Doctrine\ORM\Mapping\DiscriminatorMap;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\InheritanceType;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
 
 /**
  * SubDecision model.
  */
 #[Entity]
-#[InheritanceType(value: "SINGLE_TABLE")]
+#[InheritanceType(value: 'SINGLE_TABLE')]
 #[DiscriminatorColumn(
-    name: "type",
-    type: "string",
+    name: 'type',
+    type: 'string',
 )]
 #[DiscriminatorMap(
     value: [
-        "foundation" => Foundation::class,
-        "abrogation" => Abrogation::class,
-        "installation" => Installation::class,
-        "discharge" => Discharge::class,
-        "budget" => Budget::class,
-        "reckoning" => Reckoning::class,
-        "other" => Other::class,
-        "destroy" => Destroy::class,
-        "board_installation" => BoardInstallation::class,
-        "board_release" => BoardRelease::class,
-        "board_discharge" => BoardDischarge::class,
-        "foundationreference" => FoundationReference::class,
-        "key_granting" => KeyGranting::class,
-        "key_withdraw" => KeyWithdrawal::class,
+        'foundation' => Foundation::class,
+        'abrogation' => Abrogation::class,
+        'installation' => Installation::class,
+        'discharge' => Discharge::class,
+        'budget' => Budget::class,
+        'reckoning' => Reckoning::class,
+        'other' => Other::class,
+        'destroy' => Destroy::class,
+        'board_installation' => BoardInstallation::class,
+        'board_release' => BoardRelease::class,
+        'board_discharge' => BoardDischarge::class,
+        'foundationreference' => FoundationReference::class,
+        'key_granting' => KeyGranting::class,
+        'key_withdraw' => KeyWithdrawal::class,
     ],
 )]
 abstract class SubDecision
@@ -66,23 +62,23 @@ abstract class SubDecision
      */
     #[ManyToOne(
         targetEntity: Decision::class,
-        inversedBy: "subdecisions",
+        inversedBy: 'subdecisions',
     )]
     #[JoinColumn(
-        name: "meeting_type",
-        referencedColumnName: "meeting_type",
+        name: 'meeting_type',
+        referencedColumnName: 'meeting_type',
     )]
     #[JoinColumn(
-        name: "meeting_number",
-        referencedColumnName: "meeting_number",
+        name: 'meeting_number',
+        referencedColumnName: 'meeting_number',
     )]
     #[JoinColumn(
-        name: "decision_point",
-        referencedColumnName: "point",
+        name: 'decision_point',
+        referencedColumnName: 'point',
     )]
     #[JoinColumn(
-        name: "decision_number",
-        referencedColumnName: "number",
+        name: 'decision_number',
+        referencedColumnName: 'number',
     )]
     protected Decision $decision;
 
@@ -93,7 +89,7 @@ abstract class SubDecision
      */
     #[Id]
     #[Column(
-        type: "string",
+        type: 'string',
         enumType: MeetingTypes::class,
     )]
     protected MeetingTypes $meeting_type;
@@ -104,7 +100,7 @@ abstract class SubDecision
      * NOTE: This is a hack to make the decision a primary key here.
      */
     #[Id]
-    #[Column(type: "integer")]
+    #[Column(type: 'integer')]
     protected int $meeting_number;
 
     /**
@@ -113,7 +109,7 @@ abstract class SubDecision
      * NOTE: This is a hack to make the decision a primary key here.
      */
     #[Id]
-    #[Column(type: "integer")]
+    #[Column(type: 'integer')]
     protected int $decision_point;
 
     /**
@@ -122,26 +118,24 @@ abstract class SubDecision
      * NOTE: This is a hack to make the decision a primary key here.
      */
     #[Id]
-    #[Column(type: "integer")]
+    #[Column(type: 'integer')]
     protected int $decision_number;
 
     /**
      * Sub decision number.
      */
     #[Id]
-    #[Column(type: "integer")]
+    #[Column(type: 'integer')]
     protected int $number;
 
     /**
      * Content.
      */
-    #[Column(type: "text")]
+    #[Column(type: 'text')]
     protected string $content;
 
     /**
      * Get the decision.
-     *
-     * @return Decision
      */
     public function getDecision(): Decision
     {
@@ -150,8 +144,6 @@ abstract class SubDecision
 
     /**
      * Set the decision.
-     *
-     * @param Decision $decision
      */
     public function setDecision(Decision $decision): void
     {
@@ -165,8 +157,6 @@ abstract class SubDecision
 
     /**
      * Get the meeting type.
-     *
-     * @return MeetingTypes
      */
     public function getMeetingType(): MeetingTypes
     {
@@ -175,8 +165,6 @@ abstract class SubDecision
 
     /**
      * Get the meeting number.
-     *
-     * @return int
      */
     public function getMeetingNumber(): int
     {
@@ -185,8 +173,6 @@ abstract class SubDecision
 
     /**
      * Get the decision point number.
-     *
-     * @return int
      */
     public function getDecisionPoint(): int
     {
@@ -195,8 +181,6 @@ abstract class SubDecision
 
     /**
      * Get the decision number.
-     *
-     * @return int
      */
     public function getDecisionNumber(): int
     {
@@ -205,8 +189,6 @@ abstract class SubDecision
 
     /**
      * Get the number.
-     *
-     * @return int
      */
     public function getNumber(): int
     {
@@ -215,8 +197,6 @@ abstract class SubDecision
 
     /**
      * Set the number.
-     *
-     * @param int $number
      */
     public function setNumber(int $number): void
     {
@@ -225,8 +205,6 @@ abstract class SubDecision
 
     /**
      * Get the content.
-     *
-     * @return string
      */
     public function getContent(): string
     {
@@ -235,8 +213,6 @@ abstract class SubDecision
 
     /**
      * Set the content.
-     *
-     * @param string $content
      */
     public function setContent(string $content): void
     {

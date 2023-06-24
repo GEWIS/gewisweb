@@ -4,18 +4,16 @@ declare(strict_types=1);
 
 namespace Photo\Form;
 
-use Laminas\Form\Element\{
-    DateTimeLocal,
-    Submit,
-    Text,
-};
+use Laminas\Form\Element\DateTimeLocal;
+use Laminas\Form\Element\Submit;
+use Laminas\Form\Element\Text;
 use Laminas\Form\Form;
 use Laminas\I18n\Validator\Alnum;
-use Laminas\InputFilter\InputProviderInterface;
+use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\NotEmpty;
 
-class EditAlbum extends Form implements InputProviderInterface
+class EditAlbum extends Form implements InputFilterProviderInterface
 {
     public function __construct(Translator $translate)
     {
@@ -28,7 +26,7 @@ class EditAlbum extends Form implements InputProviderInterface
                 'options' => [
                     'label' => $translate->translate('Album title'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -39,7 +37,7 @@ class EditAlbum extends Form implements InputProviderInterface
                     'label' => $translate->translate('Start date'),
                     'format' => 'Y-m-d\TH:i',
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -50,7 +48,7 @@ class EditAlbum extends Form implements InputProviderInterface
                     'label' => $translate->translate('End date'),
                     'format' => 'Y-m-d\TH:i',
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -60,14 +58,14 @@ class EditAlbum extends Form implements InputProviderInterface
                 'options' => [
                     'label' => $translate->translate('Save'),
                 ],
-            ]
+            ],
         );
     }
 
     /**
      * @return array
      */
-    public function getInputSpecification(): array
+    public function getInputFilterSpecification(): array
     {
         return [
             'name' => [

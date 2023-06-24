@@ -14,11 +14,6 @@ class MaxActivities extends BaseMapper
 {
     /**
      * Finds the MaxActivityOptions model with the given organ and period.
-     *
-     * @param int $organId
-     * @param int $periodId
-     *
-     * @return MaxActivitiesModel|null
      */
     public function getMaxActivityOptionsByOrganPeriod(
         int $organId,
@@ -36,9 +31,6 @@ class MaxActivities extends BaseMapper
         return empty($res) ? null : $res[0];
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function getRepositoryName(): string
     {
         return MaxActivitiesModel::class;

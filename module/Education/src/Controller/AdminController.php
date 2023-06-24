@@ -4,25 +4,18 @@ declare(strict_types=1);
 
 namespace Education\Controller;
 
-use Education\Service\{
-    AclService,
-    Exam as ExamService,
-};
 use Education\Model\Course as CourseModel;
-use Education\Model\Exam;
 use Education\Model\Exam as ExamModel;
 use Education\Model\Summary as SummaryModel;
-use Laminas\Http\{
-    Request,
-    Response,
-};
+use Education\Service\AclService;
+use Education\Service\Exam as ExamService;
+use Laminas\Http\Request;
+use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
-use Laminas\View\Model\{
-    JsonModel,
-    ViewModel,
-};
+use Laminas\View\Model\JsonModel;
+use Laminas\View\Model\ViewModel;
 use User\Permissions\NotAllowedException;
 
 /**
@@ -30,6 +23,9 @@ use User\Permissions\NotAllowedException;
  */
 class AdminController extends AbstractActionController
 {
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
+     */
     public function __construct(
         private readonly AclService $aclService,
         private readonly Translator $translator,
@@ -42,7 +38,7 @@ class AdminController extends AbstractActionController
     {
         if (!$this->aclService->isAllowed('admin', 'education')) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to administer education settings')
+                $this->translator->translate('You are not allowed to administer education settings'),
             );
         }
 
@@ -77,22 +73,22 @@ class AdminController extends AbstractActionController
 
                 if ($this->examService->saveCourse($course)) {
                     $this->flashMessenger()->addSuccessMessage(
-                        $this->translator->translate('Successfully added course!')
+                        $this->translator->translate('Successfully added course!'),
                     );
 
                     return $this->redirect()->toRoute('admin_education/course/edit', ['course' => $course->getCode()]);
-                } else {
-                    $this->flashMessenger()->addErrorMessage(
-                        $this->translator->translate('An error occurred while saving the course!')
-                    );
                 }
+
+                $this->flashMessenger()->addErrorMessage(
+                    $this->translator->translate('An error occurred while saving the course!'),
+                );
             }
         }
 
         return new ViewModel(
             [
                 'form' => $form,
-            ]
+            ],
         );
     }
 
@@ -114,7 +110,7 @@ class AdminController extends AbstractActionController
         $form = $this->examService->getCourseForm($course);
 
         if ($request->isPost()) {
-             $form->setData($request->getPost()->toArray());
+            $form->setData($request->getPost()->toArray());
 
             if ($form->isValid()) {
                 /** @var CourseModel $course */
@@ -122,11 +118,11 @@ class AdminController extends AbstractActionController
 
                 if ($this->examService->saveCourse($course)) {
                     $this->flashMessenger()->addSuccessMessage(
-                        $this->translator->translate('Successfully updated course information!')
+                        $this->translator->translate('Successfully updated course information!'),
                     );
                 } else {
                     $this->flashMessenger()->addErrorMessage(
-                        $this->translator->translate('An error occurred while saving the course!')
+                        $this->translator->translate('An error occurred while saving the course!'),
                     );
                 }
             }
@@ -184,7 +180,7 @@ class AdminController extends AbstractActionController
     {
         if (!$this->aclService->isAllowed('delete', 'course_document')) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to delete course documents')
+                $this->translator->translate('You are not allowed to delete course documents'),
             );
         }
 
@@ -222,23 +218,23 @@ class AdminController extends AbstractActionController
                 return new ViewModel(
                     [
                         'success' => true,
-                    ]
-                );
-            } else {
-                $this->getResponse()->setStatusCode(500);
-
-                return new ViewModel(
-                    [
-                        'success' => false,
-                    ]
+                    ],
                 );
             }
+
+            $this->getResponse()->setStatusCode(500);
+
+            return new ViewModel(
+                [
+                    'success' => false,
+                ],
+            );
         }
 
         return new ViewModel(
             [
                 'form' => $this->examService->getTempUploadForm(),
-            ]
+            ],
         );
     }
 
@@ -253,23 +249,23 @@ class AdminController extends AbstractActionController
                 return new ViewModel(
                     [
                         'success' => true,
-                    ]
-                );
-            } else {
-                $this->getResponse()->setStatusCode(500);
-
-                return new ViewModel(
-                    [
-                        'success' => false,
-                    ]
+                    ],
                 );
             }
+
+            $this->getResponse()->setStatusCode(500);
+
+            return new ViewModel(
+                [
+                    'success' => false,
+                ],
+            );
         }
 
         return new ViewModel(
             [
                 'form' => $this->examService->getTempUploadForm(),
-            ]
+            ],
         );
     }
 
@@ -290,7 +286,7 @@ class AdminController extends AbstractActionController
                     return new ViewModel(
                         [
                             'success' => true,
-                        ]
+                        ],
                     );
                 }
             }
@@ -300,7 +296,7 @@ class AdminController extends AbstractActionController
             [
                 'form' => $form,
                 'config' => $this->educationTempConfig,
-            ]
+            ],
         );
     }
 
@@ -316,7 +312,7 @@ class AdminController extends AbstractActionController
             return new ViewModel(
                 [
                     'success' => true,
-                ]
+                ],
             );
         }
 
@@ -326,7 +322,7 @@ class AdminController extends AbstractActionController
             [
                 'form' => $this->examService->getBulkSummaryForm(),
                 'config' => $config,
-            ]
+            ],
         );
     }
 
@@ -338,7 +334,7 @@ class AdminController extends AbstractActionController
         if ($request->isPost()) {
             $this->examService->deleteTempExam(
                 $this->params()->fromRoute('filename'),
-                $this->params()->fromRoute('type')
+                $this->params()->fromRoute('type'),
             );
 
             return new JsonModel(['success' => 'true']);

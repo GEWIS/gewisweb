@@ -5,11 +5,9 @@ declare(strict_types=1);
 namespace Decision\Model\SubDecision;
 
 use Decision\Model\SubDecision;
-use Doctrine\ORM\Mapping\{
-    Entity,
-    JoinColumn,
-    ManyToOne,
-};
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
 
 /**
  * Reference to organ foundation.
@@ -25,35 +23,33 @@ abstract class FoundationReference extends SubDecision
      */
     #[ManyToOne(
         targetEntity: Foundation::class,
-        inversedBy: "references",
-        cascade: ["persist"],
+        inversedBy: 'references',
+        cascade: ['persist'],
     )]
     #[JoinColumn(
-        name: "r_meeting_type",
-        referencedColumnName: "meeting_type",
+        name: 'r_meeting_type',
+        referencedColumnName: 'meeting_type',
     )]
     #[JoinColumn(
-        name: "r_meeting_number",
-        referencedColumnName: "meeting_number",
+        name: 'r_meeting_number',
+        referencedColumnName: 'meeting_number',
     )]
     #[JoinColumn(
-        name: "r_decision_point",
-        referencedColumnName: "decision_point",
+        name: 'r_decision_point',
+        referencedColumnName: 'decision_point',
     )]
     #[JoinColumn(
-        name: "r_decision_number",
-        referencedColumnName: "decision_number",
+        name: 'r_decision_number',
+        referencedColumnName: 'decision_number',
     )]
     #[JoinColumn(
-        name: "r_number",
-        referencedColumnName: "number",
+        name: 'r_number',
+        referencedColumnName: 'number',
     )]
     protected Foundation $foundation;
 
     /**
      * Get organ foundation.
-     *
-     * @return Foundation
      */
     public function getFoundation(): Foundation
     {
@@ -62,8 +58,6 @@ abstract class FoundationReference extends SubDecision
 
     /**
      * Set organ foundation.
-     *
-     * @param Foundation $foundation
      */
     public function setFoundation(Foundation $foundation): void
     {

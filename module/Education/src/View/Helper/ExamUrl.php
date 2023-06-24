@@ -12,34 +12,25 @@ class ExamUrl extends AbstractHelper
 {
     /**
      * Exam service.
-     *
-     * @var ExamService
      */
     protected ExamService $examService;
 
     /**
      * Education data dir.
-     *
-     * @var string
      */
     protected string $dir;
 
     /**
      * Get the exam URL.
-     *
-     * @param Exam $exam
-     *
-     * @return string
      */
     public function __invoke(Exam $exam): string
     {
-        return $this->getView()->basePath() . '/' . $this->getDir() . '/' . $this->examService->courseDocumentToFilename($exam);
+        return $this->getView()->basePath() . '/' . $this->getDir(
+        ) . '/' . $this->examService->courseDocumentToFilename($exam);
     }
 
     /**
      * Get the data dir.
-     *
-     * @return string
      */
     public function getDir(): string
     {
@@ -48,8 +39,6 @@ class ExamUrl extends AbstractHelper
 
     /**
      * Set the data dir.
-     *
-     * @param string $dir
      */
     public function setDir(string $dir): void
     {
@@ -58,8 +47,6 @@ class ExamUrl extends AbstractHelper
 
     /**
      * Get the authentication service.
-     *
-     * @return ExamService
      */
     public function getExamService(): ExamService
     {
@@ -68,8 +55,6 @@ class ExamUrl extends AbstractHelper
 
     /**
      * Set the authentication service.
-     *
-     * @param ExamService $examService
      */
     public function setExamService(ExamService $examService): void
     {

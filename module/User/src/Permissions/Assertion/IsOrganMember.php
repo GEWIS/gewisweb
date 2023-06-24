@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace User\Permissions\Assertion;
 
 use DateTime;
-use Decision\Model\{
-    Organ,
-    OrganMember,
-};
+use Decision\Model\Organ;
+use Decision\Model\OrganMember;
 use Laminas\Permissions\Acl\Acl;
 use Laminas\Permissions\Acl\Assertion\AssertionInterface;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
@@ -28,12 +26,7 @@ class IsOrganMember implements AssertionInterface
      * $role, $resource, or $privilege parameters are null, it means that the query applies to all Roles, Resources, or
      * privileges, respectively.
      *
-     * @param Acl $acl
-     * @param RoleInterface|null $role
-     * @param ResourceInterface|null $resource
      * @param string|null $privilege
-     *
-     * @return bool
      */
     public function assert(
         Acl $acl,
@@ -69,10 +62,6 @@ class IsOrganMember implements AssertionInterface
 
     /**
      * Check if this is a current organ member.
-     *
-     * @param OrganMember $organMember
-     *
-     * @return bool
      */
     protected function isCurrentMember(OrganMember $organMember): bool
     {

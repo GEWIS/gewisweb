@@ -5,12 +5,10 @@ declare(strict_types=1);
 namespace Company\Model;
 
 use Application\Model\Traits\IdentifiableTrait;
-use Doctrine\ORM\Mapping\{
-    Column,
-    Entity,
-    JoinColumn,
-    OneToOne,
-};
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\OneToOne;
 
 /**
  * Job Category model.
@@ -25,44 +23,42 @@ class JobCategory
      */
     #[OneToOne(
         targetEntity: CompanyLocalisedText::class,
-        cascade: ["persist", "remove"],
+        cascade: ['persist', 'remove'],
         orphanRemoval: true,
     )]
     #[JoinColumn(
-        name: "name_id",
-        referencedColumnName: "id",
+        name: 'name_id',
+        referencedColumnName: 'id',
         nullable: false,
     )]
     protected CompanyLocalisedText $name;
-
 
     /**
      * The name of the category.
      */
     #[OneToOne(
         targetEntity: CompanyLocalisedText::class,
-        cascade: ["persist", "remove"],
+        cascade: ['persist', 'remove'],
         orphanRemoval: true,
     )]
     #[JoinColumn(
-        name: "pluralName_id",
-        referencedColumnName: "id",
+        name: 'pluralName_id',
+        referencedColumnName: 'id',
         nullable: false,
     )]
     protected CompanyLocalisedText $pluralName;
-
 
     /**
      * The slug of the category.
      */
     #[OneToOne(
         targetEntity: CompanyLocalisedText::class,
-        cascade: ["persist", "remove"],
+        cascade: ['persist', 'remove'],
         orphanRemoval: true,
     )]
     #[JoinColumn(
-        name: "slug_id",
-        referencedColumnName: "id",
+        name: 'slug_id',
+        referencedColumnName: 'id',
         nullable: false,
     )]
     protected CompanyLocalisedText $slug;
@@ -70,12 +66,9 @@ class JobCategory
     /**
      * If the category is hidden.
      */
-    #[Column(type: "boolean")]
+    #[Column(type: 'boolean')]
     protected bool $hidden;
 
-    /**
-     * @return bool
-     */
     public function getHidden(): bool
     {
         return $this->hidden;
@@ -83,8 +76,6 @@ class JobCategory
 
     /**
      * Set's the id.
-     *
-     * @param bool $hidden
      */
     public function setHidden(bool $hidden): void
     {
@@ -93,8 +84,6 @@ class JobCategory
 
     /**
      * Gets the name.
-     *
-     * @return CompanyLocalisedText
      */
     public function getName(): CompanyLocalisedText
     {
@@ -103,8 +92,6 @@ class JobCategory
 
     /**
      * Sets the name.
-     *
-     * @param CompanyLocalisedText $name
      */
     public function setName(CompanyLocalisedText $name): void
     {
@@ -113,8 +100,6 @@ class JobCategory
 
     /**
      * Gets the plural name.
-     *
-     * @return CompanyLocalisedText
      */
     public function getPluralName(): CompanyLocalisedText
     {
@@ -123,8 +108,6 @@ class JobCategory
 
     /**
      * Sets the name.
-     *
-     * @param CompanyLocalisedText $name
      */
     public function setPluralName(CompanyLocalisedText $name): void
     {
@@ -133,8 +116,6 @@ class JobCategory
 
     /**
      * Gets the slug.
-     *
-     * @return CompanyLocalisedText
      */
     public function getSlug(): CompanyLocalisedText
     {
@@ -143,8 +124,6 @@ class JobCategory
 
     /**
      * Sets the slug.
-     *
-     * @param CompanyLocalisedText $slug
      */
     public function setSlug(CompanyLocalisedText $slug): void
     {
@@ -152,7 +131,15 @@ class JobCategory
     }
 
     /**
-     * @return array
+     * @return array{
+     *     name: ?string,
+     *     nameEn: ?string,
+     *     pluralName: ?string,
+     *     pluralNameEn: ?string,
+     *     slug: ?string,
+     *     slugEn: ?string,
+     *     hidden: bool,
+     * }
      */
     public function toArray(): array
     {

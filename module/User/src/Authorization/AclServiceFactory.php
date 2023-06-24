@@ -10,36 +10,31 @@ use Decision\Service\AclService as DecisionAclService;
 use Education\Service\AclService as EducationAclService;
 use Frontpage\Service\AclService as FrontpageAclService;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
-use Laminas\ServiceManager\Factory\FactoryInterface;
 use Laminas\ServiceManager\Exception\InvalidArgumentException;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use Photo\Service\AclService as PhotoAclService;
 use Psr\Container\ContainerInterface;
-use User\Authentication\{
-    Adapter\CompanyUserAdapter,
-    Adapter\UserAdapter,
-    ApiAuthenticationService,
-    AuthenticationService as CompanyUserAuthenticationService,
-    AuthenticationService as UserAuthenticationService,
-    Storage\CompanyUserSession,
-    Storage\UserSession,
-};
+use User\Authentication\Adapter\CompanyUserAdapter;
+use User\Authentication\Adapter\UserAdapter;
+use User\Authentication\ApiAuthenticationService;
+use User\Authentication\AuthenticationService as CompanyUserAuthenticationService;
+use User\Authentication\AuthenticationService as UserAuthenticationService;
+use User\Authentication\Storage\CompanyUserSession;
+use User\Authentication\Storage\UserSession;
 use User\Service\AclService as UserAclService;
+
+use function sprintf;
 
 class AclServiceFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param string $requestedName
-     * @param array|null $options
-     *
-     * @return GenericAclService
      */
     public function __invoke(
         ContainerInterface $container,
         $requestedName,
         ?array $options = null,
     ): GenericAclService {
-        /** @var MvcTranslator $translator */
         $translator = $container->get(MvcTranslator::class);
         /** @var UserAuthenticationService<UserSession, UserAdapter> $userAuthService */
         $userAuthService = $container->get('user_auth_user_service');
@@ -47,7 +42,7 @@ class AclServiceFactory implements FactoryInterface
         $companyUserAuthService = $container->get('user_auth_companyUser_service');
         /** @var ApiAuthenticationService $apiUserAuthService */
         $apiUserAuthService = $container->get('user_auth_apiUser_service');
-        /** @var array<array-key, string> $tueRanges */
+        /** @var string[] $tueRanges */
         $tueRanges = $container->get('config')['tue_ranges'];
         /** @var string $remoteAddress */
         $remoteAddress = $container->get('user_remoteaddress');
@@ -111,9 +106,9 @@ class AclServiceFactory implements FactoryInterface
             ),
             default => throw new InvalidArgumentException(
                 sprintf(
-                    "The service with name %s could not be found and was therefore not created.",
+                    'The service with name %s could not be found and was therefore not created.',
                     $requestedName,
-                )
+                ),
             ),
         };
     }

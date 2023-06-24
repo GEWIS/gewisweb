@@ -4,28 +4,22 @@ declare(strict_types=1);
 
 namespace Decision;
 
-use Decision\Controller\{
-    AdminController,
-    DecisionController,
-    MemberController,
-    OrganAdminController,
-    OrganController,
-};
-use Decision\Controller\Factory\{
-    AdminControllerFactory,
-    DecisionControllerFactory,
-    MemberControllerFactory,
-    OrganAdminControllerFactory,
-    OrganControllerFactory,
-};
+use Decision\Controller\AdminController;
+use Decision\Controller\DecisionController;
+use Decision\Controller\Factory\AdminControllerFactory;
+use Decision\Controller\Factory\DecisionControllerFactory;
+use Decision\Controller\Factory\MemberControllerFactory;
+use Decision\Controller\Factory\OrganAdminControllerFactory;
+use Decision\Controller\Factory\OrganControllerFactory;
+use Decision\Controller\MemberController;
+use Decision\Controller\OrganAdminController;
+use Decision\Controller\OrganController;
 use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Laminas\Http\Request;
-use Laminas\Router\Http\{
-    Literal,
-    Method,
-    Regex,
-    Segment,
-};
+use Laminas\Router\Http\Literal;
+use Laminas\Router\Http\Method;
+use Laminas\Router\Http\Regex;
+use Laminas\Router\Http\Segment;
 
 return [
     'router' => [
@@ -120,7 +114,8 @@ return [
                     'files' => [
                         'type' => Regex::class,
                         'options' => [
-                            'regex' => '/files(?<path>' . (new Module())->getServiceConfig()['filebrowser_valid_file'] . ')',
+                            'regex' => '/files(?<path>' . (new Module())->getServiceConfig(
+                            )['filebrowser_valid_file'] . ')',
                             'defaults' => [
                                 'action' => 'files',
                             ],

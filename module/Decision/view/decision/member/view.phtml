@@ -101,7 +101,7 @@ $this->headTitle($this->translate('Members'));
                                 <?php $startAssociationYear = AssociationYear::fromDate($installDate)->getYear(); ?>
                                 <li>
                                     <?= sprintf(
-                                        // phpcs:ignore -- user-visible strings should not be split
+                                        // phpcs:ignore Generic.Files.LineLength.TooLong -- user-visible strings should not be split
                                         $this->translate('%s was the <strong>%s</strong> during the association year %d/%d.'),
                                         $this->escapeHtml($member->getFirstName()),
                                         $this->escapeHtml($this->translate($boardInstall->getFunction())),

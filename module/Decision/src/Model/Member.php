@@ -6,28 +6,39 @@ namespace Decision\Model;
 
 use DateTime;
 use DateTimeInterface;
-use Doctrine\Common\Collections\{
-    ArrayCollection,
-    Collection,
-};
-use Doctrine\ORM\Mapping\{
-    Column,
-    Entity,
-    Id,
-    InverseJoinColumn,
-    JoinColumn,
-    JoinTable,
-    ManyToMany,
-    OneToMany,
-    OneToOne,
-};
 use Decision\Model\Enums\MembershipTypes;
 use Decision\Model\SubDecision\Installation;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\InverseJoinColumn;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\OneToOne;
 use Photo\Model\Tag as TagModel;
 use User\Model\User as UserModel;
 
 /**
  * Member model.
+ *
+ * @psalm-type MemberArrayType = array{
+ *     lidnr: int,
+ *     email: ?string,
+ *     fullName: string,
+ *     lastName: string,
+ *     middleName: string,
+ *     initials: string,
+ *     firstName: string,
+ *     generation: int,
+ *     hidden: bool,
+ *     deleted: bool,
+ *     membershipEndsOn: ?string,
+ *     expiration: string,
+ * }
  */
 #[Entity]
 class Member
@@ -36,11 +47,11 @@ class Member
      * The user.
      */
     #[Id]
-    #[Column(type: "integer")]
+    #[Column(type: 'integer')]
     #[OneToOne(targetEntity: UserModel::class)]
     #[JoinColumn(
-        name: "lidnr",
-        referencedColumnName: "lidnr",
+        name: 'lidnr',
+        referencedColumnName: 'lidnr',
     )]
     protected int $lidnr;
 
@@ -48,7 +59,7 @@ class Member
      * Member's email address.
      */
     #[Column(
-        type: "string",
+        type: 'string',
         nullable: true,
     )]
     protected ?string $email;
@@ -56,25 +67,25 @@ class Member
     /**
      * Member's last name.
      */
-    #[Column(type: "string")]
+    #[Column(type: 'string')]
     protected string $lastName;
 
     /**
      * Middle name.
      */
-    #[Column(type: "string")]
+    #[Column(type: 'string')]
     protected string $middleName;
 
     /**
      * Initials.
      */
-    #[Column(type: "string")]
+    #[Column(type: 'string')]
     protected string $initials;
 
     /**
      * First name.
      */
-    #[Column(type: "string")]
+    #[Column(type: 'string')]
     protected string $firstName;
 
     /**
@@ -83,7 +94,7 @@ class Member
      * This is the year that this member became a GEWIS member. This is not
      * a academic year, but rather a calendar year.
      */
-    #[Column(type: "integer")]
+    #[Column(type: 'integer')]
     protected int $generation;
 
     /**
@@ -101,7 +112,7 @@ class Member
      * See artikel 7.
      */
     #[Column(
-        type: "string",
+        type: 'string',
         enumType: MembershipTypes::class,
     )]
     protected MembershipTypes $type;
@@ -109,7 +120,7 @@ class Member
     /**
      * Last changed date of membership.
      */
-    #[Column(type: "date")]
+    #[Column(type: 'date')]
     protected DateTime $changedOn;
 
     /**
@@ -118,7 +129,7 @@ class Member
      * still meets the requirements as set forth in the bylaws and internal regulations.
      */
     #[Column(
-        type: "date",
+        type: 'date',
         nullable: true,
     )]
     protected ?DateTime $membershipEndsOn = null;
@@ -126,27 +137,27 @@ class Member
     /**
      * Member birth date.
      */
-    #[Column(type: "date")]
+    #[Column(type: 'date')]
     protected DateTime $birth;
 
     /**
      * The date on which the membership of the member is set to expire and will therefore have to be renewed, which
      * happens either automatically or has to be done manually, as set forth in the bylaws and internal regulations.
      */
-    #[Column(type: "date")]
+    #[Column(type: 'date')]
     protected DateTime $expiration;
 
     /**
      * How much the member has paid for membership. 0 by default.
      */
-    #[Column(type: "integer")]
+    #[Column(type: 'integer')]
     protected int $paid = 0;
 
     /**
      * Iban number.
      */
     #[Column(
-        type: "string",
+        type: 'string',
         nullable: true,
     )]
     protected ?string $iban = null;
@@ -155,7 +166,7 @@ class Member
      * If the member receives a 'supremum'.
      */
     #[Column(
-        type: "string",
+        type: 'string',
         nullable: true,
     )]
     protected ?string $supremum = null;
@@ -167,68 +178,78 @@ class Member
      * deleted members and members that are deceased but whose profile should be kept.
      */
     #[Column(
-        type: "boolean",
-        options: ["default" => false],
+        type: 'boolean',
+        options: ['default' => false],
     )]
     protected bool $hidden = false;
 
     /**
      * Addresses of this member.
+     *
+     * @var Collection<array-key, Address>
      */
     #[OneToMany(
         targetEntity: Address::class,
-        mappedBy: "member",
-        cascade: ["persist"],
+        mappedBy: 'member',
+        cascade: ['persist'],
     )]
     protected Collection $addresses;
 
     /**
      * Installations of this member.
+     *
+     * @var Collection<array-key, Installation>
      */
     #[OneToMany(
         targetEntity: Installation::class,
-        mappedBy: "member",
+        mappedBy: 'member',
     )]
     protected Collection $installations;
 
     /**
      * Memberships of mailing lists.
+     *
+     * @var Collection<array-key, MailingList>
      */
     #[ManyToMany(
         targetEntity: MailingList::class,
-        inversedBy: "members",
+        inversedBy: 'members',
     )]
-    #[JoinTable(name: "members_mailinglists")]
+    #[JoinTable(name: 'members_mailinglists')]
     #[JoinColumn(
-        name: "lidnr",
-        referencedColumnName: "lidnr"
+        name: 'lidnr',
+        referencedColumnName: 'lidnr',
     )]
     #[InverseJoinColumn(
-        name: "name",
-        referencedColumnName: "name",
+        name: 'name',
+        referencedColumnName: 'name',
     )]
     protected Collection $lists;
 
     /**
      * Organ memberships.
+     *
+     * @var Collection<array-key, OrganMember>
      */
     #[OneToMany(
         targetEntity: OrganMember::class,
-        mappedBy: "member",
+        mappedBy: 'member',
     )]
     protected Collection $organInstallations;
 
     /**
      * Board memberships.
+     *
+     * @var Collection<array-key, BoardMember>
      */
     #[OneToMany(
         targetEntity: BoardMember::class,
-        mappedBy: "member",
+        mappedBy: 'member',
     )]
     protected Collection $boardInstallations;
 
     #[Column(
-        type: "string",
+        type: 'string',
         nullable: true,
     )]
     protected ?string $authenticationKey = null;
@@ -241,27 +262,31 @@ class Member
      * Additionally, this flag can be used to filter deleted members in external services (e.g., GEWISWEB).
      */
     #[Column(
-        type: "boolean",
-        options: ["default" => false],
+        type: 'boolean',
+        options: ['default' => false],
     )]
     protected bool $deleted = false;
 
     /**
      * Member tags.
+     *
+     * @var Collection<array-key, TagModel>
      */
     #[OneToMany(
         targetEntity: TagModel::class,
-        mappedBy: "member",
-        fetch: "EXTRA_LAZY",
+        mappedBy: 'member',
+        fetch: 'EXTRA_LAZY',
     )]
     protected Collection $tags;
 
     /**
      * Keyholdership.
+     *
+     * @var Collection<array-key, Keyholder>
      */
     #[OneToMany(
         targetEntity: Keyholder::class,
-        mappedBy: "member",
+        mappedBy: 'member',
     )]
     protected Collection $keyGrantings;
 
@@ -278,8 +303,6 @@ class Member
 
     /**
      * Get the membership number.
-     *
-     * @return int
      */
     public function getLidnr(): int
     {
@@ -288,8 +311,6 @@ class Member
 
     /**
      * Get the member's email address.
-     *
-     * @return string|null
      */
     public function getEmail(): ?string
     {
@@ -298,8 +319,6 @@ class Member
 
     /**
      * Get the member's last name.
-     *
-     * @return string
      */
     public function getLastName(): string
     {
@@ -308,8 +327,6 @@ class Member
 
     /**
      * Get the member's middle name.
-     *
-     * @return string
      */
     public function getMiddleName(): string
     {
@@ -318,8 +335,6 @@ class Member
 
     /**
      * Get the member's initials.
-     *
-     * @return string
      */
     public function getInitials(): string
     {
@@ -328,8 +343,6 @@ class Member
 
     /**
      * Get the member's first name.
-     *
-     * @return string
      */
     public function getFirstName(): string
     {
@@ -338,8 +351,6 @@ class Member
 
     /**
      * Set the lidnr.
-     *
-     * @param int $lidnr
      */
     public function setLidnr(int $lidnr): void
     {
@@ -348,8 +359,6 @@ class Member
 
     /**
      * Set the member's email address.
-     *
-     * @param string|null $email
      */
     public function setEmail(?string $email): void
     {
@@ -358,8 +367,6 @@ class Member
 
     /**
      * Set the member's last name.
-     *
-     * @param string $lastName
      */
     public function setLastName(string $lastName): void
     {
@@ -368,8 +375,6 @@ class Member
 
     /**
      * Set the member's middle name.
-     *
-     * @param string $middleName
      */
     public function setMiddleName(string $middleName): void
     {
@@ -378,8 +383,6 @@ class Member
 
     /**
      * Set the member's initials.
-     *
-     * @param string $initials
      */
     public function setInitials(string $initials): void
     {
@@ -388,8 +391,6 @@ class Member
 
     /**
      * Set the member's first name.
-     *
-     * @param string $firstName
      */
     public function setFirstName(string $firstName): void
     {
@@ -398,8 +399,6 @@ class Member
 
     /**
      * Assemble the member's full name.
-     *
-     * @return string
      */
     public function getFullName(): string
     {
@@ -415,8 +414,6 @@ class Member
 
     /**
      * Get the generation.
-     *
-     * @return int
      */
     public function getGeneration(): int
     {
@@ -425,8 +422,6 @@ class Member
 
     /**
      * Set the generation.
-     *
-     * @param int $generation
      */
     public function setGeneration(int $generation): void
     {
@@ -435,8 +430,6 @@ class Member
 
     /**
      * Get the member type.
-     *
-     * @return MembershipTypes
      */
     public function getType(): MembershipTypes
     {
@@ -445,8 +438,6 @@ class Member
 
     /**
      * Set the member type.
-     *
-     * @param MembershipTypes $type
      */
     public function setType(MembershipTypes $type): void
     {
@@ -455,8 +446,6 @@ class Member
 
     /**
      * Get the expiration date.
-     *
-     * @return DateTime
      */
     public function getExpiration(): DateTime
     {
@@ -465,8 +454,6 @@ class Member
 
     /**
      * Set the expiration date.
-     *
-     * @param DateTime $expiration
      */
     public function setExpiration(DateTime $expiration): void
     {
@@ -475,8 +462,6 @@ class Member
 
     /**
      * Get the birth date.
-     *
-     * @return DateTime
      */
     public function getBirth(): DateTime
     {
@@ -485,8 +470,6 @@ class Member
 
     /**
      * Set the birthdate.
-     *
-     * @param DateTime $birth
      */
     public function setBirth(DateTime $birth): void
     {
@@ -495,8 +478,6 @@ class Member
 
     /**
      * Get the date of the last membership change.
-     *
-     * @return DateTime
      */
     public function getChangedOn(): DateTime
     {
@@ -505,8 +486,6 @@ class Member
 
     /**
      * Set the date of the last membership change.
-     *
-     * @param DateTime $changedOn
      */
     public function setChangedOn(DateTime $changedOn): void
     {
@@ -515,8 +494,6 @@ class Member
 
     /**
      * Get the date on which the membership of the member will have ended (i.e., they have become "graduate").
-     *
-     * @return DateTime|null
      */
     public function getMembershipEndsOn(): ?DateTime
     {
@@ -525,8 +502,6 @@ class Member
 
     /**
      * Set the date on which the membership of the member will have ended (i.e., they have become "graduate").
-     *
-     * @param DateTime|null $membershipEndsOn
      */
     public function setMembershipEndsOn(?DateTime $membershipEndsOn): void
     {
@@ -535,8 +510,6 @@ class Member
 
     /**
      * Get how much has been paid.
-     *
-     * @return int
      */
     public function getPaid(): int
     {
@@ -545,8 +518,6 @@ class Member
 
     /**
      * Set how much has been paid.
-     *
-     * @param int $paid
      */
     public function setPaid(int $paid): void
     {
@@ -555,8 +526,6 @@ class Member
 
     /**
      * Get the IBAN.
-     *
-     * @return string|null
      */
     public function getIban(): ?string
     {
@@ -565,8 +534,6 @@ class Member
 
     /**
      * Set the IBAN.
-     *
-     * @param string|null $iban
      */
     public function setIban(?string $iban): void
     {
@@ -575,8 +542,6 @@ class Member
 
     /**
      * Get if the member wants a supremum.
-     *
-     * @return string|null
      */
     public function getSupremum(): ?string
     {
@@ -585,8 +550,6 @@ class Member
 
     /**
      * Set if the member wants a supremum.
-     *
-     * @param string|null $supremum
      */
     public function setSupremum(?string $supremum): void
     {
@@ -595,8 +558,6 @@ class Member
 
     /**
      * Get if the member is hidden.
-     *
-     * @return bool
      */
     public function getHidden(): bool
     {
@@ -605,8 +566,6 @@ class Member
 
     /**
      * Set if the member is hidden.
-     *
-     * @param bool $hidden
      */
     public function setHidden(bool $hidden): void
     {
@@ -616,7 +575,7 @@ class Member
     /**
      * Get the installations.
      *
-     * @return Collection
+     * @return Collection<array-key, Installation>
      */
     public function getInstallations(): Collection
     {
@@ -633,11 +592,8 @@ class Member
         $this->authenticationKey = $authenticationKey;
     }
 
-
     /**
      * Get if the member is deleted.
-     *
-     * @return bool
      */
     public function getDeleted(): bool
     {
@@ -646,8 +602,6 @@ class Member
 
     /**
      * Set if the member is deleted.
-     *
-     * @param bool $deleted
      */
     public function setDeleted(bool $deleted): void
     {
@@ -657,7 +611,7 @@ class Member
     /**
      * Get the organ installations.
      *
-     * @return Collection
+     * @return Collection<array-key, OrganMember>
      */
     public function getOrganInstallations(): Collection
     {
@@ -667,7 +621,7 @@ class Member
     /**
      * Get the organ installations of organs that the member is currently part of.
      *
-     * @return Collection
+     * @return Collection<array-key, OrganMember>
      */
     public function getCurrentOrganInstallations(): Collection
     {
@@ -679,19 +633,17 @@ class Member
         $today = new DateTime();
 
         return $this->getOrganInstallations()->filter(
-            function (OrganMember $organ) use ($today) {
+            static function (OrganMember $organ) use ($today) {
                 $dischargeDate = $organ->getDischargeDate();
 
                 // Keep installation if not discharged or discharged in the future
                 return null === $dischargeDate || $dischargeDate >= $today;
-            }
+            },
         );
     }
 
     /**
      * Returns whether the member is currently part of any organs.
-     *
-     * @return bool
      */
     public function isActive(): bool
     {
@@ -701,7 +653,7 @@ class Member
     /**
      * Get the board installations.
      *
-     * @return Collection
+     * @return Collection<array-key, BoardMember>
      */
     public function getBoardInstallations(): Collection
     {
@@ -711,7 +663,7 @@ class Member
     /**
      * Get the tags.
      *
-     * @return Collection
+     * @return Collection<array-key, TagModel>
      */
     public function getTags(): Collection
     {
@@ -720,8 +672,6 @@ class Member
 
     /**
      * Get the current board the member is part of.
-     *
-     * @return BoardMember|null
      */
     public function getCurrentBoardInstallation(): ?BoardMember
     {
@@ -729,12 +679,12 @@ class Member
         $today = new DateTime();
 
         $boards = $this->getBoardInstallations()->filter(
-            function (BoardMember $boardMember) use ($today) {
+            static function (BoardMember $boardMember) use ($today) {
                 $dischargeDate = $boardMember->getDischargeDate();
 
                 // Keep installation if not discharged or discharged in the future
-                return is_null($dischargeDate) || $dischargeDate >= $today;
-            }
+                return null === $dischargeDate || $dischargeDate >= $today;
+            },
         );
 
         if ($boards->isEmpty()) {
@@ -748,7 +698,7 @@ class Member
     /**
      * Convert most relevant items to array.
      *
-     * @return array
+     * @return MemberArrayType
      */
     public function toArray(): array
     {
@@ -771,7 +721,7 @@ class Member
     /**
      * Get all addresses.
      *
-     * @return Collection all addresses
+     * @return Collection<array-key, Address>
      */
     public function getAddresses(): Collection
     {
@@ -789,7 +739,7 @@ class Member
     /**
      * Add multiple addresses.
      *
-     * @param array $addresses
+     * @param Address[] $addresses
      */
     public function addAddresses(array $addresses): void
     {
@@ -800,8 +750,6 @@ class Member
 
     /**
      * Add an address.
-     *
-     * @param Address $address
      */
     public function addAddress(Address $address): void
     {
@@ -812,7 +760,7 @@ class Member
     /**
      * Get mailing list subscriptions.
      *
-     * @return Collection
+     * @return Collection<array-key, MailingList>
      */
     public function getLists(): Collection
     {
@@ -823,8 +771,6 @@ class Member
      * Add a mailing list subscription.
      *
      * Note that this is the owning side.
-     *
-     * @param MailingList $list
      */
     public function addList(MailingList $list): void
     {
@@ -835,7 +781,7 @@ class Member
     /**
      * Add multiple mailing lists.
      *
-     * @param array $lists
+     * @param MailingList[] $lists
      */
     public function addLists(array $lists): void
     {
@@ -854,6 +800,8 @@ class Member
 
     /**
      * Get keyholderships.
+     *
+     * @return Collection<array-key, Keyholder>
      */
     public function getKeyGrantings(): Collection
     {
@@ -872,7 +820,7 @@ class Member
         $today = new DateTime('today');
 
         $keyGrantings = $this->getKeyGrantings()->filter(
-            function (Keyholder $keyholder) use ($today) {
+            static function (Keyholder $keyholder) use ($today) {
                 $withdrawnOn = $keyholder->getWithdrawnDate();
 
                 if (
@@ -883,7 +831,7 @@ class Member
                 }
 
                 return $today <= $keyholder->getExpirationDate();
-            }
+            },
         );
 
         return !$keyGrantings->isEmpty();
@@ -891,8 +839,6 @@ class Member
 
     /**
      * Returns true the member is currently installed as a board member and false otherwise.
-     *
-     * @return bool
      */
     public function isBoardMember(): bool
     {
@@ -907,10 +853,6 @@ class Member
 
     /**
      * Check if this is a current board member.
-     *
-     * @param BoardMember $boardMember
-     *
-     * @return bool
      */
     protected function isCurrentBoard(BoardMember $boardMember): bool
     {
@@ -941,7 +883,7 @@ class Member
 
     public function is18Plus(): bool
     {
-        return (18 <= (new DateTime('now'))->diff($this->getBirth())->y);
+        return 18 <= (new DateTime('now'))->diff($this->getBirth())->y;
     }
 
     public function isExpired(): bool

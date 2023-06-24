@@ -18,12 +18,6 @@ class SignupListQuery
     ) {
     }
 
-    /**
-     * @param int $signupListId
-     * @param int $activityId
-     *
-     * @return SignupListModel|null
-     */
     public function getSignupListByActivity(
         int $signupListId,
         int $activityId,

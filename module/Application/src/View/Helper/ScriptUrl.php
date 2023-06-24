@@ -15,7 +15,7 @@ class ScriptUrl extends AbstractHelper
     /**
      * Array of all urls to make available.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected array $urls = [];
 
@@ -30,8 +30,8 @@ class ScriptUrl extends AbstractHelper
     /**
      * Makes an url route available to the javascript url helper.
      *
-     * @param string $name name of the route
-     * @param array $params list of route parameters to make available
+     * @param string   $name   name of the route
+     * @param string[] $params list of route parameters to make available
      *
      * @return ScriptUrl
      */
@@ -55,8 +55,8 @@ class ScriptUrl extends AbstractHelper
      * Make multiple url routes available to the javascript url helper.
      * Only works with urls which have the same parameters.
      *
-     * @param array $names list of route names
-     * @param array $params list of route parameters to make available
+     * @param string[] $names  list of route names
+     * @param string[] $params list of route parameters to make available
      *
      * @return ScriptUrl
      */
@@ -74,7 +74,7 @@ class ScriptUrl extends AbstractHelper
     /**
      * Returns the list of urls to feed to the javascript url helper.
      *
-     * @return array
+     * @return array<string, string>
      */
     public function getUrls(): array
     {

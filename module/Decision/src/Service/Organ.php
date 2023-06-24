@@ -4,36 +4,44 @@ declare(strict_types=1);
 
 namespace Decision\Service;
 
-use Application\Service\{
-    Email as EmailService,
-    FileStorage as FileStorageService,
-};
+use Application\Service\Email as EmailService;
+use Application\Service\FileStorage as FileStorageService;
 use Decision\Form\OrganInformation as OrganInformationForm;
-use Decision\Mapper\{
-    Member as MemberMapper,
-    Organ as OrganMapper,
-};
-use Decision\Model\{
-    Organ as OrganModel,
-    OrganInformation as OrganInformationModel,
-};
+use Decision\Mapper\Member as MemberMapper;
+use Decision\Mapper\Organ as OrganMapper;
 use Decision\Model\Enums\OrganTypes;
-use Doctrine\ORM\{
-    EntityManager,
-    Exception\ORMException,
-    NonUniqueResultException,
-    NoResultException,
-};
+use Decision\Model\Member as MemberModel;
+use Decision\Model\Organ as OrganModel;
+use Decision\Model\OrganInformation as OrganInformationModel;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Exception\ORMException;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Imagick;
 use ImagickException;
 use Laminas\Mvc\I18n\Translator;
 use User\Permissions\NotAllowedException;
+
+use function array_filter;
+use function array_merge;
+use function count;
+use function getimagesize;
+use function getrandmax;
+use function in_array;
+use function intval;
+use function random_int;
+use function round;
+use function sys_get_temp_dir;
+use function usort;
 
 /**
  * User service.
  */
 class Organ
 {
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
+     */
     public function __construct(
         private readonly AclService $aclService,
         private readonly Translator $translator,
@@ -50,7 +58,7 @@ class Organ
     /**
      * Get organs.
      *
-     * @return array of organs
+     * @return OrganModel[]
      */
     public function getOrgans(): array
     {
@@ -63,10 +71,6 @@ class Organ
 
     /**
      * Get one organ.
-     *
-     * @param int $id
-     *
-     * @return OrganModel|null
      */
     public function getOrgan(int $id): ?OrganModel
     {
@@ -80,13 +84,13 @@ class Organ
     /**
      * Retrieves all organs which the current user is allowed to edit.
      *
-     * @return array
+     * @return OrganModel[]
      */
     public function getEditableOrgans(): array
     {
         if (!$this->aclService->isAllowed('edit', 'organ')) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to edit organ information')
+                $this->translator->translate('You are not allowed to edit organ information'),
             );
         }
 
@@ -106,10 +110,6 @@ class Organ
 
     /**
      * Checks if the current user is allowed to edit the given organ.
-     *
-     * @param OrganModel $organ
-     *
-     * @return bool
      */
     public function canEditOrgan(OrganModel $organ): bool
     {
@@ -134,18 +134,13 @@ class Organ
     /**
      * @param OrganTypes $type either committee, avc or fraternity
      *
-     * @return array
+     * @return OrganModel[]
      */
     public function findActiveOrgansByType(OrganTypes $type): array
     {
         return $this->organMapper->findActive($type);
     }
 
-    /**
-     * @param int $id
-     *
-     * @return OrganModel|null
-     */
     public function findActiveOrganById(int $id): ?OrganModel
     {
         return $this->organMapper->findActiveById($id);
@@ -154,7 +149,7 @@ class Organ
     /**
      * @param OrganTypes $type either committee, avc or fraternity
      *
-     * @return array
+     * @return OrganModel[]
      */
     public function findAbrogatedOrgansByType(OrganTypes $type): array
     {
@@ -164,15 +159,12 @@ class Organ
     /**
      * Finds an organ by its abbreviation.
      *
-     * @param string $abbr
-     * @param OrganTypes|null $type
-     * @param bool $latest  Whether to retrieve the latest occurrence of an organ or not
+     * @see Decision/Mapper/Organ::findByAbbr()
      *
-     * @return OrganModel|null
+     * @param bool $latest Whether to retrieve the latest occurrence of an organ or not
      *
      * @throws NoResultException
      * @throws NonUniqueResultException
-     * @see Decision/Mapper/Organ::findByAbbr()
      */
     public function findOrganByAbbr(
         string $abbr,
@@ -187,12 +179,12 @@ class Organ
     }
 
     /**
-     * @param OrganInformationModel $organInformation
      * @param array $data
      *
-     * @return bool
      * @throws ORMException
      * @throws ImagickException
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function updateOrganInformation(
         OrganInformationModel $organInformation,
@@ -203,12 +195,12 @@ class Organ
         if ($data['cover']['size'] > 0) {
             $coverPath = $this->makeOrganInformationImage(
                 $data['cover']['tmp_name'],
-                $data['coverCropX'],
-                $data['coverCropY'],
-                $data['coverCropWidth'],
-                $data['coverCropHeight'],
+                intval($data['coverCropX']),
+                intval($data['coverCropY']),
+                intval($data['coverCropWidth']),
+                intval($data['coverCropHeight']),
                 $config['cover_width'],
-                $config['cover_height']
+                $config['cover_height'],
             );
 
             $organInformation->setCoverPath($coverPath);
@@ -217,12 +209,12 @@ class Organ
         if ($data['thumbnail']['size'] > 0) {
             $thumbnailPath = $this->makeOrganInformationImage(
                 $data['thumbnail']['tmp_name'],
-                $data['thumbnailCropX'],
-                $data['thumbnailCropY'],
-                $data['thumbnailCropWidth'],
-                $data['thumbnailCropHeight'],
+                intval($data['thumbnailCropX']),
+                intval($data['thumbnailCropY']),
+                intval($data['thumbnailCropWidth']),
+                intval($data['thumbnailCropHeight']),
                 $config['thumbnail_width'],
-                $config['thumbnail_height']
+                $config['thumbnail_height'],
             );
 
             $organInformation->setThumbnailPath($thumbnailPath);
@@ -247,23 +239,24 @@ class Organ
     /**
      * Create a thumbnail of the given file at the given location and scale.
      *
-     * @param string $file The file to create the thumbnail of
-     * @param string $x The start x position in the image
-     * @param string $y The start y position in the image
-     * @param string $width The width of the area to crop
-     * @param string $height The height of the are to crop
-     * @param int $thumbWidth The width of the final thumbnail
-     * @param int $thumbHeight The height of the final thumbnail
+     * @param string $file        The file to create the thumbnail of
+     * @param int    $x           The start x position in the image
+     * @param int    $y           The start y position in the image
+     * @param int    $width       The width of the area to crop
+     * @param int    $height      The height of the are to crop
+     * @param int    $thumbWidth  The width of the final thumbnail
+     * @param int    $thumbHeight The height of the final thumbnail
      *
      * @return string path of where the thumbnail is stored
+     *
      * @throws ImagickException
      */
     public function makeOrganInformationImage(
         string $file,
-        string $x,
-        string $y,
-        string $width,
-        string $height,
+        int $x,
+        int $y,
+        int $width,
+        int $height,
         int $thumbWidth,
         int $thumbHeight,
     ): string {
@@ -286,8 +279,6 @@ class Organ
     }
 
     /**
-     * @param OrganInformationModel $organInformation
-     *
      * @throws ORMException
      */
     public function approveOrganInformation(OrganInformationModel $organInformation): void
@@ -306,17 +297,12 @@ class Organ
 
     /**
      * Get the OrganInformation form.
-     *
-     *
-     * @param OrganInformationModel $organInformation
-     *
-     * @return OrganInformationForm
      */
     public function getOrganInformationForm(OrganInformationModel $organInformation): OrganInformationForm
     {
         if (!$this->canEditOrgan($organInformation->getOrgan())) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to edit this organ\'s information')
+                $this->translator->translate('You are not allowed to edit this organ\'s information'),
             );
         }
 
@@ -327,10 +313,6 @@ class Organ
     }
 
     /**
-     * @param int $organId
-     *
-     * @return OrganInformationModel|bool
-     *
      * @throws ORMException
      */
     public function getEditableOrganInformation(int $organId): OrganInformationModel|bool
@@ -376,9 +358,14 @@ class Organ
     /**
      * Returns a list of an organ's current and previous members including their function.
      *
-     * @param OrganModel $organ
-     *
-     * @return array
+     * @return array{
+     *     activeMembers: array<int, array{
+     *         member: MemberModel,
+     *         functions: string[],
+     *     }>,
+     *     inactiveMembers: array<int, MemberModel>,
+     *     oldMembers: array<int, MemberModel>,
+     * }
      */
     public function getOrganMemberInformation(OrganModel $organ): array
     {
@@ -415,14 +402,14 @@ class Organ
             }
         }
 
-        $oldMembers = array_filter($oldMembers, function ($member) use ($activeMembers, $inactiveMembers) {
+        $oldMembers = array_filter($oldMembers, static function ($member) use ($activeMembers, $inactiveMembers) {
             return !isset($activeMembers[$member->getLidnr()])
                 && !isset($inactiveMembers[$member->getLidnr()]);
         });
 
         // Sort members by function
-        usort($activeMembers, function ($a, $b) {
-            if ($a['functions'] == $b['functions']) {
+        usort($activeMembers, static function ($a, $b) {
+            if ($a['functions'] === $b['functions']) {
                 return 0;
             }
 

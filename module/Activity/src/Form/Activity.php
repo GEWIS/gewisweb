@@ -4,26 +4,25 @@ declare(strict_types=1);
 
 namespace Activity\Form;
 
+use Activity\Model\ActivityCategory as ActivityCategoryModel;
 use Application\Form\Localisable as LocalisableForm;
+use Company\Model\Company as CompanyModel;
 use DateTime;
+use Decision\Model\Organ as OrganModel;
 use DomainException;
-use Exception;
-use Laminas\Form\Element\{
-    Checkbox,
-    Collection,
-    DateTimeLocal,
-    MultiCheckbox,
-    Select,
-    Submit,
-    Text,
-    Textarea,
-};
+use Laminas\Form\Element\Checkbox;
+use Laminas\Form\Element\Collection;
+use Laminas\Form\Element\DateTimeLocal;
+use Laminas\Form\Element\MultiCheckbox;
+use Laminas\Form\Element\Select;
+use Laminas\Form\Element\Submit;
+use Laminas\Form\Element\Text;
+use Laminas\Form\Element\Textarea;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Validator\{
-    Callback,
-    NotEmpty,
-};
+use Laminas\Validator\Callback;
+use Laminas\Validator\NotEmpty;
+use Throwable;
 
 class Activity extends LocalisableForm implements InputFilterProviderInterface
 {
@@ -43,7 +42,7 @@ class Activity extends LocalisableForm implements InputFilterProviderInterface
                 'options' => [
                     'value_options' => $organOptions,
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -53,7 +52,7 @@ class Activity extends LocalisableForm implements InputFilterProviderInterface
                 'options' => [
                     'value_options' => $companyOptions,
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -63,7 +62,7 @@ class Activity extends LocalisableForm implements InputFilterProviderInterface
                 'options' => [
                     'format' => 'Y-m-d\TH:i',
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -73,62 +72,62 @@ class Activity extends LocalisableForm implements InputFilterProviderInterface
                 'options' => [
                     'format' => 'Y-m-d\TH:i',
                 ],
-            ]
+            ],
         );
 
         $this->add(
             [
                 'name' => 'name',
                 'type' => Text::class,
-            ]
+            ],
         );
 
         $this->add(
             [
                 'name' => 'nameEn',
                 'type' => Text::class,
-            ]
+            ],
         );
 
         $this->add(
             [
                 'name' => 'location',
                 'type' => Text::class,
-            ]
+            ],
         );
 
         $this->add(
             [
                 'name' => 'locationEn',
                 'type' => Text::class,
-            ]
+            ],
         );
 
         $this->add(
             [
                 'name' => 'costs',
                 'type' => Text::class,
-            ]
+            ],
         );
         $this->add(
             [
                 'name' => 'costsEn',
                 'type' => Text::class,
-            ]
+            ],
         );
 
         $this->add(
             [
                 'name' => 'description',
                 'type' => Textarea::class,
-            ]
+            ],
         );
 
         $this->add(
             [
                 'name' => 'descriptionEn',
                 'type' => Textarea::class,
-            ]
+            ],
         );
 
         $this->add(
@@ -139,7 +138,7 @@ class Activity extends LocalisableForm implements InputFilterProviderInterface
                     'checked_value' => '1',
                     'unchecked_value' => '0',
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -150,7 +149,7 @@ class Activity extends LocalisableForm implements InputFilterProviderInterface
                     'checked_value' => '1',
                     'unchecked_value' => '0',
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -160,7 +159,7 @@ class Activity extends LocalisableForm implements InputFilterProviderInterface
                 'options' => [
                     'value_options' => [],
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -174,7 +173,7 @@ class Activity extends LocalisableForm implements InputFilterProviderInterface
                     'allow_add' => true,
                     'target_element' => new SignupList($translator),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -184,14 +183,14 @@ class Activity extends LocalisableForm implements InputFilterProviderInterface
                 'attributes' => [
                     'value' => 'Create',
                 ],
-            ]
+            ],
         );
     }
 
     /**
-     * @param array $organs
-     * @param array $companies
-     * @param array $categories
+     * @param OrganModel[]            $organs
+     * @param CompanyModel[]          $companies
+     * @param ActivityCategoryModel[] $categories
      *
      * @return Activity
      */
@@ -227,10 +226,7 @@ class Activity extends LocalisableForm implements InputFilterProviderInterface
     /**
      * Check if a certain date is before the end date of the activity.
      *
-     * @param string $value
-     * @param array $context
-     *
-     * @return bool
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public static function beforeEndTime(
         string $value,
@@ -240,7 +236,7 @@ class Activity extends LocalisableForm implements InputFilterProviderInterface
             $endTime = isset($context['endTime']) ? new DateTime($context['endTime']) : new DateTime('now');
 
             return new DateTime($value) <= $endTime;
-        } catch (Exception) {
+        } catch (Throwable) {
             // An exception is an indication that one of the times was not valid
             return false;
         }
@@ -249,10 +245,7 @@ class Activity extends LocalisableForm implements InputFilterProviderInterface
     /**
      * Checks if a certain date is before the begin date of the activity.
      *
-     * @param string $value
-     * @param array $context
-     *
-     * @return bool
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public static function beforeBeginTime(
         string $value,
@@ -262,7 +255,7 @@ class Activity extends LocalisableForm implements InputFilterProviderInterface
             $beginTime = isset($context['beginTime']) ? new DateTime($context['beginTime']) : new DateTime('now');
 
             return new DateTime($value) <= $beginTime;
-        } catch (Exception) {
+        } catch (Throwable) {
             // An exception is an indication that one of the DateTimes was not valid
             return false;
         }
@@ -270,8 +263,6 @@ class Activity extends LocalisableForm implements InputFilterProviderInterface
 
     /**
      * Validate the form.
-     *
-     * @return bool
      *
      * @throws DomainException
      */
@@ -334,28 +325,32 @@ class Activity extends LocalisableForm implements InputFilterProviderInterface
                     }
 
                     // Check the English name of the SignupField and the "Options" option.
-                    if ($this->data['language_english']) {
-                        if (!(new NotEmpty())->isValid($field->get('nameEn')->getValue())) {
-                            $field->get('nameEn')->setMessages(
-                                [
-                                    $this->getTranslator()->translate('Value is required and can\'t be empty'),
-                                ],
-                            );
-                            $valid = false;
-                        }
-
-                        if (
-                            '3' === $field->get('type')->getValue()
-                            && !(new NotEmpty())->isValid($field->get('optionsEn')->getValue())
-                        ) {
-                            $field->get('optionsEn')->setMessages(
-                                [
-                                    $this->getTranslator()->translate('Value is required and can\'t be empty'),
-                                ],
-                            );
-                            $valid = false;
-                        }
+                    if (!$this->data['language_english']) {
+                        continue;
                     }
+
+                    if (!(new NotEmpty())->isValid($field->get('nameEn')->getValue())) {
+                        $field->get('nameEn')->setMessages(
+                            [
+                                $this->getTranslator()->translate('Value is required and can\'t be empty'),
+                            ],
+                        );
+                        $valid = false;
+                    }
+
+                    if (
+                        '3' !== $field->get('type')->getValue()
+                        || (new NotEmpty())->isValid($field->get('optionsEn')->getValue())
+                    ) {
+                        continue;
+                    }
+
+                    $field->get('optionsEn')->setMessages(
+                        [
+                            $this->getTranslator()->translate('Value is required and can\'t be empty'),
+                        ],
+                    );
+                    $valid = false;
                 }
             }
         }
@@ -364,18 +359,22 @@ class Activity extends LocalisableForm implements InputFilterProviderInterface
         // in the fieldset itself (there is no context), so do it here.
         foreach ($this->get('signupLists')->getFieldSets() as $signupList) {
             if (
-                !self::beforeBeginTime(
+                self::beforeBeginTime(
                     $signupList->get('closeDate')->getValue(),
                     ['beginTime' => $this->get('beginTime')->getValue()],
                 )
             ) {
-                $signupList->get('closeDate')->setMessages(
-                    [
-                        $this->getTranslator()->translate('The sign-up list closing date and time must be before the activity starts.'),
-                    ],
-                );
-                $valid = false;
+                continue;
             }
+
+            $signupList->get('closeDate')->setMessages(
+                [
+                    $this->getTranslator()->translate(
+                        'The sign-up list closing date and time must be before the activity starts.',
+                    ),
+                ],
+            );
+            $valid = false;
         }
 
         $this->isValid = $valid;
@@ -406,7 +405,9 @@ class Activity extends LocalisableForm implements InputFilterProviderInterface
                         'name' => Callback::class,
                         'options' => [
                             'messages' => [
-                                Callback::INVALID_VALUE => $this->getTranslator()->translate('The activity must start before it ends.'),
+                                Callback::INVALID_VALUE => $this->getTranslator()->translate(
+                                    'The activity must start before it ends.',
+                                ),
                             ],
                             'callback' => [$this, 'beforeEndTime'],
                         ],

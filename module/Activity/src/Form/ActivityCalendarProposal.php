@@ -5,20 +5,18 @@ declare(strict_types=1);
 namespace Activity\Form;
 
 use Activity\Service\ActivityCalendarForm as ActivityCalendarFormService;
-use Laminas\Form\Element\{
-    Collection,
-    Select,
-    Text,
-};
+use Laminas\Form\Element\Collection;
+use Laminas\Form\Element\Select;
+use Laminas\Form\Element\Text;
 use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Validator\{
-    Callback,
-    NotEmpty,
-    StringLength,
-};
+use Laminas\Validator\Callback;
+use Laminas\Validator\NotEmpty;
+use Laminas\Validator\StringLength;
 use User\Permissions\NotAllowedException;
+
+use function count;
 
 class ActivityCalendarProposal extends Form implements InputFilterProviderInterface
 {
@@ -68,7 +66,7 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
                     ],
                     'value_options' => $periodOptions,
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -83,21 +81,21 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
                     ],
                     'value_options' => $organOptions,
                 ],
-            ]
+            ],
         );
 
         $this->add(
             [
                 'name' => 'name',
                 'type' => Text::class,
-            ]
+            ],
         );
 
         $this->add(
             [
                 'name' => 'description',
                 'type' => Text::class,
-            ]
+            ],
         );
 
         $this->add(
@@ -113,14 +111,12 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
                         $this->calendarFormService,
                     ),
                 ],
-            ]
+            ],
         );
     }
 
     /**
      * Validate the form.
-     *
-     * @return bool
      */
     public function isValid(): bool
     {
@@ -134,47 +130,53 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
                 $valid = false;
             }
 
-            if (null !== ($period = $this->data['period'] ?? null)) {
-                $period = (int) $period;
-
-                $missingDate = false;
-                if (!(new NotEmpty())->isValid($option->get('beginTime')->getValue())) {
-                    $option->get('beginTime')->setMessages([
-                        $this->translator->translate('Value is required and can\'t be empty'),
-                    ]);
-                    $valid = false;
-                    $missingDate = true;
-                }
-
-                if (!(new NotEmpty())->isValid($option->get('endTime')->getValue())) {
-                    $option->get('endTime')->setMessages([
-                        $this->translator->translate('Value is required and can\'t be empty'),
-                    ]);
-                    $valid = false;
-                    $missingDate = true;
-                }
-
-                if (!$missingDate) {
-                    $beginTime = $this->calendarFormService->toDateTime($option->get('beginTime')->getValue());
-                    $endTime = $this->calendarFormService->toDateTime($option->get('endTime')->getValue());
-
-                    if ($endTime < $beginTime) {
-                        $option->get('endTime')->setMessages([
-                            $this->translator->translate('Option should end after it starts.'),
-                        ]);
-                        $valid = false;
-                    }
-
-                    if (!$this->calendarFormService->canCreateOptionInPeriod($period, $beginTime, $endTime)) {
-                        $option->get('beginTime')->setMessages([
-                            $this->translator->translate(
-                                'Option does not fall within option period (also check the end date).'
-                            ),
-                        ]);
-                        $valid = false;
-                    }
-                }
+            if (!(null !== ($period = $this->data['period'] ?? null))) {
+                continue;
             }
+
+            $period = (int) $period;
+
+            $missingDate = false;
+            if (!(new NotEmpty())->isValid($option->get('beginTime')->getValue())) {
+                $option->get('beginTime')->setMessages([
+                    $this->translator->translate('Value is required and can\'t be empty'),
+                ]);
+                $valid = false;
+                $missingDate = true;
+            }
+
+            if (!(new NotEmpty())->isValid($option->get('endTime')->getValue())) {
+                $option->get('endTime')->setMessages([
+                    $this->translator->translate('Value is required and can\'t be empty'),
+                ]);
+                $valid = false;
+                $missingDate = true;
+            }
+
+            if ($missingDate) {
+                continue;
+            }
+
+            $beginTime = $this->calendarFormService->toDateTime($option->get('beginTime')->getValue());
+            $endTime = $this->calendarFormService->toDateTime($option->get('endTime')->getValue());
+
+            if ($endTime < $beginTime) {
+                $option->get('endTime')->setMessages([
+                    $this->translator->translate('Option should end after it starts.'),
+                ]);
+                $valid = false;
+            }
+
+            if ($this->calendarFormService->canCreateOptionInPeriod($period, $beginTime, $endTime)) {
+                continue;
+            }
+
+            $option->get('beginTime')->setMessages([
+                $this->translator->translate(
+                    'Option does not fall within option period (also check the end date).',
+                ),
+            ]);
+            $valid = false;
         }
 
         return $valid;
@@ -218,8 +220,8 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
                                     'The activity does now have an acceptable amount of options',
                                 ),
                             ],
-                            'callback' => function ($value, $context = []) {
-                                return $this->isGoodOptionCount($value, $context);
+                            'callback' => function ($value) {
+                                return $this->isGoodOptionCount($value);
                             },
                         ],
                     ],
@@ -231,22 +233,10 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
     /**
      * Check if the amount of options is acceptable.
      *
-     * @param array $value
-     * @param array $context
-     *
-     * @return bool
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
-    public function isGoodOptionCount(
-        array $value,
-        array $context = [],
-    ): bool {
-        if (
-            count($value) < 1
-            || count($value) > $this->maxOptions
-        ) {
-            return false;
-        }
-
-        return true;
+    public function isGoodOptionCount(array $value): bool
+    {
+        return count($value) >= 1 && count($value) <= $this->maxOptions;
     }
 }

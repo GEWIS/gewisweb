@@ -6,20 +6,21 @@ namespace ApplicationTest\Mapper;
 
 use Application\Mapper\BaseMapper;
 use ApplicationTest\TestConfigProvider;
-use Doctrine\ORM\{
-    EntityManager,
-    EntityNotFoundException,
-};
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityNotFoundException;
 use Laminas\Mvc\Application;
 use Laminas\Mvc\Service\ServiceManagerConfig;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Stdlib\Exception\LogicException;
-use Laminas\Test\PHPUnit\Controller\AbstractControllerTestCase;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
+use function array_merge;
+use function array_unique;
+
 abstract class BaseMapperTest extends TestCase
 {
+    /** @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingTraversableTypeHintSpecification */
     protected array $applicationConfig;
     protected ?Application $application = null;
     protected ServiceManager $serviceManager;
@@ -65,12 +66,14 @@ abstract class BaseMapperTest extends TestCase
     /**
      * Mocks the behaviour of {@link AbstractControllerTestCase}, is required to allow ORM/DBAL to correctly obtain all
      * metadata from the entity/model classes.
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     private function setApplicationConfig(array $applicationConfig): void
     {
         if (null !== $this->application) {
             throw new LogicException(
-                'Application config can not be set, the application is already built'
+                'Application config can not be set, the application is already built',
             );
         }
 
@@ -84,6 +87,8 @@ abstract class BaseMapperTest extends TestCase
 
     /**
      * Variation of {@link Application::init} but without initial bootstrapping.
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     private static function initServiceManager(array $configuration = []): ServiceManager
     {
@@ -105,6 +110,9 @@ abstract class BaseMapperTest extends TestCase
     {
     }
 
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
+     */
     private function bootstrapApplication(
         ServiceManager $serviceManager,
         array $configuration = [],
@@ -115,6 +123,7 @@ abstract class BaseMapperTest extends TestCase
         $listenersFromConfigService = $config['listeners'] ?? [];
 
         $listeners = array_unique(array_merge($listenersFromConfigService, $listenersFromAppConfig));
+
         return $serviceManager->get('Application')->bootstrap($listeners);
     }
 
@@ -192,7 +201,7 @@ abstract class BaseMapperTest extends TestCase
             $this->mapper->removeById($id);
             $this->expectNotToPerformAssertions();
         } catch (RuntimeException $e) {
-            if ($e->getMessage() !== 'Not implemented') {
+            if ('Not implemented' !== $e->getMessage()) {
                 $this->addWarning($e->getMessage());
                 $this->addWarning($e->getTraceAsString());
                 $this->fail('testRemoveById threw an unexpected exception.');

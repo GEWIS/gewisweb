@@ -5,18 +5,14 @@ declare(strict_types=1);
 namespace Frontpage\Controller\Factory;
 
 use Frontpage\Controller\PollAdminController;
-use Psr\Container\ContainerInterface;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Psr\Container\ContainerInterface;
 
 class PollAdminControllerFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param string $requestedName
-     * @param array|null $options
-     *
-     * @return PollAdminController
      */
     public function __invoke(
         ContainerInterface $container,

@@ -4,25 +4,16 @@ declare(strict_types=1);
 
 namespace User\Form;
 
-use Laminas\Authentication\Result;
-use Laminas\Form\Element\{
-    Csrf,
-    Email,
-    Hidden,
-    Password,
-    Submit,
-};
 use Laminas\Filter\StringTrim;
+use Laminas\Form\Element\Csrf;
+use Laminas\Form\Element\Email;
+use Laminas\Form\Element\Submit;
 use Laminas\Form\Form;
-use Laminas\InputFilter\InputProviderInterface;
+use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Validator\{
-    EmailAddress,
-    NotEmpty,
-    StringLength,
-};
+use Laminas\Validator\EmailAddress;
 
-class CompanyUserReset extends Form implements InputProviderInterface
+class CompanyUserReset extends Form implements InputFilterProviderInterface
 {
     public function __construct(private readonly Translator $translate)
     {
@@ -35,7 +26,7 @@ class CompanyUserReset extends Form implements InputProviderInterface
                 'options' => [
                     'label' => $translate->translate('Email address'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -45,21 +36,21 @@ class CompanyUserReset extends Form implements InputProviderInterface
                 'attributes' => [
                     'value' => $translate->translate('Request password reset'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
             [
                 'name' => 'security',
                 'type' => Csrf::class,
-            ]
+            ],
         );
     }
 
     /**
      * @return array
      */
-    public function getInputSpecification(): array
+    public function getInputFilterSpecification(): array
     {
         return [
             'email' => [
@@ -70,7 +61,7 @@ class CompanyUserReset extends Form implements InputProviderInterface
                         'options' => [
                             'messages' => [
                                 'emailAddressInvalidFormat' => $this->translate->translate(
-                                    'E-mail address format is not valid'
+                                    'E-mail address format is not valid',
                                 ),
                             ],
                         ],

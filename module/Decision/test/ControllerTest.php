@@ -30,6 +30,9 @@ class ControllerTest extends BaseControllerTest
         $this->assertResponseStatusCode(200);
     }
 
+    /**
+     * @psalm-suppress UnevaluatedCode
+     */
     public function testMemberSearchQueryActionCanBeAccessedAsUser(): void
     {
         $this->markTestSkipped('CONCAT_WS is not supported by the SQLite driver');
@@ -44,7 +47,7 @@ class ControllerTest extends BaseControllerTest
         $this->dispatch(
             '/decision/search',
             'POST',
-            ['query' => 'web']
+            ['query' => 'web'],
         );
         $this->assertResponseStatusCode(200);
     }

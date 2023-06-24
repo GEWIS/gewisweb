@@ -97,7 +97,7 @@
         "psalm/plugin-phpunit": "^0.18.0",
         "maglnet/composer-require-checker": "^4.3.0",
         "icanhazstring/composer-unused": "^0.8.2",
-        "slevomat/coding-standard": "^8.9"
+        "gewis/gewisphp-coding-standards": "^1.0"
     },
     "replace": {
         "laminas/laminas-cache-storage-adapter-apc": "*",
@@ -141,6 +141,12 @@
             "SlowProg\\CopyFile\\ScriptHandler::copy"
         ]
     },
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/GEWIS/gewisphp-coding-standards.git"
+        }
+    ],
     "extra": {
         "copy-file": {
             "vendor/fortawesome/font-awesome/scss/": "public/scss/fontawesome/",

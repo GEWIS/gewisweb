@@ -4,32 +4,28 @@ declare(strict_types=1);
 
 namespace Company\Model;
 
-use Application\Model\Traits\{
-    ApprovableTrait,
-    IdentifiableTrait,
-    TimestampableTrait,
-    UpdateProposableTrait,
-};
+use Application\Model\Traits\ApprovableTrait;
+use Application\Model\Traits\IdentifiableTrait;
+use Application\Model\Traits\TimestampableTrait;
+use Application\Model\Traits\UpdateProposableTrait;
 use Company\Model\Proposals\JobUpdate as JobUpdateProposalModel;
-use Doctrine\Common\Collections\{
-    ArrayCollection,
-    Collection,
-};
-use Doctrine\ORM\Mapping\{
-    Column,
-    Entity,
-    HasLifecycleCallbacks,
-    JoinColumn,
-    JoinTable,
-    ManyToMany,
-    ManyToOne,
-    OneToMany,
-    OneToOne,
-};
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\OneToOne;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 /**
  * Job model.
+ *
+ * @psalm-import-type JobLabelArrayType from JobLabel as ImportedJobLabelArrayType
  */
 #[Entity]
 #[HasLifecycleCallbacks]
@@ -43,20 +39,20 @@ class Job implements ResourceInterface
     /**
      * The job's slug name.
      */
-    #[Column(type: "string")]
+    #[Column(type: 'string')]
     protected string $slugName;
 
     /**
      * The job's status.
      */
-    #[Column(type: "boolean")]
+    #[Column(type: 'boolean')]
     protected bool $published;
 
     /**
      * The job's contact's name.
      */
     #[Column(
-        type: "string",
+        type: 'string',
         nullable: true,
     )]
     protected ?string $contactName;
@@ -65,7 +61,7 @@ class Job implements ResourceInterface
      * The job's phone.
      */
     #[Column(
-        type: "string",
+        type: 'string',
         nullable: true,
     )]
     protected ?string $contactPhone;
@@ -74,7 +70,7 @@ class Job implements ResourceInterface
      * The job's email.
      */
     #[Column(
-        type: "string",
+        type: 'string',
         nullable: true,
     )]
     protected ?string $contactEmail;
@@ -84,12 +80,12 @@ class Job implements ResourceInterface
      */
     #[OneToOne(
         targetEntity: CompanyLocalisedText::class,
-        cascade: ["persist", "remove"],
+        cascade: ['persist', 'remove'],
         orphanRemoval: true,
     )]
     #[JoinColumn(
-        name: "name_id",
-        referencedColumnName: "id",
+        name: 'name_id',
+        referencedColumnName: 'id',
         nullable: false,
     )]
     protected CompanyLocalisedText $name;
@@ -99,12 +95,12 @@ class Job implements ResourceInterface
      */
     #[OneToOne(
         targetEntity: CompanyLocalisedText::class,
-        cascade: ["persist", "remove"],
+        cascade: ['persist', 'remove'],
         orphanRemoval: true,
     )]
     #[JoinColumn(
-        name: "location_id",
-        referencedColumnName: "id",
+        name: 'location_id',
+        referencedColumnName: 'id',
         nullable: false,
     )]
     protected CompanyLocalisedText $location;
@@ -114,12 +110,12 @@ class Job implements ResourceInterface
      */
     #[OneToOne(
         targetEntity: CompanyLocalisedText::class,
-        cascade: ["persist", "remove"],
+        cascade: ['persist', 'remove'],
         orphanRemoval: true,
     )]
     #[JoinColumn(
-        name: "website_id",
-        referencedColumnName: "id",
+        name: 'website_id',
+        referencedColumnName: 'id',
         nullable: false,
     )]
     protected CompanyLocalisedText $website;
@@ -129,12 +125,12 @@ class Job implements ResourceInterface
      */
     #[OneToOne(
         targetEntity: CompanyLocalisedText::class,
-        cascade: ["persist", "remove"],
+        cascade: ['persist', 'remove'],
         orphanRemoval: true,
     )]
     #[JoinColumn(
-        name: "description_id",
-        referencedColumnName: "id",
+        name: 'description_id',
+        referencedColumnName: 'id',
         nullable: false,
     )]
     protected CompanyLocalisedText $description;
@@ -144,12 +140,12 @@ class Job implements ResourceInterface
      */
     #[OneToOne(
         targetEntity: CompanyLocalisedText::class,
-        cascade: ["persist", "remove"],
+        cascade: ['persist', 'remove'],
         orphanRemoval: true,
     )]
     #[JoinColumn(
-        name: "attachment_id",
-        referencedColumnName: "id",
+        name: 'attachment_id',
+        referencedColumnName: 'id',
         nullable: false,
     )]
     protected CompanyLocalisedText $attachment;
@@ -159,11 +155,11 @@ class Job implements ResourceInterface
      */
     #[ManyToOne(
         targetEntity: CompanyJobPackage::class,
-        inversedBy: "jobs",
+        inversedBy: 'jobs',
     )]
     #[JoinColumn(
-        name: "package_id",
-        referencedColumnName: "id",
+        name: 'package_id',
+        referencedColumnName: 'id',
         nullable: false,
     )]
     protected CompanyJobPackage $package;
@@ -173,38 +169,39 @@ class Job implements ResourceInterface
      */
     #[ManyToOne(targetEntity: JobCategory::class)]
     #[JoinColumn(
-        name: "category_id",
-        referencedColumnName: "id",
+        name: 'category_id',
+        referencedColumnName: 'id',
         nullable: false,
     )]
     protected JobCategory $category;
 
     /**
      * Job labels.
+     *
+     * @var Collection<array-key, JobLabel>
      */
     #[ManyToMany(
         targetEntity: JobLabel::class,
-        inversedBy: "jobs",
-        cascade: ["persist"],
+        inversedBy: 'jobs',
+        cascade: ['persist'],
     )]
-    #[JoinTable(name: "JobLabelAssignment")]
+    #[JoinTable(name: 'JobLabelAssignment')]
     protected Collection $labels;
 
     /**
      * Proposed updates to this job.
+     *
+     * @var Collection<array-key, JobUpdateProposalModel>
      */
     #[OneToMany(
         targetEntity: JobUpdateProposalModel::class,
-        mappedBy: "original",
-        cascade: ["persist", "remove"],
+        mappedBy: 'original',
+        cascade: ['persist', 'remove'],
         orphanRemoval: true,
-        fetch: "EXTRA_LAZY",
+        fetch: 'EXTRA_LAZY',
     )]
     protected Collection $updateProposals;
 
-    /**
-     * Constructor.
-     */
     public function __construct()
     {
         $this->labels = new ArrayCollection();
@@ -213,8 +210,6 @@ class Job implements ResourceInterface
 
     /**
      * Get the job's name.
-     *
-     * @return CompanyLocalisedText
      */
     public function getName(): CompanyLocalisedText
     {
@@ -223,8 +218,6 @@ class Job implements ResourceInterface
 
     /**
      * Set the job's name.
-     *
-     * @param CompanyLocalisedText $name
      */
     public function setName(CompanyLocalisedText $name): void
     {
@@ -233,8 +226,6 @@ class Job implements ResourceInterface
 
     /**
      * Get the job's category.
-     *
-     * @return JobCategory
      */
     public function getCategory(): JobCategory
     {
@@ -243,8 +234,6 @@ class Job implements ResourceInterface
 
     /**
      * Set the job's category.
-     *
-     * @param JobCategory $category
      */
     public function setCategory(JobCategory $category): void
     {
@@ -263,8 +252,6 @@ class Job implements ResourceInterface
 
     /**
      * Set the job's slug name.
-     *
-     * @param string $name
      */
     public function setSlugName(string $name): void
     {
@@ -273,8 +260,6 @@ class Job implements ResourceInterface
 
     /**
      * Get the job's status.
-     *
-     * @return bool
      */
     public function isPublished(): bool
     {
@@ -292,8 +277,6 @@ class Job implements ResourceInterface
 
     /**
      * Set the job's status.
-     *
-     * @param bool $published
      */
     public function setPublished(bool $published): void
     {
@@ -302,8 +285,6 @@ class Job implements ResourceInterface
 
     /**
      * Get the job's website.
-     *
-     * @return CompanyLocalisedText
      */
     public function getWebsite(): CompanyLocalisedText
     {
@@ -312,8 +293,6 @@ class Job implements ResourceInterface
 
     /**
      * Set the job's website.
-     *
-     * @param CompanyLocalisedText $website
      */
     public function setWebsite(CompanyLocalisedText $website): void
     {
@@ -322,8 +301,6 @@ class Job implements ResourceInterface
 
     /**
      * Get the job's attachment.
-     *
-     * @return CompanyLocalisedText
      */
     public function getAttachment(): CompanyLocalisedText
     {
@@ -332,8 +309,6 @@ class Job implements ResourceInterface
 
     /**
      * Set the job's attachment.
-     *
-     * @param CompanyLocalisedText $attachment
      */
     public function setAttachment(CompanyLocalisedText $attachment): void
     {
@@ -342,8 +317,6 @@ class Job implements ResourceInterface
 
     /**
      * Get the job's contact's name.
-     *
-     * @return string|null
      */
     public function getContactName(): ?string
     {
@@ -352,8 +325,6 @@ class Job implements ResourceInterface
 
     /**
      * Set the job's contact's name.
-     *
-     * @param string|null $name
      */
     public function setContactName(?string $name): void
     {
@@ -362,8 +333,6 @@ class Job implements ResourceInterface
 
     /**
      * Get the job's contact's phone.
-     *
-     * @return string|null
      */
     public function getContactPhone(): ?string
     {
@@ -372,8 +341,6 @@ class Job implements ResourceInterface
 
     /**
      * Set the job's contact's phone.
-     *
-     * @param string|null $contactPhone
      */
     public function setContactPhone(?string $contactPhone): void
     {
@@ -382,8 +349,6 @@ class Job implements ResourceInterface
 
     /**
      * Get the job's contact's email.
-     *
-     * @return string|null
      */
     public function getContactEmail(): ?string
     {
@@ -392,8 +357,6 @@ class Job implements ResourceInterface
 
     /**
      * Set the job's contact's email.
-     *
-     * @param string|null $contactEmail
      */
     public function setContactEmail(?string $contactEmail): void
     {
@@ -402,8 +365,6 @@ class Job implements ResourceInterface
 
     /**
      * Get the job's description.
-     *
-     * @return CompanyLocalisedText
      */
     public function getDescription(): CompanyLocalisedText
     {
@@ -412,8 +373,6 @@ class Job implements ResourceInterface
 
     /**
      * Set the job's description.
-     *
-     * @param CompanyLocalisedText $description
      */
     public function setDescription(CompanyLocalisedText $description): void
     {
@@ -422,8 +381,6 @@ class Job implements ResourceInterface
 
     /**
      * Get the job's package.
-     *
-     * @return CompanyJobPackage
      */
     public function getPackage(): CompanyJobPackage
     {
@@ -432,8 +389,6 @@ class Job implements ResourceInterface
 
     /**
      * Get the job's company.
-     *
-     * @return Company
      */
     public function getCompany(): Company
     {
@@ -443,7 +398,7 @@ class Job implements ResourceInterface
     /**
      * Get the labels. Returns an array of JobLabelAssignments.
      *
-     * @psalm-return Collection<int, JobLabel>
+     * @return Collection<array-key, JobLabel>
      */
     public function getLabels(): Collection
     {
@@ -451,7 +406,7 @@ class Job implements ResourceInterface
     }
 
     /**
-     * @param array $labels
+     * @param JobLabel[] $labels
      */
     public function addLabels(array $labels): void
     {
@@ -460,9 +415,6 @@ class Job implements ResourceInterface
         }
     }
 
-    /**
-     * @param JobLabel $label
-     */
     public function addLabel(JobLabel $label): void
     {
         if ($this->labels->contains($label)) {
@@ -474,7 +426,7 @@ class Job implements ResourceInterface
     }
 
     /**
-     * @param array $labels
+     * @param JobLabel[] $labels
      */
     public function removeLabels(array $labels): void
     {
@@ -483,9 +435,6 @@ class Job implements ResourceInterface
         }
     }
 
-    /**
-     * @param JobLabel $label
-     */
     public function removeLabel(JobLabel $label): void
     {
         if (!$this->labels->contains($label)) {
@@ -496,9 +445,6 @@ class Job implements ResourceInterface
         $label->removeJob($this);
     }
 
-    /**
-     * @param CompanyJobPackage $package
-     */
     public function setPackage(CompanyJobPackage $package): void
     {
         $this->package = $package;
@@ -510,8 +456,6 @@ class Job implements ResourceInterface
      * The location property specifies for which location (i.e. city or country)
      * this job is intended. This location may not be equal to the company's
      * address.
-     *
-     * @return CompanyLocalisedText
      */
     public function getLocation(): CompanyLocalisedText
     {
@@ -520,8 +464,6 @@ class Job implements ResourceInterface
 
     /**
      * Sets the job's location.
-     *
-     * @param CompanyLocalisedText $location
      */
     public function setLocation(CompanyLocalisedText $location): void
     {
@@ -529,7 +471,7 @@ class Job implements ResourceInterface
     }
 
     /**
-     * @psalm-return Collection<int, JobUpdateProposalModel>
+     * @return Collection<array-key, JobUpdateProposalModel>
      */
     public function getUpdateProposals(): Collection
     {
@@ -537,7 +479,25 @@ class Job implements ResourceInterface
     }
 
     /**
-     * @return array
+     * @return array{
+     *     slugName: string,
+     *     category: JobCategory,
+     *     contactName: ?string,
+     *     contactEmail: ?string,
+     *     contactPhone: ?string,
+     *     published: bool,
+     *     name: ?string,
+     *     nameEn: ?string,
+     *     location: ?string,
+     *     locationEn: ?string,
+     *     website: ?string,
+     *     websiteEn: ?string,
+     *     description: ?string,
+     *     descriptionEn: ?string,
+     *     attachment: ?string,
+     *     attachmentEn: ?string,
+     *     labels: ImportedJobLabelArrayType[],
+     * }
      */
     public function toArray(): array
     {
@@ -567,9 +527,6 @@ class Job implements ResourceInterface
         ];
     }
 
-    /**
-     * @return string
-     */
     public function getResourceId(): string
     {
         return 'job';

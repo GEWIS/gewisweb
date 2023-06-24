@@ -7,11 +7,9 @@ namespace User\Mapper;
 use Application\Mapper\BaseMapper;
 use Application\Model\IdentityInterface;
 use DateTime;
-use User\Model\{
-    CompanyUser as CompanyUserModel,
-    LoginAttempt as LoginAttemptModel,
-    User as UserModel,
-};
+use User\Model\CompanyUser as CompanyUserModel;
+use User\Model\LoginAttempt as LoginAttemptModel;
+use User\Model\User as UserModel;
 
 /**
  * @template-extends BaseMapper<LoginAttemptModel>
@@ -42,9 +40,6 @@ class LoginAttempt extends BaseMapper
         return $qb->getQuery()->getSingleScalarResult();
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function getRepositoryName(): string
     {
         return LoginAttemptModel::class;

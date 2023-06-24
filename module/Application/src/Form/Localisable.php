@@ -20,31 +20,33 @@ abstract class Localisable extends Form implements InputFilterProviderInterface
     ) {
         parent::__construct();
 
-        if ($addElements) {
-            $this->add(
-                [
-                    'name' => 'language_dutch',
-                    'type' => Checkbox::class,
-                    'options' => [
-                        'label' => $this->getTranslator()->translate('Enable Dutch Translations'),
-                        'checked_value' => '1',
-                        'unchecked_value' => '0',
-                    ],
-                ]
-            );
-
-            $this->add(
-                [
-                    'name' => 'language_english',
-                    'type' => Checkbox::class,
-                    'options' => [
-                        'label' => $this->getTranslator()->translate('Enable English Translations'),
-                        'checked_value' => '1',
-                        'unchecked_value' => '0',
-                    ],
-                ]
-            );
+        if (!$addElements) {
+            return;
         }
+
+        $this->add(
+            [
+                'name' => 'language_dutch',
+                'type' => Checkbox::class,
+                'options' => [
+                    'label' => $this->getTranslator()->translate('Enable Dutch Translations'),
+                    'checked_value' => '1',
+                    'unchecked_value' => '0',
+                ],
+            ],
+        );
+
+        $this->add(
+            [
+                'name' => 'language_english',
+                'type' => Checkbox::class,
+                'options' => [
+                    'label' => $this->getTranslator()->translate('Enable English Translations'),
+                    'checked_value' => '1',
+                    'unchecked_value' => '0',
+                ],
+            ],
+        );
     }
 
     /**
@@ -98,9 +100,6 @@ abstract class Localisable extends Form implements InputFilterProviderInterface
      */
     abstract protected function createLocalisedInputFilterSpecification(string $suffix = ''): array;
 
-    /**
-     * @return Translator
-     */
     public function getTranslator(): Translator
     {
         return $this->translator;

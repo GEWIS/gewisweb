@@ -7,20 +7,19 @@ namespace Decision\Mapper;
 use Application\Mapper\BaseMapper;
 use DateInterval;
 use DateTime;
-use Decision\Model\{
-    Meeting as MeetingModel,
-    MeetingDocument as MeetingDocumentModel,
-};
 use Decision\Model\Enums\MeetingTypes;
-use Doctrine\ORM\{
-    NonUniqueResultException,
-    NoResultException,
-    Exception\ORMException,
-};
-use InvalidArgumentException;
+use Decision\Model\Meeting as MeetingModel;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
+
+use function is_int;
 
 /**
  * @template-extends BaseMapper<MeetingModel>
+ * @psalm-type MeetingArrayType = array<array-key, array{
+ *     0: MeetingModel,
+ *     1: int,
+ * }>
  */
 class Meeting extends BaseMapper
 {
@@ -29,7 +28,7 @@ class Meeting extends BaseMapper
      *
      * @param int|null $limit The amount of results, default is all
      *
-     * @return array<array-key, MeetingModel>
+     * @return MeetingArrayType
      */
     public function findAllMeetings(?int $limit = null): array
     {
@@ -52,7 +51,7 @@ class Meeting extends BaseMapper
      *
      * @param MeetingTypes $type ALV|BV|VV|Virt
      *
-     * @return array<array-key, MeetingModel>
+     * @return MeetingModel[]
      */
     public function findByType(MeetingTypes $type): array
     {
@@ -68,9 +67,8 @@ class Meeting extends BaseMapper
      * Find all meetings that have taken place.
      *
      * @param int $limit The amount of results
-     * @param MeetingTypes $type
      *
-     * @return array<array-key, MeetingModel> Meetings that have taken place
+     * @return MeetingModel[] Meetings that have taken place
      */
     public function findPast(
         int $limit,
@@ -99,10 +97,6 @@ class Meeting extends BaseMapper
     /**
      * Find a meeting with all decisions.
      *
-     * @param MeetingTypes $type
-     * @param int $number
-     *
-     * @return MeetingModel|null
      * @throws NonUniqueResultException
      */
     public function findMeeting(
@@ -128,9 +122,8 @@ class Meeting extends BaseMapper
     /**
      * Returns the maximum document position for the given meeting.
      *
-     * @param MeetingModel $meeting
-     *
      * @return int|null NULL if no documents are associated to the meeting
+     *
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
@@ -155,7 +148,6 @@ class Meeting extends BaseMapper
      * Note that if multiple ALVs are planned, the one that is planned furthest
      * away is returned.
      *
-     * @return MeetingModel|null
      * @throws NonUniqueResultException
      */
     public function findLatestALV(): ?MeetingModel
@@ -176,7 +168,7 @@ class Meeting extends BaseMapper
     }
 
     /**
-     * @return array<array-key, MeetingModel>
+     * @return MeetingModel[]
      */
     public function findUpcomingAnnouncedMeetings(): array
     {
@@ -196,9 +188,6 @@ class Meeting extends BaseMapper
         return $qb->getQuery()->getResult();
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function getRepositoryName(): string
     {
         return MeetingModel::class;

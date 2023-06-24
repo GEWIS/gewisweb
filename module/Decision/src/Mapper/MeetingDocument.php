@@ -8,6 +8,8 @@ use Application\Mapper\BaseMapper;
 use Decision\Model\MeetingDocument as MeetingDocumentModel;
 use InvalidArgumentException;
 
+use function sprintf;
+
 /**
  * @template-extends BaseMapper<MeetingDocumentModel>
  */
@@ -18,9 +20,7 @@ class MeetingDocument extends BaseMapper
      *
      * @param int $id Document ID
      *
-     * @return MeetingDocumentModel
-     *
-     * @throws InvalidArgumentException If the document does not exist
+     * @throws InvalidArgumentException If the document does not exist.
      */
     public function findDocumentOrFail(int $id): MeetingDocumentModel
     {
@@ -33,9 +33,6 @@ class MeetingDocument extends BaseMapper
         return $document;
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function getRepositoryName(): string
     {
         return MeetingDocumentModel::class;

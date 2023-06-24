@@ -12,12 +12,6 @@ use Application\Mapper\BaseMapper;
  */
 class SignupList extends BaseMapper
 {
-    /**
-     * @param int $signupListId
-     * @param int $activityId
-     *
-     * @return SignupListModel|null
-     */
     public function getSignupListByIdAndActivity(
         int $signupListId,
         int $activityId,
@@ -28,9 +22,6 @@ class SignupList extends BaseMapper
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function getRepositoryName(): string
     {
         return SignupListModel::class;

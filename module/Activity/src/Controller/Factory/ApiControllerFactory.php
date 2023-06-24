@@ -5,17 +5,13 @@ declare(strict_types=1);
 namespace Activity\Controller\Factory;
 
 use Activity\Controller\ApiController;
-use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Psr\Container\ContainerInterface;
 
 class ApiControllerFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param string $requestedName
-     * @param array|null $options
-     *
-     * @return ApiController
      */
     public function __invoke(
         ContainerInterface $container,

@@ -8,20 +8,18 @@ use Application\Model\Traits\IdentifiableTrait;
 use DateTime;
 use Decision\Model\Enums\OrganTypes;
 use Decision\Model\SubDecision\Foundation;
-use Doctrine\Common\Collections\{
-    ArrayCollection,
-    Collection,
-};
-use Doctrine\ORM\Mapping\{
-    Column,
-    Entity,
-    InverseJoinColumn,
-    JoinColumn,
-    JoinTable,
-    ManyToMany,
-    OneToMany,
-    OneToOne,
-};
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\InverseJoinColumn;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\OneToOne;
+
+use function usort;
 
 /**
  * Organ entity.
@@ -36,20 +34,20 @@ class Organ
     /**
      * Abbreviation (only for when organs are created).
      */
-    #[Column(type: "string")]
+    #[Column(type: 'string')]
     protected string $abbr;
 
     /**
      * Name (only for when organs are created).
      */
-    #[Column(type: "string")]
+    #[Column(type: 'string')]
     protected string $name;
 
     /**
      * Type of the organ.
      */
     #[Column(
-        type: "string",
+        type: 'string',
         enumType: OrganTypes::class,
     )]
     protected OrganTypes $type;
@@ -58,99 +56,105 @@ class Organ
      * Reference to foundation of organ.
      */
     #[OneToOne(
-        inversedBy: "organ",
+        inversedBy: 'organ',
         targetEntity: Foundation::class,
     )]
     #[JoinColumn(
-        name: "r_meeting_type",
-        referencedColumnName: "meeting_type",
+        name: 'r_meeting_type',
+        referencedColumnName: 'meeting_type',
     )]
     #[JoinColumn(
-        name: "r_meeting_number",
-        referencedColumnName: "meeting_number",
+        name: 'r_meeting_number',
+        referencedColumnName: 'meeting_number',
     )]
     #[JoinColumn(
-        name: "r_decision_point",
-        referencedColumnName: "decision_point",
+        name: 'r_decision_point',
+        referencedColumnName: 'decision_point',
     )]
     #[JoinColumn(
-        name: "r_decision_number",
-        referencedColumnName: "decision_number",
+        name: 'r_decision_number',
+        referencedColumnName: 'decision_number',
     )]
     #[JoinColumn(
-        name: "r_number",
-        referencedColumnName: "number",
+        name: 'r_number',
+        referencedColumnName: 'number',
     )]
     protected Foundation $foundation;
 
     /**
      * Foundation date.
      */
-    #[Column(type: "date")]
+    #[Column(type: 'date')]
     protected DateTime $foundationDate;
 
     /**
      * Abrogation date.
      */
     #[Column(
-        type: "date",
+        type: 'date',
         nullable: true,
     )]
     protected ?DateTime $abrogationDate = null;
 
     /**
      * Reference to members.
+     *
+     * @var Collection<array-key, OrganMember>
      */
     #[OneToMany(
-        mappedBy: "organ",
+        mappedBy: 'organ',
         targetEntity: OrganMember::class,
     )]
     protected Collection $members;
 
     /**
      * Reference to subdecisions.
+     *
+     * @var Collection<array-key, SubDecision>
      */
     #[ManyToMany(targetEntity: SubDecision::class)]
-    #[JoinTable(name: "organs_subdecisions")]
+    #[JoinTable(name: 'organs_subdecisions')]
     #[JoinColumn(
-        name: "organ_id",
-        referencedColumnName: "id",
+        name: 'organ_id',
+        referencedColumnName: 'id',
         nullable: false,
     )]
     #[InverseJoinColumn(
-        name: "meeting_type",
-        referencedColumnName: "meeting_type",
+        name: 'meeting_type',
+        referencedColumnName: 'meeting_type',
         nullable: false,
     )]
     #[InverseJoinColumn(
-        name: "meeting_number",
-        referencedColumnName: "meeting_number",
+        name: 'meeting_number',
+        referencedColumnName: 'meeting_number',
         nullable: false,
     )]
     #[InverseJoinColumn(
-        name: "decision_point",
-        referencedColumnName: "decision_point",
+        name: 'decision_point',
+        referencedColumnName: 'decision_point',
         nullable: false,
     )]
     #[InverseJoinColumn(
-        name: "decision_number",
-        referencedColumnName: "decision_number",
+        name: 'decision_number',
+        referencedColumnName: 'decision_number',
         nullable: false,
     )]
     #[InverseJoinColumn(
-        name: "subdecision_number",
-        referencedColumnName: "number",
+        name: 'subdecision_number',
+        referencedColumnName: 'number',
         nullable: false,
     )]
     protected Collection $subdecisions;
 
     /**
      * All organInformation for this organ.
+     *
+     * @var Collection<array-key, OrganInformation>
      */
     #[OneToMany(
-        mappedBy: "organ",
+        mappedBy: 'organ',
         targetEntity: OrganInformation::class,
-        cascade: ["persist", "remove"],
+        cascade: ['persist', 'remove'],
     )]
     protected Collection $organInformation;
 
@@ -163,8 +167,6 @@ class Organ
 
     /**
      * Get the abbreviation.
-     *
-     * @return string
      */
     public function getAbbr(): string
     {
@@ -173,8 +175,6 @@ class Organ
 
     /**
      * Set the abbreviation.
-     *
-     * @param string $abbr
      */
     public function setAbbr(string $abbr): void
     {
@@ -183,8 +183,6 @@ class Organ
 
     /**
      * Get the name.
-     *
-     * @return string
      */
     public function getName(): string
     {
@@ -193,8 +191,6 @@ class Organ
 
     /**
      * Set the name.
-     *
-     * @param string $name
      */
     public function setName(string $name): void
     {
@@ -203,8 +199,6 @@ class Organ
 
     /**
      * Get the type.
-     *
-     * @return OrganTypes
      */
     public function getType(): OrganTypes
     {
@@ -213,8 +207,6 @@ class Organ
 
     /**
      * Set the type.
-     *
-     * @param OrganTypes $type
      */
     public function setType(OrganTypes $type): void
     {
@@ -223,8 +215,6 @@ class Organ
 
     /**
      * Get the foundation.
-     *
-     * @return Foundation
      */
     public function getFoundation(): Foundation
     {
@@ -233,8 +223,6 @@ class Organ
 
     /**
      * Set the foundation.
-     *
-     * @param Foundation $foundation
      */
     public function setFoundation(Foundation $foundation): void
     {
@@ -243,8 +231,6 @@ class Organ
 
     /**
      * Get the foundation date.
-     *
-     * @return DateTime
      */
     public function getFoundationDate(): DateTime
     {
@@ -253,8 +239,6 @@ class Organ
 
     /**
      * Set the foundation date.
-     *
-     * @param DateTime $foundationDate
      */
     public function setFoundationDate(DateTime $foundationDate): void
     {
@@ -263,8 +247,6 @@ class Organ
 
     /**
      * Get the abrogation date.
-     *
-     * @return DateTime|null
      */
     public function getAbrogationDate(): ?DateTime
     {
@@ -273,8 +255,6 @@ class Organ
 
     /**
      * Set the abrogation date.
-     *
-     * @param DateTime|null $abrogationDate
      */
     public function setAbrogationDate(?DateTime $abrogationDate): void
     {
@@ -284,7 +264,7 @@ class Organ
     /**
      * Get the members.
      *
-     * @return Collection of OrganMember
+     * @return Collection<array-key, OrganMember>
      */
     public function getMembers(): Collection
     {
@@ -294,7 +274,7 @@ class Organ
     /**
      * Add multiple subdecisions.
      *
-     * @param array $subdecisions
+     * @param SubDecision[] $subdecisions
      */
     public function addSubdecisions(array $subdecisions): void
     {
@@ -305,20 +285,20 @@ class Organ
 
     /**
      * Add a subdecision.
-     *
-     * @param SubDecision $subdecision
      */
     public function addSubdecision(SubDecision $subdecision): void
     {
-        if (!$this->subdecisions->contains($subdecision)) {
-            $this->subdecisions[] = $subdecision;
+        if ($this->subdecisions->contains($subdecision)) {
+            return;
         }
+
+        $this->subdecisions[] = $subdecision;
     }
 
     /**
-     * Get all subdecisions.of this organ.
+     * Get all subdecisions of this organ.
      *
-     * @return Collection
+     * @return Collection<array-key, SubDecision>
      */
     public function getSubdecisions(): Collection
     {
@@ -328,13 +308,13 @@ class Organ
     /**
      * Get all subdecisions of this organ ordered by upload order.
      *
-     * @return array subdecisions[0]->getDate < subdecision[1]->getDate
+     * @return SubDecision[] subdecisions[0]->getDate < subdecision[1]->getDate
      */
     public function getOrderedSubdecisions(): array
     {
         $array = $this->subdecisions->toArray();
-        usort($array, function ($dA, $dB) {
-            return ($dA->getDecision()->getMeeting()->getDate() > $dB->getDecision()->getMeeting()->getDate() ? -1 : 1);
+        usort($array, static function ($dA, $dB) {
+            return $dA->getDecision()->getMeeting()->getDate() > $dB->getDecision()->getMeeting()->getDate() ? -1 : 1;
         });
 
         return $array;
@@ -343,7 +323,7 @@ class Organ
     /**
      * Returns all organ information.
      *
-     * @return Collection
+     * @return Collection<array-key, OrganInformation>
      */
     public function getOrganInformation(): Collection
     {
@@ -352,13 +332,11 @@ class Organ
 
     /**
      * Returns the approved information for an organ.
-     *
-     * @return OrganInformation|null
      */
     public function getApprovedOrganInformation(): ?OrganInformation
     {
         foreach ($this->organInformation as $information) {
-            if (!is_null($information->getApprover())) {
+            if (null !== $information->getApprover()) {
                 return $information;
             }
         }

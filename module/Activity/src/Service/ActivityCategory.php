@@ -6,10 +6,8 @@ namespace Activity\Service;
 
 use Activity\Form\ActivityCategory as ActivityCategoryForm;
 use Activity\Mapper\ActivityCategory as ActivityCategoryMapper;
-use Activity\Model\{
-    ActivityCategory as ActivityCategoryModel,
-    ActivityLocalisedText,
-};
+use Activity\Model\ActivityCategory as ActivityCategoryModel;
+use Activity\Model\ActivityLocalisedText;
 use Laminas\Mvc\I18n\Translator;
 use User\Permissions\NotAllowedException;
 
@@ -25,16 +23,12 @@ class ActivityCategory
 
     /**
      * Get all categories.
-     *
-     * @param int $id
-     *
-     * @return ActivityCategoryModel|null
      */
     public function getCategoryById(int $id): ?ActivityCategoryModel
     {
         if (!$this->aclService->isAllowed('listCategories', 'activity')) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view activity categories')
+                $this->translator->translate('You are not allowed to view activity categories'),
             );
         }
 
@@ -44,13 +38,13 @@ class ActivityCategory
     /**
      * Get all categories.
      *
-     * @return array
+     * @return ActivityCategoryModel[]
      */
     public function findAll(): array
     {
         if (!$this->aclService->isAllowed('listCategories', 'activity')) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view activity categories')
+                $this->translator->translate('You are not allowed to view activity categories'),
             );
         }
 
@@ -60,7 +54,7 @@ class ActivityCategory
     /**
      * @param array $data
      *
-     * @return bool
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function createCategory(array $data): bool
     {
@@ -74,14 +68,12 @@ class ActivityCategory
 
     /**
      * Return Category creation form.
-     *
-     * @return ActivityCategoryForm
      */
     public function getCategoryForm(): ActivityCategoryForm
     {
         if (!$this->aclService->isAllowed('addCategory', 'activity')) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to create an activity category')
+                $this->translator->translate('You are not allowed to create an activity category'),
             );
         }
 
@@ -89,10 +81,9 @@ class ActivityCategory
     }
 
     /**
-     * @param ActivityCategoryModel $category
      * @param array $data
      *
-     * @return bool
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function updateCategory(
         ActivityCategoryModel $category,
@@ -107,14 +98,11 @@ class ActivityCategory
         return true;
     }
 
-    /**
-     * @param ActivityCategoryModel $category
-     */
     public function deleteCategory(ActivityCategoryModel $category): void
     {
         if (!$this->aclService->isAllowed('deleteCategory', 'activity')) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to delete an activity category')
+                $this->translator->translate('You are not allowed to delete an activity category'),
             );
         }
 

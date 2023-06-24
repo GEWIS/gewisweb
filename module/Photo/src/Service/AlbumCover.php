@@ -9,11 +9,23 @@ use Imagick;
 use Photo\Mapper\Photo as PhotoMapper;
 use Photo\Model\Album as AlbumModel;
 
+use function array_merge;
+use function ceil;
+use function count;
+use function floor;
+use function getrandmax;
+use function max;
+use function random_int;
+use function sys_get_temp_dir;
+
 /**
  * Album cover services. Used for (re)generating album covers.
  */
 class AlbumCover
 {
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
+     */
     public function __construct(
         private readonly PhotoMapper $photoMapper,
         private readonly FileStorageService $storage,
@@ -23,7 +35,7 @@ class AlbumCover
     }
 
     /**
-     * Creates, stores and returns the path to a cover image, a mozaic generated from
+     * Creates, stores and returns the path to a cover image, a mosaic generated from
      * a random selection of photos in the album or sub-albums.
      *
      * @param AlbumModel $album the album to create the cover for
@@ -72,14 +84,16 @@ class AlbumCover
             } else {
                 --$columns;
             }
+
             $count = $rows * $columns;
         }
+
         // Make a blank canvas
         $target = new Imagick();
         $target->newImage(
             $this->photoConfig['album_cover']['width'],
             $this->photoConfig['album_cover']['height'],
-            $this->photoConfig['album_cover']['background']
+            $this->photoConfig['album_cover']['background'],
         );
 
         $this->drawComposition($target, $columns, $rows, $images);
@@ -91,10 +105,9 @@ class AlbumCover
     /**
      * Returns the images needed to fill the album cover.
      *
-     * @param AlbumModel $album
      * @param int $count the amount of images needed
      *
-     * @return array of Imagick - a list of the images
+     * @return Imagick[] of Imagick - a list of the images
      */
     protected function getImages(
         AlbumModel $album,
@@ -139,9 +152,11 @@ class AlbumCover
         foreach ($subAlbums as $subAlbum) {
             $allChildren = array_merge($allChildren, $subAlbum->getChildren()->toArray());
 
-            if (0 !== $subAlbum->getPhotos()->count()) {
-                $output[] = $subAlbum;
+            if (0 === $subAlbum->getPhotos()->count()) {
+                continue;
             }
+
+            $output[] = $subAlbum;
         }
 
         if (empty($output)) {
@@ -154,10 +169,10 @@ class AlbumCover
     /**
      * Draws the mosaic of photos.
      *
-     * @param Imagick $target the target object to draw to
-     * @param int $columns The amount of columns to fill
-     * @param int $rows The amount of rows to fill
-     * @param array $images of Imagick the list of images to fill the mosaic with
+     * @param Imagick   $target  the target object to draw to
+     * @param int       $columns The amount of columns to fill
+     * @param int       $rows    The amount of rows to fill
+     * @param Imagick[] $images  to fill the mosaic with
      */
     protected function drawComposition(
         Imagick $target,
@@ -178,8 +193,8 @@ class AlbumCover
         $imageWidth = floor(($innerWidth - $innerBorderWidth) / $columns);
         $imageHeight = floor(($innerHeight - $innerBorderHeight) / $rows);
         //increase outer border due to flooring of image dimensions
-        $realInnerWidth = ($columns * $imageWidth + $innerBorderWidth);
-        $realInnerHeight = ($rows * $imageHeight + $innerBorderHeight);
+        $realInnerWidth = $columns * $imageWidth + $innerBorderWidth;
+        $realInnerHeight = $rows * $imageHeight + $innerBorderHeight;
         $outerBorderX = $outerBorder + ceil(($innerWidth - $realInnerWidth) / 2);
         $outerBorderY = $outerBorder + ceil(($innerHeight - $realInnerHeight) / 2);
 
@@ -189,13 +204,13 @@ class AlbumCover
                 $image = $this->resizeCropImage(
                     $images[$x * $rows + $y],
                     (int) $imageWidth,
-                    (int) $imageHeight
+                    (int) $imageHeight,
                 );
                 $target->compositeImage(
                     $image,
                     Imagick::COMPOSITE_COPY,
                     (int) (($imageWidth + $innerBorder) * $x + $outerBorderX),
-                    (int) (($imageHeight + $innerBorder) * $y + $outerBorderY)
+                    (int) (($imageHeight + $innerBorder) * $y + $outerBorderY),
                 );
             }
         }
@@ -206,9 +221,9 @@ class AlbumCover
      * fill the full width and height without damaging the aspect ratio of the
      * photo.
      *
-     * @param Imagick $image The Imagick object to be resized and cropped
-     * @param int $width The desired width
-     * @param int $height The desired height
+     * @param Imagick $image  The Imagick object to be resized and cropped
+     * @param int     $width  The desired width
+     * @param int     $height The desired height
      *
      * @return Imagick $image
      */
@@ -226,6 +241,7 @@ class AlbumCover
         if ($width < $resizeWidth) {
             $cropX = (int) floor(($resizeWidth - $width) / 2);
         }
+
         $image->cropImage($width, $height, $cropX, 0);
 
         return $image;

@@ -7,46 +7,50 @@ namespace Company\Service;
 use Application\Model\ApprovableText as ApprovableTextModel;
 use Application\Model\Enums\ApprovableStatus;
 use Application\Service\FileStorage;
-use Company\Form\{
-    Company as CompanyForm,
-    Job as EditJobForm,
-    JobCategory as EditCategoryForm,
-    JobLabel as EditLabelForm,
-    Package as EditPackageForm,
-};
-use Company\Mapper\{
-    BannerPackage as BannerPackageMapper,
-    Category as CategoryMapper,
-    Company as CompanyMapper,
-    FeaturedPackage as FeaturedPackageMapper,
-    Job as JobMapper,
-    JobUpdate as JobUpdateMapper,
-    Label as LabelMapper,
-    Package as PackageMapper,
-};
-use Company\Model\{
-    Company as CompanyModel,
-    CompanyBannerPackage as CompanyBannerPackageModel,
-    CompanyFeaturedPackage as CompanyFeaturedPackageModel,
-    CompanyJobPackage as CompanyJobPackageModel,
-    CompanyLocalisedText,
-    CompanyPackage as CompanyPackageModel,
-    Enums\CompanyPackageTypes,
-    Job as JobModel,
-    JobCategory as JobCategoryModel,
-    JobLabel as JobLabelModel,
-    Proposals\CompanyUpdate as CompanyUpdateProposal,
-    Proposals\JobUpdate as JobUpdateProposalModel,
-};
+use Company\Form\Company as CompanyForm;
+use Company\Form\Job as EditJobForm;
+use Company\Form\JobCategory as EditCategoryForm;
+use Company\Form\JobLabel as EditLabelForm;
+use Company\Form\Package as EditPackageForm;
+use Company\Mapper\BannerPackage as BannerPackageMapper;
+use Company\Mapper\Category as CategoryMapper;
+use Company\Mapper\Company as CompanyMapper;
+use Company\Mapper\FeaturedPackage as FeaturedPackageMapper;
+use Company\Mapper\Job as JobMapper;
+use Company\Mapper\JobUpdate as JobUpdateMapper;
+use Company\Mapper\Label as LabelMapper;
+use Company\Mapper\Package as PackageMapper;
+use Company\Model\Company as CompanyModel;
+use Company\Model\CompanyBannerPackage as CompanyBannerPackageModel;
+use Company\Model\CompanyFeaturedPackage as CompanyFeaturedPackageModel;
+use Company\Model\CompanyJobPackage as CompanyJobPackageModel;
+use Company\Model\CompanyLocalisedText;
+use Company\Model\CompanyPackage as CompanyPackageModel;
+use Company\Model\Enums\CompanyPackageTypes;
+use Company\Model\Job as JobModel;
+use Company\Model\JobCategory as JobCategoryModel;
+use Company\Model\JobLabel as JobLabelModel;
+use Company\Model\Proposals\CompanyUpdate as CompanyUpdateProposal;
+use Company\Model\Proposals\JobUpdate as JobUpdateProposalModel;
 use DateTime;
-use Doctrine\ORM\{
-    NonUniqueResultException,
-    Exception\ORMException,
-};
+use Doctrine\ORM\Exception\ORMException;
+use Doctrine\ORM\NonUniqueResultException;
 use Exception;
 use Laminas\Mvc\I18n\Translator;
 use User\Permissions\NotAllowedException;
 use User\Service\User as UserService;
+
+use function array_diff;
+use function array_intersect;
+use function array_map;
+use function array_merge;
+use function boolval;
+use function intval;
+use function trim;
+use function usort;
+
+use const UPLOAD_ERR_NO_FILE;
+use const UPLOAD_ERR_OK;
 
 /**
  * Company service.
@@ -81,8 +85,6 @@ class Company
 
     /**
      * Returns a random banner for display on the frontpage.
-     *
-     * @return CompanyBannerPackageModel|null
      */
     public function getCurrentBanner(): ?CompanyBannerPackageModel
     {
@@ -93,14 +95,11 @@ class Company
         return $this->bannerPackageMapper->getBannerPackage();
     }
 
-    /**
-     * @return CompanyFeaturedPackageModel|null
-     */
     public function getFeaturedPackage(): ?CompanyFeaturedPackageModel
     {
         if (!$this->aclService->isAllowed('viewFeatured', 'company')) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view the featured company')
+                $this->translator->translate('You are not allowed to view the featured company'),
             );
         }
 
@@ -108,22 +107,20 @@ class Company
     }
 
     /**
-     * @param DateTime $date
-     *
-     * @return array
+     * @return CompanyPackageModel[]
      */
     private function getFuturePackageStartsBeforeDate(DateTime $date): array
     {
         $startPackages = array_merge(
             $this->packageMapper->findFuturePackageStartsBeforeDate($date),
             $this->bannerPackageMapper->findFuturePackageStartsBeforeDate($date),
-            $this->featuredPackageMapper->findFuturePackageStartsBeforeDate($date)
+            $this->featuredPackageMapper->findFuturePackageStartsBeforeDate($date),
         );
 
-        usort($startPackages, function ($a, $b) {
+        usort($startPackages, static function ($a, $b) {
             $aStart = $a->getStartingDate();
             $bStart = $b->getStartingDate();
-            if ($aStart == $bStart) {
+            if ($aStart === $bStart) {
                 return 0;
             }
 
@@ -134,22 +131,20 @@ class Company
     }
 
     /**
-     * @param DateTime $date
-     *
-     * @return array
+     * @return CompanyPackageModel[]
      */
     private function getFuturePackageExpiresBeforeDate(DateTime $date): array
     {
         $expirePackages = array_merge(
             $this->packageMapper->findFuturePackageExpirationsBeforeDate($date),
             $this->bannerPackageMapper->findFuturePackageExpirationsBeforeDate($date),
-            $this->featuredPackageMapper->findFuturePackageExpirationsBeforeDate($date)
+            $this->featuredPackageMapper->findFuturePackageExpirationsBeforeDate($date),
         );
 
-        usort($expirePackages, function ($a, $b) {
+        usort($expirePackages, static function ($a, $b) {
             $aEnd = $a->getExpirationDate();
             $bEnd = $b->getExpirationDate();
-            if ($aEnd == $bEnd) {
+            if ($aEnd === $bEnd) {
                 return 0;
             }
 
@@ -164,7 +159,10 @@ class Company
      *
      * @param DateTime $date The date until where to search
      *
-     * @return array Two sorted arrays, containing the packages that respectively start and expire between now and $date,
+     * @psalm-return array{
+     *     0: CompanyPackageModel[],
+     *     1: CompanyPackageModel[],
+     * } Two sorted arrays, containing the packages that respectively start and expire between now and $date
      */
     public function getPackageChangeEvents(DateTime $date): array
     {
@@ -184,7 +182,7 @@ class Company
     /**
      * Returns a list of all companies (excluding hidden companies).
      *
-     * @return array
+     * @return CompanyModel[]
      */
     public function getCompanyList(): array
     {
@@ -198,13 +196,13 @@ class Company
     /**
      * Returns a list of all companies (including hidden companies).
      *
-     * @return array
+     * @return CompanyModel[]
      */
     public function getHiddenCompanyList(): array
     {
         if (!$this->aclService->isAllowed('listAll', 'company')) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to access the admin interface')
+                $this->translator->translate('You are not allowed to access the admin interface'),
             );
         }
 
@@ -213,10 +211,6 @@ class Company
 
     /**
      * Get public company by id.
-     *
-     * @param int $id
-     *
-     * @return CompanyModel|null
      */
     public function getCompanyById(int $id): ?CompanyModel
     {
@@ -228,9 +222,6 @@ class Company
     }
 
     /**
-     * @param string $slug
-     *
-     * @return JobCategoryModel|null
      * @throws NonUniqueResultException
      */
     public function getJobCategoryBySlug(string $slug): ?JobCategoryModel
@@ -243,7 +234,7 @@ class Company
      *
      * @param array $data Category data from the JobCategory form
      *
-     * @return JobCategoryModel
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function createJobCategory(array $data): JobCategoryModel
     {
@@ -261,7 +252,9 @@ class Company
 
     /**
      * @param JobCategoryModel $jobCategory The JobCategoryModel to update
-     * @param array $data The (new) data to save
+     * @param array            $data        The (new) data to save
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function updateJobCategory(
         JobCategoryModel $jobCategory,
@@ -280,7 +273,7 @@ class Company
      *
      * @param array $data Label data from the JobLabelForm
      *
-     * @return JobLabelModel
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function createJobLabel(array $data): JobLabelModel
     {
@@ -297,8 +290,9 @@ class Company
     /**
      * Updates the JobLabelModel.
      *
-     * @param JobLabelModel $jobLabel
      * @param array $data The data to validate, and apply to the label
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function updateJobLabel(
         JobLabelModel $jobLabel,
@@ -315,9 +309,9 @@ class Company
      *
      * @param array $data
      *
-     * @return CompanyModel|bool
-     *
      * @throws ORMException
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function createCompany(array $data): CompanyModel|bool
     {
@@ -365,12 +359,11 @@ class Company
     /**
      * Updates a company with the provided data.
      *
-     * @param CompanyModel $company
      * @param array $data
      *
-     * @return bool
-     *
      * @throws Exception
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function updateCompany(
         CompanyModel $company,
@@ -401,7 +394,6 @@ class Company
             $companyUpdateProposal->setProposal($updateProposal);
 
             $this->companyMapper->persist($updateProposal);
-
             // TODO: Send e-mail to CEB/C4 about proposed changes.
         }
 
@@ -415,13 +407,11 @@ class Company
      * of jobs. It assumes that if the file is null (i.e. no image has been submitted) it should not touch the old
      * file.
      *
-     * @param CompanyModel|CompanyPackageModel|JobModel $entity
      * @param array|null $file
-     * @param string $languageSuffix
-     *
-     * @return bool
      *
      * @throws Exception
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     private function uploadFile(
         CompanyModel|CompanyPackageModel|JobModel $entity,
@@ -472,8 +462,6 @@ class Company
 
     /**
      * Saves the modified JobCategoryModel.
-     *
-     * @param JobCategoryModel $jobCategory
      */
     public function persistJobCategory(JobCategoryModel $jobCategory): void
     {
@@ -482,8 +470,6 @@ class Company
 
     /**
      * Saves the modified JobLabelModel.
-     *
-     * @param JobLabelModel $jobLabel
      */
     public function persistJobLabel(JobLabelModel $jobLabel): void
     {
@@ -493,8 +479,6 @@ class Company
     /**
      * Saves all modified jobs.
      *
-     * @param JobModel $job
-     *
      * @throws ORMException
      */
     public function persistJob(JobModel $job): void
@@ -503,8 +487,6 @@ class Company
     }
 
     /**
-     * @param CompanyModel $company
-     *
      * @throws ORMException
      */
     public function persistCompany(CompanyModel $company): void
@@ -514,8 +496,6 @@ class Company
 
     /**
      * Saves all modified packages.
-     *
-     * @param CompanyPackageModel $package
      *
      * @throws ORMException
      */
@@ -533,13 +513,11 @@ class Company
     /**
      * Creates a new package, and assigns it to the given company.
      *
-     * @param CompanyModel $company
      * @param array $data
-     * @param CompanyPackageTypes $type
-     *
-     * @return bool
      *
      * @throws Exception
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function createPackage(
         CompanyModel $company,
@@ -564,12 +542,11 @@ class Company
     /**
      * Updates the package.
      *
-     * @param CompanyPackageModel $package
      * @param array $data
      *
-     * @return bool
-     *
      * @throws Exception
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function updatePackage(
         CompanyPackageModel $package,
@@ -590,12 +567,11 @@ class Company
     /**
      * Creates a new job and adds it to the specified package.
      *
-     * @param CompanyJobPackageModel $package
      * @param array $data
      *
-     * @return JobModel|bool
-     *
      * @throws ORMException
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function createJob(
         CompanyJobPackageModel $package,
@@ -624,9 +600,11 @@ class Company
             foreach ($data['labels'] as $label) {
                 $label = $this->getJobLabelById(intval($label));
 
-                if (null !== $label) {
-                    $job->addLabel($label);
+                if (null === $label) {
+                    continue;
                 }
+
+                $job->addLabel($label);
             }
         }
 
@@ -657,12 +635,11 @@ class Company
     }
 
     /**
-     * @param JobModel $job
      * @param array $data
      *
-     * @return bool
-     *
      * @throws ORMException
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function updateJob(
         JobModel $job,
@@ -697,7 +674,7 @@ class Company
                     'intval',
                     $data['labels'],
                 );
-                $currentLabels = $job->getLabels()->map(function ($label) {
+                $currentLabels = $job->getLabels()->map(static function ($label) {
                     return $label->getId();
                 })->toArray();
 
@@ -713,9 +690,11 @@ class Company
                 foreach ($toAdd as $label) {
                     $label = $this->getJobLabelById($label);
 
-                    if (null !== $label) {
-                        $job->addLabel($label);
+                    if (null === $label) {
+                        continue;
                     }
+
+                    $job->addLabel($label);
                 }
             }
 
@@ -743,7 +722,6 @@ class Company
 
             $this->jobMapper->persist($updateProposal);
             $this->jobUpdateMapper->persist($jobUpdateProposal);
-
             // TODO: Send e-mail to CEB/C4 about proposed changes.
         }
 
@@ -754,8 +732,6 @@ class Company
 
     /**
      * Deletes the given package.
-     *
-     * @param CompanyPackageModel $package
      *
      * @throws ORMException
      */
@@ -777,15 +753,12 @@ class Company
     /**
      * Deletes the given job and its associated data.
      *
-     * @param JobModel $job
-     *
      * @throws ORMException
      */
     public function deleteJob(JobModel $job): void
     {
         $this->deleteJobAttachments($job);
 
-        /** @var JobUpdateProposalModel $jobUpdateProposal */
         foreach ($job->getUpdateProposals() as $jobUpdateProposal) {
             $this->deleteJobAttachments($jobUpdateProposal->getProposal());
         }
@@ -802,13 +775,17 @@ class Company
             $this->storageService->removeFile($dutchAttachment);
         }
 
-        if (null !== ($englishAttachment = $job->getAttachment()->getValueEN())) {
-            $this->storageService->removeFile($englishAttachment);
+        if (null === ($englishAttachment = $job->getAttachment()->getValueEN())) {
+            return;
         }
+
+        $this->storageService->removeFile($englishAttachment);
     }
 
     /**
      * Move jobs from an expired package to a non-expired package.
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function transferJobs(array $data): bool
     {
@@ -819,11 +796,18 @@ class Company
         }
 
         foreach ($data['jobs'] as $formJob) {
-            /** @var JobModel|null $job */
-            if (null !== ($job = $this->jobMapper->find((int) $formJob))) {
-                $job->setPackage($newPackage);
-                $this->jobMapper->persist($job);
+            /**
+             * @psalm-suppress UnnecessaryVarAnnotation
+             * @var JobModel|null $job
+             */
+            $job = $this->jobMapper->find((int) $formJob);
+
+            if (null === $job) {
+                continue;
             }
+
+            $job->setPackage($newPackage);
+            $this->jobMapper->persist($job);
         }
 
         $this->jobMapper->flush();
@@ -839,7 +823,7 @@ class Company
         // Fix some attributes.
         $data['category'] = $data['category']->getId();
         foreach ($data['labels'] as $key => $label) {
-            $data['labels'][$key] = $label->getId();
+            $data['labels'][$key] = $label['id'];
         }
 
         $this->updateJob($job, $data, true);
@@ -864,8 +848,6 @@ class Company
     /**
      * Deletes the company identified with $slug.
      *
-     * @param string $slug
-     *
      * @throws ORMException
      */
     public function deleteCompanyBySlug(string $slug): void
@@ -880,10 +862,6 @@ class Company
 
     /**
      * Return the company identified by $slugName.
-     *
-     * @param string $slugName
-     *
-     * @return CompanyModel|null
      */
     public function getCompanyBySlugName(string $slugName): ?CompanyModel
     {
@@ -892,10 +870,6 @@ class Company
 
     /**
      * Returns a persistent category.
-     *
-     * @param int $jobCategoryId
-     *
-     * @return JobCategoryModel|null
      */
     public function getJobCategoryById(int $jobCategoryId): ?JobCategoryModel
     {
@@ -912,10 +886,6 @@ class Company
 
     /**
      * Returns a persistent label.
-     *
-     * @param int $jobLabelId
-     *
-     * @return JobLabelModel|null
      */
     public function getJobLabelById(int $jobLabelId): ?JobLabelModel
     {
@@ -928,10 +898,6 @@ class Company
 
     /**
      * Returns a persistent package.
-     *
-     * @param int $packageId
-     *
-     * @return CompanyPackageModel|null
      */
     public function getPackageById(int $packageId): ?CompanyPackageModel
     {
@@ -939,13 +905,16 @@ class Company
             throw new NotAllowedException($this->translator->translate('You are not allowed to edit packages'));
         }
 
+        /** @var CompanyJobPackageModel|null $package */
         $package = $this->packageMapper->findEditablePackage($packageId);
 
-        if (is_null($package)) {
+        if (null === $package) {
+            /** @var CompanyBannerPackageModel|null $package */
             $package = $this->bannerPackageMapper->findEditablePackage($packageId);
         }
 
-        if (is_null($package)) {
+        if (null === $package) {
+            /** @var CompanyFeaturedPackageModel|null $package */
             $package = $this->featuredPackageMapper->findEditablePackage($packageId);
         }
 
@@ -955,10 +924,6 @@ class Company
     /**
      * Returns all jobs with a given slugname, owned by a company with
      * $companySlugName.
-     *
-     * @param int $jobId
-     *
-     * @return JobModel|null
      */
     public function getJobById(int $jobId): ?JobModel
     {
@@ -1040,9 +1005,6 @@ class Company
         return $this->editJobForm;
     }
 
-    /**
-     * @return CompanyForm
-     */
     public function getCompanyForm(): CompanyForm
     {
         if (
@@ -1067,7 +1029,7 @@ class Company
 
         if (
             null === $message
-            || "" === $message
+            || '' === $message
         ) {
             $message = null;
         } else {

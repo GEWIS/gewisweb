@@ -4,15 +4,13 @@ declare(strict_types=1);
 
 namespace Frontpage\Form;
 
-use Laminas\Form\Element\{
-    Checkbox,
-    Submit,
-    Text,
-    Textarea,
-};
+use Laminas\Form\Element\Checkbox;
+use Laminas\Form\Element\Submit;
+use Laminas\Form\Element\Text;
+use Laminas\Form\Element\Textarea;
 use Laminas\Form\Form;
-use Laminas\Mvc\I18n\Translator;
 use Laminas\InputFilter\InputFilterProviderInterface;
+use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\StringLength;
 
 class NewsItem extends Form implements InputFilterProviderInterface
@@ -28,7 +26,7 @@ class NewsItem extends Form implements InputFilterProviderInterface
                 'options' => [
                     'label' => $translator->translate('Dutch title'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -38,7 +36,7 @@ class NewsItem extends Form implements InputFilterProviderInterface
                 'options' => [
                     'label' => $translator->translate('English title'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -48,7 +46,7 @@ class NewsItem extends Form implements InputFilterProviderInterface
                 'options' => [
                     'label' => $translator->translate('Dutch content'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -58,7 +56,7 @@ class NewsItem extends Form implements InputFilterProviderInterface
                 'options' => [
                     'label' => $translator->translate('English content'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -69,7 +67,7 @@ class NewsItem extends Form implements InputFilterProviderInterface
                     'checked_value' => '1',
                     'unchecked_value' => '0',
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -79,7 +77,7 @@ class NewsItem extends Form implements InputFilterProviderInterface
                 'attributes' => [
                     'value' => $translator->translate('Save'),
                 ],
-            ]
+            ],
         );
     }
 

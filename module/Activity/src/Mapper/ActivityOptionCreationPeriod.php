@@ -7,7 +7,6 @@ namespace Activity\Mapper;
 use Activity\Model\ActivityOptionCreationPeriod as ActivityOptionCreationPeriodModel;
 use Application\Mapper\BaseMapper;
 use DateTime;
-use Exception;
 
 /**
  * @template-extends BaseMapper<ActivityOptionCreationPeriodModel>
@@ -17,7 +16,7 @@ class ActivityOptionCreationPeriod extends BaseMapper
     /**
      * Finds the ActivityOptionCreationPeriod model that is currently active.
      *
-     * @return array<array-key, ActivityOptionCreationPeriodModel>
+     * @return ActivityOptionCreationPeriodModel[]
      */
     public function getCurrentActivityOptionCreationPeriods(): array
     {
@@ -33,7 +32,7 @@ class ActivityOptionCreationPeriod extends BaseMapper
     /**
      * Finds the ActivityOptionCreationPeriod model that will be active next.
      *
-     * @return array<array-key, ActivityOptionCreationPeriodModel>
+     * @return ActivityOptionCreationPeriodModel[]
      */
     public function getUpcomingActivityOptionCreationPeriods(): array
     {
@@ -45,9 +44,6 @@ class ActivityOptionCreationPeriod extends BaseMapper
         return $qb->getQuery()->getResult();
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function getRepositoryName(): string
     {
         return ActivityOptionCreationPeriodModel::class;

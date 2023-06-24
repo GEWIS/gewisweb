@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace Decision\Form;
 
-use Laminas\Form\Element\{
-    Submit,
-    Text,
-};
+use Laminas\Form\Element\Submit;
+use Laminas\Form\Element\Text;
 use Laminas\Form\Form;
-use Laminas\Mvc\I18n\Translator;
 use Laminas\InputFilter\InputFilterProviderInterface;
+use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\NotEmpty;
 
 class SearchDecision extends Form implements InputFilterProviderInterface
@@ -26,7 +24,7 @@ class SearchDecision extends Form implements InputFilterProviderInterface
                 'options' => [
                     'label' => $translate->translate('Search query'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -37,7 +35,7 @@ class SearchDecision extends Form implements InputFilterProviderInterface
                     'value' => $translate->translate('Search'),
                     'label' => $translate->translate('Search'),
                 ],
-            ]
+            ],
         );
     }
 

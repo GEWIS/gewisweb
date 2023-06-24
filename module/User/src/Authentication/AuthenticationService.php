@@ -5,20 +5,16 @@ declare(strict_types=1);
 namespace User\Authentication;
 
 use Application\Model\IdentityInterface;
+use Laminas\Authentication\AuthenticationServiceInterface;
+use Laminas\Authentication\Result;
 use RuntimeException;
-use Laminas\Authentication\{
-    AuthenticationServiceInterface,
-    Result,
-};
-use User\Authentication\Adapter\{
-    CompanyUserAdapter,
-    UserAdapter,
-};
-use User\Authentication\Storage\{
-    CompanyUserSession,
-    UserSession,
-};
 use SensitiveParameter;
+use User\Authentication\Adapter\CompanyUserAdapter;
+use User\Authentication\Adapter\UserAdapter;
+use User\Authentication\Storage\CompanyUserSession;
+use User\Authentication\Storage\UserSession;
+use User\Model\CompanyUser;
+use User\Model\User;
 
 /**
  * @template TStorage of CompanyUserSession|UserSession
@@ -132,7 +128,7 @@ class AuthenticationService implements AuthenticationServiceInterface
     /**
      * Returns the authenticated CompanyUser|User or null if no identity is available.
      *
-     * @psalm-return (TAdapter is CompanyUserAdapter ? \User\Model\CompanyUser|null : \User\Model\User|null)
+     * @psalm-return (TAdapter is CompanyUserAdapter ? (CompanyUser|null) : (User|null))
      */
     public function getIdentity(): ?IdentityInterface
     {

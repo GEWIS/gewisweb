@@ -16,8 +16,6 @@ class FeaturedCompanyPackage extends AbstractHelper
 
     /**
      * Returns currently active featurePackage.
-     *
-     * @return CompanyFeaturedPackageModel|null
      */
     public function __invoke(): ?CompanyFeaturedPackageModel
     {

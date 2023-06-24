@@ -9,11 +9,9 @@ use Laminas\Permissions\Acl\Acl;
 use Laminas\Permissions\Acl\Assertion\AssertionInterface;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 use Laminas\Permissions\Acl\Role\RoleInterface;
-use Photo\Model\{
-    Album,
-    Photo,
-    Tag,
-};
+use Photo\Model\Album;
+use Photo\Model\Photo;
+use Photo\Model\Tag;
 use User\Model\User;
 
 /**
@@ -29,12 +27,7 @@ class IsAfterMembershipEndedAndNotTagged implements AssertionInterface
      * $role, $resource, or $privilege parameters are null, it means that the query applies to all Roles, Resources, or
      * privileges, respectively.
      *
-     * @param Acl $acl
-     * @param RoleInterface|null $role
-     * @param ResourceInterface|null $resource
      * @param string|null $privilege
-     *
-     * @return bool
      */
     public function assert(
         Acl $acl,
@@ -65,12 +58,12 @@ class IsAfterMembershipEndedAndNotTagged implements AssertionInterface
         }
 
         // Allow access if the member is tagged in the album
-        $tags_in_album = $role->getMember()->getTags()->filter(
-            function (Tag $tag) use ($resource) {
+        $tagsInAlbum = $role->getMember()->getTags()->filter(
+            static function (Tag $tag) use ($resource) {
                 return $resource->getPhotos()->contains($tag->getPhoto());
-            }
+            },
         );
 
-        return $tags_in_album->isEmpty();
+        return $tagsInAlbum->isEmpty();
     }
 }

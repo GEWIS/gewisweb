@@ -4,17 +4,13 @@ declare(strict_types=1);
 
 namespace Activity\Controller;
 
-use Activity\Service\{
-    AclService,
-    Activity as ActivityService,
-    ActivityQuery as ActivityQueryService,
-};
+use Activity\Service\AclService;
+use Activity\Service\Activity as ActivityService;
+use Activity\Service\ActivityQuery as ActivityQueryService;
 use Application\Form\ModifyRequest as RequestForm;
 use InvalidArgumentException;
-use Laminas\Http\{
-    Request,
-    Response,
-};
+use Laminas\Http\Request;
+use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\View\Model\ViewModel;
@@ -42,7 +38,7 @@ class AdminApprovalController extends AbstractActionController
 
         if (!$this->aclService->isAllowed('approval', 'activity')) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view the approval of this activity')
+                $this->translator->translate('You are not allowed to view the approval of this activity'),
             );
         }
 
@@ -58,7 +54,7 @@ class AdminApprovalController extends AbstractActionController
                 'approvalForm' => new RequestForm('updateApprovalStatus', 'Approve'),
                 'disapprovalForm' => new RequestForm('updateApprovalStatus', 'Disapprove'),
                 'resetForm' => new RequestForm('updateApprovalStatus', 'Reset'),
-            ]
+            ],
         );
     }
 
@@ -72,10 +68,6 @@ class AdminApprovalController extends AbstractActionController
 
     /**
      * Set the approval status of the activity requested.
-     *
-     * @param string $status
-     *
-     * @return ViewModel|Response
      */
     protected function setApprovalStatus(string $status): Response|ViewModel
     {
@@ -153,7 +145,7 @@ class AdminApprovalController extends AbstractActionController
                 'proposal' => $proposal,
                 'proposalApplyForm' => new RequestForm('proposalApply', 'Apply update'),
                 'proposalRevokeForm' => new RequestForm('proposalRevoke', 'Revoke update'),
-            ]
+            ],
         );
     }
 
@@ -170,6 +162,7 @@ class AdminApprovalController extends AbstractActionController
         if (!$request->isPost()) {
             return $this->notFoundAction();
         }
+
         $form = new RequestForm('proposalApply');
 
         $form->setData($request->getPost()->toArray());
@@ -183,6 +176,7 @@ class AdminApprovalController extends AbstractActionController
         if (null === $proposal) {
             return $this->notFoundAction();
         }
+
         $newId = $proposal->getNew()->getId();
         $this->activityService->updateActivity($proposal);
 
@@ -190,7 +184,7 @@ class AdminApprovalController extends AbstractActionController
             'activity_admin_approval/view',
             [
                 'id' => $newId,
-            ]
+            ],
         );
     }
 
@@ -207,6 +201,7 @@ class AdminApprovalController extends AbstractActionController
         if (!$request->isPost()) {
             return $this->notFoundAction();
         }
+
         $form = new RequestForm('proposalRevoke');
 
         $form->setData($request->getPost()->toArray());
@@ -228,7 +223,7 @@ class AdminApprovalController extends AbstractActionController
             'activity_admin_approval/view',
             [
                 'id' => $oldId,
-            ]
+            ],
         );
     }
 }

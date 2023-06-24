@@ -6,6 +6,8 @@ namespace Company\Mapper;
 
 use Company\Model\CompanyFeaturedPackage as CompanyFeaturedPackageModel;
 
+use function array_rand;
+
 /**
  * Mappers for package.
  *
@@ -16,8 +18,6 @@ class FeaturedPackage extends Package
     /**
      * Returns a random featured package from the active featured packages,
      * and null when there is no featured package.
-     *
-     * @return CompanyFeaturedPackageModel|null
      */
     public function getFeaturedPackage(): ?CompanyFeaturedPackageModel
     {
@@ -30,9 +30,6 @@ class FeaturedPackage extends Package
         return null;
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function getRepositoryName(): string
     {
         return CompanyFeaturedPackageModel::class;

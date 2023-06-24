@@ -5,18 +5,14 @@ declare(strict_types=1);
 namespace Decision\Model\SubDecision\Board;
 
 use DateTime;
-use Decision\Model\{
-    BoardMember,
-    Member,
-    SubDecision,
-};
-use Doctrine\ORM\Mapping\{
-    Column,
-    Entity,
-    JoinColumn,
-    ManyToOne,
-    OneToOne,
-};
+use Decision\Model\BoardMember;
+use Decision\Model\Member;
+use Decision\Model\SubDecision;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToOne;
 
 /**
  * Installation as board member.
@@ -27,7 +23,7 @@ class Installation extends SubDecision
     /**
      * Function in the board.
      */
-    #[Column(type: "string")]
+    #[Column(type: 'string')]
     protected string $function;
 
     /**
@@ -40,15 +36,15 @@ class Installation extends SubDecision
     // TODO: Inversed relation
     #[ManyToOne(targetEntity: Member::class)]
     #[JoinColumn(
-        name: "lidnr",
-        referencedColumnName: "lidnr",
+        name: 'lidnr',
+        referencedColumnName: 'lidnr',
     )]
     protected Member $member;
 
     /**
      * The date at which the installation is in effect.
      */
-    #[Column(type: "date")]
+    #[Column(type: 'date')]
     protected DateTime $date;
 
     /**
@@ -56,7 +52,7 @@ class Installation extends SubDecision
      */
     #[OneToOne(
         targetEntity: Discharge::class,
-        mappedBy: "installation",
+        mappedBy: 'installation',
     )]
     protected ?Discharge $discharge = null;
 
@@ -65,7 +61,7 @@ class Installation extends SubDecision
      */
     #[OneToOne(
         targetEntity: Release::class,
-        mappedBy: "installation",
+        mappedBy: 'installation',
     )]
     protected ?Release $release = null;
 
@@ -74,14 +70,12 @@ class Installation extends SubDecision
      */
     #[OneToOne(
         targetEntity: BoardMember::class,
-        mappedBy: "installationDec",
+        mappedBy: 'installationDec',
     )]
     protected BoardMember $boardMember;
 
     /**
      * Get the function.
-     *
-     * @return string
      */
     public function getFunction(): string
     {
@@ -90,8 +84,6 @@ class Installation extends SubDecision
 
     /**
      * Set the function.
-     *
-     * @param string $function
      */
     public function setFunction(string $function): void
     {
@@ -100,8 +92,6 @@ class Installation extends SubDecision
 
     /**
      * Get the member.
-     *
-     * @return Member
      */
     public function getMember(): Member
     {
@@ -110,8 +100,6 @@ class Installation extends SubDecision
 
     /**
      * Set the member.
-     *
-     * @param Member $member
      */
     public function setMember(Member $member): void
     {
@@ -120,8 +108,6 @@ class Installation extends SubDecision
 
     /**
      * Get the date.
-     *
-     * @return DateTime
      */
     public function getDate(): DateTime
     {
@@ -130,8 +116,6 @@ class Installation extends SubDecision
 
     /**
      * Set the date.
-     *
-     * @param DateTime $date
      */
     public function setDate(DateTime $date): void
     {
@@ -140,8 +124,6 @@ class Installation extends SubDecision
 
     /**
      * Get the discharge.
-     *
-     * @return ?Discharge
      */
     public function getDischarge(): ?Discharge
     {
@@ -150,8 +132,6 @@ class Installation extends SubDecision
 
     /**
      * Get the release.
-     *
-     * @return ?Release
      */
     public function getRelease(): ?Release
     {
@@ -160,8 +140,6 @@ class Installation extends SubDecision
 
     /**
      * Get the board member decision.
-     *
-     * @return BoardMember
      */
     public function getBoardMember(): BoardMember
     {

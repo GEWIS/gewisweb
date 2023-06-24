@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace Photo\Controller;
 
 use Laminas\Mvc\Controller\AbstractActionController;
-use Laminas\View\Model\{JsonModel, ViewModel};
 use Laminas\Mvc\I18n\Translator;
-use Photo\Mapper\{
-    Tag as TagMapper,
-    Vote as VoteMapper,
-};
+use Laminas\View\Model\JsonModel;
+use Laminas\View\Model\ViewModel;
+use Photo\Mapper\Tag as TagMapper;
+use Photo\Mapper\Vote as VoteMapper;
 use Photo\Service\AclService;
 use User\Permissions\NotAllowedException;
 

@@ -6,17 +6,21 @@ namespace Activity\Model;
 
 use Application\Model\Traits\IdentifiableTrait;
 use Decision\Model\Organ as OrganModel;
-use Doctrine\ORM\Mapping\{
-    Column,
-    Entity,
-    JoinColumn,
-    ManyToOne,
-};
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
 
 /**
  * Max Activities model.
  * Contains the max amount of activities an organ may create options for
- * Note that this is the limit per period!
+ * Note that this is the limit per period!.
+ *
+ * @psalm-type MaxActivitiesArrayType = array{
+ *     id: int,
+ *     organ: OrganModel,
+ *     value: int,
+ * }
  */
 #[Entity]
 class MaxActivities
@@ -28,7 +32,7 @@ class MaxActivities
      */
     #[ManyToOne(targetEntity: OrganModel::class)]
     #[JoinColumn(
-        referencedColumnName: "id",
+        referencedColumnName: 'id',
         nullable: false,
     )]
     protected OrganModel $organ;
@@ -36,7 +40,7 @@ class MaxActivities
     /**
      * The value of the option.
      */
-    #[Column(type: "integer")]
+    #[Column(type: 'integer')]
     protected int $value;
 
     /**
@@ -44,13 +48,10 @@ class MaxActivities
      */
     #[ManyToOne(
         targetEntity: ActivityOptionCreationPeriod::class,
-        inversedBy: "maxActivities",
+        inversedBy: 'maxActivities',
     )]
     protected ActivityOptionCreationPeriod $period;
 
-    /**
-     * @return ActivityOptionCreationPeriod
-     */
     public function getPeriod(): ActivityOptionCreationPeriod
     {
         return $this->period;
@@ -58,17 +59,12 @@ class MaxActivities
 
     /**
      * Set the period.
-     *
-     * @param ActivityOptionCreationPeriod $period
      */
     public function setPeriod(ActivityOptionCreationPeriod $period): void
     {
         $this->period = $period;
     }
 
-    /**
-     * @return OrganModel
-     */
     public function getOrgan(): OrganModel
     {
         return $this->organ;
@@ -76,17 +72,12 @@ class MaxActivities
 
     /**
      * Set the organ.
-     *
-     * @param OrganModel $organ
      */
     public function setOrgan(OrganModel $organ): void
     {
         $this->organ = $organ;
     }
 
-    /**
-     * @return int
-     */
     public function getValue(): int
     {
         return $this->value;
@@ -94,8 +85,6 @@ class MaxActivities
 
     /**
      * Set the value.
-     *
-     * @param int $value
      */
     public function setValue(int $value): void
     {
@@ -105,7 +94,7 @@ class MaxActivities
     /**
      * Returns an associative array representation of this object.
      *
-     * @return array
+     * @return MaxActivitiesArrayType
      */
     public function toArray(): array
     {

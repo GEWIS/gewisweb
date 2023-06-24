@@ -5,19 +5,21 @@ declare(strict_types=1);
 namespace Activity\Model;
 
 use Application\Model\Traits\IdentifiableTrait;
-use Doctrine\Common\Collections\{
-    ArrayCollection,
-    Collection,
-};
-use Doctrine\ORM\Mapping\{
-    Entity,
-    JoinColumn,
-    ManyToMany,
-    OneToOne,
-};
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\OneToOne;
 
 /**
  * Activity Category model.
+ *
+ * @psalm-type ActivityCategoryArrayType = array{
+ *     id: int,
+ *     name: ?string,
+ *     nameEn: ?string,
+ * }
  */
 #[Entity]
 class ActivityCategory
@@ -26,11 +28,13 @@ class ActivityCategory
 
     /**
      * The Activities this Category belongs to.
+     *
+     * @var Collection<array-key, Activity>
      */
     #[ManyToMany(
         targetEntity: Activity::class,
-        mappedBy: "categories",
-        cascade: ["persist"],
+        mappedBy: 'categories',
+        cascade: ['persist'],
     )]
     protected Collection $activities;
 
@@ -39,12 +43,12 @@ class ActivityCategory
      */
     #[OneToOne(
         targetEntity: ActivityLocalisedText::class,
-        cascade: ["persist", "remove"],
+        cascade: ['persist', 'remove'],
         orphanRemoval: true,
     )]
     #[JoinColumn(
-        name: "name_id",
-        referencedColumnName: "id",
+        name: 'name_id',
+        referencedColumnName: 'id',
         nullable: false,
     )]
     protected ActivityLocalisedText $name;
@@ -54,9 +58,6 @@ class ActivityCategory
         $this->activities = new ArrayCollection();
     }
 
-    /**
-     * @param Activity $activity
-     */
     public function addActivity(Activity $activity): void
     {
         if ($this->activities->contains($activity)) {
@@ -66,9 +67,6 @@ class ActivityCategory
         $this->activities->add($activity);
     }
 
-    /**
-     * @param Activity $activity
-     */
     public function removeActivity(Activity $activity): void
     {
         if (!$this->activities->contains($activity)) {
@@ -78,24 +76,18 @@ class ActivityCategory
         $this->activities->removeElement($activity);
     }
 
-    /**
-     * @return ActivityLocalisedText
-     */
     public function getName(): ActivityLocalisedText
     {
         return $this->name;
     }
 
-    /**
-     * @param ActivityLocalisedText $name
-     */
     public function setName(ActivityLocalisedText $name): void
     {
         $this->name = $name;
     }
 
     /**
-     * @return array
+     * @return Activity[]
      */
     public function getActivities(): array
     {
@@ -103,7 +95,7 @@ class ActivityCategory
     }
 
     /**
-     * @return array
+     * @return ActivityCategoryArrayType
      */
     public function toArray(): array
     {

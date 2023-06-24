@@ -4,18 +4,14 @@ declare(strict_types=1);
 
 namespace Photo\Controller\Factory\Plugin;
 
-use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Photo\Controller\Plugin\AlbumPlugin;
+use Psr\Container\ContainerInterface;
 
 class AlbumPluginFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param string $requestedName
-     * @param array|null $options
-     *
-     * @return AlbumPlugin
      */
     public function __invoke(
         ContainerInterface $container,

@@ -21,7 +21,8 @@ parameters:
             count: 1
             path: ../module/Decision/src/Model/AssociationYear.php
         - '#Property User\\Model\\ApiApp\:\:\$claims type mapping mismatch\: backing type string of enum User\\Model\\Enums\\JWTClaims does not match database type array\<string\>.$#'
-        - '#Property User\\Model\\ApiApp\:\:\$claims type mapping mismatch\: property can contain array but database expects User\\Model\\Enums\\JWTClaims\|null.$#'
+        - '#Property User\\Model\\ApiApp\:\:\$claims type mapping mismatch\: database can contain User\\Model\\Enums\\JWTClaims\|null but property expects array\<User\\Model\\Enums\\JWTClaims\>.$#'
+        - '#Property User\\Model\\ApiApp\:\:\$claims type mapping mismatch\: property can contain array\<User\\Model\\Enums\\JWTClaims\> but database expects User\\Model\\Enums\\JWTClaims\|null.$#'
         -
             message: '#Unreachable statement \- code above always terminates.$#'
             path: ..//module/*/test/*
@@ -35,3 +36,4 @@ parameters:
         - '#Method User\\Mapper\\ApiAppAuthentication\:\:getFirstAndLastAuthenticationPerApiApp\(\) should return array\<array\{0\: User\\Model\\ApiApp, firstAuthentication\: DateTime, lastAuthentication\: DateTime\}\> but returns array\<int, array\{0\: User\\Model\\ApiApp\|null, firstAuthentication\: string\|null, lastAuthentication\: string\|null\}\>.$#'
         - '#Static method ApplicationTest\\BaseControllerTest\:\:initServiceManager\(\) is unused.$#'
         - '#Method ApplicationTest\\BaseControllerTest\:\:bootstrapApplication\(\) is unused.$#'
+        - '#Parameter \#1 \$data \(array\{contractNumber\: string\|null, startDate\: string, expirationDate\: string, published\: bool, article\: string\|null, articleEn\: string\|null\}\) of method Company\\Model\\CompanyFeaturedPackage\:\:exchangeArray\(\) should be compatible with parameter \$data \(array\{contractNumber\: string\|null, startDate\?\: string, expirationDate\?\: string, published\?\: bool\|string\}\) of method Company\\Model\\CompanyPackage\:\:exchangeArray\(\)$#'

@@ -5,25 +5,24 @@ declare(strict_types=1);
 namespace Activity\Form;
 
 use Activity\Model\SignupField as SignupFieldModel;
-use Laminas\Form\Element\{
-    Number,
-    Select,
-    Text,
-};
+use Laminas\Form\Element\Number;
+use Laminas\Form\Element\Select;
+use Laminas\Form\Element\Text;
 use Laminas\Form\Fieldset;
 use Laminas\Hydrator\ClassMethodsHydrator;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Validator\{
-    Callback,
-    NotEmpty,
-};
+use Laminas\Validator\Callback;
+use Laminas\Validator\NotEmpty;
+
+use function substr_count;
 
 class SignupListField extends Fieldset implements InputFilterProviderInterface
 {
     public function __construct(private readonly Translator $translator)
     {
         parent::__construct('signupfield');
+
         $this->setHydrator(new ClassMethodsHydrator(false))
             ->setObject(new SignupFieldModel());
 
@@ -34,7 +33,7 @@ class SignupListField extends Fieldset implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->translator->translate('Name'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -44,7 +43,7 @@ class SignupListField extends Fieldset implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->translator->translate('Name'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -60,7 +59,7 @@ class SignupListField extends Fieldset implements InputFilterProviderInterface
                     ],
                     'label' => $this->translator->translate('Type'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -70,7 +69,7 @@ class SignupListField extends Fieldset implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->translator->translate('Min. value'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -80,7 +79,7 @@ class SignupListField extends Fieldset implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->translator->translate('Max. value'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -93,7 +92,7 @@ class SignupListField extends Fieldset implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->translator->translate('Options'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -106,7 +105,7 @@ class SignupListField extends Fieldset implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->translator->translate('Options'),
                 ],
-            ]
+            ],
         );
     }
 
@@ -192,7 +191,7 @@ class SignupListField extends Fieldset implements InputFilterProviderInterface
                                     'The number of English options must equal the number of Dutch options',
                                 ),
                             ],
-                            'callback' => function ($value, $context = null) {
+                            'callback' => static function ($value, $context = null) {
                                 return !((new NotEmpty())->isValid($context['nameEn']))
                                     || !((new NotEmpty())->isValid($context['name']))
                                     || substr_count($context['options'], ',') === substr_count($value, ',');
@@ -208,12 +207,11 @@ class SignupListField extends Fieldset implements InputFilterProviderInterface
      * Tests if the child field is not empty if the current field has the test
      * value. If so, returns true else false.
      *
-     * @param string $value The value to use for validation
-     * @param array $context The field context
-     * @param string $child The name of the element to test for emptiness
-     * @param string $testvalue
+     * @param string $value   The value to use for validation
+     * @param array  $context The field context
+     * @param string $child   The name of the element to test for emptiness
      *
-     * @return bool
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     protected function fieldDependantRequired(
         string $value,

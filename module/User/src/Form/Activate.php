@@ -4,18 +4,14 @@ declare(strict_types=1);
 
 namespace User\Form;
 
-use Laminas\Form\Element\{
-    Password,
-    Submit,
-};
+use Laminas\Form\Element\Password;
+use Laminas\Form\Element\Submit;
 use Laminas\Form\Form;
-use Laminas\Mvc\I18n\Translator;
 use Laminas\InputFilter\InputFilterProviderInterface;
-use Laminas\Validator\{
-    Identical,
-    NotEmpty,
-    StringLength,
-};
+use Laminas\Mvc\I18n\Translator;
+use Laminas\Validator\Identical;
+use Laminas\Validator\NotEmpty;
+use Laminas\Validator\StringLength;
 
 class Activate extends Form implements InputFilterProviderInterface
 {
@@ -32,7 +28,7 @@ class Activate extends Form implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->translator->translate('Your password'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -42,7 +38,7 @@ class Activate extends Form implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->translator->translate('Verify your password'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -52,7 +48,7 @@ class Activate extends Form implements InputFilterProviderInterface
                 'attributes' => [
                     'value' => $this->translator->translate('Activate'),
                 ],
-            ]
+            ],
         );
     }
 

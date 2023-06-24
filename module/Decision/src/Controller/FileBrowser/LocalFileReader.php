@@ -7,10 +7,25 @@ namespace Decision\Controller\FileBrowser;
 use Laminas\Http\Headers;
 use Laminas\Http\Response\Stream;
 
+use function end;
+use function explode;
+use function filesize;
+use function fopen;
+use function is_dir;
+use function is_file;
+use function is_link;
+use function is_readable;
+use function mime_content_type;
+use function preg_match;
+use function realpath;
+use function scandir;
+use function str_starts_with;
+use function strlen;
+use function strval;
+use function substr;
+
 /**
  * Description of LocalFileReader.
- *
- * @author s134399
  */
 class LocalFileReader implements FileReader
 {
@@ -20,11 +35,6 @@ class LocalFileReader implements FileReader
     ) {
     }
 
-    /**
-     * @param string $path
-     *
-     * @return bool|Stream
-     */
     public function downloadFile(string $path): bool|Stream
     {
         $fullPath = $this->root . $path;
@@ -54,20 +64,18 @@ class LocalFileReader implements FileReader
     }
 
     /**
-     * @param string $path
-     *
-     * @return array|null
+     * @return ?FileNode[]
      */
     public function listDir(string $path): ?array
     {
-        //remove the trailing slash from the dir
+        // remove the trailing slash from the dir
         $fullPath = $this->root . $path;
 
         if (!is_dir($fullPath)) {
             return null;
         }
 
-        //We can insert an additional /, except when when $path is the root
+        // We can insert an additional /, except for when $path is the root
         $delimiter = '' !== $path ? '/' : '';
         $dirContents = scandir($fullPath);
         $files = [];
@@ -90,9 +98,6 @@ class LocalFileReader implements FileReader
     }
 
     /**
-     * @param string $dirContent
-     * @param string $fullPath
-     *
      * @return false|string
      */
     protected function interpretDirContent(
@@ -104,7 +109,7 @@ class LocalFileReader implements FileReader
         }
 
         if (is_link($fullPath)) {
-            //symlink could point to illegal location, we must check this
+            // symlink could point to illegal location, we must check this
             if (!$this->isAllowed(substr($fullPath, strlen($this->root)))) {
                 return false;
             }
@@ -120,26 +125,15 @@ class LocalFileReader implements FileReader
             return 'file';
         }
 
-        //Unknown filesystem entity
-        //(likely, the path doesn't resolve to a valid entry in the filesystem at all)
+        // Unknown filesystem entity (likely, the path doesn't resolve to a valid entry in the filesystem at all)
         return false;
     }
 
-    /**
-     * @param string $path
-     *
-     * @return bool
-     */
     public function isDir(string $path): bool
     {
         return is_dir($this->root . $path);
     }
 
-    /**
-     * @param string $path
-     *
-     * @return bool
-     */
     public function isAllowed(string $path): bool
     {
         $fullPath = $this->root . $path;
@@ -151,19 +145,10 @@ class LocalFileReader implements FileReader
         $realFullPath = realpath($fullPath);
         $realRoot = realpath($this->root);
 
-        //Check whether the real location of fullPath is in a subdir of our 'root'.
-        if (!str_starts_with($realFullPath, $realRoot)) {
-            return false;
-        }
-
-        return true;
+        // Check whether the real location of fullPath is in a subdir of our 'root'.
+        return str_starts_with($realFullPath, $realRoot);
     }
 
-    /**
-     * @param string $path
-     *
-     * @return bool
-     */
     protected function isValidPathName(string $path): bool
     {
         return 1 === preg_match('#^' . $this->validFilepath . '$#', $path);

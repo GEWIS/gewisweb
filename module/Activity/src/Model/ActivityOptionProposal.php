@@ -6,16 +6,12 @@ namespace Activity\Model;
 
 use Application\Model\Traits\IdentifiableTrait;
 use DateTime;
-use Decision\Model\{
-    Member as MemberModel,
-    Organ as OrganModel,
-};
-use Doctrine\ORM\Mapping\{
-    Column,
-    Entity,
-    JoinColumn,
-    ManyToOne,
-};
+use Decision\Model\Member as MemberModel;
+use Decision\Model\Organ as OrganModel;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
 use User\Permissions\Resource\OrganResourceInterface;
 
 /**
@@ -29,13 +25,13 @@ class ActivityOptionProposal implements OrganResourceInterface
     /**
      * Name for the activity option proposal.
      */
-    #[Column(type: "string")]
+    #[Column(type: 'string')]
     protected string $name;
 
     /**
      * Description for the activity option proposal.
      */
-    #[Column(type: "string")]
+    #[Column(type: 'string')]
     protected string $description;
 
     /**
@@ -43,7 +39,7 @@ class ActivityOptionProposal implements OrganResourceInterface
      */
     #[ManyToOne(targetEntity: MemberModel::class)]
     #[JoinColumn(
-        referencedColumnName: "lidnr",
+        referencedColumnName: 'lidnr',
         nullable: false,
     )]
     protected MemberModel $creator;
@@ -51,7 +47,7 @@ class ActivityOptionProposal implements OrganResourceInterface
     /**
      * The date and time the activity option was created.
      */
-    #[Column(type: "datetime")]
+    #[Column(type: 'datetime')]
     protected DateTime $creationTime;
 
     /**
@@ -59,7 +55,7 @@ class ActivityOptionProposal implements OrganResourceInterface
      */
     #[ManyToOne(targetEntity: OrganModel::class)]
     #[JoinColumn(
-        referencedColumnName: "id",
+        referencedColumnName: 'id',
         nullable: true,
     )]
     protected ?OrganModel $organ = null;
@@ -68,54 +64,36 @@ class ActivityOptionProposal implements OrganResourceInterface
      * Who created this activity proposal, if not an organ.
      */
     #[Column(
-        type: "string",
+        type: 'string',
         nullable: true,
     )]
     protected ?string $organAlt = null;
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     */
     public function setName(string $name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * @return string
-     */
     public function getDescription(): string
     {
         return $this->description;
     }
 
-    /**
-     * @param string $description
-     */
     public function setDescription(string $description): void
     {
         $this->description = $description;
     }
 
-    /**
-     * @return DateTime
-     */
     public function getCreationTime(): DateTime
     {
         return $this->creationTime;
     }
 
-    /**
-     * @param DateTime $creationTime
-     */
     public function setCreationTime(DateTime $creationTime): void
     {
         $this->creationTime = $creationTime;
@@ -123,25 +101,17 @@ class ActivityOptionProposal implements OrganResourceInterface
 
     /**
      * Get the organ of this resource.
-     *
-     * @return OrganModel|null
      */
     public function getResourceOrgan(): ?OrganModel
     {
         return $this->getOrgan();
     }
 
-    /**
-     * @return OrganModel|null
-     */
     public function getOrgan(): ?OrganModel
     {
         return $this->organ;
     }
 
-    /**
-     * @param OrganModel|null $organ
-     */
     public function setOrgan(?OrganModel $organ): void
     {
         $this->organ = $organ;
@@ -160,12 +130,10 @@ class ActivityOptionProposal implements OrganResourceInterface
      * 1. The abbreviation of the related organ
      * 2. The alternative for an organ, other organising parties
      * 3. The full name of the member who created the proposal.
-     *
-     * @return string
      */
     public function getCreatorAlt(): string
     {
-        if (!is_null($this->getOrgan())) {
+        if (null !== $this->getOrgan()) {
             return $this->getOrgan()->getAbbr();
         }
 
@@ -176,33 +144,21 @@ class ActivityOptionProposal implements OrganResourceInterface
         return $this->getCreator()->getFullName();
     }
 
-    /**
-     * @return string|null
-     */
     public function getOrganAlt(): ?string
     {
         return $this->organAlt;
     }
 
-    /**
-     * @param string|null $organAlt
-     */
     public function setOrganAlt(?string $organAlt): void
     {
         $this->organAlt = $organAlt;
     }
 
-    /**
-     * @return MemberModel
-     */
     public function getCreator(): MemberModel
     {
         return $this->creator;
     }
 
-    /**
-     * @param MemberModel $creator
-     */
     public function setCreator(MemberModel $creator): void
     {
         $this->creator = $creator;

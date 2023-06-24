@@ -4,19 +4,12 @@ declare(strict_types=1);
 
 namespace Education\Model;
 
-use Doctrine\Common\Collections\{
-    ArrayCollection,
-    Collection,
-};
-use Doctrine\ORM\Mapping\{
-    Column,
-    Entity,
-    Id,
-    JoinColumn,
-    ManyToOne,
-    OneToMany,
-};
-use InvalidArgumentException;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\OneToMany;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 /**
@@ -29,21 +22,23 @@ class Course implements ResourceInterface
      * Course code.
      */
     #[Id]
-    #[Column(type: "string")]
+    #[Column(type: 'string')]
     protected string $code;
 
     /**
      * Course name.
      */
-    #[Column(type: "string")]
+    #[Column(type: 'string')]
     protected string $name;
 
     /**
      * Exams (and summaries) in this course.
+     *
+     * @var Collection<array-key, CourseDocument>
      */
     #[OneToMany(
         targetEntity: CourseDocument::class,
-        mappedBy: "course",
+        mappedBy: 'course',
     )]
     protected Collection $documents;
 
@@ -54,8 +49,6 @@ class Course implements ResourceInterface
 
     /**
      * Get the course code.
-     *
-     * @return string
      */
     public function getCode(): string
     {
@@ -64,8 +57,6 @@ class Course implements ResourceInterface
 
     /**
      * Get the course name.
-     *
-     * @return string
      */
     public function getName(): string
     {
@@ -75,8 +66,7 @@ class Course implements ResourceInterface
     /**
      * Get all exams belonging to this study.
      *
-     * @psalm-return Collection<int, Exam|Summary>
-     * @return Collection
+     * @return Collection<array-key, CourseDocument>
      */
     public function getDocuments(): Collection
     {
@@ -85,8 +75,6 @@ class Course implements ResourceInterface
 
     /**
      * Set the course code.
-     *
-     * @param string $code
      */
     public function setCode(string $code): void
     {
@@ -95,14 +83,18 @@ class Course implements ResourceInterface
 
     /**
      * Set the course name.
-     *
-     * @param string $name
      */
     public function setName(string $name): void
     {
         $this->name = $name;
     }
 
+    /**
+     * @return array{
+     *     code: string,
+     *     name: string,
+     * }
+     */
     public function toArray(): array
     {
         return [
@@ -113,8 +105,6 @@ class Course implements ResourceInterface
 
     /**
      * Get the resource ID.
-     *
-     * @return string
      */
     public function getResourceId(): string
     {

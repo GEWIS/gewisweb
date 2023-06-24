@@ -31,7 +31,12 @@ class AclService extends \User\Service\AclService
 
         // Graduates may not view photos/albums that were made after their membership ended.
         $this->acl->deny('graduate', 'album', 'view', new IsAfterMembershipEndedAndNotTagged());
-        $this->acl->deny('graduate', 'photo', ['view', 'download', 'view_metadata'], new IsAfterMembershipEndedAndNotTagged());
+        $this->acl->deny(
+            'graduate',
+            'photo',
+            ['view', 'download', 'view_metadata'],
+            new IsAfterMembershipEndedAndNotTagged(),
+        );
         // Graduates may not tag people or vote for the photo of the week. This applies to all photos.
         $this->acl->deny('graduate', 'tag', ['add', 'remove']);
         $this->acl->deny('graduate', 'vote', 'add');

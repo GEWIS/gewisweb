@@ -11,8 +11,6 @@ interface CreatorResourceInterface extends ResourceInterface
 {
     /**
      * Get the creator (a member) of this resource.
-     *
-     * @return MemberModel
      */
     public function getResourceCreator(): MemberModel;
 }

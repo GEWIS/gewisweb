@@ -5,15 +5,11 @@ declare(strict_types=1);
 namespace Application\View;
 
 use Application\Model\LocalisedText as LocalisedTextModel;
-use Application\View\Helper\{
-    Acl,
-    Breadcrumbs,
-    ScriptUrl,
-};
-use Company\Model\{
-    CompanyFeaturedPackage as CompanyFeaturedPackageModel,
-    JobCategory as JobCategoryModel,
-};
+use Application\View\Helper\Acl;
+use Application\View\Helper\Breadcrumbs;
+use Application\View\Helper\ScriptUrl;
+use Company\Model\CompanyFeaturedPackage as CompanyFeaturedPackageModel;
+use Company\Model\JobCategory as JobCategoryModel;
 use Laminas\Form\ElementInterface;
 use Laminas\Form\View\HelperTrait as FormHelperTrait;
 use Laminas\I18n\View\HelperTrait as I18nHelperTrait;

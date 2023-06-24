@@ -6,23 +6,21 @@ namespace User\Controller;
 
 use DateInterval;
 use DateTime;
-use Laminas\Http\{
-    Request,
-    Response,
-};
+use Laminas\Http\Request;
+use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
 use Laminas\View\Model\ViewModel;
-use User\Form\{
-    CompanyUserLogin as CompanyLoginForm,
-    UserLogin as UserLoginForm,
-};
+use User\Form\CompanyUserLogin as CompanyLoginForm;
+use User\Form\UserLogin as UserLoginForm;
 use User\Permissions\NotAllowedException;
-use User\Service\{
-    AclService,
-    User as UserService,
-};
+use User\Service\AclService;
+use User\Service\User as UserService;
+
+use function base64_decode;
+use function base64_encode;
+use function str_starts_with;
 
 /**
  * @method FlashMessenger flashMessenger()
@@ -69,7 +67,7 @@ class UserController extends AbstractActionController
 
                 if (null !== $login) {
                     return $this->redirect()->toUrl(
-                        $this->decodeRedirect((empty($data['redirect'])) ? $redirectTo : $data['redirect'])
+                        $this->decodeRedirect(empty($data['redirect']) ? $redirectTo : $data['redirect']),
                     );
                 }
             }
@@ -79,16 +77,10 @@ class UserController extends AbstractActionController
             [
                 'form' => $this->handleRedirect($userType, $redirectTo),
                 'userType' => $userType,
-            ]
+            ],
         );
     }
 
-    /**
-     * @param string $userType
-     * @param string|null $referer
-     *
-     * @return CompanyLoginForm|UserLoginForm
-     */
     private function handleRedirect(
         string $userType,
         ?string $referer,
@@ -111,8 +103,8 @@ class UserController extends AbstractActionController
                     $this->url()->fromRoute(
                         route: 'home',
                         options: ['force_canonical' => true],
-                    )
-                )
+                    ),
+                ),
             );
         }
 
@@ -172,7 +164,7 @@ class UserController extends AbstractActionController
         return new ViewModel(
             [
                 'form' => $this->userService->getRegisterForm(),
-            ]
+            ],
         );
     }
 
@@ -206,7 +198,7 @@ class UserController extends AbstractActionController
             [
                 'form' => $form,
                 'userType' => $userType,
-            ]
+            ],
         );
     }
 
@@ -246,7 +238,7 @@ class UserController extends AbstractActionController
             [
                 'form' => $form,
                 'userType' => $userType,
-            ]
+            ],
         );
     }
 
@@ -287,7 +279,7 @@ class UserController extends AbstractActionController
                     return new ViewModel(
                         [
                             'activated' => true,
-                        ]
+                        ],
                     );
                 }
             }
@@ -298,7 +290,7 @@ class UserController extends AbstractActionController
                 'form' => $form,
                 'user' => $newUser,
                 'userType' => $userType,
-            ]
+            ],
         );
     }
 }

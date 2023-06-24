@@ -16,11 +16,11 @@ class ActivityOptionProposal extends BaseMapper
     /**
      * Get activity proposals within a given period and associated with given organ.
      *
-     * @param DateTime $begin the date to get the options after
-     * @param DateTime $end the date to get the options before
-     * @param int $organId the organ options have to be associated with
+     * @param DateTime $begin   the date to get the options after
+     * @param DateTime $end     the date to get the options before
+     * @param int      $organId the organ options have to be associated with
      *
-     * @return array<array-key, ActivityOptionProposalModel>
+     * @return ActivityOptionProposalModel[]
      */
     public function getNonClosedProposalsWithinPeriodAndOrgan(
         DateTime $begin,
@@ -42,9 +42,6 @@ class ActivityOptionProposal extends BaseMapper
         return $qb->getQuery()->getResult();
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function getRepositoryName(): string
     {
         return ActivityOptionProposalModel::class;

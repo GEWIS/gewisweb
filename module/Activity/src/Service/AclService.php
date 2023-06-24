@@ -32,7 +32,7 @@ class AclService extends \User\Service\AclService
         $this->acl->allow(
             'user',
             'signupList',
-            ['view', 'viewDetails', 'signup', 'signoff', 'checkUserSignedUp']
+            ['view', 'viewDetails', 'signup', 'signoff', 'checkUserSignedUp'],
         );
 
         $this->acl->allow('active_member', 'activity', ['create', 'viewAdmin', 'listCategories']);
@@ -40,13 +40,13 @@ class AclService extends \User\Service\AclService
             'active_member',
             'activity',
             ['update', 'viewDetails', 'adminSignup', 'viewParticipants', 'exportParticipants'],
-            new IsCreatorOrOrganMember()
+            new IsCreatorOrOrganMember(),
         );
         $this->acl->allow(
             'active_member',
             'signupList',
             ['adminSignup', 'viewParticipants', 'exportParticipants'],
-            new IsCreatorOrOrganMember()
+            new IsCreatorOrOrganMember(),
         );
 
         $this->acl->allow('admin', 'activity', 'viewParticipantDetails');

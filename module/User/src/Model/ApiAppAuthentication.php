@@ -6,12 +6,10 @@ namespace User\Model;
 
 use Application\Model\Traits\IdentifiableTrait;
 use DateTime;
-use Doctrine\ORM\Mapping\{
-    Column,
-    Entity,
-    JoinColumn,
-    ManyToOne,
-};
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
 
 /**
  * Log when a member has authenticated for an external app.
@@ -26,8 +24,8 @@ class ApiAppAuthentication
      */
     #[ManyToOne(targetEntity: User::class)]
     #[JoinColumn(
-        name: "user_id",
-        referencedColumnName: "lidnr",
+        name: 'user_id',
+        referencedColumnName: 'lidnr',
         nullable: false,
     )]
     protected User $user;
@@ -37,8 +35,8 @@ class ApiAppAuthentication
      */
     #[ManyToOne(targetEntity: ApiApp::class)]
     #[JoinColumn(
-        name: "app_id",
-        referencedColumnName: "id",
+        name: 'app_id',
+        referencedColumnName: 'id',
         nullable: false,
     )]
     protected ApiApp $apiApp;
@@ -46,7 +44,7 @@ class ApiAppAuthentication
     /**
      * Time of authentication.
      */
-    #[Column(type: "datetime")]
+    #[Column(type: 'datetime')]
     protected DateTime $time;
 
     public function getUser(): User

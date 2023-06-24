@@ -28,7 +28,7 @@ class PollOption extends Fieldset implements InputFilterProviderInterface
                 'options' => [
                     'label' => 'Dutch option',
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -38,7 +38,7 @@ class PollOption extends Fieldset implements InputFilterProviderInterface
                 'options' => [
                     'label' => 'English option',
                 ],
-            ]
+            ],
         );
     }
 

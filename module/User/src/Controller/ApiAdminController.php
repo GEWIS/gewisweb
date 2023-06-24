@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace User\Controller;
 
-use Laminas\Http\{
-    Request,
-    Response,
-};
+use Laminas\Http\Request;
+use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 use User\Service\ApiUser as ApiUserService;
@@ -28,7 +26,7 @@ class ApiAdminController extends AbstractActionController
         return new ViewModel(
             [
                 'tokens' => $this->apiUserService->getTokens(),
-            ]
+            ],
         );
     }
 
@@ -52,7 +50,7 @@ class ApiAdminController extends AbstractActionController
                     return new ViewModel(
                         [
                             'apiUser' => $apiUser,
-                        ]
+                        ],
                     );
                 }
             }
@@ -61,7 +59,7 @@ class ApiAdminController extends AbstractActionController
         return new ViewModel(
             [
                 'form' => $form,
-            ]
+            ],
         );
     }
 
@@ -86,7 +84,7 @@ class ApiAdminController extends AbstractActionController
         return new ViewModel(
             [
                 'token' => $service->getToken($id),
-            ]
+            ],
         );
     }
 }

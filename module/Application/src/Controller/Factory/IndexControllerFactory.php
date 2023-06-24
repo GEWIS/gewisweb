@@ -5,17 +5,13 @@ declare(strict_types=1);
 namespace Application\Controller\Factory;
 
 use Application\Controller\IndexController;
-use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Psr\Container\ContainerInterface;
 
 class IndexControllerFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param string $requestedName
-     * @param array|null $options
-     *
-     * @return IndexController
      */
     public function __invoke(
         ContainerInterface $container,

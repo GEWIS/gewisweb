@@ -5,15 +5,13 @@ declare(strict_types=1);
 namespace Frontpage\Form;
 
 use Frontpage\Form\PollOption as PollOptionFieldset;
-use Laminas\Form\Element\{
-    Collection,
-    Submit,
-    Text,
-};
 use Laminas\Filter\StringTrim;
+use Laminas\Form\Element\Collection;
+use Laminas\Form\Element\Submit;
+use Laminas\Form\Element\Text;
 use Laminas\Form\Form;
-use Laminas\Mvc\I18n\Translator;
 use Laminas\InputFilter\InputFilterProviderInterface;
+use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\StringLength;
 
 class Poll extends Form implements InputFilterProviderInterface
@@ -29,7 +27,7 @@ class Poll extends Form implements InputFilterProviderInterface
                 'options' => [
                     'label' => $translator->translate('Dutch question'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -39,7 +37,7 @@ class Poll extends Form implements InputFilterProviderInterface
                 'options' => [
                     'label' => $translator->translate('English question'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -54,7 +52,7 @@ class Poll extends Form implements InputFilterProviderInterface
                         'type' => PollOptionFieldset::class,
                     ],
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -64,7 +62,7 @@ class Poll extends Form implements InputFilterProviderInterface
                 'attributes' => [
                     'value' => $translator->translate('Submit'),
                 ],
-            ]
+            ],
         );
     }
 

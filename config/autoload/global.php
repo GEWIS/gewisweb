@@ -14,10 +14,8 @@
 
 declare(strict_types=1);
 
-use Application\Extensions\Doctrine\{
-    Rand,
-    Year,
-};
+use Application\Extensions\Doctrine\Rand;
+use Application\Extensions\Doctrine\Year;
 use Laminas\Session\Storage\SessionArrayStorage;
 use Laminas\Session\Validator\HttpUserAgent;
 

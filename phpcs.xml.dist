@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="GEWISWEB Coding Standard">
+    <arg name="basepath" value="." />
+    <arg name="colors" />
+    <arg name="error-severity" value="1" />
+    <arg name="extensions" value="php,dist" />
+    <arg name="parallel" value="75" />
+    <arg name="warning-severity" value="1" />
+
+    <arg value="nps" />
+
+    <file>module</file>
+    <file>config</file>
+    <exclude-pattern>*/vendor/*</exclude-pattern>
+
+    <rule ref="GEWISPHPCodingStandards" />
+
+    <!-- Array unpacking is not yet supported, see https://github.com/squizlabs/PHP_CodeSniffer/pull/3843. -->
+    <rule ref="Squiz.Arrays.ArrayDeclaration.NoKeySpecified">
+        <exclude-pattern>module/Decision/src/Controller/AdminController.php</exclude-pattern>
+    </rule>
+
+    <!-- Legacy code that cannot be easily changed, so ignore for now -->
+    <rule ref="Squiz.NamingConventions.ValidVariableName.MemberNotCamelCaps">
+        <exclude-pattern>module/Decision/src/Model/Decision.php</exclude-pattern>
+        <exclude-pattern>module/Decision/src/Model/MailingList.php</exclude-pattern>
+        <exclude-pattern>module/Decision/src/Model/MeetingMinutes.php</exclude-pattern>
+        <exclude-pattern>module/Decision/src/Model/SubDecision.php</exclude-pattern>
+        <exclude-pattern>module/Photo/src/Controller/PhotoController.php</exclude-pattern>
+    </rule>
+
+    <!-- Type hints that cannot converted to native types due to signature of parent -->
+    <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint">
+        <!-- Factories -->
+        <exclude-pattern>module/Company/src/Controller/Factory/AdminApprovalControllerFactory.php</exclude-pattern>
+        <exclude-pattern>module/Company/src/Controller/Factory/AdminControllerFactory.php</exclude-pattern>
+        <exclude-pattern>module/Company/src/Controller/Factory/CompanyControllerFactory.php</exclude-pattern>
+        <exclude-pattern>module/Company/src/Controller/Factory/CompanyAccountControllerFactory.php</exclude-pattern>
+        <exclude-pattern>module/Activity/src/Controller/Factory/ActivityCalendarControllerFactory.php</exclude-pattern>
+        <exclude-pattern>module/Activity/src/Controller/Factory/AdminApprovalControllerFactory.php</exclude-pattern>
+        <exclude-pattern>module/Activity/src/Controller/Factory/AdminControllerFactory.php</exclude-pattern>
+        <exclude-pattern>module/Activity/src/Controller/Factory/ApiControllerFactory.php</exclude-pattern>
+        <exclude-pattern>module/Activity/src/Controller/Factory/ActivityControllerFactory.php</exclude-pattern>
+        <exclude-pattern>module/Activity/src/Controller/Factory/AdminCategoryControllerFactory.php</exclude-pattern>
+        <exclude-pattern>module/Activity/src/Controller/Factory/AdminOptionControllerFactory.php</exclude-pattern>
+        <exclude-pattern>module/Education/src/Controller/Factory/AdminControllerFactory.php</exclude-pattern>
+        <exclude-pattern>module/Education/src/Controller/Factory/EducationControllerFactory.php</exclude-pattern>
+        <exclude-pattern>module/Decision/src/Controller/Factory/DecisionControllerFactory.php</exclude-pattern>
+        <exclude-pattern>module/Decision/src/Controller/Factory/AdminControllerFactory.php</exclude-pattern>
+        <exclude-pattern>module/Decision/src/Controller/Factory/OrganControllerFactory.php</exclude-pattern>
+        <exclude-pattern>module/Decision/src/Controller/Factory/MemberControllerFactory.php</exclude-pattern>
+        <exclude-pattern>module/Decision/src/Controller/Factory/OrganAdminControllerFactory.php</exclude-pattern>
+        <exclude-pattern>module/Application/src/Controller/Factory/IndexControllerFactory.php</exclude-pattern>
+        <exclude-pattern>module/Frontpage/src/Controller/Factory/FrontpageControllerFactory.php</exclude-pattern>
+        <exclude-pattern>module/Frontpage/src/Controller/Factory/PollControllerFactory.php</exclude-pattern>
+        <exclude-pattern>module/Frontpage/src/Controller/Factory/PageControllerFactory.php</exclude-pattern>
+        <exclude-pattern>module/Frontpage/src/Controller/Factory/AdminControllerFactory.php</exclude-pattern>
+        <exclude-pattern>module/Frontpage/src/Controller/Factory/PollAdminControllerFactory.php</exclude-pattern>
+        <exclude-pattern>module/Frontpage/src/Controller/Factory/OrganControllerFactory.php</exclude-pattern>
+        <exclude-pattern>module/Frontpage/src/Controller/Factory/InfimumControllerFactory.php</exclude-pattern>
+        <exclude-pattern>module/Frontpage/src/Controller/Factory/PageAdminControllerFactory.php</exclude-pattern>
+        <exclude-pattern>module/Frontpage/src/Controller/Factory/NewsAdminControllerFactory.php</exclude-pattern>
+        <exclude-pattern>module/Photo/src/Controller/Factory/PhotoControllerFactory.php</exclude-pattern>
+        <exclude-pattern>module/Photo/src/Controller/Factory/AlbumAdminControllerFactory.php</exclude-pattern>
+        <exclude-pattern>module/Photo/src/Controller/Factory/ApiControllerFactory.php</exclude-pattern>
+        <exclude-pattern>module/Photo/src/Controller/Factory/AlbumControllerFactory.php</exclude-pattern>
+        <exclude-pattern>module/Photo/src/Controller/Factory/Plugin/AlbumPluginFactory.php</exclude-pattern>
+        <exclude-pattern>module/Photo/src/Controller/Factory/PhotoAdminControllerFactory.php</exclude-pattern>
+        <exclude-pattern>module/Photo/src/Controller/Factory/TagControllerFactory.php</exclude-pattern>
+        <exclude-pattern>module/User/src/Controller/Factory/ApiAuthenticationControllerFactory.php</exclude-pattern>
+        <exclude-pattern>module/User/src/Controller/Factory/UserControllerFactory.php</exclude-pattern>
+        <exclude-pattern>module/User/src/Controller/Factory/ApiAdminControllerFactory.php</exclude-pattern>
+        <exclude-pattern>module/User/src/Mapper/Factory/ApiAppFactory.php</exclude-pattern>
+        <exclude-pattern>module/User/src/Service/Factory/PwnedPasswordsFactory.php</exclude-pattern>
+        <exclude-pattern>module/User/src/Service/Factory/ApiAppFactory.php</exclude-pattern>
+        <exclude-pattern>module/User/src/Authorization/AclServiceFactory.php</exclude-pattern>
+        <!-- Permission assertions -->
+        <exclude-pattern>module/User/src/Permissions/Assertion/IsAfterMembershipEndedAndNotTagged.php</exclude-pattern>
+        <exclude-pattern>module/User/src/Permissions/Assertion/IsCreator.php</exclude-pattern>
+        <exclude-pattern>module/User/src/Permissions/Assertion/IsCreatorOrOrganMember.php</exclude-pattern>
+        <exclude-pattern>module/User/src/Permissions/Assertion/IsOrganMember.php</exclude-pattern>
+        <!-- Miscellaneous -->
+        <exclude-pattern>module/Photo/src/Controller/Plugin/AlbumPaginatorAdapter.php</exclude-pattern>
+    </rule>
+    <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingTraversableTypeHintSpecification">
+        <exclude-pattern>module/Activity/src/Module.php</exclude-pattern>
+        <exclude-pattern>module/Activity/src/Form/Activity.php</exclude-pattern>
+        <exclude-pattern>module/Activity/src/Form/ActivityCalendarOption.php</exclude-pattern>
+        <exclude-pattern>module/Activity/src/Form/ActivityCalendarPeriod.php</exclude-pattern>
+        <exclude-pattern>module/Activity/src/Form/ActivityCalendarProposal.php</exclude-pattern>
+        <exclude-pattern>module/Activity/src/Form/Signup.php</exclude-pattern>
+        <exclude-pattern>module/Activity/src/Form/SignupList.php</exclude-pattern>
+        <exclude-pattern>module/Activity/src/Form/SignupListField.php</exclude-pattern>
+        <exclude-pattern>module/Application/src/Module.php</exclude-pattern>
+        <exclude-pattern>module/Application/src/Form/Localisable.php</exclude-pattern>
+        <exclude-pattern>module/Application/src/Form/ModifyRequest.php</exclude-pattern>
+        <exclude-pattern>module/Company/src/Module.php</exclude-pattern>
+        <exclude-pattern>module/Company/src/Form/Job.php</exclude-pattern>
+        <exclude-pattern>module/Company/src/Form/JobCategory.php</exclude-pattern>
+        <exclude-pattern>module/Company/src/Form/JobsTransfer.php</exclude-pattern>
+        <exclude-pattern>module/Company/src/Form/Package.php</exclude-pattern>
+        <exclude-pattern>module/Decision/src/Module.php</exclude-pattern>
+        <exclude-pattern>module/Decision/src/Form/Authorization.php</exclude-pattern>
+        <exclude-pattern>module/Decision/src/Form/AuthorizationRevocation.php</exclude-pattern>
+        <exclude-pattern>module/Decision/src/Form/Document.php</exclude-pattern>
+        <exclude-pattern>module/Decision/src/Form/Minutes.php</exclude-pattern>
+        <exclude-pattern>module/Decision/src/Form/OrganInformation.php</exclude-pattern>
+        <exclude-pattern>module/Decision/src/Form/ReorderDocument.php</exclude-pattern>
+        <exclude-pattern>module/Decision/src/Form/SearchDecision.php</exclude-pattern>
+        <exclude-pattern>module/Education/src/Module.php</exclude-pattern>
+        <exclude-pattern>module/Education/src/Form/Bulk.php</exclude-pattern>
+        <exclude-pattern>module/Education/src/Form/Course.php</exclude-pattern>
+        <exclude-pattern>module/Education/src/Form/Fieldset.php</exclude-pattern>
+        <exclude-pattern>module/Education/src/Form/Fieldset.php</exclude-pattern>
+        <exclude-pattern>module/Education/src/Form/SearchCourse.php</exclude-pattern>
+        <exclude-pattern>module/Education/src/Form/TempUpload.php</exclude-pattern>
+        <exclude-pattern>module/Education/src/Form/Fieldset/Exam.php</exclude-pattern>
+        <exclude-pattern>module/Education/src/Form/Fieldset/Summary.php</exclude-pattern>
+        <exclude-pattern>module/Frontpage/src/Module.php</exclude-pattern>
+        <exclude-pattern>module/Frontpage/src/Form/NewsItem.php</exclude-pattern>
+        <exclude-pattern>module/Frontpage/src/Form/Page.php</exclude-pattern>
+        <exclude-pattern>module/Frontpage/src/Form/Poll.php</exclude-pattern>
+        <exclude-pattern>module/Frontpage/src/Form/PollApproval.php</exclude-pattern>
+        <exclude-pattern>module/Frontpage/src/Form/PollComment.php</exclude-pattern>
+        <exclude-pattern>module/Frontpage/src/Form/PollOption.php</exclude-pattern>
+        <exclude-pattern>module/Photo/src/Module.php</exclude-pattern>
+        <exclude-pattern>module/Photo/src/Form/CreateAlbum.php</exclude-pattern>
+        <exclude-pattern>module/Photo/src/Form/EditAlbum.php</exclude-pattern>
+        <exclude-pattern>module/User/src/Module.php</exclude-pattern>
+        <exclude-pattern>module/User/src/Form/Activate.php</exclude-pattern>
+        <exclude-pattern>module/User/src/Form/ApiToken.php</exclude-pattern>
+        <exclude-pattern>module/User/src/Form/CompanyUserLogin.php</exclude-pattern>
+        <exclude-pattern>module/User/src/Form/CompanyUserReset.php</exclude-pattern>
+        <exclude-pattern>module/User/src/Form/Password.php</exclude-pattern>
+        <exclude-pattern>module/User/src/Form/Register.php</exclude-pattern>
+        <exclude-pattern>module/User/src/Form/UserLogin.php</exclude-pattern>
+        <exclude-pattern>module/User/src/Form/UserReset.php</exclude-pattern>
+    </rule>
+</ruleset>

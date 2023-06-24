@@ -7,24 +7,20 @@ namespace Company\Form;
 use Company\Mapper\Category as CategoryMapper;
 use Company\Model\CompanyLocalisedText as CompanyLocalisedTextModel;
 use Doctrine\ORM\NonUniqueResultException;
-use Laminas\Mvc\I18n\Translator;
-use Laminas\Filter\{
-    StringToLower,
-    StringTrim,
-    StripTags,
-};
-use Laminas\Form\Element\{
-    Checkbox,
-    Submit,
-    Text,
-};
+use Laminas\Filter\StringToLower;
+use Laminas\Filter\StringTrim;
+use Laminas\Filter\StripTags;
+use Laminas\Form\Element\Checkbox;
+use Laminas\Form\Element\Submit;
+use Laminas\Form\Element\Text;
 use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterProviderInterface;
-use Laminas\Validator\{
-    Callback,
-    Regex,
-    StringLength,
-};
+use Laminas\Mvc\I18n\Translator;
+use Laminas\Validator\Callback;
+use Laminas\Validator\Regex;
+use Laminas\Validator\StringLength;
+
+use function mb_strtolower;
 
 class JobCategory extends Form implements InputFilterProviderInterface
 {
@@ -38,6 +34,7 @@ class JobCategory extends Form implements InputFilterProviderInterface
     ) {
         // we want to ignore the name passed
         parent::__construct();
+
         $this->setAttribute('method', 'post');
 
         $this->add(
@@ -47,7 +44,7 @@ class JobCategory extends Form implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->translator->translate('Name'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -57,7 +54,7 @@ class JobCategory extends Form implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->translator->translate('Name'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -67,7 +64,7 @@ class JobCategory extends Form implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->translator->translate('Name (Plural)'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -77,7 +74,7 @@ class JobCategory extends Form implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->translator->translate('Name (Plural)'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -87,7 +84,7 @@ class JobCategory extends Form implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->translator->translate('Slug'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -97,7 +94,7 @@ class JobCategory extends Form implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->translator->translate('Slug'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -109,14 +106,14 @@ class JobCategory extends Form implements InputFilterProviderInterface
                     'checked_value' => '1',
                     'unchecked_value' => '0',
                 ],
-            ]
+            ],
         );
 
         $this->add(
             [
                 'name' => 'submit',
                 'type' => Submit::class,
-            ]
+            ],
         );
     }
 
@@ -203,7 +200,9 @@ class JobCategory extends Form implements InputFilterProviderInterface
                         'options' => [
                             'pattern' => '/^[0-9a-zA-Z_\-\.]*$/',
                             'messages' => [
-                                Regex::ERROROUS => $this->translator->translate('This slug contains invalid characters'),
+                                Regex::ERROROUS => $this->translator->translate(
+                                    'This slug contains invalid characters',
+                                ),
                             ],
                         ],
                     ],
@@ -225,9 +224,6 @@ class JobCategory extends Form implements InputFilterProviderInterface
         return $filter;
     }
 
-    /**
-     * @param CompanyLocalisedTextModel $currentSlug
-     */
     public function setCurrentSlug(CompanyLocalisedTextModel $currentSlug): void
     {
         $this->currentSlug = $currentSlug->getValueNL();
@@ -237,12 +233,9 @@ class JobCategory extends Form implements InputFilterProviderInterface
     /**
      * Determine if the given slug is unique (in Dutch and English).
      *
-     * @param string $value
-     * @param array $context
-     * @param string $languageSuffix
-     *
-     * @return bool
      * @throws NonUniqueResultException
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function isSlugUnique(
         string $value,

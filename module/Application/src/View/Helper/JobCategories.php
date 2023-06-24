@@ -17,7 +17,7 @@ class JobCategories extends AbstractHelper
     /**
      * Returns all visible categories.
      *
-     * @return array<array-key, JobCategoryModel>
+     * @return JobCategoryModel[]
      */
     public function __invoke(): array
     {

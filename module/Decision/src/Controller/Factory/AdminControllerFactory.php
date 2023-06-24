@@ -5,18 +5,14 @@ declare(strict_types=1);
 namespace Decision\Controller\Factory;
 
 use Decision\Controller\AdminController;
-use Psr\Container\ContainerInterface;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Psr\Container\ContainerInterface;
 
 class AdminControllerFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param string $requestedName
-     * @param array|null $options
-     *
-     * @return AdminController
      */
     public function __invoke(
         ContainerInterface $container,

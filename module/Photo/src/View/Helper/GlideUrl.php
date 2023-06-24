@@ -13,9 +13,6 @@ use League\Glide\Urls\UrlBuilder;
  */
 class GlideUrl extends AbstractHelper
 {
-    /**
-     * @var UrlBuilder
-     */
     protected UrlBuilder $urlBuilder;
 
     /**
@@ -29,10 +26,7 @@ class GlideUrl extends AbstractHelper
     /**
      * Gets a signed glide URL.
      *
-     * @param string $imagePath
-     * @param array $params
-     *
-     * @return string
+     * @param array{w: int, h: int, fm?: string, q?: int} $params
      */
     public function getUrl(
         string $imagePath,
@@ -53,8 +47,6 @@ class GlideUrl extends AbstractHelper
 
     /**
      * Set the url builder.
-     *
-     * @param UrlBuilder $urlBuilder
      */
     public function setUrlBuilder(UrlBuilder $urlBuilder): void
     {

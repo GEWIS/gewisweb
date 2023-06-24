@@ -12,9 +12,6 @@ use Decision\Model\MeetingMinutes as MeetingMinutesModel;
  */
 class MeetingMinutes extends BaseMapper
 {
-    /**
-     * @inheritDoc
-     */
     protected function getRepositoryName(): string
     {
         return MeetingMinutesModel::class;

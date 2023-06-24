@@ -5,29 +5,23 @@ declare(strict_types=1);
 namespace Activity;
 
 use Activity\Command\CalendarNotify;
-use Activity\Controller\{
-    ActivityCalendarController,
-    ActivityController,
-    AdminApprovalController,
-    AdminCategoryController,
-    AdminController,
-    AdminOptionController,
-    ApiController,
-};
-use Activity\Controller\Factory\{
-    ActivityCalendarControllerFactory,
-    ActivityControllerFactory,
-    AdminApprovalControllerFactory,
-    AdminCategoryControllerFactory,
-    AdminControllerFactory,
-    AdminOptionControllerFactory,
-    ApiControllerFactory,
-};
+use Activity\Controller\ActivityCalendarController;
+use Activity\Controller\ActivityController;
+use Activity\Controller\AdminApprovalController;
+use Activity\Controller\AdminCategoryController;
+use Activity\Controller\AdminController;
+use Activity\Controller\AdminOptionController;
+use Activity\Controller\ApiController;
+use Activity\Controller\Factory\ActivityCalendarControllerFactory;
+use Activity\Controller\Factory\ActivityControllerFactory;
+use Activity\Controller\Factory\AdminApprovalControllerFactory;
+use Activity\Controller\Factory\AdminCategoryControllerFactory;
+use Activity\Controller\Factory\AdminControllerFactory;
+use Activity\Controller\Factory\AdminOptionControllerFactory;
+use Activity\Controller\Factory\ApiControllerFactory;
 use Doctrine\ORM\Mapping\Driver\AttributeDriver;
-use Laminas\Router\Http\{
-    Literal,
-    Segment,
-};
+use Laminas\Router\Http\Literal;
+use Laminas\Router\Http\Segment;
 
 return [
     'router' => [

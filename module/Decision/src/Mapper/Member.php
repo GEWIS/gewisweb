@@ -5,15 +5,13 @@ declare(strict_types=1);
 namespace Decision\Mapper;
 
 use Application\Mapper\BaseMapper;
-use Decision\Model\{
-    Member as MemberModel,
-    Organ as OrganModel,
-    OrganMember as OrganMemberModel,
-};
-use Doctrine\ORM\Query\{
-    ResultSetMapping,
-    ResultSetMappingBuilder,
-};
+use Decision\Model\Member as MemberModel;
+use Decision\Model\Organ as OrganModel;
+use Decision\Model\OrganMember as OrganMemberModel;
+use Doctrine\ORM\Query\ResultSetMapping;
+use Doctrine\ORM\Query\ResultSetMappingBuilder;
+
+use function strtolower;
 
 /**
  * @template-extends BaseMapper<MemberModel>
@@ -24,8 +22,6 @@ class Member extends BaseMapper
      * Find a member by its membership number (NOTE: only members who are not deleted are returned).
      *
      * @param int $number Membership number
-     *
-     * @return MemberModel|null
      */
     public function findByLidnr(int $number): ?MemberModel
     {
@@ -39,11 +35,12 @@ class Member extends BaseMapper
      * Finds members (lidnr, full name, and generation) by (part of) their name.
      *
      * @param string $name (part of) the full name of a member
-     * @param int $maxResults
-     * @param string $orderColumn
-     * @param string $orderDirection
      *
-     * @return array<array-key, array{lidnr: int, fullName: string, generation: int}>
+     * @return array<array-key, array{
+     *     lidnr: int,
+     *     fullName: string,
+     *     generation: int,
+     * }>
      */
     public function searchByName(
         string $name,
@@ -87,7 +84,7 @@ class Member extends BaseMapper
      *
      * @param int $days the number of days to look ahead
      *
-     * @return array<array-key, MemberModel> Of members sorted by birthday
+     * @return MemberModel[] sorted by birthday
      */
     public function findBirthdayMembers(int $days): array
     {
@@ -119,7 +116,7 @@ class Member extends BaseMapper
     /**
      * Find all organs of this member.
      *
-     * @return array<array-key, OrganModel>
+     * @return OrganModel[]
      */
     public function findOrgans(MemberModel $member): array
     {
@@ -139,7 +136,7 @@ class Member extends BaseMapper
     /**
      * Find all active installations of a member.
      *
-     * @return array<array-key, OrganMemberModel>
+     * @return OrganMemberModel[]
      */
     public function findCurrentInstallations(MemberModel $member): array
     {
@@ -158,7 +155,7 @@ class Member extends BaseMapper
     /**
      * Find all past installations of a member.
      *
-     * @return array<array-key, OrganMemberModel>
+     * @return OrganMemberModel[]
      */
     public function findHistoricalInstallations(MemberModel $member): array
     {
@@ -174,9 +171,6 @@ class Member extends BaseMapper
         return $qb->getQuery()->getResult();
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function getRepositoryName(): string
     {
         return MemberModel::class;

@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace User\Form;
 
-use Laminas\Form\Element\{
-    Submit,
-    Text,
-};
+use Laminas\Form\Element\Submit;
+use Laminas\Form\Element\Text;
 use Laminas\Form\Form;
-use Laminas\Mvc\I18n\Translator;
 use Laminas\InputFilter\InputFilterProviderInterface;
+use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\StringLength;
 
 class ApiToken extends Form implements InputFilterProviderInterface
@@ -26,7 +24,7 @@ class ApiToken extends Form implements InputFilterProviderInterface
                 'options' => [
                     'label' => $translator->translate('Name'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -36,7 +34,7 @@ class ApiToken extends Form implements InputFilterProviderInterface
                 'attributes' => [
                     'value' => $translator->translate('Create API token'),
                 ],
-            ]
+            ],
         );
     }
 

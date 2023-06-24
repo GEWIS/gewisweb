@@ -15,7 +15,7 @@ class EducationController extends AbstractActionController
 {
     public function __construct(
         private readonly ExamService $examService,
-        private readonly SearchCourseForm $searchCourseForm
+        private readonly SearchCourseForm $searchCourseForm,
     ) {
     }
 
@@ -31,21 +31,19 @@ class EducationController extends AbstractActionController
             if ($form->isValid()) {
                 $courses = $this->examService->searchCourse($form->getData());
 
-                if (null !== $courses) {
-                    return new ViewModel(
-                        [
-                            'form' => $form,
-                            'courses' => $courses,
-                        ]
-                    );
-                }
+                return new ViewModel(
+                    [
+                        'form' => $form,
+                        'courses' => $courses,
+                    ],
+                );
             }
         }
 
         return new ViewModel(
             [
                 'form' => $form,
-            ]
+            ],
         );
     }
 
@@ -62,7 +60,7 @@ class EducationController extends AbstractActionController
         return new ViewModel(
             [
                 'course' => $course,
-            ]
+            ],
         );
     }
 

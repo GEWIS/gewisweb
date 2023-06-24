@@ -5,12 +5,10 @@ declare(strict_types=1);
 namespace Activity\Model;
 
 use Application\Model\Traits\IdentifiableTrait;
-use Doctrine\ORM\Mapping\{
-    Column,
-    Entity,
-    JoinColumn,
-    ManyToOne,
-};
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
 
 /**
  * SignupFieldValue model.
@@ -25,8 +23,8 @@ class SignupFieldValue
      */
     #[ManyToOne(targetEntity: SignupField::class)]
     #[JoinColumn(
-        name: "field_id",
-        referencedColumnName: "id",
+        name: 'field_id',
+        referencedColumnName: 'id',
         nullable: false,
     )]
     protected SignupField $field;
@@ -36,11 +34,11 @@ class SignupFieldValue
      */
     #[ManyToOne(
         targetEntity: Signup::class,
-        inversedBy: "fieldValues",
+        inversedBy: 'fieldValues',
     )]
     #[JoinColumn(
-        name: "signup_id",
-        referencedColumnName: "id",
+        name: 'signup_id',
+        referencedColumnName: 'id',
         nullable: false,
     )]
     protected Signup $signup;
@@ -49,7 +47,7 @@ class SignupFieldValue
      * The value of the associated field, is not an option.
      */
     #[Column(
-        type: "string",
+        type: 'string',
         nullable: true,
     )]
     protected ?string $value = null;
@@ -59,14 +57,11 @@ class SignupFieldValue
      */
     #[ManyToOne(targetEntity: SignupOption::class)]
     #[JoinColumn(
-        name: "option_id",
-        referencedColumnName: "id",
+        name: 'option_id',
+        referencedColumnName: 'id',
     )]
     protected ?SignupOption $option;
 
-    /**
-     * @return SignupField
-     */
     public function getField(): SignupField
     {
         return $this->field;
@@ -74,17 +69,12 @@ class SignupFieldValue
 
     /**
      * Set the field.
-     *
-     * @param SignupField $field
      */
     public function setField(SignupField $field): void
     {
         $this->field = $field;
     }
 
-    /**
-     * @return Signup
-     */
     public function getSignup(): Signup
     {
         return $this->signup;
@@ -92,17 +82,12 @@ class SignupFieldValue
 
     /**
      * Set the signup.
-     *
-     * @param Signup $signup
      */
     public function setSignup(Signup $signup): void
     {
         $this->signup = $signup;
     }
 
-    /**
-     * @return string|null
-     */
     public function getValue(): ?string
     {
         return $this->value;
@@ -110,25 +95,17 @@ class SignupFieldValue
 
     /**
      * Set the value.
-     *
-     * @param string|null $value
      */
     public function setValue(?string $value): void
     {
         $this->value = $value;
     }
 
-    /**
-     * @return SignupOption|null
-     */
     public function getOption(): ?SignupOption
     {
         return $this->option;
     }
 
-    /**
-     * @param SignupOption|null $option
-     */
     public function setOption(?SignupOption $option): void
     {
         $this->option = $option;

@@ -5,18 +5,12 @@ declare(strict_types=1);
 namespace Education;
 
 use Doctrine\ORM\Mapping\Driver\AttributeDriver;
-use Education\Controller\{
-    AdminController,
-    EducationController,
-};
-use Education\Controller\Factory\{
-    AdminControllerFactory,
-    EducationControllerFactory,
-};
-use Laminas\Router\Http\{
-    Literal,
-    Segment,
-};
+use Education\Controller\AdminController;
+use Education\Controller\EducationController;
+use Education\Controller\Factory\AdminControllerFactory;
+use Education\Controller\Factory\EducationControllerFactory;
+use Laminas\Router\Http\Literal;
+use Laminas\Router\Http\Segment;
 
 return [
     'router' => [

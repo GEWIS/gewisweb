@@ -5,22 +5,18 @@ declare(strict_types=1);
 namespace User\Form;
 
 use Laminas\Authentication\Result;
-use Laminas\Form\Element\{
-    Csrf,
-    Email,
-    Hidden,
-    Password,
-    Submit,
-};
 use Laminas\Filter\StringTrim;
+use Laminas\Form\Element\Csrf;
+use Laminas\Form\Element\Email;
+use Laminas\Form\Element\Hidden;
+use Laminas\Form\Element\Password;
+use Laminas\Form\Element\Submit;
 use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Validator\{
-    EmailAddress,
-    NotEmpty,
-    StringLength,
-};
+use Laminas\Validator\EmailAddress;
+use Laminas\Validator\NotEmpty;
+use Laminas\Validator\StringLength;
 
 class CompanyUserLogin extends Form implements InputFilterProviderInterface
 {
@@ -37,7 +33,7 @@ class CompanyUserLogin extends Form implements InputFilterProviderInterface
                 'options' => [
                     'label' => $translator->translate('Email address'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -47,7 +43,7 @@ class CompanyUserLogin extends Form implements InputFilterProviderInterface
                 'options' => [
                     'label' => $translator->translate('Password'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -57,58 +53,58 @@ class CompanyUserLogin extends Form implements InputFilterProviderInterface
                 'attributes' => [
                     'value' => $translator->translate('Log in as company'),
                 ],
-            ]
+            ],
         );
 
         $this->add(
             [
                 'name' => 'redirect',
                 'type' => Hidden::class,
-            ]
+            ],
         );
 
         $this->add(
             [
                 'name' => 'security',
                 'type' => Csrf::class,
-            ]
+            ],
         );
     }
 
     /**
      * Set authentication result.
-     *
-     * @param Result $result
      */
     public function setResult(Result $result): void
     {
-        if (!$result->isValid()) {
-            $this->isValid = false;
+        if ($result->isValid()) {
+            return;
+        }
 
-            switch ($result->getCode()) {
-                case Result::FAILURE:
-                    $this->setMessages(
-                        [
-                            'email' => $result->getMessages(),
-                        ]
-                    );
-                    break;
-                case Result::FAILURE_IDENTITY_NOT_FOUND:
-                    $this->setMessages(
-                        [
-                            'email' => $result->getMessages(),
-                            'password' => $result->getMessages(),
-                        ]
-                    );
-                    break;
-                case Result::FAILURE_CREDENTIAL_INVALID:
-                    $this->setMessages(
-                        [
-                            'password' => $result->getMessages(),
-                        ]
-                    );
-                    break;
-            }
+        $this->isValid = false;
+
+        switch ($result->getCode()) {
+            case Result::FAILURE:
+                $this->setMessages(
+                    [
+                        'email' => $result->getMessages(),
+                    ],
+                );
+                break;
+            case Result::FAILURE_IDENTITY_NOT_FOUND:
+                $this->setMessages(
+                    [
+                        'email' => $result->getMessages(),
+                        'password' => $result->getMessages(),
+                    ],
+                );
+                break;
+            case Result::FAILURE_CREDENTIAL_INVALID:
+                $this->setMessages(
+                    [
+                        'password' => $result->getMessages(),
+                    ],
+                );
+                break;
         }
     }
 
@@ -126,7 +122,7 @@ class CompanyUserLogin extends Form implements InputFilterProviderInterface
                         'options' => [
                             'messages' => [
                                 'emailAddressInvalidFormat' => $this->translator->translate(
-                                    'E-mail address format is not valid'
+                                    'E-mail address format is not valid',
                                 ),
                             ],
                         ],

@@ -5,20 +5,14 @@ declare(strict_types=1);
 namespace User;
 
 use Doctrine\ORM\Mapping\Driver\AttributeDriver;
-use Laminas\Router\Http\{
-    Literal,
-    Segment,
-};
-use User\Controller\{
-    ApiAdminController,
-    ApiAuthenticationController,
-    UserController,
-};
-use User\Controller\Factory\{
-    ApiAdminControllerFactory,
-    ApiAuthenticationControllerFactory,
-    UserControllerFactory,
-};
+use Laminas\Router\Http\Literal;
+use Laminas\Router\Http\Segment;
+use User\Controller\ApiAdminController;
+use User\Controller\ApiAuthenticationController;
+use User\Controller\Factory\ApiAdminControllerFactory;
+use User\Controller\Factory\ApiAuthenticationControllerFactory;
+use User\Controller\Factory\UserControllerFactory;
+use User\Controller\UserController;
 
 return [
     'router' => [

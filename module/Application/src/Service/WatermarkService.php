@@ -6,11 +6,19 @@ namespace Application\Service;
 
 use DateTime;
 use setasign\Fpdi\Tcpdf\Fpdi;
-use User\Authentication\{
-    Adapter\UserAdapter,
-    AuthenticationService,
-    Storage\UserSession,
-};
+use User\Authentication\Adapter\UserAdapter;
+use User\Authentication\AuthenticationService;
+use User\Authentication\Storage\UserSession;
+
+use function atan;
+use function escapeshellarg;
+use function exec;
+use function rad2deg;
+use function sin;
+use function sprintf;
+use function sqrt;
+use function sys_get_temp_dir;
+use function tempnam;
 
 /**
  * @psalm-template TUserAuth of AuthenticationService<UserSession, UserAdapter>
@@ -106,7 +114,11 @@ class WatermarkService
         $pdf->Output($tempFile, 'F');
 
         $quality = $scanned ? '170' : '120';
-        exec("convert -density " . escapeshellarg($quality) . " " . escapeshellarg($tempFile) . " " . escapeshellarg($tempFlatFile));
+        exec(
+            'convert -density ' . escapeshellarg($quality) . ' ' . escapeshellarg($tempFile) . ' ' . escapeshellarg(
+                $tempFlatFile,
+            ),
+        );
 
         return $tempFlatFile;
     }

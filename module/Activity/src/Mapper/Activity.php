@@ -14,6 +14,11 @@ use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
 use User\Model\User as UserModel;
 
+use function array_key_exists;
+use function array_merge;
+use function count;
+use function usort;
+
 /**
  * @template-extends BaseMapper<ActivityModel>
  */
@@ -22,27 +27,26 @@ class Activity extends BaseMapper
     /**
      * Get upcoming activities sorted by date.
      *
-     * @param int|null $count optional number of activities to retrieve
+     * @param int|null        $count optional number of activities to retrieve
      * @param OrganModel|null $organ option organ by whom the activities are organized
-     * @param string|null $category
      *
-     * @return array<array-key, ActivityModel>
+     * @return ActivityModel[]
      */
     public function getUpcomingActivities(
-        int $count = null,
-        OrganModel $organ = null,
-        string $category = null,
+        ?int $count = null,
+        ?OrganModel $organ = null,
+        ?string $category = null,
     ): array {
         $qb = $this->getRepository()->createQueryBuilder('a');
         $qb->where('a.endTime > :now')
             ->andWhere('a.status = :status')
             ->orderBy('a.beginTime', 'ASC');
 
-        if (!is_null($count)) {
+        if (null !== $count) {
             $qb->setMaxResults($count);
         }
 
-        if (!is_null($organ)) {
+        if (null !== $organ) {
             $qb->andWhere('a.organ = :organ')
                 ->setParameter('organ', $organ);
         }
@@ -51,6 +55,7 @@ class Activity extends BaseMapper
         if ('career' === $category) {
             $qb->andWhere('a.isMyFuture = 1');
         }
+
         $qb->setParameter('now', new DateTime());
         $qb->setParameter('status', ActivityModel::STATUS_APPROVED);
 
@@ -62,7 +67,7 @@ class Activity extends BaseMapper
      *
      * @param UserModel $user Option user that should relate to activity
      *
-     * @return array<array-key, ActivityModel>
+     * @return ActivityModel[]
      */
     public function getUpcomingActivitiesForMember(UserModel $user): array
     {
@@ -80,12 +85,12 @@ class Activity extends BaseMapper
         // Do sorting based on start time
         usort(
             $result,
-            function ($a, $b) {
+            static function ($a, $b) {
                 $beginA = $a->getBeginTime();
                 $beginB = $b->getBeginTime();
 
                 return $beginA < $beginB ? -1 : 1;
-            }
+            },
         );
 
         $size = count($result);
@@ -93,12 +98,14 @@ class Activity extends BaseMapper
         for ($i = 0; $i < $size; ++$i) {
             for ($j = $i + 1; $j < $size; ++$j) {
                 if (
-                    array_key_exists($i, $result)
-                    && array_key_exists($j, $result)
-                    && $result[$i]->getId() == $result[$j]->getId()
+                    !array_key_exists($i, $result)
+                    || !array_key_exists($j, $result)
+                    || $result[$i]->getId() !== $result[$j]->getId()
                 ) {
-                    unset($result[$j]);
+                    continue;
                 }
+
+                unset($result[$j]);
             }
         }
 
@@ -110,7 +117,7 @@ class Activity extends BaseMapper
      *
      * @param UserModel $user Option user that should relate to activity
      *
-     * @return array<array-key, ActivityModel>
+     * @return ActivityModel[]
      */
     public function getUpcomingActivitiesSubscribedBy(UserModel $user): array
     {
@@ -134,7 +141,7 @@ class Activity extends BaseMapper
      *
      * @param UserModel $user Option user that should relate to activity
      *
-     * @return array<array-key, ActivityModel>
+     * @return ActivityModel[]
      */
     public function getUpcomingActivitiesCreatedBy(UserModel $user): array
     {
@@ -152,7 +159,7 @@ class Activity extends BaseMapper
      *
      * @param OrganModel $organ Option organ that should relate to activity
      *
-     * @return array<array-key, ActivityModel>
+     * @return ActivityModel[]
      */
     public function getUpcomingActivitiesByOrgan(OrganModel $organ): array
     {
@@ -168,11 +175,10 @@ class Activity extends BaseMapper
     /**
      * Gets upcoming activities of the given organs or user, sorted by date.
      *
-     * @param array|null $organs
-     * @param UserModel|null $user
-     * @param int|null $status An optional filter for activity status
+     * @param ?OrganModel[] $organs
+     * @param int|null      $status An optional filter for activity status
      *
-     * @return array<array-key, ActivityModel>
+     * @return ActivityModel[]
      */
     public function getAllUpcomingActivities(
         ?array $organs = null,
@@ -183,19 +189,14 @@ class Activity extends BaseMapper
             $this->getEntityManager()->createQueryBuilder()->expr()->gt('a.endTime', ':now'),
             $organs,
             $user,
-            $status
+            $status,
         );
 
         return $qb->getQuery()->getResult();
     }
 
     /**
-     * @param Comparison|null $filter
-     * @param array|null $organs
-     * @param UserModel|null $user
-     * @param int|null $status
-     *
-     * @return QueryBuilder
+     * @param ?OrganModel[] $organs
      */
     protected function activityByOrganizerQuery(
         ?Comparison $filter = null,
@@ -205,7 +206,7 @@ class Activity extends BaseMapper
     ): QueryBuilder {
         $qb = $this->getRepository()->createQueryBuilder('a');
 
-        if (!is_null($status)) {
+        if (null !== $status) {
             $qb->where('a.status = :status')
                 ->setParameter('status', $status);
         } else {
@@ -213,19 +214,22 @@ class Activity extends BaseMapper
                 ->setParameter('status', ActivityModel::STATUS_UPDATE);
         }
 
-        if (!is_null($filter)) {
+        if (null !== $filter) {
             $qb->andWhere($filter)
                 ->setParameter('now', new DateTime());
         }
 
         $qb->join('a.creator', 'u');
 
-        if (!is_null($organs) && !is_null($user)) {
+        if (
+            null !== $organs
+            && null !== $user
+        ) {
             $qb->andWhere(
                 $qb->expr()->orX(
                     $qb->expr()->in('a.organ', ':organs'),
-                    'u.lidnr = :user'
-                )
+                    'u.lidnr = :user',
+                ),
             )
                 ->setParameter('organs', $organs)
                 ->setParameter('user', $user);
@@ -240,11 +244,8 @@ class Activity extends BaseMapper
      * Gets a paginator of old activities of the given organs, sorted by date.
      * Supplying 'null' to all arguments gets all activities.
      *
-     * @param array|null $organs
-     * @param UserModel|null $user
-     * @param int|null $status An optional filter for activity status
-     *
-     * @return DoctrineAdapter
+     * @param ?OrganModel[] $organs
+     * @param int|null      $status An optional filter for activity status
      */
     public function getOldActivityPaginatorAdapterByOrganizer(
         ?array $organs = null,
@@ -255,7 +256,7 @@ class Activity extends BaseMapper
             $this->getEntityManager()->createQueryBuilder()->expr()->lt('a.endTime', ':now'),
             $organs,
             $user,
-            $status
+            $status,
         );
 
         return new DoctrineAdapter(new ORMPaginator($qb));
@@ -263,8 +264,6 @@ class Activity extends BaseMapper
 
     /**
      * Returns the oldest activity that has taken place.
-     *
-     * @return ActivityModel|null
      */
     public function getOldestActivity(): ?ActivityModel
     {
@@ -280,10 +279,7 @@ class Activity extends BaseMapper
     }
 
     /**
-     * @param DateTime $start
-     * @param DateTime $end
-     *
-     * @return array<array-key, ActivityModel>
+     * @return ActivityModel[]
      */
     public function getArchivedActivitiesInRange(
         DateTime $start,
@@ -301,9 +297,6 @@ class Activity extends BaseMapper
         return $qb->getQuery()->getResult();
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function getRepositoryName(): string
     {
         return ActivityModel::class;

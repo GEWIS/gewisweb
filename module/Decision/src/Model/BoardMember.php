@@ -7,13 +7,11 @@ namespace Decision\Model;
 use Application\Model\Traits\IdentifiableTrait;
 use DateTime;
 use Decision\Model\SubDecision\Board\Installation as BoardInstallation;
-use Doctrine\ORM\Mapping\{
-    Column,
-    Entity,
-    JoinColumn,
-    ManyToOne,
-    OneToOne,
-};
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToOne;
 
 /**
  * Board member entity.
@@ -30,11 +28,11 @@ class BoardMember
      */
     #[ManyToOne(
         targetEntity: Member::class,
-        inversedBy: "boardInstallations",
+        inversedBy: 'boardInstallations',
     )]
     #[JoinColumn(
-        name: "lidnr",
-        referencedColumnName: "lidnr",
+        name: 'lidnr',
+        referencedColumnName: 'lidnr',
         nullable: false,
     )]
     protected Member $member;
@@ -42,13 +40,13 @@ class BoardMember
     /**
      * Function.
      */
-    #[Column(type: "string")]
+    #[Column(type: 'string')]
     protected string $function;
 
     /**
      * Installation date.
      */
-    #[Column(type: "date")]
+    #[Column(type: 'date')]
     protected DateTime $installDate;
 
     /**
@@ -56,27 +54,27 @@ class BoardMember
      */
     #[OneToOne(
         targetEntity: BoardInstallation::class,
-        inversedBy: "boardMember",
+        inversedBy: 'boardMember',
     )]
     #[JoinColumn(
-        name: "r_meeting_type",
-        referencedColumnName: "meeting_type",
+        name: 'r_meeting_type',
+        referencedColumnName: 'meeting_type',
     )]
     #[JoinColumn(
-        name: "r_meeting_number",
-        referencedColumnName: "meeting_number",
+        name: 'r_meeting_number',
+        referencedColumnName: 'meeting_number',
     )]
     #[JoinColumn(
-        name: "r_decision_point",
-        referencedColumnName: "decision_point",
+        name: 'r_decision_point',
+        referencedColumnName: 'decision_point',
     )]
     #[JoinColumn(
-        name: "r_decision_number",
-        referencedColumnName: "decision_number",
+        name: 'r_decision_number',
+        referencedColumnName: 'decision_number',
     )]
     #[JoinColumn(
-        name: "r_number",
-        referencedColumnName: "number",
+        name: 'r_number',
+        referencedColumnName: 'number',
     )]
     protected BoardInstallation $installationDec;
 
@@ -84,7 +82,7 @@ class BoardMember
      * Release date.
      */
     #[Column(
-        type: "date",
+        type: 'date',
         nullable: true,
     )]
     protected ?DateTime $releaseDate = null;
@@ -93,15 +91,13 @@ class BoardMember
      * Discharge date.
      */
     #[Column(
-        type: "date",
+        type: 'date',
         nullable: true,
     )]
     protected ?DateTime $dischargeDate = null;
 
     /**
      * Get the member.
-     *
-     * @return Member
      */
     public function getMember(): Member
     {
@@ -110,8 +106,6 @@ class BoardMember
 
     /**
      * Set the member.
-     *
-     * @param Member $member
      */
     public function setMember(Member $member): void
     {
@@ -120,8 +114,6 @@ class BoardMember
 
     /**
      * Get the function.
-     *
-     * @return string
      */
     public function getFunction(): string
     {
@@ -130,8 +122,6 @@ class BoardMember
 
     /**
      * Set the function.
-     *
-     * @param string $function
      */
     public function setFunction(string $function): void
     {
@@ -140,8 +130,6 @@ class BoardMember
 
     /**
      * Get the installation date.
-     *
-     * @return DateTime
      */
     public function getInstallDate(): DateTime
     {
@@ -150,8 +138,6 @@ class BoardMember
 
     /**
      * Set the installation date.
-     *
-     * @param DateTime $installDate
      */
     public function setInstallDate(DateTime $installDate): void
     {
@@ -160,8 +146,6 @@ class BoardMember
 
     /**
      * Get the installation decision.
-     *
-     * @return BoardInstallation
      */
     public function getInstallationDec(): BoardInstallation
     {
@@ -178,8 +162,6 @@ class BoardMember
 
     /**
      * Get the release date.
-     *
-     * @return DateTime|null
      */
     public function getReleaseDate(): ?DateTime
     {
@@ -188,8 +170,6 @@ class BoardMember
 
     /**
      * Set the release date.
-     *
-     * @param DateTime|null $releaseDate
      */
     public function setReleaseDate(?DateTime $releaseDate): void
     {
@@ -198,8 +178,6 @@ class BoardMember
 
     /**
      * Get the discharge date.
-     *
-     * @return DateTime|null
      */
     public function getDischargeDate(): ?DateTime
     {
@@ -208,8 +186,6 @@ class BoardMember
 
     /**
      * Set the discharge date.
-     *
-     * @param DateTime|null $dischargeDate
      */
     public function setDischargeDate(?DateTime $dischargeDate): void
     {

@@ -7,31 +7,45 @@ namespace Activity\Model;
 use Application\Model\Traits\IdentifiableTrait;
 use Company\Model\Company as CompanyModel;
 use DateTime;
-use Decision\Model\{
-    Member as MemberModel,
-    Organ as OrganModel,
-};
-use Doctrine\Common\Collections\{
-    ArrayCollection,
-    Collection,
-};
-use Doctrine\ORM\Mapping\{
-    Column,
-    Entity,
-    JoinColumn,
-    JoinTable,
-    ManyToMany,
-    ManyToOne,
-    OneToMany,
-    OneToOne,
-};
-use User\Permissions\Resource\{
-    CreatorResourceInterface,
-    OrganResourceInterface,
-};
+use Decision\Model\Member as MemberModel;
+use Decision\Model\Organ as OrganModel;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\OneToOne;
+use User\Permissions\Resource\CreatorResourceInterface;
+use User\Permissions\Resource\OrganResourceInterface;
 
 /**
  * Activity model.
+ *
+ * @psalm-import-type ActivityCategoryArrayType from ActivityCategory as ImportedActivityCategoryArrayType
+ * @psalm-import-type SignupListArrayType from SignupList as ImportedSignupListArrayType
+ * @psalm-type ActivityArrayType = array{
+ *     id: int,
+ *     name: ?string,
+ *     nameEn: ?string,
+ *     beginTime: datetime,
+ *     endTime: datetime,
+ *     location: ?string,
+ *     locationEn: ?string,
+ *     costs: ?string,
+ *     costsEn: ?string,
+ *     description: ?string,
+ *     descriptionEn: ?string,
+ *     organ: ?OrganModel,
+ *     company: ?CompanyModel,
+ *     isMyFuture: bool,
+ *     requireGEFLITST: bool,
+ *     categories: ImportedActivityCategoryArrayType[],
+ *     signupLists: ImportedSignupListArrayType[],
+ * }
  */
 #[Entity]
 class Activity implements OrganResourceInterface, CreatorResourceInterface
@@ -51,12 +65,12 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
      */
     #[OneToOne(
         targetEntity: ActivityLocalisedText::class,
-        cascade: ["persist", "remove"],
+        cascade: ['persist', 'remove'],
         orphanRemoval: true,
     )]
     #[JoinColumn(
-        name: "name_id",
-        referencedColumnName: "id",
+        name: 'name_id',
+        referencedColumnName: 'id',
         nullable: false,
     )]
     protected ActivityLocalisedText $name;
@@ -64,13 +78,13 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * The date and time the activity starts.
      */
-    #[Column(type: "datetime")]
+    #[Column(type: 'datetime')]
     protected DateTime $beginTime;
 
     /**
      * The date and time the activity ends.
      */
-    #[Column(type: "datetime")]
+    #[Column(type: 'datetime')]
     protected DateTime $endTime;
 
     /**
@@ -78,12 +92,12 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
      */
     #[OneToOne(
         targetEntity: ActivityLocalisedText::class,
-        cascade: ["persist", "remove"],
+        cascade: ['persist', 'remove'],
         orphanRemoval: true,
     )]
     #[JoinColumn(
-        name: "location_id",
-        referencedColumnName: "id",
+        name: 'location_id',
+        referencedColumnName: 'id',
         nullable: false,
     )]
     protected ActivityLocalisedText $location;
@@ -93,12 +107,12 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
      */
     #[OneToOne(
         targetEntity: ActivityLocalisedText::class,
-        cascade: ["persist", "remove"],
+        cascade: ['persist', 'remove'],
         orphanRemoval: true,
     )]
     #[JoinColumn(
-        name: "costs_id",
-        referencedColumnName: "id",
+        name: 'costs_id',
+        referencedColumnName: 'id',
         nullable: false,
     )]
     protected ActivityLocalisedText $costs;
@@ -107,7 +121,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
      * Who (dis)approved this activity?
      */
     #[ManyToOne(targetEntity: MemberModel::class)]
-    #[JoinColumn(referencedColumnName: "lidnr")]
+    #[JoinColumn(referencedColumnName: 'lidnr')]
     protected ?MemberModel $approver = null;
 
     /**
@@ -115,7 +129,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
      */
     #[ManyToOne(targetEntity: MemberModel::class)]
     #[JoinColumn(
-        referencedColumnName: "lidnr",
+        referencedColumnName: 'lidnr',
         nullable: false,
     )]
     protected MemberModel $creator;
@@ -123,15 +137,17 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * What is the approval status      .
      */
-    #[Column(type: "integer")]
+    #[Column(type: 'integer')]
     protected int $status;
 
     /**
      * The update proposal associated with this activity.
+     *
+     * @var Collection<array-key, ActivityUpdateProposal>
      */
     #[OneToMany(
         targetEntity: ActivityUpdateProposal::class,
-        mappedBy: "old",
+        mappedBy: 'old',
     )]
     protected Collection $updateProposal;
 
@@ -140,34 +156,38 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
      */
     #[OneToOne(
         targetEntity: ActivityLocalisedText::class,
-        cascade: ["persist", "remove"],
+        cascade: ['persist', 'remove'],
         orphanRemoval: true,
     )]
     #[JoinColumn(
-        name: "description_id",
-        referencedColumnName: "id",
+        name: 'description_id',
+        referencedColumnName: 'id',
         nullable: false,
     )]
     protected ActivityLocalisedText $description;
 
     /**
      * All additional Categories belonging to this activity.
+     *
+     * @var Collection<array-key, ActivityCategory>
      */
     #[ManyToMany(
         targetEntity: ActivityCategory::class,
-        inversedBy: "activities",
-        cascade: ["persist"],
+        inversedBy: 'activities',
+        cascade: ['persist'],
     )]
-    #[JoinTable(name: "ActivityCategoryAssignment")]
+    #[JoinTable(name: 'ActivityCategoryAssignment')]
     protected Collection $categories;
 
     /**
      * All additional SignupLists belonging to this activity.
+     *
+     * @var Collection<array-key, SignupList>
      */
     #[OneToMany(
         targetEntity: SignupList::class,
-        mappedBy: "activity",
-        cascade: ["remove"],
+        mappedBy: 'activity',
+        cascade: ['remove'],
         orphanRemoval: true,
     )]
     protected Collection $signupLists;
@@ -177,7 +197,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
      */
     #[ManyToOne(targetEntity: OrganModel::class)]
     #[JoinColumn(
-        referencedColumnName: "id",
+        referencedColumnName: 'id',
         nullable: true,
     )]
     protected ?OrganModel $organ = null;
@@ -187,7 +207,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
      */
     #[ManyToOne(targetEntity: CompanyModel::class)]
     #[JoinColumn(
-        referencedColumnName: "id",
+        referencedColumnName: 'id',
         nullable: true,
     )]
     protected ?CompanyModel $company = null;
@@ -195,13 +215,13 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * Is this a My Future related activity.
      */
-    #[Column(type: "boolean")]
+    #[Column(type: 'boolean')]
     protected bool $isMyFuture;
 
     /**
      * Whether this activity needs a GEFLITST photographer.
      */
-    #[Column(type: "boolean")]
+    #[Column(type: 'boolean')]
     protected bool $requireGEFLITST;
 
     public function __construct()
@@ -211,40 +231,28 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
         $this->signupLists = new ArrayCollection();
     }
 
-    /**
-     * @return MemberModel|null
-     */
     public function getApprover(): ?MemberModel
     {
         return $this->approver;
     }
 
-    /**
-     * @param MemberModel|null $approver
-     */
     public function setApprover(?MemberModel $approver): void
     {
         $this->approver = $approver;
     }
 
-    /**
-     * @return int
-     */
     public function getStatus(): int
     {
         return $this->status;
     }
 
-    /**
-     * @param int $status
-     */
     public function setStatus(int $status): void
     {
         $this->status = $status;
     }
 
     /**
-     * @return Collection
+     * @return Collection<array-key, ActivityUpdateProposal>
      */
     public function getUpdateProposal(): Collection
     {
@@ -252,7 +260,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * @param array $categories
+     * @param ActivityCategory[] $categories
      */
     public function addCategories(array $categories): void
     {
@@ -261,9 +269,6 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
         }
     }
 
-    /**
-     * @param ActivityCategory $category
-     */
     public function addCategory(ActivityCategory $category): void
     {
         if ($this->categories->contains($category)) {
@@ -275,7 +280,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * @param array $categories
+     * @param ActivityCategory[] $categories
      */
     public function removeCategories(array $categories): void
     {
@@ -284,9 +289,6 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
         }
     }
 
-    /**
-     * @param ActivityCategory $category
-     */
     public function removeCategory(ActivityCategory $category): void
     {
         if (!$this->categories->contains($category)) {
@@ -300,7 +302,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * Adds SignupLists to this activity.
      *
-     * @param array $signupLists
+     * @param SignupList[] $signupLists
      */
     public function addSignupLists(array $signupLists): void
     {
@@ -309,9 +311,6 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
         }
     }
 
-    /**
-     * @param SignupList $signupList
-     */
     public function addSignupList(SignupList $signupList): void
     {
         if ($this->signupLists->contains($signupList)) {
@@ -325,7 +324,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * Removes SignupLists from this activity.
      *
-     * @param array $signupLists
+     * @param SignupList[] $signupLists
      */
     public function removeSignupLists(array $signupLists): void
     {
@@ -334,9 +333,6 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
         }
     }
 
-    /**
-     * @param SignupList $signupList
-     */
     public function removeSignupList(SignupList $signupList): void
     {
         if (!$this->signupLists->contains($signupList)) {
@@ -347,186 +343,123 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * Returns an Collection of SignupLists associated with this activity.
+     * Returns a Collection of SignupLists associated with this activity.
      *
-     * @return Collection
+     * @return Collection<array-key, SignupList>
      */
     public function getSignupLists(): Collection
     {
         return $this->signupLists;
     }
 
-    /**
-     * @return ActivityLocalisedText
-     */
     public function getName(): ActivityLocalisedText
     {
         return $this->name;
     }
 
-    /**
-     * @param ActivityLocalisedText $name
-     */
     public function setName(ActivityLocalisedText $name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * @return DateTime
-     */
     public function getBeginTime(): DateTime
     {
         return $this->beginTime;
     }
 
-    /**
-     * @param DateTime $beginTime
-     */
     public function setBeginTime(DateTime $beginTime): void
     {
         $this->beginTime = $beginTime;
     }
 
-    /**
-     * @return DateTime
-     */
     public function getEndTime(): DateTime
     {
         return $this->endTime;
     }
 
-    /**
-     * @param DateTime $endTime
-     */
     public function setEndTime(DateTime $endTime): void
     {
         $this->endTime = $endTime;
     }
 
-    /**
-     * @return ActivityLocalisedText
-     */
     public function getLocation(): ActivityLocalisedText
     {
         return $this->location;
     }
 
-    /**
-     * @param ActivityLocalisedText $location
-     */
     public function setLocation(ActivityLocalisedText $location): void
     {
         $this->location = $location;
     }
 
-    /**
-     * @return ActivityLocalisedText
-     */
     public function getCosts(): ActivityLocalisedText
     {
         return $this->costs;
     }
 
-    /**
-     * @param ActivityLocalisedText $costs
-     */
     public function setCosts(ActivityLocalisedText $costs): void
     {
         $this->costs = $costs;
     }
 
-    /**
-     * @return ActivityLocalisedText
-     */
     public function getDescription(): ActivityLocalisedText
     {
         return $this->description;
     }
 
-    /**
-     * @param ActivityLocalisedText $description
-     */
     public function setDescription(ActivityLocalisedText $description): void
     {
         $this->description = $description;
     }
 
-    /**
-     * @return OrganModel|null
-     */
     public function getOrgan(): ?OrganModel
     {
         return $this->organ;
     }
 
-    /**
-     * @param OrganModel|null $organ
-     */
     public function setOrgan(?OrganModel $organ): void
     {
         $this->organ = $organ;
     }
 
-    /**
-     * @return CompanyModel|null
-     */
     public function getCompany(): ?CompanyModel
     {
         return $this->company;
     }
 
-    /**
-     * @param CompanyModel|null $company
-     */
     public function setCompany(?CompanyModel $company): void
     {
         $this->company = $company;
     }
 
-    /**
-     * @return bool
-     */
     public function getIsMyFuture(): bool
     {
         return $this->isMyFuture;
     }
 
-    /**
-     * @param bool $isMyFuture
-     */
     public function setIsMyFuture(bool $isMyFuture): void
     {
         $this->isMyFuture = $isMyFuture;
     }
 
-    /**
-     * @return bool
-     */
     public function getRequireGEFLITST(): bool
     {
         return $this->requireGEFLITST;
     }
 
-    /**
-     * @param bool $requireGEFLITST
-     */
     public function setRequireGEFLITST(bool $requireGEFLITST): void
     {
         $this->requireGEFLITST = $requireGEFLITST;
     }
 
     /**
-     * @return Collection
+     * @return Collection<array-key, ActivityCategory>
      */
     public function getCategories(): Collection
     {
         return $this->categories;
     }
 
-    /**
-     * @return MemberModel
-     */
     public function getCreator(): MemberModel
     {
         return $this->creator;
@@ -540,7 +473,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * Returns an associative array representation of this object.
      *
-     * @return array
+     * @return ActivityArrayType
      */
     public function toArray(): array
     {
@@ -577,8 +510,6 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
 
     /**
      * Returns the string identifier of the Resource.
-     *
-     * @return string
      */
     public function getResourceId(): string
     {
@@ -587,8 +518,6 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
 
     /**
      * Get the organ of this resource.
-     *
-     * @return OrganModel|null
      */
     public function getResourceOrgan(): ?OrganModel
     {
@@ -597,8 +526,6 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
 
     /**
      * Get the creator of this resource.
-     *
-     * @return MemberModel
      */
     public function getResourceCreator(): MemberModel
     {

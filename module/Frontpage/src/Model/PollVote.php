@@ -5,13 +5,11 @@ declare(strict_types=1);
 namespace Frontpage\Model;
 
 use Decision\Model\Member as MemberModel;
-use Doctrine\ORM\Mapping\{
-    Entity,
-    Id,
-    JoinColumn,
-    ManyToOne,
-    UniqueConstraint,
-};
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\UniqueConstraint;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 /**
@@ -20,8 +18,8 @@ use Laminas\Permissions\Acl\Resource\ResourceInterface;
  */
 #[Entity]
 #[UniqueConstraint(
-    name: "vote_idx",
-    columns: ["poll_id", "user_id"],
+    name: 'vote_idx',
+    columns: ['poll_id', 'user_id'],
 )]
 class PollVote implements ResourceInterface
 {
@@ -30,8 +28,8 @@ class PollVote implements ResourceInterface
      */
     #[ManyToOne(targetEntity: Poll::class)]
     #[JoinColumn(
-        name: "poll_id",
-        referencedColumnName: "id",
+        name: 'poll_id',
+        referencedColumnName: 'id',
         nullable: false,
     )]
     protected Poll $poll;
@@ -42,11 +40,11 @@ class PollVote implements ResourceInterface
     #[Id]
     #[ManyToOne(
         targetEntity: PollOption::class,
-        inversedBy: "votes",
+        inversedBy: 'votes',
     )]
     #[JoinColumn(
-        name: "option_id",
-        referencedColumnName: "id",
+        name: 'option_id',
+        referencedColumnName: 'id',
         nullable: false,
     )]
     protected PollOption $pollOption;
@@ -57,42 +55,30 @@ class PollVote implements ResourceInterface
     #[Id]
     #[ManyToOne(
         targetEntity: MemberModel::class,
-        cascade: ["persist"],
+        cascade: ['persist'],
     )]
     #[JoinColumn(
-        name: "user_id",
-        referencedColumnName: "lidnr",
+        name: 'user_id',
+        referencedColumnName: 'lidnr',
         nullable: false,
     )]
     protected MemberModel $respondent;
 
-    /**
-     * @return PollOption
-     */
     public function getPollOption(): PollOption
     {
         return $this->pollOption;
     }
 
-    /**
-     * @param Poll $poll
-     */
     public function setPoll(Poll $poll): void
     {
         $this->poll = $poll;
     }
 
-    /**
-     * @param PollOption $pollOption
-     */
     public function setPollOption(PollOption $pollOption): void
     {
         $this->pollOption = $pollOption;
     }
 
-    /**
-     * @param MemberModel $respondent
-     */
     public function setRespondent(MemberModel $respondent): void
     {
         $this->respondent = $respondent;
@@ -100,8 +86,6 @@ class PollVote implements ResourceInterface
 
     /**
      * Get the resource ID.
-     *
-     * @return string
      */
     public function getResourceId(): string
     {

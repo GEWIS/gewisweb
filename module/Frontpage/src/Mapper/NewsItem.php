@@ -19,9 +19,7 @@ class NewsItem extends BaseMapper
     /**
      * Retrieves a certain number of news items sorted descending by their date.
      *
-     * @param int $count
-     *
-     * @return array<array-key, NewsItemModel>
+     * @return NewsItemModel[]
      */
     public function getLatestNewsItems(int $count): array
     {
@@ -35,8 +33,6 @@ class NewsItem extends BaseMapper
 
     /**
      * Returns a paginator adapter for paging through all news items.
-     *
-     * @return DoctrineAdapter
      */
     public function getPaginatorAdapter(): DoctrineAdapter
     {

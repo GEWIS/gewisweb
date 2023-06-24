@@ -11,8 +11,6 @@ interface OrganResourceInterface extends ResourceInterface
 {
     /**
      * Get the organ of this resource.
-     *
-     * @return ?Organ
      */
     public function getResourceOrgan(): ?Organ;
 }

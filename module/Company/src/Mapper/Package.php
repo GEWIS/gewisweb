@@ -5,21 +5,22 @@ declare(strict_types=1);
 namespace Company\Mapper;
 
 use Application\Mapper\BaseMapper;
-use Company\Model\{
-    Company as CompanyModel,
-    CompanyBannerPackage as CompanyBannerPackageModel,
-    CompanyFeaturedPackage as CompanyFeaturedPackageModel,
-    CompanyJobPackage as CompanyJobPackageModel,
-    CompanyPackage as CompanyPackageModel,
-};
+use Company\Model\Company as CompanyModel;
+use Company\Model\CompanyBannerPackage as CompanyBannerPackageModel;
+use Company\Model\CompanyFeaturedPackage as CompanyFeaturedPackageModel;
+use Company\Model\CompanyJobPackage as CompanyJobPackageModel;
+use Company\Model\CompanyPackage as CompanyPackageModel;
 use Company\Model\Enums\CompanyPackageTypes;
 use DateTime;
 use Doctrine\ORM\QueryBuilder;
+
+use function count;
 
 /**
  * Mappers for package.
  *
  * @template T0 of object
+ *
  * @template-extends BaseMapper<T0>
  */
 class Package extends BaseMapper
@@ -29,7 +30,7 @@ class Package extends BaseMapper
      *
      * @param DateTime $date The date until where to search
      *
-     * @return array<array-key, T0>
+     * @return T0[]
      */
     public function findFuturePackageExpirationsBeforeDate(DateTime $date): array
     {
@@ -49,7 +50,7 @@ class Package extends BaseMapper
      *
      * @param DateTime $date The date until where to search
      *
-     * @return array<array-key, T0>
+     * @return T0[]
      */
     public function findFuturePackageStartsBeforeDate(DateTime $date): array
     {
@@ -64,9 +65,6 @@ class Package extends BaseMapper
         return $qb->getQuery()->getResult();
     }
 
-    /**
-     * @return QueryBuilder
-     */
     protected function getVisiblePackagesQueryBuilder(): QueryBuilder
     {
         $qb = $this->getRepository()->createQueryBuilder('p');
@@ -80,7 +78,7 @@ class Package extends BaseMapper
     /**
      * Find all packages that should be visible, and returns an editable version of them.
      *
-     * @return array<array-key, T0>
+     * @return T0[]
      */
     public function findVisiblePackages(): array
     {
@@ -91,10 +89,6 @@ class Package extends BaseMapper
 
     /**
      * Find all packages, and returns an editable version of them.
-     *
-     * @param int $packageId
-     *
-     * @return CompanyPackageModel|null
      */
     public function findEditablePackage(int $packageId): ?CompanyPackageModel
     {
@@ -105,7 +99,7 @@ class Package extends BaseMapper
 
         $packages = $qb->getQuery()->getResult();
 
-        if (1 != count($packages)) {
+        if (1 !== count($packages)) {
             return null;
         }
 
@@ -115,7 +109,7 @@ class Package extends BaseMapper
     /**
      * Get all job packages for a specific company.
      *
-     * @return array<array-key, CompanyJobPackageModel>
+     * @return CompanyJobPackageModel[]
      */
     public function findJobPackagesByCompany(CompanyModel $company): array
     {
@@ -129,7 +123,7 @@ class Package extends BaseMapper
     /**
      * Get non-expired packages for a specific company.
      *
-     * @return array<array-key, T0>
+     * @return T0[]
      */
     public function findNonExpiredPackages(CompanyModel $company): array
     {
@@ -150,9 +144,6 @@ class Package extends BaseMapper
         };
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function getRepositoryName(): string
     {
         return CompanyJobPackageModel::class;

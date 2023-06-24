@@ -4,17 +4,16 @@ declare(strict_types=1);
 
 namespace Decision\Service;
 
-use Decision\Mapper\{
-    Authorization as AuthorizationMapper,
-    Member as MemberMapper,
-};
-use Decision\Model\{
-    Meeting as MeetingModel,
-    Member as MemberModel,
-};
-use Laminas\Code\Exception\InvalidArgumentException;
+use Decision\Mapper\Authorization as AuthorizationMapper;
+use Decision\Mapper\Member as MemberMapper;
+use Decision\Model\Meeting as MeetingModel;
+use Decision\Model\Member as MemberModel;
+use Decision\Model\Organ as OrganModel;
 use Laminas\Mvc\I18n\Translator;
 use User\Permissions\NotAllowedException;
+
+use function count;
+use function strlen;
 
 /**
  * Member service.
@@ -33,19 +32,12 @@ class Member
 
     /**
      * Returns is the member is active.
-     *
-     * @return bool
      */
     public function isActiveMember(): bool
     {
         return $this->aclService->isAllowed('edit', 'organ');
     }
 
-    /**
-     * @param int $lidnr
-     *
-     * @return MemberModel|null
-     */
     public function findMemberByLidNr(int $lidnr): ?MemberModel
     {
         if (
@@ -68,7 +60,7 @@ class Member
      *
      * @param int $days the number of days to look ahead
      *
-     * @return array Of members sorted by birthday
+     * @return MemberModel[] sorted by birthday
      */
     public function getBirthdayMembers(int $days = 0): array
     {
@@ -78,9 +70,7 @@ class Member
     /**
      * Get the organs a member is part of.
      *
-     * @param MemberModel $member
-     *
-     * @return array
+     * @return OrganModel[]
      */
     public function getOrgans(MemberModel $member): array
     {
@@ -91,16 +81,19 @@ class Member
      * Find a member by (part of) its name.
      *
      * @param string $query (part of) the full name of a member
-     * @pre $name must be at least MIN_SEARCH_QUERY_LENGTH
      *
-     * @return array
+     * @return array<array-key, array{
+     *     lidnr: int,
+     *     fullName: string,
+     *     generation: int,
+     * }>
+     *
+     * @pre $name must be at least MIN_SEARCH_QUERY_LENGTH
      */
     public function searchMembersByName(string $query): array
     {
         if (strlen($query) < self::MIN_SEARCH_QUERY_LENGTH) {
-            throw new InvalidArgumentException(
-                $this->translator->translate('Name must be at least ' . self::MIN_SEARCH_QUERY_LENGTH . ' characters')
-            );
+            return [];
         }
 
         return $this->memberMapper->searchByName($query);
@@ -108,11 +101,6 @@ class Member
 
     /**
      * Determine if a member can be authorized for a meeting.
-     *
-     * @param MemberModel $member
-     * @param MeetingModel $meeting
-     *
-     * @return bool
      */
     public function canAuthorize(
         MemberModel $member,
@@ -121,10 +109,6 @@ class Member
         $maxAuthorizations = 2;
         $authorizations = $this->authorizationMapper->findRecipientAuthorization($meeting->getNumber(), $member);
 
-        if (count($authorizations) < $maxAuthorizations) {
-            return true;
-        }
-
-        return false;
+        return count($authorizations) < $maxAuthorizations;
     }
 }

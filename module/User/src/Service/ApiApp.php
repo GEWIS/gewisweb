@@ -7,11 +7,12 @@ namespace User\Service;
 use DateTime;
 use Firebase\JWT\JWT;
 use User\Mapper\ApiAppAuthentication as ApiAppAuthenticationMapper;
-use User\Model\{
-    ApiApp as ApiAppModel,
-    ApiAppAuthentication as ApiAppAuthenticationModel,
-    User as UserModel,
-};
+use User\Model\ApiApp as ApiAppModel;
+use User\Model\ApiAppAuthentication as ApiAppAuthenticationModel;
+use User\Model\User as UserModel;
+
+use function bin2hex;
+use function openssl_random_pseudo_bytes;
 
 class ApiApp
 {
@@ -21,11 +22,6 @@ class ApiApp
 
     /**
      * Get a callback from an appId and a user identity.
-     *
-     * @param ApiAppModel $app
-     * @param UserModel $user
-     *
-     * @return string
      */
     public function callbackWithToken(
         ApiAppModel $app,

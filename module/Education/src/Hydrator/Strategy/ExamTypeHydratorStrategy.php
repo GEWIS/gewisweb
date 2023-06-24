@@ -10,7 +10,7 @@ use Laminas\Hydrator\Strategy\StrategyInterface;
 class ExamTypeHydratorStrategy implements StrategyInterface
 {
     public function extract(
-        $value,
+        mixed $value,
         ?object $object = null,
     ): string {
         if ($value instanceof ExamTypes) {
@@ -21,7 +21,7 @@ class ExamTypeHydratorStrategy implements StrategyInterface
     }
 
     public function hydrate(
-        $value,
+        mixed $value,
         ?array $data,
     ): ExamTypes {
         if ($value instanceof ExamTypes) {

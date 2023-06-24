@@ -5,19 +5,13 @@ declare(strict_types=1);
 namespace Company\Controller;
 
 use Application\Form\ModifyRequest as RequestForm;
-use Company\Mapper\{
-    Company as CompanyMapper,
-    Job as JobMapper,
-};
-use Company\Service\{
-    AclService,
-    Company as CompanyService,
-};
 use Application\Model\Enums\ApprovableStatus;
-use Laminas\Http\{
-    Request,
-    Response,
-};
+use Company\Mapper\Company as CompanyMapper;
+use Company\Mapper\Job as JobMapper;
+use Company\Service\AclService;
+use Company\Service\Company as CompanyService;
+use Laminas\Http\Request;
+use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
@@ -48,7 +42,7 @@ class AdminApprovalController extends AbstractActionController
             && !$approveJobs
         ) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view the approval status of jobs')
+                $this->translator->translate('You are not allowed to view the approval status of jobs'),
             );
         }
 
@@ -66,7 +60,7 @@ class AdminApprovalController extends AbstractActionController
             [
                 'companies' => $companies,
                 'jobs' => $jobs,
-            ]
+            ],
         );
     }
 
@@ -74,7 +68,7 @@ class AdminApprovalController extends AbstractActionController
     {
         if (!$this->aclService->isAllowed('approve', 'job')) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view the approval status of jobs')
+                $this->translator->translate('You are not allowed to view the approval status of jobs'),
             );
         }
 
@@ -102,7 +96,7 @@ class AdminApprovalController extends AbstractActionController
                     'updateJobApprovalStatus',
                     $this->translator->translate('Reset Approval Status'),
                 ),
-            ]
+            ],
         );
     }
 
@@ -110,7 +104,7 @@ class AdminApprovalController extends AbstractActionController
     {
         if (!$this->aclService->isAllowed('approve', 'job')) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to change the approval status of jobs')
+                $this->translator->translate('You are not allowed to change the approval status of jobs'),
             );
         }
 
@@ -158,7 +152,7 @@ class AdminApprovalController extends AbstractActionController
                 $this->companyService->resetJobApproval($job);
                 $this->flashMessenger()->addSuccessMessage($this->translator->translate('Job approval status reset!'));
                 break;
-        };
+        }
 
         return $this->redirect()->toRoute('company_admin_approval');
     }
@@ -167,7 +161,7 @@ class AdminApprovalController extends AbstractActionController
     {
         if (!$this->aclService->isAllowed('approve', 'job')) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to approve update proposals of jobs')
+                $this->translator->translate('You are not allowed to approve update proposals of jobs'),
             );
         }
 
@@ -189,7 +183,7 @@ class AdminApprovalController extends AbstractActionController
                     'updateJobProposalStatus',
                     $this->translator->translate('Reject Update'),
                 ),
-            ]
+            ],
         );
     }
 
@@ -197,7 +191,7 @@ class AdminApprovalController extends AbstractActionController
     {
         if (!$this->aclService->isAllowed('approve', 'job')) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to approve update proposals of jobs')
+                $this->translator->translate('You are not allowed to approve update proposals of jobs'),
             );
         }
 
@@ -218,7 +212,12 @@ class AdminApprovalController extends AbstractActionController
         $form->setData($request->getPost()->toArray());
 
         if (!$form->isValid()) {
-            $this->flashMessenger()->addErrorMessage($this->translator->translate('An unknown error occurred while try to change the status of a job update proposal. Please try again.'));
+            $this->flashMessenger()->addErrorMessage(
+                $this->translator->translate(
+                    // phpcs:ignore Generic.Files.LineLength.TooLong -- user-visible strings should not be split
+                    'An unknown error occurred while try to change the status of a job update proposal. Please try again.',
+                ),
+            );
 
             return $this->redirect()->toRoute('company_admin_approval/job_proposal', ['proposalId' => $proposalId]);
         }
@@ -235,7 +234,9 @@ class AdminApprovalController extends AbstractActionController
                     $proposal,
                     $request->getPost()->get('message'),
                 );
-                $this->flashMessenger()->addSuccessMessage($this->translator->translate('Job update has been rejected!'));
+                $this->flashMessenger()->addSuccessMessage(
+                    $this->translator->translate('Job update has been rejected!'),
+                );
                 break;
         }
 

@@ -5,29 +5,23 @@ declare(strict_types=1);
 namespace Photo;
 
 use Doctrine\ORM\Mapping\Driver\AttributeDriver;
-use Laminas\Router\Http\{
-    Literal,
-    Segment,
-};
+use Laminas\Router\Http\Literal;
+use Laminas\Router\Http\Segment;
 use Photo\Command\WeeklyPhoto;
-use Photo\Controller\{
-    AlbumAdminController,
-    AlbumController,
-    ApiController,
-    PhotoAdminController,
-    PhotoController,
-    TagController,
-    Plugin\AlbumPlugin,
-};
-use Photo\Controller\Factory\{
-    AlbumAdminControllerFactory,
-    AlbumControllerFactory,
-    ApiControllerFactory,
-    PhotoAdminControllerFactory,
-    PhotoControllerFactory,
-    TagControllerFactory,
-    Plugin\AlbumPluginFactory,
-};
+use Photo\Controller\AlbumAdminController;
+use Photo\Controller\AlbumController;
+use Photo\Controller\ApiController;
+use Photo\Controller\Factory\AlbumAdminControllerFactory;
+use Photo\Controller\Factory\AlbumControllerFactory;
+use Photo\Controller\Factory\ApiControllerFactory;
+use Photo\Controller\Factory\PhotoAdminControllerFactory;
+use Photo\Controller\Factory\PhotoControllerFactory;
+use Photo\Controller\Factory\Plugin\AlbumPluginFactory;
+use Photo\Controller\Factory\TagControllerFactory;
+use Photo\Controller\PhotoAdminController;
+use Photo\Controller\PhotoController;
+use Photo\Controller\Plugin\AlbumPlugin;
+use Photo\Controller\TagController;
 
 return [
     'router' => [

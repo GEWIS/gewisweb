@@ -8,6 +8,8 @@ use Decision\Service\Organ as OrganService;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 
+use function array_merge;
+
 class OrganController extends AbstractActionController
 {
     public function __construct(private readonly OrganService $organService)
@@ -22,7 +24,7 @@ class OrganController extends AbstractActionController
         return new ViewModel(
             [
                 'organs' => $this->organService->getOrgans(),
-            ]
+            ],
         );
     }
 
@@ -45,8 +47,8 @@ class OrganController extends AbstractActionController
                 [
                     'organ' => $organ,
                 ],
-                $organMemberInformation
-            )
+                $organMemberInformation,
+            ),
         );
     }
 }

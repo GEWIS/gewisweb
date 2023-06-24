@@ -10,7 +10,7 @@ use Laminas\Hydrator\Strategy\StrategyInterface;
 class LanguageHydratorStrategy implements StrategyInterface
 {
     public function extract(
-        $value,
+        mixed $value,
         ?object $object = null,
     ): string {
         if ($value instanceof Languages) {
@@ -21,7 +21,7 @@ class LanguageHydratorStrategy implements StrategyInterface
     }
 
     public function hydrate(
-        $value,
+        mixed $value,
         ?array $data,
     ): Languages {
         if ($value instanceof Languages) {

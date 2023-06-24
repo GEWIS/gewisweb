@@ -9,26 +9,34 @@ use Exception;
 use Imagick;
 use InvalidArgumentException;
 use Laminas\Mvc\I18n\Translator;
-use Laminas\Validator\File\{
-    Extension,
-    IsImage,
-};
+use Laminas\Validator\File\Extension;
+use Laminas\Validator\File\IsImage;
 use Photo\Mapper\Photo as PhotoMapper;
-use Photo\Model\{
-    Album as AlbumModel,
-    Photo as PhotoModel,
-};
-use Photo\Service\{
-    Metadata as MetadataService,
-    Photo as PhotoService,
-};
+use Photo\Model\Album as AlbumModel;
+use Photo\Model\Photo as PhotoModel;
+use Photo\Service\Metadata as MetadataService;
+use Photo\Service\Photo as PhotoService;
+use Throwable;
 use User\Permissions\NotAllowedException;
+
+use function array_values;
+use function explode;
+use function getrandmax;
+use function implode;
+use function move_uploaded_file;
+use function random_int;
+use function sprintf;
+use function sys_get_temp_dir;
+use function unlink;
 
 /**
  * Admin service for all photo admin related functions.
  */
 class Admin
 {
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
+     */
     public function __construct(
         private readonly AclService $aclService,
         private readonly Translator $translator,
@@ -45,11 +53,9 @@ class Admin
      * All upload actions should use this function to prevent "ghost" files
      * or database entries.
      *
-     * @param string $path the temporary path of the uploaded photo
+     * @param string     $path        the temporary path of the uploaded photo
      * @param AlbumModel $targetAlbum the album to save the photo in
-     * @param bool $move whether to move the photo instead of copying it
-     *
-     * @return PhotoModel|bool
+     * @param bool       $move        whether to move the photo instead of copying it
      */
     public function storeUploadedPhoto(
         string $path,
@@ -65,7 +71,7 @@ class Admin
         //check if photo exists already in the database
         $photo = $this->photoMapper->getPhotoByData($storagePath, $targetAlbum);
         //if the returned object is null, then the photo doesn't exist
-        if (is_null($photo)) {
+        if (null === $photo) {
             $photo = new PhotoModel();
             $photo->setAlbum($targetAlbum);
             $photo = $this->metadataService->populateMetaData($photo, $path);
@@ -77,16 +83,20 @@ class Admin
                 /*
                  * Create and set the storage paths for thumbnails.
                  */
-                $photo->setLargeThumbPath($this->createThumbnail(
-                    $path,
-                    $config['large_thumb_size']['width'],
-                    $config['large_thumb_size']['height']
-                ));
-                $photo->setSmallThumbPath($this->createThumbnail(
-                    $path,
-                    $config['small_thumb_size']['width'],
-                    $config['small_thumb_size']['height']
-                ));
+                $photo->setLargeThumbPath(
+                    $this->createThumbnail(
+                        $path,
+                        $config['large_thumb_size']['width'],
+                        $config['large_thumb_size']['height'],
+                    ),
+                );
+                $photo->setSmallThumbPath(
+                    $this->createThumbnail(
+                        $path,
+                        $config['small_thumb_size']['width'],
+                        $config['small_thumb_size']['height'],
+                    ),
+                );
 
                 if ($move) {
                     unlink($path);
@@ -95,7 +105,7 @@ class Admin
                 $mapper->persist($photo);
                 $mapper->flush();
                 $mapper->getConnection()->commit();
-            } catch (Exception $e) {
+            } catch (Throwable) {
                 // Rollback if anything went wrong
                 $mapper->getConnection()->rollBack();
                 $this->photoService->deletePhotoFiles($photo);
@@ -111,9 +121,9 @@ class Admin
      * Creates and stores a thumbnail of specified maximum size from a stored
      * image.
      *
-     * @param string $path the path of the original image
-     * @param int $width the maximum width of the thumbnail (in px)
-     * @param int $height the maximum height of the thumbnail (in px)
+     * @param string $path   the path of the original image
+     * @param int    $width  the maximum width of the thumbnail (in px)
+     * @param int    $height the maximum height of the thumbnail (in px)
      *
      * @return string the path of the created thumbnail
      */
@@ -130,15 +140,15 @@ class Admin
 
         switch ($orientation) {
             case imagick::ORIENTATION_BOTTOMRIGHT:
-                $image->rotateimage("#000000", 180);
+                $image->rotateimage('#000000', 180);
                 break;
 
             case imagick::ORIENTATION_RIGHTTOP:
-                $image->rotateimage("#000000", 90);
+                $image->rotateimage('#000000', 90);
                 break;
 
             case imagick::ORIENTATION_LEFTBOTTOM:
-                $image->rotateimage("#000000", -90);
+                $image->rotateimage('#000000', -90);
                 break;
         }
 
@@ -153,7 +163,8 @@ class Admin
 
     /**
      * @param array $files
-     * @param AlbumModel $album
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function upload(
         array $files,
@@ -162,19 +173,20 @@ class Admin
         $this->checkUploadAllowed();
 
         $imageValidator = new IsImage(
-            ['magicFile' => false]
+            ['magicFile' => false],
         );
         $extensionValidator = new Extension(
-            ['JPEG', 'JPG', 'JFIF', 'TIFF', 'RIF', 'GIF', 'BMP', 'PNG']
+            ['JPEG', 'JPG', 'JFIF', 'TIFF', 'RIF', 'GIF', 'BMP', 'PNG'],
         );
 
         if (0 !== $files['file']['error']) {
             throw new Exception(
                 $this->translator->translate(
                     'An unknown error occurred during uploading (' . $files['file']['error'] . ')',
-                )
+                ),
             );
         }
+
         /**
          * We re-add the original extension so it can be preserved later on
          * when moving the file.
@@ -183,25 +195,25 @@ class Admin
         $path = $files['file']['tmp_name'] . '.' . $extension;
         move_uploaded_file($files['file']['tmp_name'], $path);
 
-        if ($imageValidator->isValid($path)) {
-            if ($extensionValidator->isValid($path)) {
-                $this->storeUploadedPhoto($path, $album, true);
-            } else {
-                throw new InvalidArgumentException(
-                    $this->translator->translate('The uploaded file does not have a valid extension')
-                );
-            }
-        } else {
+        if (!$imageValidator->isValid($path)) {
             throw new InvalidArgumentException(
                 sprintf(
                     $this->translator->translate("The uploaded file is not a valid image \nError: %s"),
                     implode(
                         ',',
-                        array_values($imageValidator->getMessages())
-                    )
-                )
+                        array_values($imageValidator->getMessages()),
+                    ),
+                ),
             );
         }
+
+        if (!$extensionValidator->isValid($path)) {
+            throw new InvalidArgumentException(
+                $this->translator->translate('The uploaded file does not have a valid extension'),
+            );
+        }
+
+        $this->storeUploadedPhoto($path, $album, true);
     }
 
     /**

@@ -7,11 +7,8 @@ namespace Frontpage\Mapper;
 use Application\Mapper\BaseMapper;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
-use Frontpage\Model\{
-    Poll as PollModel,
-    PollOption as PollOptionModel,
-    PollVote as PollVoteModel,
-};
+use Frontpage\Model\Poll as PollModel;
+use Frontpage\Model\PollVote as PollVoteModel;
 
 /**
  * Mappers for Polls.
@@ -22,11 +19,6 @@ class Poll extends BaseMapper
 {
     /**
      * Find the vote of a certain user on a poll.
-     *
-     * @param int $pollId
-     * @param int|null $lidnr
-     *
-     * @return PollVoteModel|null
      */
     public function findVote(
         int $pollId,
@@ -36,12 +28,12 @@ class Poll extends BaseMapper
             [
                 'poll' => $pollId,
                 'respondent' => $lidnr,
-            ]
+            ],
         );
     }
 
     /**
-     * @return array<array-key, PollModel>
+     * @return PollModel[]
      */
     public function getUnapprovedPolls(): array
     {
@@ -55,8 +47,6 @@ class Poll extends BaseMapper
     /**
      * Returns the latest poll if one is available. Please note that this returns the poll which has its expiryDate
      * furthest into the future, and thus not necessarily the 'newest' poll.
-     *
-     * @return PollModel|null
      */
     public function getNewestPoll(): ?PollModel
     {
@@ -73,8 +63,6 @@ class Poll extends BaseMapper
 
     /**
      * Returns a paginator adapter for paging through all polls.
-     *
-     * @return DoctrineAdapter
      */
     public function getPaginatorAdapter(): DoctrineAdapter
     {
@@ -85,9 +73,6 @@ class Poll extends BaseMapper
         return new DoctrineAdapter(new Paginator($qb));
     }
 
-    /**
-     * @inheritdoc
-     */
     protected function getRepositoryName(): string
     {
         return PollModel::class;

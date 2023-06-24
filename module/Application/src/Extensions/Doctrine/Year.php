@@ -5,12 +5,10 @@ declare(strict_types=1);
 namespace Application\Extensions\Doctrine;
 
 use Doctrine\ORM\Query\AST\Functions\FunctionNode;
-use Doctrine\ORM\Query\{
-    AST\Node,
-    Lexer,
-    Parser,
-    SqlWalker,
-};
+use Doctrine\ORM\Query\AST\Node;
+use Doctrine\ORM\Query\Lexer;
+use Doctrine\ORM\Query\Parser;
+use Doctrine\ORM\Query\SqlWalker;
 
 /**
  * YearFunction ::= "YEAR" "(" ArithmeticPrimary ")"

@@ -5,32 +5,26 @@ declare(strict_types=1);
 namespace Frontpage;
 
 use Doctrine\ORM\Mapping\Driver\AttributeDriver;
-use Frontpage\Controller\{
-    AdminController,
-    FrontpageController,
-    InfimumController,
-    NewsAdminController,
-    OrganController,
-    PageAdminController,
-    PageController,
-    PollAdminController,
-    PollController,
-};
-use Frontpage\Controller\Factory\{
-    AdminControllerFactory,
-    FrontpageControllerFactory,
-    InfimumControllerFactory,
-    NewsAdminControllerFactory,
-    OrganControllerFactory,
-    PageAdminControllerFactory,
-    PageControllerFactory,
-    PollAdminControllerFactory,
-    PollControllerFactory,
-};
-use Laminas\Router\Http\{
-    Literal,
-    Segment,
-};
+use Frontpage\Controller\AdminController;
+use Frontpage\Controller\Factory\AdminControllerFactory;
+use Frontpage\Controller\Factory\FrontpageControllerFactory;
+use Frontpage\Controller\Factory\InfimumControllerFactory;
+use Frontpage\Controller\Factory\NewsAdminControllerFactory;
+use Frontpage\Controller\Factory\OrganControllerFactory;
+use Frontpage\Controller\Factory\PageAdminControllerFactory;
+use Frontpage\Controller\Factory\PageControllerFactory;
+use Frontpage\Controller\Factory\PollAdminControllerFactory;
+use Frontpage\Controller\Factory\PollControllerFactory;
+use Frontpage\Controller\FrontpageController;
+use Frontpage\Controller\InfimumController;
+use Frontpage\Controller\NewsAdminController;
+use Frontpage\Controller\OrganController;
+use Frontpage\Controller\PageAdminController;
+use Frontpage\Controller\PageController;
+use Frontpage\Controller\PollAdminController;
+use Frontpage\Controller\PollController;
+use Laminas\Router\Http\Literal;
+use Laminas\Router\Http\Segment;
 
 return [
     'router' => [

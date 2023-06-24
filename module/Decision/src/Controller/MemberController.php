@@ -4,24 +4,25 @@ declare(strict_types=1);
 
 namespace Decision\Controller;
 
-use Decision\Service\{
-    AclService,
-    Decision as DecisionService,
-    Member as MemberService,
-    MemberInfo as MemberInfoService,
-};
 use Decision\Model\Enums\MeetingTypes;
+use Decision\Service\AclService;
+use Decision\Service\Decision as DecisionService;
+use Decision\Service\Member as MemberService;
+use Decision\Service\MemberInfo as MemberInfoService;
 use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
-use Laminas\View\Model\{
-    JsonModel,
-    ViewModel,
-};
 use Laminas\Mvc\I18n\Translator;
+use Laminas\View\Model\JsonModel;
+use Laminas\View\Model\ViewModel;
 use User\Permissions\NotAllowedException;
+
+use function array_column;
 
 class MemberController extends AbstractActionController
 {
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
+     */
     public function __construct(
         private readonly AclService $aclService,
         private readonly Translator $translator,
@@ -36,7 +37,7 @@ class MemberController extends AbstractActionController
     {
         if (!$this->aclService->isAllowed('view', 'meeting')) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view meetings.')
+                $this->translator->translate('You are not allowed to view meetings.'),
             );
         }
 
@@ -62,7 +63,7 @@ class MemberController extends AbstractActionController
                 'isActive' => $this->memberService->isActiveMember(),
                 'upcoming' => $this->decisionService->getUpcomingAnnouncedMeetings(),
                 'meetingsCollection' => $meetingsCollection,
-            ]
+            ],
         );
     }
 
@@ -103,7 +104,7 @@ class MemberController extends AbstractActionController
             return new JsonModel(
                 [
                     'members' => $this->memberService->searchMembersByName($name),
-                ]
+                ],
             );
         }
 
@@ -126,14 +127,14 @@ class MemberController extends AbstractActionController
                 return new JsonModel(
                     [
                         'value' => true,
-                    ]
+                    ],
                 );
             }
 
             return new JsonModel(
                 [
                     'value' => false,
-                ]
+                ],
             );
         }
 
@@ -147,14 +148,14 @@ class MemberController extends AbstractActionController
     {
         if (!$this->aclService->isAllowed('birthdays', 'member')) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view the list of birthdays.')
+                $this->translator->translate('You are not allowed to view the list of birthdays.'),
             );
         }
 
         return new ViewModel(
             [
                 'members' => $this->memberService->getBirthdayMembers(7),
-            ]
+            ],
         );
     }
 

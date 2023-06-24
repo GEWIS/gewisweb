@@ -5,26 +5,18 @@ declare(strict_types=1);
 namespace User\Controller;
 
 use DateTime;
-use Laminas\Http\{
-    Request,
-    Response,
-};
+use Laminas\Http\Request;
+use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
-use User\Form\{
-    ApiAppAuthorisation as ApiAppAuthorisationInitialForm,
-    ApiAppAuthorisation as ApiAppAuthorisationReminderForm,
-};
-use User\Mapper\{
-    ApiApp as ApiAppMapper,
-    ApiAppAuthentication as ApiAppAuthenticationMapper,
-};
+use User\Form\ApiAppAuthorisation as ApiAppAuthorisationInitialForm;
+use User\Form\ApiAppAuthorisation as ApiAppAuthorisationReminderForm;
+use User\Mapper\ApiApp as ApiAppMapper;
+use User\Mapper\ApiAppAuthentication as ApiAppAuthenticationMapper;
 use User\Model\User;
 use User\Permissions\NotAllowedException;
-use User\Service\{
-    AclService,
-    ApiApp as ApiAppService,
-};
+use User\Service\AclService;
+use User\Service\ApiApp as ApiAppService;
 
 class ApiAuthenticationController extends AbstractActionController
 {
@@ -56,10 +48,13 @@ class ApiAuthenticationController extends AbstractActionController
         // If the user has previously authenticated with the external application, but it has been longer than 3 months
         // show a small notice as a reminder. Otherwise, directly authenticate.
         $remind = false;
-        if (null !== ($lastAuthentication = $this->apiAppAuthenticationMapper->getLastAuthentication($identity, $app))) {
-            if (90 < (new DateTime('now'))->diff($lastAuthentication->getTime())->days) {
-                $remind = true;
-            } else {
+        if (
+            null !== ($lastAuthentication = $this->apiAppAuthenticationMapper->getLastAuthentication(
+                $identity,
+                $app,
+            ))
+        ) {
+            if (90 >= (new DateTime('now'))->diff($lastAuthentication->getTime())->days) {
                 // Again, make sure that we do not use `Location: ` based redirects.
                 $viewModel = (new ViewModel())->setTemplate('user_token/redirect');
 
@@ -67,9 +62,11 @@ class ApiAuthenticationController extends AbstractActionController
                     [
                         'app' => $app->getAppId(),
                         'url' => $this->apiAppService->callbackWithToken($app, $identity),
-                    ]
+                    ],
                 );
             }
+
+            $remind = true;
         }
 
         if ($remind) {
@@ -103,7 +100,7 @@ class ApiAuthenticationController extends AbstractActionController
                     [
                         'app' => $app->getAppId(),
                         'url' => $url,
-                    ]
+                    ],
                 );
             }
         }
@@ -114,7 +111,7 @@ class ApiAuthenticationController extends AbstractActionController
                 'claims' => $app->getClaims(),
                 'form' => $form,
                 'remind' => $remind,
-            ]
+            ],
         );
     }
 }

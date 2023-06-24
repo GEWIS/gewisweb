@@ -6,6 +6,9 @@ namespace Education\Model\Enums;
 
 use Laminas\Mvc\I18n\Translator;
 
+use function array_map;
+use function array_merge;
+
 /**
  * Enum for the different exam types.
  */
@@ -26,11 +29,14 @@ enum ExamTypes: string
         };
     }
 
+    /**
+     * @return array<array-key, ExamTypes|string>
+     */
     public static function values(): array
     {
         return array_merge(
             array_map(
-                fn (self $status) => $status->value,
+                static fn (self $status) => $status->value,
                 self::cases(),
             ),
             self::cases(),

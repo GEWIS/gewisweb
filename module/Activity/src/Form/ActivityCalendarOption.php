@@ -6,15 +6,13 @@ namespace Activity\Form;
 
 use Activity\Service\ActivityCalendarForm;
 use DateTime;
-use Exception;
-use Laminas\Form\Element\{
-    Date,
-    Select,
-};
+use Laminas\Form\Element\Date;
+use Laminas\Form\Element\Select;
 use Laminas\Form\Fieldset;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\Callback;
+use Throwable;
 
 class ActivityCalendarOption extends Fieldset implements InputFilterProviderInterface
 {
@@ -40,7 +38,7 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
                 'options' => [
                     'format' => 'Y-m-d',
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -50,7 +48,7 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
                 'options' => [
                     'format' => 'Y-m-d',
                 ],
-            ]
+            ],
         );
 
         $this->add(
@@ -65,7 +63,7 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
                     ],
                     'value_options' => $typeOptions,
                 ],
-            ]
+            ],
         );
     }
 
@@ -82,7 +80,9 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
                         'name' => Callback::class,
                         'options' => [
                             'messages' => [
-                                Callback::INVALID_VALUE => $this->translator->translate('The activity must start before it ends'),
+                                Callback::INVALID_VALUE => $this->translator->translate(
+                                    'The activity must start before it ends',
+                                ),
                             ],
                             'callback' => function ($value, $context = []) {
                                 return $this->beforeEndTime($value, $context);
@@ -93,10 +93,12 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
                         'name' => Callback::class,
                         'options' => [
                             'messages' => [
-                                Callback::INVALID_VALUE => $this->translator->translate('The activity must start after today'),
+                                Callback::INVALID_VALUE => $this->translator->translate(
+                                    'The activity must start after today',
+                                ),
                             ],
-                            'callback' => function ($value, $context = []) {
-                                return $this->isFutureTime($value, $context);
+                            'callback' => function ($value) {
+                                return $this->isFutureTime($value);
                             },
                         ],
                     ],
@@ -115,41 +117,33 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
     /**
      * Check if a certain date is before the end date of the option.
      *
-     * @param string $value
-     * @param array $context
-     *
-     * @return bool
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function beforeEndTime(
         string $value,
         array $context = [],
     ): bool {
         try {
-            $endTime = isset($context['endTime']) ? $this->calendarFormService->toDateTime($context['endTime']) : new DateTime('now');
+            $endTime = isset($context['endTime']) ? $this->calendarFormService->toDateTime(
+                $context['endTime'],
+            ) : new DateTime('now');
 
             return $this->calendarFormService->toDateTime($value) <= $endTime;
-        } catch (Exception $e) {
+        } catch (Throwable) {
             return false;
         }
     }
 
     /**
      * Check if a certain date is in the future.
-     *
-     * @param string $value
-     * @param array $context
-     *
-     * @return bool
      */
-    public function isFutureTime(
-        string $value,
-        array $context = [],
-    ): bool {
+    public function isFutureTime(string $value): bool
+    {
         try {
             $today = new DateTime();
 
             return $this->calendarFormService->toDateTime($value) > $today;
-        } catch (Exception) {
+        } catch (Throwable) {
             return false;
         }
     }

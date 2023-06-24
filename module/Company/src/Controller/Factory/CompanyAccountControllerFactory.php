@@ -12,11 +12,7 @@ use Psr\Container\ContainerInterface;
 class CompanyAccountControllerFactory implements FactoryInterface
 {
     /**
-     * @param ContainerInterface $container
      * @param string $requestedName
-     * @param array|null $options
-     *
-     * @return CompanyAccountController
      */
     public function __invoke(
         ContainerInterface $container,

@@ -14,9 +14,6 @@ use Company\Model\JobLabel as JobLabelModel;
  */
 class Label extends BaseMapper
 {
-    /**
-     * @inheritDoc
-     */
     protected function getRepositoryName(): string
     {
         return JobLabeLModel::class;
