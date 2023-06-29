@@ -24,7 +24,7 @@ jobs:
                     MYSQL_PASSWORD: gewis
                 ports:
                     - 3306:3306
-                options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+                options: --health-cmd="/usr/local/bin/healthcheck.sh --innodb_initialized" --health-interval=10s --health-timeout=5s --health-retries=5
 
         steps:
             -   name: Checkout head branch
