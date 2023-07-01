@@ -20,6 +20,12 @@ $this->headTitle($this->translate('Request a poll'));
             <?php if (isset($success)): ?>
                 <?= $this->translate('Your poll request has been received and will be reviewed shortly.') ?>
             <?php else: ?>
+                <div class="col-md-12">
+                    <div class="alert alert-info" role="alert">
+                        <strong><?= $this->translate('Heads up!') ?></strong>
+                        <?= $this->translate('Polls are public and freely accessible, even to non-members. This means you cannot use personal data in the questions or options. For example, similar to infima, this means that you should always abbreviate family names, so instead of <em>John Doe</em> you should use <em>John D.</em> The board will check this before approving a poll, if personal data does appear in a poll it will be rejected and therefore not published on the website.') ?>
+                    </div>
+                </div>
                 <?php
                 $this->inlineScript()
                     ->appendFile(

@@ -202,6 +202,10 @@ $this->breadcrumbs()
             </div>
             <div class="modal-body">
                 <p><?= $this->translate('Are you sure that you want to approve this poll?') ?></p>
+                <div class="alert alert-info" role="alert">
+                    <strong><?= $this->translate('Heads up!') ?></strong>
+                    <?= $this->translate('Polls are public and freely accessible, even to non-members. There should not be any personal data in the questions or options. Make sure that family names are always abbreviated, so instead of <em>John Doe</em> it should say <em>John D.</em>') ?>
+                </div>
                 <div class="options">
                 </div>
                 <?php
