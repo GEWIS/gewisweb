@@ -177,7 +177,7 @@ New&nbsp;poll&nbsp;requested
                                                                     <p style="margin: 0; font-size: 18px;">
                                                                     <p>Dear board member,</p>
                                                                     <p><i><?= $this->escapeHtml($poll->getCreator()->getFullName()) ?></i> has created a new poll. It requires your review before it will appear on the website.</p>
-                                                                    <p><a href="<?= $this->serverUrl($this->url('admin_poll')) ?>" style="color: #C40000; text-decoration: none;" target="_blank" rel="noopener nofollow">Click here</a> to view this poll. The question of this poll is <i>"<?= $this->escapeHtml($poll->getEnglishQuestion()) ?>"</i>.</p>
+                                                                    <p><a href="<?= $this->serverUrl($this->url('admin_poll')) ?>" style="color: #C40000; text-decoration: none;" target="_blank" rel="noopener nofollow">Click here</a> to view this poll. The question of this poll is <i>"<?= $this->escapeHtml($poll->getQuestion()->getValueEN()) ?>"</i>.</p>
                                                                     With kind regards,<br> The ApplicatieBeheerCommissie
                                                                     </p>
                                                                 </div>

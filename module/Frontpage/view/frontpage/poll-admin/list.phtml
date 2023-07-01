@@ -10,7 +10,7 @@ use Laminas\View\Renderer\PhpRenderer;
 /**
  * @var PhpRenderer|HelperTrait $this
  * @var PollApprovalForm $approvalForm
- * @var Laminas\Paginator\Paginator $paginator;
+ * @var Laminas\Paginator\Paginator<array-key, PollModel> $paginator;
  * @var PollModel[] $unapprovedPolls
  */
 
@@ -49,10 +49,10 @@ $this->breadcrumbs()
         <?php ob_start() /* start buffer for poll options */ ?>
         <dl>
             <dt><?= $this->translate('Dutch question') ?></dt>
-            <dd><?= $this->escapeHtml($poll->getDutchQuestion()) ?></dd>
+            <dd><?= $this->escapeHtml($poll->getQuestion()->getValueNL()) ?></dd>
 
             <dt><?= $this->translate('English question') ?></dt>
-            <dd><?= $this->escapeHtml($poll->getEnglishQuestion()) ?></dd>
+            <dd><?= $this->escapeHtml($poll->getQuestion()->getValueEN()) ?></dd>
         </dl>
         <table class="table table-striped" style="word-break: break-word;">
             <thead>
@@ -64,8 +64,8 @@ $this->breadcrumbs()
             <tbody>
             <?php foreach ($poll->getOptions() as $option): ?>
                 <tr>
-                    <td><?= $this->escapeHtml($option->getDutchText()) ?></td>
-                    <td><?= $this->escapeHtml($option->getEnglishText()) ?></td>
+                    <td><?= $this->escapeHtml($option->getText()->getValueNL()) ?></td>
+                    <td><?= $this->escapeHtml($option->getText()->getValueEN()) ?></td>
                 </tr>
             <?php endforeach ?>
             </tbody>
@@ -73,8 +73,8 @@ $this->breadcrumbs()
         <?php $options = ob_get_clean() /* end buffer for poll options */ ?>
         <tr id="admin-poll-<?= $poll->getId() ?>" data-options="<?= $this->escapeHtmlAttr($options) ?>">
             <td><?= $poll->getId() ?></td>
-            <td><?= $this->escapeHtml($poll->getDutchQuestion()) ?></td>
-            <td><?= $this->escapeHtml($poll->getEnglishQuestion()) ?></td>
+            <td><?= $this->escapeHtml($poll->getQuestion()->getValueNL()) ?></td>
+            <td><?= $this->escapeHtml($poll->getQuestion()->getValueEN()) ?></td>
             <td><?= $poll->getExpiryDate()->format('Y-m-d') ?></td>
             <td><?= $poll->getCreator()->getFullName() ?></td>
             <td></td>
@@ -122,10 +122,10 @@ $this->breadcrumbs()
             <?php ob_start() /* start buffer for poll options */ ?>
             <dl>
                 <dt><?= $this->translate('Dutch question') ?></dt>
-                <dd><?= $this->escapeHtml($poll->getDutchQuestion()) ?></dd>
+                <dd><?= $this->escapeHtml($poll->getQuestion()->getValueNL()) ?></dd>
 
                 <dt><?= $this->translate('English question') ?></dt>
-                <dd><?= $this->escapeHtml($poll->getEnglishQuestion()) ?></dd>
+                <dd><?= $this->escapeHtml($poll->getQuestion()->getValueEN()) ?></dd>
             </dl>
             <table class="table table-striped" style="word-break: break-word;">
                 <thead>
@@ -137,8 +137,8 @@ $this->breadcrumbs()
                 <tbody>
                 <?php foreach ($poll->getOptions() as $option): ?>
                     <tr>
-                        <td><?= $this->escapeHtml($option->getDutchText()) ?></td>
-                        <td><?= $this->escapeHtml($option->getEnglishText()) ?></td>
+                        <td><?= $this->escapeHtml($option->getText()->getValueNL()) ?></td>
+                        <td><?= $this->escapeHtml($option->getText()->getValueEN()) ?></td>
                     </tr>
                 <?php endforeach ?>
                 </tbody>
@@ -146,8 +146,8 @@ $this->breadcrumbs()
             <?php $options = ob_get_clean() /* end buffer for poll options */ ?>
             <tr id="admin-poll-<?= $poll->getId() ?>" data-options="<?= $this->escapeHtmlAttr($options) ?>">
                 <td><?= $poll->getId() ?></td>
-                <td><?= $this->escapeHtml($poll->getDutchQuestion()) ?></td>
-                <td><?= $this->escapeHtml($poll->getEnglishQuestion()) ?></td>
+                <td><?= $this->escapeHtml($poll->getQuestion()->getValueNL()) ?></td>
+                <td><?= $this->escapeHtml($poll->getQuestion()->getValueEN()) ?></td>
                 <td><?= $poll->getExpiryDate()->format('Y-m-d') ?></td>
                 <td><?= $poll->getCreator()->getFullName() ?></td>
                 <td><?= $poll->getApprover()->getFullName() ?></td>

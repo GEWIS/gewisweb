@@ -25,7 +25,7 @@ class Poll extends Form implements InputFilterProviderInterface
                 'name' => 'dutchQuestion',
                 'type' => Text::class,
                 'options' => [
-                    'label' => $translator->translate('Dutch question'),
+                    'label' => $translator->translate('Question'),
                 ],
             ],
         );
@@ -35,7 +35,7 @@ class Poll extends Form implements InputFilterProviderInterface
                 'name' => 'englishQuestion',
                 'type' => Text::class,
                 'options' => [
-                    'label' => $translator->translate('English question'),
+                    'label' => $translator->translate('Question'),
                 ],
             ],
         );
@@ -47,10 +47,9 @@ class Poll extends Form implements InputFilterProviderInterface
                 'options' => [
                     'count' => 2,
                     'should_create_template' => true,
+                    'template_placeholder' => '__option__',
                     'allow_add' => true,
-                    'target_element' => [
-                        'type' => PollOptionFieldset::class,
-                    ],
+                    'target_element' => new PollOptionFieldset($translator),
                 ],
             ],
         );

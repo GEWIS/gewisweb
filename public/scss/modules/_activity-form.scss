@@ -9,19 +9,7 @@
 
     .signup-lists,
     .signup-list-fields {
-        @media (max-width: $screen-md-max) {
-            .flag-icon-en,
-            .flag-icon-nl {
-                display: inline-block;
-            }
-        }
-
-        @media (min-width: $screen-md-min) {
-            .flag-icon-en,
-            .flag-icon-nl {
-                display: none;
-            }
-        }
+        @import 'form_localisable_options';
     }
 
     .field,

@@ -1,0 +1,13 @@
+@media (max-width: $screen-md-max) {
+    .flag-icon-en,
+    .flag-icon-nl {
+        display: inline-block;
+    }
+}
+
+@media (min-width: $screen-md-min) {
+    .flag-icon-en,
+    .flag-icon-nl {
+        display: none;
+    }
+}

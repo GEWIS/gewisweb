@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-01 15:22+0200\n"
-"PO-Revision-Date: 2023-07-01 15:27+0200\n"
+"POT-Creation-Date: 2023-07-02 11:03+0200\n"
+"PO-Revision-Date: 2023-07-02 11:04+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: nl\n"
@@ -2027,6 +2027,10 @@ msgstr "Sta alleen GEWIS leden toe"
 msgid "Open date and time"
 msgstr "Openingsdatum en -tijd"
 
+#, php-format
+msgid "Option %s"
+msgstr "Optie %s"
+
 msgid "Option 1, Option 2, ..."
 msgstr "Optie 1, Optie 2, ..."
 
@@ -2302,6 +2306,9 @@ msgstr "Openbaar Archief"
 
 msgid "Published"
 msgstr "Gepubliceerd"
+
+msgid "Question"
+msgstr "Vraag"
 
 msgid "Random"
 msgstr "Willekeurig"

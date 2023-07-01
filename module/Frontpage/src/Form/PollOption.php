@@ -10,11 +10,12 @@ use Laminas\Form\Element\Text;
 use Laminas\Form\Fieldset;
 use Laminas\Hydrator\ClassMethodsHydrator;
 use Laminas\InputFilter\InputFilterProviderInterface;
+use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\StringLength;
 
 class PollOption extends Fieldset implements InputFilterProviderInterface
 {
-    public function __construct()
+    public function __construct(private readonly Translator $translator)
     {
         parent::__construct('pollOption');
 
@@ -26,7 +27,7 @@ class PollOption extends Fieldset implements InputFilterProviderInterface
                 'name' => 'dutchText',
                 'type' => Text::class,
                 'options' => [
-                    'label' => 'Dutch option',
+                    'label' => $this->translator->translate('Option %s'),
                 ],
             ],
         );
@@ -36,7 +37,7 @@ class PollOption extends Fieldset implements InputFilterProviderInterface
                 'name' => 'englishText',
                 'type' => Text::class,
                 'options' => [
-                    'label' => 'English option',
+                    'label' => $this->translator->translate('Option %s'),
                 ],
             ],
         );

@@ -1,0 +1,7 @@
+.form-poll {
+    .poll-options {
+        @import 'form_localisable_options';
+    }
+
+    @import 'form';
+}

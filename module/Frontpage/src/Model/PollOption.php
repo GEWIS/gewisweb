@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\OneToOne;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 /**
@@ -37,16 +38,19 @@ class PollOption implements ResourceInterface
     protected Poll $poll;
 
     /**
-     * The dutch text for this option.
+     * The localised text for this option.
      */
-    #[Column(type: 'string')]
-    protected string $dutchText;
-
-    /**
-     * The english translation of the option if available.
-     */
-    #[Column(type: 'string')]
-    protected string $englishText;
+    #[OneToOne(
+        targetEntity: FrontpageLocalisedText::class,
+        cascade: ['persist', 'remove'],
+        orphanRemoval: true,
+    )]
+    #[JoinColumn(
+        name: 'text_id',
+        referencedColumnName: 'id',
+        nullable: false,
+    )]
+    protected FrontpageLocalisedText $text;
 
     /**
      * Votes for this option.
@@ -72,16 +76,6 @@ class PollOption implements ResourceInterface
         return $this->poll;
     }
 
-    public function getDutchText(): string
-    {
-        return $this->dutchText;
-    }
-
-    public function getEnglishText(): string
-    {
-        return $this->englishText;
-    }
-
     /**
      * Adds a new vote for this poll option.
      */
@@ -96,14 +90,14 @@ class PollOption implements ResourceInterface
         $this->poll = $poll;
     }
 
-    public function setDutchText(string $dutchText): void
+    public function getText(): FrontpageLocalisedText
     {
-        $this->dutchText = $dutchText;
+        return $this->text;
     }
 
-    public function setEnglishText(string $englishText): void
+    public function setText(FrontpageLocalisedText $text): void
     {
-        $this->englishText = $englishText;
+        $this->text = $text;
     }
 
     /**

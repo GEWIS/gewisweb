@@ -14,6 +14,7 @@ use Frontpage\Form\PollApproval as PollApprovalForm;
 use Frontpage\Mapper\Poll as PollMapper;
 use Frontpage\Mapper\PollComment as PollCommentMapper;
 use Frontpage\Mapper\PollOption as PollOptionMapper;
+use Frontpage\Model\FrontpageLocalisedText;
 use Frontpage\Model\Poll as PollModel;
 use Frontpage\Model\PollComment as PollCommentModel;
 use Frontpage\Model\PollOption;
@@ -289,9 +290,7 @@ class Poll
         MemberModel $user,
     ): PollModel {
         $poll = new PollModel();
-        $poll->setDutchQuestion($data['dutchQuestion']);
-        $poll->setEnglishQuestion($data['englishQuestion']);
-
+        $poll->setQuestion(new FrontpageLocalisedText($data['englishQuestion'], $data['dutchQuestion']));
         $poll->setExpiryDate(new DateTime());
         $poll->setCreator($user);
 
@@ -313,8 +312,7 @@ class Poll
         PollModel $poll,
     ): PollOption {
         $pollOption = new PollOptionModel();
-        $pollOption->setDutchText($data['dutchText']);
-        $pollOption->setEnglishText($data['englishText']);
+        $pollOption->setText(new FrontpageLocalisedText($data['englishText'], $data['dutchText']));
         $pollOption->setPoll($poll);
 
         return $pollOption;
