@@ -102,7 +102,7 @@ class Member extends BaseMapper
                 DATE_SUB(CURDATE(), INTERVAL YEAR(CURDATE()) YEAR)
             ) BETWEEN 0 AND :days
             AND t1.deleted = 0
-            AND t1.expiration >= CURDATE()
+            AND t1.expiration > CURDATE()
             AND t1.hidden = 0
             ORDER BY DATE_SUB(t1.birth, INTERVAL YEAR(t1.birth) YEAR) ASC
             QUERY;
