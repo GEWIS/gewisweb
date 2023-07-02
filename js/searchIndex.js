@@ -11901,6 +11901,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Frontpage-Form-PollOption.html#method_getInputFilterSpecification"
         },                {
+            "fqsen": "\\Frontpage\\Form\\PollOption\u003A\u003A\u0024translator",
+            "name": "translator",
+            "summary": "",
+            "url": "classes/Frontpage-Form-PollOption.html#property_translator"
+        },                {
             "fqsen": "\\Frontpage\\Mapper\\NewsItem",
             "name": "NewsItem",
             "summary": "Mappers\u0020for\u0020NewsItems.",
@@ -11985,6 +11990,11 @@ Search.appendIndex(
             "name": "getRepositoryName",
             "summary": "",
             "url": "classes/Frontpage-Mapper-PollOption.html#method_getRepositoryName"
+        },                {
+            "fqsen": "\\Frontpage\\Model\\FrontpageLocalisedText",
+            "name": "FrontpageLocalisedText",
+            "summary": "\u007B\u0040link\u0020LocalisedText\u007D\u0020for\u0020the\u0020Frontpage\u0020module.",
+            "url": "classes/Frontpage-Model-FrontpageLocalisedText.html"
         },                {
             "fqsen": "\\Frontpage\\Model\\NewsItem",
             "name": "NewsItem",
@@ -12231,15 +12241,10 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Frontpage-Model-Poll.html#method_getExpiryDate"
         },                {
-            "fqsen": "\\Frontpage\\Model\\Poll\u003A\u003AgetDutchQuestion\u0028\u0029",
-            "name": "getDutchQuestion",
+            "fqsen": "\\Frontpage\\Model\\Poll\u003A\u003AgetQuestion\u0028\u0029",
+            "name": "getQuestion",
             "summary": "",
-            "url": "classes/Frontpage-Model-Poll.html#method_getDutchQuestion"
-        },                {
-            "fqsen": "\\Frontpage\\Model\\Poll\u003A\u003AgetEnglishQuestion\u0028\u0029",
-            "name": "getEnglishQuestion",
-            "summary": "",
-            "url": "classes/Frontpage-Model-Poll.html#method_getEnglishQuestion"
+            "url": "classes/Frontpage-Model-Poll.html#method_getQuestion"
         },                {
             "fqsen": "\\Frontpage\\Model\\Poll\u003A\u003AgetOptions\u0028\u0029",
             "name": "getOptions",
@@ -12266,15 +12271,10 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Frontpage-Model-Poll.html#method_setExpiryDate"
         },                {
-            "fqsen": "\\Frontpage\\Model\\Poll\u003A\u003AsetEnglishQuestion\u0028\u0029",
-            "name": "setEnglishQuestion",
+            "fqsen": "\\Frontpage\\Model\\Poll\u003A\u003AsetQuestion\u0028\u0029",
+            "name": "setQuestion",
             "summary": "",
-            "url": "classes/Frontpage-Model-Poll.html#method_setEnglishQuestion"
-        },                {
-            "fqsen": "\\Frontpage\\Model\\Poll\u003A\u003AsetDutchQuestion\u0028\u0029",
-            "name": "setDutchQuestion",
-            "summary": "",
-            "url": "classes/Frontpage-Model-Poll.html#method_setDutchQuestion"
+            "url": "classes/Frontpage-Model-Poll.html#method_setQuestion"
         },                {
             "fqsen": "\\Frontpage\\Model\\Poll\u003A\u003AaddOptions\u0028\u0029",
             "name": "addOptions",
@@ -12326,15 +12326,10 @@ Search.appendIndex(
             "summary": "The\u0020date\u0020the\u0020poll\u0020expires.",
             "url": "classes/Frontpage-Model-Poll.html#property_expiryDate"
         },                {
-            "fqsen": "\\Frontpage\\Model\\Poll\u003A\u003A\u0024dutchQuestion",
-            "name": "dutchQuestion",
-            "summary": "The\u0020Dutch\u0020question\u0020for\u0020the\u0020poll.",
-            "url": "classes/Frontpage-Model-Poll.html#property_dutchQuestion"
-        },                {
-            "fqsen": "\\Frontpage\\Model\\Poll\u003A\u003A\u0024englishQuestion",
-            "name": "englishQuestion",
-            "summary": "The\u0020English\u0020question\u0020for\u0020the\u0020poll.",
-            "url": "classes/Frontpage-Model-Poll.html#property_englishQuestion"
+            "fqsen": "\\Frontpage\\Model\\Poll\u003A\u003A\u0024question",
+            "name": "question",
+            "summary": "The\u0020localised\u0020question\u0020for\u0020the\u0020poll.",
+            "url": "classes/Frontpage-Model-Poll.html#property_question"
         },                {
             "fqsen": "\\Frontpage\\Model\\Poll\u003A\u003A\u0024options",
             "name": "options",
@@ -12451,16 +12446,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Frontpage-Model-PollOption.html#method_getPoll"
         },                {
-            "fqsen": "\\Frontpage\\Model\\PollOption\u003A\u003AgetDutchText\u0028\u0029",
-            "name": "getDutchText",
-            "summary": "",
-            "url": "classes/Frontpage-Model-PollOption.html#method_getDutchText"
-        },                {
-            "fqsen": "\\Frontpage\\Model\\PollOption\u003A\u003AgetEnglishText\u0028\u0029",
-            "name": "getEnglishText",
-            "summary": "",
-            "url": "classes/Frontpage-Model-PollOption.html#method_getEnglishText"
-        },                {
             "fqsen": "\\Frontpage\\Model\\PollOption\u003A\u003AaddVote\u0028\u0029",
             "name": "addVote",
             "summary": "Adds\u0020a\u0020new\u0020vote\u0020for\u0020this\u0020poll\u0020option.",
@@ -12471,15 +12456,15 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Frontpage-Model-PollOption.html#method_setPoll"
         },                {
-            "fqsen": "\\Frontpage\\Model\\PollOption\u003A\u003AsetDutchText\u0028\u0029",
-            "name": "setDutchText",
+            "fqsen": "\\Frontpage\\Model\\PollOption\u003A\u003AgetText\u0028\u0029",
+            "name": "getText",
             "summary": "",
-            "url": "classes/Frontpage-Model-PollOption.html#method_setDutchText"
+            "url": "classes/Frontpage-Model-PollOption.html#method_getText"
         },                {
-            "fqsen": "\\Frontpage\\Model\\PollOption\u003A\u003AsetEnglishText\u0028\u0029",
-            "name": "setEnglishText",
+            "fqsen": "\\Frontpage\\Model\\PollOption\u003A\u003AsetText\u0028\u0029",
+            "name": "setText",
             "summary": "",
-            "url": "classes/Frontpage-Model-PollOption.html#method_setEnglishText"
+            "url": "classes/Frontpage-Model-PollOption.html#method_setText"
         },                {
             "fqsen": "\\Frontpage\\Model\\PollOption\u003A\u003AgetVotesCount\u0028\u0029",
             "name": "getVotesCount",
@@ -12506,15 +12491,10 @@ Search.appendIndex(
             "summary": "Referenced\u0020poll.",
             "url": "classes/Frontpage-Model-PollOption.html#property_poll"
         },                {
-            "fqsen": "\\Frontpage\\Model\\PollOption\u003A\u003A\u0024dutchText",
-            "name": "dutchText",
-            "summary": "The\u0020dutch\u0020text\u0020for\u0020this\u0020option.",
-            "url": "classes/Frontpage-Model-PollOption.html#property_dutchText"
-        },                {
-            "fqsen": "\\Frontpage\\Model\\PollOption\u003A\u003A\u0024englishText",
-            "name": "englishText",
-            "summary": "The\u0020english\u0020translation\u0020of\u0020the\u0020option\u0020if\u0020available.",
-            "url": "classes/Frontpage-Model-PollOption.html#property_englishText"
+            "fqsen": "\\Frontpage\\Model\\PollOption\u003A\u003A\u0024text",
+            "name": "text",
+            "summary": "The\u0020localised\u0020text\u0020for\u0020this\u0020option.",
+            "url": "classes/Frontpage-Model-PollOption.html#property_text"
         },                {
             "fqsen": "\\Frontpage\\Model\\PollOption\u003A\u003A\u0024votes",
             "name": "votes",

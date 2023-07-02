@@ -407,7 +407,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/Poll.php"><a href="files/module-frontpage-src-model-poll.html"><abbr title="module/Frontpage/src/Model/Poll.php">Poll.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">22</span>
+    <span class="phpdocumentor-element-found-in__line">23</span>
 
     </aside>
 
@@ -461,20 +461,6 @@
 <dd>Who approved this poll. If null then nobody approved it.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Frontpage-Model-Poll.html#property_dutchQuestion">$dutchQuestion</a>
-    <span>
-                        &nbsp;: string            </span>
-</dt>
-<dd>The Dutch question for the poll.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Frontpage-Model-Poll.html#property_englishQuestion">$englishQuestion</a>
-    <span>
-                        &nbsp;: string            </span>
-</dt>
-<dd>The English question for the poll.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Frontpage-Model-Poll.html#property_expiryDate">$expiryDate</a>
     <span>
                         &nbsp;: <abbr title="\DateTime">DateTime</abbr>            </span>
@@ -495,6 +481,13 @@ nullable.</dd>
                         &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>            </span>
 </dt>
 <dd>Poll options.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a href="classes/Frontpage-Model-Poll.html#property_question">$question</a>
+    <span>
+                        &nbsp;: <a href="classes/Frontpage-Model-FrontpageLocalisedText.html"><abbr title="\Frontpage\Model\FrontpageLocalisedText">FrontpageLocalisedText</abbr></a>            </span>
+</dt>
+<dd>The localised question for the poll.</dd>
 
                 <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Frontpage-Model-Poll.html#method___construct">__construct()</a>
@@ -546,20 +539,6 @@ nullable.</dd>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Frontpage-Model-Poll.html#method_getDutchQuestion">getDutchQuestion()</a>
-    <span>
-                                &nbsp;: string    </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Frontpage-Model-Poll.html#method_getEnglishQuestion">getEnglishQuestion()</a>
-    <span>
-                                &nbsp;: string    </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Frontpage-Model-Poll.html#method_getExpiryDate">getExpiryDate()</a>
     <span>
                                 &nbsp;: <abbr title="\DateTime">DateTime</abbr>    </span>
@@ -577,6 +556,13 @@ nullable.</dd>
     <a href="classes/Frontpage-Model-Poll.html#method_getOptions">getOptions()</a>
     <span>
                                 &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;array-key, <a href="classes/Frontpage-Model-PollOption.html"><abbr title="\Frontpage\Model\PollOption">PollOption</abbr></a>&gt;    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Frontpage-Model-Poll.html#method_getQuestion">getQuestion()</a>
+    <span>
+                                &nbsp;: <a href="classes/Frontpage-Model-FrontpageLocalisedText.html"><abbr title="\Frontpage\Model\FrontpageLocalisedText">FrontpageLocalisedText</abbr></a>    </span>
 </dt>
 <dd></dd>
 
@@ -624,20 +610,6 @@ If no-one approved this poll, this poll is not approved.</dd>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Frontpage-Model-Poll.html#method_setDutchQuestion">setDutchQuestion()</a>
-    <span>
-                                &nbsp;: void    </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Frontpage-Model-Poll.html#method_setEnglishQuestion">setEnglishQuestion()</a>
-    <span>
-                                &nbsp;: void    </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Frontpage-Model-Poll.html#method_setExpiryDate">setExpiryDate()</a>
     <span>
                                 &nbsp;: void    </span>
@@ -650,6 +622,13 @@ If no-one approved this poll, this poll is not approved.</dd>
                                 &nbsp;: void    </span>
 </dt>
 <dd>Setting the identifier manually will, in most instances, result in undefined behaviour. Use with caution!</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Frontpage-Model-Poll.html#method_setQuestion">setQuestion()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd></dd>
 
         </dl>
 
@@ -679,7 +658,7 @@ If no-one approved this poll, this poll is not approved.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/Poll.php"><a href="files/module-frontpage-src-model-poll.html"><abbr title="module/Frontpage/src/Model/Poll.php">Poll.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">82</span>
+    <span class="phpdocumentor-element-found-in__line">86</span>
 
     </aside>
 
@@ -713,7 +692,7 @@ If no-one approved this poll, this poll is not approved.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/Poll.php"><a href="files/module-frontpage-src-model-poll.html"><abbr title="module/Frontpage/src/Model/Poll.php">Poll.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">62</span>
+    <span class="phpdocumentor-element-found-in__line">66</span>
 
     </aside>
 
@@ -746,7 +725,7 @@ If no-one approved this poll, this poll is not approved.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/Poll.php"><a href="files/module-frontpage-src-model-poll.html"><abbr title="module/Frontpage/src/Model/Poll.php">Poll.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">72</span>
+    <span class="phpdocumentor-element-found-in__line">76</span>
 
     </aside>
 
@@ -771,74 +750,6 @@ If no-one approved this poll, this poll is not approved.</dd>
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_dutchQuestion">
-        $dutchQuestion
-        <a href="classes/Frontpage-Model-Poll.html#property_dutchQuestion" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/Poll.php"><a href="files/module-frontpage-src-model-poll.html"><abbr title="module/Frontpage/src/Model/Poll.php">Poll.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">36</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">The Dutch question for the poll.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$dutchQuestion</span>
-    </code>
-
-    
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_englishQuestion">
-        $englishQuestion
-        <a href="classes/Frontpage-Model-Poll.html#property_englishQuestion" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/Poll.php"><a href="files/module-frontpage-src-model-poll.html"><abbr title="module/Frontpage/src/Model/Poll.php">Poll.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">42</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">The English question for the poll.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$englishQuestion</span>
-    </code>
-
-    
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                        "
->
     <h4 class="phpdocumentor-element__name" id="property_expiryDate">
         $expiryDate
         <a href="classes/Frontpage-Model-Poll.html#property_expiryDate" class="headerlink"><i class="fas fa-link"></i></a>
@@ -848,7 +759,7 @@ If no-one approved this poll, this poll is not approved.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/Poll.php"><a href="files/module-frontpage-src-model-poll.html"><abbr title="module/Frontpage/src/Model/Poll.php">Poll.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">30</span>
+    <span class="phpdocumentor-element-found-in__line">31</span>
 
     </aside>
 
@@ -917,7 +828,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/Poll.php"><a href="files/module-frontpage-src-model-poll.html"><abbr title="module/Frontpage/src/Model/Poll.php">Poll.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">50</span>
+    <span class="phpdocumentor-element-found-in__line">54</span>
 
     </aside>
 
@@ -931,6 +842,40 @@ nullable.</p>
 
     
     
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_question">
+        $question
+        <a href="classes/Frontpage-Model-Poll.html#property_question" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/Poll.php"><a href="files/module-frontpage-src-model-poll.html"><abbr title="module/Frontpage/src/Model/Poll.php">Poll.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">37</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">The localised question for the poll.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Frontpage-Model-FrontpageLocalisedText.html"><abbr title="\Frontpage\Model\FrontpageLocalisedText">FrontpageLocalisedText</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$question</span>
+    </code>
+
+    
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -954,7 +899,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/Poll.php"><a href="files/module-frontpage-src-model-poll.html"><abbr title="module/Frontpage/src/Model/Poll.php">Poll.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">86</span>
+    <span class="phpdocumentor-element-found-in__line">90</span>
 
     </aside>
 
@@ -987,7 +932,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/Poll.php"><a href="files/module-frontpage-src-model-poll.html"><abbr title="module/Frontpage/src/Model/Poll.php">Poll.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">183</span>
+    <span class="phpdocumentor-element-found-in__line">177</span>
 
     </aside>
 
@@ -1031,7 +976,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/Poll.php"><a href="files/module-frontpage-src-model-poll.html"><abbr title="module/Frontpage/src/Model/Poll.php">Poll.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">194</span>
+    <span class="phpdocumentor-element-found-in__line">188</span>
 
     </aside>
 
@@ -1074,7 +1019,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/Poll.php"><a href="files/module-frontpage-src-model-poll.html"><abbr title="module/Frontpage/src/Model/Poll.php">Poll.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">151</span>
+    <span class="phpdocumentor-element-found-in__line">145</span>
 
     </aside>
 
@@ -1118,7 +1063,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/Poll.php"><a href="files/module-frontpage-src-model-poll.html"><abbr title="module/Frontpage/src/Model/Poll.php">Poll.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">123</span>
+    <span class="phpdocumentor-element-found-in__line">122</span>
 
     </aside>
 
@@ -1151,7 +1096,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/Poll.php"><a href="files/module-frontpage-src-model-poll.html"><abbr title="module/Frontpage/src/Model/Poll.php">Poll.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">118</span>
+    <span class="phpdocumentor-element-found-in__line">117</span>
 
     </aside>
 
@@ -1183,7 +1128,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/Poll.php"><a href="files/module-frontpage-src-model-poll.html"><abbr title="module/Frontpage/src/Model/Poll.php">Poll.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">128</span>
+    <span class="phpdocumentor-element-found-in__line">127</span>
 
     </aside>
 
@@ -1209,72 +1154,6 @@ nullable.</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getDutchQuestion">
-        getDutchQuestion()
-        <a href="classes/Frontpage-Model-Poll.html#method_getDutchQuestion" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/Poll.php"><a href="files/module-frontpage-src-model-poll.html"><abbr title="module/Frontpage/src/Model/Poll.php">Poll.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">97</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getDutchQuestion</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string</span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getEnglishQuestion">
-        getEnglishQuestion()
-        <a href="classes/Frontpage-Model-Poll.html#method_getEnglishQuestion" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/Poll.php"><a href="files/module-frontpage-src-model-poll.html"><abbr title="module/Frontpage/src/Model/Poll.php">Poll.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">102</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getEnglishQuestion</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string</span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
     <h4 class="phpdocumentor-element__name" id="method_getExpiryDate">
         getExpiryDate()
         <a href="classes/Frontpage-Model-Poll.html#method_getExpiryDate" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1282,7 +1161,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/Poll.php"><a href="files/module-frontpage-src-model-poll.html"><abbr title="module/Frontpage/src/Model/Poll.php">Poll.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">92</span>
+    <span class="phpdocumentor-element-found-in__line">96</span>
 
     </aside>
 
@@ -1361,7 +1240,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/Poll.php"><a href="files/module-frontpage-src-model-poll.html"><abbr title="module/Frontpage/src/Model/Poll.php">Poll.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">110</span>
+    <span class="phpdocumentor-element-found-in__line">109</span>
 
     </aside>
 
@@ -1386,6 +1265,39 @@ nullable.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_getQuestion">
+        getQuestion()
+        <a href="classes/Frontpage-Model-Poll.html#method_getQuestion" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/Poll.php"><a href="files/module-frontpage-src-model-poll.html"><abbr title="module/Frontpage/src/Model/Poll.php">Poll.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">101</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getQuestion</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Frontpage-Model-FrontpageLocalisedText.html"><abbr title="\Frontpage\Model\FrontpageLocalisedText">FrontpageLocalisedText</abbr></a></span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Frontpage-Model-FrontpageLocalisedText.html"><abbr title="\Frontpage\Model\FrontpageLocalisedText">FrontpageLocalisedText</abbr></a></span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_getResourceId">
         getResourceId()
         <a href="classes/Frontpage-Model-Poll.html#method_getResourceId" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1393,7 +1305,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/Poll.php"><a href="files/module-frontpage-src-model-poll.html"><abbr title="module/Frontpage/src/Model/Poll.php">Poll.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">204</span>
+    <span class="phpdocumentor-element-found-in__line">198</span>
 
     </aside>
 
@@ -1426,7 +1338,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/Poll.php"><a href="files/module-frontpage-src-model-poll.html"><abbr title="module/Frontpage/src/Model/Poll.php">Poll.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">223</span>
+    <span class="phpdocumentor-element-found-in__line">217</span>
 
     </aside>
 
@@ -1459,7 +1371,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/Poll.php"><a href="files/module-frontpage-src-model-poll.html"><abbr title="module/Frontpage/src/Model/Poll.php">Poll.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">215</span>
+    <span class="phpdocumentor-element-found-in__line">209</span>
 
     </aside>
 
@@ -1495,7 +1407,7 @@ If no-one approved this poll, this poll is not approved.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/Poll.php"><a href="files/module-frontpage-src-model-poll.html"><abbr title="module/Frontpage/src/Model/Poll.php">Poll.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">172</span>
+    <span class="phpdocumentor-element-found-in__line">166</span>
 
     </aside>
 
@@ -1539,7 +1451,7 @@ If no-one approved this poll, this poll is not approved.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/Poll.php"><a href="files/module-frontpage-src-model-poll.html"><abbr title="module/Frontpage/src/Model/Poll.php">Poll.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">159</span>
+    <span class="phpdocumentor-element-found-in__line">153</span>
 
     </aside>
 
@@ -1583,7 +1495,7 @@ If no-one approved this poll, this poll is not approved.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/Poll.php"><a href="files/module-frontpage-src-model-poll.html"><abbr title="module/Frontpage/src/Model/Poll.php">Poll.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">164</span>
+    <span class="phpdocumentor-element-found-in__line">158</span>
 
     </aside>
 
@@ -1620,94 +1532,6 @@ If no-one approved this poll, this poll is not approved.</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_setDutchQuestion">
-        setDutchQuestion()
-        <a href="classes/Frontpage-Model-Poll.html#method_setDutchQuestion" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/Poll.php"><a href="files/module-frontpage-src-model-poll.html"><abbr title="module/Frontpage/src/Model/Poll.php">Poll.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">143</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setDutchQuestion</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$dutchQuestion</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
-
-        <section class="phpdocumentor-description"></section>
-
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$dutchQuestion</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
-            </dd>
-            </dl>
-
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_setEnglishQuestion">
-        setEnglishQuestion()
-        <a href="classes/Frontpage-Model-Poll.html#method_setEnglishQuestion" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/Poll.php"><a href="files/module-frontpage-src-model-poll.html"><abbr title="module/Frontpage/src/Model/Poll.php">Poll.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">138</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setEnglishQuestion</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$englishQuestion</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
-
-        <section class="phpdocumentor-description"></section>
-
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$englishQuestion</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
-            </dd>
-            </dl>
-
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
     <h4 class="phpdocumentor-element__name" id="method_setExpiryDate">
         setExpiryDate()
         <a href="classes/Frontpage-Model-Poll.html#method_setExpiryDate" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1715,7 +1539,7 @@ If no-one approved this poll, this poll is not approved.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/Poll.php"><a href="files/module-frontpage-src-model-poll.html"><abbr title="module/Frontpage/src/Model/Poll.php">Poll.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">133</span>
+    <span class="phpdocumentor-element-found-in__line">132</span>
 
     </aside>
 
@@ -1775,6 +1599,50 @@ If no-one approved this poll, this poll is not approved.</p>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$id</span>
                 : <span class="phpdocumentor-signature__argument__return-type">int|null</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">void</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_setQuestion">
+        setQuestion()
+        <a href="classes/Frontpage-Model-Poll.html#method_setQuestion" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/Poll.php"><a href="files/module-frontpage-src-model-poll.html"><abbr title="module/Frontpage/src/Model/Poll.php">Poll.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">137</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">setQuestion</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Frontpage-Model-FrontpageLocalisedText.html"><abbr title="\Frontpage\Model\FrontpageLocalisedText">FrontpageLocalisedText</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$question</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$question</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Frontpage-Model-FrontpageLocalisedText.html"><abbr title="\Frontpage\Model\FrontpageLocalisedText">FrontpageLocalisedText</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"></section>

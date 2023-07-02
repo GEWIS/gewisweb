@@ -385,8 +385,11 @@
 
     <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    PollOption
+    FrontpageLocalisedText
 
+        <span class="phpdocumentor-element__extends">
+        extends <a href="classes/Application-Model-LocalisedText.html"><abbr title="\Application\Model\LocalisedText">LocalisedText</abbr></a>
+    </span>
     
             <div class="phpdocumentor-element__package">
             in package
@@ -395,23 +398,17 @@
                             </ul>
         </div>
     
-            <span class="phpdocumentor-element__implements">
-            implements
-                            <abbr title="\Laminas\Permissions\Acl\Resource\ResourceInterface">ResourceInterface</abbr>                    </span>
     
-            <span class="phpdocumentor-element__extends">
-            Uses
-                            <a href="classes/Application-Model-Traits-IdentifiableTrait.html"><abbr title="\Application\Model\Traits\IdentifiableTrait">IdentifiableTrait</abbr></a>                    </span>
     </h2>
 
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/PollOption.php"><a href="files/module-frontpage-src-model-polloption.html"><abbr title="module/Frontpage/src/Model/PollOption.php">PollOption.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/FrontpageLocalisedText.php"><a href="files/module-frontpage-src-model-frontpagelocalisedtext.html"><abbr title="module/Frontpage/src/Model/FrontpageLocalisedText.php">FrontpageLocalisedText.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">20</span>
+    <span class="phpdocumentor-element-found-in__line">13</span>
 
     </aside>
 
-            <p class="phpdocumentor-summary">Poll Option.</p>
+            <p class="phpdocumentor-summary">{@link LocalisedText} for the Frontpage module.</p>
 
 
 
@@ -419,18 +416,6 @@
 
 
 
-<h3 id="interfaces_class_traits">
-    Interfaces, Classes, Traits and Enums
-    <a href="#interfaces_class_traits" class="headerlink"><i class="fas fa-link"></i></a>
-</h3>
-
-<dl class="phpdocumentor-table-of-contents">
-            <dt class="phpdocumentor-table-of-contents__entry -interface"><abbr title="\Laminas\Permissions\Acl\Resource\ResourceInterface">ResourceInterface</abbr></dt>
-        <dd></dd>
-    
-    
-    
-    </dl>
 
 
 <h3 id="toc">
@@ -440,13 +425,6 @@
 
 <dl class="phpdocumentor-table-of-contents">
                     <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Frontpage-Model-PollOption.html#property_anonymousVotes">$anonymousVotes</a>
-    <span>
-                        &nbsp;: int            </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id">$id</a>
     <span>
                         &nbsp;: int|null            </span>
@@ -455,37 +433,30 @@
 nullable.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Frontpage-Model-PollOption.html#property_poll">$poll</a>
+    <a href="classes/Application-Model-LocalisedText.html#property_valueEN">$valueEN</a>
     <span>
-                        &nbsp;: <a href="classes/Frontpage-Model-Poll.html"><abbr title="\Frontpage\Model\Poll">Poll</abbr></a>            </span>
+                        &nbsp;: string|null            </span>
 </dt>
-<dd>Referenced poll.</dd>
+<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Frontpage-Model-PollOption.html#property_text">$text</a>
+    <a href="classes/Application-Model-LocalisedText.html#property_valueNL">$valueNL</a>
     <span>
-                        &nbsp;: <a href="classes/Frontpage-Model-FrontpageLocalisedText.html"><abbr title="\Frontpage\Model\FrontpageLocalisedText">FrontpageLocalisedText</abbr></a>            </span>
+                        &nbsp;: string|null            </span>
 </dt>
-<dd>The localised text for this option.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Frontpage-Model-PollOption.html#property_votes">$votes</a>
-    <span>
-                        &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>            </span>
-</dt>
-<dd>Votes for this option.</dd>
+<dd></dd>
 
                 <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Frontpage-Model-PollOption.html#method_addVote">addVote()</a>
+    <a href="classes/Application-Model-LocalisedText.html#method___construct">__construct()</a>
     <span>
-                                &nbsp;: void    </span>
+                                &nbsp;: mixed    </span>
 </dt>
-<dd>Adds a new vote for this poll option.</dd>
+<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Frontpage-Model-PollOption.html#method_getAnonymousVotes">getAnonymousVotes()</a>
+    <a href="classes/Application-Model-LocalisedText.html#method_getExactText">getExactText()</a>
     <span>
-                                &nbsp;: int    </span>
+                                &nbsp;: string|null    </span>
 </dt>
 <dd></dd>
 
@@ -497,37 +468,23 @@ nullable.</dd>
 <dd>Get the identifier of the object.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Frontpage-Model-PollOption.html#method_getPoll">getPoll()</a>
+    <a href="classes/Application-Model-LocalisedText.html#method_getText">getText()</a>
     <span>
-                                &nbsp;: <a href="classes/Frontpage-Model-Poll.html"><abbr title="\Frontpage\Model\Poll">Poll</abbr></a>    </span>
+                                &nbsp;: string|null    </span>
 </dt>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Frontpage-Model-PollOption.html#method_getResourceId">getResourceId()</a>
+    <a href="classes/Application-Model-LocalisedText.html#method_getValueEN">getValueEN()</a>
     <span>
-                                &nbsp;: string    </span>
-</dt>
-<dd>Get the resource ID.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Frontpage-Model-PollOption.html#method_getText">getText()</a>
-    <span>
-                                &nbsp;: <a href="classes/Frontpage-Model-FrontpageLocalisedText.html"><abbr title="\Frontpage\Model\FrontpageLocalisedText">FrontpageLocalisedText</abbr></a>    </span>
+                                &nbsp;: string|null    </span>
 </dt>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Frontpage-Model-PollOption.html#method_getVotesCount">getVotesCount()</a>
+    <a href="classes/Application-Model-LocalisedText.html#method_getValueNL">getValueNL()</a>
     <span>
-                                &nbsp;: int    </span>
-</dt>
-<dd>Get the number of votes for this poll option.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Frontpage-Model-PollOption.html#method_setAnonymousVotes">setAnonymousVotes()</a>
-    <span>
-                                &nbsp;: void    </span>
+                                &nbsp;: string|null    </span>
 </dt>
 <dd></dd>
 
@@ -539,16 +496,30 @@ nullable.</dd>
 <dd>Setting the identifier manually will, in most instances, result in undefined behaviour. Use with caution!</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Frontpage-Model-PollOption.html#method_setPoll">setPoll()</a>
+    <a href="classes/Application-Model-LocalisedText.html#method_updateValueEN">updateValueEN()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Frontpage-Model-PollOption.html#method_setText">setText()</a>
+    <a href="classes/Application-Model-LocalisedText.html#method_updateValueNL">updateValueNL()</a>
     <span>
                                 &nbsp;: void    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Application-Model-LocalisedText.html#method_updateValues">updateValues()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -private">
+    <a href="classes/Application-Model-LocalisedText.html#method_getPreferredLocale">getPreferredLocale()</a>
+    <span>
+                                &nbsp;: string    </span>
 </dt>
 <dd></dd>
 
@@ -562,42 +533,8 @@ nullable.</dd>
     <section class="phpdocumentor-properties">
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
-            <a href="classes/Frontpage-Model-PollOption.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Frontpage-Model-FrontpageLocalisedText.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
         </h3>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_anonymousVotes">
-        $anonymousVotes
-        <a href="classes/Frontpage-Model-PollOption.html#property_anonymousVotes" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/PollOption.php"><a href="files/module-frontpage-src-model-polloption.html"><abbr title="module/Frontpage/src/Model/PollOption.php">PollOption.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">68</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">int</span>
-    <span class="phpdocumentor-signature__name">$anonymousVotes</span>
-     = <span class="phpdocumentor-signature__default-value">0</span></code>
-
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
                     <article
         class="
             phpdocumentor-element
@@ -640,28 +577,28 @@ nullable.</p>
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_poll">
-        $poll
-        <a href="classes/Frontpage-Model-PollOption.html#property_poll" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_valueEN">
+        $valueEN
+        <a href="classes/Application-Model-LocalisedText.html#property_valueEN" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/PollOption.php"><a href="files/module-frontpage-src-model-polloption.html"><abbr title="module/Frontpage/src/Model/PollOption.php">PollOption.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/LocalisedText.php"><a href="files/module-application-src-model-localisedtext.html"><abbr title="module/Application/src/Model/LocalisedText.php">LocalisedText.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">28</span>
+    <span class="phpdocumentor-element-found-in__line">20</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Referenced poll.</p>
-
+    
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/Frontpage-Model-Poll.html"><abbr title="\Frontpage\Model\Poll">Poll</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$poll</span>
-    </code>
+        <span class="phpdocumentor-signature__type">string|null</span>
+    <span class="phpdocumentor-signature__name">$valueEN</span>
+     = <span class="phpdocumentor-signature__default-value">null</span></code>
 
-    
+        <section class="phpdocumentor-description"></section>
+
         <section class="phpdocumentor-description"></section>
 
     
@@ -674,63 +611,30 @@ nullable.</p>
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_text">
-        $text
-        <a href="classes/Frontpage-Model-PollOption.html#property_text" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_valueNL">
+        $valueNL
+        <a href="classes/Application-Model-LocalisedText.html#property_valueNL" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/PollOption.php"><a href="files/module-frontpage-src-model-polloption.html"><abbr title="module/Frontpage/src/Model/PollOption.php">PollOption.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/LocalisedText.php"><a href="files/module-application-src-model-localisedtext.html"><abbr title="module/Application/src/Model/LocalisedText.php">LocalisedText.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">43</span>
+    <span class="phpdocumentor-element-found-in__line">25</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">The localised text for this option.</p>
-
+    
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/Frontpage-Model-FrontpageLocalisedText.html"><abbr title="\Frontpage\Model\FrontpageLocalisedText">FrontpageLocalisedText</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$text</span>
-    </code>
+        <span class="phpdocumentor-signature__type">string|null</span>
+    <span class="phpdocumentor-signature__name">$valueNL</span>
+     = <span class="phpdocumentor-signature__default-value">null</span></code>
 
-    
         <section class="phpdocumentor-description"></section>
 
-    
+        <section class="phpdocumentor-description"></section>
 
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_votes">
-        $votes
-        <a href="classes/Frontpage-Model-PollOption.html#property_votes" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/PollOption.php"><a href="files/module-frontpage-src-model-polloption.html"><abbr title="module/Frontpage/src/Model/PollOption.php">PollOption.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">60</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Votes for this option.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr></span>
-    <span class="phpdocumentor-signature__name">$votes</span>
-    </code>
-
-    
-    
     
 
 </article>
@@ -739,7 +643,7 @@ nullable.</p>
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/Frontpage-Model-PollOption.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Frontpage-Model-FrontpageLocalisedText.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
         </h3>
                     <article
         class="phpdocumentor-element
@@ -747,30 +651,38 @@ nullable.</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_addVote">
-        addVote()
-        <a href="classes/Frontpage-Model-PollOption.html#method_addVote" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method___construct">
+        __construct()
+        <a href="classes/Application-Model-LocalisedText.html#method___construct" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/PollOption.php"><a href="files/module-frontpage-src-model-polloption.html"><abbr title="module/Frontpage/src/Model/PollOption.php">PollOption.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/LocalisedText.php"><a href="files/module-application-src-model-localisedtext.html"><abbr title="module/Application/src/Model/LocalisedText.php">LocalisedText.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">82</span>
+    <span class="phpdocumentor-element-found-in__line">19</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Adds a new vote for this poll option.</p>
-
+    
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">addVote</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Frontpage-Model-PollVote.html"><abbr title="\Frontpage\Model\PollVote">PollVote</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$pollVote</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$valueEN</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$valueNL</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
-    
+        <section class="phpdocumentor-description"></section>
+
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$pollVote</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Frontpage-Model-PollVote.html"><abbr title="\Frontpage\Model\PollVote">PollVote</abbr></a></span>
-                            </dt>
+                <span class="phpdocumentor-signature__argument__name">$valueEN</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$valueNL</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"></section>
 
@@ -780,7 +692,7 @@ nullable.</p>
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
+    <span class="phpdocumentor-signature__response_type">mixed</span>
             &mdash;
         
     
@@ -791,31 +703,57 @@ nullable.</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getAnonymousVotes">
-        getAnonymousVotes()
-        <a href="classes/Frontpage-Model-PollOption.html#method_getAnonymousVotes" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_getExactText">
+        getExactText()
+        <a href="classes/Application-Model-LocalisedText.html#method_getExactText" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/PollOption.php"><a href="files/module-frontpage-src-model-polloption.html"><abbr title="module/Frontpage/src/Model/PollOption.php">PollOption.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/LocalisedText.php"><a href="files/module-application-src-model-localisedtext.html"><abbr title="module/Application/src/Model/LocalisedText.php">LocalisedText.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">111</span>
+    <span class="phpdocumentor-element-found-in__line">94</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getAnonymousVotes</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
-
-        <section class="phpdocumentor-description"></section>
+                    <span class="phpdocumentor-signature__name">getExactText</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$locale</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
 
     
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$locale</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+            </dl>
+
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\InvalidArgumentException">InvalidArgumentException</abbr></span>
+                                                            
+                                             
+                                    </dd>
+                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">int</span>
+    <span class="phpdocumentor-signature__response_type">string|null</span>
             &mdash;
-        
+            <section class="phpdocumentor-description"><p>the localised text</p>
+</section>
+
     
 </article>
                     <article
@@ -870,162 +808,29 @@ nullable.</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getPoll">
-        getPoll()
-        <a href="classes/Frontpage-Model-PollOption.html#method_getPoll" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/PollOption.php"><a href="files/module-frontpage-src-model-polloption.html"><abbr title="module/Frontpage/src/Model/PollOption.php">PollOption.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">74</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getPoll</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Frontpage-Model-Poll.html"><abbr title="\Frontpage\Model\Poll">Poll</abbr></a></span></code>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Frontpage-Model-Poll.html"><abbr title="\Frontpage\Model\Poll">Poll</abbr></a></span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getResourceId">
-        getResourceId()
-        <a href="classes/Frontpage-Model-PollOption.html#method_getResourceId" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/PollOption.php"><a href="files/module-frontpage-src-model-polloption.html"><abbr title="module/Frontpage/src/Model/PollOption.php">PollOption.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">124</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Get the resource ID.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getResourceId</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
-
-    
-    
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string</span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
     <h4 class="phpdocumentor-element__name" id="method_getText">
         getText()
-        <a href="classes/Frontpage-Model-PollOption.html#method_getText" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Application-Model-LocalisedText.html#method_getText" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/PollOption.php"><a href="files/module-frontpage-src-model-polloption.html"><abbr title="module/Frontpage/src/Model/PollOption.php">PollOption.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/LocalisedText.php"><a href="files/module-application-src-model-localisedtext.html"><abbr title="module/Application/src/Model/LocalisedText.php">LocalisedText.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">93</span>
+    <span class="phpdocumentor-element-found-in__line">66</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getText</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Frontpage-Model-FrontpageLocalisedText.html"><abbr title="\Frontpage\Model\FrontpageLocalisedText">FrontpageLocalisedText</abbr></a></span></code>
-
-        <section class="phpdocumentor-description"></section>
+                    <span class="phpdocumentor-signature__name">getText</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$locale</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
 
     
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Frontpage-Model-FrontpageLocalisedText.html"><abbr title="\Frontpage\Model\FrontpageLocalisedText">FrontpageLocalisedText</abbr></a></span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getVotesCount">
-        getVotesCount()
-        <a href="classes/Frontpage-Model-PollOption.html#method_getVotesCount" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/PollOption.php"><a href="files/module-frontpage-src-model-polloption.html"><abbr title="module/Frontpage/src/Model/PollOption.php">PollOption.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">106</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Get the number of votes for this poll option.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getVotesCount</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
-
-    
-    
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">int</span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_setAnonymousVotes">
-        setAnonymousVotes()
-        <a href="classes/Frontpage-Model-PollOption.html#method_setAnonymousVotes" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/PollOption.php"><a href="files/module-frontpage-src-model-polloption.html"><abbr title="module/Frontpage/src/Model/PollOption.php">PollOption.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">116</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setAnonymousVotes</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$anonymousVotes</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
-
-        <section class="phpdocumentor-description"></section>
-
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$anonymousVotes</span>
-                : <span class="phpdocumentor-signature__argument__return-type">int</span>
-                            </dt>
+                <span class="phpdocumentor-signature__argument__name">$locale</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"></section>
 
@@ -1033,9 +838,91 @@ nullable.</p>
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\InvalidArgumentException">InvalidArgumentException</abbr></span>
+                                                            
+                                             
+                                    </dd>
+                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
+    <span class="phpdocumentor-signature__response_type">string|null</span>
+            &mdash;
+            <section class="phpdocumentor-description"><p>the localised text or null when there is no localised text</p>
+</section>
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getValueEN">
+        getValueEN()
+        <a href="classes/Application-Model-LocalisedText.html#method_getValueEN" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/LocalisedText.php"><a href="files/module-application-src-model-localisedtext.html"><abbr title="module/Application/src/Model/LocalisedText.php">LocalisedText.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">33</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getValueEN</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">string|null</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getValueNL">
+        getValueNL()
+        <a href="classes/Application-Model-LocalisedText.html#method_getValueNL" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/LocalisedText.php"><a href="files/module-application-src-model-localisedtext.html"><abbr title="module/Application/src/Model/LocalisedText.php">LocalisedText.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">38</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getValueNL</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">string|null</span>
             &mdash;
         
     
@@ -1090,29 +977,29 @@ nullable.</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_setPoll">
-        setPoll()
-        <a href="classes/Frontpage-Model-PollOption.html#method_setPoll" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_updateValueEN">
+        updateValueEN()
+        <a href="classes/Application-Model-LocalisedText.html#method_updateValueEN" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/PollOption.php"><a href="files/module-frontpage-src-model-polloption.html"><abbr title="module/Frontpage/src/Model/PollOption.php">PollOption.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/LocalisedText.php"><a href="files/module-application-src-model-localisedtext.html"><abbr title="module/Application/src/Model/LocalisedText.php">LocalisedText.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">88</span>
+    <span class="phpdocumentor-element-found-in__line">51</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setPoll</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Frontpage-Model-Poll.html"><abbr title="\Frontpage\Model\Poll">Poll</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$poll</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">updateValueEN</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$valueEN</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
         <section class="phpdocumentor-description"></section>
 
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$poll</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Frontpage-Model-Poll.html"><abbr title="\Frontpage\Model\Poll">Poll</abbr></a></span>
+                <span class="phpdocumentor-signature__argument__name">$valueEN</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"></section>
@@ -1134,29 +1021,29 @@ nullable.</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_setText">
-        setText()
-        <a href="classes/Frontpage-Model-PollOption.html#method_setText" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_updateValueNL">
+        updateValueNL()
+        <a href="classes/Application-Model-LocalisedText.html#method_updateValueNL" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/PollOption.php"><a href="files/module-frontpage-src-model-polloption.html"><abbr title="module/Frontpage/src/Model/PollOption.php">PollOption.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/LocalisedText.php"><a href="files/module-application-src-model-localisedtext.html"><abbr title="module/Application/src/Model/LocalisedText.php">LocalisedText.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">98</span>
+    <span class="phpdocumentor-element-found-in__line">56</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setText</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Frontpage-Model-FrontpageLocalisedText.html"><abbr title="\Frontpage\Model\FrontpageLocalisedText">FrontpageLocalisedText</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$text</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">updateValueNL</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$valueNL</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
         <section class="phpdocumentor-description"></section>
 
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$text</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Frontpage-Model-FrontpageLocalisedText.html"><abbr title="\Frontpage\Model\FrontpageLocalisedText">FrontpageLocalisedText</abbr></a></span>
+                <span class="phpdocumentor-signature__argument__name">$valueNL</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"></section>
@@ -1170,6 +1057,92 @@ nullable.</p>
     <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
         
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_updateValues">
+        updateValues()
+        <a href="classes/Application-Model-LocalisedText.html#method_updateValues" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/LocalisedText.php"><a href="files/module-application-src-model-localisedtext.html"><abbr title="module/Application/src/Model/LocalisedText.php">LocalisedText.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">43</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">updateValues</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$valueEN</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$valueNL</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$valueEN</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$valueNL</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">void</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -private
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getPreferredLocale">
+        getPreferredLocale()
+        <a href="classes/Application-Model-LocalisedText.html#method_getPreferredLocale" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/LocalisedText.php"><a href="files/module-application-src-model-localisedtext.html"><abbr title="module/Application/src/Model/LocalisedText.php">LocalisedText.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">82</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+                    <span class="phpdocumentor-signature__name">getPreferredLocale</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+
+    
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">string</span>
+            &mdash;
+            <section class="phpdocumentor-description"><p>the preferred language: either 'nl'  or 'en'</p>
+</section>
+
     
 </article>
             </section>
@@ -1250,7 +1223,7 @@ nullable.</p>
 </section>
             </div>
         </div>
-        <a href="classes/Frontpage-Model-PollOption.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/Frontpage-Model-FrontpageLocalisedText.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 
