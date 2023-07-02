@@ -1,0 +1,46 @@
+<?php
+
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Frontpage\Form\PollOption;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var string|int $index
+ * @var PollOption $pollOption
+ */
+?>
+<div class="row option" id="option<?= $index ?>">
+    <div class="col-md-6">
+        <?php
+        $element = $pollOption->get('dutchText');
+        $element->setAttribute('class', 'form-control form-control-dutch')
+            ->setAttribute('id', 'option-text-nl');
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($element) ?>">
+            <label for="<?= $element->getAttribute('id') ?>" class="control-label label-required">
+                <?= sprintf($element->getLabel(), $index) ?>
+                <span class="flag-icon flag-icon-nl"></span>
+            </label>
+            <?= $this->formText($element) ?>
+            <?= $this->formElementErrors($element) ?>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <?php
+        $element = $pollOption->get('englishText');
+        $element->setAttribute('class', 'form-control form-control-english')
+            ->setAttribute('id', 'option-text-en');
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($element) ?>">
+            <label for="<?= $element->getAttribute('id') ?>" class="control-label label-required">
+                <?= sprintf($element->getLabel(), $index) ?>
+                <span class="flag-icon flag-icon-en"></span>
+            </label>
+            <?= $this->formText($element) ?>
+            <?= $this->formElementErrors($element) ?>
+        </div>
+    </div>
+</div>

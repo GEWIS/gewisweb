@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: GEWISweb v2.8.6-419-g641a385c1-dirty\n"
+"Project-Id-Version: GEWISweb v2.8.6-425-ge33730719-dirty\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-25 00:47+0200\n"
+"POT-Creation-Date: 2023-07-02 11:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1292,6 +1292,9 @@ msgid ""
 "secretary by going to GEWIS (preferred) or by sending an e-mail."
 msgstr ""
 
+msgid "Heads up!"
+msgstr ""
+
 msgid ""
 "Here you can add, edit, or remove activity categories. Click on 'Add "
 "Category' to add a new category or click on a category to edit/remove it."
@@ -1910,6 +1913,10 @@ msgstr ""
 msgid "Open date and time"
 msgstr ""
 
+#, php-format
+msgid "Option %s"
+msgstr ""
+
 msgid "Option 1, Option 2, ..."
 msgstr ""
 
@@ -2118,6 +2125,22 @@ msgstr ""
 msgid "Polls"
 msgstr ""
 
+msgid ""
+"Polls are public and freely accessible, even to non-members. There should "
+"not be any personal data in the questions or options. Make sure that family "
+"names are always abbreviated, so instead of <em>John Doe</em> it should say "
+"<em>John D.</em>"
+msgstr ""
+
+msgid ""
+"Polls are public and freely accessible, even to non-members. This means you "
+"cannot use personal data in the questions or options. For example, similar "
+"to infima, this means that you should always abbreviate family names, so "
+"instead of <em>John Doe</em> you should use <em>John D.</em> The board will "
+"check this before approving a poll, if personal data does appear in a poll "
+"it will be rejected and therefore not published on the website."
+msgstr ""
+
 msgid "Polls awaiting approval"
 msgstr ""
 
@@ -2149,6 +2172,9 @@ msgid "Public archive"
 msgstr ""
 
 msgid "Published"
+msgstr ""
+
+msgid "Question"
 msgstr ""
 
 msgid "Random"

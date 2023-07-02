@@ -21,8 +21,7 @@ use Laminas\View\Renderer\PhpRenderer;
 if (!isset($poll)) {
     $title = $this->translate('Polls');
 } else {
-    $lang = $this->plugin('translate')->getTranslator()->getLocale();
-    $title = $this->escapeHtml(('en' === $lang) ? $poll->getEnglishQuestion() : $poll->getDutchQuestion());
+    $title = $this->escapeHtml($this->localiseText($poll->getQuestion()));
     $this->headTitle($title);
 }
 

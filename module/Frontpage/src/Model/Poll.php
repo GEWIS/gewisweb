@@ -14,6 +14,7 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\OneToOne;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 /**
@@ -31,16 +32,19 @@ class Poll implements ResourceInterface
     protected DateTime $expiryDate;
 
     /**
-     * The Dutch question for the poll.
+     * The localised question for the poll.
      */
-    #[Column(type: 'string')]
-    protected string $dutchQuestion;
-
-    /**
-     * The English question for the poll.
-     */
-    #[Column(type: 'string')]
-    protected string $englishQuestion;
+    #[OneToOne(
+        targetEntity: FrontpageLocalisedText::class,
+        cascade: ['persist', 'remove'],
+        orphanRemoval: true,
+    )]
+    #[JoinColumn(
+        name: 'question_id',
+        referencedColumnName: 'id',
+        nullable: false,
+    )]
+    protected FrontpageLocalisedText $question;
 
     /**
      * Poll options.
@@ -94,14 +98,9 @@ class Poll implements ResourceInterface
         return $this->expiryDate;
     }
 
-    public function getDutchQuestion(): string
+    public function getQuestion(): FrontpageLocalisedText
     {
-        return $this->dutchQuestion;
-    }
-
-    public function getEnglishQuestion(): string
-    {
-        return $this->englishQuestion;
+        return $this->question;
     }
 
     /**
@@ -135,14 +134,9 @@ class Poll implements ResourceInterface
         $this->expiryDate = $expiryDate;
     }
 
-    public function setEnglishQuestion(string $englishQuestion): void
+    public function setQuestion(FrontpageLocalisedText $question): void
     {
-        $this->englishQuestion = $englishQuestion;
-    }
-
-    public function setDutchQuestion(string $dutchQuestion): void
-    {
-        $this->dutchQuestion = $dutchQuestion;
+        $this->question = $question;
     }
 
     /**
