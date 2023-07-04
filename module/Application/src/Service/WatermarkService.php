@@ -26,7 +26,8 @@ use function tempnam;
 class WatermarkService
 {
     // The font size of the watermark
-    private const FONT_SIZE = 32;
+    private const FONT_SIZE_DIAGONAL = 32;
+    private const FONT_SIZE_HORIZONTAL = 8;
     private const FONT = 'freesansb';
 
     /**
@@ -67,38 +68,61 @@ class WatermarkService
             $pdf->useTemplate($templateIndex, 0, 0, $templateSpecs['width'], $templateSpecs['height'], true);
 
             // Do the actual watermarking.
-            $pdf->setFont(self::FONT, '', self::FONT_SIZE);
+            $pdf->setFont(self::FONT, '', self::FONT_SIZE_DIAGONAL);
             $pdf->setTextColor(212, 0, 0);
-            // We do not have to reset the alpha layer after watermarking, as we are not adding any additional content.
+            // Set alpha to 50% for the diagonal watermark, the horizontal watermark will have a higher alpha.
             $pdf->setAlpha(0.5);
 
-            // Determine the position of the watermark, it should be (almost) centred on the page.
+            // Determine the position of the diagonal watermark, it should be (almost) centred on the page.
             $width = $pdf->getPageWidth();
             $height = $pdf->getPageHeight();
             [$watermarkAngleDeg, $watermarkAngleRad] = $this->calculateTextAngle($width, $height);
-            $watermarkMaxWidth = 0.8 * sqrt($width * $width + $height * $height);
-            $watermarkMaxHeight = 20;
+            $diagonalWatermarkMaxWidth = 0.8 * sqrt($width * $width + $height * $height);
+            $diagonalWatermarkMaxHeight = 20;
             // Adjust the coordinates to account for the shape of the text cell. Note: this is an approximation, the
             // watermark will not be completely centred on the page.
-            $watermarkAdjustment = $watermarkMaxHeight * sin($watermarkAngleRad);
-            $x = $watermarkAdjustment;
-            $y = $height - (2 * $watermarkAdjustment);
+            $diagonalWatermarkAdjustment = $diagonalWatermarkMaxHeight * sin($watermarkAngleRad);
+            $x = $diagonalWatermarkAdjustment;
+            $y = $height - (2 * $diagonalWatermarkAdjustment);
 
             // Do the actual transformation. Do not allow overflow to cause page breaks.
             $pdf->setAutoPageBreak(false);
             $pdf->StartTransform();
             $pdf->Rotate($watermarkAngleDeg, $x, $y);
             // Set the current coordinates and use MultiCell to allow long watermarks (e.g., because of long names) to
-            // wrap onto a new line. The height of the cell is strictly less than or equal to `watermarkMaxHeight`, the
-            // font size will be auto-adjusted if there is too much text.
+            // wrap onto a new line. The height of the cell is strictly less than or equal to
+            // `diagonalWatermarkMaxHeight`, the font size will be auto-adjusted if there is too much text.
             $pdf->setXY($x, $y);
             $pdf->MultiCell(
-                w: $watermarkMaxWidth,
-                h: $watermarkMaxHeight,
+                w: $diagonalWatermarkMaxWidth,
+                h: $diagonalWatermarkMaxHeight,
                 txt: $watermark,
                 align: 'C',
-                maxh: $watermarkMaxHeight,
-                valign: 'C',
+                maxh: $diagonalWatermarkMaxHeight,
+                valign: 'M',
+                fitcell: true,
+            );
+            $pdf->StopTransform();
+
+            // Set font size for horizontal watermark.
+            $pdf->setFontSize(self::FONT_SIZE_HORIZONTAL);
+            $pdf->setAlpha(0.75);
+
+            // Determine the position of the horizontal watermark, it should be in the bottom left.
+            $horizontalWatermarkMaxWidth = 0.95 * $width;
+            $horizontalWatermarkMaxHeight = 20;
+            $x = 0.01 * $width;
+            $y = 0.92 * $height;
+
+            $pdf->StartTransform();
+            $pdf->setXY($x, $y);
+            $pdf->MultiCell(
+                w: $horizontalWatermarkMaxWidth,
+                h: $horizontalWatermarkMaxHeight,
+                txt: $watermark,
+                align: 'L',
+                maxh: $horizontalWatermarkMaxHeight,
+                valign: 'B',
                 fitcell: true,
             );
             $pdf->StopTransform();
