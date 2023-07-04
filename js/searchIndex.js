@@ -3841,10 +3841,15 @@ Search.appendIndex(
             "summary": "Uses\u0020the\u0020identity\u0020of\u0020the\u0020user\u0020when\u0020signed\u0020in\u0020or\u0020the\u0020IP\u0020address\u0020from\u0020which\u0020the\u0020download\u0020is\u0020performed.",
             "url": "classes/Application-Service-WatermarkService.html#method_getWatermarkText"
         },                {
-            "fqsen": "\\Application\\Service\\WatermarkService\u003A\u003AFONT_SIZE",
-            "name": "FONT_SIZE",
+            "fqsen": "\\Application\\Service\\WatermarkService\u003A\u003AFONT_SIZE_DIAGONAL",
+            "name": "FONT_SIZE_DIAGONAL",
             "summary": "",
-            "url": "classes/Application-Service-WatermarkService.html#constant_FONT_SIZE"
+            "url": "classes/Application-Service-WatermarkService.html#constant_FONT_SIZE_DIAGONAL"
+        },                {
+            "fqsen": "\\Application\\Service\\WatermarkService\u003A\u003AFONT_SIZE_HORIZONTAL",
+            "name": "FONT_SIZE_HORIZONTAL",
+            "summary": "",
+            "url": "classes/Application-Service-WatermarkService.html#constant_FONT_SIZE_HORIZONTAL"
         },                {
             "fqsen": "\\Application\\Service\\WatermarkService\u003A\u003AFONT",
             "name": "FONT",
