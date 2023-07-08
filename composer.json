@@ -71,7 +71,8 @@
         "slowprog/composer-copy-file": "^0.3.0",
         "cweagans/composer-patches": "^1.7.1",
         "setasign/fpdi": "2.3.6",
-        "tecnickcom/tcpdf": "6.5.0"
+        "tecnickcom/tcpdf": "6.5.0",
+        "jfcherng/php-diff": "^6.15"
     },
     "require-dev": {
         "ext-pdo_sqlite": "*",
@@ -118,6 +119,7 @@
     "config": {
         "preferred-install": {
             "doctrine/orm": "source",
+            "jfcherng/php-diff": "source",
             "*": "dist"
         },
         "allow-plugins": {
@@ -156,6 +158,9 @@
         "patches": {
             "doctrine/orm": {
                 "Fix issues with SubDecisions.": "https://raw.githubusercontent.com/GEWIS/orm/2.15.x/1-to-1-multiple-join-columns.patch"
+            },
+            "jfcherng/php-diff": {
+                "Always output diff.": "https://raw.githubusercontent.com/GEWIS/gewisweb-php-diff/v6/always-render-diff.patch"
             }
         }
     },

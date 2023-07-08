@@ -1,0 +1,157 @@
+$diff-background-new: #DDFFDD;
+$diff-background-old: #FBE1E1;
+
+.diff-wrapper {
+    &.diff {
+        background: #F1F1F1;
+        border-collapse: collapse;
+        border-spacing: 0;
+        color: #15141A;
+        empty-cells: show;
+        font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, monospace;
+        font-size: 13px;
+        width: 100%;
+        word-break: break-all;
+        border: 1px solid #DDDDDD;
+        border-radius: 3px;
+
+        &.diff-combined {
+            width: auto;
+            display: inline-block;
+            vertical-align: bottom;
+        }
+
+        &.diff-html {
+            white-space: pre-wrap;
+            tab-size: 4;
+
+            &:not(.diff-inline) .change .new,
+            &:not(.diff-inline) .change .old {
+                width: 50%;
+            }
+
+            .change {
+                &.change-eq .old,
+                &.change-eq .new {
+                    background: #FFFFFF;
+                }
+
+                del,
+                ins {
+                    text-decoration: none;
+                    border-radius: 3px;
+                    padding: 0 0.1875em;
+                }
+
+                del {
+                    background: #F09494;
+                }
+
+                ins {
+                    background: #97F295;
+                }
+
+                .new {
+                    background: $diff-background-new;
+                }
+
+                .old {
+                    background: $diff-background-old;
+                }
+
+                /* .rep {
+                    background: #FDF2D0;
+                } */
+
+                .new.none,
+                .old.none,
+                .rep.none {
+                    background: transparent;
+                    cursor: not-allowed;
+                }
+            }
+        }
+
+        td,
+        th {
+            border-collapse: separate;
+            border: none;
+            padding: 1px 2px;
+            background: #FFFFFF;
+        }
+
+        /* Disabled to enable selecting empty rows using `<br>` */
+        /* td:empty:after,
+        th:empty:after {
+            content: " ";
+            visibility: hidden;
+        } */
+
+        td a,
+        th a {
+            color: #000000;
+            cursor: inherit;
+            pointer-events: none;
+        }
+
+        td {
+            vertical-align: baseline;
+        }
+
+        th {
+            cursor: default;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        thead th {
+            background: #A6A6A6;
+            border-bottom: 1px solid black;
+            padding: 4px;
+            text-align: left;
+        }
+
+        tbody {
+            &.skipped {
+                border-top: 1px solid black;
+
+                td,
+                th {
+                    display: none;
+                }
+            }
+
+            th {
+                background: #CCCCCC;
+                border-right: 1px solid black;
+                text-align: right;
+                vertical-align: top;
+                width: 4em;
+
+                &.sign {
+                    background: #FFFFFF;
+                    border-right: none;
+                    padding: 1px 0;
+                    text-align: center;
+                    width: 1em;
+
+                    &.del {
+                        background: $diff-background-old;
+                    }
+
+                    &.ins {
+                        background: $diff-background-new;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.diff-new {
+    background: $diff-background-new;
+}
+
+.diff-old {
+    background: $diff-background-old;
+}

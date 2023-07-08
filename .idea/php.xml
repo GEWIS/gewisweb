@@ -246,6 +246,11 @@
       <path value="$PROJECT_DIR$/vendor/dealerdirect/phpcodesniffer-composer-installer" />
       <path value="$PROJECT_DIR$/vendor/league/flysystem-local" />
       <path value="$PROJECT_DIR$/vendor/gewis/gewisphp-coding-standards" />
+      <path value="$PROJECT_DIR$/vendor/slevomat/coding-standard" />
+      <path value="$PROJECT_DIR$/vendor/jfcherng/php-color-output" />
+      <path value="$PROJECT_DIR$/vendor/jfcherng/php-diff" />
+      <path value="$PROJECT_DIR$/vendor/jfcherng/php-mb-string" />
+      <path value="$PROJECT_DIR$/vendor/jfcherng/php-sequence-matcher" />
     </include_path>
   </component>
   <component name="PhpInterpreters">

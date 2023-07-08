@@ -7,6 +7,7 @@ namespace Application\View;
 use Application\Model\LocalisedText as LocalisedTextModel;
 use Application\View\Helper\Acl;
 use Application\View\Helper\Breadcrumbs;
+use Application\View\Helper\Diff;
 use Application\View\Helper\ScriptUrl;
 use Company\Model\CompanyFeaturedPackage as CompanyFeaturedPackageModel;
 use Company\Model\JobCategory as JobCategoryModel;
@@ -30,6 +31,7 @@ use User\Model\CompanyUser as CompanyUserModel;
  * @method Breadcrumbs breadcrumbs()
  * @method Breadcrumbs addBreadcrumb(string $breadcrumb = '', bool $active = true, string $url = '', string|null $setType = null)
  * @method CompanyUserModel|null companyIdentity()
+ * @method string diff(string|null $old, string|null $new, string $renderer = Diff::DIFF_RENDER_COMBINED, array $rendererOverwrites = [], array $differOverwrites = [])
  * @method CompanyFeaturedPackageModel|null featuredCompanyPackage()
  * @method string fileUrl(string $path)
  * @method JobCategoryModel[] jobCategories()

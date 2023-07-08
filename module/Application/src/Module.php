@@ -9,6 +9,7 @@ use Application\Service\FileStorage as FileStorageService;
 use Application\Service\Infimum as InfimumService;
 use Application\Service\WatermarkService;
 use Application\View\Helper\Acl;
+use Application\View\Helper\Diff;
 use Application\View\Helper\FileUrl;
 use Application\View\Helper\JobCategories;
 use Application\View\Helper\ModuleIsActive;
@@ -248,6 +249,9 @@ class Module
                     $helper->setServiceLocator($container);
 
                     return $helper;
+                },
+                'diff' => static function (ContainerInterface $container) {
+                    return new Diff($container->get('config')['php-diff']);
                 },
             ],
         ];
