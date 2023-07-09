@@ -11896,6 +11896,11 @@ Search.appendIndex(
             "summary": "Should\u0020return\u0020an\u0020array\u0020specification\u0020compatible\u0020with\n\u007B\u0040link\u0020\\Laminas\\InputFilter\\Factory\u003A\u003AcreateInputFilter\u0028\u0029\u007D.",
             "url": "classes/Frontpage-Form-Poll.html#method_getInputFilterSpecification"
         },                {
+            "fqsen": "\\Frontpage\\Form\\Poll\u003A\u003A\u0024translator",
+            "name": "translator",
+            "summary": "",
+            "url": "classes/Frontpage-Form-Poll.html#property_translator"
+        },                {
             "fqsen": "\\Frontpage\\Form\\PollApproval",
             "name": "PollApproval",
             "summary": "",
