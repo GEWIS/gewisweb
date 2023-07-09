@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Activity\Model\ActivityUpdateProposal as ActivityUpdateProposalModel;
 use Application\Form\ModifyRequest as RequestForm;
+use Application\View\Helper\Diff;
 use Application\View\HelperTrait;
 use Laminas\View\Renderer\PhpRenderer;
 
@@ -29,55 +30,34 @@ $this->breadcrumbs()
         ],
     ))
     ->addBreadcrumb($this->translate('Update Proposal'));
-
-function diff($oldValue, $newValue)
-{
-    if ($oldValue === $newValue) {
-        return $oldValue;
-    } else {
-        return '<span class="diff-old">' . $oldValue . '</span> <span class="diff-new">' . $newValue . '</span>';
-    }
-}
-
 ?>
-<style>
-    .diff-old {
-        background: rgb(255, 224, 224);
-        padding: 0 0.375rem;
-    }
-
-    .diff-new {
-        background: rgb(224, 255, 224);
-        padding: 0 0.375rem;
-    }
-</style>
 <div class="row admin-section admin-approvable-overview">
     <div class="col-md-12">
         <h2><?= $this->translate('Information') ?></h2>
-        <p>
+        <span class="paragraph">
             <?=
             sprintf(
                 $this->translate('Changes in activity attributes are shown like this: %s. If there are no changes to a certain attribute, you will see the existing data. Sign-up list differences are <strong>not</strong> shown with colours, both the old sign-up list(s) and the new sign-up list(s) are shown. There might not be difference between the two!'),
-                diff($this->translate('old'), $this->translate('new'))
+                $this->diff($this->translate('unchanged old'), $this->translate('unchanged new')),
             )
             ?>
-        </p>
-        <p>
+        </span>
+        <span class="paragraph">
             <?php
             $oldOrganisingParty = "";
             if (
                 null !== $old->getOrgan()
                 && null !== $old->getCompany()
             ) {
-                $oldOrganisingParty = $this->escapeHtml($old->getOrgan()->getName()) . ' ';
+                $oldOrganisingParty = $old->getOrgan()->getName() . ' ';
                 $oldOrganisingParty .= $this->translate('and') . ' ';
-                $oldOrganisingParty .= $this->escapeHtml($old->getCompany()->getName());
+                $oldOrganisingParty .= $old->getCompany()->getName();
             } else if (null !== $old->getOrgan()) {
-                $oldOrganisingParty = $this->escapeHtml($old->getOrgan()->getName());
+                $oldOrganisingParty = $old->getOrgan()->getName();
             } else if (null !== $old->getCompany()) {
-                $oldOrganisingParty = $this->escapeHtml($old->getCompany()->getName());
+                $oldOrganisingParty = $old->getCompany()->getName();
             } else {
-                $oldOrganisingParty = $this->escapeHtml($old->getCreator()->getFullName());
+                $oldOrganisingParty = $old->getCreator()->getFullName();
             }
 
             $newOrganisingParty = "";
@@ -85,33 +65,33 @@ function diff($oldValue, $newValue)
                 null !== $new->getOrgan()
                 && null !== $new->getCompany()
             ) {
-                $newOrganisingParty = $this->escapeHtml($new->getOrgan()->getName()) . ' ';
+                $newOrganisingParty = $new->getOrgan()->getName() . ' ';
                 $newOrganisingParty .= $this->translate('and') . ' ';
-                $newOrganisingParty .= $this->escapeHtml($new->getCompany()->getName());
+                $newOrganisingParty .= $new->getCompany()->getName();
             } else if (null !== $old->getOrgan()) {
-                $newOrganisingParty = $this->escapeHtml($new->getOrgan()->getName());
+                $newOrganisingParty = $new->getOrgan()->getName();
             } else if (null !== $old->getCompany()) {
-                $newOrganisingParty = $this->escapeHtml($new->getCompany()->getName());
+                $newOrganisingParty = $new->getCompany()->getName();
             } else {
-                $newOrganisingParty = $this->escapeHtml($new->getCreator()->getFullName());
+                $newOrganisingParty = $new->getCreator()->getFullName();
             }
 
             echo sprintf(
                 $this->translate('This is activity <strong>#%d</strong>, organised by <strong>%s</strong>, and it will start on <strong>%s</strong> and end on <strong>%s</strong>.'),
                 $old->getId(),
-                diff($oldOrganisingParty, $newOrganisingParty),
-                diff(
+                $this->diff($oldOrganisingParty, $newOrganisingParty),
+                $this->diff(
                     $this->dateFormat($old->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT),
-                    $this->dateFormat($new->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT)
+                    $this->dateFormat($new->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT),
                 ),
-                diff(
+                $this->diff(
                     $this->dateFormat($old->getEndTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT),
-                    $this->dateFormat($new->getEndTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT)
-                )
+                    $this->dateFormat($new->getEndTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT),
+                ),
             );
             ?>
             <?= $this->translate('More information about this activity is available below.') ?>
-        </p>
+        </span>
     </div>
     <div class="col-md-10 col-md-offset-2 overview-header">
         <div class="row">
@@ -138,9 +118,9 @@ function diff($oldValue, $newValue)
                     <strong><?= $this->translate('Name') ?>:</strong>
                 </span>
                 <?=
-                diff(
-                    $this->escapeHtml($old->getName()->getValueNL()),
-                    $this->escapeHtml($new->getName()->getValueNL())
+                $this->diff(
+                    $old->getName()->getValueNL(),
+                    $new->getName()->getValueNL(),
                 )
                 ?>
             </div>
@@ -150,9 +130,9 @@ function diff($oldValue, $newValue)
                     <strong><?= $this->translate('Name') ?>:</strong>
                 </span>
                 <?=
-                diff(
-                    $this->escapeHtml($old->getName()->getValueEN()),
-                    $this->escapeHtml($new->getName()->getValueEN())
+                $this->diff(
+                    $old->getName()->getValueEN(),
+                    $new->getName()->getValueEN(),
                 )
                 ?>
             </div>
@@ -167,9 +147,9 @@ function diff($oldValue, $newValue)
                     <strong><?= $this->translate('Location') ?>:</strong>
                 </span>
                 <?=
-                diff(
-                    $this->escapeHtml($old->getLocation()->getValueNL()),
-                    $this->escapeHtml($new->getLocation()->getValueNL())
+                $this->diff(
+                    $old->getLocation()->getValueNL(),
+                    $new->getLocation()->getValueNL(),
                 )
                 ?>
             </div>
@@ -179,9 +159,9 @@ function diff($oldValue, $newValue)
                     <strong><?= $this->translate('Location') ?>:</strong>
                 </span>
                 <?=
-                diff(
-                    $this->escapeHtml($old->getLocation()->getValueEN()),
-                    $this->escapeHtml($new->getLocation()->getValueEN())
+                $this->diff(
+                    $old->getLocation()->getValueEN(),
+                    $new->getLocation()->getValueEN(),
                 )
                 ?>
             </div>
@@ -196,9 +176,9 @@ function diff($oldValue, $newValue)
                     <strong><?= $this->translate('Costs') ?>:</strong>
                 </span>
                 <?=
-                diff(
-                    $this->escapeHtml($old->getCosts()->getValueNL()),
-                    $this->escapeHtml($new->getCosts()->getValueNL())
+                $this->diff(
+                    $old->getCosts()->getValueNL(),
+                    $new->getCosts()->getValueNL(),
                 )
                 ?>
             </div>
@@ -208,9 +188,9 @@ function diff($oldValue, $newValue)
                     <strong><?= $this->translate('Costs') ?>:</strong>
                 </span>
                 <?=
-                diff(
-                    $this->escapeHtml($old->getCosts()->getValueEN()),
-                    $this->escapeHtml($new->getCosts()->getValueEN())
+                $this->diff(
+                    $old->getCosts()->getValueEN(),
+                    $new->getCosts()->getValueEN(),
                 )
                 ?>
             </div>
@@ -225,9 +205,10 @@ function diff($oldValue, $newValue)
                     <strong><?= $this->translate('Description') ?>:</strong>
                 </span>
                 <?=
-                diff(
-                    $this->escapeHtml($old->getDescription()->getValueNL()),
-                    $this->escapeHtml($new->getDescription()->getValueNL())
+                $this->diff(
+                    $old->getDescription()->getValueNL(),
+                    $new->getDescription()->getValueNL(),
+                    Diff::DIFF_RENDER_INLINE,
                 )
                 ?>
             </div>
@@ -237,9 +218,10 @@ function diff($oldValue, $newValue)
                     <strong><?= $this->translate('Description') ?>:</strong>
                 </span>
                 <?=
-                diff(
-                    $this->escapeHtml($old->getDescription()->getValueEN()),
-                    $this->escapeHtml($new->getDescription()->getValueEN())
+                $this->diff(
+                    $old->getDescription()->getValueEN(),
+                    $new->getDescription()->getValueEN(),
+                    Diff::DIFF_RENDER_INLINE,
                 )
                 ?>
             </div>

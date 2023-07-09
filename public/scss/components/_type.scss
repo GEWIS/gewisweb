@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @import '../bootstrap-variables';
 
 /*
@@ -110,4 +112,10 @@ Markup:
     @media (max-width: $screen-sm-max) {
         font-size: 1.6rem;
     }
+}
+
+span.paragraph {
+    line-height: $line-height-base;
+    margin: 0 0 math.div($line-height-computed, 2);
+    display: block;
 }
