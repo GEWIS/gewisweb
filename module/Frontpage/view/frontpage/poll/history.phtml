@@ -15,29 +15,48 @@ $this->headTitle($this->translate('Poll history'));
 ?>
 <section class="section">
     <div class="container">
-        <?= $this->paginationControl(
-            $paginator,
-            // the scrolling style
-            'elastic',
-            'paginator/default',
-            [
-                'path' => $this->url('poll/history')
-            ]
-        )
-        ?>
+        <div class="page-header">
+            <div class="pull-left">
+                <?= $this->paginationControl(
+                    $paginator,
+                    // the scrolling style
+                    'elastic',
+                    'paginator/default',
+                    [
+                        'path' => $this->url('poll/history')
+                    ]
+                )
+                ?>
+            </div>
+            <div class="btn-toolbar pull-right">
+                <a href="<?= $this->url('poll') ?>" class="btn btn-default">
+                    <span class="fas fa-square-poll-horizontal"></span>
+                    <?= $this->translate('Current poll') ?>
+                </a>
+                <?php if ($this->acl('frontpage_service_acl')->isAllowed('poll', 'request')): ?>
+                    <a href="<?= $this->url('poll/request') ?>" class="btn btn-primary">
+                        <?= $this->translate('Request a poll') ?>
+                    </a>
+                <?php endif; ?>
+            </div>
+            <h1>&nbsp;</h1>
+        </div>
         <?php if (!empty($paginator)): ?>
             <?php foreach ($paginator as $poll): ?>
-                <hr>
-                <?= $this->partial('partial/poll.phtml', [
-                    'poll' => $poll,
-                    'canVote' => false,
-                    'userVote' => null,
-                    'showResults' => true,
-                    'viewLink' => true
-                ]) ?>
+                <div class="row">
+                    <div class="col-md-12">
+                        <?= $this->partial('partial/poll.phtml', [
+                            'poll' => $poll,
+                            'canVote' => false,
+                            'userVote' => null,
+                            'showResults' => true,
+                            'viewLink' => true
+                        ]) ?>
+                        <hr>
+                    </div>
+                </div>
             <?php endforeach; ?>
         <?php endif; ?>
-        <hr>
         <?= $this->paginationControl(
             $paginator,
             // the scrolling style
