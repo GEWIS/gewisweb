@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-02 11:03+0200\n"
-"PO-Revision-Date: 2023-07-02 11:04+0200\n"
+"POT-Creation-Date: 2023-07-09 15:00+0200\n"
+"PO-Revision-Date: 2023-07-09 15:03+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: nl\n"
@@ -3517,10 +3517,6 @@ msgstr "Je hebt niet de rechten om polls goed te keuren"
 msgid "You are not allowed to approve this option"
 msgstr "Je hebt niet de rechten om deze optie goed te keuren"
 
-msgid "You are not allowed to approve update proposals of jobs"
-msgstr ""
-"Je hebt niet de rechten om updatevoorstellen van vacatures goed te keuren"
-
 msgid "You are not allowed to authorize someone"
 msgstr "Je hebt niet de rechten om iemand te machtigen"
 
@@ -3530,13 +3526,23 @@ msgstr "Je hebt niet de rechten om door bestanden te bladeren."
 msgid "You are not allowed to change passwords"
 msgstr "Je hebt niet de rechten om een wachtwoord te wijzigen"
 
+msgid "You are not allowed to change the approval status of activities"
+msgstr ""
+"Je hebt niet de rechten om de goedkeuringsstatus van activiteiten te wijzigen"
+
 msgid "You are not allowed to change the approval status of jobs"
 msgstr ""
-"Je hebt niet de rechten om de goedkeuringsstatus van deze vacatures te "
-"wijzigen"
+"Je hebt niet de rechten om de goedkeuringsstatus van vacatures te wijzigen"
 
-msgid "You are not allowed to change the status of the activity"
-msgstr "Je hebt niet de rechten om de status van deze activiteit te wijzigen"
+msgid "You are not allowed to change the update proposal status of activities"
+msgstr ""
+"Je hebt niet de rechten om de status van het updatevoorstel van activiteiten "
+"te wijzigen"
+
+msgid "You are not allowed to change the update proposal status of jobs"
+msgstr ""
+"Je hebt niet de rechten om de status van het updatevoorstel van vacatures te "
+"wijzigen"
 
 msgid "You are not allowed to change your password"
 msgstr "Je hebt niet de rechten om een wachtwoord te wijzigen"
@@ -3798,15 +3804,13 @@ msgstr "Je hebt niet de rechten om inschrijflijsten te bekijken"
 msgid "You are not allowed to view the activities"
 msgstr "Je hebt niet de rechten om de activiteiten in te zien"
 
-msgid "You are not allowed to view the approval of this activity"
+msgid "You are not allowed to view the approval status of activities"
 msgstr ""
-"Je hebt niet de rechten om de goedkeuringsstatus van deze activiteit te "
-"bekijken"
+"Je hebt niet de rechten om de goedkeuringsstatus van activiteiten te bekijken"
 
 msgid "You are not allowed to view the approval status of jobs"
 msgstr ""
-"Je hebt niet de rechten om de goedkeuringsstatus van deze vacature te "
-"bekijken"
+"Je hebt niet de rechten om de goedkeuringsstatus van vacatures te bekijken"
 
 msgid "You are not allowed to view the banner"
 msgstr "Je hebt niet de rechten om de banner te zien"
@@ -3857,6 +3861,13 @@ msgstr ""
 
 msgid "You are not allowed to view upcoming the activities"
 msgstr "Je hebt niet de rechten om aankomende activiteiten te zien"
+
+msgid "You are not allowed to view update proposals of activities"
+msgstr ""
+"Je hebt niet de rechten om updatevoorstellen van activiteiten te bekijken"
+
+msgid "You are not allowed to view update proposals of jobs"
+msgstr "Je hebt niet de rechten om updatevoorstellen van vacatures te bekijken"
 
 msgid "You are not allowed to vote on this poll."
 msgstr "Je hebt niet de rechten om op deze poll te stemmen."
@@ -4011,14 +4022,8 @@ msgstr "ingeschakeld"
 msgid "in the spotlight"
 msgstr "uitgelicht"
 
-msgid "new"
-msgstr "nieuw"
-
 msgid "of"
 msgstr "van"
-
-msgid "old"
-msgstr "oud"
 
 #, php-format
 msgid "resolves to %s"
@@ -4042,6 +4047,12 @@ msgstr ""
 
 msgid "unavailable"
 msgstr "niet beschikbaar"
+
+msgid "unchanged new"
+msgstr "ongewijzigd nieuw"
+
+msgid "unchanged old"
+msgstr "ongewijzigd oud"
 
 msgid "years"
 msgstr "jaren"

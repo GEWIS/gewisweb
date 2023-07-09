@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: GEWISweb v2.8.6-425-ge33730719-dirty\n"
+"Project-Id-Version: GEWISweb v2.8.6-437-g027193c51-dirty\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-02 11:03+0200\n"
+"POT-Creation-Date: 2023-07-09 15:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3268,9 +3268,6 @@ msgstr ""
 msgid "You are not allowed to approve this option"
 msgstr ""
 
-msgid "You are not allowed to approve update proposals of jobs"
-msgstr ""
-
 msgid "You are not allowed to authorize someone"
 msgstr ""
 
@@ -3280,10 +3277,16 @@ msgstr ""
 msgid "You are not allowed to change passwords"
 msgstr ""
 
+msgid "You are not allowed to change the approval status of activities"
+msgstr ""
+
 msgid "You are not allowed to change the approval status of jobs"
 msgstr ""
 
-msgid "You are not allowed to change the status of the activity"
+msgid "You are not allowed to change the update proposal status of activities"
+msgstr ""
+
+msgid "You are not allowed to change the update proposal status of jobs"
 msgstr ""
 
 msgid "You are not allowed to change your password"
@@ -3538,7 +3541,7 @@ msgstr ""
 msgid "You are not allowed to view the activities"
 msgstr ""
 
-msgid "You are not allowed to view the approval of this activity"
+msgid "You are not allowed to view the approval status of activities"
 msgstr ""
 
 msgid "You are not allowed to view the approval status of jobs"
@@ -3588,6 +3591,12 @@ msgid ""
 msgstr ""
 
 msgid "You are not allowed to view upcoming the activities"
+msgstr ""
+
+msgid "You are not allowed to view update proposals of activities"
+msgstr ""
+
+msgid "You are not allowed to view update proposals of jobs"
 msgstr ""
 
 msgid "You are not allowed to vote on this poll."
@@ -3729,13 +3738,7 @@ msgstr ""
 msgid "in the spotlight"
 msgstr ""
 
-msgid "new"
-msgstr ""
-
 msgid "of"
-msgstr ""
-
-msgid "old"
 msgstr ""
 
 #, php-format
@@ -3755,6 +3758,12 @@ msgid ""
 msgstr ""
 
 msgid "unavailable"
+msgstr ""
+
+msgid "unchanged new"
+msgstr ""
+
+msgid "unchanged old"
 msgstr ""
 
 msgid "years"

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-02 11:03+0200\n"
-"PO-Revision-Date: 2023-07-02 11:03+0200\n"
+"POT-Creation-Date: 2023-07-09 15:00+0200\n"
+"PO-Revision-Date: 2023-07-09 15:04+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: en\n"
@@ -3477,9 +3477,6 @@ msgstr "You are not allowed to approve polls"
 msgid "You are not allowed to approve this option"
 msgstr "You are not allowed to approve this option"
 
-msgid "You are not allowed to approve update proposals of jobs"
-msgstr "You are not allowed to approve update proposals of jobs"
-
 msgid "You are not allowed to authorize someone"
 msgstr "You are not allowed to authorize someone"
 
@@ -3489,11 +3486,17 @@ msgstr "You are not allowed to browse files."
 msgid "You are not allowed to change passwords"
 msgstr "You are not allowed to change passwords"
 
+msgid "You are not allowed to change the approval status of activities"
+msgstr "You are not allowed to change the approval status of activities"
+
 msgid "You are not allowed to change the approval status of jobs"
 msgstr "You are not allowed to change the approval status of jobs"
 
-msgid "You are not allowed to change the status of the activity"
-msgstr "You are not allowed to change the status of the activity"
+msgid "You are not allowed to change the update proposal status of activities"
+msgstr "You are not allowed to change the update proposal status of activities"
+
+msgid "You are not allowed to change the update proposal status of jobs"
+msgstr "You are not allowed to change the update proposal status of jobs"
 
 msgid "You are not allowed to change your password"
 msgstr "You are not allowed to change your password"
@@ -3750,8 +3753,8 @@ msgstr "You are not allowed to view sign-up lists"
 msgid "You are not allowed to view the activities"
 msgstr "You are not allowed to view the activities"
 
-msgid "You are not allowed to view the approval of this activity"
-msgstr "You are not allowed to view the approval of this activity"
+msgid "You are not allowed to view the approval status of activities"
+msgstr "You are not allowed to view the approval status of activities"
 
 msgid "You are not allowed to view the approval status of jobs"
 msgstr "You are not allowed to view the approval status of jobs"
@@ -3802,6 +3805,12 @@ msgstr ""
 
 msgid "You are not allowed to view upcoming the activities"
 msgstr "You are not allowed to view upcoming the activities"
+
+msgid "You are not allowed to view update proposals of activities"
+msgstr "You are not allowed to view update proposals of activities"
+
+msgid "You are not allowed to view update proposals of jobs"
+msgstr "You are not allowed to view update proposals of jobs"
 
 msgid "You are not allowed to vote on this poll."
 msgstr "You are not allowed to vote on this poll."
@@ -3955,14 +3964,8 @@ msgstr "enabled"
 msgid "in the spotlight"
 msgstr "in the spotlight"
 
-msgid "new"
-msgstr "new"
-
 msgid "of"
 msgstr "of"
-
-msgid "old"
-msgstr "old"
 
 #, php-format
 msgid "resolves to %s"
@@ -3985,6 +3988,12 @@ msgstr ""
 
 msgid "unavailable"
 msgstr "unavailable"
+
+msgid "unchanged new"
+msgstr "unchanged new"
+
+msgid "unchanged old"
+msgstr "unchanged old"
 
 msgid "years"
 msgstr "years"
