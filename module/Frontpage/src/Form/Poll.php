@@ -12,11 +12,14 @@ use Laminas\Form\Element\Text;
 use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
+use Laminas\Validator\Callback;
 use Laminas\Validator\StringLength;
+
+use function str_ends_with;
 
 class Poll extends Form implements InputFilterProviderInterface
 {
-    public function __construct(Translator $translator)
+    public function __construct(private readonly Translator $translator)
     {
         parent::__construct();
 
@@ -25,7 +28,7 @@ class Poll extends Form implements InputFilterProviderInterface
                 'name' => 'dutchQuestion',
                 'type' => Text::class,
                 'options' => [
-                    'label' => $translator->translate('Question'),
+                    'label' => $this->translator->translate('Question'),
                 ],
             ],
         );
@@ -35,7 +38,7 @@ class Poll extends Form implements InputFilterProviderInterface
                 'name' => 'englishQuestion',
                 'type' => Text::class,
                 'options' => [
-                    'label' => $translator->translate('Question'),
+                    'label' => $this->translator->translate('Question'),
                 ],
             ],
         );
@@ -49,7 +52,7 @@ class Poll extends Form implements InputFilterProviderInterface
                     'should_create_template' => true,
                     'template_placeholder' => '__option__',
                     'allow_add' => true,
-                    'target_element' => new PollOptionFieldset($translator),
+                    'target_element' => new PollOptionFieldset($this->translator),
                 ],
             ],
         );
@@ -59,7 +62,7 @@ class Poll extends Form implements InputFilterProviderInterface
                 'name' => 'submit',
                 'type' => Submit::class,
                 'attributes' => [
-                    'value' => $translator->translate('Submit'),
+                    'value' => $this->translator->translate('Submit'),
                 ],
             ],
         );
@@ -89,6 +92,19 @@ class Poll extends Form implements InputFilterProviderInterface
                             'max' => 128,
                         ],
                     ],
+                    [
+                        'name' => Callback::class,
+                        'options' => [
+                            'messages' => [
+                                Callback::INVALID_VALUE => $this->translator->translate(
+                                    'The question must end with a question mark',
+                                ),
+                            ],
+                            'callback' => static function ($value) {
+                                return str_ends_with($value, '?');
+                            },
+                        ],
+                    ],
                 ],
             ],
             'englishQuestion' => [
@@ -104,6 +120,19 @@ class Poll extends Form implements InputFilterProviderInterface
                         'options' => [
                             'min' => 5,
                             'max' => 128,
+                        ],
+                    ],
+                    [
+                        'name' => Callback::class,
+                        'options' => [
+                            'messages' => [
+                                Callback::INVALID_VALUE => $this->translator->translate(
+                                    'The question must end with a question mark',
+                                ),
+                            ],
+                            'callback' => static function ($value) {
+                                return str_ends_with($value, '?');
+                            },
                         ],
                     ],
                 ],

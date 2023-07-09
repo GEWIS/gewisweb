@@ -37,7 +37,11 @@ $this->headTitle($this->translate('Polls'));
                     <span class="fas fa-history"></span>
                     <?= $this->translate('Old polls') ?>
                 </a>
-                <?= sprintf($this->translate('%sRequest a poll%s'), '<a href="' . $this->url('poll/request') . '" class="btn btn-primary">', '</a>') ?>
+                <?php if ($this->acl('frontpage_service_acl')->isAllowed('poll', 'request')): ?>
+                    <a href="<?= $this->url('poll/request') ?>" class="btn btn-primary">
+                        <?= $this->translate('Request a poll') ?>
+                    </a>
+                <?php endif; ?>
             </div>
             <h1>
                 <?= $title ?>

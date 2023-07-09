@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-09 15:00+0200\n"
-"PO-Revision-Date: 2023-07-09 15:03+0200\n"
+"POT-Creation-Date: 2023-07-09 18:27+0200\n"
+"PO-Revision-Date: 2023-07-09 18:27+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: nl\n"
@@ -76,10 +76,6 @@ msgstr "%s wordt vandaag %s jaar oud!"
 #, php-format
 msgid "%s's activities"
 msgstr "Activiteiten door %s"
-
-#, php-format
-msgid "%sRequest a poll%s"
-msgstr "%sVraag een poll aan%s"
 
 msgid "(Update Pending)"
 msgstr "(Update in behandeling)"
@@ -830,6 +826,9 @@ msgstr "Aangemaakt door"
 
 msgid "Current photo of the week"
 msgstr "Huidige foto van de week"
+
+msgid "Current poll"
+msgstr "Huidige poll"
 
 msgid "Current subscriptions"
 msgstr "Huidige inschrijvingen"
@@ -2796,6 +2795,9 @@ msgstr "De foto's zijn verplaatst"
 
 msgid "The planning period must end after it starts."
 msgstr "De planningsperiode moet eindigen nadat deze begonnen is."
+
+msgid "The question must end with a question mark"
+msgstr "De vraag moet eindigen met een vraagteken"
 
 msgid "The requested URL could not be matched by routing."
 msgstr "Er is geen route gevonden die overeenkomt met de opgevraagde URL."
