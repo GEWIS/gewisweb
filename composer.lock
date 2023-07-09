@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6e43ff7330943d2a2292cde7a9ec5a6a",
+    "content-hash": "471732296d42bb8817aee581cc87d44e",
     "packages": [
         {
             "name": "brick/varexporter",
@@ -54,6 +54,87 @@
                 }
             ],
             "time": "2023-01-21T23:05:38+00:00"
+        },
+        {
+            "name": "composer/semver",
+            "version": "3.3.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/composer/semver.git",
+                "reference": "3953f23262f2bff1919fc82183ad9acb13ff62c9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/composer/semver/zipball/3953f23262f2bff1919fc82183ad9acb13ff62c9",
+                "reference": "3953f23262f2bff1919fc82183ad9acb13ff62c9",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.3.2 || ^7.0 || ^8.0"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^1.4",
+                "symfony/phpunit-bridge": "^4.2 || ^5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Composer\\Semver\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nils Adermann",
+                    "email": "naderman@naderman.de",
+                    "homepage": "http://www.naderman.de"
+                },
+                {
+                    "name": "Jordi Boggiano",
+                    "email": "j.boggiano@seld.be",
+                    "homepage": "http://seld.be"
+                },
+                {
+                    "name": "Rob Bast",
+                    "email": "rob.bast@gmail.com",
+                    "homepage": "http://robbast.nl"
+                }
+            ],
+            "description": "Semver library that offers utilities, version constraint parsing and validation.",
+            "keywords": [
+                "semantic",
+                "semver",
+                "validation",
+                "versioning"
+            ],
+            "support": {
+                "irc": "irc://irc.freenode.org/composer",
+                "issues": "https://github.com/composer/semver/issues",
+                "source": "https://github.com/composer/semver/tree/3.3.2"
+            },
+            "funding": [
+                {
+                    "url": "https://packagist.com",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/composer",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/composer/composer",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2022-04-01T19:23:25+00:00"
         },
         {
             "name": "cweagans/composer-patches",
@@ -256,16 +337,16 @@
         },
         {
             "name": "doctrine/cache",
-            "version": "1.13.0",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/cache.git",
-                "reference": "56cd022adb5514472cb144c087393c1821911d09"
+                "reference": "1ca8f21980e770095a31456042471a57bc4c68fb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/cache/zipball/56cd022adb5514472cb144c087393c1821911d09",
-                "reference": "56cd022adb5514472cb144c087393c1821911d09",
+                "url": "https://api.github.com/repos/doctrine/cache/zipball/1ca8f21980e770095a31456042471a57bc4c68fb",
+                "reference": "1ca8f21980e770095a31456042471a57bc4c68fb",
                 "shasum": ""
             },
             "require": {
@@ -275,18 +356,12 @@
                 "doctrine/common": ">2.2,<2.4"
             },
             "require-dev": {
-                "alcaeus/mongo-php-adapter": "^1.1",
                 "cache/integration-tests": "dev-master",
                 "doctrine/coding-standard": "^9",
-                "mongodb/mongodb": "^1.1",
                 "phpunit/phpunit": "^7.5 || ^8.5 || ^9.5",
-                "predis/predis": "~1.0",
                 "psr/cache": "^1.0 || ^2.0 || ^3.0",
                 "symfony/cache": "^4.4 || ^5.4 || ^6",
                 "symfony/var-exporter": "^4.4 || ^5.4 || ^6"
-            },
-            "suggest": {
-                "alcaeus/mongo-php-adapter": "Required to use legacy MongoDB driver"
             },
             "type": "library",
             "autoload": {
@@ -335,7 +410,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/cache/issues",
-                "source": "https://github.com/doctrine/cache/tree/1.13.0"
+                "source": "https://github.com/doctrine/cache/tree/2.2.0"
             },
             "funding": [
                 {
@@ -351,7 +426,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-05-20T20:06:54+00:00"
+            "time": "2022-05-20T20:07:39+00:00"
         },
         {
             "name": "doctrine/collections",
@@ -741,21 +816,23 @@
         },
         {
             "name": "doctrine/doctrine-module",
-            "version": "5.3.0",
+            "version": "6.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineModule.git",
-                "reference": "ad346200568aa095c58e2866eb1e2be0e3c3083f"
+                "reference": "d02db3d322051c2fceee2ea54bd2945f0fc1bb72"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineModule/zipball/ad346200568aa095c58e2866eb1e2be0e3c3083f",
-                "reference": "ad346200568aa095c58e2866eb1e2be0e3c3083f",
+                "url": "https://api.github.com/repos/doctrine/DoctrineModule/zipball/d02db3d322051c2fceee2ea54bd2945f0fc1bb72",
+                "reference": "d02db3d322051c2fceee2ea54bd2945f0fc1bb72",
                 "shasum": ""
             },
             "require": {
-                "doctrine/annotations": "^1.13.3",
-                "doctrine/cache": "^1.13.0",
+                "composer-runtime-api": "^2.0",
+                "composer/semver": "^3.0",
+                "doctrine/annotations": "^1.13.3 || ^2",
+                "doctrine/cache": "^1.13.0 || ^2.1.0",
                 "doctrine/collections": "^1.8.0",
                 "doctrine/doctrine-laminas-hydrator": "^3.2.0",
                 "doctrine/event-manager": "^1.2.0",
@@ -763,6 +840,8 @@
                 "doctrine/persistence": "^2.5.5 || ^3.1.0",
                 "laminas/laminas-authentication": "^2.12.0",
                 "laminas/laminas-cache": "^3.6.0",
+                "laminas/laminas-cache-storage-adapter-filesystem": "^2.2.0",
+                "laminas/laminas-cache-storage-adapter-memory": "^2.1.0",
                 "laminas/laminas-eventmanager": "^3.5.0",
                 "laminas/laminas-form": "^3.4.1",
                 "laminas/laminas-modulemanager": "^2.12.0",
@@ -771,7 +850,7 @@
                 "laminas/laminas-servicemanager": "^3.17.0",
                 "laminas/laminas-stdlib": "^3.13.0",
                 "laminas/laminas-validator": "^2.25.0",
-                "php": "~7.4.0 || ~8.0.0 || ~8.1.0 || ~8.2.0",
+                "php": "~8.0.0 || ~8.1.0 || ~8.2.0",
                 "psr/container": "^1.1.2",
                 "symfony/console": "^5.4.16 || ^6.2.1"
             },
@@ -783,11 +862,9 @@
             },
             "require-dev": {
                 "doctrine/coding-standard": "^9.0.2",
-                "doctrine/mongodb-odm": "^2.4.2",
+                "doctrine/mongodb-odm": "^2.5.0",
                 "doctrine/orm": "^2.13.4",
                 "jangregor/phpstan-prophecy": "^1.0.0",
-                "laminas/laminas-cache-storage-adapter-blackhole": "^2.0.0",
-                "laminas/laminas-cache-storage-adapter-memory": "^2.1.0",
                 "laminas/laminas-i18n": "^2.17.0",
                 "laminas/laminas-log": "^2.15.3",
                 "laminas/laminas-serializer": "^2.13.0",
@@ -855,7 +932,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/DoctrineModule/issues",
-                "source": "https://github.com/doctrine/DoctrineModule/tree/5.3.0"
+                "source": "https://github.com/doctrine/DoctrineModule/tree/6.0.3"
             },
             "funding": [
                 {
@@ -871,26 +948,26 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-12-12T15:24:40+00:00"
+            "time": "2023-06-09T20:42:01+00:00"
         },
         {
             "name": "doctrine/doctrine-orm-module",
-            "version": "5.3.0",
+            "version": "6.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineORMModule.git",
-                "reference": "79715e6ed9939595789b62eb21ed15592493ee3c"
+                "reference": "97d2321b4e5680278deb8ec459a7d84d17d9ea37"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineORMModule/zipball/79715e6ed9939595789b62eb21ed15592493ee3c",
-                "reference": "79715e6ed9939595789b62eb21ed15592493ee3c",
+                "url": "https://api.github.com/repos/doctrine/DoctrineORMModule/zipball/97d2321b4e5680278deb8ec459a7d84d17d9ea37",
+                "reference": "97d2321b4e5680278deb8ec459a7d84d17d9ea37",
                 "shasum": ""
             },
             "require": {
                 "doctrine/dbal": "^2.13.7 || ^3.3.2",
                 "doctrine/doctrine-laminas-hydrator": "^3.0.0",
-                "doctrine/doctrine-module": "^5.3.0",
+                "doctrine/doctrine-module": "^5.3.0 || ^6.0.2",
                 "doctrine/event-manager": "^1.1.1",
                 "doctrine/orm": "^2.11.1",
                 "doctrine/persistence": "^2.3.0 || ^3.0.0",
@@ -901,7 +978,7 @@
                 "laminas/laminas-paginator": "^2.12.2",
                 "laminas/laminas-servicemanager": "^3.17.0",
                 "laminas/laminas-stdlib": "^3.7.1",
-                "php": "^7.4 || ~8.0.0 || ~8.1.0 || ~8.2.0",
+                "php": "~8.0.0 || ~8.1.0 || ~8.2.0",
                 "psr/container": "^1.1.2",
                 "symfony/console": "^5.4.3 || ^6.0.3"
             },
@@ -913,6 +990,8 @@
                 "doctrine/coding-standard": "^9.0.0",
                 "doctrine/data-fixtures": "^1.5.2",
                 "doctrine/migrations": "^3.4.1",
+                "laminas/laminas-cache-storage-adapter-filesystem": "^2.0",
+                "laminas/laminas-cache-storage-adapter-memory": "^2.0",
                 "laminas/laminas-developer-tools": "^2.3.0",
                 "laminas/laminas-i18n": "^2.13.0",
                 "laminas/laminas-log": "^2.15.0",
@@ -980,7 +1059,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/DoctrineORMModule/issues",
-                "source": "https://github.com/doctrine/DoctrineORMModule/tree/5.3.0"
+                "source": "https://github.com/doctrine/DoctrineORMModule/tree/6.0.0"
             },
             "funding": [
                 {
@@ -996,7 +1075,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-12-23T10:42:13+00:00"
+            "time": "2023-06-08T16:52:40+00:00"
         },
         {
             "name": "doctrine/event-manager",
@@ -8343,87 +8422,6 @@
                 }
             ],
             "time": "2022-11-17T09:50:14+00:00"
-        },
-        {
-            "name": "composer/semver",
-            "version": "3.3.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/composer/semver.git",
-                "reference": "3953f23262f2bff1919fc82183ad9acb13ff62c9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/composer/semver/zipball/3953f23262f2bff1919fc82183ad9acb13ff62c9",
-                "reference": "3953f23262f2bff1919fc82183ad9acb13ff62c9",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^5.3.2 || ^7.0 || ^8.0"
-            },
-            "require-dev": {
-                "phpstan/phpstan": "^1.4",
-                "symfony/phpunit-bridge": "^4.2 || ^5"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-main": "3.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Composer\\Semver\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Nils Adermann",
-                    "email": "naderman@naderman.de",
-                    "homepage": "http://www.naderman.de"
-                },
-                {
-                    "name": "Jordi Boggiano",
-                    "email": "j.boggiano@seld.be",
-                    "homepage": "http://seld.be"
-                },
-                {
-                    "name": "Rob Bast",
-                    "email": "rob.bast@gmail.com",
-                    "homepage": "http://robbast.nl"
-                }
-            ],
-            "description": "Semver library that offers utilities, version constraint parsing and validation.",
-            "keywords": [
-                "semantic",
-                "semver",
-                "validation",
-                "versioning"
-            ],
-            "support": {
-                "irc": "irc://irc.freenode.org/composer",
-                "issues": "https://github.com/composer/semver/issues",
-                "source": "https://github.com/composer/semver/tree/3.3.2"
-            },
-            "funding": [
-                {
-                    "url": "https://packagist.com",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/composer",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/composer/composer",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2022-04-01T19:23:25+00:00"
         },
         {
             "name": "composer/xdebug-handler",
