@@ -161,7 +161,7 @@ class AdminApprovalController extends AbstractActionController
     {
         if (!$this->aclService->isAllowed('approve', 'job')) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to approve update proposals of jobs'),
+                $this->translator->translate('You are not allowed to view update proposals of jobs'),
             );
         }
 
@@ -191,7 +191,7 @@ class AdminApprovalController extends AbstractActionController
     {
         if (!$this->aclService->isAllowed('approve', 'job')) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to approve update proposals of jobs'),
+                $this->translator->translate('You are not allowed to change the update proposal status of jobs'),
             );
         }
 

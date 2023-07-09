@@ -68,9 +68,9 @@ $this->breadcrumbs()
                 $newOrganisingParty = $new->getOrgan()->getName() . ' ';
                 $newOrganisingParty .= $this->translate('and') . ' ';
                 $newOrganisingParty .= $new->getCompany()->getName();
-            } else if (null !== $old->getOrgan()) {
+            } else if (null !== $new->getOrgan()) {
                 $newOrganisingParty = $new->getOrgan()->getName();
-            } else if (null !== $old->getCompany()) {
+            } else if (null !== $new->getCompany()) {
                 $newOrganisingParty = $new->getCompany()->getName();
             } else {
                 $newOrganisingParty = $new->getCreator()->getFullName();

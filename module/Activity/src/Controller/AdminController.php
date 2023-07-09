@@ -414,7 +414,7 @@ class AdminController extends AbstractActionController
         $unapprovedActivities = null;
         $approvedActivities = null;
 
-        if ($this->aclService->isAllowed('approval', 'activity')) {
+        if ($this->aclService->isAllowed('approve', 'activity')) {
             $admin = true;
             $disapprovedActivities = $this->activityQueryService->getDisapprovedActivities();
             $unapprovedActivities = $this->activityQueryService->getUnapprovedActivities();
