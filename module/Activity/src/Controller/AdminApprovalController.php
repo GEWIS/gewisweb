@@ -34,14 +34,13 @@ class AdminApprovalController extends AbstractActionController
      */
     public function viewAction(): ViewModel
     {
-        $id = (int) $this->params()->fromRoute('id');
-
-        if (!$this->aclService->isAllowed('approval', 'activity')) {
+        if (!$this->aclService->isAllowed('approve', 'activity')) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view the approval of this activity'),
+                $this->translator->translate('You are not allowed to view the approval status of activities'),
             );
         }
 
+        $id = (int) $this->params()->fromRoute('id');
         $activity = $this->activityQueryService->getActivity($id);
 
         if (null === $activity) {
@@ -63,6 +62,12 @@ class AdminApprovalController extends AbstractActionController
      */
     public function approveAction(): Response|ViewModel
     {
+        if (!$this->aclService->isAllowed('approve', 'activity')) {
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to change the approval status of activities'),
+            );
+        }
+
         return $this->setApprovalStatus('approve');
     }
 
@@ -116,6 +121,12 @@ class AdminApprovalController extends AbstractActionController
      */
     public function disapproveAction(): Response|ViewModel
     {
+        if (!$this->aclService->isAllowed('approve', 'activity')) {
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to change the approval status of activities'),
+            );
+        }
+
         return $this->setApprovalStatus('disapprove');
     }
 
@@ -124,6 +135,12 @@ class AdminApprovalController extends AbstractActionController
      */
     public function resetAction(): Response|ViewModel
     {
+        if (!$this->aclService->isAllowed('approve', 'activity')) {
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to change the approval status of activities'),
+            );
+        }
+
         return $this->setApprovalStatus('reset');
     }
 
@@ -132,8 +149,13 @@ class AdminApprovalController extends AbstractActionController
      */
     public function viewProposalAction(): ViewModel
     {
-        $id = (int) $this->params()->fromRoute('id');
+        if (!$this->aclService->isAllowed('approve', 'activity')) {
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to view update proposals of activities'),
+            );
+        }
 
+        $id = (int) $this->params()->fromRoute('id');
         $proposal = $this->activityQueryService->getProposal($id);
 
         if (null === $proposal) {
@@ -154,6 +176,12 @@ class AdminApprovalController extends AbstractActionController
      */
     public function applyProposalAction(): Response|ViewModel
     {
+        if (!$this->aclService->isAllowed('approve', 'activity')) {
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to change the update proposal status of activities'),
+            );
+        }
+
         $id = (int) $this->params()->fromRoute('id');
         /** @var Request $request */
         $request = $this->getRequest();
@@ -193,6 +221,12 @@ class AdminApprovalController extends AbstractActionController
      */
     public function revokeProposalAction(): Response|ViewModel
     {
+        if (!$this->aclService->isAllowed('approve', 'activity')) {
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to change the update proposal status of activities'),
+            );
+        }
+
         $id = (int) $this->params()->fromRoute('id');
         /** @var Request $request */
         $request = $this->getRequest();

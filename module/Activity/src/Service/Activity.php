@@ -749,12 +749,6 @@ class Activity
      */
     public function approve(ActivityModel $activity): void
     {
-        if (!$this->aclService->isAllowed('approve', 'activity')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to change the status of the activity'),
-            );
-        }
-
         $activity->setStatus(ActivityModel::STATUS_APPROVED);
         $activity->setApprover($this->aclService->getUserIdentityOrThrowException()->getMember());
         $em = $this->entityManager;
@@ -767,12 +761,6 @@ class Activity
      */
     public function reset(ActivityModel $activity): void
     {
-        if (!$this->aclService->isAllowed('reset', 'activity')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to change the status of the activity'),
-            );
-        }
-
         $activity->setStatus(ActivityModel::STATUS_TO_APPROVE);
         $activity->setApprover(null);
         $em = $this->entityManager;
@@ -785,12 +773,6 @@ class Activity
      */
     public function disapprove(ActivityModel $activity): void
     {
-        if (!$this->aclService->isAllowed('disapprove', 'activity')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to change the status of the activity'),
-            );
-        }
-
         $activity->setStatus(ActivityModel::STATUS_DISAPPROVED);
         $activity->setApprover($this->aclService->getUserIdentityOrThrowException()->getMember());
         $em = $this->entityManager;

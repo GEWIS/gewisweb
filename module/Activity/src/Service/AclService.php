@@ -50,6 +50,7 @@ class AclService extends \User\Service\AclService
         );
 
         $this->acl->allow('admin', 'activity', 'viewParticipantDetails');
+        $this->acl->allow('admin', 'activity', 'approve');
 
         $this->acl->allow('user', 'activityApi', 'list');
         $this->acl->allow('apiuser', 'activityApi', 'list');
