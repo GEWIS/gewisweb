@@ -3961,6 +3961,41 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Application-View-Helper-CompanyIdentity.html#property_companyUserAuthService"
         },                {
+            "fqsen": "\\Application\\View\\Helper\\Diff",
+            "name": "Diff",
+            "summary": "",
+            "url": "classes/Application-View-Helper-Diff.html"
+        },                {
+            "fqsen": "\\Application\\View\\Helper\\Diff\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "While\u0020\u0060php\u002Ddiff\u0060\u0020has\u0020a\u0020\u0060RendererFactory\u0060\u0020it\u0020requires\u0020the\u0020renderer\u0020type\u0020to\u0020be\u0020provided,\u0020this\u0020would\u0020mean\u0020that\nwe\u0020have\u0020to\u0020inject\u0020three\u0020different\u0020instances\u0020of\u0020the\u0020renderer.\u0020This\u0020is\u0020not\u0020really\u0020a\u0020better\u0020solution\u0020than\u0020just\ncreating\u0020the\u0020renderers\u0020when\u0020invoked.",
+            "url": "classes/Application-View-Helper-Diff.html#method___construct"
+        },                {
+            "fqsen": "\\Application\\View\\Helper\\Diff\u003A\u003A__invoke\u0028\u0029",
+            "name": "__invoke",
+            "summary": "",
+            "url": "classes/Application-View-Helper-Diff.html#method___invoke"
+        },                {
+            "fqsen": "\\Application\\View\\Helper\\Diff\u003A\u003ADIFF_RENDER_COMBINED",
+            "name": "DIFF_RENDER_COMBINED",
+            "summary": "",
+            "url": "classes/Application-View-Helper-Diff.html#constant_DIFF_RENDER_COMBINED"
+        },                {
+            "fqsen": "\\Application\\View\\Helper\\Diff\u003A\u003ADIFF_RENDER_INLINE",
+            "name": "DIFF_RENDER_INLINE",
+            "summary": "",
+            "url": "classes/Application-View-Helper-Diff.html#constant_DIFF_RENDER_INLINE"
+        },                {
+            "fqsen": "\\Application\\View\\Helper\\Diff\u003A\u003ADIFF_RENDER_SIDE_BY_SIDE",
+            "name": "DIFF_RENDER_SIDE_BY_SIDE",
+            "summary": "",
+            "url": "classes/Application-View-Helper-Diff.html#constant_DIFF_RENDER_SIDE_BY_SIDE"
+        },                {
+            "fqsen": "\\Application\\View\\Helper\\Diff\u003A\u003A\u0024config",
+            "name": "config",
+            "summary": "",
+            "url": "classes/Application-View-Helper-Diff.html#property_config"
+        },                {
             "fqsen": "\\Application\\View\\Helper\\FeaturedCompanyPackage",
             "name": "FeaturedCompanyPackage",
             "summary": "",
