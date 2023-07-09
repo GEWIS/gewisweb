@@ -12,16 +12,18 @@ use Application\View\Helper\CompanyIdentity;
 use Application\View\Helper\FeaturedCompanyPackage;
 use Application\View\Helper\LocalisedTextElement;
 use Application\View\Helper\LocaliseText;
-use Doctrine\Common\Cache\MemcachedCache;
 use Doctrine\ORM\Mapping\Driver\AttributeDriver;
+use DoctrineModule\Cache\LaminasStorageCache;
 use Laminas\Cache\Service\StorageCacheAbstractServiceFactory;
+use Laminas\Cache\Storage\Adapter\Memcached;
+use Laminas\Cache\Storage\Adapter\MemcachedOptions;
 use Laminas\I18n\Translator\Resources;
 use Laminas\Router\Http\Literal;
 use Laminas\Router\Http\Segment;
 use Laminas\Session\Config\ConfigInterface;
 use Laminas\Session\Service\SessionConfigFactory;
-use Memcached;
 use Psr\Container\ContainerInterface;
+use RuntimeException;
 
 return [
     'router' => [
@@ -61,12 +63,16 @@ return [
         'factories' => [
             ConfigInterface::class => SessionConfigFactory::class,
             'doctrine.cache.my_memcached' => static function () {
-                $cache = new MemcachedCache();
                 $memcached = new Memcached();
-                $memcached->addServer('memcached', 11211);
-                $cache->setMemcached($memcached);
+                $options = $memcached->getOptions();
 
-                return $cache;
+                if (!($options instanceof MemcachedOptions)) {
+                    throw new RuntimeException('Unable to retrieve and set options for Memcached');
+                }
+
+                $options->setServers(['memcached', '11211']);
+
+                return new LaminasStorageCache($memcached);
             },
         ],
     ],
