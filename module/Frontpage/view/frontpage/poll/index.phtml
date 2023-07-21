@@ -82,7 +82,12 @@ $this->headTitle($this->translate('Polls'));
                     </div>
                 <?php endforeach ?>
             <?php endif ?>
-            <?php if ($this->acl('frontpage_service_acl')->isAllowed('poll_comment', 'create')): ?>
+            <?php
+            if (
+                $this->acl('frontpage_service_acl')->isAllowed('poll_comment', 'create')
+                && isset($commentForm)
+            ):
+            ?>
                 <hr>
                 <h3><?= $this->translate('Comment on this poll') ?></h3>
                 <?php

@@ -44,7 +44,7 @@ class PollController extends AbstractActionController
                     $details,
                     [
                         'poll' => $poll,
-                        'commentForm' => $this->pollCommentForm,
+                        'commentForm' => $poll->isActive() ? $this->pollCommentForm : null,
                     ],
                 ),
             );
@@ -89,7 +89,7 @@ class PollController extends AbstractActionController
     /**
      * Submits a comment.
      */
-    public function commentAction(): ViewModel
+    public function commentAction(): Response|ViewModel
     {
         if (!$this->aclService->isAllowed('create', 'poll_comment')) {
             throw new NotAllowedException(
@@ -100,7 +100,10 @@ class PollController extends AbstractActionController
         $pollId = (int) $this->params()->fromRoute('poll_id');
         $poll = $this->pollService->getPoll($pollId);
 
-        if (null === $poll) {
+        if (
+            null === $poll
+            || !$poll->isActive()
+        ) {
             return $this->notFoundAction();
         }
 
@@ -112,7 +115,7 @@ class PollController extends AbstractActionController
 
             if ($this->pollCommentForm->isValid()) {
                 if ($this->pollService->createComment($poll, $this->pollCommentForm->getData())) {
-                    $this->pollCommentForm->setData(['author' => '', 'content' => '']);
+                    return $this->redirect()->toRoute('poll');
                 }
             }
         }

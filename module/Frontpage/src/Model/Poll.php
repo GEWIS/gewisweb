@@ -216,6 +216,6 @@ class Poll implements ResourceInterface
      */
     public function isActive(): bool
     {
-        return $this->getExpiryDate() > new DateTime();
+        return $this->isApproved() && $this->getExpiryDate() > new DateTime();
     }
 }
