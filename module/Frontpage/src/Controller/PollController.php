@@ -44,7 +44,7 @@ class PollController extends AbstractActionController
                     $details,
                     [
                         'poll' => $poll,
-                        'commentForm' => $this->pollCommentForm,
+                        'commentForm' => $poll->isActive() ? $this->pollCommentForm : null,
                     ],
                 ),
             );
@@ -100,7 +100,10 @@ class PollController extends AbstractActionController
         $pollId = (int) $this->params()->fromRoute('poll_id');
         $poll = $this->pollService->getPoll($pollId);
 
-        if (null === $poll) {
+        if (
+            null === $poll
+            || !$poll->isActive()
+        ) {
             return $this->notFoundAction();
         }
 
