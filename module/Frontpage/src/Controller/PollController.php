@@ -89,7 +89,7 @@ class PollController extends AbstractActionController
     /**
      * Submits a comment.
      */
-    public function commentAction(): ViewModel
+    public function commentAction(): Response|ViewModel
     {
         if (!$this->aclService->isAllowed('create', 'poll_comment')) {
             throw new NotAllowedException(
@@ -115,7 +115,7 @@ class PollController extends AbstractActionController
 
             if ($this->pollCommentForm->isValid()) {
                 if ($this->pollService->createComment($poll, $this->pollCommentForm->getData())) {
-                    $this->pollCommentForm->setData(['author' => '', 'content' => '']);
+                    return $this->redirect()->toRoute('poll');
                 }
             }
         }
