@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-09 18:27+0200\n"
-"PO-Revision-Date: 2023-07-09 18:27+0200\n"
+"POT-Creation-Date: 2023-08-08 22:14+0200\n"
+"PO-Revision-Date: 2023-08-08 22:19+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: nl\n"
@@ -98,6 +98,12 @@ msgstr "Een lijst met nuttige pagina's voor actieve leden."
 msgid "API Tokens"
 msgstr "API Tokens"
 
+msgid "API User"
+msgstr "API-gebruiker"
+
+msgid "API User - Authenticated automated program"
+msgstr "API-gebruiker - Geauthenticeerd geautomatiseerd programma"
+
 msgid "API Users"
 msgstr "API gebruikers"
 
@@ -112,6 +118,12 @@ msgstr "Activeer"
 
 msgid "Active"
 msgstr "Actief"
+
+msgid "Active Member"
+msgstr "Actief lid"
+
+msgid "Active Member - Authenticated member and in an organ"
+msgstr "Actief lid - Geauthenticeerd lid en in een orgaan"
 
 msgid "Active Option Planning Periods"
 msgstr "Actieve optieplanningsperioden"
@@ -240,6 +252,9 @@ msgstr "Adressen"
 
 msgid "Admin"
 msgstr "Admin"
+
+msgid "Admin - Board and Tom"
+msgstr "Admin - Bestuur en Tom"
 
 msgid "Administrator"
 msgstr "Administrator"
@@ -687,8 +702,17 @@ msgstr "Bedrijven"
 msgid "Company"
 msgstr "Bedrijf"
 
+msgid "Company - Authenticated company representative"
+msgstr "Bedrijf - Geauthenticeerde bedrijfsvertegenwoordiger"
+
 msgid "Company Account"
 msgstr "Bedrijfsprofiel"
+
+msgid "Company Admin"
+msgstr "Bedrijfsadministratie"
+
+msgid "Company Admin - C4 members"
+msgstr "Bedrijfsadministratie - C4 leden"
 
 msgid "Complaint or suggestion about TU/e education?"
 msgstr "Klacht of suggestie over TU/e onderwijs?"
@@ -1343,6 +1367,15 @@ msgstr "Google Calendar"
 
 msgid "Graduate"
 msgstr "Afgestudeerde"
+
+msgid "Graduate - Authenticated graduate"
+msgstr "Afgestudeerde - Geauthenticeerde afgestudeerde"
+
+msgid "Guest"
+msgstr "Gast"
+
+msgid "Guest - Anyone who can access the website"
+msgstr "Gast - Iedereen die toegang heeft tot de website"
 
 msgid "Has key code?"
 msgstr "Heeft sleutelcode?"
@@ -2668,6 +2701,12 @@ msgstr "Datum van samenvatting"
 msgid "Summary on %s (%s)"
 msgstr "Samenvatting van %s (%s)"
 
+msgid "TU/e Guest"
+msgstr "TU/e gast"
+
+msgid "TU/e Guest - Anyone who can access the website from within the TU/e"
+msgstr "TU/e gast - Iedereen die toegang heeft tot de website vanuit de TU/e"
+
 msgid "Tafelvoetbalcoordinator"
 msgstr "Tafelvoetbalcoordinator"
 
@@ -3221,9 +3260,15 @@ msgstr "Praktische informatie"
 msgid "Useful links"
 msgstr "Handige links"
 
+msgid "User"
+msgstr "Gebruiker"
+
 #, php-format
 msgid "User (%s)"
 msgstr "Gebruiker (%s)"
+
+msgid "User - Authenticated member"
+msgstr "Gebruiker - Geauthenticeerd lid"
 
 msgid "Users"
 msgstr "Gebruikers"

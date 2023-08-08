@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-09 18:27+0200\n"
-"PO-Revision-Date: 2023-07-09 18:27+0200\n"
+"POT-Creation-Date: 2023-08-08 22:14+0200\n"
+"PO-Revision-Date: 2023-08-08 22:16+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: en\n"
@@ -98,6 +98,12 @@ msgstr "A list of helpful resources for active members."
 msgid "API Tokens"
 msgstr "API Tokens"
 
+msgid "API User"
+msgstr "API User"
+
+msgid "API User - Authenticated automated program"
+msgstr "API User - Authenticated automated program"
+
 msgid "API Users"
 msgstr "API Users"
 
@@ -112,6 +118,12 @@ msgstr "Activate"
 
 msgid "Active"
 msgstr "Active"
+
+msgid "Active Member"
+msgstr "Active Member"
+
+msgid "Active Member - Authenticated member and in an organ"
+msgstr "Active Member - Authenticated member and in an organ"
 
 msgid "Active Option Planning Periods"
 msgstr "Active Option Planning Periods"
@@ -239,6 +251,9 @@ msgstr "Addresses"
 
 msgid "Admin"
 msgstr "Admin"
+
+msgid "Admin - Board and Tom"
+msgstr "Admin - Board and Tom"
 
 msgid "Administrator"
 msgstr "Administrator"
@@ -681,8 +696,17 @@ msgstr "Companies"
 msgid "Company"
 msgstr "Company"
 
+msgid "Company - Authenticated company representative"
+msgstr "Company - Authenticated company representative"
+
 msgid "Company Account"
 msgstr "Company Account"
+
+msgid "Company Admin"
+msgstr "Company Admin"
+
+msgid "Company Admin - C4 members"
+msgstr "Company Admin - C4 members"
 
 msgid "Complaint or suggestion about TU/e education?"
 msgstr "Complaint or suggestion about TU/e education?"
@@ -1330,6 +1354,15 @@ msgstr "Google Calendar"
 
 msgid "Graduate"
 msgstr "Graduate"
+
+msgid "Graduate - Authenticated graduate"
+msgstr "Company Admin - C4 members"
+
+msgid "Guest"
+msgstr "Guest"
+
+msgid "Guest - Anyone who can access the website"
+msgstr "Guest - Anyone who can access the website"
 
 msgid "Has key code?"
 msgstr "Has key code?"
@@ -2646,6 +2679,12 @@ msgstr "Summary date"
 msgid "Summary on %s (%s)"
 msgstr "Summary on %s (%s)"
 
+msgid "TU/e Guest"
+msgstr "Guest - Anyone who can access the website"
+
+msgid "TU/e Guest - Anyone who can access the website from within the TU/e"
+msgstr "TU/e Guest - Anyone who can access the website from within the TU/e"
+
 msgid "Tafelvoetbalcoordinator"
 msgstr "Tafelvoetbalcoordinator"
 
@@ -3183,9 +3222,15 @@ msgstr "Useful Information"
 msgid "Useful links"
 msgstr "Useful links"
 
+msgid "User"
+msgstr "User"
+
 #, php-format
 msgid "User (%s)"
 msgstr "User (%s)"
+
+msgid "User - Authenticated member"
+msgstr "User - Authenticated member"
 
 msgid "Users"
 msgstr "Users"
