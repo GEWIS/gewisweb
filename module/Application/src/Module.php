@@ -186,15 +186,22 @@ class Module
                 },
                 'application_cache_infimum' => static function () {
                     $cache = new Memcached();
-                    // The TTL is 5 minutes (60 seconds * 5), as Supremum has a 5 minute cache on their end too. There
-                    // is no need to keep requesting an infimum if we get the same one back for 5 minutes.
                     $options = $cache->getOptions();
+
                     if (!($options instanceof MemcachedOptions)) {
                         throw new RuntimeException('Unable to retrieve and set options for Memcached');
                     }
 
+                    // The TTL is 5 minutes (60 seconds * 5), as Supremum has a 5 minute cache on their end too. There
+                    // is no need to keep requesting an infimum if we get the same one back for 5 minutes.
                     $options->setTtl(60 * 5);
-                    $options->setServers(['memcached', '11211']);
+                    $options->setServers([
+                        [
+                            'host' => 'memcached',
+                            'port' => 11211,
+                        ],
+                    ]);
+                    $options->setNamespace('Infima');
 
                     return $cache;
                 },
