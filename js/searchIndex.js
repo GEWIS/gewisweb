@@ -11951,6 +11951,21 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Frontpage-Form-PollOption.html#property_translator"
         },                {
+            "fqsen": "\\Frontpage\\Hydrator\\Strategy\\PageRoleHydratorStrategy",
+            "name": "PageRoleHydratorStrategy",
+            "summary": "",
+            "url": "classes/Frontpage-Hydrator-Strategy-PageRoleHydratorStrategy.html"
+        },                {
+            "fqsen": "\\Frontpage\\Hydrator\\Strategy\\PageRoleHydratorStrategy\u003A\u003Aextract\u0028\u0029",
+            "name": "extract",
+            "summary": "",
+            "url": "classes/Frontpage-Hydrator-Strategy-PageRoleHydratorStrategy.html#method_extract"
+        },                {
+            "fqsen": "\\Frontpage\\Hydrator\\Strategy\\PageRoleHydratorStrategy\u003A\u003Ahydrate\u0028\u0029",
+            "name": "hydrate",
+            "summary": "",
+            "url": "classes/Frontpage-Hydrator-Strategy-PageRoleHydratorStrategy.html#method_hydrate"
+        },                {
             "fqsen": "\\Frontpage\\Mapper\\NewsItem",
             "name": "NewsItem",
             "summary": "Mappers\u0020for\u0020NewsItems.",
@@ -16586,6 +16601,66 @@ Search.appendIndex(
             "summary": "",
             "url": ""
         },                {
+            "fqsen": "\\User\\Model\\Enums\\UserRoles",
+            "name": "UserRoles",
+            "summary": "Enum\u0020for\u0020all\u0020the\u0020possible\u0020roles\u0020that\u0020exist\u0020within\u0020the\u0020ACL.",
+            "url": "classes/User-Model-Enums-UserRoles.html"
+        },                {
+            "fqsen": "\\User\\Model\\Enums\\UserRoles\u003A\u003AgetName\u0028\u0029",
+            "name": "getName",
+            "summary": "",
+            "url": "classes/User-Model-Enums-UserRoles.html#method_getName"
+        },                {
+            "fqsen": "\\User\\Model\\Enums\\UserRoles\u003A\u003AgetFormValueOptions\u0028\u0029",
+            "name": "getFormValueOptions",
+            "summary": "",
+            "url": "classes/User-Model-Enums-UserRoles.html#method_getFormValueOptions"
+        },                {
+            "fqsen": "\\User\\Model\\Enums\\UserRoles\u003A\u003AGuest",
+            "name": "Guest",
+            "summary": "",
+            "url": ""
+        },                {
+            "fqsen": "\\User\\Model\\Enums\\UserRoles\u003A\u003ATueGuest",
+            "name": "TueGuest",
+            "summary": "",
+            "url": ""
+        },                {
+            "fqsen": "\\User\\Model\\Enums\\UserRoles\u003A\u003AApiUser",
+            "name": "ApiUser",
+            "summary": "",
+            "url": ""
+        },                {
+            "fqsen": "\\User\\Model\\Enums\\UserRoles\u003A\u003ACompany",
+            "name": "Company",
+            "summary": "",
+            "url": ""
+        },                {
+            "fqsen": "\\User\\Model\\Enums\\UserRoles\u003A\u003AUser",
+            "name": "User",
+            "summary": "",
+            "url": ""
+        },                {
+            "fqsen": "\\User\\Model\\Enums\\UserRoles\u003A\u003AGraduate",
+            "name": "Graduate",
+            "summary": "",
+            "url": ""
+        },                {
+            "fqsen": "\\User\\Model\\Enums\\UserRoles\u003A\u003AActiveMember",
+            "name": "ActiveMember",
+            "summary": "",
+            "url": ""
+        },                {
+            "fqsen": "\\User\\Model\\Enums\\UserRoles\u003A\u003ACompanyAdmin",
+            "name": "CompanyAdmin",
+            "summary": "",
+            "url": ""
+        },                {
+            "fqsen": "\\User\\Model\\Enums\\UserRoles\u003A\u003AAdmin",
+            "name": "Admin",
+            "summary": "",
+            "url": ""
+        },                {
             "fqsen": "\\User\\Model\\LoginAttempt",
             "name": "LoginAttempt",
             "summary": "A\u0020failed\u0020login\u0020attempt.",
@@ -17805,6 +17880,16 @@ Search.appendIndex(
             "name": "Form",
             "summary": "",
             "url": "namespaces/frontpage-form.html"
+        },                {
+            "fqsen": "\\Frontpage\\Hydrator\\Strategy",
+            "name": "Strategy",
+            "summary": "",
+            "url": "namespaces/frontpage-hydrator-strategy.html"
+        },                {
+            "fqsen": "\\Frontpage\\Hydrator",
+            "name": "Hydrator",
+            "summary": "",
+            "url": "namespaces/frontpage-hydrator.html"
         },                {
             "fqsen": "\\Frontpage\\Mapper",
             "name": "Mapper",
