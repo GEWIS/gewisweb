@@ -70,7 +70,13 @@ return [
                     throw new RuntimeException('Unable to retrieve and set options for Memcached');
                 }
 
-                $options->setServers(['memcached', '11211']);
+                $options->setServers([
+                    [
+                        'host' => 'memcached',
+                        'port' => 11211,
+                    ],
+                ]);
+                $options->setNamespace('DoctrineORMModule');
 
                 return new LaminasStorageCache($memcached);
             },
