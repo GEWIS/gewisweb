@@ -10,6 +10,7 @@ use Frontpage\Form\Page as PageForm;
 use Frontpage\Form\Poll as PollForm;
 use Frontpage\Form\PollApproval as PollApprovalForm;
 use Frontpage\Form\PollComment as PollCommentForm;
+use Frontpage\Hydrator\Strategy\PageRoleHydratorStrategy;
 use Frontpage\Mapper\NewsItem as NewsItemMapper;
 use Frontpage\Mapper\Page as PageMapper;
 use Frontpage\Mapper\Poll as PollMapper;
@@ -130,7 +131,9 @@ class Module
                     $form = new PageForm(
                         $container->get(MvcTranslator::class),
                     );
-                    $form->setHydrator($container->get('frontpage_hydrator'));
+                    $hydrator = $container->get('frontpage_hydrator');
+                    $hydrator->addStrategy('requiredRole', new PageRoleHydratorStrategy());
+                    $form->setHydrator($hydrator);
 
                     return $form;
                 },

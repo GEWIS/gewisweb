@@ -6,6 +6,7 @@ namespace Frontpage\Form;
 
 use Laminas\Filter\StringToLower;
 use Laminas\Filter\ToNull;
+use Laminas\Form\Element\Select;
 use Laminas\Form\Element\Submit;
 use Laminas\Form\Element\Text;
 use Laminas\Form\Element\Textarea;
@@ -13,6 +14,7 @@ use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\StringLength;
+use User\Model\Enums\UserRoles;
 
 class Page extends Form implements InputFilterProviderInterface
 {
@@ -84,10 +86,10 @@ class Page extends Form implements InputFilterProviderInterface
         $this->add(
             [
                 'name' => 'requiredRole',
-                'type' => Text::class,
+                'type' => Select::class,
                 'options' => [
                     'label' => $translator->translate('Required role'),
-                    'value' => 'guest',
+                    'value_options' => UserRoles::getFormValueOptions($translator),
                 ],
             ],
         );

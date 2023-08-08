@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
+use User\Model\Enums\UserRoles;
 
 /**
  * Page.
@@ -73,8 +74,11 @@ class Page implements ResourceInterface
     /**
      * The minimal role required to view a page.
      */
-    #[Column(type: 'string')]
-    protected string $requiredRole;
+    #[Column(
+        type: 'string',
+        enumType: UserRoles::class,
+    )]
+    protected UserRoles $requiredRole;
 
     public function getDutchTitle(): string
     {
@@ -111,7 +115,7 @@ class Page implements ResourceInterface
         return $this->dutchContent;
     }
 
-    public function getRequiredRole(): string
+    public function getRequiredRole(): UserRoles
     {
         return $this->requiredRole;
     }
@@ -151,7 +155,7 @@ class Page implements ResourceInterface
         $this->dutchContent = $dutchContent;
     }
 
-    public function setRequiredRole(string $requiredRole): void
+    public function setRequiredRole(UserRoles $requiredRole): void
     {
         $this->requiredRole = $requiredRole;
     }

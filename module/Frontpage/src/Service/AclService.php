@@ -14,7 +14,7 @@ class AclService extends \User\Service\AclService
     public function setPages(array $pages): void
     {
         foreach ($pages as $page) {
-            $requiredRole = $page->getRequiredRole();
+            $requiredRole = $page->getRequiredRole()->value;
             $this->acl->addResource($page);
             $this->acl->allow($requiredRole, $page, 'view');
         }
