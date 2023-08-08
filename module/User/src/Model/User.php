@@ -157,7 +157,7 @@ class User implements IdentityInterface
         $names = [];
 
         foreach ($this->getRoles() as $role) {
-            $names[] = $role->getRole();
+            $names[] = $role->getRole()->value;
         }
 
         return $names;
@@ -166,7 +166,10 @@ class User implements IdentityInterface
     public function getRoleId(): string
     {
         $roleNames = $this->getRoleNames();
-        if (in_array('admin', $roleNames) || $this->getMember()->isBoardMember()) {
+        if (
+            in_array('admin', $roleNames)
+            || $this->getMember()->isBoardMember()
+        ) {
             return 'admin';
         }
 

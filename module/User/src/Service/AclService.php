@@ -16,6 +16,7 @@ use User\Authentication\AuthenticationService as UserAuthenticationService;
 use User\Authentication\Storage\CompanyUserSession;
 use User\Authentication\Storage\UserSession;
 use User\Authorization\GenericAclService;
+use User\Model\Enums\UserRoles;
 
 class AclService extends GenericAclService
 {
@@ -68,24 +69,24 @@ class AclService extends GenericAclService
          * - apiuser: Automated tool given access by an admin
          * - admin: Defined administrators
          */
-        $this->acl->addRole(new Role('guest'));
-        $this->acl->addRole(new Role('tueguest'), 'guest');
-        $this->acl->addRole(new Role('user'), 'tueguest');
-        $this->acl->addRole(new Role('company'), 'guest');
-        $this->acl->addrole(new Role('apiuser'), 'guest');
-        $this->acl->addrole(new Role('active_member'), 'user');
-        $this->acl->addRole(new Role('graduate'), 'user');
-        $this->acl->addrole(new Role('company_admin'), 'active_member');
-        $this->acl->addRole(new Role('admin'));
+        $this->acl->addRole(new Role(UserRoles::Guest->value));
+        $this->acl->addRole(new Role(UserRoles::TueGuest->value), UserRoles::Guest->value);
+        $this->acl->addRole(new Role(UserRoles::User->value), UserRoles::TueGuest->value);
+        $this->acl->addRole(new Role(UserRoles::Company->value), UserRoles::Guest->value);
+        $this->acl->addrole(new Role(UserRoles::ApiUser->value), UserRoles::Guest->value);
+        $this->acl->addrole(new Role(UserRoles::ActiveMember->value), UserRoles::User->value);
+        $this->acl->addRole(new Role(UserRoles::Graduate->value), UserRoles::User->value);
+        $this->acl->addrole(new Role(UserRoles::CompanyAdmin->value), UserRoles::ActiveMember->value);
+        $this->acl->addRole(new Role(UserRoles::Admin->value));
 
         // admins (this includes board members) are allowed to do everything
-        $this->acl->allow('admin');
+        $this->acl->allow(UserRoles::Admin->value);
 
         // configure the user ACL
         $this->acl->addResource(new Resource('apiuser'));
         $this->acl->addResource(new Resource('user'));
 
-        $this->acl->allow('user', 'user', ['password_change']);
-        $this->acl->allow('company', 'user', ['password_change']);
+        $this->acl->allow(UserRoles::User->value, 'user', ['password_change']);
+        $this->acl->allow(UserRoles::Company->value, 'user', ['password_change']);
     }
 }

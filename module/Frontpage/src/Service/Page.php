@@ -14,6 +14,7 @@ use Laminas\Mvc\I18n\Translator;
 use Laminas\Stdlib\Parameters;
 use Laminas\Validator\File\Extension;
 use Laminas\Validator\File\IsImage;
+use User\Model\Enums\UserRoles;
 use User\Permissions\NotAllowedException;
 
 /**
@@ -175,7 +176,7 @@ class Page
         $page->setEnglishTitle($data['englishTitle']);
         $page->setEnglishContent($data['englishContent']);
 
-        $page->setRequiredRole($data['requiredRole']);
+        $page->setRequiredRole(UserRoles::from($data['requiredRole']));
 
         return $page;
     }

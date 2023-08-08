@@ -18,6 +18,7 @@ use Laminas\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use User\Authentication\AuthenticationService;
 use User\Model\CompanyUser;
+use User\Model\Enums\UserRoles;
 use User\Model\NewCompanyUser;
 use User\Model\User;
 use User\Model\UserRole;
@@ -235,7 +236,7 @@ abstract class BaseControllerTest extends AbstractHttpControllerTestCase
 
         if ('user' !== $role) {
             $roleModel = new UserRole();
-            $roleModel->setRole($role);
+            $roleModel->setRole(UserRoles::from($role));
 
             $roles = new ArrayCollection([$roleModel]);
         } else {

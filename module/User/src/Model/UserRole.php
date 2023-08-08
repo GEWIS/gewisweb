@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
+use User\Model\Enums\UserRoles;
 
 /**
  * User role model.
@@ -36,8 +37,11 @@ class UserRole
     /**
      * The user's role.
      */
-    #[Column(type: 'string')]
-    protected string $role;
+    #[Column(
+        type: 'string',
+        enumType: UserRoles::class,
+    )]
+    protected UserRoles $role;
 
     /**
      * Get the membership number.
@@ -58,7 +62,7 @@ class UserRole
     /**
      * Get the role.
      */
-    public function getRole(): string
+    public function getRole(): UserRoles
     {
         return $this->role;
     }
@@ -66,7 +70,7 @@ class UserRole
     /**
      * Set the role.
      */
-    public function setRole(string $role): void
+    public function setRole(UserRoles $role): void
     {
         $this->role = $role;
     }
