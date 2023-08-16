@@ -38,10 +38,10 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
 <section class="section">
     <div class="container">
         <?php if ($lang === 'en'): ?>
-            <h3><?= $this->escapeHtml($page->getEnglishTitle()) ?></h3>
+            <h1><?= $this->escapeHtml($page->getEnglishTitle()) ?></h1>
             <?php $this->headTitle($page->getEnglishTitle()) ?>
         <?php else: ?>
-            <h3><?= $this->escapeHtml($page->getDutchTitle()) ?></h3>
+            <h1><?= $this->escapeHtml($page->getDutchTitle()) ?></h1>
             <?php $this->headTitle($page->getDutchTitle()) ?>
         <?php endif; ?>
 
