@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Application\View\HelperTrait;
+use Laminas\View\Exception\RuntimeException;
 use Laminas\View\Renderer\PhpRenderer;
 
 /** @var PhpRenderer|HelperTrait $this */
@@ -54,9 +55,18 @@ endif; ?>
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu language <?= ($lang == 'en') ? 'reverse' : '' ?> ">
+                        <?php
+                        try {
+                            $dutchUrl = $this->url(null, ['language' => 'nl'], null, true);
+                            $englishUrl = $this->url(null, ['language' => 'en'], null, true);
+                        } catch (RuntimeException) {
+                            $dutchUrl = $this->url('home', ['language' => 'nl'],);
+                            $englishUrl = $this->url('home', ['language' => 'en'],);
+                        }
+                        ?>
                         <li>
                             <a class="<?= ($lang == 'en') ? 'disabled' : '' ?>"
-                               href="<?= $this->url(null, ['language' => 'en'], null, true) ?>"
+                               href="<?= $englishUrl ?>"
                             >
                                 <span class="flag-icon flag-icon-en"
                                       style="background-image: url('<?= $this->basePath() ?>/img/en.svg');"></span>English
@@ -64,7 +74,7 @@ endif; ?>
                         </li>
                         <li>
                             <a class="<?= ($lang == 'nl') ? 'disabled' : '' ?>"
-                               href="<?= $this->url(null, ['language' => 'nl'], null, true) ?>"
+                               href="<?= $dutchUrl ?>"
                             >
                                 <span class="flag-icon flag-icon-nl"
                                       style="background-image: url('<?= $this->basePath() ?>/img/nl.svg');"></span>Nederlands
