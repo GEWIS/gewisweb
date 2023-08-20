@@ -19,17 +19,17 @@ use Photo\Model\{
 
 $this->headScript()
     ->appendFile(
-        $this->basePath() . '/js/autocomplete.min.js',
+        $this->basepath('js/autocomplete.min.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     )
     ->appendFile(
-        $this->basePath() . '/js/photo.js',
+        $this->basepath('js/photo.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     )
     ->appendFile(
-        $this->basePath() . '/js/photo-admin.js',
+        $this->basepath('js/photo-admin.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     );

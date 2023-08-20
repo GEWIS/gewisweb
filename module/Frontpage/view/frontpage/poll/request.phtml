@@ -35,7 +35,7 @@ $this->headTitle($this->translate('Request a poll'));
                     <?php
                     $this->inlineScript()
                         ->appendFile(
-                            $this->basePath() . '/js/frontpage-poll.js',
+                            $this->basepath('js/frontpage-poll.js'),
                             'text/javascript',
                             ['nonce' => NONCE_REPLACEMENT_STRING],
                         );

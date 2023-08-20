@@ -14,13 +14,13 @@ use Laminas\View\Renderer\PhpRenderer;
 
 $this->inlineScript()
     ->appendFile(
-        $this->basePath() . '/js/education-admin.js',
+        $this->basepath('js/education-admin.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     );
 $this->headScript()
     ->appendFile(
-        $this->basePath() . '/js/bootstrap/tooltip.js',
+        $this->basepath('js/bootstrap/tooltip.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     );
@@ -54,7 +54,7 @@ $this->breadcrumbs()
             <div class="form-group">
                 <h3 class="col-sm-offset-2 col-sm-10">
                     <a target="_blank"
-                       href="<?= $this->basePath() ?>/<?= $config['public_exam_dir'] ?>/<?= $this->escapeHtmlAttr($fs->get('file')->getValue()) ?>">
+                       href="<?= $this->basePath($config['public_exam_dir'] . '/' . $this->escapeHtmlAttr($fs->get('file')->getValue())) ?>">
                         <?= $this->escapeHtml($fs->get('file')->getValue()) ?>
                     </a>
                     <a data-file-value="<?= $this->escapeHtmlAttr($fs->get('file')->getValue()) ?>"

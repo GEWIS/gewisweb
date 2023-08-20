@@ -25,8 +25,7 @@ class ExamUrl extends AbstractHelper
      */
     public function __invoke(Exam $exam): string
     {
-        return $this->getView()->basePath() . '/' . $this->getDir(
-        ) . '/' . $this->examService->courseDocumentToFilename($exam);
+        return $this->getView()->basePath($this->getDir() . '/' . $this->examService->courseDocumentToFilename($exam));
     }
 
     /**

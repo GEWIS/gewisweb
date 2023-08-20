@@ -15,12 +15,12 @@ $this->headTitle($this->translate('Add Job'));
 
 $this->headScript()
     ->appendFile(
-        $this->basePath() . '/js/company-create.js',
+        $this->basepath('js/company-create.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     )
     ->appendFile(
-        $this->basePath() . '/js/job-create.js',
+        $this->basepath('js/job-create.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     );

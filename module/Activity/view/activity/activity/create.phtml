@@ -14,20 +14,20 @@ use Laminas\View\Renderer\PhpRenderer;
 
 $this->headTitle($action);
 $this->headLink()
-    ->appendStylesheet($this->basePath() . '/css/bootstrap-markdown.min.css');
+    ->appendStylesheet($this->basepath('css/bootstrap-markdown.min.css'));
 $this->headScript()
     ->appendFile(
-        $this->basePath() . '/js/activity-create.js',
+        $this->basepath('js/activity-create.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     )
     ->appendFile(
-        $this->basePath() . '/js/bootstrap-markdown.js',
+        $this->basepath('js/bootstrap-markdown.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     )
     ->appendFile(
-        $this->basePath() . '/js/bootstrap/tooltip.js',
+        $this->basepath('js/bootstrap/tooltip.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     );

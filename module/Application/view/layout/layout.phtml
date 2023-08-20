@@ -148,19 +148,19 @@ use Laminas\View\Renderer\PhpRenderer;
     <!-- Le styles -->
     <!-- All headLinks are outputted here once. -->
     <?= $this->headLink(
-        ['rel' => 'shortcut icon', 'type' => 'image/x-icon', 'href' => $this->basePath() . '/img/favicon.ico']
+        ['rel' => 'shortcut icon', 'type' => 'image/x-icon', 'href' => $this->basepath('img/favicon.ico')]
     )
-        ->prependStylesheet($this->basePath() . '/css/gewis-theme.css') ?>
+        ->prependStylesheet($this->basepath('css/gewis-theme.css')) ?>
 
     <!-- Scripts -->
     <?= $this->headScript()
         ->prependFile(
-            $this->basePath() . '/js/jquery.min.js',
+            $this->basepath('js/jquery.min.js'),
             'text/javascript',
             ['nonce' => NONCE_REPLACEMENT_STRING],
         )
         ->prependFile(
-            $this->basePath() . '/js/url-helper.js',
+            $this->basepath('js/url-helper.js'),
             'text/javascript',
             ['nonce' => NONCE_REPLACEMENT_STRING],
         ); ?>
@@ -203,17 +203,17 @@ endif; ?>
 <!-- Scripts -->
 <?= $this->inlineScript()
     ->prependFile(
-        $this->basePath() . '/js/bootstrap.min.js',
+        $this->basepath('js/bootstrap.min.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     )
     ->prependFile(
-        $this->basePath() . '/js/privacy-widget.js',
+        $this->basepath('js/privacy-widget.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     )
     ->prependFile(
-        $this->basePath() . '/js/navbar.js',
+        $this->basepath('js/navbar.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     ); ?>

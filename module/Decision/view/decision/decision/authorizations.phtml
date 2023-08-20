@@ -19,7 +19,7 @@ use Laminas\View\Renderer\PhpRenderer;
 
 $this->inlineScript()
     ->appendFile(
-        $this->basePath() . '/js/autocomplete.min.js',
+        $this->basepath('js/autocomplete.min.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     );

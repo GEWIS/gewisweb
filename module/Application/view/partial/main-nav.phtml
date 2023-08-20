@@ -68,16 +68,16 @@ endif; ?>
                             <a class="<?= ($lang == 'en') ? 'disabled' : '' ?>"
                                href="<?= $englishUrl ?>"
                             >
-                                <span class="flag-icon flag-icon-en"
-                                      style="background-image: url('<?= $this->basePath() ?>/img/en.svg');"></span>English
+                                <span style="background-image: url('<?= $this->basePath('img/en.svg') ?>');"
+                                      class="flag-icon flag-icon-en"></span>English
                             </a>
                         </li>
                         <li>
                             <a class="<?= ($lang == 'nl') ? 'disabled' : '' ?>"
                                href="<?= $dutchUrl ?>"
                             >
-                                <span class="flag-icon flag-icon-nl"
-                                      style="background-image: url('<?= $this->basePath() ?>/img/nl.svg');"></span>Nederlands
+                                <span style="background-image: url('<?= $this->basePath('img/nl.svg') ?>');"
+                                      class="flag-icon flag-icon-nl"></span>Nederlands
                             </a>
                         </li>
                     </ul>

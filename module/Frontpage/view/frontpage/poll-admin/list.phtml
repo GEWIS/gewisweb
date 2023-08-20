@@ -16,7 +16,7 @@ use Laminas\View\Renderer\PhpRenderer;
 
 $this->inlineScript()
     ->appendFile(
-        $this->basePath() . '/js/poll-admin.js',
+        $this->basepath('js/poll-admin.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     );

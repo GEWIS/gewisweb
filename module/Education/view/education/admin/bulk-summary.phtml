@@ -9,11 +9,11 @@ use Laminas\View\Renderer\PhpRenderer;
 
 $this->inlineScript()
     ->appendFile(
-        $this->basePath() . '/js/dropzone-min.js',
+        $this->basepath('js/dropzone-min.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     );
-$this->headLink()->appendStylesheet($this->basePath() . '/css/dropzone.css');
+$this->headLink()->appendStylesheet($this->basepath('css/dropzone.css'));
 
 $this->breadcrumbs()
     ->addBreadcrumb($this->translate('Education'), true, $this->url('admin_education'))
