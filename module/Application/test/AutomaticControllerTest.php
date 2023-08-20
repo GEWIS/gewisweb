@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ApplicationTest;
 
+use Application\Router\LanguageAwareTreeRouteStack;
 use Iterator;
 use Laminas\Router\Exception\InvalidArgumentException;
 use Laminas\Router\Http\Literal;
@@ -11,7 +12,6 @@ use Laminas\Router\Http\Method;
 use Laminas\Router\Http\Part;
 use Laminas\Router\Http\Regex;
 use Laminas\Router\Http\Segment;
-use Laminas\Router\Http\TreeRouteStack;
 use Laminas\Router\PriorityList;
 use RuntimeException;
 use Throwable;
@@ -24,7 +24,7 @@ class AutomaticControllerTest extends BaseControllerTest
 {
     public function testAllRoutes(): void
     {
-        /** @var TreeRouteStack $router */
+        /** @var LanguageAwareTreeRouteStack $router */
         $router = $this->getApplication()->getServiceManager()->get('router');
         /** @var Iterator $routes */
         $routes = $router->getRoutes();
@@ -34,7 +34,7 @@ class AutomaticControllerTest extends BaseControllerTest
     public function testAllRoutesAsUser(): void
     {
         $this->setUpWithRole();
-        /** @var TreeRouteStack $router */
+        /** @var LanguageAwareTreeRouteStack $router */
         $router = $this->getApplication()->getServiceManager()->get('router');
         /** @var Iterator $routes */
         $routes = $router->getRoutes();
@@ -44,7 +44,7 @@ class AutomaticControllerTest extends BaseControllerTest
     public function testAllRoutesAsAdmin(): void
     {
         $this->setUpWithRole('admin');
-        /** @var TreeRouteStack $router */
+        /** @var LanguageAwareTreeRouteStack $router */
         $router = $this->getApplication()->getServiceManager()->get('router');
         /** @var Iterator $routes */
         $routes = $router->getRoutes();

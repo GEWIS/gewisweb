@@ -43,6 +43,7 @@
         <exclude-pattern>module/Activity/src/Controller/Factory/ActivityControllerFactory.php</exclude-pattern>
         <exclude-pattern>module/Activity/src/Controller/Factory/AdminCategoryControllerFactory.php</exclude-pattern>
         <exclude-pattern>module/Activity/src/Controller/Factory/AdminOptionControllerFactory.php</exclude-pattern>
+        <exclude-pattern>module/Application/src/Router/Factory/LanguageAwareTreeRouteStackFactory.php</exclude-pattern>
         <exclude-pattern>module/Education/src/Controller/Factory/AdminControllerFactory.php</exclude-pattern>
         <exclude-pattern>module/Education/src/Controller/Factory/EducationControllerFactory.php</exclude-pattern>
         <exclude-pattern>module/Decision/src/Controller/Factory/DecisionControllerFactory.php</exclude-pattern>

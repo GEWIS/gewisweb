@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Application;
 
+use Application\Router\Factory\LanguageAwareTreeRouteStackFactory;
+use Application\Router\LanguageAwareTreeRouteStack;
 use Application\Service\Email as EmailService;
 use Application\Service\FileStorage as FileStorageService;
 use Application\Service\Infimum as InfimumService;
@@ -16,14 +18,12 @@ use Application\View\Helper\ModuleIsActive;
 use Application\View\Helper\ScriptUrl;
 use Laminas\Cache\Storage\Adapter\Memcached;
 use Laminas\Cache\Storage\Adapter\MemcachedOptions;
-use Laminas\Http\Header\Accept\FieldValuePart\LanguageFieldValuePart;
-use Laminas\Http\Header\AcceptLanguage;
-use Laminas\Http\Request;
 use Laminas\I18n\Translator\Translator as I18nTranslator;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\Mvc\ModuleRouteListener;
 use Laminas\Mvc\MvcEvent;
-use Laminas\Session\Container as SessionContainer;
+use Laminas\Router\Http\TreeRouteStack;
+use Laminas\Router\RouteStackInterface;
 use Laminas\Validator\AbstractValidator;
 use Locale;
 use Monolog\Handler\RotatingFileHandler;
@@ -35,8 +35,6 @@ use User\Authentication\AuthenticationService;
 use User\Authentication\Storage\UserSession;
 use User\Permissions\NotAllowedException;
 
-use function str_starts_with;
-
 class Module
 {
     public function onBootstrap(MvcEvent $e): void
@@ -45,24 +43,18 @@ class Module
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
 
-        $locale = $this->determineLocale($e);
-
-        /**
-         * @psalm-suppress UnnecessaryVarAnnotation
-         * @var MvcTranslator $mvcTranslator
-         */
-        $mvcTranslator = $e->getApplication()->getServiceManager()->get(MvcTranslator::class);
-        $translator = $mvcTranslator->getTranslator();
-        if ($translator instanceof I18nTranslator) {
-            $translator->setlocale($locale);
-        }
-
-        Locale::setDefault($locale);
+        // Attach listener for locale determination through the `LanguageAwareTreeRouteStack`.
+        $eventManager->attach(MvcEvent::EVENT_ROUTE, [$this, 'onRoute']);
 
         $eventManager->attach(MvcEvent::EVENT_DISPATCH_ERROR, [$this, 'logError']);
         $eventManager->attach(MvCEvent::EVENT_RENDER_ERROR, [$this, 'logError']);
 
         // Enable Laminas\Validator default translator
+        /**
+         * @psalm-suppress UnnecessaryVarAnnotation
+         * @var MvcTranslator $mvcTranslator
+         */
+        $mvcTranslator = $e->getApplication()->getServiceManager()->get(MvcTranslator::class);
         AbstractValidator::setDefaultTranslator($mvcTranslator);
     }
 
@@ -92,48 +84,36 @@ class Module
         $logger->error($e->getError());
     }
 
-    protected function determineLocale(MvcEvent $e): string
+    public function onRoute(MvcEvent $e): void
     {
-        $session = new SessionContainer('lang');
+        $serviceManager = $e->getApplication()->getServiceManager();
+        /** @var RouteStackInterface $router */
+        $router = $serviceManager->get('router');
 
-        if (!isset($session->lang)) {
-            // Check the preferred language in the Accept-Language request header if present
-            $request = $e->getRequest();
-            if ($request instanceof Request) {
-                $lang = $this->getPreferedLanguageFromRequest($request);
-                if (null !== $lang) {
-                    $session->lang = $lang;
-                }
-            }
+        if (!$router instanceof LanguageAwareTreeRouteStack) {
+            return;
         }
 
-        if (!isset($session->lang)) {
-            // default: en locale
-            $session->lang = 'en';
+        // Check whether the router has already performed a match, if this is the case we do not have to match again.
+        $language = $router->getLastMatchedLanguage();
+
+        if (null === $language) {
+            // Router has not performed a match yet, this is weird. However, we match the route to obtain the language.
+            // Even with a 404 (i.e. not matching route) we will obtain a language (thus guaranteed to be not `null`).
+            $router->match($serviceManager->get('request'));
+
+            /** @var string $language */
+            $language = $router->getLastMatchedLanguage();
         }
 
-        return $session->lang;
-    }
+        $mvcTranslator = $serviceManager->get(MvcTranslator::class);
+        $translator = $mvcTranslator->getTranslator();
 
-    protected function getPreferedLanguageFromRequest(Request $request): ?string
-    {
-        $header = $request->getHeader('Accept-Language');
-        if ($header instanceof AcceptLanguage) {
-            $languages = $header->getPrioritized();
-            /** @var LanguageFieldValuePart $lang */
-            foreach ($languages as $lang) {
-                $langString = $lang->getLanguage();
-                if (str_starts_with($langString, 'nl')) {
-                    return 'nl';
-                }
-
-                if (str_starts_with($langString, 'en')) {
-                    return 'en';
-                }
-            }
+        if ($translator instanceof I18nTranslator) {
+            $translator->setlocale($language);
         }
 
-        return null;
+        Locale::setDefault($language);
     }
 
     /**
@@ -152,6 +132,10 @@ class Module
     public function getServiceConfig(): array
     {
         return [
+            'delegators' => [
+                'HttpRouter' => [LanguageAwareTreeRouteStackFactory::class],
+                TreeRouteStack::class => [LanguageAwareTreeRouteStackFactory::class],
+            ],
             'factories' => [
                 'application_service_email' => static function (ContainerInterface $container) {
                     $renderer = $container->get('ViewRenderer');

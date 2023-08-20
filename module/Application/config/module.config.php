@@ -19,7 +19,6 @@ use Laminas\Cache\Storage\Adapter\Memcached;
 use Laminas\Cache\Storage\Adapter\MemcachedOptions;
 use Laminas\I18n\Translator\Resources;
 use Laminas\Router\Http\Literal;
-use Laminas\Router\Http\Segment;
 use Laminas\Session\Config\ConfigInterface;
 use Laminas\Session\Service\SessionConfigFactory;
 use Psr\Container\ContainerInterface;
@@ -28,21 +27,6 @@ use RuntimeException;
 return [
     'router' => [
         'routes' => [
-            'lang' => [
-                'type' => Segment::class,
-                'options' => [
-                    'route' => '/lang/:lang[/[:href]]',
-                    'defaults' => [
-                        'controller' => IndexController::class,
-                        'action' => 'lang',
-                        'lang' => 'en',
-                    ],
-                    'constraints' => [
-                        'lang' => 'nl|en',
-                    ],
-                ],
-                'priority' => 100,
-            ],
             'teapot' => [
                 'type' => Literal::class,
                 'options' => [

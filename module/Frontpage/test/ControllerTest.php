@@ -19,32 +19,6 @@ class ControllerTest extends BaseControllerTest
         $this->assertResponseStatusCode(200);
     }
 
-    public function testLangEnDoesRedirect(): void
-    {
-        $this->dispatch('/lang/en');
-        $this->assertResponseStatusCode(302);
-    }
-
-    public function testLangNlDoesRedirect(): void
-    {
-        $this->dispatch('/lang/nl');
-        $this->assertResponseStatusCode(302);
-    }
-
-    public function testLangEnDoesRedirectToUri(): void
-    {
-        $this->dispatch('/lang/en/foo');
-        $this->assertResponseStatusCode(302);
-        $this->assertRedirectTo('/foo');
-    }
-
-    public function testLangNlDoesRedirectToUri(): void
-    {
-        $this->dispatch('/lang/nl/foo');
-        $this->assertResponseStatusCode(302);
-        $this->assertRedirectTo('/foo');
-    }
-
     public function testPollHistoryActionCanBeAccessed(): void
     {
         $this->dispatch('/poll/history');

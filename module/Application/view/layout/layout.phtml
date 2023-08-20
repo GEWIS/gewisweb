@@ -20,17 +20,16 @@ use Laminas\View\Renderer\PhpRenderer;
 
     <!-- Display alternate language links-->
     <?php
-    // Disabled because of buggy implementation.
-    // if (isset($_SERVER['REQUEST_URI'])) {
-    //     $this->headLink([
-    //         'rel' => 'alternate', 'type' => 'text/html', 'hreflang' => 'en',
-    //         'href' => $this->serverUrl('/lang/en' . $_SERVER['REQUEST_URI']),
-    //     ]);
-    //     $this->headLink([
-    //         'rel' => 'alternate', 'type' => 'text/html', 'hreflang' => 'nl',
-    //         'href' => $this->serverUrl('/lang/nl' . $_SERVER['REQUEST_URI']),
-    //     ]);
-    // }
+     if (isset($_SERVER['REQUEST_URI'])) {
+         $this->headLink([
+             'rel' => 'alternate', 'type' => 'text/html', 'hreflang' => 'en',
+             'href' => $this->serverUrl('/en' . $_SERVER['REQUEST_URI']),
+         ]);
+         $this->headLink([
+             'rel' => 'alternate', 'type' => 'text/html', 'hreflang' => 'nl',
+             'href' => $this->serverUrl('/nl' . $_SERVER['REQUEST_URI']),
+         ]);
+     }
     ?>
 
     <!-- Preload fonts-->

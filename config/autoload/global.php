@@ -16,12 +16,21 @@ declare(strict_types=1);
 
 use Application\Extensions\Doctrine\Rand;
 use Application\Extensions\Doctrine\Year;
+use Application\Router\LanguageAwareTreeRouteStack;
 use Jfcherng\Diff\Differ;
 use Jfcherng\Diff\Renderer\RendererConstant;
 use Laminas\Session\Storage\SessionArrayStorage;
 use Laminas\Session\Validator\HttpUserAgent;
 
 return [
+    /**
+     * Change the default route class (`TreeRouteStack`) with our custom implementation that can infer the locale from
+     * the URL.
+     */
+    'router' => [
+        'router_class' => LanguageAwareTreeRouteStack::class,
+    ],
+
     /*
      * Bcrypt cost.
      *
