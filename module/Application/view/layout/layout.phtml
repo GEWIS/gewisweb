@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Application\Model\Enums\Languages;
 use Application\View\HelperTrait;
 use Laminas\View\Renderer\PhpRenderer;
 
@@ -20,41 +21,37 @@ use Laminas\View\Renderer\PhpRenderer;
 
     <!-- Display alternate language links-->
     <?php
-     if (isset($_SERVER['REQUEST_URI'])) {
-         $strippedPath = ltrim(
-             substr(
-                 $_SERVER['REQUEST_URI'],
-                 strlen($this->basePath()),
-             ),
-             '/',
-         );
+    if (isset($_SERVER['REQUEST_URI'])) {
+        $strippedPath = ltrim(
+            substr(
+                $_SERVER['REQUEST_URI'],
+                strlen($this->basePath()),
+            ),
+            '/',
+        );
 
-         // Remove the language from the URL, keep the leading `/`.
-         if (str_starts_with($strippedPath, 'en/')) {
-             $strippedPath = substr($strippedPath, strlen('en'));
-         } elseif (str_starts_with($strippedPath, 'nl/')) {
-             $strippedPath = substr($strippedPath, strlen('nl'));
-         } elseif (
-             'en' === $strippedPath
-             || 'nl' === $strippedPath
-         ) {
-             $strippedPath = '';
-         }
+        // Remove the language from the URL, keep the leading `/`.
+        if (str_starts_with($strippedPath, 'en/')) {
+            $strippedPath = substr($strippedPath, strlen('en'));
+        } elseif (str_starts_with($strippedPath, 'nl/')) {
+            $strippedPath = substr($strippedPath, strlen('nl'));
+        } elseif (
+            'en' === $strippedPath
+            || 'nl' === $strippedPath
+        ) {
+            $strippedPath = '';
+        }
 
-         // If we are at the "root", remove the slash.
-         if ('/' === $strippedPath) {
-             $strippedPath = '';
-         }
+        // If we are at the "root", remove the slash.
+        if ('/' === $strippedPath) {
+            $strippedPath = '';
+        }
 
-         $this->headLink([
-             'rel' => 'alternate', 'type' => 'text/html', 'hreflang' => 'en',
-             'href' => $this->serverUrl($this->basePath('en' . $strippedPath)),
-         ]);
-         $this->headLink([
-             'rel' => 'alternate', 'type' => 'text/html', 'hreflang' => 'nl',
-             'href' => $this->serverUrl($this->basePath('nl' . $strippedPath)),
-         ]);
-     }
+        $this->hrefLang()->setHrefLang(Languages::EN, $this->serverUrl($this->basePath('en' . $strippedPath)))
+            ->setHrefLang(Languages::NL, $this->serverUrl($this->basePath('nl' . $strippedPath)));
+    }
+
+    echo $this->hrefLang();
     ?>
 
     <!-- Preload fonts-->

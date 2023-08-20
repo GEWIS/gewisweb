@@ -78,16 +78,31 @@ class PageAdminController extends AbstractActionController
         }
 
         $pageId = (int) $this->params()->fromRoute('page_id');
-        /** @var Request $request */
-        $request = $this->getRequest();
+        $page = $this->pageService->getPageById($pageId);
 
-        if ($request->isPost()) {
-            if ($this->pageService->updatePage($pageId, $request->getPost())) {
-                return $this->redirect()->toUrl($this->url()->fromRoute('admin_page'));
-            }
+        if (null === $page) {
+            return $this->notFoundAction();
         }
 
-        $form = $this->pageService->getPageForm($pageId);
+        /** @var Request $request */
+        $request = $this->getRequest();
+        $form = $this->pageService->getPageForm();
+        $form->setData($page->toArray());
+
+        if ($request->isPost()) {
+            $form->setData($request->getPost()->toArray());
+            $form->setCurrentValues(
+                $page->getCategory(),
+                $page->getSubCategory(),
+                $page->getName(),
+            );
+
+            if ($form->isValid()) {
+                if ($this->pageService->updatePage($page, $form->getData())) {
+                    return $this->redirect()->toUrl($this->url()->fromRoute('admin_page'));
+                }
+            }
+        }
 
         return new ViewModel(
             [

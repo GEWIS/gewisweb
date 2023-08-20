@@ -65,12 +65,23 @@ $this->headTitle($this->translate('Register'));
                             <?= $this->form()->closeTag($form); ?>
                         </div>
                         <div class="panel-footer">
-                            <p>You can only register to create an account if you already are a member of the association.</p>
+                            <p>
+                                <?= $this->translate('You can only register an account if you are a member of the association.') ?>
+                            </p>
                             <p>
                                 <?= sprintf(
-                                    $this->translate("To read more about the benefits of becoming a member and how to become a member, go to this %sinformation page%s."),
-                                    "<a href='" . $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'lidworden']) . "'>",
-                                    '</a>') ?>
+                                    $this->translate('To read more about the benefits of becoming a member and how to become a member, go to this %sinformation page%s.'),
+                                    '<a href="' . $this->url(
+                                        'home/page',
+                                        [
+                                            'category' => 'vereniging',
+                                            'categoryEn' => 'association',
+                                            'sub_category' => 'lidworden',
+                                            'sub_categoryEn' => 'becomemember',
+                                        ],
+                                    ) . '">',
+                                    '</a>',
+                                ) ?>
                             </p>
                         </div>
                     </div>

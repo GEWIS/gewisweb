@@ -8,6 +8,7 @@ use Application\Model\LocalisedText as LocalisedTextModel;
 use Application\View\Helper\Acl;
 use Application\View\Helper\Breadcrumbs;
 use Application\View\Helper\Diff;
+use Application\View\Helper\HrefLang;
 use Application\View\Helper\ScriptUrl;
 use Company\Model\CompanyFeaturedPackage as CompanyFeaturedPackageModel;
 use Company\Model\JobCategory as JobCategoryModel;
@@ -38,6 +39,7 @@ use User\Model\CompanyUser as CompanyUserModel;
  * @method string localisedTextElement(ElementInterface $element)
  * @method string localiseText(LocalisedTextModel $localisedText)
  * @method bool moduleIsActive(array $conditions)
+ * @method HrefLang hrefLang()
  * @method ScriptUrl scriptUrl()
  * @method string truncate(string $text, int $length = 100, array $options = [])
  */

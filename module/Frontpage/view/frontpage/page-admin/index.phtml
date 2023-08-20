@@ -44,7 +44,7 @@ $this->breadcrumbs()
                                     <a
                                         href="<?= $context->url('admin_page/edit',
                                             ['page_id' => $data['page']->getId()]) ?>">
-                                        <?= $category ?> (<?= $data['page']->getEnglishTitle() ?>)
+                                        <?= $category ?> (<?= $context->escapeHtml($context->localiseText($data['page']->getTitle())) ?>)
                                     </a>
                                 <?php else: ?>
                                     <?= $category ?>

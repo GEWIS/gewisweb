@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Model;
 
+use Application\Model\Enums\Languages;
 use Application\Model\Traits\IdentifiableTrait;
 use Doctrine\ORM\Mapping\Column;
 use InvalidArgumentException;
@@ -91,10 +92,12 @@ abstract class LocalisedText
      *
      * @throws InvalidArgumentException
      */
-    public function getExactText(?string $locale = null): ?string
+    public function getExactText(?Languages $locale = null): ?string
     {
         if (null === $locale) {
             $locale = $this->getPreferredLocale();
+        } else {
+            $locale = $locale->value;
         }
 
         return match ($locale) {

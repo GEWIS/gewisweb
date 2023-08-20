@@ -7,7 +7,8 @@ namespace Frontpage\Model;
 use Application\Model\Traits\IdentifiableTrait;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\UniqueConstraint;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\OneToOne;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 use User\Model\Enums\UserRoles;
 
@@ -15,10 +16,6 @@ use User\Model\Enums\UserRoles;
  * Page.
  */
 #[Entity]
-#[UniqueConstraint(
-    name: 'page_idx',
-    columns: ['category', 'subCategory', 'name'],
-)]
 class Page implements ResourceInterface
 {
     use IdentifiableTrait;
@@ -26,50 +23,77 @@ class Page implements ResourceInterface
     /**
      * Category of the page.
      */
-    #[Column(type: 'string')]
-    protected string $category;
+    #[OneToOne(
+        targetEntity: FrontpageLocalisedText::class,
+        cascade: ['persist', 'remove'],
+        orphanRemoval: true,
+    )]
+    #[JoinColumn(
+        name: 'category_id',
+        referencedColumnName: 'id',
+        nullable: false,
+    )]
+    protected FrontpageLocalisedText $category;
 
     /**
      * Sub-category of the page.
      */
-    #[Column(
-        type: 'string',
-        nullable: true,
+    #[OneToOne(
+        targetEntity: FrontpageLocalisedText::class,
+        cascade: ['persist', 'remove'],
+        orphanRemoval: true,
     )]
-    protected ?string $subCategory = null;
+    #[JoinColumn(
+        name: 'subCategory_id',
+        referencedColumnName: 'id',
+        nullable: false,
+    )]
+    protected FrontpageLocalisedText $subCategory;
 
     /**
      * Name of the page.
      */
-    #[Column(
-        type: 'string',
-        nullable: true,
+    #[OneToOne(
+        targetEntity: FrontpageLocalisedText::class,
+        cascade: ['persist', 'remove'],
+        orphanRemoval: true,
     )]
-    protected ?string $name = null;
+    #[JoinColumn(
+        name: 'name_id',
+        referencedColumnName: 'id',
+        nullable: false,
+    )]
+    protected FrontpageLocalisedText $name;
 
     /**
-     * Dutch title of the page.
+     * Title of the page.
      */
-    #[Column(type: 'string')]
-    protected string $dutchTitle;
+    #[OneToOne(
+        targetEntity: FrontpageLocalisedText::class,
+        cascade: ['persist', 'remove'],
+        orphanRemoval: true,
+    )]
+    #[JoinColumn(
+        name: 'title_id',
+        referencedColumnName: 'id',
+        nullable: false,
+    )]
+    protected FrontpageLocalisedText $title;
 
     /**
-     * The english HTML content of the page.
+     * The HTML content of the page.
      */
-    #[Column(type: 'text')]
-    protected string $dutchContent;
-
-    /**
-     * English title of the page.
-     */
-    #[Column(type: 'string')]
-    protected string $englishTitle;
-
-    /**
-     * The english HTML content of the page.
-     */
-    #[Column(type: 'text')]
-    protected string $englishContent;
+    #[OneToOne(
+        targetEntity: FrontpageLocalisedText::class,
+        cascade: ['persist', 'remove'],
+        orphanRemoval: true,
+    )]
+    #[JoinColumn(
+        name: 'content_id',
+        referencedColumnName: 'id',
+        nullable: false,
+    )]
+    protected FrontpageLocalisedText $content;
 
     /**
      * The minimal role required to view a page.
@@ -80,39 +104,54 @@ class Page implements ResourceInterface
     )]
     protected UserRoles $requiredRole;
 
-    public function getDutchTitle(): string
-    {
-        return $this->dutchTitle;
-    }
-
-    public function getEnglishTitle(): string
-    {
-        return $this->englishTitle;
-    }
-
-    public function getCategory(): string
+    public function getCategory(): FrontpageLocalisedText
     {
         return $this->category;
     }
 
-    public function getSubCategory(): ?string
+    public function setCategory(FrontpageLocalisedText $category): void
+    {
+        $this->category = $category;
+    }
+
+    public function getSubCategory(): FrontpageLocalisedText
     {
         return $this->subCategory;
     }
 
-    public function getName(): ?string
+    public function setSubCategory(FrontpageLocalisedText $subCategory): void
+    {
+        $this->subCategory = $subCategory;
+    }
+
+    public function getName(): FrontpageLocalisedText
     {
         return $this->name;
     }
 
-    public function getEnglishContent(): string
+    public function setName(FrontpageLocalisedText $name): void
     {
-        return $this->englishContent;
+        $this->name = $name;
     }
 
-    public function getDutchContent(): string
+    public function getTitle(): FrontpageLocalisedText
     {
-        return $this->dutchContent;
+        return $this->title;
+    }
+
+    public function setTitle(FrontpageLocalisedText $title): void
+    {
+        $this->title = $title;
+    }
+
+    public function getContent(): FrontpageLocalisedText
+    {
+        return $this->content;
+    }
+
+    public function setContent(FrontpageLocalisedText $content): void
+    {
+        $this->content = $content;
     }
 
     public function getRequiredRole(): UserRoles
@@ -120,44 +159,41 @@ class Page implements ResourceInterface
         return $this->requiredRole;
     }
 
-    public function setDutchTitle(string $dutchTitle): void
-    {
-        $this->dutchTitle = $dutchTitle;
-    }
-
-    public function setEnglishTitle(string $englishTitle): void
-    {
-        $this->englishTitle = $englishTitle;
-    }
-
-    public function setCategory(string $category): void
-    {
-        $this->category = $category;
-    }
-
-    public function setSubCategory(?string $subCategory): void
-    {
-        $this->subCategory = $subCategory;
-    }
-
-    public function setName(?string $name): void
-    {
-        $this->name = $name;
-    }
-
-    public function setEnglishContent(string $englishContent): void
-    {
-        $this->englishContent = $englishContent;
-    }
-
-    public function setDutchContent(string $dutchContent): void
-    {
-        $this->dutchContent = $dutchContent;
-    }
-
     public function setRequiredRole(UserRoles $requiredRole): void
     {
         $this->requiredRole = $requiredRole;
+    }
+
+    /**
+     * @return array{
+     *     categoryEn: ?string,
+     *     category: ?string,
+     *     subCategoryEn: ?string,
+     *     subCategory: ?string,
+     *     nameEn: ?string,
+     *     name: ?string,
+     *     titleEn: ?string,
+     *     title: ?string,
+     *     contentEn: ?string,
+     *     content: ?string,
+     *     requiredRole: string,
+     * }
+     */
+    public function toArray(): array
+    {
+        return [
+            'categoryEn' => $this->getCategory()->getValueEN(),
+            'category' => $this->getCategory()->getValueNL(),
+            'subCategoryEn' => $this->getSubCategory()->getValueEN(),
+            'subCategory' => $this->getSubCategory()->getValueNL(),
+            'nameEn' => $this->getName()->getValueEN(),
+            'name' => $this->getName()->getValueNL(),
+            'titleEn' => $this->getTitle()->getValueEN(),
+            'title' => $this->getTitle()->getValueNL(),
+            'contentEn' => $this->getContent()->getValueEN(),
+            'content' => $this->getContent()->getValueNL(),
+            'requiredRole' => $this->getRequiredRole()->value,
+        ];
     }
 
     /**

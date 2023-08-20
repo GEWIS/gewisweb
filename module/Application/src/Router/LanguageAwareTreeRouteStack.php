@@ -8,10 +8,12 @@ use Application\Model\Enums\Languages;
 use Laminas\Http\Header\Accept\FieldValuePart\LanguageFieldValuePart;
 use Laminas\Http\Header\AcceptLanguage;
 use Laminas\Mvc\I18n\Router\TranslatorAwareTreeRouteStack;
+use Laminas\Router\Exception\InvalidArgumentException;
 use Laminas\Router\RouteMatch;
 use Laminas\Session\Container as SessionContainer;
 use Laminas\Stdlib\RequestInterface;
 
+use function array_key_exists;
 use function count;
 use function explode;
 use function in_array;
@@ -62,6 +64,52 @@ class LanguageAwareTreeRouteStack extends TranslatorAwareTreeRouteStack
             // this is not a problem as we can already assemble the remaining parts of the route without having to
             // modify the base URL.
             $this->setBaseUrl($oldBaseUrl . '/' . $language);
+
+            // To make sure that the routes for custom pages use the variant of the current language we need to modify
+            // the `params` to fix the assembled route.
+            if (
+                array_key_exists('name', $options)
+                && 'home/page' === $options['name']
+            ) {
+                // `isset` for `name` checking is handled in the `TreeRouteStack`, however, we already want access here,
+                // so we just make sure that it exists, we do nothing if it does not exist, as that error will be thrown
+                // further down. This does not apply to the params, for which we WILL throw.
+                //
+                // There is no contract to enforce the following behaviour, but when linking to custom pages one should
+                // use `category(En)`, `sub_category(En)`, and `name(En)`. This follows the convention of the forms and
+                // should ensure that everything is as it should be.
+                if (Languages::EN->value === $language) {
+                    // We switch the Dutch values with English values. By using `array_key_exists` instead of `isset` we
+                    // can work with the optional `sub_category` and `name` values.
+                    if (!isset($params['category'])) {
+                        throw new InvalidArgumentException('Missing "category" param for custom page route');
+                    }
+
+                    if (array_key_exists('categoryEn', $params)) {
+                        // The alternate `hreflang`s have to be exempt from this behaviour, hence without `categoryEn`
+                        // we just pretend there is only one possible route.
+                        $params['category'] = $params['categoryEn'];
+                    }
+
+                    if (
+                        array_key_exists('sub_category', $params)
+                        && array_key_exists('sub_categoryEn', $params)
+                    ) {
+                        $params['sub_category'] = $params['sub_categoryEn'];
+                    }
+
+                    if (
+                        array_key_exists('name', $params)
+                        && array_key_exists('nameEn', $params)
+                    ) {
+                        $params['name'] = $params['nameEn'];
+                    }
+                }
+
+                // Always unset the English options to prevent messing with the upstream assemblers. If the indices do
+                // not exist no error is thrown, so we do not have to check it here.
+                unset($params['categoryEn'], $params['sub_categoryEn'], $params['nameEn']);
+            }
         }
 
         // Assemble the remaining parts of the route (everything that comes after the language delimiter).
@@ -193,7 +241,7 @@ class LanguageAwareTreeRouteStack extends TranslatorAwareTreeRouteStack
 
         // We have not stored a (preferred) language for this session, it is likely this is the first request. Try to
         // determine the preferred language using the `Accept-Language` request header if it is present.
-        $lang = $this->determinePreferredLanguageFromRequest($request);
+        $lang = $this->determinePreferredLanguageFromRequest($request)->value;
 
         // Store the (preferred) language in the session.
         $session->lang = $lang;
@@ -205,7 +253,7 @@ class LanguageAwareTreeRouteStack extends TranslatorAwareTreeRouteStack
      * Determine the preferred language based on the `Accept-Language` header. If no language is the header is supported
      * we always return English as the default language.
      */
-    private function determinePreferredLanguageFromRequest(RequestInterface $request): string
+    private function determinePreferredLanguageFromRequest(RequestInterface $request): Languages
     {
         $header = $request->getHeader('Accept-Language');
 
@@ -218,15 +266,15 @@ class LanguageAwareTreeRouteStack extends TranslatorAwareTreeRouteStack
                 $langString = $lang->getLanguage();
 
                 if (str_starts_with($langString, 'nl')) {
-                    return 'nl';
+                    return Languages::NL;
                 }
 
                 if (str_starts_with($langString, 'en')) {
-                    return 'en';
+                    return Languages::EN;
                 }
             }
         }
 
-        return 'en';
+        return Languages::EN;
     }
 }

@@ -10,6 +10,7 @@ use Application\View\Helper\BootstrapElementError;
 use Application\View\Helper\Breadcrumbs;
 use Application\View\Helper\CompanyIdentity;
 use Application\View\Helper\FeaturedCompanyPackage;
+use Application\View\Helper\HrefLang;
 use Application\View\Helper\LocalisedTextElement;
 use Application\View\Helper\LocaliseText;
 use Doctrine\ORM\Mapping\Driver\AttributeDriver;
@@ -127,6 +128,9 @@ return [
                 return new CompanyIdentity(
                     $container->get('user_auth_companyUser_service'),
                 );
+            },
+            'hrefLang' => static function () {
+                return new HrefLang();
             },
             'localisedTextElement' => static function () {
                 return new LocalisedTextElement();

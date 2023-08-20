@@ -27,7 +27,15 @@ use Laminas\View\Renderer\PhpRenderer;
             </label>
         </div>
         <div class="widget-dismiss">
-            <a href="<?= $this->url('home/page', ['category' => 'vereniging', 'sub_category' => 'statuten']) ?>">
+            <a href="<?= $this->url(
+                'home/page',
+                [
+                    'category' => 'vereniging',
+                    'categoryEn' => 'association',
+                    'sub_category' => 'reglementen',
+                    'sub_categoryEn' => 'regulations',
+                ],
+            ) ?>">
                 <?= $this->translate('Privacy Policy') ?>
             </a>
             <button class="btn btn-primary"><?= $this->translate("Continue") ?></button>

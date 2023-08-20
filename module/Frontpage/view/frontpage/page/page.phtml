@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Application\Model\Enums\Languages;
 use Application\View\HelperTrait;
 use Frontpage\Model\Page as PageModel;
 use Laminas\View\Renderer\PhpRenderer;
@@ -12,39 +13,82 @@ use Laminas\View\Renderer\PhpRenderer;
  * @var array<array-key, PageModel|null> $parents
  */
 
-$lang = $this->plugin('translate')->getTranslator()->getLocale();
+$this->headTitle($this->localiseText($page->getTitle()));
+
+$englishLink = $this->serverUrl(
+    $this->url(
+        'home/page',
+        [
+            'category' => $page->getCategory()->getValueEN(),
+            'sub_category' => $page->getSubCategory()->getValueEN(),
+            'name' => $page->getName()->getValueEN(),
+            'language' => Languages::EN->value,
+        ],
+    ),
+);
+$dutchLink = $this->serverUrl(
+    $this->url(
+        'home/page',
+        [
+            'category' => $page->getCategory()->getValueNL(),
+            'sub_category' => $page->getSubCategory()->getValueNL(),
+            'name' => $page->getName()->getValueNL(),
+            'language' => Languages::NL->value,
+        ],
+    ),
+);
+
+$this->hrefLang()->setHrefLang(
+    Languages::EN,
+    $englishLink,
+);
+$this->hrefLang()->setHrefLang(
+    Languages::NL,
+    $dutchLink,
+);
+
+$this->placeholder('pageLink')->set($dutchLink);
+$this->placeholder('pageLinkEn')->set($englishLink);
 ?>
 <section class="section section-breadcrumb">
     <div class="container">
         <ol class="breadcrumb">
-            <li class="active"><a href="<?= $this->url('home') ?>"><?= $this->translate('Home') ?></a></li>
+            <li class="active">
+                <a href="<?= $this->url('home') ?>">
+                    <?= $this->translate('Home') ?>
+                </a>
+            </li>
             <?php foreach ($parents as $parent): ?>
                 <?php if (null === $parent): ?>
                     <li>...</li>
                 <?php else: ?>
-                    <li><a href="<?= $this->url('home/page', [
-                            'category' => $parent->getCategory(),
-                            'sub_category' => $parent->getSubCategory(),
-                            'name' => $parent->getName()
-                        ]) ?>"><?= $this->escapeHtml(($lang === 'en') ? $parent->getEnglishTitle() : $parent->getDutchTitle()) ?></a>
+                    <li>
+                        <a href="<?= $this->url('home/page', [
+                            'category' => $parent->getCategory()->getValueNL(),
+                            'categoryEn' => $parent->getCategory()->getValueEN(),
+                            'sub_category' => $parent->getSubCategory()->getValueNL(),
+                            'sub_categoryEn' => $parent->getSubCategory()->getValueEN(),
+                            'name' => $parent->getName()->getValueNL(),
+                            'nameEn' => $parent->getName()->getValueEN(),
+                        ]) ?>">
+                            <?= $this->escapeHtml($this->localiseText($parent->getTitle())) ?>
+                        </a>
                     </li>
                 <?php endif; ?>
             <?php endforeach; ?>
             <li class="active">
-                <?= $this->escapeHtml(($lang === 'en') ? $page->getEnglishTitle() : $page->getDutchTitle()) ?></li>
+                <?= $this->escapeHtml($this->localiseText($page->getTitle())) ?>
+            </li>
         </ol>
     </div>
 </section>
 <section class="section">
     <div class="container">
-        <?php if ($lang === 'en'): ?>
-            <h1><?= $this->escapeHtml($page->getEnglishTitle()) ?></h1>
-            <?php $this->headTitle($page->getEnglishTitle()) ?>
-        <?php else: ?>
-            <h1><?= $this->escapeHtml($page->getDutchTitle()) ?></h1>
-            <?php $this->headTitle($page->getDutchTitle()) ?>
-        <?php endif; ?>
-
-        <?= $lang === 'en' ? $page->getEnglishContent() : $page->getDutchContent() ?>
+        <div class="row">
+            <div class="col-md-12">
+                <h1><?= $this->escapeHtml($this->localiseText($page->getTitle())) ?></h1>
+            </div>
+        </div>
+        <?= $this->localiseText($page->getContent()) ?>
     </div>
 </section>
