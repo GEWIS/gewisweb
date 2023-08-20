@@ -147,6 +147,9 @@ class LanguageAwareTreeRouteStack extends TranslatorAwareTreeRouteStack
                 // Pretend that the language is actually not part of any matchable routes by adding it to the base URL.
                 $this->setBaseUrl($oldBaseUrl . '/' . $language);
             }
+
+            $session = new SessionContainer('lang');
+            $session->lang = $language;
         } else {
             // The language was not provided through the URL, so we need to determine it based on some other factors.
             $language = $this->getLanguage($request);
