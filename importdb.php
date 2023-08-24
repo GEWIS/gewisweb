@@ -49,19 +49,26 @@ try {
     $myconn->query('SET foreign_key_checks = 0');
     $myconn->query('START TRANSACTION');
 
+    $pks = $myconn->query("SELECT TABLE_NAME, COLUMN_NAME
+                    FROM INFORMATION_SCHEMA.key_column_usage 
+                    WHERE table_schema = '" . $params['dbname'] . "' AND CONSTRAINT_NAME = 'PRIMARY'")
+                    ->fetchAll(PDO::FETCH_COLUMN|PDO::FETCH_GROUP);
+
     foreach ($tables as $table) {
         $query = "SELECT * FROM $table";
         $stmt = $pgconn->query($query);
         echo "Table $table\n";
 
-        $truncate = "TRUNCATE TABLE $table";
-        $myconn->query($truncate);
-
+        $insertcount = 0;
+        // Insert new data
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $fields = '(' . implode(', ', array_keys($row)) . ')';
             $values = '(' . implode(', ', array_map(function ($a) {
                     return ':' . $a;
                 }, array_keys($row))) . ')';
+            $updates = implode(', ', array_map(function ($a) {
+                return $a . '=VALUES(' . $a . ')';
+            }, array_keys($row)));
 
             $data = $row;
 
@@ -75,13 +82,14 @@ try {
                 }
             }
 
-            $sql = "INSERT IGNORE INTO $table $fields VALUES $values";
+            $sql = "INSERT IGNORE INTO $table $fields VALUES $values ON DUPLICATE KEY UPDATE $updates";
             $stmtt = $myconn->prepare($sql);
 
             try {
                 $stmtt->execute($data);
+                $insertcount += $stmtt->rowCount();
             } catch (Exception $e) {
-                echo "ERROR: Failed synchronization of table " . $table . "\n";
+                echo "ERROR: Failed to import data of table " . $table . "\n";
                 echo $e->getMessage();
                 echo "\n";
                 echo $e->getTraceAsString();
@@ -90,6 +98,25 @@ try {
 
             echo '.';
         }
+        echo PHP_EOL . "Inserted or updated " . $insertcount . " rows in $table (updates count double)" . PHP_EOL;
+
+        // Removing old data
+        $id_sql = "SELECT " . $pks[$table][0] . " FROM $table";
+        $ids = $pgconn->query($id_sql)->fetchAll(PDO::FETCH_COLUMN);
+        if (count($ids) === 0) $ids = [null];
+        $del_sql = "DELETE FROM $table WHERE " . $pks[$table][0] . " NOT IN (" . str_repeat('?,', count($ids) - 1) . '?' . ")";
+        $del_stmt = $myconn->prepare($del_sql);
+        try {
+            $del_stmt->execute($ids);
+            echo "Deleted " . $del_stmt->rowCount() . " rows from $table" . PHP_EOL;
+        } catch (Exception $e) {
+            echo "ERROR: Failed to remove data from table " . $table . PHP_EOL;
+            echo $e->getMessage();
+            echo "\n";
+            echo $e->getTraceAsString();
+            echo "\n\n";
+        }
+        
         echo "\n\n";
     }
 
