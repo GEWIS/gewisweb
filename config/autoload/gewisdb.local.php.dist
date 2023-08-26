@@ -8,4 +8,6 @@ return [
     'user'     => getenv('DOCKER_DB2_USERNAME'),
     'password' => getenv('DOCKER_DB2_PASSWORD'),
     'dbname'   => getenv('DOCKER_DB2_DATABASE'),
+    'charset' => 'utf8',
+    'collate' => 'utf8_unicode_ci',
 ];
