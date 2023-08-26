@@ -161,7 +161,7 @@ $this->scriptUrl()->requireUrl('member/search')
         if ($album->getAlbumCount() > 0):
         ?>
             <?php $lastWeek = (new DateTime('now'))->sub(new DateInterval('P7D')); ?>
-            <div class="row">
+            <div class="row row-height-equal">
                 <?php foreach ($album->getChildren() as $item): ?>
                     <?php
                     if (
