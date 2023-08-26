@@ -51,7 +51,7 @@ $this->headTitle($this->translate('Photos'));
     </section>
     <section class="section">
         <div class="container">
-            <div class="row">
+            <div class="row row-height-equal">
                 <?php if (0 !== count($albums)): ?>
                     <?php $lastWeek = (new DateTime('now'))->sub(new DateInterval('P7D')); ?>
                     <?php foreach ($albums as $album): ?>

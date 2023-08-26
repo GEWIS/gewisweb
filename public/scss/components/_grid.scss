@@ -56,3 +56,8 @@
 .container-admin {
     @include container-fixed;
 }
+
+.row.row-height-equal {
+    display: flex;
+    flex-wrap: wrap;
+}
