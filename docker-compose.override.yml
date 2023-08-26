@@ -36,6 +36,8 @@ services:
             context: .
         depends_on:
             - mysql
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
     postfix:
         image: mailhog/mailhog
         env_file:
