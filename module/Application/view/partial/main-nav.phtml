@@ -181,13 +181,14 @@ endif; ?>
             </button>
         </div>
         <div class="visible-xs-block clearfix"></div>
-        <div class="collapse navbar-collapse">
+        <div class="collapse navbar-collapse" id="navbar-gewis-collapse">
             <ul class="nav navbar-nav navbar-left">
-                <li class="dropdown dropdown-hover <?= $this->moduleIsActive(['frontpage', 'page']
-                ) ? 'active default' : '' ?>">
+                <?php $frontpageActive = $this->moduleIsActive(['frontpage', 'page']); ?>
+                <li class="dropdown dropdown-hover <?= $frontpageActive ? 'active default open' : '' ?>">
                     <a href="<?= $this->url('home/page', ['category' => 'vereniging']) ?>" role="button"
                        class="dropdown-toggle visible-sm visible-xs" data-toggle="dropdown" aria-haspopup="true"
-                       aria-expanded="false">
+                       aria-expanded="<?= $frontpageActive ? 'true' : 'false' ?>"
+                    >
                         <?= $this->translate('Association') ?>
                         <span class="caret"></span>
                     </a>
@@ -320,9 +321,12 @@ endif; ?>
                         </li>
                     </ul>
                 </li>
-                <li class="dropdown dropdown-hover <?= $this->moduleIsActive(['company']) ? 'active default' : '' ?>">
-                    <a href="<?= $this->url('company') ?>" role="button" aria-haspopup="true" aria-expanded="false"
-                       class="dropdown-toggle visible-sm visible-xs" data-toggle="dropdown">
+                <?php $companyActive = $this->moduleIsActive(['company']); ?>
+                <li class="dropdown dropdown-hover <?= $companyActive ? 'active default open' : '' ?>">
+                    <a href="<?= $this->url('company') ?>" role="button" aria-haspopup="true" data-toggle="dropdown"
+                       aria-expanded="<?= $companyActive ? 'true' : 'false' ?>"
+                       class="dropdown-toggle visible-sm visible-xs"
+                    >
                         <?= $this->translate('Career') ?>
                         <span class="caret"></span>
                     </a>
@@ -368,9 +372,12 @@ endif; ?>
                         <?= $this->translate('Education') ?>
                     </a>
                 </li>
-                <li class="dropdown dropdown-hover <?= $this->moduleIsActive(['activity']) ? 'active default' : '' ?>">
-                    <a href="<?= $this->url('activity') ?>" role="button" aria-haspopup="true" aria-expanded="false"
-                       class="dropdown-toggle visible-sm visible-xs" data-toggle="dropdown">
+                <?php $activityActive = $this->moduleIsActive(['activity']); ?>
+                <li class="dropdown dropdown-hover <?= $activityActive ? 'active default open' : '' ?>">
+                    <a href="<?= $this->url('activity') ?>" role="button" aria-haspopup="true" data-toggle="dropdown"
+                       aria-expanded="<?= $companyActive ? 'true' : 'false' ?>"
+                       class="dropdown-toggle visible-sm visible-xs"
+                    >
                         <?= $this->translate('Activities') ?>
                         <span class="caret"></span>
                     </a>

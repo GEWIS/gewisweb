@@ -168,7 +168,6 @@ a.navbar-brand  {
         &,
         &:hover,
         &:focus {
-            background-color: #fff;
             color: $gray;
         }
 
@@ -342,17 +341,6 @@ a.navbar-brand  {
 }
 
 .nav {
-    /* Disable hover in hamburger menu */
-
-    li.dropdown.dropdown-hover.default > .dropdown-menu {
-        visibility: visible;
-        opacity: 1;
-        position: static;
-        float: none;
-        margin-top: 0;
-        display: block;
-    }
-
     @media (min-width: $grid-float-breakpoint) {
         li.dropdown.dropdown-hover.default:not(:hover) > .dropdown-menu {
             visibility: hidden;
