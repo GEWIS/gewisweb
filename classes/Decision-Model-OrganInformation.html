@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/base.css">
             <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@100;200;300;400;600;700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="css/template.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css" integrity="sha256-ybRkN9dBjhcS2qrW1z+hfCxq+1aBdwyQM5wlQoQVt/0=" crossorigin="anonymous" />
@@ -19,6 +19,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-highlight/prism-line-highlight.css">
                 <script src="https://cdn.jsdelivr.net/npm/fuse.js@3.4.6"></script>
         <script src="https://cdn.jsdelivr.net/npm/css-vars-ponyfill@2"></script>
+        <script src="js/template.js"></script>
         <script src="js/search.js"></script>
         <script defer src="js/searchIndex.js"></script>
     </head>
@@ -52,7 +53,7 @@
 <label class="phpdocumentor-sidebar__menu-icon" for="sidebar-button">
     Menu
 </label>
-<aside class="phpdocumentor-column -four phpdocumentor-sidebar">
+<aside class="phpdocumentor-column -three phpdocumentor-sidebar">
                     <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
@@ -381,8 +382,9 @@
     </section>
 </aside>
 
-            <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <ul class="phpdocumentor-breadcrumbs">
+            <div class="phpdocumentor-column -nine phpdocumentor-content">
+                                <section>
+                                        <ul class="phpdocumentor-breadcrumbs">
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/decision.html">Decision</a></li>
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/decision-model.html">Model</a></li>
     </ul>
@@ -405,6 +407,11 @@
                             <a href="classes/Application-Model-Traits-IdentifiableTrait.html"><abbr title="\Application\Model\Traits\IdentifiableTrait">IdentifiableTrait</abbr></a>                    </span>
     </h2>
 
+<div class="phpdocumentor-label-line">
+
+
+</div>
+
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/OrganInformation.php"><a href="files/module-decision-src-model-organinformation.html"><abbr title="module/Decision/src/Model/OrganInformation.php">OrganInformation.php</abbr></a></abbr>
     :
@@ -419,16 +426,27 @@
 
 
 
-
-
-
 <h3 id="toc">
     Table of Contents
-    <a href="#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Decision-Model-OrganInformation.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+
 </h3>
 
+
+
+
+
+
+
+
+
+<h4 id="toc-properties">
+    Properties
+    <a href="classes/Decision-Model-OrganInformation.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
+
+</h4>
 <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Decision-Model-OrganInformation.html#property_approver">$approver</a>
     <span>
                         &nbsp;: <a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>|null            </span>
@@ -476,7 +494,6 @@ nullable.</dd>
     <span>
                         &nbsp;: <a href="classes/Decision-Model-Organ.html"><abbr title="\Decision\Model\Organ">Organ</abbr></a>            </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Decision-Model-OrganInformation.html#property_shortDutchDescription">$shortDutchDescription</a>
@@ -506,47 +523,49 @@ nullable.</dd>
 </dt>
 <dd>The website of the organ if available.</dd>
 
-                <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    </dl>
+
+<h4 id="toc-methods">
+    Methods
+    <a href="classes/Decision-Model-OrganInformation.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
+
+</h4>
+<dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-OrganInformation.html#method___clone">__clone()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-OrganInformation.html#method_getApprover">getApprover()</a>
     <span>
                                 &nbsp;: <a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>|null    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-OrganInformation.html#method_getCoverPath">getCoverPath()</a>
     <span>
                                 &nbsp;: string|null    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-OrganInformation.html#method_getDutchDescription">getDutchDescription()</a>
     <span>
                                 &nbsp;: string|null    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-OrganInformation.html#method_getEmail">getEmail()</a>
     <span>
                                 &nbsp;: string|null    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-OrganInformation.html#method_getEnglishDescription">getEnglishDescription()</a>
     <span>
                                 &nbsp;: string|null    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_getId">getId()</a>
@@ -560,70 +579,60 @@ nullable.</dd>
     <span>
                                 &nbsp;: <a href="classes/Decision-Model-Organ.html"><abbr title="\Decision\Model\Organ">Organ</abbr></a>    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-OrganInformation.html#method_getShortDutchDescription">getShortDutchDescription()</a>
     <span>
                                 &nbsp;: string|null    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-OrganInformation.html#method_getShortEnglishDescription">getShortEnglishDescription()</a>
     <span>
                                 &nbsp;: string|null    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-OrganInformation.html#method_getThumbnailPath">getThumbnailPath()</a>
     <span>
                                 &nbsp;: string|null    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-OrganInformation.html#method_getWebsite">getWebsite()</a>
     <span>
                                 &nbsp;: string|null    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-OrganInformation.html#method_setApprover">setApprover()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-OrganInformation.html#method_setCoverPath">setCoverPath()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-OrganInformation.html#method_setDutchDescription">setDutchDescription()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-OrganInformation.html#method_setEmail">setEmail()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-OrganInformation.html#method_setEnglishDescription">setEnglishDescription()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_setId">setId()</a>
@@ -637,37 +646,33 @@ nullable.</dd>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-OrganInformation.html#method_setShortDutchDescription">setShortDutchDescription()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-OrganInformation.html#method_setShortEnglishDescription">setShortEnglishDescription()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-OrganInformation.html#method_setThumbnailPath">setThumbnailPath()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-OrganInformation.html#method_setWebsite">setWebsite()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
-        </dl>
+    </dl>
+
 
 
 
@@ -678,6 +683,7 @@ nullable.</dd>
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
             <a href="classes/Decision-Model-OrganInformation.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+
         </h3>
                     <article
         class="
@@ -689,6 +695,7 @@ nullable.</dd>
     <h4 class="phpdocumentor-element__name" id="property_approver">
         $approver
         <a href="classes/Decision-Model-OrganInformation.html#property_approver" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -708,8 +715,7 @@ nullable.</dd>
      = <span class="phpdocumentor-signature__default-value">null</span></code>
 
     
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -723,6 +729,7 @@ nullable.</dd>
     <h4 class="phpdocumentor-element__name" id="property_coverPath">
         $coverPath
         <a href="classes/Decision-Model-OrganInformation.html#property_coverPath" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -742,8 +749,7 @@ nullable.</dd>
      = <span class="phpdocumentor-signature__default-value">null</span></code>
 
     
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -757,6 +763,7 @@ nullable.</dd>
     <h4 class="phpdocumentor-element__name" id="property_dutchDescription">
         $dutchDescription
         <a href="classes/Decision-Model-OrganInformation.html#property_dutchDescription" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -776,8 +783,7 @@ nullable.</dd>
      = <span class="phpdocumentor-signature__default-value">null</span></code>
 
     
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -791,6 +797,7 @@ nullable.</dd>
     <h4 class="phpdocumentor-element__name" id="property_email">
         $email
         <a href="classes/Decision-Model-OrganInformation.html#property_email" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -810,8 +817,7 @@ nullable.</dd>
      = <span class="phpdocumentor-signature__default-value">null</span></code>
 
     
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -825,6 +831,7 @@ nullable.</dd>
     <h4 class="phpdocumentor-element__name" id="property_englishDescription">
         $englishDescription
         <a href="classes/Decision-Model-OrganInformation.html#property_englishDescription" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -844,8 +851,7 @@ nullable.</dd>
      = <span class="phpdocumentor-signature__default-value">null</span></code>
 
     
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -859,6 +865,7 @@ nullable.</dd>
     <h4 class="phpdocumentor-element__name" id="property_id">
         $id
         <a href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -879,8 +886,7 @@ nullable.</p>
      = <span class="phpdocumentor-signature__default-value">null</span></code>
 
     
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -894,6 +900,7 @@ nullable.</p>
     <h4 class="phpdocumentor-element__name" id="property_organ">
         $organ
         <a href="classes/Decision-Model-OrganInformation.html#property_organ" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -911,10 +918,8 @@ nullable.</p>
     <span class="phpdocumentor-signature__name">$organ</span>
     </code>
 
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
+    
+    
     
 
 </article>
@@ -928,6 +933,7 @@ nullable.</p>
     <h4 class="phpdocumentor-element__name" id="property_shortDutchDescription">
         $shortDutchDescription
         <a href="classes/Decision-Model-OrganInformation.html#property_shortDutchDescription" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -947,8 +953,7 @@ nullable.</p>
      = <span class="phpdocumentor-signature__default-value">null</span></code>
 
     
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -962,6 +967,7 @@ nullable.</p>
     <h4 class="phpdocumentor-element__name" id="property_shortEnglishDescription">
         $shortEnglishDescription
         <a href="classes/Decision-Model-OrganInformation.html#property_shortEnglishDescription" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -981,8 +987,7 @@ nullable.</p>
      = <span class="phpdocumentor-signature__default-value">null</span></code>
 
     
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -996,6 +1001,7 @@ nullable.</p>
     <h4 class="phpdocumentor-element__name" id="property_thumbnailPath">
         $thumbnailPath
         <a href="classes/Decision-Model-OrganInformation.html#property_thumbnailPath" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1015,8 +1021,7 @@ nullable.</p>
      = <span class="phpdocumentor-signature__default-value">null</span></code>
 
     
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -1030,6 +1035,7 @@ nullable.</p>
     <h4 class="phpdocumentor-element__name" id="property_website">
         $website
         <a href="classes/Decision-Model-OrganInformation.html#property_website" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1049,8 +1055,7 @@ nullable.</p>
      = <span class="phpdocumentor-signature__default-value">null</span></code>
 
     
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -1060,6 +1065,7 @@ nullable.</p>
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
             <a href="classes/Decision-Model-OrganInformation.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+
         </h3>
                     <article
         class="phpdocumentor-element
@@ -1070,6 +1076,7 @@ nullable.</p>
     <h4 class="phpdocumentor-element__name" id="method___clone">
         __clone()
         <a href="classes/Decision-Model-OrganInformation.html#method___clone" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/OrganInformation.php"><a href="files/module-decision-src-model-organinformation.html"><abbr title="module/Decision/src/Model/OrganInformation.php">OrganInformation.php</abbr></a></abbr>
@@ -1083,15 +1090,12 @@ nullable.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">__clone</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">mixed</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1103,6 +1107,7 @@ nullable.</p>
     <h4 class="phpdocumentor-element__name" id="method_getApprover">
         getApprover()
         <a href="classes/Decision-Model-OrganInformation.html#method_getApprover" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/OrganInformation.php"><a href="files/module-decision-src-model-organinformation.html"><abbr title="module/Decision/src/Model/OrganInformation.php">OrganInformation.php</abbr></a></abbr>
@@ -1116,16 +1121,17 @@ nullable.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getApprover</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>|null</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>|null</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>|null</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -1136,6 +1142,7 @@ nullable.</p>
     <h4 class="phpdocumentor-element__name" id="method_getCoverPath">
         getCoverPath()
         <a href="classes/Decision-Model-OrganInformation.html#method_getCoverPath" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/OrganInformation.php"><a href="files/module-decision-src-model-organinformation.html"><abbr title="module/Decision/src/Model/OrganInformation.php">OrganInformation.php</abbr></a></abbr>
@@ -1149,16 +1156,17 @@ nullable.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getCoverPath</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string|null</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">string|null</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -1169,6 +1177,7 @@ nullable.</p>
     <h4 class="phpdocumentor-element__name" id="method_getDutchDescription">
         getDutchDescription()
         <a href="classes/Decision-Model-OrganInformation.html#method_getDutchDescription" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/OrganInformation.php"><a href="files/module-decision-src-model-organinformation.html"><abbr title="module/Decision/src/Model/OrganInformation.php">OrganInformation.php</abbr></a></abbr>
@@ -1182,16 +1191,17 @@ nullable.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getDutchDescription</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string|null</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">string|null</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -1202,6 +1212,7 @@ nullable.</p>
     <h4 class="phpdocumentor-element__name" id="method_getEmail">
         getEmail()
         <a href="classes/Decision-Model-OrganInformation.html#method_getEmail" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/OrganInformation.php"><a href="files/module-decision-src-model-organinformation.html"><abbr title="module/Decision/src/Model/OrganInformation.php">OrganInformation.php</abbr></a></abbr>
@@ -1215,16 +1226,17 @@ nullable.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getEmail</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string|null</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">string|null</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -1235,6 +1247,7 @@ nullable.</p>
     <h4 class="phpdocumentor-element__name" id="method_getEnglishDescription">
         getEnglishDescription()
         <a href="classes/Decision-Model-OrganInformation.html#method_getEnglishDescription" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/OrganInformation.php"><a href="files/module-decision-src-model-organinformation.html"><abbr title="module/Decision/src/Model/OrganInformation.php">OrganInformation.php</abbr></a></abbr>
@@ -1248,16 +1261,17 @@ nullable.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getEnglishDescription</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string|null</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">string|null</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -1268,6 +1282,7 @@ nullable.</p>
     <h4 class="phpdocumentor-element__name" id="method_getId">
         getId()
         <a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_getId" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/IdentifiableTrait.php"><a href="files/module-application-src-model-traits-identifiabletrait.html"><abbr title="module/Application/src/Model/Traits/IdentifiableTrait.php">IdentifiableTrait.php</abbr></a></abbr>
@@ -1282,12 +1297,15 @@ nullable.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getId</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int|null</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_getId#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
@@ -1297,13 +1315,13 @@ nullable.</p>
                                                                                 
                                              
                                     </dd>
-                        </dl>
+                                            </dl>
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">int|null</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">int|null</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -1314,6 +1332,7 @@ nullable.</p>
     <h4 class="phpdocumentor-element__name" id="method_getOrgan">
         getOrgan()
         <a href="classes/Decision-Model-OrganInformation.html#method_getOrgan" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/OrganInformation.php"><a href="files/module-decision-src-model-organinformation.html"><abbr title="module/Decision/src/Model/OrganInformation.php">OrganInformation.php</abbr></a></abbr>
@@ -1327,16 +1346,17 @@ nullable.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getOrgan</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-Organ.html"><abbr title="\Decision\Model\Organ">Organ</abbr></a></span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-Organ.html"><abbr title="\Decision\Model\Organ">Organ</abbr></a></span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-Organ.html"><abbr title="\Decision\Model\Organ">Organ</abbr></a></span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -1347,6 +1367,7 @@ nullable.</p>
     <h4 class="phpdocumentor-element__name" id="method_getShortDutchDescription">
         getShortDutchDescription()
         <a href="classes/Decision-Model-OrganInformation.html#method_getShortDutchDescription" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/OrganInformation.php"><a href="files/module-decision-src-model-organinformation.html"><abbr title="module/Decision/src/Model/OrganInformation.php">OrganInformation.php</abbr></a></abbr>
@@ -1360,16 +1381,17 @@ nullable.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getShortDutchDescription</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string|null</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">string|null</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -1380,6 +1402,7 @@ nullable.</p>
     <h4 class="phpdocumentor-element__name" id="method_getShortEnglishDescription">
         getShortEnglishDescription()
         <a href="classes/Decision-Model-OrganInformation.html#method_getShortEnglishDescription" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/OrganInformation.php"><a href="files/module-decision-src-model-organinformation.html"><abbr title="module/Decision/src/Model/OrganInformation.php">OrganInformation.php</abbr></a></abbr>
@@ -1393,16 +1416,17 @@ nullable.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getShortEnglishDescription</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string|null</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">string|null</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -1413,6 +1437,7 @@ nullable.</p>
     <h4 class="phpdocumentor-element__name" id="method_getThumbnailPath">
         getThumbnailPath()
         <a href="classes/Decision-Model-OrganInformation.html#method_getThumbnailPath" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/OrganInformation.php"><a href="files/module-decision-src-model-organinformation.html"><abbr title="module/Decision/src/Model/OrganInformation.php">OrganInformation.php</abbr></a></abbr>
@@ -1426,16 +1451,17 @@ nullable.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getThumbnailPath</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string|null</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">string|null</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -1446,6 +1472,7 @@ nullable.</p>
     <h4 class="phpdocumentor-element__name" id="method_getWebsite">
         getWebsite()
         <a href="classes/Decision-Model-OrganInformation.html#method_getWebsite" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/OrganInformation.php"><a href="files/module-decision-src-model-organinformation.html"><abbr title="module/Decision/src/Model/OrganInformation.php">OrganInformation.php</abbr></a></abbr>
@@ -1459,16 +1486,17 @@ nullable.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getWebsite</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string|null</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">string|null</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -1479,6 +1507,7 @@ nullable.</p>
     <h4 class="phpdocumentor-element__name" id="method_setApprover">
         setApprover()
         <a href="classes/Decision-Model-OrganInformation.html#method_setApprover" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/OrganInformation.php"><a href="files/module-decision-src-model-organinformation.html"><abbr title="module/Decision/src/Model/OrganInformation.php">OrganInformation.php</abbr></a></abbr>
@@ -1492,8 +1521,9 @@ nullable.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setApprover</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$approver</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -1501,17 +1531,12 @@ nullable.</p>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>|null</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1523,6 +1548,7 @@ nullable.</p>
     <h4 class="phpdocumentor-element__name" id="method_setCoverPath">
         setCoverPath()
         <a href="classes/Decision-Model-OrganInformation.html#method_setCoverPath" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/OrganInformation.php"><a href="files/module-decision-src-model-organinformation.html"><abbr title="module/Decision/src/Model/OrganInformation.php">OrganInformation.php</abbr></a></abbr>
@@ -1536,8 +1562,9 @@ nullable.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setCoverPath</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$coverPath</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -1545,17 +1572,12 @@ nullable.</p>
                 : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1567,6 +1589,7 @@ nullable.</p>
     <h4 class="phpdocumentor-element__name" id="method_setDutchDescription">
         setDutchDescription()
         <a href="classes/Decision-Model-OrganInformation.html#method_setDutchDescription" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/OrganInformation.php"><a href="files/module-decision-src-model-organinformation.html"><abbr title="module/Decision/src/Model/OrganInformation.php">OrganInformation.php</abbr></a></abbr>
@@ -1580,8 +1603,9 @@ nullable.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setDutchDescription</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$dutchDescription</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -1589,17 +1613,12 @@ nullable.</p>
                 : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1611,6 +1630,7 @@ nullable.</p>
     <h4 class="phpdocumentor-element__name" id="method_setEmail">
         setEmail()
         <a href="classes/Decision-Model-OrganInformation.html#method_setEmail" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/OrganInformation.php"><a href="files/module-decision-src-model-organinformation.html"><abbr title="module/Decision/src/Model/OrganInformation.php">OrganInformation.php</abbr></a></abbr>
@@ -1624,8 +1644,9 @@ nullable.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setEmail</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$email</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -1633,17 +1654,12 @@ nullable.</p>
                 : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1655,6 +1671,7 @@ nullable.</p>
     <h4 class="phpdocumentor-element__name" id="method_setEnglishDescription">
         setEnglishDescription()
         <a href="classes/Decision-Model-OrganInformation.html#method_setEnglishDescription" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/OrganInformation.php"><a href="files/module-decision-src-model-organinformation.html"><abbr title="module/Decision/src/Model/OrganInformation.php">OrganInformation.php</abbr></a></abbr>
@@ -1668,8 +1685,9 @@ nullable.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setEnglishDescription</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$englishDescription</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -1677,17 +1695,12 @@ nullable.</p>
                 : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1699,6 +1712,7 @@ nullable.</p>
     <h4 class="phpdocumentor-element__name" id="method_setId">
         setId()
         <a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_setId" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/IdentifiableTrait.php"><a href="files/module-application-src-model-traits-identifiabletrait.html"><abbr title="module/Application/src/Model/Traits/IdentifiableTrait.php">IdentifiableTrait.php</abbr></a></abbr>
@@ -1713,6 +1727,8 @@ nullable.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setId</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$id</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -1721,17 +1737,12 @@ nullable.</p>
                 : <span class="phpdocumentor-signature__argument__return-type">int|null</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1743,6 +1754,7 @@ nullable.</p>
     <h4 class="phpdocumentor-element__name" id="method_setOrgan">
         setOrgan()
         <a href="classes/Decision-Model-OrganInformation.html#method_setOrgan" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/OrganInformation.php"><a href="files/module-decision-src-model-organinformation.html"><abbr title="module/Decision/src/Model/OrganInformation.php">OrganInformation.php</abbr></a></abbr>
@@ -1756,8 +1768,9 @@ nullable.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setOrgan</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Organ.html"><abbr title="\Decision\Model\Organ">Organ</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$organ</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -1765,17 +1778,12 @@ nullable.</p>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Organ.html"><abbr title="\Decision\Model\Organ">Organ</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1787,6 +1795,7 @@ nullable.</p>
     <h4 class="phpdocumentor-element__name" id="method_setShortDutchDescription">
         setShortDutchDescription()
         <a href="classes/Decision-Model-OrganInformation.html#method_setShortDutchDescription" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/OrganInformation.php"><a href="files/module-decision-src-model-organinformation.html"><abbr title="module/Decision/src/Model/OrganInformation.php">OrganInformation.php</abbr></a></abbr>
@@ -1800,8 +1809,9 @@ nullable.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setShortDutchDescription</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$shortDutchDescription</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -1809,17 +1819,12 @@ nullable.</p>
                 : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1831,6 +1836,7 @@ nullable.</p>
     <h4 class="phpdocumentor-element__name" id="method_setShortEnglishDescription">
         setShortEnglishDescription()
         <a href="classes/Decision-Model-OrganInformation.html#method_setShortEnglishDescription" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/OrganInformation.php"><a href="files/module-decision-src-model-organinformation.html"><abbr title="module/Decision/src/Model/OrganInformation.php">OrganInformation.php</abbr></a></abbr>
@@ -1844,8 +1850,9 @@ nullable.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setShortEnglishDescription</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$shortEnglishDescription</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -1853,17 +1860,12 @@ nullable.</p>
                 : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1875,6 +1877,7 @@ nullable.</p>
     <h4 class="phpdocumentor-element__name" id="method_setThumbnailPath">
         setThumbnailPath()
         <a href="classes/Decision-Model-OrganInformation.html#method_setThumbnailPath" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/OrganInformation.php"><a href="files/module-decision-src-model-organinformation.html"><abbr title="module/Decision/src/Model/OrganInformation.php">OrganInformation.php</abbr></a></abbr>
@@ -1888,8 +1891,9 @@ nullable.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setThumbnailPath</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$thumbnailPath</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -1897,17 +1901,12 @@ nullable.</p>
                 : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1919,6 +1918,7 @@ nullable.</p>
     <h4 class="phpdocumentor-element__name" id="method_setWebsite">
         setWebsite()
         <a href="classes/Decision-Model-OrganInformation.html#method_setWebsite" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/OrganInformation.php"><a href="files/module-decision-src-model-organinformation.html"><abbr title="module/Decision/src/Model/OrganInformation.php">OrganInformation.php</abbr></a></abbr>
@@ -1932,8 +1932,9 @@ nullable.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setWebsite</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$website</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -1941,85 +1942,175 @@ nullable.</p>
                 : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
             </section>
 
-        
+        <div class="phpdocumentor-modal" id="source-view">
+    <div class="phpdocumentor-modal-bg" data-exit-button></div>
+    <div class="phpdocumentor-modal-container">
+        <div class="phpdocumentor-modal-content">
+            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/module/Decision/src/Model/OrganInformation.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
+        </div>
+        <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
+    </div>
+</div>
+
     <script type="text/javascript">
-        function loadExternalCodeSnippets(line) {
-            Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach((pre) => {
-                var src = pre.getAttribute('data-src').replace( /\\/g, '/');
-                var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
-                var language = 'php';
+        (function () {
+            function loadExternalCodeSnippet(el, url, line) {
+                Array.prototype.slice.call(el.querySelectorAll('pre[data-src]')).forEach((pre) => {
+                    const src = url || pre.getAttribute('data-src').replace(/\\/g, '/');
+                    const language = 'php';
 
-                var code = document.createElement('code');
-                code.className = 'language-' + language;
+                    const code = document.createElement('code');
+                    code.className = 'language-' + language;
+                    pre.textContent = '';
+                    pre.setAttribute('data-line', line)
+                    code.textContent = 'Loading…';
+                    pre.appendChild(code);
 
-                pre.textContent = '';
+                    var xhr = new XMLHttpRequest();
 
-                pre.setAttribute('data-line', line)
-                code.textContent = 'Loading…';
+                    xhr.open('GET', src, true);
 
-                pre.appendChild(code);
-
-                var xhr = new XMLHttpRequest();
-
-                xhr.open('GET', src, true);
-
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState == 4) {
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState !== 4) {
+                            return;
+                        }
 
                         if (xhr.status < 400 && xhr.responseText) {
                             code.textContent = xhr.responseText;
-
                             Prism.highlightElement(code);
+                            return;
                         }
-                        else if (xhr.status >= 400) {
+
+                        if (xhr.status === 404) {
+                            code.textContent = '✖ Error: File could not be found';
+                            return;
+                        }
+
+                        if (xhr.status >= 400) {
                             code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                            return;
                         }
-                        else {
-                            code.textContent = '✖ Error: File does not exist, is empty or trying to view from localhost';
-                        }
+
+                        code.textContent = '✖ Error: An unknown error occurred';
+                    };
+
+                    xhr.send(null);
+                });
+            }
+
+            const modalButtons = document.querySelectorAll("[data-modal]");
+            const openedAsLocalFile = window.location.protocol === 'file:';
+            if (modalButtons.length > 0 && openedAsLocalFile) {
+                console.warn(
+                    'Viewing the source code is unavailable because you are opening this page from the file:// scheme; ' +
+                    'browsers block XHR requests when a page is opened this way'
+                );
+            }
+
+            modalButtons.forEach(function (trigger) {
+                if (openedAsLocalFile) {
+                    trigger.setAttribute("hidden", "hidden");
+                }
+
+                trigger.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    const modal = document.getElementById(trigger.dataset.modal);
+                    if (!modal) {
+                        console.error(`Modal with id "${trigger.dataset.modal}" could not be found`);
+                        return;
                     }
-                };
+                    modal.classList.add("phpdocumentor-modal__open");
 
-                xhr.send(null);
-            });
-        }
-
-        var modals = document.querySelectorAll("[data-modal]");
-
-        modals.forEach(function (trigger) {
-            trigger.addEventListener("click", function (event) {
-                //event.preventDefault();
-                const modal = document.getElementById(trigger.dataset.modal);
-                modal.classList.add("phpdocumentor-modal__open");
-                loadExternalCodeSnippets(trigger.dataset.line)
-                const exits = modal.querySelectorAll("[data-exit-button]");
-                exits.forEach(function (exit) {
-                    exit.addEventListener("click", function (event) {
-                        event.preventDefault();
-                        modal.classList.remove("phpdocumentor-modal__open");
+                    loadExternalCodeSnippet(modal, trigger.dataset.src || null, trigger.dataset.line)
+                    const exits = modal.querySelectorAll("[data-exit-button]");
+                    exits.forEach(function (exit) {
+                        exit.addEventListener("click", function (event) {
+                            event.preventDefault();
+                            modal.classList.remove("phpdocumentor-modal__open");
+                        });
                     });
                 });
             });
-        });
+        })();
     </script>
 
     </article>
-                <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">
+                                </section>
+                <section class="phpdocumentor-on-this-page__sidebar">
+                                
+    <section class="phpdocumentor-on-this-page__content">
+        <strong class="phpdocumentor-on-this-page__title">On this page</strong>
+
+        <ul class="phpdocumentor-list -clean">
+            <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
+            <li>
+                <ul class="phpdocumentor-list -clean">
+                                                            <li><a href="classes/Decision-Model-OrganInformation.html#toc-properties">Properties</a></li>
+                                                            <li><a href="classes/Decision-Model-OrganInformation.html#toc-methods">Methods</a></li>
+                                    </ul>
+            </li>
+            
+                            <li class="phpdocumentor-on-this-page-section__title">Properties</li>
+                <li>
+                    <ul class="phpdocumentor-list -clean">
+                                                    <li><a href="classes/Decision-Model-OrganInformation.html#property_approver">$approver<a href="classes/Decision-Model-OrganInformation.html"></li>
+                                                    <li><a href="classes/Decision-Model-OrganInformation.html#property_coverPath">$coverPath<a href="classes/Decision-Model-OrganInformation.html"></li>
+                                                    <li><a href="classes/Decision-Model-OrganInformation.html#property_dutchDescription">$dutchDescription<a href="classes/Decision-Model-OrganInformation.html"></li>
+                                                    <li><a href="classes/Decision-Model-OrganInformation.html#property_email">$email<a href="classes/Decision-Model-OrganInformation.html"></li>
+                                                    <li><a href="classes/Decision-Model-OrganInformation.html#property_englishDescription">$englishDescription<a href="classes/Decision-Model-OrganInformation.html"></li>
+                                                    <li><a href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id">$id<a href="classes/Decision-Model-OrganInformation.html"></li>
+                                                    <li><a href="classes/Decision-Model-OrganInformation.html#property_organ">$organ<a href="classes/Decision-Model-OrganInformation.html"></li>
+                                                    <li><a href="classes/Decision-Model-OrganInformation.html#property_shortDutchDescription">$shortDutchDescription<a href="classes/Decision-Model-OrganInformation.html"></li>
+                                                    <li><a href="classes/Decision-Model-OrganInformation.html#property_shortEnglishDescription">$shortEnglishDescription<a href="classes/Decision-Model-OrganInformation.html"></li>
+                                                    <li><a href="classes/Decision-Model-OrganInformation.html#property_thumbnailPath">$thumbnailPath<a href="classes/Decision-Model-OrganInformation.html"></li>
+                                                    <li><a href="classes/Decision-Model-OrganInformation.html#property_website">$website<a href="classes/Decision-Model-OrganInformation.html"></li>
+                                            </ul>
+                </li>
+            
+                        <li class="phpdocumentor-on-this-page-section__title">Methods</li>
+            <li>
+                <ul class="phpdocumentor-list -clean">
+                                            <li><a href="classes/Decision-Model-OrganInformation.html#method___clone">__clone()</a></li>
+                                            <li><a href="classes/Decision-Model-OrganInformation.html#method_getApprover">getApprover()</a></li>
+                                            <li><a href="classes/Decision-Model-OrganInformation.html#method_getCoverPath">getCoverPath()</a></li>
+                                            <li><a href="classes/Decision-Model-OrganInformation.html#method_getDutchDescription">getDutchDescription()</a></li>
+                                            <li><a href="classes/Decision-Model-OrganInformation.html#method_getEmail">getEmail()</a></li>
+                                            <li><a href="classes/Decision-Model-OrganInformation.html#method_getEnglishDescription">getEnglishDescription()</a></li>
+                                            <li><a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_getId">getId()</a></li>
+                                            <li><a href="classes/Decision-Model-OrganInformation.html#method_getOrgan">getOrgan()</a></li>
+                                            <li><a href="classes/Decision-Model-OrganInformation.html#method_getShortDutchDescription">getShortDutchDescription()</a></li>
+                                            <li><a href="classes/Decision-Model-OrganInformation.html#method_getShortEnglishDescription">getShortEnglishDescription()</a></li>
+                                            <li><a href="classes/Decision-Model-OrganInformation.html#method_getThumbnailPath">getThumbnailPath()</a></li>
+                                            <li><a href="classes/Decision-Model-OrganInformation.html#method_getWebsite">getWebsite()</a></li>
+                                            <li><a href="classes/Decision-Model-OrganInformation.html#method_setApprover">setApprover()</a></li>
+                                            <li><a href="classes/Decision-Model-OrganInformation.html#method_setCoverPath">setCoverPath()</a></li>
+                                            <li><a href="classes/Decision-Model-OrganInformation.html#method_setDutchDescription">setDutchDescription()</a></li>
+                                            <li><a href="classes/Decision-Model-OrganInformation.html#method_setEmail">setEmail()</a></li>
+                                            <li><a href="classes/Decision-Model-OrganInformation.html#method_setEnglishDescription">setEnglishDescription()</a></li>
+                                            <li><a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_setId">setId()</a></li>
+                                            <li><a href="classes/Decision-Model-OrganInformation.html#method_setOrgan">setOrgan()</a></li>
+                                            <li><a href="classes/Decision-Model-OrganInformation.html#method_setShortDutchDescription">setShortDutchDescription()</a></li>
+                                            <li><a href="classes/Decision-Model-OrganInformation.html#method_setShortEnglishDescription">setShortEnglishDescription()</a></li>
+                                            <li><a href="classes/Decision-Model-OrganInformation.html#method_setThumbnailPath">setThumbnailPath()</a></li>
+                                            <li><a href="classes/Decision-Model-OrganInformation.html#method_setWebsite">setWebsite()</a></li>
+                                    </ul>
+            </li>
+                    </ul>
+    </section>
+
+                </section>
+                            </div>
+            <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">
     <section class="phpdocumentor-search-results__dialog">
         <header class="phpdocumentor-search-results__header">
             <h2 class="phpdocumentor-search-results__title">Search results</h2>
@@ -2030,7 +2121,6 @@ nullable.</p>
         </section>
     </section>
 </section>
-            </div>
         </div>
         <a href="classes/Decision-Model-OrganInformation.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 

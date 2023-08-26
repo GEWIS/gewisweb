@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/base.css">
             <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@100;200;300;400;600;700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="css/template.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css" integrity="sha256-ybRkN9dBjhcS2qrW1z+hfCxq+1aBdwyQM5wlQoQVt/0=" crossorigin="anonymous" />
@@ -19,6 +19,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-highlight/prism-line-highlight.css">
                 <script src="https://cdn.jsdelivr.net/npm/fuse.js@3.4.6"></script>
         <script src="https://cdn.jsdelivr.net/npm/css-vars-ponyfill@2"></script>
+        <script src="js/template.js"></script>
         <script src="js/search.js"></script>
         <script defer src="js/searchIndex.js"></script>
     </head>
@@ -52,7 +53,7 @@
 <label class="phpdocumentor-sidebar__menu-icon" for="sidebar-button">
     Menu
 </label>
-<aside class="phpdocumentor-column -four phpdocumentor-sidebar">
+<aside class="phpdocumentor-column -three phpdocumentor-sidebar">
                     <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
@@ -381,8 +382,9 @@
     </section>
 </aside>
 
-            <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <ul class="phpdocumentor-breadcrumbs">
+            <div class="phpdocumentor-column -nine phpdocumentor-content">
+                                <section>
+                                        <ul class="phpdocumentor-breadcrumbs">
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/company.html">Company</a></li>
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/company-model.html">Model</a></li>
     </ul>
@@ -408,6 +410,11 @@
                             <a href="classes/Application-Model-Traits-IdentifiableTrait.html"><abbr title="\Application\Model\Traits\IdentifiableTrait">IdentifiableTrait</abbr></a>,                             <a href="classes/Application-Model-Traits-TimestampableTrait.html"><abbr title="\Application\Model\Traits\TimestampableTrait">TimestampableTrait</abbr></a>,                             <a href="classes/Application-Model-Traits-ApprovableTrait.html"><abbr title="\Application\Model\Traits\ApprovableTrait">ApprovableTrait</abbr></a>,                             <a href="classes/Application-Model-Traits-UpdateProposableTrait.html"><abbr title="\Application\Model\Traits\UpdateProposableTrait">UpdateProposableTrait</abbr></a>                    </span>
     </h2>
 
+<div class="phpdocumentor-label-line">
+
+
+</div>
+
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
     :
@@ -422,28 +429,34 @@
 
 
 
-
-<h3 id="interfaces_class_traits">
-    Interfaces, Classes, Traits and Enums
-    <a href="#interfaces_class_traits" class="headerlink"><i class="fas fa-link"></i></a>
-</h3>
-
-<dl class="phpdocumentor-table-of-contents">
-            <dt class="phpdocumentor-table-of-contents__entry -interface"><abbr title="\Laminas\Permissions\Acl\Resource\ResourceInterface">ResourceInterface</abbr></dt>
-        <dd></dd>
-    
-    
-    
-    </dl>
-
-
 <h3 id="toc">
     Table of Contents
-    <a href="#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Company-Model-Company.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+
 </h3>
 
+
+
+    <h4 id="toc-interfaces">
+        Interfaces
+        <a href="classes/Company-Model-Company.html#toc-interfaces" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <dl class="phpdocumentor-table-of-contents">
+                    <dt class="phpdocumentor-table-of-contents__entry -interface"><abbr title="\Laminas\Permissions\Acl\Resource\ResourceInterface">ResourceInterface</abbr></dt>    </dl>
+
+
+
+
+
+
+<h4 id="toc-properties">
+    Properties
+    <a href="classes/Company-Model-Company.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
+
+</h4>
 <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Application-Model-Traits-ApprovableTrait.html#property_approvableText">$approvableText</a>
     <span>
                         &nbsp;: <a href="classes/Application-Model-ApprovableText.html"><abbr title="\Application\Model\ApprovableText">ApprovableText</abbr></a>|null            </span>
@@ -546,7 +559,7 @@ nullable.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Company-Model-Company.html#property_packages">$packages</a>
     <span>
-                        &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>            </span>
+                        &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Company-Model-CompanyPackage.html"><abbr title="\Company\Model\CompanyPackage">CompanyPackage</abbr></a>&gt;            </span>
 </dt>
 <dd>The company&#039;s packages.</dd>
 
@@ -595,7 +608,7 @@ nullable.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Company-Model-Company.html#property_updateProposals">$updateProposals</a>
     <span>
-                        &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>            </span>
+                        &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Company-Model-Proposals-CompanyUpdate.html"><abbr title="\Company\Model\Proposals\CompanyUpdate">CompanyUpdate</abbr></a>&gt;            </span>
 </dt>
 <dd>Proposed updates to this company.</dd>
 
@@ -606,12 +619,19 @@ nullable.</dd>
 </dt>
 <dd>Company website.</dd>
 
-                <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    </dl>
+
+<h4 id="toc-methods">
+    Methods
+    <a href="classes/Company-Model-Company.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
+
+</h4>
+<dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Company-Model-Company.html#method___construct">__construct()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Company-Model-Company.html#method_exchangeArray">exchangeArray()</a>
@@ -625,28 +645,24 @@ nullable.</dd>
     <span>
                                 &nbsp;: <a href="classes/Application-Model-ApprovableText.html"><abbr title="\Application\Model\ApprovableText">ApprovableText</abbr></a>|null    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Application-Model-Traits-ApprovableTrait.html#method_getApproved">getApproved()</a>
     <span>
                                 &nbsp;: <a href="classes/Application-Model-Enums-ApprovableStatus.html"><abbr title="\Application\Model\Enums\ApprovableStatus">ApprovableStatus</abbr></a>    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Application-Model-Traits-ApprovableTrait.html#method_getApprovedAt">getApprovedAt()</a>
     <span>
                                 &nbsp;: <abbr title="\DateTime">DateTime</abbr>|null    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Application-Model-Traits-ApprovableTrait.html#method_getApprover">getApprover()</a>
     <span>
                                 &nbsp;: <a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>|null    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Company-Model-Company.html#method_getContactAddress">getContactAddress()</a>
@@ -681,7 +697,6 @@ nullable.</dd>
     <span>
                                 &nbsp;: <abbr title="\DateTime">DateTime</abbr>    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Company-Model-Company.html#method_getDescription">getDescription()</a>
@@ -751,7 +766,7 @@ company.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Company-Model-Company.html#method_getPackages">getPackages()</a>
     <span>
-                                &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;array-key, <a href="classes/Company-Model-CompanyPackage.html"><abbr title="\Company\Model\CompanyPackage">CompanyPackage</abbr></a>&gt;    </span>
+                                &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Company-Model-CompanyPackage.html"><abbr title="\Company\Model\CompanyPackage">CompanyPackage</abbr></a>&gt;    </span>
 </dt>
 <dd>Get the company&#039;s packages.</dd>
 
@@ -774,7 +789,6 @@ company.</dd>
     <span>
                                 &nbsp;: string    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Company-Model-Company.html#method_getSlogan">getSlogan()</a>
@@ -795,14 +809,12 @@ company.</dd>
     <span>
                                 &nbsp;: <abbr title="\DateTime">DateTime</abbr>    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Company-Model-Company.html#method_getUpdateProposals">getUpdateProposals()</a>
     <span>
-                                &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;array-key, <a href="classes/Company-Model-Proposals-CompanyUpdate.html"><abbr title="\Company\Model\Proposals\CompanyUpdate">CompanyUpdate</abbr></a>&gt;    </span>
+                                &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Company-Model-Proposals-CompanyUpdate.html"><abbr title="\Company\Model\Proposals\CompanyUpdate">CompanyUpdate</abbr></a>&gt;    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Company-Model-Company.html#method_getWebsite">getWebsite()</a>
@@ -816,7 +828,6 @@ company.</dd>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Company-Model-Company.html#method_isBannerActive">isBannerActive()</a>
@@ -872,28 +883,24 @@ company.</dd>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Application-Model-Traits-ApprovableTrait.html#method_setApproved">setApproved()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Application-Model-Traits-ApprovableTrait.html#method_setApprovedAt">setApprovedAt()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Application-Model-Traits-ApprovableTrait.html#method_setApprover">setApprover()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Company-Model-Company.html#method_setContactAddress">setContactAddress()</a>
@@ -1003,7 +1010,7 @@ company.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Company-Model-Company.html#method_toArray">toArray()</a>
     <span>
-                                &nbsp;: array&lt;string|int, mixed&gt;    </span>
+                                &nbsp;: array{name: string, slugName: string, representativeName: string, representativeEmail: string, logo: ?string, contactName: ?string, contactEmail: ?string, contactAddress: ?string, contactPhone: ?string, published: bool, slogan: ?string, sloganEn: ?string, website: ?string, websiteEn: ?string, description: ?string, descriptionEn: ?string}    </span>
 </dt>
 <dd>Returns an array copy with all attributes.</dd>
 
@@ -1012,16 +1019,15 @@ company.</dd>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a href="classes/Application-Model-Traits-TimestampableTrait.html#method_setUpdatedAt">setUpdatedAt()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
-        </dl>
+    </dl>
+
 
 
 
@@ -1032,6 +1038,7 @@ company.</dd>
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
             <a href="classes/Company-Model-Company.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+
         </h3>
                     <article
         class="
@@ -1043,6 +1050,7 @@ company.</dd>
     <h4 class="phpdocumentor-element__name" id="property_approvableText">
         $approvableText
         <a href="classes/Application-Model-Traits-ApprovableTrait.html#property_approvableText" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1063,8 +1071,7 @@ has been replaced with another entity which we can EXTRA_LAZY load to ensure it 
      = <span class="phpdocumentor-signature__default-value">null</span></code>
 
     
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -1078,6 +1085,7 @@ has been replaced with another entity which we can EXTRA_LAZY load to ensure it 
     <h4 class="phpdocumentor-element__name" id="property_approved">
         $approved
         <a href="classes/Application-Model-Traits-ApprovableTrait.html#property_approved" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1097,8 +1105,7 @@ has been replaced with another entity which we can EXTRA_LAZY load to ensure it 
     </code>
 
     
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -1112,6 +1119,7 @@ has been replaced with another entity which we can EXTRA_LAZY load to ensure it 
     <h4 class="phpdocumentor-element__name" id="property_approvedAt">
         $approvedAt
         <a href="classes/Application-Model-Traits-ApprovableTrait.html#property_approvedAt" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1131,8 +1139,7 @@ has been replaced with another entity which we can EXTRA_LAZY load to ensure it 
      = <span class="phpdocumentor-signature__default-value">null</span></code>
 
     
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -1146,6 +1153,7 @@ has been replaced with another entity which we can EXTRA_LAZY load to ensure it 
     <h4 class="phpdocumentor-element__name" id="property_approver">
         $approver
         <a href="classes/Application-Model-Traits-ApprovableTrait.html#property_approver" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1165,8 +1173,7 @@ has been replaced with another entity which we can EXTRA_LAZY load to ensure it 
      = <span class="phpdocumentor-signature__default-value">null</span></code>
 
     
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -1180,6 +1187,7 @@ has been replaced with another entity which we can EXTRA_LAZY load to ensure it 
     <h4 class="phpdocumentor-element__name" id="property_contactAddress">
         $contactAddress
         <a href="classes/Company-Model-Company.html#property_contactAddress" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1199,8 +1207,7 @@ has been replaced with another entity which we can EXTRA_LAZY load to ensure it 
     </code>
 
     
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -1214,6 +1221,7 @@ has been replaced with another entity which we can EXTRA_LAZY load to ensure it 
     <h4 class="phpdocumentor-element__name" id="property_contactEmail">
         $contactEmail
         <a href="classes/Company-Model-Company.html#property_contactEmail" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1233,8 +1241,7 @@ has been replaced with another entity which we can EXTRA_LAZY load to ensure it 
     </code>
 
     
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -1248,6 +1255,7 @@ has been replaced with another entity which we can EXTRA_LAZY load to ensure it 
     <h4 class="phpdocumentor-element__name" id="property_contactName">
         $contactName
         <a href="classes/Company-Model-Company.html#property_contactName" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1267,8 +1275,7 @@ has been replaced with another entity which we can EXTRA_LAZY load to ensure it 
     </code>
 
     
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -1282,6 +1289,7 @@ has been replaced with another entity which we can EXTRA_LAZY load to ensure it 
     <h4 class="phpdocumentor-element__name" id="property_contactPhone">
         $contactPhone
         <a href="classes/Company-Model-Company.html#property_contactPhone" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1301,8 +1309,7 @@ has been replaced with another entity which we can EXTRA_LAZY load to ensure it 
     </code>
 
     
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -1316,6 +1323,7 @@ has been replaced with another entity which we can EXTRA_LAZY load to ensure it 
     <h4 class="phpdocumentor-element__name" id="property_createdAt">
         $createdAt
         <a href="classes/Application-Model-Traits-TimestampableTrait.html#property_createdAt" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1335,8 +1343,7 @@ has been replaced with another entity which we can EXTRA_LAZY load to ensure it 
     </code>
 
     
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -1350,6 +1357,7 @@ has been replaced with another entity which we can EXTRA_LAZY load to ensure it 
     <h4 class="phpdocumentor-element__name" id="property_description">
         $description
         <a href="classes/Company-Model-Company.html#property_description" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1369,8 +1377,7 @@ has been replaced with another entity which we can EXTRA_LAZY load to ensure it 
     </code>
 
     
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -1384,6 +1391,7 @@ has been replaced with another entity which we can EXTRA_LAZY load to ensure it 
     <h4 class="phpdocumentor-element__name" id="property_id">
         $id
         <a href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1404,8 +1412,7 @@ nullable.</p>
      = <span class="phpdocumentor-signature__default-value">null</span></code>
 
     
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -1419,6 +1426,7 @@ nullable.</p>
     <h4 class="phpdocumentor-element__name" id="property_isUpdate">
         $isUpdate
         <a href="classes/Application-Model-Traits-UpdateProposableTrait.html#property_isUpdate" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1438,8 +1446,7 @@ nullable.</p>
      = <span class="phpdocumentor-signature__default-value">false</span></code>
 
     
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -1453,6 +1460,7 @@ nullable.</p>
     <h4 class="phpdocumentor-element__name" id="property_logo">
         $logo
         <a href="classes/Company-Model-Company.html#property_logo" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1472,8 +1480,7 @@ nullable.</p>
      = <span class="phpdocumentor-signature__default-value">null</span></code>
 
     
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -1487,6 +1494,7 @@ nullable.</p>
     <h4 class="phpdocumentor-element__name" id="property_name">
         $name
         <a href="classes/Company-Model-Company.html#property_name" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1506,8 +1514,7 @@ nullable.</p>
     </code>
 
     
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -1521,6 +1528,7 @@ nullable.</p>
     <h4 class="phpdocumentor-element__name" id="property_packages">
         $packages
         <a href="classes/Company-Model-Company.html#property_packages" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1535,7 +1543,7 @@ nullable.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr></span>
+        <span class="phpdocumentor-signature__type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Company-Model-CompanyPackage.html"><abbr title="\Company\Model\CompanyPackage">CompanyPackage</abbr></a>&gt;</span>
     <span class="phpdocumentor-signature__name">$packages</span>
     </code>
 
@@ -1554,6 +1562,7 @@ nullable.</p>
     <h4 class="phpdocumentor-element__name" id="property_published">
         $published
         <a href="classes/Company-Model-Company.html#property_published" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1573,8 +1582,7 @@ nullable.</p>
     </code>
 
     
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -1588,6 +1596,7 @@ nullable.</p>
     <h4 class="phpdocumentor-element__name" id="property_representativeEmail">
         $representativeEmail
         <a href="classes/Company-Model-Company.html#property_representativeEmail" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1607,8 +1616,7 @@ nullable.</p>
     </code>
 
     
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -1622,6 +1630,7 @@ nullable.</p>
     <h4 class="phpdocumentor-element__name" id="property_representativeName">
         $representativeName
         <a href="classes/Company-Model-Company.html#property_representativeName" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1641,8 +1650,7 @@ nullable.</p>
     </code>
 
     
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -1656,6 +1664,7 @@ nullable.</p>
     <h4 class="phpdocumentor-element__name" id="property_slogan">
         $slogan
         <a href="classes/Company-Model-Company.html#property_slogan" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1675,8 +1684,7 @@ nullable.</p>
     </code>
 
     
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -1690,6 +1698,7 @@ nullable.</p>
     <h4 class="phpdocumentor-element__name" id="property_slugName">
         $slugName
         <a href="classes/Company-Model-Company.html#property_slugName" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1709,8 +1718,7 @@ nullable.</p>
     </code>
 
     
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -1724,6 +1732,7 @@ nullable.</p>
     <h4 class="phpdocumentor-element__name" id="property_updatedAt">
         $updatedAt
         <a href="classes/Application-Model-Traits-TimestampableTrait.html#property_updatedAt" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1743,8 +1752,7 @@ nullable.</p>
     </code>
 
     
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -1758,6 +1766,7 @@ nullable.</p>
     <h4 class="phpdocumentor-element__name" id="property_updateProposals">
         $updateProposals
         <a href="classes/Company-Model-Company.html#property_updateProposals" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1772,7 +1781,7 @@ nullable.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr></span>
+        <span class="phpdocumentor-signature__type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Company-Model-Proposals-CompanyUpdate.html"><abbr title="\Company\Model\Proposals\CompanyUpdate">CompanyUpdate</abbr></a>&gt;</span>
     <span class="phpdocumentor-signature__name">$updateProposals</span>
     </code>
 
@@ -1791,6 +1800,7 @@ nullable.</p>
     <h4 class="phpdocumentor-element__name" id="property_website">
         $website
         <a href="classes/Company-Model-Company.html#property_website" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1810,8 +1820,7 @@ nullable.</p>
     </code>
 
     
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -1821,6 +1830,7 @@ nullable.</p>
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
             <a href="classes/Company-Model-Company.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+
         </h3>
                     <article
         class="phpdocumentor-element
@@ -1831,6 +1841,7 @@ nullable.</p>
     <h4 class="phpdocumentor-element__name" id="method___construct">
         __construct()
         <a href="classes/Company-Model-Company.html#method___construct" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
@@ -1844,15 +1855,12 @@ nullable.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">mixed</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1864,6 +1872,7 @@ nullable.</p>
     <h4 class="phpdocumentor-element__name" id="method_exchangeArray">
         exchangeArray()
         <a href="classes/Company-Model-Company.html#method_exchangeArray" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
@@ -1878,6 +1887,8 @@ nullable.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">exchangeArray</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -1893,7 +1904,8 @@ nullable.</p>
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Company-Model-Company.html#method_exchangeArray#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
@@ -1929,12 +1941,8 @@ descriptionEn: ?string,
                                                             
                                              
                                     </dd>
-                        </dl>
+                                            </dl>
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1946,6 +1954,7 @@ descriptionEn: ?string,
     <h4 class="phpdocumentor-element__name" id="method_getApprovableText">
         getApprovableText()
         <a href="classes/Application-Model-Traits-ApprovableTrait.html#method_getApprovableText" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/ApprovableTrait.php"><a href="files/module-application-src-model-traits-approvabletrait.html"><abbr title="module/Application/src/Model/Traits/ApprovableTrait.php">ApprovableTrait.php</abbr></a></abbr>
@@ -1959,16 +1968,17 @@ descriptionEn: ?string,
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getApprovableText</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Application-Model-ApprovableText.html"><abbr title="\Application\Model\ApprovableText">ApprovableText</abbr></a>|null</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Application-Model-ApprovableText.html"><abbr title="\Application\Model\ApprovableText">ApprovableText</abbr></a>|null</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Application-Model-ApprovableText.html"><abbr title="\Application\Model\ApprovableText">ApprovableText</abbr></a>|null</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -1979,6 +1989,7 @@ descriptionEn: ?string,
     <h4 class="phpdocumentor-element__name" id="method_getApproved">
         getApproved()
         <a href="classes/Application-Model-Traits-ApprovableTrait.html#method_getApproved" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/ApprovableTrait.php"><a href="files/module-application-src-model-traits-approvabletrait.html"><abbr title="module/Application/src/Model/Traits/ApprovableTrait.php">ApprovableTrait.php</abbr></a></abbr>
@@ -1992,16 +2003,17 @@ descriptionEn: ?string,
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getApproved</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Application-Model-Enums-ApprovableStatus.html"><abbr title="\Application\Model\Enums\ApprovableStatus">ApprovableStatus</abbr></a></span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Application-Model-Enums-ApprovableStatus.html"><abbr title="\Application\Model\Enums\ApprovableStatus">ApprovableStatus</abbr></a></span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Application-Model-Enums-ApprovableStatus.html"><abbr title="\Application\Model\Enums\ApprovableStatus">ApprovableStatus</abbr></a></span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2012,6 +2024,7 @@ descriptionEn: ?string,
     <h4 class="phpdocumentor-element__name" id="method_getApprovedAt">
         getApprovedAt()
         <a href="classes/Application-Model-Traits-ApprovableTrait.html#method_getApprovedAt" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/ApprovableTrait.php"><a href="files/module-application-src-model-traits-approvabletrait.html"><abbr title="module/Application/src/Model/Traits/ApprovableTrait.php">ApprovableTrait.php</abbr></a></abbr>
@@ -2025,16 +2038,17 @@ descriptionEn: ?string,
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getApprovedAt</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\DateTime">DateTime</abbr>|null</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\DateTime">DateTime</abbr>|null</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type"><abbr title="\DateTime">DateTime</abbr>|null</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2045,6 +2059,7 @@ descriptionEn: ?string,
     <h4 class="phpdocumentor-element__name" id="method_getApprover">
         getApprover()
         <a href="classes/Application-Model-Traits-ApprovableTrait.html#method_getApprover" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/ApprovableTrait.php"><a href="files/module-application-src-model-traits-approvabletrait.html"><abbr title="module/Application/src/Model/Traits/ApprovableTrait.php">ApprovableTrait.php</abbr></a></abbr>
@@ -2058,16 +2073,17 @@ descriptionEn: ?string,
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getApprover</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>|null</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>|null</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>|null</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2078,6 +2094,7 @@ descriptionEn: ?string,
     <h4 class="phpdocumentor-element__name" id="method_getContactAddress">
         getContactAddress()
         <a href="classes/Company-Model-Company.html#method_getContactAddress" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
@@ -2092,15 +2109,17 @@ descriptionEn: ?string,
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getContactAddress</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string|null</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">string|null</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2111,6 +2130,7 @@ descriptionEn: ?string,
     <h4 class="phpdocumentor-element__name" id="method_getContactEmail">
         getContactEmail()
         <a href="classes/Company-Model-Company.html#method_getContactEmail" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
@@ -2125,15 +2145,17 @@ descriptionEn: ?string,
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getContactEmail</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string|null</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">string|null</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2144,6 +2166,7 @@ descriptionEn: ?string,
     <h4 class="phpdocumentor-element__name" id="method_getContactName">
         getContactName()
         <a href="classes/Company-Model-Company.html#method_getContactName" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
@@ -2158,15 +2181,17 @@ descriptionEn: ?string,
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getContactName</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string|null</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">string|null</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2177,6 +2202,7 @@ descriptionEn: ?string,
     <h4 class="phpdocumentor-element__name" id="method_getContactPhone">
         getContactPhone()
         <a href="classes/Company-Model-Company.html#method_getContactPhone" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
@@ -2191,15 +2217,17 @@ descriptionEn: ?string,
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getContactPhone</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string|null</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">string|null</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2210,6 +2238,7 @@ descriptionEn: ?string,
     <h4 class="phpdocumentor-element__name" id="method_getCreatedAt">
         getCreatedAt()
         <a href="classes/Application-Model-Traits-TimestampableTrait.html#method_getCreatedAt" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/TimestampableTrait.php"><a href="files/module-application-src-model-traits-timestampabletrait.html"><abbr title="module/Application/src/Model/Traits/TimestampableTrait.php">TimestampableTrait.php</abbr></a></abbr>
@@ -2223,16 +2252,17 @@ descriptionEn: ?string,
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getCreatedAt</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\DateTime">DateTime</abbr></span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\DateTime">DateTime</abbr></span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type"><abbr title="\DateTime">DateTime</abbr></span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2243,6 +2273,7 @@ descriptionEn: ?string,
     <h4 class="phpdocumentor-element__name" id="method_getDescription">
         getDescription()
         <a href="classes/Company-Model-Company.html#method_getDescription" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
@@ -2257,15 +2288,17 @@ descriptionEn: ?string,
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getDescription</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Company-Model-CompanyLocalisedText.html"><abbr title="\Company\Model\CompanyLocalisedText">CompanyLocalisedText</abbr></a></span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Company-Model-CompanyLocalisedText.html"><abbr title="\Company\Model\CompanyLocalisedText">CompanyLocalisedText</abbr></a></span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Company-Model-CompanyLocalisedText.html"><abbr title="\Company\Model\CompanyLocalisedText">CompanyLocalisedText</abbr></a></span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2276,6 +2309,7 @@ descriptionEn: ?string,
     <h4 class="phpdocumentor-element__name" id="method_getId">
         getId()
         <a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_getId" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/IdentifiableTrait.php"><a href="files/module-application-src-model-traits-identifiabletrait.html"><abbr title="module/Application/src/Model/Traits/IdentifiableTrait.php">IdentifiableTrait.php</abbr></a></abbr>
@@ -2290,12 +2324,15 @@ descriptionEn: ?string,
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getId</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int|null</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_getId#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
@@ -2305,13 +2342,13 @@ descriptionEn: ?string,
                                                                                 
                                              
                                     </dd>
-                        </dl>
+                                            </dl>
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">int|null</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">int|null</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2322,6 +2359,7 @@ descriptionEn: ?string,
     <h4 class="phpdocumentor-element__name" id="method_getIsUpdate">
         getIsUpdate()
         <a href="classes/Application-Model-Traits-UpdateProposableTrait.html#method_getIsUpdate" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/UpdateProposableTrait.php"><a href="files/module-application-src-model-traits-updateproposabletrait.html"><abbr title="module/Application/src/Model/Traits/UpdateProposableTrait.php">UpdateProposableTrait.php</abbr></a></abbr>
@@ -2336,15 +2374,17 @@ descriptionEn: ?string,
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getIsUpdate</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">bool</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">bool</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2355,6 +2395,7 @@ descriptionEn: ?string,
     <h4 class="phpdocumentor-element__name" id="method_getLogo">
         getLogo()
         <a href="classes/Company-Model-Company.html#method_getLogo" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
@@ -2369,15 +2410,17 @@ descriptionEn: ?string,
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getLogo</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string|null</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">string|null</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2388,6 +2431,7 @@ descriptionEn: ?string,
     <h4 class="phpdocumentor-element__name" id="method_getName">
         getName()
         <a href="classes/Company-Model-Company.html#method_getName" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
@@ -2402,15 +2446,17 @@ descriptionEn: ?string,
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getName</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">string</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2421,6 +2467,7 @@ descriptionEn: ?string,
     <h4 class="phpdocumentor-element__name" id="method_getNumberOfActiveJobs">
         getNumberOfActiveJobs()
         <a href="classes/Company-Model-Company.html#method_getNumberOfActiveJobs" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
@@ -2436,6 +2483,8 @@ company.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getNumberOfActiveJobs</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Model-JobCategory.html"><abbr title="\Company\Model\JobCategory">JobCategory</abbr></a>|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$category</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -2444,18 +2493,17 @@ company.</p>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Model-JobCategory.html"><abbr title="\Company\Model\JobCategory">JobCategory</abbr></a>|null</span>
                  = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">int</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">int</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2466,6 +2514,7 @@ company.</p>
     <h4 class="phpdocumentor-element__name" id="method_getNumberOfExpiredPackages">
         getNumberOfExpiredPackages()
         <a href="classes/Company-Model-Company.html#method_getNumberOfExpiredPackages" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
@@ -2480,15 +2529,17 @@ company.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getNumberOfExpiredPackages</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">int</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">int</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2499,6 +2550,7 @@ company.</p>
     <h4 class="phpdocumentor-element__name" id="method_getNumberOfJobs">
         getNumberOfJobs()
         <a href="classes/Company-Model-Company.html#method_getNumberOfJobs" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
@@ -2514,15 +2566,17 @@ company.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getNumberOfJobs</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">int</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">int</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2533,6 +2587,7 @@ company.</p>
     <h4 class="phpdocumentor-element__name" id="method_getNumberOfPackages">
         getNumberOfPackages()
         <a href="classes/Company-Model-Company.html#method_getNumberOfPackages" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
@@ -2547,17 +2602,21 @@ company.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getNumberOfPackages</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">int</span>
-            &mdash;
-            <section class="phpdocumentor-description"><p>the number of packages</p>
+        <span class="phpdocumentor-signature__response_type">int</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>the number of packages</p>
 </section>
 
-    
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2568,6 +2627,7 @@ company.</p>
     <h4 class="phpdocumentor-element__name" id="method_getPackages">
         getPackages()
         <a href="classes/Company-Model-Company.html#method_getPackages" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
@@ -2580,17 +2640,19 @@ company.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getPackages</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;array-key, <a href="classes/Company-Model-CompanyPackage.html"><abbr title="\Company\Model\CompanyPackage">CompanyPackage</abbr></a>&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">getPackages</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Company-Model-CompanyPackage.html"><abbr title="\Company\Model\CompanyPackage">CompanyPackage</abbr></a>&gt;</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;array-key, <a href="classes/Company-Model-CompanyPackage.html"><abbr title="\Company\Model\CompanyPackage">CompanyPackage</abbr></a>&gt;</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Company-Model-CompanyPackage.html"><abbr title="\Company\Model\CompanyPackage">CompanyPackage</abbr></a>&gt;</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2601,6 +2663,7 @@ company.</p>
     <h4 class="phpdocumentor-element__name" id="method_getRepresentativeEmail">
         getRepresentativeEmail()
         <a href="classes/Company-Model-Company.html#method_getRepresentativeEmail" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
@@ -2615,15 +2678,17 @@ company.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getRepresentativeEmail</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">string</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2634,6 +2699,7 @@ company.</p>
     <h4 class="phpdocumentor-element__name" id="method_getRepresentativeName">
         getRepresentativeName()
         <a href="classes/Company-Model-Company.html#method_getRepresentativeName" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
@@ -2648,15 +2714,17 @@ company.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getRepresentativeName</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">string</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2667,6 +2735,7 @@ company.</p>
     <h4 class="phpdocumentor-element__name" id="method_getResourceId">
         getResourceId()
         <a href="classes/Company-Model-Company.html#method_getResourceId" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
@@ -2680,16 +2749,17 @@ company.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getResourceId</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">string</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2700,6 +2770,7 @@ company.</p>
     <h4 class="phpdocumentor-element__name" id="method_getSlogan">
         getSlogan()
         <a href="classes/Company-Model-Company.html#method_getSlogan" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
@@ -2714,15 +2785,17 @@ company.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getSlogan</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Company-Model-CompanyLocalisedText.html"><abbr title="\Company\Model\CompanyLocalisedText">CompanyLocalisedText</abbr></a></span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Company-Model-CompanyLocalisedText.html"><abbr title="\Company\Model\CompanyLocalisedText">CompanyLocalisedText</abbr></a></span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Company-Model-CompanyLocalisedText.html"><abbr title="\Company\Model\CompanyLocalisedText">CompanyLocalisedText</abbr></a></span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2733,6 +2806,7 @@ company.</p>
     <h4 class="phpdocumentor-element__name" id="method_getSlugName">
         getSlugName()
         <a href="classes/Company-Model-Company.html#method_getSlugName" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
@@ -2747,17 +2821,21 @@ company.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getSlugName</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string</span>
-            &mdash;
-            <section class="phpdocumentor-description"><p>the company's slug name</p>
+        <span class="phpdocumentor-signature__response_type">string</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>the company's slug name</p>
 </section>
 
-    
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2768,6 +2846,7 @@ company.</p>
     <h4 class="phpdocumentor-element__name" id="method_getUpdatedAt">
         getUpdatedAt()
         <a href="classes/Application-Model-Traits-TimestampableTrait.html#method_getUpdatedAt" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/TimestampableTrait.php"><a href="files/module-application-src-model-traits-timestampabletrait.html"><abbr title="module/Application/src/Model/Traits/TimestampableTrait.php">TimestampableTrait.php</abbr></a></abbr>
@@ -2781,16 +2860,17 @@ company.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getUpdatedAt</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\DateTime">DateTime</abbr></span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\DateTime">DateTime</abbr></span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type"><abbr title="\DateTime">DateTime</abbr></span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2801,6 +2881,7 @@ company.</p>
     <h4 class="phpdocumentor-element__name" id="method_getUpdateProposals">
         getUpdateProposals()
         <a href="classes/Company-Model-Company.html#method_getUpdateProposals" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
@@ -2812,17 +2893,19 @@ company.</p>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getUpdateProposals</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;array-key, <a href="classes/Company-Model-Proposals-CompanyUpdate.html"><abbr title="\Company\Model\Proposals\CompanyUpdate">CompanyUpdate</abbr></a>&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">getUpdateProposals</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Company-Model-Proposals-CompanyUpdate.html"><abbr title="\Company\Model\Proposals\CompanyUpdate">CompanyUpdate</abbr></a>&gt;</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;array-key, <a href="classes/Company-Model-Proposals-CompanyUpdate.html"><abbr title="\Company\Model\Proposals\CompanyUpdate">CompanyUpdate</abbr></a>&gt;</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Company-Model-Proposals-CompanyUpdate.html"><abbr title="\Company\Model\Proposals\CompanyUpdate">CompanyUpdate</abbr></a>&gt;</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2833,6 +2916,7 @@ company.</p>
     <h4 class="phpdocumentor-element__name" id="method_getWebsite">
         getWebsite()
         <a href="classes/Company-Model-Company.html#method_getWebsite" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
@@ -2847,15 +2931,17 @@ company.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getWebsite</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Company-Model-CompanyLocalisedText.html"><abbr title="\Company\Model\CompanyLocalisedText">CompanyLocalisedText</abbr></a></span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Company-Model-CompanyLocalisedText.html"><abbr title="\Company\Model\CompanyLocalisedText">CompanyLocalisedText</abbr></a></span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Company-Model-CompanyLocalisedText.html"><abbr title="\Company\Model\CompanyLocalisedText">CompanyLocalisedText</abbr></a></span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2866,6 +2952,7 @@ company.</p>
     <h4 class="phpdocumentor-element__name" id="method_isApproved">
         isApproved()
         <a href="classes/Application-Model-Traits-ApprovableTrait.html#method_isApproved" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/ApprovableTrait.php"><a href="files/module-application-src-model-traits-approvabletrait.html"><abbr title="module/Application/src/Model/Traits/ApprovableTrait.php">ApprovableTrait.php</abbr></a></abbr>
@@ -2879,16 +2966,17 @@ company.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">isApproved</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">bool</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">bool</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2899,6 +2987,7 @@ company.</p>
     <h4 class="phpdocumentor-element__name" id="method_isBannerActive">
         isBannerActive()
         <a href="classes/Company-Model-Company.html#method_isBannerActive" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
@@ -2913,15 +3002,17 @@ company.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">isBannerActive</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">bool</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">bool</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2932,6 +3023,7 @@ company.</p>
     <h4 class="phpdocumentor-element__name" id="method_isFeatured">
         isFeatured()
         <a href="classes/Company-Model-Company.html#method_isFeatured" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
@@ -2946,15 +3038,17 @@ company.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">isFeatured</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">bool</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">bool</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2965,6 +3059,7 @@ company.</p>
     <h4 class="phpdocumentor-element__name" id="method_isHidden">
         isHidden()
         <a href="classes/Company-Model-Company.html#method_isHidden" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
@@ -2979,15 +3074,17 @@ company.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">isHidden</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">bool</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">bool</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2998,6 +3095,7 @@ company.</p>
     <h4 class="phpdocumentor-element__name" id="method_isPublished">
         isPublished()
         <a href="classes/Company-Model-Company.html#method_isPublished" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
@@ -3012,15 +3110,17 @@ company.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">isPublished</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">bool</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">bool</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -3031,6 +3131,7 @@ company.</p>
     <h4 class="phpdocumentor-element__name" id="method_isUpdate">
         isUpdate()
         <a href="classes/Application-Model-Traits-UpdateProposableTrait.html#method_isUpdate" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/UpdateProposableTrait.php"><a href="files/module-application-src-model-traits-updateproposabletrait.html"><abbr title="module/Application/src/Model/Traits/UpdateProposableTrait.php">UpdateProposableTrait.php</abbr></a></abbr>
@@ -3045,15 +3146,17 @@ company.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">isUpdate</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">bool</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">bool</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -3064,6 +3167,7 @@ company.</p>
     <h4 class="phpdocumentor-element__name" id="method_prePersist">
         prePersist()
         <a href="classes/Application-Model-Traits-TimestampableTrait.html#method_prePersist" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/TimestampableTrait.php"><a href="files/module-application-src-model-traits-timestampabletrait.html"><abbr title="module/Application/src/Model/Traits/TimestampableTrait.php">TimestampableTrait.php</abbr></a></abbr>
@@ -3078,14 +3182,12 @@ company.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">prePersist</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -3097,6 +3199,7 @@ company.</p>
     <h4 class="phpdocumentor-element__name" id="method_preUpdate">
         preUpdate()
         <a href="classes/Application-Model-Traits-TimestampableTrait.html#method_preUpdate" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/TimestampableTrait.php"><a href="files/module-application-src-model-traits-timestampabletrait.html"><abbr title="module/Application/src/Model/Traits/TimestampableTrait.php">TimestampableTrait.php</abbr></a></abbr>
@@ -3111,14 +3214,12 @@ company.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">preUpdate</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -3130,6 +3231,7 @@ company.</p>
     <h4 class="phpdocumentor-element__name" id="method_setApprovableText">
         setApprovableText()
         <a href="classes/Application-Model-Traits-ApprovableTrait.html#method_setApprovableText" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/ApprovableTrait.php"><a href="files/module-application-src-model-traits-approvabletrait.html"><abbr title="module/Application/src/Model/Traits/ApprovableTrait.php">ApprovableTrait.php</abbr></a></abbr>
@@ -3143,8 +3245,9 @@ company.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setApprovableText</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Application-Model-ApprovableText.html"><abbr title="\Application\Model\ApprovableText">ApprovableText</abbr></a>|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$approvableText</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -3152,17 +3255,12 @@ company.</p>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Application-Model-ApprovableText.html"><abbr title="\Application\Model\ApprovableText">ApprovableText</abbr></a>|null</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -3174,6 +3272,7 @@ company.</p>
     <h4 class="phpdocumentor-element__name" id="method_setApproved">
         setApproved()
         <a href="classes/Application-Model-Traits-ApprovableTrait.html#method_setApproved" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/ApprovableTrait.php"><a href="files/module-application-src-model-traits-approvabletrait.html"><abbr title="module/Application/src/Model/Traits/ApprovableTrait.php">ApprovableTrait.php</abbr></a></abbr>
@@ -3187,8 +3286,9 @@ company.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setApproved</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Application-Model-Enums-ApprovableStatus.html"><abbr title="\Application\Model\Enums\ApprovableStatus">ApprovableStatus</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$approved</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -3196,17 +3296,12 @@ company.</p>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Application-Model-Enums-ApprovableStatus.html"><abbr title="\Application\Model\Enums\ApprovableStatus">ApprovableStatus</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -3218,6 +3313,7 @@ company.</p>
     <h4 class="phpdocumentor-element__name" id="method_setApprovedAt">
         setApprovedAt()
         <a href="classes/Application-Model-Traits-ApprovableTrait.html#method_setApprovedAt" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/ApprovableTrait.php"><a href="files/module-application-src-model-traits-approvabletrait.html"><abbr title="module/Application/src/Model/Traits/ApprovableTrait.php">ApprovableTrait.php</abbr></a></abbr>
@@ -3231,8 +3327,9 @@ company.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setApprovedAt</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTime">DateTime</abbr>|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$approvedAt</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -3240,17 +3337,12 @@ company.</p>
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTime">DateTime</abbr>|null</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -3262,6 +3354,7 @@ company.</p>
     <h4 class="phpdocumentor-element__name" id="method_setApprover">
         setApprover()
         <a href="classes/Application-Model-Traits-ApprovableTrait.html#method_setApprover" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/ApprovableTrait.php"><a href="files/module-application-src-model-traits-approvabletrait.html"><abbr title="module/Application/src/Model/Traits/ApprovableTrait.php">ApprovableTrait.php</abbr></a></abbr>
@@ -3275,8 +3368,9 @@ company.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setApprover</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$approver</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -3284,17 +3378,12 @@ company.</p>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>|null</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -3306,6 +3395,7 @@ company.</p>
     <h4 class="phpdocumentor-element__name" id="method_setContactAddress">
         setContactAddress()
         <a href="classes/Company-Model-Company.html#method_setContactAddress" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
@@ -3320,6 +3410,8 @@ company.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setContactAddress</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$contactAddress</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -3328,17 +3420,12 @@ company.</p>
                 : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -3350,6 +3437,7 @@ company.</p>
     <h4 class="phpdocumentor-element__name" id="method_setContactEmail">
         setContactEmail()
         <a href="classes/Company-Model-Company.html#method_setContactEmail" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
@@ -3364,6 +3452,8 @@ company.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setContactEmail</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$contactEmail</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -3372,17 +3462,12 @@ company.</p>
                 : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -3394,6 +3479,7 @@ company.</p>
     <h4 class="phpdocumentor-element__name" id="method_setContactName">
         setContactName()
         <a href="classes/Company-Model-Company.html#method_setContactName" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
@@ -3408,6 +3494,8 @@ company.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setContactName</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$name</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -3416,17 +3504,12 @@ company.</p>
                 : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -3438,6 +3521,7 @@ company.</p>
     <h4 class="phpdocumentor-element__name" id="method_setContactPhone">
         setContactPhone()
         <a href="classes/Company-Model-Company.html#method_setContactPhone" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
@@ -3452,6 +3536,8 @@ company.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setContactPhone</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$contactPhone</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -3460,17 +3546,12 @@ company.</p>
                 : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -3482,6 +3563,7 @@ company.</p>
     <h4 class="phpdocumentor-element__name" id="method_setDescription">
         setDescription()
         <a href="classes/Company-Model-Company.html#method_setDescription" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
@@ -3496,6 +3578,8 @@ company.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setDescription</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Model-CompanyLocalisedText.html"><abbr title="\Company\Model\CompanyLocalisedText">CompanyLocalisedText</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$description</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -3504,17 +3588,12 @@ company.</p>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Model-CompanyLocalisedText.html"><abbr title="\Company\Model\CompanyLocalisedText">CompanyLocalisedText</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -3526,6 +3605,7 @@ company.</p>
     <h4 class="phpdocumentor-element__name" id="method_setId">
         setId()
         <a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_setId" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/IdentifiableTrait.php"><a href="files/module-application-src-model-traits-identifiabletrait.html"><abbr title="module/Application/src/Model/Traits/IdentifiableTrait.php">IdentifiableTrait.php</abbr></a></abbr>
@@ -3540,6 +3620,8 @@ company.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setId</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$id</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -3548,17 +3630,12 @@ company.</p>
                 : <span class="phpdocumentor-signature__argument__return-type">int|null</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -3570,6 +3647,7 @@ company.</p>
     <h4 class="phpdocumentor-element__name" id="method_setIsUpdate">
         setIsUpdate()
         <a href="classes/Application-Model-Traits-UpdateProposableTrait.html#method_setIsUpdate" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/UpdateProposableTrait.php"><a href="files/module-application-src-model-traits-updateproposabletrait.html"><abbr title="module/Application/src/Model/Traits/UpdateProposableTrait.php">UpdateProposableTrait.php</abbr></a></abbr>
@@ -3584,6 +3662,8 @@ company.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setIsUpdate</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$isUpdate</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -3592,17 +3672,12 @@ company.</p>
                 : <span class="phpdocumentor-signature__argument__return-type">bool</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -3614,6 +3689,7 @@ company.</p>
     <h4 class="phpdocumentor-element__name" id="method_setLogo">
         setLogo()
         <a href="classes/Company-Model-Company.html#method_setLogo" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
@@ -3628,6 +3704,8 @@ company.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setLogo</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$logo</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -3636,17 +3714,12 @@ company.</p>
                 : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -3658,6 +3731,7 @@ company.</p>
     <h4 class="phpdocumentor-element__name" id="method_setName">
         setName()
         <a href="classes/Company-Model-Company.html#method_setName" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
@@ -3672,6 +3746,8 @@ company.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setName</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$name</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -3680,17 +3756,12 @@ company.</p>
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -3702,6 +3773,7 @@ company.</p>
     <h4 class="phpdocumentor-element__name" id="method_setPublished">
         setPublished()
         <a href="classes/Company-Model-Company.html#method_setPublished" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
@@ -3716,6 +3788,8 @@ company.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setPublished</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$published</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -3724,17 +3798,12 @@ company.</p>
                 : <span class="phpdocumentor-signature__argument__return-type">bool</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -3746,6 +3815,7 @@ company.</p>
     <h4 class="phpdocumentor-element__name" id="method_setRepresentativeEmail">
         setRepresentativeEmail()
         <a href="classes/Company-Model-Company.html#method_setRepresentativeEmail" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
@@ -3760,6 +3830,8 @@ company.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setRepresentativeEmail</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$email</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -3768,17 +3840,12 @@ company.</p>
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -3790,6 +3857,7 @@ company.</p>
     <h4 class="phpdocumentor-element__name" id="method_setRepresentativeName">
         setRepresentativeName()
         <a href="classes/Company-Model-Company.html#method_setRepresentativeName" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
@@ -3804,6 +3872,8 @@ company.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setRepresentativeName</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$name</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -3812,17 +3882,12 @@ company.</p>
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -3834,6 +3899,7 @@ company.</p>
     <h4 class="phpdocumentor-element__name" id="method_setSlogan">
         setSlogan()
         <a href="classes/Company-Model-Company.html#method_setSlogan" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
@@ -3848,6 +3914,8 @@ company.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setSlogan</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Model-CompanyLocalisedText.html"><abbr title="\Company\Model\CompanyLocalisedText">CompanyLocalisedText</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$slogan</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -3856,17 +3924,12 @@ company.</p>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Model-CompanyLocalisedText.html"><abbr title="\Company\Model\CompanyLocalisedText">CompanyLocalisedText</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -3878,6 +3941,7 @@ company.</p>
     <h4 class="phpdocumentor-element__name" id="method_setSlugName">
         setSlugName()
         <a href="classes/Company-Model-Company.html#method_setSlugName" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
@@ -3892,6 +3956,8 @@ company.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setSlugName</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$slugName</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -3908,10 +3974,6 @@ company.</p>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -3923,6 +3985,7 @@ company.</p>
     <h4 class="phpdocumentor-element__name" id="method_setWebsite">
         setWebsite()
         <a href="classes/Company-Model-Company.html#method_setWebsite" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
@@ -3937,6 +4000,8 @@ company.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setWebsite</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Model-CompanyLocalisedText.html"><abbr title="\Company\Model\CompanyLocalisedText">CompanyLocalisedText</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$website</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -3945,17 +4010,12 @@ company.</p>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Company-Model-CompanyLocalisedText.html"><abbr title="\Company\Model\CompanyLocalisedText">CompanyLocalisedText</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -3967,6 +4027,7 @@ company.</p>
     <h4 class="phpdocumentor-element__name" id="method_toArray">
         toArray()
         <a href="classes/Company-Model-Company.html#method_toArray" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
@@ -3979,17 +4040,19 @@ company.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">toArray</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">toArray</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array{name: string, slugName: string, representativeName: string, representativeEmail: string, logo: ?string, contactName: ?string, contactEmail: ?string, contactAddress: ?string, contactPhone: ?string, published: bool, slogan: ?string, sloganEn: ?string, website: ?string, websiteEn: ?string, description: ?string, descriptionEn: ?string}</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">array{name: string, slugName: string, representativeName: string, representativeEmail: string, logo: ?string, contactName: ?string, contactEmail: ?string, contactAddress: ?string, contactPhone: ?string, published: bool, slogan: ?string, sloganEn: ?string, website: ?string, websiteEn: ?string, description: ?string, descriptionEn: ?string}</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -4000,6 +4063,7 @@ company.</p>
     <h4 class="phpdocumentor-element__name" id="method_setCreatedAt">
         setCreatedAt()
         <a href="classes/Application-Model-Traits-TimestampableTrait.html#method_setCreatedAt" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/TimestampableTrait.php"><a href="files/module-application-src-model-traits-timestampabletrait.html"><abbr title="module/Application/src/Model/Traits/TimestampableTrait.php">TimestampableTrait.php</abbr></a></abbr>
@@ -4013,8 +4077,9 @@ company.</p>
     <span class="phpdocumentor-signature__visibility">private</span>
                     <span class="phpdocumentor-signature__name">setCreatedAt</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTime">DateTime</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$createdAt</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -4022,17 +4087,12 @@ company.</p>
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTime">DateTime</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -4044,6 +4104,7 @@ company.</p>
     <h4 class="phpdocumentor-element__name" id="method_setUpdatedAt">
         setUpdatedAt()
         <a href="classes/Application-Model-Traits-TimestampableTrait.html#method_setUpdatedAt" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/TimestampableTrait.php"><a href="files/module-application-src-model-traits-timestampabletrait.html"><abbr title="module/Application/src/Model/Traits/TimestampableTrait.php">TimestampableTrait.php</abbr></a></abbr>
@@ -4057,8 +4118,9 @@ company.</p>
     <span class="phpdocumentor-signature__visibility">private</span>
                     <span class="phpdocumentor-signature__name">setUpdatedAt</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTime">DateTime</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$updatedAt</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -4066,85 +4128,223 @@ company.</p>
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTime">DateTime</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
             </section>
 
-        
+        <div class="phpdocumentor-modal" id="source-view">
+    <div class="phpdocumentor-modal-bg" data-exit-button></div>
+    <div class="phpdocumentor-modal-container">
+        <div class="phpdocumentor-modal-content">
+            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/module/Company/src/Model/Company.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
+        </div>
+        <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
+    </div>
+</div>
+
     <script type="text/javascript">
-        function loadExternalCodeSnippets(line) {
-            Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach((pre) => {
-                var src = pre.getAttribute('data-src').replace( /\\/g, '/');
-                var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
-                var language = 'php';
+        (function () {
+            function loadExternalCodeSnippet(el, url, line) {
+                Array.prototype.slice.call(el.querySelectorAll('pre[data-src]')).forEach((pre) => {
+                    const src = url || pre.getAttribute('data-src').replace(/\\/g, '/');
+                    const language = 'php';
 
-                var code = document.createElement('code');
-                code.className = 'language-' + language;
+                    const code = document.createElement('code');
+                    code.className = 'language-' + language;
+                    pre.textContent = '';
+                    pre.setAttribute('data-line', line)
+                    code.textContent = 'Loading…';
+                    pre.appendChild(code);
 
-                pre.textContent = '';
+                    var xhr = new XMLHttpRequest();
 
-                pre.setAttribute('data-line', line)
-                code.textContent = 'Loading…';
+                    xhr.open('GET', src, true);
 
-                pre.appendChild(code);
-
-                var xhr = new XMLHttpRequest();
-
-                xhr.open('GET', src, true);
-
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState == 4) {
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState !== 4) {
+                            return;
+                        }
 
                         if (xhr.status < 400 && xhr.responseText) {
                             code.textContent = xhr.responseText;
-
                             Prism.highlightElement(code);
+                            return;
                         }
-                        else if (xhr.status >= 400) {
+
+                        if (xhr.status === 404) {
+                            code.textContent = '✖ Error: File could not be found';
+                            return;
+                        }
+
+                        if (xhr.status >= 400) {
                             code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                            return;
                         }
-                        else {
-                            code.textContent = '✖ Error: File does not exist, is empty or trying to view from localhost';
-                        }
+
+                        code.textContent = '✖ Error: An unknown error occurred';
+                    };
+
+                    xhr.send(null);
+                });
+            }
+
+            const modalButtons = document.querySelectorAll("[data-modal]");
+            const openedAsLocalFile = window.location.protocol === 'file:';
+            if (modalButtons.length > 0 && openedAsLocalFile) {
+                console.warn(
+                    'Viewing the source code is unavailable because you are opening this page from the file:// scheme; ' +
+                    'browsers block XHR requests when a page is opened this way'
+                );
+            }
+
+            modalButtons.forEach(function (trigger) {
+                if (openedAsLocalFile) {
+                    trigger.setAttribute("hidden", "hidden");
+                }
+
+                trigger.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    const modal = document.getElementById(trigger.dataset.modal);
+                    if (!modal) {
+                        console.error(`Modal with id "${trigger.dataset.modal}" could not be found`);
+                        return;
                     }
-                };
+                    modal.classList.add("phpdocumentor-modal__open");
 
-                xhr.send(null);
-            });
-        }
-
-        var modals = document.querySelectorAll("[data-modal]");
-
-        modals.forEach(function (trigger) {
-            trigger.addEventListener("click", function (event) {
-                //event.preventDefault();
-                const modal = document.getElementById(trigger.dataset.modal);
-                modal.classList.add("phpdocumentor-modal__open");
-                loadExternalCodeSnippets(trigger.dataset.line)
-                const exits = modal.querySelectorAll("[data-exit-button]");
-                exits.forEach(function (exit) {
-                    exit.addEventListener("click", function (event) {
-                        event.preventDefault();
-                        modal.classList.remove("phpdocumentor-modal__open");
+                    loadExternalCodeSnippet(modal, trigger.dataset.src || null, trigger.dataset.line)
+                    const exits = modal.querySelectorAll("[data-exit-button]");
+                    exits.forEach(function (exit) {
+                        exit.addEventListener("click", function (event) {
+                            event.preventDefault();
+                            modal.classList.remove("phpdocumentor-modal__open");
+                        });
                     });
                 });
             });
-        });
+        })();
     </script>
 
     </article>
-                <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">
+                                </section>
+                <section class="phpdocumentor-on-this-page__sidebar">
+                                
+    <section class="phpdocumentor-on-this-page__content">
+        <strong class="phpdocumentor-on-this-page__title">On this page</strong>
+
+        <ul class="phpdocumentor-list -clean">
+            <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
+            <li>
+                <ul class="phpdocumentor-list -clean">
+                                                            <li><a href="classes/Company-Model-Company.html#toc-properties">Properties</a></li>
+                                                            <li><a href="classes/Company-Model-Company.html#toc-methods">Methods</a></li>
+                                    </ul>
+            </li>
+            
+                            <li class="phpdocumentor-on-this-page-section__title">Properties</li>
+                <li>
+                    <ul class="phpdocumentor-list -clean">
+                                                    <li><a href="classes/Application-Model-Traits-ApprovableTrait.html#property_approvableText">$approvableText<a href="classes/Company-Model-Company.html"></li>
+                                                    <li><a href="classes/Application-Model-Traits-ApprovableTrait.html#property_approved">$approved<a href="classes/Company-Model-Company.html"></li>
+                                                    <li><a href="classes/Application-Model-Traits-ApprovableTrait.html#property_approvedAt">$approvedAt<a href="classes/Company-Model-Company.html"></li>
+                                                    <li><a href="classes/Application-Model-Traits-ApprovableTrait.html#property_approver">$approver<a href="classes/Company-Model-Company.html"></li>
+                                                    <li><a href="classes/Company-Model-Company.html#property_contactAddress">$contactAddress<a href="classes/Company-Model-Company.html"></li>
+                                                    <li><a href="classes/Company-Model-Company.html#property_contactEmail">$contactEmail<a href="classes/Company-Model-Company.html"></li>
+                                                    <li><a href="classes/Company-Model-Company.html#property_contactName">$contactName<a href="classes/Company-Model-Company.html"></li>
+                                                    <li><a href="classes/Company-Model-Company.html#property_contactPhone">$contactPhone<a href="classes/Company-Model-Company.html"></li>
+                                                    <li><a href="classes/Application-Model-Traits-TimestampableTrait.html#property_createdAt">$createdAt<a href="classes/Company-Model-Company.html"></li>
+                                                    <li><a href="classes/Company-Model-Company.html#property_description">$description<a href="classes/Company-Model-Company.html"></li>
+                                                    <li><a href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id">$id<a href="classes/Company-Model-Company.html"></li>
+                                                    <li><a href="classes/Application-Model-Traits-UpdateProposableTrait.html#property_isUpdate">$isUpdate<a href="classes/Company-Model-Company.html"></li>
+                                                    <li><a href="classes/Company-Model-Company.html#property_logo">$logo<a href="classes/Company-Model-Company.html"></li>
+                                                    <li><a href="classes/Company-Model-Company.html#property_name">$name<a href="classes/Company-Model-Company.html"></li>
+                                                    <li><a href="classes/Company-Model-Company.html#property_packages">$packages<a href="classes/Company-Model-Company.html"></li>
+                                                    <li><a href="classes/Company-Model-Company.html#property_published">$published<a href="classes/Company-Model-Company.html"></li>
+                                                    <li><a href="classes/Company-Model-Company.html#property_representativeEmail">$representativeEmail<a href="classes/Company-Model-Company.html"></li>
+                                                    <li><a href="classes/Company-Model-Company.html#property_representativeName">$representativeName<a href="classes/Company-Model-Company.html"></li>
+                                                    <li><a href="classes/Company-Model-Company.html#property_slogan">$slogan<a href="classes/Company-Model-Company.html"></li>
+                                                    <li><a href="classes/Company-Model-Company.html#property_slugName">$slugName<a href="classes/Company-Model-Company.html"></li>
+                                                    <li><a href="classes/Application-Model-Traits-TimestampableTrait.html#property_updatedAt">$updatedAt<a href="classes/Company-Model-Company.html"></li>
+                                                    <li><a href="classes/Company-Model-Company.html#property_updateProposals">$updateProposals<a href="classes/Company-Model-Company.html"></li>
+                                                    <li><a href="classes/Company-Model-Company.html#property_website">$website<a href="classes/Company-Model-Company.html"></li>
+                                            </ul>
+                </li>
+            
+                        <li class="phpdocumentor-on-this-page-section__title">Methods</li>
+            <li>
+                <ul class="phpdocumentor-list -clean">
+                                            <li><a href="classes/Company-Model-Company.html#method___construct">__construct()</a></li>
+                                            <li><a href="classes/Company-Model-Company.html#method_exchangeArray">exchangeArray()</a></li>
+                                            <li><a href="classes/Application-Model-Traits-ApprovableTrait.html#method_getApprovableText">getApprovableText()</a></li>
+                                            <li><a href="classes/Application-Model-Traits-ApprovableTrait.html#method_getApproved">getApproved()</a></li>
+                                            <li><a href="classes/Application-Model-Traits-ApprovableTrait.html#method_getApprovedAt">getApprovedAt()</a></li>
+                                            <li><a href="classes/Application-Model-Traits-ApprovableTrait.html#method_getApprover">getApprover()</a></li>
+                                            <li><a href="classes/Company-Model-Company.html#method_getContactAddress">getContactAddress()</a></li>
+                                            <li><a href="classes/Company-Model-Company.html#method_getContactEmail">getContactEmail()</a></li>
+                                            <li><a href="classes/Company-Model-Company.html#method_getContactName">getContactName()</a></li>
+                                            <li><a href="classes/Company-Model-Company.html#method_getContactPhone">getContactPhone()</a></li>
+                                            <li><a href="classes/Application-Model-Traits-TimestampableTrait.html#method_getCreatedAt">getCreatedAt()</a></li>
+                                            <li><a href="classes/Company-Model-Company.html#method_getDescription">getDescription()</a></li>
+                                            <li><a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_getId">getId()</a></li>
+                                            <li><a href="classes/Application-Model-Traits-UpdateProposableTrait.html#method_getIsUpdate">getIsUpdate()</a></li>
+                                            <li><a href="classes/Company-Model-Company.html#method_getLogo">getLogo()</a></li>
+                                            <li><a href="classes/Company-Model-Company.html#method_getName">getName()</a></li>
+                                            <li><a href="classes/Company-Model-Company.html#method_getNumberOfActiveJobs">getNumberOfActiveJobs()</a></li>
+                                            <li><a href="classes/Company-Model-Company.html#method_getNumberOfExpiredPackages">getNumberOfExpiredPackages()</a></li>
+                                            <li><a href="classes/Company-Model-Company.html#method_getNumberOfJobs">getNumberOfJobs()</a></li>
+                                            <li><a href="classes/Company-Model-Company.html#method_getNumberOfPackages">getNumberOfPackages()</a></li>
+                                            <li><a href="classes/Company-Model-Company.html#method_getPackages">getPackages()</a></li>
+                                            <li><a href="classes/Company-Model-Company.html#method_getRepresentativeEmail">getRepresentativeEmail()</a></li>
+                                            <li><a href="classes/Company-Model-Company.html#method_getRepresentativeName">getRepresentativeName()</a></li>
+                                            <li><a href="classes/Company-Model-Company.html#method_getResourceId">getResourceId()</a></li>
+                                            <li><a href="classes/Company-Model-Company.html#method_getSlogan">getSlogan()</a></li>
+                                            <li><a href="classes/Company-Model-Company.html#method_getSlugName">getSlugName()</a></li>
+                                            <li><a href="classes/Application-Model-Traits-TimestampableTrait.html#method_getUpdatedAt">getUpdatedAt()</a></li>
+                                            <li><a href="classes/Company-Model-Company.html#method_getUpdateProposals">getUpdateProposals()</a></li>
+                                            <li><a href="classes/Company-Model-Company.html#method_getWebsite">getWebsite()</a></li>
+                                            <li><a href="classes/Application-Model-Traits-ApprovableTrait.html#method_isApproved">isApproved()</a></li>
+                                            <li><a href="classes/Company-Model-Company.html#method_isBannerActive">isBannerActive()</a></li>
+                                            <li><a href="classes/Company-Model-Company.html#method_isFeatured">isFeatured()</a></li>
+                                            <li><a href="classes/Company-Model-Company.html#method_isHidden">isHidden()</a></li>
+                                            <li><a href="classes/Company-Model-Company.html#method_isPublished">isPublished()</a></li>
+                                            <li><a href="classes/Application-Model-Traits-UpdateProposableTrait.html#method_isUpdate">isUpdate()</a></li>
+                                            <li><a href="classes/Application-Model-Traits-TimestampableTrait.html#method_prePersist">prePersist()</a></li>
+                                            <li><a href="classes/Application-Model-Traits-TimestampableTrait.html#method_preUpdate">preUpdate()</a></li>
+                                            <li><a href="classes/Application-Model-Traits-ApprovableTrait.html#method_setApprovableText">setApprovableText()</a></li>
+                                            <li><a href="classes/Application-Model-Traits-ApprovableTrait.html#method_setApproved">setApproved()</a></li>
+                                            <li><a href="classes/Application-Model-Traits-ApprovableTrait.html#method_setApprovedAt">setApprovedAt()</a></li>
+                                            <li><a href="classes/Application-Model-Traits-ApprovableTrait.html#method_setApprover">setApprover()</a></li>
+                                            <li><a href="classes/Company-Model-Company.html#method_setContactAddress">setContactAddress()</a></li>
+                                            <li><a href="classes/Company-Model-Company.html#method_setContactEmail">setContactEmail()</a></li>
+                                            <li><a href="classes/Company-Model-Company.html#method_setContactName">setContactName()</a></li>
+                                            <li><a href="classes/Company-Model-Company.html#method_setContactPhone">setContactPhone()</a></li>
+                                            <li><a href="classes/Company-Model-Company.html#method_setDescription">setDescription()</a></li>
+                                            <li><a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_setId">setId()</a></li>
+                                            <li><a href="classes/Application-Model-Traits-UpdateProposableTrait.html#method_setIsUpdate">setIsUpdate()</a></li>
+                                            <li><a href="classes/Company-Model-Company.html#method_setLogo">setLogo()</a></li>
+                                            <li><a href="classes/Company-Model-Company.html#method_setName">setName()</a></li>
+                                            <li><a href="classes/Company-Model-Company.html#method_setPublished">setPublished()</a></li>
+                                            <li><a href="classes/Company-Model-Company.html#method_setRepresentativeEmail">setRepresentativeEmail()</a></li>
+                                            <li><a href="classes/Company-Model-Company.html#method_setRepresentativeName">setRepresentativeName()</a></li>
+                                            <li><a href="classes/Company-Model-Company.html#method_setSlogan">setSlogan()</a></li>
+                                            <li><a href="classes/Company-Model-Company.html#method_setSlugName">setSlugName()</a></li>
+                                            <li><a href="classes/Company-Model-Company.html#method_setWebsite">setWebsite()</a></li>
+                                            <li><a href="classes/Company-Model-Company.html#method_toArray">toArray()</a></li>
+                                            <li><a href="classes/Application-Model-Traits-TimestampableTrait.html#method_setCreatedAt">setCreatedAt()</a></li>
+                                            <li><a href="classes/Application-Model-Traits-TimestampableTrait.html#method_setUpdatedAt">setUpdatedAt()</a></li>
+                                    </ul>
+            </li>
+                    </ul>
+    </section>
+
+                </section>
+                            </div>
+            <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">
     <section class="phpdocumentor-search-results__dialog">
         <header class="phpdocumentor-search-results__header">
             <h2 class="phpdocumentor-search-results__title">Search results</h2>
@@ -4155,7 +4355,6 @@ company.</p>
         </section>
     </section>
 </section>
-            </div>
         </div>
         <a href="classes/Company-Model-Company.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 

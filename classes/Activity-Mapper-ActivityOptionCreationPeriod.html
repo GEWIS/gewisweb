@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/base.css">
             <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@100;200;300;400;600;700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="css/template.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css" integrity="sha256-ybRkN9dBjhcS2qrW1z+hfCxq+1aBdwyQM5wlQoQVt/0=" crossorigin="anonymous" />
@@ -19,6 +19,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-highlight/prism-line-highlight.css">
                 <script src="https://cdn.jsdelivr.net/npm/fuse.js@3.4.6"></script>
         <script src="https://cdn.jsdelivr.net/npm/css-vars-ponyfill@2"></script>
+        <script src="js/template.js"></script>
         <script src="js/search.js"></script>
         <script defer src="js/searchIndex.js"></script>
     </head>
@@ -52,7 +53,7 @@
 <label class="phpdocumentor-sidebar__menu-icon" for="sidebar-button">
     Menu
 </label>
-<aside class="phpdocumentor-column -four phpdocumentor-sidebar">
+<aside class="phpdocumentor-column -three phpdocumentor-sidebar">
                     <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
@@ -381,8 +382,9 @@
     </section>
 </aside>
 
-            <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <ul class="phpdocumentor-breadcrumbs">
+            <div class="phpdocumentor-column -nine phpdocumentor-content">
+                                <section>
+                                        <ul class="phpdocumentor-breadcrumbs">
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/activity.html">Activity</a></li>
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/activity-mapper.html">Mapper</a></li>
     </ul>
@@ -405,6 +407,11 @@
     
     </h2>
 
+<div class="phpdocumentor-label-line">
+
+
+</div>
+
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Mapper/ActivityOptionCreationPeriod.php"><a href="files/module-activity-src-mapper-activityoptioncreationperiod.html"><abbr title="module/Activity/src/Mapper/ActivityOptionCreationPeriod.php">ActivityOptionCreationPeriod.php</abbr></a></abbr>
     :
@@ -420,7 +427,8 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
 
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Activity-Mapper-ActivityOptionCreationPeriod.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
@@ -432,39 +440,55 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
 </section>
 
                                     </dd>
-                        </dl>
-
-
-
+                                            </dl>
 
 
 
 <h3 id="toc">
     Table of Contents
-    <a href="#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Activity-Mapper-ActivityOptionCreationPeriod.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+
 </h3>
 
+
+
+
+
+
+
+
+
+<h4 id="toc-properties">
+    Properties
+    <a href="classes/Activity-Mapper-ActivityOptionCreationPeriod.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
+
+</h4>
 <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -property -private">
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a href="classes/Application-Mapper-BaseMapper.html#property_em">$em</a>
     <span>
                         &nbsp;: <abbr title="\Doctrine\ORM\EntityManager">EntityManager</abbr>            </span>
 </dt>
-<dd></dd>
 
-                <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    </dl>
+
+<h4 id="toc-methods">
+    Methods
+    <a href="classes/Activity-Mapper-ActivityOptionCreationPeriod.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
+
+</h4>
+<dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Application-Mapper-BaseMapper.html#method___construct">__construct()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Application-Mapper-BaseMapper.html#method_count">count()</a>
     <span>
                                 &nbsp;: int    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Application-Mapper-BaseMapper.html#method_detach">detach()</a>
@@ -478,35 +502,30 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <span>
                                 &nbsp;: <abbr title="\Application\Mapper\T">T</abbr>|null    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Application-Mapper-BaseMapper.html#method_findAll">findAll()</a>
     <span>
                                 &nbsp;: array&lt;string|int, <abbr title="\Application\Mapper\T">T</abbr>&gt;    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Application-Mapper-BaseMapper.html#method_findBy">findBy()</a>
     <span>
                                 &nbsp;: array&lt;string|int, <abbr title="\Application\Mapper\T">T</abbr>&gt;    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Application-Mapper-BaseMapper.html#method_findOneBy">findOneBy()</a>
     <span>
                                 &nbsp;: <abbr title="\Application\Mapper\T">T</abbr>|null    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Application-Mapper-BaseMapper.html#method_flush">flush()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Application-Mapper-BaseMapper.html#method_getConnection">getConnection()</a>
@@ -541,7 +560,6 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Application-Mapper-BaseMapper.html#method_persistMultiple">persistMultiple()</a>
@@ -555,7 +573,6 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Application-Mapper-BaseMapper.html#method_removeById">removeById()</a>
@@ -590,9 +607,9 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <span>
                                 &nbsp;: string    </span>
 </dt>
-<dd></dd>
 
-        </dl>
+    </dl>
+
 
 
 
@@ -603,6 +620,7 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
             <a href="classes/Activity-Mapper-ActivityOptionCreationPeriod.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+
         </h3>
                     <article
         class="
@@ -614,6 +632,7 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <h4 class="phpdocumentor-element__name" id="property_em">
         $em
         <a href="classes/Application-Mapper-BaseMapper.html#property_em" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                         <small class="phpdocumentor-element__modifier">read-only</small>        </span>
     </h4>
@@ -631,10 +650,8 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <span class="phpdocumentor-signature__name">$em</span>
     </code>
 
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
+    
+    
     
 
 </article>
@@ -644,6 +661,7 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
             <a href="classes/Activity-Mapper-ActivityOptionCreationPeriod.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+
         </h3>
                     <article
         class="phpdocumentor-element
@@ -654,6 +672,7 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <h4 class="phpdocumentor-element__name" id="method___construct">
         __construct()
         <a href="classes/Application-Mapper-BaseMapper.html#method___construct" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
@@ -667,8 +686,9 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Doctrine\ORM\EntityManager">EntityManager</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$em</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -676,17 +696,12 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Doctrine\ORM\EntityManager">EntityManager</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">mixed</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -698,6 +713,7 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <h4 class="phpdocumentor-element__name" id="method_count">
         count()
         <a href="classes/Application-Mapper-BaseMapper.html#method_count" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
@@ -711,6 +727,8 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">count</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$criteria</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -727,13 +745,15 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
 
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">int</span>
-            &mdash;
-            <section class="phpdocumentor-description"><p>The number of entities satisfying the criteria</p>
+        <span class="phpdocumentor-signature__response_type">int</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>The number of entities satisfying the criteria</p>
 </section>
 
-    
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -744,6 +764,7 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <h4 class="phpdocumentor-element__name" id="method_detach">
         detach()
         <a href="classes/Application-Mapper-BaseMapper.html#method_detach" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
@@ -758,6 +779,8 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">detach</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">object&nbsp;</span><span class="phpdocumentor-signature__argument__name">$entity</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -766,15 +789,15 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
                 : <span class="phpdocumentor-signature__argument__return-type">object</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Application-Mapper-BaseMapper.html#method_detach#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
@@ -786,12 +809,8 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
 </section>
 
                                     </dd>
-                        </dl>
+                                            </dl>
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -803,6 +822,7 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <h4 class="phpdocumentor-element__name" id="method_find">
         find()
         <a href="classes/Application-Mapper-BaseMapper.html#method_find" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
@@ -816,6 +836,8 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">find</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$id</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Application\Mapper\T">T</abbr>|null</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -832,13 +854,15 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
 
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\Application\Mapper\T">T</abbr>|null</span>
-            &mdash;
-            <section class="phpdocumentor-description"><p>The entity corresponding to the provided ID or null of the entity cannot be found</p>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\Application\Mapper\T">T</abbr>|null</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>The entity corresponding to the provided ID or null of the entity cannot be found</p>
 </section>
 
-    
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -849,6 +873,7 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <h4 class="phpdocumentor-element__name" id="method_findAll">
         findAll()
         <a href="classes/Application-Mapper-BaseMapper.html#method_findAll" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
@@ -862,17 +887,21 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">findAll</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, <abbr title="\Application\Mapper\T">T</abbr>&gt;</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">array&lt;string|int, <abbr title="\Application\Mapper\T">T</abbr>&gt;</span>
-            &mdash;
-            <section class="phpdocumentor-description"><p>All entities in the repository</p>
+        <span class="phpdocumentor-signature__response_type">array&lt;string|int, <abbr title="\Application\Mapper\T">T</abbr>&gt;</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>All entities in the repository</p>
 </section>
 
-    
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -883,6 +912,7 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <h4 class="phpdocumentor-element__name" id="method_findBy">
         findBy()
         <a href="classes/Application-Mapper-BaseMapper.html#method_findBy" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
@@ -896,6 +926,8 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">findBy</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$criteria</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, <abbr title="\Application\Mapper\T">T</abbr>&gt;</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -912,13 +944,15 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
 
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">array&lt;string|int, <abbr title="\Application\Mapper\T">T</abbr>&gt;</span>
-            &mdash;
-            <section class="phpdocumentor-description"><p>The entities corresponding to the provided criteria</p>
+        <span class="phpdocumentor-signature__response_type">array&lt;string|int, <abbr title="\Application\Mapper\T">T</abbr>&gt;</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>The entities corresponding to the provided criteria</p>
 </section>
 
-    
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -929,6 +963,7 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <h4 class="phpdocumentor-element__name" id="method_findOneBy">
         findOneBy()
         <a href="classes/Application-Mapper-BaseMapper.html#method_findOneBy" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
@@ -942,6 +977,8 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">findOneBy</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$criteria</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Application\Mapper\T">T</abbr>|null</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -959,7 +996,8 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Application-Mapper-BaseMapper.html#method_findOneBy#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
@@ -971,15 +1009,17 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
 </section>
 
                                     </dd>
-                        </dl>
+                                            </dl>
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\Application\Mapper\T">T</abbr>|null</span>
-            &mdash;
-            <section class="phpdocumentor-description"><p>The entity corresponding to the provided criteria or null of the entity cannot be found</p>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\Application\Mapper\T">T</abbr>|null</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>The entity corresponding to the provided criteria or null of the entity cannot be found</p>
 </section>
 
-    
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -990,6 +1030,7 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <h4 class="phpdocumentor-element__name" id="method_flush">
         flush()
         <a href="classes/Application-Mapper-BaseMapper.html#method_flush" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
@@ -1003,12 +1044,15 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">flush</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Application-Mapper-BaseMapper.html#method_flush#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
@@ -1027,12 +1071,8 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
                                                             
                                              
                                     </dd>
-                        </dl>
+                                            </dl>
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1044,6 +1084,7 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <h4 class="phpdocumentor-element__name" id="method_getConnection">
         getConnection()
         <a href="classes/Application-Mapper-BaseMapper.html#method_getConnection" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
@@ -1058,15 +1099,17 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getConnection</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\DBAL\Connection">Connection</abbr></span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\DBAL\Connection">Connection</abbr></span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\DBAL\Connection">Connection</abbr></span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -1077,6 +1120,7 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <h4 class="phpdocumentor-element__name" id="method_getCurrentActivityOptionCreationPeriods">
         getCurrentActivityOptionCreationPeriods()
         <a href="classes/Activity-Mapper-ActivityOptionCreationPeriod.html#method_getCurrentActivityOptionCreationPeriods" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Mapper/ActivityOptionCreationPeriod.php"><a href="files/module-activity-src-mapper-activityoptioncreationperiod.html"><abbr title="module/Activity/src/Mapper/ActivityOptionCreationPeriod.php">ActivityOptionCreationPeriod.php</abbr></a></abbr>
@@ -1091,15 +1135,17 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getCurrentActivityOptionCreationPeriods</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Activity-Model-ActivityOptionCreationPeriod.html"><abbr title="\Activity\Model\ActivityOptionCreationPeriod">ActivityOptionCreationPeriod</abbr></a>&gt;</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Activity-Model-ActivityOptionCreationPeriod.html"><abbr title="\Activity\Model\ActivityOptionCreationPeriod">ActivityOptionCreationPeriod</abbr></a>&gt;</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Activity-Model-ActivityOptionCreationPeriod.html"><abbr title="\Activity\Model\ActivityOptionCreationPeriod">ActivityOptionCreationPeriod</abbr></a>&gt;</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -1110,6 +1156,7 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <h4 class="phpdocumentor-element__name" id="method_getEntityManager">
         getEntityManager()
         <a href="classes/Application-Mapper-BaseMapper.html#method_getEntityManager" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
@@ -1124,15 +1171,17 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getEntityManager</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\ORM\EntityManager">EntityManager</abbr></span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\ORM\EntityManager">EntityManager</abbr></span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\ORM\EntityManager">EntityManager</abbr></span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -1143,6 +1192,7 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <h4 class="phpdocumentor-element__name" id="method_getUpcomingActivityOptionCreationPeriods">
         getUpcomingActivityOptionCreationPeriods()
         <a href="classes/Activity-Mapper-ActivityOptionCreationPeriod.html#method_getUpcomingActivityOptionCreationPeriods" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Mapper/ActivityOptionCreationPeriod.php"><a href="files/module-activity-src-mapper-activityoptioncreationperiod.html"><abbr title="module/Activity/src/Mapper/ActivityOptionCreationPeriod.php">ActivityOptionCreationPeriod.php</abbr></a></abbr>
@@ -1157,15 +1207,17 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getUpcomingActivityOptionCreationPeriods</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Activity-Model-ActivityOptionCreationPeriod.html"><abbr title="\Activity\Model\ActivityOptionCreationPeriod">ActivityOptionCreationPeriod</abbr></a>&gt;</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Activity-Model-ActivityOptionCreationPeriod.html"><abbr title="\Activity\Model\ActivityOptionCreationPeriod">ActivityOptionCreationPeriod</abbr></a>&gt;</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Activity-Model-ActivityOptionCreationPeriod.html"><abbr title="\Activity\Model\ActivityOptionCreationPeriod">ActivityOptionCreationPeriod</abbr></a>&gt;</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -1176,6 +1228,7 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <h4 class="phpdocumentor-element__name" id="method_persist">
         persist()
         <a href="classes/Application-Mapper-BaseMapper.html#method_persist" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
@@ -1189,6 +1242,8 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">persist</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">object&nbsp;</span><span class="phpdocumentor-signature__argument__name">$entity</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -1197,15 +1252,15 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
                 : <span class="phpdocumentor-signature__argument__return-type">object</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Application-Mapper-BaseMapper.html#method_persist#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
@@ -1225,12 +1280,8 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
                                                             
                                              
                                     </dd>
-                        </dl>
+                                            </dl>
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1242,6 +1293,7 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <h4 class="phpdocumentor-element__name" id="method_persistMultiple">
         persistMultiple()
         <a href="classes/Application-Mapper-BaseMapper.html#method_persistMultiple" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
@@ -1256,6 +1308,8 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">persistMultiple</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$entities</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -1271,7 +1325,8 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Application-Mapper-BaseMapper.html#method_persistMultiple#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
@@ -1291,12 +1346,8 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
                                                             
                                              
                                     </dd>
-                        </dl>
+                                            </dl>
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1308,6 +1359,7 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <h4 class="phpdocumentor-element__name" id="method_remove">
         remove()
         <a href="classes/Application-Mapper-BaseMapper.html#method_remove" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
@@ -1321,6 +1373,8 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">remove</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">object&nbsp;</span><span class="phpdocumentor-signature__argument__name">$entity</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -1329,15 +1383,15 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
                 : <span class="phpdocumentor-signature__argument__return-type">object</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Application-Mapper-BaseMapper.html#method_remove#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
@@ -1357,12 +1411,8 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
                                                             
                                              
                                     </dd>
-                        </dl>
+                                            </dl>
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1374,6 +1424,7 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <h4 class="phpdocumentor-element__name" id="method_removeById">
         removeById()
         <a href="classes/Application-Mapper-BaseMapper.html#method_removeById" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
@@ -1388,6 +1439,8 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">removeById</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$id</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -1396,15 +1449,15 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
                 : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Application-Mapper-BaseMapper.html#method_removeById#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
@@ -1431,12 +1484,8 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
                                                             
                                              
                                     </dd>
-                        </dl>
+                                            </dl>
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1448,6 +1497,7 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <h4 class="phpdocumentor-element__name" id="method_removeMultiple">
         removeMultiple()
         <a href="classes/Application-Mapper-BaseMapper.html#method_removeMultiple" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
@@ -1462,6 +1512,8 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">removeMultiple</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$entities</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -1477,7 +1529,8 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Application-Mapper-BaseMapper.html#method_removeMultiple#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
@@ -1497,12 +1550,8 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
                                                             
                                              
                                     </dd>
-                        </dl>
+                                            </dl>
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1514,6 +1563,7 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <h4 class="phpdocumentor-element__name" id="method_transactional">
         transactional()
         <a href="classes/Application-Mapper-BaseMapper.html#method_transactional" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
@@ -1528,6 +1578,8 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">transactional</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Closure">Closure</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$func</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
         <section class="phpdocumentor-description"><p>Instead of the EntityManager, this inserts this Mapper into the
 function.</p>
 </section>
@@ -1539,17 +1591,12 @@ function.</p>
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Closure">Closure</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">mixed</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1561,6 +1608,7 @@ function.</p>
     <h4 class="phpdocumentor-element__name" id="method_getRepository">
         getRepository()
         <a href="classes/Application-Mapper-BaseMapper.html#method_getRepository" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Mapper/BaseMapper.php"><a href="files/module-application-src-mapper-basemapper.html"><abbr title="module/Application/src/Mapper/BaseMapper.php">BaseMapper.php</abbr></a></abbr>
@@ -1575,12 +1623,15 @@ function.</p>
     <span class="phpdocumentor-signature__visibility">protected</span>
                     <span class="phpdocumentor-signature__name">getRepository</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\ORM\EntityRepository">EntityRepository</abbr></span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Application-Mapper-BaseMapper.html#method_getRepository#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
@@ -1592,13 +1643,13 @@ function.</p>
 </section>
 
                                     </dd>
-                        </dl>
+                                            </dl>
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\ORM\EntityRepository">EntityRepository</abbr></span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\ORM\EntityRepository">EntityRepository</abbr></span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -1609,6 +1660,7 @@ function.</p>
     <h4 class="phpdocumentor-element__name" id="method_getRepositoryName">
         getRepositoryName()
         <a href="classes/Activity-Mapper-ActivityOptionCreationPeriod.html#method_getRepositoryName" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Mapper/ActivityOptionCreationPeriod.php"><a href="files/module-activity-src-mapper-activityoptioncreationperiod.html"><abbr title="module/Activity/src/Mapper/ActivityOptionCreationPeriod.php">ActivityOptionCreationPeriod.php</abbr></a></abbr>
@@ -1622,84 +1674,170 @@ function.</p>
     <span class="phpdocumentor-signature__visibility">protected</span>
                     <span class="phpdocumentor-signature__name">getRepositoryName</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string</span>
-            &mdash;
-            <section class="phpdocumentor-description"><p>the name of the entity repository e.g. &quot;User/Model/User&quot;</p>
+        <span class="phpdocumentor-signature__response_type">string</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>the name of the entity repository e.g. &quot;User/Model/User&quot;</p>
 </section>
 
-    
+            </section>
+
 </article>
             </section>
 
-        
+        <div class="phpdocumentor-modal" id="source-view">
+    <div class="phpdocumentor-modal-bg" data-exit-button></div>
+    <div class="phpdocumentor-modal-container">
+        <div class="phpdocumentor-modal-content">
+            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/module/Activity/src/Mapper/ActivityOptionCreationPeriod.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
+        </div>
+        <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
+    </div>
+</div>
+
     <script type="text/javascript">
-        function loadExternalCodeSnippets(line) {
-            Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach((pre) => {
-                var src = pre.getAttribute('data-src').replace( /\\/g, '/');
-                var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
-                var language = 'php';
+        (function () {
+            function loadExternalCodeSnippet(el, url, line) {
+                Array.prototype.slice.call(el.querySelectorAll('pre[data-src]')).forEach((pre) => {
+                    const src = url || pre.getAttribute('data-src').replace(/\\/g, '/');
+                    const language = 'php';
 
-                var code = document.createElement('code');
-                code.className = 'language-' + language;
+                    const code = document.createElement('code');
+                    code.className = 'language-' + language;
+                    pre.textContent = '';
+                    pre.setAttribute('data-line', line)
+                    code.textContent = 'Loading…';
+                    pre.appendChild(code);
 
-                pre.textContent = '';
+                    var xhr = new XMLHttpRequest();
 
-                pre.setAttribute('data-line', line)
-                code.textContent = 'Loading…';
+                    xhr.open('GET', src, true);
 
-                pre.appendChild(code);
-
-                var xhr = new XMLHttpRequest();
-
-                xhr.open('GET', src, true);
-
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState == 4) {
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState !== 4) {
+                            return;
+                        }
 
                         if (xhr.status < 400 && xhr.responseText) {
                             code.textContent = xhr.responseText;
-
                             Prism.highlightElement(code);
+                            return;
                         }
-                        else if (xhr.status >= 400) {
+
+                        if (xhr.status === 404) {
+                            code.textContent = '✖ Error: File could not be found';
+                            return;
+                        }
+
+                        if (xhr.status >= 400) {
                             code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                            return;
                         }
-                        else {
-                            code.textContent = '✖ Error: File does not exist, is empty or trying to view from localhost';
-                        }
+
+                        code.textContent = '✖ Error: An unknown error occurred';
+                    };
+
+                    xhr.send(null);
+                });
+            }
+
+            const modalButtons = document.querySelectorAll("[data-modal]");
+            const openedAsLocalFile = window.location.protocol === 'file:';
+            if (modalButtons.length > 0 && openedAsLocalFile) {
+                console.warn(
+                    'Viewing the source code is unavailable because you are opening this page from the file:// scheme; ' +
+                    'browsers block XHR requests when a page is opened this way'
+                );
+            }
+
+            modalButtons.forEach(function (trigger) {
+                if (openedAsLocalFile) {
+                    trigger.setAttribute("hidden", "hidden");
+                }
+
+                trigger.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    const modal = document.getElementById(trigger.dataset.modal);
+                    if (!modal) {
+                        console.error(`Modal with id "${trigger.dataset.modal}" could not be found`);
+                        return;
                     }
-                };
+                    modal.classList.add("phpdocumentor-modal__open");
 
-                xhr.send(null);
-            });
-        }
-
-        var modals = document.querySelectorAll("[data-modal]");
-
-        modals.forEach(function (trigger) {
-            trigger.addEventListener("click", function (event) {
-                //event.preventDefault();
-                const modal = document.getElementById(trigger.dataset.modal);
-                modal.classList.add("phpdocumentor-modal__open");
-                loadExternalCodeSnippets(trigger.dataset.line)
-                const exits = modal.querySelectorAll("[data-exit-button]");
-                exits.forEach(function (exit) {
-                    exit.addEventListener("click", function (event) {
-                        event.preventDefault();
-                        modal.classList.remove("phpdocumentor-modal__open");
+                    loadExternalCodeSnippet(modal, trigger.dataset.src || null, trigger.dataset.line)
+                    const exits = modal.querySelectorAll("[data-exit-button]");
+                    exits.forEach(function (exit) {
+                        exit.addEventListener("click", function (event) {
+                            event.preventDefault();
+                            modal.classList.remove("phpdocumentor-modal__open");
+                        });
                     });
                 });
             });
-        });
+        })();
     </script>
 
     </article>
-                <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">
+                                </section>
+                <section class="phpdocumentor-on-this-page__sidebar">
+                                
+    <section class="phpdocumentor-on-this-page__content">
+        <strong class="phpdocumentor-on-this-page__title">On this page</strong>
+
+        <ul class="phpdocumentor-list -clean">
+            <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
+            <li>
+                <ul class="phpdocumentor-list -clean">
+                                                            <li><a href="classes/Activity-Mapper-ActivityOptionCreationPeriod.html#toc-properties">Properties</a></li>
+                                                            <li><a href="classes/Activity-Mapper-ActivityOptionCreationPeriod.html#toc-methods">Methods</a></li>
+                                    </ul>
+            </li>
+            
+                            <li class="phpdocumentor-on-this-page-section__title">Properties</li>
+                <li>
+                    <ul class="phpdocumentor-list -clean">
+                                                    <li><a href="classes/Application-Mapper-BaseMapper.html#property_em">$em<a href="classes/Activity-Mapper-ActivityOptionCreationPeriod.html"></li>
+                                            </ul>
+                </li>
+            
+                        <li class="phpdocumentor-on-this-page-section__title">Methods</li>
+            <li>
+                <ul class="phpdocumentor-list -clean">
+                                            <li><a href="classes/Application-Mapper-BaseMapper.html#method___construct">__construct()</a></li>
+                                            <li><a href="classes/Application-Mapper-BaseMapper.html#method_count">count()</a></li>
+                                            <li><a href="classes/Application-Mapper-BaseMapper.html#method_detach">detach()</a></li>
+                                            <li><a href="classes/Application-Mapper-BaseMapper.html#method_find">find()</a></li>
+                                            <li><a href="classes/Application-Mapper-BaseMapper.html#method_findAll">findAll()</a></li>
+                                            <li><a href="classes/Application-Mapper-BaseMapper.html#method_findBy">findBy()</a></li>
+                                            <li><a href="classes/Application-Mapper-BaseMapper.html#method_findOneBy">findOneBy()</a></li>
+                                            <li><a href="classes/Application-Mapper-BaseMapper.html#method_flush">flush()</a></li>
+                                            <li><a href="classes/Application-Mapper-BaseMapper.html#method_getConnection">getConnection()</a></li>
+                                            <li><a href="classes/Activity-Mapper-ActivityOptionCreationPeriod.html#method_getCurrentActivityOptionCreationPeriods">getCurrentActivityOptionCreationPeriods()</a></li>
+                                            <li><a href="classes/Application-Mapper-BaseMapper.html#method_getEntityManager">getEntityManager()</a></li>
+                                            <li><a href="classes/Activity-Mapper-ActivityOptionCreationPeriod.html#method_getUpcomingActivityOptionCreationPeriods">getUpcomingActivityOptionCreationPeriods()</a></li>
+                                            <li><a href="classes/Application-Mapper-BaseMapper.html#method_persist">persist()</a></li>
+                                            <li><a href="classes/Application-Mapper-BaseMapper.html#method_persistMultiple">persistMultiple()</a></li>
+                                            <li><a href="classes/Application-Mapper-BaseMapper.html#method_remove">remove()</a></li>
+                                            <li><a href="classes/Application-Mapper-BaseMapper.html#method_removeById">removeById()</a></li>
+                                            <li><a href="classes/Application-Mapper-BaseMapper.html#method_removeMultiple">removeMultiple()</a></li>
+                                            <li><a href="classes/Application-Mapper-BaseMapper.html#method_transactional">transactional()</a></li>
+                                            <li><a href="classes/Application-Mapper-BaseMapper.html#method_getRepository">getRepository()</a></li>
+                                            <li><a href="classes/Activity-Mapper-ActivityOptionCreationPeriod.html#method_getRepositoryName">getRepositoryName()</a></li>
+                                    </ul>
+            </li>
+                    </ul>
+    </section>
+
+                </section>
+                            </div>
+            <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">
     <section class="phpdocumentor-search-results__dialog">
         <header class="phpdocumentor-search-results__header">
             <h2 class="phpdocumentor-search-results__title">Search results</h2>
@@ -1710,7 +1848,6 @@ function.</p>
         </section>
     </section>
 </section>
-            </div>
         </div>
         <a href="classes/Activity-Mapper-ActivityOptionCreationPeriod.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 

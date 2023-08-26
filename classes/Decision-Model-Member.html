@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/base.css">
             <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@100;200;300;400;600;700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="css/template.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css" integrity="sha256-ybRkN9dBjhcS2qrW1z+hfCxq+1aBdwyQM5wlQoQVt/0=" crossorigin="anonymous" />
@@ -19,6 +19,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-highlight/prism-line-highlight.css">
                 <script src="https://cdn.jsdelivr.net/npm/fuse.js@3.4.6"></script>
         <script src="https://cdn.jsdelivr.net/npm/css-vars-ponyfill@2"></script>
+        <script src="js/template.js"></script>
         <script src="js/search.js"></script>
         <script defer src="js/searchIndex.js"></script>
     </head>
@@ -52,7 +53,7 @@
 <label class="phpdocumentor-sidebar__menu-icon" for="sidebar-button">
     Menu
 </label>
-<aside class="phpdocumentor-column -four phpdocumentor-sidebar">
+<aside class="phpdocumentor-column -three phpdocumentor-sidebar">
                     <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
@@ -381,8 +382,9 @@
     </section>
 </aside>
 
-            <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <ul class="phpdocumentor-breadcrumbs">
+            <div class="phpdocumentor-column -nine phpdocumentor-content">
+                                <section>
+                                        <ul class="phpdocumentor-breadcrumbs">
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/decision.html">Decision</a></li>
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/decision-model.html">Model</a></li>
     </ul>
@@ -402,6 +404,11 @@
     
     </h2>
 
+<div class="phpdocumentor-label-line">
+
+
+</div>
+
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
     :
@@ -415,7 +422,8 @@
 
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Decision-Model-Member.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
@@ -440,23 +448,34 @@ expiration: string,
 </section>
 
                                     </dd>
-                        </dl>
-
-
-
+                                            </dl>
 
 
 
 <h3 id="toc">
     Table of Contents
-    <a href="#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Decision-Model-Member.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+
 </h3>
 
+
+
+
+
+
+
+
+
+<h4 id="toc-properties">
+    Properties
+    <a href="classes/Decision-Model-Member.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
+
+</h4>
 <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Decision-Model-Member.html#property_addresses">$addresses</a>
     <span>
-                        &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>            </span>
+                        &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Decision-Model-Address.html"><abbr title="\Decision\Model\Address">Address</abbr></a>&gt;            </span>
 </dt>
 <dd>Addresses of this member.</dd>
 
@@ -465,7 +484,6 @@ expiration: string,
     <span>
                         &nbsp;: string|null            </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Decision-Model-Member.html#property_birth">$birth</a>
@@ -477,7 +495,7 @@ expiration: string,
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Decision-Model-Member.html#property_boardInstallations">$boardInstallations</a>
     <span>
-                        &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>            </span>
+                        &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Decision-Model-BoardMember.html"><abbr title="\Decision\Model\BoardMember">BoardMember</abbr></a>&gt;            </span>
 </dt>
 <dd>Board memberships.</dd>
 
@@ -550,14 +568,14 @@ happens either automatically or has to be done manually, as set forth in the byl
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Decision-Model-Member.html#property_installations">$installations</a>
     <span>
-                        &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>            </span>
+                        &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Decision-Model-SubDecision-Installation.html"><abbr title="\Decision\Model\SubDecision\Installation">Installation</abbr></a>&gt;            </span>
 </dt>
 <dd>Installations of this member.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Decision-Model-Member.html#property_keyGrantings">$keyGrantings</a>
     <span>
-                        &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>            </span>
+                        &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Decision-Model-Keyholder.html"><abbr title="\Decision\Model\Keyholder">Keyholder</abbr></a>&gt;            </span>
 </dt>
 <dd>Keyholdership.</dd>
 
@@ -578,7 +596,7 @@ happens either automatically or has to be done manually, as set forth in the byl
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Decision-Model-Member.html#property_lists">$lists</a>
     <span>
-                        &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>            </span>
+                        &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Decision-Model-MailingList.html"><abbr title="\Decision\Model\MailingList">MailingList</abbr></a>&gt;            </span>
 </dt>
 <dd>Memberships of mailing lists.</dd>
 
@@ -601,7 +619,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Decision-Model-Member.html#property_organInstallations">$organInstallations</a>
     <span>
-                        &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>            </span>
+                        &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Decision-Model-OrganMember.html"><abbr title="\Decision\Model\OrganMember">OrganMember</abbr></a>&gt;            </span>
 </dt>
 <dd>Organ memberships.</dd>
 
@@ -622,7 +640,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Decision-Model-Member.html#property_tags">$tags</a>
     <span>
-                        &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>            </span>
+                        &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Photo-Model-Tag.html"><abbr title="\Photo\Model\Tag">Tag</abbr></a>&gt;            </span>
 </dt>
 <dd>Member tags.</dd>
 
@@ -633,12 +651,19 @@ still meets the requirements as set forth in the bylaws and internal regulations
 </dt>
 <dd>Member type.</dd>
 
-                <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    </dl>
+
+<h4 id="toc-methods">
+    Methods
+    <a href="classes/Decision-Model-Member.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
+
+</h4>
+<dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-Member.html#method___construct">__construct()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-Member.html#method_addAddress">addAddress()</a>
@@ -685,7 +710,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-Member.html#method_getAddresses">getAddresses()</a>
     <span>
-                                &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;array-key, <a href="classes/Decision-Model-Address.html"><abbr title="\Decision\Model\Address">Address</abbr></a>&gt;    </span>
+                                &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Decision-Model-Address.html"><abbr title="\Decision\Model\Address">Address</abbr></a>&gt;    </span>
 </dt>
 <dd>Get all addresses.</dd>
 
@@ -694,7 +719,6 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span>
                                 &nbsp;: string|null    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-Member.html#method_getBirth">getBirth()</a>
@@ -706,7 +730,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-Member.html#method_getBoardInstallations">getBoardInstallations()</a>
     <span>
-                                &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;array-key, <a href="classes/Decision-Model-BoardMember.html"><abbr title="\Decision\Model\BoardMember">BoardMember</abbr></a>&gt;    </span>
+                                &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Decision-Model-BoardMember.html"><abbr title="\Decision\Model\BoardMember">BoardMember</abbr></a>&gt;    </span>
 </dt>
 <dd>Get the board installations.</dd>
 
@@ -727,7 +751,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-Member.html#method_getCurrentOrganInstallations">getCurrentOrganInstallations()</a>
     <span>
-                                &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;array-key, <a href="classes/Decision-Model-OrganMember.html"><abbr title="\Decision\Model\OrganMember">OrganMember</abbr></a>&gt;    </span>
+                                &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Decision-Model-OrganMember.html"><abbr title="\Decision\Model\OrganMember">OrganMember</abbr></a>&gt;    </span>
 </dt>
 <dd>Get the organ installations of organs that the member is currently part of.</dd>
 
@@ -797,14 +821,14 @@ still meets the requirements as set forth in the bylaws and internal regulations
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-Member.html#method_getInstallations">getInstallations()</a>
     <span>
-                                &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;array-key, <a href="classes/Decision-Model-SubDecision-Installation.html"><abbr title="\Decision\Model\SubDecision\Installation">Installation</abbr></a>&gt;    </span>
+                                &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Decision-Model-SubDecision-Installation.html"><abbr title="\Decision\Model\SubDecision\Installation">Installation</abbr></a>&gt;    </span>
 </dt>
 <dd>Get the installations.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-Member.html#method_getKeyGrantings">getKeyGrantings()</a>
     <span>
-                                &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;array-key, <a href="classes/Decision-Model-Keyholder.html"><abbr title="\Decision\Model\Keyholder">Keyholder</abbr></a>&gt;    </span>
+                                &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Decision-Model-Keyholder.html"><abbr title="\Decision\Model\Keyholder">Keyholder</abbr></a>&gt;    </span>
 </dt>
 <dd>Get keyholderships.</dd>
 
@@ -825,7 +849,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-Member.html#method_getLists">getLists()</a>
     <span>
-                                &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;array-key, <a href="classes/Decision-Model-MailingList.html"><abbr title="\Decision\Model\MailingList">MailingList</abbr></a>&gt;    </span>
+                                &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Decision-Model-MailingList.html"><abbr title="\Decision\Model\MailingList">MailingList</abbr></a>&gt;    </span>
 </dt>
 <dd>Get mailing list subscriptions.</dd>
 
@@ -846,7 +870,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-Member.html#method_getOrganInstallations">getOrganInstallations()</a>
     <span>
-                                &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;array-key, <a href="classes/Decision-Model-OrganMember.html"><abbr title="\Decision\Model\OrganMember">OrganMember</abbr></a>&gt;    </span>
+                                &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Decision-Model-OrganMember.html"><abbr title="\Decision\Model\OrganMember">OrganMember</abbr></a>&gt;    </span>
 </dt>
 <dd>Get the organ installations.</dd>
 
@@ -867,7 +891,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-Member.html#method_getTags">getTags()</a>
     <span>
-                                &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;array-key, <a href="classes/Photo-Model-Tag.html"><abbr title="\Photo\Model\Tag">Tag</abbr></a>&gt;    </span>
+                                &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Photo-Model-Tag.html"><abbr title="\Photo\Model\Tag">Tag</abbr></a>&gt;    </span>
 </dt>
 <dd>Get the tags.</dd>
 
@@ -883,7 +907,6 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span>
                                 &nbsp;: bool    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-Member.html#method_isActive">isActive()</a>
@@ -904,7 +927,6 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span>
                                 &nbsp;: bool    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-Member.html#method_isKeyholder">isKeyholder()</a>
@@ -918,7 +940,6 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-Member.html#method_setBirth">setBirth()</a>
@@ -1053,7 +1074,8 @@ still meets the requirements as set forth in the bylaws and internal regulations
 </dt>
 <dd>Check if this is a current board member.</dd>
 
-        </dl>
+    </dl>
+
 
 
 
@@ -1064,6 +1086,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
             <a href="classes/Decision-Model-Member.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+
         </h3>
                     <article
         class="
@@ -1075,6 +1098,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="property_addresses">
         $addresses
         <a href="classes/Decision-Model-Member.html#property_addresses" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1089,7 +1113,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr></span>
+        <span class="phpdocumentor-signature__type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Decision-Model-Address.html"><abbr title="\Decision\Model\Address">Address</abbr></a>&gt;</span>
     <span class="phpdocumentor-signature__name">$addresses</span>
     </code>
 
@@ -1108,6 +1132,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="property_authenticationKey">
         $authenticationKey
         <a href="classes/Decision-Model-Member.html#property_authenticationKey" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1125,10 +1150,8 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__name">$authenticationKey</span>
      = <span class="phpdocumentor-signature__default-value">null</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
+    
+    
     
 
 </article>
@@ -1142,6 +1165,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="property_birth">
         $birth
         <a href="classes/Decision-Model-Member.html#property_birth" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1161,8 +1185,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     </code>
 
     
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -1176,6 +1199,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="property_boardInstallations">
         $boardInstallations
         <a href="classes/Decision-Model-Member.html#property_boardInstallations" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1190,7 +1214,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr></span>
+        <span class="phpdocumentor-signature__type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Decision-Model-BoardMember.html"><abbr title="\Decision\Model\BoardMember">BoardMember</abbr></a>&gt;</span>
     <span class="phpdocumentor-signature__name">$boardInstallations</span>
     </code>
 
@@ -1209,6 +1233,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="property_changedOn">
         $changedOn
         <a href="classes/Decision-Model-Member.html#property_changedOn" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1228,8 +1253,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     </code>
 
     
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -1243,6 +1267,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="property_deleted">
         $deleted
         <a href="classes/Decision-Model-Member.html#property_deleted" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1266,8 +1291,7 @@ when deleting a member and cannot be altered via the interface.</p>
         <section class="phpdocumentor-description"><p>Additionally, this flag can be used to filter deleted members in external services (e.g., GEWISWEB).</p>
 </section>
 
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -1281,6 +1305,7 @@ when deleting a member and cannot be altered via the interface.</p>
     <h4 class="phpdocumentor-element__name" id="property_email">
         $email
         <a href="classes/Decision-Model-Member.html#property_email" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1300,8 +1325,7 @@ when deleting a member and cannot be altered via the interface.</p>
     </code>
 
     
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -1315,6 +1339,7 @@ when deleting a member and cannot be altered via the interface.</p>
     <h4 class="phpdocumentor-element__name" id="property_expiration">
         $expiration
         <a href="classes/Decision-Model-Member.html#property_expiration" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1335,8 +1360,7 @@ happens either automatically or has to be done manually, as set forth in the byl
     </code>
 
     
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -1350,6 +1374,7 @@ happens either automatically or has to be done manually, as set forth in the byl
     <h4 class="phpdocumentor-element__name" id="property_firstName">
         $firstName
         <a href="classes/Decision-Model-Member.html#property_firstName" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1369,8 +1394,7 @@ happens either automatically or has to be done manually, as set forth in the byl
     </code>
 
     
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -1384,6 +1408,7 @@ happens either automatically or has to be done manually, as set forth in the byl
     <h4 class="phpdocumentor-element__name" id="property_generation">
         $generation
         <a href="classes/Decision-Model-Member.html#property_generation" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1406,8 +1431,7 @@ happens either automatically or has to be done manually, as set forth in the byl
 a academic year, but rather a calendar year.</p>
 </section>
 
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -1421,6 +1445,7 @@ a academic year, but rather a calendar year.</p>
     <h4 class="phpdocumentor-element__name" id="property_hidden">
         $hidden
         <a href="classes/Decision-Model-Member.html#property_hidden" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1443,8 +1468,7 @@ a academic year, but rather a calendar year.</p>
 deleted members and members that are deceased but whose profile should be kept.</p>
 </section>
 
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -1458,6 +1482,7 @@ deleted members and members that are deceased but whose profile should be kept.<
     <h4 class="phpdocumentor-element__name" id="property_iban">
         $iban
         <a href="classes/Decision-Model-Member.html#property_iban" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1477,8 +1502,7 @@ deleted members and members that are deceased but whose profile should be kept.<
      = <span class="phpdocumentor-signature__default-value">null</span></code>
 
     
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -1492,6 +1516,7 @@ deleted members and members that are deceased but whose profile should be kept.<
     <h4 class="phpdocumentor-element__name" id="property_initials">
         $initials
         <a href="classes/Decision-Model-Member.html#property_initials" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1511,8 +1536,7 @@ deleted members and members that are deceased but whose profile should be kept.<
     </code>
 
     
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -1526,6 +1550,7 @@ deleted members and members that are deceased but whose profile should be kept.<
     <h4 class="phpdocumentor-element__name" id="property_installations">
         $installations
         <a href="classes/Decision-Model-Member.html#property_installations" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1540,7 +1565,7 @@ deleted members and members that are deceased but whose profile should be kept.<
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr></span>
+        <span class="phpdocumentor-signature__type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Decision-Model-SubDecision-Installation.html"><abbr title="\Decision\Model\SubDecision\Installation">Installation</abbr></a>&gt;</span>
     <span class="phpdocumentor-signature__name">$installations</span>
     </code>
 
@@ -1559,6 +1584,7 @@ deleted members and members that are deceased but whose profile should be kept.<
     <h4 class="phpdocumentor-element__name" id="property_keyGrantings">
         $keyGrantings
         <a href="classes/Decision-Model-Member.html#property_keyGrantings" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1573,7 +1599,7 @@ deleted members and members that are deceased but whose profile should be kept.<
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr></span>
+        <span class="phpdocumentor-signature__type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Decision-Model-Keyholder.html"><abbr title="\Decision\Model\Keyholder">Keyholder</abbr></a>&gt;</span>
     <span class="phpdocumentor-signature__name">$keyGrantings</span>
     </code>
 
@@ -1592,6 +1618,7 @@ deleted members and members that are deceased but whose profile should be kept.<
     <h4 class="phpdocumentor-element__name" id="property_lastName">
         $lastName
         <a href="classes/Decision-Model-Member.html#property_lastName" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1611,8 +1638,7 @@ deleted members and members that are deceased but whose profile should be kept.<
     </code>
 
     
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -1626,6 +1652,7 @@ deleted members and members that are deceased but whose profile should be kept.<
     <h4 class="phpdocumentor-element__name" id="property_lidnr">
         $lidnr
         <a href="classes/Decision-Model-Member.html#property_lidnr" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1645,8 +1672,7 @@ deleted members and members that are deceased but whose profile should be kept.<
     </code>
 
     
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -1660,6 +1686,7 @@ deleted members and members that are deceased but whose profile should be kept.<
     <h4 class="phpdocumentor-element__name" id="property_lists">
         $lists
         <a href="classes/Decision-Model-Member.html#property_lists" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1674,7 +1701,7 @@ deleted members and members that are deceased but whose profile should be kept.<
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr></span>
+        <span class="phpdocumentor-signature__type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Decision-Model-MailingList.html"><abbr title="\Decision\Model\MailingList">MailingList</abbr></a>&gt;</span>
     <span class="phpdocumentor-signature__name">$lists</span>
     </code>
 
@@ -1693,6 +1720,7 @@ deleted members and members that are deceased but whose profile should be kept.<
     <h4 class="phpdocumentor-element__name" id="property_membershipEndsOn">
         $membershipEndsOn
         <a href="classes/Decision-Model-Member.html#property_membershipEndsOn" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1714,8 +1742,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
      = <span class="phpdocumentor-signature__default-value">null</span></code>
 
     
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -1729,6 +1756,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="property_middleName">
         $middleName
         <a href="classes/Decision-Model-Member.html#property_middleName" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1748,8 +1776,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     </code>
 
     
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -1763,6 +1790,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="property_organInstallations">
         $organInstallations
         <a href="classes/Decision-Model-Member.html#property_organInstallations" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1777,7 +1805,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr></span>
+        <span class="phpdocumentor-signature__type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Decision-Model-OrganMember.html"><abbr title="\Decision\Model\OrganMember">OrganMember</abbr></a>&gt;</span>
     <span class="phpdocumentor-signature__name">$organInstallations</span>
     </code>
 
@@ -1796,6 +1824,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="property_paid">
         $paid
         <a href="classes/Decision-Model-Member.html#property_paid" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1815,8 +1844,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
      = <span class="phpdocumentor-signature__default-value">0</span></code>
 
     
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -1830,6 +1858,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="property_supremum">
         $supremum
         <a href="classes/Decision-Model-Member.html#property_supremum" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1849,8 +1878,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
      = <span class="phpdocumentor-signature__default-value">null</span></code>
 
     
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -1864,6 +1892,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="property_tags">
         $tags
         <a href="classes/Decision-Model-Member.html#property_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1878,7 +1907,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr></span>
+        <span class="phpdocumentor-signature__type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Photo-Model-Tag.html"><abbr title="\Photo\Model\Tag">Tag</abbr></a>&gt;</span>
     <span class="phpdocumentor-signature__name">$tags</span>
     </code>
 
@@ -1897,6 +1926,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="property_type">
         $type
         <a href="classes/Decision-Model-Member.html#property_type" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1926,8 +1956,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
 <p>See artikel 7.</p>
 </section>
 
-        <section class="phpdocumentor-description"></section>
-
+    
     
 
 </article>
@@ -1937,6 +1966,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
             <a href="classes/Decision-Model-Member.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+
         </h3>
                     <article
         class="phpdocumentor-element
@@ -1947,6 +1977,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method___construct">
         __construct()
         <a href="classes/Decision-Model-Member.html#method___construct" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -1960,15 +1991,12 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">mixed</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1980,6 +2008,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_addAddress">
         addAddress()
         <a href="classes/Decision-Model-Member.html#method_addAddress" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -1994,6 +2023,8 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">addAddress</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Address.html"><abbr title="\Decision\Model\Address">Address</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$address</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -2002,17 +2033,12 @@ still meets the requirements as set forth in the bylaws and internal regulations
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Address.html"><abbr title="\Decision\Model\Address">Address</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -2024,6 +2050,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_addAddresses">
         addAddresses()
         <a href="classes/Decision-Model-Member.html#method_addAddresses" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -2038,6 +2065,8 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">addAddresses</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, <a href="classes/Decision-Model-Address.html"><abbr title="\Decision\Model\Address">Address</abbr></a>&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$addresses</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -2052,10 +2081,6 @@ still meets the requirements as set forth in the bylaws and internal regulations
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -2067,6 +2092,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_addList">
         addList()
         <a href="classes/Decision-Model-Member.html#method_addList" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -2081,6 +2107,8 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">addList</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-MailingList.html"><abbr title="\Decision\Model\MailingList">MailingList</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$list</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
         <section class="phpdocumentor-description"><p>Note that this is the owning side.</p>
 </section>
 
@@ -2091,17 +2119,12 @@ still meets the requirements as set forth in the bylaws and internal regulations
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-MailingList.html"><abbr title="\Decision\Model\MailingList">MailingList</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -2113,6 +2136,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_addLists">
         addLists()
         <a href="classes/Decision-Model-Member.html#method_addLists" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -2127,6 +2151,8 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">addLists</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, <a href="classes/Decision-Model-MailingList.html"><abbr title="\Decision\Model\MailingList">MailingList</abbr></a>&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$lists</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -2141,10 +2167,6 @@ still meets the requirements as set forth in the bylaws and internal regulations
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -2156,6 +2178,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_clearAddresses">
         clearAddresses()
         <a href="classes/Decision-Model-Member.html#method_clearAddresses" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -2170,14 +2193,12 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">clearAddresses</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -2189,6 +2210,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_clearLists">
         clearLists()
         <a href="classes/Decision-Model-Member.html#method_clearLists" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -2203,14 +2225,12 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">clearLists</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -2222,6 +2242,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_getAddresses">
         getAddresses()
         <a href="classes/Decision-Model-Member.html#method_getAddresses" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -2234,17 +2255,19 @@ still meets the requirements as set forth in the bylaws and internal regulations
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getAddresses</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;array-key, <a href="classes/Decision-Model-Address.html"><abbr title="\Decision\Model\Address">Address</abbr></a>&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">getAddresses</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Decision-Model-Address.html"><abbr title="\Decision\Model\Address">Address</abbr></a>&gt;</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;array-key, <a href="classes/Decision-Model-Address.html"><abbr title="\Decision\Model\Address">Address</abbr></a>&gt;</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Decision-Model-Address.html"><abbr title="\Decision\Model\Address">Address</abbr></a>&gt;</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2255,6 +2278,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_getAuthenticationKey">
         getAuthenticationKey()
         <a href="classes/Decision-Model-Member.html#method_getAuthenticationKey" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -2268,16 +2292,17 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getAuthenticationKey</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string|null</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">string|null</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2288,6 +2313,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_getBirth">
         getBirth()
         <a href="classes/Decision-Model-Member.html#method_getBirth" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -2302,15 +2328,17 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getBirth</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\DateTime">DateTime</abbr></span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\DateTime">DateTime</abbr></span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type"><abbr title="\DateTime">DateTime</abbr></span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2321,6 +2349,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_getBoardInstallations">
         getBoardInstallations()
         <a href="classes/Decision-Model-Member.html#method_getBoardInstallations" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -2333,17 +2362,19 @@ still meets the requirements as set forth in the bylaws and internal regulations
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getBoardInstallations</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;array-key, <a href="classes/Decision-Model-BoardMember.html"><abbr title="\Decision\Model\BoardMember">BoardMember</abbr></a>&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">getBoardInstallations</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Decision-Model-BoardMember.html"><abbr title="\Decision\Model\BoardMember">BoardMember</abbr></a>&gt;</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;array-key, <a href="classes/Decision-Model-BoardMember.html"><abbr title="\Decision\Model\BoardMember">BoardMember</abbr></a>&gt;</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Decision-Model-BoardMember.html"><abbr title="\Decision\Model\BoardMember">BoardMember</abbr></a>&gt;</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2354,6 +2385,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_getChangedOn">
         getChangedOn()
         <a href="classes/Decision-Model-Member.html#method_getChangedOn" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -2368,15 +2400,17 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getChangedOn</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\DateTime">DateTime</abbr></span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\DateTime">DateTime</abbr></span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type"><abbr title="\DateTime">DateTime</abbr></span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2387,6 +2421,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_getCurrentBoardInstallation">
         getCurrentBoardInstallation()
         <a href="classes/Decision-Model-Member.html#method_getCurrentBoardInstallation" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -2401,15 +2436,17 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getCurrentBoardInstallation</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-BoardMember.html"><abbr title="\Decision\Model\BoardMember">BoardMember</abbr></a>|null</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-BoardMember.html"><abbr title="\Decision\Model\BoardMember">BoardMember</abbr></a>|null</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-BoardMember.html"><abbr title="\Decision\Model\BoardMember">BoardMember</abbr></a>|null</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2420,6 +2457,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_getCurrentOrganInstallations">
         getCurrentOrganInstallations()
         <a href="classes/Decision-Model-Member.html#method_getCurrentOrganInstallations" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -2432,17 +2470,19 @@ still meets the requirements as set forth in the bylaws and internal regulations
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getCurrentOrganInstallations</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;array-key, <a href="classes/Decision-Model-OrganMember.html"><abbr title="\Decision\Model\OrganMember">OrganMember</abbr></a>&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">getCurrentOrganInstallations</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Decision-Model-OrganMember.html"><abbr title="\Decision\Model\OrganMember">OrganMember</abbr></a>&gt;</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;array-key, <a href="classes/Decision-Model-OrganMember.html"><abbr title="\Decision\Model\OrganMember">OrganMember</abbr></a>&gt;</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Decision-Model-OrganMember.html"><abbr title="\Decision\Model\OrganMember">OrganMember</abbr></a>&gt;</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2453,6 +2493,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_getDeleted">
         getDeleted()
         <a href="classes/Decision-Model-Member.html#method_getDeleted" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -2467,15 +2508,17 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getDeleted</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">bool</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">bool</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2486,6 +2529,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_getEmail">
         getEmail()
         <a href="classes/Decision-Model-Member.html#method_getEmail" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -2500,15 +2544,17 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getEmail</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string|null</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">string|null</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2519,6 +2565,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_getExpiration">
         getExpiration()
         <a href="classes/Decision-Model-Member.html#method_getExpiration" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -2533,15 +2580,17 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getExpiration</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\DateTime">DateTime</abbr></span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\DateTime">DateTime</abbr></span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type"><abbr title="\DateTime">DateTime</abbr></span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2552,6 +2601,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_getFirstName">
         getFirstName()
         <a href="classes/Decision-Model-Member.html#method_getFirstName" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -2566,15 +2616,17 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getFirstName</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">string</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2585,6 +2637,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_getFullName">
         getFullName()
         <a href="classes/Decision-Model-Member.html#method_getFullName" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -2599,15 +2652,17 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getFullName</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">string</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2618,6 +2673,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_getGeneration">
         getGeneration()
         <a href="classes/Decision-Model-Member.html#method_getGeneration" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -2632,15 +2688,17 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getGeneration</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">int</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">int</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2651,6 +2709,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_getHidden">
         getHidden()
         <a href="classes/Decision-Model-Member.html#method_getHidden" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -2665,15 +2724,17 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getHidden</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">bool</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">bool</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2684,6 +2745,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_getIban">
         getIban()
         <a href="classes/Decision-Model-Member.html#method_getIban" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -2698,15 +2760,17 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getIban</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string|null</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">string|null</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2717,6 +2781,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_getInitials">
         getInitials()
         <a href="classes/Decision-Model-Member.html#method_getInitials" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -2731,15 +2796,17 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getInitials</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">string</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2750,6 +2817,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_getInstallations">
         getInstallations()
         <a href="classes/Decision-Model-Member.html#method_getInstallations" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -2762,17 +2830,19 @@ still meets the requirements as set forth in the bylaws and internal regulations
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getInstallations</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;array-key, <a href="classes/Decision-Model-SubDecision-Installation.html"><abbr title="\Decision\Model\SubDecision\Installation">Installation</abbr></a>&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">getInstallations</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Decision-Model-SubDecision-Installation.html"><abbr title="\Decision\Model\SubDecision\Installation">Installation</abbr></a>&gt;</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;array-key, <a href="classes/Decision-Model-SubDecision-Installation.html"><abbr title="\Decision\Model\SubDecision\Installation">Installation</abbr></a>&gt;</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Decision-Model-SubDecision-Installation.html"><abbr title="\Decision\Model\SubDecision\Installation">Installation</abbr></a>&gt;</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2783,6 +2853,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_getKeyGrantings">
         getKeyGrantings()
         <a href="classes/Decision-Model-Member.html#method_getKeyGrantings" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -2795,17 +2866,19 @@ still meets the requirements as set forth in the bylaws and internal regulations
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getKeyGrantings</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;array-key, <a href="classes/Decision-Model-Keyholder.html"><abbr title="\Decision\Model\Keyholder">Keyholder</abbr></a>&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">getKeyGrantings</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Decision-Model-Keyholder.html"><abbr title="\Decision\Model\Keyholder">Keyholder</abbr></a>&gt;</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;array-key, <a href="classes/Decision-Model-Keyholder.html"><abbr title="\Decision\Model\Keyholder">Keyholder</abbr></a>&gt;</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Decision-Model-Keyholder.html"><abbr title="\Decision\Model\Keyholder">Keyholder</abbr></a>&gt;</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2816,6 +2889,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_getLastName">
         getLastName()
         <a href="classes/Decision-Model-Member.html#method_getLastName" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -2830,15 +2904,17 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getLastName</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">string</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2849,6 +2925,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_getLidnr">
         getLidnr()
         <a href="classes/Decision-Model-Member.html#method_getLidnr" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -2863,15 +2940,17 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getLidnr</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">int</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">int</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2882,6 +2961,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_getLists">
         getLists()
         <a href="classes/Decision-Model-Member.html#method_getLists" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -2894,17 +2974,19 @@ still meets the requirements as set forth in the bylaws and internal regulations
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getLists</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;array-key, <a href="classes/Decision-Model-MailingList.html"><abbr title="\Decision\Model\MailingList">MailingList</abbr></a>&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">getLists</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Decision-Model-MailingList.html"><abbr title="\Decision\Model\MailingList">MailingList</abbr></a>&gt;</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;array-key, <a href="classes/Decision-Model-MailingList.html"><abbr title="\Decision\Model\MailingList">MailingList</abbr></a>&gt;</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Decision-Model-MailingList.html"><abbr title="\Decision\Model\MailingList">MailingList</abbr></a>&gt;</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2915,6 +2997,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_getMembershipEndsOn">
         getMembershipEndsOn()
         <a href="classes/Decision-Model-Member.html#method_getMembershipEndsOn" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -2929,15 +3012,17 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getMembershipEndsOn</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\DateTime">DateTime</abbr>|null</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\DateTime">DateTime</abbr>|null</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type"><abbr title="\DateTime">DateTime</abbr>|null</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2948,6 +3033,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_getMiddleName">
         getMiddleName()
         <a href="classes/Decision-Model-Member.html#method_getMiddleName" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -2962,15 +3048,17 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getMiddleName</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">string</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2981,6 +3069,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_getOrganInstallations">
         getOrganInstallations()
         <a href="classes/Decision-Model-Member.html#method_getOrganInstallations" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -2993,17 +3082,19 @@ still meets the requirements as set forth in the bylaws and internal regulations
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getOrganInstallations</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;array-key, <a href="classes/Decision-Model-OrganMember.html"><abbr title="\Decision\Model\OrganMember">OrganMember</abbr></a>&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">getOrganInstallations</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Decision-Model-OrganMember.html"><abbr title="\Decision\Model\OrganMember">OrganMember</abbr></a>&gt;</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;array-key, <a href="classes/Decision-Model-OrganMember.html"><abbr title="\Decision\Model\OrganMember">OrganMember</abbr></a>&gt;</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Decision-Model-OrganMember.html"><abbr title="\Decision\Model\OrganMember">OrganMember</abbr></a>&gt;</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -3014,6 +3105,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_getPaid">
         getPaid()
         <a href="classes/Decision-Model-Member.html#method_getPaid" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -3028,15 +3120,17 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getPaid</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">int</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">int</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -3047,6 +3141,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_getSupremum">
         getSupremum()
         <a href="classes/Decision-Model-Member.html#method_getSupremum" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -3061,15 +3156,17 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getSupremum</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string|null</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">string|null</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -3080,6 +3177,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_getTags">
         getTags()
         <a href="classes/Decision-Model-Member.html#method_getTags" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -3092,17 +3190,19 @@ still meets the requirements as set forth in the bylaws and internal regulations
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getTags</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;array-key, <a href="classes/Photo-Model-Tag.html"><abbr title="\Photo\Model\Tag">Tag</abbr></a>&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">getTags</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Photo-Model-Tag.html"><abbr title="\Photo\Model\Tag">Tag</abbr></a>&gt;</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;array-key, <a href="classes/Photo-Model-Tag.html"><abbr title="\Photo\Model\Tag">Tag</abbr></a>&gt;</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Photo-Model-Tag.html"><abbr title="\Photo\Model\Tag">Tag</abbr></a>&gt;</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -3113,6 +3213,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_getType">
         getType()
         <a href="classes/Decision-Model-Member.html#method_getType" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -3127,15 +3228,17 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getType</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-Enums-MembershipTypes.html"><abbr title="\Decision\Model\Enums\MembershipTypes">MembershipTypes</abbr></a></span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-Enums-MembershipTypes.html"><abbr title="\Decision\Model\Enums\MembershipTypes">MembershipTypes</abbr></a></span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-Enums-MembershipTypes.html"><abbr title="\Decision\Model\Enums\MembershipTypes">MembershipTypes</abbr></a></span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -3146,6 +3249,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_is18Plus">
         is18Plus()
         <a href="classes/Decision-Model-Member.html#method_is18Plus" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -3159,16 +3263,17 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">is18Plus</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">bool</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">bool</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -3179,6 +3284,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_isActive">
         isActive()
         <a href="classes/Decision-Model-Member.html#method_isActive" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -3193,15 +3299,17 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">isActive</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">bool</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">bool</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -3212,6 +3320,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_isBoardMember">
         isBoardMember()
         <a href="classes/Decision-Model-Member.html#method_isBoardMember" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -3226,15 +3335,17 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">isBoardMember</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">bool</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">bool</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -3245,6 +3356,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_isExpired">
         isExpired()
         <a href="classes/Decision-Model-Member.html#method_isExpired" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -3258,16 +3370,17 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">isExpired</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">bool</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">bool</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -3278,6 +3391,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_isKeyholder">
         isKeyholder()
         <a href="classes/Decision-Model-Member.html#method_isKeyholder" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -3292,15 +3406,17 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">isKeyholder</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">bool</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">bool</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -3311,6 +3427,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_setAuthenticationKey">
         setAuthenticationKey()
         <a href="classes/Decision-Model-Member.html#method_setAuthenticationKey" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -3324,8 +3441,9 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setAuthenticationKey</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$authenticationKey</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -3333,17 +3451,12 @@ still meets the requirements as set forth in the bylaws and internal regulations
                 : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -3355,6 +3468,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_setBirth">
         setBirth()
         <a href="classes/Decision-Model-Member.html#method_setBirth" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -3369,6 +3483,8 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setBirth</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTime">DateTime</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$birth</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -3377,17 +3493,12 @@ still meets the requirements as set forth in the bylaws and internal regulations
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTime">DateTime</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -3399,6 +3510,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_setChangedOn">
         setChangedOn()
         <a href="classes/Decision-Model-Member.html#method_setChangedOn" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -3413,6 +3525,8 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setChangedOn</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTime">DateTime</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$changedOn</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -3421,17 +3535,12 @@ still meets the requirements as set forth in the bylaws and internal regulations
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTime">DateTime</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -3443,6 +3552,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_setDeleted">
         setDeleted()
         <a href="classes/Decision-Model-Member.html#method_setDeleted" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -3457,6 +3567,8 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setDeleted</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$deleted</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -3465,17 +3577,12 @@ still meets the requirements as set forth in the bylaws and internal regulations
                 : <span class="phpdocumentor-signature__argument__return-type">bool</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -3487,6 +3594,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_setEmail">
         setEmail()
         <a href="classes/Decision-Model-Member.html#method_setEmail" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -3501,6 +3609,8 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setEmail</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$email</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -3509,17 +3619,12 @@ still meets the requirements as set forth in the bylaws and internal regulations
                 : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -3531,6 +3636,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_setExpiration">
         setExpiration()
         <a href="classes/Decision-Model-Member.html#method_setExpiration" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -3545,6 +3651,8 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setExpiration</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTime">DateTime</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$expiration</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -3553,17 +3661,12 @@ still meets the requirements as set forth in the bylaws and internal regulations
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTime">DateTime</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -3575,6 +3678,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_setFirstName">
         setFirstName()
         <a href="classes/Decision-Model-Member.html#method_setFirstName" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -3589,6 +3693,8 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setFirstName</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$firstName</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -3597,17 +3703,12 @@ still meets the requirements as set forth in the bylaws and internal regulations
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -3619,6 +3720,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_setGeneration">
         setGeneration()
         <a href="classes/Decision-Model-Member.html#method_setGeneration" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -3633,6 +3735,8 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setGeneration</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$generation</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -3641,17 +3745,12 @@ still meets the requirements as set forth in the bylaws and internal regulations
                 : <span class="phpdocumentor-signature__argument__return-type">int</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -3663,6 +3762,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_setHidden">
         setHidden()
         <a href="classes/Decision-Model-Member.html#method_setHidden" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -3677,6 +3777,8 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setHidden</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$hidden</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -3685,17 +3787,12 @@ still meets the requirements as set forth in the bylaws and internal regulations
                 : <span class="phpdocumentor-signature__argument__return-type">bool</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -3707,6 +3804,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_setIban">
         setIban()
         <a href="classes/Decision-Model-Member.html#method_setIban" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -3721,6 +3819,8 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setIban</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$iban</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -3729,17 +3829,12 @@ still meets the requirements as set forth in the bylaws and internal regulations
                 : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -3751,6 +3846,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_setInitials">
         setInitials()
         <a href="classes/Decision-Model-Member.html#method_setInitials" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -3765,6 +3861,8 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setInitials</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$initials</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -3773,17 +3871,12 @@ still meets the requirements as set forth in the bylaws and internal regulations
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -3795,6 +3888,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_setLastName">
         setLastName()
         <a href="classes/Decision-Model-Member.html#method_setLastName" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -3809,6 +3903,8 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setLastName</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$lastName</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -3817,17 +3913,12 @@ still meets the requirements as set forth in the bylaws and internal regulations
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -3839,6 +3930,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_setLidnr">
         setLidnr()
         <a href="classes/Decision-Model-Member.html#method_setLidnr" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -3853,6 +3945,8 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setLidnr</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$lidnr</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -3861,17 +3955,12 @@ still meets the requirements as set forth in the bylaws and internal regulations
                 : <span class="phpdocumentor-signature__argument__return-type">int</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -3883,6 +3972,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_setMembershipEndsOn">
         setMembershipEndsOn()
         <a href="classes/Decision-Model-Member.html#method_setMembershipEndsOn" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -3897,6 +3987,8 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setMembershipEndsOn</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTime">DateTime</abbr>|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$membershipEndsOn</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -3905,17 +3997,12 @@ still meets the requirements as set forth in the bylaws and internal regulations
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTime">DateTime</abbr>|null</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -3927,6 +4014,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_setMiddleName">
         setMiddleName()
         <a href="classes/Decision-Model-Member.html#method_setMiddleName" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -3941,6 +4029,8 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setMiddleName</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$middleName</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -3949,17 +4039,12 @@ still meets the requirements as set forth in the bylaws and internal regulations
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -3971,6 +4056,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_setPaid">
         setPaid()
         <a href="classes/Decision-Model-Member.html#method_setPaid" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -3985,6 +4071,8 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setPaid</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$paid</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -3993,17 +4081,12 @@ still meets the requirements as set forth in the bylaws and internal regulations
                 : <span class="phpdocumentor-signature__argument__return-type">int</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -4015,6 +4098,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_setSupremum">
         setSupremum()
         <a href="classes/Decision-Model-Member.html#method_setSupremum" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -4029,6 +4113,8 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setSupremum</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$supremum</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -4037,17 +4123,12 @@ still meets the requirements as set forth in the bylaws and internal regulations
                 : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -4059,6 +4140,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_setType">
         setType()
         <a href="classes/Decision-Model-Member.html#method_setType" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -4073,6 +4155,8 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setType</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Enums-MembershipTypes.html"><abbr title="\Decision\Model\Enums\MembershipTypes">MembershipTypes</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$type</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -4081,17 +4165,12 @@ still meets the requirements as set forth in the bylaws and internal regulations
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Enums-MembershipTypes.html"><abbr title="\Decision\Model\Enums\MembershipTypes">MembershipTypes</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -4103,6 +4182,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_toArray">
         toArray()
         <a href="classes/Decision-Model-Member.html#method_toArray" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -4117,15 +4197,17 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">toArray</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Decision\Model\MemberArrayType">MemberArrayType</abbr></span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\Decision\Model\MemberArrayType">MemberArrayType</abbr></span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type"><abbr title="\Decision\Model\MemberArrayType">MemberArrayType</abbr></span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -4136,6 +4218,7 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <h4 class="phpdocumentor-element__name" id="method_isCurrentBoard">
         isCurrentBoard()
         <a href="classes/Decision-Model-Member.html#method_isCurrentBoard" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Member.php"><a href="files/module-decision-src-model-member.html"><abbr title="module/Decision/src/Model/Member.php">Member.php</abbr></a></abbr>
@@ -4150,6 +4233,8 @@ still meets the requirements as set forth in the bylaws and internal regulations
     <span class="phpdocumentor-signature__visibility">protected</span>
                     <span class="phpdocumentor-signature__name">isCurrentBoard</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-BoardMember.html"><abbr title="\Decision\Model\BoardMember">BoardMember</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$boardMember</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -4158,85 +4243,230 @@ still meets the requirements as set forth in the bylaws and internal regulations
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-BoardMember.html"><abbr title="\Decision\Model\BoardMember">BoardMember</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">bool</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">bool</span>
+            </section>
+
 </article>
             </section>
 
-        
+        <div class="phpdocumentor-modal" id="source-view">
+    <div class="phpdocumentor-modal-bg" data-exit-button></div>
+    <div class="phpdocumentor-modal-container">
+        <div class="phpdocumentor-modal-content">
+            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/module/Decision/src/Model/Member.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
+        </div>
+        <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
+    </div>
+</div>
+
     <script type="text/javascript">
-        function loadExternalCodeSnippets(line) {
-            Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach((pre) => {
-                var src = pre.getAttribute('data-src').replace( /\\/g, '/');
-                var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
-                var language = 'php';
+        (function () {
+            function loadExternalCodeSnippet(el, url, line) {
+                Array.prototype.slice.call(el.querySelectorAll('pre[data-src]')).forEach((pre) => {
+                    const src = url || pre.getAttribute('data-src').replace(/\\/g, '/');
+                    const language = 'php';
 
-                var code = document.createElement('code');
-                code.className = 'language-' + language;
+                    const code = document.createElement('code');
+                    code.className = 'language-' + language;
+                    pre.textContent = '';
+                    pre.setAttribute('data-line', line)
+                    code.textContent = 'Loading…';
+                    pre.appendChild(code);
 
-                pre.textContent = '';
+                    var xhr = new XMLHttpRequest();
 
-                pre.setAttribute('data-line', line)
-                code.textContent = 'Loading…';
+                    xhr.open('GET', src, true);
 
-                pre.appendChild(code);
-
-                var xhr = new XMLHttpRequest();
-
-                xhr.open('GET', src, true);
-
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState == 4) {
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState !== 4) {
+                            return;
+                        }
 
                         if (xhr.status < 400 && xhr.responseText) {
                             code.textContent = xhr.responseText;
-
                             Prism.highlightElement(code);
+                            return;
                         }
-                        else if (xhr.status >= 400) {
+
+                        if (xhr.status === 404) {
+                            code.textContent = '✖ Error: File could not be found';
+                            return;
+                        }
+
+                        if (xhr.status >= 400) {
                             code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                            return;
                         }
-                        else {
-                            code.textContent = '✖ Error: File does not exist, is empty or trying to view from localhost';
-                        }
+
+                        code.textContent = '✖ Error: An unknown error occurred';
+                    };
+
+                    xhr.send(null);
+                });
+            }
+
+            const modalButtons = document.querySelectorAll("[data-modal]");
+            const openedAsLocalFile = window.location.protocol === 'file:';
+            if (modalButtons.length > 0 && openedAsLocalFile) {
+                console.warn(
+                    'Viewing the source code is unavailable because you are opening this page from the file:// scheme; ' +
+                    'browsers block XHR requests when a page is opened this way'
+                );
+            }
+
+            modalButtons.forEach(function (trigger) {
+                if (openedAsLocalFile) {
+                    trigger.setAttribute("hidden", "hidden");
+                }
+
+                trigger.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    const modal = document.getElementById(trigger.dataset.modal);
+                    if (!modal) {
+                        console.error(`Modal with id "${trigger.dataset.modal}" could not be found`);
+                        return;
                     }
-                };
+                    modal.classList.add("phpdocumentor-modal__open");
 
-                xhr.send(null);
-            });
-        }
-
-        var modals = document.querySelectorAll("[data-modal]");
-
-        modals.forEach(function (trigger) {
-            trigger.addEventListener("click", function (event) {
-                //event.preventDefault();
-                const modal = document.getElementById(trigger.dataset.modal);
-                modal.classList.add("phpdocumentor-modal__open");
-                loadExternalCodeSnippets(trigger.dataset.line)
-                const exits = modal.querySelectorAll("[data-exit-button]");
-                exits.forEach(function (exit) {
-                    exit.addEventListener("click", function (event) {
-                        event.preventDefault();
-                        modal.classList.remove("phpdocumentor-modal__open");
+                    loadExternalCodeSnippet(modal, trigger.dataset.src || null, trigger.dataset.line)
+                    const exits = modal.querySelectorAll("[data-exit-button]");
+                    exits.forEach(function (exit) {
+                        exit.addEventListener("click", function (event) {
+                            event.preventDefault();
+                            modal.classList.remove("phpdocumentor-modal__open");
+                        });
                     });
                 });
             });
-        });
+        })();
     </script>
 
     </article>
-                <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">
+                                </section>
+                <section class="phpdocumentor-on-this-page__sidebar">
+                                
+    <section class="phpdocumentor-on-this-page__content">
+        <strong class="phpdocumentor-on-this-page__title">On this page</strong>
+
+        <ul class="phpdocumentor-list -clean">
+            <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
+            <li>
+                <ul class="phpdocumentor-list -clean">
+                                                            <li><a href="classes/Decision-Model-Member.html#toc-properties">Properties</a></li>
+                                                            <li><a href="classes/Decision-Model-Member.html#toc-methods">Methods</a></li>
+                                    </ul>
+            </li>
+            
+                            <li class="phpdocumentor-on-this-page-section__title">Properties</li>
+                <li>
+                    <ul class="phpdocumentor-list -clean">
+                                                    <li><a href="classes/Decision-Model-Member.html#property_addresses">$addresses<a href="classes/Decision-Model-Member.html"></li>
+                                                    <li><a href="classes/Decision-Model-Member.html#property_authenticationKey">$authenticationKey<a href="classes/Decision-Model-Member.html"></li>
+                                                    <li><a href="classes/Decision-Model-Member.html#property_birth">$birth<a href="classes/Decision-Model-Member.html"></li>
+                                                    <li><a href="classes/Decision-Model-Member.html#property_boardInstallations">$boardInstallations<a href="classes/Decision-Model-Member.html"></li>
+                                                    <li><a href="classes/Decision-Model-Member.html#property_changedOn">$changedOn<a href="classes/Decision-Model-Member.html"></li>
+                                                    <li><a href="classes/Decision-Model-Member.html#property_deleted">$deleted<a href="classes/Decision-Model-Member.html"></li>
+                                                    <li><a href="classes/Decision-Model-Member.html#property_email">$email<a href="classes/Decision-Model-Member.html"></li>
+                                                    <li><a href="classes/Decision-Model-Member.html#property_expiration">$expiration<a href="classes/Decision-Model-Member.html"></li>
+                                                    <li><a href="classes/Decision-Model-Member.html#property_firstName">$firstName<a href="classes/Decision-Model-Member.html"></li>
+                                                    <li><a href="classes/Decision-Model-Member.html#property_generation">$generation<a href="classes/Decision-Model-Member.html"></li>
+                                                    <li><a href="classes/Decision-Model-Member.html#property_hidden">$hidden<a href="classes/Decision-Model-Member.html"></li>
+                                                    <li><a href="classes/Decision-Model-Member.html#property_iban">$iban<a href="classes/Decision-Model-Member.html"></li>
+                                                    <li><a href="classes/Decision-Model-Member.html#property_initials">$initials<a href="classes/Decision-Model-Member.html"></li>
+                                                    <li><a href="classes/Decision-Model-Member.html#property_installations">$installations<a href="classes/Decision-Model-Member.html"></li>
+                                                    <li><a href="classes/Decision-Model-Member.html#property_keyGrantings">$keyGrantings<a href="classes/Decision-Model-Member.html"></li>
+                                                    <li><a href="classes/Decision-Model-Member.html#property_lastName">$lastName<a href="classes/Decision-Model-Member.html"></li>
+                                                    <li><a href="classes/Decision-Model-Member.html#property_lidnr">$lidnr<a href="classes/Decision-Model-Member.html"></li>
+                                                    <li><a href="classes/Decision-Model-Member.html#property_lists">$lists<a href="classes/Decision-Model-Member.html"></li>
+                                                    <li><a href="classes/Decision-Model-Member.html#property_membershipEndsOn">$membershipEndsOn<a href="classes/Decision-Model-Member.html"></li>
+                                                    <li><a href="classes/Decision-Model-Member.html#property_middleName">$middleName<a href="classes/Decision-Model-Member.html"></li>
+                                                    <li><a href="classes/Decision-Model-Member.html#property_organInstallations">$organInstallations<a href="classes/Decision-Model-Member.html"></li>
+                                                    <li><a href="classes/Decision-Model-Member.html#property_paid">$paid<a href="classes/Decision-Model-Member.html"></li>
+                                                    <li><a href="classes/Decision-Model-Member.html#property_supremum">$supremum<a href="classes/Decision-Model-Member.html"></li>
+                                                    <li><a href="classes/Decision-Model-Member.html#property_tags">$tags<a href="classes/Decision-Model-Member.html"></li>
+                                                    <li><a href="classes/Decision-Model-Member.html#property_type">$type<a href="classes/Decision-Model-Member.html"></li>
+                                            </ul>
+                </li>
+            
+                        <li class="phpdocumentor-on-this-page-section__title">Methods</li>
+            <li>
+                <ul class="phpdocumentor-list -clean">
+                                            <li><a href="classes/Decision-Model-Member.html#method___construct">__construct()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_addAddress">addAddress()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_addAddresses">addAddresses()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_addList">addList()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_addLists">addLists()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_clearAddresses">clearAddresses()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_clearLists">clearLists()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_getAddresses">getAddresses()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_getAuthenticationKey">getAuthenticationKey()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_getBirth">getBirth()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_getBoardInstallations">getBoardInstallations()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_getChangedOn">getChangedOn()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_getCurrentBoardInstallation">getCurrentBoardInstallation()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_getCurrentOrganInstallations">getCurrentOrganInstallations()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_getDeleted">getDeleted()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_getEmail">getEmail()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_getExpiration">getExpiration()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_getFirstName">getFirstName()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_getFullName">getFullName()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_getGeneration">getGeneration()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_getHidden">getHidden()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_getIban">getIban()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_getInitials">getInitials()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_getInstallations">getInstallations()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_getKeyGrantings">getKeyGrantings()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_getLastName">getLastName()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_getLidnr">getLidnr()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_getLists">getLists()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_getMembershipEndsOn">getMembershipEndsOn()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_getMiddleName">getMiddleName()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_getOrganInstallations">getOrganInstallations()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_getPaid">getPaid()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_getSupremum">getSupremum()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_getTags">getTags()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_getType">getType()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_is18Plus">is18Plus()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_isActive">isActive()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_isBoardMember">isBoardMember()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_isExpired">isExpired()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_isKeyholder">isKeyholder()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_setAuthenticationKey">setAuthenticationKey()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_setBirth">setBirth()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_setChangedOn">setChangedOn()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_setDeleted">setDeleted()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_setEmail">setEmail()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_setExpiration">setExpiration()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_setFirstName">setFirstName()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_setGeneration">setGeneration()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_setHidden">setHidden()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_setIban">setIban()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_setInitials">setInitials()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_setLastName">setLastName()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_setLidnr">setLidnr()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_setMembershipEndsOn">setMembershipEndsOn()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_setMiddleName">setMiddleName()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_setPaid">setPaid()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_setSupremum">setSupremum()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_setType">setType()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_toArray">toArray()</a></li>
+                                            <li><a href="classes/Decision-Model-Member.html#method_isCurrentBoard">isCurrentBoard()</a></li>
+                                    </ul>
+            </li>
+                    </ul>
+    </section>
+
+                </section>
+                            </div>
+            <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">
     <section class="phpdocumentor-search-results__dialog">
         <header class="phpdocumentor-search-results__header">
             <h2 class="phpdocumentor-search-results__title">Search results</h2>
@@ -4247,7 +4477,6 @@ still meets the requirements as set forth in the bylaws and internal regulations
         </section>
     </section>
 </section>
-            </div>
         </div>
         <a href="classes/Decision-Model-Member.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 

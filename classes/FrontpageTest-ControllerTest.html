@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/base.css">
             <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@100;200;300;400;600;700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="css/template.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css" integrity="sha256-ybRkN9dBjhcS2qrW1z+hfCxq+1aBdwyQM5wlQoQVt/0=" crossorigin="anonymous" />
@@ -19,6 +19,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-highlight/prism-line-highlight.css">
                 <script src="https://cdn.jsdelivr.net/npm/fuse.js@3.4.6"></script>
         <script src="https://cdn.jsdelivr.net/npm/css-vars-ponyfill@2"></script>
+        <script src="js/template.js"></script>
         <script src="js/search.js"></script>
         <script defer src="js/searchIndex.js"></script>
     </head>
@@ -52,7 +53,7 @@
 <label class="phpdocumentor-sidebar__menu-icon" for="sidebar-button">
     Menu
 </label>
-<aside class="phpdocumentor-column -four phpdocumentor-sidebar">
+<aside class="phpdocumentor-column -three phpdocumentor-sidebar">
                     <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
@@ -381,8 +382,9 @@
     </section>
 </aside>
 
-            <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <ul class="phpdocumentor-breadcrumbs">
+            <div class="phpdocumentor-column -nine phpdocumentor-content">
+                                <section>
+                                        <ul class="phpdocumentor-breadcrumbs">
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/frontpagetest.html">FrontpageTest</a></li>
     </ul>
 
@@ -404,6 +406,11 @@
     
     </h2>
 
+<div class="phpdocumentor-label-line">
+
+
+</div>
+
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/test/ControllerTest.php"><a href="files/module-frontpage-test-controllertest.html"><abbr title="module/Frontpage/test/ControllerTest.php">ControllerTest.php</abbr></a></abbr>
     :
@@ -412,10 +419,6 @@
     </aside>
 
         
-    <section class="phpdocumentor-description"></section>
-
-
-
 
 
 
@@ -423,303 +426,290 @@
 
 <h3 id="toc">
     Table of Contents
-    <a href="#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/FrontpageTest-ControllerTest.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+
 </h3>
 
+
+
+
+
+
+
+<h4 id="toc-constants">
+    Constants
+    <a href="classes/FrontpageTest-ControllerTest.html#toc-constants" class="headerlink"><i class="fas fa-link"></i></a>
+
+</h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -constant -protected">
     <a href="classes/ApplicationTest-BaseControllerTest.html#constant_COMPANY_ID">COMPANY_ID</a>
     <span>
         &nbsp;= 42                            </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -protected">
     <a href="classes/ApplicationTest-BaseControllerTest.html#constant_LIDNR">LIDNR</a>
     <span>
         &nbsp;= 8000                            </span>
 </dt>
-<dd></dd>
 
-                    <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    </dl>
+
+
+<h4 id="toc-properties">
+    Properties
+    <a href="classes/FrontpageTest-ControllerTest.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
+
+</h4>
+<dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/ApplicationTest-BaseControllerTest.html#property_aclService">$aclService</a>
     <span>
                         &nbsp;: <abbr title="\PHPUnit\Framework\MockObject\MockObject">MockObject</abbr>            </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/ApplicationTest-BaseControllerTest.html#property_company">$company</a>
     <span>
                         &nbsp;: <a href="classes/Company-Model-Company.html"><abbr title="\Company\Model\Company">Company</abbr></a>            </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/ApplicationTest-BaseControllerTest.html#property_companyMapper">$companyMapper</a>
     <span>
                         &nbsp;: <abbr title="\PHPUnit\Framework\MockObject\MockObject">MockObject</abbr>            </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/ApplicationTest-BaseControllerTest.html#property_companyUser">$companyUser</a>
     <span>
                         &nbsp;: <a href="classes/User-Model-CompanyUser.html"><abbr title="\User\Model\CompanyUser">CompanyUser</abbr></a>            </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/ApplicationTest-BaseControllerTest.html#property_companyUserAuthService">$companyUserAuthService</a>
     <span>
                         &nbsp;: <abbr title="\PHPUnit\Framework\MockObject\MockObject">MockObject</abbr>            </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/ApplicationTest-BaseControllerTest.html#property_companyUserMapper">$companyUserMapper</a>
     <span>
                         &nbsp;: <abbr title="\PHPUnit\Framework\MockObject\MockObject">MockObject</abbr>            </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/ApplicationTest-BaseControllerTest.html#property_member">$member</a>
     <span>
                         &nbsp;: <a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>            </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/ApplicationTest-BaseControllerTest.html#property_memberMapper">$memberMapper</a>
     <span>
                         &nbsp;: <abbr title="\PHPUnit\Framework\MockObject\MockObject">MockObject</abbr>            </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/ApplicationTest-BaseControllerTest.html#property_newCompanyUser">$newCompanyUser</a>
     <span>
                         &nbsp;: <a href="classes/User-Model-NewCompanyUser.html"><abbr title="\User\Model\NewCompanyUser">NewCompanyUser</abbr></a>            </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/ApplicationTest-BaseControllerTest.html#property_serviceManager">$serviceManager</a>
     <span>
                         &nbsp;: <abbr title="\Laminas\ServiceManager\ServiceManager">ServiceManager</abbr>            </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/ApplicationTest-BaseControllerTest.html#property_user">$user</a>
     <span>
                         &nbsp;: <a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a>            </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/ApplicationTest-BaseControllerTest.html#property_userAuthService">$userAuthService</a>
     <span>
                         &nbsp;: <abbr title="\PHPUnit\Framework\MockObject\MockObject">MockObject</abbr>            </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/ApplicationTest-BaseControllerTest.html#property_userMapper">$userMapper</a>
     <span>
                         &nbsp;: <abbr title="\PHPUnit\Framework\MockObject\MockObject">MockObject</abbr>            </span>
 </dt>
-<dd></dd>
 
-                <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    </dl>
+
+<h4 id="toc-methods">
+    Methods
+    <a href="classes/FrontpageTest-ControllerTest.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
+
+</h4>
+<dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/ApplicationTest-BaseControllerTest.html#method_getApplication">getApplication()</a>
     <span>
                                 &nbsp;: <abbr title="\Laminas\Mvc\ApplicationInterface">ApplicationInterface</abbr>    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUp">setUp()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/FrontpageTest-ControllerTest.html#method_testAdminActionCanBeAccessedAsAdmin">testAdminActionCanBeAccessedAsAdmin()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/FrontpageTest-ControllerTest.html#method_testAdminNewsActionCanBeAccessedAsAdmin">testAdminNewsActionCanBeAccessedAsAdmin()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/FrontpageTest-ControllerTest.html#method_testAdminPageActionCanBeAccessedAsAdmin">testAdminPageActionCanBeAccessedAsAdmin()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/FrontpageTest-ControllerTest.html#method_testAdminPollActionCanBeAccessedAsAdmin">testAdminPollActionCanBeAccessedAsAdmin()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/FrontpageTest-ControllerTest.html#method_testAssociationCommitteesActionCanBeAccessed">testAssociationCommitteesActionCanBeAccessed()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/FrontpageTest-ControllerTest.html#method_testAssociationFraternitiesActionCanBeAccessed">testAssociationFraternitiesActionCanBeAccessed()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/FrontpageTest-ControllerTest.html#method_testIndexActionCanBeAccessed">testIndexActionCanBeAccessed()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/FrontpageTest-ControllerTest.html#method_testLangEnDoesRedirect">testLangEnDoesRedirect()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/FrontpageTest-ControllerTest.html#method_testLangEnDoesRedirectToUri">testLangEnDoesRedirectToUri()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/FrontpageTest-ControllerTest.html#method_testLangNlDoesRedirect">testLangNlDoesRedirect()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/FrontpageTest-ControllerTest.html#method_testLangNlDoesRedirectToUri">testLangNlDoesRedirectToUri()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/FrontpageTest-ControllerTest.html#method_testPageAction2CanBeAccessedAsAdmin">testPageAction2CanBeAccessedAsAdmin()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/FrontpageTest-ControllerTest.html#method_testPageAction3CanBeAccessedAsAdmin">testPageAction3CanBeAccessedAsAdmin()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/FrontpageTest-ControllerTest.html#method_testPageActionCanBeAccessedAsAdmin">testPageActionCanBeAccessedAsAdmin()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/FrontpageTest-ControllerTest.html#method_testPollHistoryActionCanBeAccessed">testPollHistoryActionCanBeAccessed()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/FrontpageTest-ControllerTest.html#method_testPollRequestActionCanBeAccessedAsUser">testPollRequestActionCanBeAccessedAsUser()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/FrontpageTest-ControllerTest.html#method_testPollRequestActionIsForbidden">testPollRequestActionIsForbidden()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockCompany">setUpMockCompany()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockCompanyUser">setUpMockCompanyUser()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockedServices">setUpMockedServices()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockMember">setUpMockMember()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockNewCompanyUser">setUpMockNewCompanyUser()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockUser">setUpMockUser()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpWithRole">setUpWithRole()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a href="classes/ApplicationTest-BaseControllerTest.html#method_bootstrapApplication">bootstrapApplication()</a>
     <span>
                                 &nbsp;: <abbr title="\Laminas\Mvc\Application">Application</abbr>    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a href="classes/ApplicationTest-BaseControllerTest.html#method_initServiceManager">initServiceManager()</a>
@@ -733,51 +723,45 @@
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockCompanyUserAuthService">setUpMockCompanyUserAuthService()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockCompanyUserMapper">setUpMockCompanyUserMapper()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockIdentity">setUpMockIdentity()</a>
     <span>
                                 &nbsp;: <a href="classes/User-Model-CompanyUser.html"><abbr title="\User\Model\CompanyUser">CompanyUser</abbr></a>|<a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a>|null    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockMemberMapper">setUpMockMemberMapper()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockUserAuthService">setUpMockUserAuthService()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockUserMapper">setUpMockUserMapper()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
-        </dl>
+    </dl>
+
 
 
 
@@ -786,11 +770,13 @@
         <h3 class="phpdocumentor-elements__header" id="constants">
             Constants
             <a href="classes/FrontpageTest-ControllerTest.html#constants" class="headerlink"><i class="fas fa-link"></i></a>
+
         </h3>
                     <article class="phpdocumentor-element -constant -protected ">
     <h4 class="phpdocumentor-element__name" id="constant_COMPANY_ID">
         COMPANY_ID
         <a href="classes/ApplicationTest-BaseControllerTest.html#constant_COMPANY_ID" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
 
     <aside class="phpdocumentor-element-found-in">
@@ -809,10 +795,8 @@
 </code>
 
 
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
+    
+    
     
 
 </article>
@@ -820,6 +804,7 @@
     <h4 class="phpdocumentor-element__name" id="constant_LIDNR">
         LIDNR
         <a href="classes/ApplicationTest-BaseControllerTest.html#constant_LIDNR" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
 
     <aside class="phpdocumentor-element-found-in">
@@ -838,10 +823,8 @@
 </code>
 
 
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
+    
+    
     
 
 </article>
@@ -852,6 +835,7 @@
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
             <a href="classes/FrontpageTest-ControllerTest.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+
         </h3>
                     <article
         class="
@@ -863,6 +847,7 @@
     <h4 class="phpdocumentor-element__name" id="property_aclService">
         $aclService
         <a href="classes/ApplicationTest-BaseControllerTest.html#property_aclService" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -880,10 +865,8 @@
     <span class="phpdocumentor-signature__name">$aclService</span>
     </code>
 
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
+    
+    
     
 
 </article>
@@ -897,6 +880,7 @@
     <h4 class="phpdocumentor-element__name" id="property_company">
         $company
         <a href="classes/ApplicationTest-BaseControllerTest.html#property_company" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -914,10 +898,8 @@
     <span class="phpdocumentor-signature__name">$company</span>
     </code>
 
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
+    
+    
     
 
 </article>
@@ -931,6 +913,7 @@
     <h4 class="phpdocumentor-element__name" id="property_companyMapper">
         $companyMapper
         <a href="classes/ApplicationTest-BaseControllerTest.html#property_companyMapper" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -948,10 +931,8 @@
     <span class="phpdocumentor-signature__name">$companyMapper</span>
     </code>
 
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
+    
+    
     
 
 </article>
@@ -965,6 +946,7 @@
     <h4 class="phpdocumentor-element__name" id="property_companyUser">
         $companyUser
         <a href="classes/ApplicationTest-BaseControllerTest.html#property_companyUser" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -982,10 +964,8 @@
     <span class="phpdocumentor-signature__name">$companyUser</span>
     </code>
 
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
+    
+    
     
 
 </article>
@@ -999,6 +979,7 @@
     <h4 class="phpdocumentor-element__name" id="property_companyUserAuthService">
         $companyUserAuthService
         <a href="classes/ApplicationTest-BaseControllerTest.html#property_companyUserAuthService" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1016,10 +997,8 @@
     <span class="phpdocumentor-signature__name">$companyUserAuthService</span>
     </code>
 
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
+    
+    
     
 
 </article>
@@ -1033,6 +1012,7 @@
     <h4 class="phpdocumentor-element__name" id="property_companyUserMapper">
         $companyUserMapper
         <a href="classes/ApplicationTest-BaseControllerTest.html#property_companyUserMapper" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1050,10 +1030,8 @@
     <span class="phpdocumentor-signature__name">$companyUserMapper</span>
     </code>
 
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
+    
+    
     
 
 </article>
@@ -1067,6 +1045,7 @@
     <h4 class="phpdocumentor-element__name" id="property_member">
         $member
         <a href="classes/ApplicationTest-BaseControllerTest.html#property_member" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1084,10 +1063,8 @@
     <span class="phpdocumentor-signature__name">$member</span>
     </code>
 
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
+    
+    
     
 
 </article>
@@ -1101,6 +1078,7 @@
     <h4 class="phpdocumentor-element__name" id="property_memberMapper">
         $memberMapper
         <a href="classes/ApplicationTest-BaseControllerTest.html#property_memberMapper" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1118,10 +1096,8 @@
     <span class="phpdocumentor-signature__name">$memberMapper</span>
     </code>
 
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
+    
+    
     
 
 </article>
@@ -1135,6 +1111,7 @@
     <h4 class="phpdocumentor-element__name" id="property_newCompanyUser">
         $newCompanyUser
         <a href="classes/ApplicationTest-BaseControllerTest.html#property_newCompanyUser" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1152,10 +1129,8 @@
     <span class="phpdocumentor-signature__name">$newCompanyUser</span>
     </code>
 
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
+    
+    
     
 
 </article>
@@ -1169,6 +1144,7 @@
     <h4 class="phpdocumentor-element__name" id="property_serviceManager">
         $serviceManager
         <a href="classes/ApplicationTest-BaseControllerTest.html#property_serviceManager" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1186,10 +1162,8 @@
     <span class="phpdocumentor-signature__name">$serviceManager</span>
     </code>
 
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
+    
+    
     
 
 </article>
@@ -1203,6 +1177,7 @@
     <h4 class="phpdocumentor-element__name" id="property_user">
         $user
         <a href="classes/ApplicationTest-BaseControllerTest.html#property_user" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1220,10 +1195,8 @@
     <span class="phpdocumentor-signature__name">$user</span>
     </code>
 
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
+    
+    
     
 
 </article>
@@ -1237,6 +1210,7 @@
     <h4 class="phpdocumentor-element__name" id="property_userAuthService">
         $userAuthService
         <a href="classes/ApplicationTest-BaseControllerTest.html#property_userAuthService" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1254,10 +1228,8 @@
     <span class="phpdocumentor-signature__name">$userAuthService</span>
     </code>
 
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
+    
+    
     
 
 </article>
@@ -1271,6 +1243,7 @@
     <h4 class="phpdocumentor-element__name" id="property_userMapper">
         $userMapper
         <a href="classes/ApplicationTest-BaseControllerTest.html#property_userMapper" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1288,10 +1261,8 @@
     <span class="phpdocumentor-signature__name">$userMapper</span>
     </code>
 
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
+    
+    
     
 
 </article>
@@ -1301,6 +1272,7 @@
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
             <a href="classes/FrontpageTest-ControllerTest.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+
         </h3>
                     <article
         class="phpdocumentor-element
@@ -1311,6 +1283,7 @@
     <h4 class="phpdocumentor-element__name" id="method_getApplication">
         getApplication()
         <a href="classes/ApplicationTest-BaseControllerTest.html#method_getApplication" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
@@ -1324,16 +1297,17 @@
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getApplication</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Laminas\Mvc\ApplicationInterface">ApplicationInterface</abbr></span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\Laminas\Mvc\ApplicationInterface">ApplicationInterface</abbr></span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type"><abbr title="\Laminas\Mvc\ApplicationInterface">ApplicationInterface</abbr></span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -1344,6 +1318,7 @@
     <h4 class="phpdocumentor-element__name" id="method_setUp">
         setUp()
         <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUp" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
@@ -1357,15 +1332,12 @@
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setUp</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1377,6 +1349,7 @@
     <h4 class="phpdocumentor-element__name" id="method_testAdminActionCanBeAccessedAsAdmin">
         testAdminActionCanBeAccessedAsAdmin()
         <a href="classes/FrontpageTest-ControllerTest.html#method_testAdminActionCanBeAccessedAsAdmin" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/test/ControllerTest.php"><a href="files/module-frontpage-test-controllertest.html"><abbr title="module/Frontpage/test/ControllerTest.php">ControllerTest.php</abbr></a></abbr>
@@ -1390,15 +1363,12 @@
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">testAdminActionCanBeAccessedAsAdmin</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1410,6 +1380,7 @@
     <h4 class="phpdocumentor-element__name" id="method_testAdminNewsActionCanBeAccessedAsAdmin">
         testAdminNewsActionCanBeAccessedAsAdmin()
         <a href="classes/FrontpageTest-ControllerTest.html#method_testAdminNewsActionCanBeAccessedAsAdmin" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/test/ControllerTest.php"><a href="files/module-frontpage-test-controllertest.html"><abbr title="module/Frontpage/test/ControllerTest.php">ControllerTest.php</abbr></a></abbr>
@@ -1423,15 +1394,12 @@
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">testAdminNewsActionCanBeAccessedAsAdmin</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1443,6 +1411,7 @@
     <h4 class="phpdocumentor-element__name" id="method_testAdminPageActionCanBeAccessedAsAdmin">
         testAdminPageActionCanBeAccessedAsAdmin()
         <a href="classes/FrontpageTest-ControllerTest.html#method_testAdminPageActionCanBeAccessedAsAdmin" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/test/ControllerTest.php"><a href="files/module-frontpage-test-controllertest.html"><abbr title="module/Frontpage/test/ControllerTest.php">ControllerTest.php</abbr></a></abbr>
@@ -1456,15 +1425,12 @@
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">testAdminPageActionCanBeAccessedAsAdmin</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1476,6 +1442,7 @@
     <h4 class="phpdocumentor-element__name" id="method_testAdminPollActionCanBeAccessedAsAdmin">
         testAdminPollActionCanBeAccessedAsAdmin()
         <a href="classes/FrontpageTest-ControllerTest.html#method_testAdminPollActionCanBeAccessedAsAdmin" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/test/ControllerTest.php"><a href="files/module-frontpage-test-controllertest.html"><abbr title="module/Frontpage/test/ControllerTest.php">ControllerTest.php</abbr></a></abbr>
@@ -1489,15 +1456,12 @@
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">testAdminPollActionCanBeAccessedAsAdmin</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1509,6 +1473,7 @@
     <h4 class="phpdocumentor-element__name" id="method_testAssociationCommitteesActionCanBeAccessed">
         testAssociationCommitteesActionCanBeAccessed()
         <a href="classes/FrontpageTest-ControllerTest.html#method_testAssociationCommitteesActionCanBeAccessed" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/test/ControllerTest.php"><a href="files/module-frontpage-test-controllertest.html"><abbr title="module/Frontpage/test/ControllerTest.php">ControllerTest.php</abbr></a></abbr>
@@ -1522,15 +1487,12 @@
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">testAssociationCommitteesActionCanBeAccessed</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1542,6 +1504,7 @@
     <h4 class="phpdocumentor-element__name" id="method_testAssociationFraternitiesActionCanBeAccessed">
         testAssociationFraternitiesActionCanBeAccessed()
         <a href="classes/FrontpageTest-ControllerTest.html#method_testAssociationFraternitiesActionCanBeAccessed" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/test/ControllerTest.php"><a href="files/module-frontpage-test-controllertest.html"><abbr title="module/Frontpage/test/ControllerTest.php">ControllerTest.php</abbr></a></abbr>
@@ -1555,15 +1518,12 @@
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">testAssociationFraternitiesActionCanBeAccessed</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1575,6 +1535,7 @@
     <h4 class="phpdocumentor-element__name" id="method_testIndexActionCanBeAccessed">
         testIndexActionCanBeAccessed()
         <a href="classes/FrontpageTest-ControllerTest.html#method_testIndexActionCanBeAccessed" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/test/ControllerTest.php"><a href="files/module-frontpage-test-controllertest.html"><abbr title="module/Frontpage/test/ControllerTest.php">ControllerTest.php</abbr></a></abbr>
@@ -1588,12 +1549,15 @@
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">testIndexActionCanBeAccessed</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/FrontpageTest-ControllerTest.html#method_testIndexActionCanBeAccessed#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
@@ -1605,12 +1569,8 @@
 </section>
 
                                     </dd>
-                        </dl>
+                                            </dl>
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1622,6 +1582,7 @@
     <h4 class="phpdocumentor-element__name" id="method_testLangEnDoesRedirect">
         testLangEnDoesRedirect()
         <a href="classes/FrontpageTest-ControllerTest.html#method_testLangEnDoesRedirect" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/test/ControllerTest.php"><a href="files/module-frontpage-test-controllertest.html"><abbr title="module/Frontpage/test/ControllerTest.php">ControllerTest.php</abbr></a></abbr>
@@ -1635,15 +1596,12 @@
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">testLangEnDoesRedirect</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1655,6 +1613,7 @@
     <h4 class="phpdocumentor-element__name" id="method_testLangEnDoesRedirectToUri">
         testLangEnDoesRedirectToUri()
         <a href="classes/FrontpageTest-ControllerTest.html#method_testLangEnDoesRedirectToUri" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/test/ControllerTest.php"><a href="files/module-frontpage-test-controllertest.html"><abbr title="module/Frontpage/test/ControllerTest.php">ControllerTest.php</abbr></a></abbr>
@@ -1668,15 +1627,12 @@
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">testLangEnDoesRedirectToUri</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1688,6 +1644,7 @@
     <h4 class="phpdocumentor-element__name" id="method_testLangNlDoesRedirect">
         testLangNlDoesRedirect()
         <a href="classes/FrontpageTest-ControllerTest.html#method_testLangNlDoesRedirect" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/test/ControllerTest.php"><a href="files/module-frontpage-test-controllertest.html"><abbr title="module/Frontpage/test/ControllerTest.php">ControllerTest.php</abbr></a></abbr>
@@ -1701,15 +1658,12 @@
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">testLangNlDoesRedirect</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1721,6 +1675,7 @@
     <h4 class="phpdocumentor-element__name" id="method_testLangNlDoesRedirectToUri">
         testLangNlDoesRedirectToUri()
         <a href="classes/FrontpageTest-ControllerTest.html#method_testLangNlDoesRedirectToUri" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/test/ControllerTest.php"><a href="files/module-frontpage-test-controllertest.html"><abbr title="module/Frontpage/test/ControllerTest.php">ControllerTest.php</abbr></a></abbr>
@@ -1734,15 +1689,12 @@
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">testLangNlDoesRedirectToUri</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1754,6 +1706,7 @@
     <h4 class="phpdocumentor-element__name" id="method_testPageAction2CanBeAccessedAsAdmin">
         testPageAction2CanBeAccessedAsAdmin()
         <a href="classes/FrontpageTest-ControllerTest.html#method_testPageAction2CanBeAccessedAsAdmin" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/test/ControllerTest.php"><a href="files/module-frontpage-test-controllertest.html"><abbr title="module/Frontpage/test/ControllerTest.php">ControllerTest.php</abbr></a></abbr>
@@ -1767,15 +1720,12 @@
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">testPageAction2CanBeAccessedAsAdmin</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1787,6 +1737,7 @@
     <h4 class="phpdocumentor-element__name" id="method_testPageAction3CanBeAccessedAsAdmin">
         testPageAction3CanBeAccessedAsAdmin()
         <a href="classes/FrontpageTest-ControllerTest.html#method_testPageAction3CanBeAccessedAsAdmin" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/test/ControllerTest.php"><a href="files/module-frontpage-test-controllertest.html"><abbr title="module/Frontpage/test/ControllerTest.php">ControllerTest.php</abbr></a></abbr>
@@ -1800,15 +1751,12 @@
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">testPageAction3CanBeAccessedAsAdmin</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1820,6 +1768,7 @@
     <h4 class="phpdocumentor-element__name" id="method_testPageActionCanBeAccessedAsAdmin">
         testPageActionCanBeAccessedAsAdmin()
         <a href="classes/FrontpageTest-ControllerTest.html#method_testPageActionCanBeAccessedAsAdmin" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/test/ControllerTest.php"><a href="files/module-frontpage-test-controllertest.html"><abbr title="module/Frontpage/test/ControllerTest.php">ControllerTest.php</abbr></a></abbr>
@@ -1833,15 +1782,12 @@
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">testPageActionCanBeAccessedAsAdmin</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1853,6 +1799,7 @@
     <h4 class="phpdocumentor-element__name" id="method_testPollHistoryActionCanBeAccessed">
         testPollHistoryActionCanBeAccessed()
         <a href="classes/FrontpageTest-ControllerTest.html#method_testPollHistoryActionCanBeAccessed" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/test/ControllerTest.php"><a href="files/module-frontpage-test-controllertest.html"><abbr title="module/Frontpage/test/ControllerTest.php">ControllerTest.php</abbr></a></abbr>
@@ -1866,15 +1813,12 @@
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">testPollHistoryActionCanBeAccessed</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1886,6 +1830,7 @@
     <h4 class="phpdocumentor-element__name" id="method_testPollRequestActionCanBeAccessedAsUser">
         testPollRequestActionCanBeAccessedAsUser()
         <a href="classes/FrontpageTest-ControllerTest.html#method_testPollRequestActionCanBeAccessedAsUser" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/test/ControllerTest.php"><a href="files/module-frontpage-test-controllertest.html"><abbr title="module/Frontpage/test/ControllerTest.php">ControllerTest.php</abbr></a></abbr>
@@ -1899,15 +1844,12 @@
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">testPollRequestActionCanBeAccessedAsUser</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1919,6 +1861,7 @@
     <h4 class="phpdocumentor-element__name" id="method_testPollRequestActionIsForbidden">
         testPollRequestActionIsForbidden()
         <a href="classes/FrontpageTest-ControllerTest.html#method_testPollRequestActionIsForbidden" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/test/ControllerTest.php"><a href="files/module-frontpage-test-controllertest.html"><abbr title="module/Frontpage/test/ControllerTest.php">ControllerTest.php</abbr></a></abbr>
@@ -1932,15 +1875,12 @@
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">testPollRequestActionIsForbidden</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1952,6 +1892,7 @@
     <h4 class="phpdocumentor-element__name" id="method_setUpMockCompany">
         setUpMockCompany()
         <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockCompany" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
@@ -1965,15 +1906,12 @@
     <span class="phpdocumentor-signature__visibility">protected</span>
                     <span class="phpdocumentor-signature__name">setUpMockCompany</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1985,6 +1923,7 @@
     <h4 class="phpdocumentor-element__name" id="method_setUpMockCompanyUser">
         setUpMockCompanyUser()
         <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockCompanyUser" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
@@ -1998,15 +1937,12 @@
     <span class="phpdocumentor-signature__visibility">protected</span>
                     <span class="phpdocumentor-signature__name">setUpMockCompanyUser</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -2018,6 +1954,7 @@
     <h4 class="phpdocumentor-element__name" id="method_setUpMockedServices">
         setUpMockedServices()
         <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockedServices" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
@@ -2031,15 +1968,12 @@
     <span class="phpdocumentor-signature__visibility">protected</span>
                     <span class="phpdocumentor-signature__name">setUpMockedServices</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -2051,6 +1985,7 @@
     <h4 class="phpdocumentor-element__name" id="method_setUpMockMember">
         setUpMockMember()
         <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockMember" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
@@ -2064,15 +1999,12 @@
     <span class="phpdocumentor-signature__visibility">protected</span>
                     <span class="phpdocumentor-signature__name">setUpMockMember</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -2084,6 +2016,7 @@
     <h4 class="phpdocumentor-element__name" id="method_setUpMockNewCompanyUser">
         setUpMockNewCompanyUser()
         <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockNewCompanyUser" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
@@ -2097,15 +2030,12 @@
     <span class="phpdocumentor-signature__visibility">protected</span>
                     <span class="phpdocumentor-signature__name">setUpMockNewCompanyUser</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -2117,6 +2047,7 @@
     <h4 class="phpdocumentor-element__name" id="method_setUpMockUser">
         setUpMockUser()
         <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockUser" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
@@ -2130,8 +2061,9 @@
     <span class="phpdocumentor-signature__visibility">protected</span>
                     <span class="phpdocumentor-signature__name">setUpMockUser</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$roles</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">new ArrayCollection()</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -2139,17 +2071,12 @@
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Doctrine\Common\Collections\ArrayCollection">ArrayCollection</abbr></span>
                  = <span class="phpdocumentor-signature__argument__default-value">new ArrayCollection()</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -2161,6 +2088,7 @@
     <h4 class="phpdocumentor-element__name" id="method_setUpWithRole">
         setUpWithRole()
         <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpWithRole" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
@@ -2174,8 +2102,9 @@
     <span class="phpdocumentor-signature__visibility">protected</span>
                     <span class="phpdocumentor-signature__name">setUpWithRole</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$role</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;user&#039;</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -2183,17 +2112,12 @@
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                  = <span class="phpdocumentor-signature__argument__default-value">&#039;user&#039;</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -2205,6 +2129,7 @@
     <h4 class="phpdocumentor-element__name" id="method_bootstrapApplication">
         bootstrapApplication()
         <a href="classes/ApplicationTest-BaseControllerTest.html#method_bootstrapApplication" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
@@ -2218,6 +2143,8 @@
     <span class="phpdocumentor-signature__visibility">private</span>
                     <span class="phpdocumentor-signature__name">bootstrapApplication</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\ServiceManager\ServiceManager">ServiceManager</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$serviceManager</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$configuration</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Laminas\Mvc\Application">Application</abbr></span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -2226,23 +2153,22 @@
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\ServiceManager\ServiceManager">ServiceManager</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$configuration</span>
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
                  = <span class="phpdocumentor-signature__argument__default-value">[]</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/ApplicationTest-BaseControllerTest.html#method_bootstrapApplication#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
@@ -2254,13 +2180,13 @@
 </section>
 
                                     </dd>
-                        </dl>
+                                            </dl>
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\Laminas\Mvc\Application">Application</abbr></span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type"><abbr title="\Laminas\Mvc\Application">Application</abbr></span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2271,6 +2197,7 @@
     <h4 class="phpdocumentor-element__name" id="method_initServiceManager">
         initServiceManager()
         <a href="classes/ApplicationTest-BaseControllerTest.html#method_initServiceManager" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
@@ -2285,6 +2212,8 @@
     <span class="phpdocumentor-signature__visibility">private</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">initServiceManager</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$configuration</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Laminas\ServiceManager\ServiceManager">ServiceManager</abbr></span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -2293,15 +2222,15 @@
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
                  = <span class="phpdocumentor-signature__argument__default-value">[]</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/ApplicationTest-BaseControllerTest.html#method_initServiceManager#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
@@ -2313,13 +2242,13 @@
 </section>
 
                                     </dd>
-                        </dl>
+                                            </dl>
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\Laminas\ServiceManager\ServiceManager">ServiceManager</abbr></span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type"><abbr title="\Laminas\ServiceManager\ServiceManager">ServiceManager</abbr></span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2330,6 +2259,7 @@
     <h4 class="phpdocumentor-element__name" id="method_setUpMockCompanyMapper">
         setUpMockCompanyMapper()
         <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockCompanyMapper" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
@@ -2343,15 +2273,12 @@
     <span class="phpdocumentor-signature__visibility">private</span>
                     <span class="phpdocumentor-signature__name">setUpMockCompanyMapper</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -2363,6 +2290,7 @@
     <h4 class="phpdocumentor-element__name" id="method_setUpMockCompanyUserAuthService">
         setUpMockCompanyUserAuthService()
         <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockCompanyUserAuthService" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
@@ -2376,15 +2304,12 @@
     <span class="phpdocumentor-signature__visibility">private</span>
                     <span class="phpdocumentor-signature__name">setUpMockCompanyUserAuthService</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -2396,6 +2321,7 @@
     <h4 class="phpdocumentor-element__name" id="method_setUpMockCompanyUserMapper">
         setUpMockCompanyUserMapper()
         <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockCompanyUserMapper" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
@@ -2409,15 +2335,12 @@
     <span class="phpdocumentor-signature__visibility">private</span>
                     <span class="phpdocumentor-signature__name">setUpMockCompanyUserMapper</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -2429,6 +2352,7 @@
     <h4 class="phpdocumentor-element__name" id="method_setUpMockIdentity">
         setUpMockIdentity()
         <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockIdentity" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
@@ -2442,8 +2366,9 @@
     <span class="phpdocumentor-signature__visibility">private</span>
                     <span class="phpdocumentor-signature__name">setUpMockIdentity</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$role</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/User-Model-CompanyUser.html"><abbr title="\User\Model\CompanyUser">CompanyUser</abbr></a>|<a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a>|null</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -2451,18 +2376,17 @@
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/User-Model-CompanyUser.html"><abbr title="\User\Model\CompanyUser">CompanyUser</abbr></a>|<a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a>|null</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type"><a href="classes/User-Model-CompanyUser.html"><abbr title="\User\Model\CompanyUser">CompanyUser</abbr></a>|<a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a>|null</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2473,6 +2397,7 @@
     <h4 class="phpdocumentor-element__name" id="method_setUpMockMemberMapper">
         setUpMockMemberMapper()
         <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockMemberMapper" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
@@ -2486,15 +2411,12 @@
     <span class="phpdocumentor-signature__visibility">private</span>
                     <span class="phpdocumentor-signature__name">setUpMockMemberMapper</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -2506,6 +2428,7 @@
     <h4 class="phpdocumentor-element__name" id="method_setUpMockUserAuthService">
         setUpMockUserAuthService()
         <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockUserAuthService" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
@@ -2519,15 +2442,12 @@
     <span class="phpdocumentor-signature__visibility">private</span>
                     <span class="phpdocumentor-signature__name">setUpMockUserAuthService</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -2539,6 +2459,7 @@
     <h4 class="phpdocumentor-element__name" id="method_setUpMockUserMapper">
         setUpMockUserMapper()
         <a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockUserMapper" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/BaseControllerTest.php"><a href="files/module-application-test-basecontrollertest.html"><abbr title="module/Application/test/BaseControllerTest.php">BaseControllerTest.php</abbr></a></abbr>
@@ -2552,83 +2473,197 @@
     <span class="phpdocumentor-signature__visibility">private</span>
                     <span class="phpdocumentor-signature__name">setUpMockUserMapper</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
             </section>
 
-        
+        <div class="phpdocumentor-modal" id="source-view">
+    <div class="phpdocumentor-modal-bg" data-exit-button></div>
+    <div class="phpdocumentor-modal-container">
+        <div class="phpdocumentor-modal-content">
+            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/module/Frontpage/test/ControllerTest.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
+        </div>
+        <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
+    </div>
+</div>
+
     <script type="text/javascript">
-        function loadExternalCodeSnippets(line) {
-            Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach((pre) => {
-                var src = pre.getAttribute('data-src').replace( /\\/g, '/');
-                var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
-                var language = 'php';
+        (function () {
+            function loadExternalCodeSnippet(el, url, line) {
+                Array.prototype.slice.call(el.querySelectorAll('pre[data-src]')).forEach((pre) => {
+                    const src = url || pre.getAttribute('data-src').replace(/\\/g, '/');
+                    const language = 'php';
 
-                var code = document.createElement('code');
-                code.className = 'language-' + language;
+                    const code = document.createElement('code');
+                    code.className = 'language-' + language;
+                    pre.textContent = '';
+                    pre.setAttribute('data-line', line)
+                    code.textContent = 'Loading…';
+                    pre.appendChild(code);
 
-                pre.textContent = '';
+                    var xhr = new XMLHttpRequest();
 
-                pre.setAttribute('data-line', line)
-                code.textContent = 'Loading…';
+                    xhr.open('GET', src, true);
 
-                pre.appendChild(code);
-
-                var xhr = new XMLHttpRequest();
-
-                xhr.open('GET', src, true);
-
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState == 4) {
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState !== 4) {
+                            return;
+                        }
 
                         if (xhr.status < 400 && xhr.responseText) {
                             code.textContent = xhr.responseText;
-
                             Prism.highlightElement(code);
+                            return;
                         }
-                        else if (xhr.status >= 400) {
+
+                        if (xhr.status === 404) {
+                            code.textContent = '✖ Error: File could not be found';
+                            return;
+                        }
+
+                        if (xhr.status >= 400) {
                             code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                            return;
                         }
-                        else {
-                            code.textContent = '✖ Error: File does not exist, is empty or trying to view from localhost';
-                        }
+
+                        code.textContent = '✖ Error: An unknown error occurred';
+                    };
+
+                    xhr.send(null);
+                });
+            }
+
+            const modalButtons = document.querySelectorAll("[data-modal]");
+            const openedAsLocalFile = window.location.protocol === 'file:';
+            if (modalButtons.length > 0 && openedAsLocalFile) {
+                console.warn(
+                    'Viewing the source code is unavailable because you are opening this page from the file:// scheme; ' +
+                    'browsers block XHR requests when a page is opened this way'
+                );
+            }
+
+            modalButtons.forEach(function (trigger) {
+                if (openedAsLocalFile) {
+                    trigger.setAttribute("hidden", "hidden");
+                }
+
+                trigger.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    const modal = document.getElementById(trigger.dataset.modal);
+                    if (!modal) {
+                        console.error(`Modal with id "${trigger.dataset.modal}" could not be found`);
+                        return;
                     }
-                };
+                    modal.classList.add("phpdocumentor-modal__open");
 
-                xhr.send(null);
-            });
-        }
-
-        var modals = document.querySelectorAll("[data-modal]");
-
-        modals.forEach(function (trigger) {
-            trigger.addEventListener("click", function (event) {
-                //event.preventDefault();
-                const modal = document.getElementById(trigger.dataset.modal);
-                modal.classList.add("phpdocumentor-modal__open");
-                loadExternalCodeSnippets(trigger.dataset.line)
-                const exits = modal.querySelectorAll("[data-exit-button]");
-                exits.forEach(function (exit) {
-                    exit.addEventListener("click", function (event) {
-                        event.preventDefault();
-                        modal.classList.remove("phpdocumentor-modal__open");
+                    loadExternalCodeSnippet(modal, trigger.dataset.src || null, trigger.dataset.line)
+                    const exits = modal.querySelectorAll("[data-exit-button]");
+                    exits.forEach(function (exit) {
+                        exit.addEventListener("click", function (event) {
+                            event.preventDefault();
+                            modal.classList.remove("phpdocumentor-modal__open");
+                        });
                     });
                 });
             });
-        });
+        })();
     </script>
 
     </article>
-                <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">
+                                </section>
+                <section class="phpdocumentor-on-this-page__sidebar">
+                                
+    <section class="phpdocumentor-on-this-page__content">
+        <strong class="phpdocumentor-on-this-page__title">On this page</strong>
+
+        <ul class="phpdocumentor-list -clean">
+            <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
+            <li>
+                <ul class="phpdocumentor-list -clean">
+                                        <li><a href="classes/FrontpageTest-ControllerTest.html#toc-constants">Constants</a></li>
+                                                            <li><a href="classes/FrontpageTest-ControllerTest.html#toc-properties">Properties</a></li>
+                                                            <li><a href="classes/FrontpageTest-ControllerTest.html#toc-methods">Methods</a></li>
+                                    </ul>
+            </li>
+                            <li class="phpdocumentor-on-this-page-section__title">Constants</li>
+                <li>
+                    <ul class="phpdocumentor-list -clean">
+                                                    <li><a href="classes/ApplicationTest-BaseControllerTest.html#constant_COMPANY_ID">COMPANY_ID</a></li>
+                                                    <li><a href="classes/ApplicationTest-BaseControllerTest.html#constant_LIDNR">LIDNR</a></li>
+                                            </ul>
+                </li>
+            
+                            <li class="phpdocumentor-on-this-page-section__title">Properties</li>
+                <li>
+                    <ul class="phpdocumentor-list -clean">
+                                                    <li><a href="classes/ApplicationTest-BaseControllerTest.html#property_aclService">$aclService<a href="classes/FrontpageTest-ControllerTest.html"></li>
+                                                    <li><a href="classes/ApplicationTest-BaseControllerTest.html#property_company">$company<a href="classes/FrontpageTest-ControllerTest.html"></li>
+                                                    <li><a href="classes/ApplicationTest-BaseControllerTest.html#property_companyMapper">$companyMapper<a href="classes/FrontpageTest-ControllerTest.html"></li>
+                                                    <li><a href="classes/ApplicationTest-BaseControllerTest.html#property_companyUser">$companyUser<a href="classes/FrontpageTest-ControllerTest.html"></li>
+                                                    <li><a href="classes/ApplicationTest-BaseControllerTest.html#property_companyUserAuthService">$companyUserAuthService<a href="classes/FrontpageTest-ControllerTest.html"></li>
+                                                    <li><a href="classes/ApplicationTest-BaseControllerTest.html#property_companyUserMapper">$companyUserMapper<a href="classes/FrontpageTest-ControllerTest.html"></li>
+                                                    <li><a href="classes/ApplicationTest-BaseControllerTest.html#property_member">$member<a href="classes/FrontpageTest-ControllerTest.html"></li>
+                                                    <li><a href="classes/ApplicationTest-BaseControllerTest.html#property_memberMapper">$memberMapper<a href="classes/FrontpageTest-ControllerTest.html"></li>
+                                                    <li><a href="classes/ApplicationTest-BaseControllerTest.html#property_newCompanyUser">$newCompanyUser<a href="classes/FrontpageTest-ControllerTest.html"></li>
+                                                    <li><a href="classes/ApplicationTest-BaseControllerTest.html#property_serviceManager">$serviceManager<a href="classes/FrontpageTest-ControllerTest.html"></li>
+                                                    <li><a href="classes/ApplicationTest-BaseControllerTest.html#property_user">$user<a href="classes/FrontpageTest-ControllerTest.html"></li>
+                                                    <li><a href="classes/ApplicationTest-BaseControllerTest.html#property_userAuthService">$userAuthService<a href="classes/FrontpageTest-ControllerTest.html"></li>
+                                                    <li><a href="classes/ApplicationTest-BaseControllerTest.html#property_userMapper">$userMapper<a href="classes/FrontpageTest-ControllerTest.html"></li>
+                                            </ul>
+                </li>
+            
+                        <li class="phpdocumentor-on-this-page-section__title">Methods</li>
+            <li>
+                <ul class="phpdocumentor-list -clean">
+                                            <li><a href="classes/ApplicationTest-BaseControllerTest.html#method_getApplication">getApplication()</a></li>
+                                            <li><a href="classes/ApplicationTest-BaseControllerTest.html#method_setUp">setUp()</a></li>
+                                            <li><a href="classes/FrontpageTest-ControllerTest.html#method_testAdminActionCanBeAccessedAsAdmin">testAdminActionCanBeAccessedAsAdmin()</a></li>
+                                            <li><a href="classes/FrontpageTest-ControllerTest.html#method_testAdminNewsActionCanBeAccessedAsAdmin">testAdminNewsActionCanBeAccessedAsAdmin()</a></li>
+                                            <li><a href="classes/FrontpageTest-ControllerTest.html#method_testAdminPageActionCanBeAccessedAsAdmin">testAdminPageActionCanBeAccessedAsAdmin()</a></li>
+                                            <li><a href="classes/FrontpageTest-ControllerTest.html#method_testAdminPollActionCanBeAccessedAsAdmin">testAdminPollActionCanBeAccessedAsAdmin()</a></li>
+                                            <li><a href="classes/FrontpageTest-ControllerTest.html#method_testAssociationCommitteesActionCanBeAccessed">testAssociationCommitteesActionCanBeAccessed()</a></li>
+                                            <li><a href="classes/FrontpageTest-ControllerTest.html#method_testAssociationFraternitiesActionCanBeAccessed">testAssociationFraternitiesActionCanBeAccessed()</a></li>
+                                            <li><a href="classes/FrontpageTest-ControllerTest.html#method_testIndexActionCanBeAccessed">testIndexActionCanBeAccessed()</a></li>
+                                            <li><a href="classes/FrontpageTest-ControllerTest.html#method_testLangEnDoesRedirect">testLangEnDoesRedirect()</a></li>
+                                            <li><a href="classes/FrontpageTest-ControllerTest.html#method_testLangEnDoesRedirectToUri">testLangEnDoesRedirectToUri()</a></li>
+                                            <li><a href="classes/FrontpageTest-ControllerTest.html#method_testLangNlDoesRedirect">testLangNlDoesRedirect()</a></li>
+                                            <li><a href="classes/FrontpageTest-ControllerTest.html#method_testLangNlDoesRedirectToUri">testLangNlDoesRedirectToUri()</a></li>
+                                            <li><a href="classes/FrontpageTest-ControllerTest.html#method_testPageAction2CanBeAccessedAsAdmin">testPageAction2CanBeAccessedAsAdmin()</a></li>
+                                            <li><a href="classes/FrontpageTest-ControllerTest.html#method_testPageAction3CanBeAccessedAsAdmin">testPageAction3CanBeAccessedAsAdmin()</a></li>
+                                            <li><a href="classes/FrontpageTest-ControllerTest.html#method_testPageActionCanBeAccessedAsAdmin">testPageActionCanBeAccessedAsAdmin()</a></li>
+                                            <li><a href="classes/FrontpageTest-ControllerTest.html#method_testPollHistoryActionCanBeAccessed">testPollHistoryActionCanBeAccessed()</a></li>
+                                            <li><a href="classes/FrontpageTest-ControllerTest.html#method_testPollRequestActionCanBeAccessedAsUser">testPollRequestActionCanBeAccessedAsUser()</a></li>
+                                            <li><a href="classes/FrontpageTest-ControllerTest.html#method_testPollRequestActionIsForbidden">testPollRequestActionIsForbidden()</a></li>
+                                            <li><a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockCompany">setUpMockCompany()</a></li>
+                                            <li><a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockCompanyUser">setUpMockCompanyUser()</a></li>
+                                            <li><a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockedServices">setUpMockedServices()</a></li>
+                                            <li><a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockMember">setUpMockMember()</a></li>
+                                            <li><a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockNewCompanyUser">setUpMockNewCompanyUser()</a></li>
+                                            <li><a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockUser">setUpMockUser()</a></li>
+                                            <li><a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpWithRole">setUpWithRole()</a></li>
+                                            <li><a href="classes/ApplicationTest-BaseControllerTest.html#method_bootstrapApplication">bootstrapApplication()</a></li>
+                                            <li><a href="classes/ApplicationTest-BaseControllerTest.html#method_initServiceManager">initServiceManager()</a></li>
+                                            <li><a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockCompanyMapper">setUpMockCompanyMapper()</a></li>
+                                            <li><a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockCompanyUserAuthService">setUpMockCompanyUserAuthService()</a></li>
+                                            <li><a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockCompanyUserMapper">setUpMockCompanyUserMapper()</a></li>
+                                            <li><a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockIdentity">setUpMockIdentity()</a></li>
+                                            <li><a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockMemberMapper">setUpMockMemberMapper()</a></li>
+                                            <li><a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockUserAuthService">setUpMockUserAuthService()</a></li>
+                                            <li><a href="classes/ApplicationTest-BaseControllerTest.html#method_setUpMockUserMapper">setUpMockUserMapper()</a></li>
+                                    </ul>
+            </li>
+                    </ul>
+    </section>
+
+                </section>
+                            </div>
+            <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">
     <section class="phpdocumentor-search-results__dialog">
         <header class="phpdocumentor-search-results__header">
             <h2 class="phpdocumentor-search-results__title">Search results</h2>
@@ -2639,7 +2674,6 @@
         </section>
     </section>
 </section>
-            </div>
         </div>
         <a href="classes/FrontpageTest-ControllerTest.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 

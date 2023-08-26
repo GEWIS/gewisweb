@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/base.css">
             <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@100;200;300;400;600;700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="css/template.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css" integrity="sha256-ybRkN9dBjhcS2qrW1z+hfCxq+1aBdwyQM5wlQoQVt/0=" crossorigin="anonymous" />
@@ -19,6 +19,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-highlight/prism-line-highlight.css">
                 <script src="https://cdn.jsdelivr.net/npm/fuse.js@3.4.6"></script>
         <script src="https://cdn.jsdelivr.net/npm/css-vars-ponyfill@2"></script>
+        <script src="js/template.js"></script>
         <script src="js/search.js"></script>
         <script defer src="js/searchIndex.js"></script>
     </head>
@@ -52,7 +53,7 @@
 <label class="phpdocumentor-sidebar__menu-icon" for="sidebar-button">
     Menu
 </label>
-<aside class="phpdocumentor-column -four phpdocumentor-sidebar">
+<aside class="phpdocumentor-column -three phpdocumentor-sidebar">
                     <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
@@ -381,8 +382,9 @@
     </section>
 </aside>
 
-            <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <ul class="phpdocumentor-breadcrumbs">
+            <div class="phpdocumentor-column -nine phpdocumentor-content">
+                                <section>
+                                        <ul class="phpdocumentor-breadcrumbs">
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/activitytest.html">ActivityTest</a></li>
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/activitytest-mapper.html">Mapper</a></li>
     </ul>
@@ -405,6 +407,11 @@
     
     </h2>
 
+<div class="phpdocumentor-label-line">
+
+
+</div>
+
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/test/Mapper/ActivityMapperTest.php"><a href="files/module-activity-test-mapper-activitymappertest.html"><abbr title="module/Activity/test/Mapper/ActivityMapperTest.php">ActivityMapperTest.php</abbr></a></abbr>
     :
@@ -413,10 +420,6 @@
     </aside>
 
         
-    <section class="phpdocumentor-description"></section>
-
-
-
 
 
 
@@ -424,219 +427,211 @@
 
 <h3 id="toc">
     Table of Contents
-    <a href="#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/ActivityTest-Mapper-ActivityMapperTest.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+
 </h3>
 
+
+
+
+
+
+
+
+
+<h4 id="toc-properties">
+    Properties
+    <a href="classes/ActivityTest-Mapper-ActivityMapperTest.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
+
+</h4>
 <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#property_application">$application</a>
     <span>
                         &nbsp;: <abbr title="\Laminas\Mvc\Application">Application</abbr>|null            </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#property_applicationConfig">$applicationConfig</a>
     <span>
                         &nbsp;: array&lt;string|int, mixed&gt;            </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#property_entityManager">$entityManager</a>
     <span>
                         &nbsp;: <abbr title="\Doctrine\ORM\EntityManager">EntityManager</abbr>            </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/ActivityTest-Mapper-ActivityMapperTest.html#property_mapper">$mapper</a>
     <span>
-                        &nbsp;: <a href="classes/Application-Mapper-BaseMapper.html"><abbr title="\Application\Mapper\BaseMapper">BaseMapper</abbr></a>            </span>
+                        &nbsp;: <a href="classes/Activity-Mapper-Activity.html"><abbr title="\Activity\Mapper\Activity">Activity</abbr></a>            </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/ActivityTest-Mapper-ActivityMapperTest.html#property_member">$member</a>
     <span>
                         &nbsp;: <a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>            </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#property_object">$object</a>
     <span>
                         &nbsp;: object            </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#property_serviceManager">$serviceManager</a>
     <span>
                         &nbsp;: <abbr title="\Laminas\ServiceManager\ServiceManager">ServiceManager</abbr>            </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/ActivityTest-Mapper-ActivityMapperTest.html#property_user">$user</a>
     <span>
                         &nbsp;: <a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a>            </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a href="classes/ActivityTest-Mapper-ActivityMapperTest.html#property_localisedText">$localisedText</a>
     <span>
                         &nbsp;: <a href="classes/Activity-Model-ActivityLocalisedText.html"><abbr title="\Activity\Model\ActivityLocalisedText">ActivityLocalisedText</abbr></a>            </span>
 </dt>
-<dd></dd>
 
-                <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    </dl>
+
+<h4 id="toc-methods">
+    Methods
+    <a href="classes/ActivityTest-Mapper-ActivityMapperTest.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
+
+</h4>
+<dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_getApplication">getApplication()</a>
     <span>
                                 &nbsp;: <abbr title="\Laminas\Mvc\Application">Application</abbr>    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/ActivityTest-Mapper-ActivityMapperTest.html#method_setUp">setUp()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testCount">testCount()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testDetach">testDetach()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testFindAll">testFindAll()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testFindBy">testFindBy()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testFindOneBy">testFindOneBy()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testFlush">testFlush()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testGetConnection">testGetConnection()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testGetEntityManager">testGetEntityManager()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/ActivityTest-Mapper-ActivityMapperTest.html#method_testGetUpcomingActivitiesForMember">testGetUpcomingActivitiesForMember()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testPersist">testPersist()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testPersistMultiple">testPersistMultiple()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testRemove">testRemove()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testRemoveById">testRemoveById()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testRemoveByIdNotFound">testRemoveByIdNotFound()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testRemoveMultiple">testRemoveMultiple()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_getId">getId()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_setUpMockedServices">setUpMockedServices()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a href="classes/ActivityTest-Mapper-ActivityMapperTest.html#method_setUpUser">setUpUser()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_bootstrapApplication">bootstrapApplication()</a>
     <span>
                                 &nbsp;: <abbr title="\Laminas\Mvc\Application">Application</abbr>    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_initServiceManager">initServiceManager()</a>
@@ -653,7 +648,8 @@
 <dd>Mocks the behaviour of {@link AbstractControllerTestCase}, is required to allow ORM/DBAL to correctly obtain all
 metadata from the entity/model classes.</dd>
 
-        </dl>
+    </dl>
+
 
 
 
@@ -664,6 +660,7 @@ metadata from the entity/model classes.</dd>
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
             <a href="classes/ActivityTest-Mapper-ActivityMapperTest.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+
         </h3>
                     <article
         class="
@@ -675,6 +672,7 @@ metadata from the entity/model classes.</dd>
     <h4 class="phpdocumentor-element__name" id="property_application">
         $application
         <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#property_application" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -692,10 +690,8 @@ metadata from the entity/model classes.</dd>
     <span class="phpdocumentor-signature__name">$application</span>
      = <span class="phpdocumentor-signature__default-value">null</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
+    
+    
     
 
 </article>
@@ -709,6 +705,7 @@ metadata from the entity/model classes.</dd>
     <h4 class="phpdocumentor-element__name" id="property_applicationConfig">
         $applicationConfig
         <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#property_applicationConfig" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -727,12 +724,12 @@ metadata from the entity/model classes.</dd>
     </code>
 
     
-        <section class="phpdocumentor-description"></section>
-
+    
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#property_applicationConfig#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
@@ -744,7 +741,7 @@ metadata from the entity/model classes.</dd>
 </section>
 
                                     </dd>
-                        </dl>
+                                            </dl>
 
 </article>
                     <article
@@ -757,6 +754,7 @@ metadata from the entity/model classes.</dd>
     <h4 class="phpdocumentor-element__name" id="property_entityManager">
         $entityManager
         <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#property_entityManager" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -774,10 +772,8 @@ metadata from the entity/model classes.</dd>
     <span class="phpdocumentor-signature__name">$entityManager</span>
     </code>
 
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
+    
+    
     
 
 </article>
@@ -791,6 +787,7 @@ metadata from the entity/model classes.</dd>
     <h4 class="phpdocumentor-element__name" id="property_mapper">
         $mapper
         <a href="classes/ActivityTest-Mapper-ActivityMapperTest.html#property_mapper" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -804,7 +801,7 @@ metadata from the entity/model classes.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/Application-Mapper-BaseMapper.html"><abbr title="\Application\Mapper\BaseMapper">BaseMapper</abbr></a></span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Activity-Mapper-Activity.html"><abbr title="\Activity\Mapper\Activity">Activity</abbr></a></span>
     <span class="phpdocumentor-signature__name">$mapper</span>
     </code>
 
@@ -823,6 +820,7 @@ metadata from the entity/model classes.</dd>
     <h4 class="phpdocumentor-element__name" id="property_member">
         $member
         <a href="classes/ActivityTest-Mapper-ActivityMapperTest.html#property_member" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -840,10 +838,8 @@ metadata from the entity/model classes.</dd>
     <span class="phpdocumentor-signature__name">$member</span>
     </code>
 
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
+    
+    
     
 
 </article>
@@ -857,6 +853,7 @@ metadata from the entity/model classes.</dd>
     <h4 class="phpdocumentor-element__name" id="property_object">
         $object
         <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#property_object" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -874,10 +871,8 @@ metadata from the entity/model classes.</dd>
     <span class="phpdocumentor-signature__name">$object</span>
     </code>
 
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
+    
+    
     
 
 </article>
@@ -891,6 +886,7 @@ metadata from the entity/model classes.</dd>
     <h4 class="phpdocumentor-element__name" id="property_serviceManager">
         $serviceManager
         <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#property_serviceManager" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -908,10 +904,8 @@ metadata from the entity/model classes.</dd>
     <span class="phpdocumentor-signature__name">$serviceManager</span>
     </code>
 
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
+    
+    
     
 
 </article>
@@ -925,6 +919,7 @@ metadata from the entity/model classes.</dd>
     <h4 class="phpdocumentor-element__name" id="property_user">
         $user
         <a href="classes/ActivityTest-Mapper-ActivityMapperTest.html#property_user" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -942,10 +937,8 @@ metadata from the entity/model classes.</dd>
     <span class="phpdocumentor-signature__name">$user</span>
     </code>
 
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
+    
+    
     
 
 </article>
@@ -959,6 +952,7 @@ metadata from the entity/model classes.</dd>
     <h4 class="phpdocumentor-element__name" id="property_localisedText">
         $localisedText
         <a href="classes/ActivityTest-Mapper-ActivityMapperTest.html#property_localisedText" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -976,10 +970,8 @@ metadata from the entity/model classes.</dd>
     <span class="phpdocumentor-signature__name">$localisedText</span>
     </code>
 
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
+    
+    
     
 
 </article>
@@ -989,6 +981,7 @@ metadata from the entity/model classes.</dd>
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
             <a href="classes/ActivityTest-Mapper-ActivityMapperTest.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+
         </h3>
                     <article
         class="phpdocumentor-element
@@ -999,6 +992,7 @@ metadata from the entity/model classes.</dd>
     <h4 class="phpdocumentor-element__name" id="method_getApplication">
         getApplication()
         <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_getApplication" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/Mapper/BaseMapperTest.php"><a href="files/module-application-test-mapper-basemappertest.html"><abbr title="module/Application/test/Mapper/BaseMapperTest.php">BaseMapperTest.php</abbr></a></abbr>
@@ -1012,16 +1006,17 @@ metadata from the entity/model classes.</dd>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getApplication</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Laminas\Mvc\Application">Application</abbr></span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\Laminas\Mvc\Application">Application</abbr></span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type"><abbr title="\Laminas\Mvc\Application">Application</abbr></span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -1032,6 +1027,7 @@ metadata from the entity/model classes.</dd>
     <h4 class="phpdocumentor-element__name" id="method_setUp">
         setUp()
         <a href="classes/ActivityTest-Mapper-ActivityMapperTest.html#method_setUp" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/test/Mapper/ActivityMapperTest.php"><a href="files/module-activity-test-mapper-activitymappertest.html"><abbr title="module/Activity/test/Mapper/ActivityMapperTest.php">ActivityMapperTest.php</abbr></a></abbr>
@@ -1045,15 +1041,12 @@ metadata from the entity/model classes.</dd>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setUp</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1065,6 +1058,7 @@ metadata from the entity/model classes.</dd>
     <h4 class="phpdocumentor-element__name" id="method_testCount">
         testCount()
         <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testCount" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/Mapper/BaseMapperTest.php"><a href="files/module-application-test-mapper-basemappertest.html"><abbr title="module/Application/test/Mapper/BaseMapperTest.php">BaseMapperTest.php</abbr></a></abbr>
@@ -1078,15 +1072,12 @@ metadata from the entity/model classes.</dd>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">testCount</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1098,6 +1089,7 @@ metadata from the entity/model classes.</dd>
     <h4 class="phpdocumentor-element__name" id="method_testDetach">
         testDetach()
         <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testDetach" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/Mapper/BaseMapperTest.php"><a href="files/module-application-test-mapper-basemappertest.html"><abbr title="module/Application/test/Mapper/BaseMapperTest.php">BaseMapperTest.php</abbr></a></abbr>
@@ -1111,15 +1103,12 @@ metadata from the entity/model classes.</dd>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">testDetach</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1131,6 +1120,7 @@ metadata from the entity/model classes.</dd>
     <h4 class="phpdocumentor-element__name" id="method_testFindAll">
         testFindAll()
         <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testFindAll" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/Mapper/BaseMapperTest.php"><a href="files/module-application-test-mapper-basemappertest.html"><abbr title="module/Application/test/Mapper/BaseMapperTest.php">BaseMapperTest.php</abbr></a></abbr>
@@ -1144,15 +1134,12 @@ metadata from the entity/model classes.</dd>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">testFindAll</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1164,6 +1151,7 @@ metadata from the entity/model classes.</dd>
     <h4 class="phpdocumentor-element__name" id="method_testFindBy">
         testFindBy()
         <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testFindBy" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/Mapper/BaseMapperTest.php"><a href="files/module-application-test-mapper-basemappertest.html"><abbr title="module/Application/test/Mapper/BaseMapperTest.php">BaseMapperTest.php</abbr></a></abbr>
@@ -1177,15 +1165,12 @@ metadata from the entity/model classes.</dd>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">testFindBy</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1197,6 +1182,7 @@ metadata from the entity/model classes.</dd>
     <h4 class="phpdocumentor-element__name" id="method_testFindOneBy">
         testFindOneBy()
         <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testFindOneBy" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/Mapper/BaseMapperTest.php"><a href="files/module-application-test-mapper-basemappertest.html"><abbr title="module/Application/test/Mapper/BaseMapperTest.php">BaseMapperTest.php</abbr></a></abbr>
@@ -1210,15 +1196,12 @@ metadata from the entity/model classes.</dd>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">testFindOneBy</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1230,6 +1213,7 @@ metadata from the entity/model classes.</dd>
     <h4 class="phpdocumentor-element__name" id="method_testFlush">
         testFlush()
         <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testFlush" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/Mapper/BaseMapperTest.php"><a href="files/module-application-test-mapper-basemappertest.html"><abbr title="module/Application/test/Mapper/BaseMapperTest.php">BaseMapperTest.php</abbr></a></abbr>
@@ -1243,15 +1227,12 @@ metadata from the entity/model classes.</dd>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">testFlush</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1263,6 +1244,7 @@ metadata from the entity/model classes.</dd>
     <h4 class="phpdocumentor-element__name" id="method_testGetConnection">
         testGetConnection()
         <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testGetConnection" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/Mapper/BaseMapperTest.php"><a href="files/module-application-test-mapper-basemappertest.html"><abbr title="module/Application/test/Mapper/BaseMapperTest.php">BaseMapperTest.php</abbr></a></abbr>
@@ -1276,15 +1258,12 @@ metadata from the entity/model classes.</dd>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">testGetConnection</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1296,6 +1275,7 @@ metadata from the entity/model classes.</dd>
     <h4 class="phpdocumentor-element__name" id="method_testGetEntityManager">
         testGetEntityManager()
         <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testGetEntityManager" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/Mapper/BaseMapperTest.php"><a href="files/module-application-test-mapper-basemappertest.html"><abbr title="module/Application/test/Mapper/BaseMapperTest.php">BaseMapperTest.php</abbr></a></abbr>
@@ -1309,15 +1289,12 @@ metadata from the entity/model classes.</dd>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">testGetEntityManager</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1329,6 +1306,7 @@ metadata from the entity/model classes.</dd>
     <h4 class="phpdocumentor-element__name" id="method_testGetUpcomingActivitiesForMember">
         testGetUpcomingActivitiesForMember()
         <a href="classes/ActivityTest-Mapper-ActivityMapperTest.html#method_testGetUpcomingActivitiesForMember" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/test/Mapper/ActivityMapperTest.php"><a href="files/module-activity-test-mapper-activitymappertest.html"><abbr title="module/Activity/test/Mapper/ActivityMapperTest.php">ActivityMapperTest.php</abbr></a></abbr>
@@ -1342,15 +1320,12 @@ metadata from the entity/model classes.</dd>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">testGetUpcomingActivitiesForMember</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1362,6 +1337,7 @@ metadata from the entity/model classes.</dd>
     <h4 class="phpdocumentor-element__name" id="method_testPersist">
         testPersist()
         <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testPersist" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/Mapper/BaseMapperTest.php"><a href="files/module-application-test-mapper-basemappertest.html"><abbr title="module/Application/test/Mapper/BaseMapperTest.php">BaseMapperTest.php</abbr></a></abbr>
@@ -1375,15 +1351,12 @@ metadata from the entity/model classes.</dd>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">testPersist</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1395,6 +1368,7 @@ metadata from the entity/model classes.</dd>
     <h4 class="phpdocumentor-element__name" id="method_testPersistMultiple">
         testPersistMultiple()
         <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testPersistMultiple" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/Mapper/BaseMapperTest.php"><a href="files/module-application-test-mapper-basemappertest.html"><abbr title="module/Application/test/Mapper/BaseMapperTest.php">BaseMapperTest.php</abbr></a></abbr>
@@ -1408,15 +1382,12 @@ metadata from the entity/model classes.</dd>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">testPersistMultiple</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1428,6 +1399,7 @@ metadata from the entity/model classes.</dd>
     <h4 class="phpdocumentor-element__name" id="method_testRemove">
         testRemove()
         <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testRemove" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/Mapper/BaseMapperTest.php"><a href="files/module-application-test-mapper-basemappertest.html"><abbr title="module/Application/test/Mapper/BaseMapperTest.php">BaseMapperTest.php</abbr></a></abbr>
@@ -1441,15 +1413,12 @@ metadata from the entity/model classes.</dd>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">testRemove</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1461,6 +1430,7 @@ metadata from the entity/model classes.</dd>
     <h4 class="phpdocumentor-element__name" id="method_testRemoveById">
         testRemoveById()
         <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testRemoveById" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/Mapper/BaseMapperTest.php"><a href="files/module-application-test-mapper-basemappertest.html"><abbr title="module/Application/test/Mapper/BaseMapperTest.php">BaseMapperTest.php</abbr></a></abbr>
@@ -1474,15 +1444,12 @@ metadata from the entity/model classes.</dd>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">testRemoveById</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1494,6 +1461,7 @@ metadata from the entity/model classes.</dd>
     <h4 class="phpdocumentor-element__name" id="method_testRemoveByIdNotFound">
         testRemoveByIdNotFound()
         <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testRemoveByIdNotFound" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/Mapper/BaseMapperTest.php"><a href="files/module-application-test-mapper-basemappertest.html"><abbr title="module/Application/test/Mapper/BaseMapperTest.php">BaseMapperTest.php</abbr></a></abbr>
@@ -1507,15 +1475,12 @@ metadata from the entity/model classes.</dd>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">testRemoveByIdNotFound</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1527,6 +1492,7 @@ metadata from the entity/model classes.</dd>
     <h4 class="phpdocumentor-element__name" id="method_testRemoveMultiple">
         testRemoveMultiple()
         <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testRemoveMultiple" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/Mapper/BaseMapperTest.php"><a href="files/module-application-test-mapper-basemappertest.html"><abbr title="module/Application/test/Mapper/BaseMapperTest.php">BaseMapperTest.php</abbr></a></abbr>
@@ -1540,15 +1506,12 @@ metadata from the entity/model classes.</dd>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">testRemoveMultiple</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1560,6 +1523,7 @@ metadata from the entity/model classes.</dd>
     <h4 class="phpdocumentor-element__name" id="method_getId">
         getId()
         <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_getId" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/Mapper/BaseMapperTest.php"><a href="files/module-application-test-mapper-basemappertest.html"><abbr title="module/Application/test/Mapper/BaseMapperTest.php">BaseMapperTest.php</abbr></a></abbr>
@@ -1573,8 +1537,9 @@ metadata from the entity/model classes.</dd>
     <span class="phpdocumentor-signature__visibility">protected</span>
                     <span class="phpdocumentor-signature__name">getId</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">object&nbsp;</span><span class="phpdocumentor-signature__argument__name">$object</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -1582,17 +1547,12 @@ metadata from the entity/model classes.</dd>
                 : <span class="phpdocumentor-signature__argument__return-type">object</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">mixed</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1604,6 +1564,7 @@ metadata from the entity/model classes.</dd>
     <h4 class="phpdocumentor-element__name" id="method_setUpMockedServices">
         setUpMockedServices()
         <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_setUpMockedServices" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/Mapper/BaseMapperTest.php"><a href="files/module-application-test-mapper-basemappertest.html"><abbr title="module/Application/test/Mapper/BaseMapperTest.php">BaseMapperTest.php</abbr></a></abbr>
@@ -1617,15 +1578,12 @@ metadata from the entity/model classes.</dd>
     <span class="phpdocumentor-signature__visibility">protected</span>
                     <span class="phpdocumentor-signature__name">setUpMockedServices</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1637,6 +1595,7 @@ metadata from the entity/model classes.</dd>
     <h4 class="phpdocumentor-element__name" id="method_setUpUser">
         setUpUser()
         <a href="classes/ActivityTest-Mapper-ActivityMapperTest.html#method_setUpUser" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/test/Mapper/ActivityMapperTest.php"><a href="files/module-activity-test-mapper-activitymappertest.html"><abbr title="module/Activity/test/Mapper/ActivityMapperTest.php">ActivityMapperTest.php</abbr></a></abbr>
@@ -1650,15 +1609,12 @@ metadata from the entity/model classes.</dd>
     <span class="phpdocumentor-signature__visibility">protected</span>
                     <span class="phpdocumentor-signature__name">setUpUser</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1670,6 +1626,7 @@ metadata from the entity/model classes.</dd>
     <h4 class="phpdocumentor-element__name" id="method_bootstrapApplication">
         bootstrapApplication()
         <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_bootstrapApplication" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/Mapper/BaseMapperTest.php"><a href="files/module-application-test-mapper-basemappertest.html"><abbr title="module/Application/test/Mapper/BaseMapperTest.php">BaseMapperTest.php</abbr></a></abbr>
@@ -1683,6 +1640,8 @@ metadata from the entity/model classes.</dd>
     <span class="phpdocumentor-signature__visibility">private</span>
                     <span class="phpdocumentor-signature__name">bootstrapApplication</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\ServiceManager\ServiceManager">ServiceManager</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$serviceManager</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$configuration</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Laminas\Mvc\Application">Application</abbr></span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -1691,23 +1650,22 @@ metadata from the entity/model classes.</dd>
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\ServiceManager\ServiceManager">ServiceManager</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$configuration</span>
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
                  = <span class="phpdocumentor-signature__argument__default-value">[]</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_bootstrapApplication#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
@@ -1719,13 +1677,13 @@ metadata from the entity/model classes.</dd>
 </section>
 
                                     </dd>
-                        </dl>
+                                            </dl>
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\Laminas\Mvc\Application">Application</abbr></span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type"><abbr title="\Laminas\Mvc\Application">Application</abbr></span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -1736,6 +1694,7 @@ metadata from the entity/model classes.</dd>
     <h4 class="phpdocumentor-element__name" id="method_initServiceManager">
         initServiceManager()
         <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_initServiceManager" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/Mapper/BaseMapperTest.php"><a href="files/module-application-test-mapper-basemappertest.html"><abbr title="module/Application/test/Mapper/BaseMapperTest.php">BaseMapperTest.php</abbr></a></abbr>
@@ -1750,6 +1709,8 @@ metadata from the entity/model classes.</dd>
     <span class="phpdocumentor-signature__visibility">private</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">initServiceManager</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$configuration</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Laminas\ServiceManager\ServiceManager">ServiceManager</abbr></span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -1758,15 +1719,15 @@ metadata from the entity/model classes.</dd>
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
                  = <span class="phpdocumentor-signature__argument__default-value">[]</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_initServiceManager#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
@@ -1778,13 +1739,13 @@ metadata from the entity/model classes.</dd>
 </section>
 
                                     </dd>
-                        </dl>
+                                            </dl>
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\Laminas\ServiceManager\ServiceManager">ServiceManager</abbr></span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type"><abbr title="\Laminas\ServiceManager\ServiceManager">ServiceManager</abbr></span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -1795,6 +1756,7 @@ metadata from the entity/model classes.</dd>
     <h4 class="phpdocumentor-element__name" id="method_setApplicationConfig">
         setApplicationConfig()
         <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_setApplicationConfig" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/test/Mapper/BaseMapperTest.php"><a href="files/module-application-test-mapper-basemappertest.html"><abbr title="module/Application/test/Mapper/BaseMapperTest.php">BaseMapperTest.php</abbr></a></abbr>
@@ -1810,6 +1772,8 @@ metadata from the entity/model classes.</p>
     <span class="phpdocumentor-signature__visibility">private</span>
                     <span class="phpdocumentor-signature__name">setApplicationConfig</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$applicationConfig</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -1818,15 +1782,15 @@ metadata from the entity/model classes.</p>
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_setApplicationConfig#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
@@ -1838,80 +1802,169 @@ metadata from the entity/model classes.</p>
 </section>
 
                                     </dd>
-                        </dl>
+                                            </dl>
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
             </section>
 
-        
+        <div class="phpdocumentor-modal" id="source-view">
+    <div class="phpdocumentor-modal-bg" data-exit-button></div>
+    <div class="phpdocumentor-modal-container">
+        <div class="phpdocumentor-modal-content">
+            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/module/Activity/test/Mapper/ActivityMapperTest.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
+        </div>
+        <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
+    </div>
+</div>
+
     <script type="text/javascript">
-        function loadExternalCodeSnippets(line) {
-            Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach((pre) => {
-                var src = pre.getAttribute('data-src').replace( /\\/g, '/');
-                var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
-                var language = 'php';
+        (function () {
+            function loadExternalCodeSnippet(el, url, line) {
+                Array.prototype.slice.call(el.querySelectorAll('pre[data-src]')).forEach((pre) => {
+                    const src = url || pre.getAttribute('data-src').replace(/\\/g, '/');
+                    const language = 'php';
 
-                var code = document.createElement('code');
-                code.className = 'language-' + language;
+                    const code = document.createElement('code');
+                    code.className = 'language-' + language;
+                    pre.textContent = '';
+                    pre.setAttribute('data-line', line)
+                    code.textContent = 'Loading…';
+                    pre.appendChild(code);
 
-                pre.textContent = '';
+                    var xhr = new XMLHttpRequest();
 
-                pre.setAttribute('data-line', line)
-                code.textContent = 'Loading…';
+                    xhr.open('GET', src, true);
 
-                pre.appendChild(code);
-
-                var xhr = new XMLHttpRequest();
-
-                xhr.open('GET', src, true);
-
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState == 4) {
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState !== 4) {
+                            return;
+                        }
 
                         if (xhr.status < 400 && xhr.responseText) {
                             code.textContent = xhr.responseText;
-
                             Prism.highlightElement(code);
+                            return;
                         }
-                        else if (xhr.status >= 400) {
+
+                        if (xhr.status === 404) {
+                            code.textContent = '✖ Error: File could not be found';
+                            return;
+                        }
+
+                        if (xhr.status >= 400) {
                             code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                            return;
                         }
-                        else {
-                            code.textContent = '✖ Error: File does not exist, is empty or trying to view from localhost';
-                        }
+
+                        code.textContent = '✖ Error: An unknown error occurred';
+                    };
+
+                    xhr.send(null);
+                });
+            }
+
+            const modalButtons = document.querySelectorAll("[data-modal]");
+            const openedAsLocalFile = window.location.protocol === 'file:';
+            if (modalButtons.length > 0 && openedAsLocalFile) {
+                console.warn(
+                    'Viewing the source code is unavailable because you are opening this page from the file:// scheme; ' +
+                    'browsers block XHR requests when a page is opened this way'
+                );
+            }
+
+            modalButtons.forEach(function (trigger) {
+                if (openedAsLocalFile) {
+                    trigger.setAttribute("hidden", "hidden");
+                }
+
+                trigger.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    const modal = document.getElementById(trigger.dataset.modal);
+                    if (!modal) {
+                        console.error(`Modal with id "${trigger.dataset.modal}" could not be found`);
+                        return;
                     }
-                };
+                    modal.classList.add("phpdocumentor-modal__open");
 
-                xhr.send(null);
-            });
-        }
-
-        var modals = document.querySelectorAll("[data-modal]");
-
-        modals.forEach(function (trigger) {
-            trigger.addEventListener("click", function (event) {
-                //event.preventDefault();
-                const modal = document.getElementById(trigger.dataset.modal);
-                modal.classList.add("phpdocumentor-modal__open");
-                loadExternalCodeSnippets(trigger.dataset.line)
-                const exits = modal.querySelectorAll("[data-exit-button]");
-                exits.forEach(function (exit) {
-                    exit.addEventListener("click", function (event) {
-                        event.preventDefault();
-                        modal.classList.remove("phpdocumentor-modal__open");
+                    loadExternalCodeSnippet(modal, trigger.dataset.src || null, trigger.dataset.line)
+                    const exits = modal.querySelectorAll("[data-exit-button]");
+                    exits.forEach(function (exit) {
+                        exit.addEventListener("click", function (event) {
+                            event.preventDefault();
+                            modal.classList.remove("phpdocumentor-modal__open");
+                        });
                     });
                 });
             });
-        });
+        })();
     </script>
 
     </article>
-                <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">
+                                </section>
+                <section class="phpdocumentor-on-this-page__sidebar">
+                                
+    <section class="phpdocumentor-on-this-page__content">
+        <strong class="phpdocumentor-on-this-page__title">On this page</strong>
+
+        <ul class="phpdocumentor-list -clean">
+            <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
+            <li>
+                <ul class="phpdocumentor-list -clean">
+                                                            <li><a href="classes/ActivityTest-Mapper-ActivityMapperTest.html#toc-properties">Properties</a></li>
+                                                            <li><a href="classes/ActivityTest-Mapper-ActivityMapperTest.html#toc-methods">Methods</a></li>
+                                    </ul>
+            </li>
+            
+                            <li class="phpdocumentor-on-this-page-section__title">Properties</li>
+                <li>
+                    <ul class="phpdocumentor-list -clean">
+                                                    <li><a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#property_application">$application<a href="classes/ActivityTest-Mapper-ActivityMapperTest.html"></li>
+                                                    <li><a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#property_applicationConfig">$applicationConfig<a href="classes/ActivityTest-Mapper-ActivityMapperTest.html"></li>
+                                                    <li><a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#property_entityManager">$entityManager<a href="classes/ActivityTest-Mapper-ActivityMapperTest.html"></li>
+                                                    <li><a href="classes/ActivityTest-Mapper-ActivityMapperTest.html#property_mapper">$mapper<a href="classes/ActivityTest-Mapper-ActivityMapperTest.html"></li>
+                                                    <li><a href="classes/ActivityTest-Mapper-ActivityMapperTest.html#property_member">$member<a href="classes/ActivityTest-Mapper-ActivityMapperTest.html"></li>
+                                                    <li><a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#property_object">$object<a href="classes/ActivityTest-Mapper-ActivityMapperTest.html"></li>
+                                                    <li><a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#property_serviceManager">$serviceManager<a href="classes/ActivityTest-Mapper-ActivityMapperTest.html"></li>
+                                                    <li><a href="classes/ActivityTest-Mapper-ActivityMapperTest.html#property_user">$user<a href="classes/ActivityTest-Mapper-ActivityMapperTest.html"></li>
+                                                    <li><a href="classes/ActivityTest-Mapper-ActivityMapperTest.html#property_localisedText">$localisedText<a href="classes/ActivityTest-Mapper-ActivityMapperTest.html"></li>
+                                            </ul>
+                </li>
+            
+                        <li class="phpdocumentor-on-this-page-section__title">Methods</li>
+            <li>
+                <ul class="phpdocumentor-list -clean">
+                                            <li><a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_getApplication">getApplication()</a></li>
+                                            <li><a href="classes/ActivityTest-Mapper-ActivityMapperTest.html#method_setUp">setUp()</a></li>
+                                            <li><a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testCount">testCount()</a></li>
+                                            <li><a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testDetach">testDetach()</a></li>
+                                            <li><a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testFindAll">testFindAll()</a></li>
+                                            <li><a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testFindBy">testFindBy()</a></li>
+                                            <li><a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testFindOneBy">testFindOneBy()</a></li>
+                                            <li><a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testFlush">testFlush()</a></li>
+                                            <li><a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testGetConnection">testGetConnection()</a></li>
+                                            <li><a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testGetEntityManager">testGetEntityManager()</a></li>
+                                            <li><a href="classes/ActivityTest-Mapper-ActivityMapperTest.html#method_testGetUpcomingActivitiesForMember">testGetUpcomingActivitiesForMember()</a></li>
+                                            <li><a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testPersist">testPersist()</a></li>
+                                            <li><a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testPersistMultiple">testPersistMultiple()</a></li>
+                                            <li><a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testRemove">testRemove()</a></li>
+                                            <li><a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testRemoveById">testRemoveById()</a></li>
+                                            <li><a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testRemoveByIdNotFound">testRemoveByIdNotFound()</a></li>
+                                            <li><a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testRemoveMultiple">testRemoveMultiple()</a></li>
+                                            <li><a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_getId">getId()</a></li>
+                                            <li><a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_setUpMockedServices">setUpMockedServices()</a></li>
+                                            <li><a href="classes/ActivityTest-Mapper-ActivityMapperTest.html#method_setUpUser">setUpUser()</a></li>
+                                            <li><a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_bootstrapApplication">bootstrapApplication()</a></li>
+                                            <li><a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_initServiceManager">initServiceManager()</a></li>
+                                            <li><a href="classes/ApplicationTest-Mapper-BaseMapperTest.html#method_setApplicationConfig">setApplicationConfig()</a></li>
+                                    </ul>
+            </li>
+                    </ul>
+    </section>
+
+                </section>
+                            </div>
+            <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">
     <section class="phpdocumentor-search-results__dialog">
         <header class="phpdocumentor-search-results__header">
             <h2 class="phpdocumentor-search-results__title">Search results</h2>
@@ -1922,7 +1975,6 @@ metadata from the entity/model classes.</p>
         </section>
     </section>
 </section>
-            </div>
         </div>
         <a href="classes/ActivityTest-Mapper-ActivityMapperTest.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 

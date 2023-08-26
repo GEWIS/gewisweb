@@ -3354,17 +3354,17 @@ Search.appendIndex(
             "fqsen": "\\Application\\Model\\Enums\\ApprovableStatus\u003A\u003AUnapproved",
             "name": "Unapproved",
             "summary": "",
-            "url": ""
+            "url": "classes/Application-Model-Enums-ApprovableStatus.html#enumcase_Unapproved"
         },                {
             "fqsen": "\\Application\\Model\\Enums\\ApprovableStatus\u003A\u003AApproved",
             "name": "Approved",
             "summary": "",
-            "url": ""
+            "url": "classes/Application-Model-Enums-ApprovableStatus.html#enumcase_Approved"
         },                {
             "fqsen": "\\Application\\Model\\Enums\\ApprovableStatus\u003A\u003ARejected",
             "name": "Rejected",
             "summary": "",
-            "url": ""
+            "url": "classes/Application-Model-Enums-ApprovableStatus.html#enumcase_Rejected"
         },                {
             "fqsen": "\\Application\\Model\\Enums\\Languages",
             "name": "Languages",
@@ -3384,12 +3384,12 @@ Search.appendIndex(
             "fqsen": "\\Application\\Model\\Enums\\Languages\u003A\u003AEN",
             "name": "EN",
             "summary": "",
-            "url": ""
+            "url": "classes/Application-Model-Enums-Languages.html#enumcase_EN"
         },                {
             "fqsen": "\\Application\\Model\\Enums\\Languages\u003A\u003ANL",
             "name": "NL",
             "summary": "",
-            "url": ""
+            "url": "classes/Application-Model-Enums-Languages.html#enumcase_NL"
         },                {
             "fqsen": "\\Application\\Model\\IdentityInterface",
             "name": "IdentityInterface",
@@ -5824,17 +5824,17 @@ Search.appendIndex(
             "fqsen": "\\Company\\Model\\Enums\\CompanyPackageTypes\u003A\u003ABanner",
             "name": "Banner",
             "summary": "",
-            "url": ""
+            "url": "classes/Company-Model-Enums-CompanyPackageTypes.html#enumcase_Banner"
         },                {
             "fqsen": "\\Company\\Model\\Enums\\CompanyPackageTypes\u003A\u003AFeatured",
             "name": "Featured",
             "summary": "",
-            "url": ""
+            "url": "classes/Company-Model-Enums-CompanyPackageTypes.html#enumcase_Featured"
         },                {
             "fqsen": "\\Company\\Model\\Enums\\CompanyPackageTypes\u003A\u003AJob",
             "name": "Job",
             "summary": "",
-            "url": ""
+            "url": "classes/Company-Model-Enums-CompanyPackageTypes.html#enumcase_Job"
         },                {
             "fqsen": "\\Company\\Model\\Job",
             "name": "Job",
@@ -8019,17 +8019,17 @@ Search.appendIndex(
             "fqsen": "\\Decision\\Model\\Enums\\AddressTypes\u003A\u003AHome",
             "name": "Home",
             "summary": "",
-            "url": ""
+            "url": "classes/Decision-Model-Enums-AddressTypes.html#enumcase_Home"
         },                {
             "fqsen": "\\Decision\\Model\\Enums\\AddressTypes\u003A\u003AStudent",
             "name": "Student",
             "summary": "",
-            "url": ""
+            "url": "classes/Decision-Model-Enums-AddressTypes.html#enumcase_Student"
         },                {
             "fqsen": "\\Decision\\Model\\Enums\\AddressTypes\u003A\u003AMail",
             "name": "Mail",
             "summary": "",
-            "url": ""
+            "url": "classes/Decision-Model-Enums-AddressTypes.html#enumcase_Mail"
         },                {
             "fqsen": "\\Decision\\Model\\Enums\\MeetingTypes",
             "name": "MeetingTypes",
@@ -8049,22 +8049,22 @@ Search.appendIndex(
             "fqsen": "\\Decision\\Model\\Enums\\MeetingTypes\u003A\u003ABV",
             "name": "BV",
             "summary": "",
-            "url": ""
+            "url": "classes/Decision-Model-Enums-MeetingTypes.html#enumcase_BV"
         },                {
             "fqsen": "\\Decision\\Model\\Enums\\MeetingTypes\u003A\u003AALV",
             "name": "ALV",
             "summary": "",
-            "url": ""
+            "url": "classes/Decision-Model-Enums-MeetingTypes.html#enumcase_ALV"
         },                {
             "fqsen": "\\Decision\\Model\\Enums\\MeetingTypes\u003A\u003AVV",
             "name": "VV",
             "summary": "",
-            "url": ""
+            "url": "classes/Decision-Model-Enums-MeetingTypes.html#enumcase_VV"
         },                {
             "fqsen": "\\Decision\\Model\\Enums\\MeetingTypes\u003A\u003AVIRT",
             "name": "VIRT",
             "summary": "",
-            "url": ""
+            "url": "classes/Decision-Model-Enums-MeetingTypes.html#enumcase_VIRT"
         },                {
             "fqsen": "\\Decision\\Model\\Enums\\MembershipTypes",
             "name": "MembershipTypes",
@@ -8079,22 +8079,22 @@ Search.appendIndex(
             "fqsen": "\\Decision\\Model\\Enums\\MembershipTypes\u003A\u003AOrdinary",
             "name": "Ordinary",
             "summary": "",
-            "url": ""
+            "url": "classes/Decision-Model-Enums-MembershipTypes.html#enumcase_Ordinary"
         },                {
             "fqsen": "\\Decision\\Model\\Enums\\MembershipTypes\u003A\u003AExternal",
             "name": "External",
             "summary": "",
-            "url": ""
+            "url": "classes/Decision-Model-Enums-MembershipTypes.html#enumcase_External"
         },                {
             "fqsen": "\\Decision\\Model\\Enums\\MembershipTypes\u003A\u003AGraduate",
             "name": "Graduate",
             "summary": "",
-            "url": ""
+            "url": "classes/Decision-Model-Enums-MembershipTypes.html#enumcase_Graduate"
         },                {
             "fqsen": "\\Decision\\Model\\Enums\\MembershipTypes\u003A\u003AHonorary",
             "name": "Honorary",
             "summary": "",
-            "url": ""
+            "url": "classes/Decision-Model-Enums-MembershipTypes.html#enumcase_Honorary"
         },                {
             "fqsen": "\\Decision\\Model\\Enums\\OrganTypes",
             "name": "OrganTypes",
@@ -8109,32 +8109,32 @@ Search.appendIndex(
             "fqsen": "\\Decision\\Model\\Enums\\OrganTypes\u003A\u003ACommittee",
             "name": "Committee",
             "summary": "",
-            "url": ""
+            "url": "classes/Decision-Model-Enums-OrganTypes.html#enumcase_Committee"
         },                {
             "fqsen": "\\Decision\\Model\\Enums\\OrganTypes\u003A\u003AAVC",
             "name": "AVC",
             "summary": "",
-            "url": ""
+            "url": "classes/Decision-Model-Enums-OrganTypes.html#enumcase_AVC"
         },                {
             "fqsen": "\\Decision\\Model\\Enums\\OrganTypes\u003A\u003AFraternity",
             "name": "Fraternity",
             "summary": "",
-            "url": ""
+            "url": "classes/Decision-Model-Enums-OrganTypes.html#enumcase_Fraternity"
         },                {
             "fqsen": "\\Decision\\Model\\Enums\\OrganTypes\u003A\u003AKCC",
             "name": "KCC",
             "summary": "",
-            "url": ""
+            "url": "classes/Decision-Model-Enums-OrganTypes.html#enumcase_KCC"
         },                {
             "fqsen": "\\Decision\\Model\\Enums\\OrganTypes\u003A\u003AAVW",
             "name": "AVW",
             "summary": "",
-            "url": ""
+            "url": "classes/Decision-Model-Enums-OrganTypes.html#enumcase_AVW"
         },                {
             "fqsen": "\\Decision\\Model\\Enums\\OrganTypes\u003A\u003ARvA",
             "name": "RvA",
             "summary": "",
-            "url": ""
+            "url": "classes/Decision-Model-Enums-OrganTypes.html#enumcase_RvA"
         },                {
             "fqsen": "\\Decision\\Model\\Keyholder",
             "name": "Keyholder",
@@ -11084,22 +11084,22 @@ Search.appendIndex(
             "fqsen": "\\Education\\Model\\Enums\\ExamTypes\u003A\u003AFinal",
             "name": "Final",
             "summary": "",
-            "url": ""
+            "url": "classes/Education-Model-Enums-ExamTypes.html#enumcase_Final"
         },                {
             "fqsen": "\\Education\\Model\\Enums\\ExamTypes\u003A\u003AInterim",
             "name": "Interim",
             "summary": "",
-            "url": ""
+            "url": "classes/Education-Model-Enums-ExamTypes.html#enumcase_Interim"
         },                {
             "fqsen": "\\Education\\Model\\Enums\\ExamTypes\u003A\u003AAnswers",
             "name": "Answers",
             "summary": "",
-            "url": ""
+            "url": "classes/Education-Model-Enums-ExamTypes.html#enumcase_Answers"
         },                {
             "fqsen": "\\Education\\Model\\Enums\\ExamTypes\u003A\u003AOther",
             "name": "Other",
             "summary": "",
-            "url": ""
+            "url": "classes/Education-Model-Enums-ExamTypes.html#enumcase_Other"
         },                {
             "fqsen": "\\Education\\Model\\Exam",
             "name": "Exam",
@@ -16569,37 +16569,37 @@ Search.appendIndex(
             "fqsen": "\\User\\Model\\Enums\\JWTClaims\u003A\u003AEmail",
             "name": "Email",
             "summary": "",
-            "url": ""
+            "url": "classes/User-Model-Enums-JWTClaims.html#enumcase_Email"
         },                {
             "fqsen": "\\User\\Model\\Enums\\JWTClaims\u003A\u003AFamilyName",
             "name": "FamilyName",
             "summary": "",
-            "url": ""
+            "url": "classes/User-Model-Enums-JWTClaims.html#enumcase_FamilyName"
         },                {
             "fqsen": "\\User\\Model\\Enums\\JWTClaims\u003A\u003AGivenName",
             "name": "GivenName",
             "summary": "",
-            "url": ""
+            "url": "classes/User-Model-Enums-JWTClaims.html#enumcase_GivenName"
         },                {
             "fqsen": "\\User\\Model\\Enums\\JWTClaims\u003A\u003AIs18Plus",
             "name": "Is18Plus",
             "summary": "",
-            "url": ""
+            "url": "classes/User-Model-Enums-JWTClaims.html#enumcase_Is18Plus"
         },                {
             "fqsen": "\\User\\Model\\Enums\\JWTClaims\u003A\u003ALidnr",
             "name": "Lidnr",
             "summary": "",
-            "url": ""
+            "url": "classes/User-Model-Enums-JWTClaims.html#enumcase_Lidnr"
         },                {
             "fqsen": "\\User\\Model\\Enums\\JWTClaims\u003A\u003AMembershipType",
             "name": "MembershipType",
             "summary": "",
-            "url": ""
+            "url": "classes/User-Model-Enums-JWTClaims.html#enumcase_MembershipType"
         },                {
             "fqsen": "\\User\\Model\\Enums\\JWTClaims\u003A\u003AMiddleName",
             "name": "MiddleName",
             "summary": "",
-            "url": ""
+            "url": "classes/User-Model-Enums-JWTClaims.html#enumcase_MiddleName"
         },                {
             "fqsen": "\\User\\Model\\Enums\\UserRoles",
             "name": "UserRoles",
@@ -16619,47 +16619,47 @@ Search.appendIndex(
             "fqsen": "\\User\\Model\\Enums\\UserRoles\u003A\u003AGuest",
             "name": "Guest",
             "summary": "",
-            "url": ""
+            "url": "classes/User-Model-Enums-UserRoles.html#enumcase_Guest"
         },                {
             "fqsen": "\\User\\Model\\Enums\\UserRoles\u003A\u003ATueGuest",
             "name": "TueGuest",
             "summary": "",
-            "url": ""
+            "url": "classes/User-Model-Enums-UserRoles.html#enumcase_TueGuest"
         },                {
             "fqsen": "\\User\\Model\\Enums\\UserRoles\u003A\u003AApiUser",
             "name": "ApiUser",
             "summary": "",
-            "url": ""
+            "url": "classes/User-Model-Enums-UserRoles.html#enumcase_ApiUser"
         },                {
             "fqsen": "\\User\\Model\\Enums\\UserRoles\u003A\u003ACompany",
             "name": "Company",
             "summary": "",
-            "url": ""
+            "url": "classes/User-Model-Enums-UserRoles.html#enumcase_Company"
         },                {
             "fqsen": "\\User\\Model\\Enums\\UserRoles\u003A\u003AUser",
             "name": "User",
             "summary": "",
-            "url": ""
+            "url": "classes/User-Model-Enums-UserRoles.html#enumcase_User"
         },                {
             "fqsen": "\\User\\Model\\Enums\\UserRoles\u003A\u003AGraduate",
             "name": "Graduate",
             "summary": "",
-            "url": ""
+            "url": "classes/User-Model-Enums-UserRoles.html#enumcase_Graduate"
         },                {
             "fqsen": "\\User\\Model\\Enums\\UserRoles\u003A\u003AActiveMember",
             "name": "ActiveMember",
             "summary": "",
-            "url": ""
+            "url": "classes/User-Model-Enums-UserRoles.html#enumcase_ActiveMember"
         },                {
             "fqsen": "\\User\\Model\\Enums\\UserRoles\u003A\u003ACompanyAdmin",
             "name": "CompanyAdmin",
             "summary": "",
-            "url": ""
+            "url": "classes/User-Model-Enums-UserRoles.html#enumcase_CompanyAdmin"
         },                {
             "fqsen": "\\User\\Model\\Enums\\UserRoles\u003A\u003AAdmin",
             "name": "Admin",
             "summary": "",
-            "url": ""
+            "url": "classes/User-Model-Enums-UserRoles.html#enumcase_Admin"
         },                {
             "fqsen": "\\User\\Model\\LoginAttempt",
             "name": "LoginAttempt",
@@ -17280,6 +17280,26 @@ Search.appendIndex(
             "name": "__invoke",
             "summary": "",
             "url": "classes/User-Service-Factory-PwnedPasswordsFactory.html#method___invoke"
+        },                {
+            "fqsen": "\\User\\Service\\PwnedPasswords",
+            "name": "PwnedPasswords",
+            "summary": "A\u0020service\u0020providing\u0020a\u0020check\u0020against\u0020a\u0020Pwned\u0020Passwords\u0020API.\u0020This\u0020is\u0020a\u0020separate\u0020service\u0020from\u0020the\u0020\u007B\u0040link\u0020User\u007D\u0020service\nto\u0020prevent\u0020cyclic\u0020dependencies.",
+            "url": "classes/User-Service-PwnedPasswords.html"
+        },                {
+            "fqsen": "\\User\\Service\\PwnedPasswords\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/User-Service-PwnedPasswords.html#method___construct"
+        },                {
+            "fqsen": "\\User\\Service\\PwnedPasswords\u003A\u003AisPasswordLeaked\u0028\u0029",
+            "name": "isPasswordLeaked",
+            "summary": "Check\u0020a\u0020password\u0020against\u0020a\u0020Pwned\u0020Passwords\u0020instance\u0020to\u0020determine\u0020if\u0020it\u0020was\u0020leaked\u0020in\u0020a\u0020public\u0020breach.\u0020To\u0020not\u0020send\nthe\u0020plaintext\u0020password\u0020over\u0020the\u0020internet,\u0020we\u0020SHA1\u0020it.\u0020This\u0020is\u0020different\u0020from\u0020the\u0020official\u0020Pwned\u0020Passwords\u0020API,\nwere\u0020only\u0020the\u0020first\u0020few\u0020characters\u0020of\u0020the\u0020hash\u0020are\u0020transmitted.",
+            "url": "classes/User-Service-PwnedPasswords.html#method_isPasswordLeaked"
+        },                {
+            "fqsen": "\\User\\Service\\PwnedPasswords\u003A\u003A\u0024pwnedPasswordsHost",
+            "name": "pwnedPasswordsHost",
+            "summary": "",
+            "url": "classes/User-Service-PwnedPasswords.html#property_pwnedPasswordsHost"
         },                {
             "fqsen": "\\User\\Service\\User",
             "name": "User",
