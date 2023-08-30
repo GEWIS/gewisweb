@@ -26,14 +26,14 @@ $this->breadcrumbs()
 
 $this->headScript()
     ->appendFile(
-        $this->basePath() . '/js/company-create.js',
+        $this->basepath('js/company-create.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     );
 
 $this->inlineScript()
     ->appendFile(
-        $this->basePath() . '/js/company-admin.js',
+        $this->basepath('js/company-admin.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     );

@@ -13,21 +13,21 @@ use Photo\Model\Album as AlbumModel;
 
 $this->inlineScript()
     ->appendFile(
-        $this->basePath() . '/js/dropzone-min.js',
+        $this->basepath('js/dropzone-min.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     )
     ->appendFile(
-        $this->basePath() . '/js/photo.js',
+        $this->basepath('js/photo.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     )
     ->appendFile(
-        $this->basePath() . '/js/photo-admin.js',
+        $this->basepath('js/photo-admin.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     );
-$this->headLink()->appendStylesheet($this->basePath() . '/css/dropzone.css');
+$this->headLink()->appendStylesheet($this->basepath('css/dropzone.css'));
 
 $this->breadcrumbs()
     ->addBreadcrumb($this->translate('Photos'), true, $this->url('admin_photo'))

@@ -19,12 +19,12 @@ $this->breadcrumbs()
 
 $this->headScript()
     ->prependFile(
-        $this->basePath() . '/js/activity-create.js',
+        $this->basepath('js/activity-create.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     )
     ->appendFile(
-        $this->basePath() . '/js/bootstrap/tooltip.js',
+        $this->basepath('js/bootstrap/tooltip.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     );

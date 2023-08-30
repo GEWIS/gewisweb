@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Application\View\HelperTrait;
+use Laminas\View\Exception\RuntimeException;
 use Laminas\View\Renderer\PhpRenderer;
 
 /** @var PhpRenderer|HelperTrait $this */
@@ -54,20 +55,38 @@ endif; ?>
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu language <?= ($lang == 'en') ? 'reverse' : '' ?> ">
+                        <?php
+                        try {
+                            $dutchUrl = $this->url(null, ['language' => 'nl'], null, true);
+                            $englishUrl = $this->url(null, ['language' => 'en'], null, true);
+                        } catch (RuntimeException) {
+                            $dutchUrl = $this->url('home', ['language' => 'nl']);
+                            $englishUrl = $this->url('home', ['language' => 'en']);
+                        }
+
+                        // Overwrite the current language link values with specific ones, for example, for custom pages.
+                        if ('' !== ($dutchLink = $this->placeholder('pageLink')->toString())) {
+                            $dutchUrl = $dutchLink;
+                        }
+
+                        if ('' !== ($englishLink = $this->placeholder('pageLinkEn')->toString())) {
+                            $englishUrl = $englishLink;
+                        }
+                        ?>
                         <li>
                             <a class="<?= ($lang == 'en') ? 'disabled' : '' ?>"
-                               href="<?= $this->url('lang', ['lang' => 'en']) ?>"
+                               href="<?= $englishUrl ?>"
                             >
-                                <span class="flag-icon flag-icon-en"
-                                      style="background-image: url('<?= $this->basePath() ?>/img/en.svg');"></span>English
+                                <span style="background-image: url('<?= $this->basePath('img/en.svg') ?>');"
+                                      class="flag-icon flag-icon-en"></span>English
                             </a>
                         </li>
                         <li>
                             <a class="<?= ($lang == 'nl') ? 'disabled' : '' ?>"
-                               href="<?= $this->url('lang', ['lang' => 'nl']) ?>"
+                               href="<?= $dutchUrl ?>"
                             >
-                                <span class="flag-icon flag-icon-nl"
-                                      style="background-image: url('<?= $this->basePath() ?>/img/nl.svg');"></span>Nederlands
+                                <span style="background-image: url('<?= $this->basePath('img/nl.svg') ?>');"
+                                      class="flag-icon flag-icon-nl"></span>Nederlands
                             </a>
                         </li>
                     </ul>
@@ -92,7 +111,9 @@ endif; ?>
                                     'home/page',
                                     [
                                         'category' => 'vereniging',
+                                        'categoryEn' => 'association',
                                         'sub_category' => 'lidworden',
+                                        'sub_categoryEn' => 'becomemember',
                                     ],
                                 ) ?>">
                                     <?= $this->translate('Subscribe') ?>
@@ -185,20 +206,37 @@ endif; ?>
             <ul class="nav navbar-nav navbar-left">
                 <?php $frontpageActive = $this->moduleIsActive(['frontpage', 'page']); ?>
                 <li class="dropdown dropdown-hover <?= $frontpageActive ? 'active default open' : '' ?>">
-                    <a href="<?= $this->url('home/page', ['category' => 'vereniging']) ?>" role="button"
+                    <a href="<?= $this->url(
+                        'home/page',
+                        [
+                            'category' => 'vereniging',
+                            'categoryEn' => 'association',
+                        ],
+                    ) ?>" role="button" aria-expanded="<?= $frontpageActive ? 'true' : 'false' ?>"
                        class="dropdown-toggle visible-sm visible-xs" data-toggle="dropdown" aria-haspopup="true"
-                       aria-expanded="<?= $frontpageActive ? 'true' : 'false' ?>"
                     >
                         <?= $this->translate('Association') ?>
                         <span class="caret"></span>
                     </a>
-                    <a href="<?= $this->url('home/page', ['category' => 'vereniging']) ?>" role="button"
-                       class="hidden-sm hidden-xs">
+                    <a href="<?= $this->url(
+                        'home/page',
+                        [
+                            'category' => 'vereniging',
+                            'categoryEn' => 'association',
+                        ],
+                    ) ?>" role="button" class="hidden-sm hidden-xs"
+                    >
                         <?= $this->translate('Association') ?>
                     </a>
                     <ul class="dropdown-menu">
                         <li class="visible-sm visible-xs">
-                            <a href="<?= $this->url('home/page', ['category' => 'vereniging']) ?>">
+                            <a href="<?= $this->url(
+                                'home/page',
+                                [
+                                    'category' => 'vereniging',
+                                    'categoryEn' => 'association',
+                                ],
+                            ) ?>">
                                 <?= $this->translate('Association') ?>
                             </a>
                         </li>
@@ -207,7 +245,9 @@ endif; ?>
                                 'home/page',
                                 [
                                     'category' => 'vereniging',
+                                    'categoryEn' => 'association',
                                     'sub_category' => 'bestuur',
+                                    'sub_categoryEn' => 'board',
                                 ],
                             ) ?>">
                                 <?= $this->translate('Board') ?>
@@ -228,7 +268,9 @@ endif; ?>
                                 'home/page',
                                 [
                                     'category' => 'vereniging',
+                                    'categoryEn' => 'association',
                                     'sub_category' => 'exceptionalmembers',
+                                    'sub_categoryEn' => 'exceptionalmembers',
                                 ],
                             ) ?>">
                                 <?= $this->translate('Exceptional Members') ?>
@@ -239,7 +281,9 @@ endif; ?>
                                 'home/page',
                                 [
                                     'category' => 'vereniging',
+                                    'categoryEn' => 'association',
                                     'sub_category' => 'lied',
+                                    'sub_categoryEn' => 'song',
                                 ],
                             ) ?>">
                                 <?= $this->translate('GEWIS song') ?>
@@ -250,7 +294,9 @@ endif; ?>
                                 'home/page',
                                 [
                                     'category' => 'vereniging',
-                                    'sub_category' => 'statuten',
+                                    'categoryEn' => 'association',
+                                    'sub_category' => 'reglementen',
+                                    'sub_categoryEn' => 'regulations',
                                 ],
                             ) ?>">
                                 <?= $this->translate('Regulations') ?>
@@ -270,12 +316,24 @@ endif; ?>
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="<?= $this->url('home/page', ['category' => 'links']) ?>">
+                                    <a href="<?= $this->url(
+                                        'home/page',
+                                        [
+                                            'category' => 'links',
+                                            'categoryEn' => 'links',
+                                        ],
+                                    ) ?>">
                                         <?= $this->translate('Links') ?>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="<?= $this->url('home/page', ['category' => 'wellbeing']) ?>">
+                                    <a href="<?= $this->url(
+                                        'home/page',
+                                        [
+                                            'category' => 'welzijn',
+                                            'categoryEn' => 'wellbeing',
+                                        ],
+                                    ) ?>">
                                         <?= $this->translate('Well-being') ?>
                                     </a>
                                 </li>
@@ -283,15 +341,23 @@ endif; ?>
                                     <a href="<?= $this->url(
                                         'home/page',
                                         [
-                                            'category' => 'wellbeing',
-                                            'sub_category' => 'ccp',
+                                            'category' => 'welzijn',
+                                            'categoryEn' => 'wellbeing',
+                                            'sub_category' => 'vcp',
+                                            'sub_categoryEn' => 'ccp',
                                         ],
                                     ) ?>">
                                         <?= $this->translate('Confidential Contact Person (CCP)') ?>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="<?= $this->url('home/page', ['category' => 'faq']) ?>">
+                                    <a href="<?= $this->url(
+                                        'home/page',
+                                        [
+                                            'category' => 'faq',
+                                            'categoryEn' => 'faq',
+                                        ],
+                                    ) ?>">
                                         <?= $this->translate('FAQ') ?>
                                     </a>
                                 </li>
@@ -299,8 +365,10 @@ endif; ?>
                                     <a href="<?= $this->url(
                                         'home/page',
                                         [
-                                            'category' => 'wellbeing',
-                                            'sub_category' => 'housing',
+                                            'category' => 'welzijn',
+                                            'categoryEn' => 'wellbeing',
+                                            'sub_category' => 'huisvesting',
+                                            'sub_categoryEn' => 'housing',
                                         ],
                                     ) ?>">
                                         <?= $this->translate('Housing') ?>
@@ -313,7 +381,9 @@ endif; ?>
                                 'home/page',
                                 [
                                     'category' => 'vereniging',
+                                    'categoryEn' => 'association',
                                     'sub_category' => 'contact',
+                                    'sub_categoryEn' => 'contact',
                                 ],
                             ) ?>">
                                 <?= $this->translate('Contact') ?>

@@ -20,7 +20,7 @@ $this->headTitle($this->translate('Edit Package'));
 
 $this->headScript()
     ->appendFile(
-        $this->basePath() . '/js/company-create.js',
+        $this->basepath('js/company-create.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     );

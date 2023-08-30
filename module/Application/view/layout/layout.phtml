@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Application\Model\Enums\Languages;
 use Application\View\HelperTrait;
 use Laminas\View\Renderer\PhpRenderer;
 
@@ -20,17 +21,37 @@ use Laminas\View\Renderer\PhpRenderer;
 
     <!-- Display alternate language links-->
     <?php
-    // Disabled because of buggy implementation.
-    // if (isset($_SERVER['REQUEST_URI'])) {
-    //     $this->headLink([
-    //         'rel' => 'alternate', 'type' => 'text/html', 'hreflang' => 'en',
-    //         'href' => $this->serverUrl('/lang/en' . $_SERVER['REQUEST_URI']),
-    //     ]);
-    //     $this->headLink([
-    //         'rel' => 'alternate', 'type' => 'text/html', 'hreflang' => 'nl',
-    //         'href' => $this->serverUrl('/lang/nl' . $_SERVER['REQUEST_URI']),
-    //     ]);
-    // }
+    if (isset($_SERVER['REQUEST_URI'])) {
+        $strippedPath = ltrim(
+            substr(
+                $_SERVER['REQUEST_URI'],
+                strlen($this->basePath()),
+            ),
+            '/',
+        );
+
+        // Remove the language from the URL, keep the leading `/`.
+        if (str_starts_with($strippedPath, 'en/')) {
+            $strippedPath = substr($strippedPath, strlen('en'));
+        } elseif (str_starts_with($strippedPath, 'nl/')) {
+            $strippedPath = substr($strippedPath, strlen('nl'));
+        } elseif (
+            'en' === $strippedPath
+            || 'nl' === $strippedPath
+        ) {
+            $strippedPath = '';
+        }
+
+        // If we are at the "root", remove the slash.
+        if ('/' === $strippedPath) {
+            $strippedPath = '';
+        }
+
+        $this->hrefLang()->setHrefLang(Languages::EN, $this->serverUrl($this->basePath('en' . $strippedPath)))
+            ->setHrefLang(Languages::NL, $this->serverUrl($this->basePath('nl' . $strippedPath)));
+    }
+
+    echo $this->hrefLang();
     ?>
 
     <!-- Preload fonts-->
@@ -124,19 +145,19 @@ use Laminas\View\Renderer\PhpRenderer;
     <!-- Le styles -->
     <!-- All headLinks are outputted here once. -->
     <?= $this->headLink(
-        ['rel' => 'shortcut icon', 'type' => 'image/x-icon', 'href' => $this->basePath() . '/img/favicon.ico']
+        ['rel' => 'shortcut icon', 'type' => 'image/x-icon', 'href' => $this->basepath('img/favicon.ico')]
     )
-        ->prependStylesheet($this->basePath() . '/css/gewis-theme.css') ?>
+        ->prependStylesheet($this->basepath('css/gewis-theme.css')) ?>
 
     <!-- Scripts -->
     <?= $this->headScript()
         ->prependFile(
-            $this->basePath() . '/js/jquery.min.js',
+            $this->basepath('js/jquery.min.js'),
             'text/javascript',
             ['nonce' => NONCE_REPLACEMENT_STRING],
         )
         ->prependFile(
-            $this->basePath() . '/js/url-helper.js',
+            $this->basepath('js/url-helper.js'),
             'text/javascript',
             ['nonce' => NONCE_REPLACEMENT_STRING],
         ); ?>
@@ -179,17 +200,17 @@ endif; ?>
 <!-- Scripts -->
 <?= $this->inlineScript()
     ->prependFile(
-        $this->basePath() . '/js/bootstrap.min.js',
+        $this->basepath('js/bootstrap.min.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     )
     ->prependFile(
-        $this->basePath() . '/js/privacy-widget.js',
+        $this->basepath('js/privacy-widget.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     )
     ->prependFile(
-        $this->basePath() . '/js/navbar.js',
+        $this->basepath('js/navbar.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     ); ?>

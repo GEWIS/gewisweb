@@ -13,11 +13,11 @@ use Laminas\View\Renderer\PhpRenderer;
 
 $this->headScript()
     ->appendFile(
-        $this->basePath() . '/js/tree.js',
+        $this->basepath('js/tree.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     );
-$this->headLink()->appendStylesheet($this->basePath() . '/css/tree.css');
+$this->headLink()->appendStylesheet($this->basepath('css/tree.css'));
 
 $this->breadcrumbs()
     ->addBreadcrumb($this->translate('Pages'));
@@ -44,7 +44,7 @@ $this->breadcrumbs()
                                     <a
                                         href="<?= $context->url('admin_page/edit',
                                             ['page_id' => $data['page']->getId()]) ?>">
-                                        <?= $category ?> (<?= $data['page']->getEnglishTitle() ?>)
+                                        <?= $category ?> (<?= $context->escapeHtml($context->localiseText($data['page']->getTitle())) ?>)
                                     </a>
                                 <?php else: ?>
                                     <?= $category ?>

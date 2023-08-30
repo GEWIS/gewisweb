@@ -38,4 +38,15 @@ enum Languages: string
             self::cases(),
         );
     }
+
+    /**
+     * @return string[]
+     */
+    public static function stringValues(): array
+    {
+        return array_map(
+            static fn (self $status) => $status->value,
+            self::cases(),
+        );
+    }
 }

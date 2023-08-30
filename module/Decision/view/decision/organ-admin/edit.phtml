@@ -15,32 +15,32 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
 
 $this->headScript()
     ->appendFile(
-        $this->basePath() . '/js/imagesloaded.pkgd.min.js',
+        $this->basepath('js/imagesloaded.pkgd.min.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     )
     ->appendFile(
-        $this->basePath() . '/js/jquery.Jcrop.min.js',
+        $this->basepath('js/jquery.Jcrop.min.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     )
     ->appendFile(
-        $this->basePath() . '/js/ckeditor/ckeditor.js',
+        $this->basepath('js/ckeditor/ckeditor.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     );
 
 if ('nl' === $lang) {
     $this->headScript()->appendFile(
-        $this->basePath() . '/js/ckeditor/translations/nl.js',
+        $this->basepath('js/ckeditor/translations/nl.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     );
 }
 
 $this->headLink()
-    ->appendStylesheet($this->basePath() . '/css/jquery.Jcrop.min.css')
-    ->appendStylesheet($this->basePath() . '/css/ckeditor/style.css');
+    ->appendStylesheet($this->basepath('css/jquery.Jcrop.min.css'))
+    ->appendStylesheet($this->basepath('css/ckeditor/style.css'));
 
 $this->scriptUrl()->requireUrl('admin_page/upload');
 

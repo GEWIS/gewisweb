@@ -14,7 +14,7 @@ use Laminas\View\Renderer\PhpRenderer;
 $this->headTitle($this->translate('Create activity proposal'));
 $this->headScript()
     ->appendFile(
-        $this->basePath() . '/js/proposal-create.js',
+        $this->basepath('js/proposal-create.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     );

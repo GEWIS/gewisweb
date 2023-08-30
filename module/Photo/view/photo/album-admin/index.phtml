@@ -12,22 +12,22 @@ use Laminas\View\Renderer\PhpRenderer;
 
 $this->headScript()
     ->appendFile(
-        $this->basePath() . '/js/photo.js',
+        $this->basepath('js/photo.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     )
     ->appendFile(
-        $this->basePath() . '/js/photo-admin.js',
+        $this->basepath('js/photo-admin.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     )
     ->appendFile(
-        $this->basePath() . '/js/tree.js',
+        $this->basepath('js/tree.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     );
 $this->headLink()
-    ->appendStylesheet($this->basePath() . '/css/tree.css');
+    ->appendStylesheet($this->basepath('css/tree.css'));
 
 $this->breadcrumbs()
     ->addBreadcrumb($this->translate('Photos'));

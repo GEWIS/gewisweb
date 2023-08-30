@@ -30,31 +30,31 @@ $this->headTitle($this->translate('Photos'));
 ?>
 <?php $this->headScript()
     ->appendFile(
-        $this->basePath() . '/js/autocomplete.min.js',
+        $this->basepath('js/autocomplete.min.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     )
     ->appendFile(
-        $this->basePath() . '/js/photo.js',
+        $this->basepath('js/photo.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     )
     ->appendFile(
-        $this->basePath() . '/js/masonry.pkgd.min.js',
+        $this->basepath('js/masonry.pkgd.min.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     )
     ->appendFile(
-        $this->basePath() . '/js/lazyload.min.js',
+        $this->basepath('js/lazyload.min.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     )
     ->appendFile(
-        $this->basePath() . '/js/bootstrap/tooltip.js',
+        $this->basepath('js/bootstrap/tooltip.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     );
-$this->headLink()->appendStylesheet($this->basePath() . '/css/photoswipe.css');
+$this->headLink()->appendStylesheet($this->basepath('css/photoswipe.css'));
 
 $this->scriptUrl()->requireUrl('member/search')
     ->requireUrl('member/view', ['lidnr'])
@@ -414,11 +414,11 @@ $this->scriptUrl()->requireUrl('member/search')
     };
 </script>
 <script type="module" nonce="<?= NONCE_REPLACEMENT_STRING ?>">
-    import PhotoSwipeLightbox from '<?= $this->basePath() ?>/js/photoswipe-lightbox.esm.min.js';
+    import PhotoSwipeLightbox from '<?= $this->basePath('js/photoswipe-lightbox.esm.min.js') ?>';
 
-    const leftArrowSVGString = '<svg aria-hidden="true" class="pswp__icn" viewBox="0 0 50 30" width="50" height="30"><use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#chevron-left"></use></svg>';
-    const closeSVGString = '<svg aria-hidden="true" class="pswp__icn" viewBox="0 0 32 32" width="32" height="32"><use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#xmark"></use></svg>';
-    const zoomSVGString = '<svg aria-hidden="true" class="pswp__icn" viewBox="0 0 32 32" width="32" height="32"><use class="pswp__icn-zoom-plus" href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#magnifying-glass-plus"></use><use class="pswp__icn-zoom-minus" href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#magnifying-glass-minus"></use></svg>';
+    const leftArrowSVGString = '<svg aria-hidden="true" class="pswp__icn" viewBox="0 0 50 30" width="50" height="30"><use href="<?= $this->basePath('sprites/fontawesome/solid.svg#chevron-left') ?>"></use></svg>';
+    const closeSVGString = '<svg aria-hidden="true" class="pswp__icn" viewBox="0 0 32 32" width="32" height="32"><use href="<?= $this->basePath('sprites/fontawesome/solid.svg#xmark') ?>"></use></svg>';
+    const zoomSVGString = '<svg aria-hidden="true" class="pswp__icn" viewBox="0 0 32 32" width="32" height="32"><use class="pswp__icn-zoom-plus" href="<?= $this->basePath('sprites/fontawesome/solid.svg#magnifying-glass-plus') ?>"></use><use class="pswp__icn-zoom-minus" href="<?= $this->basePath('sprites/fontawesome/solid.svg#magnifying-glass-minus') ?>"></use></svg>';
 
     let lastActiveElement = null;
 
@@ -440,7 +440,7 @@ $this->scriptUrl()->requireUrl('member/search')
         arrowNextTitle: '<?=  $this->translate('Next') ?>',
         errorMsg: '<?= $this->translate('The image could not be loaded.') ?>',
 
-        pswpModule: () => import('<?= $this->basePath() ?>/js/photoswipe.esm.min.js'),
+        pswpModule: () => import('<?= $this->basePath('js/photoswipe.esm.min.js') ?>'),
     });
 
     lightbox.on('uiRegister', () => {
@@ -454,7 +454,7 @@ $this->scriptUrl()->requireUrl('member/search')
                 title: '<?= $this->translate('Download') ?>',
                 html: {
                     isCustomSVG: true,
-                    inner: '<use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#download"></use>',
+                    inner: '<use href="<?= $this->basePath('sprites/fontawesome/solid.svg#download') ?>"></use>',
                 },
                 onClick: (event, el, pswp) => {
                     let downloadUrl = pswp.currSlide.data.element.dataset.rawUrl;
@@ -478,7 +478,7 @@ $this->scriptUrl()->requireUrl('member/search')
             title: '<?= $this->translate('Share') ?>',
             html: {
                 isCustomSVG: true,
-                inner: '<use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#share"></use>',
+                inner: '<use href="<?= $this->basePath('sprites/fontawesome/solid.svg#share') ?>"></use>',
             },
             onClick: (event, el, pswp) => {
                 let id = pswp.currSlide.data.element.dataset.id;
@@ -500,7 +500,7 @@ $this->scriptUrl()->requireUrl('member/search')
                 title: '<?= $this->translate('Go to album') ?>',
                 html: {
                     isCustomSVG: true,
-                    inner: '<use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#images"></use>',
+                    inner: '<use href="<?= $this->basePath('sprites/fontawesome/solid.svg#images') ?>"></use>',
                 },
                 onClick: (event, el, pswp) => {
                     let id = pswp.currSlide.data.element.dataset.id;
@@ -521,7 +521,7 @@ $this->scriptUrl()->requireUrl('member/search')
                 title: '<?= $this->translate('Information') ?>',
                 html: {
                     isCustomSVG: true,
-                    inner: '<use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#circle-info"></use>',
+                    inner: '<use href="<?= $this->basePath('sprites/fontawesome/solid.svg#circle-info') ?>"></use>',
                 },
                 onClick: () => {
                     let metadata = document.querySelector('.pswp__metadata-ui');
@@ -543,7 +543,7 @@ $this->scriptUrl()->requireUrl('member/search')
             title: '<?= $this->translate('Set as profile picture') ?>',
             html: {
                 isCustomSVG: true,
-                inner: '<use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#image-portrait"></use>',
+                inner: '<use href="<?= $this->basePath('sprites/fontawesome/solid.svg#image-portrait') ?>"></use>',
             },
             onInit: (el, pswp) => {
                 // Hide button by default, it should only be shown through tags.
@@ -574,7 +574,7 @@ $this->scriptUrl()->requireUrl('member/search')
                 title: '<?= $this->translate('Vote for photo of the week') ?>',
                 html: {
                     isCustomSVG: true,
-                    inner: '<use href="<?= $this->basePath() ?>/sprites/fontawesome/solid.svg#thumbs-up"></use>',
+                    inner: '<use href="<?= $this->basePath('sprites/fontawesome/solid.svg#thumbs-up') ?>"></use>',
                 },
                 onInit: (el, pswp) => {
                     pswp.on('change', () => {

@@ -22,7 +22,7 @@ $this->breadcrumbs()
 
 $this->inlineScript()
     ->appendFile(
-        $this->basePath() . '/js/company-admin.js',
+        $this->basepath('js/company-admin.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     );

@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Frontpage\Service;
 
+use Application\Model\Enums\Languages;
 use Application\Service\FileStorage;
 use Doctrine\ORM\Exception\ORMException;
 use Frontpage\Form\Page as PageForm;
 use Frontpage\Mapper\Page as PageMapper;
+use Frontpage\Model\FrontpageLocalisedText;
 use Frontpage\Model\Page as PageModel;
 use InvalidArgumentException;
 use Laminas\Mvc\I18n\Translator;
@@ -47,11 +49,12 @@ class Page
      * Returns a single page.
      */
     public function getPage(
+        Languages $language,
         string $category,
         ?string $subCategory = null,
         ?string $name = null,
     ): ?PageModel {
-        $page = $this->pageMapper->findPage($category, $subCategory, $name);
+        $page = $this->pageMapper->findPage($language, $category, $subCategory, $name);
 
         if (null !== $page && !$this->aclService->isAllowed('view', $page)) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view this page.'));
@@ -65,15 +68,24 @@ class Page
      *
      * @return array<array-key, PageModel|null>
      */
-    public function getPageParents(PageModel $page): array
-    {
+    public function getPageParents(
+        PageModel $page,
+        Languages $language,
+    ): array {
         $parents = [];
 
-        if (null !== $page->getSubCategory()) {
-            $parents[] = $this->pageMapper->findPage($page->getCategory());
+        if (null !== $page->getSubCategory()->getExactText($language)) {
+            $parents[] = $this->pageMapper->findPage(
+                $language,
+                $page->getCategory()->getExactText($language),
+            );
 
-            if (null !== $page->getName()) {
-                $parents[] = $this->pageMapper->findPage($page->getCategory(), $page->getSubCategory());
+            if (null !== $page->getName()->getExactText($language)) {
+                $parents[] = $this->pageMapper->findPage(
+                    $language,
+                    $page->getCategory()->getExactText($language),
+                    $page->getSubCategory()->getExactText($language),
+                );
             }
         }
 
@@ -113,9 +125,9 @@ class Page
 
         $pageArray = [];
         foreach ($pages as $page) {
-            $category = $page->getCategory();
-            $subCategory = $page->getSubCategory();
-            $name = $page->getName();
+            $category = $page->getCategory()->getText();
+            $subCategory = $page->getSubCategory()->getText();
+            $name = $page->getName()->getText();
 
             if (null === $name) {
                 if (null === $subCategory) {
@@ -151,7 +163,8 @@ class Page
             return false;
         }
 
-        $page = $this->savePageData($form->getData());
+        $page = new PageModel();
+        $page = $this->savePageData($page, $form->getData());
 
         $this->pageMapper->persist($page);
         $this->pageMapper->flush();
@@ -164,17 +177,16 @@ class Page
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
-    public function savePageData(array $data): PageModel
-    {
-        $page = new PageModel();
-        $page->setCategory($data['category']);
-        $page->setSubCategory($data['subCategory'] ?? null);
-        $page->setName($data['name'] ?? null);
+    public function savePageData(
+        PageModel $page,
+        array $data,
+    ): PageModel {
+        $page->setCategory(new FrontpageLocalisedText($data['categoryEn'], $data['category']));
+        $page->setSubCategory(new FrontpageLocalisedText($data['subCategoryEn'], $data['subCategory']));
+        $page->setName(new FrontpageLocalisedText($data['nameEn'], $data['name']));
 
-        $page->setDutchTitle($data['dutchTitle']);
-        $page->setDutchContent($data['dutchContent']);
-        $page->setEnglishTitle($data['englishTitle']);
-        $page->setEnglishContent($data['englishContent']);
+        $page->setTitle(new FrontpageLocalisedText($data['titleEn'], $data['title']));
+        $page->setContent(new FrontpageLocalisedText($data['contentEn'], $data['content']));
 
         $page->setRequiredRole(UserRoles::from($data['requiredRole']));
 
@@ -182,25 +194,17 @@ class Page
     }
 
     /**
-     * @param Parameters $data form post data
-     *
      * @throws ORMException
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function updatePage(
-        int $pageId,
-        Parameters $data,
+        PageModel $page,
+        array $data,
     ): bool {
-        if (!$this->aclService->isAllowed('edit', 'page')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to edit pages.'));
-        }
+        $page = $this->savePageData($page, $data);
 
-        $form = $this->getPageForm($pageId);
-        $form->setData($data);
-
-        if (!$form->isValid()) {
-            return false;
-        }
-
+        $this->pageMapper->persist($page);
         $this->pageMapper->flush();
 
         return true;
@@ -254,7 +258,7 @@ class Page
     /**
      * Get the Page form.
      */
-    public function getPageForm(?int $pageId = null): PageForm
+    public function getPageForm(): PageForm
     {
         if (!$this->aclService->isAllowed('create', 'page')) {
             throw new NotAllowedException(
@@ -262,13 +266,6 @@ class Page
             );
         }
 
-        $form = $this->pageForm;
-
-        if (null !== $pageId) {
-            $page = $this->getPageById($pageId);
-            $form->bind($page);
-        }
-
-        return $form;
+        return $this->pageForm;
     }
 }

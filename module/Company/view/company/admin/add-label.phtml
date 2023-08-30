@@ -15,7 +15,7 @@ $this->headTitle($this->translate('Create Job Label'));
 
 $this->headScript()
     ->appendFile(
-        $this->basePath() . '/js/company-create.js',
+        $this->basepath('js/company-create.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     );

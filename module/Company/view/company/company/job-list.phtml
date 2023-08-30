@@ -23,7 +23,7 @@ $this->headTitle($this->localiseText($jobCategory->getPluralName()));
 
 $this->headScript()
     ->appendFile(
-        $this->basePath() . '/js/bootstrap/tooltip.js',
+        $this->basepath('js/bootstrap/tooltip.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     );

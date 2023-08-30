@@ -15,21 +15,21 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
 
 $this->headScript()
     ->appendFile(
-        $this->basePath() . '/js/ckeditor/ckeditor.js',
+        $this->basepath('js/ckeditor/ckeditor.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     );
 
 if ('nl' === $lang) {
     $this->headScript()->appendFile(
-        $this->basePath() . '/js/ckeditor/translations/nl.js',
+        $this->basepath('js/ckeditor/translations/nl.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     );
 }
 
 $this->headLink()
-    ->appendStylesheet($this->basePath() . '/css/ckeditor/style.css');
+    ->appendStylesheet($this->basepath('css/ckeditor/style.css'));
 
 $this->scriptUrl()->requireUrl('admin_page/upload');
 
@@ -45,80 +45,96 @@ $form->setAttribute('method', 'post');
 $form->setAttribute('role', 'form');
 ?>
 <?= $this->form()->openTag($form); ?>
-<h3><?= $this->translate('URL options') ?></h3>
-<?= $this->translate('Make this page available at the following URL. Providing a category is required.') ?>
-</br>
-<div class="form-group form-inline">
+<h2><?= $this->translate('URL options') ?></h2>
+<?= $this->translate(
+    // phpcs:ignore Generic.Files.LineLength.TooLong -- user-visible strings should not be split
+    'Make this page available at the following URLs. Providing a category is required. Always try to translate the relevant segments of the URL.',
+) ?>
+<br>
+<?php foreach(['En', ''] as $suffix): ?>
     <?php
-    $category = $form->get('category');
-    $subCategory = $form->get('subCategory');
-    $name = $form->get('name');
 
-    $category->setAttribute('class', 'form-control');
-    $subCategory->setAttribute('class', 'form-control');
-    $name->setAttribute('class', 'form-control');
+    $category = $form->get('category' . $suffix);
+    $category->setAttribute('class', 'form-control')
+        ->setAttribute('id', 'category-' . ('' === $suffix) ? 'nl' : 'en')
+        ->setAttribute('required', 'required')
+        ->setAttribute('placeholder', $this->translate('Category'));
 
-    $category->setAttribute('placeholder', 'category');
-    $subCategory->setAttribute('placeholder', 'sub-category');
-    $name->setAttribute('placeholder', 'name');
+    $subCategory = $form->get('subCategory' . $suffix);
+    $subCategory->setAttribute('class', 'form-control')
+        ->setAttribute('id', 'sub-category-' . ('' === $suffix) ? 'nl' : 'en')
+        ->setAttribute('placeholder', $this->translate('Subcategory'));
 
-    $category->setAttribute('required', 'required');
+    $name = $form->get('name' . $suffix);
+    $name->setAttribute('class', 'form-control')
+        ->setAttribute('id', 'name-' . ('' === $suffix) ? 'nl' : 'en')
+        ->setAttribute('placeholder', $this->translate('Name'));
+
     ?>
-    <strong>
-        <?= $this->serverUrl($this->basePath()) ?>/
-        <?= $this->formText($category); ?>/
-        <?= $this->formText($subCategory); ?>/
-        <?= $this->formText($name); ?>
-    </strong>
-</div>
-
-<?= $this->formElementErrors($category); ?>
-<?= $this->formElementErrors($subCategory); ?>
-<?= $this->formElementErrors($name); ?>
+    <div class="form-group form-inline">
+        <strong>
+            <?= $this->serverUrl($this->url('home', ['language' => '' === $suffix ? 'nl' : 'en'])) ?>
+            <div class="<?= $this->bootstrapElementError($category) ?>" style="display: inline-block">
+                <?= $this->formText($category); ?>
+                <?= $this->formElementErrors($category); ?>
+            </div>/
+            <div class="<?= $this->bootstrapElementError($subCategory) ?>" style="display: inline-block">
+                <?= $this->formText($subCategory); ?>
+                <?= $this->formElementErrors($subCategory); ?>
+            </div>/
+            <div class="<?= $this->bootstrapElementError($name) ?>" style="display: inline-block">
+                <?= $this->formText($name); ?>
+                <?= $this->formElementErrors($name); ?>
+            </div>
+        </strong>
+    </div>
+<?php endforeach; ?>
 <hr>
 
-<h3><?= $this->translate('English content') ?></h3>
-<div class="form-group">
-    <?php
-    $element = $form->get('englishTitle');
-    $element->setAttribute('class', 'form-control');
-    $element->setAttribute('required', 'required');
-    ?>
+<h2><?= $this->translate('English content') ?></h2>
+<?php
+$element = $form->get('titleEn');
+$element->setAttribute('class', 'form-control');
+$element->setAttribute('id', 'title-en');
+$element->setAttribute('required', 'required');
+?>
+<div class="form-group <?= $this->bootstrapElementError($element) ?>">
     <?= $this->formLabel($element); ?>
     <?= $this->formText($element); ?>
     <?= $this->formElementErrors($element); ?>
 </div>
 
-<div class="form-group">
-    <?php
-    $element = $form->get('englishContent');
-    $element->setAttribute('id', 'english-content')
-        ->setAttribute('class', 'form-control');
-    ?>
+<?php
+$element = $form->get('contentEn');
+$element->setAttribute('id', 'content-en')
+    ->setAttribute('class', 'form-control');
+?>
+<div class="form-group <?= $this->bootstrapElementError($element) ?>">
     <?= $this->formLabel($element); ?>
     <?= $this->formTextarea($element); ?>
     <?= $this->formElementErrors($element); ?>
 </div>
 
 <hr>
-<h3><?= $this->translate('Dutch content') ?></h3>
-<div class="form-group">
-    <?php
-    $element = $form->get('dutchTitle');
-    $element->setAttribute('class', 'form-control');
-    $element->setAttribute('required', 'required');
-    ?>
+<h2><?= $this->translate('Dutch content') ?></h2>
+<?php
+$element = $form->get('title');
+$element->setAttribute('class', 'form-control');
+$element->setAttribute('id', 'title-nl');
+$element->setAttribute('required', 'required');
+?>
+<div class="form-group <?= $this->bootstrapElementError($element) ?>">
     <?= $this->formLabel($element); ?>
     <?= $this->formText($element); ?>
     <?= $this->formElementErrors($element); ?>
 </div>
 
-<div class="form-group">
-    <?php
-    $element = $form->get('dutchContent');
-    $element->setAttribute('id', 'dutch-content')
-        ->setAttribute('class', 'form-control');
-    ?>
+<?php
+$element = $form->get('content');
+$element->setAttribute('id', 'content-nl')
+    ->setAttribute('class', 'form-control');
+?>
+<div class="form-group <?= $this->bootstrapElementError($element) ?>">
     <?= $this->formLabel($element); ?>
     <?= $this->formTextarea($element); ?>
     <?= $this->formElementErrors($element); ?>
@@ -126,13 +142,15 @@ $form->setAttribute('role', 'form');
 
 <hr>
 <h3><?= $this->translate('Permissions') ?></h3>
-Set the minimal role required to view this page. All visitors whom have this role may view the page.
-<div class="form-group">
-    <?php
-    $element = $form->get('requiredRole');
-    $element->setAttribute('class', 'form-control');
-    $element->setAttribute('required', 'required');
-    ?>
+<p>
+    <?= $this->translate('Set the minimal role required to view this page. All visitors whom have this role may view the page.') ?>
+</p>
+<?php
+$element = $form->get('requiredRole');
+$element->setAttribute('class', 'form-control');
+$element->setAttribute('required', 'required');
+?>
+<div class="form-group <?= $this->bootstrapElementError($element) ?>">
     <?= $this->formLabel($element); ?>
     <?= $this->formSelect($element); ?>
     <?= $this->formElementErrors($element); ?>
@@ -155,7 +173,7 @@ $submit->setAttribute('class', 'btn btn-primary');
 <?= $this->form()->closeTag(); ?>
 <script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
     ClassicEditor
-        .create(document.querySelector('#dutch-content'), {
+        .create(document.querySelector('#content-nl'), {
             language: '<?= $lang ?>'
         })
         .catch(error => {
@@ -163,7 +181,7 @@ $submit->setAttribute('class', 'btn btn-primary');
         });
 
     ClassicEditor
-        .create(document.querySelector('#english-content'), {
+        .create(document.querySelector('#content-en'), {
             language: '<?= $lang ?>'
         })
         .catch(error => {

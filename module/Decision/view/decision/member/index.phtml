@@ -87,8 +87,13 @@ $this->headTitle($this->translate('Members'));
                         <div class="big-icon fas fa-book"></div>
                         <div class="panel-heading">Supremum</div>
                     </a>
-                    <a href="<?= $this->url('home/page', ['category' => 'links']) ?>"
-                       class="panel panel-image align-middle">
+                    <a href="<?= $this->url(
+                        'home/page',
+                        [
+                            'category' => 'links',
+                            'categoryEn' => 'links',
+                        ],
+                    ) ?>" class="panel panel-image align-middle">
                         <div class="big-icon fas fa-link"></div>
                         <div class="panel-heading"><?= $this->translate('Links') ?></div>
                     </a>
@@ -230,8 +235,11 @@ $this->headTitle($this->translate('Members'));
                                 'home/page',
                                 [
                                     'category' => 'vereniging',
-                                    'sub_category' => 'statuten',
+                                    'categoryEn' => 'association',
+                                    'sub_category' => 'reglementen',
+                                    'sub_categoryEn' => 'regulations',
                                     'name' => 'statuten',
+                                    'nameEn' => 'bylaws',
                                 ],
                             ) ?>">
                                 <?= $this->translate('Bylaws') ?>
@@ -242,8 +250,11 @@ $this->headTitle($this->translate('Members'));
                                 'home/page',
                                 [
                                     'category' => 'vereniging',
-                                    'sub_category' => 'statuten',
+                                    'categoryEn' => 'association',
+                                    'sub_category' => 'reglementen',
+                                    'sub_categoryEn' => 'regulations',
                                     'name' => 'hr',
+                                    'nameEn' => 'ir',
                                 ],
                             ) ?>">
                                 <?= $this->translate('Internal Regulations') ?>
