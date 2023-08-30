@@ -1,3 +1,47 @@
+## [v4.0](https://github.com/GEWIS/gewisweb/tree/v4.0) (2023-08-30)
+
+* Added notice for `administrator`s to warn them about their powers.
+* Added history of board positions to member profiles of board members.
+* Added option to mark course documents as `scanned` to improve quality of watermarked PDF.
+* Added option for organisers of activities to view sign-up list details up to a month after the activity ended.
+* Added more detailed suggestions to failed searches to help with getting results.
+* Added notice to polls to prevent personal data from appearing in polls.
+* Added horizontal watermark to course documents to help with automatic OCR detection.
+* Added button to historical poll overview to go to the current poll.
+* Added language aware router for localised URLs (e.g. [gewis.nl/en/](https://gewis.nl/en/)).
+* Added localisable routes to custom pages.
+* Changed how historical polls are displayed and interacted with.
+* Changed coding standard to catch issues before they make it to production.
+* Changed map provider for photo locations from Google Maps to OpenStreetMap.
+* Changed how translations are compiled.
+* Changed localisation of polls.
+* Changed validation of poll questions to always require them to end with a question mark.
+* Improved support for password managers to autofill and change passwords.
+* Improved `diff` display for proposed updates to activities and vacancies.
+* Improved selecting required viewing privileges for custom pages by exchanging the text field with a list.
+* Improved consistency of page headings for custom pages.
+* Improved synchronisation script for GEWISDB by replacing not dropping all data at once.
+* Improved layout of album overview when albums have long titles.
+* Fixed issue where long poll options were not split across multiple lines.
+* Fixed issue where it was not possible to update a `JobCategory`.
+* Fixed issue where poll question was not shown on the frontpage.
+* Fixed issue where renaming a `MeetingDocument` would redirect away from the current page.
+* Fixed issue where it was not possible to unsubscribe from an activity.
+* Fixed issue where organ functions where displayed for the wrong organ due to incorrect deduplication and ordering of organ hashes.
+* Fixed issue where e-mails with a `Reply-To` with special characters resulted in an exception.
+* Fixed issue where MariaDB healthcheck did no longer work.
+* Fixed issue where birthdays of expired memberships/graduate statuses were shown on July 1. 
+* Fixed issue where it was not possible to view activity update proposals when the organiser was removed in the update.
+* Fixed issue where it was possible to approve activity update proposals without having the proper privileges.
+* Fixed issue where it was possible to comment on old or unapproved polls.
+* Fixed issue where certain sign-up list fields would not show when selected.
+* Fixed issue where errors in the synchronisation script for GEWISDB could result in (temporary) loss of data.
+* Fixed issue where it was not possible to close a dropdown that was open by default on mobile devices.
+* Fixed issue where (un)collapsing the main navbar would also (un)collapse the admin navbar.
+* Updated dependencies.
+
+---
+
 ## [v3.0.5](https://github.com/GEWIS/gewisweb/tree/v3.0.5) (2023-04-08)
 
 * Changed text under active polls on the frontpage to be more descriptive.
