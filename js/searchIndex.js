@@ -3111,11 +3111,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Application-Controller-IndexController.html"
         },                {
-            "fqsen": "\\Application\\Controller\\IndexController\u003A\u003AlangAction\u0028\u0029",
-            "name": "langAction",
-            "summary": "Action\u0020to\u0020switch\u0020language.",
-            "url": "classes/Application-Controller-IndexController.html#method_langAction"
-        },                {
             "fqsen": "\\Application\\Controller\\IndexController\u003A\u003AexternalAction\u0028\u0029",
             "name": "externalAction",
             "summary": "Action\u0020called\u0020when\u0020loading\u0020pages\u0020from\u0020external\u0020templates.",
@@ -3381,6 +3376,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Application-Model-Enums-Languages.html#method_values"
         },                {
+            "fqsen": "\\Application\\Model\\Enums\\Languages\u003A\u003AstringValues\u0028\u0029",
+            "name": "stringValues",
+            "summary": "",
+            "url": "classes/Application-Model-Enums-Languages.html#method_stringValues"
+        },                {
             "fqsen": "\\Application\\Model\\Enums\\Languages\u003A\u003AEN",
             "name": "EN",
             "summary": "",
@@ -3626,15 +3626,10 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Application-Module.html#method_logError"
         },                {
-            "fqsen": "\\Application\\Module\u003A\u003AdetermineLocale\u0028\u0029",
-            "name": "determineLocale",
+            "fqsen": "\\Application\\Module\u003A\u003AonRoute\u0028\u0029",
+            "name": "onRoute",
             "summary": "",
-            "url": "classes/Application-Module.html#method_determineLocale"
-        },                {
-            "fqsen": "\\Application\\Module\u003A\u003AgetPreferedLanguageFromRequest\u0028\u0029",
-            "name": "getPreferedLanguageFromRequest",
-            "summary": "",
-            "url": "classes/Application-Module.html#method_getPreferedLanguageFromRequest"
+            "url": "classes/Application-Module.html#method_onRoute"
         },                {
             "fqsen": "\\Application\\Module\u003A\u003AgetConfig\u0028\u0029",
             "name": "getConfig",
@@ -3650,6 +3645,51 @@ Search.appendIndex(
             "name": "getViewHelperConfig",
             "summary": "Get\u0020view\u0020helper\u0020configuration.",
             "url": "classes/Application-Module.html#method_getViewHelperConfig"
+        },                {
+            "fqsen": "\\Application\\Router\\Factory\\LanguageAwareTreeRouteStackFactory",
+            "name": "LanguageAwareTreeRouteStackFactory",
+            "summary": "",
+            "url": "classes/Application-Router-Factory-LanguageAwareTreeRouteStackFactory.html"
+        },                {
+            "fqsen": "\\Application\\Router\\Factory\\LanguageAwareTreeRouteStackFactory\u003A\u003A__invoke\u0028\u0029",
+            "name": "__invoke",
+            "summary": "",
+            "url": "classes/Application-Router-Factory-LanguageAwareTreeRouteStackFactory.html#method___invoke"
+        },                {
+            "fqsen": "\\Application\\Router\\LanguageAwareTreeRouteStack",
+            "name": "LanguageAwareTreeRouteStack",
+            "summary": "",
+            "url": "classes/Application-Router-LanguageAwareTreeRouteStack.html"
+        },                {
+            "fqsen": "\\Application\\Router\\LanguageAwareTreeRouteStack\u003A\u003Aassemble\u0028\u0029",
+            "name": "assemble",
+            "summary": "",
+            "url": "classes/Application-Router-LanguageAwareTreeRouteStack.html#method_assemble"
+        },                {
+            "fqsen": "\\Application\\Router\\LanguageAwareTreeRouteStack\u003A\u003Amatch\u0028\u0029",
+            "name": "match",
+            "summary": "",
+            "url": "classes/Application-Router-LanguageAwareTreeRouteStack.html#method_match"
+        },                {
+            "fqsen": "\\Application\\Router\\LanguageAwareTreeRouteStack\u003A\u003AgetLastMatchedLanguage\u0028\u0029",
+            "name": "getLastMatchedLanguage",
+            "summary": "Get\u0020the\u0020last\u0020matched\u0020language\u0020from\u0020a\u0020request.",
+            "url": "classes/Application-Router-LanguageAwareTreeRouteStack.html#method_getLastMatchedLanguage"
+        },                {
+            "fqsen": "\\Application\\Router\\LanguageAwareTreeRouteStack\u003A\u003AgetLanguage\u0028\u0029",
+            "name": "getLanguage",
+            "summary": "Get\u0020the\u0020stored\u0020\u0028preferred\u0029\u0020language\u0020or\u0020try\u0020to\u0020determine\u0020it\u0020based\u0020on\u0020the\u0020request.",
+            "url": "classes/Application-Router-LanguageAwareTreeRouteStack.html#method_getLanguage"
+        },                {
+            "fqsen": "\\Application\\Router\\LanguageAwareTreeRouteStack\u003A\u003AdeterminePreferredLanguageFromRequest\u0028\u0029",
+            "name": "determinePreferredLanguageFromRequest",
+            "summary": "Determine\u0020the\u0020preferred\u0020language\u0020based\u0020on\u0020the\u0020\u0060Accept\u002DLanguage\u0060\u0020header.\u0020If\u0020no\u0020language\u0020is\u0020the\u0020header\u0020is\u0020supported\nwe\u0020always\u0020return\u0020English\u0020as\u0020the\u0020default\u0020language.",
+            "url": "classes/Application-Router-LanguageAwareTreeRouteStack.html#method_determinePreferredLanguageFromRequest"
+        },                {
+            "fqsen": "\\Application\\Router\\LanguageAwareTreeRouteStack\u003A\u003A\u0024lastMatchedLanguage",
+            "name": "lastMatchedLanguage",
+            "summary": "",
+            "url": "classes/Application-Router-LanguageAwareTreeRouteStack.html#property_lastMatchedLanguage"
         },                {
             "fqsen": "\\Application\\Service\\AbstractAclService",
             "name": "AbstractAclService",
@@ -4040,6 +4080,21 @@ Search.appendIndex(
             "name": "locator",
             "summary": "Service\u0020locator.",
             "url": "classes/Application-View-Helper-FileUrl.html#property_locator"
+        },                {
+            "fqsen": "\\Application\\View\\Helper\\HrefLang",
+            "name": "HrefLang",
+            "summary": "Helper\u0020for\u0020setting\u0020\u0060alternate\u0060\u0020\u0060hreflang\u0060\u0020tags.\u0020The\u0020normal\u0020\u0060HeadLink\u0060\u0020view\u0020helper\u0020of\u0020Laminas\u0020only\u0020allow\u0020us\u0020to\u0020set\u0020one\nand\u0020then\u0020overwrite\u0020only\u0020one\u0020tag,\u0020while\u0020we\u0020need\u0020more.",
+            "url": "classes/Application-View-Helper-HrefLang.html"
+        },                {
+            "fqsen": "\\Application\\View\\Helper\\HrefLang\u003A\u003AsetHrefLang\u0028\u0029",
+            "name": "setHrefLang",
+            "summary": "Set\u0020a\u0020specific\u0020\u0060hreflang\u0060.",
+            "url": "classes/Application-View-Helper-HrefLang.html#method_setHrefLang"
+        },                {
+            "fqsen": "\\Application\\View\\Helper\\HrefLang\u003A\u003AtoString\u0028\u0029",
+            "name": "toString",
+            "summary": "",
+            "url": "classes/Application-View-Helper-HrefLang.html#method_toString"
         },                {
             "fqsen": "\\Application\\View\\Helper\\JobCategories",
             "name": "JobCategories",
@@ -11876,10 +11931,45 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Frontpage-Form-Page.html#method___construct"
         },                {
+            "fqsen": "\\Frontpage\\Form\\Page\u003A\u003AsetCurrentValues\u0028\u0029",
+            "name": "setCurrentValues",
+            "summary": "",
+            "url": "classes/Frontpage-Form-Page.html#method_setCurrentValues"
+        },                {
+            "fqsen": "\\Frontpage\\Form\\Page\u003A\u003AisValid\u0028\u0029",
+            "name": "isValid",
+            "summary": "",
+            "url": "classes/Frontpage-Form-Page.html#method_isValid"
+        },                {
             "fqsen": "\\Frontpage\\Form\\Page\u003A\u003AgetInputFilterSpecification\u0028\u0029",
             "name": "getInputFilterSpecification",
             "summary": "Should\u0020return\u0020an\u0020array\u0020specification\u0020compatible\u0020with\n\u007B\u0040link\u0020\\Laminas\\InputFilter\\Factory\u003A\u003AcreateInputFilter\u0028\u0029\u007D.",
             "url": "classes/Frontpage-Form-Page.html#method_getInputFilterSpecification"
+        },                {
+            "fqsen": "\\Frontpage\\Form\\Page\u003A\u003A\u0024currentCategory",
+            "name": "currentCategory",
+            "summary": "",
+            "url": "classes/Frontpage-Form-Page.html#property_currentCategory"
+        },                {
+            "fqsen": "\\Frontpage\\Form\\Page\u003A\u003A\u0024currentSubCategory",
+            "name": "currentSubCategory",
+            "summary": "",
+            "url": "classes/Frontpage-Form-Page.html#property_currentSubCategory"
+        },                {
+            "fqsen": "\\Frontpage\\Form\\Page\u003A\u003A\u0024currentName",
+            "name": "currentName",
+            "summary": "",
+            "url": "classes/Frontpage-Form-Page.html#property_currentName"
+        },                {
+            "fqsen": "\\Frontpage\\Form\\Page\u003A\u003A\u0024pageMapper",
+            "name": "pageMapper",
+            "summary": "",
+            "url": "classes/Frontpage-Form-Page.html#property_pageMapper"
+        },                {
+            "fqsen": "\\Frontpage\\Form\\Page\u003A\u003A\u0024translator",
+            "name": "translator",
+            "summary": "",
+            "url": "classes/Frontpage-Form-Page.html#property_translator"
         },                {
             "fqsen": "\\Frontpage\\Form\\Poll",
             "name": "Poll",
@@ -11950,21 +12040,6 @@ Search.appendIndex(
             "name": "translator",
             "summary": "",
             "url": "classes/Frontpage-Form-PollOption.html#property_translator"
-        },                {
-            "fqsen": "\\Frontpage\\Hydrator\\Strategy\\PageRoleHydratorStrategy",
-            "name": "PageRoleHydratorStrategy",
-            "summary": "",
-            "url": "classes/Frontpage-Hydrator-Strategy-PageRoleHydratorStrategy.html"
-        },                {
-            "fqsen": "\\Frontpage\\Hydrator\\Strategy\\PageRoleHydratorStrategy\u003A\u003Aextract\u0028\u0029",
-            "name": "extract",
-            "summary": "",
-            "url": "classes/Frontpage-Hydrator-Strategy-PageRoleHydratorStrategy.html#method_extract"
-        },                {
-            "fqsen": "\\Frontpage\\Hydrator\\Strategy\\PageRoleHydratorStrategy\u003A\u003Ahydrate\u0028\u0029",
-            "name": "hydrate",
-            "summary": "",
-            "url": "classes/Frontpage-Hydrator-Strategy-PageRoleHydratorStrategy.html#method_hydrate"
         },                {
             "fqsen": "\\Frontpage\\Mapper\\NewsItem",
             "name": "NewsItem",
@@ -12161,85 +12236,70 @@ Search.appendIndex(
             "summary": "Page.",
             "url": "classes/Frontpage-Model-Page.html"
         },                {
-            "fqsen": "\\Frontpage\\Model\\Page\u003A\u003AgetDutchTitle\u0028\u0029",
-            "name": "getDutchTitle",
-            "summary": "",
-            "url": "classes/Frontpage-Model-Page.html#method_getDutchTitle"
-        },                {
-            "fqsen": "\\Frontpage\\Model\\Page\u003A\u003AgetEnglishTitle\u0028\u0029",
-            "name": "getEnglishTitle",
-            "summary": "",
-            "url": "classes/Frontpage-Model-Page.html#method_getEnglishTitle"
-        },                {
             "fqsen": "\\Frontpage\\Model\\Page\u003A\u003AgetCategory\u0028\u0029",
             "name": "getCategory",
             "summary": "",
             "url": "classes/Frontpage-Model-Page.html#method_getCategory"
-        },                {
-            "fqsen": "\\Frontpage\\Model\\Page\u003A\u003AgetSubCategory\u0028\u0029",
-            "name": "getSubCategory",
-            "summary": "",
-            "url": "classes/Frontpage-Model-Page.html#method_getSubCategory"
-        },                {
-            "fqsen": "\\Frontpage\\Model\\Page\u003A\u003AgetName\u0028\u0029",
-            "name": "getName",
-            "summary": "",
-            "url": "classes/Frontpage-Model-Page.html#method_getName"
-        },                {
-            "fqsen": "\\Frontpage\\Model\\Page\u003A\u003AgetEnglishContent\u0028\u0029",
-            "name": "getEnglishContent",
-            "summary": "",
-            "url": "classes/Frontpage-Model-Page.html#method_getEnglishContent"
-        },                {
-            "fqsen": "\\Frontpage\\Model\\Page\u003A\u003AgetDutchContent\u0028\u0029",
-            "name": "getDutchContent",
-            "summary": "",
-            "url": "classes/Frontpage-Model-Page.html#method_getDutchContent"
-        },                {
-            "fqsen": "\\Frontpage\\Model\\Page\u003A\u003AgetRequiredRole\u0028\u0029",
-            "name": "getRequiredRole",
-            "summary": "",
-            "url": "classes/Frontpage-Model-Page.html#method_getRequiredRole"
-        },                {
-            "fqsen": "\\Frontpage\\Model\\Page\u003A\u003AsetDutchTitle\u0028\u0029",
-            "name": "setDutchTitle",
-            "summary": "",
-            "url": "classes/Frontpage-Model-Page.html#method_setDutchTitle"
-        },                {
-            "fqsen": "\\Frontpage\\Model\\Page\u003A\u003AsetEnglishTitle\u0028\u0029",
-            "name": "setEnglishTitle",
-            "summary": "",
-            "url": "classes/Frontpage-Model-Page.html#method_setEnglishTitle"
         },                {
             "fqsen": "\\Frontpage\\Model\\Page\u003A\u003AsetCategory\u0028\u0029",
             "name": "setCategory",
             "summary": "",
             "url": "classes/Frontpage-Model-Page.html#method_setCategory"
         },                {
+            "fqsen": "\\Frontpage\\Model\\Page\u003A\u003AgetSubCategory\u0028\u0029",
+            "name": "getSubCategory",
+            "summary": "",
+            "url": "classes/Frontpage-Model-Page.html#method_getSubCategory"
+        },                {
             "fqsen": "\\Frontpage\\Model\\Page\u003A\u003AsetSubCategory\u0028\u0029",
             "name": "setSubCategory",
             "summary": "",
             "url": "classes/Frontpage-Model-Page.html#method_setSubCategory"
+        },                {
+            "fqsen": "\\Frontpage\\Model\\Page\u003A\u003AgetName\u0028\u0029",
+            "name": "getName",
+            "summary": "",
+            "url": "classes/Frontpage-Model-Page.html#method_getName"
         },                {
             "fqsen": "\\Frontpage\\Model\\Page\u003A\u003AsetName\u0028\u0029",
             "name": "setName",
             "summary": "",
             "url": "classes/Frontpage-Model-Page.html#method_setName"
         },                {
-            "fqsen": "\\Frontpage\\Model\\Page\u003A\u003AsetEnglishContent\u0028\u0029",
-            "name": "setEnglishContent",
+            "fqsen": "\\Frontpage\\Model\\Page\u003A\u003AgetTitle\u0028\u0029",
+            "name": "getTitle",
             "summary": "",
-            "url": "classes/Frontpage-Model-Page.html#method_setEnglishContent"
+            "url": "classes/Frontpage-Model-Page.html#method_getTitle"
         },                {
-            "fqsen": "\\Frontpage\\Model\\Page\u003A\u003AsetDutchContent\u0028\u0029",
-            "name": "setDutchContent",
+            "fqsen": "\\Frontpage\\Model\\Page\u003A\u003AsetTitle\u0028\u0029",
+            "name": "setTitle",
             "summary": "",
-            "url": "classes/Frontpage-Model-Page.html#method_setDutchContent"
+            "url": "classes/Frontpage-Model-Page.html#method_setTitle"
+        },                {
+            "fqsen": "\\Frontpage\\Model\\Page\u003A\u003AgetContent\u0028\u0029",
+            "name": "getContent",
+            "summary": "",
+            "url": "classes/Frontpage-Model-Page.html#method_getContent"
+        },                {
+            "fqsen": "\\Frontpage\\Model\\Page\u003A\u003AsetContent\u0028\u0029",
+            "name": "setContent",
+            "summary": "",
+            "url": "classes/Frontpage-Model-Page.html#method_setContent"
+        },                {
+            "fqsen": "\\Frontpage\\Model\\Page\u003A\u003AgetRequiredRole\u0028\u0029",
+            "name": "getRequiredRole",
+            "summary": "",
+            "url": "classes/Frontpage-Model-Page.html#method_getRequiredRole"
         },                {
             "fqsen": "\\Frontpage\\Model\\Page\u003A\u003AsetRequiredRole\u0028\u0029",
             "name": "setRequiredRole",
             "summary": "",
             "url": "classes/Frontpage-Model-Page.html#method_setRequiredRole"
+        },                {
+            "fqsen": "\\Frontpage\\Model\\Page\u003A\u003AtoArray\u0028\u0029",
+            "name": "toArray",
+            "summary": "",
+            "url": "classes/Frontpage-Model-Page.html#method_toArray"
         },                {
             "fqsen": "\\Frontpage\\Model\\Page\u003A\u003AgetResourceId\u0028\u0029",
             "name": "getResourceId",
@@ -12261,25 +12321,15 @@ Search.appendIndex(
             "summary": "Name\u0020of\u0020the\u0020page.",
             "url": "classes/Frontpage-Model-Page.html#property_name"
         },                {
-            "fqsen": "\\Frontpage\\Model\\Page\u003A\u003A\u0024dutchTitle",
-            "name": "dutchTitle",
-            "summary": "Dutch\u0020title\u0020of\u0020the\u0020page.",
-            "url": "classes/Frontpage-Model-Page.html#property_dutchTitle"
+            "fqsen": "\\Frontpage\\Model\\Page\u003A\u003A\u0024title",
+            "name": "title",
+            "summary": "Title\u0020of\u0020the\u0020page.",
+            "url": "classes/Frontpage-Model-Page.html#property_title"
         },                {
-            "fqsen": "\\Frontpage\\Model\\Page\u003A\u003A\u0024dutchContent",
-            "name": "dutchContent",
-            "summary": "The\u0020english\u0020HTML\u0020content\u0020of\u0020the\u0020page.",
-            "url": "classes/Frontpage-Model-Page.html#property_dutchContent"
-        },                {
-            "fqsen": "\\Frontpage\\Model\\Page\u003A\u003A\u0024englishTitle",
-            "name": "englishTitle",
-            "summary": "English\u0020title\u0020of\u0020the\u0020page.",
-            "url": "classes/Frontpage-Model-Page.html#property_englishTitle"
-        },                {
-            "fqsen": "\\Frontpage\\Model\\Page\u003A\u003A\u0024englishContent",
-            "name": "englishContent",
-            "summary": "The\u0020english\u0020HTML\u0020content\u0020of\u0020the\u0020page.",
-            "url": "classes/Frontpage-Model-Page.html#property_englishContent"
+            "fqsen": "\\Frontpage\\Model\\Page\u003A\u003A\u0024content",
+            "name": "content",
+            "summary": "The\u0020HTML\u0020content\u0020of\u0020the\u0020page.",
+            "url": "classes/Frontpage-Model-Page.html#property_content"
         },                {
             "fqsen": "\\Frontpage\\Model\\Page\u003A\u003A\u0024requiredRole",
             "name": "requiredRole",
@@ -13045,26 +13095,6 @@ Search.appendIndex(
             "name": "testIndexActionCanBeAccessed",
             "summary": "",
             "url": "classes/FrontpageTest-ControllerTest.html#method_testIndexActionCanBeAccessed"
-        },                {
-            "fqsen": "\\FrontpageTest\\ControllerTest\u003A\u003AtestLangEnDoesRedirect\u0028\u0029",
-            "name": "testLangEnDoesRedirect",
-            "summary": "",
-            "url": "classes/FrontpageTest-ControllerTest.html#method_testLangEnDoesRedirect"
-        },                {
-            "fqsen": "\\FrontpageTest\\ControllerTest\u003A\u003AtestLangNlDoesRedirect\u0028\u0029",
-            "name": "testLangNlDoesRedirect",
-            "summary": "",
-            "url": "classes/FrontpageTest-ControllerTest.html#method_testLangNlDoesRedirect"
-        },                {
-            "fqsen": "\\FrontpageTest\\ControllerTest\u003A\u003AtestLangEnDoesRedirectToUri\u0028\u0029",
-            "name": "testLangEnDoesRedirectToUri",
-            "summary": "",
-            "url": "classes/FrontpageTest-ControllerTest.html#method_testLangEnDoesRedirectToUri"
-        },                {
-            "fqsen": "\\FrontpageTest\\ControllerTest\u003A\u003AtestLangNlDoesRedirectToUri\u0028\u0029",
-            "name": "testLangNlDoesRedirectToUri",
-            "summary": "",
-            "url": "classes/FrontpageTest-ControllerTest.html#method_testLangNlDoesRedirectToUri"
         },                {
             "fqsen": "\\FrontpageTest\\ControllerTest\u003A\u003AtestPollHistoryActionCanBeAccessed\u0028\u0029",
             "name": "testPollHistoryActionCanBeAccessed",
@@ -17671,6 +17701,16 @@ Search.appendIndex(
             "summary": "",
             "url": "namespaces/application-model-traits.html"
         },                {
+            "fqsen": "\\Application\\Router\\Factory",
+            "name": "Factory",
+            "summary": "",
+            "url": "namespaces/application-router-factory.html"
+        },                {
+            "fqsen": "\\Application\\Router",
+            "name": "Router",
+            "summary": "",
+            "url": "namespaces/application-router.html"
+        },                {
             "fqsen": "\\Application\\Service",
             "name": "Service",
             "summary": "",
@@ -17900,16 +17940,6 @@ Search.appendIndex(
             "name": "Form",
             "summary": "",
             "url": "namespaces/frontpage-form.html"
-        },                {
-            "fqsen": "\\Frontpage\\Hydrator\\Strategy",
-            "name": "Strategy",
-            "summary": "",
-            "url": "namespaces/frontpage-hydrator-strategy.html"
-        },                {
-            "fqsen": "\\Frontpage\\Hydrator",
-            "name": "Hydrator",
-            "summary": "",
-            "url": "namespaces/frontpage-hydrator.html"
         },                {
             "fqsen": "\\Frontpage\\Mapper",
             "name": "Mapper",

@@ -125,6 +125,10 @@
                 
             </li>
                     <li>
+                <a href="namespaces/application-router.html" class="">Router</a>
+                
+            </li>
+                    <li>
                 <a href="namespaces/application-service.html" class="">Service</a>
                 
             </li>
@@ -252,10 +256,6 @@
             </li>
                     <li>
                 <a href="namespaces/frontpage-form.html" class="">Form</a>
-                
-            </li>
-                    <li>
-                <a href="namespaces/frontpage-hydrator.html" class="">Hydrator</a>
                 
             </li>
                     <li>
@@ -411,7 +411,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Module.php"><a href="files/module-application-src-module.html"><abbr title="module/Application/src/Module.php">Module.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">40</span>
+    <span class="phpdocumentor-element-found-in__line">38</span>
 
     </aside>
 
@@ -474,16 +474,10 @@
                                 &nbsp;: void    </span>
 </dt>
 
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/Application-Module.html#method_determineLocale">determineLocale()</a>
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Application-Module.html#method_onRoute">onRoute()</a>
     <span>
-                                &nbsp;: string    </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/Application-Module.html#method_getPreferedLanguageFromRequest">getPreferedLanguageFromRequest()</a>
-    <span>
-                                &nbsp;: string|null    </span>
+                                &nbsp;: void    </span>
 </dt>
 
     </dl>
@@ -515,7 +509,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Module.php"><a href="files/module-application-src-module.html"><abbr title="module/Application/src/Module.php">Module.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">144</span>
+    <span class="phpdocumentor-element-found-in__line">124</span>
 
     </aside>
 
@@ -555,7 +549,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Module.php"><a href="files/module-application-src-module.html"><abbr title="module/Application/src/Module.php">Module.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">152</span>
+    <span class="phpdocumentor-element-found-in__line">132</span>
 
     </aside>
 
@@ -590,7 +584,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Module.php"><a href="files/module-application-src-module.html"><abbr title="module/Application/src/Module.php">Module.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">230</span>
+    <span class="phpdocumentor-element-found-in__line">214</span>
 
     </aside>
 
@@ -626,7 +620,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Module.php"><a href="files/module-application-src-module.html"><abbr title="module/Application/src/Module.php">Module.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">69</span>
+    <span class="phpdocumentor-element-found-in__line">61</span>
 
     </aside>
 
@@ -667,7 +661,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Module.php"><a href="files/module-application-src-module.html"><abbr title="module/Application/src/Module.php">Module.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">42</span>
+    <span class="phpdocumentor-element-found-in__line">40</span>
 
     </aside>
 
@@ -697,25 +691,25 @@
                     <article
         class="phpdocumentor-element
             -method
-            -protected
+            -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_determineLocale">
-        determineLocale()
-        <a href="classes/Application-Module.html#method_determineLocale" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_onRoute">
+        onRoute()
+        <a href="classes/Application-Module.html#method_onRoute" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Module.php"><a href="files/module-application-src-module.html"><abbr title="module/Application/src/Module.php">Module.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">95</span>
+    <span class="phpdocumentor-element-found-in__line">87</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">determineLocale</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Mvc\MvcEvent">MvcEvent</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$e</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">onRoute</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Mvc\MvcEvent">MvcEvent</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$e</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -733,56 +727,7 @@
 
     
 
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">string</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getPreferedLanguageFromRequest">
-        getPreferedLanguageFromRequest()
-        <a href="classes/Application-Module.html#method_getPreferedLanguageFromRequest" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Module.php"><a href="files/module-application-src-module.html"><abbr title="module/Application/src/Module.php">Module.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">118</span>
-
-    </aside>
-
     
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getPreferedLanguageFromRequest</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Http\Request">Request</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$request</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$request</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Http\Request">Request</abbr></span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">string|null</span>
-            </section>
-
 </article>
             </section>
 
@@ -902,8 +847,7 @@
                                             <li><a href="classes/Application-Module.html#method_getViewHelperConfig">getViewHelperConfig()</a></li>
                                             <li><a href="classes/Application-Module.html#method_logError">logError()</a></li>
                                             <li><a href="classes/Application-Module.html#method_onBootstrap">onBootstrap()</a></li>
-                                            <li><a href="classes/Application-Module.html#method_determineLocale">determineLocale()</a></li>
-                                            <li><a href="classes/Application-Module.html#method_getPreferedLanguageFromRequest">getPreferedLanguageFromRequest()</a></li>
+                                            <li><a href="classes/Application-Module.html#method_onRoute">onRoute()</a></li>
                                     </ul>
             </li>
                     </ul>
