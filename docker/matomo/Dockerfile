@@ -1,4 +1,4 @@
-FROM matomo:4.14-fpm-alpine as gewisweb_matomo
+FROM matomo:4.15-fpm-alpine as gewisweb_matomo
 
 RUN apk add --no-cache --virtual .build-deps \
         tzdata \
