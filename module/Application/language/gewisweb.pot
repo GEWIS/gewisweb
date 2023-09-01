@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: GEWISweb v2.8.6-450-gf0a589c7c-dirty\n"
+"Project-Id-Version: GEWISweb v2.8.6-479-g4251c841a-dirty\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-08 22:14+0200\n"
+"POT-Creation-Date: 2023-09-01 15:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1646,8 +1646,8 @@ msgid "Mail the education officer"
 msgstr ""
 
 msgid ""
-"Make this page available at the following URL. Providing a category is "
-"required."
+"Make this page available at the following URLs. Providing a category is "
+"required. Always try to translate the relevant segments of the URL."
 msgstr ""
 
 msgid "Max Activities"
@@ -2399,6 +2399,11 @@ msgstr ""
 msgid "Set as profile picture!"
 msgstr ""
 
+msgid ""
+"Set the minimal role required to view this page. All visitors whom have this "
+"role may view the page."
+msgstr ""
+
 msgid "Settings"
 msgstr ""
 
@@ -2483,6 +2488,9 @@ msgid ""
 "Study association GEWIS obviously has several fraternities which contribute "
 "to the atmosphere at GEWIS and organize fun activities. Some fraternities "
 "have retired, but luckily new fraternities continue to be founded."
+msgstr ""
+
+msgid "Subcategory"
 msgstr ""
 
 msgid "Submit"
@@ -2858,6 +2866,12 @@ msgid "This option planning period cannot be edited."
 msgstr ""
 
 msgid "This poll has no comments"
+msgstr ""
+
+msgid "This route already exists for another page!"
+msgstr ""
+
+msgid "This route part contains invalid characters."
 msgstr ""
 
 msgid ""
@@ -3650,6 +3664,10 @@ msgid "You are not allowed to vote on this poll."
 msgstr ""
 
 msgid "You are not subscribed to this activity!"
+msgstr ""
+
+msgid ""
+"You can only register an account if you are a member of the association."
 msgstr ""
 
 msgid "You cannot create new jobs in expired job packages."
