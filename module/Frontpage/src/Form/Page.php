@@ -16,6 +16,7 @@ use Laminas\Form\Element\Textarea;
 use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
+use Laminas\Validator\Regex;
 use Laminas\Validator\StringLength;
 use User\Model\Enums\UserRoles;
 
@@ -278,6 +279,17 @@ class Page extends Form implements InputFilterProviderInterface
                                 'max' => 25,
                             ],
                         ],
+                        [
+                            'name' => Regex::class,
+                            'options' => [
+                                'pattern' => '/^[0-9a-zA-Z_\-]+$/',
+                                'messages' => [
+                                    Regex::ERROROUS => $this->translator->translate(
+                                        'This route part contains invalid characters.',
+                                    ),
+                                ],
+                            ],
+                        ],
                     ],
                     'filters' => [
                         [
@@ -293,6 +305,17 @@ class Page extends Form implements InputFilterProviderInterface
                             'options' => [
                                 'min' => 2,
                                 'max' => 25,
+                            ],
+                        ],
+                        [
+                            'name' => Regex::class,
+                            'options' => [
+                                'pattern' => '/^[0-9a-zA-Z_\-]+$/',
+                                'messages' => [
+                                    Regex::ERROROUS => $this->translator->translate(
+                                        'This route part contains invalid characters.',
+                                    ),
+                                ],
                             ],
                         ],
                     ],
@@ -313,6 +336,17 @@ class Page extends Form implements InputFilterProviderInterface
                             'options' => [
                                 'min' => 2,
                                 'max' => 25,
+                            ],
+                        ],
+                        [
+                            'name' => Regex::class,
+                            'options' => [
+                                'pattern' => '/^[0-9a-zA-Z_\-]+$/',
+                                'messages' => [
+                                    Regex::ERROROUS => $this->translator->translate(
+                                        'This route part contains invalid characters.',
+                                    ),
+                                ],
                             ],
                         ],
                     ],
