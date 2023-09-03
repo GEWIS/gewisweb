@@ -197,7 +197,7 @@ $this->scriptUrl()->requireUrl('member/search')
                                 <?php endif; ?>
                                 <div class="caption">
                                     <p>
-                                        <?php if ($album->getCreatedAt() >= $lastWeek): ?>
+                                        <?php if ($item->getCreatedAt() >= $lastWeek): ?>
                                             <span class="label label-primary">
                                                 <?= $this->translate('NEW') ?>
                                             </span>&nbsp;
