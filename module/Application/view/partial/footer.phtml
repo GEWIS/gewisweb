@@ -54,8 +54,15 @@ use Laminas\View\Renderer\PhpRenderer;
                         </p>
                     </div>
                     <div class="col-sm-4">
-                        <span class="fas fa-address-book"></span> <a
-                            href="/vereniging/contact"><?= $this->translate('Contact') ?></a><br>
+                        <span class="fas fa-address-book"></span> <a href="<?= $this->url(
+                            'home/page',
+                            [
+                                'category' => 'vereniging',
+                                'categoryEn' => 'association',
+                                'sub_category' => 'contact',
+                                'sub_categoryEn' => 'contact',
+                            ],
+                        ) ?>"><?= $this->translate('Contact') ?></a><br>
                         <span class="fab fa-linkedin"></span> <a
                             href="https://www.linkedin.com/company/study-association-gewis/">LinkedIn</a><br>
                         <span class="fab fa-facebook-square"></span> <a
