@@ -19,11 +19,13 @@ $showName = false;
 switch ($form->getType()) {
     case SignupForm::USER:
         $agreementText = $this->translate('By subscribing to this activity, you agree to the terms outlined in the');
+        $sensitiveStartText = $this->translate('Your sign-up will be visible to other members and graduates.');
         $submitUrl = $this->url('activity/signup', ['id' => $signupList->getActivity()->getId(), 'signupList' => $signupList->getId()]);
         $submitText = $this->translate('Confirm subscription');
         break;
     case SignupForm::EXTERNAL_USER:
         $agreementText = $this->translate('By subscribing to this activity, you agree to the terms outlined in the');
+        $sensitiveStartText = $this->translate('Your sign-up will be visible to all visitors of the website.');
         $submitUrl = $this->url('activity/externalSignup', ['id' => $signupList->getActivity()->getId(), 'signupList' => $signupList->getId()]);
         $submitText = $this->translate('Subscribe as external participant');
         $showCaptcha = true;
@@ -31,28 +33,44 @@ switch ($form->getType()) {
         break;
     case SignupForm::EXTERNAL_ADMIN:
         $agreementText = $this->translate('By subscribing an external participant to this activity, they must agree to the terms outlined in the');
+        $sensitiveStartText = $this->translate('The sign-up of this external participant will be visible to all visitors of the website.');
         $submitUrl = $this->url('activity_admin/adminSignup', ['id' => $signupList->getActivity()->getId(), 'signupList' => $signupList->getId()]);
         $submitText = $this->translate('Subscribe an external participant');
         $showName = true;
         break;
 }
 
-function formElementRender($element, $label, $id, $context)
-{
+function formElementRender(
+    $element,
+    $label,
+    $id,
+    $sensitive,
+    $context,
+): string {
     $element->setAttribute('id', $id);
     $elementType = (new ReflectionClass($element))->getShortName();
+
     if (!in_array($elementType, ['Radio', 'Checkbox'])) {
         $element->setAttribute('class', 'form-control');
     }
+
+    if ($sensitive) {
+        // Mark this field as sensitive.
+        $label .= '¹';
+    }
+
     $result = '<div class="form-group' . (count($element->getMessages()) > 0 ? ' has-error' : '') . '">';
     $result .= '<label for="' . $element->getAttribute('id') . '" class="control-label">' . $label . '</label>';
+
     if (in_array($elementType, ['Radio'])) {
         $context->formRadio()->setSeparator('</div><div class="radio">');
         $result .= '<div class="radio">' . $context->formRadio($element) . '</div>';
     } else {
         $result .= $context->formRow($element);
     }
+
     $result .= '</div>';
+
     return $result;
 }
 
@@ -64,12 +82,12 @@ $form->prepare();
 echo $this->form()->openTag($form);
 ?>
 <?php if ($showName): ?>
-    <?= formElementRender($form->get('fullName'), $this->translate('Full name:'), 'fullName', $this) ?>
-    <?= formElementRender($form->get('email'), $this->translate('Email address:'), 'email', $this) ?>
+    <?= formElementRender($form->get('fullName'), $this->translate('Full name'), 'fullName', false, $this) ?>
+    <?= formElementRender($form->get('email'), $this->translate('E-mail Address'), 'email', true, $this) ?>
 <?php endif; ?>
 
 <?php if ($showCaptcha): ?>
-    <?= formElementRender($form->get('captcha'), $this->translate('Please fill in this CAPTCHA:'), 'captcha', $this) ?>
+    <?= formElementRender($form->get('captcha'), $this->translate('CAPTCHA'), 'captcha', false, $this) ?>
 <?php endif; ?>
 
 <?php foreach ($signupList->getFields() as $field): ?>
@@ -77,6 +95,7 @@ echo $this->form()->openTag($form);
         $form->get(strval($field->getId())),
         $this->escapeHtml($this->localiseText($field->getName())),
         $field->getId(),
+        $field->isSensitive(),
         $this,
     ) ?>
 <?php endforeach; ?>
@@ -86,6 +105,12 @@ echo $this->form()->openTag($form);
         <?= $this->translate('Activity Policy') ?></a> <?= $this->translate('and') ?>
     <a href="https://gewis.nl/data/regulations/alcohol-policy.pdf" target="_blank">
         <?= $this->translate('Alcohol Policy') ?></a>.
+</p>
+
+<p class="text-muted">
+    <em>
+        <?= $sensitiveStartText ?> <?= $this->translate('Fields that are marked with an \'¹\' will only be shared with the board and the organiser of the activity.') ?>
+    </em>
 </p>
 
 <?php

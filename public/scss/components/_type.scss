@@ -119,3 +119,10 @@ span.paragraph {
     margin: 0 0 math.div($line-height-computed, 2);
     display: block;
 }
+
+.blurred-text {
+    color: transparent;
+    letter-spacing: -1px;
+    text-shadow: 0 0 8px black;
+    user-select: none;
+}

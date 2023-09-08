@@ -280,6 +280,7 @@ class Activity
         $field = new SignupFieldModel();
 
         $field->setSignupList($signupList);
+        $field->setIsSensitive(boolval($data['sensitive']));
         $field->setName(new ActivityLocalisedText($data['nameEn'], $data['name']));
         $field->setType(intval($data['type']));
 
