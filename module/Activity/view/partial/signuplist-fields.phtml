@@ -61,6 +61,23 @@ use Laminas\View\Renderer\PhpRenderer;
                     <?= $this->formElementErrors($nameEn) ?>
                 </div>
             </div>
+            <div class="col-md-3 col-md-offset-3">
+                <?php
+                $sensitive = $this->signupListField->get('sensitive');
+                ?>
+                <div class="form-group <?= $this->bootstrapElementError($sensitive) ?>">
+                    <label>
+                        <?= $this->formCheckbox($sensitive) ?>
+                        <?= $this->translate('Mark as sensitive') ?>
+                        <span data-toggle="tooltip" data-placement="right" class="fas fa-info-circle" aria-hidden="true"
+                              title="<?= $this->translate(
+                                  // phpcs:ignore Generic.Files.LineLength.TooLong -- user-visible strings should not be split
+                                  'Select this to mark this field as sensitive. A sensitive field is hidden from participants and thus only visible to the board and the organiser. You can use this for things like dietary preferences or contact information.',
+                              ) ?>"></span>
+                    </label>
+                    <?= $this->formElementErrors($sensitive) ?>
+                </div>
+            </div>
         </div>
         <div class="row field-dependant type-2" style="display:none;">
             <div class="col-md-3 col-md-offset-6">

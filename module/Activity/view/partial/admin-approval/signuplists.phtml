@@ -59,10 +59,10 @@ use Laminas\View\Renderer\PhpRenderer;
                 <strong><?= $this->translate('GEWIS members only') ?></strong>
             </div>
             <div class="col-md-5">
-                <?= $signupList->getOnlyGEWIS() ? $this->translate("Yes") : $this->translate("No") ?>
+                <?= $signupList->getOnlyGEWIS() ? $this->translate('Yes') : $this->translate('No') ?>
             </div>
             <div class="col-md-5 overview-sidebar">
-                <?= $signupList->getOnlyGEWIS() ? $this->translate("Yes") : $this->translate("No"); ?>
+                <?= $signupList->getOnlyGEWIS() ? $this->translate('Yes') : $this->translate('No'); ?>
             </div>
         </div>
         <div class="row">
@@ -70,10 +70,10 @@ use Laminas\View\Renderer\PhpRenderer;
                 <strong><?= $this->translate('Display GEWIS member count') ?></strong>
             </div>
             <div class="col-md-5">
-                <?= $signupList->getDisplaySubscribedNumber() ? $this->translate("Yes") : $this->translate("No") ?>
+                <?= $signupList->getDisplaySubscribedNumber() ? $this->translate('Yes') : $this->translate('No') ?>
             </div>
             <div class="col-md-5 overview-sidebar">
-                <?= $signupList->getDisplaySubscribedNumber() ? $this->translate("Yes") : $this->translate("No"); ?>
+                <?= $signupList->getDisplaySubscribedNumber() ? $this->translate('Yes') : $this->translate('No'); ?>
             </div>
         </div>
         <div class="row">
@@ -81,10 +81,10 @@ use Laminas\View\Renderer\PhpRenderer;
                 <strong><?= $this->translate('Has limited capacity') ?></strong>
             </div>
             <div class="col-md-5">
-                <?= $signupList->getLimitedCapacity() ? $this->translate("Yes") : $this->translate("No") ?>
+                <?= $signupList->getLimitedCapacity() ? $this->translate('Yes') : $this->translate('No') ?>
             </div>
             <div class="col-md-5 overview-sidebar">
-                <?= $signupList->getLimitedCapacity() ? $this->translate("Yes") : $this->translate("No"); ?>
+                <?= $signupList->getLimitedCapacity() ? $this->translate('Yes') : $this->translate('No'); ?>
             </div>
         </div>
         <?php if ($signupList->getFields()->count() > 0): ?>
@@ -114,6 +114,17 @@ use Laminas\View\Renderer\PhpRenderer;
                             <strong><?= $this->translate('Name') ?>:</strong>
                         </span>
                         <?= $this->escapeHtml($field->getName()->getValueEN()) ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2 overview-sidebar">
+                        <strong><?= $this->translate('Sensitive') ?></strong>
+                    </div>
+                    <div class="col-md-5">
+                        <?= $field->isSensitive() ? $this->translate('Yes') : $this->translate('No') ?>
+                    </div>
+                    <div class="col-md-5 overview-sidebar">
+                        <?= $field->isSensitive() ? $this->translate('Yes') : $this->translate('No'); ?>
                     </div>
                 </div>
                 <div class="row">

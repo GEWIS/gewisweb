@@ -29,7 +29,9 @@ use Laminas\View\Renderer\PhpRenderer;
         <?php endif; ?>
         <?php if (isset($detailed) && isset($signupList)): ?>
             <?php foreach ($signupList->getFields() as $field): ?>
-                <th><?= $this->escapeHtml($this->localiseText($field->getName())) ?></th>
+                <th>
+                    <?= $this->escapeHtml($this->localiseText($field->getName())) . ($field->isSensitive() ? '¹' : '') ?>
+                </th>
             <?php endforeach; ?>
         <?php endif; ?>
     </tr>

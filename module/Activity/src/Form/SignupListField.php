@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Activity\Form;
 
 use Activity\Model\SignupField as SignupFieldModel;
+use Laminas\Form\Element\Checkbox;
 use Laminas\Form\Element\Number;
 use Laminas\Form\Element\Select;
 use Laminas\Form\Element\Text;
@@ -32,6 +33,17 @@ class SignupListField extends Fieldset implements InputFilterProviderInterface
                 'type' => Text::class,
                 'options' => [
                     'label' => $this->translator->translate('Name'),
+                ],
+            ],
+        );
+
+        $this->add(
+            [
+                'name' => 'sensitive',
+                'type' => Checkbox::class,
+                'options' => [
+                    'checked_value' => '1',
+                    'unchecked_value' => '0',
                 ],
             ],
         );

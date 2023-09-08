@@ -288,34 +288,50 @@ $this->headTitle($this->translate('Activities'));
                             </tr>
                         <?php endif; ?>
                         <?php if (!$isArchived || $this->acl('activity_service_acl')->isAllowed('signupList', 'viewDetails')): ?>
+                            <?php $member = $this->identity()?->getMember()->getLidnr(); ?>
                             <?php foreach ($signupList->getSignUps() as $signup): ?>
                                 <?php if (($signup instanceof Activity\Model\ExternalSignup) || $this->acl('activity_service_acl')->isAllowed('signupList', 'viewDetails')): ?>
                                     <tr>
                                         <td><?= $this->acl('activity_service_acl')->isAllowed('signupList', 'view') || $signupList->getDisplaySubscribedNumber() ? $i : '' ?></td>
                                         <td><?= $this->escapeHtml($signup->getFullName()) ?></td>
                                         <?php foreach ($fields as $field): ?>
-                                            <?php foreach ($signup->getFieldValues() as $fieldValue): ?>
-                                                <?php if ($fieldValue->getField()->getId() === $field->getId()): ?>
-                                                    <td>
-                                                        <?php
-                                                        switch ($field->getType()) {
-                                                            case 0:
-                                                                echo $this->escapeHtml($fieldValue->getValue());
-                                                                break;
-                                                            case 1:
-                                                                echo $this->translate($fieldValue->getValue());
-                                                                break;
-                                                            case 2:
-                                                                echo $fieldValue->getValue();
-                                                                break;
-                                                            case 3:
-                                                                echo $this->localiseText($fieldValue->getOption()->getValue());
-                                                                break;
-                                                        }
-                                                        ?>
-                                                    </td>
-                                                <?php endif; ?>
-                                            <?php endforeach; ?>
+                                            <?php if (
+                                                $field->isSensitive()
+                                                && !(
+                                                    $signup instanceof Activity\Model\UserSignup
+                                                    && null !== $member
+                                                    && $member === $signup->getUser()->getLidnr()
+                                                )
+                                            ): ?>
+                                                <td>
+                                                    <span class="blurred-text">
+                                                        <?= $this->translate('Hidden') ?>
+                                                    </span>
+                                                </td>
+                                            <?php else: ?>
+                                                <?php foreach ($signup->getFieldValues() as $fieldValue): ?>
+                                                    <?php if ($fieldValue->getField()->getId() === $field->getId()): ?>
+                                                        <td>
+                                                            <?php
+                                                            switch ($field->getType()) {
+                                                                case 0:
+                                                                    echo $this->escapeHtml($fieldValue->getValue());
+                                                                    break;
+                                                                case 1:
+                                                                    echo $this->translate($fieldValue->getValue());
+                                                                    break;
+                                                                case 2:
+                                                                    echo $fieldValue->getValue();
+                                                                    break;
+                                                                case 3:
+                                                                    echo $this->localiseText($fieldValue->getOption()->getValue());
+                                                                    break;
+                                                            }
+                                                            ?>
+                                                        </td>
+                                                    <?php endif; ?>
+                                                <?php endforeach; ?>
+                                            <?php endif; ?>
                                         <?php endforeach; ?>
                                     </tr>
                                     <?php $i = $i + 1; ?>

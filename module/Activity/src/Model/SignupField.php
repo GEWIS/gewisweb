@@ -19,6 +19,7 @@ use Doctrine\ORM\Mapping\OneToOne;
  *
  * @psalm-type SignupFieldArrayType = array{
  *     id: int,
+ *     sensitive: bool,
  *     name: ?string,
  *     nameEn: ?string,
  *     type: int,
@@ -62,6 +63,13 @@ class SignupField
         nullable: false,
     )]
     protected ActivityLocalisedText $name;
+
+    /**
+     * Whether this SignupField is sensitive. If it is sensitive, it is only visible to the board and the organiser of
+     * the activity.
+     */
+    #[Column(type: 'boolean')]
+    protected bool $isSensitive = false;
 
     /**
      * The type of the SignupField.
@@ -112,6 +120,16 @@ class SignupField
     public function setSignupList(SignupList $signupList): void
     {
         $this->signupList = $signupList;
+    }
+
+    public function isSensitive(): bool
+    {
+        return $this->isSensitive;
+    }
+
+    public function setIsSensitive(bool $isSensitive): void
+    {
+        $this->isSensitive = $isSensitive;
     }
 
     /**
@@ -180,6 +198,7 @@ class SignupField
 
         return [
             'id' => $this->getId(),
+            'sensitive' => $this->isSensitive(),
             'name' => $this->getName()->getValueNL(),
             'nameEn' => $this->getName()->getValueEN(),
             'type' => $this->getType(),
