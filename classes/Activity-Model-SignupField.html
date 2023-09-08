@@ -415,7 +415,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupField.php"><a href="files/module-activity-src-model-signupfield.html"><abbr title="module/Activity/src/Model/SignupField.php">SignupField.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">31</span>
+    <span class="phpdocumentor-element-found-in__line">32</span>
 
     </aside>
 
@@ -436,6 +436,7 @@
                                                                                 
                                                  <section class="phpdocumentor-description"><p>SignupFieldArrayType = array{
 id: int,
+sensitive: bool,
 name: ?string,
 nameEn: ?string,
 type: int,
@@ -478,6 +479,14 @@ optionsEn: array&lt;array-key, ?string&gt;,
 </dt>
 <dd>The default value must be `null` to prevent issues with auto generating the value. The column is strictly not
 nullable.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a href="classes/Activity-Model-SignupField.html#property_isSensitive">$isSensitive</a>
+    <span>
+                        &nbsp;: bool            </span>
+</dt>
+<dd>Whether this SignupField is sensitive. If it is sensitive, it is only visible to the board and the organiser of
+the activity.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Activity-Model-SignupField.html#property_maximumValue">$maximumValue</a>
@@ -579,11 +588,23 @@ nullable.</dd>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Activity-Model-SignupField.html#method_isSensitive">isSensitive()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_setId">setId()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
 <dd>Setting the identifier manually will, in most instances, result in undefined behaviour. Use with caution!</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Activity-Model-SignupField.html#method_setIsSensitive">setIsSensitive()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Activity-Model-SignupField.html#method_setMaximumValue">setMaximumValue()</a>
@@ -678,6 +699,41 @@ nullable.</p>
             -protected
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="property_isSensitive">
+        $isSensitive
+        <a href="classes/Activity-Model-SignupField.html#property_isSensitive" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupField.php"><a href="files/module-activity-src-model-signupfield.html"><abbr title="module/Activity/src/Model/SignupField.php">SignupField.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">71</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Whether this SignupField is sensitive. If it is sensitive, it is only visible to the board and the organiser of
+the activity.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type">bool</span>
+    <span class="phpdocumentor-signature__name">$isSensitive</span>
+     = <span class="phpdocumentor-signature__default-value">false</span></code>
+
+    
+    
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="property_maximumValue">
         $maximumValue
         <a href="classes/Activity-Model-SignupField.html#property_maximumValue" class="headerlink"><i class="fas fa-link"></i></a>
@@ -688,7 +744,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupField.php"><a href="files/module-activity-src-model-signupfield.html"><abbr title="module/Activity/src/Model/SignupField.php">SignupField.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">84</span>
+    <span class="phpdocumentor-element-found-in__line">92</span>
 
     </aside>
 
@@ -722,7 +778,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupField.php"><a href="files/module-activity-src-model-signupfield.html"><abbr title="module/Activity/src/Model/SignupField.php">SignupField.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">75</span>
+    <span class="phpdocumentor-element-found-in__line">83</span>
 
     </aside>
 
@@ -756,7 +812,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupField.php"><a href="files/module-activity-src-model-signupfield.html"><abbr title="module/Activity/src/Model/SignupField.php">SignupField.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">54</span>
+    <span class="phpdocumentor-element-found-in__line">55</span>
 
     </aside>
 
@@ -790,7 +846,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupField.php"><a href="files/module-activity-src-model-signupfield.html"><abbr title="module/Activity/src/Model/SignupField.php">SignupField.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">95</span>
+    <span class="phpdocumentor-element-found-in__line">103</span>
 
     </aside>
 
@@ -824,7 +880,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupField.php"><a href="files/module-activity-src-model-signupfield.html"><abbr title="module/Activity/src/Model/SignupField.php">SignupField.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">39</span>
+    <span class="phpdocumentor-element-found-in__line">40</span>
 
     </aside>
 
@@ -858,7 +914,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupField.php"><a href="files/module-activity-src-model-signupfield.html"><abbr title="module/Activity/src/Model/SignupField.php">SignupField.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">69</span>
+    <span class="phpdocumentor-element-found-in__line">77</span>
 
     </aside>
 
@@ -897,7 +953,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupField.php"><a href="files/module-activity-src-model-signupfield.html"><abbr title="module/Activity/src/Model/SignupField.php">SignupField.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">102</span>
+    <span class="phpdocumentor-element-found-in__line">110</span>
 
     </aside>
 
@@ -978,7 +1034,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupField.php"><a href="files/module-activity-src-model-signupfield.html"><abbr title="module/Activity/src/Model/SignupField.php">SignupField.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">155</span>
+    <span class="phpdocumentor-element-found-in__line">173</span>
 
     </aside>
 
@@ -1013,7 +1069,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupField.php"><a href="files/module-activity-src-model-signupfield.html"><abbr title="module/Activity/src/Model/SignupField.php">SignupField.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">145</span>
+    <span class="phpdocumentor-element-found-in__line">163</span>
 
     </aside>
 
@@ -1048,7 +1104,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupField.php"><a href="files/module-activity-src-model-signupfield.html"><abbr title="module/Activity/src/Model/SignupField.php">SignupField.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">125</span>
+    <span class="phpdocumentor-element-found-in__line">143</span>
 
     </aside>
 
@@ -1083,7 +1139,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupField.php"><a href="files/module-activity-src-model-signupfield.html"><abbr title="module/Activity/src/Model/SignupField.php">SignupField.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">120</span>
+    <span class="phpdocumentor-element-found-in__line">138</span>
 
     </aside>
 
@@ -1118,7 +1174,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupField.php"><a href="files/module-activity-src-model-signupfield.html"><abbr title="module/Activity/src/Model/SignupField.php">SignupField.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">107</span>
+    <span class="phpdocumentor-element-found-in__line">115</span>
 
     </aside>
 
@@ -1153,7 +1209,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupField.php"><a href="files/module-activity-src-model-signupfield.html"><abbr title="module/Activity/src/Model/SignupField.php">SignupField.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">135</span>
+    <span class="phpdocumentor-element-found-in__line">153</span>
 
     </aside>
 
@@ -1171,6 +1227,41 @@ nullable.</p>
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">int</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_isSensitive">
+        isSensitive()
+        <a href="classes/Activity-Model-SignupField.html#method_isSensitive" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupField.php"><a href="files/module-activity-src-model-signupfield.html"><abbr title="module/Activity/src/Model/SignupField.php">SignupField.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">125</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">isSensitive</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
             </section>
 
 </article>
@@ -1222,6 +1313,47 @@ nullable.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_setIsSensitive">
+        setIsSensitive()
+        <a href="classes/Activity-Model-SignupField.html#method_setIsSensitive" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupField.php"><a href="files/module-activity-src-model-signupfield.html"><abbr title="module/Activity/src/Model/SignupField.php">SignupField.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">130</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">setIsSensitive</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$isSensitive</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$isSensitive</span>
+                : <span class="phpdocumentor-signature__argument__return-type">bool</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_setMaximumValue">
         setMaximumValue()
         <a href="classes/Activity-Model-SignupField.html#method_setMaximumValue" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1230,7 +1362,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupField.php"><a href="files/module-activity-src-model-signupfield.html"><abbr title="module/Activity/src/Model/SignupField.php">SignupField.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">160</span>
+    <span class="phpdocumentor-element-found-in__line">178</span>
 
     </aside>
 
@@ -1271,7 +1403,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupField.php"><a href="files/module-activity-src-model-signupfield.html"><abbr title="module/Activity/src/Model/SignupField.php">SignupField.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">150</span>
+    <span class="phpdocumentor-element-found-in__line">168</span>
 
     </aside>
 
@@ -1312,7 +1444,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupField.php"><a href="files/module-activity-src-model-signupfield.html"><abbr title="module/Activity/src/Model/SignupField.php">SignupField.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">130</span>
+    <span class="phpdocumentor-element-found-in__line">148</span>
 
     </aside>
 
@@ -1353,7 +1485,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupField.php"><a href="files/module-activity-src-model-signupfield.html"><abbr title="module/Activity/src/Model/SignupField.php">SignupField.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">112</span>
+    <span class="phpdocumentor-element-found-in__line">120</span>
 
     </aside>
 
@@ -1394,7 +1526,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupField.php"><a href="files/module-activity-src-model-signupfield.html"><abbr title="module/Activity/src/Model/SignupField.php">SignupField.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">140</span>
+    <span class="phpdocumentor-element-found-in__line">158</span>
 
     </aside>
 
@@ -1435,7 +1567,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupField.php"><a href="files/module-activity-src-model-signupfield.html"><abbr title="module/Activity/src/Model/SignupField.php">SignupField.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">170</span>
+    <span class="phpdocumentor-element-found-in__line">188</span>
 
     </aside>
 
@@ -1571,6 +1703,7 @@ nullable.</p>
                 <li>
                     <ul class="phpdocumentor-list -clean">
                                                     <li><a href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id">$id<a href="classes/Activity-Model-SignupField.html"></li>
+                                                    <li><a href="classes/Activity-Model-SignupField.html#property_isSensitive">$isSensitive<a href="classes/Activity-Model-SignupField.html"></li>
                                                     <li><a href="classes/Activity-Model-SignupField.html#property_maximumValue">$maximumValue<a href="classes/Activity-Model-SignupField.html"></li>
                                                     <li><a href="classes/Activity-Model-SignupField.html#property_minimumValue">$minimumValue<a href="classes/Activity-Model-SignupField.html"></li>
                                                     <li><a href="classes/Activity-Model-SignupField.html#property_name">$name<a href="classes/Activity-Model-SignupField.html"></li>
@@ -1591,7 +1724,9 @@ nullable.</p>
                                             <li><a href="classes/Activity-Model-SignupField.html#method_getOptions">getOptions()</a></li>
                                             <li><a href="classes/Activity-Model-SignupField.html#method_getSignupList">getSignupList()</a></li>
                                             <li><a href="classes/Activity-Model-SignupField.html#method_getType">getType()</a></li>
+                                            <li><a href="classes/Activity-Model-SignupField.html#method_isSensitive">isSensitive()</a></li>
                                             <li><a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_setId">setId()</a></li>
+                                            <li><a href="classes/Activity-Model-SignupField.html#method_setIsSensitive">setIsSensitive()</a></li>
                                             <li><a href="classes/Activity-Model-SignupField.html#method_setMaximumValue">setMaximumValue()</a></li>
                                             <li><a href="classes/Activity-Model-SignupField.html#method_setMinimumValue">setMinimumValue()</a></li>
                                             <li><a href="classes/Activity-Model-SignupField.html#method_setName">setName()</a></li>

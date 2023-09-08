@@ -1906,6 +1906,16 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Activity-Model-SignupField.html#method_setSignupList"
         },                {
+            "fqsen": "\\Activity\\Model\\SignupField\u003A\u003A\u0024isSensitive",
+            "name": "isSensitive",
+            "summary": "Whether\u0020this\u0020SignupField\u0020is\u0020sensitive.\u0020If\u0020it\u0020is\u0020sensitive,\u0020it\u0020is\u0020only\u0020visible\u0020to\u0020the\u0020board\u0020and\u0020the\u0020organiser\u0020of\nthe\u0020activity.",
+            "url": "classes/Activity-Model-SignupField.html#property_isSensitive"
+        },                {
+            "fqsen": "\\Activity\\Model\\SignupField\u003A\u003AsetIsSensitive\u0028\u0029",
+            "name": "setIsSensitive",
+            "summary": "",
+            "url": "classes/Activity-Model-SignupField.html#method_setIsSensitive"
+        },                {
             "fqsen": "\\Activity\\Model\\SignupField\u003A\u003AgetOptions\u0028\u0029",
             "name": "getOptions",
             "summary": "",
