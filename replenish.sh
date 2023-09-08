@@ -1,6 +1,6 @@
 #!/bin/sh
 export REPOSITORY="GEWIS/gewisweb"
-export BRANCH="master"
+export BRANCH="main"
 cd /tmp
 wget --no-cache "https://github.com/${REPOSITORY}/archive/refs/heads/${BRANCH}.zip"
 unzip "${BRANCH}.zip"

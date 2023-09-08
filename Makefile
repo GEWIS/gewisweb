@@ -90,7 +90,7 @@ phpstan:
 
 phpstanpr:
 		@git fetch --all
-		@git update-ref refs/heads/temp-phpstanpr refs/remotes/origin/master
+		@git update-ref refs/heads/temp-phpstanpr refs/remotes/origin/main
 		@git checkout --detach temp-phpstanpr
 		@echo "" > phpstan/phpstan-baseline.neon
 		@echo "" > phpstan/phpstan-baseline-pr.neon

@@ -43,10 +43,10 @@ jobs:
                     cp config/autoload/laminas-developer-tools.local.php.dist config/autoload/laminas-developer-tools.local.php
                     cp config/autoload/local.development.php.dist config/autoload/local.php
 
-            -   name: Check out master
+            -   name: Check out main
                 run: |
                     git fetch --all
-                    git update-ref refs/heads/temp-phpstanpr refs/remotes/origin/master
+                    git update-ref refs/heads/temp-phpstanpr refs/remotes/origin/main
                     git checkout --detach temp-phpstanpr
 
             -   name: Install dependencies with Composer

@@ -1,10 +1,10 @@
 name: PHP Coding Standards
 
-# Only run this action when pushing to master or on pull requests (creation, synchronisation, and reopening).
+# Only run this action when pushing to main or on pull requests (creation, synchronisation, and reopening).
 on:
     push:
         branches:
-            - master
+            - main
     pull_request:
 
 # Cancel running jobs that have become stale through updates to the ref (e.g., pushes to a pull request).
