@@ -691,6 +691,26 @@ Search.appendIndex(
             "summary": "Validate\u0020the\u0020form.",
             "url": "classes/Activity-Form-ActivityCategory.html#method_isValid"
         },                {
+            "fqsen": "\\Activity\\Form\\Element\\ValidatedText",
+            "name": "ValidatedText",
+            "summary": "",
+            "url": "classes/Activity-Form-Element-ValidatedText.html"
+        },                {
+            "fqsen": "\\Activity\\Form\\Element\\ValidatedText\u003A\u003AgetValidator\u0028\u0029",
+            "name": "getValidator",
+            "summary": "Get\u0020primary\u0020validator.",
+            "url": "classes/Activity-Form-Element-ValidatedText.html#method_getValidator"
+        },                {
+            "fqsen": "\\Activity\\Form\\Element\\ValidatedText\u003A\u003AgetInputSpecification\u0028\u0029",
+            "name": "getInputSpecification",
+            "summary": "Provide\u0020default\u0020input\u0020rules\u0020for\u0020this\u0020element",
+            "url": "classes/Activity-Form-Element-ValidatedText.html#method_getInputSpecification"
+        },                {
+            "fqsen": "\\Activity\\Form\\Element\\ValidatedText\u003A\u003A\u0024validator",
+            "name": "validator",
+            "summary": "",
+            "url": "classes/Activity-Form-Element-ValidatedText.html#property_validator"
+        },                {
             "fqsen": "\\Activity\\Form\\MaxActivities",
             "name": "MaxActivities",
             "summary": "",
@@ -17625,6 +17645,11 @@ Search.appendIndex(
             "name": "Form",
             "summary": "",
             "url": "namespaces/activity-form.html"
+        },                {
+            "fqsen": "\\Activity\\Form\\Element",
+            "name": "Element",
+            "summary": "",
+            "url": "namespaces/activity-form-element.html"
         },                {
             "fqsen": "\\Activity\\Mapper",
             "name": "Mapper",
