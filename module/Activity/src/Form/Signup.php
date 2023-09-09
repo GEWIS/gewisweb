@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Activity\Form;
 
+use Activity\Form\Element\ValidatedText;
 use Activity\Model\SignupField as SignupFieldModel;
 use Activity\Model\SignupList as SignupListModel;
 use Laminas\Captcha\Image as ImageCaptcha;
@@ -135,7 +136,7 @@ class Signup extends Form implements InputFilterProviderInterface
 
         switch ($field->getType()) {
             case 0: //'Text'
-                $result['type'] = 'Text';
+                $result['type'] = ValidatedText::class;
                 break;
             case 1: //'Yes/No'
                 $result['type'] = Radio::class;

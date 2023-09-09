@@ -60,7 +60,7 @@ function formElementRender(
     }
 
     $result = '<div class="form-group' . (count($element->getMessages()) > 0 ? ' has-error' : '') . '">';
-    $result .= '<label for="' . $element->getAttribute('id') . '" class="control-label">' . $label . '</label>';
+    $result .= '<label for="' . $element->getAttribute('id') . '" class="control-label label-required">' . $label . '</label>';
 
     if (in_array($elementType, ['Radio'])) {
         $context->formRadio()->setSeparator('</div><div class="radio">');
@@ -78,6 +78,7 @@ function formElementRender(
 
 <?php
 $form->setAttribute('action', $submitUrl);
+$form->setAttribute('class', 'form-signup');
 $form->prepare();
 echo $this->form()->openTag($form);
 ?>
