@@ -1,3 +1,18 @@
+## [v4.0.1](https://github.com/GEWIS/gewisweb/tree/v4.0.1) (2023-09-11)
+
+* Added the option to mark a sign-up list field as sensitive. Sensitive fields are only viewable by the organiser or the board.
+* Added tooltip to meeting documents to show when the meeting document was uploaded.
+* Improved activity admin approval view by preserving structure of activity descriptions.
+* Improved sign-up form by adding asterisks to denote required fields.
+* Fixed issue where the navbar was grey instead of GEWIS red.
+* Fixed issue where it was possible to use special path characters for custom routes.
+* Fixed issue where sub-albums did not display the 'NEW' tag if they were recently created.
+* Fixed issue where photos in the admin album overview would not load.
+* Fixed issue where the 'Text' sign-up list field was never validated when signing up.
+* Fixed issue where activities that were not yet approved could be viewed by everyone.
+
+---
+
 ## [v4.0](https://github.com/GEWIS/gewisweb/tree/v4.0) (2023-08-30)
 
 * Added notice for `administrator`s to warn them about their powers.
