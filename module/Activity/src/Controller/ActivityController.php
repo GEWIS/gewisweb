@@ -72,6 +72,12 @@ class ActivityController extends AbstractActionController
             return $this->notFoundAction();
         }
 
+        if (ActivityModel::STATUS_APPROVED !== $activity->getStatus()) {
+            if (!$this->aclService->isAllowed('update', $activity)) {
+                return $this->notFoundAction();
+            }
+        }
+
         // If the Activity has a sign-up list always display it by redirecting the request.
         if (0 !== $activity->getSignupLists()->count()) {
             return $this->forward()->dispatch(
