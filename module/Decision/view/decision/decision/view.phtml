@@ -21,11 +21,18 @@ $meetingName = sprintf(
 );
 
 $this->headTitle($meetingName);
+
+$this->headScript()
+    ->appendFile(
+        $this->basepath('js/bootstrap/tooltip.js'),
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    );
 ?>
 <section class="section">
     <div class="container">
         <h1><?= $meetingName ?></h1>
-        <h2><?= $this->dateFormat($meeting->getDate(), IntlDateFormatter::FULL, IntlDateFormatter::NONE) ?></h2>
+        <h2><?= $this->dateFormat($meeting->getDate(), IntlDateFormatter::FULL) ?></h2>
         <div class="row">
             <div class="col-md-6">
                 <h3><?= $this->translate('Documents') ?></h3>
@@ -35,8 +42,24 @@ $this->headTitle($meetingName);
                             <tr>
                                 <td>
                                     <a href="<?= $this->url('decision/document', ['id' => $document->getId()]) ?>"
-                                       class="d-block">
-                                        <?= $document->getName() ?>
+                                       class="d-block"
+                                    >
+                                        <?= $this->escapeHtml($document->getName()) ?>
+                                        <?php
+                                        $title = sprintf(
+                                            $this->translate('This document was uploaded on %s.'),
+                                            $this->dateFormat($document->getCreatedAt(), IntlDateFormatter::FULL),
+                                        );
+
+                                        if ($document->getCreatedAt() != $document->getUpdatedAt()) {
+                                            $title .= ' ' . sprintf(
+                                                $this->translate('It was last edited on %s.'),
+                                                $this->dateFormat($document->getUpdatedAt(), IntlDateFormatter::FULL),
+                                            );
+                                        }
+                                        ?>
+                                        <span data-toggle="tooltip" data-placement="right" class="fas fa-info-circle"
+                                            title="<?= $title ?>" aria-hidden="true"></span>
                                     </a>
                                 </td>
                             </tr>
@@ -95,3 +118,6 @@ $this->headTitle($meetingName);
         <?php endif; ?>
     </div>
 </section>
+<script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
+    $('[data-toggle="tooltip"]').tooltip({container: 'body'});
+</script>
