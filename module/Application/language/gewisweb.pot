@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: GEWISweb v2.8.6-479-g4251c841a-dirty\n"
+"Project-Id-Version: GEWISweb v2.8.6-500-g5bf05e9eb-dirty\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-01 15:08+0200\n"
+"POT-Creation-Date: 2023-09-11 17:42+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -530,6 +530,9 @@ msgstr ""
 msgid "Bylaws"
 msgstr ""
 
+msgid "CAPTCHA"
+msgstr ""
+
 msgid "CM"
 msgstr ""
 
@@ -1031,9 +1034,6 @@ msgstr ""
 msgid "Email address"
 msgstr ""
 
-msgid "Email address:"
-msgstr ""
-
 msgid "Email the board of GEWIS"
 msgstr ""
 
@@ -1178,6 +1178,11 @@ msgstr ""
 msgid "Featured in language"
 msgstr ""
 
+msgid ""
+"Fields that are marked with an '¹' will only be shared with the board and "
+"the organiser of the activity."
+msgstr ""
+
 msgid "File"
 msgstr ""
 
@@ -1240,7 +1245,7 @@ msgstr ""
 msgid "From"
 msgstr ""
 
-msgid "Full name:"
+msgid "Full name"
 msgstr ""
 
 msgid "GEWIKI"
@@ -1342,7 +1347,9 @@ msgstr ""
 msgid ""
 "Here you can find everyone who signed up to this sign-up list. Here you can "
 "add or remove external participants and view detailed information regarding "
-"the signup of all participants."
+"the signup of all participants. Please note that fields that are marked with "
+"an '¹' contain sensitive data and should be treated with the utmost care to "
+"prevent unauthorized access or disclosure."
 msgstr ""
 
 msgid "Hidden"
@@ -1486,6 +1493,10 @@ msgstr ""
 msgid ""
 "It is not allowed to put more than 3 options for the same activity in the "
 "calendar."
+msgstr ""
+
+#, php-format
+msgid "It was last edited on %s."
 msgstr ""
 
 msgid "It will become visible after it has been approved by the board."
@@ -1648,6 +1659,9 @@ msgstr ""
 msgid ""
 "Make this page available at the following URLs. Providing a category is "
 "required. Always try to translate the relevant segments of the URL."
+msgstr ""
+
+msgid "Mark as sensitive"
 msgstr ""
 
 msgid "Max Activities"
@@ -2130,9 +2144,6 @@ msgid ""
 "fun!"
 msgstr ""
 
-msgid "Please fill in this CAPTCHA:"
-msgstr ""
-
 msgid "Please note that numbers are not dependant on the selected language(s)."
 msgstr ""
 
@@ -2389,8 +2400,17 @@ msgid ""
 msgstr ""
 
 msgid ""
+"Select this to mark this field as sensitive. A sensitive field is hidden "
+"from participants and thus only visible to the board and the organiser. You "
+"can use this for things like dietary preferences or contact information."
+msgstr ""
+
+msgid ""
 "Select whether an organ (committee, fraternity, etc.) or a company is "
 "responsible for this activity, or both."
+msgstr ""
+
+msgid "Sensitive"
 msgstr ""
 
 msgid "Set as profile picture"
@@ -2700,6 +2720,11 @@ msgid ""
 "closes."
 msgstr ""
 
+msgid ""
+"The sign-up of this external participant will be visible to all visitors of "
+"the website."
+msgstr ""
+
 msgid "The uploaded file does not have a valid extension"
 msgstr ""
 
@@ -2799,6 +2824,10 @@ msgid "This album does not contain any photos."
 msgstr ""
 
 msgid "This course does not have any exams."
+msgstr ""
+
+#, php-format
+msgid "This document was uploaded on %s."
 msgstr ""
 
 msgid ""
@@ -3763,6 +3792,12 @@ msgid "Your poll request has been received and will be reviewed shortly."
 msgstr ""
 
 msgid "Your profile picture will be chosen automatically instead."
+msgstr ""
+
+msgid "Your sign-up will be visible to all visitors of the website."
+msgstr ""
+
+msgid "Your sign-up will be visible to other members and graduates."
 msgstr ""
 
 msgid "Zoek"

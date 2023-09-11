@@ -5,6 +5,7 @@ cd `dirname $0`
 # parse php files
 find ./module -iname "*.phtml" -print0 | sort -z | xargs -r0 xgettext \
     --language=PHP \
+    --from-code=UTF-8 \
     --keyword=translate \
     --keyword=translatePlural:1,2 \
     --output=./module/Application/language/gewisweb.pot \
@@ -17,6 +18,7 @@ find ./module -iname "*.phtml" -print0 | sort -z | xargs -r0 xgettext \
 
 find ./module -iname "*.php" -print0 | sort -z | xargs -r0 xgettext \
     --language=PHP \
+    --from-code=UTF-8 \
     --keyword=translate \
     --keyword=translatePlural:1,2 \
     --output=./module/Application/language/gewisweb.pot \

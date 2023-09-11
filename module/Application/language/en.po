@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-01 15:08+0200\n"
-"PO-Revision-Date: 2023-09-01 15:08+0200\n"
+"POT-Creation-Date: 2023-09-11 17:42+0200\n"
+"PO-Revision-Date: 2023-09-11 17:46+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: en\n"
@@ -562,6 +562,9 @@ msgstr ""
 msgid "Bylaws"
 msgstr "Bylaws"
 
+msgid "CAPTCHA"
+msgstr "CAPTCHA"
+
 msgid "CM"
 msgstr "CM"
 
@@ -1076,9 +1079,6 @@ msgstr "Email"
 msgid "Email address"
 msgstr "Email address"
 
-msgid "Email address:"
-msgstr "Email address:"
-
 msgid "Email the board of GEWIS"
 msgstr "Email the board of GEWIS"
 
@@ -1229,6 +1229,13 @@ msgstr "Featured company"
 msgid "Featured in language"
 msgstr "Featured in language"
 
+msgid ""
+"Fields that are marked with an '¹' will only be shared with the board and "
+"the organiser of the activity."
+msgstr ""
+"Fields that are marked with an '¹' will only be shared with the board and "
+"the organiser of the activity."
+
 msgid "File"
 msgstr "File"
 
@@ -1291,8 +1298,8 @@ msgstr "Fraternity"
 msgid "From"
 msgstr "From"
 
-msgid "Full name:"
-msgstr "Full name:"
+msgid "Full name"
+msgstr "Full name"
 
 msgid "GEWIKI"
 msgstr "GEWIKI"
@@ -1401,11 +1408,15 @@ msgstr ""
 msgid ""
 "Here you can find everyone who signed up to this sign-up list. Here you can "
 "add or remove external participants and view detailed information regarding "
-"the signup of all participants."
+"the signup of all participants. Please note that fields that are marked with "
+"an '¹' contain sensitive data and should be treated with the utmost care to "
+"prevent unauthorized access or disclosure."
 msgstr ""
 "Here you can find everyone who signed up to this sign-up list. Here you can "
 "add or remove external participants and view detailed information regarding "
-"the signup of all participants."
+"the signup of all participants. Please note that fields that are marked with "
+"an '¹' contain sensitive data and should be treated with the utmost care to "
+"prevent unauthorized access or disclosure."
 
 msgid "Hidden"
 msgstr "Hidden"
@@ -1570,6 +1581,10 @@ msgid ""
 msgstr ""
 "It is not allowed to put more than 3 options for the same activity in the "
 "calendar."
+
+#, php-format
+msgid "It was last edited on %s."
+msgstr "It was last edited on %s."
 
 msgid "It will become visible after it has been approved by the board."
 msgstr "It will become visible after it has been approved by the board."
@@ -1740,6 +1755,9 @@ msgid ""
 msgstr ""
 "Make this page available at the following URLs. Providing a category is "
 "required. Always try to translate the relevant segments of the URL."
+
+msgid "Mark as sensitive"
+msgstr "Mark as sensitive"
 
 msgid "Max Activities"
 msgstr "Max Activities"
@@ -2229,9 +2247,6 @@ msgstr ""
 "are unable to attend after the deadline for unsubscribing has passed. Have "
 "fun!"
 
-msgid "Please fill in this CAPTCHA:"
-msgstr "Please fill in this CAPTCHA:"
-
 msgid "Please note that numbers are not dependant on the selected language(s)."
 msgstr ""
 "Please note that numbers are not dependant on the selected language(s)."
@@ -2512,11 +2527,23 @@ msgstr ""
 "visitors."
 
 msgid ""
+"Select this to mark this field as sensitive. A sensitive field is hidden "
+"from participants and thus only visible to the board and the organiser. You "
+"can use this for things like dietary preferences or contact information."
+msgstr ""
+"Select this to mark this field as sensitive. A sensitive field is hidden "
+"from participants and thus only visible to the board and the organiser. You "
+"can use this for things like dietary preferences or contact information."
+
+msgid ""
 "Select whether an organ (committee, fraternity, etc.) or a company is "
 "responsible for this activity, or both."
 msgstr ""
 "Select whether an organ (committee, fraternity, etc.) or a company is "
 "responsible for this activity, or both."
+
+msgid "Sensitive"
+msgstr "Sensitive"
 
 msgid "Set as profile picture"
 msgstr "Set as profile picture"
@@ -2850,6 +2877,13 @@ msgstr ""
 "The sign-up list opening date and time must be before the sign-up list "
 "closes."
 
+msgid ""
+"The sign-up of this external participant will be visible to all visitors of "
+"the website."
+msgstr ""
+"The sign-up of this external participant will be visible to all visitors of "
+"the website."
+
 msgid "The uploaded file does not have a valid extension"
 msgstr "The uploaded file does not have a valid extension"
 
@@ -2955,6 +2989,10 @@ msgstr "This album does not contain any photos."
 
 msgid "This course does not have any exams."
 msgstr "This course does not have any exams."
+
+#, php-format
+msgid "This document was uploaded on %s."
+msgstr "This document was uploaded on %s."
 
 msgid ""
 "This functionality is currently unavailable. Our apologies for the "
@@ -3993,6 +4031,12 @@ msgstr "Your poll request has been received and will be reviewed shortly."
 
 msgid "Your profile picture will be chosen automatically instead."
 msgstr "Your profile picture will be chosen automatically instead."
+
+msgid "Your sign-up will be visible to all visitors of the website."
+msgstr "Your sign-up will be visible to all visitors of the website."
+
+msgid "Your sign-up will be visible to other members and graduates."
+msgstr "Your sign-up will be visible to other members and graduates."
 
 msgid "Zoek"
 msgstr "Search"
