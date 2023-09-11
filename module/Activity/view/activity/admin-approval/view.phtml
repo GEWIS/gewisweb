@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Activity\Model\Activity as ActivityModel;
 use Application\Form\ModifyRequest as RequestForm;
+use Application\View\Helper\Diff;
 use Application\View\HelperTrait;
 use Laminas\View\Renderer\PhpRenderer;
 
@@ -141,14 +142,26 @@ $this->breadcrumbs()
                     <span class="flag-icon flag-icon-nl"></span>
                     <strong><?= $this->translate('Description') ?>:</strong>
                 </span>
-                <?= $this->escapeHtml($activity->getDescription()->getValueNL()) ?>
+                <?=
+                $this->diff(
+                    $activity->getDescription()->getValueNL(),
+                    $activity->getDescription()->getValueNL(),
+                    Diff::DIFF_RENDER_INLINE,
+                )
+                ?>
             </div>
             <div class="col-md-5">
                 <span class="approvable-property">
                     <span class="flag-icon flag-icon-en"></span>
                     <strong><?= $this->translate('Description') ?>:</strong>
                 </span>
-                <?= $this->escapeHtml($activity->getDescription()->getValueEN()) ?>
+                <?=
+                $this->diff(
+                    $activity->getDescription()->getValueEN(),
+                    $activity->getDescription()->getValueEN(),
+                    Diff::DIFF_RENDER_INLINE,
+                )
+                ?>
             </div>
         </div>
         <div class="row">
