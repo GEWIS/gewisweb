@@ -1,3 +1,9 @@
+## [v4.0.2](https://github.com/GEWIS/gewisweb/tree/v4.0.2) (2023-09-13)
+
+* Fixed issue where (sub)decisions removed in GEWISDB were not removed during synchronisation.
+
+---
+
 ## [v4.0.1](https://github.com/GEWIS/gewisweb/tree/v4.0.1) (2023-09-11)
 
 * Added the option to mark a sign-up list field as sensitive. Sensitive fields are only viewable by the organiser or the board.
