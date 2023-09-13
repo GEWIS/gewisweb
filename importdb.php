@@ -179,28 +179,45 @@ PKS;
         echo PHP_EOL . PHP_EOL;
         echo 'Inserted or updated ' . $insertCount . ' rows in "' . $table . '" (updates count double)' . PHP_EOL;
 
-        // Removing old data
+        /**
+         * Removing old data
+         */
+        
+        // Tables without primary keys are skipped
+        if (0 === count($pks[$table])) continue;
+
+        // We construct a list of primary key names, both used to select and to delete data
+        $pklist = implode(',', $pks[$table]);
+        // We also already create pairs of question marks with the same length as above
+        $pklistqm = '(' . str_repeat('?,', count($pks[$table]) - 1) . '?)';
+
+        // Obtain all primary key pairs from a given table
         $idSql = sprintf(
             'SELECT %s FROM %s',
-            $pks[$table][0],
+            $pklist,
             $table,
         );
-        $ids = $pgconn->query($idSql)->fetchAll(PDO::FETCH_COLUMN);
+        $ids = $pgconn->query($idSql)->fetchAll(PDO::FETCH_ASSOC);
 
+        // If we don't have any, assume we have exactly one row
         if (0 === count($ids)) {
-            $ids = [null];
+            $ids = [array_fill(0, count($pks[$table]), null)];
         }
 
+        // To prepare the statement, we need them flattened
+        $idsflat = array();
+        array_walk_recursive($ids, function($elem) use (&$idsflat) { $idsflat[] = $elem; });
+
         $deletionSql = sprintf(
-            "DELETE FROM %s WHERE %s NOT IN (%s?)",
+            "DELETE FROM %s WHERE %s NOT IN (%s)",
             $table,
-            $pks[$table][0],
-            str_repeat('?,', count($ids) - 1),
+            '(' . $pklist . ')',
+            str_repeat($pklistqm . ',', count($ids) - 1) . $pklistqm,
         );
         $removeStmt = $myconn->prepare($deletionSql);
 
         try {
-            $removeStmt->execute($ids);
+            $removeStmt->execute($idsflat);
             echo 'Deleted ' . $removeStmt->rowCount() . ' rows from "' . $table . '"' . PHP_EOL;
         } catch (Exception $e) {
             echo 'ERROR: Failed to remove data from table "' . $table . '"' . PHP_EOL;
