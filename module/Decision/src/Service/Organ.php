@@ -25,10 +25,10 @@ use User\Permissions\NotAllowedException;
 use function array_filter;
 use function array_merge;
 use function count;
+use function floatval;
 use function getimagesize;
 use function getrandmax;
 use function in_array;
-use function intval;
 use function random_int;
 use function round;
 use function sys_get_temp_dir;
@@ -195,10 +195,10 @@ class Organ
         if ($data['cover']['size'] > 0) {
             $coverPath = $this->makeOrganInformationImage(
                 $data['cover']['tmp_name'],
-                intval($data['coverCropX']),
-                intval($data['coverCropY']),
-                intval($data['coverCropWidth']),
-                intval($data['coverCropHeight']),
+                floatval($data['coverCropX']),
+                floatval($data['coverCropY']),
+                floatval($data['coverCropWidth']),
+                floatval($data['coverCropHeight']),
                 $config['cover_width'],
                 $config['cover_height'],
             );
@@ -209,10 +209,10 @@ class Organ
         if ($data['thumbnail']['size'] > 0) {
             $thumbnailPath = $this->makeOrganInformationImage(
                 $data['thumbnail']['tmp_name'],
-                intval($data['thumbnailCropX']),
-                intval($data['thumbnailCropY']),
-                intval($data['thumbnailCropWidth']),
-                intval($data['thumbnailCropHeight']),
+                floatval($data['thumbnailCropX']),
+                floatval($data['thumbnailCropY']),
+                floatval($data['thumbnailCropWidth']),
+                floatval($data['thumbnailCropHeight']),
                 $config['thumbnail_width'],
                 $config['thumbnail_height'],
             );
@@ -240,10 +240,10 @@ class Organ
      * Create a thumbnail of the given file at the given location and scale.
      *
      * @param string $file        The file to create the thumbnail of
-     * @param int    $x           The start x position in the image
-     * @param int    $y           The start y position in the image
-     * @param int    $width       The width of the area to crop
-     * @param int    $height      The height of the are to crop
+     * @param float  $x           The start x position in the image
+     * @param float  $y           The start y position in the image
+     * @param float  $width       The width of the area to crop
+     * @param float  $height      The height of the are to crop
      * @param int    $thumbWidth  The width of the final thumbnail
      * @param int    $thumbHeight The height of the final thumbnail
      *
@@ -253,10 +253,10 @@ class Organ
      */
     public function makeOrganInformationImage(
         string $file,
-        int $x,
-        int $y,
-        int $width,
-        int $height,
+        float $x,
+        float $y,
+        float $width,
+        float $height,
         int $thumbWidth,
         int $thumbHeight,
     ): string {
