@@ -8131,6 +8131,16 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Decision-Model-Enums-MeetingTypes.html#method_getAbbreviation"
         },                {
+            "fqsen": "\\Decision\\Model\\Enums\\MeetingTypes\u003A\u003AgetSearchableStrings\u0028\u0029",
+            "name": "getSearchableStrings",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-MeetingTypes.html#method_getSearchableStrings"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\MeetingTypes\u003A\u003AtryFromSearch\u0028\u0029",
+            "name": "tryFromSearch",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-MeetingTypes.html#method_tryFromSearch"
+        },                {
             "fqsen": "\\Decision\\Model\\Enums\\MeetingTypes\u003A\u003ABV",
             "name": "BV",
             "summary": "",
