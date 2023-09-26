@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-11 17:42+0200\n"
-"PO-Revision-Date: 2023-09-11 17:45+0200\n"
+"POT-Creation-Date: 2023-09-26 19:21+0200\n"
+"PO-Revision-Date: 2023-09-26 19:23+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: nl\n"
@@ -343,9 +343,6 @@ msgstr "Aperture"
 msgid "App"
 msgstr "App"
 
-msgid "Applied Physics"
-msgstr "Technische Natuurkunde"
-
 msgid "Apply Update"
 msgstr "Update toepassen"
 
@@ -520,9 +517,6 @@ msgstr "Bannerpakket"
 msgid "Banner active"
 msgstr "Banner actief"
 
-msgid "Biomedical Engineering"
-msgstr "Biomedische Technologie"
-
 msgid "Birth date"
 msgstr "Geboortedatum"
 
@@ -634,9 +628,6 @@ msgstr ""
 "kwaliteit mogelijk maakt. Let op dat het inschakelen van deze instelling "
 "voor niet-gescande documenten de mogelijkheid om het document te downloaden "
 "aanzienlijk zal beïnvloeden."
-
-msgid "Chemical Engineering"
-msgstr "Scheikundige Technologie"
 
 msgid "Choice"
 msgstr "Keuze"
@@ -1079,9 +1070,6 @@ msgstr "Onderwijs"
 msgid "Education admin"
 msgstr "Onderwijs admin"
 
-msgid "Electrical Engineering"
-msgstr "Electrical Engineering"
-
 msgid "Email"
 msgstr "Email"
 
@@ -1292,9 +1280,6 @@ msgstr "Flits"
 
 msgid "Focal length"
 msgstr "Brandpuntsafstand"
-
-msgid "For old exams of minor courses, you can also look at:"
-msgstr "Voor oude tentamens of minor vakken kun je ook terecht bij:"
 
 #, php-format
 msgid "Found %d %s matching your description"
@@ -1570,9 +1555,6 @@ msgstr "Initialen"
 
 msgid "Inkoper"
 msgstr "Inkoper"
-
-msgid "Innovation Sciences"
-msgstr "Innovation Sciences"
 
 msgid "Interim"
 msgstr "Tussentijdse toets"
@@ -3144,15 +3126,19 @@ msgid "Thumbnail photo to upload"
 msgstr "Profiel foto"
 
 msgid ""
-"To optimally display your image on the overview page, please crop it below"
+"To optimally display your image on the overview page, please crop it below. "
+"The cropped aspect ratio is 16:9."
 msgstr ""
 "Om deze afbeelding optimaal weer te kunnen geven op commissies pagina, moet "
-"deze bijgesneden worden"
+"deze bijgesneden worden. De bijgesneden beeldverhouding is 16:9."
 
-msgid "To optimally display your image your page, please crop it below"
+msgid ""
+"To optimally display your image your page, please crop it below. The cropped "
+"aspect ratio is 16:4."
 msgstr ""
 "Om deze afbeelding optimaal weer te kunnen geven op je persoonlijke "
-"commissie pagina, moet deze bijgesneden worden"
+"commissie pagina, moet deze bijgesneden worden. De bijgesneden "
+"beeldhverhouding is 16:4."
 
 #, php-format
 msgid ""

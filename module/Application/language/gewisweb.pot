@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: GEWISweb v2.8.6-500-g5bf05e9eb-dirty\n"
+"Project-Id-Version: GEWISweb v2.8.6-509-g92a891dbc-dirty\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-11 17:42+0200\n"
+"POT-Creation-Date: 2023-09-26 19:21+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -327,9 +327,6 @@ msgstr ""
 msgid "App"
 msgstr ""
 
-msgid "Applied Physics"
-msgstr ""
-
 msgid "Apply Update"
 msgstr ""
 
@@ -489,9 +486,6 @@ msgstr ""
 msgid "Banner active"
 msgstr ""
 
-msgid "Biomedical Engineering"
-msgstr ""
-
 msgid "Birth date"
 msgstr ""
 
@@ -588,9 +582,6 @@ msgid ""
 "Check this if the document is scanned, as this will enable higher quality "
 "downloads. Please note that enabling setting this for non-scanned documents "
 "will significantly impact the ability to download the document."
-msgstr ""
-
-msgid "Chemical Engineering"
 msgstr ""
 
 msgid "Choice"
@@ -1025,9 +1016,6 @@ msgstr ""
 msgid "Education admin"
 msgstr ""
 
-msgid "Electrical Engineering"
-msgstr ""
-
 msgid "Email"
 msgstr ""
 
@@ -1227,9 +1215,6 @@ msgid "Flash"
 msgstr ""
 
 msgid "Focal length"
-msgstr ""
-
-msgid "For old exams of minor courses, you can also look at:"
 msgstr ""
 
 #, php-format
@@ -1463,9 +1448,6 @@ msgid "Initials"
 msgstr ""
 
 msgid "Inkoper"
-msgstr ""
-
-msgid "Innovation Sciences"
 msgstr ""
 
 msgid "Interim"
@@ -2923,10 +2905,13 @@ msgid "Thumbnail photo to upload"
 msgstr ""
 
 msgid ""
-"To optimally display your image on the overview page, please crop it below"
+"To optimally display your image on the overview page, please crop it below. "
+"The cropped aspect ratio is 16:9."
 msgstr ""
 
-msgid "To optimally display your image your page, please crop it below"
+msgid ""
+"To optimally display your image your page, please crop it below. The cropped "
+"aspect ratio is 16:4."
 msgstr ""
 
 #, php-format

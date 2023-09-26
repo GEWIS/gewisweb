@@ -147,7 +147,7 @@ $form->setAttribute('id', 'editForm');
     <?= $this->formElementErrors($element) ?>
     <br>
     <div id="thumbnailPreviewAlert" style="display:none" class="alert alert-info">
-        <?= $this->translate('To optimally display your image on the overview page, please crop it below') ?>
+        <?= $this->translate('To optimally display your image on the overview page, please crop it below. The cropped aspect ratio is 16:9.') ?>
     </div>
     <br>
     <div id="thumbnailPreview"></div>
@@ -163,7 +163,7 @@ $form->setAttribute('id', 'editForm');
     <?= $this->formElementErrors($element) ?>
     <br>
     <div id="coverPreviewAlert" style="display:none" class="alert alert-info">
-        <?= $this->translate('To optimally display your image your page, please crop it below') ?>
+        <?= $this->translate('To optimally display your image your page, please crop it below. The cropped aspect ratio is 16:4.') ?>
     </div>
     <br>
     <div id="coverPreview"></div>
@@ -244,7 +244,7 @@ $submit->setAttribute('class', 'btn btn-primary');
     });
 
     $("#coverUpload").change(function () {
-        readImage(this, 'coverPreview', 16, 5, function (c) {
+        readImage(this, 'coverPreview', 16, 4, function (c) {
             var width = $('#coverPreviewImage').width();
             var height = $('#coverPreviewImage').height();
             $('[name=coverCropX]').val(c.x / width);
