@@ -9,6 +9,7 @@ use Decision\Model\Decision as DecisionModel;
 use Decision\Model\Enums\MeetingTypes;
 
 use function addcslashes;
+use function implode;
 use function is_numeric;
 use function preg_match;
 
@@ -36,7 +37,7 @@ class Decision extends BaseMapper
         $qb->setParameter('query', '%' . addcslashes($query, '%_') . '%');
 
         // Start by matching meeting type and meeting number, then we also match additional meeting points and decision
-        // numbers.
+        // numbers. Both the Dutch and English abbreviation for the meeting types can be used.
         //
         // To make it usable, we also split the meeting type and meeting number match into two separate capture groups.
         // In total there are four capture groups.
@@ -52,13 +53,11 @@ class Decision extends BaseMapper
         //     [3]=> string(3) "456"
         //     [4]=> string(3) "789"
         // }
-        $meetingRegex = '/(?:(' . MeetingTypes::ALV->value . '|'
-            . MeetingTypes::BV->value . '|'
-            . MeetingTypes::VV->value . '|'
-            . MeetingTypes::VIRT->value . ') ([0-9]+))(?:.([0-9]+))?(?:.([0-9]+))?/';
+        $meetingRegex = '/(?:(' . implode('|', MeetingTypes::getSearchableStrings()) . ')'
+            . ' ([0-9]+))(?:.([0-9]+))?(?:.([0-9]+))?/';
         $meetingInfo = [];
         if (1 === preg_match($meetingRegex, $query, $meetingInfo, PREG_UNMATCHED_AS_NULL)) {
-            $meetingType = MeetingTypes::from($meetingInfo[1]);
+            $meetingType = MeetingTypes::tryFromSearch($meetingInfo[1]);
             $meetingNumber = (int) $meetingInfo[2];
 
             $where = 'd.meeting_type = :meeting_type AND d.meeting_number = :meeting_number';
