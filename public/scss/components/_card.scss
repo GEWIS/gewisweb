@@ -17,7 +17,7 @@
 }
 
 .card .card-image {
-  @include aspect-ratio(16, 9);
+  aspect-ratio: 16 / 9;
   background-color: $brand-primary;
   position: relative;
   overflow: hidden;

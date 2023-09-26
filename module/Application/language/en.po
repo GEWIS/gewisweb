@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-11 17:42+0200\n"
-"PO-Revision-Date: 2023-09-11 17:46+0200\n"
+"POT-Creation-Date: 2023-09-26 19:21+0200\n"
+"PO-Revision-Date: 2023-09-26 19:22+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: en\n"
@@ -341,9 +341,6 @@ msgstr "Aperture"
 msgid "App"
 msgstr "App"
 
-msgid "Applied Physics"
-msgstr "Applied Physics"
-
 msgid "Apply Update"
 msgstr "Apply Update"
 
@@ -518,9 +515,6 @@ msgstr "Banner Package"
 msgid "Banner active"
 msgstr "Banner active"
 
-msgid "Biomedical Engineering"
-msgstr "Biomedical Engineering"
-
 msgid "Birth date"
 msgstr "Birth date"
 
@@ -629,9 +623,6 @@ msgstr ""
 "Check this if the document is scanned, as this will enable higher quality "
 "downloads. Please note that enabling setting this for non-scanned documents "
 "will significantly impact the ability to download the document."
-
-msgid "Chemical Engineering"
-msgstr "Chemical Engineering"
 
 msgid "Choice"
 msgstr "Choice"
@@ -1070,9 +1061,6 @@ msgstr "Education"
 msgid "Education admin"
 msgstr "Education admin"
 
-msgid "Electrical Engineering"
-msgstr "Electrical Engineering"
-
 msgid "Email"
 msgstr "Email"
 
@@ -1281,9 +1269,6 @@ msgstr "Flash"
 
 msgid "Focal length"
 msgstr "Focal length"
-
-msgid "For old exams of minor courses, you can also look at:"
-msgstr "For old exams of minor courses, you can also look at:"
 
 #, php-format
 msgid "Found %d %s matching your description"
@@ -1547,9 +1532,6 @@ msgstr "Initials"
 
 msgid "Inkoper"
 msgstr "Inkoper"
-
-msgid "Innovation Sciences"
-msgstr "Innovation Sciences"
 
 msgid "Interim"
 msgstr "Interim"
@@ -3106,12 +3088,18 @@ msgid "Thumbnail photo to upload"
 msgstr "Thumbnail photo to upload"
 
 msgid ""
-"To optimally display your image on the overview page, please crop it below"
+"To optimally display your image on the overview page, please crop it below. "
+"The cropped aspect ratio is 16:9."
 msgstr ""
-"To optimally display your image on the overview page, please crop it below"
+"To optimally display your image on the overview page, please crop it below. "
+"The cropped aspect ratio is 16:9."
 
-msgid "To optimally display your image your page, please crop it below"
-msgstr "To optimally display your image your page, please crop it below"
+msgid ""
+"To optimally display your image your page, please crop it below. The cropped "
+"aspect ratio is 16:4."
+msgstr ""
+"To optimally display your image your page, please crop it below. The cropped "
+"aspect ratio is 16:4."
 
 #, php-format
 msgid ""
