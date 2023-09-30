@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\OrderBy;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 /**
@@ -40,6 +41,8 @@ class Course implements ResourceInterface
         targetEntity: CourseDocument::class,
         mappedBy: 'course',
     )]
+    #[OrderBy(value: ['date' => 'ASC'])]
+
     protected Collection $documents;
 
     public function __construct()
