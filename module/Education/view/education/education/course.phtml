@@ -19,6 +19,18 @@ $this->headTitle(sprintf(
     $this->escapeHtml($course->getName()),
 ));
 $this->headTitle($this->translate('Education'));
+$documents = $course->getDocuments();
+$exams = [];
+$summaries = [];
+
+foreach ($documents as $document) {
+    if ($document instanceof  SummaryModel){
+        $summaries[] = $document;
+    } else {
+        $exams[] = $document;
+    }
+}
+
 ?>
 <section class="section">
     <div class="container">
@@ -29,37 +41,56 @@ $this->headTitle($this->translate('Education'));
         </div>
         <hr>
         <div class="row">
-            <div class="col-md-8">
-                <h2><?= $this->translate('Exams and summaries') ?></h2>
-                <ul>
-                    <?php foreach ($course->getDocuments() as $document): ?>
-                        <li>
-                            <a href="<?= $this->url('education/course/download', [
-                                'code' => $course->getCode(),
-                                'id' => $document->getId()
-                            ]) ?>">
-                                <?php if ($document instanceof SummaryModel): ?>
-                                    <?php if (null !== ($author = $document->getauthor())): ?>
+            <div class="col-md-6">
+                <h2><?= $this->translate('Summaries') ?></h2>
+                <?php if (count($summaries) <= 0): ?>
+                    <p><?= $this->translate('There are currently no summaries available. Consider submitting one yourself by sending an email to')?> <a href="mailto:summary@gewis.nl">summary@gewis.nl</a>!</p>
+                <?php else: ?>
+                    <ul>
+                        <?php foreach ($summaries as $summary): ?>
+                            <li>
+                                <a href="<?= $this->url('education/course/download', [
+                                    'code' => $course->getCode(),
+                                    'id' => $summary->getId()
+                                ]) ?>">
+                                    <?php if (null !== ($author = $summary->getauthor())): ?>
                                         <?= sprintf(
                                             $this->translate('Summary by %s on %s (%s)'),
-                                            $this->escapeHtml($document->getAuthor()),
-                                            $document->getDate()->format('Y-m-d'),
-                                            $document->getLanguage()->getName(
+                                            $this->escapeHtml($summary->getAuthor()),
+                                            $summary->getDate()->format('Y-m-d'),
+                                            $summary->getLanguage()->getName(
                                                 $this->plugin('translate')->getTranslator()
                                             ),
                                         ) ?>
                                     <?php else: ?>
                                         <?= sprintf(
                                             $this->translate('Summary on %s (%s)'),
-                                            $document->getDate()->format('Y-m-d'),
-                                            $document->getLanguage()->getName(
+                                            $summary->getDate()->format('Y-m-d'),
+                                            $summary->getLanguage()->getName(
                                                 $this->plugin('translate')->getTranslator()
                                             ),
                                         ) ?>
                                     <?php endif; ?>
-                                <?php else: ?>
+                                </a>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php endif; ?>
+            </div>
+            <div class="col-md-6">
+                <h2><?= $this->translate('Exams &amp; Solutions') ?></h2>
+                <?php if (count($exams) <= 0):?>
+                    <p><?= $this->translate('There are currently no exams or solutions available.') ?></p>
+                <?php else: ?>
+                    <ul>
+                        <?php foreach ($exams as $exam): ?>
+                            <li>
+                                <a href="<?= $this->url('education/course/download', [
+                                    'code' => $course->getCode(),
+                                    'id' => $exam->getId()
+                                ]) ?>">
                                     <?php
-                                    switch ($document->getExamType()) {
+                                    switch ($exam->getExamType()) {
                                         case ExamTypes::Final:
                                             $name = $this->translate('Final test from %s (%s)');
                                             break;
@@ -77,17 +108,17 @@ $this->headTitle($this->translate('Education'));
                                     <?= $this->escapeHtml(
                                         sprintf(
                                             $name,
-                                            $document->getDate()->format('Y-m-d'),
-                                            $document->getLanguage()->getName(
+                                            $exam->getDate()->format('Y-m-d'),
+                                            $exam->getLanguage()->getName(
                                                 $this->plugin('translate')->getTranslator()
                                             ),
                                         )
                                     ) ?>
-                                <?php endif ?>
-                            </a>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
+                                </a>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php endif; ?>
             </div>
         </div>
     </div>

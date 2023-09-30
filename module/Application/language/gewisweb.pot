@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: GEWISweb v2.8.6-509-g92a891dbc-dirty\n"
+"Project-Id-Version: GEWISweb e0cd4ee5-dirty\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-26 19:21+0200\n"
+"POT-Creation-Date: 2023-09-30 23:20+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1121,7 +1121,7 @@ msgstr ""
 msgid "Exams"
 msgstr ""
 
-msgid "Exams and summaries"
+msgid "Exams &amp; Solutions"
 msgstr ""
 
 msgid "Exceptional Members"
@@ -2731,7 +2731,15 @@ msgstr ""
 msgid "There are currently no activity categories..."
 msgstr ""
 
+msgid "There are currently no exams or solutions available."
+msgstr ""
+
 msgid "There are currently no job labels..."
+msgstr ""
+
+msgid ""
+"There are currently no summaries available. Consider submitting one yourself "
+"by sending an email to"
 msgstr ""
 
 msgid "There are no activities in the archive."
