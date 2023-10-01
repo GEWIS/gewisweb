@@ -44,6 +44,7 @@ foreach ($documents as $document) {
             <div class="col-md-6">
                 <h2><?= $this->translate('Summaries') ?></h2>
                 <?php if (count($summaries) <= 0): ?>
+                    // phpcs:ignore Generic.Files.LineLength.TooLong -- user-visible strings should not be split
                     <p><?= $this->translate('There are currently no summaries available. Consider submitting one yourself by sending an email to')?> <a href="mailto:summary@gewis.nl">summary@gewis.nl</a>!</p>
                 <?php else: ?>
                     <ul>

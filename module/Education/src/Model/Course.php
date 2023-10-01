@@ -42,7 +42,6 @@ class Course implements ResourceInterface
         mappedBy: 'course',
     )]
     #[OrderBy(value: ['date' => 'ASC'])]
-
     protected Collection $documents;
 
     public function __construct()
