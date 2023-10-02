@@ -382,6 +382,14 @@ msgstr "Goedgekeurde polls"
 msgid "Approver"
 msgstr "Goedgekeurd door"
 
+msgid ""
+"Are you looking for someone to help you with your courses? Send an email "
+"using one of the following links and we can help you find someone to tutor "
+"you."
+msgstr ""
+"Ben je op zoek naar iemand die kan helpen met je vakken? Stuur een email met "
+"een van de volgende links en dan zoeken we een tutor voor jou."
+
 msgid "Are you sure that you want to approve this poll?"
 msgstr "Weet je zeker dat je deze poll wilt goedkeuren?"
 
@@ -3026,8 +3034,8 @@ msgid ""
 "it will start on <strong>%s</strong> and end on <strong>%s</strong>."
 msgstr ""
 "Dit is activiteit <strong>#%d</strong>, georganiseerd door <strong>%s</"
-"strong>, en deze zal beginnen op <strong>%s</strong> en eindigen op "
-"<strong>%s</strong>."
+"strong>, en deze zal beginnen op <strong>%s</strong> en eindigen op <strong>"
+"%s</strong>."
 
 #, php-format
 msgid "This job is proposed by <strong>%s</strong> as part of job package %s."
@@ -3174,6 +3182,15 @@ msgstr "Probeer minder trefwoorden in te voeren"
 
 msgid "Try using a more generic search term"
 msgstr "Probeer een meer algemene zoekterm te gebruiken"
+
+msgid "Tutoring"
+msgstr "Tutors"
+
+msgid "Tutoring AM"
+msgstr "Tutors AM"
+
+msgid "Tutoring CS"
+msgstr "Tutors CS"
 
 msgid "Type"
 msgstr "Type"
@@ -3419,6 +3436,9 @@ msgstr "Stem voor de foto van de week"
 
 msgid "Voted!"
 msgstr "Gestemd!"
+
+msgid "Want to be a tutor?"
+msgstr "Tutor worden?"
 
 msgid ""
 "Warning! This is an update to an unapproved job. Applying this update will "

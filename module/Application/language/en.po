@@ -380,6 +380,15 @@ msgstr "Approved polls"
 msgid "Approver"
 msgstr "Approver"
 
+msgid ""
+"Are you looking for someone to help you with your courses? Send an email "
+"using one of the following links and we can help you find someone to tutor "
+"you."
+msgstr ""
+"Are you looking for someone to help you with your courses? Send an email "
+"using one of the following links and we can help you find someone to tutor "
+"you."
+
 msgid "Are you sure that you want to approve this poll?"
 msgstr "Are you sure that you want to approve this poll?"
 
@@ -3136,6 +3145,15 @@ msgstr "Try entering fewer keywords"
 msgid "Try using a more generic search term"
 msgstr "Try using a more generic search term"
 
+msgid "Tutoring"
+msgstr "Tutoring"
+
+msgid "Tutoring AM"
+msgstr "Tutoring AM"
+
+msgid "Tutoring CS"
+msgstr "Tutoring CS"
+
 msgid "Type"
 msgstr "Type"
 
@@ -3380,6 +3398,9 @@ msgstr "Vote for photo of the week"
 
 msgid "Voted!"
 msgstr "Voted!"
+
+msgid "Want to be a tutor?"
+msgstr "Want to be a tutor?"
 
 msgid ""
 "Warning! This is an update to an unapproved job. Applying this update will "

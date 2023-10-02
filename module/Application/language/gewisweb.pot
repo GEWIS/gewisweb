@@ -366,6 +366,12 @@ msgstr ""
 msgid "Approver"
 msgstr ""
 
+msgid ""
+"Are you looking for someone to help you with your courses? Send an email "
+"using one of the following links and we can help you find someone to tutor "
+"you."
+msgstr ""
+
 msgid "Are you sure that you want to approve this poll?"
 msgstr ""
 
@@ -2947,6 +2953,15 @@ msgstr ""
 msgid "Try using a more generic search term"
 msgstr ""
 
+msgid "Tutoring"
+msgstr ""
+
+msgid "Tutoring AM"
+msgstr ""
+
+msgid "Tutoring CS"
+msgstr ""
+
 msgid "Type"
 msgstr ""
 
@@ -3188,6 +3203,9 @@ msgid "Vote for photo of the week"
 msgstr ""
 
 msgid "Voted!"
+msgstr ""
+
+msgid "Want to be a tutor?"
 msgstr ""
 
 msgid ""
