@@ -24,7 +24,7 @@ $exams = [];
 $summaries = [];
 
 foreach ($documents as $document) {
-    if ($document instanceof  SummaryModel){
+    if ($document instanceof SummaryModel) {
         $summaries[] = $document;
     } else {
         $exams[] = $document;
@@ -43,9 +43,11 @@ foreach ($documents as $document) {
         <div class="row">
             <div class="col-md-6">
                 <h2><?= $this->translate('Summaries') ?></h2>
-                <?php if (count($summaries) <= 0): ?>
-                    // phpcs:ignore Generic.Files.LineLength.TooLong -- user-visible strings should not be split
-                    <p><?= $this->translate('There are currently no summaries available. Consider submitting one yourself by sending an email to')?> <a href="mailto:summary@gewis.nl">summary@gewis.nl</a>!</p>
+                <?php if (count($summaries) === 0): ?>
+                    <p><?= $this->translate(
+                        // phpcs:ignore Generic.Files.LineLength.TooLong -- user-visible strings should not be split
+                        'There are currently no summaries available. Consider submitting one yourself by sending an email to'
+                        ) ?> <a href="mailto:summary@gewis.nl">summary@gewis.nl</a>!</p>
                 <?php else: ?>
                     <ul>
                         <?php foreach ($summaries as $summary): ?>
@@ -80,7 +82,7 @@ foreach ($documents as $document) {
             </div>
             <div class="col-md-6">
                 <h2><?= $this->translate('Exams &amp; Solutions') ?></h2>
-                <?php if (count($exams) <= 0):?>
+                <?php if (count($exams) === 0):?>
                     <p><?= $this->translate('There are currently no exams or solutions available.') ?></p>
                 <?php else: ?>
                     <ul>

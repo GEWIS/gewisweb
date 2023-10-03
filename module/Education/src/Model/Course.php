@@ -34,7 +34,7 @@ class Course implements ResourceInterface
 
     /**
      * Exams (and summaries) in this course.
-     *
+     * Ordered by date, from old to recent since documents are not necessarily uploaded in chronological order
      * @var Collection<array-key, CourseDocument>
      */
     #[OneToMany(
