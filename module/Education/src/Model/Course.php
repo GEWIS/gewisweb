@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\OrderBy;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 /**
@@ -33,13 +34,14 @@ class Course implements ResourceInterface
 
     /**
      * Exams (and summaries) in this course.
-     *
+     * Ordered by date, from old to recent since documents are not necessarily uploaded in chronological order
      * @var Collection<array-key, CourseDocument>
      */
     #[OneToMany(
         targetEntity: CourseDocument::class,
         mappedBy: 'course',
     )]
+    #[OrderBy(value: ['date' => 'ASC'])]
     protected Collection $documents;
 
     public function __construct()
