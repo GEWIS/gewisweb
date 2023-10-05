@@ -124,5 +124,22 @@ foreach ($documents as $document) {
                 <?php endif; ?>
             </div>
         </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-8">
+                <h2><?= $this->translate('Similar courses') ?></h2>
+                <ul>
+                    <?php foreach ($course->getSimilarCoursesTo() as $similarCourse): ?>
+                        <li>
+                            <a href="<?= $this->url('education/course', [
+                                'code' => $similarCourse->getCode(),
+                            ]) ?>">
+                                <?= $this->escapeHtml($similarCourse->getCode()) ?> - <?= $this->escapeHtml($similarCourse->getName()) ?>
+                            </a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        </div>
     </div>
 </section>

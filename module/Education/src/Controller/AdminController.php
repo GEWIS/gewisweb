@@ -9,6 +9,7 @@ use Education\Model\Exam as ExamModel;
 use Education\Model\Summary as SummaryModel;
 use Education\Service\AclService;
 use Education\Service\Course as CourseService;
+use Laminas\Form\FormInterface;
 use Laminas\Http\Request;
 use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
@@ -68,10 +69,10 @@ class AdminController extends AbstractActionController
             $form->setData($request->getPost()->toArray());
 
             if ($form->isValid()) {
-                /** @var CourseModel $course */
-                $course = $form->getObject();
+                $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
+                $course = $this->courseService->saveCourse($data);
 
-                if ($this->courseService->saveCourse($course)) {
+                if (null !== $course) {
                     $this->flashMessenger()->addSuccessMessage(
                         $this->translator->translate('Successfully added course!'),
                     );
@@ -113,10 +114,10 @@ class AdminController extends AbstractActionController
             $form->setData($request->getPost()->toArray());
 
             if ($form->isValid()) {
-                /** @var CourseModel $course */
-                $course = $form->getObject();
+                $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
+                $course = $this->courseService->updateCourse($course, $data);
 
-                if ($this->courseService->saveCourse($course)) {
+                if (null !== $course) {
                     $this->flashMessenger()->addSuccessMessage(
                         $this->translator->translate('Successfully updated course information!'),
                     );

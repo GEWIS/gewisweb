@@ -1941,6 +1941,11 @@ msgstr ""
 msgid "Onderwijscommissaris"
 msgstr ""
 
+msgid ""
+"One of the courses is not valid (either it does not exist or is the same as "
+"the current course)"
+msgstr ""
+
 msgid "Only allow GEWIS members"
 msgstr ""
 
@@ -2431,6 +2436,9 @@ msgid "Sign-up List"
 msgstr ""
 
 msgid "Sign-up Lists"
+msgstr ""
+
+msgid "Similar courses"
 msgstr ""
 
 msgid "Slogan"

@@ -15,6 +15,8 @@ use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\Callback;
 use Laminas\Validator\StringLength;
 
+use function explode;
+
 class Course extends Form implements InputFilterProviderInterface
 {
     private ?string $currentCode = null;
@@ -41,6 +43,16 @@ class Course extends Form implements InputFilterProviderInterface
                 'type' => Text::class,
                 'options' => [
                     'label' => $translator->translate('Name'),
+                ],
+            ],
+        );
+
+        $this->add(
+            [
+                'name' => 'similar',
+                'type' => Text::class,
+                'options' => [
+                    'label' => $translator->translate('Similar courses'),
                 ],
             ],
         );
@@ -96,6 +108,22 @@ class Course extends Form implements InputFilterProviderInterface
             'name' => [
                 'required' => true,
             ],
+            'similar' => [
+                'required' => false,
+                'validators' => [
+                    [
+                        'name' => Callback::class,
+                        'options' => [
+                            'callback' => [$this, 'areSimilarValid'],
+                            'messages' => [
+                                Callback::INVALID_VALUE => $this->translator->translate(
+                                    'One of the courses is not valid (either it does not exist or is the same as the current course)',
+                                ),
+                            ],
+                        ],
+                    ],
+                ],
+            ],
         ];
     }
 
@@ -107,6 +135,9 @@ class Course extends Form implements InputFilterProviderInterface
         $this->currentCode = $currentCode;
     }
 
+    /**
+     * Check if a course code is unique.
+     */
     public function isCourseCodeUnique(string $code): bool
     {
         if ($this->currentCode === $code) {
@@ -114,5 +145,35 @@ class Course extends Form implements InputFilterProviderInterface
         }
 
         return null === $this->courseMapper->find($code);
+    }
+
+    /**
+     * Check if the similar courses are valid.
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
+     */
+    public function areSimilarValid(
+        string $similar, 
+        array $context = []
+    ): bool {
+        $code = $context['code'];
+        $courses = explode(",", $similar);
+
+        foreach ($courses as $course) {
+            if (!$this->isSimilarValid($course, $code)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Check if a similar course is valid.
+     */
+    public function isSimilarValid(string $similar, string $code): bool
+    {
+        return $similar !== $code
+            && null !== $this->courseMapper->find($similar);
     }
 }

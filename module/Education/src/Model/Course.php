@@ -17,6 +17,8 @@ use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OrderBy;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
+use function implode;
+
 /**
  * Course.
  */
@@ -132,6 +134,7 @@ class Course implements ResourceInterface
      * @return array{
      *     code: string,
      *     name: string,
+     *     similar: string,
      * }
      */
     public function toArray(): array
@@ -139,7 +142,48 @@ class Course implements ResourceInterface
         return [
             'code' => $this->getCode(),
             'name' => $this->getName(),
+            'similar' => $this->getSimilarCoursesAsString(),
         ];
+    }
+
+    /**
+     * Get the similar courses to this course as a comma separated string.
+     */
+    public function getSimilarCoursesAsString(): string
+    {
+        return implode(',', $this->similarCoursesTo->map(
+            fn (self $course) => $course->getCode()
+        )->toArray());
+    }
+
+    /**
+     * Get the similar courses to this course.
+     */
+    public function getSimilarCoursesTo(): Collection
+    {
+        return $this->similarCoursesTo;
+    }
+
+    /**
+     * Adds a course to the similar courses to list if it doesn't yet exist.
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
+     */
+    public function addSimilarCourseTo(self $course): void
+    {
+        if ($this->similarCoursesTo->contains($course)) {
+            return;
+        }
+
+        $this->similarCoursesTo->add($course);
+    }
+
+    /**
+     * Removes all references to similar courses to this course.
+     */
+    public function clearSimilarCoursesTo(): void
+    {
+        $this->similarCoursesTo->clear();
     }
 
     /**

@@ -2063,6 +2063,13 @@ msgstr "Ouder"
 msgid "Onderwijscommissaris"
 msgstr "Onderwijscommissaris"
 
+msgid ""
+"One of the courses is not valid (either it does not exist or is the same as "
+"the current course)"
+msgstr ""
+"Een van de vakken is ongeldig (hij bestaat niet of is hetzelfde als het "
+"huidige vak)"
+
 msgid "Only allow GEWIS members"
 msgstr "Sta alleen GEWIS leden toe"
 
@@ -2595,6 +2602,9 @@ msgstr "Inschrijflijst"
 
 msgid "Sign-up Lists"
 msgstr "Inschrijflijsten"
+
+msgid "Similar courses"
+msgstr "Vergelijkbare vakken"
 
 msgid "Slogan"
 msgstr "Slogan"
