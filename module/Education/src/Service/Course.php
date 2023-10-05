@@ -486,6 +486,8 @@ class Course
 
     /**
      * Save a course.
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function saveCourse(array $data): CourseModel
     {
@@ -507,6 +509,8 @@ class Course
 
     /**
      * Update a course.
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function updateCourse(
         CourseModel $course,

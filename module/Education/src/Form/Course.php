@@ -173,10 +173,9 @@ class Course extends Form implements InputFilterProviderInterface
      * Check if a similar course is valid.
      */
     public function isSimilarValid(
-        string $similar, 
-        string $code
-    ): bool
-    {
+        string $similar,
+        string $code,
+    ): bool {
         return $similar !== $code
             && null !== $this->courseMapper->find($similar);
     }

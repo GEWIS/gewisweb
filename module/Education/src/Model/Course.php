@@ -158,7 +158,7 @@ class Course implements ResourceInterface
 
     /**
      * Get the similar courses to this course.
-     * 
+     *
      * @return Collection<array-key, Course>
      */
     public function getSimilarCoursesTo(): Collection
@@ -168,8 +168,6 @@ class Course implements ResourceInterface
 
     /**
      * Adds a course to the similar courses to list if it doesn't yet exist.
-     *
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function addSimilarCourseTo(self $course): void
     {
