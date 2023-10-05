@@ -8,7 +8,7 @@ use Education\Model\Course as CourseModel;
 use Education\Model\Exam as ExamModel;
 use Education\Model\Summary as SummaryModel;
 use Education\Service\AclService;
-use Education\Service\Exam as ExamService;
+use Education\Service\Course as CourseService;
 use Laminas\Http\Request;
 use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
@@ -29,7 +29,7 @@ class AdminController extends AbstractActionController
     public function __construct(
         private readonly AclService $aclService,
         private readonly Translator $translator,
-        private readonly ExamService $examService,
+        private readonly CourseService $courseService,
         private readonly array $educationTempConfig,
     ) {
     }
@@ -51,7 +51,7 @@ class AdminController extends AbstractActionController
             throw new NotAllowedException($this->translator->translate('You are not allowed to administer courses'));
         }
 
-        return new ViewModel(['courses' => $this->examService->getAllCourses()]);
+        return new ViewModel(['courses' => $this->courseService->getAllCourses()]);
     }
 
     public function addCourseAction(): Response|ViewModel
@@ -62,7 +62,7 @@ class AdminController extends AbstractActionController
 
         /** @var Request $request */
         $request = $this->getRequest();
-        $form = $this->examService->getCourseForm();
+        $form = $this->courseService->getCourseForm();
 
         if ($request->isPost()) {
             $form->setData($request->getPost()->toArray());
@@ -71,7 +71,7 @@ class AdminController extends AbstractActionController
                 /** @var CourseModel $course */
                 $course = $form->getObject();
 
-                if ($this->examService->saveCourse($course)) {
+                if ($this->courseService->saveCourse($course)) {
                     $this->flashMessenger()->addSuccessMessage(
                         $this->translator->translate('Successfully added course!'),
                     );
@@ -99,7 +99,7 @@ class AdminController extends AbstractActionController
         }
 
         $courseId = $this->params()->fromRoute('course');
-        $course = $this->examService->getCourse($courseId);
+        $course = $this->courseService->getCourse($courseId);
 
         if (null === $course) {
             return $this->notFoundAction();
@@ -107,7 +107,7 @@ class AdminController extends AbstractActionController
 
         /** @var Request $request */
         $request = $this->getRequest();
-        $form = $this->examService->getCourseForm($course);
+        $form = $this->courseService->getCourseForm($course);
 
         if ($request->isPost()) {
             $form->setData($request->getPost()->toArray());
@@ -116,7 +116,7 @@ class AdminController extends AbstractActionController
                 /** @var CourseModel $course */
                 $course = $form->getObject();
 
-                if ($this->examService->saveCourse($course)) {
+                if ($this->courseService->saveCourse($course)) {
                     $this->flashMessenger()->addSuccessMessage(
                         $this->translator->translate('Successfully updated course information!'),
                     );
@@ -146,8 +146,8 @@ class AdminController extends AbstractActionController
         if ($request->getPost()) {
             $courseId = $this->params()->fromRoute('course');
 
-            if (null !== ($course = $this->examService->getCourse($courseId))) {
-                $this->examService->deleteCourse($course);
+            if (null !== ($course = $this->courseService->getCourse($courseId))) {
+                $this->courseService->deleteCourse($course);
 
                 return $this->redirect()->toRoute('admin_education/course');
             }
@@ -163,7 +163,7 @@ class AdminController extends AbstractActionController
         }
 
         $courseId = $this->params()->fromRoute('course');
-        $course = $this->examService->getCourse($courseId);
+        $course = $this->courseService->getCourse($courseId);
 
         if (null === $course) {
             return $this->notFoundAction();
@@ -171,8 +171,8 @@ class AdminController extends AbstractActionController
 
         return new ViewModel([
             'course' => $course,
-            'exams' => $this->examService->getDocumentsForCourse($course, ExamModel::class),
-            'summaries' => $this->examService->getDocumentsForCourse($course, SummaryModel::class),
+            'exams' => $this->courseService->getDocumentsForCourse($course, ExamModel::class),
+            'summaries' => $this->courseService->getDocumentsForCourse($course, SummaryModel::class),
         ]);
     }
 
@@ -185,7 +185,7 @@ class AdminController extends AbstractActionController
         }
 
         $courseId = $this->params()->fromRoute('course');
-        $course = $this->examService->getCourse($courseId);
+        $course = $this->courseService->getCourse($courseId);
 
         if (null === $course) {
             return $this->notFoundAction();
@@ -197,8 +197,8 @@ class AdminController extends AbstractActionController
         if ($request->getPost()) {
             $documentId = (int) $this->params()->fromRoute('document');
 
-            if (null !== ($document = $this->examService->getDocument($documentId))) {
-                $this->examService->deleteDocument($document);
+            if (null !== ($document = $this->courseService->getDocument($documentId))) {
+                $this->courseService->deleteDocument($document);
 
                 return $this->redirect()->toRoute('admin_education/course/documents', ['course' => $course->getCode()]);
             }
@@ -214,7 +214,7 @@ class AdminController extends AbstractActionController
 
         if ($request->isPost()) {
             // try uploading
-            if ($this->examService->tempExamUpload($request->getPost(), $request->getFiles())) {
+            if ($this->courseService->tempExamUpload($request->getPost(), $request->getFiles())) {
                 return new ViewModel(
                     [
                         'success' => true,
@@ -233,7 +233,7 @@ class AdminController extends AbstractActionController
 
         return new ViewModel(
             [
-                'form' => $this->examService->getTempUploadForm(),
+                'form' => $this->courseService->getTempUploadForm(),
             ],
         );
     }
@@ -245,7 +245,7 @@ class AdminController extends AbstractActionController
 
         if ($request->isPost()) {
             // try uploading
-            if ($this->examService->tempSummaryUpload($request->getPost(), $request->getFiles())) {
+            if ($this->courseService->tempSummaryUpload($request->getPost(), $request->getFiles())) {
                 return new ViewModel(
                     [
                         'success' => true,
@@ -264,7 +264,7 @@ class AdminController extends AbstractActionController
 
         return new ViewModel(
             [
-                'form' => $this->examService->getTempUploadForm(),
+                'form' => $this->courseService->getTempUploadForm(),
             ],
         );
     }
@@ -276,13 +276,13 @@ class AdminController extends AbstractActionController
     {
         /** @var Request $request */
         $request = $this->getRequest();
-        $form = $this->examService->getBulkExamForm();
+        $form = $this->courseService->getBulkExamForm();
 
         if ($request->isPost()) {
             $form->setData($request->getPost()->toArray());
 
             if ($form->isValid()) {
-                if ($this->examService->bulkExamEdit($form->getData())) {
+                if ($this->courseService->bulkExamEdit($form->getData())) {
                     return new ViewModel(
                         [
                             'success' => true,
@@ -308,7 +308,7 @@ class AdminController extends AbstractActionController
         /** @var Request $request */
         $request = $this->getRequest();
 
-        if ($request->isPost() && $this->examService->bulkSummaryEdit($request->getPost()->toArray())) {
+        if ($request->isPost() && $this->courseService->bulkSummaryEdit($request->getPost()->toArray())) {
             return new ViewModel(
                 [
                     'success' => true,
@@ -320,7 +320,7 @@ class AdminController extends AbstractActionController
 
         return new ViewModel(
             [
-                'form' => $this->examService->getBulkSummaryForm(),
+                'form' => $this->courseService->getBulkSummaryForm(),
                 'config' => $config,
             ],
         );
@@ -332,7 +332,7 @@ class AdminController extends AbstractActionController
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-            $this->examService->deleteTempExam(
+            $this->courseService->deleteTempExam(
                 $this->params()->fromRoute('filename'),
                 $this->params()->fromRoute('type'),
             );

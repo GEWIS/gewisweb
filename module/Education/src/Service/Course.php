@@ -43,9 +43,9 @@ use function strlen;
 use function unlink;
 
 /**
- * Exam service.
+ * Course service.
  */
-class Exam
+class Course
 {
     protected ?BulkForm $bulkForm = null;
 

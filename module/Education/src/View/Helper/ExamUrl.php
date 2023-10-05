@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace Education\View\Helper;
 
 use Education\Model\Exam;
-use Education\Service\Exam as ExamService;
+use Education\Service\Course as CourseService;
 use Laminas\View\Helper\AbstractHelper;
 
 class ExamUrl extends AbstractHelper
 {
     /**
-     * Exam service.
+     * Course service.
      */
-    protected ExamService $examService;
+    protected CourseService $courseService;
 
     /**
      * Education data dir.
@@ -25,7 +25,7 @@ class ExamUrl extends AbstractHelper
      */
     public function __invoke(Exam $exam): string
     {
-        return $this->getView()->basePath($this->getDir() . '/' . $this->examService->courseDocumentToFilename($exam));
+        return $this->getView()->basePath($this->getDir() . '/' . $this->courseService->courseDocumentToFilename($exam));
     }
 
     /**
@@ -49,14 +49,14 @@ class ExamUrl extends AbstractHelper
      */
     public function getExamService(): ExamService
     {
-        return $this->examService;
+        return $this->courseService;
     }
 
     /**
      * Set the authentication service.
      */
-    public function setExamService(ExamService $examService): void
+    public function setCourseService(CourseService $courseService): void
     {
-        $this->examService = $examService;
+        $this->courseService = $courseService;
     }
 }

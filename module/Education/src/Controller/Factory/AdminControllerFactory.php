@@ -22,7 +22,7 @@ class AdminControllerFactory implements FactoryInterface
         return new AdminController(
             $container->get('education_service_acl'),
             $container->get(MvcTranslator::class),
-            $container->get('education_service_exam'),
+            $container->get('education_service_course'),
             $container->get('config')['education_temp'],
         );
     }

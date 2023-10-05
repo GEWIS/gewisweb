@@ -17,7 +17,7 @@ use Education\Mapper\Course as CourseMapper;
 use Education\Mapper\CourseDocument as CourseDocumentMapper;
 use Education\Model\Exam as ExamModel;
 use Education\Model\Summary as SummaryModel;
-use Education\Service\Exam as ExamService;
+use Education\Service\Course as CourseService;
 use Education\View\Helper\ExamUrl;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Psr\Container\ContainerInterface;
@@ -44,7 +44,7 @@ class Module
     {
         return [
             'factories' => [
-                'education_service_exam' => static function (ContainerInterface $container) {
+                'education_service_course' => static function (ContainerInterface $container) {
                     $aclService = $container->get('education_service_acl');
                     $translator = $container->get(MvcTranslator::class);
                     $storageService = $container->get('application_service_storage');
@@ -56,7 +56,7 @@ class Module
                     $bulkExamForm = $container->get('education_form_bulk_exam');
                     $config = $container->get('config');
 
-                    return new ExamService(
+                    return new CourseService(
                         $aclService,
                         $translator,
                         $storageService,
@@ -167,7 +167,7 @@ class Module
                     $config = $container->get('config');
                     $helper = new ExamUrl();
                     $helper->setDir($config['education']['public_dir']);
-                    $helper->setExamService($container->get('education_service_exam'));
+                    $helper->setExamService($container->get('education_service_course'));
 
                     return $helper;
                 },

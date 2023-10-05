@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Education\Controller;
 
 use Education\Form\SearchCourse as SearchCourseForm;
-use Education\Service\Exam as ExamService;
+use Education\Service\Course as CourseService;
 use Laminas\Http\Response;
 use Laminas\Http\Response\Stream;
 use Laminas\Mvc\Controller\AbstractActionController;
@@ -14,7 +14,7 @@ use Laminas\View\Model\ViewModel;
 class EducationController extends AbstractActionController
 {
     public function __construct(
-        private readonly ExamService $examService,
+        private readonly CourseService $courseService,
         private readonly SearchCourseForm $searchCourseForm,
     ) {
     }
@@ -29,7 +29,7 @@ class EducationController extends AbstractActionController
             $form->setData($query);
 
             if ($form->isValid()) {
-                $courses = $this->examService->searchCourse($form->getData());
+                $courses = $this->courseService->searchCourse($form->getData());
 
                 return new ViewModel(
                     [
@@ -50,7 +50,7 @@ class EducationController extends AbstractActionController
     public function courseAction(): Response|ViewModel
     {
         $code = $this->params()->fromRoute('code');
-        $course = $this->examService->getCourse($code);
+        $course = $this->courseService->getCourse($code);
 
         // If the course does not exist, trigger 404
         if (null === $course) {
@@ -71,7 +71,7 @@ class EducationController extends AbstractActionController
     {
         $id = (int) $this->params()->fromRoute('id');
 
-        $download = $this->examService->getDocumentDownload($id);
+        $download = $this->courseService->getDocumentDownload($id);
 
         if (null === $download) {
             return $this->notFoundAction();
