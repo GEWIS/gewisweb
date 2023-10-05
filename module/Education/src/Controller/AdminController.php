@@ -114,15 +114,9 @@ class AdminController extends AbstractActionController
                 $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
                 $course = $this->courseService->updateCourse($course, $data);
 
-                if ($this->courseService->saveCourse($course)) {
-                    $this->flashMessenger()->addSuccessMessage(
-                        $this->translator->translate('Successfully updated course information!'),
-                    );
-                } else {
-                    $this->flashMessenger()->addErrorMessage(
-                        $this->translator->translate('An error occurred while saving the course!'),
-                    );
-                }
+                $this->flashMessenger()->addSuccessMessage(
+                    $this->translator->translate('Successfully updated course information!'),
+                );
             }
         }
 

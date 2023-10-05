@@ -63,20 +63,20 @@ class Course implements ResourceInterface
 
     /**
      * Courses similar to this course
-     * 
+     *
      * @var Collection<array-key, Course>
      */
     #[JoinTable(name: 'SimilarCourse')]
     #[JoinColumn(
-        name: 'course_code', 
+        name: 'course_code',
         referencedColumnName: 'code',
     )]
     #[InverseJoinColumn(
-        name: 'similar_course_code', 
+        name: 'similar_course_code',
         referencedColumnName: 'code',
     )]
     #[ManyToMany(
-        targetEntity: self::class, 
+        targetEntity: self::class,
         inversedBy: 'similarCoursesFrom',
     )]
     private Collection $similarCoursesTo;
@@ -152,12 +152,14 @@ class Course implements ResourceInterface
     public function getSimilarCoursesAsString(): string
     {
         return implode(',', $this->similarCoursesTo->map(
-            fn (self $course) => $course->getCode()
+            static fn (self $course) => $course->getCode()
         )->toArray());
     }
 
     /**
      * Get the similar courses to this course.
+     * 
+     * @return Collection<array-key, Course>
      */
     public function getSimilarCoursesTo(): Collection
     {

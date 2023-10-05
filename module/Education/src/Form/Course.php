@@ -117,7 +117,8 @@ class Course extends Form implements InputFilterProviderInterface
                             'callback' => [$this, 'areSimilarValid'],
                             'messages' => [
                                 Callback::INVALID_VALUE => $this->translator->translate(
-                                    'One of the courses is not valid (either it does not exist or is the same as the current course)',
+                                    'One of the courses is not valid (either it does not exist or is the same as the '
+                                    . 'current course)',
                                 ),
                             ],
                         ],
@@ -153,11 +154,11 @@ class Course extends Form implements InputFilterProviderInterface
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function areSimilarValid(
-        string $similar, 
-        array $context = []
+        string $similar,
+        array $context = [],
     ): bool {
         $code = $context['code'];
-        $courses = explode(",", $similar);
+        $courses = explode(',', $similar);
 
         foreach ($courses as $course) {
             if (!$this->isSimilarValid($course, $code)) {
@@ -171,7 +172,10 @@ class Course extends Form implements InputFilterProviderInterface
     /**
      * Check if a similar course is valid.
      */
-    public function isSimilarValid(string $similar, string $code): bool
+    public function isSimilarValid(
+        string $similar, 
+        string $code
+    ): bool
     {
         return $similar !== $code
             && null !== $this->courseMapper->find($similar);
