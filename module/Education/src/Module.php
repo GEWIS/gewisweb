@@ -167,7 +167,7 @@ class Module
                     $config = $container->get('config');
                     $helper = new ExamUrl();
                     $helper->setDir($config['education']['public_dir']);
-                    $helper->setExamService($container->get('education_service_course'));
+                    $helper->setCourseService($container->get('education_service_course'));
 
                     return $helper;
                 },

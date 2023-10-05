@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Education\Controller;
 
-use Education\Model\Course as CourseModel;
 use Education\Model\Exam as ExamModel;
 use Education\Model\Summary as SummaryModel;
 use Education\Service\AclService;
@@ -72,18 +71,16 @@ class AdminController extends AbstractActionController
                 $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
                 $course = $this->courseService->saveCourse($data);
 
-                if (null !== $course) {
-                    $this->flashMessenger()->addSuccessMessage(
-                        $this->translator->translate('Successfully added course!'),
-                    );
-
-                    return $this->redirect()->toRoute('admin_education/course/edit', ['course' => $course->getCode()]);
-                }
-
-                $this->flashMessenger()->addErrorMessage(
-                    $this->translator->translate('An error occurred while saving the course!'),
+                $this->flashMessenger()->addSuccessMessage(
+                    $this->translator->translate('Successfully added course!'),
                 );
+
+                return $this->redirect()->toRoute('admin_education/course/edit', ['course' => $course->getCode()]);
             }
+
+            $this->flashMessenger()->addErrorMessage(
+                $this->translator->translate('The course form is invalid!'),
+            );
         }
 
         return new ViewModel(
@@ -117,15 +114,9 @@ class AdminController extends AbstractActionController
                 $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
                 $course = $this->courseService->updateCourse($course, $data);
 
-                if (null !== $course) {
-                    $this->flashMessenger()->addSuccessMessage(
-                        $this->translator->translate('Successfully updated course information!'),
-                    );
-                } else {
-                    $this->flashMessenger()->addErrorMessage(
-                        $this->translator->translate('An error occurred while saving the course!'),
-                    );
-                }
+                $this->flashMessenger()->addSuccessMessage(
+                    $this->translator->translate('Successfully updated course information!'),
+                );
             }
         }
 

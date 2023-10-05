@@ -486,12 +486,6 @@ class Course
 
     /**
      * Save a course.
-     * 
-     * @param array $data
-     * 
-     * @throws ORMException
-     *
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function saveCourse(array $data): CourseModel
     {
@@ -499,7 +493,7 @@ class Course
         $course->setCode($data['code']);
         $course->setName($data['name']);
 
-        $similarCoursesCodes = explode(",", $data['similar']);
+        $similarCoursesCodes = explode(',', $data['similar']);
 
         foreach ($similarCoursesCodes as $similarCourseCode) {
             $similarCourse = $this->getCourse($similarCourseCode);
@@ -511,12 +505,17 @@ class Course
         return $course;
     }
 
-    public function updateCourse(CourseModel $course, array $data): CourseModel
-    {
+    /**
+     * Update a course.
+     */
+    public function updateCourse(
+        CourseModel $course,
+        array $data,
+    ): CourseModel {
         $course->setCode($data['code']);
         $course->setName($data['name']);
 
-        $similarCoursesCodes = explode(",", $data['similar']);
+        $similarCoursesCodes = explode(',', $data['similar']);
 
         $course->clearSimilarCoursesTo();
 
