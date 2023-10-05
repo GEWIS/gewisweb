@@ -71,9 +71,10 @@ class AdminController extends AbstractActionController
                 $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
                 $course = $this->courseService->saveCourse($data);
 
-                $this->flashMessenger()->addSuccessMessage(
-                    $this->translator->translate('Successfully added course!'),
-                );
+                if ($this->courseService->saveCourse($course)) {
+                    $this->flashMessenger()->addSuccessMessage(
+                        $this->translator->translate('Successfully added course!'),
+                    );
 
                 return $this->redirect()->toRoute('admin_education/course/edit', ['course' => $course->getCode()]);
             }
@@ -114,9 +115,15 @@ class AdminController extends AbstractActionController
                 $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
                 $course = $this->courseService->updateCourse($course, $data);
 
-                $this->flashMessenger()->addSuccessMessage(
-                    $this->translator->translate('Successfully updated course information!'),
-                );
+                if ($this->courseService->saveCourse($course)) {
+                    $this->flashMessenger()->addSuccessMessage(
+                        $this->translator->translate('Successfully updated course information!'),
+                    );
+                } else {
+                    $this->flashMessenger()->addErrorMessage(
+                        $this->translator->translate('An error occurred while saving the course!'),
+                    );
+                }
             }
         }
 
