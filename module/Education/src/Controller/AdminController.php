@@ -71,10 +71,9 @@ class AdminController extends AbstractActionController
                 $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
                 $course = $this->courseService->saveCourse($data);
 
-                if ($this->courseService->saveCourse($course)) {
-                    $this->flashMessenger()->addSuccessMessage(
-                        $this->translator->translate('Successfully added course!'),
-                    );
+                $this->flashMessenger()->addSuccessMessage(
+                    $this->translator->translate('Successfully added course!'),
+                );
 
                 return $this->redirect()->toRoute('admin_education/course/edit', ['course' => $course->getCode()]);
             }
