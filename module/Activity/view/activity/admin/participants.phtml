@@ -37,12 +37,20 @@ $this->breadcrumbs()
     <div class="row">
         <div class="col-md-12">
             <ul class="nav nav-tabs">
-                <li role="presentation" <?= isset($signupList) ? '' : 'class="active"' ?>>
-                    <a href="<?= $this->url('activity_admin/participants', ['id' => $activity->getId()]) ?>"><?= $this->translate('General') ?></a>
+                <li class="nav-item">
+                    <a href="<?= $this->url('activity_admin/participants', ['id' => $activity->getId()]) ?>"
+                       class="nav-link<?= isset($signupList) ? '' : ' active' ?>"
+                    >
+                        <?= $this->translate('General') ?>
+                    </a>
                 </li>
                 <?php foreach ($signupLists as $list): ?>
-                    <li role="presentation" <?= isset($signupList) ? ($signupList->getId() === $list['id'] ? 'class="active"' : '') : '' ?>>
-                        <a href="<?= $this->url('activity_admin/participants', ['id' => $activity->getId(), 'signupList' => $list['id']]) ?>"><?= $this->escapeHtml($this->localiseText($list['name'])) ?></a>
+                    <li class="nav-item">
+                        <a href="<?= $this->url('activity_admin/participants', ['id' => $activity->getId(), 'signupList' => $list['id']]) ?>"
+                           class="nav-link<?= isset($signupList) ? ($signupList->getId() === $list['id'] ? ' active' : '') : '' ?>"
+                        >
+                            <?= $this->escapeHtml($this->localiseText($list['name'])) ?>
+                        </a>
                     </li>
                 <?php endforeach; ?>
             </ul>

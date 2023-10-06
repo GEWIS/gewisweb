@@ -22,11 +22,6 @@ $this->headScript()
         $this->basepath('js/activity-create.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
-    )
-    ->appendFile(
-        $this->basepath('js/bootstrap/tooltip.js'),
-        'text/javascript',
-        ['nonce' => NONCE_REPLACEMENT_STRING],
     );
 
 $form->prepare();

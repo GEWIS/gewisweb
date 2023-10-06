@@ -51,16 +51,16 @@ use Laminas\View\Renderer\PhpRenderer;
         </div>
     </nav>
     <div class="content-container">
-        <section class="section section-breadcrumb">
+        <nav class="navbar-breadcrumb" aria-label="breadcrumb">
             <div class="container-admin">
                 <ol class="breadcrumb">
-                    <li class="active">
+                    <li class="breadcrumb-item active">
                         <a href="<?= $this->url('company_account/self') ?>"><?= $this->translate('My Company') ?></a>
                     </li>
                     <?= $this->breadcrumbs() ?>
                 </ol>
             </div>
-        </section>
+        </nav>
         <section class="section">
             <div class="container-admin">
                 <?php

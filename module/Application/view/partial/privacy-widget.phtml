@@ -17,9 +17,9 @@ use Laminas\View\Renderer\PhpRenderer;
             <label for="opt-out">
                 <strong>
                     <?= $this->translate("Analytics are currently") ?>
-                    <span id="opt-out-status-false" class="hidden"><?= $this->translate('enabled') ?></span>
-                    <span id="opt-out-status-true" class="hidden"><?= $this->translate('disabled') ?></span>
-                    <span id="opt-out-status-disabled" class="hidden"><?= $this->translate(
+                    <span id="opt-out-status-false" hidden><?= $this->translate('enabled') ?></span>
+                    <span id="opt-out-status-true" hidden><?= $this->translate('disabled') ?></span>
+                    <span id="opt-out-status-disabled" hidden><?= $this->translate(
                             'disabled (Do Not Track)'
                         ) ?></span>
                     <span id="opt-out-status-unavailable"><?= $this->translate('unavailable') ?></span>

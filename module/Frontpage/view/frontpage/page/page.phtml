@@ -50,19 +50,19 @@ $this->hrefLang()->setHrefLang(
 $this->placeholder('pageLink')->set($dutchLink);
 $this->placeholder('pageLinkEn')->set($englishLink);
 ?>
-<section class="section section-breadcrumb">
+<nav class="navbar-breadcrumb" aria-label="breadcrumb">
     <div class="container">
         <ol class="breadcrumb">
-            <li class="active">
+            <li class="breadcrumb-item active">
                 <a href="<?= $this->url('home') ?>">
                     <?= $this->translate('Home') ?>
                 </a>
             </li>
             <?php foreach ($parents as $parent): ?>
                 <?php if (null === $parent): ?>
-                    <li>...</li>
+                    <li class="breadcrumb-item">...</li>
                 <?php else: ?>
-                    <li>
+                    <li class="breadcrumb-item">
                         <a href="<?= $this->url('home/page', [
                             'category' => $parent->getCategory()->getValueNL(),
                             'categoryEn' => $parent->getCategory()->getValueEN(),
@@ -76,12 +76,12 @@ $this->placeholder('pageLinkEn')->set($englishLink);
                     </li>
                 <?php endif; ?>
             <?php endforeach; ?>
-            <li class="active">
+            <li class="breadcrumb-item active" aria-current="page">
                 <?= $this->escapeHtml($this->localiseText($page->getTitle())) ?>
             </li>
         </ol>
     </div>
-</section>
+</nav>
 <section class="section">
     <div class="container">
         <div class="row">

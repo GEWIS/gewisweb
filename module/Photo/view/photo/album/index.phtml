@@ -48,11 +48,6 @@ $this->headTitle($this->translate('Photos'));
         $this->basepath('js/lazyload.min.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
-    )
-    ->appendFile(
-        $this->basepath('js/bootstrap/tooltip.js'),
-        'text/javascript',
-        ['nonce' => NONCE_REPLACEMENT_STRING],
     );
 $this->headLink()->appendStylesheet($this->basepath('css/photoswipe.css'));
 
@@ -61,16 +56,16 @@ $this->scriptUrl()->requireUrl('member/search')
     ->requireUrl('photo/photo/tag/add', ['photo_id', 'lidnr'])
     ->requireUrl('photo/photo/tag/remove', ['photo_id', 'lidnr']);
 ?>
-<section class="section section-breadcrumb">
+<nav class="navbar-breadcrumb" aria-label="breadcrumb">
     <div class="container">
         <ol class="breadcrumb">
-            <li>
+            <li class="breadcrumb-item">
                 <a href="<?= $this->url('photo') ?>">
                     <?= $this->translate('Photos') ?>
                 </a>
             </li>
             <?php if (!$currentAlbum instanceof VirtualAlbum): ?>
-                <li>
+                <li class="breadcrumb-item">
                     <?php
                     // determine association year
                     if (null !== ($startDateTime = $album->getStartDateTime())):
@@ -82,7 +77,7 @@ $this->scriptUrl()->requireUrl('member/search')
                     <?php endif; ?>
                 </li>
             <?php elseif ($currentAlbum instanceof WeeklyAlbum): ?>
-                <li>
+                <li class="breadcrumb-item">
                     <a href="<?= $this->url('photo/weekly') ?>"><?= $this->translate('Photos of the Week') ?></a>
                 </li>
             <?php endif; ?>
@@ -108,13 +103,13 @@ $this->scriptUrl()->requireUrl('member/search')
             }
             // then we print them
             foreach ($crumbs as $crumb): ?>
-                <li>
+                <li class="breadcrumb-item">
                     <a href="<?= $crumb['url'] ?>">
                         <?= $this->escapeHtml($crumb['name']) ?>
                     </a>
                 </li>
             <?php endforeach; ?>
-            <li class="active">
+            <li class="breadcrumb-item active">
                 <?php if ($album instanceof MemberAlbum): ?>
                     <span class="fas fa-user"></span>
                     &nbsp;
@@ -126,7 +121,7 @@ $this->scriptUrl()->requireUrl('member/search')
             </li>
         </ol>
     </div>
-</section>
+</nav>
 
 <section class="section">
     <div class="container-fluid">

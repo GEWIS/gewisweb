@@ -18,12 +18,6 @@ $this->inlineScript()
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     );
-$this->headScript()
-    ->appendFile(
-        $this->basepath('js/bootstrap/tooltip.js'),
-        'text/javascript',
-        ['nonce' => NONCE_REPLACEMENT_STRING],
-    );
 
 $this->scriptUrl()->requireUrl('admin_education/delete_temp', ['type', 'filename']);
 

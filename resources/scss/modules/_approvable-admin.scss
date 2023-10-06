@@ -7,17 +7,17 @@
 .admin-approvable-overview {
     .overview-header,
     .overview-sidebar, {
-        @media (max-width: $screen-sm-max) {
+        @include media-breakpoint-down(sm) {
             display: none !important;
         }
     }
 
     .approvable-property {
-        @media (max-width: $screen-md-max) {
+        @include media-breakpoint-down(md) {
             display: inline-block;
         }
 
-        @media (min-width: $screen-md-min) {
+        @include media-breakpoint-up(md) {
             display: none;
         }
     }

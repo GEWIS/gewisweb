@@ -10,7 +10,7 @@ use Laminas\View\Renderer\PhpRenderer;
 ?>
 <?= $this->doctype(); ?>
 
-<html lang="<?= $this->plugin('translate')->getTranslator()->getLocale() ?>">
+<html lang="<?= $this->plugin('translate')->getTranslator()->getLocale() ?>" class="h-100">
 <head>
     <meta charset="utf-8">
     <?= $this->headTitle($this->translate('Study Association GEWIS'))->setSeparator(' - ')->setAutoEscape(false) ?>
@@ -160,7 +160,13 @@ use Laminas\View\Renderer\PhpRenderer;
             $this->basepath('js/url-helper.js'),
             'text/javascript',
             ['nonce' => NONCE_REPLACEMENT_STRING],
+        )
+        ->prependFile(
+            $this->basepath('js/color-modes.js'),
+            'text/javascript',
+            ['nonce' => NONCE_REPLACEMENT_STRING],
         ); ?>
+
 
     <?php
     $matomoDomain = getenv('MATOMO_DOMAIN'); ?>
@@ -175,7 +181,7 @@ use Laminas\View\Renderer\PhpRenderer;
     </script>
     <script src="<?= $matomoDomain . '/matomo.js' ?>" nonce="<?= NONCE_REPLACEMENT_STRING ?>" async defer></script>
 </head>
-<body>
+<body class="d-flex flex-column">
 <?= $this->partial('partial/main-nav.phtml') ?>
 
 <?php
@@ -188,7 +194,7 @@ elseif (str_contains($viewModel->getTemplate(), 'company-account')): ?>
     <?= $this->partial('partial/company.phtml', ['content' => $this->content]) ?>
 <?php
 else: ?>
-    <div class="content-container">
+    <div class="content-container pb-4">
         <?= $this->content ?>
     </div>
     <?= $this->partial('partial/footer.phtml') ?>
@@ -200,7 +206,7 @@ endif; ?>
 <!-- Scripts -->
 <?= $this->inlineScript()
     ->prependFile(
-        $this->basepath('js/bootstrap.min.js'),
+        $this->basepath('js/bootstrap.bundle.min.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     )

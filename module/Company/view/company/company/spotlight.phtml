@@ -25,23 +25,23 @@ $companyURL = $this->url('company/companyItem', // Route url
     true // Reuse matched parameters
 );
 ?>
-<section class="section section-breadcrumb">
+<nav class="navbar-breadcrumb" aria-label="breadcrumb">
     <div class="container">
         <ol class="breadcrumb">
-            <li>
+            <li class="breadcrumb-item">
                 <a href="<?= $this->url('company') ?>">
                     <?= $this->translate('Companies') ?>
                 </a>
             </li>
-            <li class="active">
+            <li class="breadcrumb-item active">
                 <?= $this->translate('Featured company') ?>
             </li>
-            <li class="active">
+            <li class="breadcrumb-item active" aria-current="page">
                 <?= $this->escapeHtml($company->getName()) ?>
             </li>
         </ol>
     </div>
-</section>
+</nav>
 <section class="section">
     <div class="container">
         <h1>

@@ -1,0 +1,108 @@
+// Panel
+//
+// A panel is a card in disguise.
+
+.panel {
+    --#{$prefix}panel-spacer-x: #{$panel-spacer-x};
+    --#{$prefix}panel-spacer-y: #{$panel-spacer-y};
+    --#{$prefix}panel-header-color: #{$panel-header-color};
+    --#{$prefix}panel-header-font-size: #{$panel-header-font-size};
+    --#{$prefix}panel-border-width: #{$panel-border-width};
+    --#{$prefix}panel-border-color: #{$panel-border-color};
+    --#{$prefix}panel-border-radius: #{$panel-border-radius};
+    --#{$prefix}panel-inner-border-radius: #{$panel-inner-border-radius};
+    --#{$prefix}panel-bg: #{$panel-bg};
+
+    background-color: var(--#{$prefix}panel-bg);
+    background-clip: border-box;
+    @include border-radius(var(--#{$prefix}panel-border-radius));
+    color: var(--#{$prefix}body-color);
+    display: flex;
+    border: var(--#{$prefix}panel-border-width) solid var(--#{$prefix}panel-border-color);
+    flex-direction: column;
+    height: var(--#{$prefix}panel-height);
+    margin-bottom: var(--#{$prefix}panel-spacer-y);
+    margin-top: var(--#{$prefix}panel-spacer-y);
+    position: relative;
+    // min-width: 0;
+    word-wrap: break-word;
+
+    .list-group {
+        --#{$prefix}list-group-bg: #{$panel-bg};
+        --#{$prefix}list-group-item-padding-x: #{$panel-spacer-x};
+        --#{$prefix}list-group-item-padding-y: #{$panel-list-group-item-spacer-y};
+        --#{$prefix}list-group-action-hover-bg: #{$panel-bg};
+
+        > .list-group-item {
+            &:first-child {
+                padding-top: 0;
+            }
+
+            &:last-child {
+                padding-bottom: 0;
+            }
+        }
+    }
+
+    .panel-heading {
+        padding: var(--#{$prefix}panel-spacer-y) var(--#{$prefix}panel-spacer-x);
+
+        > h3 {
+            color: var(--#{$prefix}panel-header-color);
+            font-size: var(--#{$prefix}panel-header-font-size);
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        + .panel-body {
+            padding-top: 0;
+        }
+    }
+
+    .panel-body {
+        flex: 1 1 auto;
+        padding: var(--#{$prefix}panel-spacer-y) var(--#{$prefix}panel-spacer-x);
+    }
+
+    .panel-thumb {
+        img {
+            width: 100%;
+        }
+    }
+
+    .panel-footer {
+        --#{$prefix}panel-footer-bg: #{$panel-footer-bg};
+        --#{$prefix}panel-footer-link-color: #{$panel-footer-link-color};
+
+        background-color: var(--#{$prefix}panel-footer-bg);
+        @include border-bottom-start-radius(var(--#{$prefix}panel-border-radius));
+        @include border-bottom-end-radius(var(--#{$prefix}panel-border-radius));
+        padding: var(--#{$prefix}panel-spacer-y) var(--#{$prefix}panel-spacer-x);
+
+        .panel-footer-link {
+            color: var(--#{$prefix}panel-footer-link-color);
+            font-weight: 600;
+            text-transform: uppercase;
+
+            + .panel-footer-link {
+                margin-left: 0.5rem;
+            }
+        }
+    }
+}
+
+@include color-mode(gewis-night) {
+    .panel {
+        --#{$prefix}panel-bg: #{$panel-bg-dark};
+
+        .panel-footer {
+            --#{$prefix}panel-footer-bg: #{$panel-footer-bg-dark};
+            --#{$prefix}panel-footer-link-color: #{$panel-footer-link-color-dark};
+        }
+
+        .list-group {
+            --#{$prefix}list-group-bg: #{$panel-bg-dark};
+            --#{$prefix}list-group-action-hover-bg: #{$panel-bg-dark};
+        }
+    }
+}

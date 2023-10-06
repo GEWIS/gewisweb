@@ -21,13 +21,6 @@ $meetingName = sprintf(
 );
 
 $this->headTitle($meetingName);
-
-$this->headScript()
-    ->appendFile(
-        $this->basepath('js/bootstrap/tooltip.js'),
-        'text/javascript',
-        ['nonce' => NONCE_REPLACEMENT_STRING],
-    );
 ?>
 <section class="section">
     <div class="container">
