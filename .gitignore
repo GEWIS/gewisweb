@@ -19,6 +19,7 @@ node_modules/
 data/cache/phpstan/
 public/css/gewis-theme.css
 public/css/gewis-theme.css.map
+resources/scss/
 public/styleguide/
 autoload_classmap.php
 .mysql

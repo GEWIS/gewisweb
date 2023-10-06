@@ -5,8 +5,8 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "scss": "sass --style compressed --no-source-map public/scss/gewis-theme.scss:public/css/gewis-theme.css",
-        "watch": "sass --watch public/scss/gewis-theme.scss:public/css"
+        "scss": "sass --style compressed --no-source-map resources/scss/gewis-theme.scss:public/css/gewis-theme.css",
+        "watch": "sass --watch resources/scss/gewis-theme.scss:public/css"
     },
     "repository": {
         "type": "git",

@@ -13,6 +13,7 @@
 .env.dist
 .git/
 .gitattributes
+.gitignore
 .idea/
 .mysql/
 .project

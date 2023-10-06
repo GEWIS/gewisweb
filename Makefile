@@ -69,7 +69,7 @@ replenish:
 		@docker cp ./data "$(shell docker compose ps -q web)":/code
 		@docker compose exec web chown -R www-data:www-data /code/data
 		@docker compose exec web rm -rf data/cache/module-config-cache.application.config.cache.php
-		@docker compose exec web php composer.phar dump-autoload --dev
+		@docker compose exec web composer dump-autoload --dev
 		@docker compose exec web ./orm orm:generate-proxies
 
 update: updatecomposer updatepackage updatecss updateglide updatedocker
@@ -146,13 +146,11 @@ checkcomposerunused: loadenv
 		@XDEBUG_MODE=off vendor/bin/composer-unused
 
 checkcomposeroutdated:
-		@php composer.phar outdated
+		@composer outdated
 
 updatecomposer:
 		@docker cp ./composer.json "$(shell docker compose ps -q web)":/code/composer.json
-		@docker compose exec web php composer.phar selfupdate
-		@docker cp "$(shell docker compose ps -q web)":/code/composer.phar ./composer.phar
-		@docker compose exec web php composer.phar update -W
+		@docker compose exec web php composer update -W
 		@docker cp "$(shell docker compose ps -q web)":/code/composer.lock ./composer.lock
 
 updatepackage:
@@ -167,13 +165,8 @@ updatecss:
 		@docker cp "$(shell docker compose ps -q web)":/code/public/css/gewis-theme.css ./public/css/gewis-theme.css
 
 updateglide:
-		@docker compose exec glide php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-		@docker compose exec glide php composer-setup.php
-		@docker compose exec glide php -r "unlink('composer-setup.php');"
 		@docker cp ./docker/glide/composer.json "$(shell docker compose ps -q glide)":/glide/composer.json
-		@docker compose exec glide php composer.phar selfupdate
-		@docker cp "$(shell docker compose ps -q glide)":/glide/composer.phar ./docker/glide/composer.phar
-		@docker compose exec glide php composer.phar update -W
+		@docker compose exec glide composer update -W
 		@docker cp "$(shell docker compose ps -q glide)":/glide/composer.lock ./docker/glide/composer.lock
 
 updatedocker:

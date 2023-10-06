@@ -1,0 +1,56 @@
+/*!
+ * Bootstrap v3.4.1 (https://getbootstrap.com/)
+ * Copyright 2011-2019 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+
+// Core variables and mixins
+@import "../../vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap/variables";
+@import "../../vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap/mixins";
+
+// Reset and dependencies
+@import "../../vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap/normalize";
+@import "../../vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap/print";
+@import "../../vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap/glyphicons";
+
+// Core CSS
+@import "../../vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap/scaffolding";
+@import "../../vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap/type";
+@import "../../vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap/code";
+@import "../../vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap/grid";
+@import "../../vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap/tables";
+@import "../../vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap/forms";
+@import "../../vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap/buttons";
+
+// Components
+@import "../../vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap/component-animations";
+@import "../../vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap/dropdowns";
+@import "../../vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap/button-groups";
+@import "../../vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap/input-groups";
+@import "../../vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap/navs";
+@import "../../vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap/navbar";
+@import "../../vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap/breadcrumbs";
+@import "../../vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap/pagination";
+@import "../../vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap/pager";
+@import "../../vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap/labels";
+@import "../../vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap/badges";
+@import "../../vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap/jumbotron";
+@import "../../vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap/thumbnails";
+@import "../../vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap/alerts";
+@import "../../vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap/progress-bars";
+@import "../../vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap/media";
+@import "../../vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap/list-group";
+@import "../../vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap/panels";
+@import "../../vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap/responsive-embed";
+@import "../../vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap/wells";
+@import "../../vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap/close";
+
+// Components w/ JavaScript
+@import "../../vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap/modals";
+@import "../../vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap/tooltip";
+@import "../../vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap/popovers";
+@import "../../vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap/carousel";
+
+// Utility classes
+@import "../../vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap/utilities";
+@import "../../vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap/responsive-utilities";
