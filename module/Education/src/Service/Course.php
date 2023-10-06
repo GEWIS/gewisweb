@@ -43,9 +43,9 @@ use function strlen;
 use function unlink;
 
 /**
- * Exam service.
+ * Course service.
  */
-class Exam
+class Course
 {
     protected ?BulkForm $bulkForm = null;
 
@@ -485,13 +485,52 @@ class Exam
     }
 
     /**
-     * Add a new course.
+     * Save a course.
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
-    public function saveCourse(CourseModel $course): bool
+    public function saveCourse(array $data): CourseModel
     {
+        $course = new CourseModel();
+        $course->setCode($data['code']);
+        $course->setName($data['name']);
+
+        $similarCoursesCodes = explode(',', $data['similar']);
+
+        foreach ($similarCoursesCodes as $similarCourseCode) {
+            $similarCourse = $this->getCourse($similarCourseCode);
+            $course->addSimilarCourseTo($similarCourse);
+        }
+
         $this->courseMapper->persist($course);
 
-        return true;
+        return $course;
+    }
+
+    /**
+     * Update a course.
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
+     */
+    public function updateCourse(
+        CourseModel $course,
+        array $data,
+    ): CourseModel {
+        $course->setCode($data['code']);
+        $course->setName($data['name']);
+
+        $similarCoursesCodes = explode(',', $data['similar']);
+
+        $course->clearSimilarCoursesTo();
+
+        foreach ($similarCoursesCodes as $similarCourseCode) {
+            $similarCourse = $this->getCourse($similarCourseCode);
+            $course->addSimilarCourseTo($similarCourse);
+        }
+
+        $this->courseMapper->persist($course);
+
+        return $course;
     }
 
     /**

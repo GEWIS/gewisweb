@@ -2040,6 +2040,13 @@ msgstr "Older"
 msgid "Onderwijscommissaris"
 msgstr "Educational Officer"
 
+msgid ""
+"One of the courses is not valid (either it does not exist or is the same as "
+"the current course)"
+msgstr ""
+"One of the courses is not valid (either it does not exist or is the same as "
+"the current course)"
+
 msgid "Only allow GEWIS members"
 msgstr "Only allow GEWIS members"
 
@@ -2569,6 +2576,9 @@ msgstr "Sign-up List"
 
 msgid "Sign-up Lists"
 msgstr "Sign-up Lists"
+
+msgid "Similar courses"
+msgstr "Similar courses"
 
 msgid "Slogan"
 msgstr "Slogan"

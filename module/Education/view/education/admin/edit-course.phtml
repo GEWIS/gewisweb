@@ -63,6 +63,19 @@ $form->setAttribute('method', 'post');
         </div>
     </div>
     <div class="col-md-12">
+        <?php
+        $element = $form->get('similar');
+        $element->setAttribute('class', 'form-control');
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($element) ?>">
+            <label for="<?= $element->getName() ?>" class="control-label label-required">
+                <?= $element->getLabel() ?>
+            </label>
+            <?= $this->formText($element) ?>
+            <?= $this->formElementErrors($element) ?>
+        </div>
+    </div>
+    <div class="col-md-12">
         <div class="form-group">
             <?php
             $submit = $form->get('submit');

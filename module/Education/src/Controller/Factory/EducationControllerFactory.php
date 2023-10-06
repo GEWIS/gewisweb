@@ -19,7 +19,7 @@ class EducationControllerFactory implements FactoryInterface
         ?array $options = null,
     ): EducationController {
         return new EducationController(
-            $container->get('education_service_exam'),
+            $container->get('education_service_course'),
             $container->get('education_form_searchcourse'),
         );
     }
