@@ -452,15 +452,15 @@
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -private">
-    <a href="classes/Education-Controller-AdminController.html#property_educationTempConfig">$educationTempConfig</a>
+    <a href="classes/Education-Controller-AdminController.html#property_courseService">$courseService</a>
     <span>
-                        &nbsp;: array&lt;string|int, mixed&gt;            </span>
+                        &nbsp;: <a href="classes/Education-Service-Course.html"><abbr title="\Education\Service\Course">Course</abbr></a>            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -private">
-    <a href="classes/Education-Controller-AdminController.html#property_examService">$examService</a>
+    <a href="classes/Education-Controller-AdminController.html#property_educationTempConfig">$educationTempConfig</a>
     <span>
-                        &nbsp;: <a href="classes/Education-Service-Exam.html"><abbr title="\Education\Service\Exam">Exam</abbr></a>            </span>
+                        &nbsp;: array&lt;string|int, mixed&gt;            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -private">
@@ -617,6 +617,39 @@
             -private
                                                 -read-only        "
 >
+    <h4 class="phpdocumentor-element__name" id="property_courseService">
+        $courseService
+        <a href="classes/Education-Controller-AdminController.html#property_courseService" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Controller/AdminController.php"><a href="files/module-education-src-controller-admincontroller.html"><abbr title="module/Education/src/Controller/AdminController.php">AdminController.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">32</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Education-Service-Course.html"><abbr title="\Education\Service\Course">Course</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$courseService</span>
+    </code>
+
+    
+    
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+                                                -read-only        "
+>
     <h4 class="phpdocumentor-element__name" id="property_educationTempConfig">
         $educationTempConfig
         <a href="classes/Education-Controller-AdminController.html#property_educationTempConfig" class="headerlink"><i class="fas fa-link"></i></a>
@@ -636,39 +669,6 @@
     <span class="phpdocumentor-signature__visibility">private</span>
         <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$educationTempConfig</span>
-    </code>
-
-    
-    
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -private
-                                                -read-only        "
->
-    <h4 class="phpdocumentor-element__name" id="property_examService">
-        $examService
-        <a href="classes/Education-Controller-AdminController.html#property_examService" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Controller/AdminController.php"><a href="files/module-education-src-controller-admincontroller.html"><abbr title="module/Education/src/Controller/AdminController.php">AdminController.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">32</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/Education-Service-Exam.html"><abbr title="\Education\Service\Exam">Exam</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$examService</span>
     </code>
 
     
@@ -738,7 +738,7 @@
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Education-Service-AclService.html"><abbr title="\Education\Service\AclService">AclService</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$aclService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Mvc\I18n\Translator">Translator</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$translator</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Education-Service-Exam.html"><abbr title="\Education\Service\Exam">Exam</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$examService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$educationTempConfig</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Education-Service-AclService.html"><abbr title="\Education\Service\AclService">AclService</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$aclService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Mvc\I18n\Translator">Translator</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$translator</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Education-Service-Course.html"><abbr title="\Education\Service\Course">Course</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$courseService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$educationTempConfig</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -760,8 +760,8 @@
                 
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$examService</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Education-Service-Exam.html"><abbr title="\Education\Service\Exam">Exam</abbr></a></span>
+                <span class="phpdocumentor-signature__argument__name">$courseService</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Education-Service-Course.html"><abbr title="\Education\Service\Course">Course</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
@@ -844,7 +844,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Controller/AdminController.php"><a href="files/module-education-src-controller-admincontroller.html"><abbr title="module/Education/src/Controller/AdminController.php">AdminController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">210</span>
+    <span class="phpdocumentor-element-found-in__line">202</span>
 
     </aside>
 
@@ -879,7 +879,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Controller/AdminController.php"><a href="files/module-education-src-controller-admincontroller.html"><abbr title="module/Education/src/Controller/AdminController.php">AdminController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">241</span>
+    <span class="phpdocumentor-element-found-in__line">233</span>
 
     </aside>
 
@@ -949,7 +949,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Controller/AdminController.php"><a href="files/module-education-src-controller-admincontroller.html"><abbr title="module/Education/src/Controller/AdminController.php">AdminController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">159</span>
+    <span class="phpdocumentor-element-found-in__line">151</span>
 
     </aside>
 
@@ -984,7 +984,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Controller/AdminController.php"><a href="files/module-education-src-controller-admincontroller.html"><abbr title="module/Education/src/Controller/AdminController.php">AdminController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">137</span>
+    <span class="phpdocumentor-element-found-in__line">129</span>
 
     </aside>
 
@@ -1019,7 +1019,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Controller/AdminController.php"><a href="files/module-education-src-controller-admincontroller.html"><abbr title="module/Education/src/Controller/AdminController.php">AdminController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">179</span>
+    <span class="phpdocumentor-element-found-in__line">171</span>
 
     </aside>
 
@@ -1054,7 +1054,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Controller/AdminController.php"><a href="files/module-education-src-controller-admincontroller.html"><abbr title="module/Education/src/Controller/AdminController.php">AdminController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">329</span>
+    <span class="phpdocumentor-element-found-in__line">321</span>
 
     </aside>
 
@@ -1089,7 +1089,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Controller/AdminController.php"><a href="files/module-education-src-controller-admincontroller.html"><abbr title="module/Education/src/Controller/AdminController.php">AdminController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">95</span>
+    <span class="phpdocumentor-element-found-in__line">93</span>
 
     </aside>
 
@@ -1124,7 +1124,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Controller/AdminController.php"><a href="files/module-education-src-controller-admincontroller.html"><abbr title="module/Education/src/Controller/AdminController.php">AdminController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">275</span>
+    <span class="phpdocumentor-element-found-in__line">267</span>
 
     </aside>
 
@@ -1160,7 +1160,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Controller/AdminController.php"><a href="files/module-education-src-controller-admincontroller.html"><abbr title="module/Education/src/Controller/AdminController.php">AdminController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">306</span>
+    <span class="phpdocumentor-element-found-in__line">298</span>
 
     </aside>
 
@@ -1366,8 +1366,8 @@
                 <li>
                     <ul class="phpdocumentor-list -clean">
                                                     <li><a href="classes/Education-Controller-AdminController.html#property_aclService">$aclService<a href="classes/Education-Controller-AdminController.html"></li>
+                                                    <li><a href="classes/Education-Controller-AdminController.html#property_courseService">$courseService<a href="classes/Education-Controller-AdminController.html"></li>
                                                     <li><a href="classes/Education-Controller-AdminController.html#property_educationTempConfig">$educationTempConfig<a href="classes/Education-Controller-AdminController.html"></li>
-                                                    <li><a href="classes/Education-Controller-AdminController.html#property_examService">$examService<a href="classes/Education-Controller-AdminController.html"></li>
                                                     <li><a href="classes/Education-Controller-AdminController.html#property_translator">$translator<a href="classes/Education-Controller-AdminController.html"></li>
                                             </ul>
                 </li>

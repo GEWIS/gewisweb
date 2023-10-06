@@ -10741,10 +10741,10 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Education-Controller-AdminController.html#property_translator"
         },                {
-            "fqsen": "\\Education\\Controller\\AdminController\u003A\u003A\u0024examService",
-            "name": "examService",
+            "fqsen": "\\Education\\Controller\\AdminController\u003A\u003A\u0024courseService",
+            "name": "courseService",
             "summary": "",
-            "url": "classes/Education-Controller-AdminController.html#property_examService"
+            "url": "classes/Education-Controller-AdminController.html#property_courseService"
         },                {
             "fqsen": "\\Education\\Controller\\AdminController\u003A\u003A\u0024educationTempConfig",
             "name": "educationTempConfig",
@@ -10776,10 +10776,10 @@ Search.appendIndex(
             "summary": "Download\u0020an\u0020exam.",
             "url": "classes/Education-Controller-EducationController.html#method_downloadAction"
         },                {
-            "fqsen": "\\Education\\Controller\\EducationController\u003A\u003A\u0024examService",
-            "name": "examService",
+            "fqsen": "\\Education\\Controller\\EducationController\u003A\u003A\u0024courseService",
+            "name": "courseService",
             "summary": "",
-            "url": "classes/Education-Controller-EducationController.html#property_examService"
+            "url": "classes/Education-Controller-EducationController.html#property_courseService"
         },                {
             "fqsen": "\\Education\\Controller\\EducationController\u003A\u003A\u0024searchCourseForm",
             "name": "searchCourseForm",
@@ -10858,8 +10858,18 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Education\\Form\\Course\u003A\u003AisCourseCodeUnique\u0028\u0029",
             "name": "isCourseCodeUnique",
-            "summary": "",
+            "summary": "Check\u0020if\u0020a\u0020course\u0020code\u0020is\u0020unique.",
             "url": "classes/Education-Form-Course.html#method_isCourseCodeUnique"
+        },                {
+            "fqsen": "\\Education\\Form\\Course\u003A\u003AareSimilarValid\u0028\u0029",
+            "name": "areSimilarValid",
+            "summary": "Check\u0020if\u0020the\u0020similar\u0020courses\u0020are\u0020valid.",
+            "url": "classes/Education-Form-Course.html#method_areSimilarValid"
+        },                {
+            "fqsen": "\\Education\\Form\\Course\u003A\u003AisSimilarValid\u0028\u0029",
+            "name": "isSimilarValid",
+            "summary": "Check\u0020if\u0020a\u0020similar\u0020course\u0020is\u0020valid.",
+            "url": "classes/Education-Form-Course.html#method_isSimilarValid"
         },                {
             "fqsen": "\\Education\\Form\\Course\u003A\u003A\u0024currentCode",
             "name": "currentCode",
@@ -11056,6 +11066,26 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Education-Model-Course.html#method_toArray"
         },                {
+            "fqsen": "\\Education\\Model\\Course\u003A\u003AgetSimilarCoursesAsString\u0028\u0029",
+            "name": "getSimilarCoursesAsString",
+            "summary": "Get\u0020the\u0020similar\u0020courses\u0020to\u0020this\u0020course\u0020as\u0020a\u0020comma\u0020separated\u0020string.",
+            "url": "classes/Education-Model-Course.html#method_getSimilarCoursesAsString"
+        },                {
+            "fqsen": "\\Education\\Model\\Course\u003A\u003AgetSimilarCoursesTo\u0028\u0029",
+            "name": "getSimilarCoursesTo",
+            "summary": "Get\u0020the\u0020similar\u0020courses\u0020to\u0020this\u0020course.",
+            "url": "classes/Education-Model-Course.html#method_getSimilarCoursesTo"
+        },                {
+            "fqsen": "\\Education\\Model\\Course\u003A\u003AaddSimilarCourseTo\u0028\u0029",
+            "name": "addSimilarCourseTo",
+            "summary": "Adds\u0020a\u0020course\u0020to\u0020the\u0020similar\u0020courses\u0020to\u0020list\u0020if\u0020it\u0020doesn\u0027t\u0020yet\u0020exist.",
+            "url": "classes/Education-Model-Course.html#method_addSimilarCourseTo"
+        },                {
+            "fqsen": "\\Education\\Model\\Course\u003A\u003AclearSimilarCoursesTo\u0028\u0029",
+            "name": "clearSimilarCoursesTo",
+            "summary": "Removes\u0020all\u0020references\u0020to\u0020similar\u0020courses\u0020to\u0020this\u0020course.",
+            "url": "classes/Education-Model-Course.html#method_clearSimilarCoursesTo"
+        },                {
             "fqsen": "\\Education\\Model\\Course\u003A\u003AgetResourceId\u0028\u0029",
             "name": "getResourceId",
             "summary": "Get\u0020the\u0020resource\u0020ID.",
@@ -11075,6 +11105,16 @@ Search.appendIndex(
             "name": "documents",
             "summary": "Exams\u0020\u0028and\u0020summaries\u0029\u0020in\u0020this\u0020course.",
             "url": "classes/Education-Model-Course.html#property_documents"
+        },                {
+            "fqsen": "\\Education\\Model\\Course\u003A\u003A\u0024similarCoursesFrom",
+            "name": "similarCoursesFrom",
+            "summary": "Courses\u0020that\u0020say\u0020they\u0020are\u0020similar\u0020to\u0020this\u0020course",
+            "url": "classes/Education-Model-Course.html#property_similarCoursesFrom"
+        },                {
+            "fqsen": "\\Education\\Model\\Course\u003A\u003A\u0024similarCoursesTo",
+            "name": "similarCoursesTo",
+            "summary": "Courses\u0020similar\u0020to\u0020this\u0020course",
+            "url": "classes/Education-Model-Course.html#property_similarCoursesTo"
         },                {
             "fqsen": "\\Education\\Model\\CourseDocument",
             "name": "CourseDocument",
@@ -11266,195 +11306,200 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Education-Service-AclService.html#method_createAcl"
         },                {
-            "fqsen": "\\Education\\Service\\Exam",
-            "name": "Exam",
-            "summary": "Exam\u0020service.",
-            "url": "classes/Education-Service-Exam.html"
+            "fqsen": "\\Education\\Service\\Course",
+            "name": "Course",
+            "summary": "Course\u0020service.",
+            "url": "classes/Education-Service-Course.html"
         },                {
-            "fqsen": "\\Education\\Service\\Exam\u003A\u003A__construct\u0028\u0029",
+            "fqsen": "\\Education\\Service\\Course\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
             "summary": "",
-            "url": "classes/Education-Service-Exam.html#method___construct"
+            "url": "classes/Education-Service-Course.html#method___construct"
         },                {
-            "fqsen": "\\Education\\Service\\Exam\u003A\u003AsearchCourse\u0028\u0029",
+            "fqsen": "\\Education\\Service\\Course\u003A\u003AsearchCourse\u0028\u0029",
             "name": "searchCourse",
             "summary": "Search\u0020for\u0020a\u0020course.",
-            "url": "classes/Education-Service-Exam.html#method_searchCourse"
+            "url": "classes/Education-Service-Course.html#method_searchCourse"
         },                {
-            "fqsen": "\\Education\\Service\\Exam\u003A\u003AgetCourse\u0028\u0029",
+            "fqsen": "\\Education\\Service\\Course\u003A\u003AgetCourse\u0028\u0029",
             "name": "getCourse",
             "summary": "Get\u0020a\u0020course.",
-            "url": "classes/Education-Service-Exam.html#method_getCourse"
+            "url": "classes/Education-Service-Course.html#method_getCourse"
         },                {
-            "fqsen": "\\Education\\Service\\Exam\u003A\u003AgetDocumentDownload\u0028\u0029",
+            "fqsen": "\\Education\\Service\\Course\u003A\u003AgetDocumentDownload\u0028\u0029",
             "name": "getDocumentDownload",
             "summary": "Get\u0020an\u0020exam.",
-            "url": "classes/Education-Service-Exam.html#method_getDocumentDownload"
+            "url": "classes/Education-Service-Course.html#method_getDocumentDownload"
         },                {
-            "fqsen": "\\Education\\Service\\Exam\u003A\u003AbulkEdit\u0028\u0029",
+            "fqsen": "\\Education\\Service\\Course\u003A\u003AbulkEdit\u0028\u0029",
             "name": "bulkEdit",
             "summary": "Finish\u0020the\u0020bulk\u0020edit.",
-            "url": "classes/Education-Service-Exam.html#method_bulkEdit"
+            "url": "classes/Education-Service-Course.html#method_bulkEdit"
         },                {
-            "fqsen": "\\Education\\Service\\Exam\u003A\u003AbulkExamEdit\u0028\u0029",
+            "fqsen": "\\Education\\Service\\Course\u003A\u003AbulkExamEdit\u0028\u0029",
             "name": "bulkExamEdit",
             "summary": "",
-            "url": "classes/Education-Service-Exam.html#method_bulkExamEdit"
+            "url": "classes/Education-Service-Course.html#method_bulkExamEdit"
         },                {
-            "fqsen": "\\Education\\Service\\Exam\u003A\u003AbulkSummaryEdit\u0028\u0029",
+            "fqsen": "\\Education\\Service\\Course\u003A\u003AbulkSummaryEdit\u0028\u0029",
             "name": "bulkSummaryEdit",
             "summary": "",
-            "url": "classes/Education-Service-Exam.html#method_bulkSummaryEdit"
+            "url": "classes/Education-Service-Course.html#method_bulkSummaryEdit"
         },                {
-            "fqsen": "\\Education\\Service\\Exam\u003A\u003AtempUpload\u0028\u0029",
+            "fqsen": "\\Education\\Service\\Course\u003A\u003AtempUpload\u0028\u0029",
             "name": "tempUpload",
             "summary": "Temporary\u0020exam\u0020upload.",
-            "url": "classes/Education-Service-Exam.html#method_tempUpload"
+            "url": "classes/Education-Service-Course.html#method_tempUpload"
         },                {
-            "fqsen": "\\Education\\Service\\Exam\u003A\u003AtempExamUpload\u0028\u0029",
+            "fqsen": "\\Education\\Service\\Course\u003A\u003AtempExamUpload\u0028\u0029",
             "name": "tempExamUpload",
             "summary": "",
-            "url": "classes/Education-Service-Exam.html#method_tempExamUpload"
+            "url": "classes/Education-Service-Course.html#method_tempExamUpload"
         },                {
-            "fqsen": "\\Education\\Service\\Exam\u003A\u003AtempSummaryUpload\u0028\u0029",
+            "fqsen": "\\Education\\Service\\Course\u003A\u003AtempSummaryUpload\u0028\u0029",
             "name": "tempSummaryUpload",
             "summary": "",
-            "url": "classes/Education-Service-Exam.html#method_tempSummaryUpload"
+            "url": "classes/Education-Service-Course.html#method_tempSummaryUpload"
         },                {
-            "fqsen": "\\Education\\Service\\Exam\u003A\u003AcourseDocumentToFilename\u0028\u0029",
+            "fqsen": "\\Education\\Service\\Course\u003A\u003AcourseDocumentToFilename\u0028\u0029",
             "name": "courseDocumentToFilename",
             "summary": "Get\u0020a\u0020filename\u0020from\u0020an\u0020exam\u0020\u0028or\u0020summary\u0029.",
-            "url": "classes/Education-Service-Exam.html#method_courseDocumentToFilename"
+            "url": "classes/Education-Service-Course.html#method_courseDocumentToFilename"
         },                {
-            "fqsen": "\\Education\\Service\\Exam\u003A\u003AgetConfig\u0028\u0029",
+            "fqsen": "\\Education\\Service\\Course\u003A\u003AgetConfig\u0028\u0029",
             "name": "getConfig",
             "summary": "Get\u0020the\u0020education\u0020config,\u0020as\u0020used\u0020by\u0020this\u0020service.",
-            "url": "classes/Education-Service-Exam.html#method_getConfig"
+            "url": "classes/Education-Service-Course.html#method_getConfig"
         },                {
-            "fqsen": "\\Education\\Service\\Exam\u003A\u003AdeleteTempExam\u0028\u0029",
+            "fqsen": "\\Education\\Service\\Course\u003A\u003AdeleteTempExam\u0028\u0029",
             "name": "deleteTempExam",
             "summary": "Deletes\u0020a\u0020temp\u0020uploaded\u0020exam\u0020or\u0020summary.",
-            "url": "classes/Education-Service-Exam.html#method_deleteTempExam"
+            "url": "classes/Education-Service-Course.html#method_deleteTempExam"
         },                {
-            "fqsen": "\\Education\\Service\\Exam\u003A\u003AgetBulkForm\u0028\u0029",
+            "fqsen": "\\Education\\Service\\Course\u003A\u003AgetBulkForm\u0028\u0029",
             "name": "getBulkForm",
             "summary": "Get\u0020the\u0020bulk\u0020edit\u0020form.",
-            "url": "classes/Education-Service-Exam.html#method_getBulkForm"
+            "url": "classes/Education-Service-Course.html#method_getBulkForm"
         },                {
-            "fqsen": "\\Education\\Service\\Exam\u003A\u003AgetBulkSummaryForm\u0028\u0029",
+            "fqsen": "\\Education\\Service\\Course\u003A\u003AgetBulkSummaryForm\u0028\u0029",
             "name": "getBulkSummaryForm",
             "summary": "Get\u0020the\u0020bulk\u0020summary\u0020edit\u0020form.",
-            "url": "classes/Education-Service-Exam.html#method_getBulkSummaryForm"
+            "url": "classes/Education-Service-Course.html#method_getBulkSummaryForm"
         },                {
-            "fqsen": "\\Education\\Service\\Exam\u003A\u003AgetBulkExamForm\u0028\u0029",
+            "fqsen": "\\Education\\Service\\Course\u003A\u003AgetBulkExamForm\u0028\u0029",
             "name": "getBulkExamForm",
             "summary": "Get\u0020the\u0020bulk\u0020exam\u0020edit\u0020form.",
-            "url": "classes/Education-Service-Exam.html#method_getBulkExamForm"
+            "url": "classes/Education-Service-Course.html#method_getBulkExamForm"
         },                {
-            "fqsen": "\\Education\\Service\\Exam\u003A\u003AguessCourseDocumentData\u0028\u0029",
+            "fqsen": "\\Education\\Service\\Course\u003A\u003AguessCourseDocumentData\u0028\u0029",
             "name": "guessCourseDocumentData",
             "summary": "Guesses\u0020the\u0020course\u0020code\u0020and\u0020date\u0020based\u0020on\u0020an\u0020exam\u0027s\u0020filename.",
-            "url": "classes/Education-Service-Exam.html#method_guessCourseDocumentData"
+            "url": "classes/Education-Service-Course.html#method_guessCourseDocumentData"
         },                {
-            "fqsen": "\\Education\\Service\\Exam\u003A\u003AguessSummaryAuthor\u0028\u0029",
+            "fqsen": "\\Education\\Service\\Course\u003A\u003AguessSummaryAuthor\u0028\u0029",
             "name": "guessSummaryAuthor",
             "summary": "Guesses\u0020the\u0020summary\u0020author\u0020based\u0020on\u0020a\u0020summary\u0027s\u0020filename.",
-            "url": "classes/Education-Service-Exam.html#method_guessSummaryAuthor"
+            "url": "classes/Education-Service-Course.html#method_guessSummaryAuthor"
         },                {
-            "fqsen": "\\Education\\Service\\Exam\u003A\u003AgetTempUploadForm\u0028\u0029",
+            "fqsen": "\\Education\\Service\\Course\u003A\u003AgetTempUploadForm\u0028\u0029",
             "name": "getTempUploadForm",
             "summary": "Get\u0020the\u0020Temporary\u0020Upload\u0020form.",
-            "url": "classes/Education-Service-Exam.html#method_getTempUploadForm"
+            "url": "classes/Education-Service-Course.html#method_getTempUploadForm"
         },                {
-            "fqsen": "\\Education\\Service\\Exam\u003A\u003AgetCourseForm\u0028\u0029",
+            "fqsen": "\\Education\\Service\\Course\u003A\u003AgetCourseForm\u0028\u0029",
             "name": "getCourseForm",
             "summary": "Get\u0020the\u0020add\u0020course\u0020form.",
-            "url": "classes/Education-Service-Exam.html#method_getCourseForm"
+            "url": "classes/Education-Service-Course.html#method_getCourseForm"
         },                {
-            "fqsen": "\\Education\\Service\\Exam\u003A\u003AsaveCourse\u0028\u0029",
+            "fqsen": "\\Education\\Service\\Course\u003A\u003AsaveCourse\u0028\u0029",
             "name": "saveCourse",
-            "summary": "Add\u0020a\u0020new\u0020course.",
-            "url": "classes/Education-Service-Exam.html#method_saveCourse"
+            "summary": "Save\u0020a\u0020course.",
+            "url": "classes/Education-Service-Course.html#method_saveCourse"
         },                {
-            "fqsen": "\\Education\\Service\\Exam\u003A\u003AdeleteCourse\u0028\u0029",
+            "fqsen": "\\Education\\Service\\Course\u003A\u003AupdateCourse\u0028\u0029",
+            "name": "updateCourse",
+            "summary": "Update\u0020a\u0020course.",
+            "url": "classes/Education-Service-Course.html#method_updateCourse"
+        },                {
+            "fqsen": "\\Education\\Service\\Course\u003A\u003AdeleteCourse\u0028\u0029",
             "name": "deleteCourse",
             "summary": "Delete\u0020a\u0020course\u0020and\u0020all\u0020its\u0020documents.",
-            "url": "classes/Education-Service-Exam.html#method_deleteCourse"
+            "url": "classes/Education-Service-Course.html#method_deleteCourse"
         },                {
-            "fqsen": "\\Education\\Service\\Exam\u003A\u003AgetAllCourses\u0028\u0029",
+            "fqsen": "\\Education\\Service\\Course\u003A\u003AgetAllCourses\u0028\u0029",
             "name": "getAllCourses",
             "summary": "Get\u0020all\u0020courses.",
-            "url": "classes/Education-Service-Exam.html#method_getAllCourses"
+            "url": "classes/Education-Service-Course.html#method_getAllCourses"
         },                {
-            "fqsen": "\\Education\\Service\\Exam\u003A\u003AgetDocumentsForCourse\u0028\u0029",
+            "fqsen": "\\Education\\Service\\Course\u003A\u003AgetDocumentsForCourse\u0028\u0029",
             "name": "getDocumentsForCourse",
             "summary": "Get\u0020all\u0020documents\u0020of\u0020a\u0020specific\u0020type\u0020for\u0020a\u0020specific\u0020course.",
-            "url": "classes/Education-Service-Exam.html#method_getDocumentsForCourse"
+            "url": "classes/Education-Service-Course.html#method_getDocumentsForCourse"
         },                {
-            "fqsen": "\\Education\\Service\\Exam\u003A\u003AgetDocument\u0028\u0029",
+            "fqsen": "\\Education\\Service\\Course\u003A\u003AgetDocument\u0028\u0029",
             "name": "getDocument",
             "summary": "Get\u0020a\u0020specific\u0020course\u0020document.",
-            "url": "classes/Education-Service-Exam.html#method_getDocument"
+            "url": "classes/Education-Service-Course.html#method_getDocument"
         },                {
-            "fqsen": "\\Education\\Service\\Exam\u003A\u003AdeleteDocument\u0028\u0029",
+            "fqsen": "\\Education\\Service\\Course\u003A\u003AdeleteDocument\u0028\u0029",
             "name": "deleteDocument",
             "summary": "Delete\u0020a\u0020course\u0020document",
-            "url": "classes/Education-Service-Exam.html#method_deleteDocument"
+            "url": "classes/Education-Service-Course.html#method_deleteDocument"
         },                {
-            "fqsen": "\\Education\\Service\\Exam\u003A\u003A\u0024bulkForm",
+            "fqsen": "\\Education\\Service\\Course\u003A\u003A\u0024bulkForm",
             "name": "bulkForm",
             "summary": "",
-            "url": "classes/Education-Service-Exam.html#property_bulkForm"
+            "url": "classes/Education-Service-Course.html#property_bulkForm"
         },                {
-            "fqsen": "\\Education\\Service\\Exam\u003A\u003A\u0024aclService",
+            "fqsen": "\\Education\\Service\\Course\u003A\u003A\u0024aclService",
             "name": "aclService",
             "summary": "",
-            "url": "classes/Education-Service-Exam.html#property_aclService"
+            "url": "classes/Education-Service-Course.html#property_aclService"
         },                {
-            "fqsen": "\\Education\\Service\\Exam\u003A\u003A\u0024translator",
+            "fqsen": "\\Education\\Service\\Course\u003A\u003A\u0024translator",
             "name": "translator",
             "summary": "",
-            "url": "classes/Education-Service-Exam.html#property_translator"
+            "url": "classes/Education-Service-Course.html#property_translator"
         },                {
-            "fqsen": "\\Education\\Service\\Exam\u003A\u003A\u0024storageService",
+            "fqsen": "\\Education\\Service\\Course\u003A\u003A\u0024storageService",
             "name": "storageService",
             "summary": "",
-            "url": "classes/Education-Service-Exam.html#property_storageService"
+            "url": "classes/Education-Service-Course.html#property_storageService"
         },                {
-            "fqsen": "\\Education\\Service\\Exam\u003A\u003A\u0024courseMapper",
+            "fqsen": "\\Education\\Service\\Course\u003A\u003A\u0024courseMapper",
             "name": "courseMapper",
             "summary": "",
-            "url": "classes/Education-Service-Exam.html#property_courseMapper"
+            "url": "classes/Education-Service-Course.html#property_courseMapper"
         },                {
-            "fqsen": "\\Education\\Service\\Exam\u003A\u003A\u0024courseDocumentMapper",
+            "fqsen": "\\Education\\Service\\Course\u003A\u003A\u0024courseDocumentMapper",
             "name": "courseDocumentMapper",
             "summary": "",
-            "url": "classes/Education-Service-Exam.html#property_courseDocumentMapper"
+            "url": "classes/Education-Service-Course.html#property_courseDocumentMapper"
         },                {
-            "fqsen": "\\Education\\Service\\Exam\u003A\u003A\u0024courseForm",
+            "fqsen": "\\Education\\Service\\Course\u003A\u003A\u0024courseForm",
             "name": "courseForm",
             "summary": "",
-            "url": "classes/Education-Service-Exam.html#property_courseForm"
+            "url": "classes/Education-Service-Course.html#property_courseForm"
         },                {
-            "fqsen": "\\Education\\Service\\Exam\u003A\u003A\u0024tempUploadForm",
+            "fqsen": "\\Education\\Service\\Course\u003A\u003A\u0024tempUploadForm",
             "name": "tempUploadForm",
             "summary": "",
-            "url": "classes/Education-Service-Exam.html#property_tempUploadForm"
+            "url": "classes/Education-Service-Course.html#property_tempUploadForm"
         },                {
-            "fqsen": "\\Education\\Service\\Exam\u003A\u003A\u0024bulkSummaryForm",
+            "fqsen": "\\Education\\Service\\Course\u003A\u003A\u0024bulkSummaryForm",
             "name": "bulkSummaryForm",
             "summary": "",
-            "url": "classes/Education-Service-Exam.html#property_bulkSummaryForm"
+            "url": "classes/Education-Service-Course.html#property_bulkSummaryForm"
         },                {
-            "fqsen": "\\Education\\Service\\Exam\u003A\u003A\u0024bulkExamForm",
+            "fqsen": "\\Education\\Service\\Course\u003A\u003A\u0024bulkExamForm",
             "name": "bulkExamForm",
             "summary": "",
-            "url": "classes/Education-Service-Exam.html#property_bulkExamForm"
+            "url": "classes/Education-Service-Course.html#property_bulkExamForm"
         },                {
-            "fqsen": "\\Education\\Service\\Exam\u003A\u003A\u0024config",
+            "fqsen": "\\Education\\Service\\Course\u003A\u003A\u0024config",
             "name": "config",
             "summary": "",
-            "url": "classes/Education-Service-Exam.html#property_config"
+            "url": "classes/Education-Service-Course.html#property_config"
         },                {
             "fqsen": "\\Education\\View\\Helper\\ExamUrl",
             "name": "ExamUrl",
@@ -11476,20 +11521,20 @@ Search.appendIndex(
             "summary": "Set\u0020the\u0020data\u0020dir.",
             "url": "classes/Education-View-Helper-ExamUrl.html#method_setDir"
         },                {
-            "fqsen": "\\Education\\View\\Helper\\ExamUrl\u003A\u003AgetExamService\u0028\u0029",
-            "name": "getExamService",
-            "summary": "Get\u0020the\u0020authentication\u0020service.",
-            "url": "classes/Education-View-Helper-ExamUrl.html#method_getExamService"
+            "fqsen": "\\Education\\View\\Helper\\ExamUrl\u003A\u003AgetCourseService\u0028\u0029",
+            "name": "getCourseService",
+            "summary": "Get\u0020the\u0020course\u0020service.",
+            "url": "classes/Education-View-Helper-ExamUrl.html#method_getCourseService"
         },                {
-            "fqsen": "\\Education\\View\\Helper\\ExamUrl\u003A\u003AsetExamService\u0028\u0029",
-            "name": "setExamService",
-            "summary": "Set\u0020the\u0020authentication\u0020service.",
-            "url": "classes/Education-View-Helper-ExamUrl.html#method_setExamService"
+            "fqsen": "\\Education\\View\\Helper\\ExamUrl\u003A\u003AsetCourseService\u0028\u0029",
+            "name": "setCourseService",
+            "summary": "Set\u0020the\u0020course\u0020service.",
+            "url": "classes/Education-View-Helper-ExamUrl.html#method_setCourseService"
         },                {
-            "fqsen": "\\Education\\View\\Helper\\ExamUrl\u003A\u003A\u0024examService",
-            "name": "examService",
-            "summary": "Exam\u0020service.",
-            "url": "classes/Education-View-Helper-ExamUrl.html#property_examService"
+            "fqsen": "\\Education\\View\\Helper\\ExamUrl\u003A\u003A\u0024courseService",
+            "name": "courseService",
+            "summary": "Course\u0020service.",
+            "url": "classes/Education-View-Helper-ExamUrl.html#property_courseService"
         },                {
             "fqsen": "\\Education\\View\\Helper\\ExamUrl\u003A\u003A\u0024dir",
             "name": "dir",
