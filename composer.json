@@ -68,7 +68,6 @@
         "monolog/monolog": "^3.0.0",
         "league/glide": "^2.2.0",
         "fortawesome/font-awesome": "^6.0.0",
-        "slowprog/composer-copy-file": "^0.3.0",
         "cweagans/composer-patches": "^1.7.1",
         "setasign/fpdi": "2.3.6",
         "tecnickcom/tcpdf": "6.5.0",
@@ -135,14 +134,6 @@
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "scripts": {
-        "post-install-cmd": [
-            "SlowProg\\CopyFile\\ScriptHandler::copy"
-        ],
-        "post-update-cmd": [
-            "SlowProg\\CopyFile\\ScriptHandler::copy"
-        ]
-    },
     "repositories": [
         {
             "type": "git",
@@ -150,11 +141,6 @@
         }
     ],
     "extra": {
-        "copy-file": {
-            "vendor/fortawesome/font-awesome/scss/": "public/scss/fontawesome/",
-            "vendor/fortawesome/font-awesome/webfonts/": "public/fonts/fontawesome/",
-            "vendor/fortawesome/font-awesome/sprites/": "public/sprites/fontawesome/"
-        },
         "patches": {
             "doctrine/orm": {
                 "Fix issues with SubDecisions.": "https://raw.githubusercontent.com/GEWIS/orm/2.15.x/1-to-1-multiple-join-columns.patch"

@@ -36,12 +36,10 @@ RUN apk add --no-cache --virtual .build-deps \
 FROM php-target as composer-build
 WORKDIR /glide
 
-RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
-    && php composer-setup.php \
-    && php -r "unlink('composer-setup.php');"
-
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 COPY ./composer.json ./composer.lock ./
-RUN php composer.phar install -o --no-dev
+
+RUN composer install -o --no-dev
 
 FROM php-target as glide
 WORKDIR /glide

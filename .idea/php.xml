@@ -27,7 +27,6 @@
     <include_path>
       <path value="$PROJECT_DIR$/vendor/michelf/php-markdown" />
       <path value="$PROJECT_DIR$/vendor/monolog/monolog" />
-      <path value="$PROJECT_DIR$/vendor/slowprog/composer-copy-file" />
       <path value="$PROJECT_DIR$/vendor/maglnet/magl-markdown" />
       <path value="$PROJECT_DIR$/vendor/guzzlehttp/psr7" />
       <path value="$PROJECT_DIR$/vendor/ralouphie/getallheaders" />
@@ -255,7 +254,7 @@
   </component>
   <component name="PhpInterpreters">
     <interpreters>
-      <interpreter id="b6502dad-7c78-4cdb-b177-76e9f54dbca6" name="web.docker-registry.gewis.nl/gewisweb_web:development" home="docker://DATA" false="false" debugger_id="php.debugger.XDebug">
+      <interpreter id="b6502dad-7c78-4cdb-b177-76e9f54dbca6" name="web.docker-registry.gewis.nl/gewisweb_web:development" home="docker://DATA" auto="false" debugger_id="php.debugger.XDebug">
         <remote_data INTERPRETER_PATH="php" HELPERS_PATH="/opt/.phpstorm_helpers" VALID="true" RUN_AS_ROOT_VIA_SUDO="false" DOCKER_ACCOUNT_NAME="Docker" DOCKER_IMAGE_NAME="web.docker-registry.gewis.nl/gewisweb_web:development" DOCKER_REMOTE_PROJECT_PATH="/opt/project" />
       </interpreter>
     </interpreters>

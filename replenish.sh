@@ -13,9 +13,9 @@ rm -R /tmp/gewisweb-${BRANCH}
 cd /code
 if [ "${APP_ENV}" == 'production' ]
 then
-    php composer.phar dump-autoload -o --no-dev
+    composer dump-autoload -o --no-dev
 else
-    php composer.phar dump-autoload -o
+    composer dump-autoload -o
 fi
 ./orm orm:generate-proxies
 rm -Rf /code/data/cache/*

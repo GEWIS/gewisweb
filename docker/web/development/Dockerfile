@@ -1,17 +1,18 @@
-# Compile the language files
+# Compile the language files.
 FROM alpine:latest AS gewisweb_translations
 WORKDIR /code
 
 RUN apk add --no-cache --virtual .runtime-deps \
         gettext
 
-COPY ./module/Application/language/*.po .
+COPY ./module/Application/language/*.po ./
 
 RUN msgfmt en.po -o en -c --strict -v \
     && msgfmt nl.po -o nl -c --strict -v
 
-# Install dependencies and create final image
-FROM php:8.2-fpm-alpine AS gewisweb_web_development
+# Install dependencies and create final image.
+FROM php:8.2-fpm-alpine AS gewisweb_web_development_base
+WORKDIR /code
 
 RUN apk add --no-cache --virtual .build-deps \
         $PHPIZE_DEPS \
@@ -77,23 +78,32 @@ RUN apk add --no-cache --virtual .build-deps \
 
 RUN sed -i 's/<policy domain="coder" rights="none" pattern="PDF" \/>/<policy domain="coder" rights="read|write" pattern="PDF" \/>/g' /etc/ImageMagick-7/policy.xml
 
+# Install composer and dependencies.
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+COPY ./composer.json ./composer.lock ./
+
+RUN composer install
+
+# Compile the SCSS files.
+FROM node:lts-alpine as gewisweb_web_styles
 WORKDIR /code
 
-RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
-    && php composer-setup.php \
-    && php -r "unlink('composer-setup.php');"
+COPY ./package.json ./package-lock.json ./
+RUN npm install --omit=dev
 
-COPY --chown=www-data:www-data ./composer.json ./
-RUN php composer.phar install
+RUN mkdir public && mkdir public/scss && mkdir public/css
 
-# If you are not a member of the ApplicatieBeheerCommissie comment the line below.
-COPY --from=web.docker-registry.gewis.nl/gewisweb_patches:latest . /code
+COPY --from=gewisweb_web_development_base /code/vendor ./vendor
+COPY ./resources/scss ./resources/scss/
 
-COPY --chown=www-data:www-data ./package.json ./package-lock.json ./
-RUN npm install --production=false
-
-COPY --chown=www-data:www-data ./public/scss ./public/scss/
 RUN npm run scss
+
+# Create the final image.
+FROM gewisweb_web_development_base AS gewisweb_web_development
+
+# Copy patches for dependencies that cannot be patched through composer. If you are not a member of the
+# ApplicatieBeheerCommissie comment the line below.
+COPY --from=web.docker-registry.gewis.nl/gewisweb_patches:latest . /code
 
 COPY --chown=www-data:www-data ./docker/web/development/php.ini /usr/local/etc/php/conf.d/default.ini
 COPY --chown=www-data:www-data ./docker/web/development/php-fpm.conf /usr/local/etc/php-fpm.d/zz-gewisweb.conf
@@ -110,9 +120,12 @@ RUN chmod 0775 ./docker-entrypoint.sh
 
 COPY --chown=www-data:www-data . /code
 COPY --chown=www-data:www-data --from=gewisweb_translations /code/*.mo /code/module/Application/language/
+COPY --chown=www-data:www-data --from=gewisweb_web_styles /code/public/css/gewis-theme.css /code/public/css/gewis-theme.css
+RUN cp -R ./vendor/fortawesome/font-awesome/sprites/. ./public/sprites/fontawesome
+RUN cp -R ./vendor/fortawesome/font-awesome/webfonts/. ./public/fonts/fontawesome
 ENV PHP_IDE_CONFIG="serverName=gewis.nl"
 
-RUN php composer.phar dump-autoload
+RUN composer dump-autoload
 
 ARG GIT_COMMIT
 ENV GIT_COMMIT=${GIT_COMMIT}
