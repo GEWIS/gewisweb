@@ -392,7 +392,7 @@
 
     <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    FoundationReference
+    Reappointment
 
         <span class="phpdocumentor-element__extends">
         extends <a href="classes/Decision-Model-SubDecision.html"><abbr title="\Decision\Model\SubDecision">SubDecision</abbr></a>
@@ -411,21 +411,18 @@
 <div class="phpdocumentor-label-line">
 
 
-    <div class="phpdocumentor-label phpdocumentor-label--success"><span>Abstract</span><span>Yes</span></div>
-
 </div>
 
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/FoundationReference.php"><a href="files/module-decision-src-model-subdecision-foundationreference.html"><abbr title="module/Decision/src/Model/SubDecision/FoundationReference.php">FoundationReference.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Reappointment.php"><a href="files/module-decision-src-model-subdecision-reappointment.html"><abbr title="module/Decision/src/Model/SubDecision/Reappointment.php">Reappointment.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">18</span>
+    <span class="phpdocumentor-element-found-in__line">17</span>
 
     </aside>
 
-            <p class="phpdocumentor-summary">Reference to organ foundation.</p>
+            <p class="phpdocumentor-summary">Reappointment of a previous installation.</p>
 
-    <section class="phpdocumentor-description"><p>Note that this should not be directly used. It is in the inheritance map,
-but that is only to make it usable as mappable entity.</p>
+    <section class="phpdocumentor-description"><p>To prevent issues with recursive self-references, multiple reappointments can point to the same installation.</p>
 </section>
 
 
@@ -434,7 +431,7 @@ but that is only to make it usable as mappable entity.</p>
 
 <h3 id="toc">
     Table of Contents
-    <a href="classes/Decision-Model-SubDecision-FoundationReference.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Decision-Model-SubDecision-Reappointment.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h3>
 
@@ -448,7 +445,7 @@ but that is only to make it usable as mappable entity.</p>
 
 <h4 id="toc-properties">
     Properties
-    <a href="classes/Decision-Model-SubDecision-FoundationReference.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Decision-Model-SubDecision-Reappointment.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
@@ -481,11 +478,11 @@ but that is only to make it usable as mappable entity.</p>
 <dd>Decision point.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Decision-Model-SubDecision-FoundationReference.html#property_foundation">$foundation</a>
+    <a href="classes/Decision-Model-SubDecision-Reappointment.html#property_installation">$installation</a>
     <span>
-                        &nbsp;: <a href="classes/Decision-Model-SubDecision-Foundation.html"><abbr title="\Decision\Model\SubDecision\Foundation">Foundation</abbr></a>            </span>
+                        &nbsp;: <a href="classes/Decision-Model-SubDecision-Installation.html"><abbr title="\Decision\Model\SubDecision\Installation">Installation</abbr></a>            </span>
 </dt>
-<dd>Reference to foundation of organ.</dd>
+<dd>Reference to the installation of a member.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Decision-Model-SubDecision.html#property_meeting_number">$meeting_number</a>
@@ -512,7 +509,7 @@ but that is only to make it usable as mappable entity.</p>
 
 <h4 id="toc-methods">
     Methods
-    <a href="classes/Decision-Model-SubDecision-FoundationReference.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Decision-Model-SubDecision-Reappointment.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
@@ -545,11 +542,11 @@ but that is only to make it usable as mappable entity.</p>
 <dd>Get the decision point number.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Decision-Model-SubDecision-FoundationReference.html#method_getFoundation">getFoundation()</a>
+    <a href="classes/Decision-Model-SubDecision-Reappointment.html#method_getInstallation">getInstallation()</a>
     <span>
-                                &nbsp;: <a href="classes/Decision-Model-SubDecision-Foundation.html"><abbr title="\Decision\Model\SubDecision\Foundation">Foundation</abbr></a>    </span>
+                                &nbsp;: <a href="classes/Decision-Model-SubDecision-Installation.html"><abbr title="\Decision\Model\SubDecision\Installation">Installation</abbr></a>    </span>
 </dt>
-<dd>Get organ foundation.</dd>
+<dd>Get the original installation for this reappointment.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-SubDecision.html#method_getMeetingNumber">getMeetingNumber()</a>
@@ -587,11 +584,11 @@ but that is only to make it usable as mappable entity.</p>
 <dd>Set the decision.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Decision-Model-SubDecision-FoundationReference.html#method_setFoundation">setFoundation()</a>
+    <a href="classes/Decision-Model-SubDecision-Reappointment.html#method_setInstallation">setInstallation()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd>Set organ foundation.</dd>
+<dd>Set the installation.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-SubDecision.html#method_setNumber">setNumber()</a>
@@ -611,7 +608,7 @@ but that is only to make it usable as mappable entity.</p>
     <section class="phpdocumentor-properties">
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
-            <a href="classes/Decision-Model-SubDecision-FoundationReference.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Decision-Model-SubDecision-Reappointment.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
@@ -761,26 +758,26 @@ but that is only to make it usable as mappable entity.</p>
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_foundation">
-        $foundation
-        <a href="classes/Decision-Model-SubDecision-FoundationReference.html#property_foundation" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_installation">
+        $installation
+        <a href="classes/Decision-Model-SubDecision-Reappointment.html#property_installation" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/FoundationReference.php"><a href="files/module-decision-src-model-subdecision-foundationreference.html"><abbr title="module/Decision/src/Model/SubDecision/FoundationReference.php">FoundationReference.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Reappointment.php"><a href="files/module-decision-src-model-subdecision-reappointment.html"><abbr title="module/Decision/src/Model/SubDecision/Reappointment.php">Reappointment.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">24</span>
+    <span class="phpdocumentor-element-found-in__line">23</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Reference to foundation of organ.</p>
+        <p class="phpdocumentor-summary">Reference to the installation of a member.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/Decision-Model-SubDecision-Foundation.html"><abbr title="\Decision\Model\SubDecision\Foundation">Foundation</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$foundation</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Decision-Model-SubDecision-Installation.html"><abbr title="\Decision\Model\SubDecision\Installation">Installation</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$installation</span>
     </code>
 
     
@@ -899,7 +896,7 @@ but that is only to make it usable as mappable entity.</p>
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/Decision-Model-SubDecision-FoundationReference.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Decision-Model-SubDecision-Reappointment.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
@@ -1052,23 +1049,23 @@ but that is only to make it usable as mappable entity.</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getFoundation">
-        getFoundation()
-        <a href="classes/Decision-Model-SubDecision-FoundationReference.html#method_getFoundation" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_getInstallation">
+        getInstallation()
+        <a href="classes/Decision-Model-SubDecision-Reappointment.html#method_getInstallation" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/FoundationReference.php"><a href="files/module-decision-src-model-subdecision-foundationreference.html"><abbr title="module/Decision/src/Model/SubDecision/FoundationReference.php">FoundationReference.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Reappointment.php"><a href="files/module-decision-src-model-subdecision-reappointment.html"><abbr title="module/Decision/src/Model/SubDecision/Reappointment.php">Reappointment.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">54</span>
+    <span class="phpdocumentor-element-found-in__line">52</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Get organ foundation.</p>
+        <p class="phpdocumentor-summary">Get the original installation for this reappointment.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getFoundation</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-SubDecision-Foundation.html"><abbr title="\Decision\Model\SubDecision\Foundation">Foundation</abbr></a></span></code>
+                    <span class="phpdocumentor-signature__name">getInstallation</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-SubDecision-Installation.html"><abbr title="\Decision\Model\SubDecision\Installation">Installation</abbr></a></span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -1078,7 +1075,7 @@ but that is only to make it usable as mappable entity.</p>
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-SubDecision-Foundation.html"><abbr title="\Decision\Model\SubDecision\Foundation">Foundation</abbr></a></span>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-SubDecision-Installation.html"><abbr title="\Decision\Model\SubDecision\Installation">Installation</abbr></a></span>
             </section>
 
 </article>
@@ -1280,23 +1277,23 @@ but that is only to make it usable as mappable entity.</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_setFoundation">
-        setFoundation()
-        <a href="classes/Decision-Model-SubDecision-FoundationReference.html#method_setFoundation" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_setInstallation">
+        setInstallation()
+        <a href="classes/Decision-Model-SubDecision-Reappointment.html#method_setInstallation" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/FoundationReference.php"><a href="files/module-decision-src-model-subdecision-foundationreference.html"><abbr title="module/Decision/src/Model/SubDecision/FoundationReference.php">FoundationReference.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Reappointment.php"><a href="files/module-decision-src-model-subdecision-reappointment.html"><abbr title="module/Decision/src/Model/SubDecision/Reappointment.php">Reappointment.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">62</span>
+    <span class="phpdocumentor-element-found-in__line">60</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Set organ foundation.</p>
+        <p class="phpdocumentor-summary">Set the installation.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setFoundation</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-SubDecision-Foundation.html"><abbr title="\Decision\Model\SubDecision\Foundation">Foundation</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$foundation</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">setInstallation</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-SubDecision-Installation.html"><abbr title="\Decision\Model\SubDecision\Installation">Installation</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$installation</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -1304,8 +1301,8 @@ but that is only to make it usable as mappable entity.</p>
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$foundation</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-SubDecision-Foundation.html"><abbr title="\Decision\Model\SubDecision\Foundation">Foundation</abbr></a></span>
+                <span class="phpdocumentor-signature__argument__name">$installation</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-SubDecision-Installation.html"><abbr title="\Decision\Model\SubDecision\Installation">Installation</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
@@ -1364,7 +1361,7 @@ but that is only to make it usable as mappable entity.</p>
     <div class="phpdocumentor-modal-bg" data-exit-button></div>
     <div class="phpdocumentor-modal-container">
         <div class="phpdocumentor-modal-content">
-            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/module/Decision/src/Model/SubDecision/FoundationReference.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
+            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/module/Decision/src/Model/SubDecision/Reappointment.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
         </div>
         <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
     </div>
@@ -1463,22 +1460,22 @@ but that is only to make it usable as mappable entity.</p>
             <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                                            <li><a href="classes/Decision-Model-SubDecision-FoundationReference.html#toc-properties">Properties</a></li>
-                                                            <li><a href="classes/Decision-Model-SubDecision-FoundationReference.html#toc-methods">Methods</a></li>
+                                                            <li><a href="classes/Decision-Model-SubDecision-Reappointment.html#toc-properties">Properties</a></li>
+                                                            <li><a href="classes/Decision-Model-SubDecision-Reappointment.html#toc-methods">Methods</a></li>
                                     </ul>
             </li>
             
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li><a href="classes/Decision-Model-SubDecision.html#property_content">$content<a href="classes/Decision-Model-SubDecision-FoundationReference.html"></li>
-                                                    <li><a href="classes/Decision-Model-SubDecision.html#property_decision">$decision<a href="classes/Decision-Model-SubDecision-FoundationReference.html"></li>
-                                                    <li><a href="classes/Decision-Model-SubDecision.html#property_decision_number">$decision_number<a href="classes/Decision-Model-SubDecision-FoundationReference.html"></li>
-                                                    <li><a href="classes/Decision-Model-SubDecision.html#property_decision_point">$decision_point<a href="classes/Decision-Model-SubDecision-FoundationReference.html"></li>
-                                                    <li><a href="classes/Decision-Model-SubDecision-FoundationReference.html#property_foundation">$foundation<a href="classes/Decision-Model-SubDecision-FoundationReference.html"></li>
-                                                    <li><a href="classes/Decision-Model-SubDecision.html#property_meeting_number">$meeting_number<a href="classes/Decision-Model-SubDecision-FoundationReference.html"></li>
-                                                    <li><a href="classes/Decision-Model-SubDecision.html#property_meeting_type">$meeting_type<a href="classes/Decision-Model-SubDecision-FoundationReference.html"></li>
-                                                    <li><a href="classes/Decision-Model-SubDecision.html#property_number">$number<a href="classes/Decision-Model-SubDecision-FoundationReference.html"></li>
+                                                    <li><a href="classes/Decision-Model-SubDecision.html#property_content">$content<a href="classes/Decision-Model-SubDecision-Reappointment.html"></li>
+                                                    <li><a href="classes/Decision-Model-SubDecision.html#property_decision">$decision<a href="classes/Decision-Model-SubDecision-Reappointment.html"></li>
+                                                    <li><a href="classes/Decision-Model-SubDecision.html#property_decision_number">$decision_number<a href="classes/Decision-Model-SubDecision-Reappointment.html"></li>
+                                                    <li><a href="classes/Decision-Model-SubDecision.html#property_decision_point">$decision_point<a href="classes/Decision-Model-SubDecision-Reappointment.html"></li>
+                                                    <li><a href="classes/Decision-Model-SubDecision-Reappointment.html#property_installation">$installation<a href="classes/Decision-Model-SubDecision-Reappointment.html"></li>
+                                                    <li><a href="classes/Decision-Model-SubDecision.html#property_meeting_number">$meeting_number<a href="classes/Decision-Model-SubDecision-Reappointment.html"></li>
+                                                    <li><a href="classes/Decision-Model-SubDecision.html#property_meeting_type">$meeting_type<a href="classes/Decision-Model-SubDecision-Reappointment.html"></li>
+                                                    <li><a href="classes/Decision-Model-SubDecision.html#property_number">$number<a href="classes/Decision-Model-SubDecision-Reappointment.html"></li>
                                             </ul>
                 </li>
             
@@ -1489,13 +1486,13 @@ but that is only to make it usable as mappable entity.</p>
                                             <li><a href="classes/Decision-Model-SubDecision.html#method_getDecision">getDecision()</a></li>
                                             <li><a href="classes/Decision-Model-SubDecision.html#method_getDecisionNumber">getDecisionNumber()</a></li>
                                             <li><a href="classes/Decision-Model-SubDecision.html#method_getDecisionPoint">getDecisionPoint()</a></li>
-                                            <li><a href="classes/Decision-Model-SubDecision-FoundationReference.html#method_getFoundation">getFoundation()</a></li>
+                                            <li><a href="classes/Decision-Model-SubDecision-Reappointment.html#method_getInstallation">getInstallation()</a></li>
                                             <li><a href="classes/Decision-Model-SubDecision.html#method_getMeetingNumber">getMeetingNumber()</a></li>
                                             <li><a href="classes/Decision-Model-SubDecision.html#method_getMeetingType">getMeetingType()</a></li>
                                             <li><a href="classes/Decision-Model-SubDecision.html#method_getNumber">getNumber()</a></li>
                                             <li><a href="classes/Decision-Model-SubDecision.html#method_setContent">setContent()</a></li>
                                             <li><a href="classes/Decision-Model-SubDecision.html#method_setDecision">setDecision()</a></li>
-                                            <li><a href="classes/Decision-Model-SubDecision-FoundationReference.html#method_setFoundation">setFoundation()</a></li>
+                                            <li><a href="classes/Decision-Model-SubDecision-Reappointment.html#method_setInstallation">setInstallation()</a></li>
                                             <li><a href="classes/Decision-Model-SubDecision.html#method_setNumber">setNumber()</a></li>
                                     </ul>
             </li>
@@ -1516,7 +1513,7 @@ but that is only to make it usable as mappable entity.</p>
     </section>
 </section>
         </div>
-        <a href="classes/Decision-Model-SubDecision-FoundationReference.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/Decision-Model-SubDecision-Reappointment.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 
