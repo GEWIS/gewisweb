@@ -18,6 +18,7 @@ use Decision\Model\SubDecision\Installation;
 use Decision\Model\SubDecision\Key\Granting as KeyGranting;
 use Decision\Model\SubDecision\Key\Withdrawal as KeyWithdrawal;
 use Decision\Model\SubDecision\Other;
+use Decision\Model\SubDecision\Reappointment;
 use Decision\Model\SubDecision\Reckoning;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\DiscriminatorColumn;
@@ -42,6 +43,7 @@ use Doctrine\ORM\Mapping\ManyToOne;
         'foundation' => Foundation::class,
         'abrogation' => Abrogation::class,
         'installation' => Installation::class,
+        'reappointment' => Reappointment::class,
         'discharge' => Discharge::class,
         'budget' => Budget::class,
         'reckoning' => Reckoning::class,
