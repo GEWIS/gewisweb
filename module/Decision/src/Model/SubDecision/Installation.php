@@ -6,10 +6,13 @@ namespace Decision\Model\SubDecision;
 
 use Decision\Model\Member;
 use Decision\Model\OrganMember;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OneToOne;
 
 /**
@@ -38,6 +41,17 @@ class Installation extends FoundationReference
     protected Member $member;
 
     /**
+     * Reappointment subdecisions if this installation was prolonged (can be done multiple times).
+     *
+     * @var Collection<array-key, Reappointment>
+     */
+    #[OneToMany(
+        targetEntity: Reappointment::class,
+        mappedBy: 'installation',
+    )]
+    protected Collection $reappointments;
+
+    /**
      * Discharges.
      */
     #[OneToOne(
@@ -54,6 +68,11 @@ class Installation extends FoundationReference
         mappedBy: 'installation',
     )]
     protected OrganMember $organMember;
+
+    public function __construct()
+    {
+        $this->reappointments = new ArrayCollection();
+    }
 
     /**
      * Get the function.
@@ -85,6 +104,16 @@ class Installation extends FoundationReference
     public function setMember(Member $member): void
     {
         $this->member = $member;
+    }
+
+    /**
+     * Get the reappointments, if they exist.
+     *
+     * @return Collection<array-key, Reappointment>
+     */
+    public function getReappointments(): Collection
+    {
+        return $this->reappointments;
     }
 
     /**
