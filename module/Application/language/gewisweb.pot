@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: GEWISweb e0cd4ee5-dirty\n"
+"Project-Id-Version: GEWISweb v2.8.6-537-gc5c058d79-dirty\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-30 23:20+0200\n"
+"POT-Creation-Date: 2023-10-13 18:12+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -291,9 +291,6 @@ msgid ""
 msgstr ""
 
 msgid "An error occurred"
-msgstr ""
-
-msgid "An error occurred while saving the course!"
 msgstr ""
 
 msgid "An error occurred while trying to generate an album photo."
@@ -2097,6 +2094,10 @@ msgid "Photo of the week"
 msgstr ""
 
 #, php-format
+msgid "Photo of the week (%s)"
+msgstr ""
+
+#, php-format
 msgid "Photo's of %s"
 msgstr ""
 
@@ -2329,6 +2330,9 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
+msgid "Search Infimum"
+msgstr ""
+
 msgid "Search by keyword or meeting number"
 msgstr ""
 
@@ -2512,6 +2516,9 @@ msgstr ""
 msgid "Submit"
 msgstr ""
 
+msgid "Submit Infimum"
+msgstr ""
+
 msgid "Submitter"
 msgstr ""
 
@@ -2627,6 +2634,9 @@ msgid ""
 "The board can always decide to make an exception to the rules written above, "
 "for example in case of dependence on a third party, or when it concerns very "
 "big activities or weekends."
+msgstr ""
+
+msgid "The course form is invalid!"
 msgstr ""
 
 msgid "The currently active fraternities of GEWIS (in arbitrary order)"

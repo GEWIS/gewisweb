@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-30 23:18+0200\n"
+"POT-Creation-Date: 2023-10-13 18:12+0200\n"
 "PO-Revision-Date: 2023-09-30 23:20+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -304,9 +304,6 @@ msgstr ""
 
 msgid "An error occurred"
 msgstr "Er is een fout opgetreden"
-
-msgid "An error occurred while saving the course!"
-msgstr "Er is een fout opgetreden tijdens het opslaan van het vak!"
 
 msgid "An error occurred while trying to generate an album photo."
 msgstr "Er is een fout opgetreden tijdens het genereren van een albumfoto."
@@ -2223,6 +2220,10 @@ msgstr "Foto van de week<br> Week"
 msgid "Photo of the week"
 msgstr "Foto van de week"
 
+#, fuzzy, php-format
+msgid "Photo of the week (%s)"
+msgstr "Foto van de week"
+
 #, php-format
 msgid "Photo's of %s"
 msgstr "Foto's van %s"
@@ -2476,6 +2477,9 @@ msgstr "Gescand?"
 msgid "Search"
 msgstr "Zoek"
 
+msgid "Search Infimum"
+msgstr "Infimum opzoeken"
+
 msgid "Search by keyword or meeting number"
 msgstr "Zoek met trefwoord of vergaderingsnummer"
 
@@ -2682,6 +2686,9 @@ msgstr "Subcategorie"
 msgid "Submit"
 msgstr "Verzend"
 
+msgid "Submit Infimum"
+msgstr "Infimum indienen"
+
 msgid "Submitter"
 msgstr "Verzender"
 
@@ -2801,6 +2808,9 @@ msgstr ""
 "Het bestuur kan altijd beslissen om een uitzondering op bovenstaande regels "
 "te maken, bijvoorbeeld in het geval van afhankelijkheid van een derde "
 "partij, of als het gaat om grote activiteiten en weekenden."
+
+msgid "The course form is invalid!"
+msgstr ""
 
 msgid "The currently active fraternities of GEWIS (in arbitrary order)"
 msgstr "De huidige disputen van GEWIS zijn (in willekeurige volgorde):"
@@ -3055,8 +3065,8 @@ msgid ""
 "it will start on <strong>%s</strong> and end on <strong>%s</strong>."
 msgstr ""
 "Dit is activiteit <strong>#%d</strong>, georganiseerd door <strong>%s</"
-"strong>, en deze zal beginnen op <strong>%s</strong> en eindigen op <strong>"
-"%s</strong>."
+"strong>, en deze zal beginnen op <strong>%s</strong> en eindigen op "
+"<strong>%s</strong>."
 
 #, php-format
 msgid "This job is proposed by <strong>%s</strong> as part of job package %s."

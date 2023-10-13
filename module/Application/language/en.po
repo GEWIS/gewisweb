@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-30 23:18+0200\n"
+"POT-Creation-Date: 2023-10-13 18:12+0200\n"
 "PO-Revision-Date: 2023-09-30 23:18+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -303,9 +303,6 @@ msgstr ""
 
 msgid "An error occurred"
 msgstr "An error occurred"
-
-msgid "An error occurred while saving the course!"
-msgstr "An error occurred while saving the course!"
 
 msgid "An error occurred while trying to generate an album photo."
 msgstr "An error occurred while trying to generate an album photo."
@@ -2200,6 +2197,10 @@ msgstr "Photo of the Week:<br> Week"
 msgid "Photo of the week"
 msgstr "Photo of the week"
 
+#, fuzzy, php-format
+msgid "Photo of the week (%s)"
+msgstr "Photo of the week"
+
 #, php-format
 msgid "Photo's of %s"
 msgstr "Photo's of %s"
@@ -2452,6 +2453,9 @@ msgstr "Scanned?"
 msgid "Search"
 msgstr "Search"
 
+msgid "Search Infimum"
+msgstr "Search Infimum"
+
 msgid "Search by keyword or meeting number"
 msgstr "Search by keyword or meeting number"
 
@@ -2658,6 +2662,9 @@ msgstr "Subcategory"
 msgid "Submit"
 msgstr "Submit"
 
+msgid "Submit Infimum"
+msgstr "Submit Infimum"
+
 msgid "Submitter"
 msgstr "Submitter"
 
@@ -2777,6 +2784,9 @@ msgstr ""
 "The board can always decide to make an exception to the rules written above, "
 "for example in case of dependence on a third party, or when it concerns very "
 "big activities or weekends."
+
+msgid "The course form is invalid!"
+msgstr ""
 
 msgid "The currently active fraternities of GEWIS (in arbitrary order)"
 msgstr "The currently active fraternities of GEWIS (in arbitrary order)"
