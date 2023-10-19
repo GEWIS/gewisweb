@@ -495,11 +495,13 @@ class Course
         $course->setCode($data['code']);
         $course->setName($data['name']);
 
-        $similarCoursesCodes = explode(',', $data['similar']);
+        if (null !== $data['similar']) {
+            $similarCoursesCodes = explode(',', $data['similar']);
 
-        foreach ($similarCoursesCodes as $similarCourseCode) {
-            $similarCourse = $this->getCourse($similarCourseCode);
-            $course->addSimilarCourseTo($similarCourse);
+            foreach ($similarCoursesCodes as $similarCourseCode) {
+                $similarCourse = $this->getCourse($similarCourseCode);
+                $course->addSimilarCourseTo($similarCourse);
+            }
         }
 
         $this->courseMapper->persist($course);
@@ -519,13 +521,15 @@ class Course
         $course->setCode($data['code']);
         $course->setName($data['name']);
 
-        $similarCoursesCodes = explode(',', $data['similar']);
-
         $course->clearSimilarCoursesTo();
 
-        foreach ($similarCoursesCodes as $similarCourseCode) {
-            $similarCourse = $this->getCourse($similarCourseCode);
-            $course->addSimilarCourseTo($similarCourse);
+        if (null !== $data['similar']) {
+            $similarCoursesCodes = explode(',', $data['similar']);
+
+            foreach ($similarCoursesCodes as $similarCourseCode) {
+                $similarCourse = $this->getCourse($similarCourseCode);
+                $course->addSimilarCourseTo($similarCourse);
+            }
         }
 
         $this->courseMapper->persist($course);
