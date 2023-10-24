@@ -6,6 +6,7 @@ namespace Education\Form;
 
 use Education\Mapper\Course as CourseMapper;
 use Laminas\Filter\StringToUpper;
+use Laminas\Filter\ToNull;
 use Laminas\Form\Element\Submit;
 use Laminas\Form\Element\Text;
 use Laminas\Form\Form;
@@ -122,6 +123,11 @@ class Course extends Form implements InputFilterProviderInterface
                                 ),
                             ],
                         ],
+                    ],
+                ],
+                'filters' => [
+                    [
+                        'name' => ToNull::class,
                     ],
                 ],
             ],
