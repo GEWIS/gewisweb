@@ -112,3 +112,38 @@ Photo
     overflow: hidden;
     margin: 0;
 }
+
+.btn-hidden {
+    display: none;
+}
+
+.selectable-photo.selected {
+    &:after {
+        content: '✔';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 3rem;
+        color: #FFFFFF;
+        background-color: transparentize($brand-primary, 0.2);
+        border-radius: 50%;
+        width: 4rem;
+        height: 4rem;
+        line-height: 4rem;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: $brand-primary;
+        opacity: 0.4;
+        cursor: pointer;
+    }
+}

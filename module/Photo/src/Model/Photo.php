@@ -38,8 +38,6 @@ use function getimagesize;
  *     iso: ?int,
  *     album: ImportedAlbumArrayType,
  *     path: string,
- *     smallThumbPath: string,
- *     largeThumbPath: string,
  *     longitude: ?float,
  *     latitude: ?float,
  * }
@@ -152,20 +150,6 @@ class Photo implements ResourceInterface
      */
     #[Column(type: 'string')]
     protected string $path;
-
-    /**
-     * The path where the small thumbnail of the photo is located relative to
-     * the storage directory.
-     */
-    #[Column(type: 'string')]
-    protected string $smallThumbPath;
-
-    /**
-     * The path where the large thumbnail of the photo is located relative to
-     * the storage directory.
-     */
-    #[Column(type: 'string')]
-    protected string $largeThumbPath;
 
     /**
      * The GPS longitude of the location where the photo was taken.
@@ -337,22 +321,6 @@ class Photo implements ResourceInterface
     }
 
     /**
-     * Get the path where the large thumbnail is stored.
-     */
-    public function getLargeThumbPath(): string
-    {
-        return $this->largeThumbPath;
-    }
-
-    /**
-     * Get the path where the large thumbnail is stored.
-     */
-    public function getSmallThumbPath(): string
-    {
-        return $this->smallThumbPath;
-    }
-
-    /**
      * Get the GPS longitude of the location where the photo was taken.
      */
     public function getLongitude(): ?float
@@ -403,7 +371,7 @@ class Photo implements ResourceInterface
     #[PrePersist]
     public function calculateAspectRatio(): void
     {
-        [$width, $height] = getimagesize('public/data/' . $this->getSmallThumbPath());
+        [$width, $height] = getimagesize('public/data/' . $this->getPath());
         $this->aspectRatio = $height / $width;
     }
 
@@ -493,22 +461,6 @@ class Photo implements ResourceInterface
     public function setPath(string $path): void
     {
         $this->path = $path;
-    }
-
-    /**
-     * Set the path where the large thumbnail is stored.
-     */
-    public function setLargeThumbPath(string $path): void
-    {
-        $this->largeThumbPath = $path;
-    }
-
-    /**
-     * Set the path where the small thumbnail is stored.
-     */
-    public function setSmallThumbPath(string $path): void
-    {
-        $this->smallThumbPath = $path;
     }
 
     /**
@@ -612,8 +564,6 @@ class Photo implements ResourceInterface
             'iso' => $this->getIso(),
             'album' => $this->getAlbum()->toArray(),
             'path' => $this->getPath(),
-            'smallThumbPath' => $this->getSmallThumbPath(),
-            'largeThumbPath' => $this->getLargeThumbPath(),
             'longitude' => $this->getLongitude(),
             'latitude' => $this->getLatitude(),
         ];

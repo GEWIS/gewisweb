@@ -34,9 +34,6 @@ use function unlink;
  */
 class Admin
 {
-    /**
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
-     */
     public function __construct(
         private readonly AclService $aclService,
         private readonly Translator $translator,
@@ -44,7 +41,6 @@ class Admin
         private readonly MetadataService $metadataService,
         private readonly FileStorageService $storageService,
         private readonly PhotoMapper $photoMapper,
-        private readonly array $photoConfig,
     ) {
     }
 
@@ -66,7 +62,6 @@ class Admin
             throw new NotAllowedException($this->translator->translate('Not allowed to add photos.'));
         }
 
-        $config = $this->photoConfig;
         $storagePath = $this->storageService->storeFile($path, false);
         //check if photo exists already in the database
         $photo = $this->photoMapper->getPhotoByData($storagePath, $targetAlbum);
@@ -80,24 +75,6 @@ class Admin
             $mapper = $this->photoMapper;
             $mapper->getConnection()->beginTransaction();
             try {
-                /*
-                 * Create and set the storage paths for thumbnails.
-                 */
-                $photo->setLargeThumbPath(
-                    $this->createThumbnail(
-                        $path,
-                        $config['large_thumb_size']['width'],
-                        $config['large_thumb_size']['height'],
-                    ),
-                );
-                $photo->setSmallThumbPath(
-                    $this->createThumbnail(
-                        $path,
-                        $config['small_thumb_size']['width'],
-                        $config['small_thumb_size']['height'],
-                    ),
-                );
-
                 if ($move) {
                     unlink($path);
                 }

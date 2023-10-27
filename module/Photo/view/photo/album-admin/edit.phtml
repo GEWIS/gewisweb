@@ -4,22 +4,43 @@ declare(strict_types=1);
 
 use Application\View\HelperTrait;
 use Laminas\View\Renderer\PhpRenderer;
-use Photo\Form\EditAlbum as EditAlbumForm;
+use Photo\Form\Album as EditAlbumForm;
+use Photo\Model\Album as AlbumModel;
 
 /**
  * @var PhpRenderer|HelperTrait $this
+ * @var AlbumModel|null $album
  * @var EditAlbumForm $form
  */
 
+$editing = isset($album);
+
 $this->breadcrumbs()
-    ->addBreadcrumb($this->translate('Photos'), true, $this->url('admin_photo'))
-    ->addBreadcrumb($this->translate('Edit Album'));
+    ->addBreadcrumb($this->translate('Photos'), true, $this->url('admin_photo'));
+
+if ($editing) {
+    $this->breadcrumbs()
+        ->addBreadcrumb($this->escapeHtml($album->getName()), true, $this->url(
+            'admin_photo/album',
+            [
+                'album_id' => $album->getId(),
+            ],
+        ))
+        ->addBreadcrumb($this->translate('Edit Album'));
+} else {
+    $this->breadcrumbs()
+        ->addBreadcrumb($this->translate('Create Album'));
+}
 
 $form->prepare();
 ?>
 <div class="row">
     <div class="col-md-12">
-        <h2><?= $this->translate('Update Album') ?></h2>
+        <?php if ($editing): ?>
+            <h2><?= $this->translate('Update Album') ?></h2>
+        <?php else: ?>
+            <h2><?= $this->translate('Create Album') ?></h2>
+        <?php endif; ?>
     </div>
     <div class="col-md-6">
         <?= $this->form()->openTag($form) ?>
@@ -45,7 +66,7 @@ $form->prepare();
                     ->setAttribute('id', 'start-date');
                 ?>
                 <div class="form-group <?= $this->bootstrapElementError($startDateTime) ?>">
-                    <label for="<?= $startDateTime->getAttribute('id') ?>">
+                    <label for="<?= $startDateTime->getAttribute('id') ?>" class="control-label label-required">
                         <?= $startDateTime->getLabel() ?>
                     </label>
                     <?= $this->formDateTimeLocal($startDateTime) ?>
@@ -59,13 +80,27 @@ $form->prepare();
                     ->setAttribute('id', 'end-date');
                 ?>
                 <div class="form-group <?= $this->bootstrapElementError($endDateTime) ?>">
-                    <label for="<?= $endDateTime->getAttribute('id') ?>">
+                    <label for="<?= $endDateTime->getAttribute('id') ?>" class="control-label label-required">
                         <?= $endDateTime->getLabel() ?>
                     </label>
                     <?= $this->formDateTimeLocal($endDateTime) ?>
                     <?= $this->formElementErrors($endDateTime) ?>
                 </div>
                 <br>
+            </div>
+            <div class="col-md-12">
+                <?php
+                $published = $form->get('published')
+                    ->setAttribute('class', 'form-control')
+                    ->setAttribute('id', 'published');
+                ?>
+                <div class="form-group <?= $this->bootstrapElementError($published) ?>">
+                    <label for="<?= $published->getAttribute('id') ?>" class="control-label label-required">
+                        <?= $published->getLabel() ?>
+                    </label>
+                    <?= $this->formCheckbox($published) ?>
+                    <?= $this->formElementErrors($published) ?>
+                </div>
             </div>
             <div class="col-md-12">
                 <?php

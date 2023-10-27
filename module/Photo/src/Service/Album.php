@@ -11,8 +11,7 @@ use Decision\Model\AssociationYear;
 use Decision\Service\Member as MemberService;
 use Exception;
 use Laminas\Mvc\I18n\Translator;
-use Photo\Form\CreateAlbum as CreateAlbumForm;
-use Photo\Form\EditAlbum as EditAlbumForm;
+use Photo\Form\Album as AlbumForm;
 use Photo\Mapper\Album as AlbumMapper;
 use Photo\Mapper\Tag as TagMapper;
 use Photo\Mapper\WeeklyPhoto as WeeklyPhotoMapper;
@@ -25,6 +24,7 @@ use Photo\Service\AlbumCover as AlbumCoverService;
 use Photo\Service\Photo as PhotoService;
 use User\Permissions\NotAllowedException;
 
+use function boolval;
 use function range;
 use function sprintf;
 
@@ -43,8 +43,7 @@ class Album
         private readonly AlbumMapper $albumMapper,
         private readonly TagMapper $tagMapper,
         private readonly WeeklyPhotoMapper $weeklyPhotoMapper,
-        private readonly CreateAlbumForm $createAlbumForm,
-        private readonly EditAlbumForm $editAlbumForm,
+        private readonly AlbumForm $albumForm,
     ) {
     }
 
@@ -89,14 +88,23 @@ class Album
      *
      * Example: A value of 2010 would represent the association year 2010/2011
      *
-     * @param int $year the year in which the albums have been created
+     * @param int  $year          the year in which the albums have been created
+     * @param bool $onlyPublished whether to only retrieve published albums or all albums
      *
      * @return AlbumModel[]
      */
-    public function getAlbumsByYear(int $year): array
-    {
+    public function getAlbumsByYear(
+        int $year,
+        bool $onlyPublished = true,
+    ): array {
         if (!$this->aclService->isAllowed('view', 'album')) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to view albums'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to view albums'));
+        }
+
+        if (!$onlyPublished && !$this->aclService->isAllowed('unpublished', 'album')) {
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to view unpublished albums'),
+            );
         }
 
         $start = DateTime::createFromFormat(
@@ -107,7 +115,7 @@ class Album
         $end = clone $start;
         $end->add(new DateInterval('P1Y'));
 
-        return $this->albumMapper->getAlbumsInDateRange($start, $end);
+        return $this->albumMapper->getAlbumsInDateRange($start, $end, $onlyPublished);
     }
 
     /**
@@ -134,10 +142,10 @@ class Album
      *
      * @return int[] representing years
      */
-    public function getAlbumYears(): array
+    public function getAlbumYears(bool $onlyPublished = true): array
     {
-        $oldest = $this->albumMapper->getOldestAlbum();
-        $newest = $this->albumMapper->getNewestAlbum();
+        $oldest = $this->albumMapper->getOldestAlbum($onlyPublished);
+        $newest = $this->albumMapper->getNewestAlbum($onlyPublished);
 
         if (
             null === $oldest
@@ -148,29 +156,11 @@ class Album
             return [];
         }
 
-        $startYear = $this->getAssociationYear($oldest->getStartDateTime());
-        $endYear = $this->getAssociationYear($newest->getEndDateTime());
+        $startYear = AssociationYear::fromDate($oldest->getStartDateTime())->getYear();
+        $endYear = AssociationYear::fromDate($newest->getEndDateTime())->getYear();
 
         // We make the reasonable assumption that at least one photo is taken every year
         return range($startYear, $endYear);
-    }
-
-    /**
-     * Returns the association year to which a certain date belongs
-     * In this context an association year is defined as the year which contains
-     * the first day of the association year.
-     *
-     * Example: A value of 2010 would represent the association year 2010/2011
-     *
-     * @return int representing an association year
-     */
-    public function getAssociationYear(DateTime $date): int
-    {
-        if ($date->format('n') < AssociationYear::ASSOCIATION_YEAR_START_MONTH) {
-            return (int) $date->format('Y') - 1;
-        }
-
-        return (int) $date->format('Y');
     }
 
     /**
@@ -193,6 +183,7 @@ class Album
 
         $album = new AlbumModel();
         $album->setName($data['name']);
+        $album->setPublished(boolval($data['published']));
 
         if (null !== $parentId) {
             $album->setParent($this->getAlbum($parentId));
@@ -202,18 +193,6 @@ class Album
         $this->albumMapper->flush();
 
         return $album;
-    }
-
-    /**
-     * Retrieves the form for creating a new album.
-     */
-    public function getCreateAlbumForm(): CreateAlbumForm
-    {
-        if (!$this->aclService->isAllowed('create', 'album')) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to create albums.'));
-        }
-
-        return $this->createAlbumForm;
     }
 
     /**
@@ -261,6 +240,7 @@ class Album
 
         $album = new MemberAlbumModel($lidNr, $member);
         $album->setName($member->getFullName());
+        $album->setPublished(true);
         $album->setStartDateTime($member->getBirth()); // ugly fix
         $album->setEndDateTime(new DateTime());
         $album->addPhotos($this->photoService->getPhotos($album));
@@ -285,8 +265,8 @@ class Album
             return [];
         }
 
-        $startYear = $this->getAssociationYear($oldest->getWeek());
-        $endYear = $this->getAssociationYear($newest->getWeek());
+        $startYear = AssociationYear::fromDate($oldest->getWeek())->getYear();
+        $endYear = AssociationYear::fromDate($newest->getWeek())->getYear();
         $years = range($startYear, $endYear);
 
         $photos = [];
@@ -329,6 +309,7 @@ class Album
                 $year + 1,
             ),
         );
+        $weeklyAlbum->setPublished(true);
 
         $startDate = DateTime::createFromFormat(
             'Y-m-d H:i:s',
@@ -366,19 +347,22 @@ class Album
     /**
      * Retrieves the form for editing the specified album.
      *
-     * @param int $albumId of the album
+     * @param int|null $albumId of the album
      *
      * @throws Exception
      */
-    public function getEditAlbumForm(int $albumId): EditAlbumForm
+    public function getAlbumForm(?int $albumId = null): AlbumForm
     {
         if (!$this->aclService->isAllowed('edit', 'album')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to edit albums.'));
         }
 
-        $form = $this->editAlbumForm;
-        $album = $this->getAlbum($albumId);
-        $form->bind($album);
+        $form = $this->albumForm;
+
+        if (null !== $albumId) {
+            $album = $this->getAlbum($albumId);
+            $form->bind($album);
+        }
 
         return $form;
     }

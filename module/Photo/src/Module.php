@@ -11,8 +11,7 @@ use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\Mvc\MvcEvent;
 use League\Glide\Urls\UrlBuilderFactory;
 use Photo\Command\WeeklyPhoto;
-use Photo\Form\CreateAlbum as CreateAlbumForm;
-use Photo\Form\EditAlbum as EditAlbumForm;
+use Photo\Form\Album as AlbumForm;
 use Photo\Listener\AlbumDate as AlbumDateListener;
 use Photo\Listener\Remove as RemoveListener;
 use Photo\Mapper\Album as AlbumMapper;
@@ -72,8 +71,7 @@ class Module
                     $albumMapper = $container->get('photo_mapper_album');
                     $tagMapper = $container->get('photo_mapper_tag');
                     $weeklyPhotoMapper = $container->get('photo_mapper_weekly_photo');
-                    $createAlbumForm = $container->get('photo_form_album_create');
-                    $editAlbumForm = $container->get('photo_form_album_edit');
+                    $albumForm = $container->get('photo_form_album');
 
                     return new AlbumService(
                         $aclService,
@@ -85,8 +83,7 @@ class Module
                         $albumMapper,
                         $tagMapper,
                         $weeklyPhotoMapper,
-                        $createAlbumForm,
-                        $editAlbumForm,
+                        $albumForm,
                     );
                 },
                 'photo_service_metadata' => static function () {
@@ -137,7 +134,6 @@ class Module
                     $metadataService = $container->get('photo_service_metadata');
                     $storageService = $container->get('application_service_storage');
                     $photoMapper = $container->get('photo_mapper_photo');
-                    $photoConfig = $container->get('config')['photo'];
 
                     return new AdminService(
                         $aclService,
@@ -146,19 +142,10 @@ class Module
                         $metadataService,
                         $storageService,
                         $photoMapper,
-                        $photoConfig,
                     );
                 },
-                'photo_form_album_edit' => static function (ContainerInterface $container) {
-                    $form = new EditAlbumForm(
-                        $container->get(MvcTranslator::class),
-                    );
-                    $form->setHydrator($container->get('photo_hydrator'));
-
-                    return $form;
-                },
-                'photo_form_album_create' => static function (ContainerInterface $container) {
-                    $form = new CreateAlbumForm(
+                'photo_form_album' => static function (ContainerInterface $container) {
+                    $form = new AlbumForm(
                         $container->get(MvcTranslator::class),
                     );
                     $form->setHydrator($container->get('photo_hydrator'));

@@ -24,6 +24,7 @@ class ApiControllerFactory implements FactoryInterface
             $container->get(MvcTranslator::class),
             $container->get('photo_mapper_tag'),
             $container->get('photo_mapper_vote'),
+            $container->get('photo_service_album'),
         );
     }
 }

@@ -16,11 +16,9 @@ use Photo\Controller\Factory\AlbumControllerFactory;
 use Photo\Controller\Factory\ApiControllerFactory;
 use Photo\Controller\Factory\PhotoAdminControllerFactory;
 use Photo\Controller\Factory\PhotoControllerFactory;
-use Photo\Controller\Factory\Plugin\AlbumPluginFactory;
 use Photo\Controller\Factory\TagControllerFactory;
 use Photo\Controller\PhotoAdminController;
 use Photo\Controller\PhotoController;
-use Photo\Controller\Plugin\AlbumPlugin;
 use Photo\Controller\TagController;
 
 return [
@@ -178,50 +176,43 @@ return [
                 ],
                 'may_terminate' => true,
                 'child_routes' => [
-                    'default' => [
+                    'album' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/index',
+                            'route' => '/album/:album_id',
+                            'defaults' => [
+                                'action' => 'view',
+                            ],
+                            'constraints' => [
+                                'album_id' => '[0-9]+',
+                            ],
                         ],
                     ],
-                    'album' => [
+                    'album_year' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/albums/:year',
+                            'defaults' => [
+                                'action' => 'year',
+                            ],
+                            'constraints' => [
+                                'year' => '[0-9]+',
+                            ],
+                        ],
+                    ],
+                    'album_undated' => [
                         'type' => Literal::class,
                         'options' => [
-                            'route' => '/album',
+                            'route' => '/albums/undated',
                             'defaults' => [
-                                'action' => 'index',
-                            ],
-                        ],
-                    ],
-                    'album_index' => [
-                        'type' => Segment::class,
-                        'options' => [
-                            'route' => '/album[/:album_id]',
-                            'defaults' => [
-                                'action' => 'page',
-                            ],
-                            'constraints' => [
-                                'album_id' => '[0-9]+',
-                            ],
-                        ],
-                    ],
-                    'album_page' => [
-                        'type' => Segment::class,
-                        'options' => [
-                            'route' => '/album[/:album_id][/:page]',
-                            'defaults' => [
-                                'action' => 'page',
-                            ],
-                            'constraints' => [
-                                'album_id' => '[0-9]+',
-                                'page' => '[0-9]+',
+                                'action' => 'undated',
                             ],
                         ],
                     ],
                     'album_edit' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/album[/:album_id]/edit',
+                            'route' => '/album/:album_id/edit',
                             'defaults' => [
                                 'action' => 'edit',
                             ],
@@ -257,7 +248,7 @@ return [
                     'album_upload' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/album[/:album_id]/upload',
+                            'route' => '/album/:album_id/upload',
                             'defaults' => [
                                 'action' => 'upload',
                             ],
@@ -281,7 +272,7 @@ return [
                     'album_delete' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/album[/:album_id]/delete',
+                            'route' => '/album/:album_id/delete',
                             'defaults' => [
                                 'action' => 'delete',
                             ],
@@ -293,7 +284,7 @@ return [
                     'album_cover' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/album[/:album_id]/cover',
+                            'route' => '/album/:album_id/cover',
                             'defaults' => [
                                 'action' => 'cover',
                             ],
@@ -302,23 +293,10 @@ return [
                             ],
                         ],
                     ],
-                    'photo_index' => [
-                        'type' => Segment::class,
-                        'options' => [
-                            'route' => '/photo[/:photo_id]',
-                            'defaults' => [
-                                'controller' => PhotoAdminController::class,
-                                'action' => 'index',
-                            ],
-                            'constraints' => [
-                                'photo_id' => '[0-9]+',
-                            ],
-                        ],
-                    ],
                     'photo_move' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/photo[/:photo_id]/move',
+                            'route' => '/photo/:photo_id/move',
                             'defaults' => [
                                 'controller' => PhotoAdminController::class,
                                 'action' => 'move',
@@ -331,7 +309,7 @@ return [
                     'photo_delete' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/photo[/:photo_id]/delete',
+                            'route' => '/photo/:photo_id/delete',
                             'defaults' => [
                                 'controller' => PhotoAdminController::class,
                                 'action' => 'delete',
@@ -394,17 +372,12 @@ return [
             TagController::class => TagControllerFactory::class,
         ],
     ],
-    'controller_plugins' => [
-        'aliases' => [
-            'AlbumPlugin' => AlbumPlugin::class,
-        ],
-        'factories' => [
-            AlbumPlugin::class => AlbumPluginFactory::class,
-        ],
-    ],
     'view_manager' => [
         'template_path_stack' => [
             'photo' => __DIR__ . '/../view/',
+        ],
+        'template_map' => [
+            'photo/album-admin/create' => __DIR__ . '/../view/photo/album-admin/edit.phtml',
         ],
         'strategies' => [
             'ViewJsonStrategy',

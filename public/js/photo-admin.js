@@ -5,285 +5,174 @@
  */
 
 Photo.Admin = {};
-Photo.Admin.activePage = 'photo';
-Photo.Admin.activeData = null;
+Photo.Admin.activeAlbum = null;
 Photo.Admin.selectedCount = 0;
-Photo.Admin.loadPage = function (resource) {
-    $.getJSON(resource, function (data) {
-        Photo.Admin.activePage = resource;
-        Photo.Admin.activeData = data;
-        Photo.Admin.selectedCount = 0;
-        $("#album").html('<div class="row"></div>');
-        $.each(data.albums, function (i, album) {
-            href = URLHelper.url('admin_photo/album_index', {'album_id': album.id});
-            $("#album").append('<div class="col-lg-3 col-md-4 col-xs-6 thumb">'
-                    + '<a class="thumbnail" href="' + href + '">'
-                    + '<img class="img-responsive" src="/data/' + album.coverPath + '" alt="">'
-                    + album.name
-                    + '</a>'
-                    + '</div>');
-        });
 
-        $("#album").find("a").each(function () {
-            $(this).on('click', Photo.Admin.albumClicked);
-        });
+Photo.Admin.regenerateCover = function() {
+    document.getElementById('coverPreview').style.display = "none";
+    document.getElementById('coverSpinner').style.display = "block";
 
-        $.each(data.photos, function (i, photo) {
-            href = URLHelper.url('admin_photo/photo_index', {'photo_id': photo.id});
-            $("#album").append('<div class="col-lg-3 col-md-4 col-xs-6 thumb">'
-                    + '<div class="thumbnail">'
-                    + '<a href="' + href + '">'
-                    + '<img class="img-responsive" src="/data/' + photo.smallThumbPath + '" alt="">'
-                    + '</a>'
-                    + '<input type="checkbox" class="thumbnail-checkbox">'
-                    + '</div>'
-                    + '</div>');
-        });
-        $("#paging").html('');
-
-        $.each(data.pages.pagesInRange, function (key, page) {
-            href = URLHelper.url('admin_photo/album_page', {'album_id': data.album.id, 'page': page});
-            if (page === data.pages.current)
-            {
-                $("#paging").append('<li class="active"><a href="' + href + '">' + (page) + '</a></li>');
-            } else {
-                $("#paging").append('<li><a href="' + href + '">' + (page) + '</a></li>');
-            }
-        });
-        if (data.pages.previous)
-        {
-            href = URLHelper.url('admin_photo/album_page', {'album_id': data.album.id, 'page': data.pages.previous});
-            $("#paging").prepend('<li><a id="previous" href="' + href + '">'
-                    + '<span aria-hidden="true">«</span>'
-                    + '<span class="sr-only">Previous</span>'
-                    + '</a></li>');
-        }
-        if (data.pages.next) {
-            href = URLHelper.url('admin_photo/album_page', {'album_id': data.album.id, 'page': data.pages.next});
-            $("#paging").append('<li><a id="next" href="' + href + '">'
-                    + '<span aria-hidden="true">»</span>'
-                    + '<span class="sr-only">Next</span>'
-                    + '</a></li>');
-        }
-
-        $("#paging").find("a").each(function () {
-            $(this).on('click', function (e) {
-                e.preventDefault();
-                Photo.Admin.loadPage(e.target.href);
-
-            });
-        });
-
-        $(".thumbnail-checkbox").change(Photo.Admin.itemSelected);
-        $("#btnAdd").attr('href', URLHelper.url('admin_photo/album_add', {'album_id': data.album.id}));
-        $("#btnEdit").attr('href', URLHelper.url('admin_photo/album_edit', {'album_id': data.album.id}));
-        $("#btnCreate").attr('href', URLHelper.url('admin_photo/album_create', {'album_id': data.album.id}));
-    });
-}
-
-Photo.Admin.regenerateCover = function () {
-    $("#coverPreview").hide();
-    $("#coverSpinner").show();
-    $.post(URLHelper.url('admin_photo/album_cover', {'album_id': Photo.Admin.activeData.album.id}), function (data) {
+    fetch(URLHelper.url('admin_photo/album_cover', {'album_id': Photo.Admin.activeAlbum}), {
+        method: 'POST',
+    })
+    .then(response => response.json())
+    .then(data => {
         if (data.success) {
-            $("#coverPreview").attr('src', '/data/' + data.coverPath);
-            $("#coverSpinner").hide();
-            $("#coverPreview").show();
+            document.getElementById('coverPreview').src = '/data/' + data.coverPath;
+            document.getElementById('coverSpinner').style.display = "none";
+            document.getElementById('coverPreview').style.display = "block";
         } else {
-            $("#coverSpinner").hide();
-            $("#coverError").show();
+            document.getElementById('coverSpinner').style.display = "none";
+            document.getElementById('coverError').style.display = "block";
         }
     });
 }
 
-Photo.Admin.deleteAlbum = function () {
-    $("#deleteConfirm").hide();
-    $("#deleteProgress").show();
-    $.post(URLHelper.url('admin_photo/album_delete', {'album_id': Photo.Admin.activeData.album.id})).done(function( data ) {
-        location.reload(); //reload to update album tree (TODO: update album tree dynamically)
+Photo.Admin.deleteAlbum = function() {
+    document.getElementById('deleteConfirm').style.display = "none";
+    document.getElementById('deleteProgress').style.display = "block";
+
+    fetch(URLHelper.url('admin_photo/album_delete', {'album_id': Photo.Admin.activeAlbum}), {
+        method: 'POST',
+    })
+    .then(() => {
+        window.location = URLHelper.url('admin_photo');
+        document.getElementById('deleteProgress').style.display = "none";
+        document.getElementById('deleteDone').style.display = "block";
     });
-    $("#deleteProgress").hide();
-    $("#deleteDone").show();
 }
 
-Photo.Admin.deletePhoto = function () {
-    $("#deleteConfirm").hide();
-    $("#deleteProgress").show();
-    $.post(location.href + '/delete').always(function( data ){
-        window.location = $('.next-on-delete').first().attr('href');
-    });
-    $("#deleteProgress").hide();
-    $("#deleteDone").show();
-}
+Photo.Admin.deleteMultiple = function() {
+    document.getElementById('multipleDeleteButton').style.display = "none";
+    document.getElementById('multipleDeleteProgress').style.display = "block";
 
-Photo.Admin.deleteMultiple = function () {
-    $("#multipleDeleteConfirm").hide();
-    $("#multipleDeleteProgress").show();
-    var toDelete = [];
-    $(".thumbnail-checkbox:checked").each(function() {
-        toDelete.push($(this).parent().find('a'));
-    });
-
-    $.each(toDelete, function( i, item ) {
-        $.post(item.attr('href') + '/delete').always(function() {
-            item.parent().remove();
-            toDelete.splice(toDelete.indexOf(item), 1);
-            if(toDelete.length == 0) {
-                Photo.Admin.resetDeleteMultiple();
-            }
+    let selectedThumbnails = document.querySelectorAll('.selectable-photo.selected');
+    let fetchPromises = Array.from(selectedThumbnails).map(element => {
+        return fetch(URLHelper.url('admin_photo/photo_delete', {'photo_id': element.dataset.photoId}), {
+            method: 'POST',
         });
     });
+
+    Promise.all(fetchPromises)
+        .then(() => {
+            location.reload();
+        })
+        .catch(() => {
+            // TODO: add proper error handling
+        });
 }
 
-Photo.Admin.resetDeleteMultiple = function() {
-    $('#multipleDeleteModal').modal('hide');
-    $('#multipleDeleteConfirm').show();
-    $('#multipleDeleteProgress').hide();
+Photo.Admin.moveMultiple = function() {
+    document.getElementById('multipleMoveButton').style.display = "none";
+
+    let selectedThumbnails = document.querySelectorAll('.selectable-photo.selected');
+    let fetchPromises = Array.from(selectedThumbnails).map(element => {
+        let formData = new FormData();
+        formData.append('album_id', document.getElementById('newPhotoAlbum').value);
+
+        return fetch(URLHelper.url('admin_photo/photo_move', {'photo_id': element.dataset.photoId}), {
+            method: 'POST',
+            body: formData,
+        });
+    });
+
+    Promise.all(fetchPromises)
+        .then(() => {
+            location.reload();
+        })
+        .catch(() => {
+            // TODO: add proper error handling
+        });
+}
+
+Photo.Admin.moveAlbum = function() {
+    document.getElementById('albumMoveSelect').style.display = "none";
+    document.getElementById('albumMoveProgress').style.display = "block";
+
+    let formData = new FormData();
+    formData.append('parent_id', document.getElementById('newAlbumParent').value);
+
+    fetch(URLHelper.url('admin_photo/album_move', {'album_id': Photo.Admin.activeAlbum}), {
+        method: 'POST',
+        body: formData,
+    }).then(function() {
+        // TODO: add proper error handling
+        location.reload();
+    });
+}
+
+Photo.Admin.init = function (albumId) {
+    Photo.Admin.activeAlbum = albumId;
+    const COUNT_SPAN = "<span class='selectedCount'>0</span>";
+    document.getElementById('btnMultipleMove').innerHTML = document.getElementById('btnMultipleMove').innerHTML.replace('%i', COUNT_SPAN);
+    document.getElementById('btnMultipleDelete').innerHTML = document.getElementById('btnMultipleDelete').innerHTML.replace('%i', COUNT_SPAN);
+
+    // Add event listeners
+    document.getElementById('btnMultipleSelect').addEventListener('click', Photo.Admin.startSelection);
+    document.getElementById('btnStopMultipleSelect').addEventListener('click', Photo.Admin.cancelSelection);
+    document.getElementById('generateCoverButton').addEventListener('click', Photo.Admin.regenerateCover);
+    document.getElementById('deleteAlbumButton').addEventListener('click', Photo.Admin.deleteAlbum);
+    document.getElementById('multipleDeleteButton').addEventListener('click', Photo.Admin.deleteMultiple);
+    document.getElementById('multipleMoveButton').addEventListener('click', Photo.Admin.moveMultiple);
+    document.getElementById('moveAlbumButton').addEventListener('click', Photo.Admin.moveAlbum);
+}
+
+Photo.Admin.startSelection = function() {
+    document.getElementById('btnMultipleSelect').classList.add('btn-hidden');
+    document.getElementById('btnStopMultipleSelect').classList.remove('btn-hidden');
+    document.getElementById('btnMultipleDelete').classList.remove('btn-hidden');
+    document.getElementById('btnMultipleMove').classList.remove('btn-hidden');
+
+    let thumbnails = document.querySelectorAll('.pswp-gallery__item');
+    thumbnails.forEach(function(element) {
+        element.classList.remove('pswp-gallery__item');
+        element.classList.add('selectable-photo');
+        element.addEventListener('click', Photo.Admin.itemSelected);
+    });
+}
+
+Photo.Admin.cancelSelection = function() {
+    document.getElementById('btnMultipleSelect').classList.remove('btn-hidden');
+    document.getElementById('btnStopMultipleSelect').classList.add('btn-hidden');
+    document.getElementById('btnMultipleDelete').classList.add('btn-hidden');
+    document.getElementById('btnMultipleMove').classList.add('btn-hidden');
+
     Photo.Admin.clearSelection();
-}
 
-Photo.Admin.moveMultiple = function () {
-    $("#multipleMoveConfirm").hide();
-    $("#multipleMoveProgress").show();
-    var toMove = [];
-    $(".thumbnail-checkbox:checked").each(function() {
-        toMove.push($(this).parent().find('a'));
-    });
-    $.each(toMove, function( i, item ) {
-        $.post(item.attr('href') + '/move',
-            { album_id : $("#newPhotoAlbum").val() }
-        ).always(function() {
-            item.parent().remove();
-            toMove.splice(toMove.indexOf(item), 1);
-            if(toMove.length == 0) {
-                Photo.Admin.resetMoveMultiple();
-            }
-        });
+    let thumbnails = document.querySelectorAll('.selectable-photo');
+    thumbnails.forEach(function(element) {
+        element.removeEventListener('click', Photo.Admin.itemSelected);
+        element.classList.remove('selectable-photo');
+        element.classList.add('pswp-gallery__item');
     });
 }
 
-Photo.Admin.resetMoveMultiple = function() {
-    $('#multipleMoveModal').modal('hide');
-    $('#multipleMoveConfirm').show();
-    $('#multipleMoveProgress').hide();
-    Photo.Admin.clearSelection();
-}
+Photo.Admin.itemSelected = function(e) {
+    e.preventDefault();
+    e.stopPropagation();
 
-Photo.Admin.moveAlbum = function () {
-    $("#albumMoveSelect").hide();
-    $("#albumMoveProgress").show();
-    $.post(
-        URLHelper.url('admin_photo/album_move', {'album_id': Photo.Admin.activeData.album.id}),
-        { parent_id : $("#newAlbumParent").val() }
-    ).done(function( data ) {
-            location.reload(); //reload to update album tree (TODO: update album tree dynamically)
-    });
-
-}
-
-Photo.Admin.movePhoto = function () {
-    $("#photoMoveSelect").hide();
-    $("#photoMoveProgress").show();
-    $.post(
-        location.href + '/move',
-        { album_id : $("#newPhotoAlbum").val() }
-    ).done(function( data ) {
-            location.reload(); //reload to update view (TODO: update view dynamically)
-        });
-    $("#photoMoveProgress").hide();
-    $("#photoMoveDone").show();
-
-}
-
-Photo.Admin.init = function () {
-    $("#albumControls").hide();
-    var COUNT_SPAN = '<span class="selectedCount"></span>'
-    $("#btnMultipleMove").html($("#btnMultipleMove").html().replace('%i', COUNT_SPAN));
-    $("#btnMultipleDelete").html($("#btnMultipleDelete").html().replace('%i', COUNT_SPAN));
-    //we use class instead of id here to get the button since there are multiple instances
-    $(".btn-regenerate").on('click', Photo.Admin.regenerateCover);
-    $("#deleteAlbumButton").on('click', Photo.Admin.deleteAlbum);
-    $("#multipleDeleteButton").on('click', Photo.Admin.deleteMultiple);
-    $("#multipleMoveButton").on('click', Photo.Admin.moveMultiple);
-    $("#moveAlbumButton").on('click', Photo.Admin.moveAlbum);
-    $('.tree .branch a').each(function () {
-        $(this).on('click', Photo.Admin.albumClicked);
-    });
-    //auto load album on hash
-    if (location.hash !== "") {
-        $(location.hash).click();
-        //$(location.hash).parent().parent().children().toggle();
-    }
-}
-
-Photo.Admin.initPhoto = function() {
-    $("#deletePhotoButton").on('click', Photo.Admin.deletePhoto);
-    $("#movePhotoButton").on('click', Photo.Admin.movePhoto);
-}
-
-Photo.Admin.itemSelected = function () {
-    if (this.checked) {
+    if (this.classList.toggle('selected')) {
         Photo.Admin.selectedCount++;
     } else {
         Photo.Admin.selectedCount--;
     }
-    $(".selectedCount").html(Photo.Admin.selectedCount);
-    if (Photo.Admin.selectedCount > 0)
-    {
-        $("#btnMultipleDelete").removeClass("btn-hidden");
-        $("#btnMultipleMove").removeClass("btn-hidden");
-    } else {
-        $("#btnMultipleDelete").addClass("btn-hidden");
-        $("#btnMultipleMove").addClass("btn-hidden");
-    }
+
+    let counts = document.querySelectorAll('.selectedCount');
+    counts.forEach(function(element) {
+        element.textContent = Photo.Admin.selectedCount;
+    });
 }
 
 Photo.Admin.clearSelection = function() {
+    let selectedPhotos = document.querySelectorAll('.selectable-photo.selected');
+    selectedPhotos.forEach(function(element) {
+        element.classList.remove('selected');
+    });
+
     Photo.Admin.selectedCount = 0;
-    $(".selectedCount").html(0);
-    $("#btnMultipleDelete").addClass("btn-hidden");
-    $("#btnMultipleMove").addClass("btn-hidden");
-}
 
-Photo.Admin.updateBreadCrumb = function (target) {
-
-    if (target.attr('class') == 'thumbnail') {
-        a = target.clone();
-        a.children().remove();
-        a.attr('class', '');
-        a.on('click', Photo.Admin.albumClicked);
-        item = $("<li></li>").append(a);
-        $("#breadcrumb").append(item)
-    } else if (target.parent().parent().attr('id') == 'breadcrumb') {
-        target.parent().nextAll().remove();
-    } else {
-        $("#breadcrumb").empty();
-        while (!target.is('div')) {
-            if (target.children('a').length > 0)
-            {
-                a = target.children('a').clone();
-                a.on('click', Photo.Admin.albumClicked);
-                item = $("<li></li>").append(a);
-                $("#breadcrumb").prepend(item)
-            }
-            target = target.parent();
-        }
-    }
-}
-Photo.Admin.albumClicked = function (e) {
-    e.preventDefault();
-    $(this).closest('li').click();
-    //workaround for preventing page from jumping when changing hash
-    if (history.pushState) {
-        history.pushState(null, null, '#' + $(this).attr('id'));
-    }
-    else {
-        location.hash = $(this).attr('id');
-    }
-
-    location.hash = $(this).attr('id');
-    $("#albumControls").show();
-    Photo.Admin.updateBreadCrumb($(this));
-    Photo.Admin.loadPage(e.target.href);
-
+    let counts = document.querySelectorAll('.selectedCount');
+    counts.forEach(function(element) {
+        element.textContent = "0";
+    });
 }
