@@ -8566,6 +8566,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Decision-Model-MeetingDocument.html#method_setDisplayPosition"
         },                {
+            "fqsen": "\\Decision\\Model\\MeetingDocument\u003A\u003ApreUpdate\u0028\u0029",
+            "name": "preUpdate",
+            "summary": "Override\u0020the\u0020\u0060preUpdate\u0060\u0020lifecycle\u0020callback\u0020to\u0020prevent\u0020updating\u0020the\u0020timestamp\u0020when\u0020changing\u0020the\u0020display\u0020position.",
+            "url": "classes/Decision-Model-MeetingDocument.html#method_preUpdate"
+        },                {
             "fqsen": "\\Decision\\Model\\MeetingDocument\u003A\u003A\u0024meeting",
             "name": "meeting",
             "summary": "Meeting.",

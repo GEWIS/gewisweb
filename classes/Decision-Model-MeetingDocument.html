@@ -415,7 +415,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/MeetingDocument.php"><a href="files/module-decision-src-model-meetingdocument.html"><abbr title="module/Decision/src/Model/MeetingDocument.php">MeetingDocument.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">18</span>
+    <span class="phpdocumentor-element-found-in__line">21</span>
 
     </aside>
 
@@ -558,11 +558,11 @@ nullable.</dd>
 <dd>Automatically fill in the `DateTime`s before the initial call to `persist()`.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Application-Model-Traits-TimestampableTrait.html#method_preUpdate">preUpdate()</a>
+    <a href="classes/Decision-Model-MeetingDocument.html#method_preUpdate">preUpdate()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd>Automatically update the `updatedAt` `DateTime` when doing an update to the entity.</dd>
+<dd>Override the `preUpdate` lifecycle callback to prevent updating the timestamp when changing the display position.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-MeetingDocument.html#method_setDisplayPosition">setDisplayPosition()</a>
@@ -675,7 +675,7 @@ nullable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/MeetingDocument.php"><a href="files/module-decision-src-model-meetingdocument.html"><abbr title="module/Decision/src/Model/MeetingDocument.php">MeetingDocument.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">59</span>
+    <span class="phpdocumentor-element-found-in__line">62</span>
 
     </aside>
 
@@ -746,7 +746,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/MeetingDocument.php"><a href="files/module-decision-src-model-meetingdocument.html"><abbr title="module/Decision/src/Model/MeetingDocument.php">MeetingDocument.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">28</span>
+    <span class="phpdocumentor-element-found-in__line">31</span>
 
     </aside>
 
@@ -780,7 +780,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/MeetingDocument.php"><a href="files/module-decision-src-model-meetingdocument.html"><abbr title="module/Decision/src/Model/MeetingDocument.php">MeetingDocument.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">45</span>
+    <span class="phpdocumentor-element-found-in__line">48</span>
 
     </aside>
 
@@ -814,7 +814,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/MeetingDocument.php"><a href="files/module-decision-src-model-meetingdocument.html"><abbr title="module/Decision/src/Model/MeetingDocument.php">MeetingDocument.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">51</span>
+    <span class="phpdocumentor-element-found-in__line">54</span>
 
     </aside>
 
@@ -922,7 +922,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/MeetingDocument.php"><a href="files/module-decision-src-model-meetingdocument.html"><abbr title="module/Decision/src/Model/MeetingDocument.php">MeetingDocument.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">114</span>
+    <span class="phpdocumentor-element-found-in__line">117</span>
 
     </aside>
 
@@ -1007,7 +1007,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/MeetingDocument.php"><a href="files/module-decision-src-model-meetingdocument.html"><abbr title="module/Decision/src/Model/MeetingDocument.php">MeetingDocument.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">68</span>
+    <span class="phpdocumentor-element-found-in__line">71</span>
 
     </aside>
 
@@ -1043,7 +1043,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/MeetingDocument.php"><a href="files/module-decision-src-model-meetingdocument.html"><abbr title="module/Decision/src/Model/MeetingDocument.php">MeetingDocument.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">85</span>
+    <span class="phpdocumentor-element-found-in__line">88</span>
 
     </aside>
 
@@ -1079,7 +1079,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/MeetingDocument.php"><a href="files/module-decision-src-model-meetingdocument.html"><abbr title="module/Decision/src/Model/MeetingDocument.php">MeetingDocument.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">101</span>
+    <span class="phpdocumentor-element-found-in__line">104</span>
 
     </aside>
 
@@ -1176,26 +1176,36 @@ nullable.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_preUpdate">
         preUpdate()
-        <a href="classes/Application-Model-Traits-TimestampableTrait.html#method_preUpdate" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Decision-Model-MeetingDocument.html#method_preUpdate" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/TimestampableTrait.php"><a href="files/module-application-src-model-traits-timestampabletrait.html"><abbr title="module/Application/src/Model/Traits/TimestampableTrait.php">TimestampableTrait.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/MeetingDocument.php"><a href="files/module-decision-src-model-meetingdocument.html"><abbr title="module/Decision/src/Model/MeetingDocument.php">MeetingDocument.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">66</span>
+    <span class="phpdocumentor-element-found-in__line">130</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Automatically update the `updatedAt` `DateTime` when doing an update to the entity.</p>
+        <p class="phpdocumentor-summary">Override the `preUpdate` lifecycle callback to prevent updating the timestamp when changing the display position.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">preUpdate</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">preUpdate</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Doctrine\ORM\Event\PreUpdateEventArgs">PreUpdateEventArgs</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$event</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
     
-    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$event</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Doctrine\ORM\Event\PreUpdateEventArgs">PreUpdateEventArgs</abbr></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
     
 
     
@@ -1214,7 +1224,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/MeetingDocument.php"><a href="files/module-decision-src-model-meetingdocument.html"><abbr title="module/Decision/src/Model/MeetingDocument.php">MeetingDocument.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">119</span>
+    <span class="phpdocumentor-element-found-in__line">122</span>
 
     </aside>
 
@@ -1297,7 +1307,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/MeetingDocument.php"><a href="files/module-decision-src-model-meetingdocument.html"><abbr title="module/Decision/src/Model/MeetingDocument.php">MeetingDocument.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">76</span>
+    <span class="phpdocumentor-element-found-in__line">79</span>
 
     </aside>
 
@@ -1339,7 +1349,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/MeetingDocument.php"><a href="files/module-decision-src-model-meetingdocument.html"><abbr title="module/Decision/src/Model/MeetingDocument.php">MeetingDocument.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">93</span>
+    <span class="phpdocumentor-element-found-in__line">96</span>
 
     </aside>
 
@@ -1381,7 +1391,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/MeetingDocument.php"><a href="files/module-decision-src-model-meetingdocument.html"><abbr title="module/Decision/src/Model/MeetingDocument.php">MeetingDocument.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">109</span>
+    <span class="phpdocumentor-element-found-in__line">112</span>
 
     </aside>
 
@@ -1625,7 +1635,7 @@ nullable.</p>
                                             <li><a href="classes/Decision-Model-MeetingDocument.html#method_getPath">getPath()</a></li>
                                             <li><a href="classes/Application-Model-Traits-TimestampableTrait.html#method_getUpdatedAt">getUpdatedAt()</a></li>
                                             <li><a href="classes/Application-Model-Traits-TimestampableTrait.html#method_prePersist">prePersist()</a></li>
-                                            <li><a href="classes/Application-Model-Traits-TimestampableTrait.html#method_preUpdate">preUpdate()</a></li>
+                                            <li><a href="classes/Decision-Model-MeetingDocument.html#method_preUpdate">preUpdate()</a></li>
                                             <li><a href="classes/Decision-Model-MeetingDocument.html#method_setDisplayPosition">setDisplayPosition()</a></li>
                                             <li><a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_setId">setId()</a></li>
                                             <li><a href="classes/Decision-Model-MeetingDocument.html#method_setMeeting">setMeeting()</a></li>
