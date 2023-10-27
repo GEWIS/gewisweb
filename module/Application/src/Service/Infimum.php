@@ -8,6 +8,7 @@ use Laminas\Cache\Exception\ExceptionInterface;
 use Laminas\Cache\Storage\Adapter\AbstractAdapter;
 use Laminas\Http\Client;
 use Laminas\Http\Client\Adapter\Curl;
+use Laminas\Http\Client\Adapter\Exception\RuntimeException;
 use Laminas\Http\Request;
 use Laminas\Json\Json;
 use Laminas\Mvc\I18n\Translator;
@@ -48,19 +49,23 @@ class Infimum
         $client->setAdapter(Curl::class)
             ->setEncType('application/json');
 
-        $response = $client->send($request);
+        try {
+            $response = $client->send($request);
 
-        // Check if the request was successful.
-        if (200 === $response->getStatusCode()) {
-            $responseContent = Json::decode($response->getBody(), Json::TYPE_ARRAY);
+            // Check if the request was successful.
+            if (200 === $response->getStatusCode()) {
+                $responseContent = Json::decode($response->getBody(), Json::TYPE_ARRAY);
 
-            // Check if an Infimum is returned.
-            if (array_key_exists('content', $responseContent)) {
-                // Cache the infimum to reduce the number of requests that need to be executed.
-                $this->infimumCache->setItem('infimum', $responseContent['content']);
+                // Check if an Infimum is returned.
+                if (array_key_exists('content', $responseContent)) {
+                    // Cache the infimum to reduce the number of requests that need to be executed.
+                    $this->infimumCache->setItem('infimum', $responseContent['content']);
 
-                return $responseContent['content'];
+                    return $responseContent['content'];
+                }
             }
+        } catch (RuntimeException) {
+            // cURL threw an error and the page could not be loaded.
         }
 
         return $this->translator->translate('Unable to retrieve infimum.');
