@@ -6,11 +6,14 @@ namespace Decision\Model;
 
 use Application\Model\Traits\IdentifiableTrait;
 use Application\Model\Traits\TimestampableTrait;
+use DateTime;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\PreUpdate;
 
 /**
  * Meeting document model.
@@ -119,5 +122,18 @@ class MeetingDocument
     public function setDisplayPosition(int $position): void
     {
         $this->displayPosition = $position;
+    }
+
+    /**
+     * Override the `preUpdate` lifecycle callback to prevent updating the timestamp when changing the display position.
+     */
+    #[PreUpdate]
+    public function preUpdate(PreUpdateEventArgs $event): void
+    {
+        if ($event->hasChangedField('displayPosition')) {
+            return;
+        }
+
+        $this->setUpdatedAt(new DateTime());
     }
 }
