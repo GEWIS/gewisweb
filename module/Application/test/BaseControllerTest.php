@@ -6,6 +6,7 @@ namespace ApplicationTest;
 
 use Company\Model\Company;
 use Company\Model\CompanyLocalisedText;
+use DateInterval;
 use DateTime;
 use Decision\Model\Enums\MembershipTypes;
 use Decision\Model\Member;
@@ -237,6 +238,7 @@ abstract class BaseControllerTest extends AbstractHttpControllerTestCase
         if ('user' !== $role) {
             $roleModel = new UserRole();
             $roleModel->setRole(UserRoles::from($role));
+            $roleModel->setExpiration((new DateTime('now'))->add(new DateInterval('P1D')));
 
             $roles = new ArrayCollection([$roleModel]);
         } else {

@@ -148,7 +148,7 @@ class User implements IdentityInterface
     }
 
     /**
-     * Get the user's role names.
+     * Get the user's active role names.
      *
      * @return string[] Role names
      */
@@ -157,6 +157,10 @@ class User implements IdentityInterface
         $names = [];
 
         foreach ($this->getRoles() as $role) {
+            if (!$role->isActive()) {
+                continue;
+            }
+
             $names[] = $role->getRole()->value;
         }
 
