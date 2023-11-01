@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace User\Model;
 
 use Application\Model\Traits\IdentifiableTrait;
+use DateTime;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\JoinColumn;
@@ -44,6 +45,15 @@ class UserRole
     protected UserRoles $role;
 
     /**
+     * Date after which this role has expired.
+     */
+    #[Column(
+        type: 'datetime',
+        nullable: true,
+    )]
+    protected ?DateTime $expiration = null;
+
+    /**
      * Get the membership number.
      */
     public function getLidnr(): User
@@ -73,5 +83,30 @@ class UserRole
     public function setRole(UserRoles $role): void
     {
         $this->role = $role;
+    }
+
+    /**
+     * Get the expiration, `null` means invalid (and thus inactive).
+     */
+    public function getExpiration(): ?DateTime
+    {
+        return $this->expiration;
+    }
+
+    /**
+     * Set the expiration date.
+     */
+    public function setExpiration(DateTime $expiration): void
+    {
+        $this->expiration = $expiration;
+    }
+
+    /**
+     * Determine whether this role is active (i.e. has not expired).
+     */
+    public function isActive(): bool
+    {
+        return null !== $this->expiration
+            && (new DateTime('now')) < $this->expiration;
     }
 }
