@@ -17058,7 +17058,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\User\\Model\\User\u003A\u003AgetRoleNames\u0028\u0029",
             "name": "getRoleNames",
-            "summary": "Get\u0020the\u0020user\u0027s\u0020role\u0020names.",
+            "summary": "Get\u0020the\u0020user\u0027s\u0020active\u0020role\u0020names.",
             "url": "classes/User-Model-User.html#method_getRoleNames"
         },                {
             "fqsen": "\\User\\Model\\User\u003A\u003AgetRoleId\u0028\u0029",
@@ -17151,6 +17151,21 @@ Search.appendIndex(
             "summary": "Set\u0020the\u0020role.",
             "url": "classes/User-Model-UserRole.html#method_setRole"
         },                {
+            "fqsen": "\\User\\Model\\UserRole\u003A\u003AgetExpiration\u0028\u0029",
+            "name": "getExpiration",
+            "summary": "Get\u0020the\u0020expiration,\u0020\u0060null\u0060\u0020means\u0020invalid\u0020\u0028and\u0020thus\u0020inactive\u0029.",
+            "url": "classes/User-Model-UserRole.html#method_getExpiration"
+        },                {
+            "fqsen": "\\User\\Model\\UserRole\u003A\u003AsetExpiration\u0028\u0029",
+            "name": "setExpiration",
+            "summary": "Set\u0020the\u0020expiration\u0020date.",
+            "url": "classes/User-Model-UserRole.html#method_setExpiration"
+        },                {
+            "fqsen": "\\User\\Model\\UserRole\u003A\u003AisActive\u0028\u0029",
+            "name": "isActive",
+            "summary": "Determine\u0020whether\u0020this\u0020role\u0020is\u0020active\u0020\u0028i.e.\u0020has\u0020not\u0020expired\u0029.",
+            "url": "classes/User-Model-UserRole.html#method_isActive"
+        },                {
             "fqsen": "\\User\\Model\\UserRole\u003A\u003A\u0024lidnr",
             "name": "lidnr",
             "summary": "The\u0020membership\u0020number\u0020of\u0020the\u0020user\u0020with\u0020this\u0020role.",
@@ -17160,6 +17175,11 @@ Search.appendIndex(
             "name": "role",
             "summary": "The\u0020user\u0027s\u0020role.",
             "url": "classes/User-Model-UserRole.html#property_role"
+        },                {
+            "fqsen": "\\User\\Model\\UserRole\u003A\u003A\u0024expiration",
+            "name": "expiration",
+            "summary": "Date\u0020after\u0020which\u0020this\u0020role\u0020has\u0020expired.",
+            "url": "classes/User-Model-UserRole.html#property_expiration"
         },                {
             "fqsen": "\\User\\Module",
             "name": "Module",

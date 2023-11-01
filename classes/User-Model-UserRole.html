@@ -415,7 +415,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Model/UserRole.php"><a href="files/module-user-src-model-userrole.html"><abbr title="module/User/src/Model/UserRole.php">UserRole.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">19</span>
+    <span class="phpdocumentor-element-found-in__line">20</span>
 
     </aside>
 
@@ -449,6 +449,13 @@
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a href="classes/User-Model-UserRole.html#property_expiration">$expiration</a>
+    <span>
+                        &nbsp;: <abbr title="\DateTime">DateTime</abbr>|null            </span>
+</dt>
+<dd>Date after which this role has expired.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id">$id</a>
     <span>
                         &nbsp;: int|null            </span>
@@ -479,6 +486,13 @@ nullable.</dd>
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/User-Model-UserRole.html#method_getExpiration">getExpiration()</a>
+    <span>
+                                &nbsp;: <abbr title="\DateTime">DateTime</abbr>|null    </span>
+</dt>
+<dd>Get the expiration, `null` means invalid (and thus inactive).</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_getId">getId()</a>
     <span>
                                 &nbsp;: int|null    </span>
@@ -498,6 +512,20 @@ nullable.</dd>
                                 &nbsp;: <a href="classes/User-Model-Enums-UserRoles.html"><abbr title="\User\Model\Enums\UserRoles">UserRoles</abbr></a>    </span>
 </dt>
 <dd>Get the role.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/User-Model-UserRole.html#method_isActive">isActive()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+<dd>Determine whether this role is active (i.e. has not expired).</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/User-Model-UserRole.html#method_setExpiration">setExpiration()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>Set the expiration date.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_setId">setId()</a>
@@ -534,6 +562,40 @@ nullable.</dd>
             <a href="classes/User-Model-UserRole.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_expiration">
+        $expiration
+        <a href="classes/User-Model-UserRole.html#property_expiration" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Model/UserRole.php"><a href="files/module-user-src-model-userrole.html"><abbr title="module/User/src/Model/UserRole.php">UserRole.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">50</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Date after which this role has expired.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type"><abbr title="\DateTime">DateTime</abbr>|null</span>
+    <span class="phpdocumentor-signature__name">$expiration</span>
+     = <span class="phpdocumentor-signature__default-value">null</span></code>
+
+    
+    
+    
+
+</article>
                     <article
         class="
             phpdocumentor-element
@@ -586,7 +648,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Model/UserRole.php"><a href="files/module-user-src-model-userrole.html"><abbr title="module/User/src/Model/UserRole.php">UserRole.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">27</span>
+    <span class="phpdocumentor-element-found-in__line">28</span>
 
     </aside>
 
@@ -620,7 +682,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Model/UserRole.php"><a href="files/module-user-src-model-userrole.html"><abbr title="module/User/src/Model/UserRole.php">UserRole.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">40</span>
+    <span class="phpdocumentor-element-found-in__line">41</span>
 
     </aside>
 
@@ -645,6 +707,42 @@ nullable.</p>
             <a href="classes/User-Model-UserRole.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getExpiration">
+        getExpiration()
+        <a href="classes/User-Model-UserRole.html#method_getExpiration" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Model/UserRole.php"><a href="files/module-user-src-model-userrole.html"><abbr title="module/User/src/Model/UserRole.php">UserRole.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">91</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Get the expiration, `null` means invalid (and thus inactive).</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getExpiration</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\DateTime">DateTime</abbr>|null</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\DateTime">DateTime</abbr>|null</span>
+            </section>
+
+</article>
                     <article
         class="phpdocumentor-element
             -method
@@ -709,7 +807,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Model/UserRole.php"><a href="files/module-user-src-model-userrole.html"><abbr title="module/User/src/Model/UserRole.php">UserRole.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">49</span>
+    <span class="phpdocumentor-element-found-in__line">59</span>
 
     </aside>
 
@@ -745,7 +843,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Model/UserRole.php"><a href="files/module-user-src-model-userrole.html"><abbr title="module/User/src/Model/UserRole.php">UserRole.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">65</span>
+    <span class="phpdocumentor-element-found-in__line">75</span>
 
     </aside>
 
@@ -766,6 +864,84 @@ nullable.</p>
         <span class="phpdocumentor-signature__response_type"><a href="classes/User-Model-Enums-UserRoles.html"><abbr title="\User\Model\Enums\UserRoles">UserRoles</abbr></a></span>
             </section>
 
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_isActive">
+        isActive()
+        <a href="classes/User-Model-UserRole.html#method_isActive" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Model/UserRole.php"><a href="files/module-user-src-model-userrole.html"><abbr title="module/User/src/Model/UserRole.php">UserRole.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">107</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Determine whether this role is active (i.e. has not expired).</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">isActive</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_setExpiration">
+        setExpiration()
+        <a href="classes/User-Model-UserRole.html#method_setExpiration" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Model/UserRole.php"><a href="files/module-user-src-model-userrole.html"><abbr title="module/User/src/Model/UserRole.php">UserRole.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">99</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Set the expiration date.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">setExpiration</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTime">DateTime</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$expiration</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$expiration</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTime">DateTime</abbr></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+    
 </article>
                     <article
         class="phpdocumentor-element
@@ -823,7 +999,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Model/UserRole.php"><a href="files/module-user-src-model-userrole.html"><abbr title="module/User/src/Model/UserRole.php">UserRole.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">57</span>
+    <span class="phpdocumentor-element-found-in__line">67</span>
 
     </aside>
 
@@ -865,7 +1041,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Model/UserRole.php"><a href="files/module-user-src-model-userrole.html"><abbr title="module/User/src/Model/UserRole.php">UserRole.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">73</span>
+    <span class="phpdocumentor-element-found-in__line">83</span>
 
     </aside>
 
@@ -1006,6 +1182,7 @@ nullable.</p>
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
+                                                    <li><a href="classes/User-Model-UserRole.html#property_expiration">$expiration<a href="classes/User-Model-UserRole.html"></li>
                                                     <li><a href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id">$id<a href="classes/User-Model-UserRole.html"></li>
                                                     <li><a href="classes/User-Model-UserRole.html#property_lidnr">$lidnr<a href="classes/User-Model-UserRole.html"></li>
                                                     <li><a href="classes/User-Model-UserRole.html#property_role">$role<a href="classes/User-Model-UserRole.html"></li>
@@ -1015,9 +1192,12 @@ nullable.</p>
                         <li class="phpdocumentor-on-this-page-section__title">Methods</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
+                                            <li><a href="classes/User-Model-UserRole.html#method_getExpiration">getExpiration()</a></li>
                                             <li><a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_getId">getId()</a></li>
                                             <li><a href="classes/User-Model-UserRole.html#method_getLidnr">getLidnr()</a></li>
                                             <li><a href="classes/User-Model-UserRole.html#method_getRole">getRole()</a></li>
+                                            <li><a href="classes/User-Model-UserRole.html#method_isActive">isActive()</a></li>
+                                            <li><a href="classes/User-Model-UserRole.html#method_setExpiration">setExpiration()</a></li>
                                             <li><a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_setId">setId()</a></li>
                                             <li><a href="classes/User-Model-UserRole.html#method_setLidnr">setLidnr()</a></li>
                                             <li><a href="classes/User-Model-UserRole.html#method_setRole">setRole()</a></li>
