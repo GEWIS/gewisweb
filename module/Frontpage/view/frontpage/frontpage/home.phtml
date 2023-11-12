@@ -7,19 +7,19 @@ use Application\View\HelperTrait;
 use Company\Model\CompanyBannerPackage as CompanyBannerPackageModel;
 use Frontpage\Model\NewsItem as NewsItemModel;
 use Laminas\View\Renderer\PhpRenderer;
-use Photo\Model\{
-    Photo as PhotoModel,
-    WeeklyPhoto as WeeklyPhotoModel,
-};
+use Photo\Model\Photo as PhotoModel;
+use Photo\Model\WeeklyPhoto as WeeklyPhotoModel;
 
 /**
  * @var PhpRenderer|HelperTrait $this
  * @var PhotoModel|null $birthdayPhoto
  * @var CompanyBannerPackageModel|null $companyBanner
- * @var NewsItemModel[] $news
+ * @var array<array-key, ActivityModel|NewsItemModel> $news
  * @var array $photoConfig
  * @var WeeklyPhotoModel $weeklyPhoto
  */
+
+$lang = $this->plugin('translate')->getTranslator()->getLocale();
 ?>
 <div class="jumbotron jumbotron--panorama">
     <img alt=""
@@ -54,28 +54,20 @@ use Photo\Model\{
                     <h2><?= $this->translate('News') ?></h2>
 
                     <?php foreach ($news as $item): ?>
+                        <?php
+                        if ($item instanceof ActivityModel) {
+                            $title = $item->getName()->getText($lang);
+                            $content = $item->getDescription()->getText($lang);
+                        } else {
+                            $title = ($lang === 'en') ? $item->getEnglishTitle() : $item->getDutchTitle();
+                            $content = ($lang === 'en') ? $item->getEnglishContent() : $item->getDutchContent();
+                        }
+                        ?>
                         <article class="content-article">
-                            <h3>
-                                <?php
-                                $lang = $this->plugin('translate')->getTranslator()->getLocale();
-                                if ($item instanceof ActivityModel) {
-                                    echo ($lang === 'en') ? $item->getName()->getValueEN() : $item->getName()->getValueNL();
-                                } else {
-                                    echo ($lang === 'en') ? $item->getEnglishTitle() : $item->getDutchTitle();
-                                }
-                                ?>
-                            </h3>
+                            <h3><?= $this->escapeHtml($title) ?></h3>
                             <div style="position: relative; overflow: hidden;">
                                 <div class="reveal reveal-10">
-                                    <?php
-                                    if ($item instanceof ActivityModel) {
-                                        $content = ($lang === 'en') ? $item->getDescription()->getValueEN() : $item->getDescription()->getValueNL();
-                                    } else {
-                                        $content = ($lang === 'en') ? $item->getEnglishContent() : $item->getDutchContent();
-                                    }
-
-                                    echo $this->markdown($content);
-                                    ?>
+                                    <?= $this->markdown($content) ?>
                                     <a class="reveal-button"><?= $this->translate('Continue reading') ?></a>
                                 </div>
                             </div>
@@ -172,7 +164,6 @@ use Photo\Model\{
                             <?php foreach ($activities as $activity): ?>
                                 <a class="list-group-item"
                                    href="<?= $this->url('activity/view', ['id' => $activity->getId()]) ?>">
-                                    <?php $lang = $this->plugin('translate')->getTranslator()->getLocale(); ?>
                                     <h4 class="list-group-item-heading"><?= $activity->getName()->getText($lang) ?></h4>
                                     <p class="list-group-item-text text-muted"><?= ucfirst($this->dateFormat($activity->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT, $lang)); ?></p>
                                 </a>
