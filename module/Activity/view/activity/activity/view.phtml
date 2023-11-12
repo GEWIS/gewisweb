@@ -259,87 +259,92 @@ $this->headTitle($this->translate('Activities'));
                         <?php endif; ?>
                     </div>
                 </div>
-                <div class="col-md-12 table-responsive agenda-subscriptions">
+                <div class="col-md-12">
                     <h2><?= $this->translate('Current subscriptions') ?></h2>
-                    <table class="table table-hover">
-                        <thead>
-                        <tr>
-                            <th></th>
-                            <th><?= $this->translate('Name') ?> </th>
-                            <?php foreach ($fields as $field): ?>
-                                <th><?= $this->escapeHtml($this->localiseText($field->getName())) ?></th>
-                            <?php endforeach; ?>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <?php $i = 1; ?>
-                        <?php if (!$this->acl('activity_service_acl')->isAllowed('signupList', 'viewDetails')): ?>
-                            <tr>
-                                <td align="center" colspan="<?= count($fields) + 2 ?>">
-                                    <?php
-                                    if ($signupList->getDisplaySubscribedNumber()) {
-                                        echo sprintf($this->translate('The number of subscribed members is currently %d.'), $memberSignups) . '<br/>';
-                                    }
-                                    ?>
-                                    <a href="<?= $this->url('user/login', ['user_type' => 'member']) ?>">
-                                        <?= $this->translate('Login to view the subscribed members.') ?>
-                                    </a>
-                                </td>
-                            </tr>
-                        <?php endif; ?>
-                        <?php if (!$isArchived || $this->acl('activity_service_acl')->isAllowed('signupList', 'viewDetails')): ?>
-                            <?php $member = $this->identity()?->getMember()->getLidnr(); ?>
-                            <?php foreach ($signupList->getSignUps() as $signup): ?>
-                                <?php if (($signup instanceof Activity\Model\ExternalSignup) || $this->acl('activity_service_acl')->isAllowed('signupList', 'viewDetails')): ?>
+                    <div class="table-responsive">
+                        <table class="table table-hover agenda-subscriptions">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th><?= $this->translate('Name') ?> </th>
+                                    <?php foreach ($fields as $field): ?>
+                                        <th><?= $this->escapeHtml($this->localiseText($field->getName())) ?></th>
+                                    <?php endforeach; ?>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php $i = 1; ?>
+                                <?php if (!$this->acl('activity_service_acl')->isAllowed('signupList', 'viewDetails')): ?>
                                     <tr>
-                                        <td><?= $this->acl('activity_service_acl')->isAllowed('signupList', 'view') || $signupList->getDisplaySubscribedNumber() ? $i : '' ?></td>
-                                        <td><?= $this->escapeHtml($signup->getFullName()) ?></td>
-                                        <?php foreach ($fields as $field): ?>
-                                            <?php if (
-                                                $field->isSensitive()
-                                                && !(
-                                                    $signup instanceof Activity\Model\UserSignup
-                                                    && null !== $member
-                                                    && $member === $signup->getUser()->getLidnr()
-                                                )
-                                            ): ?>
-                                                <td>
-                                                    <span class="blurred-text">
-                                                        <?= $this->translate('Hidden') ?>
-                                                    </span>
-                                                </td>
-                                            <?php else: ?>
-                                                <?php foreach ($signup->getFieldValues() as $fieldValue): ?>
-                                                    <?php if ($fieldValue->getField()->getId() === $field->getId()): ?>
+                                        <td align="center" colspan="<?= count($fields) + 2 ?>">
+                                            <?php if ($signupList->getDisplaySubscribedNumber()): ?>
+                                                <p>
+                                                    <?= sprintf(
+                                                        $this->translate('The number of subscribed members is currently %d.'),
+                                                        $memberSignups,
+                                                    ) ?>
+                                                </p>
+                                            <?php endif; ?>
+                                            <a href="<?= $this->url('user/login', ['user_type' => 'member']) ?>">
+                                                <?= $this->translate('Login to view the subscribed members.') ?>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                <?php endif; ?>
+                                <?php if (!$isArchived || $this->acl('activity_service_acl')->isAllowed('signupList', 'viewDetails')): ?>
+                                    <?php $member = $this->identity()?->getMember()->getLidnr(); ?>
+                                    <?php foreach ($signupList->getSignUps() as $signup): ?>
+                                        <?php if (($signup instanceof Activity\Model\ExternalSignup) || $this->acl('activity_service_acl')->isAllowed('signupList', 'viewDetails')): ?>
+                                            <tr>
+                                                <td><?= $this->acl('activity_service_acl')->isAllowed('signupList', 'view') || $signupList->getDisplaySubscribedNumber() ? $i : '' ?></td>
+                                                <td><?= $this->escapeHtml($signup->getFullName()) ?></td>
+                                                <?php foreach ($fields as $field): ?>
+                                                    <?php if (
+                                                        $field->isSensitive()
+                                                        && !(
+                                                            $signup instanceof Activity\Model\UserSignup
+                                                            && null !== $member
+                                                            && $member === $signup->getUser()->getLidnr()
+                                                        )
+                                                    ): ?>
                                                         <td>
-                                                            <?php
-                                                            switch ($field->getType()) {
-                                                                case 0:
-                                                                    echo $this->escapeHtml($fieldValue->getValue());
-                                                                    break;
-                                                                case 1:
-                                                                    echo $this->translate($fieldValue->getValue());
-                                                                    break;
-                                                                case 2:
-                                                                    echo $fieldValue->getValue();
-                                                                    break;
-                                                                case 3:
-                                                                    echo $this->localiseText($fieldValue->getOption()->getValue());
-                                                                    break;
-                                                            }
-                                                            ?>
+                                                            <span class="blurred-text">
+                                                                <?= $this->translate('Hidden') ?>
+                                                            </span>
                                                         </td>
+                                                    <?php else: ?>
+                                                        <?php foreach ($signup->getFieldValues() as $fieldValue): ?>
+                                                            <?php if ($fieldValue->getField()->getId() === $field->getId()): ?>
+                                                                <td>
+                                                                    <?php
+                                                                    switch ($field->getType()) {
+                                                                        case 0:
+                                                                            echo $this->escapeHtml($fieldValue->getValue());
+                                                                            break;
+                                                                        case 1:
+                                                                            echo $this->translate($fieldValue->getValue());
+                                                                            break;
+                                                                        case 2:
+                                                                            echo $fieldValue->getValue();
+                                                                            break;
+                                                                        case 3:
+                                                                            echo $this->localiseText($fieldValue->getOption()->getValue());
+                                                                            break;
+                                                                    }
+                                                                    ?>
+                                                                </td>
+                                                            <?php endif; ?>
+                                                        <?php endforeach; ?>
                                                     <?php endif; ?>
                                                 <?php endforeach; ?>
-                                            <?php endif; ?>
-                                        <?php endforeach; ?>
-                                    </tr>
-                                    <?php $i = $i + 1; ?>
+                                            </tr>
+                                            <?php $i = $i + 1; ?>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
                                 <?php endif; ?>
-                            <?php endforeach; ?>
-                        <?php endif; ?>
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         <?php endif; ?>
