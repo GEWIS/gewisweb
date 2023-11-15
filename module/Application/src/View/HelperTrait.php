@@ -38,6 +38,7 @@ use User\Model\CompanyUser as CompanyUserModel;
  * @method JobCategoryModel[] jobCategories()
  * @method string localisedTextElement(ElementInterface $element)
  * @method string localiseText(LocalisedTextModel $localisedText)
+ * @method string markdown(string $text)
  * @method bool moduleIsActive(array $conditions)
  * @method HrefLang hrefLang()
  * @method ScriptUrl scriptUrl()

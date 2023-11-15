@@ -10,6 +10,8 @@ use Laminas\View\Renderer\PhpRenderer;
  * @var PhpRenderer|HelperTrait $this
  * @var ActivityForm $form
  */
+
+$lang = $this->plugin('translate')->getTranslator()->getLocale();
 ?>
 <div class="row">
     <div class="col-md-12">
@@ -76,7 +78,7 @@ use Laminas\View\Renderer\PhpRenderer;
         </div>
         <?php
         $description = $form->get('description')
-            ->setAttribute('class', 'form-control form-control-dutch markdown-editor')
+            ->setAttribute('class', 'form-control form-control-dutch')
             ->setAttribute('style', 'width:100%; height:10em; resize:none')
             ->setAttribute('data-provide', 'markdown')
             ->setAttribute('id', 'description-nl');
@@ -150,7 +152,7 @@ use Laminas\View\Renderer\PhpRenderer;
         </div>
         <?php
         $descriptionEn = $form->get('descriptionEn')
-            ->setAttribute('class', 'form-control form-control-english markdown-editor')
+            ->setAttribute('class', 'form-control form-control-english')
             ->setAttribute('style', 'width:100%; height:10em; resize:none')
             ->setAttribute('data-provide', 'markdown')
             ->setAttribute('id', 'description-en');
@@ -207,4 +209,20 @@ use Laminas\View\Renderer\PhpRenderer;
             Activity.updateForm();
         });
     });
+
+    GEDITOR.MarkdownEditor
+        .create(document.querySelector('#description-nl'), {
+            language: '<?= $lang ?>'
+        })
+        .catch(error => {
+            console.error(error);
+        });
+
+    GEDITOR.MarkdownEditor
+        .create(document.querySelector('#description-en'), {
+            language: '<?= $lang ?>'
+        })
+        .catch(error => {
+            console.error(error);
+        });
 </script>

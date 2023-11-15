@@ -1,0 +1,287 @@
+<?php
+
+declare(strict_types=1);
+
+use Activity\Form\Activity;
+use Application\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var string $action
+ * @var Activity $form
+ */
+
+$this->headTitle($action);
+$this->breadcrumbs()
+    ->addBreadcrumb($this->translate('Activities'), true, $this->url('activity_admin'))
+    ->addBreadcrumb($action);
+
+$lang = $this->plugin('translate')->getTranslator()->getLocale();
+
+$this->headLink()
+    ->appendStylesheet($this->basepath('css/ckeditor/style.css'));
+$this->headScript()
+    ->appendFile(
+        $this->basepath('js/activity-create.js'),
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    )
+    ->appendFile(
+        $this->basepath('js/ckeditor/ckeditor.js'),
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    )
+    ->appendFile(
+        $this->basepath('js/bootstrap/tooltip.js'),
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    );
+
+if ('nl' === $lang) {
+    $this->headScript()->appendFile(
+        $this->basepath('js/ckeditor/translations/nl.js'),
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    );
+}
+
+$form->prepare();
+$form->setAttribute('class', 'form-activity');
+?>
+<?= $this->form()->openTag($form) ?>
+<div class="row">
+    <div class="col-md-12">
+        <h1><?= $action ?></h1>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-12">
+                <h2><?= $this->translate('Organizer') ?></h2>
+                <p><?= $this->translate('Select whether an organ (committee, fraternity, etc.) or a company is responsible for this activity, or both.') ?></p>
+            </div>
+            <div class="col-md-6">
+                <?php
+                $organ = $form->get('organ')
+                    ->setAttribute('class', 'form-control')
+                    ->setAttribute('id', 'organizing-organ');
+                ?>
+                <div class="form-group <?= $this->bootstrapElementError($organ) ?>">
+                    <label for="<?= $organ->getAttribute('id') ?>" class="control-label label-required">
+                        <?= $this->translate('Committee / fraternity') ?>
+                    </label>
+                    <?= $this->formSelect($organ) ?>
+                    <?= $this->formElementErrors($organ) ?>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <?php
+                $company = $form->get('company')
+                    ->setAttribute('class', 'form-control')
+                    ->setAttribute('id', 'organizing-company');
+                ?>
+                <div class="form-group <?= $this->bootstrapElementError($company) ?>">
+                    <label for="<?= $company->getAttribute('id') ?>" class="control-label label-required">
+                        <?= $this->translate('Company') ?>
+                    </label>
+                    <?= $this->formSelect($company) ?>
+                    <?= $this->formElementErrors($company) ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-12">
+                <h2><?= $this->translate('Date and time') ?></h2>
+                <p><?= $this->translate('Enter the start and end date and time of this activity.') ?></p>
+            </div>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-6">
+                        <?php
+                        $beginTime = $form->get('beginTime')
+                            ->setAttribute('class', 'form-control')
+                            ->setAttribute('id', 'begin-time');
+                        ?>
+                        <div class="form-group <?= $this->bootstrapElementError($beginTime) ?>">
+                            <label for="<?= $beginTime->getAttribute('id') ?>"
+                                   class="control-label label-required">
+                                <?= $this->translate('Start date and time') ?>
+                            </label>
+                            <?= $this->formDateTimeLocal($beginTime) ?>
+                            <?= $this->formElementErrors($beginTime) ?>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <?php
+                        $endTime = $form->get('endTime')
+                            ->setAttribute('class', 'form-control')
+                            ->setAttribute('id', 'end-time');
+                        ?>
+                        <div class="form-group <?= $this->bootstrapElementError($endTime) ?>">
+                            <label for="<?= $endTime->getAttribute('id') ?>"
+                                   class="control-label label-required">
+                                <?= $this->translate('End date and time') ?>
+                            </label>
+                            <?= $this->formDateTimeLocal($endTime) ?>
+                            <?= $this->formElementErrors($endTime) ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?= $this->partial('partial/create', ['form' => $form]) ?>
+<div class="row">
+    <div class="col-md-12">
+        <h2><?= $this->translate('Activity Categories') ?></h2>
+        <p><?= $this->translate('Add activity categories to your activity to give potential subscribers a better understanding of the activity.') ?></p>
+    </div>
+    <div class="col-md-12">
+        <?php
+        $categories = $form->get('categories');
+        $categoriesName = $categories->getName();
+        $categoryOptions = $categories->getValueOptions();
+        $categorySelectedValues = $categories->getValue();
+
+        if (!empty($categorySelectedValues)) {
+            $selectedCategoryIds = [];
+
+            // To prevent issues with Zend's form parsing, we must access `id` as an array attribute and not via
+            // `ActivityCategory->getId()`.
+            foreach ($categorySelectedValues as $category) {
+                $selectedCategoryIds[] = is_string($category) ? $category : $category['id'];
+            }
+        }
+        ?>
+        <?php if (empty($categoryOptions)): ?>
+            <p><em><?= $this->translate('There are currently no activity categories...') ?></em></p>
+        <?php else: ?>
+            <fieldset>
+                <?php foreach ($categoryOptions as $option => $value): ?>
+                    <?php
+                    $checked = (isset($selectedCategoryIds) && in_array($option, $selectedCategoryIds)) ?
+                        'checked="checked"' : '';
+                    ?>
+                    <div class="chip chip-clickable chip-outlined">
+                        <span class="chip-icon chip-check-icon fas fa-check-circle hidden"></span>
+                        <label for="<?= $categoriesName ?>-<?= $option ?>" data-category-id="<?= $option ?>"
+                               class="chip-label">
+                            <?= $this->escapeHtml($this->localiseText($value)) ?>
+                        </label>
+                        <input type="checkbox" name="<?= $categoriesName ?>[]"
+                               id="<?= $categoriesName ?>-<?= $option; ?>"
+                               value="<?= $option ?>" class="chip-checkbox" <?= $checked ?>>
+                    </div>
+                <?php endforeach; ?>
+            </fieldset>
+        <?php endif; ?>
+    </div>
+</div>
+<?php if (isset($allowSignupList) && $allowSignupList): // Do not allow updates to change SignupLists. This is very complicated. ?>
+    <div class="row">
+        <div class="col-md-12">
+            <h2><?= $this->translate('Sign-up Lists') ?></h2>
+            <p><?= $this->translate('Add sign-up lists to allow people to sign up for this activity. Each list can have optional fields to collect specific information from the participants.') ?></p>
+        </div>
+        <div class="col-md-12">
+            <div class="row signup-lists-header">
+                <div class="col-md-3 col-md-offset-6">
+                    <span class="flag-icon flag-icon-nl"></span>
+                    <strong><?= $this->translate('Dutch') ?></strong>
+                    <hr/>
+                </div>
+                <div class="col-md-3">
+                    <span class="flag-icon flag-icon-en"></span>
+                    <strong><?= $this->translate('English') ?></strong>
+                    <hr/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <?php
+                    // Render template for SignupLists
+                    $signupListsTemplate = $form->get('signupLists')->getTemplateElement();
+                    ob_start();
+                    echo $this->partial('partial/signuplist.phtml', ['signupList' => $signupListsTemplate, 'index' => '__signuplist__']);
+                    $signupListsTemplateData = trim(ob_get_clean());
+                    ?>
+                    <fieldset class="signup-lists">
+                        <span class="template"
+                              data-template="<?= $this->escapeHtmlAttr($signupListsTemplateData) ?>"></span>
+                        <?php
+                        $index = 0;
+                        foreach ($form->get('signupLists')->getIterator() as $signupList) {
+                            echo $this->partial('partial/signuplist.phtml', ['signupList' => $signupList, 'index' => $index]);
+                            $index++;
+                        }
+                        ?>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group signup-list-controls">
+                                    <button class="btn btn-danger remove-signup-list" type="button">
+                                        <span class="fas fa-minus"></span>
+                                        <?= $this->translate('Remove the last sign-up list') ?>
+                                    </button>
+                                    <button class="btn btn-success add-signup-list" type="button">
+                                        <span class="fas fa-plus"></span>
+                                        <?= $this->translate('Add a sign-up list') ?>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+<div class="row">
+    <div class="col-md-12">
+        <?php
+        $submit = $form->get('submit')
+            ->setLabel($action)
+            ->setAttribute('class', 'btn btn-primary');
+        ?>
+        <div class="form-group">
+            <?= $this->formButton($submit) ?>
+        </div>
+    </div>
+    <?= $this->form()->closeTag(); ?>
+</div>
+
+<script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
+    Activity.updateForm();
+    Activity.updateAllFields();
+    Activity.updateAllCategories();
+
+    document.querySelector('.add-signup-list').addEventListener('click', () => {
+        Activity.addSignupList();
+    });
+    document.querySelector('.remove-signup-list').addEventListener('click', () => {
+        Activity.removeSignupList();
+    });
+
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('remove-field')) {
+            Activity.removeField(e.target.dataset.signupListId);
+        } else if (e.target.classList.contains('add-field')) {
+            Activity.addField(e.target.dataset.signupListId);
+        }
+    });
+
+    document.addEventListener('change', (e) => {
+        if (e.target.classList.contains('signup-list-field-type')) {
+            Activity.updateField(e.target.dataset.signupListId, e.target.dataset.fieldId);
+        }
+    });
+
+    $('label[for^="categories-"]').on('click', function () {
+        Activity.toggleCategory($(this).data('category-id'));
+    });
+</script>

@@ -88,4 +88,33 @@ return [
         'base_url' => getenv('GLIDE_HOST'),
         'signing_key' => getenv('GLIDE_KEY'),
     ],
+
+    /**
+     * Settings for the league/commonmark Markdown converter.
+     */
+    'commonmark' => [
+        'commonmark' => [
+            'enable_em' => true,
+            'enable_strong' => true,
+            'use_asterisk' => true,
+            'use_underscore' => true,
+            'unordered_list_markers' => ['-', '*', '+'],
+        ],
+        'external_link' => [
+            'internal_hosts' => 'gewis.nl',
+            'open_in_new_window' => true,
+            'html_class' => 'external-link',
+            'nofollow' => '',
+            'noopener' => 'external',
+            'noreferrer' => 'external',
+        ],
+        'renderer' => [
+            'block_separator' => '<br>',
+            'inner_separator' => '',
+            'soft_break'      => '<br>',
+        ],
+        'html_input' => 'escape',
+        'allow_unsafe_links' => false,
+        'max_nesting_level' => 100,
+    ],
 ];

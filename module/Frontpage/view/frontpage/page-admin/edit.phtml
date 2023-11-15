@@ -172,7 +172,7 @@ $submit->setAttribute('class', 'btn btn-primary');
 
 <?= $this->form()->closeTag(); ?>
 <script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
-    ClassicEditor
+    GEDITOR.FullEditor
         .create(document.querySelector('#content-nl'), {
             language: '<?= $lang ?>'
         })
@@ -180,7 +180,7 @@ $submit->setAttribute('class', 'btn btn-primary');
             console.error(error);
         });
 
-    ClassicEditor
+    GEDITOR.FullEditor
         .create(document.querySelector('#content-en'), {
             language: '<?= $lang ?>'
         })

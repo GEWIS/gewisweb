@@ -14,6 +14,7 @@ use Application\View\Helper\Acl;
 use Application\View\Helper\Diff;
 use Application\View\Helper\FileUrl;
 use Application\View\Helper\JobCategories;
+use Application\View\Helper\Markdown;
 use Application\View\Helper\ModuleIsActive;
 use Application\View\Helper\ScriptUrl;
 use Laminas\Cache\Storage\Adapter\Memcached;
@@ -25,6 +26,11 @@ use Laminas\Mvc\MvcEvent;
 use Laminas\Router\Http\TreeRouteStack;
 use Laminas\Router\RouteStackInterface;
 use Laminas\Validator\AbstractValidator;
+use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+use League\CommonMark\Extension\ExternalLink\ExternalLinkExtension;
+use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
+use League\CommonMark\MarkdownConverter;
 use Locale;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
@@ -243,6 +249,17 @@ class Module
                 },
                 'diff' => static function (ContainerInterface $container) {
                     return new Diff($container->get('config')['php-diff']);
+                },
+                'markdown' => static function (ContainerInterface $container) {
+                    $environment = new Environment($container->get('config')['commonmark']);
+                    $environment->addExtension(new CommonMarkCoreExtension())
+                        ->addExtension(new GithubFlavoredMarkdownExtension())
+                        ->addExtension(new ExternalLinkExtension());
+
+                    return new Markdown(
+                        $container->get(MvcTranslator::class),
+                        new MarkdownConverter($environment),
+                    );
                 },
             ],
         ];

@@ -42,8 +42,6 @@ $this->headLink()
     ->appendStylesheet($this->basepath('css/jquery.Jcrop.min.css'))
     ->appendStylesheet($this->basepath('css/ckeditor/style.css'));
 
-$this->scriptUrl()->requireUrl('admin_page/upload');
-
 $this->breadcrumbs()
     ->addBreadcrumb($this->translate('Organs'), true, $this->url('admin_organ'))
     ->addBreadcrumb($this->translate('Edit'));
@@ -186,7 +184,7 @@ $submit->setAttribute('class', 'btn btn-primary');
 
 <?= $this->form()->closeTag(); ?>
 <script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
-    ClassicEditor
+    GEDITOR.MarkdownEditor
         .create(document.querySelector('#dutch-description'), {
             language: '<?= $lang ?>'
         })
@@ -194,7 +192,7 @@ $submit->setAttribute('class', 'btn btn-primary');
             console.error(error);
         });
 
-    ClassicEditor
+    GEDITOR.MarkdownEditor
         .create(document.querySelector('#english-description'), {
             language: '<?= $lang ?>'
         })

@@ -8,7 +8,6 @@ use Activity\Form\Signup as SignupForm;
 use Activity\Model\Activity as ActivityModel;
 use Activity\Model\SignupList as SignupListModel;
 use Activity\Service\AclService;
-use Activity\Service\Activity as ActivityService;
 use Activity\Service\ActivityQuery as ActivityQueryService;
 use Activity\Service\Signup as SignupService;
 use Activity\Service\SignupListQuery as SignupListQueryService;
@@ -37,7 +36,6 @@ class ActivityController extends AbstractActionController
     public function __construct(
         private readonly AclService $aclService,
         private readonly Translator $translator,
-        private readonly ActivityService $activityService,
         private readonly ActivityQueryService $activityQueryService,
         private readonly SignupService $signupService,
         private readonly SignupListQueryService $signupListQueryService,
@@ -204,37 +202,6 @@ class ActivityController extends AbstractActionController
         }
 
         return null;
-    }
-
-    /**
-     * Create an activity.
-     */
-    public function createAction(): ViewModel
-    {
-        $form = $this->activityService->getActivityForm();
-        /** @var Request $request */
-        $request = $this->getRequest();
-
-        if ($request->isPost()) {
-            $form->setData($request->getPost()->toArray());
-
-            if ($form->isValid()) {
-                if ($this->activityService->createActivity($form->getData())) {
-                    $view = new ViewModel();
-                    $view->setTemplate('activity/activity/createSuccess.phtml');
-
-                    return $view;
-                }
-            }
-        }
-
-        return new ViewModel(
-            [
-                'form' => $form,
-                'action' => $this->translator->translate('Create Activity'),
-                'allowSignupList' => true,
-            ],
-        );
     }
 
     /**

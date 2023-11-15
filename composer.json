@@ -71,7 +71,8 @@
         "cweagans/composer-patches": "^1.7.1",
         "setasign/fpdi": "2.3.6",
         "tecnickcom/tcpdf": "6.5.0",
-        "jfcherng/php-diff": "^6.15"
+        "jfcherng/php-diff": "^6.15",
+        "league/commonmark": "^2.4"
     },
     "require-dev": {
         "ext-pdo_sqlite": "*",
