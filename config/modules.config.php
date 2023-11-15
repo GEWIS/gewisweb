@@ -35,5 +35,4 @@ return [
     'Activity',
     'Photo',
     'Education',
-    'MaglMarkdown',
 ];
