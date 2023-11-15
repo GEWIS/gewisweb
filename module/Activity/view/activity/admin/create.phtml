@@ -17,8 +17,10 @@ $this->breadcrumbs()
     ->addBreadcrumb($this->translate('Activities'), true, $this->url('activity_admin'))
     ->addBreadcrumb($action);
 
+$lang = $this->plugin('translate')->getTranslator()->getLocale();
+
 $this->headLink()
-    ->appendStylesheet($this->basepath('css/bootstrap-markdown.min.css'));
+    ->appendStylesheet($this->basepath('css/ckeditor/style.css'));
 $this->headScript()
     ->appendFile(
         $this->basepath('js/activity-create.js'),
@@ -26,7 +28,7 @@ $this->headScript()
         ['nonce' => NONCE_REPLACEMENT_STRING],
     )
     ->appendFile(
-        $this->basepath('js/bootstrap-markdown.js'),
+        $this->basepath('js/ckeditor/ckeditor.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     )
@@ -35,6 +37,14 @@ $this->headScript()
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     );
+
+if ('nl' === $lang) {
+    $this->headScript()->appendFile(
+        $this->basepath('js/ckeditor/translations/nl.js'),
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    );
+}
 
 $form->prepare();
 $form->setAttribute('class', 'form-activity');
@@ -246,14 +256,6 @@ $form->setAttribute('class', 'form-activity');
 </div>
 
 <script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
-    $('.markdown-editor').each(function () {
-        $(this).markdown(
-            {
-                resize: "both",
-                iconlibrary: "fa"
-            }
-        );
-    });
     Activity.updateForm();
     Activity.updateAllFields();
     Activity.updateAllCategories();
