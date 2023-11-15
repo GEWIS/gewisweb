@@ -111,11 +111,6 @@ Search.appendIndex(
             "summary": "Get\u0020the\u0020appropriate\u0020signup\u0020form.",
             "url": "classes/Activity-Controller-ActivityController.html#method_prepareSignupForm"
         },                {
-            "fqsen": "\\Activity\\Controller\\ActivityController\u003A\u003AcreateAction\u0028\u0029",
-            "name": "createAction",
-            "summary": "Create\u0020an\u0020activity.",
-            "url": "classes/Activity-Controller-ActivityController.html#method_createAction"
-        },                {
             "fqsen": "\\Activity\\Controller\\ActivityController\u003A\u003AsignupAction\u0028\u0029",
             "name": "signupAction",
             "summary": "Signup\u0020for\u0020an\u0020activity.",
@@ -150,11 +145,6 @@ Search.appendIndex(
             "name": "translator",
             "summary": "",
             "url": "classes/Activity-Controller-ActivityController.html#property_translator"
-        },                {
-            "fqsen": "\\Activity\\Controller\\ActivityController\u003A\u003A\u0024activityService",
-            "name": "activityService",
-            "summary": "",
-            "url": "classes/Activity-Controller-ActivityController.html#property_activityService"
         },                {
             "fqsen": "\\Activity\\Controller\\ActivityController\u003A\u003A\u0024activityQueryService",
             "name": "activityQueryService",
@@ -300,6 +290,11 @@ Search.appendIndex(
             "name": "__construct",
             "summary": "",
             "url": "classes/Activity-Controller-AdminController.html#method___construct"
+        },                {
+            "fqsen": "\\Activity\\Controller\\AdminController\u003A\u003AcreateAction\u0028\u0029",
+            "name": "createAction",
+            "summary": "Create\u0020an\u0020activity.",
+            "url": "classes/Activity-Controller-AdminController.html#method_createAction"
         },                {
             "fqsen": "\\Activity\\Controller\\AdminController\u003A\u003AupdateAction\u0028\u0029",
             "name": "updateAction",
@@ -4165,6 +4160,31 @@ Search.appendIndex(
             "name": "__invoke",
             "summary": "Determines\u0020the\u0020correct\u0020value\u0020for\u0020an\u0020element.",
             "url": "classes/Application-View-Helper-LocaliseText.html#method___invoke"
+        },                {
+            "fqsen": "\\Application\\View\\Helper\\Markdown",
+            "name": "Markdown",
+            "summary": "",
+            "url": "classes/Application-View-Helper-Markdown.html"
+        },                {
+            "fqsen": "\\Application\\View\\Helper\\Markdown\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Application-View-Helper-Markdown.html#method___construct"
+        },                {
+            "fqsen": "\\Application\\View\\Helper\\Markdown\u003A\u003A__invoke\u0028\u0029",
+            "name": "__invoke",
+            "summary": "Parse\u0020Markdown\u0020and\u0020convert\u0020it\u0020to\u0020HTML.",
+            "url": "classes/Application-View-Helper-Markdown.html#method___invoke"
+        },                {
+            "fqsen": "\\Application\\View\\Helper\\Markdown\u003A\u003A\u0024translator",
+            "name": "translator",
+            "summary": "",
+            "url": "classes/Application-View-Helper-Markdown.html#property_translator"
+        },                {
+            "fqsen": "\\Application\\View\\Helper\\Markdown\u003A\u003A\u0024converter",
+            "name": "converter",
+            "summary": "",
+            "url": "classes/Application-View-Helper-Markdown.html#property_converter"
         },                {
             "fqsen": "\\Application\\View\\Helper\\ModuleIsActive",
             "name": "ModuleIsActive",
