@@ -49,6 +49,40 @@ class AdminController extends AbstractActionController
     ) {
     }
 
+    /**
+     * Create an activity.
+     */
+    public function createAction(): Response|ViewModel
+    {
+        $form = $this->activityService->getActivityForm();
+        /** @var Request $request */
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+            $form->setData($request->getPost()->toArray());
+
+            if ($form->isValid()) {
+                if ($this->activityService->createActivity($form->getData())) {
+                    return $this->redirectActivityAdmin(
+                        true,
+                        $this->translator->translate(
+                            // phpcs:ignore Generic.Files.LineLength.TooLong -- user-visible strings should not be split
+                            'You have successfully created an activity! Once the activity is approved by the board, it will become visible on the website.',
+                        ),
+                    );
+                }
+            }
+        }
+
+        return new ViewModel(
+            [
+                'form' => $form,
+                'action' => $this->translator->translate('Create Activity'),
+                'allowSignupList' => true,
+            ],
+        );
+    }
+
     public function updateAction(): Response|ViewModel
     {
         $activityId = (int) $this->params()->fromRoute('id');
@@ -144,7 +178,7 @@ class AdminController extends AbstractActionController
                 'allowSignupList' => $allowSignupList,
             ],
         );
-        $viewModel->setTemplate('activity/activity/create.phtml');
+        $viewModel->setTemplate('activity/admin/create.phtml');
 
         return $viewModel;
     }

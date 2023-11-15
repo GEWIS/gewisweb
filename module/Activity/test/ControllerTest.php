@@ -49,7 +49,7 @@ class ControllerTest extends BaseControllerTest
     public function testActivityCreateActionCanBeAccessedAsAdmin(): void
     {
         $this->setUpWithRole('admin');
-        $this->dispatch('/activity/create');
+        $this->dispatch('/admin/activity/create');
         $this->assertResponseStatusCode(200);
     }
 

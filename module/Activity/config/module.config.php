@@ -103,15 +103,6 @@ return [
                             ],
                         ],
                     ],
-                    'create' => [
-                        'type' => Literal::class,
-                        'options' => [
-                            'route' => '/create',
-                            'defaults' => [
-                                'action' => 'create',
-                            ],
-                        ],
-                    ],
                     'career' => [
                         'type' => Literal::class,
                         'options' => [
@@ -216,6 +207,15 @@ return [
                             ],
                             'defaults' => [
                                 'action' => 'externalSignoff',
+                            ],
+                        ],
+                    ],
+                    'create' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/create',
+                            'defaults' => [
+                                'action' => 'create',
                             ],
                         ],
                     ],
