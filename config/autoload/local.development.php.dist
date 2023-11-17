@@ -111,7 +111,7 @@ return [
         'renderer' => [
             'block_separator' => '',
             'inner_separator' => '',
-            'soft_break'      => '',
+            'soft_break'      => '<br>',
         ],
         'html_input' => 'escape',
         'allow_unsafe_links' => false,

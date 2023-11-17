@@ -109,7 +109,7 @@ return [
             'noreferrer' => 'external',
         ],
         'renderer' => [
-            'block_separator' => '<br>',
+            'block_separator' => '',
             'inner_separator' => '',
             'soft_break'      => '<br>',
         ],
