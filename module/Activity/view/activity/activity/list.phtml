@@ -42,12 +42,10 @@ use Laminas\View\Renderer\PhpRenderer;
                             <?php endforeach; ?>
                         </div>
                         <div class="col-md-8 reveal reveal-10">
-                            <p>
-                                <?= strip_tags(
-                                    $this->markdown($this->localiseText($activity->getDescription())),
-                                    ['<p>'],
-                                ) ?>
-                            </p>
+                            <?= strip_tags(
+                                $this->markdown($this->localiseText($activity->getDescription())),
+                                ['<p>'],
+                            ) ?>
                             <a class="reveal-button"><?= $this->translate('Continue reading') ?></a>
                         </div>
                         <div class="col-md-4">

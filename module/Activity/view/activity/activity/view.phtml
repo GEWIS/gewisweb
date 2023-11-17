@@ -81,7 +81,7 @@ $this->headTitle($this->translate('Activities'));
                 <div class="row agenda-item">
                     <div class="col-md-9">
                         <div class="agenda-item-body">
-                            <p><?= $this->markdown($this->localiseText($activity->getDescription())) ?></p>
+                            <?= $this->markdown($this->localiseText($activity->getDescription())) ?>
                         </div>
                     </div>
                     <div class="col-md-3">
