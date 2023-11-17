@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-27 21:18+0200\n"
-"PO-Revision-Date: 2023-10-27 21:21+0200\n"
+"POT-Creation-Date: 2023-11-16 10:29+0100\n"
+"PO-Revision-Date: 2023-11-16 10:29+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: nl\n"
@@ -1608,10 +1608,6 @@ msgstr ""
 msgid "It was last edited on %s."
 msgstr "Laatst bewerkt op %s."
 
-msgid "It will become visible after it has been approved by the board."
-msgstr ""
-"Het zal zichtbaar worden als de activiteit goedgekeurd is door het bestuur."
-
 msgid "Job Labels"
 msgstr "Vacature-labels"
 
@@ -2776,9 +2772,6 @@ msgstr "De activiteitencategorie is succesvol bijgewerkt!"
 msgid "The activity does now have an acceptable amount of options"
 msgstr "De activiteit heeft geen acceptabel aantal opties"
 
-msgid "The activity has been successfully created."
-msgstr "De activiteit is gemaakt."
-
 msgid "The activity must start after today"
 msgstr "De starttijd van de activiteit moet in de toekomst zijn"
 
@@ -2807,7 +2800,7 @@ msgstr ""
 "partij, of als het gaat om grote activiteiten en weekenden."
 
 msgid "The course form is invalid!"
-msgstr ""
+msgstr "Het vakformulier is ongeldig!"
 
 msgid "The currently active fraternities of GEWIS (in arbitrary order)"
 msgstr "De huidige disputen van GEWIS zijn (in willekeurige volgorde):"
@@ -3157,6 +3150,9 @@ msgstr "Deze permalink bevat ongeldige tekens"
 
 msgid "This slug is already taken"
 msgstr "Deze permalink is al in gebruik"
+
+msgid "This text could not be generated."
+msgstr "Deze tekst kon niet worden gegenereerd."
 
 msgid "Thumbnail photo to upload"
 msgstr "Profiel foto"
@@ -4061,6 +4057,13 @@ msgstr "Je hebt %s gemachtigd voor de %s ALV (%s)."
 
 msgid "You have not been a member of a committee or fraternity."
 msgstr "Je bent geen lid geweest van een commissie of dispuut."
+
+msgid ""
+"You have successfully created an activity! Once the activity is approved by "
+"the board, it will become visible on the website."
+msgstr ""
+"Je hebt met succes een activiteit aangemaakt! Zodra de activiteit is "
+"goedgekeurd door het bestuur, wordt deze zichtbaar op de website."
 
 msgid ""
 "You have successfully created an update proposal for the activity! If the "

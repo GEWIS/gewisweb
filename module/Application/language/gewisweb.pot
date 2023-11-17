@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: GEWISweb v2.8.6-543-g6886ab369-dirty\n"
+"Project-Id-Version: GEWISweb v2.8.6-563-g229793789-dirty\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-27 21:18+0200\n"
+"POT-Creation-Date: 2023-11-16 10:29+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1493,9 +1493,6 @@ msgstr ""
 msgid "It was last edited on %s."
 msgstr ""
 
-msgid "It will become visible after it has been approved by the board."
-msgstr ""
-
 msgid "Job Labels"
 msgstr ""
 
@@ -2607,9 +2604,6 @@ msgstr ""
 msgid "The activity does now have an acceptable amount of options"
 msgstr ""
 
-msgid "The activity has been successfully created."
-msgstr ""
-
 msgid "The activity must start after today"
 msgstr ""
 
@@ -2929,6 +2923,9 @@ msgid "This slug contains invalid characters"
 msgstr ""
 
 msgid "This slug is already taken"
+msgstr ""
+
+msgid "This text could not be generated."
 msgstr ""
 
 msgid "Thumbnail photo to upload"
@@ -3764,6 +3761,11 @@ msgid "You have authorized %s for the %s GMM (%s)."
 msgstr ""
 
 msgid "You have not been a member of a committee or fraternity."
+msgstr ""
+
+msgid ""
+"You have successfully created an activity! Once the activity is approved by "
+"the board, it will become visible on the website."
 msgstr ""
 
 msgid ""

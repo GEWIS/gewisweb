@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-27 21:18+0200\n"
-"PO-Revision-Date: 2023-10-27 21:22+0200\n"
+"POT-Creation-Date: 2023-11-16 10:18+0100\n"
+"PO-Revision-Date: 2023-11-16 10:19+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: en\n"
@@ -1586,9 +1586,6 @@ msgstr ""
 msgid "It was last edited on %s."
 msgstr "It was last edited on %s."
 
-msgid "It will become visible after it has been approved by the board."
-msgstr "It will become visible after it has been approved by the board."
-
 msgid "Job Labels"
 msgstr "Job Labels"
 
@@ -2752,9 +2749,6 @@ msgstr "The activity category was successfully updated!"
 msgid "The activity does now have an acceptable amount of options"
 msgstr "The activity does now have an acceptable amount of options"
 
-msgid "The activity has been successfully created."
-msgstr "The activity has been successfully created."
-
 msgid "The activity must start after today"
 msgstr "The activity must start after today"
 
@@ -2783,7 +2777,7 @@ msgstr ""
 "big activities or weekends."
 
 msgid "The course form is invalid!"
-msgstr ""
+msgstr "The course form is invalid!"
 
 msgid "The currently active fraternities of GEWIS (in arbitrary order)"
 msgstr "The currently active fraternities of GEWIS (in arbitrary order)"
@@ -3119,6 +3113,9 @@ msgstr "This slug contains invalid characters"
 
 msgid "This slug is already taken"
 msgstr "This slug is already taken"
+
+msgid "This text could not be generated."
+msgstr "This text could not be generated."
 
 msgid "Thumbnail photo to upload"
 msgstr "Thumbnail photo to upload"
@@ -4002,6 +3999,13 @@ msgstr "You have authorized %s for the %s GMM (%s)."
 
 msgid "You have not been a member of a committee or fraternity."
 msgstr "You have not been a member of a committee or fraternity."
+
+msgid ""
+"You have successfully created an activity! Once the activity is approved by "
+"the board, it will become visible on the website."
+msgstr ""
+"You have successfully created an activity! Once the activity is approved by "
+"the board, it will become visible on the website."
 
 msgid ""
 "You have successfully created an update proposal for the activity! If the "
