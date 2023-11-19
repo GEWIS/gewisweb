@@ -123,6 +123,7 @@ class DecisionController extends AbstractActionController
                 return new ViewModel(
                     [
                         'result' => $result,
+                        'prompt' => $form->getData()['query'],
                         'form' => $form,
                     ],
                 );
