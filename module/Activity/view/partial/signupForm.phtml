@@ -76,49 +76,89 @@ function formElementRender(
 
 ?>
 
-<?php
-$form->setAttribute('action', $submitUrl);
-$form->setAttribute('class', 'form-signup');
-$form->prepare();
-echo $this->form()->openTag($form);
-?>
-<?php if ($showName): ?>
-    <?= formElementRender($form->get('fullName'), $this->translate('Full name'), 'fullName', false, $this) ?>
-    <?= formElementRender($form->get('email'), $this->translate('E-mail Address'), 'email', true, $this) ?>
-<?php endif; ?>
+<div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">
+                    <?= sprintf(
+                        $this->translate('Subscribe to \'%s\''),
+                        $this->escapeHtml($this->localiseText($signupList->getName())),
+                    ) ?>
+                </h4>
+            </div>
+            <?php
+            $form->setAttribute('action', $submitUrl);
+            $form->setAttribute('class', 'form-signup');
+            $form->prepare();
+            echo $this->form()->openTag($form);
+            ?>
+                <div class="modal-body">
+                    <?php if ($showCaptcha): ?>
+                        <p>
+                            <strong>
+                                <?= sprintf(
+                                    $this->translate('Do you have a GEWIS account? <a href="%s">Log in to subscribe.</a>'),
+                                    $this->url(
+                                        'user/login',
+                                        [
+                                            'user_type' => 'member',
+                                            'redirect_to' => base64_encode($this->serverUrl(true)),
+                                        ],
+                                    ),
+                                ) ?>
+                            </strong> <?= $this->translate('Or subscribe without a GEWIS membership: ') ?>
+                        </p>
+                    <?php endif; ?>
 
-<?php if ($showCaptcha): ?>
-    <?= formElementRender($form->get('captcha'), $this->translate('CAPTCHA'), 'captcha', false, $this) ?>
-<?php endif; ?>
+                    <?php if ($showName): ?>
+                        <?= formElementRender($form->get('fullName'), $this->translate('Full name'), 'fullName', false, $this) ?>
+                        <?= formElementRender($form->get('email'), $this->translate('E-mail Address'), 'email', true, $this) ?>
+                    <?php endif; ?>
 
-<?php foreach ($signupList->getFields() as $field): ?>
-    <?= formElementRender(
-        $form->get(strval($field->getId())),
-        $this->escapeHtml($this->localiseText($field->getName())),
-        $field->getId(),
-        $field->isSensitive(),
-        $this,
-    ) ?>
-<?php endforeach; ?>
+                    <?php if ($showCaptcha): ?>
+                        <?= formElementRender($form->get('captcha'), $this->translate('CAPTCHA'), 'captcha', false, $this) ?>
+                    <?php endif; ?>
 
-<p>
-    <?= $agreementText ?> <a href="https://gewis.nl/data/regulations/activity-policy.pdf" target="_blank">
-        <?= $this->translate('Activity Policy') ?></a> <?= $this->translate('and') ?>
-    <a href="https://gewis.nl/data/regulations/alcohol-policy.pdf" target="_blank">
-        <?= $this->translate('Alcohol Policy') ?></a>.
-</p>
+                    <?php foreach ($signupList->getFields() as $field): ?>
+                        <?= formElementRender(
+                            $form->get(strval($field->getId())),
+                            $this->escapeHtml($this->localiseText($field->getName())),
+                            $field->getId(),
+                            $field->isSensitive(),
+                            $this,
+                        ) ?>
+                    <?php endforeach; ?>
 
-<p class="text-muted">
-    <em>
-        <?= $sensitiveStartText ?> <?= $this->translate('Fields that are marked with an \'¹\' will only be shared with the board and the organiser of the activity.') ?>
-    </em>
-</p>
+                    <p>
+                        <?= $agreementText ?> <a href="https://gewis.nl/data/regulations/activity-policy.pdf" target="_blank">
+                            <?= $this->translate('Activity Policy') ?></a> <?= $this->translate('and') ?>
+                        <a href="https://gewis.nl/data/regulations/alcohol-policy.pdf" target="_blank">
+                            <?= $this->translate('Alcohol Policy') ?></a>.
+                    </p>
 
-<?php
-$submit = $form->get('submit');
-$submit->setAttribute('class', 'btn btn-primary');
-$submit->setAttribute('value', $submitText);
-echo $this->formElement($form->get('security'));
-echo $this->formSubmit($submit);
-echo $this->form()->closeTag();
-?>
+                    <p class="text-muted">
+                        <em>
+                            <?= $sensitiveStartText ?> <?= $this->translate('Fields that are marked with an \'¹\' will only be shared with the board and the organiser of the activity.') ?>
+                        </em>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <?php
+                    $submit = $form->get('submit');
+                    $submit->setAttribute('class', 'btn btn-primary');
+                    $submit->setAttribute('value', $submitText);
+                    echo $this->formElement($form->get('security'));
+                    echo $this->formSubmit($submit);
+                    ?>
+                    <button type="button" class="btn" data-dismiss="modal">
+                        <?= $this->translate('Cancel') ?>
+                    </button>
+                </div>
+            <?= $this->form()->closeTag() ?>
+        </div>
+    </div>
+</div>

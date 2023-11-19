@@ -187,78 +187,108 @@ $this->headTitle($this->translate('Activities'));
                 </div>
                 <div class="col-md-12">
                     <?php if ($isSignedUp) : ?>
-                        <button class="btn btn-default btn-lg agenda-subscription-button" type="button"
-                                data-toggle="collapse" data-target="#subscriptionForm"
-                                aria-expanded="false" aria-controls="subscriptionForm">
-                            <?= $this->translate('Already subscribed') ?>
-                        </button>
+                        <?php if ($subscriptionCloseDatePassed) : ?>
+                            <button class="btn btn-default btn-lg" type="button" disabled="disabled">
+                                <span class="fas fa-user-check"></span> <?= $this->translate('Unsubscription period closed') ?>
+                            </button>
+                        <?php else: ?>
+                            <button class="btn btn-default btn-lg" type="button" data-toggle="modal"
+                                    data-target="#signoffModal" aria-hidden="true" aria-controls="signoffModal">
+                                <span class="fas fa-user-minus"></span> <?= $this->translate('Unsubscribe') ?>
+                            </button>
+                            <div class="modal fade" id="signoffModal" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            <h4 class="modal-title">
+                                                <?= sprintf(
+                                                    $this->translate('Unsubscribe from \'%s\''),
+                                                    $this->escapeHtml($this->localiseText($signupList->getName())),
+                                                ) ?>
+                                            </h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>
+                                                <?= $this->translate('Are you sure you want to unsubscribe?') ?>
+                                            </p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <?php
+                                            $signoffForm->setAttribute(
+                                                'action',
+                                                $this->url(
+                                                    'activity/signoff',
+                                                    ['id' => $activity->getId(), 'signupList' => $signupList->getId()],
+                                                ),
+                                            );
+                                            $signoffForm->prepare();
+                                            echo $this->form()->openTag($signoffForm);
+                                            echo $this->formElement($signoffForm->get('security'));
+                                            $submit = $signoffForm->get('submit');
+                                            $submit->setAttribute('class', 'btn btn-default');
+                                            echo $this->formSubmit($submit);
+                                            ?>
+                                            <button type="button" class="btn" data-dismiss="modal">
+                                                <?= $this->translate('Cancel') ?>
+                                            </button>
+                                            <?= $this->form()->closeTag(); ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
                     <?php elseif (!$signupOpen): ?>
-                        <button class="btn btn-default btn-lg agenda-subscription-button" type="button"
-                                data-toggle="collapse" data-target="#subscriptionForm"
-                                aria-expanded="false" disabled="disabled"
-                                aria-controls="subscriptionForm">
-                            <?= $this->translate('Subscription closed') ?>
+                        <button class="btn btn-default btn-lg" type="button" disabled="disabled">
+                            <span class="fas fa-user-xmark"></span> <?= $this->translate('Subscription period closed') ?>
                         </button>
                     <?php else: ?>
-                        <button class="btn btn-primary btn-lg agenda-subscription-button collapsed" type="button"
-                                data-toggle="collapse" data-target="#subscriptionForm" aria-expanded="false"
-                                aria-controls="subscriptionForm">
-                            <span class="fas fa-chevron-right"></span> <?= $this->translate('Subscribe now') ?>
-                        </button>
-                    <?php endif; ?>
-                </div>
-                <div class="col-md-6 collapse activity-subscription-form" id="subscriptionForm">
-                    <div class="well">
-                        <?php if ($isSignedUp) : ?>
-                            <h2><?= $this->translate('Unsubscribe yourself') ?></h2>
-                            <?php if ($subscriptionCloseDatePassed) : ?>
-                                <div>
-                                    <?= $this->translate('You are not allowed to unsubscribe after the deadline!') ?>
-                                </div>
-                            <?php else : ?>
-                                <div>
-                                    <?php
-                                    $signoffForm->setAttribute('action', $this->url('activity/signoff', ['id' => $activity->getId(), 'signupList' => $signupList->getId()]));
-                                    $signoffForm->prepare();
-                                    echo $this->form()->openTag($signoffForm);
-                                    echo $this->formElement($signoffForm->get('security'));
-                                    $submit = $signoffForm->get('submit');
-                                    $submit->setAttribute('class', 'btn btn-default');
-                                    echo $this->formSubmit($submit);
-                                    echo $this->form()->closeTag();
-                                    ?>
-                                </div>
-                            <?php endif; ?>
-                        <?php endif; ?>
-                        <?php if ($signupOpen && !$isAllowedToSubscribe): ?>
-                            <h2>
-                                <?= $this->translate('Subscribe yourself') ?>
-                            </h2>
-                            <a href="<?= $this->url('user/login', ['user_type' => 'member']) ?>">
-                                <?= $this->translate('Login to subscribe') ?>
+                        <?php if (!$isAllowedToSubscribe && $signupList->getOnlyGEWIS()): ?>
+                            <a href="<?= $this->url(
+                                'user/login',
+                                [
+                                    'user_type' => 'member',
+                                    'redirect_to' => base64_encode($this->serverUrl(true)),
+                                ],
+                            ) ?>"
+                               class="btn btn-primary btn-lg">
+                                <span class="fas fa-user-plus"></span> <?= $this->translate('Log in to subscribe') ?>
                             </a>
-                            <?php if (!$signupList->getOnlyGEWIS() && null !== $form): ?>
-                                <br/>
-                                <?= $this->translate('Or subscribe without a GEWIS membership: ') ?>
-                                <?= $this->partial('partial/signupForm', [
-                                    'form' => $form,
-                                    'signupList' => $signupList,
-                                ])
-                                ?>
-                            <?php endif; ?>
-                        <?php endif; ?>
-                        <?php if (null !== $form && $signupOpen && !$isSignedUp && $isAllowedToSubscribe): //display the form ?>
-                            <h2>
-                                <?= $this->translate('Subscribe yourself') ?>
-                            </h2>
+                        <?php elseif (!$isAllowedToSubscribe && !$signupList->getOnlyGEWIS()): ?>
+                            <button class="btn btn-primary btn-lg" type="button" data-toggle="modal"
+                                    data-target="#signupModal" aria-hidden="true" aria-controls="signupModal">
+                                <span class="fas fa-user-plus"></span> <?= $this->translate('Subscribe as external participant') ?>
+                            </button>
+                            <?= $this->partial('partial/signupForm', [
+                                'form' => $form,
+                                'signupList' => $signupList,
+                            ])
+                            ?>
+                        <?php else: ?>
+                            <button class="btn btn-primary btn-lg" type="button" data-toggle="modal"
+                                    data-target="#signupModal" aria-hidden="true" aria-controls="signupModal">
+                                <span class="fas fa-user-plus"></span> <?= $this->translate('Subscribe') ?>
+                            </button>
                             <?= $this->partial('partial/signupForm', [
                                 'form' => $form,
                                 'signupList' => $signupList,
                             ])
                             ?>
                         <?php endif; ?>
-                    </div>
+                        <?php if (isset($reopen) && $reopen): ?>
+                            <script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
+                                document.addEventListener("DOMContentLoaded", function() {
+                                    $('#signupModal').modal('show');
+                                });
+                            </script>
+                        <?php endif; ?>
+                    <?php endif; ?>
                 </div>
+            </div>
+            <br>
+            <div class="row">
                 <div class="col-md-12">
                     <h2><?= $this->translate('Current subscriptions') ?></h2>
                     <div class="table-responsive">
