@@ -158,11 +158,9 @@ class ActivityController extends AbstractActionController
         $view->setTemplate('activity/activity/view.phtml');
 
         // Retrieve and clear the request status from the session, if it exists.
-        if (isset($activitySession->success)) {
-            $view->setVariable('success', $activitySession->success);
-            unset($activitySession->success);
-            $view->setVariable('message', $activitySession->message);
-            unset($activitySession->message);
+        if (isset($activitySession->reopen)) {
+            $view->setVariable('reopen', $activitySession->reopen);
+            unset($activitySession->reopen);
         }
 
         return $view;
@@ -219,6 +217,8 @@ class ActivityController extends AbstractActionController
 
         /** @var Request $request */
         $request = $this->getRequest();
+        $activityRequestSession = new SessionContainer('activityRequest');
+        $activityRequestSession->reopen = false;
 
         if ($request->isPost()) {
             $form = $this->signupService->getForm($signupList);
@@ -229,7 +229,7 @@ class ActivityController extends AbstractActionController
             // Check if the form is valid
             if (!$form->isValid()) {
                 $error = $this->translator->translate('Invalid form');
-                $activityRequestSession = new SessionContainer('activityRequest');
+                $activityRequestSession->reopen = true;
                 $activityRequestSession->signupData = $postData->toArray();
 
                 return $this->redirectActivityRequest($activityId, $signupListId, false, $error);
@@ -268,6 +268,7 @@ class ActivityController extends AbstractActionController
         }
 
         $error = $this->translator->translate('Use the form to subscribe');
+        $activityRequestSession->reopen = true;
 
         return $this->redirectActivityRequest($activityId, $signupListId, false, $error);
     }
@@ -312,6 +313,8 @@ class ActivityController extends AbstractActionController
 
         /** @var Request $request */
         $request = $this->getRequest();
+        $activityRequestSession = new SessionContainer('activityRequest');
+        $activityRequestSession->reopen = false;
 
         if ($request->isPost()) {
             $form = $this->signupService->getExternalForm($signupList);
@@ -322,7 +325,7 @@ class ActivityController extends AbstractActionController
             // Check if the form is valid
             if (!$form->isValid()) {
                 $error = $this->translator->translate('Invalid form');
-                $activityRequestSession = new SessionContainer('activityRequest');
+                $activityRequestSession->reopen = true;
                 $activityRequestSession->signupData = $postData->toArray();
 
                 return $this->redirectActivityRequest($activityId, $signupListId, false, $error);
@@ -357,6 +360,7 @@ class ActivityController extends AbstractActionController
         }
 
         $error = $this->translator->translate('Use the form to subscribe');
+        $activityRequestSession->reopen = true;
 
         return $this->redirectActivityRequest($activityId, $signupListId, false, $error);
     }

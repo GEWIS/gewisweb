@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: GEWISweb v2.8.6-563-g229793789-dirty\n"
+"Project-Id-Version: GEWISweb v2.8.6-570-g8364f44e3-dirty\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-16 10:29+0100\n"
+"POT-Creation-Date: 2023-11-19 16:08+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -276,9 +276,6 @@ msgstr ""
 msgid "All rights reserved."
 msgstr ""
 
-msgid "Already subscribed"
-msgstr ""
-
 msgid "Already voted!"
 msgstr ""
 
@@ -424,6 +421,9 @@ msgid ""
 msgstr ""
 
 msgid "Are you sure you want to delete this poll?"
+msgstr ""
+
+msgid "Are you sure you want to unsubscribe?"
 msgstr ""
 
 msgid "Are you sure you would like to authorize"
@@ -907,6 +907,10 @@ msgid "Display GEWIS member count"
 msgstr ""
 
 msgid "Display number of subscribed members"
+msgstr ""
+
+#, php-format
+msgid "Do you have a GEWIS account? <a href=\"%s\">Log in to subscribe.</a>"
 msgstr ""
 
 #, php-format
@@ -1595,10 +1599,10 @@ msgstr ""
 msgid "Log in as member"
 msgstr ""
 
-msgid "Login"
+msgid "Log in to subscribe"
 msgstr ""
 
-msgid "Login to subscribe"
+msgid "Login"
 msgstr ""
 
 msgid "Login to view more information"
@@ -2526,13 +2530,14 @@ msgstr ""
 msgid "Subscribe as external participant"
 msgstr ""
 
-msgid "Subscribe now"
+msgid "Subscribe external participant"
 msgstr ""
 
-msgid "Subscribe yourself"
+#, php-format
+msgid "Subscribe to '%s'"
 msgstr ""
 
-msgid "Subscription closed"
+msgid "Subscription period closed"
 msgstr ""
 
 msgid "Successfully added course!"
@@ -3008,7 +3013,14 @@ msgstr ""
 msgid "Unknown"
 msgstr ""
 
-msgid "Unsubscribe yourself"
+msgid "Unsubscribe"
+msgstr ""
+
+#, php-format
+msgid "Unsubscribe from '%s'"
+msgstr ""
+
+msgid "Unsubscription period closed"
 msgstr ""
 
 msgid "Until"
@@ -3584,9 +3596,6 @@ msgid "You are not allowed to subscribe to this sign-up list"
 msgstr ""
 
 msgid "You are not allowed to transfer jobs"
-msgstr ""
-
-msgid "You are not allowed to unsubscribe after the deadline!"
 msgstr ""
 
 msgid "You are not allowed to update this activity"

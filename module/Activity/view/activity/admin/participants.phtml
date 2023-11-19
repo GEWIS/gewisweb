@@ -77,12 +77,23 @@ $this->breadcrumbs()
     </div>
     <div class="col-md-12">
         <?php if (isset($externalSignupForm)): //display the external signup form ?>
+            <button class="btn btn-primary btn-lg" type="button" data-toggle="modal"
+                    data-target="#signupModal" aria-hidden="true" aria-controls="signupModal">
+                <span class="fas fa-user-plus"></span> <?= $this->translate('Subscribe external participant') ?>
+            </button>
             <?= $this->partial('partial/signupForm', [
                 'form' => $externalSignupForm,
                 'activity' => $activity,
                 'signupList' => $signupList,
             ])
             ?>
+            <?php if (isset($reopen) && $reopen): ?>
+                <script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
+                    document.addEventListener("DOMContentLoaded", function() {
+                        $('#signupModal').modal('show');
+                    });
+                </script>
+            <?php endif; ?>
         <?php endif; ?>
     </div>
 </div>

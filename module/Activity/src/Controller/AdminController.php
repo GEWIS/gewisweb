@@ -281,11 +281,9 @@ class AdminController extends AbstractActionController
         $result['signupLists'] = $signupLists;
 
         // Retrieve and clear the request status from the session, if it exists.
-        if (isset($activityAdminSession->success)) {
-            $result['success'] = $activityAdminSession->success;
-            unset($activityAdminSession->success);
-            $result['message'] = $activityAdminSession->message;
-            unset($activityAdminSession->message);
+        if (isset($activityAdminSession->reopen)) {
+            $result['reopen'] = $activityAdminSession->reopen;
+            unset($activityAdminSession->reopen);
         }
 
         $result['canSeeTimeOfSignup'] = $this->aclService->isAllowed('viewParticipantDetails', 'activity');
@@ -309,6 +307,8 @@ class AdminController extends AbstractActionController
 
         /** @var Request $request */
         $request = $this->getRequest();
+        $activityAdminSession = new SessionContainer('activityAdminRequest');
+        $activityAdminSession->reopen = false;
 
         if ($request->isPost()) {
             $form = $this->signupService->getExternalAdminForm($signupList);
@@ -318,7 +318,7 @@ class AdminController extends AbstractActionController
 
             // Check if the form is valid
             if (!$form->isValid()) {
-                $activityAdminSession = new SessionContainer('activityAdminRequest');
+                $activityAdminSession->reopen = true;
                 $activityAdminSession->signupData = $postData->toArray();
 
                 return $this->redirectActivityAdminRequest(
@@ -344,6 +344,8 @@ class AdminController extends AbstractActionController
                 $this->translator->translate('Successfully subscribed external participant'),
             );
         }
+
+        $activityAdminSession->reopen = true;
 
         return $this->redirectActivityAdminRequest(
             $activityId,
