@@ -276,7 +276,7 @@ class Page extends Form implements InputFilterProviderInterface
                             'name' => StringLength::class,
                             'options' => [
                                 'min' => 3,
-                                'max' => 25,
+                                'max' => 32,
                             ],
                         ],
                         [
@@ -304,7 +304,7 @@ class Page extends Form implements InputFilterProviderInterface
                             'name' => StringLength::class,
                             'options' => [
                                 'min' => 2,
-                                'max' => 25,
+                                'max' => 32,
                             ],
                         ],
                         [
@@ -335,7 +335,7 @@ class Page extends Form implements InputFilterProviderInterface
                             'name' => StringLength::class,
                             'options' => [
                                 'min' => 2,
-                                'max' => 25,
+                                'max' => 32,
                             ],
                         ],
                         [
