@@ -19,6 +19,7 @@ enum UserRoles: string
     case Graduate = 'graduate';
     case ActiveMember = 'active_member';
     case CompanyAdmin = 'company_admin';
+    case Board = 'board';
     case Admin = 'admin';
 
     public function getName(Translator $translator): string
@@ -32,6 +33,7 @@ enum UserRoles: string
             self::Graduate => $translator->translate('Graduate'),
             self::ActiveMember => $translator->translate('Active Member'),
             self::CompanyAdmin => $translator->translate('Company Admin'),
+            self::Board => $translator->translate('Board'),
             self::Admin => $translator->translate('Admin'),
         };
     }
@@ -52,7 +54,8 @@ enum UserRoles: string
             self::Graduate->value => $translator->translate('Graduate - Authenticated graduate'),
             self::ActiveMember->value => $translator->translate('Active Member - Authenticated member and in an organ'),
             self::CompanyAdmin->value => $translator->translate('Company Admin - C4 members'),
-            self::Admin->value => $translator->translate('Admin - Board and Tom'),
+            self::Board->value => $translator->translate('Admin - Board'),
+            self::Admin->value => $translator->translate('Admin - Tom'),
         ];
     }
 }

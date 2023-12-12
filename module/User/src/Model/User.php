@@ -18,6 +18,8 @@ use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OneToOne;
 use RuntimeException;
 
+use User\Model\Enums\UserRoles;
+
 use function count;
 use function in_array;
 use function sprintf;
@@ -170,27 +172,28 @@ class User implements IdentityInterface
     public function getRoleId(): string
     {
         $roleNames = $this->getRoleNames();
-        if (
-            in_array('admin', $roleNames)
-            || $this->getMember()->isBoardMember()
-        ) {
-            return 'admin';
+        if (in_array('admin', $roleNames)) {
+            return UserRoles::Admin->value;
+        }
+
+        if ($this->getMember()->isBoardMember()) {
+            return UserRoles::Board->value;
         }
 
         if (in_array('company_admin', $roleNames)) {
-            return 'company_admin';
+            return UserRoles::CompanyAdmin->value;
         }
 
         if (empty($roleNames)) {
             if (MembershipTypes::Graduate === $this->getMember()->getType()) {
-                return 'graduate';
+                return UserRoles::Graduate->value;
             }
 
             if (count($this->getMember()->getCurrentOrganInstallations()) > 0) {
-                return 'active_member';
+                return UserRoles::ActiveMember->value;
             }
 
-            return 'user';
+            return UserRoles::User->value;
         }
 
         throw new RuntimeException(
