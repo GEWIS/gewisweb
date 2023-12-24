@@ -5,12 +5,9 @@ declare(strict_types=1);
 namespace Decision\Model\SubDecision;
 
 use DateTime;
-use Decision\Model\Member;
 use Decision\Model\SubDecision;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\ManyToOne;
 
 /**
  * Budget decision.
@@ -18,16 +15,6 @@ use Doctrine\ORM\Mapping\ManyToOne;
 #[Entity]
 class Budget extends SubDecision
 {
-    /**
-     * Budget author.
-     */
-    #[ManyToOne(targetEntity: Member::class)]
-    #[JoinColumn(
-        name: 'lidnr',
-        referencedColumnName: 'lidnr',
-    )]
-    protected Member $author;
-
     /**
      * Name of the budget.
      */
@@ -60,22 +47,6 @@ class Budget extends SubDecision
      */
     #[Column(type: 'boolean')]
     protected bool $changes;
-
-    /**
-     * Get the author.
-     */
-    public function getAuthor(): Member
-    {
-        return $this->author;
-    }
-
-    /**
-     * Set the author.
-     */
-    public function setAuthor(Member $author): void
-    {
-        $this->author = $author;
-    }
 
     /**
      * Get the name.
