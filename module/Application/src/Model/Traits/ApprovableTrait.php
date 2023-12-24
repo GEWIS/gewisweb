@@ -7,6 +7,7 @@ namespace Application\Model\Traits;
 use Application\Model\ApprovableText as ApprovableTextModel;
 use Application\Model\Enums\ApprovableStatus;
 use DateTime;
+use DateTimeInterface;
 use Decision\Model\Member as MemberModel;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\JoinColumn;
@@ -17,6 +18,13 @@ use Doctrine\ORM\Mapping\OneToOne;
  * A trait which provides basic (repeated) functionality for approvable entities.
  *
  * TODO: Make activities also use this trait.
+ *
+ * @psalm-type ApprovableTraitGdprArrayType = array{
+ *     id: int,
+ *     approved: int,
+ *     approvedAt: ?string,
+ *     approvableText: ?string,
+ * }
  */
 trait ApprovableTrait
 {
@@ -105,5 +113,18 @@ trait ApprovableTrait
     public function setApprovableText(?ApprovableTextModel $approvableText): void
     {
         $this->approvableText = $approvableText;
+    }
+
+    /**
+     * @return ApprovableTraitGdprArrayType
+     */
+    public function toGdprArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'approved' => $this->getApproved()->value,
+            'approvedAt' => $this->getApprovedAt()?->format(DateTimeInterface::ATOM),
+            'approvableText' => $this->getApprovableText()?->getMessage(),
+        ];
     }
 }

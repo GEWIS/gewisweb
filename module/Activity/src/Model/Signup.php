@@ -6,6 +6,7 @@ namespace Activity\Model;
 
 use Application\Model\Traits\IdentifiableTrait;
 use Application\Model\Traits\TimestampableTrait;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\DiscriminatorColumn;
@@ -19,6 +20,16 @@ use Doctrine\ORM\Mapping\OneToMany;
 
 /**
  * Signup model.
+ *
+ * @psalm-import-type SignupFieldValueGdprArrayType from SignupFieldValue as ImportedSignupFieldValueGdprArrayType
+ * @psalm-type SignupGdprArrayType = array{
+ *     id: int,
+ *     createdAt: string,
+ *     updatedAt: string,
+ *     activity_id: int,
+ *     signupList_id: int,
+ *     fieldValues: ImportedSignupFieldValueGdprArrayType[],
+ * }
  */
 #[Entity]
 #[InheritanceType(value: 'SINGLE_TABLE')]
@@ -104,4 +115,25 @@ abstract class Signup
      * Get the email address of the user whom signed up for the SignupList.
      */
     abstract public function getEmail(): ?string;
+
+    /**
+     * @return SignupGdprArrayType
+     */
+    public function toGdprArray(): array
+    {
+        /** @var ImportedSignupFieldValueGdprArrayType[] $fieldValues */
+        $fieldValues = [];
+        foreach ($this->getFieldValues() as $fieldValue) {
+            $fieldValues[] = $fieldValue->toGdprArray();
+        }
+
+        return [
+            'id' => $this->getId(),
+            'createdAt' => $this->getCreatedAt()->format(DateTimeInterface::ATOM),
+            'updatedAt' => $this->getUpdatedAt()->format(DateTimeInterface::ATOM),
+            'activity_id' => $this->getSignupList()->getActivity()->getId(),
+            'signupList_id' => $this->getSignupList()->getId(),
+            'fieldValues' => $fieldValues,
+        ];
+    }
 }

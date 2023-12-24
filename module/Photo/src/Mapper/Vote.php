@@ -76,6 +76,18 @@ class Vote extends BaseMapper
         return 0 !== count($qb->getQuery()->getResult());
     }
 
+    /**
+     * @return VoteModel[]
+     */
+    public function getVotesByLidnr(int $lidnr): array
+    {
+        return $this->getRepository()->findBy(
+            [
+                'voter' => $lidnr,
+            ],
+        );
+    }
+
     protected function getRepositoryName(): string
     {
         return VoteModel::class;

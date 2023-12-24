@@ -6,6 +6,7 @@ namespace Photo\Model;
 
 use Application\Model\Traits\IdentifiableTrait;
 use DateTime;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\Column;
@@ -41,6 +42,11 @@ use function getimagesize;
  *     largeThumbPath: string,
  *     longitude: ?float,
  *     latitude: ?float,
+ * }
+ * @psalm-type PhotoGdprArrayType = array{
+ *     id: int,
+ *     dateTime: string,
+ *     path: string,
  * }
  */
 #[Entity]
@@ -610,6 +616,18 @@ class Photo implements ResourceInterface
             'largeThumbPath' => $this->getLargeThumbPath(),
             'longitude' => $this->getLongitude(),
             'latitude' => $this->getLatitude(),
+        ];
+    }
+
+    /**
+     * @return PhotoGdprArrayType
+     */
+    public function toGdprArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'dateTime' => $this->getDateTime()->format(DateTimeInterface::ATOM),
+            'path' => $this->getPath(),
         ];
     }
 

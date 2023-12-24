@@ -6,6 +6,7 @@ namespace User\Model;
 
 use Application\Model\IdentityInterface;
 use DateTime;
+use DateTimeInterface;
 use Decision\Model\Enums\MembershipTypes;
 use Decision\Model\Member as MemberModel;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -17,7 +18,6 @@ use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OneToOne;
 use RuntimeException;
-
 use User\Model\Enums\UserRoles;
 
 use function count;
@@ -27,7 +27,11 @@ use function sprintf;
 /**
  * User model.
  *
- * @psalm-import-type MemberArrayType from MemberModel as ImportedMemberArrayType
+ * @psalm-import-type UserRoleGdprArrayType from UserRole as ImportedUserRoleGdprArrayType
+ * @psalm-type UserGdprArrayType = array{
+ *     roles: ImportedUserRoleGdprArrayType[],
+ *     passwordChangedOn: ?string,
+ * }
  */
 #[Entity]
 class User implements IdentityInterface
@@ -227,16 +231,19 @@ class User implements IdentityInterface
     }
 
     /**
-     * @return array{
-     *     lidnr: int,
-     *     member: ImportedMemberArrayType,
-     * }
+     * @return UserGdprArrayType
      */
-    public function toArray(): array
+    public function toGdprArray(): array
     {
+        /** @var ImportedUserRoleGdprArrayType[] $roles */
+        $roles = [];
+        foreach ($this->getRoles() as $role) {
+            $roles[] = $role->toGdprArray();
+        }
+
         return [
-            'lidnr' => $this->getLidnr(),
-            'member' => $this->getMember()->toArray(),
+            'roles' => $roles,
+            'passwordChangedOn' => $this->getPasswordChangedOn()?->format(DateTimeInterface::ATOM),
         ];
     }
 

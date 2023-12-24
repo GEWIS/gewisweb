@@ -19,7 +19,9 @@ use Decision\Mapper\MeetingDocument as MeetingDocumentMapper;
 use Decision\Mapper\MeetingMinutes as MeetingMinutesMapper;
 use Decision\Mapper\Member as MemberMapper;
 use Decision\Mapper\Organ as OrganMapper;
+use Decision\Mapper\SubDecision as SubDecisionMapper;
 use Decision\Service\Decision as DecisionService;
+use Decision\Service\Gdpr as GdprService;
 use Decision\Service\Member as MemberService;
 use Decision\Service\MemberInfo as MemberInfoService;
 use Decision\Service\Organ as OrganService;
@@ -109,6 +111,49 @@ class Module
                         $authorizationRevocationForm,
                     );
                 },
+                'decision_service_gdpr' => static function (ContainerInterface $container) {
+                    $aclService = $container->get('decision_service_acl');
+                    $translator = $container->get(MvcTranslator::class);
+                    $activityMapper = $container->get('activity_mapper_activity');
+                    $apiAppAuthenticationMapper = $container->get('user_mapper_apiappauthentication');
+                    $authorizationMapper = $container->get('decision_mapper_authorization');
+                    $companyMapper = $container->get('company_mapper_company');
+                    $courseDocumentMapper = $container->get('education_mapper_courseDocument');
+                    $jobMapper = $container->get('company_mapper_job');
+                    $loginAttemptMapper = $container->get('user_mapper_loginAttempt');
+                    $memberMapper = $container->get('decision_mapper_member');
+                    $pollMapper = $container->get('frontpage_mapper_poll');
+                    $pollCommentMapper = $container->get('frontpage_mapper_poll_comment');
+                    $photoMapper = $container->get('photo_mapper_photo');
+                    $profilePhotoMapper = $container->get('photo_mapper_profile_photo');
+                    $signupMapper = $container->get('activity_mapper_signup');
+                    $subDecisionMapper = $container->get('decision_mapper_subDecision');
+                    $tagMapper = $container->get('photo_mapper_tag');
+                    $userMapper = $container->get('user_mapper_user');
+                    $voteMapper = $container->get('photo_mapper_vote');
+
+                    return new GdprService(
+                        $aclService,
+                        $translator,
+                        $activityMapper,
+                        $apiAppAuthenticationMapper,
+                        $authorizationMapper,
+                        $companyMapper,
+                        $courseDocumentMapper,
+                        $jobMapper,
+                        $loginAttemptMapper,
+                        $memberMapper,
+                        $pollMapper,
+                        $pollCommentMapper,
+                        $photoMapper,
+                        $profilePhotoMapper,
+                        $signupMapper,
+                        $subDecisionMapper,
+                        $tagMapper,
+                        $userMapper,
+                        $voteMapper,
+                    );
+                },
                 'decision_service_member' => static function (ContainerInterface $container) {
                     $aclService = $container->get('decision_service_acl');
                     $translator = $container->get(MvcTranslator::class);
@@ -166,6 +211,11 @@ class Module
                 },
                 'decision_mapper_decision' => static function (ContainerInterface $container) {
                     return new DecisionMapper(
+                        $container->get('doctrine.entitymanager.orm_default'),
+                    );
+                },
+                'decision_mapper_subDecision' => static function (ContainerInterface $container) {
+                    return new SubDecisionMapper(
                         $container->get('doctrine.entitymanager.orm_default'),
                     );
                 },

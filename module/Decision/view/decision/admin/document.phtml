@@ -19,8 +19,8 @@ use Laminas\View\Renderer\PhpRenderer;
 
 $this->scriptUrl()->requireUrls(
     [
-        'admin_decision/delete_document',
-        'admin_decision/rename_document',
+        'decision_admin/delete_document',
+        'decision_admin/rename_document',
     ],
     ['document_id'],
 );
@@ -120,7 +120,7 @@ else:
 
                                 $form->setAttributes([
                                     'class' => 'form-reorder-document',
-                                    'action' => $this->url('admin_decision/position_document/post')
+                                    'action' => $this->url('decision_admin/position_document/post')
                                 ]);
                                 $form->populateValues([
                                     'document' => $document->getId()
@@ -327,14 +327,14 @@ else:
         });
 
         document.getElementById('meeting-selector').addEventListener('change', e => {
-            window.location = '<?= $this->url('admin_decision/document') ?>/' + e.target.value;
+            window.location = '<?= $this->url('decision_admin/document') ?>/' + e.target.value;
         });
 
         document.querySelectorAll('.btn-delete').forEach((element) => {
             element.addEventListener('click', () => {
                 document.querySelector('#delete-document-name').textContent = element.dataset.documentName;
                 document.querySelector('.form-delete').action = URLHelper.url(
-                    'admin_decision/delete_document',
+                    'decision_admin/delete_document',
                     {'document_id': element.dataset.documentId},
                 );
                 $('#deleteModal').modal('show');
@@ -345,7 +345,7 @@ else:
             element.addEventListener('click', () => {
                 document.querySelector('#new-document-name').value = element.dataset.documentName;
                 document.querySelector('.form-rename').action = URLHelper.url(
-                    'admin_decision/rename_document',
+                    'decision_admin/rename_document',
                     {'document_id': element.dataset.documentId},
                 );
                 $('#renameModal').modal('show');

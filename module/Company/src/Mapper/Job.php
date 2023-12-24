@@ -8,6 +8,7 @@ use Application\Mapper\BaseMapper;
 use Application\Model\Enums\ApprovableStatus;
 use Company\Model\Job as JobModel;
 use Company\Model\Proposals\JobUpdate as JobUpdateModel;
+use Decision\Model\Member as MemberModel;
 use Doctrine\ORM\Query\Expr\Join;
 
 use function count;
@@ -173,6 +174,20 @@ class Job extends BaseMapper
         $qb->setParameter('proposalId', $proposalId);
 
         return $qb->getQuery()->getOneOrNullResult();
+    }
+
+    /**
+     * Get all jobs that were approved or rejected by a specific member.
+     *
+     * @return JobModel[]
+     */
+    public function findAllJobsApprovedByMember(MemberModel $member): array
+    {
+        $qb = $this->getRepository()->createQueryBuilder('j');
+        $qb->where('j.approver = :member')
+            ->setParameter('member', $member);
+
+        return $qb->getQuery()->getResult();
     }
 
     protected function getRepositoryName(): string

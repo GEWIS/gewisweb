@@ -156,17 +156,17 @@ use Laminas\View\Renderer\PhpRenderer;
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="<?= $this->url('admin_decision/minutes') ?>"><?= $this->translate(
+                                    <a href="<?= $this->url('decision_admin/minutes') ?>"><?= $this->translate(
                                             'Minutes'
                                         ) ?></a>
                                 </li>
                                 <li>
-                                    <a href="<?= $this->url('admin_decision/document') ?>"><?= $this->translate(
+                                    <a href="<?= $this->url('decision_admin/document') ?>"><?= $this->translate(
                                             'Documents'
                                         ) ?></a>
                                 </li>
                                 <li>
-                                    <a href="<?= $this->url('admin_decision/authorizations') ?>"><?= $this->translate(
+                                    <a href="<?= $this->url('decision_admin/authorizations') ?>"><?= $this->translate(
                                             'Authorizations'
                                         ) ?></a>
                                 </li>
@@ -220,9 +220,9 @@ use Laminas\View\Renderer\PhpRenderer;
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="<?= $this->url('user_admin/api') ?>"><?= $this->translate(
-                                            'API Users'
-                                        ) ?></a>
+                                    <a href="<?= $this->url('user_admin/api') ?>">
+                                        <?= $this->translate('API Users') ?>
+                                    </a>
                                 </li>
                             </ul>
                         </li>

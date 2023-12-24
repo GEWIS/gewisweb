@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Activity\Model;
 
+use Application\Model\LocalisedText as LocalisedTextModel;
 use Application\Model\Traits\IdentifiableTrait;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\JoinColumn;
@@ -13,6 +14,12 @@ use Doctrine\ORM\Mapping\OneToOne;
 /**
  * SignupOption model.
  * Contains the possible options of a field of type ``option''.
+ *
+ * @psalm-import-type LocalisedTextGdprArrayType from LocalisedTextModel as ImportedLocalisedTextGdprArrayType
+ * @psalm-type SignupOptionGdprArrayType = array{
+ *     id: int,
+ *     value: ImportedLocalisedTextGdprArrayType,
+ * }
  */
 #[Entity]
 class SignupOption
@@ -90,6 +97,17 @@ class SignupOption
             'id' => $this->getId(),
             'value' => $this->getValue()->getValueNL(),
             'valueEn' => $this->getValue()->getValueEN(),
+        ];
+    }
+
+    /**
+     * @return SignupOptionGdprArrayType
+     */
+    public function toGdprArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'value' => $this->getValue()->toGdprArray(),
         ];
     }
 }

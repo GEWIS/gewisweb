@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Frontpage\Model;
 
+use Application\Model\LocalisedText as LocalisedTextModel;
 use Application\Model\Traits\IdentifiableTrait;
 use DateTime;
+use DateTimeInterface;
 use Decision\Model\Member as MemberModel;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -19,6 +21,17 @@ use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 /**
  * Poll.
+ *
+ * @psalm-import-type LocalisedTextGdprArrayType from LocalisedTextModel as ImportedLocalisedTextGdprArrayType
+ * @psalm-type PollGdprArrayType = array{
+ *     id: int,
+ *     expiryDate: string,
+ *     question: ImportedLocalisedTextGdprArrayType,
+ *     options: array<array-key, array{
+ *         id: int,
+ *         value: ImportedLocalisedTextGdprArrayType,
+ *     }>,
+ * }
  */
 #[Entity]
 class Poll implements ResourceInterface
@@ -217,5 +230,26 @@ class Poll implements ResourceInterface
     public function isActive(): bool
     {
         return $this->isApproved() && $this->getExpiryDate() > new DateTime();
+    }
+
+    /**
+     * @return PollGdprArrayType
+     */
+    public function toGdprArray(): array
+    {
+        $options = [];
+        foreach ($this->getOptions() as $option) {
+            $options[] = [
+                'id' => $option->getId(),
+                'value' => $option->getText()->toGdprArray(),
+            ];
+        }
+
+        return [
+            'id' => $this->getId(),
+            'expiryDate' => $this->getExpiryDate()->format(DateTimeInterface::ATOM),
+            'question' => $this->getQuestion()->toGdprArray(),
+            'options' => $options,
+        ];
     }
 }

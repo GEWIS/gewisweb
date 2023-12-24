@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Frontpage\Mapper;
 
 use Application\Mapper\BaseMapper;
+use Decision\Model\Member as MemberModel;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
 use Frontpage\Model\Poll as PollModel;
@@ -71,6 +72,49 @@ class Poll extends BaseMapper
             ->orderBy('p.expiryDate', 'DESC');
 
         return new DoctrineAdapter(new Paginator($qb));
+    }
+
+    /**
+     * Get all poll votes casted by a specific member.
+     *
+     * @return PollVoteModel[]
+     */
+    public function findVotesByMember(MemberModel $member): array
+    {
+        $qb = $this->getEntityManager()->getRepository(PollVoteModel::class)->createQueryBuilder('v');
+        $qb->where('v.respondent = :member')
+            ->orderBy('v.poll', 'DESC')
+            ->setParameter('member', $member);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Get all polls created by a specific member.
+     *
+     * @return PollModel[]
+     */
+    public function findPollsCreatedByMember(MemberModel $member): array
+    {
+        $qb = $this->getRepository()->createQueryBuilder('p');
+        $qb->where('p.creator = :member')
+            ->setParameter('member', $member);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Get all polls approved by a specific member.
+     *
+     * @return PollModel[]
+     */
+    public function findPollsApprovedByMember(MemberModel $member): array
+    {
+        $qb = $this->getRepository()->createQueryBuilder('p');
+        $qb->where('p.approver = :member')
+            ->setParameter('member', $member);
+
+        return $qb->getQuery()->getResult();
     }
 
     protected function getRepositoryName(): string

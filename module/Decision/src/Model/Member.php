@@ -25,7 +25,7 @@ use User\Model\User as UserModel;
 /**
  * Member model.
  *
- * @psalm-type MemberArrayType = array{
+ * @psalm-type MemberGdprArrayType = array{
  *     lidnr: int,
  *     email: ?string,
  *     fullName: string,
@@ -33,11 +33,16 @@ use User\Model\User as UserModel;
  *     middleName: string,
  *     initials: string,
  *     firstName: string,
+ *     birth: string,
  *     generation: int,
- *     hidden: bool,
- *     deleted: bool,
+ *     type: string,
+ *     paid: int,
+ *     changedOn: string,
  *     membershipEndsOn: ?string,
  *     expiration: string,
+ *     supremum: ?string,
+ *     hidden: bool,
+ *     deleted: bool,
  * }
  */
 #[Entity]
@@ -152,15 +157,6 @@ class Member
      */
     #[Column(type: 'integer')]
     protected int $paid = 0;
-
-    /**
-     * Iban number.
-     */
-    #[Column(
-        type: 'string',
-        nullable: true,
-    )]
-    protected ?string $iban = null;
 
     /**
      * If the member receives a 'supremum'.
@@ -525,22 +521,6 @@ class Member
     }
 
     /**
-     * Get the IBAN.
-     */
-    public function getIban(): ?string
-    {
-        return $this->iban;
-    }
-
-    /**
-     * Set the IBAN.
-     */
-    public function setIban(?string $iban): void
-    {
-        $this->iban = $iban;
-    }
-
-    /**
      * Get if the member wants a supremum.
      */
     public function getSupremum(): ?string
@@ -698,9 +678,9 @@ class Member
     /**
      * Convert most relevant items to array.
      *
-     * @return MemberArrayType
+     * @return MemberGdprArrayType
      */
-    public function toArray(): array
+    public function toGdprArray(): array
     {
         return [
             'lidnr' => $this->getLidnr(),
@@ -710,11 +690,16 @@ class Member
             'middleName' => $this->getMiddleName(),
             'initials' => $this->getInitials(),
             'firstName' => $this->getFirstName(),
+            'birth' => $this->getBirth()->format(DateTimeInterface::ATOM),
             'generation' => $this->getGeneration(),
+            'type' => $this->getType()->value,
+            'paid' => $this->getPaid(),
+            'changedOn' => $this->getChangedOn()->format(DateTimeInterface::ATOM),
+            'membershipEndsOn' => $this->getMembershipEndsOn()?->format(DateTimeInterface::ATOM),
+            'expiration' => $this->getExpiration()->format(DateTimeInterface::ATOM),
+            'supremum' => $this->getSupremum(),
             'hidden' => $this->getHidden(),
             'deleted' => $this->getDeleted(),
-            'membershipEndsOn' => $this->getMembershipEndsOn()?->format(DateTimeInterface::ISO8601) ?? null,
-            'expiration' => $this->getExpiration()->format(DateTimeInterface::ISO8601),
         ];
     }
 

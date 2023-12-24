@@ -6,6 +6,7 @@ namespace Photo\Model;
 
 use Application\Model\Traits\IdentifiableTrait;
 use DateTime;
+use DateTimeInterface;
 use Decision\Model\Member as MemberModel;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
@@ -16,6 +17,13 @@ use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 /**
  * ProfilePhoto.
+ *
+ * @psalm-import-type PhotoGdprArrayType from Photo as ImportedPhotoGdprArrayType
+ * @psalm-type ProfilePhotoGdprArrayType = array{
+ *     dateTime: string,
+ *     explicit: bool,
+ *     photo: ImportedPhotoGdprArrayType,
+ * }
  */
 #[Entity]
 class ProfilePhoto implements ResourceInterface
@@ -97,6 +105,18 @@ class ProfilePhoto implements ResourceInterface
     public function setExplicit(bool $explicit): void
     {
         $this->explicit = $explicit;
+    }
+
+    /**
+     * @return ProfilePhotoGdprArrayType
+     */
+    public function toGdprArray(): array
+    {
+        return [
+            'dateTime' => $this->getDateTime()->format(DateTimeInterface::ATOM),
+            'explicit' => $this->isExplicit(),
+            'photo' => $this->getPhoto()->toGdprArray(),
+        ];
     }
 
     /**

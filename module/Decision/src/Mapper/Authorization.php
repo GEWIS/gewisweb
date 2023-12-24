@@ -73,6 +73,28 @@ class Authorization extends BaseMapper
         return $qb->getQuery()->getResult();
     }
 
+    /**
+     * Find all authorizations granted by or granted to a specific member. This includes revoked authorizations.
+     *
+     * @return AuthorizationModel[]
+     */
+    public function findByMember(
+        MemberModel $member,
+        bool $authorizer,
+    ): array {
+        $qb = $this->getRepository()->createQueryBuilder('a');
+
+        if ($authorizer) {
+            $qb->where('a.authorizer = :authorizer')
+                ->setParameter('authorizer', $member);
+        } else {
+            $qb->Where('a.recipient = :recipient')
+                ->setParameter('recipient', $member);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
     protected function getRepositoryName(): string
     {
         return AuthorizationModel::class;

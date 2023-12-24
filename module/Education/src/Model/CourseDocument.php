@@ -7,6 +7,7 @@ namespace Education\Model;
 use Application\Model\Enums\Languages;
 use Application\Model\Traits\IdentifiableTrait;
 use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\DiscriminatorColumn;
 use Doctrine\ORM\Mapping\DiscriminatorMap;
@@ -16,6 +17,17 @@ use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
+/**
+ * @psalm-import-type CourseGdprArrayType from Course as ImportedCourseGdprArrayType
+ * @psalm-type CourseDocumentGdprArrayType = array{
+ *     id: int,
+ *     course: ImportedCourseGdprArrayType,
+ *     date: string,
+ *     language: string,
+ *     scanned: bool,
+ *     path: string,
+ * }
+ */
 #[Entity]
 #[InheritanceType(value: 'SINGLE_TABLE')]
 #[DiscriminatorColumn(
@@ -151,6 +163,21 @@ abstract class CourseDocument implements ResourceInterface
     public function setScanned(bool $scanned): void
     {
         $this->scanned = $scanned;
+    }
+
+    /**
+     * @return CourseDocumentGdprArrayType
+     */
+    public function toGdprArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'course' => $this->getCourse()->toGdprArray(),
+            'date' => $this->getDate()->format(DateTimeInterface::ATOM),
+            'language' => $this->getLanguage()->value,
+            'scanned' => $this->getScanned(),
+            'path' => $this->getFilename(),
+        ];
     }
 
     public function getResourceId(): string

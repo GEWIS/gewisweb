@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Decision;
 
 use Decision\Controller\AdminController;
+use Decision\Controller\AdminMemberController;
 use Decision\Controller\DecisionController;
 use Decision\Controller\Factory\AdminControllerFactory;
+use Decision\Controller\Factory\AdminMemberControllerFactory;
 use Decision\Controller\Factory\DecisionControllerFactory;
 use Decision\Controller\Factory\MemberControllerFactory;
 use Decision\Controller\Factory\OrganAdminControllerFactory;
@@ -125,7 +127,7 @@ return [
                 ],
                 'priority' => 100,
             ],
-            'admin_decision' => [
+            'decision_admin' => [
                 'type' => Literal::class,
                 'options' => [
                     'route' => '/admin/decision',
@@ -141,6 +143,30 @@ return [
                             'route' => '[/:action]',
                             'constraints' => [
                                 'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ],
+                        ],
+                    ],
+                    'member' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/member',
+                            'defaults' => [
+                                'controller' => AdminMemberController::class,
+                            ],
+                        ],
+                        'may_terminate' => false,
+                        'child_routes' => [
+                            'gdpr' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/:lidnr',
+                                    'constraints' => [
+                                        'type' => '[0-9]+',
+                                    ],
+                                    'defaults' => [
+                                        'action' => 'memberGdpr',
+                                    ],
+                                ],
                             ],
                         ],
                     ],
@@ -363,6 +389,7 @@ return [
     'controllers' => [
         'factories' => [
             AdminController::class => AdminControllerFactory::class,
+            AdminMemberController::class => AdminMemberControllerFactory::class,
             DecisionController::class => DecisionControllerFactory::class,
             MemberController::class => MemberControllerFactory::class,
             OrganAdminController::class => OrganAdminControllerFactory::class,

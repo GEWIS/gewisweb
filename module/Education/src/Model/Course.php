@@ -21,6 +21,11 @@ use function implode;
 
 /**
  * Course.
+ *
+ * @psalm-type CourseGdprArrayType = array{
+ *     code: string,
+ *     name: string,
+ * }
  */
 #[Entity]
 class Course implements ResourceInterface
@@ -184,6 +189,17 @@ class Course implements ResourceInterface
     public function clearSimilarCoursesTo(): void
     {
         $this->similarCoursesTo->clear();
+    }
+
+    /**
+     * @return CourseGdprArrayType
+     */
+    public function toGdprArray(): array
+    {
+        return [
+            'code' => $this->getCode(),
+            'name' => $this->getName(),
+        ];
     }
 
     /**

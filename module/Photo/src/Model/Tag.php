@@ -15,6 +15,12 @@ use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 /**
  * Tag.
+ *
+ * @psalm-import-type PhotoGdprArrayType from Photo as ImportedPhotoGdprArrayType
+ * @psalm-type TagGdprArrayType = array{
+ *     id: int,
+ *     photo: ImportedPhotoGdprArrayType,
+ * }
  */
 #[Entity]
 #[Table(name: 'Tag')]
@@ -83,6 +89,17 @@ class Tag implements ResourceInterface
             'id' => $this->getId(),
             'photo_id' => $this->getPhoto()->getId(),
             'member_id' => $this->getMember()->getLidnr(),
+        ];
+    }
+
+    /**
+     * @return TagGdprArrayType
+     */
+    public function toGdprArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'photo' => $this->getPhoto()->toGdprArray(),
         ];
     }
 

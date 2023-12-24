@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Decision\Model\SubDecision;
 
-use Decision\Model\Enums\MeetingTypes;
 use Decision\Model\Enums\OrganTypes;
 use Decision\Model\Organ;
 use Decision\Model\SubDecision;
@@ -149,37 +148,5 @@ class Foundation extends SubDecision
             $this->getDecisionNumber(),
             $this->getNumber(),
         );
-    }
-
-    /**
-     * Get an array with all information.
-     *
-     * Mostly useful for usage with JSON.
-     *
-     * @return array{
-     *     meeting_type: MeetingTypes,
-     *     meeting_number: int,
-     *     decision_point: int,
-     *     decision_number: int,
-     *     subdecision_number: int,
-     *     abbr: string,
-     *     name: string,
-     *     organtype: OrganTypes,
-     * }
-     */
-    public function toArray(): array
-    {
-        $decision = $this->getDecision();
-
-        return [
-            'meeting_type' => $decision->getMeeting()->getType(),
-            'meeting_number' => $decision->getMeeting()->getNumber(),
-            'decision_point' => $decision->getPoint(),
-            'decision_number' => $decision->getNumber(),
-            'subdecision_number' => $this->getNumber(),
-            'abbr' => $this->getAbbr(),
-            'name' => $this->getName(),
-            'organtype' => $this->getOrganType(),
-        ];
     }
 }

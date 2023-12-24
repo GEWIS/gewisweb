@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Activity\Model;
 
+use Application\Model\LocalisedText as LocalisedTextModel;
 use Application\Model\Traits\IdentifiableTrait;
 use Company\Model\Company as CompanyModel;
 use DateTime;
+use DateTimeInterface;
 use Decision\Model\Member as MemberModel;
 use Decision\Model\Organ as OrganModel;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -45,6 +47,24 @@ use User\Permissions\Resource\OrganResourceInterface;
  *     requireGEFLITST: bool,
  *     categories: ImportedActivityCategoryArrayType[],
  *     signupLists: ImportedSignupListArrayType[],
+ * }
+ * @psalm-import-type LocalisedTextGdprArrayType from LocalisedTextModel as ImportedLocalisedTextGdprArrayType
+ * @psalm-import-type ActivityCategoryGdprArrayType from ActivityCategory as ImportedActivityCategoryGdprArrayType
+ * @psalm-import-type SignupListGdprArrayType from SignupList as ImportedSignupListGdprArrayType
+ * @psalm-type ActivityGdprArrayType = array{
+ *     id: int,
+ *     name: ImportedLocalisedTextGdprArrayType,
+ *     beginTime: string,
+ *     endTime: string,
+ *     location: ImportedLocalisedTextGdprArrayType,
+ *     costs: ImportedLocalisedTextGdprArrayType,
+ *     description: ImportedLocalisedTextGdprArrayType,
+ *     organ: ?int,
+ *     company: ?int,
+ *     isMyFuture: bool,
+ *     requireGEFLITST: bool,
+ *     categories: ImportedActivityCategoryGdprArrayType[],
+ *     signupLists: ImportedSignupListGdprArrayType[],
  * }
  */
 #[Entity]
@@ -501,6 +521,40 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
             'descriptionEn' => $this->getDescription()->getValueEN(),
             'organ' => $this->getOrgan(),
             'company' => $this->getCompany(),
+            'isMyFuture' => $this->getIsMyFuture(),
+            'requireGEFLITST' => $this->getRequireGEFLITST(),
+            'categories' => $categoriesArrays,
+            'signupLists' => $signupListsArrays,
+        ];
+    }
+
+    /**
+     * @return ActivityGdprArrayType
+     */
+    public function toGdprArray(): array
+    {
+        /** @var ImportedSignupListGdprArrayType[] $signupListsArrays */
+        $signupListsArrays = [];
+        foreach ($this->getSignupLists() as $signupList) {
+            $signupListsArrays[] = $signupList->toGdprArray();
+        }
+
+        /** @var ImportedActivityCategoryGdprArrayType[] $categoriesArrays */
+        $categoriesArrays = [];
+        foreach ($this->getCategories() as $category) {
+            $categoriesArrays[] = $category->toGdprArray();
+        }
+
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName()->toGdprArray(),
+            'beginTime' => $this->getBeginTime()->format(DateTimeInterface::ATOM),
+            'endTime' => $this->getEndTime()->format(DateTimeInterface::ATOM),
+            'location' => $this->getLocation()->toGdprArray(),
+            'costs' => $this->getCosts()->toGdprArray(),
+            'description' => $this->getDescription()->toGdprArray(),
+            'organ' => $this->getOrgan()?->getId(),
+            'company' => $this->getCompany()?->getId(),
             'isMyFuture' => $this->getIsMyFuture(),
             'requireGEFLITST' => $this->getRequireGEFLITST(),
             'categories' => $categoriesArrays,

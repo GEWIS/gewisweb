@@ -6,6 +6,7 @@ namespace Photo\Model;
 
 use Application\Model\Traits\IdentifiableTrait;
 use DateTime;
+use DateTimeInterface;
 use Decision\Model\Member as MemberModel;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
@@ -14,6 +15,13 @@ use Doctrine\ORM\Mapping\ManyToOne;
 
 /**
  * Vote, represents a vote for a photo of the week.
+ *
+ * @psalm-import-type PhotoGdprArrayType from Photo as ImportedPhotoGdprArrayType
+ * @psalm-type VoteGdprArrayType = array{
+ *     id: int,
+ *     dateTime: string,
+ *     photo: ImportedPhotoGdprArrayType,
+ * }
  */
 #[Entity]
 class Vote
@@ -51,6 +59,11 @@ class Vote
         $this->dateTime = new DateTime();
     }
 
+    public function getDateTime(): DateTime
+    {
+        return $this->dateTime;
+    }
+
     public function setPhoto(Photo $photo): void
     {
         $this->photo = $photo;
@@ -59,5 +72,17 @@ class Vote
     public function getPhoto(): Photo
     {
         return $this->photo;
+    }
+
+    /**
+     * @return VoteGdprArrayType
+     */
+    public function toGdprArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'dateTime' => $this->getDateTime()->format(DateTimeInterface::ATOM),
+            'photo' => $this->getPhoto()->toGdprArray(),
+        ];
     }
 }
