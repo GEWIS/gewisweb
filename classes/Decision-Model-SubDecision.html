@@ -488,6 +488,13 @@
 <dd>Meeting type.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a href="classes/Decision-Model-SubDecision.html#property_member">$member</a>
+    <span>
+                        &nbsp;: <a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>|null            </span>
+</dt>
+<dd>The member involved in this sub-decision.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Decision-Model-SubDecision.html#property_number">$number</a>
     <span>
                         &nbsp;: int            </span>
@@ -545,6 +552,13 @@
 <dd>Get the meeting type.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Decision-Model-SubDecision.html#method_getMember">getMember()</a>
+    <span>
+                                &nbsp;: <a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>|null    </span>
+</dt>
+<dd>Get the member.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-SubDecision.html#method_getNumber">getNumber()</a>
     <span>
                                 &nbsp;: int    </span>
@@ -564,6 +578,13 @@
                                 &nbsp;: void    </span>
 </dt>
 <dd>Set the decision.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Decision-Model-SubDecision.html#method_setMember">setMember()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>Set the member.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-SubDecision.html#method_setNumber">setNumber()</a>
@@ -805,6 +826,43 @@
             -protected
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="property_member">
+        $member
+        <a href="classes/Decision-Model-SubDecision.html#property_member" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">145</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">The member involved in this sub-decision.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>|null</span>
+    <span class="phpdocumentor-signature__name">$member</span>
+     = <span class="phpdocumentor-signature__default-value">null</span></code>
+
+        <section class="phpdocumentor-description"><p>Not all sub-decisions require this, as such it is nullable. However, sub-decisions that need the guarantee that
+this is not null or need to specify an inverse side can do so using an association override.</p>
+</section>
+
+    
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="property_number">
         $number
         <a href="classes/Decision-Model-SubDecision.html#property_number" class="headerlink"><i class="fas fa-link"></i></a>
@@ -854,7 +912,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">211</span>
+    <span class="phpdocumentor-element-found-in__line">241</span>
 
     </aside>
 
@@ -890,7 +948,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">142</span>
+    <span class="phpdocumentor-element-found-in__line">156</span>
 
     </aside>
 
@@ -926,7 +984,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">187</span>
+    <span class="phpdocumentor-element-found-in__line">201</span>
 
     </aside>
 
@@ -962,7 +1020,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">179</span>
+    <span class="phpdocumentor-element-found-in__line">193</span>
 
     </aside>
 
@@ -998,7 +1056,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">171</span>
+    <span class="phpdocumentor-element-found-in__line">185</span>
 
     </aside>
 
@@ -1034,7 +1092,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">163</span>
+    <span class="phpdocumentor-element-found-in__line">177</span>
 
     </aside>
 
@@ -1062,6 +1120,42 @@
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_getMember">
+        getMember()
+        <a href="classes/Decision-Model-SubDecision.html#method_getMember" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">225</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Get the member.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getMember</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>|null</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>|null</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_getNumber">
         getNumber()
         <a href="classes/Decision-Model-SubDecision.html#method_getNumber" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1070,7 +1164,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">195</span>
+    <span class="phpdocumentor-element-found-in__line">209</span>
 
     </aside>
 
@@ -1106,7 +1200,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">219</span>
+    <span class="phpdocumentor-element-found-in__line">249</span>
 
     </aside>
 
@@ -1148,7 +1242,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">150</span>
+    <span class="phpdocumentor-element-found-in__line">164</span>
 
     </aside>
 
@@ -1182,6 +1276,48 @@
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_setMember">
+        setMember()
+        <a href="classes/Decision-Model-SubDecision.html#method_setMember" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">233</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Set the member.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">setMember</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$member</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$member</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_setNumber">
         setNumber()
         <a href="classes/Decision-Model-SubDecision.html#method_setNumber" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1190,7 +1326,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">203</span>
+    <span class="phpdocumentor-element-found-in__line">217</span>
 
     </aside>
 
@@ -1337,6 +1473,7 @@
                                                     <li><a href="classes/Decision-Model-SubDecision.html#property_decision_point">$decision_point<a href="classes/Decision-Model-SubDecision.html"></li>
                                                     <li><a href="classes/Decision-Model-SubDecision.html#property_meeting_number">$meeting_number<a href="classes/Decision-Model-SubDecision.html"></li>
                                                     <li><a href="classes/Decision-Model-SubDecision.html#property_meeting_type">$meeting_type<a href="classes/Decision-Model-SubDecision.html"></li>
+                                                    <li><a href="classes/Decision-Model-SubDecision.html#property_member">$member<a href="classes/Decision-Model-SubDecision.html"></li>
                                                     <li><a href="classes/Decision-Model-SubDecision.html#property_number">$number<a href="classes/Decision-Model-SubDecision.html"></li>
                                             </ul>
                 </li>
@@ -1350,9 +1487,11 @@
                                             <li><a href="classes/Decision-Model-SubDecision.html#method_getDecisionPoint">getDecisionPoint()</a></li>
                                             <li><a href="classes/Decision-Model-SubDecision.html#method_getMeetingNumber">getMeetingNumber()</a></li>
                                             <li><a href="classes/Decision-Model-SubDecision.html#method_getMeetingType">getMeetingType()</a></li>
+                                            <li><a href="classes/Decision-Model-SubDecision.html#method_getMember">getMember()</a></li>
                                             <li><a href="classes/Decision-Model-SubDecision.html#method_getNumber">getNumber()</a></li>
                                             <li><a href="classes/Decision-Model-SubDecision.html#method_setContent">setContent()</a></li>
                                             <li><a href="classes/Decision-Model-SubDecision.html#method_setDecision">setDecision()</a></li>
+                                            <li><a href="classes/Decision-Model-SubDecision.html#method_setMember">setMember()</a></li>
                                             <li><a href="classes/Decision-Model-SubDecision.html#method_setNumber">setNumber()</a></li>
                                     </ul>
             </li>
