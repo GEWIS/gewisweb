@@ -415,7 +415,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Mapper/Poll.php"><a href="files/module-frontpage-src-mapper-poll.html"><abbr title="module/Frontpage/src/Mapper/Poll.php">Poll.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">18</span>
+    <span class="phpdocumentor-element-found-in__line">19</span>
 
     </aside>
 
@@ -520,11 +520,32 @@
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Frontpage-Mapper-Poll.html#method_findPollsApprovedByMember">findPollsApprovedByMember()</a>
+    <span>
+                                &nbsp;: array&lt;string|int, <a href="classes/Frontpage-Model-Poll.html"><abbr title="\Frontpage\Model\Poll">Poll</abbr></a>&gt;    </span>
+</dt>
+<dd>Get all polls approved by a specific member.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Frontpage-Mapper-Poll.html#method_findPollsCreatedByMember">findPollsCreatedByMember()</a>
+    <span>
+                                &nbsp;: array&lt;string|int, <a href="classes/Frontpage-Model-Poll.html"><abbr title="\Frontpage\Model\Poll">Poll</abbr></a>&gt;    </span>
+</dt>
+<dd>Get all polls created by a specific member.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Frontpage-Mapper-Poll.html#method_findVote">findVote()</a>
     <span>
                                 &nbsp;: <a href="classes/Frontpage-Model-PollVote.html"><abbr title="\Frontpage\Model\PollVote">PollVote</abbr></a>|null    </span>
 </dt>
 <dd>Find the vote of a certain user on a poll.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Frontpage-Mapper-Poll.html#method_findVotesByMember">findVotesByMember()</a>
+    <span>
+                                &nbsp;: array&lt;string|int, <a href="classes/Frontpage-Model-PollVote.html"><abbr title="\Frontpage\Model\PollVote">PollVote</abbr></a>&gt;    </span>
+</dt>
+<dd>Get all poll votes casted by a specific member.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Application-Mapper-BaseMapper.html#method_flush">flush()</a>
@@ -1039,6 +1060,98 @@ furthest into the future, and thus not necessarily the &#039;newest&#039; poll.<
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_findPollsApprovedByMember">
+        findPollsApprovedByMember()
+        <a href="classes/Frontpage-Mapper-Poll.html#method_findPollsApprovedByMember" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Mapper/Poll.php"><a href="files/module-frontpage-src-mapper-poll.html"><abbr title="module/Frontpage/src/Mapper/Poll.php">Poll.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">111</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Get all polls approved by a specific member.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">findPollsApprovedByMember</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$member</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Frontpage-Model-Poll.html"><abbr title="\Frontpage\Model\Poll">Poll</abbr></a>&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$member</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Frontpage-Model-Poll.html"><abbr title="\Frontpage\Model\Poll">Poll</abbr></a>&gt;</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_findPollsCreatedByMember">
+        findPollsCreatedByMember()
+        <a href="classes/Frontpage-Mapper-Poll.html#method_findPollsCreatedByMember" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Mapper/Poll.php"><a href="files/module-frontpage-src-mapper-poll.html"><abbr title="module/Frontpage/src/Mapper/Poll.php">Poll.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">97</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Get all polls created by a specific member.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">findPollsCreatedByMember</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$member</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Frontpage-Model-Poll.html"><abbr title="\Frontpage\Model\Poll">Poll</abbr></a>&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$member</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Frontpage-Model-Poll.html"><abbr title="\Frontpage\Model\Poll">Poll</abbr></a>&gt;</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_findVote">
         findVote()
         <a href="classes/Frontpage-Mapper-Poll.html#method_findVote" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1047,7 +1160,7 @@ furthest into the future, and thus not necessarily the &#039;newest&#039; poll.<
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Mapper/Poll.php"><a href="files/module-frontpage-src-mapper-poll.html"><abbr title="module/Frontpage/src/Mapper/Poll.php">Poll.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">23</span>
+    <span class="phpdocumentor-element-found-in__line">24</span>
 
     </aside>
 
@@ -1083,6 +1196,52 @@ furthest into the future, and thus not necessarily the &#039;newest&#039; poll.<
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><a href="classes/Frontpage-Model-PollVote.html"><abbr title="\Frontpage\Model\PollVote">PollVote</abbr></a>|null</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_findVotesByMember">
+        findVotesByMember()
+        <a href="classes/Frontpage-Mapper-Poll.html#method_findVotesByMember" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Mapper/Poll.php"><a href="files/module-frontpage-src-mapper-poll.html"><abbr title="module/Frontpage/src/Mapper/Poll.php">Poll.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">82</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Get all poll votes casted by a specific member.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">findVotesByMember</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$member</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Frontpage-Model-PollVote.html"><abbr title="\Frontpage\Model\PollVote">PollVote</abbr></a>&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$member</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Frontpage-Model-PollVote.html"><abbr title="\Frontpage\Model\PollVote">PollVote</abbr></a>&gt;</span>
             </section>
 
 </article>
@@ -1226,7 +1385,7 @@ furthest into the future, and thus not necessarily the &#039;newest&#039; poll.<
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Mapper/Poll.php"><a href="files/module-frontpage-src-mapper-poll.html"><abbr title="module/Frontpage/src/Mapper/Poll.php">Poll.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">51</span>
+    <span class="phpdocumentor-element-found-in__line">52</span>
 
     </aside>
 
@@ -1263,7 +1422,7 @@ furthest into the future, and thus not necessarily the &#039;newest&#039; poll.<
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Mapper/Poll.php"><a href="files/module-frontpage-src-mapper-poll.html"><abbr title="module/Frontpage/src/Mapper/Poll.php">Poll.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">67</span>
+    <span class="phpdocumentor-element-found-in__line">68</span>
 
     </aside>
 
@@ -1299,7 +1458,7 @@ furthest into the future, and thus not necessarily the &#039;newest&#039; poll.<
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Mapper/Poll.php"><a href="files/module-frontpage-src-mapper-poll.html"><abbr title="module/Frontpage/src/Mapper/Poll.php">Poll.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">38</span>
+    <span class="phpdocumentor-element-found-in__line">39</span>
 
     </aside>
 
@@ -1766,7 +1925,7 @@ function.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Mapper/Poll.php"><a href="files/module-frontpage-src-mapper-poll.html"><abbr title="module/Frontpage/src/Mapper/Poll.php">Poll.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">76</span>
+    <span class="phpdocumentor-element-found-in__line">120</span>
 
     </aside>
 
@@ -1918,7 +2077,10 @@ function.</p>
                                             <li><a href="classes/Application-Mapper-BaseMapper.html#method_findAll">findAll()</a></li>
                                             <li><a href="classes/Application-Mapper-BaseMapper.html#method_findBy">findBy()</a></li>
                                             <li><a href="classes/Application-Mapper-BaseMapper.html#method_findOneBy">findOneBy()</a></li>
+                                            <li><a href="classes/Frontpage-Mapper-Poll.html#method_findPollsApprovedByMember">findPollsApprovedByMember()</a></li>
+                                            <li><a href="classes/Frontpage-Mapper-Poll.html#method_findPollsCreatedByMember">findPollsCreatedByMember()</a></li>
                                             <li><a href="classes/Frontpage-Mapper-Poll.html#method_findVote">findVote()</a></li>
+                                            <li><a href="classes/Frontpage-Mapper-Poll.html#method_findVotesByMember">findVotesByMember()</a></li>
                                             <li><a href="classes/Application-Mapper-BaseMapper.html#method_flush">flush()</a></li>
                                             <li><a href="classes/Application-Mapper-BaseMapper.html#method_getConnection">getConnection()</a></li>
                                             <li><a href="classes/Application-Mapper-BaseMapper.html#method_getEntityManager">getEntityManager()</a></li>

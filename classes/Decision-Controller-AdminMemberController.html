@@ -385,17 +385,16 @@
             <div class="phpdocumentor-column -nine phpdocumentor-content">
                                 <section>
                                         <ul class="phpdocumentor-breadcrumbs">
-            <li class="phpdocumentor-breadcrumb"><a href="namespaces/user.html">User</a></li>
-            <li class="phpdocumentor-breadcrumb"><a href="namespaces/user-model.html">Model</a></li>
-            <li class="phpdocumentor-breadcrumb"><a href="namespaces/user-model-enums.html">Enums</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/decision.html">Decision</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/decision-controller.html">Controller</a></li>
     </ul>
 
     <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    UserRoles
+    AdminMemberController
 
-            <span class="phpdocumentor-element__extends">
-        : string
+        <span class="phpdocumentor-element__extends">
+        extends <abbr title="\Laminas\Mvc\Controller\AbstractActionController">AbstractActionController</abbr>
     </span>
     
             <div class="phpdocumentor-element__package">
@@ -408,15 +407,19 @@
     
     </h2>
 
+<div class="phpdocumentor-label-line">
+
+
+</div>
+
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Model/Enums/UserRoles.php"><a href="files/module-user-src-model-enums-userroles.html"><abbr title="module/User/src/Model/Enums/UserRoles.php">UserRoles.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Controller/AdminMemberController.php"><a href="files/module-decision-src-controller-adminmembercontroller.html"><abbr title="module/Decision/src/Controller/AdminMemberController.php">AdminMemberController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">12</span>
+    <span class="phpdocumentor-element-found-in__line">14</span>
 
     </aside>
 
-            <p class="phpdocumentor-summary">Enum for all the possible roles that exist within the ACL.</p>
-
+        
 
 
 
@@ -424,7 +427,7 @@
 
 <h3 id="toc">
     Table of Contents
-    <a href="classes/User-Model-Enums-UserRoles.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Decision-Controller-AdminMemberController.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h3>
 
@@ -435,91 +438,49 @@
 
 
 
-<h4 id="toc-cases">
-    Cases
-    <a href="classes/User-Model-Enums-UserRoles.html#toc-cases" class="headerlink"><i class="fas fa-link"></i></a>
+
+<h4 id="toc-properties">
+    Properties
+    <a href="classes/Decision-Controller-AdminMemberController.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
-            <dt class="phpdocumentor-table-of-contents__entry -case -">
-    <a href="classes/User-Model-Enums-UserRoles.html#enumcase_ActiveMember">ActiveMember</a>
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a href="classes/Decision-Controller-AdminMemberController.html#property_aclService">$aclService</a>
     <span>
-                &nbsp;= &#039;active_member&#039;                    </span>
+                        &nbsp;: <a href="classes/Decision-Service-AclService.html"><abbr title="\Decision\Service\AclService">AclService</abbr></a>            </span>
 </dt>
 
-            <dt class="phpdocumentor-table-of-contents__entry -case -">
-    <a href="classes/User-Model-Enums-UserRoles.html#enumcase_Admin">Admin</a>
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a href="classes/Decision-Controller-AdminMemberController.html#property_gdprService">$gdprService</a>
     <span>
-                &nbsp;= &#039;admin&#039;                    </span>
+                        &nbsp;: <abbr title="\Decision\Service\Gdpr">Gdpr</abbr>            </span>
 </dt>
 
-            <dt class="phpdocumentor-table-of-contents__entry -case -">
-    <a href="classes/User-Model-Enums-UserRoles.html#enumcase_ApiUser">ApiUser</a>
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a href="classes/Decision-Controller-AdminMemberController.html#property_translator">$translator</a>
     <span>
-                &nbsp;= &#039;apiuser&#039;                    </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -case -">
-    <a href="classes/User-Model-Enums-UserRoles.html#enumcase_Board">Board</a>
-    <span>
-                &nbsp;= &#039;board&#039;                    </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -case -">
-    <a href="classes/User-Model-Enums-UserRoles.html#enumcase_Company">Company</a>
-    <span>
-                &nbsp;= &#039;company&#039;                    </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -case -">
-    <a href="classes/User-Model-Enums-UserRoles.html#enumcase_CompanyAdmin">CompanyAdmin</a>
-    <span>
-                &nbsp;= &#039;company_admin&#039;                    </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -case -">
-    <a href="classes/User-Model-Enums-UserRoles.html#enumcase_Graduate">Graduate</a>
-    <span>
-                &nbsp;= &#039;graduate&#039;                    </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -case -">
-    <a href="classes/User-Model-Enums-UserRoles.html#enumcase_Guest">Guest</a>
-    <span>
-                &nbsp;= &#039;guest&#039;                    </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -case -">
-    <a href="classes/User-Model-Enums-UserRoles.html#enumcase_TueGuest">TueGuest</a>
-    <span>
-                &nbsp;= &#039;tueguest&#039;                    </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -case -">
-    <a href="classes/User-Model-Enums-UserRoles.html#enumcase_User">User</a>
-    <span>
-                &nbsp;= &#039;user&#039;                    </span>
+                        &nbsp;: <abbr title="\Laminas\Mvc\I18n\Translator">Translator</abbr>            </span>
 </dt>
 
     </dl>
-
 
 <h4 id="toc-methods">
     Methods
-    <a href="classes/User-Model-Enums-UserRoles.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Decision-Controller-AdminMemberController.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/User-Model-Enums-UserRoles.html#method_getFormValueOptions">getFormValueOptions()</a>
+    <a href="classes/Decision-Controller-AdminMemberController.html#method___construct">__construct()</a>
     <span>
-                                &nbsp;: array&lt;string, string&gt;    </span>
+                                &nbsp;: mixed    </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/User-Model-Enums-UserRoles.html#method_getName">getName()</a>
+    <a href="classes/Decision-Controller-AdminMemberController.html#method_memberGdprAction">memberGdprAction()</a>
     <span>
-                                &nbsp;: string    </span>
+                                &nbsp;: <abbr title="\Laminas\View\Model\JsonModel">JsonModel</abbr>    </span>
 </dt>
 
     </dl>
@@ -527,103 +488,43 @@
 
 
 
-            <section class="phpdocumentor-cases">
-        <h3 class="phpdocumentor-elements__header" id="cases">
-            Cases
-            <a href="classes/User-Model-Enums-UserRoles.html#cases" class="headerlink"><i class="fas fa-link"></i></a>
+        
+
+        
+    <section class="phpdocumentor-properties">
+        <h3 class="phpdocumentor-elements__header" id="properties">
+            Properties
+            <a href="classes/Decision-Controller-AdminMemberController.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
         class="
             phpdocumentor-element
-            -enum-case
-        "
+            -property
+            -private
+                                                -read-only        "
 >
-    <h4 class="phpdocumentor-element__name" id="enumcase_Guest">
-        Guest
-        <a href="classes/User-Model-Enums-UserRoles.html#enumcase_Guest" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_aclService">
+        $aclService
+        <a href="classes/Decision-Controller-AdminMemberController.html#property_aclService" class="headerlink"><i class="fas fa-link"></i></a>
 
+        <span class="phpdocumentor-element__modifiers">
+                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Model/Enums/UserRoles.php"><a href="files/module-user-src-model-enums-userroles.html"><abbr title="module/User/src/Model/Enums/UserRoles.php">UserRoles.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">14</span>
-
-    </aside>
-
-    
-    
-    
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -enum-case
-        "
->
-    <h4 class="phpdocumentor-element__name" id="enumcase_TueGuest">
-        TueGuest
-        <a href="classes/User-Model-Enums-UserRoles.html#enumcase_TueGuest" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Model/Enums/UserRoles.php"><a href="files/module-user-src-model-enums-userroles.html"><abbr title="module/User/src/Model/Enums/UserRoles.php">UserRoles.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">15</span>
-
-    </aside>
-
-    
-    
-    
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -enum-case
-        "
->
-    <h4 class="phpdocumentor-element__name" id="enumcase_ApiUser">
-        ApiUser
-        <a href="classes/User-Model-Enums-UserRoles.html#enumcase_ApiUser" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Model/Enums/UserRoles.php"><a href="files/module-user-src-model-enums-userroles.html"><abbr title="module/User/src/Model/Enums/UserRoles.php">UserRoles.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">16</span>
-
-    </aside>
-
-    
-    
-    
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -enum-case
-        "
->
-    <h4 class="phpdocumentor-element__name" id="enumcase_Company">
-        Company
-        <a href="classes/User-Model-Enums-UserRoles.html#enumcase_Company" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Model/Enums/UserRoles.php"><a href="files/module-user-src-model-enums-userroles.html"><abbr title="module/User/src/Model/Enums/UserRoles.php">UserRoles.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Controller/AdminMemberController.php"><a href="files/module-decision-src-controller-adminmembercontroller.html"><abbr title="module/Decision/src/Controller/AdminMemberController.php">AdminMemberController.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">17</span>
 
     </aside>
 
     
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Decision-Service-AclService.html"><abbr title="\Decision\Service\AclService">AclService</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$aclService</span>
+    </code>
+
     
     
     
@@ -632,46 +533,31 @@
                     <article
         class="
             phpdocumentor-element
-            -enum-case
-        "
+            -property
+            -private
+                                                -read-only        "
 >
-    <h4 class="phpdocumentor-element__name" id="enumcase_User">
-        User
-        <a href="classes/User-Model-Enums-UserRoles.html#enumcase_User" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_gdprService">
+        $gdprService
+        <a href="classes/Decision-Controller-AdminMemberController.html#property_gdprService" class="headerlink"><i class="fas fa-link"></i></a>
 
+        <span class="phpdocumentor-element__modifiers">
+                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Model/Enums/UserRoles.php"><a href="files/module-user-src-model-enums-userroles.html"><abbr title="module/User/src/Model/Enums/UserRoles.php">UserRoles.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">18</span>
-
-    </aside>
-
-    
-    
-    
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -enum-case
-        "
->
-    <h4 class="phpdocumentor-element__name" id="enumcase_Graduate">
-        Graduate
-        <a href="classes/User-Model-Enums-UserRoles.html#enumcase_Graduate" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Model/Enums/UserRoles.php"><a href="files/module-user-src-model-enums-userroles.html"><abbr title="module/User/src/Model/Enums/UserRoles.php">UserRoles.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Controller/AdminMemberController.php"><a href="files/module-decision-src-controller-adminmembercontroller.html"><abbr title="module/Decision/src/Controller/AdminMemberController.php">AdminMemberController.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">19</span>
 
     </aside>
 
     
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+        <span class="phpdocumentor-signature__type"><abbr title="\Decision\Service\Gdpr">Gdpr</abbr></span>
+    <span class="phpdocumentor-signature__name">$gdprService</span>
+    </code>
+
     
     
     
@@ -680,94 +566,31 @@
                     <article
         class="
             phpdocumentor-element
-            -enum-case
-        "
+            -property
+            -private
+                                                -read-only        "
 >
-    <h4 class="phpdocumentor-element__name" id="enumcase_ActiveMember">
-        ActiveMember
-        <a href="classes/User-Model-Enums-UserRoles.html#enumcase_ActiveMember" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_translator">
+        $translator
+        <a href="classes/Decision-Controller-AdminMemberController.html#property_translator" class="headerlink"><i class="fas fa-link"></i></a>
 
+        <span class="phpdocumentor-element__modifiers">
+                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Model/Enums/UserRoles.php"><a href="files/module-user-src-model-enums-userroles.html"><abbr title="module/User/src/Model/Enums/UserRoles.php">UserRoles.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Controller/AdminMemberController.php"><a href="files/module-decision-src-controller-adminmembercontroller.html"><abbr title="module/Decision/src/Controller/AdminMemberController.php">AdminMemberController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">20</span>
+    <span class="phpdocumentor-element-found-in__line">18</span>
 
     </aside>
 
     
-    
-    
-    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+        <span class="phpdocumentor-signature__type"><abbr title="\Laminas\Mvc\I18n\Translator">Translator</abbr></span>
+    <span class="phpdocumentor-signature__name">$translator</span>
+    </code>
 
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -enum-case
-        "
->
-    <h4 class="phpdocumentor-element__name" id="enumcase_CompanyAdmin">
-        CompanyAdmin
-        <a href="classes/User-Model-Enums-UserRoles.html#enumcase_CompanyAdmin" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Model/Enums/UserRoles.php"><a href="files/module-user-src-model-enums-userroles.html"><abbr title="module/User/src/Model/Enums/UserRoles.php">UserRoles.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">21</span>
-
-    </aside>
-
-    
-    
-    
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -enum-case
-        "
->
-    <h4 class="phpdocumentor-element__name" id="enumcase_Board">
-        Board
-        <a href="classes/User-Model-Enums-UserRoles.html#enumcase_Board" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Model/Enums/UserRoles.php"><a href="files/module-user-src-model-enums-userroles.html"><abbr title="module/User/src/Model/Enums/UserRoles.php">UserRoles.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">22</span>
-
-    </aside>
-
-    
-    
-    
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -enum-case
-        "
->
-    <h4 class="phpdocumentor-element__name" id="enumcase_Admin">
-        Admin
-        <a href="classes/User-Model-Enums-UserRoles.html#enumcase_Admin" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Model/Enums/UserRoles.php"><a href="files/module-user-src-model-enums-userroles.html"><abbr title="module/User/src/Model/Enums/UserRoles.php">UserRoles.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">23</span>
-
-    </aside>
-
-    
     
     
     
@@ -778,31 +601,31 @@
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/User-Model-Enums-UserRoles.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Decision-Controller-AdminMemberController.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
         class="phpdocumentor-element
             -method
             -public
-                                    -static                    "
+                                                        "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getFormValueOptions">
-        getFormValueOptions()
-        <a href="classes/User-Model-Enums-UserRoles.html#method_getFormValueOptions" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method___construct">
+        __construct()
+        <a href="classes/Decision-Controller-AdminMemberController.html#method___construct" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Model/Enums/UserRoles.php"><a href="files/module-user-src-model-enums-userroles.html"><abbr title="module/User/src/Model/Enums/UserRoles.php">UserRoles.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Controller/AdminMemberController.php"><a href="files/module-decision-src-controller-adminmembercontroller.html"><abbr title="module/Decision/src/Controller/AdminMemberController.php">AdminMemberController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">44</span>
+    <span class="phpdocumentor-element-found-in__line">16</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">getFormValueOptions</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Mvc\I18n\Translator">Translator</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$translator</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string, string&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Service-AclService.html"><abbr title="\Decision\Service\AclService">AclService</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$aclService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Mvc\I18n\Translator">Translator</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$translator</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Decision\Service\Gdpr">Gdpr</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$gdprService</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -810,8 +633,22 @@
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$aclService</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Service-AclService.html"><abbr title="\Decision\Service\AclService">AclService</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$translator</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Mvc\I18n\Translator">Translator</abbr></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$gdprService</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Decision\Service\Gdpr">Gdpr</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
@@ -820,11 +657,7 @@
 
     
 
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">array&lt;string, string&gt;</span>
-            </section>
-
+    
 </article>
                     <article
         class="phpdocumentor-element
@@ -832,42 +665,32 @@
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getName">
-        getName()
-        <a href="classes/User-Model-Enums-UserRoles.html#method_getName" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_memberGdprAction">
+        memberGdprAction()
+        <a href="classes/Decision-Controller-AdminMemberController.html#method_memberGdprAction" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/User/src/Model/Enums/UserRoles.php"><a href="files/module-user-src-model-enums-userroles.html"><abbr title="module/User/src/Model/Enums/UserRoles.php">UserRoles.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Controller/AdminMemberController.php"><a href="files/module-decision-src-controller-adminmembercontroller.html"><abbr title="module/Decision/src/Controller/AdminMemberController.php">AdminMemberController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">25</span>
+    <span class="phpdocumentor-element-found-in__line">23</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getName</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Mvc\I18n\Translator">Translator</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$translator</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+                    <span class="phpdocumentor-signature__name">memberGdprAction</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Laminas\View\Model\JsonModel">JsonModel</abbr></span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
     
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$translator</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Mvc\I18n\Translator">Translator</abbr></span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
+    
     
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">string</span>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\Laminas\View\Model\JsonModel">JsonModel</abbr></span>
             </section>
 
 </article>
@@ -877,7 +700,7 @@
     <div class="phpdocumentor-modal-bg" data-exit-button></div>
     <div class="phpdocumentor-modal-container">
         <div class="phpdocumentor-modal-content">
-            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/module/User/src/Model/Enums/UserRoles.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
+            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/module/Decision/src/Controller/AdminMemberController.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
         </div>
         <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
     </div>
@@ -968,7 +791,7 @@
     </article>
                                 </section>
                 <section class="phpdocumentor-on-this-page__sidebar">
-                            
+                                
     <section class="phpdocumentor-on-this-page__content">
         <strong class="phpdocumentor-on-this-page__title">On this page</strong>
 
@@ -976,33 +799,27 @@
             <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                            <li><a href="classes/User-Model-Enums-UserRoles.html#toc-cases">Cases</a></li>
-                                                                <li><a href="classes/User-Model-Enums-UserRoles.html#toc-methods">Methods</a></li>
+                                                            <li><a href="classes/Decision-Controller-AdminMemberController.html#toc-properties">Properties</a></li>
+                                                            <li><a href="classes/Decision-Controller-AdminMemberController.html#toc-methods">Methods</a></li>
                                     </ul>
             </li>
-                            <li class="phpdocumentor-on-this-page-section__title">Cases</li>
+            
+                            <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li><a href="classes/User-Model-Enums-UserRoles.html#enumcase_Guest">Guest</a></li>
-                                                    <li><a href="classes/User-Model-Enums-UserRoles.html#enumcase_TueGuest">TueGuest</a></li>
-                                                    <li><a href="classes/User-Model-Enums-UserRoles.html#enumcase_ApiUser">ApiUser</a></li>
-                                                    <li><a href="classes/User-Model-Enums-UserRoles.html#enumcase_Company">Company</a></li>
-                                                    <li><a href="classes/User-Model-Enums-UserRoles.html#enumcase_User">User</a></li>
-                                                    <li><a href="classes/User-Model-Enums-UserRoles.html#enumcase_Graduate">Graduate</a></li>
-                                                    <li><a href="classes/User-Model-Enums-UserRoles.html#enumcase_ActiveMember">ActiveMember</a></li>
-                                                    <li><a href="classes/User-Model-Enums-UserRoles.html#enumcase_CompanyAdmin">CompanyAdmin</a></li>
-                                                    <li><a href="classes/User-Model-Enums-UserRoles.html#enumcase_Board">Board</a></li>
-                                                    <li><a href="classes/User-Model-Enums-UserRoles.html#enumcase_Admin">Admin</a></li>
+                                                    <li><a href="classes/Decision-Controller-AdminMemberController.html#property_aclService">$aclService<a href="classes/Decision-Controller-AdminMemberController.html"></li>
+                                                    <li><a href="classes/Decision-Controller-AdminMemberController.html#property_gdprService">$gdprService<a href="classes/Decision-Controller-AdminMemberController.html"></li>
+                                                    <li><a href="classes/Decision-Controller-AdminMemberController.html#property_translator">$translator<a href="classes/Decision-Controller-AdminMemberController.html"></li>
                                             </ul>
                 </li>
             
-                            <li class="phpdocumentor-on-this-page-section__title">Methods</li>
-                <li>
-                    <ul class="phpdocumentor-list -clean">
-                                                    <li><a href="classes/User-Model-Enums-UserRoles.html#method_getFormValueOptions">getFormValueOptions()</a></li>
-                                                    <li><a href="classes/User-Model-Enums-UserRoles.html#method_getName">getName()</a></li>
-                                            </ul>
-                </li>
+                        <li class="phpdocumentor-on-this-page-section__title">Methods</li>
+            <li>
+                <ul class="phpdocumentor-list -clean">
+                                            <li><a href="classes/Decision-Controller-AdminMemberController.html#method___construct">__construct()</a></li>
+                                            <li><a href="classes/Decision-Controller-AdminMemberController.html#method_memberGdprAction">memberGdprAction()</a></li>
+                                    </ul>
+            </li>
                     </ul>
     </section>
 
@@ -1020,7 +837,7 @@
     </section>
 </section>
         </div>
-        <a href="classes/User-Model-Enums-UserRoles.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/Decision-Controller-AdminMemberController.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 

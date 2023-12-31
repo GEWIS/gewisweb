@@ -415,7 +415,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Vote.php"><a href="files/module-photo-src-model-vote.html"><abbr title="module/Photo/src/Model/Vote.php">Vote.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">18</span>
+    <span class="phpdocumentor-element-found-in__line">26</span>
 
     </aside>
 
@@ -423,6 +423,35 @@
 
 
 
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Photo-Model-Vote.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">psalm-import-type</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>PhotoGdprArrayType from Photo as ImportedPhotoGdprArrayType</p>
+</section>
+
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">psalm-type</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>VoteGdprArrayType = array{
+id: int,
+dateTime: string,
+photo: ImportedPhotoGdprArrayType,
+}</p>
+</section>
+
+                                    </dd>
+                                            </dl>
 
 
 
@@ -488,6 +517,12 @@ nullable.</dd>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Photo-Model-Vote.html#method_getDateTime">getDateTime()</a>
+    <span>
+                                &nbsp;: <abbr title="\DateTime">DateTime</abbr>    </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_getId">getId()</a>
     <span>
                                 &nbsp;: int|null    </span>
@@ -511,6 +546,12 @@ nullable.</dd>
     <a href="classes/Photo-Model-Vote.html#method_setPhoto">setPhoto()</a>
     <span>
                                 &nbsp;: void    </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Photo-Model-Vote.html#method_toGdprArray">toGdprArray()</a>
+    <span>
+                                &nbsp;: <abbr title="\Photo\Model\VoteGdprArrayType">VoteGdprArrayType</abbr>    </span>
 </dt>
 
     </dl>
@@ -544,7 +585,7 @@ nullable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Vote.php"><a href="files/module-photo-src-model-vote.html"><abbr title="module/Photo/src/Model/Vote.php">Vote.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">26</span>
+    <span class="phpdocumentor-element-found-in__line">34</span>
 
     </aside>
 
@@ -613,7 +654,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Vote.php"><a href="files/module-photo-src-model-vote.html"><abbr title="module/Photo/src/Model/Vote.php">Vote.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">33</span>
+    <span class="phpdocumentor-element-found-in__line">41</span>
 
     </aside>
 
@@ -646,7 +687,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Vote.php"><a href="files/module-photo-src-model-vote.html"><abbr title="module/Photo/src/Model/Vote.php">Vote.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">43</span>
+    <span class="phpdocumentor-element-found-in__line">51</span>
 
     </aside>
 
@@ -684,7 +725,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Vote.php"><a href="files/module-photo-src-model-vote.html"><abbr title="module/Photo/src/Model/Vote.php">Vote.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">32</span>
+    <span class="phpdocumentor-element-found-in__line">40</span>
 
     </aside>
 
@@ -719,6 +760,41 @@ nullable.</p>
     
 
     
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getDateTime">
+        getDateTime()
+        <a href="classes/Photo-Model-Vote.html#method_getDateTime" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Vote.php"><a href="files/module-photo-src-model-vote.html"><abbr title="module/Photo/src/Model/Vote.php">Vote.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">62</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getDateTime</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\DateTime">DateTime</abbr></span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\DateTime">DateTime</abbr></span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -784,7 +860,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Vote.php"><a href="files/module-photo-src-model-vote.html"><abbr title="module/Photo/src/Model/Vote.php">Vote.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">59</span>
+    <span class="phpdocumentor-element-found-in__line">72</span>
 
     </aside>
 
@@ -861,7 +937,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Vote.php"><a href="files/module-photo-src-model-vote.html"><abbr title="module/Photo/src/Model/Vote.php">Vote.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">54</span>
+    <span class="phpdocumentor-element-found-in__line">67</span>
 
     </aside>
 
@@ -887,6 +963,41 @@ nullable.</p>
     
 
     
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_toGdprArray">
+        toGdprArray()
+        <a href="classes/Photo-Model-Vote.html#method_toGdprArray" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Vote.php"><a href="files/module-photo-src-model-vote.html"><abbr title="module/Photo/src/Model/Vote.php">Vote.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">80</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">toGdprArray</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Photo\Model\VoteGdprArrayType">VoteGdprArrayType</abbr></span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\Photo\Model\VoteGdprArrayType">VoteGdprArrayType</abbr></span>
+            </section>
+
 </article>
             </section>
 
@@ -1012,10 +1123,12 @@ nullable.</p>
             <li>
                 <ul class="phpdocumentor-list -clean">
                                             <li><a href="classes/Photo-Model-Vote.html#method___construct">__construct()</a></li>
+                                            <li><a href="classes/Photo-Model-Vote.html#method_getDateTime">getDateTime()</a></li>
                                             <li><a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_getId">getId()</a></li>
                                             <li><a href="classes/Photo-Model-Vote.html#method_getPhoto">getPhoto()</a></li>
                                             <li><a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_setId">setId()</a></li>
                                             <li><a href="classes/Photo-Model-Vote.html#method_setPhoto">setPhoto()</a></li>
+                                            <li><a href="classes/Photo-Model-Vote.html#method_toGdprArray">toGdprArray()</a></li>
                                     </ul>
             </li>
                     </ul>

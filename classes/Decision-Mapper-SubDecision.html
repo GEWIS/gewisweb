@@ -385,13 +385,13 @@
             <div class="phpdocumentor-column -nine phpdocumentor-content">
                                 <section>
                                         <ul class="phpdocumentor-breadcrumbs">
-            <li class="phpdocumentor-breadcrumb"><a href="namespaces/activity.html">Activity</a></li>
-            <li class="phpdocumentor-breadcrumb"><a href="namespaces/activity-mapper.html">Mapper</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/decision.html">Decision</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/decision-mapper.html">Mapper</a></li>
     </ul>
 
     <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    Activity
+    SubDecision
 
         <span class="phpdocumentor-element__extends">
         extends <a href="classes/Application-Mapper-BaseMapper.html"><abbr title="\Application\Mapper\BaseMapper">BaseMapper</abbr></a>
@@ -413,9 +413,9 @@
 </div>
 
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Mapper/Activity.php"><a href="files/module-activity-src-mapper-activity.html"><abbr title="module/Activity/src/Mapper/Activity.php">Activity.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Mapper/SubDecision.php"><a href="files/module-decision-src-mapper-subdecision.html"><abbr title="module/Decision/src/Mapper/SubDecision.php">SubDecision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">26</span>
+    <span class="phpdocumentor-element-found-in__line">16</span>
 
     </aside>
 
@@ -427,7 +427,7 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
 
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/Activity-Mapper-Activity.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Decision-Mapper-SubDecision.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
@@ -436,7 +436,7 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"><p>BaseMapper&lt;ActivityModel&gt;</p>
+                                                 <section class="phpdocumentor-description"><p>BaseMapper&lt;SubDecisionModel&gt;</p>
 </section>
 
                                     </dd>
@@ -446,7 +446,7 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
 
 <h3 id="toc">
     Table of Contents
-    <a href="classes/Activity-Mapper-Activity.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Decision-Mapper-SubDecision.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h3>
 
@@ -460,7 +460,7 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
 
 <h4 id="toc-properties">
     Properties
-    <a href="classes/Activity-Mapper-Activity.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Decision-Mapper-SubDecision.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
@@ -474,7 +474,7 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
 
 <h4 id="toc-methods">
     Methods
-    <a href="classes/Activity-Mapper-Activity.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Decision-Mapper-SubDecision.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
@@ -510,24 +510,17 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Activity-Mapper-Activity.html#method_findAllActivitiesApprovedByMember">findAllActivitiesApprovedByMember()</a>
-    <span>
-                                &nbsp;: array&lt;string|int, <a href="classes/Activity-Model-Activity.html"><abbr title="\Activity\Model\Activity">Activity</abbr></a>&gt;    </span>
-</dt>
-<dd>Get all activities that were approved or rejected by a member.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Activity-Mapper-Activity.html#method_findAllActivitiesCreatedByMember">findAllActivitiesCreatedByMember()</a>
-    <span>
-                                &nbsp;: array&lt;string|int, <a href="classes/Activity-Model-Activity.html"><abbr title="\Activity\Model\Activity">Activity</abbr></a>&gt;    </span>
-</dt>
-<dd>Get all activities that were created by a member.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Application-Mapper-BaseMapper.html#method_findBy">findBy()</a>
     <span>
                                 &nbsp;: array&lt;string|int, <abbr title="\Application\Mapper\T">T</abbr>&gt;    </span>
 </dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Decision-Mapper-SubDecision.html#method_findByMember">findByMember()</a>
+    <span>
+                                &nbsp;: array&lt;string|int, <a href="classes/Decision-Model-SubDecision.html"><abbr title="\Decision\Model\SubDecision">SubDecision</abbr></a>&gt;    </span>
+</dt>
+<dd>Search sub-decisions.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Application-Mapper-BaseMapper.html#method_findOneBy">findOneBy()</a>
@@ -539,19 +532,6 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <a href="classes/Application-Mapper-BaseMapper.html#method_flush">flush()</a>
     <span>
                                 &nbsp;: void    </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Activity-Mapper-Activity.html#method_getAllUpcomingActivities">getAllUpcomingActivities()</a>
-    <span>
-                                &nbsp;: array&lt;string|int, <a href="classes/Activity-Model-Activity.html"><abbr title="\Activity\Model\Activity">Activity</abbr></a>&gt;    </span>
-</dt>
-<dd>Gets upcoming activities of the given organs or user, sorted by date.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Activity-Mapper-Activity.html#method_getArchivedActivitiesInRange">getArchivedActivitiesInRange()</a>
-    <span>
-                                &nbsp;: array&lt;string|int, <a href="classes/Activity-Model-Activity.html"><abbr title="\Activity\Model\Activity">Activity</abbr></a>&gt;    </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
@@ -567,55 +547,6 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
                                 &nbsp;: <abbr title="\Doctrine\ORM\EntityManager">EntityManager</abbr>    </span>
 </dt>
 <dd>Get the entity manager.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Activity-Mapper-Activity.html#method_getOldActivityPaginatorAdapterByOrganizer">getOldActivityPaginatorAdapterByOrganizer()</a>
-    <span>
-                                &nbsp;: <abbr title="\DoctrineORMModule\Paginator\Adapter\DoctrinePaginator">DoctrinePaginator</abbr>    </span>
-</dt>
-<dd>Gets a paginator of old activities of the given organs, sorted by date.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Activity-Mapper-Activity.html#method_getOldestActivity">getOldestActivity()</a>
-    <span>
-                                &nbsp;: <a href="classes/Activity-Model-Activity.html"><abbr title="\Activity\Model\Activity">Activity</abbr></a>|null    </span>
-</dt>
-<dd>Returns the oldest activity that has taken place.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Activity-Mapper-Activity.html#method_getUpcomingActivities">getUpcomingActivities()</a>
-    <span>
-                                &nbsp;: array&lt;string|int, <a href="classes/Activity-Model-Activity.html"><abbr title="\Activity\Model\Activity">Activity</abbr></a>&gt;    </span>
-</dt>
-<dd>Get upcoming activities sorted by date.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Activity-Mapper-Activity.html#method_getUpcomingActivitiesByOrgan">getUpcomingActivitiesByOrgan()</a>
-    <span>
-                                &nbsp;: array&lt;string|int, <a href="classes/Activity-Model-Activity.html"><abbr title="\Activity\Model\Activity">Activity</abbr></a>&gt;    </span>
-</dt>
-<dd>Get upcoming activities sorted by date that an organ created.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Activity-Mapper-Activity.html#method_getUpcomingActivitiesCreatedBy">getUpcomingActivitiesCreatedBy()</a>
-    <span>
-                                &nbsp;: array&lt;string|int, <a href="classes/Activity-Model-Activity.html"><abbr title="\Activity\Model\Activity">Activity</abbr></a>&gt;    </span>
-</dt>
-<dd>Get upcoming activities sorted by date that a user created.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Activity-Mapper-Activity.html#method_getUpcomingActivitiesForMember">getUpcomingActivitiesForMember()</a>
-    <span>
-                                &nbsp;: array&lt;string|int, <a href="classes/Activity-Model-Activity.html"><abbr title="\Activity\Model\Activity">Activity</abbr></a>&gt;    </span>
-</dt>
-<dd>Get upcoming activities sorted by date for member.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Activity-Mapper-Activity.html#method_getUpcomingActivitiesSubscribedBy">getUpcomingActivitiesSubscribedBy()</a>
-    <span>
-                                &nbsp;: array&lt;string|int, <a href="classes/Activity-Model-Activity.html"><abbr title="\Activity\Model\Activity">Activity</abbr></a>&gt;    </span>
-</dt>
-<dd>Get upcoming activities sorted by date that a user is subscribed to.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Application-Mapper-BaseMapper.html#method_persist">persist()</a>
@@ -658,12 +589,6 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
 <dd>Transactional Doctrine wrapper.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/Activity-Mapper-Activity.html#method_activityByOrganizerQuery">activityByOrganizerQuery()</a>
-    <span>
-                                &nbsp;: <abbr title="\Doctrine\ORM\QueryBuilder">QueryBuilder</abbr>    </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a href="classes/Application-Mapper-BaseMapper.html#method_getRepository">getRepository()</a>
     <span>
                                 &nbsp;: <abbr title="\Doctrine\ORM\EntityRepository">EntityRepository</abbr>    </span>
@@ -671,7 +596,7 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
 <dd>Get the repository for this mapper.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/Activity-Mapper-Activity.html#method_getRepositoryName">getRepositoryName()</a>
+    <a href="classes/Decision-Mapper-SubDecision.html#method_getRepositoryName">getRepositoryName()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
@@ -687,7 +612,7 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <section class="phpdocumentor-properties">
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
-            <a href="classes/Activity-Mapper-Activity.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Decision-Mapper-SubDecision.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
@@ -728,7 +653,7 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/Activity-Mapper-Activity.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Decision-Mapper-SubDecision.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
@@ -977,98 +902,6 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_findAllActivitiesApprovedByMember">
-        findAllActivitiesApprovedByMember()
-        <a href="classes/Activity-Mapper-Activity.html#method_findAllActivitiesApprovedByMember" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Mapper/Activity.php"><a href="files/module-activity-src-mapper-activity.html"><abbr title="module/Activity/src/Mapper/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">320</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Get all activities that were approved or rejected by a member.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">findAllActivitiesApprovedByMember</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$member</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Activity-Model-Activity.html"><abbr title="\Activity\Model\Activity">Activity</abbr></a>&gt;</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$member</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a></span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Activity-Model-Activity.html"><abbr title="\Activity\Model\Activity">Activity</abbr></a>&gt;</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_findAllActivitiesCreatedByMember">
-        findAllActivitiesCreatedByMember()
-        <a href="classes/Activity-Mapper-Activity.html#method_findAllActivitiesCreatedByMember" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Mapper/Activity.php"><a href="files/module-activity-src-mapper-activity.html"><abbr title="module/Activity/src/Mapper/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">306</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Get all activities that were created by a member.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">findAllActivitiesCreatedByMember</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$member</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Activity-Model-Activity.html"><abbr title="\Activity\Model\Activity">Activity</abbr></a>&gt;</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$member</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a></span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Activity-Model-Activity.html"><abbr title="\Activity\Model\Activity">Activity</abbr></a>&gt;</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
     <h4 class="phpdocumentor-element__name" id="method_findBy">
         findBy()
         <a href="classes/Application-Mapper-BaseMapper.html#method_findBy" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1111,6 +944,52 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
                 <section class="phpdocumentor-description"><p>The entities corresponding to the provided criteria</p>
 </section>
 
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_findByMember">
+        findByMember()
+        <a href="classes/Decision-Mapper-SubDecision.html#method_findByMember" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Mapper/SubDecision.php"><a href="files/module-decision-src-mapper-subdecision.html"><abbr title="module/Decision/src/Mapper/SubDecision.php">SubDecision.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">23</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Search sub-decisions.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">findByMember</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$member</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Decision-Model-SubDecision.html"><abbr title="\Decision\Model\SubDecision">SubDecision</abbr></a>&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$member</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Decision-Model-SubDecision.html"><abbr title="\Decision\Model\SubDecision">SubDecision</abbr></a>&gt;</span>
             </section>
 
 </article>
@@ -1241,120 +1120,6 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getAllUpcomingActivities">
-        getAllUpcomingActivities()
-        <a href="classes/Activity-Mapper-Activity.html#method_getAllUpcomingActivities" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Mapper/Activity.php"><a href="files/module-activity-src-mapper-activity.html"><abbr title="module/Activity/src/Mapper/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">184</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Gets upcoming activities of the given organs or user, sorted by date.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getAllUpcomingActivities</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, <a href="classes/Decision-Model-Organ.html"><abbr title="\Decision\Model\Organ">Organ</abbr></a>&gt;|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$organs</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a>|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$user</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$status</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Activity-Model-Activity.html"><abbr title="\Activity\Model\Activity">Activity</abbr></a>&gt;</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$organs</span>
-                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, <a href="classes/Decision-Model-Organ.html"><abbr title="\Decision\Model\Organ">Organ</abbr></a>&gt;|null</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$user</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a>|null</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$status</span>
-                : <span class="phpdocumentor-signature__argument__return-type">int|null</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>An optional filter for activity status</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Activity-Model-Activity.html"><abbr title="\Activity\Model\Activity">Activity</abbr></a>&gt;</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getArchivedActivitiesInRange">
-        getArchivedActivitiesInRange()
-        <a href="classes/Activity-Mapper-Activity.html#method_getArchivedActivitiesInRange" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Mapper/Activity.php"><a href="files/module-activity-src-mapper-activity.html"><abbr title="module/Activity/src/Mapper/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">285</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getArchivedActivitiesInRange</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTime">DateTime</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$start</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTime">DateTime</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$end</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Activity-Model-Activity.html"><abbr title="\Activity\Model\Activity">Activity</abbr></a>&gt;</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$start</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTime">DateTime</abbr></span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$end</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\DateTime">DateTime</abbr></span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Activity-Model-Activity.html"><abbr title="\Activity\Model\Activity">Activity</abbr></a>&gt;</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
     <h4 class="phpdocumentor-element__name" id="method_getConnection">
         getConnection()
         <a href="classes/Application-Mapper-BaseMapper.html#method_getConnection" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1418,362 +1183,6 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\ORM\EntityManager">EntityManager</abbr></span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getOldActivityPaginatorAdapterByOrganizer">
-        getOldActivityPaginatorAdapterByOrganizer()
-        <a href="classes/Activity-Mapper-Activity.html#method_getOldActivityPaginatorAdapterByOrganizer" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Mapper/Activity.php"><a href="files/module-activity-src-mapper-activity.html"><abbr title="module/Activity/src/Mapper/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">251</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Gets a paginator of old activities of the given organs, sorted by date.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getOldActivityPaginatorAdapterByOrganizer</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, <a href="classes/Decision-Model-Organ.html"><abbr title="\Decision\Model\Organ">Organ</abbr></a>&gt;|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$organs</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a>|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$user</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$status</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\DoctrineORMModule\Paginator\Adapter\DoctrinePaginator">DoctrinePaginator</abbr></span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-        <section class="phpdocumentor-description"><p>Supplying 'null' to all arguments gets all activities.</p>
-</section>
-
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$organs</span>
-                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, <a href="classes/Decision-Model-Organ.html"><abbr title="\Decision\Model\Organ">Organ</abbr></a>&gt;|null</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$user</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a>|null</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$status</span>
-                : <span class="phpdocumentor-signature__argument__return-type">int|null</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>An optional filter for activity status</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><abbr title="\DoctrineORMModule\Paginator\Adapter\DoctrinePaginator">DoctrinePaginator</abbr></span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getOldestActivity">
-        getOldestActivity()
-        <a href="classes/Activity-Mapper-Activity.html#method_getOldestActivity" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Mapper/Activity.php"><a href="files/module-activity-src-mapper-activity.html"><abbr title="module/Activity/src/Mapper/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">269</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Returns the oldest activity that has taken place.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getOldestActivity</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Activity-Model-Activity.html"><abbr title="\Activity\Model\Activity">Activity</abbr></a>|null</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Activity-Model-Activity.html"><abbr title="\Activity\Model\Activity">Activity</abbr></a>|null</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getUpcomingActivities">
-        getUpcomingActivities()
-        <a href="classes/Activity-Mapper-Activity.html#method_getUpcomingActivities" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Mapper/Activity.php"><a href="files/module-activity-src-mapper-activity.html"><abbr title="module/Activity/src/Mapper/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">36</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Get upcoming activities sorted by date.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getUpcomingActivities</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">int|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$count</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Organ.html"><abbr title="\Decision\Model\Organ">Organ</abbr></a>|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$organ</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$category</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Activity-Model-Activity.html"><abbr title="\Activity\Model\Activity">Activity</abbr></a>&gt;</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$count</span>
-                : <span class="phpdocumentor-signature__argument__return-type">int|null</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>optional number of activities to retrieve</p>
-</section>
-
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$organ</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Organ.html"><abbr title="\Decision\Model\Organ">Organ</abbr></a>|null</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>option organ by whom the activities are organized</p>
-</section>
-
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$category</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Activity-Model-Activity.html"><abbr title="\Activity\Model\Activity">Activity</abbr></a>&gt;</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getUpcomingActivitiesByOrgan">
-        getUpcomingActivitiesByOrgan()
-        <a href="classes/Activity-Mapper-Activity.html#method_getUpcomingActivitiesByOrgan" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Mapper/Activity.php"><a href="files/module-activity-src-mapper-activity.html"><abbr title="module/Activity/src/Mapper/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">165</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Get upcoming activities sorted by date that an organ created.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getUpcomingActivitiesByOrgan</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Organ.html"><abbr title="\Decision\Model\Organ">Organ</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$organ</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Activity-Model-Activity.html"><abbr title="\Activity\Model\Activity">Activity</abbr></a>&gt;</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$organ</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Organ.html"><abbr title="\Decision\Model\Organ">Organ</abbr></a></span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Option organ that should relate to activity</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Activity-Model-Activity.html"><abbr title="\Activity\Model\Activity">Activity</abbr></a>&gt;</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getUpcomingActivitiesCreatedBy">
-        getUpcomingActivitiesCreatedBy()
-        <a href="classes/Activity-Mapper-Activity.html#method_getUpcomingActivitiesCreatedBy" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Mapper/Activity.php"><a href="files/module-activity-src-mapper-activity.html"><abbr title="module/Activity/src/Mapper/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">147</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Get upcoming activities sorted by date that a user created.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getUpcomingActivitiesCreatedBy</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$user</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Activity-Model-Activity.html"><abbr title="\Activity\Model\Activity">Activity</abbr></a>&gt;</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$user</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a></span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Option user that should relate to activity</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Activity-Model-Activity.html"><abbr title="\Activity\Model\Activity">Activity</abbr></a>&gt;</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getUpcomingActivitiesForMember">
-        getUpcomingActivitiesForMember()
-        <a href="classes/Activity-Mapper-Activity.html#method_getUpcomingActivitiesForMember" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Mapper/Activity.php"><a href="files/module-activity-src-mapper-activity.html"><abbr title="module/Activity/src/Mapper/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">73</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Get upcoming activities sorted by date for member.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getUpcomingActivitiesForMember</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$user</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Activity-Model-Activity.html"><abbr title="\Activity\Model\Activity">Activity</abbr></a>&gt;</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$user</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a></span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Option user that should relate to activity</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Activity-Model-Activity.html"><abbr title="\Activity\Model\Activity">Activity</abbr></a>&gt;</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getUpcomingActivitiesSubscribedBy">
-        getUpcomingActivitiesSubscribedBy()
-        <a href="classes/Activity-Mapper-Activity.html#method_getUpcomingActivitiesSubscribedBy" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Mapper/Activity.php"><a href="files/module-activity-src-mapper-activity.html"><abbr title="module/Activity/src/Mapper/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">123</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Get upcoming activities sorted by date that a user is subscribed to.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getUpcomingActivitiesSubscribedBy</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$user</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Activity-Model-Activity.html"><abbr title="\Activity\Model\Activity">Activity</abbr></a>&gt;</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$user</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a></span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Option user that should relate to activity</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Activity-Model-Activity.html"><abbr title="\Activity\Model\Activity">Activity</abbr></a>&gt;</span>
             </section>
 
 </article>
@@ -2163,72 +1572,6 @@ function.</p>
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_activityByOrganizerQuery">
-        activityByOrganizerQuery()
-        <a href="classes/Activity-Mapper-Activity.html#method_activityByOrganizerQuery" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Mapper/Activity.php"><a href="files/module-activity-src-mapper-activity.html"><abbr title="module/Activity/src/Mapper/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">202</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">activityByOrganizerQuery</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Doctrine\ORM\Query\Expr\Comparison">Comparison</abbr>|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$filter</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, <a href="classes/Decision-Model-Organ.html"><abbr title="\Decision\Model\Organ">Organ</abbr></a>&gt;|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$organs</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a>|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$user</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$status</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\ORM\QueryBuilder">QueryBuilder</abbr></span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$filter</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Doctrine\ORM\Query\Expr\Comparison">Comparison</abbr>|null</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$organs</span>
-                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, <a href="classes/Decision-Model-Organ.html"><abbr title="\Decision\Model\Organ">Organ</abbr></a>&gt;|null</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$user</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a>|null</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$status</span>
-                : <span class="phpdocumentor-signature__argument__return-type">int|null</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\ORM\QueryBuilder">QueryBuilder</abbr></span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                                        "
->
     <h4 class="phpdocumentor-element__name" id="method_getRepository">
         getRepository()
         <a href="classes/Application-Mapper-BaseMapper.html#method_getRepository" class="headerlink"><i class="fas fa-link"></i></a>
@@ -2283,13 +1626,13 @@ function.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_getRepositoryName">
         getRepositoryName()
-        <a href="classes/Activity-Mapper-Activity.html#method_getRepositoryName" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Decision-Mapper-SubDecision.html#method_getRepositoryName" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Mapper/Activity.php"><a href="files/module-activity-src-mapper-activity.html"><abbr title="module/Activity/src/Mapper/Activity.php">Activity.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Mapper/SubDecision.php"><a href="files/module-decision-src-mapper-subdecision.html"><abbr title="module/Decision/src/Mapper/SubDecision.php">SubDecision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">329</span>
+    <span class="phpdocumentor-element-found-in__line">36</span>
 
     </aside>
 
@@ -2320,7 +1663,7 @@ function.</p>
     <div class="phpdocumentor-modal-bg" data-exit-button></div>
     <div class="phpdocumentor-modal-container">
         <div class="phpdocumentor-modal-content">
-            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/module/Activity/src/Mapper/Activity.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
+            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/module/Decision/src/Mapper/SubDecision.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
         </div>
         <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
     </div>
@@ -2419,15 +1762,15 @@ function.</p>
             <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                                            <li><a href="classes/Activity-Mapper-Activity.html#toc-properties">Properties</a></li>
-                                                            <li><a href="classes/Activity-Mapper-Activity.html#toc-methods">Methods</a></li>
+                                                            <li><a href="classes/Decision-Mapper-SubDecision.html#toc-properties">Properties</a></li>
+                                                            <li><a href="classes/Decision-Mapper-SubDecision.html#toc-methods">Methods</a></li>
                                     </ul>
             </li>
             
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li><a href="classes/Application-Mapper-BaseMapper.html#property_em">$em<a href="classes/Activity-Mapper-Activity.html"></li>
+                                                    <li><a href="classes/Application-Mapper-BaseMapper.html#property_em">$em<a href="classes/Decision-Mapper-SubDecision.html"></li>
                                             </ul>
                 </li>
             
@@ -2439,31 +1782,20 @@ function.</p>
                                             <li><a href="classes/Application-Mapper-BaseMapper.html#method_detach">detach()</a></li>
                                             <li><a href="classes/Application-Mapper-BaseMapper.html#method_find">find()</a></li>
                                             <li><a href="classes/Application-Mapper-BaseMapper.html#method_findAll">findAll()</a></li>
-                                            <li><a href="classes/Activity-Mapper-Activity.html#method_findAllActivitiesApprovedByMember">findAllActivitiesApprovedByMember()</a></li>
-                                            <li><a href="classes/Activity-Mapper-Activity.html#method_findAllActivitiesCreatedByMember">findAllActivitiesCreatedByMember()</a></li>
                                             <li><a href="classes/Application-Mapper-BaseMapper.html#method_findBy">findBy()</a></li>
+                                            <li><a href="classes/Decision-Mapper-SubDecision.html#method_findByMember">findByMember()</a></li>
                                             <li><a href="classes/Application-Mapper-BaseMapper.html#method_findOneBy">findOneBy()</a></li>
                                             <li><a href="classes/Application-Mapper-BaseMapper.html#method_flush">flush()</a></li>
-                                            <li><a href="classes/Activity-Mapper-Activity.html#method_getAllUpcomingActivities">getAllUpcomingActivities()</a></li>
-                                            <li><a href="classes/Activity-Mapper-Activity.html#method_getArchivedActivitiesInRange">getArchivedActivitiesInRange()</a></li>
                                             <li><a href="classes/Application-Mapper-BaseMapper.html#method_getConnection">getConnection()</a></li>
                                             <li><a href="classes/Application-Mapper-BaseMapper.html#method_getEntityManager">getEntityManager()</a></li>
-                                            <li><a href="classes/Activity-Mapper-Activity.html#method_getOldActivityPaginatorAdapterByOrganizer">getOldActivityPaginatorAdapterByOrganizer()</a></li>
-                                            <li><a href="classes/Activity-Mapper-Activity.html#method_getOldestActivity">getOldestActivity()</a></li>
-                                            <li><a href="classes/Activity-Mapper-Activity.html#method_getUpcomingActivities">getUpcomingActivities()</a></li>
-                                            <li><a href="classes/Activity-Mapper-Activity.html#method_getUpcomingActivitiesByOrgan">getUpcomingActivitiesByOrgan()</a></li>
-                                            <li><a href="classes/Activity-Mapper-Activity.html#method_getUpcomingActivitiesCreatedBy">getUpcomingActivitiesCreatedBy()</a></li>
-                                            <li><a href="classes/Activity-Mapper-Activity.html#method_getUpcomingActivitiesForMember">getUpcomingActivitiesForMember()</a></li>
-                                            <li><a href="classes/Activity-Mapper-Activity.html#method_getUpcomingActivitiesSubscribedBy">getUpcomingActivitiesSubscribedBy()</a></li>
                                             <li><a href="classes/Application-Mapper-BaseMapper.html#method_persist">persist()</a></li>
                                             <li><a href="classes/Application-Mapper-BaseMapper.html#method_persistMultiple">persistMultiple()</a></li>
                                             <li><a href="classes/Application-Mapper-BaseMapper.html#method_remove">remove()</a></li>
                                             <li><a href="classes/Application-Mapper-BaseMapper.html#method_removeById">removeById()</a></li>
                                             <li><a href="classes/Application-Mapper-BaseMapper.html#method_removeMultiple">removeMultiple()</a></li>
                                             <li><a href="classes/Application-Mapper-BaseMapper.html#method_transactional">transactional()</a></li>
-                                            <li><a href="classes/Activity-Mapper-Activity.html#method_activityByOrganizerQuery">activityByOrganizerQuery()</a></li>
                                             <li><a href="classes/Application-Mapper-BaseMapper.html#method_getRepository">getRepository()</a></li>
-                                            <li><a href="classes/Activity-Mapper-Activity.html#method_getRepositoryName">getRepositoryName()</a></li>
+                                            <li><a href="classes/Decision-Mapper-SubDecision.html#method_getRepositoryName">getRepositoryName()</a></li>
                                     </ul>
             </li>
                     </ul>
@@ -2483,7 +1815,7 @@ function.</p>
     </section>
 </section>
         </div>
-        <a href="classes/Activity-Mapper-Activity.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/Decision-Mapper-SubDecision.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 

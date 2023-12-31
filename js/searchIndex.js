@@ -886,6 +886,16 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Activity-Mapper-Activity.html#method_getArchivedActivitiesInRange"
         },                {
+            "fqsen": "\\Activity\\Mapper\\Activity\u003A\u003AfindAllActivitiesCreatedByMember\u0028\u0029",
+            "name": "findAllActivitiesCreatedByMember",
+            "summary": "Get\u0020all\u0020activities\u0020that\u0020were\u0020created\u0020by\u0020a\u0020member.",
+            "url": "classes/Activity-Mapper-Activity.html#method_findAllActivitiesCreatedByMember"
+        },                {
+            "fqsen": "\\Activity\\Mapper\\Activity\u003A\u003AfindAllActivitiesApprovedByMember\u0028\u0029",
+            "name": "findAllActivitiesApprovedByMember",
+            "summary": "Get\u0020all\u0020activities\u0020that\u0020were\u0020approved\u0020or\u0020rejected\u0020by\u0020a\u0020member.",
+            "url": "classes/Activity-Mapper-Activity.html#method_findAllActivitiesApprovedByMember"
+        },                {
             "fqsen": "\\Activity\\Mapper\\Activity\u003A\u003AgetRepositoryName\u0028\u0029",
             "name": "getRepositoryName",
             "summary": "",
@@ -1015,6 +1025,11 @@ Search.appendIndex(
             "name": "getNumberOfSignedUpMembers",
             "summary": "",
             "url": "classes/Activity-Mapper-Signup.html#method_getNumberOfSignedUpMembers"
+        },                {
+            "fqsen": "\\Activity\\Mapper\\Signup\u003A\u003AfindSignupsByMember\u0028\u0029",
+            "name": "findSignupsByMember",
+            "summary": "Get\u0020all\u0020sign\u002Dups\u0020for\u0020a\u0020specific\u0020member.",
+            "url": "classes/Activity-Mapper-Signup.html#method_findSignupsByMember"
         },                {
             "fqsen": "\\Activity\\Mapper\\Signup\u003A\u003AgetRepositoryName\u0028\u0029",
             "name": "getRepositoryName",
@@ -1260,6 +1275,11 @@ Search.appendIndex(
             "name": "toArray",
             "summary": "Returns\u0020an\u0020associative\u0020array\u0020representation\u0020of\u0020this\u0020object.",
             "url": "classes/Activity-Model-Activity.html#method_toArray"
+        },                {
+            "fqsen": "\\Activity\\Model\\Activity\u003A\u003AtoGdprArray\u0028\u0029",
+            "name": "toGdprArray",
+            "summary": "",
+            "url": "classes/Activity-Model-Activity.html#method_toGdprArray"
         },                {
             "fqsen": "\\Activity\\Model\\Activity\u003A\u003AgetResourceId\u0028\u0029",
             "name": "getResourceId",
@@ -1520,6 +1540,11 @@ Search.appendIndex(
             "name": "toArray",
             "summary": "",
             "url": "classes/Activity-Model-ActivityCategory.html#method_toArray"
+        },                {
+            "fqsen": "\\Activity\\Model\\ActivityCategory\u003A\u003AtoGdprArray\u0028\u0029",
+            "name": "toGdprArray",
+            "summary": "",
+            "url": "classes/Activity-Model-ActivityCategory.html#method_toGdprArray"
         },                {
             "fqsen": "\\Activity\\Model\\ActivityCategory\u003A\u003A\u0024activities",
             "name": "activities",
@@ -1891,6 +1916,11 @@ Search.appendIndex(
             "summary": "Get\u0020the\u0020email\u0020address\u0020of\u0020the\u0020user\u0020whom\u0020signed\u0020up\u0020for\u0020the\u0020SignupList.",
             "url": "classes/Activity-Model-Signup.html#method_getEmail"
         },                {
+            "fqsen": "\\Activity\\Model\\Signup\u003A\u003AtoGdprArray\u0028\u0029",
+            "name": "toGdprArray",
+            "summary": "",
+            "url": "classes/Activity-Model-Signup.html#method_toGdprArray"
+        },                {
             "fqsen": "\\Activity\\Model\\Signup\u003A\u003A\u0024signupList",
             "name": "signupList",
             "summary": "The\u0020SignupList\u0020the\u0020signup\u0020is\u0020for.",
@@ -1981,6 +2011,11 @@ Search.appendIndex(
             "summary": "Returns\u0020an\u0020associative\u0020array\u0020representation\u0020of\u0020this\u0020object.",
             "url": "classes/Activity-Model-SignupField.html#method_toArray"
         },                {
+            "fqsen": "\\Activity\\Model\\SignupField\u003A\u003AtoGdprArray\u0028\u0029",
+            "name": "toGdprArray",
+            "summary": "",
+            "url": "classes/Activity-Model-SignupField.html#method_toGdprArray"
+        },                {
             "fqsen": "\\Activity\\Model\\SignupField\u003A\u003A\u0024signupList",
             "name": "signupList",
             "summary": "Activity\u0020that\u0020the\u0020SignupField\u0020belongs\u0020to.",
@@ -2055,6 +2090,11 @@ Search.appendIndex(
             "name": "setOption",
             "summary": "",
             "url": "classes/Activity-Model-SignupFieldValue.html#method_setOption"
+        },                {
+            "fqsen": "\\Activity\\Model\\SignupFieldValue\u003A\u003AtoGdprArray\u0028\u0029",
+            "name": "toGdprArray",
+            "summary": "",
+            "url": "classes/Activity-Model-SignupFieldValue.html#method_toGdprArray"
         },                {
             "fqsen": "\\Activity\\Model\\SignupFieldValue\u003A\u003A\u0024field",
             "name": "field",
@@ -2181,6 +2221,11 @@ Search.appendIndex(
             "summary": "Returns\u0020an\u0020associative\u0020array\u0020representation\u0020of\u0020this\u0020object.",
             "url": "classes/Activity-Model-SignupList.html#method_toArray"
         },                {
+            "fqsen": "\\Activity\\Model\\SignupList\u003A\u003AtoGdprArray\u0028\u0029",
+            "name": "toGdprArray",
+            "summary": "",
+            "url": "classes/Activity-Model-SignupList.html#method_toGdprArray"
+        },                {
             "fqsen": "\\Activity\\Model\\SignupList\u003A\u003AgetResourceId\u0028\u0029",
             "name": "getResourceId",
             "summary": "Returns\u0020the\u0020string\u0020identifier\u0020of\u0020the\u0020Resource.",
@@ -2270,6 +2315,11 @@ Search.appendIndex(
             "name": "toArray",
             "summary": "Returns\u0020an\u0020associative\u0020array\u0020representation\u0020of\u0020this\u0020object.",
             "url": "classes/Activity-Model-SignupOption.html#method_toArray"
+        },                {
+            "fqsen": "\\Activity\\Model\\SignupOption\u003A\u003AtoGdprArray\u0028\u0029",
+            "name": "toGdprArray",
+            "summary": "",
+            "url": "classes/Activity-Model-SignupOption.html#method_toGdprArray"
         },                {
             "fqsen": "\\Activity\\Model\\SignupOption\u003A\u003A\u0024field",
             "name": "field",
@@ -3471,6 +3521,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Application-Model-LocalisedText.html#method_getExactText"
         },                {
+            "fqsen": "\\Application\\Model\\LocalisedText\u003A\u003AtoGdprArray\u0028\u0029",
+            "name": "toGdprArray",
+            "summary": "",
+            "url": "classes/Application-Model-LocalisedText.html#method_toGdprArray"
+        },                {
             "fqsen": "\\Application\\Model\\LocalisedText\u003A\u003A\u0024valueEN",
             "name": "valueEN",
             "summary": "",
@@ -3530,6 +3585,11 @@ Search.appendIndex(
             "name": "setApprovableText",
             "summary": "",
             "url": "classes/Application-Model-Traits-ApprovableTrait.html#method_setApprovableText"
+        },                {
+            "fqsen": "\\Application\\Model\\Traits\\ApprovableTrait\u003A\u003AtoGdprArray\u0028\u0029",
+            "name": "toGdprArray",
+            "summary": "",
+            "url": "classes/Application-Model-Traits-ApprovableTrait.html#method_toGdprArray"
         },                {
             "fqsen": "\\Application\\Model\\Traits\\ApprovableTrait\u003A\u003A\u0024approved",
             "name": "approved",
@@ -5286,6 +5346,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Company-Mapper-Company.html#method_findUpdateProposals"
         },                {
+            "fqsen": "\\Company\\Mapper\\Company\u003A\u003AfindAllCompaniesApprovedByMember\u0028\u0029",
+            "name": "findAllCompaniesApprovedByMember",
+            "summary": "Get\u0020all\u0020companies\u0020that\u0020were\u0020approved\u0020or\u0020rejected\u0020by\u0020a\u0020specific\u0020member.",
+            "url": "classes/Company-Mapper-Company.html#method_findAllCompaniesApprovedByMember"
+        },                {
             "fqsen": "\\Company\\Mapper\\Company\u003A\u003AgetRepositoryName\u0028\u0029",
             "name": "getRepositoryName",
             "summary": "",
@@ -5340,6 +5405,11 @@ Search.appendIndex(
             "name": "findProposal",
             "summary": "",
             "url": "classes/Company-Mapper-Job.html#method_findProposal"
+        },                {
+            "fqsen": "\\Company\\Mapper\\Job\u003A\u003AfindAllJobsApprovedByMember\u0028\u0029",
+            "name": "findAllJobsApprovedByMember",
+            "summary": "Get\u0020all\u0020jobs\u0020that\u0020were\u0020approved\u0020or\u0020rejected\u0020by\u0020a\u0020specific\u0020member.",
+            "url": "classes/Company-Mapper-Job.html#method_findAllJobsApprovedByMember"
         },                {
             "fqsen": "\\Company\\Mapper\\Job\u003A\u003AgetRepositoryName\u0028\u0029",
             "name": "getRepositoryName",
@@ -6926,6 +6996,36 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Decision-Controller-AdminController.html#property_decisionService"
         },                {
+            "fqsen": "\\Decision\\Controller\\AdminMemberController",
+            "name": "AdminMemberController",
+            "summary": "",
+            "url": "classes/Decision-Controller-AdminMemberController.html"
+        },                {
+            "fqsen": "\\Decision\\Controller\\AdminMemberController\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Decision-Controller-AdminMemberController.html#method___construct"
+        },                {
+            "fqsen": "\\Decision\\Controller\\AdminMemberController\u003A\u003AmemberGdprAction\u0028\u0029",
+            "name": "memberGdprAction",
+            "summary": "",
+            "url": "classes/Decision-Controller-AdminMemberController.html#method_memberGdprAction"
+        },                {
+            "fqsen": "\\Decision\\Controller\\AdminMemberController\u003A\u003A\u0024aclService",
+            "name": "aclService",
+            "summary": "",
+            "url": "classes/Decision-Controller-AdminMemberController.html#property_aclService"
+        },                {
+            "fqsen": "\\Decision\\Controller\\AdminMemberController\u003A\u003A\u0024translator",
+            "name": "translator",
+            "summary": "",
+            "url": "classes/Decision-Controller-AdminMemberController.html#property_translator"
+        },                {
+            "fqsen": "\\Decision\\Controller\\AdminMemberController\u003A\u003A\u0024gdprService",
+            "name": "gdprService",
+            "summary": "",
+            "url": "classes/Decision-Controller-AdminMemberController.html#property_gdprService"
+        },                {
             "fqsen": "\\Decision\\Controller\\DecisionController",
             "name": "DecisionController",
             "summary": "",
@@ -7005,6 +7105,16 @@ Search.appendIndex(
             "name": "__invoke",
             "summary": "",
             "url": "classes/Decision-Controller-Factory-AdminControllerFactory.html#method___invoke"
+        },                {
+            "fqsen": "\\Decision\\Controller\\Factory\\AdminMemberControllerFactory",
+            "name": "AdminMemberControllerFactory",
+            "summary": "",
+            "url": "classes/Decision-Controller-Factory-AdminMemberControllerFactory.html"
+        },                {
+            "fqsen": "\\Decision\\Controller\\Factory\\AdminMemberControllerFactory\u003A\u003A__invoke\u0028\u0029",
+            "name": "__invoke",
+            "summary": "",
+            "url": "classes/Decision-Controller-Factory-AdminMemberControllerFactory.html#method___invoke"
         },                {
             "fqsen": "\\Decision\\Controller\\Factory\\DecisionControllerFactory",
             "name": "DecisionControllerFactory",
@@ -7471,6 +7581,11 @@ Search.appendIndex(
             "summary": "Find\u0020non\u002Drevoked\u0020authorizations\u0020for\u0020a\u0020meeting\u0020for\u0020a\u0020recipient.",
             "url": "classes/Decision-Mapper-Authorization.html#method_findRecipientAuthorization"
         },                {
+            "fqsen": "\\Decision\\Mapper\\Authorization\u003A\u003AfindByMember\u0028\u0029",
+            "name": "findByMember",
+            "summary": "Find\u0020all\u0020authorizations\u0020granted\u0020by\u0020or\u0020granted\u0020to\u0020a\u0020specific\u0020member.\u0020This\u0020includes\u0020revoked\u0020authorizations.",
+            "url": "classes/Decision-Mapper-Authorization.html#method_findByMember"
+        },                {
             "fqsen": "\\Decision\\Mapper\\Authorization\u003A\u003AgetRepositoryName\u0028\u0029",
             "name": "getRepositoryName",
             "summary": "",
@@ -7636,6 +7751,21 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Decision-Mapper-Organ.html#method_getRepositoryName"
         },                {
+            "fqsen": "\\Decision\\Mapper\\SubDecision",
+            "name": "SubDecision",
+            "summary": "The\u0020base\u0020mapper\u0020to\u0020be\u0020used\u0020for\u0020all\u0020other\u0020mappers.\u0020It\u0020helps\u0020with\u0020preventing\u0020duplicate\u0020Doctrine\u0020code.\u0020It\u0020uses\u0020special\ntypes\u0020to\u0020ensure\u0020that\u0020the\u0020returned\u0020values\u0020are\u0020as\u0020expected.\u0020As\u0020\u007B\u0040link\u0020LocalisedTextModel\u007D\u0020does\u0020not\u0020have\u0020its\u0020own\u0020mapper,\nany\u0020of\u0020such\u0020objects\u0020can\u0020be\u0020persisted\u0020and\/or\u0020removed\u0020from\u0020the\u0020base\u0020mapper.",
+            "url": "classes/Decision-Mapper-SubDecision.html"
+        },                {
+            "fqsen": "\\Decision\\Mapper\\SubDecision\u003A\u003AfindByMember\u0028\u0029",
+            "name": "findByMember",
+            "summary": "Search\u0020sub\u002Ddecisions.",
+            "url": "classes/Decision-Mapper-SubDecision.html#method_findByMember"
+        },                {
+            "fqsen": "\\Decision\\Mapper\\SubDecision\u003A\u003AgetRepositoryName\u0028\u0029",
+            "name": "getRepositoryName",
+            "summary": "",
+            "url": "classes/Decision-Mapper-SubDecision.html#method_getRepositoryName"
+        },                {
             "fqsen": "\\Decision\\Model\\Address",
             "name": "Address",
             "summary": "Address\u0020model.",
@@ -7720,6 +7850,11 @@ Search.appendIndex(
             "name": "setPhone",
             "summary": "Set\u0020the\u0020phone\u0020number.",
             "url": "classes/Decision-Model-Address.html#method_setPhone"
+        },                {
+            "fqsen": "\\Decision\\Model\\Address\u003A\u003AtoGdprArray\u0028\u0029",
+            "name": "toGdprArray",
+            "summary": "",
+            "url": "classes/Decision-Model-Address.html#method_toGdprArray"
         },                {
             "fqsen": "\\Decision\\Model\\Address\u003A\u003A\u0024member",
             "name": "member",
@@ -7870,6 +8005,11 @@ Search.appendIndex(
             "name": "setRevokedAt",
             "summary": "",
             "url": "classes/Decision-Model-Authorization.html#method_setRevokedAt"
+        },                {
+            "fqsen": "\\Decision\\Model\\Authorization\u003A\u003AtoGdprArray\u0028\u0029",
+            "name": "toGdprArray",
+            "summary": "",
+            "url": "classes/Decision-Model-Authorization.html#method_toGdprArray"
         },                {
             "fqsen": "\\Decision\\Model\\Authorization\u003A\u003A\u0024authorizer",
             "name": "authorizer",
@@ -8406,6 +8546,11 @@ Search.appendIndex(
             "summary": "Add\u0020a\u0020member.",
             "url": "classes/Decision-Model-MailingList.html#method_addMember"
         },                {
+            "fqsen": "\\Decision\\Model\\MailingList\u003A\u003AtoGdprArray\u0028\u0029",
+            "name": "toGdprArray",
+            "summary": "",
+            "url": "classes/Decision-Model-MailingList.html#method_toGdprArray"
+        },                {
             "fqsen": "\\Decision\\Model\\MailingList\u003A\u003A\u0024name",
             "name": "name",
             "summary": "Mailman\u002Didentifier\u0020\/\u0020name.",
@@ -8801,16 +8946,6 @@ Search.appendIndex(
             "summary": "Set\u0020how\u0020much\u0020has\u0020been\u0020paid.",
             "url": "classes/Decision-Model-Member.html#method_setPaid"
         },                {
-            "fqsen": "\\Decision\\Model\\Member\u003A\u003AgetIban\u0028\u0029",
-            "name": "getIban",
-            "summary": "Get\u0020the\u0020IBAN.",
-            "url": "classes/Decision-Model-Member.html#method_getIban"
-        },                {
-            "fqsen": "\\Decision\\Model\\Member\u003A\u003AsetIban\u0028\u0029",
-            "name": "setIban",
-            "summary": "Set\u0020the\u0020IBAN.",
-            "url": "classes/Decision-Model-Member.html#method_setIban"
-        },                {
             "fqsen": "\\Decision\\Model\\Member\u003A\u003AgetSupremum\u0028\u0029",
             "name": "getSupremum",
             "summary": "Get\u0020if\u0020the\u0020member\u0020wants\u0020a\u0020supremum.",
@@ -8886,10 +9021,10 @@ Search.appendIndex(
             "summary": "Get\u0020the\u0020current\u0020board\u0020the\u0020member\u0020is\u0020part\u0020of.",
             "url": "classes/Decision-Model-Member.html#method_getCurrentBoardInstallation"
         },                {
-            "fqsen": "\\Decision\\Model\\Member\u003A\u003AtoArray\u0028\u0029",
-            "name": "toArray",
+            "fqsen": "\\Decision\\Model\\Member\u003A\u003AtoGdprArray\u0028\u0029",
+            "name": "toGdprArray",
             "summary": "Convert\u0020most\u0020relevant\u0020items\u0020to\u0020array.",
-            "url": "classes/Decision-Model-Member.html#method_toArray"
+            "url": "classes/Decision-Model-Member.html#method_toGdprArray"
         },                {
             "fqsen": "\\Decision\\Model\\Member\u003A\u003AgetAddresses\u0028\u0029",
             "name": "getAddresses",
@@ -9025,11 +9160,6 @@ Search.appendIndex(
             "name": "paid",
             "summary": "How\u0020much\u0020the\u0020member\u0020has\u0020paid\u0020for\u0020membership.\u00200\u0020by\u0020default.",
             "url": "classes/Decision-Model-Member.html#property_paid"
-        },                {
-            "fqsen": "\\Decision\\Model\\Member\u003A\u003A\u0024iban",
-            "name": "iban",
-            "summary": "Iban\u0020number.",
-            "url": "classes/Decision-Model-Member.html#property_iban"
         },                {
             "fqsen": "\\Decision\\Model\\Member\u003A\u003A\u0024supremum",
             "name": "supremum",
@@ -9796,11 +9926,6 @@ Search.appendIndex(
             "summary": "Get\u0020a\u0020unique\u0020identifier\u0020for\u0020this\u0020foundation.\u0020It\u0020is\u0020used\u0020to\u0020distinguish\u0020between\u0020organs\u0020that\u0020share\u0020the\u0020same\u0020name\nbut\u0020are\u0020actually\u0020distinct.",
             "url": "classes/Decision-Model-SubDecision-Foundation.html#method_getHash"
         },                {
-            "fqsen": "\\Decision\\Model\\SubDecision\\Foundation\u003A\u003AtoArray\u0028\u0029",
-            "name": "toArray",
-            "summary": "Get\u0020an\u0020array\u0020with\u0020all\u0020information.",
-            "url": "classes/Decision-Model-SubDecision-Foundation.html#method_toArray"
-        },                {
             "fqsen": "\\Decision\\Model\\SubDecision\\Foundation\u003A\u003A\u0024abbr",
             "name": "abbr",
             "summary": "Abbreviation\u0020\u0028only\u0020for\u0020when\u0020organs\u0020are\u0020created\u0029.",
@@ -10080,6 +10205,11 @@ Search.appendIndex(
             "name": "setContent",
             "summary": "Set\u0020the\u0020content.",
             "url": "classes/Decision-Model-SubDecision.html#method_setContent"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\u003A\u003AtoGdprArray\u0028\u0029",
+            "name": "toGdprArray",
+            "summary": "",
+            "url": "classes/Decision-Model-SubDecision.html#method_toGdprArray"
         },                {
             "fqsen": "\\Decision\\Model\\SubDecision\u003A\u003A\u0024decision",
             "name": "decision",
@@ -11046,6 +11176,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Education-Mapper-CourseDocument.html#method_findDocumentsByCourse"
         },                {
+            "fqsen": "\\Education\\Mapper\\CourseDocument\u003A\u003AfindSummariesByAuthor\u0028\u0029",
+            "name": "findSummariesByAuthor",
+            "summary": "Get\u0020all\u0020summaries\u0020created\u0020by\u0020a\u0020specific\u0020member.",
+            "url": "classes/Education-Mapper-CourseDocument.html#method_findSummariesByAuthor"
+        },                {
             "fqsen": "\\Education\\Mapper\\CourseDocument\u003A\u003AgetRepositoryName\u0028\u0029",
             "name": "getRepositoryName",
             "summary": "",
@@ -11110,6 +11245,11 @@ Search.appendIndex(
             "name": "clearSimilarCoursesTo",
             "summary": "Removes\u0020all\u0020references\u0020to\u0020similar\u0020courses\u0020to\u0020this\u0020course.",
             "url": "classes/Education-Model-Course.html#method_clearSimilarCoursesTo"
+        },                {
+            "fqsen": "\\Education\\Model\\Course\u003A\u003AtoGdprArray\u0028\u0029",
+            "name": "toGdprArray",
+            "summary": "",
+            "url": "classes/Education-Model-Course.html#method_toGdprArray"
         },                {
             "fqsen": "\\Education\\Model\\Course\u003A\u003AgetResourceId\u0028\u0029",
             "name": "getResourceId",
@@ -11195,6 +11335,11 @@ Search.appendIndex(
             "name": "setScanned",
             "summary": "Set\u0020whether\u0020the\u0020document\u0020is\u0020scanned\u0020or\u0020not.",
             "url": "classes/Education-Model-CourseDocument.html#method_setScanned"
+        },                {
+            "fqsen": "\\Education\\Model\\CourseDocument\u003A\u003AtoGdprArray\u0028\u0029",
+            "name": "toGdprArray",
+            "summary": "",
+            "url": "classes/Education-Model-CourseDocument.html#method_toGdprArray"
         },                {
             "fqsen": "\\Education\\Model\\CourseDocument\u003A\u003AgetResourceId\u0028\u0029",
             "name": "getResourceId",
@@ -12211,6 +12356,21 @@ Search.appendIndex(
             "summary": "Returns\u0020a\u0020paginator\u0020adapter\u0020for\u0020paging\u0020through\u0020all\u0020polls.",
             "url": "classes/Frontpage-Mapper-Poll.html#method_getPaginatorAdapter"
         },                {
+            "fqsen": "\\Frontpage\\Mapper\\Poll\u003A\u003AfindVotesByMember\u0028\u0029",
+            "name": "findVotesByMember",
+            "summary": "Get\u0020all\u0020poll\u0020votes\u0020casted\u0020by\u0020a\u0020specific\u0020member.",
+            "url": "classes/Frontpage-Mapper-Poll.html#method_findVotesByMember"
+        },                {
+            "fqsen": "\\Frontpage\\Mapper\\Poll\u003A\u003AfindPollsCreatedByMember\u0028\u0029",
+            "name": "findPollsCreatedByMember",
+            "summary": "Get\u0020all\u0020polls\u0020created\u0020by\u0020a\u0020specific\u0020member.",
+            "url": "classes/Frontpage-Mapper-Poll.html#method_findPollsCreatedByMember"
+        },                {
+            "fqsen": "\\Frontpage\\Mapper\\Poll\u003A\u003AfindPollsApprovedByMember\u0028\u0029",
+            "name": "findPollsApprovedByMember",
+            "summary": "Get\u0020all\u0020polls\u0020approved\u0020by\u0020a\u0020specific\u0020member.",
+            "url": "classes/Frontpage-Mapper-Poll.html#method_findPollsApprovedByMember"
+        },                {
             "fqsen": "\\Frontpage\\Mapper\\Poll\u003A\u003AgetRepositoryName\u0028\u0029",
             "name": "getRepositoryName",
             "summary": "",
@@ -12220,6 +12380,11 @@ Search.appendIndex(
             "name": "PollComment",
             "summary": "Mappers\u0020for\u0020poll\u0020comments.",
             "url": "classes/Frontpage-Mapper-PollComment.html"
+        },                {
+            "fqsen": "\\Frontpage\\Mapper\\PollComment\u003A\u003AfindByMember\u0028\u0029",
+            "name": "findByMember",
+            "summary": "Get\u0020all\u0020poll\u0020comments\u0020made\u0020by\u0020specific\u0020member.",
+            "url": "classes/Frontpage-Mapper-PollComment.html#method_findByMember"
         },                {
             "fqsen": "\\Frontpage\\Mapper\\PollComment\u003A\u003AgetRepositoryName\u0028\u0029",
             "name": "getRepositoryName",
@@ -12541,6 +12706,11 @@ Search.appendIndex(
             "summary": "Check\u0020to\u0020see\u0020if\u0020the\u0020poll\u0020is\u0020currently\u0020displayed.",
             "url": "classes/Frontpage-Model-Poll.html#method_isActive"
         },                {
+            "fqsen": "\\Frontpage\\Model\\Poll\u003A\u003AtoGdprArray\u0028\u0029",
+            "name": "toGdprArray",
+            "summary": "",
+            "url": "classes/Frontpage-Model-Poll.html#method_toGdprArray"
+        },                {
             "fqsen": "\\Frontpage\\Model\\Poll\u003A\u003A\u0024expiryDate",
             "name": "expiryDate",
             "summary": "The\u0020date\u0020the\u0020poll\u0020expires.",
@@ -12625,6 +12795,11 @@ Search.appendIndex(
             "name": "setCreatedOn",
             "summary": "Set\u0020the\u0020creation\u0020date.",
             "url": "classes/Frontpage-Model-PollComment.html#method_setCreatedOn"
+        },                {
+            "fqsen": "\\Frontpage\\Model\\PollComment\u003A\u003AtoGdprArray\u0028\u0029",
+            "name": "toGdprArray",
+            "summary": "",
+            "url": "classes/Frontpage-Model-PollComment.html#method_toGdprArray"
         },                {
             "fqsen": "\\Frontpage\\Model\\PollComment\u003A\u003AgetResourceId\u0028\u0029",
             "name": "getResourceId",
@@ -12731,6 +12906,11 @@ Search.appendIndex(
             "summary": "Poll\u0020response\nRepresents\u0020a\u0020vote\u0020on\u0020a\u0020poll\u0020option.",
             "url": "classes/Frontpage-Model-PollVote.html"
         },                {
+            "fqsen": "\\Frontpage\\Model\\PollVote\u003A\u003AgetPoll\u0028\u0029",
+            "name": "getPoll",
+            "summary": "",
+            "url": "classes/Frontpage-Model-PollVote.html#method_getPoll"
+        },                {
             "fqsen": "\\Frontpage\\Model\\PollVote\u003A\u003AgetPollOption\u0028\u0029",
             "name": "getPollOption",
             "summary": "",
@@ -12750,6 +12930,11 @@ Search.appendIndex(
             "name": "setRespondent",
             "summary": "",
             "url": "classes/Frontpage-Model-PollVote.html#method_setRespondent"
+        },                {
+            "fqsen": "\\Frontpage\\Model\\PollVote\u003A\u003AtoGdprArray\u0028\u0029",
+            "name": "toGdprArray",
+            "summary": "",
+            "url": "classes/Frontpage-Model-PollVote.html#method_toGdprArray"
         },                {
             "fqsen": "\\Frontpage\\Model\\PollVote\u003A\u003AgetResourceId\u0028\u0029",
             "name": "getResourceId",
@@ -13866,6 +14051,11 @@ Search.appendIndex(
             "summary": "Checks\u0020if\u0020the\u0020specified\u0020photo\u0020exists\u0020in\u0020the\u0020database\u0020already\u0020and\u0020returns\u0020it\u0020if\u0020it\u0020does.",
             "url": "classes/Photo-Mapper-Photo.html#method_getPhotoByData"
         },                {
+            "fqsen": "\\Photo\\Mapper\\Photo\u003A\u003AfindPhotosByMember\u0028\u0029",
+            "name": "findPhotosByMember",
+            "summary": "Get\u0020all\u0020photos\u0020that\u0020have\u0020the\u0020member\u0020as\u0020its\u0020author.",
+            "url": "classes/Photo-Mapper-Photo.html#method_findPhotosByMember"
+        },                {
             "fqsen": "\\Photo\\Mapper\\Photo\u003A\u003AgetRepositoryName\u0028\u0029",
             "name": "getRepositoryName",
             "summary": "",
@@ -13940,6 +14130,11 @@ Search.appendIndex(
             "name": "hasRecentVote",
             "summary": "Checks\u0020if\u0020a\u0020member\u0020has\u0020recently\u0020voted.",
             "url": "classes/Photo-Mapper-Vote.html#method_hasRecentVote"
+        },                {
+            "fqsen": "\\Photo\\Mapper\\Vote\u003A\u003AgetVotesByLidnr\u0028\u0029",
+            "name": "getVotesByLidnr",
+            "summary": "",
+            "url": "classes/Photo-Mapper-Vote.html#method_getVotesByLidnr"
         },                {
             "fqsen": "\\Photo\\Mapper\\Vote\u003A\u003AgetRepositoryName\u0028\u0029",
             "name": "getRepositoryName",
@@ -14381,6 +14576,11 @@ Search.appendIndex(
             "summary": "Returns\u0020an\u0020associative\u0020array\u0020representation\u0020of\u0020this\u0020object.",
             "url": "classes/Photo-Model-Photo.html#method_toArray"
         },                {
+            "fqsen": "\\Photo\\Model\\Photo\u003A\u003AtoGdprArray\u0028\u0029",
+            "name": "toGdprArray",
+            "summary": "",
+            "url": "classes/Photo-Model-Photo.html#method_toGdprArray"
+        },                {
             "fqsen": "\\Photo\\Model\\Photo\u003A\u003AgetResourceId\u0028\u0029",
             "name": "getResourceId",
             "summary": "Get\u0020the\u0020resource\u0020ID.",
@@ -14531,6 +14731,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Photo-Model-ProfilePhoto.html#method_setExplicit"
         },                {
+            "fqsen": "\\Photo\\Model\\ProfilePhoto\u003A\u003AtoGdprArray\u0028\u0029",
+            "name": "toGdprArray",
+            "summary": "",
+            "url": "classes/Photo-Model-ProfilePhoto.html#method_toGdprArray"
+        },                {
             "fqsen": "\\Photo\\Model\\ProfilePhoto\u003A\u003AgetResourceId\u0028\u0029",
             "name": "getResourceId",
             "summary": "Get\u0020the\u0020resource\u0020Id.",
@@ -14585,6 +14790,11 @@ Search.appendIndex(
             "name": "toArray",
             "summary": "Returns\u0020the\u0020Tag\u0020as\u0020an\u0020associative\u0020array.",
             "url": "classes/Photo-Model-Tag.html#method_toArray"
+        },                {
+            "fqsen": "\\Photo\\Model\\Tag\u003A\u003AtoGdprArray\u0028\u0029",
+            "name": "toGdprArray",
+            "summary": "",
+            "url": "classes/Photo-Model-Tag.html#method_toGdprArray"
         },                {
             "fqsen": "\\Photo\\Model\\Tag\u003A\u003AgetResourceId\u0028\u0029",
             "name": "getResourceId",
@@ -14676,6 +14886,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Photo-Model-Vote.html#method___construct"
         },                {
+            "fqsen": "\\Photo\\Model\\Vote\u003A\u003AgetDateTime\u0028\u0029",
+            "name": "getDateTime",
+            "summary": "",
+            "url": "classes/Photo-Model-Vote.html#method_getDateTime"
+        },                {
             "fqsen": "\\Photo\\Model\\Vote\u003A\u003AsetPhoto\u0028\u0029",
             "name": "setPhoto",
             "summary": "",
@@ -14685,6 +14900,11 @@ Search.appendIndex(
             "name": "getPhoto",
             "summary": "",
             "url": "classes/Photo-Model-Vote.html#method_getPhoto"
+        },                {
+            "fqsen": "\\Photo\\Model\\Vote\u003A\u003AtoGdprArray\u0028\u0029",
+            "name": "toGdprArray",
+            "summary": "",
+            "url": "classes/Photo-Model-Vote.html#method_toGdprArray"
         },                {
             "fqsen": "\\Photo\\Model\\Vote\u003A\u003A\u0024dateTime",
             "name": "dateTime",
@@ -16331,6 +16551,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/User-Mapper-ApiAppAuthentication.html#method_getLastAuthentication"
         },                {
+            "fqsen": "\\User\\Mapper\\ApiAppAuthentication\u003A\u003AgetMemberAuthenticationsPerApiApp\u0028\u0029",
+            "name": "getMemberAuthenticationsPerApiApp",
+            "summary": "",
+            "url": "classes/User-Mapper-ApiAppAuthentication.html#method_getMemberAuthenticationsPerApiApp"
+        },                {
             "fqsen": "\\User\\Mapper\\ApiAppAuthentication\u003A\u003AgetRepositoryName\u0028\u0029",
             "name": "getRepositoryName",
             "summary": "",
@@ -16385,6 +16610,11 @@ Search.appendIndex(
             "name": "getFailedAttemptCount",
             "summary": "",
             "url": "classes/User-Mapper-LoginAttempt.html#method_getFailedAttemptCount"
+        },                {
+            "fqsen": "\\User\\Mapper\\LoginAttempt\u003A\u003AgetAttemptsByMember\u0028\u0029",
+            "name": "getAttemptsByMember",
+            "summary": "",
+            "url": "classes/User-Mapper-LoginAttempt.html#method_getAttemptsByMember"
         },                {
             "fqsen": "\\User\\Mapper\\LoginAttempt\u003A\u003AgetRepositoryName\u0028\u0029",
             "name": "getRepositoryName",
@@ -16555,6 +16785,11 @@ Search.appendIndex(
             "name": "setTime",
             "summary": "",
             "url": "classes/User-Model-ApiAppAuthentication.html#method_setTime"
+        },                {
+            "fqsen": "\\User\\Model\\ApiAppAuthentication\u003A\u003AtoGdprArray\u0028\u0029",
+            "name": "toGdprArray",
+            "summary": "",
+            "url": "classes/User-Model-ApiAppAuthentication.html#method_toGdprArray"
         },                {
             "fqsen": "\\User\\Model\\ApiAppAuthentication\u003A\u003A\u0024user",
             "name": "user",
@@ -16796,6 +17031,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/User-Model-Enums-UserRoles.html#enumcase_CompanyAdmin"
         },                {
+            "fqsen": "\\User\\Model\\Enums\\UserRoles\u003A\u003ABoard",
+            "name": "Board",
+            "summary": "",
+            "url": "classes/User-Model-Enums-UserRoles.html#enumcase_Board"
+        },                {
             "fqsen": "\\User\\Model\\Enums\\UserRoles\u003A\u003AAdmin",
             "name": "Admin",
             "summary": "",
@@ -16845,6 +17085,11 @@ Search.appendIndex(
             "name": "setTime",
             "summary": "",
             "url": "classes/User-Model-LoginAttempt.html#method_setTime"
+        },                {
+            "fqsen": "\\User\\Model\\LoginAttempt\u003A\u003AtoGdprArray\u0028\u0029",
+            "name": "toGdprArray",
+            "summary": "",
+            "url": "classes/User-Model-LoginAttempt.html#method_toGdprArray"
         },                {
             "fqsen": "\\User\\Model\\LoginAttempt\u003A\u003A\u0024user",
             "name": "user",
@@ -17076,10 +17321,10 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/User-Model-User.html#method_setPasswordChangedOn"
         },                {
-            "fqsen": "\\User\\Model\\User\u003A\u003AtoArray\u0028\u0029",
-            "name": "toArray",
+            "fqsen": "\\User\\Model\\User\u003A\u003AtoGdprArray\u0028\u0029",
+            "name": "toGdprArray",
             "summary": "",
-            "url": "classes/User-Model-User.html#method_toArray"
+            "url": "classes/User-Model-User.html#method_toGdprArray"
         },                {
             "fqsen": "\\User\\Model\\User\u003A\u003AgetResourceId\u0028\u0029",
             "name": "getResourceId",
@@ -17150,6 +17395,11 @@ Search.appendIndex(
             "name": "isActive",
             "summary": "Determine\u0020whether\u0020this\u0020role\u0020is\u0020active\u0020\u0028i.e.\u0020has\u0020not\u0020expired\u0029.",
             "url": "classes/User-Model-UserRole.html#method_isActive"
+        },                {
+            "fqsen": "\\User\\Model\\UserRole\u003A\u003AtoGdprArray\u0028\u0029",
+            "name": "toGdprArray",
+            "summary": "",
+            "url": "classes/User-Model-UserRole.html#method_toGdprArray"
         },                {
             "fqsen": "\\User\\Model\\UserRole\u003A\u003A\u0024lidnr",
             "name": "lidnr",

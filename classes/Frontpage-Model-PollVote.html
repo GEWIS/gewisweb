@@ -415,7 +415,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/PollVote.php"><a href="files/module-frontpage-src-model-pollvote.html"><abbr title="module/Frontpage/src/Model/PollVote.php">PollVote.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">19</span>
+    <span class="phpdocumentor-element-found-in__line">26</span>
 
     </aside>
 
@@ -424,6 +424,34 @@ Represents a vote on a poll option.</p>
 
 
 
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Frontpage-Model-PollVote.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">psalm-import-type</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>LocalisedTextGdprArrayType from LocalisedTextModel as ImportedLocalisedTextGdprArrayType</p>
+</section>
+
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">psalm-type</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>PollVoteGdprArrayType = array{
+poll_id: int,
+option: ImportedLocalisedTextGdprArrayType,
+}</p>
+</section>
+
+                                    </dd>
+                                            </dl>
 
 
 
@@ -484,6 +512,12 @@ Represents a vote on a poll option.</p>
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Frontpage-Model-PollVote.html#method_getPoll">getPoll()</a>
+    <span>
+                                &nbsp;: <a href="classes/Frontpage-Model-Poll.html"><abbr title="\Frontpage\Model\Poll">Poll</abbr></a>    </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Frontpage-Model-PollVote.html#method_getPollOption">getPollOption()</a>
     <span>
                                 &nbsp;: <a href="classes/Frontpage-Model-PollOption.html"><abbr title="\Frontpage\Model\PollOption">PollOption</abbr></a>    </span>
@@ -512,6 +546,12 @@ Represents a vote on a poll option.</p>
     <a href="classes/Frontpage-Model-PollVote.html#method_setRespondent">setRespondent()</a>
     <span>
                                 &nbsp;: void    </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Frontpage-Model-PollVote.html#method_toGdprArray">toGdprArray()</a>
+    <span>
+                                &nbsp;: <abbr title="\Frontpage\Model\PollVoteGdprArrayType">PollVoteGdprArrayType</abbr>    </span>
 </dt>
 
     </dl>
@@ -545,7 +585,7 @@ Represents a vote on a poll option.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/PollVote.php"><a href="files/module-frontpage-src-model-pollvote.html"><abbr title="module/Frontpage/src/Model/PollVote.php">PollVote.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">29</span>
+    <span class="phpdocumentor-element-found-in__line">36</span>
 
     </aside>
 
@@ -579,7 +619,7 @@ Represents a vote on a poll option.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/PollVote.php"><a href="files/module-frontpage-src-model-pollvote.html"><abbr title="module/Frontpage/src/Model/PollVote.php">PollVote.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">40</span>
+    <span class="phpdocumentor-element-found-in__line">47</span>
 
     </aside>
 
@@ -613,7 +653,7 @@ Represents a vote on a poll option.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/PollVote.php"><a href="files/module-frontpage-src-model-pollvote.html"><abbr title="module/Frontpage/src/Model/PollVote.php">PollVote.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">55</span>
+    <span class="phpdocumentor-element-found-in__line">62</span>
 
     </aside>
 
@@ -644,6 +684,41 @@ Represents a vote on a poll option.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_getPoll">
+        getPoll()
+        <a href="classes/Frontpage-Model-PollVote.html#method_getPoll" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/PollVote.php"><a href="files/module-frontpage-src-model-pollvote.html"><abbr title="module/Frontpage/src/Model/PollVote.php">PollVote.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">74</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getPoll</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Frontpage-Model-Poll.html"><abbr title="\Frontpage\Model\Poll">Poll</abbr></a></span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Frontpage-Model-Poll.html"><abbr title="\Frontpage\Model\Poll">Poll</abbr></a></span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_getPollOption">
         getPollOption()
         <a href="classes/Frontpage-Model-PollVote.html#method_getPollOption" class="headerlink"><i class="fas fa-link"></i></a>
@@ -652,7 +727,7 @@ Represents a vote on a poll option.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/PollVote.php"><a href="files/module-frontpage-src-model-pollvote.html"><abbr title="module/Frontpage/src/Model/PollVote.php">PollVote.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">67</span>
+    <span class="phpdocumentor-element-found-in__line">79</span>
 
     </aside>
 
@@ -687,7 +762,7 @@ Represents a vote on a poll option.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/PollVote.php"><a href="files/module-frontpage-src-model-pollvote.html"><abbr title="module/Frontpage/src/Model/PollVote.php">PollVote.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">90</span>
+    <span class="phpdocumentor-element-found-in__line">113</span>
 
     </aside>
 
@@ -723,7 +798,7 @@ Represents a vote on a poll option.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/PollVote.php"><a href="files/module-frontpage-src-model-pollvote.html"><abbr title="module/Frontpage/src/Model/PollVote.php">PollVote.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">72</span>
+    <span class="phpdocumentor-element-found-in__line">84</span>
 
     </aside>
 
@@ -764,7 +839,7 @@ Represents a vote on a poll option.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/PollVote.php"><a href="files/module-frontpage-src-model-pollvote.html"><abbr title="module/Frontpage/src/Model/PollVote.php">PollVote.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">77</span>
+    <span class="phpdocumentor-element-found-in__line">89</span>
 
     </aside>
 
@@ -805,7 +880,7 @@ Represents a vote on a poll option.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/PollVote.php"><a href="files/module-frontpage-src-model-pollvote.html"><abbr title="module/Frontpage/src/Model/PollVote.php">PollVote.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">82</span>
+    <span class="phpdocumentor-element-found-in__line">94</span>
 
     </aside>
 
@@ -831,6 +906,41 @@ Represents a vote on a poll option.</p>
     
 
     
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_toGdprArray">
+        toGdprArray()
+        <a href="classes/Frontpage-Model-PollVote.html#method_toGdprArray" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/PollVote.php"><a href="files/module-frontpage-src-model-pollvote.html"><abbr title="module/Frontpage/src/Model/PollVote.php">PollVote.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">102</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">toGdprArray</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Frontpage\Model\PollVoteGdprArrayType">PollVoteGdprArrayType</abbr></span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\Frontpage\Model\PollVoteGdprArrayType">PollVoteGdprArrayType</abbr></span>
+            </section>
+
 </article>
             </section>
 
@@ -954,11 +1064,13 @@ Represents a vote on a poll option.</p>
                         <li class="phpdocumentor-on-this-page-section__title">Methods</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
+                                            <li><a href="classes/Frontpage-Model-PollVote.html#method_getPoll">getPoll()</a></li>
                                             <li><a href="classes/Frontpage-Model-PollVote.html#method_getPollOption">getPollOption()</a></li>
                                             <li><a href="classes/Frontpage-Model-PollVote.html#method_getResourceId">getResourceId()</a></li>
                                             <li><a href="classes/Frontpage-Model-PollVote.html#method_setPoll">setPoll()</a></li>
                                             <li><a href="classes/Frontpage-Model-PollVote.html#method_setPollOption">setPollOption()</a></li>
                                             <li><a href="classes/Frontpage-Model-PollVote.html#method_setRespondent">setRespondent()</a></li>
+                                            <li><a href="classes/Frontpage-Model-PollVote.html#method_toGdprArray">toGdprArray()</a></li>
                                     </ul>
             </li>
                     </ul>
