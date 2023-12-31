@@ -7,6 +7,7 @@ namespace User\Mapper;
 use Application\Mapper\BaseMapper;
 use Application\Model\IdentityInterface;
 use DateTime;
+use Decision\Model\Member as MemberModel;
 use User\Model\CompanyUser as CompanyUserModel;
 use User\Model\LoginAttempt as LoginAttemptModel;
 use User\Model\User as UserModel;
@@ -38,6 +39,19 @@ class LoginAttempt extends BaseMapper
         }
 
         return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * @return LoginAttemptModel[]
+     */
+    public function getAttemptsByMember(MemberModel $member): array
+    {
+        $qb = $this->getRepository()->createQueryBuilder('l');
+        $qb->where('l.user = :user')
+            ->orderBy('l.time', 'DESC')
+            ->setParameter('user', $member->getLidnr());
+
+        return $qb->getQuery()->getResult();
     }
 
     protected function getRepositoryName(): string

@@ -6,6 +6,7 @@ namespace User\Model;
 
 use Application\Model\Traits\IdentifiableTrait;
 use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\JoinColumn;
@@ -13,6 +14,12 @@ use Doctrine\ORM\Mapping\ManyToOne;
 
 /**
  * Log when a member has authenticated for an external app.
+ *
+ * @psalm-type ApiAppAuthenticationGdprArrayType = array{
+ *     id: int,
+ *     app_id: string,
+ *     time: string,
+ * }
  */
 #[Entity]
 class ApiAppAuthentication
@@ -75,5 +82,17 @@ class ApiAppAuthentication
     public function setTime(DateTime $time): void
     {
         $this->time = $time;
+    }
+
+    /**
+     * @return ApiAppAuthenticationGdprArrayType
+     */
+    public function toGdprArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'app_id' => $this->getApiApp()->getAppId(),
+            'time' => $this->getTime()->format(DateTimeInterface::ATOM),
+        ];
     }
 }

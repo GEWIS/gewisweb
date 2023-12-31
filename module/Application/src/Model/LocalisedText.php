@@ -12,6 +12,11 @@ use Laminas\Session\Container as SessionContainer;
 
 /**
  * Class LocalisedText: stores Dutch and English versions of text fields.
+ *
+ * @psalm-type LocalisedTextGdprArrayType = array{
+ *     valueEN: ?string,
+ *     valueNL: ?string,
+ * }
  */
 abstract class LocalisedText
 {
@@ -105,5 +110,16 @@ abstract class LocalisedText
             'en' => $this->valueEN,
             default => throw new InvalidArgumentException('Locale not supported: ' . $locale),
         };
+    }
+
+    /**
+     * @return LocalisedTextGdprArrayType
+     */
+    public function toGdprArray(): array
+    {
+        return [
+            'valueEN' => $this->getValueEN(),
+            'valueNL' => $this->getValueNL(),
+        ];
     }
 }

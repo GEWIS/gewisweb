@@ -6,6 +6,7 @@ namespace Decision\Model;
 
 use Application\Model\Traits\IdentifiableTrait;
 use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\JoinColumn;
@@ -14,6 +15,12 @@ use Doctrine\ORM\Mapping\UniqueConstraint;
 
 /**
  * Authorization model.
+ *
+ * @psalm-type AuthorizationGdprArrayType = array{
+ *     meeting_number: int,
+ *     createdAt: string,
+ *     revokedAt: ?string,
+ * }
  */
 #[Entity]
 #[UniqueConstraint(
@@ -35,7 +42,7 @@ class Authorization
     protected Member $authorizer;
 
     /**
-     * Member receiving this authorization..
+     * Member receiving this authorization.
      */
     #[ManyToOne(targetEntity: Member::class)]
     #[JoinColumn(
@@ -113,5 +120,17 @@ class Authorization
     public function setRevokedAt(?DateTime $revokedAt): void
     {
         $this->revokedAt = $revokedAt;
+    }
+
+    /**
+     * @return AuthorizationGdprArrayType
+     */
+    public function toGdprArray(): array
+    {
+        return [
+            'meeting_number' => $this->getMeetingNumber(),
+            'createdAt' => $this->getCreatedAt()->format(DateTimeInterface::ATOM),
+            'revokedAt' => $this->getRevokedAt()?->format(DateTimeInterface::ATOM),
+        ];
     }
 }

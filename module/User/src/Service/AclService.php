@@ -67,6 +67,7 @@ class AclService extends GenericAclService
          * - graduate: an old GEWIS-member, has limited privileges
          * - company: a company which uses the career section of the website
          * - apiuser: Automated tool given access by an admin
+         * - board: Members of the board, they have almost all privileges
          * - admin: Defined administrators
          */
         $this->acl->addRole(new Role(UserRoles::Guest->value));
@@ -78,13 +79,17 @@ class AclService extends GenericAclService
         $this->acl->addRole(new Role(UserRoles::Graduate->value), UserRoles::User->value);
         $this->acl->addrole(new Role(UserRoles::CompanyAdmin->value), UserRoles::ActiveMember->value);
         $this->acl->addRole(new Role(UserRoles::Admin->value));
+        $this->acl->addRole(new Role(UserRoles::Board->value), UserRoles::Admin->value);
 
-        // admins (this includes board members) are allowed to do everything
+        // admins (this includes board members) are allowed to do everything (board not actually)
         $this->acl->allow(UserRoles::Admin->value);
 
         // configure the user ACL
         $this->acl->addResource(new Resource('apiuser'));
         $this->acl->addResource(new Resource('user'));
+
+        // Do not allow the board to touch API tokens
+        $this->acl->deny(UserRoles::Board->value, 'apiuser');
 
         $this->acl->allow(UserRoles::User->value, 'user', ['password_change']);
         $this->acl->allow(UserRoles::Company->value, 'user', ['password_change']);

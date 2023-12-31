@@ -55,7 +55,7 @@ class AdminController extends AbstractActionController
                         $this->translator->translate('Meeting minutes uploaded'),
                     );
 
-                    return $this->redirect()->toRoute('admin_decision/minutes');
+                    return $this->redirect()->toRoute('decision_admin/minutes');
                 }
             }
         }
@@ -156,7 +156,7 @@ class AdminController extends AbstractActionController
                 }
 
                 return $this->redirect()->toRoute(
-                    'admin_decision/document',
+                    'decision_admin/document',
                     [
                         'type' => $document->getMeeting()->getType()->value,
                         'number' => $document->getMeeting()->getNumber(),
@@ -188,7 +188,7 @@ class AdminController extends AbstractActionController
             }
         }
 
-        return $this->redirect()->toRoute('admin_decision/document');
+        return $this->redirect()->toRoute('decision_admin/document');
     }
 
     public function changePositionDocumentAction(): mixed

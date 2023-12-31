@@ -12,6 +12,13 @@ use Doctrine\ORM\Mapping\ManyToOne;
 
 /**
  * SignupFieldValue model.
+ *
+ * @psalm-import-type SignupOptionGdprArrayType from SignupOption as ImportedSignupOptionGdprArrayType
+ * @psalm-type SignupFieldValueGdprArrayType = array{
+ *     id: int,
+ *     value: ?string,
+ *     option: ?ImportedSignupOptionGdprArrayType,
+ * }
  */
 #[Entity]
 class SignupFieldValue
@@ -60,7 +67,7 @@ class SignupFieldValue
         name: 'option_id',
         referencedColumnName: 'id',
     )]
-    protected ?SignupOption $option;
+    protected ?SignupOption $option = null;
 
     public function getField(): SignupField
     {
@@ -109,5 +116,17 @@ class SignupFieldValue
     public function setOption(?SignupOption $option): void
     {
         $this->option = $option;
+    }
+
+    /**
+     * @return SignupFieldValueGdprArrayType
+     */
+    public function toGdprArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'value' => $this->getValue(),
+            'option' => $this->getOption()->toGdprArray(),
+        ];
     }
 }

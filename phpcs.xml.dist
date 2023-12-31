@@ -48,6 +48,7 @@
         <exclude-pattern>module/Education/src/Controller/Factory/EducationControllerFactory.php</exclude-pattern>
         <exclude-pattern>module/Decision/src/Controller/Factory/DecisionControllerFactory.php</exclude-pattern>
         <exclude-pattern>module/Decision/src/Controller/Factory/AdminControllerFactory.php</exclude-pattern>
+        <exclude-pattern>module/Decision/src/Controller/Factory/AdminMemberControllerFactory.php</exclude-pattern>
         <exclude-pattern>module/Decision/src/Controller/Factory/OrganControllerFactory.php</exclude-pattern>
         <exclude-pattern>module/Decision/src/Controller/Factory/MemberControllerFactory.php</exclude-pattern>
         <exclude-pattern>module/Decision/src/Controller/Factory/OrganAdminControllerFactory.php</exclude-pattern>

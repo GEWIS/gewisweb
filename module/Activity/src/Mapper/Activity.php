@@ -7,6 +7,7 @@ namespace Activity\Mapper;
 use Activity\Model\Activity as ActivityModel;
 use Application\Mapper\BaseMapper;
 use DateTime;
+use Decision\Model\Member as MemberModel;
 use Decision\Model\Organ as OrganModel;
 use Doctrine\ORM\Query\Expr\Comparison;
 use Doctrine\ORM\QueryBuilder;
@@ -293,6 +294,34 @@ class Activity extends BaseMapper
             ->andWhere('a.status = :status')
             ->setParameter('status', ActivityModel::STATUS_APPROVED)
             ->orderBy('a.beginTime', 'DESC');
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Get all activities that were created by a member.
+     *
+     * @return ActivityModel[]
+     */
+    public function findAllActivitiesCreatedByMember(MemberModel $member): array
+    {
+        $qb = $this->getRepository()->createQueryBuilder('a');
+        $qb->where('a.creator = :member')
+            ->setParameter('member', $member);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Get all activities that were approved or rejected by a member.
+     *
+     * @return ActivityModel[]
+     */
+    public function findAllActivitiesApprovedByMember(MemberModel $member): array
+    {
+        $qb = $this->getRepository()->createQueryBuilder('a');
+        $qb->where('a.approver = :member')
+            ->setParameter('member', $member);
 
         return $qb->getQuery()->getResult();
     }

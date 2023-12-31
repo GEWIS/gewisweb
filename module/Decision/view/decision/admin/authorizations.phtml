@@ -22,7 +22,7 @@ $this->breadcrumbs()
                     <?php foreach ($meetings as $meeting): ?>
                         <option
                             value="<?= $this->url(
-                                'admin_decision/authorizations',
+                                'decision_admin/authorizations',
                                 ['number' => $meeting->getNumber()],
                             ) ?>"
                             <?= ($meeting->getNumber() === $number) ? 'selected' : '' ?>

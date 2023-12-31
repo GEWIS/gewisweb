@@ -31,6 +31,15 @@ use Doctrine\ORM\Mapping\ManyToOne;
 
 /**
  * SubDecision model.
+ *
+ * @psalm-type SubDecisionGdprArrayType = array{
+ *     meeting_type: string,
+ *     meeting_number: int,
+ *     decision_point: int,
+ *     decision_number: int,
+ *     subdecision_number: int,
+ *     ...,
+ * }
  */
 #[Entity]
 #[InheritanceType(value: 'SINGLE_TABLE')]
@@ -249,5 +258,20 @@ abstract class SubDecision
     public function setContent(string $content): void
     {
         $this->content = $content;
+    }
+
+    /**
+     * @return SubDecisionGdprArrayType
+     */
+    public function toGdprArray(): array
+    {
+        return [
+            'meeting_type' => $this->getMeetingType()->value,
+            'meeting_number' => $this->getMeetingNumber(),
+            'decision_point' => $this->getDecisionPoint(),
+            'decision_number' => $this->getDecisionNumber(),
+            'subdecision_number' => $this->getNumber(),
+            'content' => $this->getContent(),
+        ];
     }
 }

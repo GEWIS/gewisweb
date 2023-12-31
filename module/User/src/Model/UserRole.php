@@ -6,6 +6,7 @@ namespace User\Model;
 
 use Application\Model\Traits\IdentifiableTrait;
 use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\JoinColumn;
@@ -16,6 +17,11 @@ use User\Model\Enums\UserRoles;
  * User role model.
  *
  * This specifies all the roles of a user.
+ *
+ * @psalm-type UserRoleGdprArrayType = array{
+ *     role: string,
+ *     expiration: ?string,
+ * }
  */
 #[Entity]
 class UserRole
@@ -108,5 +114,16 @@ class UserRole
     {
         return null !== $this->expiration
             && (new DateTime('now')) < $this->expiration;
+    }
+
+    /**
+     * @return UserRoleGdprArrayType
+     */
+    public function toGdprArray(): array
+    {
+        return [
+            'role' => $this->getRole()->value,
+            'expiration' => $this->getExpiration()?->format(DateTimeInterface::ATOM),
+        ];
     }
 }

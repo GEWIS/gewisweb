@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace Photo\Mapper;
 
 use Application\Mapper\BaseMapper;
+use Decision\Model\Member as MemberModel;
 use Photo\Model\Album as AlbumModel;
 use Photo\Model\MemberAlbum as MemberAlbumModel;
 use Photo\Model\Photo as PhotoModel;
+
+use function addcslashes;
 
 /**
  * Mappers for Photo.
@@ -149,6 +152,20 @@ class Photo extends BaseMapper
                 'album' => $album,
             ],
         );
+    }
+
+    /**
+     * Get all photos that have the member as its author.
+     *
+     * @return PhotoModel[]
+     */
+    public function findPhotosByMember(MemberModel $member): array
+    {
+        $qb = $this->getRepository()->createQueryBuilder('p');
+        $qb->where('p.artist LIKE :full_name')
+            ->setParameter('full_name', '%' . addcslashes($member->getFullName(), '%_') . '%');
+
+        return $qb->getQuery()->getResult();
     }
 
     protected function getRepositoryName(): string

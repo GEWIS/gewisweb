@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Activity\Model;
 
+use Application\Model\LocalisedText as LocalisedTextModel;
 use Application\Model\Traits\IdentifiableTrait;
 use DateTime;
+use DateTimeInterface;
 use Decision\Model\Member as MemberModel;
 use Decision\Model\Organ as OrganModel;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -34,6 +36,18 @@ use User\Permissions\Resource\OrganResourceInterface;
  *     displaySubscribedNumber: bool,
  *     limitedCapacity: bool,
  *     fields: ImportedSignupFieldArrayType[],
+ * }
+ * @psalm-import-type LocalisedTextGdprArrayType from LocalisedTextModel as ImportedLocalisedTextGdprArrayType
+ * @psalm-import-type SignupFieldGdprArrayType from SignupField as ImportedSignupFieldGdprArrayType
+ * @psalm-type SignupListGdprArrayType = array{
+ *     id: int,
+ *     name: ImportedLocalisedTextGdprArrayType,
+ *     openDate: string,
+ *     closeDate: string,
+ *     onlyGEWIS: bool,
+ *     displaySubscribedNumber: bool,
+ *     limitedCapacity: bool,
+ *     fields: ImportedSignupFieldGdprArrayType[],
  * }
  */
 #[Entity]
@@ -290,6 +304,29 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
             'nameEn' => $this->getName()->getValueEN(),
             'openDate' => $this->getOpenDate(),
             'closeDate' => $this->getCloseDate(),
+            'onlyGEWIS' => $this->getOnlyGEWIS(),
+            'displaySubscribedNumber' => $this->getDisplaySubscribedNumber(),
+            'limitedCapacity' => $this->getLimitedCapacity(),
+            'fields' => $fieldsArrays,
+        ];
+    }
+
+    /**
+     * @return SignupListGdprArrayType
+     */
+    public function toGdprArray(): array
+    {
+        /** @var ImportedSignupFieldGdprArrayType[] $fieldsArrays */
+        $fieldsArrays = [];
+        foreach ($this->getFields() as $field) {
+            $fieldsArrays[] = $field->toGdprArray();
+        }
+
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName()->toGdprArray(),
+            'openDate' => $this->getOpenDate()->format(DateTimeInterface::ATOM),
+            'closeDate' => $this->getCloseDate()->format(DateTimeInterface::ATOM),
             'onlyGEWIS' => $this->getOnlyGEWIS(),
             'displaySubscribedNumber' => $this->getDisplaySubscribedNumber(),
             'limitedCapacity' => $this->getLimitedCapacity(),

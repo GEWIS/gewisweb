@@ -18,6 +18,7 @@ class AclService extends \User\Service\AclService
         $this->acl->addResource('authorization');
         $this->acl->addResource('files');
         $this->acl->addResource('regulations');
+        $this->acl->addResource('gdpr');
 
         // users are allowed to view the organs
         $this->acl->allow('guest', 'organ', 'list');
@@ -45,5 +46,8 @@ class AclService extends \User\Service\AclService
         // graduates may not do a few things, so limit them.
         $this->acl->deny('graduate', 'member', ['view', 'search', 'birthdays']);
         $this->acl->deny('graduate', 'authorization', ['create', 'revoke', 'view_own']);
+
+        // do not allow board to perform GDPR requests
+        $this->acl->deny('board', 'gdpr');
     }
 }

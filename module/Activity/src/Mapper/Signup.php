@@ -8,6 +8,7 @@ use Activity\Model\ExternalSignup as ExternalSignupModel;
 use Activity\Model\SignupList as SignupListModel;
 use Activity\Model\UserSignup as UserSignupModel;
 use Application\Mapper\BaseMapper;
+use Decision\Model\Member as MemberModel;
 use User\Model\User as UserModel;
 
 /**
@@ -60,6 +61,20 @@ class Signup extends BaseMapper
             ->setParameter('signupList', $signupList);
 
         return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * Get all sign-ups for a specific member.
+     *
+     * @return UserSignupModel[]
+     */
+    public function findSignupsByMember(MemberModel $member): array
+    {
+        $qb = $this->getRepository()->createQueryBuilder('s');
+        $qb->where('s.user = :member')
+            ->setParameter('member', $member);
+
+        return $qb->getQuery()->getResult();
     }
 
     protected function getRepositoryName(): string

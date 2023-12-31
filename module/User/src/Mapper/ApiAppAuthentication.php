@@ -51,6 +51,22 @@ class ApiAppAuthentication extends BaseMapper
         return $qb->getQuery()->getOneOrNullResult();
     }
 
+    /**
+     * @return ApiAppAuthenticationModel[]
+     */
+    public function getMemberAuthenticationsPerApiApp(MemberModel $member): array
+    {
+        $qb = $this->getRepository()->createQueryBuilder('a');
+        $qb->select('a, app')
+            ->leftJoin(ApiAppModel::class, 'app', 'WITH', 'a.apiApp = app.id')
+            ->where('a.user = :user_id')
+            ->groupBy('app.appId')
+            ->orderBy('a.time', 'DESC')
+            ->setParameter('user_id', $member->getLidnr());
+
+        return $qb->getQuery()->getResult();
+    }
+
     protected function getRepositoryName(): string
     {
         return ApiAppAuthenticationModel::class;

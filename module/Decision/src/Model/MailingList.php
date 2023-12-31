@@ -13,6 +13,12 @@ use Doctrine\ORM\Mapping\ManyToMany;
 
 /**
  * Mailing List model.
+ *
+ * @psalm-type MailingListGdprArrayType = array{
+ *     name: string,
+ *     description_en: string,
+ *     description_nl: string,
+ * }
  */
 #[Entity]
 class MailingList
@@ -178,5 +184,17 @@ class MailingList
     public function addMember(Member $member): void
     {
         $this->members[] = $member;
+    }
+
+    /**
+     * @return MailingListGdprArrayType
+     */
+    public function toGdprArray(): array
+    {
+        return [
+            'name' => $this->getName(),
+            'description_en' => $this->getEnDescription(),
+            'description_nl' => $this->getNlDescription(),
+        ];
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Activity\Model;
 
+use Application\Model\LocalisedText as LocalisedTextModel;
 use Application\Model\Traits\IdentifiableTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -27,6 +28,17 @@ use Doctrine\ORM\Mapping\OneToOne;
  *     maximumValue: ?int,
  *     options: array<array-key, ?string>,
  *     optionsEn: array<array-key, ?string>,
+ * }
+ * @psalm-import-type LocalisedTextGdprArrayType from LocalisedTextModel as ImportedLocalisedTextGdprArrayType
+ * @psalm-import-type SignupOptionGdprArrayType from SignupOption as ImportedSignupOptionGdprArrayType
+ * @psalm-type SignupFieldGdprArrayType = array{
+ *     id: int,
+ *     sensitive: bool,
+ *     name: ImportedLocalisedTextGdprArrayType,
+ *     type: int,
+ *     minimumValue: ?int,
+ *     maximumValue: ?int,
+ *     options: ?ImportedSignupOptionGdprArrayType[],
  * }
  */
 #[Entity]
@@ -206,6 +218,28 @@ class SignupField
             'maximumValue' => $this->getMaximumValue(),
             'options' => $optionsArrays,
             'optionsEn' => $optionsEn,
+        ];
+    }
+
+    /**
+     * @return SignupFieldGdprArrayType
+     */
+    public function toGdprArray(): array
+    {
+        /** @var ImportedSignupOptionGdprArrayType[] $options */
+        $options = [];
+        foreach ($this->getOptions() as $option) {
+            $options[] = $option->toGdprArray();
+        }
+
+        return [
+            'id' => $this->getId(),
+            'sensitive' => $this->isSensitive(),
+            'name' => $this->getName()->toGdprArray(),
+            'type' => $this->getType(),
+            'minimumValue' => $this->getMinimumValue(),
+            'maximumValue' => $this->getMaximumValue(),
+            'options' => $options,
         ];
     }
 }

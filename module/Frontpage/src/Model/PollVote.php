@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Frontpage\Model;
 
+use Application\Model\LocalisedText as LocalisedTextModel;
 use Decision\Model\Member as MemberModel;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Id;
@@ -15,6 +16,12 @@ use Laminas\Permissions\Acl\Resource\ResourceInterface;
 /**
  * Poll response
  * Represents a vote on a poll option.
+ *
+ * @psalm-import-type LocalisedTextGdprArrayType from LocalisedTextModel as ImportedLocalisedTextGdprArrayType
+ * @psalm-type PollVoteGdprArrayType = array{
+ *     poll_id: int,
+ *     option: ImportedLocalisedTextGdprArrayType,
+ * }
  */
 #[Entity]
 #[UniqueConstraint(
@@ -64,6 +71,11 @@ class PollVote implements ResourceInterface
     )]
     protected MemberModel $respondent;
 
+    public function getPoll(): Poll
+    {
+        return $this->poll;
+    }
+
     public function getPollOption(): PollOption
     {
         return $this->pollOption;
@@ -82,6 +94,17 @@ class PollVote implements ResourceInterface
     public function setRespondent(MemberModel $respondent): void
     {
         $this->respondent = $respondent;
+    }
+
+    /**
+     * @return PollVoteGdprArrayType
+     */
+    public function toGdprArray(): array
+    {
+        return [
+            'poll_id' => $this->getPoll()->getId(),
+            'option' => $this->getPollOption()->getText()->toGdprArray(),
+        ];
     }
 
     /**

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Activity\Model;
 
+use Application\Model\LocalisedText as LocalisedTextModel;
 use Application\Model\Traits\IdentifiableTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -19,6 +20,11 @@ use Doctrine\ORM\Mapping\OneToOne;
  *     id: int,
  *     name: ?string,
  *     nameEn: ?string,
+ * }
+ * @psalm-import-type LocalisedTextGdprArrayType from LocalisedTextModel as ImportedLocalisedTextGdprArrayType
+ * @psalm-type ActivityCategoryGdprArrayType = array{
+ *     id: int,
+ *     name: ImportedLocalisedTextGdprArrayType,
  * }
  */
 #[Entity]
@@ -103,6 +109,17 @@ class ActivityCategory
             'id' => $this->getId(),
             'name' => $this->getName()->getValueNL(),
             'nameEn' => $this->getName()->getValueEN(),
+        ];
+    }
+
+    /**
+     * @return ActivityCategoryGdprArrayType
+     */
+    public function toGdprArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName()->toGdprArray(),
         ];
     }
 }

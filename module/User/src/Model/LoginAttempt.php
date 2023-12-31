@@ -6,6 +6,7 @@ namespace User\Model;
 
 use Application\Model\Traits\IdentifiableTrait;
 use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\JoinColumn;
@@ -15,6 +16,12 @@ use User\Model\User as UserModel;
 
 /**
  * A failed login attempt.
+ *
+ * @psalm-type LoginAttemptGdprArrayType = array{
+ *     id: int,
+ *     time: string,
+ *     ip: string,
+ * }
  */
 #[Entity]
 class LoginAttempt
@@ -91,5 +98,17 @@ class LoginAttempt
     public function setTime(DateTime $time): void
     {
         $this->time = $time;
+    }
+
+    /**
+     * @return LoginAttemptGdprArrayType
+     */
+    public function toGdprArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'time' => $this->getTime()->format(DateTimeInterface::ATOM),
+            'ip' => $this->getIp(),
+        ];
     }
 }

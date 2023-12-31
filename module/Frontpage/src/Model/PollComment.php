@@ -6,6 +6,7 @@ namespace Frontpage\Model;
 
 use Application\Model\Traits\IdentifiableTrait;
 use DateTime;
+use DateTimeInterface;
 use Decision\Model\Member as MemberModel;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
@@ -15,6 +16,13 @@ use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 /**
  * Poll comment.
+ *
+ * @psalm-type PollCommentGdprArrayType = array{
+ *     id: int,
+ *     createdOn: string,
+ *     author: string,
+ *     content: string,
+ * }
  */
 #[Entity]
 class PollComment implements ResourceInterface
@@ -142,6 +150,19 @@ class PollComment implements ResourceInterface
     public function setCreatedOn(DateTime $createdOn): void
     {
         $this->createdOn = $createdOn;
+    }
+
+    /**
+     * @return PollCommentGdprArrayType
+     */
+    public function toGdprArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'createdOn' => $this->getCreatedOn()->format(DateTimeInterface::ATOM),
+            'author' => $this->getAuthor(),
+            'content' => $this->getContent(),
+        ];
     }
 
     /**

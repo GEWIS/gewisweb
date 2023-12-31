@@ -8,6 +8,7 @@ use Application\Mapper\BaseMapper;
 use Application\Model\Enums\ApprovableStatus;
 use Company\Model\Company as CompanyModel;
 use Company\Model\Proposals\CompanyUpdate as CompanyUpdateModel;
+use Decision\Model\Member as MemberModel;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
 
 /**
@@ -91,6 +92,20 @@ class Company extends BaseMapper
 
         $qb->setParameter('approved', ApprovableStatus::Unapproved)
             ->setParameter('isUpdate', false);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Get all companies that were approved or rejected by a specific member.
+     *
+     * @return CompanyModel[]
+     */
+    public function findAllCompaniesApprovedByMember(MemberModel $member): array
+    {
+        $qb = $this->getRepository()->createQueryBuilder('c');
+        $qb->where('c.approver = :member')
+            ->setParameter('member', $member);
 
         return $qb->getQuery()->getResult();
     }
