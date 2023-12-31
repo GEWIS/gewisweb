@@ -1,3 +1,29 @@
+## [v4.1](https://github.com/GEWIS/gewisweb/tree/v4.1) (2023-12-31)
+
+* Added information on tutoring to the education page.
+* Added overview for similar courses.
+* Added links to directly submit/search infima on the Supremum website.
+* Added fail-safe for manually assigned roles to let them automatically expire.
+* Added proper Markdown support to `Activity`, `NewsItem`, and `OrganInformation`.
+* Added highlights to search terms in the results of a decision search.
+* Added functionality to assist with GDPR data subject requests.
+* Improved searching for specific meetings by allowing the English initialism of the meetings.
+* Improved course document display by separating exams & summaries and ordering by date.
+* Improved wording on the privacy widget to prevent confusing analytics with tracking.
+* Improved activity creation form by moving it to the more spacious administration section of the website.
+* Improved activity overview page by not removing structure and simple styling from descriptions.
+* Improved activity sign-up process.
+* Improved separation of concerns by splitting `board` and `admin` privileges.
+* Removed links to education pages that are behind a login.
+* Fixed issue where cropping images resulted in an incorrect aspect ratio.
+* Fixed issue where requesting an infimum around midnight resulted in an exception.
+* Fixed issue where the sign-up overview was not responsive on mobiles.
+* Fixed issue where activities did not appear in the news section of the front page.
+* Fixed issue where injection of HTML in activity descriptions was possible.
+* Fixed issue where existing custom pages had URLs longer than the limit.
+
+---
+
 ## [v4.0.2](https://github.com/GEWIS/gewisweb/tree/v4.0.2) (2023-09-13)
 
 * Fixed issue where (sub)decisions removed in GEWISDB were not removed during synchronisation.
