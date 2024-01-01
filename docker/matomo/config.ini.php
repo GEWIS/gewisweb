@@ -1,3 +1,4 @@
+; <?php exit; ?> DO NOT REMOVE THIS LINE
 [database]
 host = ${MATOMO_DATABASE_HOST}
 port = ${MATOMO_DATABASE_PORT}
@@ -92,7 +93,7 @@ Plugins[] = CustomDimensions
 
 Plugins[] = "LogViewer"
 Plugins[] = "SecurityInfo"
-Plugins[] = "TrackingOptOut"
+Plugins[] = "AnalyticsOptOut"
 
 [PluginsInstalled]
 PluginsInstalled[] = Diagnostics
@@ -106,4 +107,4 @@ PluginsInstalled[] = Intl
 
 PluginsInstalled[] = "LogViewer"
 PluginsInstalled[] = "SecurityInfo"
-PluginsInstalled[] = "TrackingOptOut"
+PluginsInstalled[] = "AnalyticsOptOut"

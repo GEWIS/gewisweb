@@ -1,4 +1,4 @@
-FROM matomo:4.15-fpm-alpine as gewisweb_matomo
+FROM matomo:5.0-fpm-alpine as gewisweb_matomo
 
 RUN apk add --no-cache --virtual .build-deps \
         tzdata \
@@ -21,11 +21,11 @@ RUN curl -o SecurityInfo.zip \
       && rm SecurityInfo.zip \
       && mv SecurityInfo /usr/src/matomo/plugins
 
-RUN curl -L -o TrackingOptOut.zip \
-      https://github.com/GEWIS/gewisweb-analytics-opt-out/archive/refs/tags/v1.0.2-gewisweb.zip \
-      && unzip -j TrackingOptOut.zip -d "TrackingOptOut" \
-      && rm TrackingOptOut.zip \
-      && mv TrackingOptOut /usr/src/matomo/plugins
+RUN curl -L -o AnalyticsOptOut.zip \
+      https://github.com/GEWIS/gewisweb-analytics-opt-out/archive/refs/tags/v1.0.3-gewisweb.zip \
+      && unzip -j AnalyticsOptOut.zip -d "AnalyticsOptOut" \
+      && rm AnalyticsOptOut.zip \
+      && mv AnalyticsOptOut /usr/src/matomo/plugins
 
 COPY --chown=www-data:www-data config.ini.php ./config/config.ini.php.template
 

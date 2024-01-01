@@ -13,7 +13,7 @@ let status_unavailable = document.getElementById('opt-out-status-unavailable');
 // JSONP handler.
 const trackingRequest = (action) => {
     // action is expected to be one of; `isTracked`, `doIgnore`, or `doTrack`.
-    let url = matomoDomain + '/index.php?module=API&format=json&method=TrackingOptOut.';
+    let url = matomoDomain + '/index.php?module=API&format=json&method=AnalyticsOptOut.';
     let prefix = '__jsonp_tracking';
     let target = document.head || document.getElementsByTagName("head")[0];
     let timeout = 1000;
