@@ -250,6 +250,8 @@
       <path value="$PROJECT_DIR$/vendor/jfcherng/php-diff" />
       <path value="$PROJECT_DIR$/vendor/jfcherng/php-mb-string" />
       <path value="$PROJECT_DIR$/vendor/jfcherng/php-sequence-matcher" />
+      <path value="$PROJECT_DIR$/vendor/symfony/validator" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php83" />
     </include_path>
   </component>
   <component name="PhpInterpreters">
