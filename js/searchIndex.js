@@ -8323,7 +8323,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Decision\\Model\\Enums\\MembershipTypes",
             "name": "MembershipTypes",
-            "summary": "Enum\u0020for\u0020the\u0020different\u0020membership\u0020types\u0020as\u0020defined\u0020in\u0020the\u0020bylaws\u0020of\u0020the\u0020association.",
+            "summary": "Enum\u0020for\u0020the\u0020different\u0020membership\u0020types\u0020as\u0020defined\u0020in\u0020the\u0020articles\u0020of\u0020association.",
             "url": "classes/Decision-Model-Enums-MembershipTypes.html"
         },                {
             "fqsen": "\\Decision\\Model\\Enums\\MembershipTypes\u003A\u003AgetName\u0028\u0029",
@@ -9143,7 +9143,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Decision\\Model\\Member\u003A\u003A\u0024membershipEndsOn",
             "name": "membershipEndsOn",
-            "summary": "Date\u0020when\u0020the\u0020real\u0020membership\u0020\u0028\u0022ordinary\u0022\u0020or\u0020\u0022external\u0022\u0029\u0020of\u0020the\u0020member\u0020will\u0020have\u0020ended,\u0020in\u0020other\u0020words,\u0020from\u0020this\ndate\u0020onwards\u0020they\u0020are\u0020\u0022graduate\u0022.\u0020If\u0020\u0060null\u0060,\u0020the\u0020expiration\u0020is\u0020rolling\u0020and\u0020will\u0020be\u0020silently\u0020renewed\u0020if\u0020the\u0020member\nstill\u0020meets\u0020the\u0020requirements\u0020as\u0020set\u0020forth\u0020in\u0020the\u0020bylaws\u0020and\u0020internal\u0020regulations.",
+            "summary": "Date\u0020when\u0020the\u0020real\u0020membership\u0020\u0028\u0022ordinary\u0022\u0020or\u0020\u0022external\u0022\u0029\u0020of\u0020the\u0020member\u0020will\u0020have\u0020ended,\u0020in\u0020other\u0020words,\u0020from\u0020this\ndate\u0020onwards\u0020they\u0020are\u0020\u0022graduate\u0022.\u0020If\u0020\u0060null\u0060,\u0020the\u0020expiration\u0020is\u0020rolling\u0020and\u0020will\u0020be\u0020silently\u0020renewed\u0020if\u0020the\u0020member\nstill\u0020meets\u0020the\u0020requirements\u0020as\u0020set\u0020forth\u0020in\u0020the\u0020articles\u0020of\u0020association\u0020and\u0020internal\u0020regulations.",
             "url": "classes/Decision-Model-Member.html#property_membershipEndsOn"
         },                {
             "fqsen": "\\Decision\\Model\\Member\u003A\u003A\u0024birth",
@@ -9153,7 +9153,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Decision\\Model\\Member\u003A\u003A\u0024expiration",
             "name": "expiration",
-            "summary": "The\u0020date\u0020on\u0020which\u0020the\u0020membership\u0020of\u0020the\u0020member\u0020is\u0020set\u0020to\u0020expire\u0020and\u0020will\u0020therefore\u0020have\u0020to\u0020be\u0020renewed,\u0020which\nhappens\u0020either\u0020automatically\u0020or\u0020has\u0020to\u0020be\u0020done\u0020manually,\u0020as\u0020set\u0020forth\u0020in\u0020the\u0020bylaws\u0020and\u0020internal\u0020regulations.",
+            "summary": "The\u0020date\u0020on\u0020which\u0020the\u0020membership\u0020of\u0020the\u0020member\u0020is\u0020set\u0020to\u0020expire\u0020and\u0020will\u0020therefore\u0020have\u0020to\u0020be\u0020renewed,\u0020which\nhappens\u0020either\u0020automatically\u0020or\u0020has\u0020to\u0020be\u0020done\u0020manually,\u0020as\u0020set\u0020forth\u0020in\u0020the\u0020articles\u0020of\u0020association\u0020and\u0020internal\nregulations.",
             "url": "classes/Decision-Model-Member.html#property_expiration"
         },                {
             "fqsen": "\\Decision\\Model\\Member\u003A\u003A\u0024paid",
