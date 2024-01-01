@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-19 16:08+0100\n"
-"PO-Revision-Date: 2023-11-19 16:09+0100\n"
+"POT-Creation-Date: 2024-01-01 13:40+0100\n"
+"PO-Revision-Date: 2024-01-01 13:41+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: en\n"
@@ -252,8 +252,11 @@ msgstr "Addresses"
 msgid "Admin"
 msgstr "Admin"
 
-msgid "Admin - Board and Tom"
-msgstr "Admin - Board and Tom"
+msgid "Admin - Board"
+msgstr "Admin - Board"
+
+msgid "Admin - Tom"
+msgstr "Admin - Tom"
 
 msgid "Administrator"
 msgstr "Administrator"
@@ -463,6 +466,9 @@ msgstr "Are you sure you would like to authorize %s"
 msgid "Article"
 msgstr "Article"
 
+msgid "Articles of Association"
+msgstr "Articles of Association"
+
 msgid "Artist"
 msgstr "Artist"
 
@@ -561,9 +567,6 @@ msgstr ""
 msgid "By subscribing to this activity, you agree to the terms outlined in the"
 msgstr ""
 "By subscribing to this activity, you agree to the terms outlined in the"
-
-msgid "Bylaws"
-msgstr "Bylaws"
 
 msgid "CAPTCHA"
 msgstr "CAPTCHA"
@@ -3772,6 +3775,9 @@ msgstr "You are not allowed to edit pages."
 
 msgid "You are not allowed to edit this organ's information"
 msgstr "You are not allowed to edit this organ's information"
+
+msgid "You are not allowed to export member data"
+msgstr "You are not allowed to export member data"
 
 msgid "You are not allowed to list all job categories"
 msgstr "You are not allowed to list all job categories"
