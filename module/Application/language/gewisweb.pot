@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: GEWISweb v2.8.6-570-g8364f44e3-dirty\n"
+"Project-Id-Version: GEWISweb v2.8.6-584-g9df01abcc-dirty\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-19 16:08+0100\n"
+"POT-Creation-Date: 2024-01-01 13:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -243,7 +243,10 @@ msgstr ""
 msgid "Admin"
 msgstr ""
 
-msgid "Admin - Board and Tom"
+msgid "Admin - Board"
+msgstr ""
+
+msgid "Admin - Tom"
 msgstr ""
 
 msgid "Administrator"
@@ -436,6 +439,9 @@ msgstr ""
 msgid "Article"
 msgstr ""
 
+msgid "Articles of Association"
+msgstr ""
+
 msgid "Artist"
 msgstr ""
 
@@ -525,9 +531,6 @@ msgid ""
 msgstr ""
 
 msgid "By subscribing to this activity, you agree to the terms outlined in the"
-msgstr ""
-
-msgid "Bylaws"
 msgstr ""
 
 msgid "CAPTCHA"
@@ -3542,6 +3545,9 @@ msgid "You are not allowed to edit pages."
 msgstr ""
 
 msgid "You are not allowed to edit this organ's information"
+msgstr ""
+
+msgid "You are not allowed to export member data"
 msgstr ""
 
 msgid "You are not allowed to list all job categories"

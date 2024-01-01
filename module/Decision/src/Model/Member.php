@@ -131,7 +131,7 @@ class Member
     /**
      * Date when the real membership ("ordinary" or "external") of the member will have ended, in other words, from this
      * date onwards they are "graduate". If `null`, the expiration is rolling and will be silently renewed if the member
-     * still meets the requirements as set forth in the bylaws and internal regulations.
+     * still meets the requirements as set forth in the articles of association and internal regulations.
      */
     #[Column(
         type: 'date',
@@ -147,7 +147,8 @@ class Member
 
     /**
      * The date on which the membership of the member is set to expire and will therefore have to be renewed, which
-     * happens either automatically or has to be done manually, as set forth in the bylaws and internal regulations.
+     * happens either automatically or has to be done manually, as set forth in the articles of association and internal
+     * regulations.
      */
     #[Column(type: 'date')]
     protected DateTime $expiration;

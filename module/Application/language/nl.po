@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-19 16:08+0100\n"
-"PO-Revision-Date: 2023-11-19 16:12+0100\n"
+"POT-Creation-Date: 2024-01-01 13:40+0100\n"
+"PO-Revision-Date: 2024-01-01 13:42+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: nl\n"
@@ -253,8 +253,11 @@ msgstr "Adressen"
 msgid "Admin"
 msgstr "Admin"
 
-msgid "Admin - Board and Tom"
-msgstr "Admin - Bestuur en Tom"
+msgid "Admin - Board"
+msgstr "Admin - Bestuur"
+
+msgid "Admin - Tom"
+msgstr "Admin - Tom"
 
 msgid "Administrator"
 msgstr "Administrator"
@@ -464,6 +467,9 @@ msgstr "Weet je zeker dat je %s wilt machtigen"
 msgid "Article"
 msgstr "Artikel"
 
+msgid "Articles of Association"
+msgstr "Statuten"
+
 msgid "Artist"
 msgstr "Artiest"
 
@@ -563,9 +569,6 @@ msgid "By subscribing to this activity, you agree to the terms outlined in the"
 msgstr ""
 "Door je in te schrijven voor deze activiteit ga je akkoord met de "
 "voorwaarden in het"
-
-msgid "Bylaws"
-msgstr "Statuten"
 
 msgid "CAPTCHA"
 msgstr "CAPTCHA"
@@ -3819,6 +3822,9 @@ msgstr "Je hebt niet de rechten om pagina's te wijzigen."
 
 msgid "You are not allowed to edit this organ's information"
 msgstr "Je hebt niet de rechten om de informatie van dit orgaan te wijzigen"
+
+msgid "You are not allowed to export member data"
+msgstr "Je hebt niet de rechten om informatie over leden te exporteren"
 
 msgid "You are not allowed to list all job categories"
 msgstr "Je hebt niet de rechten om alle vacaturecategorieën te bekijken"
