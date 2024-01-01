@@ -57,10 +57,9 @@ class ApiAppAuthentication extends BaseMapper
     public function getMemberAuthenticationsPerApiApp(MemberModel $member): array
     {
         $qb = $this->getRepository()->createQueryBuilder('a');
-        $qb->select('a, app')
-            ->leftJoin(ApiAppModel::class, 'app', 'WITH', 'a.apiApp = app.id')
+        $qb->select('a')
             ->where('a.user = :user_id')
-            ->groupBy('app.appId')
+            ->groupBy('a.apiApp')
             ->orderBy('a.time', 'DESC')
             ->setParameter('user_id', $member->getLidnr());
 

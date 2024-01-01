@@ -126,7 +126,7 @@ class SignupFieldValue
         return [
             'id' => $this->getId(),
             'value' => $this->getValue(),
-            'option' => $this->getOption()->toGdprArray(),
+            'option' => $this->getOption()?->toGdprArray(),
         ];
     }
 }
