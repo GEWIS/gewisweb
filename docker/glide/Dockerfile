@@ -1,4 +1,4 @@
-FROM php:8.2-fpm-alpine as php-target
+FROM php:8.3-fpm-alpine as php-target
 
 RUN apk add --no-cache --virtual .build-deps \
         $PHPIZE_DEPS \

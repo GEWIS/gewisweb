@@ -11,7 +11,7 @@ RUN msgfmt en.po -o en -c --strict -v \
     && msgfmt nl.po -o nl -c --strict -v
 
 # Create a base image with all PHP dependencies.
-FROM php:8.2-fpm-alpine as gewisweb_web_production_base
+FROM php:8.3-fpm-alpine as gewisweb_web_production_base
 WORKDIR /code
 
 RUN apk add --no-cache --virtual .build-deps \
