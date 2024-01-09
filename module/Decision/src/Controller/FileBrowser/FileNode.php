@@ -277,9 +277,10 @@ class FileNode
     ];
 
     public function __construct(
-        private readonly string $kind,
-        private readonly string $fullPath,
         private readonly string $name,
+        private readonly string $fullPath,
+        private readonly string $kind,
+        private readonly string $root,
     ) {
         if (
             'dir' !== $this->kind
@@ -298,7 +299,7 @@ class FileNode
             $filenameSplitted = explode('.', $name);
             $this->extension = strtolower(end($filenameSplitted));
 
-            if (null !== ($lastModified = filemtime($this->fullPath))) {
+            if (false !== ($lastModified = filemtime($this->root . $this->fullPath))) {
                 $this->lastModified = DateTime::createFromFormat(
                     'U',
                     (string) $lastModified,
