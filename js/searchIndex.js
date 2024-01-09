@@ -7191,10 +7191,20 @@ Search.appendIndex(
             "summary": "Get\u0020corresponding\u0020FontAwesome\u0020file\u0020icon.",
             "url": "classes/Decision-Controller-FileBrowser-FileNode.html#method_getFileIcon"
         },                {
+            "fqsen": "\\Decision\\Controller\\FileBrowser\\FileNode\u003A\u003AgetLastModified\u0028\u0029",
+            "name": "getLastModified",
+            "summary": "Get\u0020when\u0020the\u0020file\u0020was\u0020last\u0020modified.",
+            "url": "classes/Decision-Controller-FileBrowser-FileNode.html#method_getLastModified"
+        },                {
             "fqsen": "\\Decision\\Controller\\FileBrowser\\FileNode\u003A\u003A\u0024extension",
             "name": "extension",
             "summary": "The\u0020extension\u0020\u0028according\u0020to\u0020the\u0020file\u0020name\u0029.",
             "url": "classes/Decision-Controller-FileBrowser-FileNode.html#property_extension"
+        },                {
+            "fqsen": "\\Decision\\Controller\\FileBrowser\\FileNode\u003A\u003A\u0024lastModified",
+            "name": "lastModified",
+            "summary": "When\u0020the\u0020file\u0020was\u0020last\u0020modified.\u0020Is\u0020\u0060null\u0060\u0020when\u0020the\u0020file\u0020node\u0020concerns\u0020a\u0020directory\u0020or\u0020the\u0020time\u0020cannot\u0020be\u0020read.",
+            "url": "classes/Decision-Controller-FileBrowser-FileNode.html#property_lastModified"
         },                {
             "fqsen": "\\Decision\\Controller\\FileBrowser\\FileNode\u003A\u003A\u0024iconExtensions",
             "name": "iconExtensions",
