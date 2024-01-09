@@ -5,7 +5,7 @@ rm -rf /code/public/publicarchive/*
 # Download the new files
 sshpass -p "${SSH_PASSWORD}" sftp -o StrictHostKeyChecking=no "${SSH_USERNAME}"@"${SSH_REMOTE}" <<!
 cd "/datas/Public Archive/"
-mget -r * /code/public/publicarchive/
+mget -r -p * /code/public/publicarchive/
 quit
 !
 

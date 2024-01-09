@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Decision\Controller\FileBrowser;
 
+use DateTime;
+use DateTimeZone;
 use RuntimeException;
 
 use function end;
 use function explode;
+use function filemtime;
 use function in_array;
 use function mb_strtolower;
 use function strtolower;
@@ -24,6 +27,11 @@ class FileNode
      * @var string extension according to the filesystem
      */
     private string $extension;
+
+    /**
+     * When the file was last modified. Is `null` when the file node concerns a directory or the time cannot be read.
+     */
+    private ?DateTime $lastModified = null;
 
     /**
      * File extensions per FontAwesome icon.
@@ -289,6 +297,13 @@ class FileNode
         } else {
             $filenameSplitted = explode('.', $name);
             $this->extension = strtolower(end($filenameSplitted));
+
+            if (null !== ($lastModified = filemtime($this->fullPath))) {
+                $this->lastModified = DateTime::createFromFormat(
+                    'U',
+                    (string) $lastModified,
+                )->setTimezone(new DateTimeZone('Europe/Amsterdam'));
+            }
         }
     }
 
@@ -346,5 +361,13 @@ class FileNode
         }
 
         return 'fa-file';
+    }
+
+    /**
+     * Get when the file was last modified.
+     */
+    public function getLastModified(): ?DateTime
+    {
+        return $this->lastModified;
     }
 }
