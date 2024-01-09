@@ -33,6 +33,7 @@ class WatermarkService
 
     /**
      * @psalm-param TUserAuth $authService
+     * @psalm-param array{tag: string} $watermarkConfig
      */
     public function __construct(
         private readonly AuthenticationService $authService,
@@ -72,8 +73,8 @@ class WatermarkService
             // Do the actual watermarking.
             $pdf->setFont(self::FONT, '', self::FONT_SIZE_DIAGONAL);
             $pdf->setTextColor(212, 0, 0);
-            // Set alpha to 50% for the diagonal watermark, the horizontal watermark will have a higher alpha.
-            $pdf->setAlpha(0.5);
+            // Set alpha to 35% for the diagonal watermark, the horizontal watermark will have a higher alpha.
+            $pdf->setAlpha(0.35);
 
             // Determine the position of the diagonal watermark, it should be (almost) centred on the page.
             $width = $pdf->getPageWidth();
@@ -160,11 +161,21 @@ class WatermarkService
         $pdf->AddPage($templateSpecs['orientation']);
         $pdf->useTemplate($templateIndex, 0, 0, $templateSpecs['width'], $templateSpecs['height'], true);
         $pdf->setFont(self::TAG_FONT, '', 6);
-        
+
         // Set text color to the same color as the image at 0 0
         $pdf->setTextColor(255, 255, 255);
         $pdf->setXY(0, 0);
         $pdf->Write(0, $tag);
+
+        // add the rest of the pages
+        for ($page = 2; $page <= $pages; $page++) {
+            $templateIndex = $pdf->importPage($page);
+            $templateSpecs = $pdf->getTemplateSize($templateIndex);
+            $pdf->setPrintHeader(false);
+            $pdf->setPrintFooter(false);
+            $pdf->AddPage($templateSpecs['orientation']);
+            $pdf->useTemplate($templateIndex, 0, 0, $templateSpecs['width'], $templateSpecs['height'], true);
+        }
 
         $tempTaggedFile = $tempName . '-tagged.pdf';
         $pdf->Output($tempTaggedFile, 'F');
