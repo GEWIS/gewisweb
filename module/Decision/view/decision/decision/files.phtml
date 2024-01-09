@@ -76,6 +76,7 @@ $this->headTitle($this->translate('Public Archive') . ' - [' . ($folderName === 
                     <div class="fas fa-file-alt"></div>
                 </th>
                 <th><?= $this->translate('Filename') ?></th>
+                <th><?= $this->translate('Last Modified') ?></th>
             </tr>
             </thead>
             <tbody>
@@ -91,6 +92,7 @@ $this->headTitle($this->translate('Public Archive') . ' - [' . ($folderName === 
                     <td><a style="display: block; height: 100%; width: 100%"
                            href="<?= $escaper->escapeHtmlAttr($parentUrl) ?>"><?= $this->translate(".. Move up a folder") ?></a>
                     </td>
+                    <td></td>
                 </tr>
             <?php endif; ?>
             <?php if (empty($folder)): ?>
@@ -98,7 +100,7 @@ $this->headTitle($this->translate('Public Archive') . ' - [' . ($folderName === 
                     <td>
                         <div class="fas fa-ban"></div>
                     </td>
-                    <td><?= $this->translate('Empty folder') ?></td>
+                    <td colspan="2"><?= $this->translate('Empty folder') ?></td>
                 </tr>
             <?php endif; ?>
             <?php foreach ($folder as $node): ?>
@@ -115,6 +117,7 @@ $this->headTitle($this->translate('Public Archive') . ' - [' . ($folderName === 
                         <td><a style="display: block; height: 100%; width: 100%"
                                href="<?= $escaper->escapeHtmlAttr($url) ?>"><?= $escaper->escapeHtml($node->getName()) ?></a>
                         </td>
+                        <td></td>
                     </tr>
                 <?php endif; ?>
             <?php endforeach; ?>
@@ -132,6 +135,11 @@ $this->headTitle($this->translate('Public Archive') . ' - [' . ($folderName === 
                         <td><a style="display: block; height: 100%; width: 100%"
                                href="<?= $escaper->escapeHtmlAttr($url) ?>"><?= $escaper->escapeHtml($node->getName()) ?></a>
                         </td>
+                        <?php if (null !== ($lastModified = $node->getLastModified())): ?>
+                            <td><?= $lastModified->format('Y-m-d H:i:s') ?></td>
+                        <?php else: ?>
+                            <td></td>
+                        <?php endif; ?>
                     </tr>
                 <?php endif; ?>
             <?php endforeach; ?>
