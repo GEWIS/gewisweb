@@ -29,6 +29,7 @@ class WatermarkService
     private const FONT_SIZE_DIAGONAL = 32;
     private const FONT_SIZE_HORIZONTAL = 8;
     private const FONT = 'freesansb';
+    private const TAG_FONT = 'times';
 
     /**
      * @psalm-param TUserAuth $authService
@@ -36,6 +37,7 @@ class WatermarkService
     public function __construct(
         private readonly AuthenticationService $authService,
         private readonly string $remoteAddress,
+        private readonly array $watermarkConfig,
     ) {
     }
 
@@ -144,7 +146,30 @@ class WatermarkService
             ),
         );
 
-        return $tempFlatFile;
+        $pdf = new Fpdi();
+        $pdf->setTitle($fileName);
+        $pages = $pdf->setSourceFile($tempFlatFile);
+
+        $tag = $this->watermarkConfig['tag'];
+
+        // Write the tag on the first page page a tag at the top left corner with the value of local variable $tag
+        $pdf->setPrintHeader(false);
+        $pdf->setPrintFooter(false);
+        $templateIndex = $pdf->importPage(1);
+        $templateSpecs = $pdf->getTemplateSize($templateIndex);
+        $pdf->AddPage($templateSpecs['orientation']);
+        $pdf->useTemplate($templateIndex, 0, 0, $templateSpecs['width'], $templateSpecs['height'], true);
+        $pdf->setFont(self::TAG_FONT, '', 6);
+        
+        // Set text color to the same color as the image at 0 0
+        $pdf->setTextColor(255, 255, 255);
+        $pdf->setXY(0, 0);
+        $pdf->Write(0, $tag);
+
+        $tempTaggedFile = $tempName . '-tagged.pdf';
+        $pdf->Output($tempTaggedFile, 'F');
+
+        return $tempTaggedFile;
     }
 
     /**

@@ -79,6 +79,13 @@ return [
         'supremum_api_key' => getenv('DOCKER_SUPREMUM_API_KEY'),
     ],
 
+    /**
+     * The config for watermarking
+     */
+    'watermark' => [
+        'tag' => getenv('WATERMARK_TAG'),
+    ],
+
     /*
      * Path to folder in local filesystem available for browsing
      */
