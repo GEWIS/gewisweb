@@ -7211,20 +7211,25 @@ Search.appendIndex(
             "summary": "File\u0020extensions\u0020per\u0020FontAwesome\u0020icon.",
             "url": "classes/Decision-Controller-FileBrowser-FileNode.html#property_iconExtensions"
         },                {
-            "fqsen": "\\Decision\\Controller\\FileBrowser\\FileNode\u003A\u003A\u0024kind",
-            "name": "kind",
+            "fqsen": "\\Decision\\Controller\\FileBrowser\\FileNode\u003A\u003A\u0024name",
+            "name": "name",
             "summary": "",
-            "url": "classes/Decision-Controller-FileBrowser-FileNode.html#property_kind"
+            "url": "classes/Decision-Controller-FileBrowser-FileNode.html#property_name"
         },                {
             "fqsen": "\\Decision\\Controller\\FileBrowser\\FileNode\u003A\u003A\u0024fullPath",
             "name": "fullPath",
             "summary": "",
             "url": "classes/Decision-Controller-FileBrowser-FileNode.html#property_fullPath"
         },                {
-            "fqsen": "\\Decision\\Controller\\FileBrowser\\FileNode\u003A\u003A\u0024name",
-            "name": "name",
+            "fqsen": "\\Decision\\Controller\\FileBrowser\\FileNode\u003A\u003A\u0024kind",
+            "name": "kind",
             "summary": "",
-            "url": "classes/Decision-Controller-FileBrowser-FileNode.html#property_name"
+            "url": "classes/Decision-Controller-FileBrowser-FileNode.html#property_kind"
+        },                {
+            "fqsen": "\\Decision\\Controller\\FileBrowser\\FileNode\u003A\u003A\u0024root",
+            "name": "root",
+            "summary": "",
+            "url": "classes/Decision-Controller-FileBrowser-FileNode.html#property_root"
         },                {
             "fqsen": "\\Decision\\Controller\\FileBrowser\\FileReader",
             "name": "FileReader",
