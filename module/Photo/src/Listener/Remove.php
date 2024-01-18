@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Photo\Listener;
 
-use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PreRemoveEventArgs;
 use Photo\Model\Album as AlbumModel;
 use Photo\Model\Photo as PhotoModel;
 use Photo\Service\Album as AlbumService;
@@ -22,9 +22,9 @@ class Remove
     ) {
     }
 
-    public function preRemove(LifecycleEventArgs $eventArgs): void
+    public function preRemove(PreRemoveEventArgs $eventArgs): void
     {
-        $entity = $eventArgs->getEntity();
+        $entity = $eventArgs->getObject();
 
         if ($entity instanceof AlbumModel) {
             $this->albumRemoved($entity);

@@ -166,6 +166,10 @@ class Photo
      */
     public function deletePhotoFiles(PhotoModel $photo): void
     {
+        if (1 !== $this->photoMapper->count(['path' => $photo->getPath()])) {
+            return;
+        }
+
         $this->deletePhotoFile($photo->getPath());
     }
 
