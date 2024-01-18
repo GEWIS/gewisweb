@@ -37,9 +37,9 @@ class GlideUrl extends AbstractHelper
             $params['fm'] = 'webp';
         }
 
-        // If the quality is not specifically defined, default to 80 (90 is standard).
+        // If the quality is not specifically defined, default to 90.
         if (!isset($params['q'])) {
-            $params['q'] = 80;
+            $params['q'] = 90;
         }
 
         return $this->urlBuilder->getUrl($imagePath, $params);

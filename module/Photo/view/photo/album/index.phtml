@@ -247,6 +247,15 @@ $this->scriptUrl()->requireUrl('member/search')
                     $weeklyPhoto = null;
                     if (!($album instanceof WeeklyAlbum)) {
                         $weeklyPhoto = $item->getWeeklyPhoto();
+
+                        if (null !== $weeklyPhoto) {
+                            $thumbnailSize = array_map(
+                                function($value) {
+                                    return round($value * 1.75);
+                                },
+                                $thumbnailSize,
+                            );
+                        }
                     }
                     ?>
                     <figure
