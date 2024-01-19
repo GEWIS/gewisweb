@@ -13501,15 +13501,25 @@ Search.appendIndex(
             "summary": "Retrieves\u0020the\u0020main\u0020photo\u0020admin\u0020index\u0020page.",
             "url": "classes/Photo-Controller-AlbumAdminController.html#method_indexAction"
         },                {
+            "fqsen": "\\Photo\\Controller\\AlbumAdminController\u003A\u003AviewAction\u0028\u0029",
+            "name": "viewAction",
+            "summary": "Show\u0020a\u0020specific\u0020album.",
+            "url": "classes/Photo-Controller-AlbumAdminController.html#method_viewAction"
+        },                {
+            "fqsen": "\\Photo\\Controller\\AlbumAdminController\u003A\u003AyearAction\u0028\u0029",
+            "name": "yearAction",
+            "summary": "Show\u0020all\u0020albums\u0020in\u0020a\u0020specific\u0020year.",
+            "url": "classes/Photo-Controller-AlbumAdminController.html#method_yearAction"
+        },                {
+            "fqsen": "\\Photo\\Controller\\AlbumAdminController\u003A\u003AundatedAction\u0028\u0029",
+            "name": "undatedAction",
+            "summary": "Show\u0020all\u0020albums\u0020that\u0020do\u0020not\u0020have\u0020a\u0020date,\u0020most\u0020of\u0020these\u0020will\u0020be\u0020recently\u0020created\u0020albums.",
+            "url": "classes/Photo-Controller-AlbumAdminController.html#method_undatedAction"
+        },                {
             "fqsen": "\\Photo\\Controller\\AlbumAdminController\u003A\u003AcreateAction\u0028\u0029",
             "name": "createAction",
             "summary": "Retrieves\u0020the\u0020album\u0020creation\u0020form\u0020and\u0020saves\u0020data\u0020if\u0020needed.",
             "url": "classes/Photo-Controller-AlbumAdminController.html#method_createAction"
-        },                {
-            "fqsen": "\\Photo\\Controller\\AlbumAdminController\u003A\u003ApageAction\u0028\u0029",
-            "name": "pageAction",
-            "summary": "Retrieves\u0020photos\u0020on\u0020a\u0020certain\u0020page.",
-            "url": "classes/Photo-Controller-AlbumAdminController.html#method_pageAction"
         },                {
             "fqsen": "\\Photo\\Controller\\AlbumAdminController\u003A\u003AeditAction\u0028\u0029",
             "name": "editAction",
@@ -13541,6 +13551,16 @@ Search.appendIndex(
             "summary": "Regenerates\u0020the\u0020cover\u0020photo\u0020for\u0020the\u0020album.",
             "url": "classes/Photo-Controller-AlbumAdminController.html#method_coverAction"
         },                {
+            "fqsen": "\\Photo\\Controller\\AlbumAdminController\u003A\u003A\u0024aclService",
+            "name": "aclService",
+            "summary": "",
+            "url": "classes/Photo-Controller-AlbumAdminController.html#property_aclService"
+        },                {
+            "fqsen": "\\Photo\\Controller\\AlbumAdminController\u003A\u003A\u0024translator",
+            "name": "translator",
+            "summary": "",
+            "url": "classes/Photo-Controller-AlbumAdminController.html#property_translator"
+        },                {
             "fqsen": "\\Photo\\Controller\\AlbumAdminController\u003A\u003A\u0024adminService",
             "name": "adminService",
             "summary": "",
@@ -13550,6 +13570,11 @@ Search.appendIndex(
             "name": "albumService",
             "summary": "",
             "url": "classes/Photo-Controller-AlbumAdminController.html#property_albumService"
+        },                {
+            "fqsen": "\\Photo\\Controller\\AlbumAdminController\u003A\u003A\u0024photoConfig",
+            "name": "photoConfig",
+            "summary": "",
+            "url": "classes/Photo-Controller-AlbumAdminController.html#property_photoConfig"
         },                {
             "fqsen": "\\Photo\\Controller\\AlbumController",
             "name": "AlbumController",
@@ -13603,7 +13628,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Photo\\Controller\\ApiController\u003A\u003AlistAction\u0028\u0029",
             "name": "listAction",
-            "summary": "Retrieve\u0020a\u0020list\u0020of\u0020all\u0020photo\u0027s\u0020in\u0020an\u0020album.",
+            "summary": "Retrieve\u0020a\u0020list\u0020of\u0020all\u0020photos\u0020in\u0020an\u0020album.",
             "url": "classes/Photo-Controller-ApiController.html#method_listAction"
         },                {
             "fqsen": "\\Photo\\Controller\\ApiController\u003A\u003AdetailsAction\u0028\u0029",
@@ -13630,6 +13655,11 @@ Search.appendIndex(
             "name": "voteMapper",
             "summary": "",
             "url": "classes/Photo-Controller-ApiController.html#property_voteMapper"
+        },                {
+            "fqsen": "\\Photo\\Controller\\ApiController\u003A\u003A\u0024albumService",
+            "name": "albumService",
+            "summary": "",
+            "url": "classes/Photo-Controller-ApiController.html#property_albumService"
         },                {
             "fqsen": "\\Photo\\Controller\\Factory\\AlbumAdminControllerFactory",
             "name": "AlbumAdminControllerFactory",
@@ -13681,16 +13711,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Photo-Controller-Factory-PhotoControllerFactory.html#method___invoke"
         },                {
-            "fqsen": "\\Photo\\Controller\\Factory\\Plugin\\AlbumPluginFactory",
-            "name": "AlbumPluginFactory",
-            "summary": "",
-            "url": "classes/Photo-Controller-Factory-Plugin-AlbumPluginFactory.html"
-        },                {
-            "fqsen": "\\Photo\\Controller\\Factory\\Plugin\\AlbumPluginFactory\u003A\u003A__invoke\u0028\u0029",
-            "name": "__invoke",
-            "summary": "",
-            "url": "classes/Photo-Controller-Factory-Plugin-AlbumPluginFactory.html#method___invoke"
-        },                {
             "fqsen": "\\Photo\\Controller\\Factory\\TagControllerFactory",
             "name": "TagControllerFactory",
             "summary": "",
@@ -13710,11 +13730,6 @@ Search.appendIndex(
             "name": "__construct",
             "summary": "",
             "url": "classes/Photo-Controller-PhotoAdminController.html#method___construct"
-        },                {
-            "fqsen": "\\Photo\\Controller\\PhotoAdminController\u003A\u003AindexAction\u0028\u0029",
-            "name": "indexAction",
-            "summary": "Shows\u0020an\u0020admin\u0020page\u0020for\u0020the\u0020specified\u0020photo.",
-            "url": "classes/Photo-Controller-PhotoAdminController.html#method_indexAction"
         },                {
             "fqsen": "\\Photo\\Controller\\PhotoAdminController\u003A\u003AmoveAction\u0028\u0029",
             "name": "moveAction",
@@ -13801,81 +13816,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Photo-Controller-PhotoController.html#property_photoConfig"
         },                {
-            "fqsen": "\\Photo\\Controller\\Plugin\\AlbumPaginatorAdapter",
-            "name": "AlbumPaginatorAdapter",
-            "summary": "Paginator\u0020for\u0020album\u0020pages.",
-            "url": "classes/Photo-Controller-Plugin-AlbumPaginatorAdapter.html"
-        },                {
-            "fqsen": "\\Photo\\Controller\\Plugin\\AlbumPaginatorAdapter\u003A\u003A__construct\u0028\u0029",
-            "name": "__construct",
-            "summary": "",
-            "url": "classes/Photo-Controller-Plugin-AlbumPaginatorAdapter.html#method___construct"
-        },                {
-            "fqsen": "\\Photo\\Controller\\Plugin\\AlbumPaginatorAdapter\u003A\u003AgetItems\u0028\u0029",
-            "name": "getItems",
-            "summary": "Returns\u0020an\u0020array\u0020of\u0020items\u0020for\u0020a\u0020page.",
-            "url": "classes/Photo-Controller-Plugin-AlbumPaginatorAdapter.html#method_getItems"
-        },                {
-            "fqsen": "\\Photo\\Controller\\Plugin\\AlbumPaginatorAdapter\u003A\u003A\u0024count",
-            "name": "count",
-            "summary": "Item\u0020count.",
-            "url": "classes/Photo-Controller-Plugin-AlbumPaginatorAdapter.html#property_count"
-        },                {
-            "fqsen": "\\Photo\\Controller\\Plugin\\AlbumPaginatorAdapter\u003A\u003A\u0024photoService",
-            "name": "photoService",
-            "summary": "",
-            "url": "classes/Photo-Controller-Plugin-AlbumPaginatorAdapter.html#property_photoService"
-        },                {
-            "fqsen": "\\Photo\\Controller\\Plugin\\AlbumPaginatorAdapter\u003A\u003A\u0024albumService",
-            "name": "albumService",
-            "summary": "",
-            "url": "classes/Photo-Controller-Plugin-AlbumPaginatorAdapter.html#property_albumService"
-        },                {
-            "fqsen": "\\Photo\\Controller\\Plugin\\AlbumPaginatorAdapter\u003A\u003A\u0024album",
-            "name": "album",
-            "summary": "",
-            "url": "classes/Photo-Controller-Plugin-AlbumPaginatorAdapter.html#property_album"
-        },                {
-            "fqsen": "\\Photo\\Controller\\Plugin\\AlbumPlugin",
-            "name": "AlbumPlugin",
-            "summary": "This\u0020plugin\u0020helps\u0020with\u0020rendering\u0020the\u0020pages\u0020doing\u0020album\u0020related\u0020stuff.",
-            "url": "classes/Photo-Controller-Plugin-AlbumPlugin.html"
-        },                {
-            "fqsen": "\\Photo\\Controller\\Plugin\\AlbumPlugin\u003A\u003A__construct\u0028\u0029",
-            "name": "__construct",
-            "summary": "",
-            "url": "classes/Photo-Controller-Plugin-AlbumPlugin.html#method___construct"
-        },                {
-            "fqsen": "\\Photo\\Controller\\Plugin\\AlbumPlugin\u003A\u003AgetAlbumAsArray\u0028\u0029",
-            "name": "getAlbumAsArray",
-            "summary": "Gets\u0020an\u0020album\u0020page,\u0020but\u0020returns\u0020all\u0020objects\u0020as\u0020assoc\u0020arrays.",
-            "url": "classes/Photo-Controller-Plugin-AlbumPlugin.html#method_getAlbumAsArray"
-        },                {
-            "fqsen": "\\Photo\\Controller\\Plugin\\AlbumPlugin\u003A\u003AgetAlbumPageAsArray\u0028\u0029",
-            "name": "getAlbumPageAsArray",
-            "summary": "Gets\u0020an\u0020album\u0020page,\u0020but\u0020returns\u0020all\u0020objects\u0020as\u0020assoc\u0020arrays.",
-            "url": "classes/Photo-Controller-Plugin-AlbumPlugin.html#method_getAlbumPageAsArray"
-        },                {
-            "fqsen": "\\Photo\\Controller\\Plugin\\AlbumPlugin\u003A\u003AgetAlbumPage\u0028\u0029",
-            "name": "getAlbumPage",
-            "summary": "Retrieves\u0020all\u0020data\u0020needed\u0020to\u0020display\u0020a\u0020page\u0020of\u0020an\u0020album.",
-            "url": "classes/Photo-Controller-Plugin-AlbumPlugin.html#method_getAlbumPage"
-        },                {
-            "fqsen": "\\Photo\\Controller\\Plugin\\AlbumPlugin\u003A\u003A\u0024albumService",
-            "name": "albumService",
-            "summary": "",
-            "url": "classes/Photo-Controller-Plugin-AlbumPlugin.html#property_albumService"
-        },                {
-            "fqsen": "\\Photo\\Controller\\Plugin\\AlbumPlugin\u003A\u003A\u0024photoService",
-            "name": "photoService",
-            "summary": "",
-            "url": "classes/Photo-Controller-Plugin-AlbumPlugin.html#property_photoService"
-        },                {
-            "fqsen": "\\Photo\\Controller\\Plugin\\AlbumPlugin\u003A\u003A\u0024photoConfig",
-            "name": "photoConfig",
-            "summary": "",
-            "url": "classes/Photo-Controller-Plugin-AlbumPlugin.html#property_photoConfig"
-        },                {
             "fqsen": "\\Photo\\Controller\\TagController",
             "name": "TagController",
             "summary": "",
@@ -13911,35 +13851,20 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Photo-Controller-TagController.html#property_photoService"
         },                {
-            "fqsen": "\\Photo\\Form\\CreateAlbum",
-            "name": "CreateAlbum",
+            "fqsen": "\\Photo\\Form\\Album",
+            "name": "Album",
             "summary": "",
-            "url": "classes/Photo-Form-CreateAlbum.html"
+            "url": "classes/Photo-Form-Album.html"
         },                {
-            "fqsen": "\\Photo\\Form\\CreateAlbum\u003A\u003A__construct\u0028\u0029",
+            "fqsen": "\\Photo\\Form\\Album\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
             "summary": "",
-            "url": "classes/Photo-Form-CreateAlbum.html#method___construct"
+            "url": "classes/Photo-Form-Album.html#method___construct"
         },                {
-            "fqsen": "\\Photo\\Form\\CreateAlbum\u003A\u003AgetInputFilterSpecification\u0028\u0029",
+            "fqsen": "\\Photo\\Form\\Album\u003A\u003AgetInputFilterSpecification\u0028\u0029",
             "name": "getInputFilterSpecification",
             "summary": "",
-            "url": "classes/Photo-Form-CreateAlbum.html#method_getInputFilterSpecification"
-        },                {
-            "fqsen": "\\Photo\\Form\\EditAlbum",
-            "name": "EditAlbum",
-            "summary": "",
-            "url": "classes/Photo-Form-EditAlbum.html"
-        },                {
-            "fqsen": "\\Photo\\Form\\EditAlbum\u003A\u003A__construct\u0028\u0029",
-            "name": "__construct",
-            "summary": "",
-            "url": "classes/Photo-Form-EditAlbum.html#method___construct"
-        },                {
-            "fqsen": "\\Photo\\Form\\EditAlbum\u003A\u003AgetInputFilterSpecification\u0028\u0029",
-            "name": "getInputFilterSpecification",
-            "summary": "",
-            "url": "classes/Photo-Form-EditAlbum.html#method_getInputFilterSpecification"
+            "url": "classes/Photo-Form-Album.html#method_getInputFilterSpecification"
         },                {
             "fqsen": "\\Photo\\Listener\\AlbumDate",
             "name": "AlbumDate",
@@ -14050,16 +13975,6 @@ Search.appendIndex(
             "name": "getRandomPhotosFromAlbums",
             "summary": "Retrieves\u0020some\u0020random\u0020photos\u0020from\u0020the\u0020specified\u0020albums.\u0020If\u0020the\u0020amount\u0020of\u0020available\u0020photos\u0020is\u0020smaller\u0020than\u0020the\nrequested\u0020count,\u0020fewer\u0020photos\u0020will\u0020be\u0020returned.",
             "url": "classes/Photo-Mapper-Photo.html#method_getRandomPhotosFromAlbums"
-        },                {
-            "fqsen": "\\Photo\\Mapper\\Photo\u003A\u003AgetNextPhoto\u0028\u0029",
-            "name": "getNextPhoto",
-            "summary": "Returns\u0020the\u0020next\u0020photo\u0020in\u0020the\u0020album\u0020to\u0020display.",
-            "url": "classes/Photo-Mapper-Photo.html#method_getNextPhoto"
-        },                {
-            "fqsen": "\\Photo\\Mapper\\Photo\u003A\u003AgetPreviousPhoto\u0028\u0029",
-            "name": "getPreviousPhoto",
-            "summary": "Returns\u0020the\u0020previous\u0020photo\u0020in\u0020the\u0020album\u0020to\u0020display.",
-            "url": "classes/Photo-Mapper-Photo.html#method_getPreviousPhoto"
         },                {
             "fqsen": "\\Photo\\Mapper\\Photo\u003A\u003AgetPhotoByData\u0028\u0029",
             "name": "getPhotoByData",
@@ -14286,6 +14201,21 @@ Search.appendIndex(
             "summary": "Set\u0020the\u0020cover\u0020photo\u0020for\u0020the\u0020album.",
             "url": "classes/Photo-Model-Album.html#method_setCoverPath"
         },                {
+            "fqsen": "\\Photo\\Model\\Album\u003A\u003AgetPublished\u0028\u0029",
+            "name": "getPublished",
+            "summary": "Get\u0020the\u0020published\u0020state.",
+            "url": "classes/Photo-Model-Album.html#method_getPublished"
+        },                {
+            "fqsen": "\\Photo\\Model\\Album\u003A\u003AisPublished\u0028\u0029",
+            "name": "isPublished",
+            "summary": "Whether\u0020this\u0020album\u0020is\u0020published.",
+            "url": "classes/Photo-Model-Album.html#method_isPublished"
+        },                {
+            "fqsen": "\\Photo\\Model\\Album\u003A\u003AsetPublished\u0028\u0029",
+            "name": "setPublished",
+            "summary": "Set\u0020the\u0020published\u0020state.",
+            "url": "classes/Photo-Model-Album.html#method_setPublished"
+        },                {
             "fqsen": "\\Photo\\Model\\Album\u003A\u003AgetPhotoCount\u0028\u0029",
             "name": "getPhotoCount",
             "summary": "Get\u0020the\u0020amount\u0020of\u0020photos\u0020in\u0020the\u0020album.",
@@ -14335,6 +14265,11 @@ Search.appendIndex(
             "name": "coverPath",
             "summary": "The\u0020cover\u0020photo\u0020to\u0020display\u0020with\u0020the\u0020album.",
             "url": "classes/Photo-Model-Album.html#property_coverPath"
+        },                {
+            "fqsen": "\\Photo\\Model\\Album\u003A\u003A\u0024published",
+            "name": "published",
+            "summary": "Whether\u0020the\u0020album\u0020is\u0020published.",
+            "url": "classes/Photo-Model-Album.html#property_published"
         },                {
             "fqsen": "\\Photo\\Model\\MemberAlbum",
             "name": "MemberAlbum",
@@ -14420,16 +14355,6 @@ Search.appendIndex(
             "name": "getPath",
             "summary": "Get\u0020the\u0020path\u0020where\u0020the\u0020photo\u0020is\u0020stored.",
             "url": "classes/Photo-Model-Photo.html#method_getPath"
-        },                {
-            "fqsen": "\\Photo\\Model\\Photo\u003A\u003AgetLargeThumbPath\u0028\u0029",
-            "name": "getLargeThumbPath",
-            "summary": "Get\u0020the\u0020path\u0020where\u0020the\u0020large\u0020thumbnail\u0020is\u0020stored.",
-            "url": "classes/Photo-Model-Photo.html#method_getLargeThumbPath"
-        },                {
-            "fqsen": "\\Photo\\Model\\Photo\u003A\u003AgetSmallThumbPath\u0028\u0029",
-            "name": "getSmallThumbPath",
-            "summary": "Get\u0020the\u0020path\u0020where\u0020the\u0020large\u0020thumbnail\u0020is\u0020stored.",
-            "url": "classes/Photo-Model-Photo.html#method_getSmallThumbPath"
         },                {
             "fqsen": "\\Photo\\Model\\Photo\u003A\u003AgetLongitude\u0028\u0029",
             "name": "getLongitude",
@@ -14525,16 +14450,6 @@ Search.appendIndex(
             "name": "setPath",
             "summary": "Set\u0020the\u0020path\u0020where\u0020the\u0020photo\u0020is\u0020stored.",
             "url": "classes/Photo-Model-Photo.html#method_setPath"
-        },                {
-            "fqsen": "\\Photo\\Model\\Photo\u003A\u003AsetLargeThumbPath\u0028\u0029",
-            "name": "setLargeThumbPath",
-            "summary": "Set\u0020the\u0020path\u0020where\u0020the\u0020large\u0020thumbnail\u0020is\u0020stored.",
-            "url": "classes/Photo-Model-Photo.html#method_setLargeThumbPath"
-        },                {
-            "fqsen": "\\Photo\\Model\\Photo\u003A\u003AsetSmallThumbPath\u0028\u0029",
-            "name": "setSmallThumbPath",
-            "summary": "Set\u0020the\u0020path\u0020where\u0020the\u0020small\u0020thumbnail\u0020is\u0020stored.",
-            "url": "classes/Photo-Model-Photo.html#method_setSmallThumbPath"
         },                {
             "fqsen": "\\Photo\\Model\\Photo\u003A\u003AsetLongitude\u0028\u0029",
             "name": "setLongitude",
@@ -14655,16 +14570,6 @@ Search.appendIndex(
             "name": "path",
             "summary": "The\u0020path\u0020where\u0020the\u0020photo\u0020is\u0020located\u0020relative\u0020to\u0020the\u0020storage\u0020directory.",
             "url": "classes/Photo-Model-Photo.html#property_path"
-        },                {
-            "fqsen": "\\Photo\\Model\\Photo\u003A\u003A\u0024smallThumbPath",
-            "name": "smallThumbPath",
-            "summary": "The\u0020path\u0020where\u0020the\u0020small\u0020thumbnail\u0020of\u0020the\u0020photo\u0020is\u0020located\u0020relative\u0020to\nthe\u0020storage\u0020directory.",
-            "url": "classes/Photo-Model-Photo.html#property_smallThumbPath"
-        },                {
-            "fqsen": "\\Photo\\Model\\Photo\u003A\u003A\u0024largeThumbPath",
-            "name": "largeThumbPath",
-            "summary": "The\u0020path\u0020where\u0020the\u0020large\u0020thumbnail\u0020of\u0020the\u0020photo\u0020is\u0020located\u0020relative\u0020to\nthe\u0020storage\u0020directory.",
-            "url": "classes/Photo-Model-Photo.html#property_largeThumbPath"
         },                {
             "fqsen": "\\Photo\\Model\\Photo\u003A\u003A\u0024longitude",
             "name": "longitude",
@@ -15091,11 +14996,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Photo-Service-Admin.html#property_photoMapper"
         },                {
-            "fqsen": "\\Photo\\Service\\Admin\u003A\u003A\u0024photoConfig",
-            "name": "photoConfig",
-            "summary": "",
-            "url": "classes/Photo-Service-Admin.html#property_photoConfig"
-        },                {
             "fqsen": "\\Photo\\Service\\Album",
             "name": "Album",
             "summary": "Album\u0020service.",
@@ -15126,20 +15026,10 @@ Search.appendIndex(
             "summary": "Gets\u0020a\u0020list\u0020of\u0020all\u0020association\u0020years\u0020of\u0020which\u0020photos\u0020are\u0020available.",
             "url": "classes/Photo-Service-Album.html#method_getAlbumYears"
         },                {
-            "fqsen": "\\Photo\\Service\\Album\u003A\u003AgetAssociationYear\u0028\u0029",
-            "name": "getAssociationYear",
-            "summary": "Returns\u0020the\u0020association\u0020year\u0020to\u0020which\u0020a\u0020certain\u0020date\u0020belongs\nIn\u0020this\u0020context\u0020an\u0020association\u0020year\u0020is\u0020defined\u0020as\u0020the\u0020year\u0020which\u0020contains\nthe\u0020first\u0020day\u0020of\u0020the\u0020association\u0020year.",
-            "url": "classes/Photo-Service-Album.html#method_getAssociationYear"
-        },                {
             "fqsen": "\\Photo\\Service\\Album\u003A\u003AcreateAlbum\u0028\u0029",
             "name": "createAlbum",
             "summary": "Creates\u0020a\u0020new\u0020album.",
             "url": "classes/Photo-Service-Album.html#method_createAlbum"
-        },                {
-            "fqsen": "\\Photo\\Service\\Album\u003A\u003AgetCreateAlbumForm\u0028\u0029",
-            "name": "getCreateAlbumForm",
-            "summary": "Retrieves\u0020the\u0020form\u0020for\u0020creating\u0020a\u0020new\u0020album.",
-            "url": "classes/Photo-Service-Album.html#method_getCreateAlbumForm"
         },                {
             "fqsen": "\\Photo\\Service\\Album\u003A\u003AgetAlbum\u0028\u0029",
             "name": "getAlbum",
@@ -15166,10 +15056,10 @@ Search.appendIndex(
             "summary": "Updates\u0020the\u0020metadata\u0020of\u0020an\u0020album\u0020using\u0020post\u0020data.",
             "url": "classes/Photo-Service-Album.html#method_updateAlbum"
         },                {
-            "fqsen": "\\Photo\\Service\\Album\u003A\u003AgetEditAlbumForm\u0028\u0029",
-            "name": "getEditAlbumForm",
+            "fqsen": "\\Photo\\Service\\Album\u003A\u003AgetAlbumForm\u0028\u0029",
+            "name": "getAlbumForm",
             "summary": "Retrieves\u0020the\u0020form\u0020for\u0020editing\u0020the\u0020specified\u0020album.",
-            "url": "classes/Photo-Service-Album.html#method_getEditAlbumForm"
+            "url": "classes/Photo-Service-Album.html#method_getAlbumForm"
         },                {
             "fqsen": "\\Photo\\Service\\Album\u003A\u003AmoveAlbum\u0028\u0029",
             "name": "moveAlbum",
@@ -15246,15 +15136,10 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Photo-Service-Album.html#property_weeklyPhotoMapper"
         },                {
-            "fqsen": "\\Photo\\Service\\Album\u003A\u003A\u0024createAlbumForm",
-            "name": "createAlbumForm",
+            "fqsen": "\\Photo\\Service\\Album\u003A\u003A\u0024albumForm",
+            "name": "albumForm",
             "summary": "",
-            "url": "classes/Photo-Service-Album.html#property_createAlbumForm"
-        },                {
-            "fqsen": "\\Photo\\Service\\Album\u003A\u003A\u0024editAlbumForm",
-            "name": "editAlbumForm",
-            "summary": "",
-            "url": "classes/Photo-Service-Album.html#property_editAlbumForm"
+            "url": "classes/Photo-Service-Album.html#property_albumForm"
         },                {
             "fqsen": "\\Photo\\Service\\AlbumCover",
             "name": "AlbumCover",
@@ -15375,21 +15260,6 @@ Search.appendIndex(
             "name": "getPhotoFileName",
             "summary": "Returns\u0020a\u0020unique\u0020file\u0020name\u0020for\u0020a\u0020photo.",
             "url": "classes/Photo-Service-Photo.html#method_getPhotoFileName"
-        },                {
-            "fqsen": "\\Photo\\Service\\Photo\u003A\u003AgetPhotoData\u0028\u0029",
-            "name": "getPhotoData",
-            "summary": "Get\u0020the\u0020photo\u0020data\u0020belonging\u0020to\u0020a\u0020certain\u0020photo.",
-            "url": "classes/Photo-Service-Photo.html#method_getPhotoData"
-        },                {
-            "fqsen": "\\Photo\\Service\\Photo\u003A\u003AgetNextPhoto\u0028\u0029",
-            "name": "getNextPhoto",
-            "summary": "Returns\u0020the\u0020next\u0020photo\u0020in\u0020the\u0020album\u0020to\u0020display.",
-            "url": "classes/Photo-Service-Photo.html#method_getNextPhoto"
-        },                {
-            "fqsen": "\\Photo\\Service\\Photo\u003A\u003AgetPreviousPhoto\u0028\u0029",
-            "name": "getPreviousPhoto",
-            "summary": "Returns\u0020the\u0020previous\u0020photo\u0020in\u0020the\u0020album\u0020to\u0020display.",
-            "url": "classes/Photo-Service-Photo.html#method_getPreviousPhoto"
         },                {
             "fqsen": "\\Photo\\Service\\Photo\u003A\u003AdeletePhoto\u0028\u0029",
             "name": "deletePhoto",
@@ -18380,16 +18250,6 @@ Search.appendIndex(
             "name": "Factory",
             "summary": "",
             "url": "namespaces/photo-controller-factory.html"
-        },                {
-            "fqsen": "\\Photo\\Controller\\Factory\\Plugin",
-            "name": "Plugin",
-            "summary": "",
-            "url": "namespaces/photo-controller-factory-plugin.html"
-        },                {
-            "fqsen": "\\Photo\\Controller\\Plugin",
-            "name": "Plugin",
-            "summary": "",
-            "url": "namespaces/photo-controller-plugin.html"
         },                {
             "fqsen": "\\Photo\\Form",
             "name": "Form",

@@ -415,7 +415,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Controller/AlbumAdminController.php"><a href="files/module-photo-src-controller-albumadmincontroller.html"><abbr title="module/Photo/src/Controller/AlbumAdminController.php">AlbumAdminController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">18</span>
+    <span class="phpdocumentor-element-found-in__line">21</span>
 
     </aside>
 
@@ -446,6 +446,12 @@
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a href="classes/Photo-Controller-AlbumAdminController.html#property_aclService">$aclService</a>
+    <span>
+                        &nbsp;: <a href="classes/Photo-Service-AclService.html"><abbr title="\Photo\Service\AclService">AclService</abbr></a>            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a href="classes/Photo-Controller-AlbumAdminController.html#property_adminService">$adminService</a>
     <span>
                         &nbsp;: <a href="classes/Photo-Service-Admin.html"><abbr title="\Photo\Service\Admin">Admin</abbr></a>            </span>
@@ -455,6 +461,18 @@
     <a href="classes/Photo-Controller-AlbumAdminController.html#property_albumService">$albumService</a>
     <span>
                         &nbsp;: <a href="classes/Photo-Service-Album.html"><abbr title="\Photo\Service\Album">Album</abbr></a>            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a href="classes/Photo-Controller-AlbumAdminController.html#property_photoConfig">$photoConfig</a>
+    <span>
+                        &nbsp;: array&lt;string|int, mixed&gt;            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a href="classes/Photo-Controller-AlbumAdminController.html#property_translator">$translator</a>
+    <span>
+                        &nbsp;: <abbr title="\Laminas\Mvc\I18n\Translator">Translator</abbr>            </span>
 </dt>
 
     </dl>
@@ -520,11 +538,11 @@
 <dd>Moves the album by setting the parent album to another album.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Photo-Controller-AlbumAdminController.html#method_pageAction">pageAction()</a>
+    <a href="classes/Photo-Controller-AlbumAdminController.html#method_undatedAction">undatedAction()</a>
     <span>
-                                &nbsp;: <abbr title="\Laminas\View\Model\JsonModel">JsonModel</abbr>|<abbr title="\Laminas\View\Model\ViewModel">ViewModel</abbr>    </span>
+                                &nbsp;: <abbr title="\Laminas\View\Model\ViewModel">ViewModel</abbr>    </span>
 </dt>
-<dd>Retrieves photos on a certain page.</dd>
+<dd>Show all albums that do not have a date, most of these will be recently created albums.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Photo-Controller-AlbumAdminController.html#method_uploadAction">uploadAction()</a>
@@ -532,6 +550,20 @@
                                 &nbsp;: <abbr title="\Laminas\View\Model\JsonModel">JsonModel</abbr>    </span>
 </dt>
 <dd>Uploads an image file and adds it to an album.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Photo-Controller-AlbumAdminController.html#method_viewAction">viewAction()</a>
+    <span>
+                                &nbsp;: <abbr title="\Laminas\View\Model\ViewModel">ViewModel</abbr>    </span>
+</dt>
+<dd>Show a specific album.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Photo-Controller-AlbumAdminController.html#method_yearAction">yearAction()</a>
+    <span>
+                                &nbsp;: <abbr title="\Laminas\View\Model\ViewModel">ViewModel</abbr>    </span>
+</dt>
+<dd>Show all albums in a specific year.</dd>
 
     </dl>
 
@@ -554,6 +586,39 @@
             -private
                                                 -read-only        "
 >
+    <h4 class="phpdocumentor-element__name" id="property_aclService">
+        $aclService
+        <a href="classes/Photo-Controller-AlbumAdminController.html#property_aclService" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Controller/AlbumAdminController.php"><a href="files/module-photo-src-controller-albumadmincontroller.html"><abbr title="module/Photo/src/Controller/AlbumAdminController.php">AlbumAdminController.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">27</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Photo-Service-AclService.html"><abbr title="\Photo\Service\AclService">AclService</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$aclService</span>
+    </code>
+
+    
+    
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+                                                -read-only        "
+>
     <h4 class="phpdocumentor-element__name" id="property_adminService">
         $adminService
         <a href="classes/Photo-Controller-AlbumAdminController.html#property_adminService" class="headerlink"><i class="fas fa-link"></i></a>
@@ -564,7 +629,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Controller/AlbumAdminController.php"><a href="files/module-photo-src-controller-albumadmincontroller.html"><abbr title="module/Photo/src/Controller/AlbumAdminController.php">AlbumAdminController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">21</span>
+    <span class="phpdocumentor-element-found-in__line">29</span>
 
     </aside>
 
@@ -597,7 +662,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Controller/AlbumAdminController.php"><a href="files/module-photo-src-controller-albumadmincontroller.html"><abbr title="module/Photo/src/Controller/AlbumAdminController.php">AlbumAdminController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">22</span>
+    <span class="phpdocumentor-element-found-in__line">30</span>
 
     </aside>
 
@@ -606,6 +671,72 @@
     <span class="phpdocumentor-signature__visibility">private</span>
         <span class="phpdocumentor-signature__type"><a href="classes/Photo-Service-Album.html"><abbr title="\Photo\Service\Album">Album</abbr></a></span>
     <span class="phpdocumentor-signature__name">$albumService</span>
+    </code>
+
+    
+    
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+                                                -read-only        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_photoConfig">
+        $photoConfig
+        <a href="classes/Photo-Controller-AlbumAdminController.html#property_photoConfig" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Controller/AlbumAdminController.php"><a href="files/module-photo-src-controller-albumadmincontroller.html"><abbr title="module/Photo/src/Controller/AlbumAdminController.php">AlbumAdminController.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">31</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+        <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
+    <span class="phpdocumentor-signature__name">$photoConfig</span>
+    </code>
+
+    
+    
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+                                                -read-only        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_translator">
+        $translator
+        <a href="classes/Photo-Controller-AlbumAdminController.html#property_translator" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Controller/AlbumAdminController.php"><a href="files/module-photo-src-controller-albumadmincontroller.html"><abbr title="module/Photo/src/Controller/AlbumAdminController.php">AlbumAdminController.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">28</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+        <span class="phpdocumentor-signature__type"><abbr title="\Laminas\Mvc\I18n\Translator">Translator</abbr></span>
+    <span class="phpdocumentor-signature__name">$translator</span>
     </code>
 
     
@@ -635,20 +766,34 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Controller/AlbumAdminController.php"><a href="files/module-photo-src-controller-albumadmincontroller.html"><abbr title="module/Photo/src/Controller/AlbumAdminController.php">AlbumAdminController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">20</span>
+    <span class="phpdocumentor-element-found-in__line">26</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Photo-Service-Admin.html"><abbr title="\Photo\Service\Admin">Admin</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$adminService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Photo-Service-Album.html"><abbr title="\Photo\Service\Album">Album</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$albumService</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Photo-Service-AclService.html"><abbr title="\Photo\Service\AclService">AclService</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$aclService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Mvc\I18n\Translator">Translator</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$translator</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Photo-Service-Admin.html"><abbr title="\Photo\Service\Admin">Admin</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$adminService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Photo-Service-Album.html"><abbr title="\Photo\Service\Album">Album</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$albumService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$photoConfig</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$aclService</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Photo-Service-AclService.html"><abbr title="\Photo\Service\AclService">AclService</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$translator</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Mvc\I18n\Translator">Translator</abbr></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$adminService</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Photo-Service-Admin.html"><abbr title="\Photo\Service\Admin">Admin</abbr></a></span>
@@ -663,9 +808,32 @@
             <dd class="phpdocumentor-argument-list__definition">
                 
             </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$photoConfig</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Photo-Controller-AlbumAdminController.html#method___construct#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">phpcsSuppress</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification</p>
+</section>
+
+                                    </dd>
+                                            </dl>
 
     
 </article>
@@ -683,7 +851,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Controller/AlbumAdminController.php"><a href="files/module-photo-src-controller-albumadmincontroller.html"><abbr title="module/Photo/src/Controller/AlbumAdminController.php">AlbumAdminController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">122</span>
+    <span class="phpdocumentor-element-found-in__line">194</span>
 
     </aside>
 
@@ -718,7 +886,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Controller/AlbumAdminController.php"><a href="files/module-photo-src-controller-albumadmincontroller.html"><abbr title="module/Photo/src/Controller/AlbumAdminController.php">AlbumAdminController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">204</span>
+    <span class="phpdocumentor-element-found-in__line">283</span>
 
     </aside>
 
@@ -754,7 +922,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Controller/AlbumAdminController.php"><a href="files/module-photo-src-controller-albumadmincontroller.html"><abbr title="module/Photo/src/Controller/AlbumAdminController.php">AlbumAdminController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">50</span>
+    <span class="phpdocumentor-element-found-in__line">132</span>
 
     </aside>
 
@@ -790,7 +958,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Controller/AlbumAdminController.php"><a href="files/module-photo-src-controller-albumadmincontroller.html"><abbr title="module/Photo/src/Controller/AlbumAdminController.php">AlbumAdminController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">188</span>
+    <span class="phpdocumentor-element-found-in__line">263</span>
 
     </aside>
 
@@ -826,7 +994,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Controller/AlbumAdminController.php"><a href="files/module-photo-src-controller-albumadmincontroller.html"><abbr title="module/Photo/src/Controller/AlbumAdminController.php">AlbumAdminController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">97</span>
+    <span class="phpdocumentor-element-found-in__line">164</span>
 
     </aside>
 
@@ -862,7 +1030,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Controller/AlbumAdminController.php"><a href="files/module-photo-src-controller-albumadmincontroller.html"><abbr title="module/Photo/src/Controller/AlbumAdminController.php">AlbumAdminController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">29</span>
+    <span class="phpdocumentor-element-found-in__line">38</span>
 
     </aside>
 
@@ -898,7 +1066,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Controller/AlbumAdminController.php"><a href="files/module-photo-src-controller-albumadmincontroller.html"><abbr title="module/Photo/src/Controller/AlbumAdminController.php">AlbumAdminController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">165</span>
+    <span class="phpdocumentor-element-found-in__line">240</span>
 
     </aside>
 
@@ -926,23 +1094,23 @@
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_pageAction">
-        pageAction()
-        <a href="classes/Photo-Controller-AlbumAdminController.html#method_pageAction" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_undatedAction">
+        undatedAction()
+        <a href="classes/Photo-Controller-AlbumAdminController.html#method_undatedAction" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Controller/AlbumAdminController.php"><a href="files/module-photo-src-controller-albumadmincontroller.html"><abbr title="module/Photo/src/Controller/AlbumAdminController.php">AlbumAdminController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">78</span>
+    <span class="phpdocumentor-element-found-in__line">115</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Retrieves photos on a certain page.</p>
+        <p class="phpdocumentor-summary">Show all albums that do not have a date, most of these will be recently created albums.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">pageAction</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Laminas\View\Model\JsonModel">JsonModel</abbr>|<abbr title="\Laminas\View\Model\ViewModel">ViewModel</abbr></span></code>
+                    <span class="phpdocumentor-signature__name">undatedAction</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Laminas\View\Model\ViewModel">ViewModel</abbr></span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -952,7 +1120,7 @@
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><abbr title="\Laminas\View\Model\JsonModel">JsonModel</abbr>|<abbr title="\Laminas\View\Model\ViewModel">ViewModel</abbr></span>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\Laminas\View\Model\ViewModel">ViewModel</abbr></span>
             </section>
 
 </article>
@@ -970,7 +1138,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Controller/AlbumAdminController.php"><a href="files/module-photo-src-controller-albumadmincontroller.html"><abbr title="module/Photo/src/Controller/AlbumAdminController.php">AlbumAdminController.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">139</span>
+    <span class="phpdocumentor-element-found-in__line">212</span>
 
     </aside>
 
@@ -989,6 +1157,78 @@
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><abbr title="\Laminas\View\Model\JsonModel">JsonModel</abbr></span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_viewAction">
+        viewAction()
+        <a href="classes/Photo-Controller-AlbumAdminController.html#method_viewAction" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Controller/AlbumAdminController.php"><a href="files/module-photo-src-controller-albumadmincontroller.html"><abbr title="module/Photo/src/Controller/AlbumAdminController.php">AlbumAdminController.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">57</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Show a specific album.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">viewAction</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Laminas\View\Model\ViewModel">ViewModel</abbr></span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\Laminas\View\Model\ViewModel">ViewModel</abbr></span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_yearAction">
+        yearAction()
+        <a href="classes/Photo-Controller-AlbumAdminController.html#method_yearAction" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Controller/AlbumAdminController.php"><a href="files/module-photo-src-controller-albumadmincontroller.html"><abbr title="module/Photo/src/Controller/AlbumAdminController.php">AlbumAdminController.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">97</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Show all albums in a specific year.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">yearAction</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Laminas\View\Model\ViewModel">ViewModel</abbr></span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\Laminas\View\Model\ViewModel">ViewModel</abbr></span>
             </section>
 
 </article>
@@ -1105,8 +1345,11 @@
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
+                                                    <li><a href="classes/Photo-Controller-AlbumAdminController.html#property_aclService">$aclService<a href="classes/Photo-Controller-AlbumAdminController.html"></li>
                                                     <li><a href="classes/Photo-Controller-AlbumAdminController.html#property_adminService">$adminService<a href="classes/Photo-Controller-AlbumAdminController.html"></li>
                                                     <li><a href="classes/Photo-Controller-AlbumAdminController.html#property_albumService">$albumService<a href="classes/Photo-Controller-AlbumAdminController.html"></li>
+                                                    <li><a href="classes/Photo-Controller-AlbumAdminController.html#property_photoConfig">$photoConfig<a href="classes/Photo-Controller-AlbumAdminController.html"></li>
+                                                    <li><a href="classes/Photo-Controller-AlbumAdminController.html#property_translator">$translator<a href="classes/Photo-Controller-AlbumAdminController.html"></li>
                                             </ul>
                 </li>
             
@@ -1121,8 +1364,10 @@
                                             <li><a href="classes/Photo-Controller-AlbumAdminController.html#method_editAction">editAction()</a></li>
                                             <li><a href="classes/Photo-Controller-AlbumAdminController.html#method_indexAction">indexAction()</a></li>
                                             <li><a href="classes/Photo-Controller-AlbumAdminController.html#method_moveAction">moveAction()</a></li>
-                                            <li><a href="classes/Photo-Controller-AlbumAdminController.html#method_pageAction">pageAction()</a></li>
+                                            <li><a href="classes/Photo-Controller-AlbumAdminController.html#method_undatedAction">undatedAction()</a></li>
                                             <li><a href="classes/Photo-Controller-AlbumAdminController.html#method_uploadAction">uploadAction()</a></li>
+                                            <li><a href="classes/Photo-Controller-AlbumAdminController.html#method_viewAction">viewAction()</a></li>
+                                            <li><a href="classes/Photo-Controller-AlbumAdminController.html#method_yearAction">yearAction()</a></li>
                                     </ul>
             </li>
                     </ul>

@@ -386,14 +386,16 @@
                                 <section>
                                         <ul class="phpdocumentor-breadcrumbs">
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/photo.html">Photo</a></li>
-            <li class="phpdocumentor-breadcrumb"><a href="namespaces/photo-controller.html">Controller</a></li>
-            <li class="phpdocumentor-breadcrumb"><a href="namespaces/photo-controller-plugin.html">Plugin</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/photo-form.html">Form</a></li>
     </ul>
 
     <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    AlbumPaginatorAdapter
+    Album
 
+        <span class="phpdocumentor-element__extends">
+        extends <abbr title="\Laminas\Form\Form">Form</abbr>
+    </span>
     
             <div class="phpdocumentor-element__package">
             in package
@@ -404,7 +406,7 @@
     
             <span class="phpdocumentor-element__implements">
             implements
-                            <abbr title="\Laminas\Paginator\Adapter\AdapterInterface">AdapterInterface</abbr>                    </span>
+                            <abbr title="\Laminas\InputFilter\InputFilterProviderInterface">InputFilterProviderInterface</abbr>                    </span>
     
     </h2>
 
@@ -414,38 +416,21 @@
 </div>
 
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Controller/Plugin/AlbumPaginatorAdapter.php"><a href="files/module-photo-src-controller-plugin-albumpaginatoradapter.html"><abbr title="module/Photo/src/Controller/Plugin/AlbumPaginatorAdapter.php">AlbumPaginatorAdapter.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Form/Album.php"><a href="files/module-photo-src-form-album.html"><abbr title="module/Photo/src/Form/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">22</span>
+    <span class="phpdocumentor-element-found-in__line">18</span>
 
     </aside>
 
-            <p class="phpdocumentor-summary">Paginator for album pages.</p>
+        
 
 
-
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="classes/Photo-Controller-Plugin-AlbumPaginatorAdapter.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">template-implements</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>AdapterInterface&lt;int, PhotoModel&gt;</p>
-</section>
-
-                                    </dd>
-                                            </dl>
 
 
 
 <h3 id="toc">
     Table of Contents
-    <a href="classes/Photo-Controller-Plugin-AlbumPaginatorAdapter.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Photo-Form-Album.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h3>
 
@@ -453,75 +438,35 @@
 
     <h4 id="toc-interfaces">
         Interfaces
-        <a href="classes/Photo-Controller-Plugin-AlbumPaginatorAdapter.html#toc-interfaces" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Photo-Form-Album.html#toc-interfaces" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -interface"><abbr title="\Laminas\Paginator\Adapter\AdapterInterface">AdapterInterface</abbr></dt>    </dl>
+                    <dt class="phpdocumentor-table-of-contents__entry -interface"><abbr title="\Laminas\InputFilter\InputFilterProviderInterface">InputFilterProviderInterface</abbr></dt>    </dl>
 
 
 
 
 
 
-<h4 id="toc-properties">
-    Properties
-    <a href="classes/Photo-Controller-Plugin-AlbumPaginatorAdapter.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
-
-</h4>
-<dl class="phpdocumentor-table-of-contents">
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Photo-Controller-Plugin-AlbumPaginatorAdapter.html#property_count">$count</a>
-    <span>
-                        &nbsp;: int|null            </span>
-</dt>
-<dd>Item count.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -private">
-    <a href="classes/Photo-Controller-Plugin-AlbumPaginatorAdapter.html#property_album">$album</a>
-    <span>
-                        &nbsp;: <a href="classes/Photo-Model-Album.html"><abbr title="\Photo\Model\Album">Album</abbr></a>|null            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -private">
-    <a href="classes/Photo-Controller-Plugin-AlbumPaginatorAdapter.html#property_albumService">$albumService</a>
-    <span>
-                        &nbsp;: <a href="classes/Photo-Service-Album.html"><abbr title="\Photo\Service\Album">Album</abbr></a>            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -private">
-    <a href="classes/Photo-Controller-Plugin-AlbumPaginatorAdapter.html#property_photoService">$photoService</a>
-    <span>
-                        &nbsp;: <a href="classes/Photo-Service-Photo.html"><abbr title="\Photo\Service\Photo">Photo</abbr></a>            </span>
-</dt>
-
-    </dl>
 
 <h4 id="toc-methods">
     Methods
-    <a href="classes/Photo-Controller-Plugin-AlbumPaginatorAdapter.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Photo-Form-Album.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Photo-Controller-Plugin-AlbumPaginatorAdapter.html#method___construct">__construct()</a>
+    <a href="classes/Photo-Form-Album.html#method___construct">__construct()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Photo-Controller-Plugin-AlbumPaginatorAdapter.html#method_count">count()</a>
+    <a href="classes/Photo-Form-Album.html#method_getInputFilterSpecification">getInputFilterSpecification()</a>
     <span>
-                                &nbsp;: int    </span>
+                                &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
-<dd>Returns the total number of rows in the array.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Photo-Controller-Plugin-AlbumPaginatorAdapter.html#method_getItems">getItems()</a>
-    <span>
-                                &nbsp;: array&lt;string|int, <a href="classes/Photo-Model-Album.html"><abbr title="\Photo\Model\Album">Album</abbr></a>|<a href="classes/Photo-Model-Photo.html"><abbr title="\Photo\Model\Photo">Photo</abbr></a>&gt;    </span>
-</dt>
-<dd>Returns an array of items for a page.</dd>
 
     </dl>
 
@@ -531,151 +476,11 @@
         
 
         
-    <section class="phpdocumentor-properties">
-        <h3 class="phpdocumentor-elements__header" id="properties">
-            Properties
-            <a href="classes/Photo-Controller-Plugin-AlbumPaginatorAdapter.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
-
-        </h3>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_count">
-        $count
-        <a href="classes/Photo-Controller-Plugin-AlbumPaginatorAdapter.html#property_count" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Controller/Plugin/AlbumPaginatorAdapter.php"><a href="files/module-photo-src-controller-plugin-albumpaginatoradapter.html"><abbr title="module/Photo/src/Controller/Plugin/AlbumPaginatorAdapter.php">AlbumPaginatorAdapter.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">27</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Item count.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">int|null</span>
-    <span class="phpdocumentor-signature__name">$count</span>
-     = <span class="phpdocumentor-signature__default-value">null</span></code>
-
-    
-    
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -private
-                                                -read-only        "
->
-    <h4 class="phpdocumentor-element__name" id="property_album">
-        $album
-        <a href="classes/Photo-Controller-Plugin-AlbumPaginatorAdapter.html#property_album" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Controller/Plugin/AlbumPaginatorAdapter.php"><a href="files/module-photo-src-controller-plugin-albumpaginatoradapter.html"><abbr title="module/Photo/src/Controller/Plugin/AlbumPaginatorAdapter.php">AlbumPaginatorAdapter.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">32</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/Photo-Model-Album.html"><abbr title="\Photo\Model\Album">Album</abbr></a>|null</span>
-    <span class="phpdocumentor-signature__name">$album</span>
-     = <span class="phpdocumentor-signature__default-value">null</span></code>
-
-    
-    
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -private
-                                                -read-only        "
->
-    <h4 class="phpdocumentor-element__name" id="property_albumService">
-        $albumService
-        <a href="classes/Photo-Controller-Plugin-AlbumPaginatorAdapter.html#property_albumService" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Controller/Plugin/AlbumPaginatorAdapter.php"><a href="files/module-photo-src-controller-plugin-albumpaginatoradapter.html"><abbr title="module/Photo/src/Controller/Plugin/AlbumPaginatorAdapter.php">AlbumPaginatorAdapter.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">31</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/Photo-Service-Album.html"><abbr title="\Photo\Service\Album">Album</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$albumService</span>
-    </code>
-
-    
-    
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -private
-                                                -read-only        "
->
-    <h4 class="phpdocumentor-element__name" id="property_photoService">
-        $photoService
-        <a href="classes/Photo-Controller-Plugin-AlbumPaginatorAdapter.html#property_photoService" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Controller/Plugin/AlbumPaginatorAdapter.php"><a href="files/module-photo-src-controller-plugin-albumpaginatoradapter.html"><abbr title="module/Photo/src/Controller/Plugin/AlbumPaginatorAdapter.php">AlbumPaginatorAdapter.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">30</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/Photo-Service-Photo.html"><abbr title="\Photo\Service\Photo">Photo</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$photoService</span>
-    </code>
-
-    
-    
-    
-
-</article>
-            </section>
 
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/Photo-Controller-Plugin-AlbumPaginatorAdapter.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Photo-Form-Album.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
@@ -686,20 +491,20 @@
 >
     <h4 class="phpdocumentor-element__name" id="method___construct">
         __construct()
-        <a href="classes/Photo-Controller-Plugin-AlbumPaginatorAdapter.html#method___construct" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Photo-Form-Album.html#method___construct" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Controller/Plugin/AlbumPaginatorAdapter.php"><a href="files/module-photo-src-controller-plugin-albumpaginatoradapter.html"><abbr title="module/Photo/src/Controller/Plugin/AlbumPaginatorAdapter.php">AlbumPaginatorAdapter.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Form/Album.php"><a href="files/module-photo-src-form-album.html"><abbr title="module/Photo/src/Form/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">29</span>
+    <span class="phpdocumentor-element-found-in__line">20</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Photo-Service-Photo.html"><abbr title="\Photo\Service\Photo">Photo</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$photoService</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Photo-Service-Album.html"><abbr title="\Photo\Service\Album">Album</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$albumService</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Photo-Model-Album.html"><abbr title="\Photo\Model\Album">Album</abbr></a>|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$album</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Mvc\I18n\Translator">Translator</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$translate</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -707,23 +512,9 @@
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$photoService</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Photo-Service-Photo.html"><abbr title="\Photo\Service\Photo">Photo</abbr></a></span>
+                <span class="phpdocumentor-signature__argument__name">$translate</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Mvc\I18n\Translator">Translator</abbr></span>
                             </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$albumService</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Photo-Service-Album.html"><abbr title="\Photo\Service\Album">Album</abbr></a></span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$album</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Photo-Model-Album.html"><abbr title="\Photo\Model\Album">Album</abbr></a>|null</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
             </dd>
@@ -739,23 +530,22 @@
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_count">
-        count()
-        <a href="classes/Photo-Controller-Plugin-AlbumPaginatorAdapter.html#method_count" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_getInputFilterSpecification">
+        getInputFilterSpecification()
+        <a href="classes/Photo-Form-Album.html#method_getInputFilterSpecification" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Controller/Plugin/AlbumPaginatorAdapter.php"><a href="files/module-photo-src-controller-plugin-albumpaginatoradapter.html"><abbr title="module/Photo/src/Controller/Plugin/AlbumPaginatorAdapter.php">AlbumPaginatorAdapter.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Form/Album.php"><a href="files/module-photo-src-form-album.html"><abbr title="module/Photo/src/Form/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">65</span>
+    <span class="phpdocumentor-element-found-in__line">85</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Returns the total number of rows in the array.</p>
-
+    
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">count</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
+                    <span class="phpdocumentor-signature__name">getInputFilterSpecification</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -765,64 +555,7 @@
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">int</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getItems">
-        getItems()
-        <a href="classes/Photo-Controller-Plugin-AlbumPaginatorAdapter.html#method_getItems" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Controller/Plugin/AlbumPaginatorAdapter.php"><a href="files/module-photo-src-controller-plugin-albumpaginatoradapter.html"><abbr title="module/Photo/src/Controller/Plugin/AlbumPaginatorAdapter.php">AlbumPaginatorAdapter.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">45</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Returns an array of items for a page.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getItems</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$offset</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$itemCountPerPage</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Photo-Model-Album.html"><abbr title="\Photo\Model\Album">Album</abbr></a>|<a href="classes/Photo-Model-Photo.html"><abbr title="\Photo\Model\Photo">Photo</abbr></a>&gt;</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$offset</span>
-                : <span class="phpdocumentor-signature__argument__return-type">int</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Page offset</p>
-</section>
-
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$itemCountPerPage</span>
-                : <span class="phpdocumentor-signature__argument__return-type">int</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Number of items per page</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Photo-Model-Album.html"><abbr title="\Photo\Model\Album">Album</abbr></a>|<a href="classes/Photo-Model-Photo.html"><abbr title="\Photo\Model\Photo">Photo</abbr></a>&gt;</span>
+        <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
             </section>
 
 </article>
@@ -832,7 +565,7 @@
     <div class="phpdocumentor-modal-bg" data-exit-button></div>
     <div class="phpdocumentor-modal-container">
         <div class="phpdocumentor-modal-content">
-            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/module/Photo/src/Controller/Plugin/AlbumPaginatorAdapter.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
+            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/module/Photo/src/Form/Album.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
         </div>
         <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
     </div>
@@ -931,27 +664,16 @@
             <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                                            <li><a href="classes/Photo-Controller-Plugin-AlbumPaginatorAdapter.html#toc-properties">Properties</a></li>
-                                                            <li><a href="classes/Photo-Controller-Plugin-AlbumPaginatorAdapter.html#toc-methods">Methods</a></li>
+                                                                                <li><a href="classes/Photo-Form-Album.html#toc-methods">Methods</a></li>
                                     </ul>
             </li>
             
-                            <li class="phpdocumentor-on-this-page-section__title">Properties</li>
-                <li>
-                    <ul class="phpdocumentor-list -clean">
-                                                    <li><a href="classes/Photo-Controller-Plugin-AlbumPaginatorAdapter.html#property_count">$count<a href="classes/Photo-Controller-Plugin-AlbumPaginatorAdapter.html"></li>
-                                                    <li><a href="classes/Photo-Controller-Plugin-AlbumPaginatorAdapter.html#property_album">$album<a href="classes/Photo-Controller-Plugin-AlbumPaginatorAdapter.html"></li>
-                                                    <li><a href="classes/Photo-Controller-Plugin-AlbumPaginatorAdapter.html#property_albumService">$albumService<a href="classes/Photo-Controller-Plugin-AlbumPaginatorAdapter.html"></li>
-                                                    <li><a href="classes/Photo-Controller-Plugin-AlbumPaginatorAdapter.html#property_photoService">$photoService<a href="classes/Photo-Controller-Plugin-AlbumPaginatorAdapter.html"></li>
-                                            </ul>
-                </li>
             
                         <li class="phpdocumentor-on-this-page-section__title">Methods</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                            <li><a href="classes/Photo-Controller-Plugin-AlbumPaginatorAdapter.html#method___construct">__construct()</a></li>
-                                            <li><a href="classes/Photo-Controller-Plugin-AlbumPaginatorAdapter.html#method_count">count()</a></li>
-                                            <li><a href="classes/Photo-Controller-Plugin-AlbumPaginatorAdapter.html#method_getItems">getItems()</a></li>
+                                            <li><a href="classes/Photo-Form-Album.html#method___construct">__construct()</a></li>
+                                            <li><a href="classes/Photo-Form-Album.html#method_getInputFilterSpecification">getInputFilterSpecification()</a></li>
                                     </ul>
             </li>
                     </ul>
@@ -971,7 +693,7 @@
     </section>
 </section>
         </div>
-        <a href="classes/Photo-Controller-Plugin-AlbumPaginatorAdapter.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/Photo-Form-Album.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 
