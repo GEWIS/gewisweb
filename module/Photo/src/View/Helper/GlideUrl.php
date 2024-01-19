@@ -9,6 +9,8 @@ use DateTimeInterface;
 use Laminas\View\Helper\AbstractHelper;
 use League\Glide\Urls\UrlBuilder;
 
+use function array_map;
+
 /**
  * Url view helper for generating (signed) glide urls
  * Usage: $this->glideUrl()->getUrl('path to image', ['parameters']);.
@@ -51,6 +53,9 @@ class GlideUrl extends AbstractHelper
 
         // Convert expiration to string.
         $params['expires'] = $params['expires']->format(DateTimeInterface::ATOM);
+
+        // Ensure that all parameters are a string, this is how the Glide server will handle them.
+        $params = array_map('strval', $params);
 
         return $this->urlBuilder->getUrl($imagePath, $params);
     }

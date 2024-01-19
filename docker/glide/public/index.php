@@ -157,12 +157,15 @@ $signkey = getenv('GLIDE_KEY');
 $base = '';
 $path = explode('?', $_SERVER['REQUEST_URI'], 2)[0];
 
+// Ensure that all parameters are a string, this is how the Glide server will handle them.
+$params = array_map('strval', $_GET);
+
 try {
     // Validate HTTP signature
-    GlideSignatureFactory::create($signkey)->validateRequest($base . $path, $_GET);
+    GlideSignatureFactory::create($signkey)->validateRequest($base . $path, $params);
 } catch (SignatureException $e) {
     http_response_code(403);
     die('Forbidden');
 }
 
-$server->outputImage($path, $_GET);
+$server->outputImage($path, $params);
