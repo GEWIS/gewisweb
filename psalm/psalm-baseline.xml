@@ -67,11 +67,6 @@
       <code>$this-&gt;data[$field . 'En']</code>
     </PossiblyNullArrayAccess>
   </file>
-  <file src="module/Photo/src/Controller/Plugin/AlbumPaginatorAdapter.php">
-    <InvalidNullableReturnType>
-      <code>int</code>
-    </InvalidNullableReturnType>
-  </file>
   <file src="module/User/src/Authorization/GenericAclService.php">
     <PossiblyUndefinedArrayOffset>
       <code>$bits</code>

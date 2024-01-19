@@ -4,22 +4,31 @@ declare(strict_types=1);
 
 namespace Photo\Controller;
 
+use DateTime;
+use Decision\Model\AssociationYear;
 use Laminas\Http\Request;
 use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\Mvc\I18n\Translator;
 use Laminas\View\Model\JsonModel;
 use Laminas\View\Model\ViewModel;
+use Photo\Service\AclService;
 use Photo\Service\Admin as AdminService;
 use Photo\Service\Album as AlbumService;
 use Throwable;
-
-use function array_reverse;
+use User\Permissions\NotAllowedException;
 
 class AlbumAdminController extends AbstractActionController
 {
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
+     */
     public function __construct(
+        private readonly AclService $aclService,
+        private readonly Translator $translator,
         private readonly AdminService $adminService,
         private readonly AlbumService $albumService,
+        private readonly array $photoConfig,
     ) {
     }
 
@@ -28,20 +37,93 @@ class AlbumAdminController extends AbstractActionController
      */
     public function indexAction(): ViewModel
     {
-        $years = $this->albumService->getAlbumYears();
-        $albumsByYear = [];
-        foreach ($years as $year) {
-            $albumsByYear[$year] = $this->albumService->getAlbumsByYear($year);
+        if (!$this->aclService->isAllowed('edit', 'album')) {
+            throw new NotAllowedException($this->translator->translate('You are not allowed to administer albums'));
         }
 
-        $albumsWithoutDate = $this->albumService->getAlbumsWithoutDate();
+        $years = $this->albumService->getAlbumYears(false);
 
         return new ViewModel(
             [
-                'albumsByYear' => array_reverse($albumsByYear, true),
-                'albumsWithoutDate' => $albumsWithoutDate,
+                'years' => $years,
+                'year' => AssociationYear::fromDate(new DateTime())->getYear(),
             ],
         );
+    }
+
+    /**
+     * Show a specific album.
+     */
+    public function viewAction(): ViewModel
+    {
+        if (!$this->aclService->isAllowed('edit', 'album')) {
+            throw new NotAllowedException($this->translator->translate('You are not allowed to administer albums'));
+        }
+
+        $albumId = (int) $this->params()->fromRoute('album_id');
+        $album = $this->albumService->getAlbum($albumId);
+
+        if (null === $album) {
+            return $this->notFoundAction();
+        }
+
+        $albumToCheck = $album;
+        $startDateTime = null;
+        while (null !== $albumToCheck) {
+            // Recursively get start datetime of parent album if null.
+            if (null !== ($parentStartDateTime = $albumToCheck->getStartDateTime())) {
+                $startDateTime = $parentStartDateTime;
+            }
+
+            $albumToCheck = $albumToCheck->getParent();
+        }
+
+        if (null !== $startDateTime) {
+            $year = AssociationYear::fromDate($startDateTime)->getYear();
+        } else {
+            $year = null;
+        }
+
+        return new ViewModel([
+            'album' => $album,
+            'config' => $this->photoConfig,
+            'year' => $year,
+        ]);
+    }
+
+    /**
+     * Show all albums in a specific year.
+     */
+    public function yearAction(): ViewModel
+    {
+        if (!$this->aclService->isAllowed('edit', 'album')) {
+            throw new NotAllowedException($this->translator->translate('You are not allowed to administer albums'));
+        }
+
+        $year = (int) $this->params()->fromRoute('year');
+
+        return new ViewModel([
+            'albums' => $this->albumService->getAlbumsByYear($year, false),
+            'years' => $this->albumService->getAlbumYears(false),
+            'year' => $year,
+        ]);
+    }
+
+    /**
+     * Show all albums that do not have a date, most of these will be recently created albums.
+     */
+    public function undatedAction(): ViewModel
+    {
+        if (!$this->aclService->isAllowed('nodate', 'album')) {
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to view albums without dates'),
+            );
+        }
+
+        return new ViewModel([
+            'albums' => $this->albumService->getAlbumsWithoutDate(),
+            'years' => $this->albumService->getAlbumYears(false),
+        ]);
     }
 
     /**
@@ -49,7 +131,11 @@ class AlbumAdminController extends AbstractActionController
      */
     public function createAction(): Response|ViewModel
     {
-        $form = $this->albumService->getCreateAlbumForm();
+        if (!$this->aclService->isAllowed('create', 'album')) {
+            throw new NotAllowedException($this->translator->translate('You are not allowed to create albums'));
+        }
+
+        $form = $this->albumService->getAlbumForm();
 
         /** @var Request $request */
         $request = $this->getRequest();
@@ -60,7 +146,7 @@ class AlbumAdminController extends AbstractActionController
 
             if ($form->isValid()) {
                 if (null !== ($album = $this->albumService->createAlbum($albumId, $form->getData()))) {
-                    return $this->redirect()->toUrl($this->url()->fromRoute('admin_photo') . '#' . $album->getId());
+                    return $this->redirect()->toRoute('admin_photo/album', ['album_id' => $album->getId()]);
                 }
             }
         }
@@ -73,31 +159,16 @@ class AlbumAdminController extends AbstractActionController
     }
 
     /**
-     * Retrieves photos on a certain page.
-     */
-    public function pageAction(): JsonModel|ViewModel
-    {
-        $albumId = (int) $this->params()->fromRoute('album_id');
-        $activePage = (int) $this->params()->fromRoute('page');
-
-        if (0 !== $albumId) {
-            $albumPage = $this->plugin('AlbumPlugin')->getAlbumPageAsArray($albumId, $activePage);
-
-            if (null !== $albumPage) {
-                return new JsonModel($albumPage);
-            }
-        }
-
-        return $this->notFoundAction();
-    }
-
-    /**
      * Retrieves the album editing form and saves changes.
      */
     public function editAction(): Response|ViewModel
     {
+        if (!$this->aclService->isAllowed('edit', 'album')) {
+            throw new NotAllowedException($this->translator->translate('You are not allowed to edit albums'));
+        }
+
         $albumId = (int) $this->params()->fromRoute('album_id');
-        $form = $this->albumService->getEditAlbumForm($albumId);
+        $form = $this->albumService->getAlbumForm($albumId);
 
         /** @var Request $request */
         $request = $this->getRequest();
@@ -107,7 +178,7 @@ class AlbumAdminController extends AbstractActionController
 
             if ($form->isValid()) {
                 if ($this->albumService->updateAlbum()) {
-                    return $this->redirect()->toUrl($this->url()->fromRoute('admin_photo') . '#' . $albumId);
+                    return $this->redirect()->toRoute('admin_photo/album', ['album_id' => $albumId]);
                 }
             }
         }
@@ -115,6 +186,7 @@ class AlbumAdminController extends AbstractActionController
         return new ViewModel(
             [
                 'form' => $form,
+                'album' => $form->getObject(),
             ],
         );
     }
@@ -129,6 +201,7 @@ class AlbumAdminController extends AbstractActionController
         return new ViewModel(
             [
                 'album' => $album,
+                'year' => AssociationYear::fromDate($album->getStartDateTime())->getYear(),
             ],
         );
     }
@@ -138,6 +211,8 @@ class AlbumAdminController extends AbstractActionController
      */
     public function uploadAction(): JsonModel
     {
+        $this->adminService->checkUploadAllowed();
+
         /** @var Request $request */
         $request = $this->getRequest();
 
@@ -187,6 +262,10 @@ class AlbumAdminController extends AbstractActionController
      */
     public function deleteAction(): JsonModel
     {
+        if (!$this->aclService->isAllowed('delete', 'album')) {
+            throw new NotAllowedException($this->translator->translate('You are not allowed to delete albums'));
+        }
+
         /** @var Request $request */
         $request = $this->getRequest();
 

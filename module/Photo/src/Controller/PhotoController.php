@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Photo\Controller;
 
+use DateTime;
+use Decision\Model\AssociationYear;
 use Laminas\Http\Request;
 use Laminas\Http\Response;
 use Laminas\Http\Response\Stream;
@@ -20,7 +22,6 @@ use User\Permissions\NotAllowedException;
 use function array_filter;
 use function array_map;
 use function count;
-use function date;
 use function in_array;
 use function max;
 
@@ -50,12 +51,17 @@ class PhotoController extends AbstractActionController
         // If no year is supplied, use the latest year.
         if (null === $year) {
             if (0 === count($years)) {
-                $year = (int) date('Y');
+                $year = AssociationYear::fromDate(new DateTime())->getYear();
+                $years[] = $year;
             } else {
                 $year = max($years);
             }
         } else {
             $year = (int) $year;
+
+            if (0 === count($years)) {
+                $years[] = $year;
+            }
         }
 
         $albums = $this->albumService->getAlbumsByYear($year);
@@ -80,6 +86,7 @@ class PhotoController extends AbstractActionController
         return new ViewModel(
             [
                 'years' => $years,
+                'year' => $year,
                 'albums' => $albums,
             ],
         );

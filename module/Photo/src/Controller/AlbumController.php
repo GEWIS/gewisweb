@@ -44,6 +44,7 @@ class AlbumController extends AbstractActionController
             (
                 null === $album->getStartDateTime()
                 || null === $album->getEndDateTime()
+                || !$album->isPublished()
             )
             && !$this->aclService->isAllowed('nodate', 'album')
         ) {

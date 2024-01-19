@@ -67,6 +67,7 @@ class Album extends BaseMapper
     public function getAlbumsInDateRange(
         DateTime $start,
         DateTime $end,
+        bool $onlyPublished = true,
     ): array {
         $qb = $this->getRepository()->createQueryBuilder('a');
         $qb->where('a.parent IS NULL')
@@ -74,6 +75,10 @@ class Album extends BaseMapper
             ->setParameter(1, $start)
             ->setParameter(2, $end)
             ->orderBy('a.startDateTime', 'DESC');
+
+        if ($onlyPublished) {
+            $qb->andWhere('a.published = TRUE');
+        }
 
         return $qb->getQuery()->getResult();
     }
@@ -87,8 +92,7 @@ class Album extends BaseMapper
     public function getAlbumsWithoutDate(): array
     {
         $qb = $this->getRepository()->createQueryBuilder('a');
-        $qb->where('a.parent IS NULL')
-            ->andWhere('a.startDateTime IS NULL');
+        $qb->where('a.startDateTime IS NULL');
 
         return $qb->getQuery()->getResult();
     }
@@ -96,13 +100,17 @@ class Album extends BaseMapper
     /**
      * Returns the root album containing the most recent photos.
      */
-    public function getNewestAlbum(): ?AlbumModel
+    public function getNewestAlbum(bool $onlyPublished = true): ?AlbumModel
     {
         $qb = $this->getRepository()->createQueryBuilder('a');
         $qb->where('a.parent IS NULL')
             ->andWhere('a.startDateTime IS NOT NULL')
             ->setMaxResults(1)
             ->orderBy('a.startDateTime', 'DESC');
+
+        if ($onlyPublished) {
+            $qb->andWhere('a.published = TRUE');
+        }
 
         $res = $qb->getQuery()->getResult();
 
@@ -112,13 +120,17 @@ class Album extends BaseMapper
     /**
      * Returns the root album containing the oldest photos.
      */
-    public function getOldestAlbum(): ?AlbumModel
+    public function getOldestAlbum(bool $onlyPublished = true): ?AlbumModel
     {
         $qb = $this->getRepository()->createQueryBuilder('a');
         $qb->where('a.parent IS NULL')
             ->andWhere('a.startDateTime IS NOT NULL')
             ->setMaxResults(1)
             ->orderBy('a.startDateTime', 'ASC');
+
+        if ($onlyPublished) {
+            $qb->andWhere('a.published = TRUE');
+        }
 
         $res = $qb->getQuery()->getResult();
 

@@ -26,6 +26,7 @@ use Laminas\Permissions\Acl\Resource\ResourceInterface;
  *     id: int,
  *     startDateTime: ?DateTime,
  *     endDateTime: ?DateTime,
+ *     published: bool,
  *     name: string,
  *     parent: ?array<string, mixed>,
  *     children: array{},
@@ -119,6 +120,12 @@ class Album implements ResourceInterface
     )]
     protected ?string $coverPath = null;
 
+    /**
+     * Whether the album is published.
+     */
+    #[Column(type: 'boolean')]
+    protected bool $published = false;
+
     public function __construct()
     {
         $this->children = new ArrayCollection();
@@ -183,6 +190,7 @@ class Album implements ResourceInterface
      *     id: int,
      *     startDateTime: ?DateTime,
      *     endDateTime: ?DateTime,
+     *     published: bool,
      *     name: string,
      *     parent: ?array<string, mixed>,
      *     children: AlbumArrayType[],
@@ -217,6 +225,7 @@ class Album implements ResourceInterface
             'id' => $this->getId(),
             'startDateTime' => $this->getStartDateTime(),
             'endDateTime' => $this->getEndDateTime(),
+            'published' => $this->isPublished(),
             'name' => $this->getName(),
             'parent' => $this->getParent()?->toArray(),
             'children' => [],
@@ -309,6 +318,30 @@ class Album implements ResourceInterface
     public function setCoverPath(?string $photo): void
     {
         $this->coverPath = $photo;
+    }
+
+    /**
+     * Get the published state.
+     */
+    public function getPublished(): bool
+    {
+        return $this->published;
+    }
+
+    /**
+     * Whether this album is published.
+     */
+    public function isPublished(): bool
+    {
+        return $this->published;
+    }
+
+    /**
+     * Set the published state.
+     */
+    public function setPublished(bool $published): void
+    {
+        $this->published = $published;
     }
 
     /**

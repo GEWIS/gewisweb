@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Photo\View\Helper;
 
+use DateTime;
+use DateTimeInterface;
 use Laminas\View\Helper\AbstractHelper;
 use League\Glide\Urls\UrlBuilder;
 
@@ -26,7 +28,7 @@ class GlideUrl extends AbstractHelper
     /**
      * Gets a signed glide URL.
      *
-     * @param array{w: int, h: int, fm?: string, q?: int} $params
+     * @param array{w: int, h: int, fm?: string, q?: int, expires?: DateTime} $params
      */
     public function getUrl(
         string $imagePath,
@@ -37,10 +39,18 @@ class GlideUrl extends AbstractHelper
             $params['fm'] = 'webp';
         }
 
-        // If the quality is not specifically defined, default to 80 (90 is standard).
+        // If the quality is not specifically defined, default to 90.
         if (!isset($params['q'])) {
-            $params['q'] = 80;
+            $params['q'] = 90;
         }
+
+        // If the expiration is not specifically defined, default to tomorrow at midnight.
+        if (!isset($params['expires'])) {
+            $params['expires'] = new DateTime('tomorrow'); // = midnight tomorrow
+        }
+
+        // Convert expiration to string.
+        $params['expires'] = $params['expires']->format(DateTimeInterface::ATOM);
 
         return $this->urlBuilder->getUrl($imagePath, $params);
     }

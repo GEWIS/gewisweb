@@ -9,10 +9,10 @@ use Doctrine\ORM\Events;
 use Exception;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\Mvc\MvcEvent;
-use League\Glide\Urls\UrlBuilderFactory;
+use League\Glide\Signatures\Signature;
+use League\Glide\Urls\UrlBuilder;
 use Photo\Command\WeeklyPhoto;
-use Photo\Form\CreateAlbum as CreateAlbumForm;
-use Photo\Form\EditAlbum as EditAlbumForm;
+use Photo\Form\Album as AlbumForm;
 use Photo\Listener\AlbumDate as AlbumDateListener;
 use Photo\Listener\Remove as RemoveListener;
 use Photo\Mapper\Album as AlbumMapper;
@@ -29,6 +29,12 @@ use Photo\Service\Photo as PhotoService;
 use Photo\View\Helper\GlideUrl;
 use Psr\Container\ContainerInterface;
 use User\Authorization\AclServiceFactory;
+
+use function array_merge;
+use function hash;
+use function http_build_query;
+use function ksort;
+use function ltrim;
 
 class Module
 {
@@ -72,8 +78,7 @@ class Module
                     $albumMapper = $container->get('photo_mapper_album');
                     $tagMapper = $container->get('photo_mapper_tag');
                     $weeklyPhotoMapper = $container->get('photo_mapper_weekly_photo');
-                    $createAlbumForm = $container->get('photo_form_album_create');
-                    $editAlbumForm = $container->get('photo_form_album_edit');
+                    $albumForm = $container->get('photo_form_album');
 
                     return new AlbumService(
                         $aclService,
@@ -85,8 +90,7 @@ class Module
                         $albumMapper,
                         $tagMapper,
                         $weeklyPhotoMapper,
-                        $createAlbumForm,
-                        $editAlbumForm,
+                        $albumForm,
                     );
                 },
                 'photo_service_metadata' => static function () {
@@ -137,7 +141,6 @@ class Module
                     $metadataService = $container->get('photo_service_metadata');
                     $storageService = $container->get('application_service_storage');
                     $photoMapper = $container->get('photo_mapper_photo');
-                    $photoConfig = $container->get('config')['photo'];
 
                     return new AdminService(
                         $aclService,
@@ -146,19 +149,10 @@ class Module
                         $metadataService,
                         $storageService,
                         $photoMapper,
-                        $photoConfig,
                     );
                 },
-                'photo_form_album_edit' => static function (ContainerInterface $container) {
-                    $form = new EditAlbumForm(
-                        $container->get(MvcTranslator::class),
-                    );
-                    $form->setHydrator($container->get('photo_hydrator'));
-
-                    return $form;
-                },
-                'photo_form_album_create' => static function (ContainerInterface $container) {
-                    $form = new CreateAlbumForm(
+                'photo_form_album' => static function (ContainerInterface $container) {
+                    $form = new AlbumForm(
                         $container->get(MvcTranslator::class),
                     );
                     $form->setHydrator($container->get('photo_hydrator'));
@@ -229,10 +223,48 @@ class Module
                         throw new Exception('Invalid glide configuration');
                     }
 
-                    $urlBuilder = UrlBuilderFactory::create(
-                        $config['glide']['base_url'],
-                        $config['glide']['signing_key'],
-                    );
+                    // Custom implementation of Signature to enable usage of SHA3-256
+                    $signature = new class ($config['glide']['signing_key']) extends Signature {
+                        /**
+                         * @inheritDoc
+                         */
+                        public function addSignature(
+                            $path,
+                            array $params,
+                        ) {
+                            return array_merge($params, ['s' => $this->generateSignature($path, $params)]);
+                        }
+
+                        /**
+                         * @inheritDoc
+                         */
+                        public function validateRequest(
+                            $path,
+                            array $params,
+                        ) {
+                            // Not needed.
+                        }
+
+                        /**
+                         * IMPORTANT: This function MUST be exactly the same as the one used in the Glide server.
+                         *
+                         * @inheritDoc
+                         */
+                        public function generateSignature(
+                            $path,
+                            array $params,
+                        ) {
+                            unset($params['s']);
+                            ksort($params);
+
+                            // MODIFIED: use SHA3-256 instead of md5 for better guarantees the signature is not crafted.
+                            return hash(
+                                'sha3-256',
+                                $this->signKey . ':' . ltrim($path, '/') . '?' . http_build_query($params),
+                            );
+                        }
+                    };
+                    $urlBuilder = new UrlBuilder($config['glide']['base_url'], $signature);
                     $helper->setUrlBuilder($urlBuilder);
 
                     return $helper;

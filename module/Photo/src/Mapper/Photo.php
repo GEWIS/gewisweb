@@ -79,64 +79,6 @@ class Photo extends BaseMapper
     }
 
     /**
-     * Returns the next photo in the album to display.
-     *
-     * @return PhotoModel|null Photo if there is a next photo, null otherwise
-     */
-    public function getNextPhoto(
-        PhotoModel $photo,
-        AlbumModel $album,
-    ): ?PhotoModel {
-        $qb = $this->getRepository()->createQueryBuilder('p');
-
-        if ($album instanceof MemberAlbumModel) {
-            $qb->innerJoin('p.tags', 't')
-                ->where('t.member = ?1 AND p.dateTime > ?2')
-                ->setParameter(1, $album->getMember())
-                ->setParameter(2, $photo->getDateTime());
-        } else {
-            $qb->where('p.dateTime > ?1 AND p.album = ?2')
-                ->setParameter(1, $photo->getDateTime())
-                ->setParameter(2, $photo->getAlbum());
-        }
-
-        $qb->orderBy('p.dateTime', 'ASC')
-            ->setMaxResults(1);
-        $res = $qb->getQuery()->getResult();
-
-        return empty($res) ? null : $res[0];
-    }
-
-    /**
-     * Returns the previous photo in the album to display.
-     *
-     * @return PhotoModel|null Photo if there is a previous photo, null otherwise
-     */
-    public function getPreviousPhoto(
-        PhotoModel $photo,
-        AlbumModel $album,
-    ): ?PhotoModel {
-        $qb = $this->getRepository()->createQueryBuilder('p');
-
-        if ($album instanceof MemberAlbumModel) {
-            $qb->innerJoin('p.tags', 't')
-                ->where('t.member = ?1 AND p.dateTime < ?2')
-                ->setParameter(1, $album->getMember())
-                ->setParameter(2, $photo->getDateTime());
-        } else {
-            $qb->where('p.dateTime < ?1 AND p.album = ?2')
-                ->setParameter(1, $photo->getDateTime())
-                ->setParameter(2, $photo->getAlbum());
-        }
-
-        $qb->orderBy('p.dateTime', 'DESC')
-            ->setMaxResults(1);
-        $res = $qb->getQuery()->getResult();
-
-        return empty($res) ? null : $res[0];
-    }
-
-    /**
      * Checks if the specified photo exists in the database already and returns it if it does.
      *
      * @param string     $path  The storage path of the photo

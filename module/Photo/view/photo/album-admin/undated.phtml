@@ -1,0 +1,29 @@
+<?php
+
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+use Photo\Model\Album as AlbumModel;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var AlbumModel[] $albums
+ * @var int[] $years
+ */
+
+$this->breadcrumbs()
+    ->addBreadcrumb($this->translate('Photos'), true, $this->url('admin_photo'))
+    ->addBreadcrumb($this->translate('Undated'));
+?>
+<?= $this->partial('partial/years', ['years' => $years, 'admin' => true]) ?>
+<br>
+<div class="row row-height-equal">
+    <?php if (0 !== count($albums)): ?>
+        <?= $this->partial('partial/albums', ['albums' => $albums, 'admin' => true]) ?>
+    <?php else: ?>
+        <div class="col-md-12">
+            <p><?= $this->translate('There are no undated albums.') ?></p>
+        </div>
+    <?php endif; ?>
+</div>

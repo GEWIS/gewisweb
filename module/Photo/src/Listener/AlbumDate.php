@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Photo\Listener;
 
-use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PrePersistEventArgs;
 use Photo\Model\Album as AlbumModel;
 use Photo\Model\Photo as PhotoModel;
 
@@ -14,9 +14,9 @@ use Photo\Model\Photo as PhotoModel;
  */
 class AlbumDate
 {
-    public function prePersist(LifecycleEventArgs $eventArgs): void
+    public function prePersist(PrePersistEventArgs $eventArgs): void
     {
-        $entity = $eventArgs->getEntity();
+        $entity = $eventArgs->getObject();
 
         if ($entity instanceof AlbumModel) {
             $this->albumPersisted($entity);

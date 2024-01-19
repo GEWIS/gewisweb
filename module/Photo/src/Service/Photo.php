@@ -13,7 +13,6 @@ use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\NoResultException;
 use Exception;
 use Laminas\Http\Response\Stream;
-use Laminas\I18n\Filter\Alnum;
 use Laminas\Mvc\I18n\Translator;
 use Photo\Mapper\Photo as PhotoMapper;
 use Photo\Mapper\ProfilePhoto as ProfilePhotoMapper;
@@ -29,6 +28,7 @@ use Photo\Model\WeeklyPhoto as WeeklyPhotoModel;
 use User\Permissions\NotAllowedException;
 
 use function count;
+use function preg_replace;
 use function str_replace;
 use function strpos;
 use function substr;
@@ -125,108 +125,13 @@ class Photo
     public function getPhotoFileName(PhotoModel $photo): string
     {
         // filtering is required to prevent invalid characters in file names.
-        $filter = new Alnum(true);
-        $albumName = $filter->filter($photo->getAlbum()->getName());
+        $albumName = preg_replace('/[^\p{L}\p{N}\s]/u', '', $photo->getAlbum()->getName());
 
         // don't put spaces in file names
         $albumName = str_replace(' ', '-', $albumName);
         $extension = substr($photo->getPath(), strpos($photo->getPath(), '.'));
 
         return $albumName . '-' . $photo->getDateTime()->format('Y') . '-' . $photo->getId() . $extension;
-    }
-
-    /**
-     * Get the photo data belonging to a certain photo.
-     *
-     * @param int $photoId the id of the photo to retrieve
-     *
-     * @return ?array{
-     *     photo: PhotoModel,
-     *     next: ?PhotoModel,
-     *     previous: ?PhotoModel,
-     *     isTagged: bool,
-     *     isProfilePhoto: bool,
-     *     isExplicitProfilePhoto: bool,
-     * }
-     *
-     * @throws Exception
-     */
-    public function getPhotoData(
-        int $photoId,
-        ?AlbumModel $album = null,
-    ): ?array {
-        if (!$this->aclService->isAllowed('view', 'photo')) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to view photos'));
-        }
-
-        $photo = $this->getPhoto($photoId);
-
-        // photo does not exist
-        if (null === $photo) {
-            return null;
-        }
-
-        if (null === $album) {
-            // Default type for albums is Album.
-            $album = new AlbumModel();
-        }
-
-        $next = $this->getNextPhoto($photo, $album);
-        $previous = $this->getPreviousPhoto($photo, $album);
-
-        $lidnr = $this->aclService->getUserIdentityOrThrowException()->getLidnr();
-        $isTagged = $this->isTaggedIn($photoId, $lidnr);
-        $profilePhoto = $this->getStoredProfilePhoto($lidnr);
-        $isProfilePhoto = false;
-        $isExplicitProfilePhoto = false;
-
-        if (null !== $profilePhoto) {
-            $isExplicitProfilePhoto = $profilePhoto->isExplicit();
-            if ($photoId === $profilePhoto->getPhoto()->getId()) {
-                $isProfilePhoto = true;
-            }
-        }
-
-        return [
-            'photo' => $photo,
-            'next' => $next,
-            'previous' => $previous,
-            'isTagged' => $isTagged,
-            'isProfilePhoto' => $isProfilePhoto,
-            'isExplicitProfilePhoto' => $isExplicitProfilePhoto,
-        ];
-    }
-
-    /**
-     * Returns the next photo in the album to display.
-     *
-     * @return PhotoModel|null the next photo
-     */
-    public function getNextPhoto(
-        PhotoModel $photo,
-        AlbumModel $album,
-    ): ?PhotoModel {
-        if (!$this->aclService->isAllowed('view', 'photo')) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to view photos'));
-        }
-
-        return $this->photoMapper->getNextPhoto($photo, $album);
-    }
-
-    /**
-     * Returns the previous photo in the album to display.
-     *
-     * @return PhotoModel|null the next photo
-     */
-    public function getPreviousPhoto(
-        PhotoModel $photo,
-        AlbumModel $album,
-    ): ?PhotoModel {
-        if (!$this->aclService->isAllowed('view', 'photo')) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to view photos'));
-        }
-
-        return $this->photoMapper->getPreviousPhoto($photo, $album);
     }
 
     /**
@@ -261,9 +166,11 @@ class Photo
      */
     public function deletePhotoFiles(PhotoModel $photo): void
     {
+        if (1 !== $this->photoMapper->count(['path' => $photo->getPath()])) {
+            return;
+        }
+
         $this->deletePhotoFile($photo->getPath());
-        $this->deletePhotoFile($photo->getLargeThumbPath());
-        $this->deletePhotoFile($photo->getSmallThumbPath());
     }
 
     /**
@@ -680,7 +587,7 @@ class Photo
      */
     public function getBaseDirectory(): string
     {
-        return str_replace('public', '', $this->photoConfig['upload_dir']);
+        return str_replace('public', '', (string) $this->photoConfig['upload_dir']);
     }
 
     /**

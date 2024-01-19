@@ -1,0 +1,468 @@
+<?php
+
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+use Photo\Model\Album as AlbumModel;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var AlbumModel $album
+ * @var array $config
+ * @var int|null $year
+ */
+
+$this->headScript()
+    ->appendFile(
+        $this->basepath('js/masonry.pkgd.min.js'),
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    )
+    ->appendFile(
+        $this->basepath('js/photo.js'),
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    )
+    ->appendFile(
+        $this->basepath('js/photo-admin.js'),
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    )
+    ->appendFile(
+        $this->basepath('js/lazyload.min.js'),
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    );
+$this->headLink()->appendStylesheet($this->basepath('css/photoswipe.css'));
+
+$this->scriptUrl()
+    ->requireUrls(
+        [
+            'admin_photo',
+            'admin_photo/album',
+            'admin_photo/album_delete',
+            'admin_photo/album_move',
+            'admin_photo/album_cover',
+        ],
+        ['album_id']
+    )
+    ->requireUrls(
+        [
+            'admin_photo/photo_delete',
+            'admin_photo/photo_move',
+        ],
+        ['photo_id'],
+    );
+
+$this->breadcrumbs()
+    ->addBreadcrumb($this->translate('Photos'), true, $this->url('admin_photo'));
+
+if (null !== $year) {
+    $this->breadcrumbs()
+        ->addBreadcrumb(
+            sprintf(
+                '%d/%d',
+                $year,
+                $year + 1,
+            ),
+            true,
+            $this->url('admin_photo/album_year', ['year' => $year]),
+        );
+}
+
+if (null !== $album->getParent()) {
+    $parents = [];
+    $currentAlbum = $album;
+
+    while (null !== ($parent = $currentAlbum->getParent())) {
+        $parents[] = [
+            $this->escapeHtml($parent->getName()),
+            true,
+            $this->url('admin_photo/album', ['album_id' => $parent->getId()]),
+        ];
+
+        $currentAlbum = $parent;
+    }
+
+    $parents = array_reverse($parents);
+
+    foreach ($parents as $info) {
+        $this->breadcrumbs()->addBreadcrumb(...$info);
+    }
+}
+
+$this->breadcrumbs()
+    ->addBreadcrumb($this->escapeHtml($album->getName()));
+?>
+<div class="row">
+    <div class="col-md-12">
+        <a class="btn btn-primary" href="<?= $this->url('admin_photo/album_add', ['album_id' => $album->getId()]) ?>">
+            <span class="fas fa-file-upload"></span>&nbsp;<?= $this->translate('Add photos') ?>
+        </a>
+        <a class="btn btn-primary" href="<?= $this->url('admin_photo/album_create', ['album_id' => $album->getId()]) ?>">
+            <span class="fas fa-folder-plus"></span>&nbsp;<?= $this->translate('Add sub-album') ?>
+        </a>
+        <a class="btn btn-primary" href="<?= $this->url('admin_photo/album_edit', ['album_id' => $album->getId()]) ?>">
+            <span class="fas fa-edit"></span>&nbsp;<?= $this->translate('Edit album') ?>
+        </a>
+        <button type="button" data-toggle="modal" data-target="#moveAlbumModal" class="btn btn-primary">
+            <span class="fas fa-file-export"></span>&nbsp;<?= $this->translate('Move album') ?>
+        </button>
+        <button type="button" data-toggle="modal" data-target="#coverModal" class="btn btn-primary btn-regenerate">
+            <span class="fas fa-redo-alt"></span>&nbsp;<?= $this->translate('Regenerate album cover') ?>
+        </button>
+        <button type="button" data-toggle="modal" data-target="#deleteModal" class="btn btn-danger">
+            <span class="far fa-trash-alt"></span>&nbsp;<?= $this->translate('Delete album') ?>
+        </button>
+        <button type="button" class="btn btn-primary btn-select" id="btnMultipleSelect">
+            <span class="fas fa-filter"></span>&nbsp;<?= $this->translate('Select photos') ?>
+        </button>
+        <button type="button" class="btn btn-primary btn-hidden btn-select-clear" id="btnStopMultipleSelect">
+            <span class="fas fa-filter-circle-xmark"></span>&nbsp;<?= $this->translate('Cancel selection') ?>
+        </button>
+        <button type="button" data-toggle="modal" data-target="#multipleMoveModal"
+                class="btn btn-danger btn-hidden" id="btnMultipleMove"
+        >
+            <span class="fas fa-file-export"></span>&nbsp;<?= $this->translate('Move %i photos') ?>
+        </button>
+        <button type="button" data-toggle="modal" data-target="#multipleDeleteModal"
+                class="btn btn-danger btn-hidden" id="btnMultipleDelete"
+        >
+            <span class="far fa-trash-alt"></span>&nbsp;<?= $this->translate('Delete %i photos') ?>
+        </button>
+    </div>
+</div>
+<br>
+<?php if (0 !== $album->getChildren()->count()): ?>
+    <div class="row">
+        <?= $this->partial('partial/albums', ['albums' => $album->getChildren(), 'admin' => true]) ?>
+    </div>
+<?php endif; ?>
+<div class="row">
+    <div class="col-md-12">
+        <div class="pswp-gallery">
+            <?php if (0 === $album->getPhotoCount(false)): ?>
+                <hr>
+                <p><?= $this->translate('This album does not contain any photos.') ?></p>
+            <?php else: ?>
+                <div class="grid-sizer"></div>
+                <div class="gutter-sizer"></div>
+                <?php foreach ($album->getPhotos() as $key => $item): ?>
+                    <?php
+                    $ar = $item->getAspectRatio();
+                    $width = $config['small_thumb_size']['width'];
+                    $thumbnailSize = [
+                        'w' => $width,
+                        'h' => round($width * $ar)
+                    ];
+
+                    $width = $config['large_thumb_size']['width'];
+                    $largeSize = [
+                        'w' => $width,
+                        'h' => round($width * $ar)
+                    ];
+                    ?>
+                    <figure
+                        class="pswp-gallery__item"
+                        data-raw-url="<?= $this->url('photo/photo_download', ['photo_id' => $item->getId()]) ?>"
+                        data-photo-id="<?= $item->getId() ?>"
+                    >
+                        <a href="<?= $this->glideUrl()->getUrl($item->getPath(), $largeSize) ?>"
+                           target="_blank"
+                           data-pswp-height="<?= $largeSize['h'] ?>"
+                           data-pswp-width="<?= $largeSize['w'] ?>"
+                        >
+                            <img
+                                class="lazy-load"
+                                data-height="<?= $thumbnailSize['h'] ?>"
+                                data-width="<?= $thumbnailSize['w'] ?>"
+                                data-src="<?= $this->glideUrl()->getUrl($item->getPath(), $thumbnailSize) ?>"
+                                alt=""
+                            >
+                        </a>
+                        <figcaption class="hidden">
+                            <?= $this->partial('partial/metadata.phtml', ['photo' => $item]) ?>
+                        </figcaption>
+                    </figure>
+                    <!-- <input type="checkbox" class="thumbnail-checkbox"> -->
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
+
+<!-- Regenerate album cover modal -->
+<div class="modal fade" id="coverModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"><?= $this->translate('Generate a new cover photo') ?></h4>
+            </div>
+            <div class="modal-body">
+                <center>
+                    <div id="coverSpinner" class="spinner"></div>
+                    <p id="coverError"  style="display: none;">
+                        <?= $this->translate('An error occurred while trying to generate an album photo.') ?>
+                    </p>
+                    <img id="coverPreview" class="cover-preview" src="">
+                </center>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-regenerate" id="generateCoverButton">
+                    <?= $this->translate('Regenerate') ?>
+                </button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    <?= $this->translate('Close') ?>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Move album modal -->
+<div class="modal fade" id="moveAlbumModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"><?= $this->translate('Move the album') ?></h4>
+            </div>
+            <div class="modal-body">
+                <div id="albumMoveSelect">
+                    <!-- TODO: find a user friendly way to do this -->
+                    <p><?= $this->translate('Select a new parent for the album') ?></p>
+                    <input id="newAlbumParent" name="parent_id" type="text"/>
+                </div>
+                <div id="albumMoveDone" style="display:none">
+                    <p><?= $this->translate('The album has been moved') ?></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="moveAlbumButton"
+                        class="btn btn-primary"><?= $this->translate('Move') ?></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete album modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"><?= $this->translate('Delete confirmation') ?></h4>
+            </div>
+            <div class="modal-body">
+                <div id="deleteConfirm">
+                    <p><?= $this->translate('Are you sure you want to delete this album including all photos inside of it? <strong>This action can not be reverted.</strong>') ?> </p>
+                </div>
+                <div id="deleteProgress" style="display:none">
+                    <center><p><?= $this->translate('Please wait while the album is being deleted.') ?></p></center>
+                    <center>
+                        <div class="spinner"></div>
+                    </center>
+                </div>
+                <div id="deleteDone" style="display:none">
+                    <p><?= $this->translate('The album has been deleted') ?> </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="deleteAlbumButton"
+                        class="btn btn-danger"><?= $this->translate('Delete album') ?></button>
+                <button type="button" class="btn" data-dismiss="modal"><?= $this->translate('Cancel') ?></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete multiple modal -->
+<div class="modal fade" id="multipleDeleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"><?= $this->translate('Delete confirmation') ?></h4>
+            </div>
+            <div class="modal-body">
+                <div id="multipleDeleteConfirm">
+                    <p><?= $this->translate('Are you sure you want to delete the selected items? <strong>This action can not be reverted.</strong>') ?> </p>
+                </div>
+                <div id="multipleDeleteProgress" style="display:none">
+                    <center><p><?= $this->translate('Please wait while the photos are being deleted.') ?></p></center>
+                    <center>
+                        <div class="spinner"></div>
+                    </center>
+                </div>
+                <div id="multipleDeleteDone" style="display:none">
+                    <p><?= $this->translate('The photos have been been deleted') ?> </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="multipleDeleteButton" class="btn btn-danger">
+                    <?= $this->translate('Delete photos') ?>
+                </button>
+                <button type="button" class="btn" data-dismiss="modal"><?= $this->translate('Cancel') ?></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Move multiple photo modal -->
+<div class="modal fade" id="multipleMoveModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"><?= $this->translate('Move the photos to another album') ?></h4>
+            </div>
+            <div class="modal-body">
+                <div id="multipleMoveSelect">
+                    <!-- TODO: find a user friendly way to do this -->
+                    <p><?= $this->translate('Select a new parent album') ?></p>
+                    <input id="newPhotoAlbum" name="album_id" type="text"/>
+                </div>
+                <div id="multipleMoveDone" style="display:none">
+                    <p><?= $this->translate('The photos have been moved') ?></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="multipleMoveButton" class="btn btn-primary">
+                    <?= $this->translate('Move') ?>
+                </button>
+                <button type="button" class="btn" data-dismiss="modal"><?= $this->translate('Cancel') ?></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
+    $(document).ready(function () {
+        Photo.Admin.init(<?= $album->getId() ?>);
+        Photo.initGrid();
+    });
+</script>
+<script type="module" nonce="<?= NONCE_REPLACEMENT_STRING ?>">
+    import PhotoSwipeLightbox from '<?= $this->basePath('js/photoswipe-lightbox.esm.min.js') ?>';
+
+    const leftArrowSVGString = '<svg aria-hidden="true" class="pswp__icn" viewBox="0 0 50 30" width="50" height="30"><use href="<?= $this->basePath('sprites/fontawesome/solid.svg#chevron-left') ?>"></use></svg>';
+    const closeSVGString = '<svg aria-hidden="true" class="pswp__icn" viewBox="0 0 32 32" width="32" height="32"><use href="<?= $this->basePath('sprites/fontawesome/solid.svg#xmark') ?>"></use></svg>';
+    const zoomSVGString = '<svg aria-hidden="true" class="pswp__icn" viewBox="0 0 32 32" width="32" height="32"><use class="pswp__icn-zoom-plus" href="<?= $this->basePath('sprites/fontawesome/solid.svg#magnifying-glass-plus') ?>"></use><use class="pswp__icn-zoom-minus" href="<?= $this->basePath('sprites/fontawesome/solid.svg#magnifying-glass-minus') ?>"></use></svg>';
+
+    let lastActiveElement = null;
+
+    const lightbox = new PhotoSwipeLightbox({
+        gallery: '.pswp-gallery',
+        children: '.pswp-gallery__item',
+        bgOpacity: 0.9,
+
+        // Use FontAwesome for all icons.
+        arrowPrevSVG: leftArrowSVGString,
+        arrowNextSVG: leftArrowSVGString,
+        closeSVG: closeSVGString,
+        zoomSVG: zoomSVGString,
+
+        // Update translations.
+        closeTitle: '<?= $this->translate('Close') ?>',
+        zoomTitle: '<?= $this->translate('Zoom (z)') ?>',
+        arrowPrevTitle: '<?=  $this->translate('Previous') ?>',
+        arrowNextTitle: '<?=  $this->translate('Next') ?>',
+        errorMsg: '<?= $this->translate('The image could not be loaded.') ?>',
+
+        pswpModule: () => import('<?= $this->basePath('js/photoswipe.esm.min.js') ?>'),
+    });
+
+    lightbox.on('uiRegister', () => {
+        // Register custom buttons.
+        lightbox.pswp.ui.registerElement({
+            name: 'download-button',
+            appendTo: 'bar',
+            order: 13,
+            isButton: true,
+            title: '<?= $this->translate('Download') ?>',
+            html: {
+                isCustomSVG: true,
+                inner: '<use href="<?= $this->basePath('sprites/fontawesome/solid.svg#download') ?>"></use>',
+            },
+            onClick: (event, el, pswp) => {
+                let downloadUrl = pswp.currSlide.data.element.dataset.rawUrl;
+                let link = document.createElement('a');
+
+                link.href = downloadUrl;
+                link.download = '';
+                document.body.appendChild(link);
+
+                link.click();
+                link.remove();
+            },
+        });
+
+        lightbox.pswp.ui.registerElement({
+            name: 'metadata-button',
+            appendTo: 'bar',
+            order: 9,
+            isButton: true,
+            title: '<?= $this->translate('Information') ?>',
+            html: {
+                isCustomSVG: true,
+                inner: '<use href="<?= $this->basePath('sprites/fontawesome/solid.svg#circle-info') ?>"></use>',
+            },
+            onClick: () => {
+                let metadata = document.querySelector('.pswp__metadata-ui');
+
+                if (metadata.classList.contains('pswp__metadata-ui-open')) {
+                    metadata.classList.remove('pswp__metadata-ui-open');
+                } else {
+                    metadata.classList.add('pswp__metadata-ui-open');
+                }
+            },
+        });
+
+        // Register the metadata UI.
+        lightbox.pswp.ui.registerElement({
+            name: 'metadata-ui',
+            appendTo: 'root',
+            order: 43,
+            isButton: false,
+            html: '<?= $this->translate('Cannot load metadata') ?>',
+            onInit: (el, pswp) => {
+                pswp.on('change', () => {
+                    let currentSlide = pswp.currSlide.data.element;
+
+                    // Copy all HTML.
+                    el.innerHTML = currentSlide.querySelector('figcaption').innerHTML;
+                });
+            },
+        });
+    });
+
+    // Update the last active element when a new slide is shown.
+    lightbox.on('change', () => {
+        lastActiveElement = lightbox.pswp.currSlide.data.element;
+    });
+
+    lightbox.on('close', () => {
+        let elBoundingBox = lastActiveElement.getBoundingClientRect();
+
+        // If the last active element is slightly outside the viewport, scroll it into view (preferably centered).
+        if (
+            elBoundingBox.top < 0
+            || elBoundingBox.left < 0
+            || elBoundingBox.bottom > (window.innerHeight || document.documentElement.clientHeight)
+            || elBoundingBox.right > (window.innerWidth || document.documentElement.clientWidth)
+        ) {
+            lastActiveElement.scrollIntoView({block: 'center'});
+        }
+
+        lastActiveElement = null;
+    });
+
+    lightbox.init();
+</script>

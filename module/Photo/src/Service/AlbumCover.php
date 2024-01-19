@@ -126,7 +126,7 @@ class AlbumCover
         //convert the photo objects to Imagick objects
         $images = [];
         foreach ($photos as $photo) {
-            $imagePath = $this->storageConfig['storage_dir'] . '/' . $photo->getSmallThumbPath();
+            $imagePath = $this->storageConfig['storage_dir'] . '/' . $photo->getPath();
             $images[] = new Imagick($imagePath);
         }
 

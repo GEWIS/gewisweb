@@ -1,0 +1,66 @@
+<?php
+
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var bool $admin
+ * @var int[] $years
+ * @var int|null $year
+ */
+
+$admin = isset($admin) && $admin;
+
+$url = 'photo/year';
+if ($admin) {
+    $url = 'admin_photo/album_year';
+}
+?>
+<div class="row">
+    <div class="col-md-12">
+        <ul class="nav nav-tabs head-menu">
+            <?php for ($i = count($years) - 1; $i >= max(0, count($years) - 5); $i--): ?>
+                <li class="<?= isset($year) && $year === $years[$i] ? 'active' : '' ?>">
+                    <a href="<?= $this->url($url, ['year' => $years[$i]]); ?>">
+                        <?= $years[$i] ?>-<?= $years[$i] + 1 ?>
+                    </a>
+                </li>
+            <?php endfor; ?>
+            <?php if (7 <= count($years)): ?>
+                <li role="presentation" class="dropdown">
+                    <a class="dropdown-toggle"
+                       data-toggle="dropdown"
+                       href="#"
+                       role="button"
+                       aria-haspopup="true"
+                       aria-expanded="false">
+                        <?= $this->translate('Older') ?> <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <?php for ($i = max(0, count($years) - 6); $i > 0; $i--): ?>
+                            <li>
+                                <a href="<?= $this->url($url, ['year' => $years[$i]]); ?>">
+                                    <?= $years[$i] ?>/<?= $years[$i] + 1 ?>
+                                </a>
+                            </li>
+                        <?php endfor ?>
+                    </ul>
+                </li>
+            <?php endif; ?>
+            <?php if ($admin): ?>
+                <li>
+                    <a href="<?= $this->url('admin_photo/album_undated') ?>">
+                        <?= $this->translate('Undated') ?>
+                    </a>
+                </li>
+                <a href="<?= $this->url('admin_photo/album_create') ?>" class="btn btn-primary pull-right">
+                    <span class="fas fa-plus"></span>
+                    <?= $this->translate('Create Album') ?>
+                </a>
+            <?php endif; ?>
+        </ul>
+    </div>
+</div>

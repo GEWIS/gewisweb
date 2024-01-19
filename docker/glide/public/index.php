@@ -10,19 +10,12 @@ chdir(dirname(__DIR__));
 require 'vendor/autoload.php';
 
 use League\Flysystem\FilesystemException as FilesystemV2Exception;
-use League\Glide\{
-    Server,
-    ServerFactory,
-};
-use League\Glide\Filesystem\{
-    FileNotFoundException,
-    FilesystemException,
-};
-use League\Glide\Signatures\{
-    SignatureFactory,
-    SignatureException,
-};
-
+use League\Glide\Server;
+use League\Glide\ServerFactory;
+use League\Glide\Filesystem\FilesystemException;
+use League\Glide\Signatures\Signature;
+use League\Glide\Signatures\SignatureException;
+use League\Glide\Signatures\SignatureFactory;
 
 /**
  * Override the actual `ServerFactory`, such that our custom `Server` is returned.
@@ -31,6 +24,8 @@ class GlideServerFactory extends ServerFactory
 {
     /**
      * Get configured custom server.
+     *
+     * TODO: Mark with #[Override]
      *
      * @return GlideServer Configured Glide server.
      */
@@ -60,80 +55,101 @@ class GlideServerFactory extends ServerFactory
 }
 
 /**
- * Override the actual `Server`, such that creation of images does not use the memory hogging
- * `file_{get,put}_contents()` functions.
+ * Override the actual `Server`, such that output of images is cached regardless of the `expires` value.
  */
 class GlideServer extends Server
 {
     /**
-     * Generate manipulated image.
-     *
-     * @param string $path   Image path.
-     * @param array  $params Image manipulation params.
-     *
-     * @return string Cache path.
-     *
-     * @throws FileNotFoundException
-     * @throws FilesystemException
+     * TODO: Mark with #[Override]
+     * *
+     * * @inheritDoc
      */
-    public function makeImage($path, array $params): string
+    public function outputImage($path, array $params): void
     {
-        $sourcePath = $this->getSourcePath($path);
-        $cachedPath = $this->getCachePath($path, $params);
+        // MODIFIED: unset the 'expires' parameter to ensure that we do not generate daily cache files.
+        unset($params['expires']);
 
-        if (true === $this->cacheFileExists($path, $params)) {
-            return $cachedPath;
-        }
-
-        if (false === $this->sourceFileExists($path)) {
-            throw new FileNotFoundException('Could not find the image `'.$sourcePath.'`.');
-        }
+        $path = $this->makeImage($path, $params);
 
         try {
-            // MODIFIED: Do not read the whole file into memory (`file_get_contents()`), simply check its existence.
-            $source = $this->source->fileExists(
-                $sourcePath
-            );
-        } catch (FilesystemV2Exception $exception) {
-            throw new FilesystemException('Could not read the image `'.$sourcePath.'`.');
+            header('Content-Type:' . $this->cache->mimeType($path));
+            header('Content-Length:' . $this->cache->fileSize($path));
+            header('Expires:' . date_create('tomorrow')->format('D, d M Y H:i:s') . ' GMT');
+
+            $stream = $this->cache->readStream($path);
+
+            if (0 !== ftell($stream)) {
+                rewind($stream);
+            }
+            fpassthru($stream);
+            fclose($stream);
+        } catch (FilesystemV2Exception) {
+            throw new FilesystemException('Could not read the image `' . $path . '`.');
+        }
+    }
+}
+
+class GlideSignatureFactory extends SignatureFactory
+{
+    /**
+     * TODO: Mark with #[Override]
+     *
+     * @inheritDoc
+     */
+    public static function create($signKey)
+    {
+        return new GlideSignature($signKey);
+    }
+}
+
+class GlideSignature extends Signature
+{
+    /**
+     * MODIFIED: check expiration from the parameters.
+     *
+     * TODO: Mark with #[Override]
+     *
+     * @inheritDoc
+     */
+    public function validateRequest($path, array $params)
+    {
+        if (!isset($params['s'])) {
+            throw new SignatureException('Signature is missing.');
         }
 
-        // We need to write the image to the local disk before
-        // doing any manipulations. This is because EXIF data
-        // can only be read from an actual file.
-        $tmp = tempnam($this->tempDir, 'Glide');
-
-        // MODIFIED: Copy the file with a native copy instead of using `file_put_contents()`;
-        try {
-            $this->source->copy(
-                $sourcePath,
-                $tmp,
-            );
-        } catch (FilesystemV2Exception $exception) {
-            throw new FilesystemException('Could not write temp file for `'.$sourcePath.'`.');
+        if ($params['s'] !== $this->generateSignature($path, $params)) {
+            throw new SignatureException('Signature is not valid.');
         }
 
-        try {
-            $this->cache->write(
-                $cachedPath,
-                $this->api->run($tmp, $this->getAllParams($params))
-            );
-        } catch (FilesystemV2Exception $exception) {
-            throw new FilesystemException('Could not write the image `'.$cachedPath.'`.');
-        } finally {
-            unlink($tmp);
+        // MODIFIED: check that the link has not expired.
+        if ((new DateTime('now')) >= (DateTime::createFromFormat(DateTimeInterface::ATOM, $params['expires']))) {
+            throw new SignatureException('Signature has expired.');
         }
+    }
 
-        return $cachedPath;
+    /**
+     * MODIFIED: use SHA3-256 instead of MD5.
+     *
+     * TODO: Mark with #[Override]
+     *
+     * @inheritDoc
+     */
+    public function generateSignature($path, array $params): string
+    {
+        unset($params['s']);
+        ksort($params);
+
+        // MODIFIED: use SHA3-256 instead of md5 as we want better guarantees that the signature is not crafted.
+        return hash('sha3-256', $this->signKey.':'.ltrim($path, '/').'?'.http_build_query($params));
     }
 }
 
 // Setup Glide server
-$server = GlideServerFactory::create([
+$server = (new GlideServerFactory([
     'source' => '/code/public/data',
     'cache' => '/glide/cache',
     'driver' => 'imagick',
-]);
+]))->getServer();
 
 // set complicated sign key
 $signkey = getenv('GLIDE_KEY');
@@ -143,7 +159,7 @@ $path = explode('?', $_SERVER['REQUEST_URI'], 2)[0];
 
 try {
     // Validate HTTP signature
-    SignatureFactory::create($signkey)->validateRequest($base . $path, $_GET);
+    GlideSignatureFactory::create($signkey)->validateRequest($base . $path, $_GET);
 } catch (SignatureException $e) {
     http_response_code(403);
     die('Forbidden');

@@ -31,13 +31,35 @@ $this->headLink()->appendStylesheet($this->basepath('css/dropzone.css'));
 
 $this->breadcrumbs()
     ->addBreadcrumb($this->translate('Photos'), true, $this->url('admin_photo'))
-    ->addBreadcrumb($album->getName(), true, $this->url(
-        'admin_photo',
-        [],
-        [
-            'fragment' => $album->getId(),
-        ],
-    ))
+    ->addBreadcrumb(sprintf('%d/%d', $year, $year + 1), true, $this->url('admin_photo/album_year', ['year' => $year]));
+
+if (null !== $album->getParent()) {
+    $parents = [];
+    $currentAlbum = $album;
+
+    while (null !== ($parent = $currentAlbum->getParent())) {
+        $parents[] = [
+            $this->escapeHtml($parent->getName()),
+            true,
+            $this->url('admin_photo/album', ['album_id' => $parent->getId()]),
+        ];
+
+        $currentAlbum = $parent;
+    }
+
+    $parents = array_reverse($parents);
+
+    foreach ($parents as $info) {
+        $this->breadcrumbs()->addBreadcrumb(...$info);
+    }
+}
+
+$this->breadcrumbs()
+    ->addBreadcrumb(
+        $this->escapeHtml($album->getName()),
+        true,
+        $this->url('admin_photo/album', ['album_id' => $album->getId()]),
+    )
     ->addBreadcrumb($this->translate('Upload Photos'));
 ?>
 <h1><?= sprintf($this->translate('Uploading photos to %s'), $album->getName()) ?></h1>
