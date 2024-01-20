@@ -49,6 +49,7 @@ class UserAdapter implements AdapterInterface
             $user->getMember()->getDeleted()
             || $user->getMember()->getHidden()
             || $user->getMember()->isExpired()
+            || null === $user->getMember()->getEmail()
         ) {
             return new Result(
                 Result::FAILURE_UNCATEGORIZED,
