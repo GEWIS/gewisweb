@@ -16,6 +16,7 @@ use League\Glide\Filesystem\FilesystemException;
 use League\Glide\Signatures\Signature;
 use League\Glide\Signatures\SignatureException;
 use League\Glide\Signatures\SignatureFactory;
+use Override;
 
 /**
  * Override the actual `ServerFactory`, such that our custom `Server` is returned.
@@ -25,10 +26,9 @@ class GlideServerFactory extends ServerFactory
     /**
      * Get configured custom server.
      *
-     * TODO: Mark with #[Override]
-     *
      * @return GlideServer Configured Glide server.
      */
+    #[Override]
     public function getServer(): GlideServer
     {
         $server = new GlideServer(
@@ -60,10 +60,9 @@ class GlideServerFactory extends ServerFactory
 class GlideServer extends Server
 {
     /**
-     * TODO: Mark with #[Override]
-     * *
-     * * @inheritDoc
+     * @inheritDoc
      */
+    #[Override]
     public function outputImage($path, array $params): void
     {
         // MODIFIED: unset the 'expires' parameter to ensure that we do not generate daily cache files.
@@ -92,10 +91,9 @@ class GlideServer extends Server
 class GlideSignatureFactory extends SignatureFactory
 {
     /**
-     * TODO: Mark with #[Override]
-     *
      * @inheritDoc
      */
+    #[Override]
     public static function create($signKey)
     {
         return new GlideSignature($signKey);
@@ -107,10 +105,9 @@ class GlideSignature extends Signature
     /**
      * MODIFIED: check expiration from the parameters.
      *
-     * TODO: Mark with #[Override]
-     *
      * @inheritDoc
      */
+    #[Override]
     public function validateRequest($path, array $params)
     {
         if (!isset($params['s'])) {
@@ -130,10 +127,9 @@ class GlideSignature extends Signature
     /**
      * MODIFIED: use SHA3-256 instead of MD5.
      *
-     * TODO: Mark with #[Override]
-     *
      * @inheritDoc
      */
+    #[Override]
     public function generateSignature($path, array $params): string
     {
         unset($params['s']);

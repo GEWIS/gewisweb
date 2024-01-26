@@ -14,6 +14,7 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\OneToOne;
+use Override;
 
 /**
  * Installation as board member.
@@ -91,6 +92,7 @@ class Installation extends SubDecision
      *
      * @psalm-suppress InvalidNullableReturnType
      */
+    #[Override]
     public function getMember(): Member
     {
         return $this->member;

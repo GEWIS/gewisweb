@@ -12,35 +12,38 @@ use Laminas\Mvc\Application;
 use Laminas\Mvc\Service\ServiceManagerConfig;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Stdlib\Exception\LogicException;
-use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
 use function array_merge;
 use function array_unique;
+use function trigger_error;
 
-abstract class BaseMapperTest extends TestCase
+use const E_USER_WARNING;
+
+/**
+ * @psalm-template TMapper of BaseMapper
+ * @psalm-template TObject of object
+ */
+trait BaseMapperTrait
 {
     /** @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingTraversableTypeHintSpecification */
     protected array $applicationConfig;
     protected ?Application $application = null;
     protected ServiceManager $serviceManager;
     protected EntityManager $entityManager;
+    /** @psalm-var TMapper $mapper */
     protected BaseMapper $mapper;
+    /** @psalm-var TObject $object */
     protected object $object;
 
-    public function setUp(): void
+    private function setUpEntityManager(): void
     {
         $this->setApplicationConfig(TestConfigProvider::getConfig());
         $this->getApplication();
         $this->entityManager = $this->serviceManager->get('doctrine.entitymanager.orm_default');
     }
 
-    protected function getId(object $object): mixed
-    {
-        throw new RuntimeException('Not implemented');
-    }
-
-    public function getApplication(): Application
+    private function getApplication(): Application
     {
         if ($this->application) {
             return $this->application;
@@ -127,6 +130,11 @@ abstract class BaseMapperTest extends TestCase
         return $serviceManager->get('Application')->bootstrap($listeners);
     }
 
+    protected function getId(object $object): mixed
+    {
+        throw new RuntimeException('Not implemented');
+    }
+
     public function testGetEntityManager(): void
     {
         $this->mapper->getEntityManager();
@@ -202,8 +210,8 @@ abstract class BaseMapperTest extends TestCase
             $this->expectNotToPerformAssertions();
         } catch (RuntimeException $e) {
             if ('Not implemented' !== $e->getMessage()) {
-                $this->addWarning($e->getMessage());
-                $this->addWarning($e->getTraceAsString());
+                trigger_error($e->getMessage(), E_USER_WARNING);
+                trigger_error($e->getTraceAsString(), E_USER_WARNING);
                 $this->fail('testRemoveById threw an unexpected exception.');
             } else {
                 $this->expectNotToPerformAssertions();

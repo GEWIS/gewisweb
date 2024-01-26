@@ -16,4 +16,4 @@ jobs:
     php-codesniffer:
         uses: 'GEWIS/gewisphp-coding-standards/.github/workflows/coding-standards.yml@1.1.0'
         with:
-            php-version: '8.2'
+            php-version: '8.3'
