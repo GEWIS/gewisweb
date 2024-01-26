@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace ActivityTest;
 
-use ApplicationTest\BaseControllerTest;
+use ApplicationTest\BaseControllerTrait;
+use Laminas\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 
-class ControllerTest extends BaseControllerTest
+class ControllerTest extends AbstractHttpControllerTestCase
 {
+    use BaseControllerTrait;
+
     public function testActivityActionCanBeAccessed(): void
     {
         $this->dispatch('/activity');

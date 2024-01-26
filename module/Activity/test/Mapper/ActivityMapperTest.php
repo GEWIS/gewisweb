@@ -7,24 +7,25 @@ namespace ActivityTest\Mapper;
 use Activity\Mapper\Activity as ActivityMapper;
 use Activity\Model\Activity;
 use Activity\Model\ActivityLocalisedText;
-use Application\Mapper\BaseMapper;
-use ApplicationTest\Mapper\BaseMapperTest;
+use ApplicationTest\Mapper\BaseMapperTrait;
 use DateTime;
 use Decision\Model\Enums\MembershipTypes;
 use Decision\Model\Member;
+use PHPUnit\Framework\TestCase;
 use User\Model\User;
 
-class ActivityMapperTest extends BaseMapperTest
+class ActivityMapperTest extends TestCase
 {
-    /** @var ActivityMapper */
-    protected BaseMapper $mapper;
+    /** @use BaseMapperTrait<ActivityMapper, Activity> */
+    use BaseMapperTrait;
+
     protected User $user;
     protected Member $member;
     private ActivityLocalisedText $localisedText;
 
     public function setUp(): void
     {
-        parent::setUp();
+        $this->setUpEntityManager();
 
         $this->mapper = $this->serviceManager->get('activity_mapper_activity');
 

@@ -15,7 +15,6 @@ use Laminas\Mvc\Application;
 use Laminas\Mvc\ApplicationInterface;
 use Laminas\Mvc\Service\ServiceManagerConfig;
 use Laminas\ServiceManager\ServiceManager;
-use Laminas\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use User\Authentication\AuthenticationService;
 use User\Model\CompanyUser;
@@ -27,7 +26,7 @@ use User\Model\UserRole;
 use function array_merge;
 use function array_unique;
 
-abstract class BaseControllerTest extends AbstractHttpControllerTestCase
+trait BaseControllerTrait
 {
     protected ServiceManager $serviceManager;
 
@@ -229,8 +228,8 @@ abstract class BaseControllerTest extends AbstractHttpControllerTestCase
             $this->setUpMockNewCompanyUser();
             $this->setUpMockCompanyUser();
 
-            $this->companyMapper->method('find')->willReturnMap([[$this::COMPANY_ID], $this->company]);
-            $this->companyUserMapper->method('find')->willReturnMap([[$this::COMPANY_ID], $this->companyUser]);
+            $this->companyMapper->method('find')->willReturnMap([[$this::COMPANY_ID], [$this->company]]);
+            $this->companyUserMapper->method('find')->willReturnMap([[$this::COMPANY_ID], [$this->companyUser]]);
 
             return $this->companyUser;
         }
@@ -252,8 +251,8 @@ abstract class BaseControllerTest extends AbstractHttpControllerTestCase
             $roleModel->setLidnr($this->user);
         }
 
-        $this->userMapper->method('find')->willReturnMap([[$this::LIDNR], $this->user]);
-        $this->memberMapper->method('findByLidnr')->willReturnMap([[$this::LIDNR], $this->member]);
+        $this->userMapper->method('find')->willReturnMap([[$this::LIDNR], [$this->user]]);
+        $this->memberMapper->method('findByLidnr')->willReturnMap([[$this::LIDNR], [$this->member]]);
 
         return $this->user;
     }

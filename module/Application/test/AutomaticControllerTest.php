@@ -13,15 +13,21 @@ use Laminas\Router\Http\Part;
 use Laminas\Router\Http\Regex;
 use Laminas\Router\Http\Segment;
 use Laminas\Router\PriorityList;
+use Laminas\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 use RuntimeException;
 use Throwable;
 
 use function is_string;
 use function serialize;
 use function sprintf;
+use function trigger_error;
 
-class AutomaticControllerTest extends BaseControllerTest
+use const E_USER_WARNING;
+
+class AutomaticControllerTest extends AbstractHttpControllerTestCase
 {
+    use BaseControllerTrait;
+
     public function testAllRoutes(): void
     {
         /** @var LanguageAwareTreeRouteStack $router */
@@ -106,15 +112,25 @@ class AutomaticControllerTest extends BaseControllerTest
             $url = $element->assemble($params);
             $this->parseUrl($url);
         } catch (InvalidArgumentException $exception) {
-            $this->addWarning(
+            trigger_error(
                 // phpcs:ignore Generic.Files.LineLength.TooLong -- user-visible strings should not be split
                 'Skipping one or multiple route segments/parts because required parameters could not be generated automatically.',
+                E_USER_WARNING,
             );
-            $this->addWarning($exception->getMessage());
+            trigger_error(
+                $exception->getMessage(),
+                E_USER_WARNING,
+            );
             try {
-                $this->addWarning(serialize($element));
+                trigger_error(
+                    serialize($element),
+                    E_USER_WARNING,
+                );
             } catch (Throwable) {
-                $this->addWarning('More details could not be provided through serialization.');
+                trigger_error(
+                    'More details could not be provided through serialization.',
+                    E_USER_WARNING,
+                );
                 // A part is not always serializable.
             }
         }

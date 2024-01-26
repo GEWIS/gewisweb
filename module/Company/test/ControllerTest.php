@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace CompanyTest;
 
-use ApplicationTest\BaseControllerTest;
+use ApplicationTest\BaseControllerTrait;
+use Laminas\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 
-class ControllerTest extends BaseControllerTest
+class ControllerTest extends AbstractHttpControllerTestCase
 {
+    use BaseControllerTrait;
+
     public function testCareerActionCanBeAccessed(): void
     {
         $this->dispatch('/career');

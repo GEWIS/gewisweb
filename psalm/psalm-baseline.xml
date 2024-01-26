@@ -20,15 +20,7 @@
       <code>$this-&gt;remoteAddress</code>
     </TypeDoesNotContainNull>
   </file>
-  <file src="module/Application/test/BaseControllerTest.php">
-    <InvalidArgument>
-      <code>[[$this::COMPANY_ID], $this-&gt;companyUser]</code>
-      <code>[[$this::COMPANY_ID], $this-&gt;company]</code>
-      <code>[[$this::LIDNR], $this-&gt;member]</code>
-      <code>[[$this::LIDNR], $this-&gt;user]</code>
-    </InvalidArgument>
-  </file>
-  <file src="module/Application/test/Mapper/BaseMapperTest.php">
+  <file src="module/Application/test/Mapper/BaseMapperTrait.php">
     <UnusedMethodCall>
       <code>getEntityManager</code>
     </UnusedMethodCall>
@@ -46,20 +38,6 @@
   <file src="module/Company/src/Service/Company.php">
     <InvalidArgument>
       <code>$file</code>
-    </InvalidArgument>
-  </file>
-  <file src="module/Decision/src/Service/Decision.php">
-    <InvalidArgument>
-      <code>function (MeetingDocumentModel $document) use ($ordering): void {
-            $position = $ordering-&gt;indexOf($document-&gt;getId());
-
-            $document-&gt;setDisplayPosition($position);
-
-            $this-&gt;meetingDocumentMapper-&gt;persist($document);
-        }</code>
-      <code>static function (MeetingDocumentModel $document) {
-            return $document-&gt;getId();
-        }</code>
     </InvalidArgument>
   </file>
   <file src="module/Frontpage/src/Form/Page.php">
