@@ -3151,11 +3151,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/ActivityTest-Mapper-ActivityMapperTest.html#method_testGetUpcomingActivitiesForMember"
         },                {
-            "fqsen": "\\ActivityTest\\Mapper\\ActivityMapperTest\u003A\u003A\u0024mapper",
-            "name": "mapper",
-            "summary": "",
-            "url": "classes/ActivityTest-Mapper-ActivityMapperTest.html#property_mapper"
-        },                {
             "fqsen": "\\ActivityTest\\Mapper\\ActivityMapperTest\u003A\u003A\u0024user",
             "name": "user",
             "summary": "",
@@ -4396,315 +4391,305 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/ApplicationTest-AutomaticControllerTest.html#method_getParams"
         },                {
-            "fqsen": "\\ApplicationTest\\BaseControllerTest",
-            "name": "BaseControllerTest",
+            "fqsen": "\\ApplicationTest\\BaseControllerTrait",
+            "name": "BaseControllerTrait",
             "summary": "",
-            "url": "classes/ApplicationTest-BaseControllerTest.html"
+            "url": "classes/ApplicationTest-BaseControllerTrait.html"
         },                {
-            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003AsetUp\u0028\u0029",
+            "fqsen": "\\ApplicationTest\\BaseControllerTrait\u003A\u003AsetUp\u0028\u0029",
             "name": "setUp",
             "summary": "",
-            "url": "classes/ApplicationTest-BaseControllerTest.html#method_setUp"
+            "url": "classes/ApplicationTest-BaseControllerTrait.html#method_setUp"
         },                {
-            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003AsetUpMockedServices\u0028\u0029",
+            "fqsen": "\\ApplicationTest\\BaseControllerTrait\u003A\u003AsetUpMockedServices\u0028\u0029",
             "name": "setUpMockedServices",
             "summary": "",
-            "url": "classes/ApplicationTest-BaseControllerTest.html#method_setUpMockedServices"
+            "url": "classes/ApplicationTest-BaseControllerTrait.html#method_setUpMockedServices"
         },                {
-            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003AgetApplication\u0028\u0029",
+            "fqsen": "\\ApplicationTest\\BaseControllerTrait\u003A\u003AgetApplication\u0028\u0029",
             "name": "getApplication",
             "summary": "",
-            "url": "classes/ApplicationTest-BaseControllerTest.html#method_getApplication"
+            "url": "classes/ApplicationTest-BaseControllerTrait.html#method_getApplication"
         },                {
-            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003AinitServiceManager\u0028\u0029",
+            "fqsen": "\\ApplicationTest\\BaseControllerTrait\u003A\u003AinitServiceManager\u0028\u0029",
             "name": "initServiceManager",
             "summary": "Variation\u0020of\u0020\u007B\u0040link\u0020Application\u003A\u003Ainit\u007D\u0020but\u0020without\u0020initial\u0020bootstrapping.",
-            "url": "classes/ApplicationTest-BaseControllerTest.html#method_initServiceManager"
+            "url": "classes/ApplicationTest-BaseControllerTrait.html#method_initServiceManager"
         },                {
-            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003AbootstrapApplication\u0028\u0029",
+            "fqsen": "\\ApplicationTest\\BaseControllerTrait\u003A\u003AbootstrapApplication\u0028\u0029",
             "name": "bootstrapApplication",
             "summary": "",
-            "url": "classes/ApplicationTest-BaseControllerTest.html#method_bootstrapApplication"
+            "url": "classes/ApplicationTest-BaseControllerTrait.html#method_bootstrapApplication"
         },                {
-            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003AsetUpMockCompanyUserAuthService\u0028\u0029",
+            "fqsen": "\\ApplicationTest\\BaseControllerTrait\u003A\u003AsetUpMockCompanyUserAuthService\u0028\u0029",
             "name": "setUpMockCompanyUserAuthService",
             "summary": "",
-            "url": "classes/ApplicationTest-BaseControllerTest.html#method_setUpMockCompanyUserAuthService"
+            "url": "classes/ApplicationTest-BaseControllerTrait.html#method_setUpMockCompanyUserAuthService"
         },                {
-            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003AsetUpMockCompanyMapper\u0028\u0029",
+            "fqsen": "\\ApplicationTest\\BaseControllerTrait\u003A\u003AsetUpMockCompanyMapper\u0028\u0029",
             "name": "setUpMockCompanyMapper",
             "summary": "",
-            "url": "classes/ApplicationTest-BaseControllerTest.html#method_setUpMockCompanyMapper"
+            "url": "classes/ApplicationTest-BaseControllerTrait.html#method_setUpMockCompanyMapper"
         },                {
-            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003AsetUpMockCompanyUserMapper\u0028\u0029",
+            "fqsen": "\\ApplicationTest\\BaseControllerTrait\u003A\u003AsetUpMockCompanyUserMapper\u0028\u0029",
             "name": "setUpMockCompanyUserMapper",
             "summary": "",
-            "url": "classes/ApplicationTest-BaseControllerTest.html#method_setUpMockCompanyUserMapper"
+            "url": "classes/ApplicationTest-BaseControllerTrait.html#method_setUpMockCompanyUserMapper"
         },                {
-            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003AsetUpMockUserAuthService\u0028\u0029",
+            "fqsen": "\\ApplicationTest\\BaseControllerTrait\u003A\u003AsetUpMockUserAuthService\u0028\u0029",
             "name": "setUpMockUserAuthService",
             "summary": "",
-            "url": "classes/ApplicationTest-BaseControllerTest.html#method_setUpMockUserAuthService"
+            "url": "classes/ApplicationTest-BaseControllerTrait.html#method_setUpMockUserAuthService"
         },                {
-            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003AsetUpMockUserMapper\u0028\u0029",
+            "fqsen": "\\ApplicationTest\\BaseControllerTrait\u003A\u003AsetUpMockUserMapper\u0028\u0029",
             "name": "setUpMockUserMapper",
             "summary": "",
-            "url": "classes/ApplicationTest-BaseControllerTest.html#method_setUpMockUserMapper"
+            "url": "classes/ApplicationTest-BaseControllerTrait.html#method_setUpMockUserMapper"
         },                {
-            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003AsetUpMockMemberMapper\u0028\u0029",
+            "fqsen": "\\ApplicationTest\\BaseControllerTrait\u003A\u003AsetUpMockMemberMapper\u0028\u0029",
             "name": "setUpMockMemberMapper",
             "summary": "",
-            "url": "classes/ApplicationTest-BaseControllerTest.html#method_setUpMockMemberMapper"
+            "url": "classes/ApplicationTest-BaseControllerTrait.html#method_setUpMockMemberMapper"
         },                {
-            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003AsetUpWithRole\u0028\u0029",
+            "fqsen": "\\ApplicationTest\\BaseControllerTrait\u003A\u003AsetUpWithRole\u0028\u0029",
             "name": "setUpWithRole",
             "summary": "",
-            "url": "classes/ApplicationTest-BaseControllerTest.html#method_setUpWithRole"
+            "url": "classes/ApplicationTest-BaseControllerTrait.html#method_setUpWithRole"
         },                {
-            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003AsetUpMockIdentity\u0028\u0029",
+            "fqsen": "\\ApplicationTest\\BaseControllerTrait\u003A\u003AsetUpMockIdentity\u0028\u0029",
             "name": "setUpMockIdentity",
             "summary": "",
-            "url": "classes/ApplicationTest-BaseControllerTest.html#method_setUpMockIdentity"
+            "url": "classes/ApplicationTest-BaseControllerTrait.html#method_setUpMockIdentity"
         },                {
-            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003AsetUpMockUser\u0028\u0029",
+            "fqsen": "\\ApplicationTest\\BaseControllerTrait\u003A\u003AsetUpMockUser\u0028\u0029",
             "name": "setUpMockUser",
             "summary": "",
-            "url": "classes/ApplicationTest-BaseControllerTest.html#method_setUpMockUser"
+            "url": "classes/ApplicationTest-BaseControllerTrait.html#method_setUpMockUser"
         },                {
-            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003AsetUpMockMember\u0028\u0029",
+            "fqsen": "\\ApplicationTest\\BaseControllerTrait\u003A\u003AsetUpMockMember\u0028\u0029",
             "name": "setUpMockMember",
             "summary": "",
-            "url": "classes/ApplicationTest-BaseControllerTest.html#method_setUpMockMember"
+            "url": "classes/ApplicationTest-BaseControllerTrait.html#method_setUpMockMember"
         },                {
-            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003AsetUpMockCompany\u0028\u0029",
+            "fqsen": "\\ApplicationTest\\BaseControllerTrait\u003A\u003AsetUpMockCompany\u0028\u0029",
             "name": "setUpMockCompany",
             "summary": "",
-            "url": "classes/ApplicationTest-BaseControllerTest.html#method_setUpMockCompany"
+            "url": "classes/ApplicationTest-BaseControllerTrait.html#method_setUpMockCompany"
         },                {
-            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003AsetUpMockNewCompanyUser\u0028\u0029",
+            "fqsen": "\\ApplicationTest\\BaseControllerTrait\u003A\u003AsetUpMockNewCompanyUser\u0028\u0029",
             "name": "setUpMockNewCompanyUser",
             "summary": "",
-            "url": "classes/ApplicationTest-BaseControllerTest.html#method_setUpMockNewCompanyUser"
+            "url": "classes/ApplicationTest-BaseControllerTrait.html#method_setUpMockNewCompanyUser"
         },                {
-            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003AsetUpMockCompanyUser\u0028\u0029",
+            "fqsen": "\\ApplicationTest\\BaseControllerTrait\u003A\u003AsetUpMockCompanyUser\u0028\u0029",
             "name": "setUpMockCompanyUser",
             "summary": "",
-            "url": "classes/ApplicationTest-BaseControllerTest.html#method_setUpMockCompanyUser"
+            "url": "classes/ApplicationTest-BaseControllerTrait.html#method_setUpMockCompanyUser"
         },                {
-            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003ALIDNR",
-            "name": "LIDNR",
-            "summary": "",
-            "url": "classes/ApplicationTest-BaseControllerTest.html#constant_LIDNR"
-        },                {
-            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003ACOMPANY_ID",
-            "name": "COMPANY_ID",
-            "summary": "",
-            "url": "classes/ApplicationTest-BaseControllerTest.html#constant_COMPANY_ID"
-        },                {
-            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003A\u0024serviceManager",
+            "fqsen": "\\ApplicationTest\\BaseControllerTrait\u003A\u003A\u0024serviceManager",
             "name": "serviceManager",
             "summary": "",
-            "url": "classes/ApplicationTest-BaseControllerTest.html#property_serviceManager"
+            "url": "classes/ApplicationTest-BaseControllerTrait.html#property_serviceManager"
         },                {
-            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003A\u0024aclService",
+            "fqsen": "\\ApplicationTest\\BaseControllerTrait\u003A\u003A\u0024aclService",
             "name": "aclService",
             "summary": "",
-            "url": "classes/ApplicationTest-BaseControllerTest.html#property_aclService"
+            "url": "classes/ApplicationTest-BaseControllerTrait.html#property_aclService"
         },                {
-            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003A\u0024companyUserAuthService",
+            "fqsen": "\\ApplicationTest\\BaseControllerTrait\u003A\u003A\u0024companyUserAuthService",
             "name": "companyUserAuthService",
             "summary": "",
-            "url": "classes/ApplicationTest-BaseControllerTest.html#property_companyUserAuthService"
+            "url": "classes/ApplicationTest-BaseControllerTrait.html#property_companyUserAuthService"
         },                {
-            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003A\u0024userAuthService",
+            "fqsen": "\\ApplicationTest\\BaseControllerTrait\u003A\u003A\u0024userAuthService",
             "name": "userAuthService",
             "summary": "",
-            "url": "classes/ApplicationTest-BaseControllerTest.html#property_userAuthService"
+            "url": "classes/ApplicationTest-BaseControllerTrait.html#property_userAuthService"
         },                {
-            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003A\u0024companyMapper",
+            "fqsen": "\\ApplicationTest\\BaseControllerTrait\u003A\u003A\u0024companyMapper",
             "name": "companyMapper",
             "summary": "",
-            "url": "classes/ApplicationTest-BaseControllerTest.html#property_companyMapper"
+            "url": "classes/ApplicationTest-BaseControllerTrait.html#property_companyMapper"
         },                {
-            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003A\u0024companyUserMapper",
+            "fqsen": "\\ApplicationTest\\BaseControllerTrait\u003A\u003A\u0024companyUserMapper",
             "name": "companyUserMapper",
             "summary": "",
-            "url": "classes/ApplicationTest-BaseControllerTest.html#property_companyUserMapper"
+            "url": "classes/ApplicationTest-BaseControllerTrait.html#property_companyUserMapper"
         },                {
-            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003A\u0024userMapper",
+            "fqsen": "\\ApplicationTest\\BaseControllerTrait\u003A\u003A\u0024userMapper",
             "name": "userMapper",
             "summary": "",
-            "url": "classes/ApplicationTest-BaseControllerTest.html#property_userMapper"
+            "url": "classes/ApplicationTest-BaseControllerTrait.html#property_userMapper"
         },                {
-            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003A\u0024memberMapper",
+            "fqsen": "\\ApplicationTest\\BaseControllerTrait\u003A\u003A\u0024memberMapper",
             "name": "memberMapper",
             "summary": "",
-            "url": "classes/ApplicationTest-BaseControllerTest.html#property_memberMapper"
+            "url": "classes/ApplicationTest-BaseControllerTrait.html#property_memberMapper"
         },                {
-            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003A\u0024user",
+            "fqsen": "\\ApplicationTest\\BaseControllerTrait\u003A\u003A\u0024user",
             "name": "user",
             "summary": "",
-            "url": "classes/ApplicationTest-BaseControllerTest.html#property_user"
+            "url": "classes/ApplicationTest-BaseControllerTrait.html#property_user"
         },                {
-            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003A\u0024member",
+            "fqsen": "\\ApplicationTest\\BaseControllerTrait\u003A\u003A\u0024member",
             "name": "member",
             "summary": "",
-            "url": "classes/ApplicationTest-BaseControllerTest.html#property_member"
+            "url": "classes/ApplicationTest-BaseControllerTrait.html#property_member"
         },                {
-            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003A\u0024company",
+            "fqsen": "\\ApplicationTest\\BaseControllerTrait\u003A\u003A\u0024company",
             "name": "company",
             "summary": "",
-            "url": "classes/ApplicationTest-BaseControllerTest.html#property_company"
+            "url": "classes/ApplicationTest-BaseControllerTrait.html#property_company"
         },                {
-            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003A\u0024companyUser",
+            "fqsen": "\\ApplicationTest\\BaseControllerTrait\u003A\u003A\u0024companyUser",
             "name": "companyUser",
             "summary": "",
-            "url": "classes/ApplicationTest-BaseControllerTest.html#property_companyUser"
+            "url": "classes/ApplicationTest-BaseControllerTrait.html#property_companyUser"
         },                {
-            "fqsen": "\\ApplicationTest\\BaseControllerTest\u003A\u003A\u0024newCompanyUser",
+            "fqsen": "\\ApplicationTest\\BaseControllerTrait\u003A\u003A\u0024newCompanyUser",
             "name": "newCompanyUser",
             "summary": "",
-            "url": "classes/ApplicationTest-BaseControllerTest.html#property_newCompanyUser"
+            "url": "classes/ApplicationTest-BaseControllerTrait.html#property_newCompanyUser"
         },                {
-            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTest",
-            "name": "BaseMapperTest",
+            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTrait",
+            "name": "BaseMapperTrait",
             "summary": "",
-            "url": "classes/ApplicationTest-Mapper-BaseMapperTest.html"
+            "url": "classes/ApplicationTest-Mapper-BaseMapperTrait.html"
         },                {
-            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTest\u003A\u003AsetUp\u0028\u0029",
-            "name": "setUp",
+            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTrait\u003A\u003AsetUpEntityManager\u0028\u0029",
+            "name": "setUpEntityManager",
             "summary": "",
-            "url": "classes/ApplicationTest-Mapper-BaseMapperTest.html#method_setUp"
+            "url": "classes/ApplicationTest-Mapper-BaseMapperTrait.html#method_setUpEntityManager"
         },                {
-            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTest\u003A\u003AgetId\u0028\u0029",
-            "name": "getId",
-            "summary": "",
-            "url": "classes/ApplicationTest-Mapper-BaseMapperTest.html#method_getId"
-        },                {
-            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTest\u003A\u003AgetApplication\u0028\u0029",
+            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTrait\u003A\u003AgetApplication\u0028\u0029",
             "name": "getApplication",
             "summary": "",
-            "url": "classes/ApplicationTest-Mapper-BaseMapperTest.html#method_getApplication"
+            "url": "classes/ApplicationTest-Mapper-BaseMapperTrait.html#method_getApplication"
         },                {
-            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTest\u003A\u003AsetApplicationConfig\u0028\u0029",
+            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTrait\u003A\u003AsetApplicationConfig\u0028\u0029",
             "name": "setApplicationConfig",
             "summary": "Mocks\u0020the\u0020behaviour\u0020of\u0020\u007B\u0040link\u0020AbstractControllerTestCase\u007D,\u0020is\u0020required\u0020to\u0020allow\u0020ORM\/DBAL\u0020to\u0020correctly\u0020obtain\u0020all\nmetadata\u0020from\u0020the\u0020entity\/model\u0020classes.",
-            "url": "classes/ApplicationTest-Mapper-BaseMapperTest.html#method_setApplicationConfig"
+            "url": "classes/ApplicationTest-Mapper-BaseMapperTrait.html#method_setApplicationConfig"
         },                {
-            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTest\u003A\u003AinitServiceManager\u0028\u0029",
+            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTrait\u003A\u003AinitServiceManager\u0028\u0029",
             "name": "initServiceManager",
             "summary": "Variation\u0020of\u0020\u007B\u0040link\u0020Application\u003A\u003Ainit\u007D\u0020but\u0020without\u0020initial\u0020bootstrapping.",
-            "url": "classes/ApplicationTest-Mapper-BaseMapperTest.html#method_initServiceManager"
+            "url": "classes/ApplicationTest-Mapper-BaseMapperTrait.html#method_initServiceManager"
         },                {
-            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTest\u003A\u003AsetUpMockedServices\u0028\u0029",
+            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTrait\u003A\u003AsetUpMockedServices\u0028\u0029",
             "name": "setUpMockedServices",
             "summary": "",
-            "url": "classes/ApplicationTest-Mapper-BaseMapperTest.html#method_setUpMockedServices"
+            "url": "classes/ApplicationTest-Mapper-BaseMapperTrait.html#method_setUpMockedServices"
         },                {
-            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTest\u003A\u003AbootstrapApplication\u0028\u0029",
+            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTrait\u003A\u003AbootstrapApplication\u0028\u0029",
             "name": "bootstrapApplication",
             "summary": "",
-            "url": "classes/ApplicationTest-Mapper-BaseMapperTest.html#method_bootstrapApplication"
+            "url": "classes/ApplicationTest-Mapper-BaseMapperTrait.html#method_bootstrapApplication"
         },                {
-            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTest\u003A\u003AtestGetEntityManager\u0028\u0029",
+            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTrait\u003A\u003AgetId\u0028\u0029",
+            "name": "getId",
+            "summary": "",
+            "url": "classes/ApplicationTest-Mapper-BaseMapperTrait.html#method_getId"
+        },                {
+            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTrait\u003A\u003AtestGetEntityManager\u0028\u0029",
             "name": "testGetEntityManager",
             "summary": "",
-            "url": "classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testGetEntityManager"
+            "url": "classes/ApplicationTest-Mapper-BaseMapperTrait.html#method_testGetEntityManager"
         },                {
-            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTest\u003A\u003AtestFindBy\u0028\u0029",
+            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTrait\u003A\u003AtestFindBy\u0028\u0029",
             "name": "testFindBy",
             "summary": "",
-            "url": "classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testFindBy"
+            "url": "classes/ApplicationTest-Mapper-BaseMapperTrait.html#method_testFindBy"
         },                {
-            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTest\u003A\u003AtestFindOneBy\u0028\u0029",
+            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTrait\u003A\u003AtestFindOneBy\u0028\u0029",
             "name": "testFindOneBy",
             "summary": "",
-            "url": "classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testFindOneBy"
+            "url": "classes/ApplicationTest-Mapper-BaseMapperTrait.html#method_testFindOneBy"
         },                {
-            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTest\u003A\u003AtestFlush\u0028\u0029",
+            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTrait\u003A\u003AtestFlush\u0028\u0029",
             "name": "testFlush",
             "summary": "",
-            "url": "classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testFlush"
+            "url": "classes/ApplicationTest-Mapper-BaseMapperTrait.html#method_testFlush"
         },                {
-            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTest\u003A\u003AtestGetConnection\u0028\u0029",
+            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTrait\u003A\u003AtestGetConnection\u0028\u0029",
             "name": "testGetConnection",
             "summary": "",
-            "url": "classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testGetConnection"
+            "url": "classes/ApplicationTest-Mapper-BaseMapperTrait.html#method_testGetConnection"
         },                {
-            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTest\u003A\u003AtestCount\u0028\u0029",
+            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTrait\u003A\u003AtestCount\u0028\u0029",
             "name": "testCount",
             "summary": "",
-            "url": "classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testCount"
+            "url": "classes/ApplicationTest-Mapper-BaseMapperTrait.html#method_testCount"
         },                {
-            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTest\u003A\u003AtestFindAll\u0028\u0029",
+            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTrait\u003A\u003AtestFindAll\u0028\u0029",
             "name": "testFindAll",
             "summary": "",
-            "url": "classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testFindAll"
+            "url": "classes/ApplicationTest-Mapper-BaseMapperTrait.html#method_testFindAll"
         },                {
-            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTest\u003A\u003AtestPersist\u0028\u0029",
+            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTrait\u003A\u003AtestPersist\u0028\u0029",
             "name": "testPersist",
             "summary": "",
-            "url": "classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testPersist"
+            "url": "classes/ApplicationTest-Mapper-BaseMapperTrait.html#method_testPersist"
         },                {
-            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTest\u003A\u003AtestPersistMultiple\u0028\u0029",
+            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTrait\u003A\u003AtestPersistMultiple\u0028\u0029",
             "name": "testPersistMultiple",
             "summary": "",
-            "url": "classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testPersistMultiple"
+            "url": "classes/ApplicationTest-Mapper-BaseMapperTrait.html#method_testPersistMultiple"
         },                {
-            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTest\u003A\u003AtestRemove\u0028\u0029",
+            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTrait\u003A\u003AtestRemove\u0028\u0029",
             "name": "testRemove",
             "summary": "",
-            "url": "classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testRemove"
+            "url": "classes/ApplicationTest-Mapper-BaseMapperTrait.html#method_testRemove"
         },                {
-            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTest\u003A\u003AtestRemoveMultiple\u0028\u0029",
+            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTrait\u003A\u003AtestRemoveMultiple\u0028\u0029",
             "name": "testRemoveMultiple",
             "summary": "",
-            "url": "classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testRemoveMultiple"
+            "url": "classes/ApplicationTest-Mapper-BaseMapperTrait.html#method_testRemoveMultiple"
         },                {
-            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTest\u003A\u003AtestRemoveById\u0028\u0029",
+            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTrait\u003A\u003AtestRemoveById\u0028\u0029",
             "name": "testRemoveById",
             "summary": "",
-            "url": "classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testRemoveById"
+            "url": "classes/ApplicationTest-Mapper-BaseMapperTrait.html#method_testRemoveById"
         },                {
-            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTest\u003A\u003AtestRemoveByIdNotFound\u0028\u0029",
+            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTrait\u003A\u003AtestRemoveByIdNotFound\u0028\u0029",
             "name": "testRemoveByIdNotFound",
             "summary": "",
-            "url": "classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testRemoveByIdNotFound"
+            "url": "classes/ApplicationTest-Mapper-BaseMapperTrait.html#method_testRemoveByIdNotFound"
         },                {
-            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTest\u003A\u003AtestDetach\u0028\u0029",
+            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTrait\u003A\u003AtestDetach\u0028\u0029",
             "name": "testDetach",
             "summary": "",
-            "url": "classes/ApplicationTest-Mapper-BaseMapperTest.html#method_testDetach"
+            "url": "classes/ApplicationTest-Mapper-BaseMapperTrait.html#method_testDetach"
         },                {
-            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTest\u003A\u003A\u0024applicationConfig",
+            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTrait\u003A\u003A\u0024applicationConfig",
             "name": "applicationConfig",
             "summary": "",
-            "url": "classes/ApplicationTest-Mapper-BaseMapperTest.html#property_applicationConfig"
+            "url": "classes/ApplicationTest-Mapper-BaseMapperTrait.html#property_applicationConfig"
         },                {
-            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTest\u003A\u003A\u0024application",
+            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTrait\u003A\u003A\u0024application",
             "name": "application",
             "summary": "",
-            "url": "classes/ApplicationTest-Mapper-BaseMapperTest.html#property_application"
+            "url": "classes/ApplicationTest-Mapper-BaseMapperTrait.html#property_application"
         },                {
-            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTest\u003A\u003A\u0024serviceManager",
+            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTrait\u003A\u003A\u0024serviceManager",
             "name": "serviceManager",
             "summary": "",
-            "url": "classes/ApplicationTest-Mapper-BaseMapperTest.html#property_serviceManager"
+            "url": "classes/ApplicationTest-Mapper-BaseMapperTrait.html#property_serviceManager"
         },                {
-            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTest\u003A\u003A\u0024entityManager",
+            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTrait\u003A\u003A\u0024entityManager",
             "name": "entityManager",
             "summary": "",
-            "url": "classes/ApplicationTest-Mapper-BaseMapperTest.html#property_entityManager"
+            "url": "classes/ApplicationTest-Mapper-BaseMapperTrait.html#property_entityManager"
         },                {
-            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTest\u003A\u003A\u0024mapper",
+            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTrait\u003A\u003A\u0024mapper",
             "name": "mapper",
             "summary": "",
-            "url": "classes/ApplicationTest-Mapper-BaseMapperTest.html#property_mapper"
+            "url": "classes/ApplicationTest-Mapper-BaseMapperTrait.html#property_mapper"
         },                {
-            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTest\u003A\u003A\u0024object",
+            "fqsen": "\\ApplicationTest\\Mapper\\BaseMapperTrait\u003A\u003A\u0024object",
             "name": "object",
             "summary": "",
-            "url": "classes/ApplicationTest-Mapper-BaseMapperTest.html#property_object"
+            "url": "classes/ApplicationTest-Mapper-BaseMapperTrait.html#property_object"
         },                {
             "fqsen": "\\ApplicationTest\\TestConfigProvider",
             "name": "TestConfigProvider",
