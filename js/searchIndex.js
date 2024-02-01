@@ -3976,6 +3976,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Application-Service-WatermarkService.html#constant_FONT"
         },                {
+            "fqsen": "\\Application\\Service\\WatermarkService\u003A\u003ATAG_FONT",
+            "name": "TAG_FONT",
+            "summary": "",
+            "url": "classes/Application-Service-WatermarkService.html#constant_TAG_FONT"
+        },                {
             "fqsen": "\\Application\\Service\\WatermarkService\u003A\u003A\u0024authService",
             "name": "authService",
             "summary": "",
@@ -3985,6 +3990,11 @@ Search.appendIndex(
             "name": "remoteAddress",
             "summary": "",
             "url": "classes/Application-Service-WatermarkService.html#property_remoteAddress"
+        },                {
+            "fqsen": "\\Application\\Service\\WatermarkService\u003A\u003A\u0024watermarkConfig",
+            "name": "watermarkConfig",
+            "summary": "",
+            "url": "classes/Application-Service-WatermarkService.html#property_watermarkConfig"
         },                {
             "fqsen": "\\Application\\View\\Helper\\Acl",
             "name": "Acl",
