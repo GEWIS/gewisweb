@@ -147,38 +147,39 @@ class WatermarkService
             ),
         );
 
-        $pdf = new Fpdi();
-        $pdf->setTitle($fileName);
-        $pages = $pdf->setSourceFile($tempFlatFile);
+        // Construct final PDF.
+        $taggedPdf = new Fpdi();
+        $taggedPdf->setTitle($fileName);
+        $pages = $taggedPdf->setSourceFile($tempFlatFile);
 
         $tag = $this->watermarkConfig['tag'];
 
-        // Write the tag on the first page page a tag at the top left corner with the value of local variable $tag
-        $pdf->setPrintHeader(false);
-        $pdf->setPrintFooter(false);
-        $templateIndex = $pdf->importPage(1);
-        $templateSpecs = $pdf->getTemplateSize($templateIndex);
-        $pdf->AddPage($templateSpecs['orientation']);
-        $pdf->useTemplate($templateIndex, 0, 0, $templateSpecs['width'], $templateSpecs['height'], true);
-        $pdf->setFont(self::TAG_FONT, '', 6);
+        // We have to copy all pages to this new PDF.
+        for ($page = 1; $page <= $pages; $page++) {
+            $templateIndex = $taggedPdf->importPage($page);
+            $templateSpecs = $taggedPdf->getTemplateSize($templateIndex);
+            $taggedPdf->setPrintHeader(false);
+            $taggedPdf->setPrintFooter(false);
+            $taggedPdf->AddPage($templateSpecs['orientation']);
+            $taggedPdf->useTemplate($templateIndex, 0, 0, $templateSpecs['width'], $templateSpecs['height'], true);
 
-        // Set text color to the same color as the image at 0 0
-        $pdf->setTextColor(255, 255, 255);
-        $pdf->setXY(0, 0);
-        $pdf->Write(0, $tag);
+            // Early exit if we are not working on the first page.
+            if (1 !== $page) {
+                continue;
+            }
 
-        // add the rest of the pages
-        for ($page = 2; $page <= $pages; $page++) {
-            $templateIndex = $pdf->importPage($page);
-            $templateSpecs = $pdf->getTemplateSize($templateIndex);
-            $pdf->setPrintHeader(false);
-            $pdf->setPrintFooter(false);
-            $pdf->AddPage($templateSpecs['orientation']);
-            $pdf->useTemplate($templateIndex, 0, 0, $templateSpecs['width'], $templateSpecs['height'], true);
+            // Write the tag on the first page in the top left corner.
+            $taggedPdf->setFont(self::TAG_FONT, '', 6);
+            $taggedPdf->setTextColor(255, 255, 255);
+
+            $taggedPdf->StartTransform();
+            $taggedPdf->setXY(0, 0);
+            $taggedPdf->Write(0, $tag);
+            $taggedPdf->StopTransform();
         }
 
         $tempTaggedFile = $tempName . '-tagged.pdf';
-        $pdf->Output($tempTaggedFile, 'F');
+        $taggedPdf->Output($tempTaggedFile, 'F');
 
         return $tempTaggedFile;
     }
