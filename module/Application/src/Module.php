@@ -168,8 +168,9 @@ class Module
                     /** @var AuthenticationService<UserSession, UserAdapter> $authService */
                     $authService = $container->get('user_auth_user_service');
                     $remoteAddress = $container->get('user_remoteaddress');
+                    $watermarkConfig = $container->get('config')['watermark'];
 
-                    return new WatermarkService($authService, $remoteAddress);
+                    return new WatermarkService($authService, $remoteAddress, $watermarkConfig);
                 },
                 'application_get_languages' => static function () {
                     return ['nl', 'en'];

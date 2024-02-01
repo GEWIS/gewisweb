@@ -29,13 +29,16 @@ class WatermarkService
     private const FONT_SIZE_DIAGONAL = 32;
     private const FONT_SIZE_HORIZONTAL = 8;
     private const FONT = 'freesansb';
+    private const TAG_FONT = 'times';
 
     /**
      * @psalm-param TUserAuth $authService
+     * @psalm-param array{tag: string} $watermarkConfig
      */
     public function __construct(
         private readonly AuthenticationService $authService,
         private readonly string $remoteAddress,
+        private readonly array $watermarkConfig,
     ) {
     }
 
@@ -70,8 +73,8 @@ class WatermarkService
             // Do the actual watermarking.
             $pdf->setFont(self::FONT, '', self::FONT_SIZE_DIAGONAL);
             $pdf->setTextColor(212, 0, 0);
-            // Set alpha to 50% for the diagonal watermark, the horizontal watermark will have a higher alpha.
-            $pdf->setAlpha(0.5);
+            // Set alpha to 35% for the diagonal watermark, the horizontal watermark will have a higher alpha.
+            $pdf->setAlpha(0.35);
 
             // Determine the position of the diagonal watermark, it should be (almost) centred on the page.
             $width = $pdf->getPageWidth();
@@ -144,7 +147,41 @@ class WatermarkService
             ),
         );
 
-        return $tempFlatFile;
+        // Construct final PDF.
+        $taggedPdf = new Fpdi();
+        $taggedPdf->setTitle($fileName);
+        $pages = $taggedPdf->setSourceFile($tempFlatFile);
+
+        $tag = $this->watermarkConfig['tag'];
+
+        // We have to copy all pages to this new PDF.
+        for ($page = 1; $page <= $pages; $page++) {
+            $templateIndex = $taggedPdf->importPage($page);
+            $templateSpecs = $taggedPdf->getTemplateSize($templateIndex);
+            $taggedPdf->setPrintHeader(false);
+            $taggedPdf->setPrintFooter(false);
+            $taggedPdf->AddPage($templateSpecs['orientation']);
+            $taggedPdf->useTemplate($templateIndex, 0, 0, $templateSpecs['width'], $templateSpecs['height'], true);
+
+            // Early exit if we are not working on the first page.
+            if (1 !== $page) {
+                continue;
+            }
+
+            // Write the tag on the first page in the top left corner.
+            $taggedPdf->setFont(self::TAG_FONT, '', 6);
+            $taggedPdf->setTextColor(255, 255, 255);
+
+            $taggedPdf->StartTransform();
+            $taggedPdf->setXY(0, 0);
+            $taggedPdf->Write(0, $tag);
+            $taggedPdf->StopTransform();
+        }
+
+        $tempTaggedFile = $tempName . '-tagged.pdf';
+        $taggedPdf->Output($tempTaggedFile, 'F');
+
+        return $tempTaggedFile;
     }
 
     /**
