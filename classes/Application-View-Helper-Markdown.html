@@ -308,10 +308,6 @@
                 <a href="namespaces/photo-service.html" class="">Service</a>
                 
             </li>
-                    <li>
-                <a href="namespaces/photo-view.html" class="">View</a>
-                
-            </li>
             </ul>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
@@ -447,7 +443,13 @@
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -property -private">
-    <a href="classes/Application-View-Helper-Markdown.html#property_converter">$converter</a>
+    <a href="classes/Application-View-Helper-Markdown.html#property_companyConverter">$companyConverter</a>
+    <span>
+                        &nbsp;: <abbr title="\League\CommonMark\MarkdownConverter">MarkdownConverter</abbr>            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a href="classes/Application-View-Helper-Markdown.html#property_defaultConverter">$defaultConverter</a>
     <span>
                         &nbsp;: <abbr title="\League\CommonMark\MarkdownConverter">MarkdownConverter</abbr>            </span>
 </dt>
@@ -500,9 +502,42 @@
             -private
                                                 -read-only        "
 >
-    <h4 class="phpdocumentor-element__name" id="property_converter">
-        $converter
-        <a href="classes/Application-View-Helper-Markdown.html#property_converter" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_companyConverter">
+        $companyConverter
+        <a href="classes/Application-View-Helper-Markdown.html#property_companyConverter" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/View/Helper/Markdown.php"><a href="files/module-application-src-view-helper-markdown.html"><abbr title="module/Application/src/View/Helper/Markdown.php">Markdown.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">17</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+        <span class="phpdocumentor-signature__type"><abbr title="\League\CommonMark\MarkdownConverter">MarkdownConverter</abbr></span>
+    <span class="phpdocumentor-signature__name">$companyConverter</span>
+    </code>
+
+    
+    
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+                                                -read-only        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_defaultConverter">
+        $defaultConverter
+        <a href="classes/Application-View-Helper-Markdown.html#property_defaultConverter" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                         <small class="phpdocumentor-element__modifier">read-only</small>        </span>
@@ -518,7 +553,7 @@
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">private</span>
         <span class="phpdocumentor-signature__type"><abbr title="\League\CommonMark\MarkdownConverter">MarkdownConverter</abbr></span>
-    <span class="phpdocumentor-signature__name">$converter</span>
+    <span class="phpdocumentor-signature__name">$defaultConverter</span>
     </code>
 
     
@@ -588,7 +623,7 @@
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Mvc\I18n\Translator">Translator</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$translator</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\League\CommonMark\MarkdownConverter">MarkdownConverter</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$converter</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Mvc\I18n\Translator">Translator</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$translator</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\League\CommonMark\MarkdownConverter">MarkdownConverter</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$defaultConverter</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\League\CommonMark\MarkdownConverter">MarkdownConverter</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$companyConverter</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -603,7 +638,14 @@
                 
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$converter</span>
+                <span class="phpdocumentor-signature__argument__name">$defaultConverter</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\League\CommonMark\MarkdownConverter">MarkdownConverter</abbr></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$companyConverter</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\League\CommonMark\MarkdownConverter">MarkdownConverter</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
@@ -629,7 +671,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/View/Helper/Markdown.php"><a href="files/module-application-src-view-helper-markdown.html"><abbr title="module/Application/src/View/Helper/Markdown.php">Markdown.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">23</span>
+    <span class="phpdocumentor-element-found-in__line">24</span>
 
     </aside>
 
@@ -637,7 +679,7 @@
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">__invoke</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$text</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+                    <span class="phpdocumentor-signature__name">__invoke</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$text</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$company</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">false</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -648,6 +690,13 @@
                 <span class="phpdocumentor-signature__argument__name">$text</span>
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$company</span>
+                : <span class="phpdocumentor-signature__argument__return-type">bool</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">false</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
             </dd>
@@ -774,7 +823,8 @@
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li><a href="classes/Application-View-Helper-Markdown.html#property_converter">$converter<a href="classes/Application-View-Helper-Markdown.html"></li>
+                                                    <li><a href="classes/Application-View-Helper-Markdown.html#property_companyConverter">$companyConverter<a href="classes/Application-View-Helper-Markdown.html"></li>
+                                                    <li><a href="classes/Application-View-Helper-Markdown.html#property_defaultConverter">$defaultConverter<a href="classes/Application-View-Helper-Markdown.html"></li>
                                                     <li><a href="classes/Application-View-Helper-Markdown.html#property_translator">$translator<a href="classes/Application-View-Helper-Markdown.html"></li>
                                             </ul>
                 </li>

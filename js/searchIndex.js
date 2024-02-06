@@ -3191,6 +3191,226 @@ Search.appendIndex(
             "summary": "Throws\u0020a\u0020teapot\u0020error.",
             "url": "classes/Application-Controller-IndexController.html#method_teapotAction"
         },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\CompanyImage\\CompanyImageExtension",
+            "name": "CompanyImageExtension",
+            "summary": "",
+            "url": "classes/Application-Extensions-CommonMark-CompanyImage-CompanyImageExtension.html"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\CompanyImage\\CompanyImageExtension\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Application-Extensions-CommonMark-CompanyImage-CompanyImageExtension.html#method___construct"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\CompanyImage\\CompanyImageExtension\u003A\u003Aregister\u0028\u0029",
+            "name": "register",
+            "summary": "",
+            "url": "classes/Application-Extensions-CommonMark-CompanyImage-CompanyImageExtension.html#method_register"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\CompanyImage\\CompanyImageExtension\u003A\u003A\u0024glideUrl",
+            "name": "glideUrl",
+            "summary": "",
+            "url": "classes/Application-Extensions-CommonMark-CompanyImage-CompanyImageExtension.html#property_glideUrl"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\CompanyImage\\CompanyImageRenderer",
+            "name": "CompanyImageRenderer",
+            "summary": "",
+            "url": "classes/Application-Extensions-CommonMark-CompanyImage-CompanyImageRenderer.html"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\CompanyImage\\CompanyImageRenderer\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Application-Extensions-CommonMark-CompanyImage-CompanyImageRenderer.html#method___construct"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\CompanyImage\\CompanyImageRenderer\u003A\u003Arender\u0028\u0029",
+            "name": "render",
+            "summary": "",
+            "url": "classes/Application-Extensions-CommonMark-CompanyImage-CompanyImageRenderer.html#method_render"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\CompanyImage\\CompanyImageRenderer\u003A\u003A\u0024config",
+            "name": "config",
+            "summary": "",
+            "url": "classes/Application-Extensions-CommonMark-CompanyImage-CompanyImageRenderer.html#property_config"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\CompanyImage\\CompanyImageRenderer\u003A\u003A\u0024baseImageRenderer",
+            "name": "baseImageRenderer",
+            "summary": "",
+            "url": "classes/Application-Extensions-CommonMark-CompanyImage-CompanyImageRenderer.html#property_baseImageRenderer"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\CompanyImage\\CompanyImageRenderer\u003A\u003A\u0024glideUrl",
+            "name": "glideUrl",
+            "summary": "",
+            "url": "classes/Application-Extensions-CommonMark-CompanyImage-CompanyImageRenderer.html#property_glideUrl"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\NoImage\\NoImageExtension",
+            "name": "NoImageExtension",
+            "summary": "",
+            "url": "classes/Application-Extensions-CommonMark-NoImage-NoImageExtension.html"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\NoImage\\NoImageExtension\u003A\u003Aregister\u0028\u0029",
+            "name": "register",
+            "summary": "",
+            "url": "classes/Application-Extensions-CommonMark-NoImage-NoImageExtension.html#method_register"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\NoImage\\NoImageRenderer",
+            "name": "NoImageRenderer",
+            "summary": "",
+            "url": "classes/Application-Extensions-CommonMark-NoImage-NoImageRenderer.html"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\NoImage\\NoImageRenderer\u003A\u003Arender\u0028\u0029",
+            "name": "render",
+            "summary": "",
+            "url": "classes/Application-Extensions-CommonMark-NoImage-NoImageRenderer.html#method_render"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\VideoIframe\\Parsers\\VimeoUrlParser",
+            "name": "VimeoUrlParser",
+            "summary": "",
+            "url": "classes/Application-Extensions-CommonMark-VideoIframe-Parsers-VimeoUrlParser.html"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\VideoIframe\\Parsers\\VimeoUrlParser\u003A\u003Aparse\u0028\u0029",
+            "name": "parse",
+            "summary": "",
+            "url": "classes/Application-Extensions-CommonMark-VideoIframe-Parsers-VimeoUrlParser.html#method_parse"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\VideoIframe\\Parsers\\VimeoUrlParser\u003A\u003AREGEX",
+            "name": "REGEX",
+            "summary": "",
+            "url": "classes/Application-Extensions-CommonMark-VideoIframe-Parsers-VimeoUrlParser.html#constant_REGEX"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\VideoIframe\\Parsers\\YouTubeUrlParser",
+            "name": "YouTubeUrlParser",
+            "summary": "",
+            "url": "classes/Application-Extensions-CommonMark-VideoIframe-Parsers-YouTubeUrlParser.html"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\VideoIframe\\Parsers\\YouTubeUrlParser\u003A\u003Aparse\u0028\u0029",
+            "name": "parse",
+            "summary": "",
+            "url": "classes/Application-Extensions-CommonMark-VideoIframe-Parsers-YouTubeUrlParser.html#method_parse"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\VideoIframe\\Parsers\\YouTubeUrlParser\u003A\u003AREGEX",
+            "name": "REGEX",
+            "summary": "",
+            "url": "classes/Application-Extensions-CommonMark-VideoIframe-Parsers-YouTubeUrlParser.html#constant_REGEX"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\VideoIframe\\Video",
+            "name": "Video",
+            "summary": "",
+            "url": "classes/Application-Extensions-CommonMark-VideoIframe-Video.html"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\VideoIframe\\Video\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Application-Extensions-CommonMark-VideoIframe-Video.html#method___construct"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\VideoIframe\\Video\u003A\u003AgetPlatform\u0028\u0029",
+            "name": "getPlatform",
+            "summary": "",
+            "url": "classes/Application-Extensions-CommonMark-VideoIframe-Video.html#method_getPlatform"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\VideoIframe\\Video\u003A\u003AgetIdentifier\u0028\u0029",
+            "name": "getIdentifier",
+            "summary": "",
+            "url": "classes/Application-Extensions-CommonMark-VideoIframe-Video.html#method_getIdentifier"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\VideoIframe\\Video\u003A\u003A\u0024platform",
+            "name": "platform",
+            "summary": "",
+            "url": "classes/Application-Extensions-CommonMark-VideoIframe-Video.html#property_platform"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\VideoIframe\\Video\u003A\u003A\u0024identifier",
+            "name": "identifier",
+            "summary": "",
+            "url": "classes/Application-Extensions-CommonMark-VideoIframe-Video.html#property_identifier"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\VideoIframe\\VideoIframe",
+            "name": "VideoIframe",
+            "summary": "",
+            "url": "classes/Application-Extensions-CommonMark-VideoIframe-VideoIframe.html"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\VideoIframe\\VideoIframe\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Application-Extensions-CommonMark-VideoIframe-VideoIframe.html#method___construct"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\VideoIframe\\VideoIframe\u003A\u003AgetVideo\u0028\u0029",
+            "name": "getVideo",
+            "summary": "",
+            "url": "classes/Application-Extensions-CommonMark-VideoIframe-VideoIframe.html#method_getVideo"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\VideoIframe\\VideoIframe\u003A\u003A\u0024video",
+            "name": "video",
+            "summary": "",
+            "url": "classes/Application-Extensions-CommonMark-VideoIframe-VideoIframe.html#property_video"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\VideoIframe\\VideoIframeExtension",
+            "name": "VideoIframeExtension",
+            "summary": "",
+            "url": "classes/Application-Extensions-CommonMark-VideoIframe-VideoIframeExtension.html"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\VideoIframe\\VideoIframeExtension\u003A\u003Aregister\u0028\u0029",
+            "name": "register",
+            "summary": "",
+            "url": "classes/Application-Extensions-CommonMark-VideoIframe-VideoIframeExtension.html#method_register"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\VideoIframe\\VideoIframeProcessor",
+            "name": "VideoIframeProcessor",
+            "summary": "",
+            "url": "classes/Application-Extensions-CommonMark-VideoIframe-VideoIframeProcessor.html"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\VideoIframe\\VideoIframeProcessor\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Application-Extensions-CommonMark-VideoIframe-VideoIframeProcessor.html#method___construct"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\VideoIframe\\VideoIframeProcessor\u003A\u003A__invoke\u0028\u0029",
+            "name": "__invoke",
+            "summary": "",
+            "url": "classes/Application-Extensions-CommonMark-VideoIframe-VideoIframeProcessor.html#method___invoke"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\VideoIframe\\VideoIframeProcessor\u003A\u003A\u0024parsers",
+            "name": "parsers",
+            "summary": "",
+            "url": "classes/Application-Extensions-CommonMark-VideoIframe-VideoIframeProcessor.html#property_parsers"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\VideoIframe\\VideoIframeRenderer",
+            "name": "VideoIframeRenderer",
+            "summary": "",
+            "url": "classes/Application-Extensions-CommonMark-VideoIframe-VideoIframeRenderer.html"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\VideoIframe\\VideoIframeRenderer\u003A\u003Arender\u0028\u0029",
+            "name": "render",
+            "summary": "",
+            "url": "classes/Application-Extensions-CommonMark-VideoIframe-VideoIframeRenderer.html#method_render"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\VideoIframe\\VideoPlatforms",
+            "name": "VideoPlatforms",
+            "summary": "",
+            "url": "classes/Application-Extensions-CommonMark-VideoIframe-VideoPlatforms.html"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\VideoIframe\\VideoPlatforms\u003A\u003AgetUrl\u0028\u0029",
+            "name": "getUrl",
+            "summary": "",
+            "url": "classes/Application-Extensions-CommonMark-VideoIframe-VideoPlatforms.html#method_getUrl"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\VideoIframe\\VideoPlatforms\u003A\u003AVimeo",
+            "name": "Vimeo",
+            "summary": "",
+            "url": "classes/Application-Extensions-CommonMark-VideoIframe-VideoPlatforms.html#enumcase_Vimeo"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\VideoIframe\\VideoPlatforms\u003A\u003AYouTube",
+            "name": "YouTube",
+            "summary": "",
+            "url": "classes/Application-Extensions-CommonMark-VideoIframe-VideoPlatforms.html#enumcase_YouTube"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\VideoIframe\\VideoUrlParserInterface",
+            "name": "VideoUrlParserInterface",
+            "summary": "",
+            "url": "classes/Application-Extensions-CommonMark-VideoIframe-VideoUrlParserInterface.html"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\VideoIframe\\VideoUrlParserInterface\u003A\u003Aparse\u0028\u0029",
+            "name": "parse",
+            "summary": "",
+            "url": "classes/Application-Extensions-CommonMark-VideoIframe-VideoUrlParserInterface.html#method_parse"
+        },                {
             "fqsen": "\\Application\\Extensions\\Doctrine\\Rand",
             "name": "Rand",
             "summary": "This\u0020extension\u0020adds\u0020SQL\u0020RAND\u0028\u0029\u0020functionality\u0020to\u0020DQL\u0020for\u0020returning\u0020random\ndatabase\u0020entries.",
@@ -4246,10 +4466,15 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Application-View-Helper-Markdown.html#property_translator"
         },                {
-            "fqsen": "\\Application\\View\\Helper\\Markdown\u003A\u003A\u0024converter",
-            "name": "converter",
+            "fqsen": "\\Application\\View\\Helper\\Markdown\u003A\u003A\u0024defaultConverter",
+            "name": "defaultConverter",
             "summary": "",
-            "url": "classes/Application-View-Helper-Markdown.html#property_converter"
+            "url": "classes/Application-View-Helper-Markdown.html#property_defaultConverter"
+        },                {
+            "fqsen": "\\Application\\View\\Helper\\Markdown\u003A\u003A\u0024companyConverter",
+            "name": "companyConverter",
+            "summary": "",
+            "url": "classes/Application-View-Helper-Markdown.html#property_companyConverter"
         },                {
             "fqsen": "\\Application\\View\\Helper\\ModuleIsActive",
             "name": "ModuleIsActive",
@@ -4866,6 +5091,11 @@ Search.appendIndex(
             "summary": "Action\u0020that\u0020displays\u0020a\u0020form\u0020for\u0020editing\u0020a\u0020label.",
             "url": "classes/Company-Controller-AdminController.html#method_editLabelAction"
         },                {
+            "fqsen": "\\Company\\Controller\\AdminController\u003A\u003AuploadCompanyImageAction\u0028\u0029",
+            "name": "uploadCompanyImageAction",
+            "summary": "",
+            "url": "classes/Company-Controller-AdminController.html#method_uploadCompanyImageAction"
+        },                {
             "fqsen": "\\Company\\Controller\\AdminController\u003A\u003A\u0024aclService",
             "name": "aclService",
             "summary": "",
@@ -4945,6 +5175,11 @@ Search.appendIndex(
             "name": "bannerAction",
             "summary": "",
             "url": "classes/Company-Controller-CompanyAccountController.html#method_bannerAction"
+        },                {
+            "fqsen": "\\Company\\Controller\\CompanyAccountController\u003A\u003AuploadCompanyImageAction\u0028\u0029",
+            "name": "uploadCompanyImageAction",
+            "summary": "",
+            "url": "classes/Company-Controller-CompanyAccountController.html#method_uploadCompanyImageAction"
         },                {
             "fqsen": "\\Company\\Controller\\CompanyAccountController\u003A\u003A\u0024aclService",
             "name": "aclService",
@@ -6666,6 +6901,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Company-Service-Company.html#method_cancelJobProposal"
         },                {
+            "fqsen": "\\Company\\Service\\Company\u003A\u003AuploadImage\u0028\u0029",
+            "name": "uploadImage",
+            "summary": "Upload\u0020an\u0020image\u0020to\u0020be\u0020displayed\u0020in\u0020a\u0020company\u0020or\u0020job\u0020description.",
+            "url": "classes/Company-Service-Company.html#method_uploadImage"
+        },                {
             "fqsen": "\\Company\\Service\\Company\u003A\u003AdeleteCompanyBySlug\u0028\u0029",
             "name": "deleteCompanyBySlug",
             "summary": "Deletes\u0020the\u0020company\u0020identified\u0020with\u0020\u0024slug.",
@@ -6825,6 +7065,11 @@ Search.appendIndex(
             "name": "userService",
             "summary": "",
             "url": "classes/Company-Service-Company.html#property_userService"
+        },                {
+            "fqsen": "\\Company\\Service\\Company\u003A\u003A\u0024storageConfig",
+            "name": "storageConfig",
+            "summary": "",
+            "url": "classes/Company-Service-Company.html#property_storageConfig"
         },                {
             "fqsen": "\\Company\\Service\\CompanyQuery",
             "name": "CompanyQuery",
@@ -14916,11 +15161,6 @@ Search.appendIndex(
             "summary": "Get\u0020service\u0020configuration.",
             "url": "classes/Photo-Module.html#method_getServiceConfig"
         },                {
-            "fqsen": "\\Photo\\Module\u003A\u003AgetViewHelperConfig\u0028\u0029",
-            "name": "getViewHelperConfig",
-            "summary": "",
-            "url": "classes/Photo-Module.html#method_getViewHelperConfig"
-        },                {
             "fqsen": "\\Photo\\Service\\AclService",
             "name": "AclService",
             "summary": "",
@@ -15425,31 +15665,6 @@ Search.appendIndex(
             "name": "photoConfig",
             "summary": "",
             "url": "classes/Photo-Service-Photo.html#property_photoConfig"
-        },                {
-            "fqsen": "\\Photo\\View\\Helper\\GlideUrl",
-            "name": "GlideUrl",
-            "summary": "Url\u0020view\u0020helper\u0020for\u0020generating\u0020\u0028signed\u0029\u0020glide\u0020urls\nUsage\u003A\u0020\u0024this\u002D\u003EglideUrl\u0028\u0029\u002D\u003EgetUrl\u0028\u0027path\u0020to\u0020image\u0027,\u0020\u005B\u0027parameters\u0027\u005D\u0029\u003B.",
-            "url": "classes/Photo-View-Helper-GlideUrl.html"
-        },                {
-            "fqsen": "\\Photo\\View\\Helper\\GlideUrl\u003A\u003A__invoke\u0028\u0029",
-            "name": "__invoke",
-            "summary": "",
-            "url": "classes/Photo-View-Helper-GlideUrl.html#method___invoke"
-        },                {
-            "fqsen": "\\Photo\\View\\Helper\\GlideUrl\u003A\u003AgetUrl\u0028\u0029",
-            "name": "getUrl",
-            "summary": "Gets\u0020a\u0020signed\u0020glide\u0020URL.",
-            "url": "classes/Photo-View-Helper-GlideUrl.html#method_getUrl"
-        },                {
-            "fqsen": "\\Photo\\View\\Helper\\GlideUrl\u003A\u003AsetUrlBuilder\u0028\u0029",
-            "name": "setUrlBuilder",
-            "summary": "Set\u0020the\u0020url\u0020builder.",
-            "url": "classes/Photo-View-Helper-GlideUrl.html#method_setUrlBuilder"
-        },                {
-            "fqsen": "\\Photo\\View\\Helper\\GlideUrl\u003A\u003A\u0024urlBuilder",
-            "name": "urlBuilder",
-            "summary": "",
-            "url": "classes/Photo-View-Helper-GlideUrl.html#property_urlBuilder"
         },                {
             "fqsen": "\\PhotoTest\\ControllerTest",
             "name": "ControllerTest",
@@ -17921,15 +18136,40 @@ Search.appendIndex(
             "summary": "",
             "url": "namespaces/application-controller.html"
         },                {
-            "fqsen": "\\Application\\Extensions\\Doctrine",
-            "name": "Doctrine",
+            "fqsen": "\\Application\\Extensions\\CommonMark\\CompanyImage",
+            "name": "CompanyImage",
             "summary": "",
-            "url": "namespaces/application-extensions-doctrine.html"
+            "url": "namespaces/application-extensions-commonmark-companyimage.html"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark",
+            "name": "CommonMark",
+            "summary": "",
+            "url": "namespaces/application-extensions-commonmark.html"
         },                {
             "fqsen": "\\Application\\Extensions",
             "name": "Extensions",
             "summary": "",
             "url": "namespaces/application-extensions.html"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\NoImage",
+            "name": "NoImage",
+            "summary": "",
+            "url": "namespaces/application-extensions-commonmark-noimage.html"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\VideoIframe\\Parsers",
+            "name": "Parsers",
+            "summary": "",
+            "url": "namespaces/application-extensions-commonmark-videoiframe-parsers.html"
+        },                {
+            "fqsen": "\\Application\\Extensions\\CommonMark\\VideoIframe",
+            "name": "VideoIframe",
+            "summary": "",
+            "url": "namespaces/application-extensions-commonmark-videoiframe.html"
+        },                {
+            "fqsen": "\\Application\\Extensions\\Doctrine",
+            "name": "Doctrine",
+            "summary": "",
+            "url": "namespaces/application-extensions-doctrine.html"
         },                {
             "fqsen": "\\Application\\Form",
             "name": "Form",
@@ -18270,16 +18510,6 @@ Search.appendIndex(
             "name": "Service",
             "summary": "",
             "url": "namespaces/photo-service.html"
-        },                {
-            "fqsen": "\\Photo\\View\\Helper",
-            "name": "Helper",
-            "summary": "",
-            "url": "namespaces/photo-view-helper.html"
-        },                {
-            "fqsen": "\\Photo\\View",
-            "name": "View",
-            "summary": "",
-            "url": "namespaces/photo-view.html"
         },                {
             "fqsen": "\\PhotoTest",
             "name": "PhotoTest",
