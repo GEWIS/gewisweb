@@ -130,8 +130,6 @@ class PageAdminController extends AbstractActionController
         if (
             !$this->aclService->isAllowed('create', 'page')
             && !$this->aclService->isAllowed('edit', 'page')
-            && !$this->aclService->isAllowed('create', 'news_item')
-            && !$this->aclService->isAllowed('edit', 'news_item')
         ) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to upload images.'));
         }

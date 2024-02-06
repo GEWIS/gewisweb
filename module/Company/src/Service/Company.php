@@ -36,7 +36,10 @@ use DateTime;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\NonUniqueResultException;
 use Exception;
+use InvalidArgumentException;
 use Laminas\Mvc\I18n\Translator;
+use Laminas\Validator\File\Extension;
+use Laminas\Validator\File\IsImage;
 use User\Permissions\NotAllowedException;
 use User\Service\User as UserService;
 
@@ -59,6 +62,8 @@ class Company
 {
     /**
      * @psalm-param PackageMapper<CompanyJobPackageModel> $packageMapper
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function __construct(
         private readonly AclService $aclService,
@@ -80,6 +85,7 @@ class Company
         private readonly EditCategoryForm $editCategoryForm,
         private readonly EditLabelForm $editLabelForm,
         private readonly UserService $userService,
+        private readonly array $storageConfig,
     ) {
     }
 
@@ -371,6 +377,7 @@ class Company
     ): bool {
         // If the user can approve changes to companies, directly apply the changes to the company.
         if ($this->aclService->isAllowed('approve', 'company')) {
+            // TODO: handle change of slug w.r.t. uploaded files.
             $company->exchangeArray($data);
 
             $company->setApproved(ApprovableStatus::Approved);
@@ -428,8 +435,14 @@ class Company
                 return false;
             }
 
+            if ($entity instanceof CompanyModel) {
+                $directory = $entity->getId();
+            } else {
+                $directory = $entity->getCompany()->getId();
+            }
+
             // Save the file to persistent storage.
-            $path = $this->storageService->storeUploadedFile($file);
+            $path = $this->storageService->storeUploadedFile($file, 'company/' . $directory);
 
             if ($entity instanceof CompanyModel) {
                 $oldPath = $entity->getLogo();
@@ -842,6 +855,43 @@ class Company
             $jobUpdate->getProposal(),
             ApprovableStatus::Rejected,
             $message,
+        );
+    }
+
+    /**
+     * Upload an image to be displayed in a company or job description.
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
+     */
+    public function uploadImage(
+        CompanyModel $company,
+        array $files,
+    ): string {
+        $imageValidator = new IsImage(
+            ['magicFile' => false],
+        );
+
+        $extensionValidator = new Extension(
+            ['JPEG', 'JPG', 'PNG'],
+        );
+
+        if ($imageValidator->isValid($files['upload']['tmp_name'])) {
+            if ($extensionValidator->isValid($files['upload'])) {
+                $fileName = $this->storageService->storeUploadedFile(
+                    $files['upload'],
+                    'company/' . $company->getId(),
+                );
+
+                return $this->storageConfig['public_dir'] . '/' . $fileName;
+            }
+
+            throw new InvalidArgumentException(
+                $this->translator->translate('The uploaded file does not have a valid extension'),
+            );
+        }
+
+        throw new InvalidArgumentException(
+            $this->translator->translate('The uploaded file is not a valid image'),
         );
     }
 

@@ -24,6 +24,7 @@ use function rename;
 use function sha1_file;
 use function sprintf;
 use function substr;
+use function trim;
 use function unlink;
 
 use const FILEINFO_MIME_TYPE;
@@ -52,20 +53,30 @@ class FileStorage
      *
      * @return string the path at which the photo should be saved
      */
-    public function generateStoragePath(string $path): string
-    {
+    public function generateStoragePath(
+        string $path,
+        string $directory = '',
+    ): string {
         $config = $this->storageConfig;
         $hash = sha1_file($path);
         /**
          * the hash is split to obtain a path
          * like 92/cfceb39d57d914ed8b14d0e37643de0797ae56.jpg.
          */
-        $directory = substr($hash, 0, 2);
-        if (!file_exists($config['storage_dir'] . '/' . $directory)) {
-            mkdir($config['storage_dir'] . '/' . $directory, $config['dir_mode']);
+        $contentDirectory = substr($hash, 0, 2);
+
+        if ('' === $directory) {
+            $storageDirectory = $config['storage_dir'] . '/' . $contentDirectory;
+        } else {
+            $directory = trim($directory, '/') . '/';
+            $storageDirectory = $config['storage_dir'] . '/' . $directory . $contentDirectory;
         }
 
-        return $directory . '/' . substr($hash, 2);
+        if (!file_exists($storageDirectory)) {
+            mkdir($storageDirectory, $config['dir_mode'], true);
+        }
+
+        return $directory . $contentDirectory . '/' . substr($hash, 2);
     }
 
     /**
@@ -82,8 +93,10 @@ class FileStorage
      *
      * @throws Exception
      */
-    public function storeUploadedFile(array $file): string
-    {
+    public function storeUploadedFile(
+        array $file,
+        string $directory = '',
+    ): string {
         $config = $this->storageConfig;
         if (0 !== $file['error']) {
             throw new RuntimeException(
@@ -95,7 +108,7 @@ class FileStorage
         }
 
         $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
-        $storagePath = $this->generateStoragePath($file['tmp_name']) . '.' . $extension;
+        $storagePath = $this->generateStoragePath($file['tmp_name'], $directory) . '.' . $extension;
         $destination = $config['storage_dir'] . '/' . $storagePath;
         if (!file_exists($destination)) {
             move_uploaded_file($file['tmp_name'], $destination);

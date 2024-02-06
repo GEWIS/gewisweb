@@ -8,6 +8,7 @@ use Application\Model\LocalisedText as LocalisedTextModel;
 use Application\View\Helper\Acl;
 use Application\View\Helper\Breadcrumbs;
 use Application\View\Helper\Diff;
+use Application\View\Helper\GlideUrl;
 use Application\View\Helper\HrefLang;
 use Application\View\Helper\ScriptUrl;
 use Company\Model\CompanyFeaturedPackage as CompanyFeaturedPackageModel;
@@ -35,10 +36,11 @@ use User\Model\CompanyUser as CompanyUserModel;
  * @method string diff(string|null $old, string|null $new, string $renderer = Diff::DIFF_RENDER_COMBINED, array $rendererOverwrites = [], array $differOverwrites = [])
  * @method CompanyFeaturedPackageModel|null featuredCompanyPackage()
  * @method string fileUrl(string $path)
+ * @method GlideUrl glideUrl()
  * @method JobCategoryModel[] jobCategories()
  * @method string localisedTextElement(ElementInterface $element)
  * @method string localiseText(LocalisedTextModel $localisedText)
- * @method string markdown(string $text)
+ * @method string markdown(string $text, bool $company = false)
  * @method bool moduleIsActive(array $conditions)
  * @method HrefLang hrefLang()
  * @method ScriptUrl scriptUrl()

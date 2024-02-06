@@ -17,7 +17,9 @@ use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
+use Laminas\View\Model\JsonModel;
 use Laminas\View\Model\ViewModel;
+use Throwable;
 use User\Permissions\NotAllowedException;
 
 use function array_merge_recursive;
@@ -178,6 +180,7 @@ class AdminController extends AbstractActionController
         return [
             'company' => $company,
             'form' => $companyForm,
+            'isCompany' => false,
         ];
     }
 
@@ -480,6 +483,8 @@ class AdminController extends AbstractActionController
         return new ViewModel(
             [
                 'form' => $jobForm,
+                'companySlugName' => $companySlugName,
+                'isCompany' => false,
             ],
         );
     }
@@ -555,6 +560,8 @@ class AdminController extends AbstractActionController
             [
                 'form' => $jobForm,
                 'attachments' => $job->getAttachment(),
+                'companySlugName' => $companySlugName,
+                'isCompany' => false,
             ],
         );
     }
@@ -791,5 +798,49 @@ class AdminController extends AbstractActionController
         $labelForm->setData($jobLabelData);
 
         return new ViewModel(['form' => $labelForm]);
+    }
+
+    public function uploadCompanyImageAction(): JsonModel
+    {
+        if (
+            !$this->aclService->isAllowed('create', 'company')
+            && !$this->aclService->isAllowed('edit', 'company')
+            && !$this->aclService->isAllowed('create', 'job')
+            && !$this->aclService->isAllowed('edit', 'job')
+        ) {
+            throw new NotAllowedException($this->translator->translate('You are not allowed to upload images.'));
+        }
+
+        // Get parameter
+        $companySlugName = $this->params()->fromRoute('companySlugName');
+
+        // Get the specified company
+        $company = $this->companyService->getCompanyBySlugName($companySlugName);
+
+        // If the company is not found, show error.
+        if (null === $company) {
+            return new JsonModel(['error' => ['message' => 'Company does not exist.']]);
+        }
+
+        /** @var Request $request */
+        $request = $this->getRequest();
+
+        if (!$request->isPost()) {
+            return new JsonModel(['error' => ['message' => 'Method not allowed.']]);
+        }
+
+        $result = [];
+
+        try {
+            $path = $this->companyService->uploadImage(
+                $company,
+                $request->getFiles()->toArray(),
+            );
+            $result['url'] = '/' . $path;
+        } catch (Throwable $e) {
+            $result['error']['message'] = $e->getMessage();
+        }
+
+        return new JsonModel($result);
     }
 }

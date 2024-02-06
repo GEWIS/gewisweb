@@ -13,17 +13,24 @@ class Markdown extends AbstractHelper
 {
     public function __construct(
         private readonly Translator $translator,
-        private readonly MarkdownConverter $converter,
+        private readonly MarkdownConverter $defaultConverter,
+        private readonly MarkdownConverter $companyConverter,
     ) {
     }
 
     /**
      * Parse Markdown and convert it to HTML.
      */
-    public function __invoke(string $text): string
-    {
+    public function __invoke(
+        string $text,
+        bool $company = false,
+    ): string {
         try {
-            return $this->converter->convert($text)->getContent();
+            if ($company) {
+                return $this->companyConverter->convert($text)->getContent();
+            }
+
+            return $this->defaultConverter->convert($text)->getContent();
         } catch (CommonMarkException) {
             return $this->translator->translate('This text could not be generated.');
         }

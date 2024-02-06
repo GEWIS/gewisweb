@@ -6,11 +6,8 @@ namespace Photo;
 
 use Doctrine\Laminas\Hydrator\DoctrineObject;
 use Doctrine\ORM\Events;
-use Exception;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\Mvc\MvcEvent;
-use League\Glide\Signatures\Signature;
-use League\Glide\Urls\UrlBuilder;
 use Photo\Command\WeeklyPhoto;
 use Photo\Form\Album as AlbumForm;
 use Photo\Listener\AlbumDate as AlbumDateListener;
@@ -26,15 +23,8 @@ use Photo\Service\Album as AlbumService;
 use Photo\Service\AlbumCover as AlbumCoverService;
 use Photo\Service\Metadata as MetadataService;
 use Photo\Service\Photo as PhotoService;
-use Photo\View\Helper\GlideUrl;
 use Psr\Container\ContainerInterface;
 use User\Authorization\AclServiceFactory;
-
-use function array_merge;
-use function hash;
-use function http_build_query;
-use function ksort;
-use function ltrim;
 
 class Module
 {
@@ -201,73 +191,6 @@ class Module
                     $weeklyPhoto->setPhotoService($photoService);
 
                     return $weeklyPhoto;
-                },
-            ],
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    public function getViewHelperConfig(): array
-    {
-        return [
-            'factories' => [
-                'glideUrl' => static function (ContainerInterface $container) {
-                    $helper = new GlideUrl();
-                    $config = $container->get('config');
-                    if (
-                        !isset($config['glide']) || !isset($config['glide']['base_url'])
-                        || !isset($config['glide']['signing_key'])
-                    ) {
-                        throw new Exception('Invalid glide configuration');
-                    }
-
-                    // Custom implementation of Signature to enable usage of SHA3-256
-                    $signature = new class ($config['glide']['signing_key']) extends Signature {
-                        /**
-                         * @inheritDoc
-                         */
-                        public function addSignature(
-                            $path,
-                            array $params,
-                        ) {
-                            return array_merge($params, ['s' => $this->generateSignature($path, $params)]);
-                        }
-
-                        /**
-                         * @inheritDoc
-                         */
-                        public function validateRequest(
-                            $path,
-                            array $params,
-                        ) {
-                            // Not needed.
-                        }
-
-                        /**
-                         * IMPORTANT: This function MUST be exactly the same as the one used in the Glide server.
-                         *
-                         * @inheritDoc
-                         */
-                        public function generateSignature(
-                            $path,
-                            array $params,
-                        ) {
-                            unset($params['s']);
-                            ksort($params);
-
-                            // MODIFIED: use SHA3-256 instead of md5 for better guarantees the signature is not crafted.
-                            return hash(
-                                'sha3-256',
-                                $this->signKey . ':' . ltrim($path, '/') . '?' . http_build_query($params),
-                            );
-                        }
-                    };
-                    $urlBuilder = new UrlBuilder($config['glide']['base_url'], $signature);
-                    $helper->setUrlBuilder($urlBuilder);
-
-                    return $helper;
                 },
             ],
         ];

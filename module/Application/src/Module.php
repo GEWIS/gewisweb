@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Application;
 
+use Application\Extensions\CommonMark\CompanyImage\CompanyImageExtension;
+use Application\Extensions\CommonMark\NoImage\NoImageExtension;
+use Application\Extensions\CommonMark\VideoIframe\VideoIframeExtension;
 use Application\Router\Factory\LanguageAwareTreeRouteStackFactory;
 use Application\Router\LanguageAwareTreeRouteStack;
 use Application\Service\Email as EmailService;
@@ -13,10 +16,12 @@ use Application\Service\WatermarkService;
 use Application\View\Helper\Acl;
 use Application\View\Helper\Diff;
 use Application\View\Helper\FileUrl;
+use Application\View\Helper\GlideUrl;
 use Application\View\Helper\JobCategories;
 use Application\View\Helper\Markdown;
 use Application\View\Helper\ModuleIsActive;
 use Application\View\Helper\ScriptUrl;
+use Exception;
 use Laminas\Cache\Storage\Adapter\Memcached;
 use Laminas\Cache\Storage\Adapter\MemcachedOptions;
 use Laminas\I18n\Translator\Translator as I18nTranslator;
@@ -31,15 +36,24 @@ use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\ExternalLink\ExternalLinkExtension;
 use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
 use League\CommonMark\MarkdownConverter;
+use League\Glide\Signatures\Signature;
+use League\Glide\Urls\UrlBuilder;
 use Locale;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
+use Override;
 use Psr\Container\ContainerInterface;
 use RuntimeException;
 use User\Authentication\Adapter\UserAdapter;
 use User\Authentication\AuthenticationService;
 use User\Authentication\Storage\UserSession;
 use User\Permissions\NotAllowedException;
+
+use function array_merge;
+use function hash;
+use function http_build_query;
+use function ksort;
+use function ltrim;
 
 class Module
 {
@@ -209,6 +223,52 @@ class Module
 
                     return $logger;
                 },
+                'glide_url_builder' => static function (ContainerInterface $container) {
+                    $config = $container->get('config');
+
+                    if (
+                        !isset($config['glide']) || !isset($config['glide']['base_url'])
+                        || !isset($config['glide']['signing_key'])
+                    ) {
+                        throw new Exception('Invalid glide configuration');
+                    }
+
+                    // Custom implementation of Signature to enable usage of SHA3-256
+                    $signature = new class ($config['glide']['signing_key']) extends Signature {
+                        /**
+                         * @inheritDoc
+                         */
+                        #[Override]
+                        public function addSignature(
+                            $path,
+                            array $params,
+                        ): array {
+                            return array_merge($params, ['s' => $this->generateSignature($path, $params)]);
+                        }
+
+                        /**
+                         * IMPORTANT: This function MUST be exactly the same as the one used in the Glide server.
+                         *
+                         * @inheritDoc
+                         */
+                        #[Override]
+                        public function generateSignature(
+                            $path,
+                            array $params,
+                        ) {
+                            unset($params['s']);
+                            ksort($params);
+
+                            // MODIFIED: use SHA3-256 instead of md5 for better guarantees the signature is not crafted.
+                            return hash(
+                                'sha3-256',
+                                $this->signKey . ':' . ltrim($path, '/') . '?' . http_build_query($params),
+                            );
+                        }
+                    };
+
+                    return new UrlBuilder($config['glide']['base_url'], $signature);
+                },
             ],
         ];
     }
@@ -257,10 +317,27 @@ class Module
                         ->addExtension(new GithubFlavoredMarkdownExtension())
                         ->addExtension(new ExternalLinkExtension());
 
+                    // Create separate environment for companies.
+                    $companyEnvironment = clone $environment;
+                    $glide = new GlideUrl();
+                    $glide->setUrlBuilder($container->get('glide_url_builder'));
+                    $companyEnvironment->addExtension(new CompanyImageExtension($glide))
+                        ->addExtension(new VideoIframeExtension());
+
+                    // Do not render images in the default environment (activities, news items, etc.).
+                    $environment->addExtension(new NoImageExtension());
+
                     return new Markdown(
                         $container->get(MvcTranslator::class),
                         new MarkdownConverter($environment),
+                        new MarkdownConverter($companyEnvironment),
                     );
+                },
+                'glideUrl' => static function (ContainerInterface $container) {
+                    $helper = new GlideUrl();
+                    $helper->setUrlBuilder($container->get('glide_url_builder'));
+
+                    return $helper;
                 },
             ],
         ];

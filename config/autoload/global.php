@@ -77,7 +77,7 @@ return [
     ],
 
     /*
-     * Exam and Summary upload directory configration.
+     * Exam and Summary upload directory configuration.
      */
     'education' => [
         'upload_dir' => 'public/data/education',
@@ -86,7 +86,7 @@ return [
     ],
 
     /*
-     * Exam and Summary temporary upload directory configration.
+     * Exam and Summary temporary upload directory configuration.
      */
     'education_temp' => [
         'upload_exam_dir' => 'public/data/education_temp_exams',
