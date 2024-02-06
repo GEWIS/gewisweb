@@ -31,7 +31,8 @@ if ('nl' === $lang) {
 $this->headLink()
     ->appendStylesheet($this->basepath('css/ckeditor/style.css'));
 
-$this->scriptUrl()->requireUrl('admin_page/upload');
+// admin_page/upload
+$uploadPath = '/admin/page/upload';
 
 $this->breadcrumbs()
     ->addBreadcrumb($this->translate('Pages'), true, $this->url('admin_page'))
@@ -176,7 +177,7 @@ $submit->setAttribute('class', 'btn btn-primary');
         .create(document.querySelector('#content-nl'), {
             language: '<?= $lang ?>',
             simpleUpload: {
-                uploadUrl: URLHelper.url('admin_page/upload')
+                uploadUrl: '<?= $uploadPath ?>'
             }
         })
         .catch(error => {
@@ -187,7 +188,7 @@ $submit->setAttribute('class', 'btn btn-primary');
         .create(document.querySelector('#content-en'), {
             language: '<?= $lang ?>',
             simpleUpload: {
-                uploadUrl: URLHelper.url('admin_page/upload')
+                uploadUrl: '<?= $uploadPath ?>'
             }
         })
         .catch(error => {
