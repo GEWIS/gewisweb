@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Photo\View\Helper;
+namespace Application\View\Helper;
 
 use DateTime;
 use DateTimeInterface;

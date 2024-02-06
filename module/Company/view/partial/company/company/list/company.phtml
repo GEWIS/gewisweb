@@ -98,7 +98,7 @@ $companyURL = $escaper->escapeHtmlAttr($this->localiseText($company->getWebsite(
         <div class="col-md-9">
             <h2><?= $this->translate('Description') ?></h2>
             <div class="company-description text-justify markdown">
-                <?= $this->markdown($this->localiseText($company->getDescription())) ?>
+                <?= $this->markdown($this->localiseText($company->getDescription()), true) ?>
             </div>
         </div>
     </div>
