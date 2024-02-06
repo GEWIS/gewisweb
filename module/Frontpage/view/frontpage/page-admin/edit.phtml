@@ -174,7 +174,10 @@ $submit->setAttribute('class', 'btn btn-primary');
 <script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
     GEDITOR.FullEditor
         .create(document.querySelector('#content-nl'), {
-            language: '<?= $lang ?>'
+            language: '<?= $lang ?>',
+            simpleUpload: {
+                uploadUrl: URLHelper.url('admin_page/upload')
+            }
         })
         .catch(error => {
             console.error(error);
@@ -182,7 +185,10 @@ $submit->setAttribute('class', 'btn btn-primary');
 
     GEDITOR.FullEditor
         .create(document.querySelector('#content-en'), {
-            language: '<?= $lang ?>'
+            language: '<?= $lang ?>',
+            simpleUpload: {
+                uploadUrl: URLHelper.url('admin_page/upload')
+            }
         })
         .catch(error => {
             console.error(error);

@@ -12,7 +12,10 @@ use Laminas\View\Renderer\PhpRenderer;
  * @var PhpRenderer|HelperTrait $this
  * @var CompanyModel $company
  * @var CompanyForm $form
+ * @var bool $isCompany
  */
+
+$lang = $this->plugin('translate')->getTranslator()->getLocale();
 
 $this->headTitle($this->translate('Edit Company'));
 $this->breadcrumbs()
@@ -29,7 +32,31 @@ $this->headScript()
         $this->basepath('js/company-create.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
+    )
+    ->appendFile(
+        $this->basepath('js/ckeditor/ckeditor.js'),
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
     );
+
+if ('nl' === $lang) {
+    $this->headScript()->appendFile(
+        $this->basepath('js/ckeditor/translations/nl.js'),
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    );
+}
+
+$this->headLink()
+    ->appendStylesheet($this->basepath('css/ckeditor/style.css'));
+
+if ($isCompany) {
+    // company_account/upload
+    $uploadPath = '/company/upload';
+} else {
+    // company_admin/company/edit/upload
+    $uploadPath = '/admin/career/company/edit/' . $company->getSlugName() . '/upload';
+}
 
 $this->inlineScript()
     ->appendFile(
@@ -226,4 +253,26 @@ $form->setAttribute('class', 'form-company');
             Company.Admin.deletePackage(e.target.dataset.slugName, e.target.dataset.packageId);
         });
     });
+
+    GEDITOR.MarkdownCompanyEditor
+        .create(document.querySelector('#description-nl'), {
+            language: '<?= $lang ?>',
+            simpleUpload: {
+                uploadUrl: '<?= $uploadPath ?>'
+            }
+        })
+        .catch(error => {
+            console.error(error);
+        });
+
+    GEDITOR.MarkdownCompanyEditor
+        .create(document.querySelector('#description-en'), {
+            language: '<?= $lang ?>',
+            simpleUpload: {
+                uploadUrl: '<?= $uploadPath ?>'
+            }
+        })
+        .catch(error => {
+            console.error(error);
+        });
 </script>

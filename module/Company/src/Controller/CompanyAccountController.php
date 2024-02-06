@@ -17,7 +17,9 @@ use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
+use Laminas\View\Model\JsonModel;
 use Laminas\View\Model\ViewModel;
+use Throwable;
 use User\Permissions\NotAllowedException;
 
 use function array_merge_recursive;
@@ -192,6 +194,7 @@ class CompanyAccountController extends AbstractActionController
         return new ViewModel(
             [
                 'form' => $jobForm,
+                'isCompany' => true,
             ],
         );
     }
@@ -299,6 +302,7 @@ class CompanyAccountController extends AbstractActionController
                 'isJobRejected' => $isJobRejected,
                 'isJobUpdate' => $job->getIsUpdate(),
                 'jobRejectedMessage' => $jobRejectedMessage,
+                'isCompany' => true,
             ],
         );
     }
@@ -433,5 +437,37 @@ class CompanyAccountController extends AbstractActionController
     public function bannerAction(): ViewModel
     {
         return new ViewModel([]);
+    }
+
+    public function uploadCompanyImageAction(): JsonModel
+    {
+        if (
+            !$this->aclService->isAllowed('editOwn', 'company')
+            && !$this->aclService->isAllowed('createOwn', 'job')
+            && !$this->aclService->isAllowed('editOwn', 'job')
+        ) {
+            throw new NotAllowedException($this->translator->translate('You are not allowed to upload images.'));
+        }
+
+        /** @var Request $request */
+        $request = $this->getRequest();
+
+        if (!$request->isPost()) {
+            return new JsonModel(['error' => ['message' => 'Method not allowed.']]);
+        }
+
+        $result = [];
+
+        try {
+            $path = $this->companyService->uploadImage(
+                $this->aclService->getCompanyUserIdentityOrThrowException()->getCompany(),
+                $request->getFiles()->toArray(),
+            );
+            $result['url'] = '/' . $path;
+        } catch (Throwable $e) {
+            $result['error']['message'] = $e->getMessage();
+        }
+
+        return new JsonModel($result);
     }
 }

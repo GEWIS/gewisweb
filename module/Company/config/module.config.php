@@ -242,6 +242,15 @@ return [
                             ],
                         ],
                     ],
+                    'upload' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/upload',
+                            'defaults' => [
+                                'action' => 'uploadCompanyImage',
+                            ],
+                        ],
+                    ],
                 ],
                 'priority' => 100,
             ],
@@ -298,6 +307,15 @@ return [
                                 ],
                                 'may_terminate' => true,
                                 'child_routes' => [
+                                    'upload' => [
+                                        'type' => Literal::class,
+                                        'options' => [
+                                            'route' => '/upload',
+                                            'defaults' => [
+                                                'action' => 'uploadCompanyImage',
+                                            ],
+                                        ],
+                                    ],
                                     'package' => [
                                         'type' => Literal::class,
                                         'options' => [

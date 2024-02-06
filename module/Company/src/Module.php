@@ -183,6 +183,7 @@ class Module
                 $jobCategoryForm = $container->get('company_admin_jobcategory_form');
                 $jobLabelForm = $container->get('company_admin_joblabel_form');
                 $userService = $container->get('user_service_user');
+                $storageConfig = $container->get('config')['storage'];
 
                 return new CompanySerivce(
                     $aclService,
@@ -204,6 +205,7 @@ class Module
                     $jobCategoryForm,
                     $jobLabelForm,
                     $userService,
+                    $storageConfig,
                 );
             },
             'company_service_companyquery' => static function (ContainerInterface $container) {

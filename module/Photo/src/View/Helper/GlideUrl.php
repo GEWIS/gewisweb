@@ -30,7 +30,7 @@ class GlideUrl extends AbstractHelper
     /**
      * Gets a signed glide URL.
      *
-     * @param array{w: int, h: int, fm?: string, q?: int, expires?: DateTime} $params
+     * @param array{w: int, h: int, fm?: string, q?: int, expires?: DateTime}|array<never, never> $params
      */
     public function getUrl(
         string $imagePath,

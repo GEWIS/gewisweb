@@ -11,6 +11,8 @@ use Laminas\View\Renderer\PhpRenderer;
  * @var CompanyForm $form
  */
 
+$lang = $this->plugin('translate')->getTranslator()->getLocale();
+
 $this->headTitle($this->translate('Create Company'));
 
 $this->headScript()
@@ -18,7 +20,23 @@ $this->headScript()
         $this->basepath('js/company-create.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
+    )
+    ->appendFile(
+        $this->basepath('js/ckeditor/ckeditor.js'),
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
     );
+
+if ('nl' === $lang) {
+    $this->headScript()->appendFile(
+        $this->basepath('js/ckeditor/translations/nl.js'),
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    );
+}
+
+$this->headLink()
+    ->appendStylesheet($this->basepath('css/ckeditor/style.css'));
 
 $form->prepare();
 $form->setAttribute('class', 'form-company');
@@ -51,4 +69,20 @@ $form->setAttribute('class', 'form-company');
 <?= $this->form()->closeTag() ?>
 <script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
     Company.updateForm();
+
+    GEDITOR.MarkdownCompanyEditor
+        .create(document.querySelector('#description-nl'), {
+            language: '<?= $lang ?>'
+        })
+        .catch(error => {
+            console.error(error);
+        });
+
+    GEDITOR.MarkdownCompanyEditor
+        .create(document.querySelector('#description-en'), {
+            language: '<?= $lang ?>'
+        })
+        .catch(error => {
+            console.error(error);
+        });
 </script>

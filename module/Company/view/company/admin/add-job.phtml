@@ -8,8 +8,12 @@ use Laminas\View\Renderer\PhpRenderer;
 
 /**
  * @var PhpRenderer|HelperTrait $this
+ * @var string $companySlugName
  * @var JobForm $form
+ * @var bool $isCompany
  */
+
+$lang = $this->plugin('translate')->getTranslator()->getLocale();
 
 $this->headTitle($this->translate('Add Job'));
 
@@ -23,7 +27,31 @@ $this->headScript()
         $this->basepath('js/job-create.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
+    )
+    ->appendFile(
+        $this->basepath('js/ckeditor/ckeditor.js'),
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
     );
+
+if ('nl' === $lang) {
+    $this->headScript()->appendFile(
+        $this->basepath('js/ckeditor/translations/nl.js'),
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    );
+}
+
+$this->headLink()
+    ->appendStylesheet($this->basepath('css/ckeditor/style.css'));
+
+if ($isCompany) {
+    // company_account/upload
+    $uploadPath = '/company/upload';
+} else {
+    // company_admin/company/edit/upload
+    $uploadPath = '/admin/career/company/edit/' . $companySlugName . '/upload';
+}
 
 $form->prepare();
 $form->setAttribute('class', 'form-company');
@@ -60,4 +88,26 @@ $form->setAttribute('class', 'form-company');
     $('label[for^="labels-"]').on('click', function () {
         Job.toggleLabel($(this).data('label-id'));
     });
+
+    GEDITOR.MarkdownCompanyEditor
+        .create(document.querySelector('#description-nl'), {
+            language: '<?= $lang ?>',
+            simpleUpload: {
+                uploadUrl: '<?= $uploadPath ?>'
+            }
+        })
+        .catch(error => {
+            console.error(error);
+        });
+
+    GEDITOR.MarkdownCompanyEditor
+        .create(document.querySelector('#description-en'), {
+            language: '<?= $lang ?>',
+            simpleUpload: {
+                uploadUrl: '<?= $uploadPath ?>'
+            }
+        })
+        .catch(error => {
+            console.error(error);
+        });
 </script>
