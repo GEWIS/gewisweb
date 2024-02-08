@@ -9,15 +9,15 @@ use Laminas\Form\Element\DateTimeLocal;
 use Laminas\Form\Element\Submit;
 use Laminas\Form\Element\Text;
 use Laminas\Form\Form;
-use Laminas\I18n\Validator\Alnum;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\NotEmpty;
+use Laminas\Validator\Regex;
 use Laminas\Validator\StringLength;
 
 class Album extends Form implements InputFilterProviderInterface
 {
-    public function __construct(Translator $translate)
+    public function __construct(private Translator $translator)
     {
         parent::__construct();
 
@@ -26,7 +26,7 @@ class Album extends Form implements InputFilterProviderInterface
                 'name' => 'name',
                 'type' => Text::class,
                 'options' => [
-                    'label' => $translate->translate('Album title'),
+                    'label' => $this->translator->translate('Album title'),
                 ],
             ],
         );
@@ -36,7 +36,7 @@ class Album extends Form implements InputFilterProviderInterface
                 'name' => 'startDateTime',
                 'type' => DateTimeLocal::class,
                 'options' => [
-                    'label' => $translate->translate('Start date'),
+                    'label' => $this->translator->translate('Start date'),
                     'format' => 'Y-m-d\TH:i',
                 ],
             ],
@@ -47,7 +47,7 @@ class Album extends Form implements InputFilterProviderInterface
                 'name' => 'endDateTime',
                 'type' => DateTimeLocal::class,
                 'options' => [
-                    'label' => $translate->translate('End date'),
+                    'label' => $this->translator->translate('End date'),
                     'format' => 'Y-m-d\TH:i',
                 ],
             ],
@@ -58,7 +58,7 @@ class Album extends Form implements InputFilterProviderInterface
                 'name' => 'published',
                 'type' => Checkbox::class,
                 'options' => [
-                    'label' => $translate->translate('Published'),
+                    'label' => $this->translator->translate('Published'),
                     'checked_value' => '1',
                     'unchecked_value' => '0',
                 ],
@@ -73,7 +73,7 @@ class Album extends Form implements InputFilterProviderInterface
                 'name' => 'submit',
                 'type' => Submit::class,
                 'options' => [
-                    'label' => $translate->translate('Save'),
+                    'label' => $this->translator->translate('Save'),
                 ],
             ],
         );
@@ -92,9 +92,14 @@ class Album extends Form implements InputFilterProviderInterface
                         'name' => NotEmpty::class,
                     ],
                     [
-                        'name' => Alnum::class,
+                        'name' => Regex::class,
                         'options' => [
-                            'allowWhiteSpace' => true,
+                            'pattern' => '/^[0-9a-zA-Z\-\.\:\'\"\s]+$/',
+                            'messages' => [
+                                Regex::NOT_MATCH => $this->translator->translate(
+                                    'Album name can only contain letters, numbers, -, ., :, \', ", and spaces',
+                                ),
+                            ],
                         ],
                     ],
                     [

@@ -289,7 +289,7 @@ class Job extends LocalisableForm implements InputFilterProviderInterface
                         'options' => [
                             'pattern' => '/^[0-9a-zA-Z_\-\.]+$/',
                             'messages' => [
-                                Regex::ERROROUS => $this->getTranslator()->translate(
+                                Regex::NOT_MATCH => $this->getTranslator()->translate(
                                     'This slug contains invalid characters',
                                 ),
                             ],

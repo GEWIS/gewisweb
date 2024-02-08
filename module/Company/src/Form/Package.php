@@ -175,7 +175,7 @@ class Package extends LocalisableForm implements InputFilterProviderInterface
                         'options' => [
                             'pattern' => '/^[0-9a-zA-Z_\-\.\s]+$/',
                             'messages' => [
-                                Regex::ERROROUS => $this->getTranslator()->translate(
+                                Regex::NOT_MATCH => $this->getTranslator()->translate(
                                     'Contract numbers can only contain letters, numbers, _, -, ., and spaces',
                                 ),
                             ],
