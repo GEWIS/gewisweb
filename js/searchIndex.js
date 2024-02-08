@@ -14106,6 +14106,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Photo-Form-Album.html#method_getInputFilterSpecification"
         },                {
+            "fqsen": "\\Photo\\Form\\Album\u003A\u003A\u0024translator",
+            "name": "translator",
+            "summary": "",
+            "url": "classes/Photo-Form-Album.html#property_translator"
+        },                {
             "fqsen": "\\Photo\\Listener\\AlbumDate",
             "name": "AlbumDate",
             "summary": "Doctrine\u0020event\u0020listener\u0020class\u0020for\u0020Album\u0020and\u0020Photo\u0020entities.",
