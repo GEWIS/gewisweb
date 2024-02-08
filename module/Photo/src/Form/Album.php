@@ -94,10 +94,10 @@ class Album extends Form implements InputFilterProviderInterface
                     [
                         'name' => Regex::class,
                         'options' => [
-                            'pattern' => '/^[0-9a-zA-Z\-\.\:\'\"\s]+$/',
+                            'pattern' => '/^[\p{L}\p{N}\-\.\:\@\^\&\*\?\!\(\)\'\"\s]+$/u',
                             'messages' => [
                                 Regex::NOT_MATCH => $this->translator->translate(
-                                    'Album name can only contain letters, numbers, -, ., :, \', ", and spaces',
+                                    'Album name can only contain letters, numbers, -, ., :, @, ^, &, *, ?, !, (, ), \', ", and spaces',
                                 ),
                             ],
                         ],
