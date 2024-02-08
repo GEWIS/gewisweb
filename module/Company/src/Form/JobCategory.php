@@ -200,7 +200,7 @@ class JobCategory extends Form implements InputFilterProviderInterface
                         'options' => [
                             'pattern' => '/^[0-9a-zA-Z_\-\.]*$/',
                             'messages' => [
-                                Regex::ERROROUS => $this->translator->translate(
+                                Regex::NOT_MATCH => $this->translator->translate(
                                     'This slug contains invalid characters',
                                 ),
                             ],

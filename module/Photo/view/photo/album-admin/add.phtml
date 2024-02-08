@@ -9,6 +9,7 @@ use Photo\Model\Album as AlbumModel;
 /**
  * @var PhpRenderer|HelperTrait $this
  * @var AlbumModel $album
+ * @var int|null $year
  */
 
 $this->inlineScript()
@@ -30,8 +31,28 @@ $this->inlineScript()
 $this->headLink()->appendStylesheet($this->basepath('css/dropzone.css'));
 
 $this->breadcrumbs()
-    ->addBreadcrumb($this->translate('Photos'), true, $this->url('admin_photo'))
-    ->addBreadcrumb(sprintf('%d/%d', $year, $year + 1), true, $this->url('admin_photo/album_year', ['year' => $year]));
+    ->addBreadcrumb($this->translate('Photos'), true, $this->url('admin_photo'));
+
+if (null === $year) {
+    $this->breadcrumbs()
+        ->addBreadcrumb(
+            $this->translate('Undated'),
+            true,
+            $this->url('admin_photo/album_undated'),
+        );
+} else {
+    $this->breadcrumbs()
+        ->addBreadcrumb(
+            sprintf(
+                '%d/%d',
+                $year,
+                $year + 1,
+            ),
+            true,
+            $this->url('admin_photo/album_year', ['year' => $year]),
+        );
+}
+
 
 if (null !== $album->getParent()) {
     $parents = [];

@@ -198,10 +198,13 @@ class AlbumAdminController extends AbstractActionController
         $albumId = (int) $this->params()->fromRoute('album_id');
         $album = $this->albumService->getAlbum($albumId);
 
+        $start = $album->getStartDateTime();
+        $year = null === $start ? null : AssociationYear::fromDate($start)->getYear();
+
         return new ViewModel(
             [
                 'album' => $album,
-                'year' => AssociationYear::fromDate($album->getStartDateTime())->getYear(),
+                'year' => $year,
             ],
         );
     }
