@@ -7,18 +7,18 @@ use Laminas\View\Renderer\PhpRenderer;
 
 /** @var PhpRenderer|HelperTrait $this */
 ?>
-<footer class="footer">
+<footer class="footer mt-auto py-4 border-top text-secondary">
     <div class="container">
         <div class="row">
             <div class="hidden-xs col-sm-2 col-md-1">
-                <div class="gi gewis-base" style="font-size: 7em;"></div>
+                <div class="gi gewis-base" style="font-size: 7rem;"></div>
             </div>
             <div class="col-sm-10 col-md-11">
                 <div class="row">
                     <div class="col-sm-8">
                         <?php
                         if ($this->acl('frontpage_service_acl')->isAllowed('infimum', 'view')): ?>
-                            <h3><?= $this->translate('Infimum') ?></h3>
+                            <h4><?= $this->translate('Infimum') ?></h4>
                             <p id="infimum-footer"><?= $this->translate('Loading an infimum...') ?></p>
                             <script type="text/javascript" nonce="<?= NONCE_REPLACEMENT_STRING ?>">
                                 fetch('<?= $this->url('infimum') ?>')
@@ -44,7 +44,7 @@ use Laminas\View\Renderer\PhpRenderer;
                             </script>
                         <?php
                         endif ?>
-                        <p>
+                        <p class="mt-3">
                             &copy; 2013
                             - <?= date('Y') ?> S.v. GEWIS. <?php
                             echo $this->translate('All rights reserved.') ?>

@@ -30,31 +30,31 @@ $this->headTitle($this->escapeHtml($this->localiseText($activity->getName())));
 $this->headTitle($this->translate('Activities'));
 ?>
 <?php if (!isset($breadcrumb)): // only show breadcrumbs if they were not yet shown ?>
-    <section class="section section-breadcrumb">
+    <nav class="navbar-breadcrumb" aria-label="breadcrumb">
         <div class="container">
             <ol class="breadcrumb">
-                <li>
+                <li class="breadcrumb-item">
                     <a href="<?= $this->url('activity') ?>">
                         <?= $this->translate('Activities') ?>
                     </a>
                 </li>
                 <?php if (!isset($signupList)): ?>
-                    <li class="active">
+                    <li class="breadcrumb-item active">
                         <?= $this->escapeHtml($this->localiseText($activity->getName())) ?>
                     </li>
                 <?php else: ?>
-                    <li>
+                    <li class="breadcrumb-item">
                         <a href="<?= $this->url('activity/view', ['id' => $activity->getId()]) ?>">
                             <?= $this->escapeHtml($this->localiseText($activity->getName())) ?>
                         </a>
                     </li>
-                    <li class="active">
+                    <li class="breadcrumb-item active">
                         <?= $this->escapeHtml($this->localiseText($signupList->getName())) ?>
                     </li>
                 <?php endif; ?>
             </ol>
         </div>
-    </section>
+    </nav>
 <?php endif; ?>
 
 <section class="section">
@@ -136,8 +136,12 @@ $this->headTitle($this->translate('Activities'));
                 <div class="col-md-12">
                     <ul class="nav nav-tabs">
                         <?php foreach ($signupLists as $list): ?>
-                            <li role="presentation" <?= isset($signupList) ? ($signupList->getId() === $list['id'] ? 'class="active"' : '') : '' ?>>
-                                <a href="<?= $this->url('activity/view/signuplist', ['id' => $activity->getId(), 'signupList' => $list['id']]) ?>"><?= $this->escapeHtml($this->localiseText($list['name'])) ?></a>
+                            <li class="nav-item">
+                                <a href="<?= $this->url('activity/view/signuplist', ['id' => $activity->getId(), 'signupList' => $list['id']]) ?>"
+                                   class="nav-link<?= isset($signupList) ? ($signupList->getId() === $list['id'] ? ' active' : '') : '' ?>"
+                                >
+                                    <?= $this->escapeHtml($this->localiseText($list['name'])) ?>
+                                </a>
                             </li>
                         <?php endforeach; ?>
                     </ul>

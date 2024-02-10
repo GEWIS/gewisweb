@@ -3,8 +3,6 @@ Photo
 
 */
 
-@import '../_bootstrap-variables.scss';
-
 .grid-sizer {
     float: left;
 }
@@ -18,15 +16,15 @@ Photo
     margin-bottom: 0.5%;
     width: 49%;
 
-    @media (min-width: $screen-sm-min) {
+    @include media-breakpoint-up(sm) {
         width: 33%;
     }
 
-    @media (min-width: $screen-md-min) {
+    @include media-breakpoint-up(md) {
         width: 24.5%;
     }
 
-    @media (min-width: $screen-lg-min) {
+    @include media-breakpoint-up(lg) {
         width: 16.2%;
     }
 }
@@ -34,15 +32,15 @@ Photo
 .pswp-gallery__item.potw-thumb {
     width: 98.498%;
 
-    @media (min-width: $screen-sm-min) {
+    @include media-breakpoint-up(sm) {
         width: 66.499%;
     }
 
-    @media (min-width: $screen-md-min) {
+    @include media-breakpoint-up(md) {
         width: 49.499%;
     }
 
-    @media (min-width: $screen-lg-min) {
+    @include media-breakpoint-up(lg) {
         width: 32.899%;
     }
 }

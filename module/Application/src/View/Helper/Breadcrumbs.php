@@ -84,7 +84,7 @@ class Breadcrumbs extends AbstractStandalone
         $output = '';
 
         foreach ($this as $item) {
-            $output .= '<li class="' . ($item['active'] ? 'active' : '') . '">';
+            $output .= '<li class="breadcrumb-item' . ($item['active'] ? ' active" aria-current="page' : '') . '">';
 
             if ('' !== $item['url']) {
                 $output .= sprintf(

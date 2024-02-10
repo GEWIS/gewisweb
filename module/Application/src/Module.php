@@ -19,7 +19,7 @@ use Application\View\Helper\FileUrl;
 use Application\View\Helper\GlideUrl;
 use Application\View\Helper\JobCategories;
 use Application\View\Helper\Markdown;
-use Application\View\Helper\ModuleIsActive;
+use Application\View\Helper\IsModuleActive;
 use Application\View\Helper\ScriptUrl;
 use Exception;
 use Laminas\Cache\Storage\Adapter\Memcached;
@@ -291,11 +291,8 @@ class Module
                 'scriptUrl' => static function () {
                     return new ScriptUrl();
                 },
-                'moduleIsActive' => static function (ContainerInterface $container) {
-                    $helper = new ModuleIsActive();
-                    $helper->setServiceLocator($container);
-
-                    return $helper;
+                'isModuleActive' => static function (ContainerInterface $container) {
+                    return new IsModuleActive($container);
                 },
                 'jobCategories' => static function (ContainerInterface $container) {
                     $companyQueryService = $container->get('company_service_companyquery');

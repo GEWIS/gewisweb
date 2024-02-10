@@ -41,7 +41,7 @@ use User\Model\CompanyUser as CompanyUserModel;
  * @method string localisedTextElement(ElementInterface $element)
  * @method string localiseText(LocalisedTextModel $localisedText)
  * @method string markdown(string $text, bool $company = false)
- * @method bool moduleIsActive(array $conditions)
+ * @method bool isModuleActive(array $conditions)
  * @method HrefLang hrefLang()
  * @method ScriptUrl scriptUrl()
  * @method string truncate(string $text, int $length = 100, array $options = [])

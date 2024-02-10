@@ -79,26 +79,26 @@ const setTrackingState = (state) => {
 
 const checkAndUpdateState = () => {
     trackingRequest('isTracked').then((data) => {
-        status_unavailable.classList.add('hidden');
+        status_unavailable.hidden = true;
         privacy_widget_checkbox.disabled = false;
 
         if (data.isTracked) {
             // User is being tracked.
             privacy_widget_checkbox.checked = true;
-            status_enabled.classList.remove('hidden');
+            status_enabled.hidden = false;
         } else if (!data.isTracked && data.isDoNotTrackPresent) {
             // User is not being tracked due to a Do Not Track signal.
             privacy_widget_checkbox.checked = false;
             privacy_widget_checkbox.disabled = true;
-            status_disabled_dnt.classList.remove('hidden');
+            status_disabled_dnt.hidden = false;
         } else if (!data.isTracked && !data.isDoNotTrackPresent) {
             // User is not being tracked.
             privacy_widget_checkbox.checked = false;
-            status_disabled.classList.remove('hidden');
+            status_disabled.hidden = false;
         }
     }).catch((error) => {
         console.log(error);
-        status_unavailable.classList.remove('hidden');
+        status_unavailable.hidden = false;
         privacy_widget_checkbox.disabled = true;
     });
 };

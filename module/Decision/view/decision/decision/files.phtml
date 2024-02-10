@@ -51,21 +51,20 @@ $this->headTitle($this->translate('Public Archive') . ' - [' . ($folderName === 
             <?= $this->translate('Browsing directory: ') . ($folderName === '' ? $this->translate('Root') : $escaper->escapeHtml($folderName)) ?>
         </h2>
     </div>
-    <section class="section section-breadcrumb">
+    <nav class="navbar-breadcrumb" aria-label="breadcrumb">
         <div class="container">
             <ol class="breadcrumb">
                 <?php foreach ($crumbs as $crumb): ?>
-                    <li>
+                    <li class="breadcrumb-item">
                         <?= $crumb ?>
                     </li>
                 <?php endforeach; ?>
-                <li class="active">
+                <li class="breadcrumb-item active" aria-current="page">
                     <?= $escaper->escapeHtml($folderName) ?>
                 </li>
             </ol>
         </div>
-    </section>
-    <p/>
+    </nav>
     <div class="container">
         <table class="table table-hover">
             <thead>

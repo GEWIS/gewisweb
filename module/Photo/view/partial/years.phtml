@@ -21,17 +21,19 @@ if ($admin) {
 ?>
 <div class="row">
     <div class="col-md-12">
-        <ul class="nav nav-tabs head-menu">
+        <ul class="nav nav-tabs">
             <?php for ($i = count($years) - 1; $i >= max(0, count($years) - 5); $i--): ?>
-                <li class="<?= isset($year) && $year === $years[$i] ? 'active' : '' ?>">
-                    <a href="<?= $this->url($url, ['year' => $years[$i]]); ?>">
+                <li class="nav-item">
+                    <a href="<?= $this->url($url, ['year' => $years[$i]]); ?>"
+                       class="nav-link<?= isset($year) && $year === $years[$i] ? ' active' : '' ?>"
+                    >
                         <?= $years[$i] ?>-<?= $years[$i] + 1 ?>
                     </a>
                 </li>
             <?php endfor; ?>
             <?php if (7 <= count($years)): ?>
-                <li role="presentation" class="dropdown">
-                    <a class="dropdown-toggle"
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle"
                        data-toggle="dropdown"
                        href="#"
                        role="button"
@@ -42,7 +44,7 @@ if ($admin) {
                     <ul class="dropdown-menu">
                         <?php for ($i = max(0, count($years) - 6); $i > 0; $i--): ?>
                             <li>
-                                <a href="<?= $this->url($url, ['year' => $years[$i]]); ?>">
+                                <a href="<?= $this->url($url, ['year' => $years[$i]]); ?>" class="dropdown-item">
                                     <?= $years[$i] ?>/<?= $years[$i] + 1 ?>
                                 </a>
                             </li>
@@ -51,8 +53,8 @@ if ($admin) {
                 </li>
             <?php endif; ?>
             <?php if ($admin): ?>
-                <li>
-                    <a href="<?= $this->url('admin_photo/album_undated') ?>">
+                <li class="nav-item">
+                    <a href="<?= $this->url('admin_photo/album_undated') ?>" class="nav-link">
                         <?= $this->translate('Undated') ?>
                     </a>
                 </li>

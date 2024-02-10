@@ -1,0 +1,21 @@
+body > .admin-container {
+    > .content-container {
+        width: calc(100% - #{$navbar-sidebar-width-md});
+
+        > .navbar-breadcrumb {
+            position: sticky;
+            top: 0;
+            z-index: ceil($zindex-dropdown * 0.5);
+        }
+
+        > .section:not(.navbar-breadcrumb) {
+            overflow-x: scroll;
+            height: 100%;
+        }
+    }
+}
+
+.container-admin {
+    padding: 0 1.5rem;
+    margin: 0 auto;
+}

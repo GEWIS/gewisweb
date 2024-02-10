@@ -20,24 +20,17 @@ if (isset($this->company)) {
 }
 
 $this->headTitle($this->localiseText($jobCategory->getPluralName()));
-
-$this->headScript()
-    ->appendFile(
-        $this->basepath('js/bootstrap/tooltip.js'),
-        'text/javascript',
-        ['nonce' => NONCE_REPLACEMENT_STRING],
-    );
 ?>
-<section class="section section-breadcrumb">
+<nav class="navbar-breadcrumb" aria-label="breadcrumb">
     <div class="container">
         <ol class="breadcrumb">
-            <li>
+            <li class="breadcrumb-item">
                 <a href="<?= $this->url('company') ?>">
                     <?= $this->translate('Companies') ?>
                 </a>
             </li>
             <?php if (isset($this->company)): ?>
-                <li>
+                <li class="breadcrumb-item">
                     <a href="<?= $this->url(
                         'company/companyItem',
                         [
@@ -48,12 +41,12 @@ $this->headScript()
                     </a>
                 </li>
             <?php endif; ?>
-            <li class="active">
+            <li class="breadcrumb-item active" aria-current="page">
                 <?= $this->escapeHtml($this->localiseText($jobCategory->getPluralName())) ?>
             </li>
         </ol>
     </div>
-</section>
+</nav>
 
 <section class="section">
     <div class="container">

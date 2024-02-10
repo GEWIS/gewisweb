@@ -1,0 +1,5 @@
+.nav {
+    --#{$prefix}nav-link-padding-x: #{$nav-padding-x};
+    --#{$prefix}nav-link-padding-y: #{$nav-padding-y};
+    --#{$prefix}nav-link-font-size: #{$nav-font-size};
+}

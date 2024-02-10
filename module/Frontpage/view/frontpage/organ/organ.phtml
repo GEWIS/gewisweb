@@ -51,10 +51,10 @@ function getOrganDescription($organInformation, $lang)
 
 ?>
 <?php if (!isset($breadcrumb)): // only show breadcrumbs if they were not yet shown ?>
-    <section class="section section-breadcrumb">
+    <nav class="navbar-breadcrumb" aria-label="breadcrumb">
         <div class="container">
             <ol class="breadcrumb">
-                <li class="active">
+                <li class="breadcrumb-item active">
                     <?php if (OrganTypes::Fraternity === $organ->getType()): ?>
                         <a href="<?= $this->url('home/fraternity_list') ?>">
                             <?= $this->translate('Fraternities') ?>
@@ -73,12 +73,12 @@ function getOrganDescription($organInformation, $lang)
                         <?= $this->translate('Advisory Boards') ?>
                     <?php endif; ?>
                 </li>
-                <li class="active">
+                <li class="breadcrumb-item active" aria-current="page">
                     <?= $this->escapeHtml($organ->getName()) ?>
                 </li>
             </ol>
         </div>
-    </section>
+    </nav>
 <?php endif; ?>
 <section class="section">
     <div class="container">
@@ -117,7 +117,7 @@ function getOrganDescription($organInformation, $lang)
                         </tr>
                     <?php endif; ?>
                 </table>
-                <div class="panel panel-default agenda">
+                <div class="panel agenda">
                     <div class="panel-heading">
                         <h3><?= sprintf($this->translate('%s\'s activities'), $organ->getAbbr()) ?></h3>
                     </div>
@@ -132,7 +132,7 @@ function getOrganDescription($organInformation, $lang)
                         <?php endforeach; ?>
                     </div>
                     <div class="panel-footer">
-                        <a href="<?= $this->url('activity') ?>" class="panel-footer__link">
+                        <a href="<?= $this->url('activity') ?>" class="panel-footer-link">
                             <?= $this->translate('Complete agenda') ?>
                         </a>
                     </div>

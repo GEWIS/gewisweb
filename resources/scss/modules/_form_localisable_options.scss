@@ -1,11 +1,11 @@
-@media (max-width: $screen-md-max) {
+@include media-breakpoint-down(md) {
     .flag-icon-en,
     .flag-icon-nl {
         display: inline-block;
     }
 }
 
-@media (min-width: $screen-md-min) {
+@include media-breakpoint-up(md) {
     .flag-icon-en,
     .flag-icon-nl {
         display: none;

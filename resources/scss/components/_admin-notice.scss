@@ -1,0 +1,43 @@
+/** Make sure body is larger than viewport to allow sticky to go past 100vh. */
+body {
+    min-height: 100% !important;
+    height: auto;
+}
+
+.sticky-top {
+    z-index: ($zindex-dropdown - 2);
+}
+
+.section-admin-notice {
+    background-color: #005AB4;
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, 0.15), inset 0 -1px 0 rgba(255, 255, 255, 0.15);
+    color: #FFFFFF;
+    font-size: 0.75rem;
+    height: 2rem;
+    padding: 0.5rem 1.5rem;
+    z-index: ($zindex-dropdown - 1);
+
+    /** Fix text align in complex situations */
+    align-items: center;
+    display: flex;
+    justify-content: center;
+
+    @include media-breakpoint-down(sm) {
+        height: 3.5rem;
+    }
+
+    > p {
+        margin: 0;
+    }
+
+    + .admin-container {
+        > .content-container > .navbar-breadcrumb,
+        > .navbar-gewis-admin > .navbar-nav {
+            top: 2rem;
+
+            @include media-breakpoint-down(sm) {
+                top: 3.5rem;
+            }
+        }
+    }
+}

@@ -1,61 +1,71 @@
-@import 'fonts';
-@import 'variables';
-@import 'bootstrap-variables';
-@import 'bootstrap';
+// Core
+@import "../../vendor/twbs/bootstrap/scss/functions";
+@import "../../vendor/twbs/bootstrap/scss/mixins";
 
-// Mixins
-@import 'mixins/buttons';
-@import 'mixins/vendor-prefixes';
-@import 'mixins/markdown';
-@import 'mixins/autocomplete';
+// Core variables
+@import "../../vendor/twbs/bootstrap/scss/variables";
 
+// Variable overrides
+$enable-dark-mode: false;
+$enable-negative-margins: true;
+
+// Core
+@import "../../vendor/twbs/bootstrap/scss/maps";
+
+// Custom theme variables
+@import "variables";
+
+// Custom root
+@import "root";
+
+// Core components
+@import "../../vendor/twbs/bootstrap/scss/utilities";
+@import "../../vendor/twbs/bootstrap/scss/reboot";
+@import "../../vendor/twbs/bootstrap/scss/alert";
+@import "../../vendor/twbs/bootstrap/scss/buttons";
+@import "../../vendor/twbs/bootstrap/scss/breadcrumb";
+@import "../../vendor/twbs/bootstrap/scss/containers";
+@import "../../vendor/twbs/bootstrap/scss/dropdown";
+@import "../../vendor/twbs/bootstrap/scss/images";
+@import "../../vendor/twbs/bootstrap/scss/grid";
+@import "../../vendor/twbs/bootstrap/scss/helpers";
+@import "../../vendor/twbs/bootstrap/scss/list-group";
+@import "../../vendor/twbs/bootstrap/scss/nav";
+@import "../../vendor/twbs/bootstrap/scss/navbar";
+@import "../../vendor/twbs/bootstrap/scss/offcanvas";
+@import "../../vendor/twbs/bootstrap/scss/transitions";
+@import "../../vendor/twbs/bootstrap/scss/type";
+
+// Magic
+@import "../../vendor/twbs/bootstrap/scss/utilities/api";
+
+// Custom styling
 // Components
-@import 'components/badges';
-@import 'components/banner';
-@import 'components/breadcrumbs';
-@import 'components/button-groups';
-@import 'components/buttons';
-@import 'components/card';
-@import 'components/chips';
-@import 'components/flag-icon';
-@import 'components/footer';
-@import 'components/forms';
-@import 'components/grid';
-@import 'components/headings';
-@import 'components/jumbotron';
-@import 'components/layout';
-@import 'components/logo';
-@import 'components/links';
-@import 'components/list-group';
-@import 'components/md-editor';
-@import 'components/navbar';
-@import 'components/navs';
-@import 'components/pagination';
-@import 'components/panels';
-@import 'components/progress';
-@import 'components/reveal';
-@import 'components/sections';
-@import 'components/tables';
-@import 'components/thumbnails';
-@import 'components/type';
+@import 'components/admin-notice';
+@import 'components/breadcrumb';
+@import 'components/chip';
+@import 'components/flag-icons';
+@import "components/nav";
+@import "components/navbar";
+@import "components/panel";
+@import 'components/privacy-widget';
 
 // Module specific styles
-@import 'modules/company';
-@import 'modules/decision';
-@import 'modules/photo';
-@import 'modules/frontpage';
-@import 'modules/approvable-admin';
 @import 'modules/activity-calendar';
 @import 'modules/activity-form';
-@import 'modules/company-form';
-@import 'modules/poll-form';
-@import 'modules/privacy-widget';
-@import 'modules/admin-notice';
+@import 'modules/admin';
+@import 'modules/approvable-admin';
 @import "modules/ckeditor";
+@import 'modules/company';
+@import 'modules/company-form';
+@import 'modules/decision';
 @import "modules/diff";
+@import 'modules/frontpage';
+@import 'modules/photo';
+@import 'modules/poll-form';
+@import 'modules/section';
 
-// FontAwesome
+// Fonts (Normal, FontAwesome, GEWIS Icons)
+@import 'fonts';
 @import "fontawesome";
-
-//GEWIS icons
-@import "gewisicons/gewisicons.scss";
+@import "gewisicons/gewisicons";

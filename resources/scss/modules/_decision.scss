@@ -1,4 +1,3 @@
-@import '../_bootstrap-variables.scss';
 @import '../_variables.scss';
 
 .decision-meeting {
@@ -6,7 +5,7 @@
     width: 100%;
     color: $brand-primary;
 
-    @media (min-width: $screen-md-min) {
+    @include media-breakpoint-up(md) {
         & {
             display: inline-block;
             text-align: right;
@@ -16,7 +15,7 @@
 }
 
 .decision-content {
-    @media (min-width: $screen-md-min) {
+    @include media-breakpoint-up(md) {
         & {
             display: inline-block;
             vertical-align: top;
