@@ -84,13 +84,13 @@ class Decision
      *
      * @return ImportedMeetingArrayType
      */
-    public function getMeetings(?int $limit = null): array
+    public function getMeetings(?int $limit = null, ?MeetingTypes $type = null): array
     {
         if (!$this->aclService->isAllowed('list_meetings', 'decision')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to list meetings.'));
         }
 
-        return $this->meetingMapper->findAllMeetings($limit);
+        return $this->meetingMapper->findAllMeetings($limit, $type);
     }
 
     /**
