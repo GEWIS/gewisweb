@@ -40,7 +40,7 @@ class DecisionController extends AbstractActionController
         return new ViewModel(
             [
                 'meetings' => $this->decisionService->getMeetings(),
-                'meetingType' => null
+                'meetingType' => null,
             ],
         );
     }
@@ -95,7 +95,7 @@ class DecisionController extends AbstractActionController
             $view = new ViewModel(
                 [
                     'meetings' => $this->decisionService->getMeetings(type: $type),
-                    'meetingType' => $type
+                    'meetingType' => $type,
                 ],
             );
 
