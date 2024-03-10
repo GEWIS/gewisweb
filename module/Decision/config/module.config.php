@@ -58,7 +58,7 @@ return [
                     'meeting' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/:type/:number',
+                            'route' => '/:type[/:number]',
                             'constraints' => [
                                 'type' => 'BV|ALV|VV|Virt',
                                 'number' => '[0-9]+',

@@ -40,6 +40,7 @@ class DecisionController extends AbstractActionController
         return new ViewModel(
             [
                 'meetings' => $this->decisionService->getMeetings(),
+                'meetingType' => null,
             ],
         );
     }
@@ -86,7 +87,22 @@ class DecisionController extends AbstractActionController
     public function viewAction(): ViewModel
     {
         $type = MeetingTypes::from($this->params()->fromRoute('type'));
-        $number = (int) $this->params()->fromRoute('number');
+        $number = (int) $this->params()->fromRoute('number'); // 0
+        if (0 === $number) {
+            // view all meetings of certain type
+            $this->decisionService->getMeetingsByType($type);
+
+            $view = new ViewModel(
+                [
+                    'meetings' => $this->decisionService->getMeetings(type: $type),
+                    'meetingType' => $type,
+                ],
+            );
+
+            $view->setTemplate('decision/index');
+
+            return $view;
+        }
 
         $meeting = $this->decisionService->getMeeting($type, $number);
         if (null === $meeting) {

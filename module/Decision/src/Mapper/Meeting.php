@@ -30,8 +30,10 @@ class Meeting extends BaseMapper
      *
      * @return MeetingArrayType
      */
-    public function findAllMeetings(?int $limit = null): array
-    {
+    public function findAllMeetings(
+        ?int $limit = null,
+        ?MeetingTypes $type = null,
+    ): array {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('m, COUNT(d)')
             ->from($this->getRepositoryName(), 'm')
@@ -41,6 +43,11 @@ class Meeting extends BaseMapper
 
         if (is_int($limit) && $limit >= 0) {
             $qb->setMaxResults($limit);
+        }
+
+        if (null !== $type) {
+            $qb->andWhere('m.type = :type')
+                ->setParameter(':type', $type);
         }
 
         return $qb->getQuery()->getResult();
