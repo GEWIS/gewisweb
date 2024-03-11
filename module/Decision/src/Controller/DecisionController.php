@@ -68,8 +68,8 @@ class DecisionController extends AbstractActionController
     public function documentAction(): ViewModel|Stream
     {
         $id = (int) $this->params()->fromRoute('id');
-
         $meetingDocument = $this->decisionService->getMeetingDocument($id);
+
         if (null !== $meetingDocument) {
             $response = $this->decisionService->getMeetingDocumentDownload($meetingDocument);
 
@@ -88,9 +88,9 @@ class DecisionController extends AbstractActionController
     {
         $type = MeetingTypes::from($this->params()->fromRoute('type'));
         $number = (int) $this->params()->fromRoute('number'); // 0
+
         if (0 === $number) {
             // view all meetings of certain type
-            $this->decisionService->getMeetingsByType($type);
 
             $view = new ViewModel(
                 [
@@ -105,6 +105,7 @@ class DecisionController extends AbstractActionController
         }
 
         $meeting = $this->decisionService->getMeeting($type, $number);
+
         if (null === $meeting) {
             return $this->notFoundAction();
         }

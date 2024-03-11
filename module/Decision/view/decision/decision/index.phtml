@@ -16,23 +16,34 @@ use Laminas\View\Renderer\PhpRenderer;
  * @psalm-var ImportedMeetingArrayType $meetings
  */
 
-$this->headTitle($this->translate('Meetings')); ?>
+$translator = $this->plugin('translate')->getTranslator();
+
+$this->headTitle($this->translate('Meetings'));
+?>
 <section class="section">
     <div class="container">
         <div class="row">
             <div class="col-md-5 col-sm-5 col-xs-12">
                 <ul class="nav nav-pills">
                     <li role="presentation" class="<?= $meetingType === null ? 'active' : '' ?>">
-                        <a href="<?= $this->url('decision') ?>"><?= $this->translate('All Meetings') ?></a>
+                        <a href="<?= $this->url('decision') ?>">
+                            <?= $this->translate('All Meetings') ?>
+                        </a>
                     </li>
                     <li role="presentation" class="<?= $meetingType === MeetingTypes::ALV ? 'active' : '' ?>">
-                        <a href="<?= $this->url('decision/meeting', ['type' => MeetingTypes::ALV->value]) ?>"><?= $this->translate('GMM') ?></a>
+                        <a href="<?= $this->url('decision/meeting', ['type' => MeetingTypes::ALV->value]) ?>">
+                            <?= MeetingTypes::ALV->getAbbreviation($translator) ?>
+                        </a>
                     </li>
                     <li role="presentation" class="<?= $meetingType === MeetingTypes::BV ? 'active' : '' ?>">
-                        <a href="<?= $this->url('decision/meeting', ['type' => MeetingTypes::BV->value]) ?>"><?= $this->translate('BM') ?></a>
+                        <a href="<?= $this->url('decision/meeting', ['type' => MeetingTypes::BV->value]) ?>">
+                            <?= MeetingTypes::BV->getAbbreviation($translator) ?>
+                        </a>
                     </li>
                     <li role="presentation" class="<?= $meetingType === MeetingTypes::VV ? 'active' : '' ?>">
-                        <a href="<?= $this->url('decision/meeting', ['type' => MeetingTypes::VV->value]) ?>"><?= $this->translate('CM') ?></a>
+                        <a href="<?= $this->url('decision/meeting', ['type' => MeetingTypes::VV->value]) ?>">
+                            <?= MeetingTypes::VV->getAbbreviation($translator) ?>
+                        </a>
                     </li>
                 </ul>
             </div>
