@@ -59,7 +59,7 @@ class OrganController extends AbstractActionController
         }
 
         $organMemberInformation = $this->organService->getOrganMemberInformation($organ);
-        $activities = $this->activityQueryService->getOrganActivities($organ, 3);
+        $activities = $this->activityQueryService->getOrganActivities($organ, 5);
 
         return new ViewModel(
             array_merge(
