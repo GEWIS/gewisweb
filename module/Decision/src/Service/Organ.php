@@ -23,22 +23,32 @@ use Laminas\Mvc\I18n\Translator;
 use User\Permissions\NotAllowedException;
 
 use function array_filter;
+use function array_map;
 use function array_merge;
-use function count;
+use function array_search;
 use function floatval;
 use function getimagesize;
 use function getrandmax;
-use function in_array;
+use function min;
 use function random_int;
 use function round;
 use function sys_get_temp_dir;
 use function usort;
+
+use const PHP_INT_MAX;
 
 /**
  * User service.
  */
 class Organ
 {
+    private const array FUNCTION_ORDER = [
+        'Voorzitter',
+        'Secretaris',
+        'Penningmeester',
+        'Vice-Voorzitter',
+    ];
+
     /**
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
@@ -408,17 +418,29 @@ class Organ
         });
 
         // Sort members by function
-        usort($activeMembers, static function ($a, $b) {
-            if ($a['functions'] === $b['functions']) {
-                return 0;
-            }
+        usort(
+            $activeMembers,
+            static function ($a, $b) {
+                $aFunctionPriorities = array_map(
+                    static function ($function) {
+                        return array_search($function, self::FUNCTION_ORDER);
+                    },
+                    $a['functions'],
+                );
 
-            if (count($a['functions']) > count($b['functions'])) {
-                return -1;
-            }
+                $bFunctionPriorities = array_map(
+                    static function ($function) {
+                        return array_search($function, self::FUNCTION_ORDER);
+                    },
+                    $b['functions'],
+                );
 
-            return in_array('Voorzitter', $a['functions']) ? -1 : 1;
-        });
+                $aHighestFunction = !empty($aFunctionPriorities) ? min($aFunctionPriorities) : PHP_INT_MAX;
+                $bHighestFunction = !empty($bFunctionPriorities) ? min($bFunctionPriorities) : PHP_INT_MAX;
+
+                return $aHighestFunction <=> $bHighestFunction;
+            },
+        );
 
         return [
             'activeMembers' => $activeMembers,
