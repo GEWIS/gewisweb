@@ -7661,10 +7661,15 @@ Search.appendIndex(
             "summary": "Index\u0020action,\u0020shows\u0020all\u0020active\u0020organs.",
             "url": "classes/Decision-Controller-OrganController.html#method_indexAction"
         },                {
-            "fqsen": "\\Decision\\Controller\\OrganController\u003A\u003AshowAction\u0028\u0029",
-            "name": "showAction",
+            "fqsen": "\\Decision\\Controller\\OrganController\u003A\u003AhistoryAction\u0028\u0029",
+            "name": "historyAction",
+            "summary": "",
+            "url": "classes/Decision-Controller-OrganController.html#method_historyAction"
+        },                {
+            "fqsen": "\\Decision\\Controller\\OrganController\u003A\u003AviewAction\u0028\u0029",
+            "name": "viewAction",
             "summary": "Show\u0020an\u0020organ.",
-            "url": "classes/Decision-Controller-OrganController.html#method_showAction"
+            "url": "classes/Decision-Controller-OrganController.html#method_viewAction"
         },                {
             "fqsen": "\\Decision\\Controller\\OrganController\u003A\u003A\u0024organService",
             "name": "organService",
@@ -12100,6 +12105,11 @@ Search.appendIndex(
             "name": "committeeListAction",
             "summary": "",
             "url": "classes/Frontpage-Controller-OrganController.html#method_committeeListAction"
+        },                {
+            "fqsen": "\\Frontpage\\Controller\\OrganController\u003A\u003AhistoricalCommitteeListAction\u0028\u0029",
+            "name": "historicalCommitteeListAction",
+            "summary": "",
+            "url": "classes/Frontpage-Controller-OrganController.html#method_historicalCommitteeListAction"
         },                {
             "fqsen": "\\Frontpage\\Controller\\OrganController\u003A\u003AfraternityListAction\u0028\u0029",
             "name": "fraternityListAction",
