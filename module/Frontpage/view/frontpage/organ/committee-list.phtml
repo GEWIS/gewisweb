@@ -16,25 +16,30 @@ $this->headTitle($this->translate('Committees'));
 <section class="section">
     <div class="container">
         <div class="row">
-            <div class="col-md-9">
-                <h1><?= $this->translate('Committees') ?></h1>
-                <p><?= $this->translate('GEWIS has many different committees, learn more about them below!') ?></p>
-            </div>
-            <?php if ($this->acl('decision_service_acl')->isAllowed('organ', 'view')): ?>
-                <div class="col-md-3">
-                    <a href="<?= $this->url(
-                        'home/page',
-                        [
-                            'category' => 'commissie',
-                            'categoryEn' => 'committee',
-                            'sub_category' => 'info',
-                            'sub_categoryEn' => 'info',
-                        ],
-                    ) ?>" class="btn btn-primary pull-right">
-                        <?= $this->translate('Information for committees') ?>
-                    </a>
+            <div class="col-md-12">
+                <div class="page-header">
+                    <div class="btn-toolbar pull-right">
+                        <a href="<?= $this->url('home/committee_historical_list') ?>" class="btn btn-default">
+                            <span class="fas fa-history"></span> <?= $this->translate('Old committees') ?>
+                        </a>
+                        <?php if ($this->acl('decision_service_acl')->isAllowed('organ', 'view')): ?>
+                            <a href="<?= $this->url(
+                                'home/page',
+                                [
+                                    'category' => 'commissie',
+                                    'categoryEn' => 'committee',
+                                    'sub_category' => 'info',
+                                    'sub_categoryEn' => 'info',
+                                ],
+                            ) ?>" class="btn btn-primary pull-right">
+                                <?= $this->translate('Information for committees') ?>
+                            </a>
+                        <?php endif; ?>
+                    </div>
+                    <h1><?= $this->translate('Committees') ?></h1>
+                    <p><?= $this->translate('GEWIS has many different committees, learn more about them below!') ?></p>
                 </div>
-            <?php endif; ?>
+            </div>
         </div>
         <div class="row">
 

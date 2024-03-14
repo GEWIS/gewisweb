@@ -1,0 +1,39 @@
+<?php
+
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Decision\Model\Organ as OrganModel;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var OrganModel[] $committees
+ */
+
+$this->headTitle($this->translate('Old committees'));
+?>
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="page-header">
+                    <h1><?= $this->translate('Old committees') ?></h1>
+                    <p><?= $this->translate('GEWIS has had many different committees over the years, learn more about this rich history below!') ?></p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <?php
+            $lang = $this->plugin('translate')->getTranslator()->getLocale();
+
+            foreach ($committees as $committee) {
+                echo $this->partial('partial/organ-card.phtml', [
+                    'organ' => $committee,
+                    'lang' => $lang,
+                ]);
+            }
+            ?>
+        </div>
+    </div>
+</section>

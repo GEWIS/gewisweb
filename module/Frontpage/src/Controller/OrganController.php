@@ -22,24 +22,28 @@ class OrganController extends AbstractActionController
 
     public function committeeListAction(): ViewModel
     {
-        $committees = $this->organService->findActiveOrgansByType(OrganTypes::Committee);
-
         return new ViewModel(
             [
-                'committees' => $committees,
+                'committees' => $this->organService->findActiveOrgansByType(OrganTypes::Committee),
+            ],
+        );
+    }
+
+    public function historicalCommitteeListAction(): ViewModel
+    {
+        return new ViewModel(
+            [
+                'committees' => $this->organService->findAbrogatedOrgansByType(OrganTypes::Committee),
             ],
         );
     }
 
     public function fraternityListAction(): ViewModel
     {
-        $activeFraternities = $this->organService->findActiveOrgansByType(OrganTypes::Fraternity);
-        $abrogatedFraternities = $this->organService->findAbrogatedOrgansByType(OrganTypes::Fraternity);
-
         return new ViewModel(
             [
-                'activeFraternities' => $activeFraternities,
-                'abrogatedFraternities' => $abrogatedFraternities,
+                'activeFraternities' => $this->organService->findActiveOrgansByType(OrganTypes::Fraternity),
+                'abrogatedFraternities' => $this->organService->findAbrogatedOrgansByType(OrganTypes::Fraternity),
             ],
         );
     }

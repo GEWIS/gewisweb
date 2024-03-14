@@ -82,6 +82,17 @@ return [
                         ],
                         'priority' => 100,
                     ],
+                    'committee_historical_list' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => 'association/history/committees',
+                            'defaults' => [
+                                'controller' => OrganController::class,
+                                'action' => 'historicalCommitteeList',
+                            ],
+                        ],
+                        'priority' => 100,
+                    ],
                     'fraternity_list' => [
                         'type' => Literal::class,
                         'options' => [
