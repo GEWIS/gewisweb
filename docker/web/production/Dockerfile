@@ -71,6 +71,11 @@ RUN sed -i 's/<policy domain="coder" rights="none" pattern="PDF" \/>/<policy dom
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 COPY ./composer.json ./composer.lock ./
 
+# We need to be able to use the Composer plugins for several patches, however, these are disabled when running non-
+# interactively as root. As such, we re-enable this functionality to ensure this works. The alternative is becoming
+# www-data while installing the dependencies, however, this would allow for modification of the PHP files at runtime.
+ENV COMPOSER_ALLOW_SUPERUSER=1
+
 RUN composer install -o --no-dev
 
 # Compile the SCSS files.
