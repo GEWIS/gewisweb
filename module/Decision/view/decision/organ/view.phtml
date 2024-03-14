@@ -22,55 +22,88 @@ $this->headTitle($organ->getName());
         <div class="row">
             <h1><?= $this->escapeHtml($organ->getName()) ?> (<?= $this->escapeHtml($organ->getAbbr()) ?>)</h1>
             <div class="col-md-4">
-                <h2><?= $this->translate('Active members') ?></h2>
-                <ul>
-                    <?php foreach ($activeMembers as $membership): ?>
-                        <li>
-                            <a href="<?= $this->url(
-                                'member/view',
-                                ['lidnr' => $membership['member']->getLidnr()],
-                            ) ?>">
-                                <?= $this->escapeHtml($membership['member']->getFullName()) ?>
-                            </a>
-                            <?php if (!empty($membership['functions'])): ?>
-                                (<?= $this->escapeHtml(
-                                    implode(
-                                        ', ',
-                                        array_map(
-                                            fn (string $value): string => $this->translate($value),
-                                            $membership['functions'],
-                                        ),
-                                    )
-                                ) ?>)
-                            <?php endif ?>
-                        </li>
-                    <?php endforeach ?>
-                </ul>
+                <?php if (!empty($activeMembers)): ?>
+                    <h2><?= $this->translate('Active members') ?></h2>
+                    <ul class="list-unstyled">
+                        <?php foreach ($activeMembers as $membership): ?>
+                            <li>
+                                <a href="<?= $this->url(
+                                    'member/view',
+                                    ['lidnr' => $membership['member']->getLidnr()],
+                                ) ?>">
+                                    <?= $this->escapeHtml($membership['member']->getFullName()) ?>
+                                </a>
+                                <?php if (!empty($membership['functions'])): ?>
+                                    (<?= $this->escapeHtml(
+                                        implode(
+                                            ', ',
+                                            array_map(
+                                                fn (string $value): string => $this->translate($value),
+                                                $membership['functions'],
+                                            ),
+                                        )
+                                    ) ?>)
+                                <?php endif ?>
+                            </li>
+                        <?php endforeach ?>
+                    </ul>
+                <?php endif; ?>
 
-                <h2><?= $this->translate('Inactive members') ?></h2>
-                <ul>
-                    <?php foreach ($inactiveMembers as $membership): ?>
-                        <li>
-                            <a href="<?= $this->url('member/view', ['lidnr' => $membership->getLidnr()]) ?>">
-                                <?= $this->escapeHtml($membership->getFullName()) ?>
-                            </a>
-                        </li>
-                    <?php endforeach ?>
-                </ul>
+                <?php if (!empty($inactiveMembers)): ?>
+                    <h2><?= $this->translate('Inactive members') ?></h2>
+                    <ul class="list-unstyled">
+                        <?php foreach ($inactiveMembers as $membership): ?>
+                            <li>
+                                <a href="<?= $this->url('member/view', ['lidnr' => $membership->getLidnr()]) ?>">
+                                    <?= $this->escapeHtml($membership->getFullName()) ?>
+                                </a>
+                            </li>
+                        <?php endforeach ?>
+                    </ul>
+                <?php endif; ?>
 
-                <h2><?= $this->translate('Old members') ?></h2>
-                <ul>
-                    <?php foreach ($oldMembers as $member): ?>
-                        <li><?= $this->escapeHtml($member->getFullName()) ?></li>
-                    <?php endforeach ?>
-                </ul>
+                <?php if (!empty($oldMembers)): ?>
+                    <h2><?= $this->translate('Old members') ?></h2>
+                    <ul class="list-unstyled">
+                        <?php foreach ($oldMembers as $member): ?>
+                            <li><?= $this->escapeHtml($member->getFullName()) ?></li>
+                        <?php endforeach ?>
+                    </ul>
+                <?php endif; ?>
             </div>
 
             <div class="col-md-8">
                 <h2><?= $this->translate('Organ mutations') ?></h2>
-                <ul>
+                <ul class="list-unstyled">
                     <?php foreach ($organ->getOrderedSubdecisions() as $subdecision): ?>
-                        <li><?= $this->escapeHtml($subdecision->getContent()) ?></li>
+                        <?php
+                        $id = vsprintf('%s %s.%s.%s', [
+                            $subdecision->getMeetingType()->value,
+                            $subdecision->getMeetingNumber(),
+                            $subdecision->getDecisionPoint(),
+                            $subdecision->getDecisionNumber(),
+                        ]);
+                        $extendedId = $id . '.' . $subdecision->getNumber();
+                        ?>
+                        <li id="<?= urlencode($extendedId) ?>" class="link-permalink-container">
+                            <strong class="decision-meeting">
+                                <a href="<?= $this->url(
+                                    'decision/meeting',
+                                    [
+                                        'type' => $subdecision->getMeetingType()->value,
+                                        'number' => $subdecision->getMeetingNumber(),
+                                    ],
+                                ) ?>">
+                                    <?= $id ?>
+                                </a>
+                            </strong>
+                            <span class="decision-content">
+                                <?= $this->escapeHtml($subdecision->getContent()) ?>
+                                <a href="#<?= urlencode($extendedId) ?>" class="link-permalink">
+                                    <span class="fa fa-link"></span>
+                                </a>
+                            </span>
+                        </li>
                     <?php endforeach ?>
                 </ul>
             </div>
