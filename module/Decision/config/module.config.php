@@ -249,10 +249,10 @@ return [
                 ],
                 'priority' => 100,
             ],
-            'organ' => [
+            'organs' => [
                 'type' => Literal::class,
                 'options' => [
-                    'route' => '/organ',
+                    'route' => '/organs',
                     'defaults' => [
                         'controller' => OrganController::class,
                         'action' => 'index',
@@ -260,15 +260,24 @@ return [
                 ],
                 'may_terminate' => true,
                 'child_routes' => [
-                    'show' => [
+                    'history' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/history',
+                            'defaults' => [
+                                'action' => 'history',
+                            ],
+                        ],
+                    ],
+                    'view' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/show/:organ',
+                            'route' => '/view/:organ',
                             'constraints' => [
                                 'organ' => '[0-9]+',
                             ],
                             'defaults' => [
-                                'action' => 'show',
+                                'action' => 'view',
                             ],
                         ],
                     ],
@@ -399,6 +408,9 @@ return [
     'view_manager' => [
         'template_path_stack' => [
             'decision' => __DIR__ . '/../view/',
+        ],
+        'template_map' => [
+            'decision/organ/history' => __DIR__ . '/../view/decision/organ/index.phtml',
         ],
     ],
     'doctrine' => [

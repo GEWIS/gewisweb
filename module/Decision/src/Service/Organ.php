@@ -70,13 +70,17 @@ class Organ
      *
      * @return OrganModel[]
      */
-    public function getOrgans(): array
+    public function getOrgans(bool $abrogated = false): array
     {
         if (!$this->aclService->isAllowed('list', 'organ')) {
             throw new NotAllowedException($this->translator->translate('Not allowed to view the list of organs'));
         }
 
-        return $this->organMapper->findActive();
+        if (!$abrogated) {
+            return $this->organMapper->findActive();
+        }
+
+        return $this->organMapper->findAbrogated();
     }
 
     /**

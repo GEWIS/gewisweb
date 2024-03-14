@@ -23,7 +23,18 @@ class OrganController extends AbstractActionController
     {
         return new ViewModel(
             [
+                'historical' => false,
                 'organs' => $this->organService->getOrgans(),
+            ],
+        );
+    }
+
+    public function historyAction(): ViewModel
+    {
+        return new ViewModel(
+            [
+                'historical' => true,
+                'organs' => $this->organService->getOrgans(true),
             ],
         );
     }
@@ -31,7 +42,7 @@ class OrganController extends AbstractActionController
     /**
      * Show an organ.
      */
-    public function showAction(): ViewModel
+    public function viewAction(): ViewModel
     {
         $organId = (int) $this->params()->fromRoute('organ');
         $organ = $this->organService->getOrgan($organId);
