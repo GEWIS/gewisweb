@@ -314,7 +314,16 @@ class Organ
     {
         $array = $this->subdecisions->toArray();
         usort($array, static function ($dA, $dB) {
-            return $dA->getDecision()->getMeeting()->getDate() > $dB->getDecision()->getMeeting()->getDate() ? -1 : 1;
+            // Compare the meeting dates first (note that we compare B against A).
+            $dateComparison = $dB->getDecision()->getMeeting()->getDate()
+                <=> $dA->getDecision()->getMeeting()->getDate();
+
+            if (0 === $dateComparison) {
+                // If the meeting dates are equal, compare the subdecision numbers (note that we compare B against A).
+                return $dB->getNumber() <=> $dA->getNumber();
+            }
+
+            return $dateComparison;
         });
 
         return $array;

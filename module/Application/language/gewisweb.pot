@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: GEWISweb v2.8.6-587-g838eb6f2e-dirty\n"
+"Project-Id-Version: GEWISweb v2.8.6-623-g6c81b4349-dirty\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-09 17:03+0100\n"
+"POT-Creation-Date: 2024-03-14 21:49+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -228,6 +228,9 @@ msgid ""
 "participants."
 msgstr ""
 
+msgid "Add sub-album"
+msgstr ""
+
 msgid "Additional actions"
 msgstr ""
 
@@ -267,6 +270,11 @@ msgstr ""
 msgid "Agenda"
 msgstr ""
 
+msgid ""
+"Album name can only contain letters, numbers, -, ., :, @, ^, &, *, ?, !, "
+"(, ), ', \", and spaces"
+msgstr ""
+
 msgid "Album title"
 msgstr ""
 
@@ -274,6 +282,9 @@ msgid "Alcohol Policy"
 msgstr ""
 
 msgid "All Activities"
+msgstr ""
+
+msgid "All Meetings"
 msgstr ""
 
 msgid "All rights reserved."
@@ -418,11 +429,6 @@ msgstr ""
 msgid "Are you sure you want to delete this package?"
 msgstr ""
 
-msgid ""
-"Are you sure you want to delete this photo? <strong>This action can not be "
-"reverted.</strong>"
-msgstr ""
-
 msgid "Are you sure you want to delete this poll?"
 msgstr ""
 
@@ -543,6 +549,9 @@ msgid "Camera"
 msgstr ""
 
 msgid "Cancel"
+msgstr ""
+
+msgid "Cancel selection"
 msgstr ""
 
 msgid "Cannot load metadata"
@@ -753,9 +762,6 @@ msgstr ""
 msgid "Cover photo to upload"
 msgstr ""
 
-msgid "Create"
-msgstr ""
-
 msgid "Create API token"
 msgstr ""
 
@@ -786,13 +792,7 @@ msgstr ""
 msgid "Create activity proposal"
 msgstr ""
 
-msgid "Create album"
-msgstr ""
-
 msgid "Create an activity"
-msgstr ""
-
-msgid "Create new album"
 msgstr ""
 
 msgid "Create news item"
@@ -865,9 +865,6 @@ msgid "Delete package"
 msgstr ""
 
 msgid "Delete period"
-msgstr ""
-
-msgid "Delete photo"
 msgstr ""
 
 msgid "Delete photos"
@@ -1247,6 +1244,11 @@ msgid "Full name"
 msgstr ""
 
 msgid "GEWIKI"
+msgstr ""
+
+msgid ""
+"GEWIS has had many different committees over the years, learn more about "
+"this rich history below!"
 msgstr ""
 
 msgid "GEWIS has many different committees, learn more about them below!"
@@ -1752,13 +1754,7 @@ msgstr ""
 msgid "Move down"
 msgstr ""
 
-msgid "Move photo"
-msgstr ""
-
 msgid "Move the album"
-msgstr ""
-
-msgid "Move the photo to another album"
 msgstr ""
 
 msgid "Move the photos to another album"
@@ -1864,9 +1860,6 @@ msgstr ""
 msgid "Not allowed to create albums"
 msgstr ""
 
-msgid "Not allowed to create albums."
-msgstr ""
-
 msgid "Not allowed to delete albums."
 msgstr ""
 
@@ -1934,6 +1927,9 @@ msgid "Number"
 msgstr ""
 
 msgid "Old activities"
+msgstr ""
+
+msgid "Old committees"
 msgstr ""
 
 msgid "Old members"
@@ -2044,9 +2040,6 @@ msgstr ""
 msgid "Other"
 msgstr ""
 
-msgid "Other albums"
-msgstr ""
-
 #, php-format
 msgid "Other exam material from %s (%s)"
 msgstr ""
@@ -2094,13 +2087,6 @@ msgid "Phone Number"
 msgstr ""
 
 msgid "Phone number"
-msgstr ""
-
-#, php-format
-msgid "Photo #%d"
-msgstr ""
-
-msgid "Photo admin"
 msgstr ""
 
 msgid "Photo of the Week:<br> Week"
@@ -2160,9 +2146,6 @@ msgid "Please wait while the album is being deleted."
 msgstr ""
 
 msgid "Please wait while the photos are being deleted."
-msgstr ""
-
-msgid "Please wait while your photo is being deleted."
 msgstr ""
 
 msgid "Poll"
@@ -2371,12 +2354,18 @@ msgstr ""
 msgid "Select a type"
 msgstr ""
 
+msgid "Select an association year to continue."
+msgstr ""
+
 msgid "Select an option"
 msgstr ""
 
 msgid ""
 "Select an organ to edit its information. Changes will not be displayed until "
 "they have been approved."
+msgstr ""
+
+msgid "Select photos"
 msgstr ""
 
 msgid "Select the jobs that you want to transfer to another job package."
@@ -2689,12 +2678,6 @@ msgstr ""
 msgid "The option period must start after the planning period ends."
 msgstr ""
 
-msgid "The photo has been deleted"
-msgstr ""
-
-msgid "The photo has been moved"
-msgstr ""
-
 msgid "The photos have been been deleted"
 msgstr ""
 
@@ -2775,6 +2758,12 @@ msgstr ""
 msgid "There are no activities."
 msgstr ""
 
+msgid "There are no albums in this year."
+msgstr ""
+
+msgid "There are no albums, create one to continue."
+msgstr ""
+
 msgid "There are no exams to be edited. Upload exams to edit them."
 msgstr ""
 
@@ -2797,6 +2786,9 @@ msgid "There are no revoked authorizations for this GMM."
 msgstr ""
 
 msgid "There are no summaries to be edited. Upload exams to edit them."
+msgstr ""
+
+msgid "There are no undated albums."
 msgstr ""
 
 msgid ""
@@ -3007,6 +2999,9 @@ msgid "Unapproved Companies"
 msgstr ""
 
 msgid "Unapproved Jobs"
+msgstr ""
+
+msgid "Undated"
 msgstr ""
 
 msgid "Unfortunately there currently is no poll :("
@@ -3376,6 +3371,9 @@ msgstr ""
 msgid "You are not allowed to administer activities"
 msgstr ""
 
+msgid "You are not allowed to administer albums"
+msgstr ""
+
 msgid "You are not allowed to administer career settings"
 msgstr ""
 
@@ -3430,6 +3428,9 @@ msgstr ""
 msgid "You are not allowed to create activity proposals"
 msgstr ""
 
+msgid "You are not allowed to create albums"
+msgstr ""
+
 msgid "You are not allowed to create an activity"
 msgstr ""
 
@@ -3464,6 +3465,9 @@ msgid "You are not allowed to create option calendar periods"
 msgstr ""
 
 msgid "You are not allowed to create packages"
+msgstr ""
+
+msgid "You are not allowed to delete albums"
 msgstr ""
 
 msgid "You are not allowed to delete an activity category"
@@ -3506,6 +3510,9 @@ msgid "You are not allowed to delete this option"
 msgstr ""
 
 msgid "You are not allowed to download course documents"
+msgstr ""
+
+msgid "You are not allowed to edit albums"
 msgstr ""
 
 msgid "You are not allowed to edit an activity category"
@@ -3640,6 +3647,12 @@ msgstr ""
 msgid "You are not allowed to view activity categories"
 msgstr ""
 
+msgid "You are not allowed to view albums"
+msgstr ""
+
+msgid "You are not allowed to view albums without dates"
+msgstr ""
+
 msgid "You are not allowed to view all authorizations."
 msgstr ""
 
@@ -3713,6 +3726,9 @@ msgid "You are not allowed to view unapproved activities"
 msgstr ""
 
 msgid "You are not allowed to view unapproved polls"
+msgstr ""
+
+msgid "You are not allowed to view unpublished albums"
 msgstr ""
 
 msgid ""

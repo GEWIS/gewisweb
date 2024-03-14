@@ -58,7 +58,8 @@ class Organ extends BaseMapper
     public function findAbrogated(?OrganTypes $type = null): array
     {
         $qb = $this->getRepository()->createQueryBuilder('o');
-        $qb->where('o.abrogationDate IS NOT NULL');
+        $qb->where('o.abrogationDate IS NOT NULL')
+            ->orderBy('o.abrogationDate', 'DESC');
 
         if (null !== $type) {
             $qb->andWhere('o.type = :type')

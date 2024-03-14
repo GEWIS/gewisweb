@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-09 17:03+0100\n"
-"PO-Revision-Date: 2024-01-09 17:04+0100\n"
+"POT-Creation-Date: 2024-03-14 21:49+0100\n"
+"PO-Revision-Date: 2024-03-14 21:53+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: nl\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.1\n"
+"X-Generator: Poedit 3.4.2\n"
 
 msgid " <strong>has a limited capacity</strong> and "
 msgstr " <strong>heeft een beperkte capaciteit</strong> en "
@@ -238,6 +238,9 @@ msgstr ""
 "activiteit in te schrijven. Elke lijst kan optionele velden hebben om "
 "specifieke informatie van de deelnemers te verzamelen."
 
+msgid "Add sub-album"
+msgstr "Subalbum toevoegen"
+
 msgid "Additional actions"
 msgstr "Aanvullende acties"
 
@@ -277,6 +280,13 @@ msgstr "Leeftijd"
 msgid "Agenda"
 msgstr "Agenda"
 
+msgid ""
+"Album name can only contain letters, numbers, -, ., :, @, ^, &, *, ?, !, "
+"(, ), ', \", and spaces"
+msgstr ""
+"Albumnaam kan alleen letters, nummers, -, ., :, @, ^, &, *, ?, !, (, ), ', "
+"\" en spaties bevatten"
+
 msgid "Album title"
 msgstr "Album titel"
 
@@ -285,6 +295,9 @@ msgstr "Alcoholreglement"
 
 msgid "All Activities"
 msgstr "Alle Activiteiten"
+
+msgid "All Meetings"
+msgstr "Alle vergaderingen"
 
 msgid "All rights reserved."
 msgstr "Alle rechten voorbehouden."
@@ -444,13 +457,6 @@ msgstr "Weet je zeker dat je deze optie wil verwijderen?"
 msgid "Are you sure you want to delete this package?"
 msgstr "Weet je zeker dat je dit pakket wilt verwijderen?"
 
-msgid ""
-"Are you sure you want to delete this photo? <strong>This action can not be "
-"reverted.</strong>"
-msgstr ""
-"Weet je zeker dat je deze foto wilt verwijderen? <strong>Deze actie kan niet "
-"ongedaan gemaakt worden.</strong>"
-
 msgid "Are you sure you want to delete this poll?"
 msgstr "Weet je zeker dat je deze poll wilt verwijderen?"
 
@@ -581,6 +587,9 @@ msgstr "Camera"
 
 msgid "Cancel"
 msgstr "Annuleer"
+
+msgid "Cancel selection"
+msgstr "Selectie annuleren"
 
 msgid "Cannot load metadata"
 msgstr "Kan metadata niet laden"
@@ -802,9 +811,6 @@ msgstr "Vakken"
 msgid "Cover photo to upload"
 msgstr "Coverfoto om te uploaden"
 
-msgid "Create"
-msgstr "Maak"
-
 msgid "Create API token"
 msgstr "Maak een API token"
 
@@ -835,14 +841,8 @@ msgstr "Maak een nieuwe pagina"
 msgid "Create activity proposal"
 msgstr "Creëer activiteitenvoorstel"
 
-msgid "Create album"
-msgstr "Nieuw album"
-
 msgid "Create an activity"
 msgstr "Maak een activiteit"
-
-msgid "Create new album"
-msgstr "Maak nieuw album"
 
 msgid "Create news item"
 msgstr "Maak een nieuw nieuwsitem"
@@ -915,9 +915,6 @@ msgstr "Verwijder pakket"
 
 msgid "Delete period"
 msgstr "Verwijder periode"
-
-msgid "Delete photo"
-msgstr "Verwijder foto"
 
 msgid "Delete photos"
 msgstr "Verwijder foto's"
@@ -1315,6 +1312,13 @@ msgstr "Volledige naam"
 
 msgid "GEWIKI"
 msgstr "GEWIKI"
+
+msgid ""
+"GEWIS has had many different committees over the years, learn more about "
+"this rich history below!"
+msgstr ""
+"GEWIS heeft door de jaren heen veel verschillende commissies gehad. Lees "
+"hieronder meer over deze rijke geschiedenis."
 
 msgid "GEWIS has many different committees, learn more about them below!"
 msgstr ""
@@ -1877,14 +1881,8 @@ msgstr "Verplaats album"
 msgid "Move down"
 msgstr "Verplaats omlaag"
 
-msgid "Move photo"
-msgstr "Verplaats foto"
-
 msgid "Move the album"
 msgstr "Verplaats het album"
-
-msgid "Move the photo to another album"
-msgstr "Verplaats de foto naar een ander album"
 
 msgid "Move the photos to another album"
 msgstr "Verplaats de foto's naar een ander album"
@@ -1989,9 +1987,6 @@ msgstr "Het is niet toegestaan om tags toe te voegen."
 msgid "Not allowed to create albums"
 msgstr "Het is niet toegestaan om albums te maken"
 
-msgid "Not allowed to create albums."
-msgstr "Het is niet toegestaan om albums te maken."
-
 msgid "Not allowed to delete albums."
 msgstr "Het is niet toegestaan om albums te verwijderen."
 
@@ -2060,6 +2055,9 @@ msgstr "Getal"
 
 msgid "Old activities"
 msgstr "Oude activiteiten"
+
+msgid "Old committees"
+msgstr "Oude commissies"
 
 msgid "Old members"
 msgstr "Oud leden"
@@ -2174,9 +2172,6 @@ msgstr ""
 msgid "Other"
 msgstr "Anders"
 
-msgid "Other albums"
-msgstr "Andere albums"
-
 #, php-format
 msgid "Other exam material from %s (%s)"
 msgstr "Ander tentamenmateriaal van %s (%s)"
@@ -2225,13 +2220,6 @@ msgstr "Telefoonnummer"
 
 msgid "Phone number"
 msgstr "Telefoonnummer"
-
-#, php-format
-msgid "Photo #%d"
-msgstr "Foto #%d"
-
-msgid "Photo admin"
-msgstr "Foto admin"
 
 msgid "Photo of the Week:<br> Week"
 msgstr "Foto van de week<br> Week"
@@ -2296,9 +2284,6 @@ msgstr "Wacht terwijl dit album verwijderd wordt."
 
 msgid "Please wait while the photos are being deleted."
 msgstr "Wacht a.u.b. terwijl de foto's verwijderd worden."
-
-msgid "Please wait while your photo is being deleted."
-msgstr "Wacht terwijl de foto verwijderd wordt."
 
 msgid "Poll"
 msgstr "Poll"
@@ -2517,6 +2502,9 @@ msgstr "Selecteer een vacaturepakket als bestemming"
 msgid "Select a type"
 msgstr "Selecteer een type"
 
+msgid "Select an association year to continue."
+msgstr "Selecteer een verenigingsjaar om verder te gaan."
+
 msgid "Select an option"
 msgstr "Selecteer een optie"
 
@@ -2526,6 +2514,9 @@ msgid ""
 msgstr ""
 "Selecteer een orgaan om de informatie te wijzigen. Wijzigingen worden niet "
 "getoond totdat deze goedgekeurd zijn."
+
+msgid "Select photos"
+msgstr "Foto's selecteren"
 
 msgid "Select the jobs that you want to transfer to another job package."
 msgstr ""
@@ -2872,12 +2863,6 @@ msgstr "De optieperiode moet eindigen nadat deze begonnen is."
 msgid "The option period must start after the planning period ends."
 msgstr "De optieperiode moet ingaan na afloop van de planningsperiode."
 
-msgid "The photo has been deleted"
-msgstr "De foto is verwijderd"
-
-msgid "The photo has been moved"
-msgstr "De foto is verplaatst"
-
 msgid "The photos have been been deleted"
 msgstr "De foto's zijn verwijderd"
 
@@ -2969,6 +2954,12 @@ msgstr "Er zijn geen activiteiten in het archief."
 msgid "There are no activities."
 msgstr "Er zijn geen activiteiten."
 
+msgid "There are no albums in this year."
+msgstr "Er zijn geen albums in dit jaar."
+
+msgid "There are no albums, create one to continue."
+msgstr "Er zijn geen albums, maak er een aan om verder te gaan."
+
 msgid "There are no exams to be edited. Upload exams to edit them."
 msgstr ""
 "Er zijn geen tentamens om te wijzigen. Upload nieuwe tentamens om deze "
@@ -2997,6 +2988,9 @@ msgid "There are no summaries to be edited. Upload exams to edit them."
 msgstr ""
 "Er zijn geen samenvattingen om te wijzigen. Upload nieuwe samenvattingen om "
 "deze correct in de Website te zetten."
+
+msgid "There are no undated albums."
+msgstr "Er zijn geen ongedateerde albums."
 
 msgid ""
 "There are no upcoming meetings for which you can authorize someone.\n"
@@ -3242,6 +3236,9 @@ msgstr "Niet goedgekeurde bedrijven"
 
 msgid "Unapproved Jobs"
 msgstr "Niet goedgekeurde vacatures"
+
+msgid "Undated"
+msgstr "Ongedateerd"
 
 msgid "Unfortunately there currently is no poll :("
 msgstr "Helaas is er op het moment geen poll :("
@@ -3646,6 +3643,9 @@ msgstr "Je hebt niet de rechten om vakken toe te voegen"
 msgid "You are not allowed to administer activities"
 msgstr "Je hebt niet de rechten om activiteiten te beheren"
 
+msgid "You are not allowed to administer albums"
+msgstr "Je hebt niet de rechten om albums te beheren"
+
 msgid "You are not allowed to administer career settings"
 msgstr "Je hebt niet de rechten om carrière-instellingen te beheren"
 
@@ -3706,6 +3706,9 @@ msgstr "Je hebt niet de rechten om opties voor activiteiten te maken"
 msgid "You are not allowed to create activity proposals"
 msgstr "Je hebt niet de rechten om opties voor activiteiten te maken"
 
+msgid "You are not allowed to create albums"
+msgstr "Je hebt niet de rechten om albums te maken"
+
 msgid "You are not allowed to create an activity"
 msgstr "Je hebt niet de rechten om een activiteit te maken"
 
@@ -3741,6 +3744,9 @@ msgstr "Je hebt niet de rechten om optieperiodes toe te voegen"
 
 msgid "You are not allowed to create packages"
 msgstr "Je hebt niet de rechten om pakketten toe te voegen"
+
+msgid "You are not allowed to delete albums"
+msgstr "Je hebt niet de rechten om albums te verwijderen"
 
 msgid "You are not allowed to delete an activity category"
 msgstr "Je hebt niet de rechten om een activiteitencategorie te verwijderen"
@@ -3783,6 +3789,9 @@ msgstr "Je hebt niet de rechten om deze optie te verwijderen"
 
 msgid "You are not allowed to download course documents"
 msgstr "Je hebt niet de rechten om documenten van vakken te downloaden"
+
+msgid "You are not allowed to edit albums"
+msgstr "Je hebt niet de rechten om albums te wijzigen"
 
 msgid "You are not allowed to edit an activity category"
 msgstr "Je hebt niet de rechten om een activiteitencategorie bij te werken"
@@ -3924,6 +3933,12 @@ msgstr "Je hebt niet de rechten om de activiteiten in te zien"
 msgid "You are not allowed to view activity categories"
 msgstr "Je hebt niet de rechten om activiteitencategorieën te bekijken"
 
+msgid "You are not allowed to view albums"
+msgstr "Je hebt niet de rechten om albums te bekijken"
+
+msgid "You are not allowed to view albums without dates"
+msgstr "Je hebt niet de rechten om ongedateerde albums te bekijken"
+
 msgid "You are not allowed to view all authorizations."
 msgstr "Je hebt niet de rechten om alle machtigingen te bekijken."
 
@@ -4002,6 +4017,9 @@ msgstr "Je hebt niet de rechten om niet goedgekeurde activiteiten in te zien"
 
 msgid "You are not allowed to view unapproved polls"
 msgstr "Je hebt niet de rechten om niet-goedgekeurde polls te bekijken"
+
+msgid "You are not allowed to view unpublished albums"
+msgstr "Je hebt niet de rechten om ongepubliceerde albums bekijken"
 
 msgid ""
 "You are not allowed to view upcoming activities coupled to a member account"
