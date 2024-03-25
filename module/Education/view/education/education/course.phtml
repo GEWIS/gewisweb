@@ -40,99 +40,99 @@ foreach ($documents as $document) {
             </div>
         </div>
         <hr>
-        <?php if(!$this->acl('education_service_acl')->isAllowed('course_document', 'download')) :?>
-        <div class="row">
-            <p><?= $this->translate('You are not allowed to view these documents!') ?></p>
-            <p><?=sprintf(
-                $this->translate('If you want to view these documents, you can either <a href=%s> login </a> or access these documents on the campus.'),
-                $this->url('user/login', ['user_type' => 'member']),
-                )?></p>
-        </div>
+        <?php if (!$this->acl('education_service_acl')->isAllowed('course_document', 'download')): ?>
+            <div class="row">
+                <p><?= $this->translate('You are not allowed to view these documents!') ?></p>
+                <p><?=sprintf(
+                    $this->translate('If you want to view these documents, you can either <a href="%s">login</a> or access these documents on the campus.'),
+                    $this->url('user/login', ['user_type' => 'member']),
+                    )?></p>
+            </div>
         <?php else: ?>
-        <div class="row">
-            <div class="col-md-6">
-                <h2><?= $this->translate('Summaries') ?></h2>
-                <?php if (count($summaries) === 0): ?>
-                    <p><?= $this->translate(
-                        // phpcs:ignore Generic.Files.LineLength.TooLong -- user-visible strings should not be split
-                        'There are currently no summaries available. Consider submitting one yourself by sending an email to'
-                        ) ?> <a href="mailto:summary@gewis.nl">summary@gewis.nl</a>!</p>
-                <?php else: ?>
-                    <ul>
-                        <?php foreach ($summaries as $summary): ?>
-                            <li>
-                                <a href="<?= $this->url('education/course/download', [
-                                    'code' => $course->getCode(),
-                                    'id' => $summary->getId()
-                                ]) ?>">
-                                    <?php if (null !== ($author = $summary->getauthor())): ?>
-                                        <?= sprintf(
-                                            $this->translate('Summary by %s on %s (%s)'),
-                                            $this->escapeHtml($summary->getAuthor()),
-                                            $summary->getDate()->format('Y-m-d'),
-                                            $summary->getLanguage()->getName(
-                                                $this->plugin('translate')->getTranslator()
-                                            ),
+            <div class="row">
+                <div class="col-md-6">
+                    <h2><?= $this->translate('Summaries') ?></h2>
+                    <?php if (count($summaries) === 0): ?>
+                        <p><?= $this->translate(
+                            // phpcs:ignore Generic.Files.LineLength.TooLong -- user-visible strings should not be split
+                            'There are currently no summaries available. Consider submitting one yourself by sending an email to'
+                            ) ?> <a href="mailto:summary@gewis.nl">summary@gewis.nl</a>!</p>
+                    <?php else: ?>
+                        <ul>
+                            <?php foreach ($summaries as $summary): ?>
+                                <li>
+                                    <a href="<?= $this->url('education/course/download', [
+                                        'code' => $course->getCode(),
+                                        'id' => $summary->getId()
+                                    ]) ?>">
+                                        <?php if (null !== ($author = $summary->getauthor())): ?>
+                                            <?= sprintf(
+                                                $this->translate('Summary by %s on %s (%s)'),
+                                                $this->escapeHtml($summary->getAuthor()),
+                                                $summary->getDate()->format('Y-m-d'),
+                                                $summary->getLanguage()->getName(
+                                                    $this->plugin('translate')->getTranslator()
+                                                ),
+                                            ) ?>
+                                        <?php else: ?>
+                                            <?= sprintf(
+                                                $this->translate('Summary on %s (%s)'),
+                                                $summary->getDate()->format('Y-m-d'),
+                                                $summary->getLanguage()->getName(
+                                                    $this->plugin('translate')->getTranslator()
+                                                ),
+                                            ) ?>
+                                        <?php endif; ?>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>
+                </div>
+                <div class="col-md-6">
+                    <h2><?= $this->translate('Exams &amp; Solutions') ?></h2>
+                    <?php if (count($exams) === 0):?>
+                        <p><?= $this->translate('There are currently no exams or solutions available.') ?></p>
+                    <?php else: ?>
+                        <ul>
+                            <?php foreach ($exams as $exam): ?>
+                                <li>
+                                    <a href="<?= $this->url('education/course/download', [
+                                        'code' => $course->getCode(),
+                                        'id' => $exam->getId()
+                                    ]) ?>">
+                                        <?php
+                                        switch ($exam->getExamType()) {
+                                            case ExamTypes::Final:
+                                                $name = $this->translate('Final test from %s (%s)');
+                                                break;
+                                            case ExamTypes::Interim:
+                                                $name = $this->translate('Interim test from %s (%s)');
+                                                break;
+                                            case ExamTypes::Answers:
+                                                $name = $this->translate('Answers from %s (%s)');
+                                                break;
+                                            case ExamTypes::Other:
+                                                $name = $this->translate('Other exam material from %s (%s)');
+                                                break;
+                                        }
+                                        ?>
+                                        <?= $this->escapeHtml(
+                                            sprintf(
+                                                $name,
+                                                $exam->getDate()->format('Y-m-d'),
+                                                $exam->getLanguage()->getName(
+                                                    $this->plugin('translate')->getTranslator()
+                                                ),
+                                            )
                                         ) ?>
-                                    <?php else: ?>
-                                        <?= sprintf(
-                                            $this->translate('Summary on %s (%s)'),
-                                            $summary->getDate()->format('Y-m-d'),
-                                            $summary->getLanguage()->getName(
-                                                $this->plugin('translate')->getTranslator()
-                                            ),
-                                        ) ?>
-                                    <?php endif; ?>
-                                </a>
-                            </li>
-                        <?php endforeach; ?>
-                    </ul>
-                <?php endif; ?>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>
+                </div>
             </div>
-            <div class="col-md-6">
-                <h2><?= $this->translate('Exams &amp; Solutions') ?></h2>
-                <?php if (count($exams) === 0):?>
-                    <p><?= $this->translate('There are currently no exams or solutions available.') ?></p>
-                <?php else: ?>
-                    <ul>
-                        <?php foreach ($exams as $exam): ?>
-                            <li>
-                                <a href="<?= $this->url('education/course/download', [
-                                    'code' => $course->getCode(),
-                                    'id' => $exam->getId()
-                                ]) ?>">
-                                    <?php
-                                    switch ($exam->getExamType()) {
-                                        case ExamTypes::Final:
-                                            $name = $this->translate('Final test from %s (%s)');
-                                            break;
-                                        case ExamTypes::Interim:
-                                            $name = $this->translate('Interim test from %s (%s)');
-                                            break;
-                                        case ExamTypes::Answers:
-                                            $name = $this->translate('Answers from %s (%s)');
-                                            break;
-                                        case ExamTypes::Other:
-                                            $name = $this->translate('Other exam material from %s (%s)');
-                                            break;
-                                    }
-                                    ?>
-                                    <?= $this->escapeHtml(
-                                        sprintf(
-                                            $name,
-                                            $exam->getDate()->format('Y-m-d'),
-                                            $exam->getLanguage()->getName(
-                                                $this->plugin('translate')->getTranslator()
-                                            ),
-                                        )
-                                    ) ?>
-                                </a>
-                            </li>
-                        <?php endforeach; ?>
-                    </ul>
-                <?php endif; ?>
-            </div>
-        </div>
         <?php endif?>
         <?php if (count($course->getSimilarCoursesTo()) > 0): ?>
             <hr>
