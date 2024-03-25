@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: GEWISweb v2.8.6-623-g6c81b4349-dirty\n"
+"Project-Id-Version: GEWISweb 0e185a69-dirty\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-14 21:49+0100\n"
+"POT-Creation-Date: 2024-03-25 19:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -107,6 +107,9 @@ msgid "API Users"
 msgstr ""
 
 msgid "Abbreviation"
+msgstr ""
+
+msgid "Abrogation Date"
 msgstr ""
 
 msgid "Actions"
@@ -1434,6 +1437,12 @@ msgstr ""
 
 #, php-format
 msgid "If you forgot your password, go to the %sPassword reset page%s"
+msgstr ""
+
+#, php-format
+msgid ""
+"If you want to view these documents, you can either <a href=\"%s\">login</a> "
+"or access these documents on the campus."
 msgstr ""
 
 #, php-format
@@ -3714,6 +3723,9 @@ msgid "You are not allowed to view the sign up data"
 msgstr ""
 
 msgid "You are not allowed to view the status of a job"
+msgstr ""
+
+msgid "You are not allowed to view these documents!"
 msgstr ""
 
 msgid "You are not allowed to view this activity"
