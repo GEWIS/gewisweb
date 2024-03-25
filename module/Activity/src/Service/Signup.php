@@ -207,11 +207,14 @@ class Signup
         return $signup;
     }
 
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
+     */
     public function editSignUp(
         UserSignupModel $signup,
         array $fieldResults,
     ): void {
-        foreach($signup->getFieldValues() as $fieldValue) {
+        foreach ($signup->getFieldValues() as $fieldValue) {
             $value = $fieldResults[$fieldValue->getField()->getId()];
 
             //Change the value into the actual format
@@ -228,6 +231,7 @@ class Signup
                     break;
             }
         }
+
         $this->signupMapper->persist($signup);
         $this->signupMapper->flush();
     }

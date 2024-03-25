@@ -25,8 +25,6 @@ use Laminas\Stdlib\Parameters;
 use Laminas\Stdlib\ParametersInterface;
 use Laminas\View\Model\ViewModel;
 
-use User\Permissions\NotAllowedException;
-
 use function count;
 use function date;
 use function max;
@@ -131,8 +129,8 @@ class ActivityController extends AbstractActionController
             $identity = $this->aclService->getUserIdentityOrThrowException();
             $isSignedUp = $isAllowedToSubscribe
                 && $this->signupService->isSignedUp($signupList, $identity);
-            if($isSignedUp) {
-                if(null !== ($signup = $this->signupMapper->getSignUp($signupList, $identity))){
+            if ($isSignedUp) {
+                if (null !== ($signup = $this->signupMapper->getSignUp($signupList, $identity))) {
                     $form->setData($signup->toFormArray());
                 }
             }
