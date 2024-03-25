@@ -1444,6 +1444,12 @@ msgstr ""
 
 #, php-format
 msgid ""
+"If you want to view these documents, you can either <a href=\"%s\">login</a> "
+"or access these documents on the campus."
+msgstr ""
+
+#, php-format
+msgid ""
 "If your browser does not redirect you back, please <a href=\"%s\">click "
 "here</a> to continue."
 msgstr ""
@@ -3720,6 +3726,9 @@ msgid "You are not allowed to view the sign up data"
 msgstr ""
 
 msgid "You are not allowed to view the status of a job"
+msgstr ""
+
+msgid "You are not allowed to view these documents!"
 msgstr ""
 
 msgid "You are not allowed to view this activity"
