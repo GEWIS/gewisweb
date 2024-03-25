@@ -40,6 +40,15 @@ foreach ($documents as $document) {
             </div>
         </div>
         <hr>
+        <?php if(!$this->acl('education_service_acl')->isAllowed('course_document', 'download')) :?>
+        <div class="row">
+            <p><?= $this->translate('You are not allowed to view these documents!') ?></p>
+            <p><?=sprintf(
+                $this->translate('If you want to view these documents, you can either <a href=%s> login </a> or access these documents on the campus.'),
+                $this->url('user/login', ['user_type' => 'member']),
+                )?></p>
+        </div>
+        <?php else: ?>
         <div class="row">
             <div class="col-md-6">
                 <h2><?= $this->translate('Summaries') ?></h2>
@@ -124,6 +133,7 @@ foreach ($documents as $document) {
                 <?php endif; ?>
             </div>
         </div>
+        <?php endif?>
         <?php if (count($course->getSimilarCoursesTo()) > 0): ?>
             <hr>
             <div class="row">
