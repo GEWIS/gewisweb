@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-14 21:49+0100\n"
+"POT-Creation-Date: 2024-03-25 19:39+0000\n"
 "PO-Revision-Date: 2024-03-14 21:55+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -110,6 +110,10 @@ msgstr "API Users"
 msgid "Abbreviation"
 msgstr "Abbreviation"
 
+#, fuzzy
+msgid "Abrogation Date"
+msgstr "Expiration Date"
+
 msgid "Actions"
 msgstr "Actions"
 
@@ -167,6 +171,9 @@ msgstr "Add Company"
 
 msgid "Add Course"
 msgstr "Add Course"
+
+msgid "Add Documents"
+msgstr "Add Documents"
 
 msgid "Add Job"
 msgstr "Add Job"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-14 21:49+0100\n"
+"POT-Creation-Date: 2024-03-25 19:39+0000\n"
 "PO-Revision-Date: 2024-03-14 21:53+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -110,6 +110,10 @@ msgstr "API gebruikers"
 msgid "Abbreviation"
 msgstr "Afkorting"
 
+#, fuzzy
+msgid "Abrogation Date"
+msgstr "Afloopdatum"
+
 msgid "Actions"
 msgstr "Acties"
 
@@ -167,6 +171,9 @@ msgstr "Voeg bedrijf toe"
 
 msgid "Add Course"
 msgstr "Vak toevoegen"
+
+msgid "Add Documents"
+msgstr "Voeg documenten toe"
 
 msgid "Add Job"
 msgstr "Voeg vacature toe"
@@ -3061,8 +3068,8 @@ msgid ""
 "it will start on <strong>%s</strong> and end on <strong>%s</strong>."
 msgstr ""
 "Dit is activiteit <strong>#%d</strong>, georganiseerd door <strong>%s</"
-"strong>, en deze zal beginnen op <strong>%s</strong> en eindigen op "
-"<strong>%s</strong>."
+"strong>, en deze zal beginnen op <strong>%s</strong> en eindigen op <strong>"
+"%s</strong>."
 
 #, php-format
 msgid "This job is proposed by <strong>%s</strong> as part of job package %s."

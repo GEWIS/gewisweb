@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: GEWISweb v2.8.6-623-g6c81b4349-dirty\n"
+"Project-Id-Version: GEWISweb 241cad7a-dirty\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-14 21:49+0100\n"
+"POT-Creation-Date: 2024-03-25 19:39+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -109,6 +109,9 @@ msgstr ""
 msgid "Abbreviation"
 msgstr ""
 
+msgid "Abrogation Date"
+msgstr ""
+
 msgid "Actions"
 msgstr ""
 
@@ -163,6 +166,9 @@ msgid "Add Company"
 msgstr ""
 
 msgid "Add Course"
+msgstr ""
+
+msgid "Add Documents"
 msgstr ""
 
 msgid "Add Job"
