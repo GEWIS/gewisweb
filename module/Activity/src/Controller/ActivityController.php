@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Activity\Controller;
 
 use Activity\Form\Signup as SignupForm;
+use Activity\Mapper\Signup as SignupMapper;
 use Activity\Model\Activity as ActivityModel;
 use Activity\Model\SignupList as SignupListModel;
 use Activity\Service\AclService;
@@ -24,6 +25,8 @@ use Laminas\Stdlib\Parameters;
 use Laminas\Stdlib\ParametersInterface;
 use Laminas\View\Model\ViewModel;
 
+use User\Permissions\NotAllowedException;
+
 use function count;
 use function date;
 use function max;
@@ -36,6 +39,7 @@ class ActivityController extends AbstractActionController
     public function __construct(
         private readonly AclService $aclService,
         private readonly Translator $translator,
+        private readonly SignupMapper $signupMapper,
         private readonly ActivityQueryService $activityQueryService,
         private readonly SignupService $signupService,
         private readonly SignupListQueryService $signupListQueryService,
@@ -127,6 +131,11 @@ class ActivityController extends AbstractActionController
             $identity = $this->aclService->getUserIdentityOrThrowException();
             $isSignedUp = $isAllowedToSubscribe
                 && $this->signupService->isSignedUp($signupList, $identity);
+            if($isSignedUp) {
+                if(null !== ($signup = $this->signupMapper->getSignUp($signupList, $identity))){
+                    $form->setData($signup->toFormArray());
+                }
+            }
         }
 
         $subscriptionOpenDatePassed = $signupList->getOpenDate() < new DateTime();
@@ -254,15 +263,14 @@ class ActivityController extends AbstractActionController
 
             $identity = $this->aclService->getUserIdentityOrThrowException();
 
-            // Check if the user is not already subscribed
-            if ($this->signupService->isSignedUp($signupList, $identity)) {
-                $error = $this->translator->translate('You have already been subscribed for this activity');
-
-                return $this->redirectActivityRequest($activityId, $signupListId, false, $error);
+            // Let user edit subscription details
+            if (null !== ($signup = $this->signupMapper->getSignUp($signupList, $identity))) {
+                $this->signupService->editSignUp($signup, $form->getData(FormInterface::VALUES_AS_ARRAY));
+                $message = $this->translator->translate('Successfully edited subscription');
+            } else {
+                $this->signupService->signUp($signupList, $form->getData(FormInterface::VALUES_AS_ARRAY));
+                $message = $this->translator->translate('Successfully subscribed');
             }
-
-            $this->signupService->signUp($signupList, $form->getData(FormInterface::VALUES_AS_ARRAY));
-            $message = $this->translator->translate('Successfully subscribed');
 
             return $this->redirectActivityRequest($activityId, $signupListId, true, $message);
         }

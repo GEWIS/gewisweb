@@ -176,7 +176,6 @@ class Signup
         array $fieldResults,
     ): ExternalSignupModel|UserSignupModel {
         $signup->setSignupList($signupList);
-        $optionMapper = $this->signupOptionMapper;
         $em = $this->entityManager;
 
         foreach ($signupList->getFields() as $field) {
@@ -194,7 +193,7 @@ class Signup
                     $fieldValue->setValue($value ? 'Yes' : 'No');
                     break;
                 case 3://'Choice'
-                    $fieldValue->setOption($optionMapper->find((int) $value));
+                    $fieldValue->setOption($this->signupOptionMapper->find((int) $value));
                     break;
             }
 
@@ -206,6 +205,31 @@ class Signup
         $em->flush();
 
         return $signup;
+    }
+
+    public function editSignUp(
+        UserSignupModel $signup,
+        array $fieldResults,
+    ): void {
+        foreach($signup->getFieldValues() as $fieldValue) {
+            $value = $fieldResults[$fieldValue->getField()->getId()];
+
+            //Change the value into the actual format
+            switch ($fieldValue->getField()->getType()) {
+                case 0://'Text'
+                case 2://'Number'
+                    $fieldValue->setValue($value);
+                    break;
+                case 1://'Yes/No'
+                    $fieldValue->setValue($value ? 'Yes' : 'No');
+                    break;
+                case 3://'Choice'
+                    $fieldValue->setOption($this->signupOptionMapper->find((int) $value));
+                    break;
+            }
+        }
+        $this->signupMapper->persist($signup);
+        $this->signupMapper->flush();
     }
 
     /**
