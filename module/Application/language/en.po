@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-14 21:49+0100\n"
+"POT-Creation-Date: 2024-03-25 19:26+0000\n"
 "PO-Revision-Date: 2024-03-14 21:55+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -109,6 +109,9 @@ msgstr "API Users"
 
 msgid "Abbreviation"
 msgstr "Abbreviation"
+
+msgid "Abrogation Date"
+msgstr "Expiration Date"
 
 msgid "Actions"
 msgstr "Actions"
@@ -1522,6 +1525,12 @@ msgstr "If you don't have an account yet, go to the %sRegistration page%s"
 #, php-format
 msgid "If you forgot your password, go to the %sPassword reset page%s"
 msgstr "If you forgot your password, go to the %sPassword reset page%s"
+
+#, php-format
+msgid ""
+"If you want to view these documents, you can either <a href=\"%s\">login</a> "
+"or access these documents on the campus."
+msgstr ""
 
 #, php-format
 msgid ""
@@ -3949,6 +3958,10 @@ msgstr "You are not allowed to view the sign up data"
 
 msgid "You are not allowed to view the status of a job"
 msgstr "You are not allowed to view the status of a job"
+
+#, fuzzy
+msgid "You are not allowed to view these documents!"
+msgstr "You are not allowed to view meeting documents."
 
 msgid "You are not allowed to view this activity"
 msgstr "You are not allowed to view this activity"
