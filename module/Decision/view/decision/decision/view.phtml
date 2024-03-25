@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Application\View\HelperTrait;
+use Decision\Model\Enums\MeetingTypes;
 use Decision\Model\Meeting as MeetingModel;
 use Laminas\View\Renderer\PhpRenderer;
 
@@ -36,7 +37,7 @@ $this->headScript()
                 <h1><?= $meetingName ?></h1>
                 <h2><?= $this->dateFormat($meeting->getDate(), IntlDateFormatter::FULL) ?></h2>
             </div>
-            <?php if ($this->acl('decision_service_acl')->isAllowed('meeting','upload_document') && $meeting->getType()->value != "BV"): ?>
+            <?php if ($this->acl('decision_service_acl')->isAllowed('meeting','upload_document') && $meeting->getType()->value !== MeetingTypes::BV): ?>
                 <div class="col-md-2">
                     <a href="<?= $this->url('decision_admin/document', ['type' => $meeting->getType()->value, 'number' => $meeting->getNumber()]) ?>" class="btn btn-success pull-right">
                         <span class="fas fa-plus"></span> <?= $this->translate('Add Documents') ?>
