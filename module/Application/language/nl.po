@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-14 21:49+0100\n"
+"POT-Creation-Date: 2024-03-25 19:26+0000\n"
 "PO-Revision-Date: 2024-03-14 21:53+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -109,6 +109,9 @@ msgstr "API gebruikers"
 
 msgid "Abbreviation"
 msgstr "Afkorting"
+
+msgid "Abrogation Date"
+msgstr "Datum van opheffen"
 
 msgid "Actions"
 msgstr "Acties"
@@ -1545,6 +1548,13 @@ msgstr "Als je nog geen account hebt, ga naar de %sRegistratie pagina%s"
 msgid "If you forgot your password, go to the %sPassword reset page%s"
 msgstr ""
 "Als je je wachtwoord bent vergeten, ga naar de %sWachtwoord reset pagina %s"
+
+#, php-format
+msgid ""
+"If you want to view these documents, you can either <a href=\"%s\">login</a> "
+"or access these documents on the campus."
+msgstr "Als je dit bestand wilt bekijken, dan moet je <a href=\"%s\">inloggen</a> "
+"of het bestand op de campus downloaden."
 
 #, php-format
 msgid ""
@@ -3061,8 +3071,8 @@ msgid ""
 "it will start on <strong>%s</strong> and end on <strong>%s</strong>."
 msgstr ""
 "Dit is activiteit <strong>#%d</strong>, georganiseerd door <strong>%s</"
-"strong>, en deze zal beginnen op <strong>%s</strong> en eindigen op "
-"<strong>%s</strong>."
+"strong>, en deze zal beginnen op <strong>%s</strong> en eindigen op <strong>"
+"%s</strong>."
 
 #, php-format
 msgid "This job is proposed by <strong>%s</strong> as part of job package %s."
@@ -4005,6 +4015,9 @@ msgstr "Je hebt niet de rechten om ingeschreven leden te zien"
 msgid "You are not allowed to view the status of a job"
 msgstr ""
 "Je hebt niet de rechten om de goedkeuringsstatus van vacatures te bekijken"
+
+msgid "You are not allowed to view these documents!"
+msgstr "Het is niet toegestaan om document te zien."
 
 msgid "You are not allowed to view this activity"
 msgstr "Je hebt niet de rechten om deze activiteit te bekijken"
