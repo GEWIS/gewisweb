@@ -22,6 +22,7 @@ class ActivityControllerFactory implements FactoryInterface
         return new ActivityController(
             $container->get('activity_service_acl'),
             $container->get(MvcTranslator::class),
+            $container->get('activity_mapper_signup'),
             $container->get('activity_service_activityQuery'),
             $container->get('activity_service_signup'),
             $container->get('activity_service_signupListQuery'),

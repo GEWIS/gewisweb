@@ -136,4 +136,25 @@ abstract class Signup
             'fieldValues' => $fieldValues,
         ];
     }
+
+    /**
+     * @return array<array-key, int|string|null>
+     */
+    public function toFormArray(): array
+    {
+        $fieldValues = [];
+        foreach ($this->getFieldValues() as $fieldValue) {
+            $value = null;
+
+            if (3 === $fieldValue->getField()->getType()) {
+                $value = $fieldValue->getOption()?->getId();
+            } elseif (1 === $fieldValue->getField()->getType()) {
+                $value = 'Yes' === $fieldValue->getValue() ? '1' : '0';
+            }
+
+            $fieldValues[$fieldValue->getField()->getId()] = $value ?? $fieldValue->getValue();
+        }
+
+        return $fieldValues;
+    }
 }

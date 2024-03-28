@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-25 19:26+0000\n"
-"PO-Revision-Date: 2024-03-14 21:55+0100\n"
+"POT-Creation-Date: 2024-03-28 19:28+0100\n"
+"PO-Revision-Date: 2024-03-28 19:28+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: en\n"
@@ -1531,6 +1531,8 @@ msgid ""
 "If you want to view these documents, you can either <a href=\"%s\">login</a> "
 "or access these documents on the campus."
 msgstr ""
+"If you want to view these documents, you can either <a href=\"%s\">login</a> "
+"or access these documents on the campus."
 
 #, php-format
 msgid ""
@@ -2712,6 +2714,9 @@ msgstr "Successfully unsubscribed"
 msgid "Successfully updated course information!"
 msgstr "Successfully updated course information!"
 
+msgid "Successfully updated subscription"
+msgstr "Successfully updated subscription"
+
 msgid "SudoSOS"
 msgstr "SudoSOS"
 
@@ -3280,6 +3285,9 @@ msgstr ""
 
 msgid "Update status"
 msgstr "Update status"
+
+msgid "Update subscription"
+msgstr "Update subscription"
 
 msgid "Upload"
 msgstr "Upload"
@@ -3959,9 +3967,8 @@ msgstr "You are not allowed to view the sign up data"
 msgid "You are not allowed to view the status of a job"
 msgstr "You are not allowed to view the status of a job"
 
-#, fuzzy
 msgid "You are not allowed to view these documents!"
-msgstr "You are not allowed to view meeting documents."
+msgstr "You are not allowed to view these documents!"
 
 msgid "You are not allowed to view this activity"
 msgstr "You are not allowed to view this activity"
@@ -4038,9 +4045,6 @@ msgstr "You do not have recently rejected jobs."
 
 msgid "You do not have the required privileges to view this page"
 msgstr "You do not have the required privileges to view this page"
-
-msgid "You have already been subscribed for this activity"
-msgstr "You have already been subscribed for this activity"
 
 #, php-format
 msgid "You have authorized %s for the %s GMM (%s)."

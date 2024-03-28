@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-25 19:26+0000\n"
-"PO-Revision-Date: 2024-03-14 21:53+0100\n"
+"POT-Creation-Date: 2024-03-28 19:28+0100\n"
+"PO-Revision-Date: 2024-03-28 19:30+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: nl\n"
@@ -1321,7 +1321,7 @@ msgid ""
 "this rich history below!"
 msgstr ""
 "GEWIS heeft door de jaren heen veel verschillende commissies gehad. Lees "
-"hieronder meer over deze rijke geschiedenis."
+"hieronder meer over deze rijke geschiedenis!"
 
 msgid "GEWIS has many different committees, learn more about them below!"
 msgstr ""
@@ -1553,8 +1553,9 @@ msgstr ""
 msgid ""
 "If you want to view these documents, you can either <a href=\"%s\">login</a> "
 "or access these documents on the campus."
-msgstr "Als je dit bestand wilt bekijken, dan moet je <a href=\"%s\">inloggen</a> "
-"of het bestand op de campus downloaden."
+msgstr ""
+"Als je dit bestand wilt bekijken, dan moet je <a href=\"%s\">inloggen</a> of "
+"het bestand op de campus downloaden."
 
 #, php-format
 msgid ""
@@ -2737,6 +2738,9 @@ msgstr "Succesvol uitgeschreven"
 msgid "Successfully updated course information!"
 msgstr "Vakinformatie succesvol aangepast!"
 
+msgid "Successfully updated subscription"
+msgstr "Inschrijving succesvol aangepast!"
+
 msgid "SudoSOS"
 msgstr "SudoSOS"
 
@@ -3071,8 +3075,8 @@ msgid ""
 "it will start on <strong>%s</strong> and end on <strong>%s</strong>."
 msgstr ""
 "Dit is activiteit <strong>#%d</strong>, georganiseerd door <strong>%s</"
-"strong>, en deze zal beginnen op <strong>%s</strong> en eindigen op <strong>"
-"%s</strong>."
+"strong>, en deze zal beginnen op <strong>%s</strong> en eindigen op "
+"<strong>%s</strong>."
 
 #, php-format
 msgid "This job is proposed by <strong>%s</strong> as part of job package %s."
@@ -3320,6 +3324,9 @@ msgstr ""
 
 msgid "Update status"
 msgstr "Bewerkings status"
+
+msgid "Update subscription"
+msgstr "Inschrijving bijwerken"
 
 msgid "Upload"
 msgstr "Upload"
@@ -4097,9 +4104,6 @@ msgstr "Je hebt geen vacatures die recentelijk zijn afgekeurd."
 
 msgid "You do not have the required privileges to view this page"
 msgstr "Je beschikt niet over de juiste rechten om deze pagina te bekijken"
-
-msgid "You have already been subscribed for this activity"
-msgstr "Je bent al ingeschreven voor deze activiteit"
 
 #, php-format
 msgid "You have authorized %s for the %s GMM (%s)."
