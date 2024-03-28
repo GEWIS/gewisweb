@@ -199,7 +199,7 @@ $this->headTitle($this->translate('Activities'));
                                 </button>
                                 <button class="btn btn-primary btn-lg" type="button" data-toggle="modal"
                                         data-target="#signupModal" aria-hidden="true" aria-controls="signupModal">
-                                    <span class="fas fa-user-pen"></span> <?= $this->translate('Edit subscription') ?>
+                                    <span class="fas fa-user-pen"></span> <?= $this->translate('Update subscription') ?>
                                 </button>
                             </div>
                             <!-- modal to sign out -->
@@ -250,6 +250,7 @@ $this->headTitle($this->translate('Activities'));
                             <?= $this->partial('partial/signupForm', [
                                 'form' => $form,
                                 'signupList' => $signupList,
+                                'update' => true,
                             ])
                             ?>
                         <?php endif; ?>

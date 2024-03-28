@@ -11,6 +11,7 @@ use Laminas\View\Renderer\PhpRenderer;
  * @var PhpRenderer|HelperTrait $this
  * @var SignupForm $form
  * @var SignupListModel $signupList
+ * @var ?bool $update
  */
 
 $showCaptcha = false;
@@ -20,13 +21,31 @@ switch ($form->getType()) {
     case SignupForm::USER:
         $agreementText = $this->translate('By subscribing to this activity, you agree to the terms outlined in the');
         $sensitiveStartText = $this->translate('Your sign-up will be visible to other members and graduates.');
-        $submitUrl = $this->url('activity/signup', ['id' => $signupList->getActivity()->getId(), 'signupList' => $signupList->getId()]);
-        $submitText = $this->translate('Confirm subscription');
+        $submitUrl = $this->url(
+            'activity/signup',
+            [
+                'id' => $signupList->getActivity()->getId(),
+                'signupList' => $signupList->getId(),
+            ],
+        );
+
+        if (isset($update)) {
+            $submitText = $this->translate('Update subscription');
+        } else {
+            $submitText = $this->translate('Confirm subscription');
+        }
+
         break;
     case SignupForm::EXTERNAL_USER:
         $agreementText = $this->translate('By subscribing to this activity, you agree to the terms outlined in the');
         $sensitiveStartText = $this->translate('Your sign-up will be visible to all visitors of the website.');
-        $submitUrl = $this->url('activity/externalSignup', ['id' => $signupList->getActivity()->getId(), 'signupList' => $signupList->getId()]);
+        $submitUrl = $this->url(
+            'activity/externalSignup',
+            [
+                'id' => $signupList->getActivity()->getId(),
+                'signupList' => $signupList->getId(),
+            ],
+        );
         $submitText = $this->translate('Subscribe as external participant');
         $showCaptcha = true;
         $showName = true;
@@ -34,7 +53,13 @@ switch ($form->getType()) {
     case SignupForm::EXTERNAL_ADMIN:
         $agreementText = $this->translate('By subscribing an external participant to this activity, they must agree to the terms outlined in the');
         $sensitiveStartText = $this->translate('The sign-up of this external participant will be visible to all visitors of the website.');
-        $submitUrl = $this->url('activity_admin/adminSignup', ['id' => $signupList->getActivity()->getId(), 'signupList' => $signupList->getId()]);
+        $submitUrl = $this->url(
+            'activity_admin/adminSignup',
+            [
+                'id' => $signupList->getActivity()->getId(),
+                'signupList' => $signupList->getId(),
+            ],
+        );
         $submitText = $this->translate('Subscribe an external participant');
         $showName = true;
         break;
