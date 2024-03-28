@@ -146,6 +146,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Activity-Controller-ActivityController.html#property_translator"
         },                {
+            "fqsen": "\\Activity\\Controller\\ActivityController\u003A\u003A\u0024signupMapper",
+            "name": "signupMapper",
+            "summary": "",
+            "url": "classes/Activity-Controller-ActivityController.html#property_signupMapper"
+        },                {
             "fqsen": "\\Activity\\Controller\\ActivityController\u003A\u003A\u0024activityQueryService",
             "name": "activityQueryService",
             "summary": "",
@@ -1921,6 +1926,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Activity-Model-Signup.html#method_toGdprArray"
         },                {
+            "fqsen": "\\Activity\\Model\\Signup\u003A\u003AtoFormArray\u0028\u0029",
+            "name": "toFormArray",
+            "summary": "",
+            "url": "classes/Activity-Model-Signup.html#method_toFormArray"
+        },                {
             "fqsen": "\\Activity\\Model\\Signup\u003A\u003A\u0024signupList",
             "name": "signupList",
             "summary": "The\u0020SignupList\u0020the\u0020signup\u0020is\u0020for.",
@@ -2955,6 +2965,11 @@ Search.appendIndex(
             "name": "createSignup",
             "summary": "Creates\u0020the\u0020generic\u0020parts\u0020of\u0020a\u0020signup.",
             "url": "classes/Activity-Service-Signup.html#method_createSignup"
+        },                {
+            "fqsen": "\\Activity\\Service\\Signup\u003A\u003AeditSignUp\u0028\u0029",
+            "name": "editSignUp",
+            "summary": "",
+            "url": "classes/Activity-Service-Signup.html#method_editSignUp"
         },                {
             "fqsen": "\\Activity\\Service\\Signup\u003A\u003AadminSignUp\u0028\u0029",
             "name": "adminSignUp",
