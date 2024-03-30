@@ -313,8 +313,6 @@ class Company
     /**
      * Inserts the company and initializes translations for the given languages.
      *
-     * @param array $data
-     *
      * @throws ORMException
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
@@ -364,8 +362,6 @@ class Company
 
     /**
      * Updates a company with the provided data.
-     *
-     * @param array $data
      *
      * @throws Exception
      *
@@ -526,8 +522,6 @@ class Company
     /**
      * Creates a new package, and assigns it to the given company.
      *
-     * @param array $data
-     *
      * @throws Exception
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
@@ -555,8 +549,6 @@ class Company
     /**
      * Updates the package.
      *
-     * @param array $data
-     *
      * @throws Exception
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
@@ -579,8 +571,6 @@ class Company
 
     /**
      * Creates a new job and adds it to the specified package.
-     *
-     * @param array $data
      *
      * @throws ORMException
      *
@@ -648,8 +638,6 @@ class Company
     }
 
     /**
-     * @param array $data
-     *
      * @throws ORMException
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification

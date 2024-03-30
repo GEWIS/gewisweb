@@ -47,8 +47,6 @@ class AuthorizationRevocation extends Form implements InputFilterProviderInterfa
 
     /**
      * Input filter specification.
-     *
-     * @return array
      */
     public function getInputFilterSpecification(): array
     {

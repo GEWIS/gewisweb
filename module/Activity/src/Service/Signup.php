@@ -134,8 +134,6 @@ class Signup
     /**
      * Sign a User up for an activity with the specified field values.
      *
-     * @param array $fieldResults
-     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function signUp(
@@ -159,8 +157,7 @@ class Signup
      * Creates the generic parts of a signup.
      *
      * @template T of ExternalSignupModel|UserSignupModel
-     *
-     * @param array $fieldResults
+
      * @psalm-param T $signup
      *
      * @psalm-return T
@@ -239,8 +236,6 @@ class Signup
     /**
      * Sign an external user up for an activity, which the current user may admin.
      *
-     * @param array $fieldResults
-     *
      * @throws NotAllowedException
      * @throws ORMException
      *
@@ -264,8 +259,6 @@ class Signup
     /**
      * Sign an external user up for an activity.
      *
-     * @param array $fieldResults
-     *
      * @throws ORMException
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
@@ -285,8 +278,6 @@ class Signup
 
     /**
      * Sign an external user up for an activity, allowed by a guest.
-     *
-     * @param array $fieldResults
      *
      * @throws NotAllowedException
      * @throws ORMException

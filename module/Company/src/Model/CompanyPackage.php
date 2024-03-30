@@ -197,7 +197,6 @@ abstract class CompanyPackage
     }
 
     /**
-     * @param array $data
      * @psalm-param array{
      *     contractNumber: ?string,
      *     startDate?: string,

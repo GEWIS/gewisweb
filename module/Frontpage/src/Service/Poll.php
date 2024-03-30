@@ -198,8 +198,6 @@ class Poll
     /**
      * Creates a comment on the given poll.
      *
-     * @param array $data
-     *
      * @throws ORMException
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
@@ -221,8 +219,6 @@ class Poll
 
     /**
      * Save data for a poll comment.
-     *
-     * @param array $data
      *
      * @throws ORMException
      *
@@ -279,8 +275,6 @@ class Poll
     }
 
     /**
-     * @param array $data
-     *
      * @throws ORMException
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
@@ -303,8 +297,6 @@ class Poll
     }
 
     /**
-     * @param array $data
-     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function createPollOption(

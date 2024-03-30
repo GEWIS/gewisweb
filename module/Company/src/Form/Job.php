@@ -262,9 +262,6 @@ class Job extends LocalisableForm implements InputFilterProviderInterface
         $this->currentSlug = $currentSlug;
     }
 
-    /**
-     * @return array
-     */
     public function getInputFilterSpecification(): array
     {
         $filter = parent::getInputFilterSpecification();

@@ -104,8 +104,6 @@ class Exam extends Fieldset implements InputFilterProviderInterface
     /**
      * Set the configuration.
      *
-     * @param array $config
-     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function setConfig(array $config): void
@@ -113,9 +111,6 @@ class Exam extends Fieldset implements InputFilterProviderInterface
         $this->config = $config['education_temp'];
     }
 
-    /**
-     * @return array
-     */
     public function getInputFilterSpecification(): array
     {
         $dir = $this->config['upload_exam_dir'];

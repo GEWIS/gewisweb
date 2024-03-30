@@ -41,8 +41,6 @@ class SearchDecision extends Form implements InputFilterProviderInterface
 
     /**
      * Input filter specification.
-     *
-     * @return array
      */
     public function getInputFilterSpecification(): array
     {

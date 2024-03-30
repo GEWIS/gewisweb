@@ -40,7 +40,6 @@ abstract class BaseMapper
     /**
      * Persist multiple studies.
      *
-     * @param array $entities
      * @psalm-param T[] $entities
      *
      * @throws ORMException
@@ -68,7 +67,6 @@ abstract class BaseMapper
     /**
      * Removes multiple studies.
      *
-     * @param array $entities
      * @psalm-param T[] $entities
      *
      * @throws ORMException

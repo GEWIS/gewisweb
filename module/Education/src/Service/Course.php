@@ -69,8 +69,6 @@ class Course
     /**
      * Search for a course.
      *
-     * @param array $data
-     *
      * @return CourseModel[]
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
@@ -179,8 +177,6 @@ class Course
     }
 
     /**
-     * @param array $data
-     *
      * @throws Exception
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
@@ -191,8 +187,6 @@ class Course
     }
 
     /**
-     * @param array $data
-     *
      * @throws Exception
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
@@ -294,8 +288,6 @@ class Course
 
     /**
      * Get the education config, as used by this service.
-     *
-     * @return array
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingTraversableTypeHintSpecification
      */

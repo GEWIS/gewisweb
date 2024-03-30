@@ -125,8 +125,6 @@ class Signup extends Form implements InputFilterProviderInterface
     /**
      * Creates an array of the form element specification for the given $field,
      * to be used by the factory.
-     *
-     * @return array
      */
     protected function createSignupFieldElementArray(SignupFieldModel $field): array
     {
@@ -174,8 +172,6 @@ class Signup extends Form implements InputFilterProviderInterface
 
     /**
      * Apparently, validators are automatically added, so this works.
-     *
-     * @return array
      */
     public function getInputFilterSpecification(): array
     {
