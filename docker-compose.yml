@@ -1,5 +1,3 @@
-version: '3.5'
-
 #x-shared-envs: &shared-envs
 #    APP_ENV: ''
 #    NONCE_REPLACEMENT_STRING: ''
