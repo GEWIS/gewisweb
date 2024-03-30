@@ -2,6 +2,7 @@
     "name": "gewis/gewisweb",
     "description": "GEWIS Website",
     "license": "GPL-3.0-only",
+    "type": "project",
     "keywords": [
         "website",
         "gewis"
@@ -35,12 +36,12 @@
         "laminas/laminas-crypt": "^3.11.0",
         "laminas/laminas-escaper": "^2.13.0",
         "laminas/laminas-eventmanager": "^3.13.0",
-        "laminas/laminas-form": "^3.19.1",
+        "laminas/laminas-form": "^3.19.2",
         "laminas/laminas-http": "^2.19.0",
         "laminas/laminas-hydrator": "^4.15.0",
         "laminas/laminas-i18n": "^2.26.0",
         "laminas/laminas-i18n-resources": "^2.10.0",
-        "laminas/laminas-inputfilter": "^2.29.0",
+        "laminas/laminas-inputfilter": "^2.30.0",
         "laminas/laminas-json": "^3.6.0",
         "laminas/laminas-mail": "^2.25.1",
         "laminas/laminas-mime": "^2.12.0",
@@ -50,16 +51,16 @@
         "laminas/laminas-mvc-plugin-flashmessenger": "^1.10.1",
         "laminas/laminas-paginator": "^2.18.1",
         "laminas/laminas-permissions-acl": "^2.16.0",
-        "laminas/laminas-router": "^3.12.0",
+        "laminas/laminas-router": "^3.13.0",
         "laminas/laminas-serializer": "^2.17.0",
         "laminas/laminas-servicemanager": "^3.22.1",
-        "laminas/laminas-session": "^2.17.0",
+        "laminas/laminas-session": "^2.20.0",
         "laminas/laminas-stdlib": "^3.19.0",
-        "laminas/laminas-validator": "^2.47.0",
+        "laminas/laminas-validator": "^2.52.0",
         "laminas/laminas-view": "^2.34.0",
-        "doctrine/dbal": "^3.8.0",
-        "doctrine/orm": "^2.17.3",
-        "doctrine/doctrine-module": "^6.1.0",
+        "doctrine/dbal": "^3.8.3",
+        "doctrine/orm": "^2.19.3",
+        "doctrine/doctrine-module": "^6.1.1",
         "doctrine/doctrine-orm-module": "^6.1.0",
         "doctrine/doctrine-laminas-hydrator": "^3.4.0",
         "maglnet/magl-markdown": "^1.10.0",
@@ -71,8 +72,8 @@
         "cweagans/composer-patches": "^1.7.3",
         "setasign/fpdi": "2.3.6",
         "tecnickcom/tcpdf": "6.5.0",
-        "jfcherng/php-diff": "^6.15.3",
-        "league/commonmark": "^2.4.1"
+        "jfcherng/php-diff": "^6.16.2",
+        "league/commonmark": "^2.4.2"
     },
     "require-dev": {
         "ext-pdo_sqlite": "*",
@@ -83,20 +84,20 @@
         "laminas/laminas-loader": "^2.10.0",
         "laminas/laminas-test": "^4.10.0",
         "san/san-session-toolbar": "^4.0.1",
-        "phpunit/phpunit": "^10.5.9",
-        "squizlabs/php_codesniffer": "^3.8.1",
-        "friendsofphp/php-cs-fixer": "^3.48.0",
-        "phpstan/phpstan": "^1.10.57",
+        "phpunit/phpunit": "^10.5.16",
+        "squizlabs/php_codesniffer": "^3.9.0",
+        "friendsofphp/php-cs-fixer": "^3.52.1",
+        "phpstan/phpstan": "^1.10.66",
         "phpstan/extension-installer": "^1.3.1",
         "bnf/phpstan-psr-container": "^1.0.1",
         "slam/phpstan-laminas-framework": "^1.5.0",
-        "phpstan/phpstan-doctrine": "^1.3.59",
-        "phpstan/phpstan-phpunit": "^1.3.15",
-        "vimeo/psalm": "^5.20.0",
+        "phpstan/phpstan-doctrine": "^1.3.64",
+        "phpstan/phpstan-phpunit": "^1.3.16",
+        "vimeo/psalm": "^5.23.1",
         "lctrs/psalm-psr-container-plugin": "^1.10.0",
         "weirdan/doctrine-psalm-plugin": "^2.9.0",
         "psalm/plugin-phpunit": "^0.18.4",
-        "maglnet/composer-require-checker": "^4.8.0",
+        "maglnet/composer-require-checker": "^4.10.0",
         "icanhazstring/composer-unused": "^0.8.11",
         "gewis/gewisphp-coding-standards": "^1.1.0"
     },
@@ -144,10 +145,7 @@
     "extra": {
         "patches": {
             "doctrine/orm": {
-                "Fix issues with SubDecisions.": "https://raw.githubusercontent.com/GEWIS/orm/2.17.x/1-to-1-multiple-join-columns.patch"
-            },
-            "jfcherng/php-diff": {
-                "Always output diff.": "https://raw.githubusercontent.com/GEWIS/gewisweb-php-diff/v6/always-render-diff.patch"
+                "Fix issues with SubDecisions.": "https://raw.githubusercontent.com/GEWIS/orm/2.19.x/1-to-1-multiple-join-columns.patch"
             }
         }
     },
