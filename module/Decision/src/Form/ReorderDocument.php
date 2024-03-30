@@ -73,9 +73,6 @@ class ReorderDocument extends Form implements InputFilterProviderInterface
         return $this;
     }
 
-    /**
-     * @return array
-     */
     public function getInputFilterSpecification(): array
     {
         return [

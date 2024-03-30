@@ -94,8 +94,6 @@ class ActivityCalendar
     }
 
     /**
-     * @param array $data
-     *
      * @throws Exception
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
@@ -137,8 +135,6 @@ class ActivityCalendar
     }
 
     /**
-     * @param array $data
-     *
      * @throws Exception
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
@@ -250,8 +246,6 @@ class ActivityCalendar
     }
 
     /**
-     * @param array $data
-     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function createOptionPlanningPeriod(array $data): bool
@@ -291,8 +285,6 @@ class ActivityCalendar
     }
 
     /**
-     * @param array $data
-     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function updateOptionPlanningPeriod(

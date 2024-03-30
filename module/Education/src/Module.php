@@ -156,8 +156,6 @@ class Module
 
     /**
      * Get view helper configuration.
-     *
-     * @return array
      */
     public function getViewHelperConfig(): array
     {

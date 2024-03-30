@@ -49,9 +49,6 @@ abstract class Localisable extends Form implements InputFilterProviderInterface
         );
     }
 
-    /**
-     * @return array
-     */
     public function getInputFilterSpecification(): array
     {
         $filter = [];
@@ -95,8 +92,6 @@ abstract class Localisable extends Form implements InputFilterProviderInterface
      * Create an {@link \Laminas\InputFilter\InputFilter} for a specific language.
      *
      * @param string $suffix For languages that are not Dutch, a suffix should be specified (English: 'En').
-     *
-     * @return array
      */
     abstract protected function createLocalisedInputFilterSpecification(string $suffix = ''): array;
 

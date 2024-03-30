@@ -173,8 +173,6 @@ class Page
     }
 
     /**
-     * @param array $data
-     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function savePageData(

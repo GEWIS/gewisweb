@@ -82,7 +82,6 @@ class FileStorage
     /**
      * Stores an uploaded file in the content based file system.
      *
-     * @param array $file
      * @psalm-param array{
      *     name: string,
      *     tmp_name: string,

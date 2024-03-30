@@ -537,7 +537,6 @@ class Company implements ResourceInterface
     /**
      * Updates this object with values in the form of getArrayCopy(). This does not include the logo.
      *
-     * @param array $data
      * @psalm-param array{
      *     name: string,
      *     slugName: string,

@@ -193,8 +193,6 @@ class Organ
     }
 
     /**
-     * @param array $data
-     *
      * @throws ORMException
      * @throws ImagickException
      *
