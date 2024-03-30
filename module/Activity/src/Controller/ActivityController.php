@@ -263,6 +263,16 @@ class ActivityController extends AbstractActionController
 
             // Let user edit subscription details
             if (null !== ($signup = $this->signupMapper->getSignUp($signupList, $identity))) {
+                if (0 === $signupList->getFields()->count()) {
+                    return $this->redirect()->toRoute(
+                        'activity/view/signuplist',
+                        [
+                            'id' => $activityId,
+                            'signupList' => $signupListId,
+                        ],
+                    );
+                }
+
                 $this->signupService->editSignUp($signup, $form->getData(FormInterface::VALUES_AS_ARRAY));
                 $message = $this->translator->translate('Successfully updated subscription');
             } else {
