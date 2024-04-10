@@ -221,23 +221,17 @@ class AdminController extends AbstractActionController
         $meetings = $this->decisionService->getMeetingsByType(MeetingTypes::ALV);
         $number = (int) $this->params()->fromRoute('number');
 
-        $authorizations = [
-            'valid' => [],
-            'revoked' => [],
-        ];
-
         if (
             0 === $number
             && !empty($meetings)
         ) {
             $number = $meetings[0]->getNumber();
-            $authorizations = $this->decisionService->getAllAuthorizations($number);
         }
 
         return new ViewModel(
             [
                 'meetings' => $meetings,
-                ...$authorizations,
+                ...$this->decisionService->getAllAuthorizations($number),
                 'number' => $number,
             ],
         );
