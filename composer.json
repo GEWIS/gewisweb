@@ -71,7 +71,7 @@
         "fortawesome/font-awesome": "^6.5.1",
         "cweagans/composer-patches": "^1.7.3",
         "setasign/fpdi": "2.3.6",
-        "tecnickcom/tcpdf": "6.5.0",
+        "tecnickcom/tcpdf": "6.7.4",
         "jfcherng/php-diff": "^6.16.2",
         "league/commonmark": "^2.4.2"
     },
