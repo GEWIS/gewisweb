@@ -21,6 +21,36 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Activity-Command-CalendarNotify.html#property_calendarService"
         },                {
+            "fqsen": "\\Activity\\Command\\DeleteOldSignups",
+            "name": "DeleteOldSignups",
+            "summary": "",
+            "url": "classes/Activity-Command-DeleteOldSignups.html"
+        },                {
+            "fqsen": "\\Activity\\Command\\DeleteOldSignups\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Activity-Command-DeleteOldSignups.html#method___construct"
+        },                {
+            "fqsen": "\\Activity\\Command\\DeleteOldSignups\u003A\u003Aexecute\u0028\u0029",
+            "name": "execute",
+            "summary": "",
+            "url": "classes/Activity-Command-DeleteOldSignups.html#method_execute"
+        },                {
+            "fqsen": "\\Activity\\Command\\DeleteOldSignups\u003A\u003A\u0024signupService",
+            "name": "signupService",
+            "summary": "",
+            "url": "classes/Activity-Command-DeleteOldSignups.html#property_signupService"
+        },                {
+            "fqsen": "\\Activity\\Command\\Factory\\DeleteOldSignupsFactory",
+            "name": "DeleteOldSignupsFactory",
+            "summary": "",
+            "url": "classes/Activity-Command-Factory-DeleteOldSignupsFactory.html"
+        },                {
+            "fqsen": "\\Activity\\Command\\Factory\\DeleteOldSignupsFactory\u003A\u003A__invoke\u0028\u0029",
+            "name": "__invoke",
+            "summary": "",
+            "url": "classes/Activity-Command-Factory-DeleteOldSignupsFactory.html#method___invoke"
+        },                {
             "fqsen": "\\Activity\\Controller\\ActivityCalendarController",
             "name": "ActivityCalendarController",
             "summary": "",
@@ -1035,6 +1065,11 @@ Search.appendIndex(
             "name": "findSignupsByMember",
             "summary": "Get\u0020all\u0020sign\u002Dups\u0020for\u0020a\u0020specific\u0020member.",
             "url": "classes/Activity-Mapper-Signup.html#method_findSignupsByMember"
+        },                {
+            "fqsen": "\\Activity\\Mapper\\Signup\u003A\u003AdeleteSignupsForActivitiesOlderThan5Years\u0028\u0029",
+            "name": "deleteSignupsForActivitiesOlderThan5Years",
+            "summary": "Delete\u0020all\u0020sign\u002Dups\u0020for\u0020activities\u0020that\u0020ended\u00205\u0020years\u0020ago.",
+            "url": "classes/Activity-Mapper-Signup.html#method_deleteSignupsForActivitiesOlderThan5Years"
         },                {
             "fqsen": "\\Activity\\Mapper\\Signup\u003A\u003AgetRepositoryName\u0028\u0029",
             "name": "getRepositoryName",
@@ -3005,6 +3040,11 @@ Search.appendIndex(
             "name": "externalSignOff",
             "summary": "",
             "url": "classes/Activity-Service-Signup.html#method_externalSignOff"
+        },                {
+            "fqsen": "\\Activity\\Service\\Signup\u003A\u003AdeleteOldSignups\u0028\u0029",
+            "name": "deleteOldSignups",
+            "summary": "Delete\u0020all\u0020sign\u002Dups\u0020for\u0020activities\u0020that\u0020are\u0020older\u0020than\u00205\u0020years.",
+            "url": "classes/Activity-Service-Signup.html#method_deleteOldSignups"
         },                {
             "fqsen": "\\Activity\\Service\\Signup\u003A\u003AisInSubscriptionWindow\u0028\u0029",
             "name": "isInSubscriptionWindow",
@@ -17980,6 +18020,11 @@ Search.appendIndex(
             "name": "Command",
             "summary": "",
             "url": "namespaces/activity-command.html"
+        },                {
+            "fqsen": "\\Activity\\Command\\Factory",
+            "name": "Factory",
+            "summary": "",
+            "url": "namespaces/activity-command-factory.html"
         },                {
             "fqsen": "\\Activity\\Controller",
             "name": "Controller",

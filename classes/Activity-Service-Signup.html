@@ -496,6 +496,13 @@
 <dd>Sign an external user up for an activity, which the current user may admin.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Activity-Service-Signup.html#method_deleteOldSignups">deleteOldSignups()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>Delete all sign-ups for activities that are older than 5 years.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Activity-Service-Signup.html#method_editSignUp">editSignUp()</a>
     <span>
                                 &nbsp;: void    </span>
@@ -1020,6 +1027,41 @@
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_deleteOldSignups">
+        deleteOldSignups()
+        <a href="classes/Activity-Service-Signup.html#method_deleteOldSignups" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Service/Signup.php"><a href="files/module-activity-src-service-signup.html"><abbr title="module/Activity/src/Service/Signup.php">Signup.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">365</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Delete all sign-ups for activities that are older than 5 years.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">deleteOldSignups</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+        <section class="phpdocumentor-description"><p>We can automatically DELETE all sign-ups at once instead of retrieving them and iterating over them before using
+<code class="prettyprint">$this-&gt;removeSignup()</code> to remove them.</p>
+</section>
+
+    
+    
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_editSignUp">
         editSignUp()
         <a href="classes/Activity-Service-Signup.html#method_editSignUp" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1499,7 +1541,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Service/Signup.php"><a href="files/module-activity-src-service-signup.html"><abbr title="module/Activity/src/Service/Signup.php">Signup.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">379</span>
+    <span class="phpdocumentor-element-found-in__line">390</span>
 
     </aside>
 
@@ -1535,7 +1577,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Service/Signup.php"><a href="files/module-activity-src-service-signup.html"><abbr title="module/Activity/src/Service/Signup.php">Signup.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">389</span>
+    <span class="phpdocumentor-element-found-in__line">400</span>
 
     </aside>
 
@@ -1570,7 +1612,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Service/Signup.php"><a href="files/module-activity-src-service-signup.html"><abbr title="module/Activity/src/Service/Signup.php">Signup.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">371</span>
+    <span class="phpdocumentor-element-found-in__line">382</span>
 
     </aside>
 
@@ -1606,7 +1648,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Service/Signup.php"><a href="files/module-activity-src-service-signup.html"><abbr title="module/Activity/src/Service/Signup.php">Signup.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">384</span>
+    <span class="phpdocumentor-element-found-in__line">395</span>
 
     </aside>
 
@@ -1641,7 +1683,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Service/Signup.php"><a href="files/module-activity-src-service-signup.html"><abbr title="module/Activity/src/Service/Signup.php">Signup.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">359</span>
+    <span class="phpdocumentor-element-found-in__line">370</span>
 
     </aside>
 
@@ -2251,6 +2293,7 @@
                 <ul class="phpdocumentor-list -clean">
                                             <li><a href="classes/Activity-Service-Signup.html#method___construct">__construct()</a></li>
                                             <li><a href="classes/Activity-Service-Signup.html#method_adminSignUp">adminSignUp()</a></li>
+                                            <li><a href="classes/Activity-Service-Signup.html#method_deleteOldSignups">deleteOldSignups()</a></li>
                                             <li><a href="classes/Activity-Service-Signup.html#method_editSignUp">editSignUp()</a></li>
                                             <li><a href="classes/Activity-Service-Signup.html#method_externalSignOff">externalSignOff()</a></li>
                                             <li><a href="classes/Activity-Service-Signup.html#method_externalSignUp">externalSignUp()</a></li>
