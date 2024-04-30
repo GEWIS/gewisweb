@@ -356,6 +356,17 @@ class Signup
         $this->removeSignUp($signup);
     }
 
+    /**
+     * Delete all sign-ups for activities that are older than 5 years.
+     *
+     * We can automatically DELETE all sign-ups at once instead of retrieving them and iterating over them before using
+     * `$this->removeSignup()` to remove them.
+     */
+    public function deleteOldSignups(): void
+    {
+        $this->signupMapper->deleteSignupsForActivitiesOlderThan5Years();
+    }
+
     public static function isInSubscriptionWindow(
         DateTime $openDate,
         DateTime $closeDate,
