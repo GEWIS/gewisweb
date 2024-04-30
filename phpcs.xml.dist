@@ -36,6 +36,7 @@
         <exclude-pattern>module/Company/src/Controller/Factory/AdminControllerFactory.php</exclude-pattern>
         <exclude-pattern>module/Company/src/Controller/Factory/CompanyControllerFactory.php</exclude-pattern>
         <exclude-pattern>module/Company/src/Controller/Factory/CompanyAccountControllerFactory.php</exclude-pattern>
+        <exclude-pattern>module/Activity/src/Command/Factory/DeleteOldSignupsFactory.php</exclude-pattern>
         <exclude-pattern>module/Activity/src/Controller/Factory/ActivityCalendarControllerFactory.php</exclude-pattern>
         <exclude-pattern>module/Activity/src/Controller/Factory/AdminApprovalControllerFactory.php</exclude-pattern>
         <exclude-pattern>module/Activity/src/Controller/Factory/AdminControllerFactory.php</exclude-pattern>

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Activity;
 
 use Activity\Command\CalendarNotify;
+use Activity\Command\DeleteOldSignups;
 use Activity\Controller\ActivityCalendarController;
 use Activity\Controller\ActivityController;
 use Activity\Controller\AdminApprovalController;
@@ -497,6 +498,7 @@ return [
     'laminas-cli' => [
         'commands' => [
             'activity:calendar:notify' => CalendarNotify::class,
+            'activity:gdpr:delete-old-signups' => DeleteOldSignups::class,
         ],
     ],
     'doctrine' => [
