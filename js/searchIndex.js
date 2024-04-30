@@ -4458,7 +4458,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Application\\View\\Helper\\LocaliseText\u003A\u003A__invoke\u0028\u0029",
             "name": "__invoke",
-            "summary": "Determines\u0020the\u0020correct\u0020value\u0020for\u0020an\u0020element.",
+            "summary": "Returns\u0020the\u0020localised\u0020value\u0020of\u0020an\u0020element.",
             "url": "classes/Application-View-Helper-LocaliseText.html#method___invoke"
         },                {
             "fqsen": "\\Application\\View\\Helper\\Markdown",
