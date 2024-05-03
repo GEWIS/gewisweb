@@ -92,9 +92,6 @@ class ActivityCalendarPeriod extends Form implements InputFilterProviderInterfac
         );
     }
 
-    /**
-     * @return array
-     */
     public function getInputFilterSpecification(): array
     {
         return [

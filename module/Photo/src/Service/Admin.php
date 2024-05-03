@@ -139,8 +139,6 @@ class Admin
     }
 
     /**
-     * @param array $files
-     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function upload(

@@ -123,9 +123,6 @@ class Package extends LocalisableForm implements InputFilterProviderInterface
         );
     }
 
-    /**
-     * @return array
-     */
     public function getInputFilterSpecification(): array
     {
         $filter = [];

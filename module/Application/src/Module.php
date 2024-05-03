@@ -138,17 +138,12 @@ class Module
 
     /**
      * Get the configuration for this module.
-     *
-     * @return array Module configuration
      */
     public function getConfig(): array
     {
         return include __DIR__ . '/../config/module.config.php';
     }
 
-    /**
-     * @return array
-     */
     public function getServiceConfig(): array
     {
         return [
@@ -275,8 +270,6 @@ class Module
 
     /**
      * Get view helper configuration.
-     *
-     * @return array
      */
     public function getViewHelperConfig(): array
     {

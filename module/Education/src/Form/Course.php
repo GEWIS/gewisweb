@@ -69,9 +69,6 @@ class Course extends Form implements InputFilterProviderInterface
         );
     }
 
-    /**
-     * @return array
-     */
     public function getInputFilterSpecification(): array
     {
         return [

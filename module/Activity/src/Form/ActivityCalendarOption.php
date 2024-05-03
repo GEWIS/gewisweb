@@ -67,9 +67,6 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
         );
     }
 
-    /**
-     * @return array
-     */
     public function getInputFilterSpecification(): array
     {
         return [

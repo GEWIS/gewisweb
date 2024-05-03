@@ -52,8 +52,6 @@ class ActivityCategory
     }
 
     /**
-     * @param array $data
-     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function createCategory(array $data): bool
@@ -81,8 +79,6 @@ class ActivityCategory
     }
 
     /**
-     * @param array $data
-     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function updateCategory(

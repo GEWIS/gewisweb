@@ -210,8 +210,6 @@ class Decision
     /**
      * Upload meeting minutes.
      *
-     * @param array $data
-     *
      * @return bool If uploading was a success
      *
      * @throws Exception
@@ -239,8 +237,6 @@ class Decision
 
     /**
      * Upload a meeting document.
-     *
-     * @param array $data
      *
      * @return bool If uploading was a success
      *
@@ -287,8 +283,6 @@ class Decision
     }
 
     /**
-     * @param array $data
-     *
      * @throws ORMException
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
@@ -413,8 +407,6 @@ class Decision
     }
 
     /**
-     * @param array $data
-     *
      * @throws ORMException
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification

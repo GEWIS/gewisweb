@@ -53,8 +53,6 @@ class PollComment extends Form implements InputFilterProviderInterface
     /**
      * Should return an array specification compatible with
      * {@link \Laminas\InputFilter\Factory::createInputFilter()}.
-     *
-     * @return array
      */
     public function getInputFilterSpecification(): array
     {

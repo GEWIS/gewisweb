@@ -134,8 +134,6 @@ class Signup
     /**
      * Sign a User up for an activity with the specified field values.
      *
-     * @param array $fieldResults
-     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function signUp(
@@ -159,8 +157,7 @@ class Signup
      * Creates the generic parts of a signup.
      *
      * @template T of ExternalSignupModel|UserSignupModel
-     *
-     * @param array $fieldResults
+
      * @psalm-param T $signup
      *
      * @psalm-return T
@@ -176,7 +173,6 @@ class Signup
         array $fieldResults,
     ): ExternalSignupModel|UserSignupModel {
         $signup->setSignupList($signupList);
-        $optionMapper = $this->signupOptionMapper;
         $em = $this->entityManager;
 
         foreach ($signupList->getFields() as $field) {
@@ -194,7 +190,7 @@ class Signup
                     $fieldValue->setValue($value ? 'Yes' : 'No');
                     break;
                 case 3://'Choice'
-                    $fieldValue->setOption($optionMapper->find((int) $value));
+                    $fieldValue->setOption($this->signupOptionMapper->find((int) $value));
                     break;
             }
 
@@ -209,9 +205,36 @@ class Signup
     }
 
     /**
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
+     */
+    public function editSignUp(
+        UserSignupModel $signup,
+        array $fieldResults,
+    ): void {
+        foreach ($signup->getFieldValues() as $fieldValue) {
+            $value = $fieldResults[$fieldValue->getField()->getId()];
+
+            //Change the value into the actual format
+            switch ($fieldValue->getField()->getType()) {
+                case 0://'Text'
+                case 2://'Number'
+                    $fieldValue->setValue($value);
+                    break;
+                case 1://'Yes/No'
+                    $fieldValue->setValue($value ? 'Yes' : 'No');
+                    break;
+                case 3://'Choice'
+                    $fieldValue->setOption($this->signupOptionMapper->find((int) $value));
+                    break;
+            }
+        }
+
+        $this->signupMapper->persist($signup);
+        $this->signupMapper->flush();
+    }
+
+    /**
      * Sign an external user up for an activity, which the current user may admin.
-     *
-     * @param array $fieldResults
      *
      * @throws NotAllowedException
      * @throws ORMException
@@ -236,8 +259,6 @@ class Signup
     /**
      * Sign an external user up for an activity.
      *
-     * @param array $fieldResults
-     *
      * @throws ORMException
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
@@ -257,8 +278,6 @@ class Signup
 
     /**
      * Sign an external user up for an activity, allowed by a guest.
-     *
-     * @param array $fieldResults
      *
      * @throws NotAllowedException
      * @throws ORMException
@@ -335,6 +354,17 @@ class Signup
         }
 
         $this->removeSignUp($signup);
+    }
+
+    /**
+     * Delete all sign-ups for activities that are older than 5 years.
+     *
+     * We can automatically DELETE all sign-ups at once instead of retrieving them and iterating over them before using
+     * `$this->removeSignup()` to remove them.
+     */
+    public function deleteOldSignups(): void
+    {
+        $this->signupMapper->deleteSignupsForActivitiesOlderThan5Years();
     }
 
     public static function isInSubscriptionWindow(

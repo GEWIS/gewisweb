@@ -117,9 +117,6 @@ class JobCategory extends Form implements InputFilterProviderInterface
         );
     }
 
-    /**
-     * @return array
-     */
     public function getInputFilterSpecification(): array
     {
         $filter = [

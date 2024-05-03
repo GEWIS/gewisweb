@@ -137,9 +137,6 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
         }
     }
 
-    /**
-     * @return array
-     */
     public function getInputFilterSpecification(): array
     {
         return [

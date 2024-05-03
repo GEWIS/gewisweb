@@ -71,9 +71,6 @@ class Bulk extends Form implements InputFilterProviderInterface
         return $valid;
     }
 
-    /**
-     * @return array
-     */
     public function getInputFilterSpecification(): array
     {
         return [];

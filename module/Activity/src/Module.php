@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Activity;
 
-use Activity\Command\CalendarNotify;
+use Activity\Command\CalendarNotify as CalendarNotifyCommand;
+use Activity\Command\DeleteOldSignups as DeleteOldSignupsCommand;
+use Activity\Command\Factory\DeleteOldSignupsFactory as DeleteOldSignupsCommandFactory;
 use Activity\Form\Activity as ActivityForm;
 use Activity\Form\ActivityCalendarOption as ActivityCalendarOptionForm;
 use Activity\Form\ActivityCalendarPeriod as ActivityCalendarPeriodForm;
@@ -283,13 +285,14 @@ class Module
                     );
                 },
                 'activity_service_acl' => AclServiceFactory::class,
-                CalendarNotify::class => static function (ContainerInterface $container) {
-                    $calendarNotify = new CalendarNotify();
+                CalendarNotifyCommand::class => static function (ContainerInterface $container) {
+                    $calendarNotify = new CalendarNotifyCommand();
                     $calendarService = $container->get('activity_service_calendar');
                     $calendarNotify->setCalendarService($calendarService);
 
                     return $calendarNotify;
                 },
+                DeleteOldSignupsCommand::class => DeleteOldSignupsCommandFactory::class,
             ],
         ];
     }

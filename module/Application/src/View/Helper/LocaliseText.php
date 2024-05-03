@@ -10,12 +10,10 @@ use Laminas\View\Helper\AbstractHelper;
 class LocaliseText extends AbstractHelper
 {
     /**
-     * Determines the correct value for an element.
-     *
-     * @return string|null The localised value of `$localisedText` or null if no translation exists.
+     * Returns the localised value of an element.
      */
-    public function __invoke(LocalisedTextModel $localisedText): ?string
+    public function __invoke(LocalisedTextModel $localisedText): string
     {
-        return $localisedText->getText();
+        return $localisedText->getText() ?? '';
     }
 }

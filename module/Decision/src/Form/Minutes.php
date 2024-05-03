@@ -59,7 +59,6 @@ class Minutes extends Form implements InputFilterProviderInterface
     }
 
     /**
-     * @param array $meetings
      * @psalm-param ImportedMeetingArrayType $meetings
      *
      * @return Minutes
@@ -99,8 +98,6 @@ class Minutes extends Form implements InputFilterProviderInterface
 
     /**
      * Input filter specification.
-     *
-     * @return array
      */
     public function getInputFilterSpecification(): array
     {

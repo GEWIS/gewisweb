@@ -233,8 +233,6 @@ class Email
     /**
      * Render a template with given variables.
      *
-     * @param array $vars
-     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function render(

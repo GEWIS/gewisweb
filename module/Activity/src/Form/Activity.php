@@ -385,8 +385,6 @@ class Activity extends LocalisableForm implements InputFilterProviderInterface
     /**
      * Get the input filter. Will generate a different inputfilter depending on if the Dutch and/or English language
      * is set.
-     *
-     * @return array
      */
     public function getInputFilterSpecification(): array
     {

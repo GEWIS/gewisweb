@@ -157,7 +157,7 @@ class Course implements ResourceInterface
     public function getSimilarCoursesAsString(): string
     {
         return implode(',', $this->similarCoursesTo->map(
-            static fn (self $course) => $course->getCode()
+            static fn (self $course) => $course->getCode(),
         )->toArray());
     }
 

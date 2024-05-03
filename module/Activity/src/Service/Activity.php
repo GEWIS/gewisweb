@@ -230,8 +230,6 @@ class Activity
     /**
      * Creates a SignupList for the specified Activity.
      *
-     * @param array $data
-     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function createSignupList(
@@ -389,8 +387,6 @@ class Activity
     /**
      * Create a new update proposal from user form.
      *
-     * @param array $data
-     *
      * @return bool indicating whether the update was applied or is pending
      *
      * @throws ORMException
@@ -490,9 +486,6 @@ class Activity
 
     /**
      * Check if an update proposal is actually an update.
-     *
-     * @param array $current
-     * @param array $proposal
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
@@ -600,11 +593,6 @@ class Activity
      *
      * Adapted from https://www.php.net/manual/en/function.array-diff-assoc.php#usernotes.
      *
-     * @param array $array1
-     * @param array $array2
-     *
-     * @return array
-     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingTraversableTypeHintSpecification
      */
@@ -636,8 +624,6 @@ class Activity
     /**
      * Recursively unset a key in an array (by reference).
      *
-     * @param array $array
-     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     protected function recursiveUnsetKey(
@@ -658,10 +644,6 @@ class Activity
     /**
      * `array_filter` but recursively. Used to compare an update proposal of an activity
      * to the original activity.
-     *
-     * @param array $array
-     *
-     * @return array
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingTraversableTypeHintSpecification

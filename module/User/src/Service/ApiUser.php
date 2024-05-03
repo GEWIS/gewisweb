@@ -80,8 +80,6 @@ class ApiUser
     /**
      * Add an API token.
      *
-     * @param array $data
-     *
      * @throws ORMException
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification

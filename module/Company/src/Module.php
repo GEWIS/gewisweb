@@ -38,9 +38,6 @@ class Module
         return include __DIR__ . '/../config/module.config.php';
     }
 
-    /**
-     * @return array
-     */
     private function getFormFactories(): array
     {
         return [
@@ -93,9 +90,6 @@ class Module
         ];
     }
 
-    /**
-     * @return array
-     */
     private function getMapperFactories(): array
     {
         return [
@@ -142,9 +136,6 @@ class Module
         ];
     }
 
-    /**
-     * @return array
-     */
     private function getOtherFactories(): array
     {
         return [
