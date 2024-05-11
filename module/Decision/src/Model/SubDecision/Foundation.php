@@ -146,7 +146,7 @@ class Foundation extends SubDecision
             $this->getMeetingNumber(),
             $this->getDecisionPoint(),
             $this->getDecisionNumber(),
-            $this->getNumber(),
+            $this->getSequence(),
         );
     }
 }
