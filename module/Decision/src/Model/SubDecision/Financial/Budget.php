@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Decision\Model\SubDecision;
+namespace Decision\Model\SubDecision\Financial;
 
 use DateTime;
 use Decision\Model\SubDecision;

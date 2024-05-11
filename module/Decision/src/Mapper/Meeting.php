@@ -116,7 +116,7 @@ class Meeting extends BaseMapper
             ->where('m.type = :type')
             ->andWhere('m.number = :number')
             ->leftJoin('m.decisions', 'd')
-            ->leftJoin('d.destroyedby', 'db')
+            ->leftJoin('d.annulledBy', 'db')
             ->orderBy('d.point')
             ->addOrderBy('d.number');
 
