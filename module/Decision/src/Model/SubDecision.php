@@ -9,9 +9,10 @@ use Decision\Model\SubDecision\Abrogation;
 use Decision\Model\SubDecision\Board\Discharge as BoardDischarge;
 use Decision\Model\SubDecision\Board\Installation as BoardInstallation;
 use Decision\Model\SubDecision\Board\Release as BoardRelease;
-use Decision\Model\SubDecision\Budget;
 use Decision\Model\SubDecision\Destroy;
 use Decision\Model\SubDecision\Discharge;
+use Decision\Model\SubDecision\Financial\Budget;
+use Decision\Model\SubDecision\Financial\Statement;
 use Decision\Model\SubDecision\Foundation;
 use Decision\Model\SubDecision\FoundationReference;
 use Decision\Model\SubDecision\Installation;
@@ -19,7 +20,6 @@ use Decision\Model\SubDecision\Key\Granting as KeyGranting;
 use Decision\Model\SubDecision\Key\Withdrawal as KeyWithdrawal;
 use Decision\Model\SubDecision\Other;
 use Decision\Model\SubDecision\Reappointment;
-use Decision\Model\SubDecision\Reckoning;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\DiscriminatorColumn;
 use Doctrine\ORM\Mapping\DiscriminatorMap;
@@ -54,8 +54,8 @@ use Doctrine\ORM\Mapping\ManyToOne;
         'installation' => Installation::class,
         'reappointment' => Reappointment::class,
         'discharge' => Discharge::class,
-        'budget' => Budget::class,
-        'reckoning' => Reckoning::class,
+        'financial_budget' => Budget::class,
+        'financial_statement' => Statement::class,
         'other' => Other::class,
         'destroy' => Destroy::class,
         'board_installation' => BoardInstallation::class,
