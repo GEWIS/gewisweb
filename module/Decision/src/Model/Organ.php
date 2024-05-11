@@ -76,8 +76,8 @@ class Organ
         referencedColumnName: 'decision_number',
     )]
     #[JoinColumn(
-        name: 'r_number',
-        referencedColumnName: 'number',
+        name: 'r_sequence',
+        referencedColumnName: 'sequence',
     )]
     protected Foundation $foundation;
 
@@ -140,8 +140,8 @@ class Organ
         nullable: false,
     )]
     #[InverseJoinColumn(
-        name: 'subdecision_number',
-        referencedColumnName: 'number',
+        name: 'subdecision_sequence',
+        referencedColumnName: 'sequence',
         nullable: false,
     )]
     protected Collection $subdecisions;
@@ -313,14 +313,14 @@ class Organ
     public function getOrderedSubdecisions(): array
     {
         $array = $this->subdecisions->toArray();
-        usort($array, static function ($dA, $dB) {
+        usort($array, static function (SubDecision $dA, SubDecision $dB) {
             // Compare the meeting dates first (note that we compare B against A).
             $dateComparison = $dB->getDecision()->getMeeting()->getDate()
                 <=> $dA->getDecision()->getMeeting()->getDate();
 
             if (0 === $dateComparison) {
-                // If the meeting dates are equal, compare the subdecision numbers (note that we compare B against A).
-                return $dB->getNumber() <=> $dA->getNumber();
+                // If the meeting dates are equal, compare the sequence numbers (note that we compare B against A).
+                return $dB->getSequence() <=> $dA->getSequence();
             }
 
             return $dateComparison;

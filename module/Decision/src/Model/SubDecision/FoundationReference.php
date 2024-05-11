@@ -43,8 +43,8 @@ abstract class FoundationReference extends SubDecision
         referencedColumnName: 'decision_number',
     )]
     #[JoinColumn(
-        name: 'r_number',
-        referencedColumnName: 'number',
+        name: 'r_sequence',
+        referencedColumnName: 'sequence',
     )]
     protected Foundation $foundation;
 

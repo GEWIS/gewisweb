@@ -81,8 +81,8 @@ class OrganMember
         referencedColumnName: 'decision_number',
     )]
     #[JoinColumn(
-        name: 'r_number',
-        referencedColumnName: 'number',
+        name: 'r_sequence',
+        referencedColumnName: 'sequence',
     )]
     protected Installation $installation;
 

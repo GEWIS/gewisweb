@@ -83,7 +83,7 @@ $this->headTitle($organ->getName());
                             $subdecision->getDecisionPoint(),
                             $subdecision->getDecisionNumber(),
                         ]);
-                        $extendedId = $id . '.' . $subdecision->getNumber();
+                        $extendedId = $id . '.' . $subdecision->getSequence();
                         ?>
                         <li id="<?= urlencode($extendedId) ?>" class="link-permalink-container">
                             <strong class="decision-meeting">

@@ -37,7 +37,7 @@ use Doctrine\ORM\Mapping\ManyToOne;
  *     meeting_number: int,
  *     decision_point: int,
  *     decision_number: int,
- *     subdecision_number: int,
+ *     subdecision_sequence: int,
  *     ...,
  * }
  */
@@ -133,11 +133,11 @@ abstract class SubDecision
     protected int $decision_number;
 
     /**
-     * Sub decision number.
+     * Sub decision sequence number.
      */
     #[Id]
     #[Column(type: 'integer')]
-    protected int $number;
+    protected int $sequence;
 
     /**
      * Content.
@@ -213,19 +213,19 @@ abstract class SubDecision
     }
 
     /**
-     * Get the number.
+     * Get the sequence number.
      */
-    public function getNumber(): int
+    public function getSequence(): int
     {
-        return $this->number;
+        return $this->sequence;
     }
 
     /**
-     * Set the number.
+     * Set the sequence number.
      */
-    public function setNumber(int $number): void
+    public function setSequence(int $sequence): void
     {
-        $this->number = $number;
+        $this->sequence = $sequence;
     }
 
     /**
@@ -270,7 +270,7 @@ abstract class SubDecision
             'meeting_number' => $this->getMeetingNumber(),
             'decision_point' => $this->getDecisionPoint(),
             'decision_number' => $this->getDecisionNumber(),
-            'subdecision_number' => $this->getNumber(),
+            'subdecision_sequence' => $this->getSequence(),
             'content' => $this->getContent(),
         ];
     }
