@@ -6,10 +6,10 @@ namespace Decision\Model;
 
 use Decision\Model\Enums\MeetingTypes;
 use Decision\Model\SubDecision\Abrogation;
+use Decision\Model\SubDecision\Annulment;
 use Decision\Model\SubDecision\Board\Discharge as BoardDischarge;
 use Decision\Model\SubDecision\Board\Installation as BoardInstallation;
 use Decision\Model\SubDecision\Board\Release as BoardRelease;
-use Decision\Model\SubDecision\Destroy;
 use Decision\Model\SubDecision\Discharge;
 use Decision\Model\SubDecision\Financial\Budget;
 use Decision\Model\SubDecision\Financial\Statement;
@@ -57,7 +57,7 @@ use Doctrine\ORM\Mapping\ManyToOne;
         'financial_budget' => Budget::class,
         'financial_statement' => Statement::class,
         'other' => Other::class,
-        'destroy' => Destroy::class,
+        'annulment' => Annulment::class,
         'board_installation' => BoardInstallation::class,
         'board_release' => BoardRelease::class,
         'board_discharge' => BoardDischarge::class,
