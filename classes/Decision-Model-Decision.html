@@ -440,18 +440,18 @@
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a href="classes/Decision-Model-Decision.html#property_annulledBy">$annulledBy</a>
+    <span>
+                        &nbsp;: <a href="classes/Decision-Model-SubDecision-Annulment.html"><abbr title="\Decision\Model\SubDecision\Annulment">Annulment</abbr></a>            </span>
+</dt>
+<dd>Annulled by.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Decision-Model-Decision.html#property_content">$content</a>
     <span>
                         &nbsp;: string            </span>
 </dt>
 <dd>Content.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Decision-Model-Decision.html#property_destroyedby">$destroyedby</a>
-    <span>
-                        &nbsp;: <a href="classes/Decision-Model-SubDecision-Destroy.html"><abbr title="\Decision\Model\SubDecision\Destroy">Destroy</abbr></a>            </span>
-</dt>
-<dd>Destroyed by.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Decision-Model-Decision.html#property_meeting">$meeting</a>
@@ -518,18 +518,18 @@
 <dd>Add multiple subdecisions.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Decision-Model-Decision.html#method_getAnnulledBy">getAnnulledBy()</a>
+    <span>
+                                &nbsp;: <a href="classes/Decision-Model-SubDecision-Annulment.html"><abbr title="\Decision\Model\SubDecision\Annulment">Annulment</abbr></a>|null    </span>
+</dt>
+<dd>Get the subdecision by which this decision is annulled.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-Decision.html#method_getContent">getContent()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
 <dd>Get decision content.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Decision-Model-Decision.html#method_getDestroyedBy">getDestroyedBy()</a>
-    <span>
-                                &nbsp;: <a href="classes/Decision-Model-SubDecision-Destroy.html"><abbr title="\Decision\Model\SubDecision\Destroy">Destroy</abbr></a>    </span>
-</dt>
-<dd>Get the subdecision by which this decision is destroyed.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-Decision.html#method_getMeeting">getMeeting()</a>
@@ -574,11 +574,11 @@
 <dd>Get the subdecisions.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Decision-Model-Decision.html#method_isDestroyed">isDestroyed()</a>
+    <a href="classes/Decision-Model-Decision.html#method_isAnnulled">isAnnulled()</a>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
-<dd>Check if this decision is destroyed by another decision.</dd>
+<dd>Check if this decision is annulled by another decision.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Decision-Model-Decision.html#method_setContent">setContent()</a>
@@ -629,6 +629,40 @@
             -protected
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="property_annulledBy">
+        $annulledBy
+        <a href="classes/Decision-Model-Decision.html#property_annulledBy" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Decision.php"><a href="files/module-decision-src-model-decision.html"><abbr title="module/Decision/src/Model/Decision.php">Decision.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">102</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Annulled by.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Decision-Model-SubDecision-Annulment.html"><abbr title="\Decision\Model\SubDecision\Annulment">Annulment</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$annulledBy</span>
+    </code>
+
+    
+    
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="property_content">
         $content
         <a href="classes/Decision-Model-Decision.html#property_content" class="headerlink"><i class="fas fa-link"></i></a>
@@ -654,40 +688,6 @@
         <section class="phpdocumentor-description"><p>Generated from subdecisions.</p>
 </section>
 
-    
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_destroyedby">
-        $destroyedby
-        <a href="classes/Decision-Model-Decision.html#property_destroyedby" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Decision.php"><a href="files/module-decision-src-model-decision.html"><abbr title="module/Decision/src/Model/Decision.php">Decision.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">102</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Destroyed by.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/Decision-Model-SubDecision-Destroy.html"><abbr title="\Decision\Model\SubDecision\Destroy">Destroy</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$destroyedby</span>
-    </code>
-
-    
     
     
 
@@ -998,6 +998,44 @@
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_getAnnulledBy">
+        getAnnulledBy()
+        <a href="classes/Decision-Model-Decision.html#method_getAnnulledBy" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Decision.php"><a href="files/module-decision-src-model-decision.html"><abbr title="module/Decision/src/Model/Decision.php">Decision.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">226</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Get the subdecision by which this decision is annulled.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getAnnulledBy</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-SubDecision-Annulment.html"><abbr title="\Decision\Model\SubDecision\Annulment">Annulment</abbr></a>|null</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+        <section class="phpdocumentor-description"><p>Or null, if it wasn't annulled.</p>
+</section>
+
+    
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-SubDecision-Annulment.html"><abbr title="\Decision\Model\SubDecision\Annulment">Annulment</abbr></a>|null</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_getContent">
         getContent()
         <a href="classes/Decision-Model-Decision.html#method_getContent" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1025,44 +1063,6 @@
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">string</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getDestroyedBy">
-        getDestroyedBy()
-        <a href="classes/Decision-Model-Decision.html#method_getDestroyedBy" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Decision.php"><a href="files/module-decision-src-model-decision.html"><abbr title="module/Decision/src/Model/Decision.php">Decision.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">226</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Get the subdecision by which this decision is destroyed.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getDestroyedBy</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-SubDecision-Destroy.html"><abbr title="\Decision\Model\SubDecision\Destroy">Destroy</abbr></a></span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-        <section class="phpdocumentor-description"><p>Or null, if it wasn't destroyed.</p>
-</section>
-
-    
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-SubDecision-Destroy.html"><abbr title="\Decision\Model\SubDecision\Destroy">Destroy</abbr></a></span>
             </section>
 
 </article>
@@ -1288,9 +1288,9 @@
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_isDestroyed">
-        isDestroyed()
-        <a href="classes/Decision-Model-Decision.html#method_isDestroyed" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_isAnnulled">
+        isAnnulled()
+        <a href="classes/Decision-Model-Decision.html#method_isAnnulled" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
@@ -1300,11 +1300,11 @@
 
     </aside>
 
-        <p class="phpdocumentor-summary">Check if this decision is destroyed by another decision.</p>
+        <p class="phpdocumentor-summary">Check if this decision is annulled by another decision.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">isDestroyed</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+                    <span class="phpdocumentor-signature__name">isAnnulled</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -1599,8 +1599,8 @@
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
+                                                    <li><a href="classes/Decision-Model-Decision.html#property_annulledBy">$annulledBy<a href="classes/Decision-Model-Decision.html"></li>
                                                     <li><a href="classes/Decision-Model-Decision.html#property_content">$content<a href="classes/Decision-Model-Decision.html"></li>
-                                                    <li><a href="classes/Decision-Model-Decision.html#property_destroyedby">$destroyedby<a href="classes/Decision-Model-Decision.html"></li>
                                                     <li><a href="classes/Decision-Model-Decision.html#property_meeting">$meeting<a href="classes/Decision-Model-Decision.html"></li>
                                                     <li><a href="classes/Decision-Model-Decision.html#property_meeting_number">$meeting_number<a href="classes/Decision-Model-Decision.html"></li>
                                                     <li><a href="classes/Decision-Model-Decision.html#property_meeting_type">$meeting_type<a href="classes/Decision-Model-Decision.html"></li>
@@ -1615,15 +1615,15 @@
                 <ul class="phpdocumentor-list -clean">
                                             <li><a href="classes/Decision-Model-Decision.html#method_addSubdecision">addSubdecision()</a></li>
                                             <li><a href="classes/Decision-Model-Decision.html#method_addSubdecisions">addSubdecisions()</a></li>
+                                            <li><a href="classes/Decision-Model-Decision.html#method_getAnnulledBy">getAnnulledBy()</a></li>
                                             <li><a href="classes/Decision-Model-Decision.html#method_getContent">getContent()</a></li>
-                                            <li><a href="classes/Decision-Model-Decision.html#method_getDestroyedBy">getDestroyedBy()</a></li>
                                             <li><a href="classes/Decision-Model-Decision.html#method_getMeeting">getMeeting()</a></li>
                                             <li><a href="classes/Decision-Model-Decision.html#method_getMeetingNumber">getMeetingNumber()</a></li>
                                             <li><a href="classes/Decision-Model-Decision.html#method_getMeetingType">getMeetingType()</a></li>
                                             <li><a href="classes/Decision-Model-Decision.html#method_getNumber">getNumber()</a></li>
                                             <li><a href="classes/Decision-Model-Decision.html#method_getPoint">getPoint()</a></li>
                                             <li><a href="classes/Decision-Model-Decision.html#method_getSubdecisions">getSubdecisions()</a></li>
-                                            <li><a href="classes/Decision-Model-Decision.html#method_isDestroyed">isDestroyed()</a></li>
+                                            <li><a href="classes/Decision-Model-Decision.html#method_isAnnulled">isAnnulled()</a></li>
                                             <li><a href="classes/Decision-Model-Decision.html#method_setContent">setContent()</a></li>
                                             <li><a href="classes/Decision-Model-Decision.html#method_setMeeting">setMeeting()</a></li>
                                             <li><a href="classes/Decision-Model-Decision.html#method_setNumber">setNumber()</a></li>
