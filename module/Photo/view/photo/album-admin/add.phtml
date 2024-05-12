@@ -98,14 +98,14 @@ $this->breadcrumbs()
 
                 window.addEventListener("beforeunload", function (e) {
                     if (uploading) {
+                        e.preventDefault();
                         // Most modern browsers no longer support setting custom dialog messages
                         // for this dialog, but for backwards compatibility this could be nice.
-                        const warning = "You are currently uploading files, are you sure you want to leave?";
-                        e.returnValue = warning;
-                        return warning;
+                        // So, included for legacy support, e.g. Chrome/Edge < 119:
+                        e.returnValue = "You are currently uploading files, are you sure you want to leave?";
                     }
                 });
-                
+
                 this.on("addedfile", function (file) {
                     uploading = true
                 })
