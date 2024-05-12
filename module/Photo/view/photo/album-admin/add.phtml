@@ -93,6 +93,27 @@ $this->breadcrumbs()
     document.addEventListener("DOMContentLoaded", function() {
         Dropzone.options.imageDropzone = {
             acceptedFiles: 'image/*',
+            init: function () {
+                let uploading = false;
+
+                window.addEventListener("beforeunload", function (e) {
+                    if (uploading) {
+                        // Most modern browsers no longer support setting custom dialog messages
+                        // for this dialog, but for backwards compatibility this could be nice.
+                        const warning = "You are currently uploading files, are you sure you want to leave?";
+                        e.returnValue = warning;
+                        return warning;
+                    }
+                });
+                
+                this.on("addedfile", function (file) {
+                    uploading = true
+                })
+
+                this.on("queuecomplete", function (file) {
+                    uploading = false
+                });
+             }
         };
         Dropzone.discover();
     });
