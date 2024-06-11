@@ -54,7 +54,7 @@
     Menu
 </label>
 <aside class="phpdocumentor-column -three phpdocumentor-sidebar">
-                    <section class="phpdocumentor-sidebar__category">
+                    <section class="phpdocumentor-sidebar__category -namespaces">
             <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="namespaces/activity.html" class="">Activity</a>
@@ -357,7 +357,7 @@
 </h4>
 
                         </section>
-                <section class="phpdocumentor-sidebar__category">
+                <section class="phpdocumentor-sidebar__category -packages">
             <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="packages/gewisweb.html" class="">gewisweb</a>
@@ -365,14 +365,14 @@
 
                         </section>
             
-    <section class="phpdocumentor-sidebar__category">
+    <section class="phpdocumentor-sidebar__category -reports">
         <h2 class="phpdocumentor-sidebar__category-header">Reports</h2>
                 <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/deprecated.html">Deprecated</a></h3>
         <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/errors.html">Errors</a></h3>
         <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/markers.html">Markers</a></h3>
     </section>
 
-    <section class="phpdocumentor-sidebar__category">
+    <section class="phpdocumentor-sidebar__category -indices">
         <h2 class="phpdocumentor-sidebar__category-header">Indices</h2>
         <h3 class="phpdocumentor-sidebar__root-package"><a href="indices/files.html">Files</a></h3>
     </section>
@@ -424,6 +424,8 @@
 
 
 
+
+
 <h3 id="toc">
     Table of Contents
     <a href="classes/Application-Extensions-CommonMark-VideoIframe-Parsers-VimeoUrlParser.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
@@ -452,7 +454,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -constant -private">
     <a href="classes/Application-Extensions-CommonMark-VideoIframe-Parsers-VimeoUrlParser.html#constant_REGEX">REGEX</a>
     <span>
-        &nbsp;= &#039;/(?:vimeo\\.com\\/(?:\\d+|[^\\/]+\\/[^\\/]+\\/video\\/|album\\/[^\\/]+\\/video\\/|channels\\/[^\\/]+\\/|groups\\/[^\\/]+\\/videos\\/|ondemand\\/[^\\/]+\\/)|player\\.vimeo\\.com\\/video\\/)(\\d+)/&#039;                            </span>
+        &nbsp;= &#039;/(?:vimeo\.com\/(?:\d+|[^\/]+\/[^\/]+\/video\/|album\/[^\/]+\/video\/|channels\/[^\/]+\/|groups\/[^\/]+\/videos\/|ondemand\/[^\/]+\/)|player\.vimeo\.com\/video\/)(\d+)/&#039;                            </span>
 </dt>
 
     </dl>
@@ -472,7 +474,6 @@
 </dt>
 
     </dl>
-
 
 
 
@@ -502,12 +503,14 @@
     <span class="phpdocumentor-signature__visibility">private</span>
         <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">REGEX</span>
-    = <span class="phpdocumentor-signature__default-value">&#039;/(?:vimeo\\.com\\/(?:\\d+|[^\\/]+\\/[^\\/]+\\/video\\/|album\\/[^\\/]+\\/video\\/|channels\\/[^\\/]+\\/|groups\\/[^\\/]+\\/videos\\/|ondemand\\/[^\\/]+\\/)|player\\.vimeo\\.com\\/video\\/)(\\d+)/&#039;</span>
+    = <span class="phpdocumentor-signature__default-value">&#039;/(?:vimeo\.com\/(?:\d+|[^\/]+\/[^\/]+\/video\/|album\/[^\/]+\/video\/|channels\/[^\/]+\/|groups\/[^\/]+\/videos\/|ondemand\/[^\/]+\/)|player\.vimeo\.com\/video\/)(\d+)/&#039;</span>
 </code>
 
 
     
     
+    
+
     
 
 </article>
@@ -559,6 +562,19 @@
             </dl>
 
     
+
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Application-Extensions-CommonMark-VideoIframe-Parsers-VimeoUrlParser.html#method_parse#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Override">Override</abbr>]
+    </dt>
+    </dl>
+            </section>
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>

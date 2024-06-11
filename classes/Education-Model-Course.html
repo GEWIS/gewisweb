@@ -54,7 +54,7 @@
     Menu
 </label>
 <aside class="phpdocumentor-column -three phpdocumentor-sidebar">
-                    <section class="phpdocumentor-sidebar__category">
+                    <section class="phpdocumentor-sidebar__category -namespaces">
             <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="namespaces/activity.html" class="">Activity</a>
@@ -357,7 +357,7 @@
 </h4>
 
                         </section>
-                <section class="phpdocumentor-sidebar__category">
+                <section class="phpdocumentor-sidebar__category -packages">
             <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="packages/gewisweb.html" class="">gewisweb</a>
@@ -365,14 +365,14 @@
 
                         </section>
             
-    <section class="phpdocumentor-sidebar__category">
+    <section class="phpdocumentor-sidebar__category -reports">
         <h2 class="phpdocumentor-sidebar__category-header">Reports</h2>
                 <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/deprecated.html">Deprecated</a></h3>
         <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/errors.html">Errors</a></h3>
         <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/markers.html">Markers</a></h3>
     </section>
 
-    <section class="phpdocumentor-sidebar__category">
+    <section class="phpdocumentor-sidebar__category -indices">
         <h2 class="phpdocumentor-sidebar__category-header">Indices</h2>
         <h3 class="phpdocumentor-sidebar__root-package"><a href="indices/files.html">Files</a></h3>
     </section>
@@ -438,6 +438,19 @@ name: string,
 
                                     </dd>
                                             </dl>
+
+
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Education-Model-Course.html#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Entity">Entity</abbr>]
+    </dt>
+    </dl>
+            </section>
 
 
 
@@ -603,7 +616,6 @@ name: string,
 
 
 
-
         
 
         
@@ -646,6 +658,27 @@ name: string,
     
     
 
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Education-Model-Course.html#property_code#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $type: &#039;string&#039;
+    </dd>
+    </dl>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Id">Id</abbr>]
+    </dt>
+    </dl>
+            </section>
+
 </article>
                     <article
         class="
@@ -682,6 +715,33 @@ name: string,
     
     
 
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Education-Model-Course.html#property_documents#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\OneToMany">OneToMany</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $targetEntity: \Education\Model\CourseDocument::class
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $mappedBy: &#039;course&#039;
+    </dd>
+    </dl>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\OrderBy">OrderBy</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $value: [&#039;date&#039; =&gt; &#039;ASC&#039;]
+    </dd>
+    </dl>
+            </section>
+
 </article>
                     <article
         class="
@@ -715,6 +775,22 @@ name: string,
     
     
     
+
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Education-Model-Course.html#property_name#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $type: &#039;string&#039;
+    </dd>
+    </dl>
+            </section>
 
 </article>
                     <article
@@ -750,6 +826,25 @@ name: string,
     
     
 
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Education-Model-Course.html#property_similarCoursesFrom#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\ManyToMany">ManyToMany</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $targetEntity: self::class
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $mappedBy: &#039;similarCoursesTo&#039;
+    </dd>
+    </dl>
+            </section>
+
 </article>
                     <article
         class="
@@ -783,6 +878,55 @@ name: string,
     
     
     
+
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Education-Model-Course.html#property_similarCoursesTo#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\InverseJoinColumn">InverseJoinColumn</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $name: &#039;similar_course_code&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $referencedColumnName: &#039;code&#039;
+    </dd>
+    </dl>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\JoinColumn">JoinColumn</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $name: &#039;course_code&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $referencedColumnName: &#039;code&#039;
+    </dd>
+    </dl>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\JoinTable">JoinTable</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $name: &#039;SimilarCourse&#039;
+    </dd>
+    </dl>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\ManyToMany">ManyToMany</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $targetEntity: self::class
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $inversedBy: &#039;similarCoursesFrom&#039;
+    </dd>
+    </dl>
+            </section>
 
 </article>
             </section>
@@ -820,6 +964,8 @@ name: string,
         </div>
     
     
+    
+
     
 
     
@@ -865,6 +1011,8 @@ name: string,
     
 
     
+
+    
 </article>
                     <article
         class="phpdocumentor-element
@@ -897,6 +1045,8 @@ name: string,
     
 
     
+
+    
 </article>
                     <article
         class="phpdocumentor-element
@@ -926,6 +1076,8 @@ name: string,
         </div>
     
     
+    
+
     
 
             <section>
@@ -964,6 +1116,8 @@ name: string,
     
     
 
+    
+
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Education-Model-CourseDocument.html"><abbr title="\Education\Model\CourseDocument">CourseDocument</abbr></a>&gt;</span>
@@ -998,6 +1152,8 @@ name: string,
         </div>
     
     
+    
+
     
 
             <section>
@@ -1036,6 +1192,8 @@ name: string,
     
     
 
+    
+
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">string</span>
@@ -1072,6 +1230,8 @@ name: string,
     
     
 
+    
+
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">string</span>
@@ -1106,6 +1266,8 @@ name: string,
         </div>
     
     
+    
+
     
 
             <section>
@@ -1155,6 +1317,8 @@ name: string,
     
 
     
+
+    
 </article>
                     <article
         class="phpdocumentor-element
@@ -1197,6 +1361,8 @@ name: string,
     
 
     
+
+    
 </article>
                     <article
         class="phpdocumentor-element
@@ -1225,6 +1391,8 @@ name: string,
         </div>
     
     
+    
+
     
 
             <section>
@@ -1260,6 +1428,8 @@ name: string,
         </div>
     
     
+    
+
     
 
             <section>

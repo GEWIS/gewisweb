@@ -54,7 +54,7 @@
     Menu
 </label>
 <aside class="phpdocumentor-column -three phpdocumentor-sidebar">
-                    <section class="phpdocumentor-sidebar__category">
+                    <section class="phpdocumentor-sidebar__category -namespaces">
             <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="namespaces/activity.html" class="">Activity</a>
@@ -357,7 +357,7 @@
 </h4>
 
                         </section>
-                <section class="phpdocumentor-sidebar__category">
+                <section class="phpdocumentor-sidebar__category -packages">
             <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="packages/gewisweb.html" class="">gewisweb</a>
@@ -365,14 +365,14 @@
 
                         </section>
             
-    <section class="phpdocumentor-sidebar__category">
+    <section class="phpdocumentor-sidebar__category -reports">
         <h2 class="phpdocumentor-sidebar__category-header">Reports</h2>
                 <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/deprecated.html">Deprecated</a></h3>
         <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/errors.html">Errors</a></h3>
         <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/markers.html">Markers</a></h3>
     </section>
 
-    <section class="phpdocumentor-sidebar__category">
+    <section class="phpdocumentor-sidebar__category -indices">
         <h2 class="phpdocumentor-sidebar__category-header">Indices</h2>
         <h3 class="phpdocumentor-sidebar__root-package"><a href="indices/files.html">Files</a></h3>
     </section>
@@ -419,6 +419,8 @@
 
     <section class="phpdocumentor-description"><p>This is a VirtualAlbum, meaning that it is not persisted.</p>
 </section>
+
+
 
 
 
@@ -545,14 +547,14 @@ nullable.</dd>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Photo-Model-Album.html#method_addAlbum">addAlbum()</a>
+    <a href="classes/Photo-Model-VirtualAlbum.html#method_addAlbum">addAlbum()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
 <dd>Add a sub album to an album.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Photo-Model-Album.html#method_addPhoto">addPhoto()</a>
+    <a href="classes/Photo-Model-VirtualAlbum.html#method_addPhoto">addPhoto()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
@@ -565,14 +567,14 @@ nullable.</dd>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Photo-Model-Album.html#method_getAlbumCount">getAlbumCount()</a>
+    <a href="classes/Photo-Model-VirtualAlbum.html#method_getAlbumCount">getAlbumCount()</a>
     <span>
                                 &nbsp;: int    </span>
 </dt>
 <dd>Get the amount of subalbums in the album.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Photo-Model-Album.html#method_getChildren">getChildren()</a>
+    <a href="classes/Photo-Model-VirtualAlbum.html#method_getChildren">getChildren()</a>
     <span>
                                 &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Photo-Model-Album.html"><abbr title="\Photo\Model\Album">Album</abbr></a>&gt;    </span>
 </dt>
@@ -619,21 +621,21 @@ nullable.</dd>
 <dd>Get the album name.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Photo-Model-Album.html#method_getParent">getParent()</a>
+    <a href="classes/Photo-Model-VirtualAlbum.html#method_getParent">getParent()</a>
     <span>
                                 &nbsp;: <a href="classes/Photo-Model-Album.html"><abbr title="\Photo\Model\Album">Album</abbr></a>|null    </span>
 </dt>
 <dd>Get the parent album.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Photo-Model-Album.html#method_getPhotoCount">getPhotoCount()</a>
+    <a href="classes/Photo-Model-VirtualAlbum.html#method_getPhotoCount">getPhotoCount()</a>
     <span>
                                 &nbsp;: int    </span>
 </dt>
 <dd>Get the amount of photos in the album.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Photo-Model-Album.html#method_getPhotos">getPhotos()</a>
+    <a href="classes/Photo-Model-VirtualAlbum.html#method_getPhotos">getPhotos()</a>
     <span>
                                 &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Photo-Model-Photo.html"><abbr title="\Photo\Model\Photo">Photo</abbr></a>&gt;    </span>
 </dt>
@@ -723,7 +725,7 @@ nullable.</dd>
 <dd>Set the name of the album.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Photo-Model-Album.html#method_setParent">setParent()</a>
+    <a href="classes/Photo-Model-VirtualAlbum.html#method_setParent">setParent()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
@@ -744,16 +746,16 @@ nullable.</dd>
 <dd>Set the start date.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Photo-Model-Album.html#method_toArray">toArray()</a>
+    <a href="classes/Photo-Model-VirtualAlbum.html#method_toArray">toArray()</a>
     <span>
-                                &nbsp;: <abbr title="\Photo\Model\AlbumArrayType">AlbumArrayType</abbr>    </span>
+                                &nbsp;: <abbr title="array{id: int, startDateTime: ?\DateTime, endDateTime: ?\DateTime, published: bool, name: string, parent: null, children: array{}, photos: array{}, coverPath: ?string, photoCount: int, albumCount: int}">DateTime, published: bool, name: string, parent: null, children: array{}, photos: array{}, coverPath: ?string, photoCount: int, albumCount: int}</abbr>    </span>
 </dt>
 <dd>Returns an associative array representation of this object.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Photo-Model-Album.html#method_toArrayWithChildren">toArrayWithChildren()</a>
+    <a href="classes/Photo-Model-VirtualAlbum.html#method_toArrayWithChildren">toArrayWithChildren()</a>
     <span>
-                                &nbsp;: <abbr title="array{id: int, startDateTime: ?\DateTime, endDateTime: ?\DateTime, published: bool, name: string, parent: ?array<string,mixed>, children: \Photo\Model\AlbumArrayType[], photos: \Photo\Model\ImportedPhotoArrayType[], coverPath: ?string, photoCount: int, albumCount: int}">ImportedPhotoArrayType[], coverPath: ?string, photoCount: int, albumCount: int}</abbr>    </span>
+                                &nbsp;: <abbr title="array{id: int, startDateTime: ?\DateTime, endDateTime: ?\DateTime, published: bool, name: string, parent: null, children: array{}, photos: \Photo\Model\ImportedPhotoArrayType[], coverPath: ?string, photoCount: int, albumCount: int}">ImportedPhotoArrayType[], coverPath: ?string, photoCount: int, albumCount: int}</abbr>    </span>
 </dt>
 <dd>Returns an associative array representation of this object
 including all child objects.</dd>
@@ -771,7 +773,6 @@ including all child objects.</dd>
 </dt>
 
     </dl>
-
 
 
 
@@ -819,6 +820,31 @@ album count.</p>
     
     
 
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Photo-Model-Album.html#property_children#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\OneToMany">OneToMany</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $targetEntity: self::class
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $mappedBy: &#039;parent&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $cascade: [&#039;persist&#039;, &#039;remove&#039;]
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $fetch: &#039;EXTRA_LAZY&#039;
+    </dd>
+    </dl>
+            </section>
+
 </article>
                     <article
         class="
@@ -852,6 +878,25 @@ album count.</p>
     
     
     
+
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Photo-Model-Album.html#property_coverPath#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $type: &#039;string&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $nullable: true
+    </dd>
+    </dl>
+            </section>
 
 </article>
                     <article
@@ -887,6 +932,22 @@ album count.</p>
     
     
 
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Application-Model-Traits-TimestampableTrait.html#property_createdAt#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $type: &#039;datetime&#039;
+    </dd>
+    </dl>
+            </section>
+
 </article>
                     <article
         class="
@@ -920,6 +981,25 @@ album count.</p>
     
     
     
+
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Photo-Model-Album.html#property_endDateTime#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $type: &#039;datetime&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $nullable: true
+    </dd>
+    </dl>
+            </section>
 
 </article>
                     <article
@@ -956,6 +1036,35 @@ nullable.</p>
     
     
 
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $type: &#039;integer&#039;
+    </dd>
+    </dl>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\GeneratedValue">GeneratedValue</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $strategy: &#039;IDENTITY&#039;
+    </dd>
+    </dl>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Id">Id</abbr>]
+    </dt>
+    </dl>
+            </section>
+
 </article>
                     <article
         class="
@@ -990,6 +1099,22 @@ nullable.</p>
     
     
 
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Photo-Model-Album.html#property_name#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $type: &#039;string&#039;
+    </dd>
+    </dl>
+            </section>
+
 </article>
                     <article
         class="
@@ -1023,6 +1148,36 @@ nullable.</p>
     
     
     
+
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Photo-Model-Album.html#property_parent#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\JoinColumn">JoinColumn</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $name: &#039;parent_id&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $referencedColumnName: &#039;id&#039;
+    </dd>
+    </dl>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\ManyToOne">ManyToOne</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $targetEntity: self::class
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $inversedBy: &#039;children&#039;
+    </dd>
+    </dl>
+            </section>
 
 </article>
                     <article
@@ -1061,6 +1216,39 @@ photo count.</p>
     
     
 
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Photo-Model-Album.html#property_photos#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\OneToMany">OneToMany</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $targetEntity: \Photo\Model\Photo::class
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $mappedBy: &#039;album&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $cascade: [&#039;persist&#039;, &#039;remove&#039;]
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $fetch: &#039;EXTRA_LAZY&#039;
+    </dd>
+    </dl>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\OrderBy">OrderBy</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $value: [&#039;dateTime&#039; =&gt; &#039;ASC&#039;]
+    </dd>
+    </dl>
+            </section>
+
 </article>
                     <article
         class="
@@ -1094,6 +1282,22 @@ photo count.</p>
     
     
     
+
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Photo-Model-Album.html#property_published#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $type: &#039;boolean&#039;
+    </dd>
+    </dl>
+            </section>
 
 </article>
                     <article
@@ -1129,6 +1333,25 @@ photo count.</p>
     
     
 
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Photo-Model-Album.html#property_startDateTime#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $type: &#039;datetime&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $nullable: true
+    </dd>
+    </dl>
+            </section>
+
 </article>
                     <article
         class="
@@ -1163,6 +1386,22 @@ photo count.</p>
     
     
 
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Application-Model-Traits-TimestampableTrait.html#property_updatedAt#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $type: &#039;datetime&#039;
+    </dd>
+    </dl>
+            </section>
+
 </article>
                     <article
         class="
@@ -1194,6 +1433,8 @@ photo count.</p>
 
     
     
+    
+
     
 
 </article>
@@ -1252,6 +1493,8 @@ photo count.</p>
     
 
     
+
+    
 </article>
                     <article
         class="phpdocumentor-element
@@ -1261,13 +1504,13 @@ photo count.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_addAlbum">
         addAlbum()
-        <a href="classes/Photo-Model-Album.html#method_addAlbum" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Photo-Model-VirtualAlbum.html#method_addAlbum" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Album.php"><a href="files/module-photo-src-model-album.html"><abbr title="module/Photo/src/Model/Album.php">Album.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/VirtualAlbum.php"><a href="files/module-photo-src-model-virtualalbum.html"><abbr title="module/Photo/src/Model/VirtualAlbum.php">VirtualAlbum.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">167</span>
+    <span class="phpdocumentor-element-found-in__line">94</span>
 
     </aside>
 
@@ -1292,6 +1535,23 @@ photo count.</p>
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Photo-Model-VirtualAlbum.html#method_addAlbum#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
+                                                            
+                                             
+                                    </dd>
+                                            </dl>
+
+    
 
     
 </article>
@@ -1303,13 +1563,13 @@ photo count.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_addPhoto">
         addPhoto()
-        <a href="classes/Photo-Model-Album.html#method_addPhoto" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Photo-Model-VirtualAlbum.html#method_addPhoto" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Album.php"><a href="files/module-photo-src-model-album.html"><abbr title="module/Photo/src/Model/Album.php">Album.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/VirtualAlbum.php"><a href="files/module-photo-src-model-virtualalbum.html"><abbr title="module/Photo/src/Model/VirtualAlbum.php">VirtualAlbum.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">158</span>
+    <span class="phpdocumentor-element-found-in__line">70</span>
 
     </aside>
 
@@ -1332,6 +1592,8 @@ photo count.</p>
                 
             </dd>
             </dl>
+
+    
 
     
 
@@ -1377,6 +1639,8 @@ photo count.</p>
     
 
     
+
+    
 </article>
                     <article
         class="phpdocumentor-element
@@ -1386,13 +1650,13 @@ photo count.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_getAlbumCount">
         getAlbumCount()
-        <a href="classes/Photo-Model-Album.html#method_getAlbumCount" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Photo-Model-VirtualAlbum.html#method_getAlbumCount" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Album.php"><a href="files/module-photo-src-model-album.html"><abbr title="module/Photo/src/Model/Album.php">Album.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/VirtualAlbum.php"><a href="files/module-photo-src-model-virtualalbum.html"><abbr title="module/Photo/src/Model/VirtualAlbum.php">VirtualAlbum.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">366</span>
+    <span class="phpdocumentor-element-found-in__line">177</span>
 
     </aside>
 
@@ -1406,6 +1670,8 @@ photo count.</p>
         </div>
     
     
+    
+
     
 
             <section>
@@ -1422,13 +1688,13 @@ photo count.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_getChildren">
         getChildren()
-        <a href="classes/Photo-Model-Album.html#method_getChildren" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Photo-Model-VirtualAlbum.html#method_getChildren" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Album.php"><a href="files/module-photo-src-model-album.html"><abbr title="module/Photo/src/Model/Album.php">Album.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/VirtualAlbum.php"><a href="files/module-photo-src-model-virtualalbum.html"><abbr title="module/Photo/src/Model/VirtualAlbum.php">VirtualAlbum.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">140</span>
+    <span class="phpdocumentor-element-found-in__line">54</span>
 
     </aside>
 
@@ -1442,6 +1708,8 @@ photo count.</p>
         </div>
     
     
+    
+
     
 
             <section>
@@ -1480,6 +1748,8 @@ photo count.</p>
     
     
 
+    
+
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">string|null</span>
@@ -1513,6 +1783,8 @@ photo count.</p>
         </div>
     
     
+    
+
     
 
             <section>
@@ -1549,6 +1821,8 @@ photo count.</p>
         </div>
     
     
+    
+
     
 
             <section>
@@ -1601,6 +1875,8 @@ photo count.</p>
                                     </dd>
                                             </dl>
 
+    
+
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">int|null</span>
@@ -1634,6 +1910,8 @@ photo count.</p>
         </div>
     
     
+    
+
     
 
             <section>
@@ -1672,6 +1950,8 @@ photo count.</p>
     
     
 
+    
+
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">string</span>
@@ -1690,13 +1970,13 @@ photo count.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_getParent">
         getParent()
-        <a href="classes/Photo-Model-Album.html#method_getParent" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Photo-Model-VirtualAlbum.html#method_getParent" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Album.php"><a href="files/module-photo-src-model-album.html"><abbr title="module/Photo/src/Model/Album.php">Album.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/VirtualAlbum.php"><a href="files/module-photo-src-model-virtualalbum.html"><abbr title="module/Photo/src/Model/VirtualAlbum.php">VirtualAlbum.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">294</span>
+    <span class="phpdocumentor-element-found-in__line">34</span>
 
     </aside>
 
@@ -1710,6 +1990,8 @@ photo count.</p>
         </div>
     
     
+    
+
     
 
             <section>
@@ -1730,13 +2012,13 @@ photo count.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_getPhotoCount">
         getPhotoCount()
-        <a href="classes/Photo-Model-Album.html#method_getPhotoCount" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Photo-Model-VirtualAlbum.html#method_getPhotoCount" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Album.php"><a href="files/module-photo-src-model-album.html"><abbr title="module/Photo/src/Model/Album.php">Album.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/VirtualAlbum.php"><a href="files/module-photo-src-model-virtualalbum.html"><abbr title="module/Photo/src/Model/VirtualAlbum.php">VirtualAlbum.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">350</span>
+    <span class="phpdocumentor-element-found-in__line">169</span>
 
     </aside>
 
@@ -1744,7 +2026,7 @@ photo count.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getPhotoCount</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$includeSubAlbums</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">true</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
+                    <span class="phpdocumentor-signature__name">getPhotoCount</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$includeSubAlbums</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">false</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -1754,11 +2036,13 @@ photo count.</p>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$includeSubAlbums</span>
                 : <span class="phpdocumentor-signature__argument__return-type">bool</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">true</span>            </dt>
+                 = <span class="phpdocumentor-signature__argument__default-value">false</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
             </dd>
             </dl>
+
+    
 
     
 
@@ -1776,13 +2060,13 @@ photo count.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_getPhotos">
         getPhotos()
-        <a href="classes/Photo-Model-Album.html#method_getPhotos" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Photo-Model-VirtualAlbum.html#method_getPhotos" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Album.php"><a href="files/module-photo-src-model-album.html"><abbr title="module/Photo/src/Model/Album.php">Album.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/VirtualAlbum.php"><a href="files/module-photo-src-model-virtualalbum.html"><abbr title="module/Photo/src/Model/VirtualAlbum.php">VirtualAlbum.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">150</span>
+    <span class="phpdocumentor-element-found-in__line">62</span>
 
     </aside>
 
@@ -1796,6 +2080,8 @@ photo count.</p>
         </div>
     
     
+    
+
     
 
             <section>
@@ -1834,6 +2120,8 @@ photo count.</p>
     
     
 
+    
+
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">bool</span>
@@ -1868,6 +2156,8 @@ photo count.</p>
         </div>
     
     
+    
+
     
 
             <section>
@@ -1906,6 +2196,8 @@ photo count.</p>
     
     
 
+    
+
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><abbr title="\DateTime">DateTime</abbr>|null</span>
@@ -1939,6 +2231,8 @@ photo count.</p>
         </div>
     
     
+    
+
     
 
             <section>
@@ -1975,6 +2269,8 @@ photo count.</p>
         </div>
     
     
+    
+
     
 
             <section>
@@ -2014,6 +2310,19 @@ photo count.</p>
     
 
     
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Application-Model-Traits-TimestampableTrait.html#method_prePersist#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\PrePersist">PrePersist</abbr>]
+    </dt>
+    </dl>
+            </section>
+
+    
 </article>
                     <article
         class="phpdocumentor-element
@@ -2044,6 +2353,19 @@ photo count.</p>
     
     
     
+
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Application-Model-Traits-TimestampableTrait.html#method_preUpdate#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\PreUpdate">PreUpdate</abbr>]
+    </dt>
+    </dl>
+            </section>
 
     
 </article>
@@ -2084,6 +2406,8 @@ photo count.</p>
                 
             </dd>
             </dl>
+
+    
 
     
 
@@ -2130,6 +2454,8 @@ photo count.</p>
     
 
     
+
+    
 </article>
                     <article
         class="phpdocumentor-element
@@ -2168,6 +2494,8 @@ photo count.</p>
                 
             </dd>
             </dl>
+
+    
 
     
 
@@ -2214,6 +2542,8 @@ photo count.</p>
     
 
     
+
+    
 </article>
                     <article
         class="phpdocumentor-element
@@ -2256,6 +2586,8 @@ photo count.</p>
     
 
     
+
+    
 </article>
                     <article
         class="phpdocumentor-element
@@ -2265,13 +2597,13 @@ photo count.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_setParent">
         setParent()
-        <a href="classes/Photo-Model-Album.html#method_setParent" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Photo-Model-VirtualAlbum.html#method_setParent" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Album.php"><a href="files/module-photo-src-model-album.html"><abbr title="module/Photo/src/Model/Album.php">Album.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/VirtualAlbum.php"><a href="files/module-photo-src-model-virtualalbum.html"><abbr title="module/Photo/src/Model/VirtualAlbum.php">VirtualAlbum.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">302</span>
+    <span class="phpdocumentor-element-found-in__line">44</span>
 
     </aside>
 
@@ -2294,6 +2626,23 @@ photo count.</p>
                 
             </dd>
             </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Photo-Model-VirtualAlbum.html#method_setParent#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
+                                                            
+                                             
+                                    </dd>
+                                            </dl>
 
     
 
@@ -2340,6 +2689,8 @@ photo count.</p>
     
 
     
+
+    
 </article>
                     <article
         class="phpdocumentor-element
@@ -2382,6 +2733,8 @@ photo count.</p>
     
 
     
+
+    
 </article>
                     <article
         class="phpdocumentor-element
@@ -2391,13 +2744,13 @@ photo count.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_toArray">
         toArray()
-        <a href="classes/Photo-Model-Album.html#method_toArray" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Photo-Model-VirtualAlbum.html#method_toArray" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Album.php"><a href="files/module-photo-src-model-album.html"><abbr title="module/Photo/src/Model/Album.php">Album.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/VirtualAlbum.php"><a href="files/module-photo-src-model-virtualalbum.html"><abbr title="module/Photo/src/Model/VirtualAlbum.php">VirtualAlbum.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">222</span>
+    <span class="phpdocumentor-element-found-in__line">149</span>
 
     </aside>
 
@@ -2405,7 +2758,7 @@ photo count.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">toArray</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Photo\Model\AlbumArrayType">AlbumArrayType</abbr></span></code>
+                    <span class="phpdocumentor-signature__name">toArray</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="array{id: int, startDateTime: ?\DateTime, endDateTime: ?\DateTime, published: bool, name: string, parent: null, children: array{}, photos: array{}, coverPath: ?string, photoCount: int, albumCount: int}">DateTime, published: bool, name: string, parent: null, children: array{}, photos: array{}, coverPath: ?string, photoCount: int, albumCount: int}</abbr></span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -2413,9 +2766,11 @@ photo count.</p>
     
     
 
+    
+
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><abbr title="\Photo\Model\AlbumArrayType">AlbumArrayType</abbr></span>
+        <span class="phpdocumentor-signature__response_type"><abbr title="array{id: int, startDateTime: ?\DateTime, endDateTime: ?\DateTime, published: bool, name: string, parent: null, children: array{}, photos: array{}, coverPath: ?string, photoCount: int, albumCount: int}">DateTime, published: bool, name: string, parent: null, children: array{}, photos: array{}, coverPath: ?string, photoCount: int, albumCount: int}</abbr></span>
             </section>
 
 </article>
@@ -2427,13 +2782,13 @@ photo count.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_toArrayWithChildren">
         toArrayWithChildren()
-        <a href="classes/Photo-Model-Album.html#method_toArrayWithChildren" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Photo-Model-VirtualAlbum.html#method_toArrayWithChildren" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/Album.php"><a href="files/module-photo-src-model-album.html"><abbr title="module/Photo/src/Model/Album.php">Album.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Model/VirtualAlbum.php"><a href="files/module-photo-src-model-virtualalbum.html"><abbr title="module/Photo/src/Model/VirtualAlbum.php">VirtualAlbum.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">203</span>
+    <span class="phpdocumentor-element-found-in__line">117</span>
 
     </aside>
 
@@ -2442,7 +2797,7 @@ including all child objects.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">toArrayWithChildren</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="array{id: int, startDateTime: ?\DateTime, endDateTime: ?\DateTime, published: bool, name: string, parent: ?array<string,mixed>, children: \Photo\Model\AlbumArrayType[], photos: \Photo\Model\ImportedPhotoArrayType[], coverPath: ?string, photoCount: int, albumCount: int}">ImportedPhotoArrayType[], coverPath: ?string, photoCount: int, albumCount: int}</abbr></span></code>
+                    <span class="phpdocumentor-signature__name">toArrayWithChildren</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="array{id: int, startDateTime: ?\DateTime, endDateTime: ?\DateTime, published: bool, name: string, parent: null, children: array{}, photos: \Photo\Model\ImportedPhotoArrayType[], coverPath: ?string, photoCount: int, albumCount: int}">ImportedPhotoArrayType[], coverPath: ?string, photoCount: int, albumCount: int}</abbr></span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -2450,9 +2805,11 @@ including all child objects.</p>
     
     
 
+    
+
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><abbr title="array{id: int, startDateTime: ?\DateTime, endDateTime: ?\DateTime, published: bool, name: string, parent: ?array<string,mixed>, children: \Photo\Model\AlbumArrayType[], photos: \Photo\Model\ImportedPhotoArrayType[], coverPath: ?string, photoCount: int, albumCount: int}">ImportedPhotoArrayType[], coverPath: ?string, photoCount: int, albumCount: int}</abbr></span>
+        <span class="phpdocumentor-signature__response_type"><abbr title="array{id: int, startDateTime: ?\DateTime, endDateTime: ?\DateTime, published: bool, name: string, parent: null, children: array{}, photos: \Photo\Model\ImportedPhotoArrayType[], coverPath: ?string, photoCount: int, albumCount: int}">ImportedPhotoArrayType[], coverPath: ?string, photoCount: int, albumCount: int}</abbr></span>
             </section>
 
 </article>
@@ -2496,6 +2853,8 @@ including all child objects.</p>
     
 
     
+
+    
 </article>
                     <article
         class="phpdocumentor-element
@@ -2533,6 +2892,8 @@ including all child objects.</p>
                 
             </dd>
             </dl>
+
+    
 
     
 
@@ -2670,20 +3031,20 @@ including all child objects.</p>
             <li>
                 <ul class="phpdocumentor-list -clean">
                                             <li><a href="classes/Photo-Model-MemberAlbum.html#method___construct">__construct()</a></li>
-                                            <li><a href="classes/Photo-Model-Album.html#method_addAlbum">addAlbum()</a></li>
-                                            <li><a href="classes/Photo-Model-Album.html#method_addPhoto">addPhoto()</a></li>
+                                            <li><a href="classes/Photo-Model-VirtualAlbum.html#method_addAlbum">addAlbum()</a></li>
+                                            <li><a href="classes/Photo-Model-VirtualAlbum.html#method_addPhoto">addPhoto()</a></li>
                                             <li><a href="classes/Photo-Model-VirtualAlbum.html#method_addPhotos">addPhotos()</a></li>
-                                            <li><a href="classes/Photo-Model-Album.html#method_getAlbumCount">getAlbumCount()</a></li>
-                                            <li><a href="classes/Photo-Model-Album.html#method_getChildren">getChildren()</a></li>
+                                            <li><a href="classes/Photo-Model-VirtualAlbum.html#method_getAlbumCount">getAlbumCount()</a></li>
+                                            <li><a href="classes/Photo-Model-VirtualAlbum.html#method_getChildren">getChildren()</a></li>
                                             <li><a href="classes/Photo-Model-Album.html#method_getCoverPath">getCoverPath()</a></li>
                                             <li><a href="classes/Application-Model-Traits-TimestampableTrait.html#method_getCreatedAt">getCreatedAt()</a></li>
                                             <li><a href="classes/Photo-Model-Album.html#method_getEndDateTime">getEndDateTime()</a></li>
                                             <li><a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_getId">getId()</a></li>
                                             <li><a href="classes/Photo-Model-MemberAlbum.html#method_getMember">getMember()</a></li>
                                             <li><a href="classes/Photo-Model-Album.html#method_getName">getName()</a></li>
-                                            <li><a href="classes/Photo-Model-Album.html#method_getParent">getParent()</a></li>
-                                            <li><a href="classes/Photo-Model-Album.html#method_getPhotoCount">getPhotoCount()</a></li>
-                                            <li><a href="classes/Photo-Model-Album.html#method_getPhotos">getPhotos()</a></li>
+                                            <li><a href="classes/Photo-Model-VirtualAlbum.html#method_getParent">getParent()</a></li>
+                                            <li><a href="classes/Photo-Model-VirtualAlbum.html#method_getPhotoCount">getPhotoCount()</a></li>
+                                            <li><a href="classes/Photo-Model-VirtualAlbum.html#method_getPhotos">getPhotos()</a></li>
                                             <li><a href="classes/Photo-Model-Album.html#method_getPublished">getPublished()</a></li>
                                             <li><a href="classes/Photo-Model-Album.html#method_getResourceId">getResourceId()</a></li>
                                             <li><a href="classes/Photo-Model-Album.html#method_getStartDateTime">getStartDateTime()</a></li>
@@ -2696,11 +3057,11 @@ including all child objects.</p>
                                             <li><a href="classes/Photo-Model-Album.html#method_setEndDateTime">setEndDateTime()</a></li>
                                             <li><a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_setId">setId()</a></li>
                                             <li><a href="classes/Photo-Model-Album.html#method_setName">setName()</a></li>
-                                            <li><a href="classes/Photo-Model-Album.html#method_setParent">setParent()</a></li>
+                                            <li><a href="classes/Photo-Model-VirtualAlbum.html#method_setParent">setParent()</a></li>
                                             <li><a href="classes/Photo-Model-Album.html#method_setPublished">setPublished()</a></li>
                                             <li><a href="classes/Photo-Model-Album.html#method_setStartDateTime">setStartDateTime()</a></li>
-                                            <li><a href="classes/Photo-Model-Album.html#method_toArray">toArray()</a></li>
-                                            <li><a href="classes/Photo-Model-Album.html#method_toArrayWithChildren">toArrayWithChildren()</a></li>
+                                            <li><a href="classes/Photo-Model-VirtualAlbum.html#method_toArray">toArray()</a></li>
+                                            <li><a href="classes/Photo-Model-VirtualAlbum.html#method_toArrayWithChildren">toArrayWithChildren()</a></li>
                                             <li><a href="classes/Application-Model-Traits-TimestampableTrait.html#method_setCreatedAt">setCreatedAt()</a></li>
                                             <li><a href="classes/Application-Model-Traits-TimestampableTrait.html#method_setUpdatedAt">setUpdatedAt()</a></li>
                                     </ul>

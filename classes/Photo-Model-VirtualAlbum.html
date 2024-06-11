@@ -54,7 +54,7 @@
     Menu
 </label>
 <aside class="phpdocumentor-column -three phpdocumentor-sidebar">
-                    <section class="phpdocumentor-sidebar__category">
+                    <section class="phpdocumentor-sidebar__category -namespaces">
             <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="namespaces/activity.html" class="">Activity</a>
@@ -357,7 +357,7 @@
 </h4>
 
                         </section>
-                <section class="phpdocumentor-sidebar__category">
+                <section class="phpdocumentor-sidebar__category -packages">
             <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="packages/gewisweb.html" class="">gewisweb</a>
@@ -365,14 +365,14 @@
 
                         </section>
             
-    <section class="phpdocumentor-sidebar__category">
+    <section class="phpdocumentor-sidebar__category -reports">
         <h2 class="phpdocumentor-sidebar__category-header">Reports</h2>
                 <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/deprecated.html">Deprecated</a></h3>
         <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/errors.html">Errors</a></h3>
         <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/markers.html">Markers</a></h3>
     </section>
 
-    <section class="phpdocumentor-sidebar__category">
+    <section class="phpdocumentor-sidebar__category -indices">
         <h2 class="phpdocumentor-sidebar__category-header">Indices</h2>
         <h3 class="phpdocumentor-sidebar__root-package"><a href="indices/files.html">Files</a></h3>
     </section>
@@ -437,6 +437,8 @@
 
                                     </dd>
                                             </dl>
+
+
 
 
 
@@ -778,7 +780,6 @@ including all child objects.</dd>
 
 
 
-
         
 
         
@@ -823,6 +824,31 @@ album count.</p>
     
     
 
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Photo-Model-Album.html#property_children#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\OneToMany">OneToMany</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $targetEntity: self::class
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $mappedBy: &#039;parent&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $cascade: [&#039;persist&#039;, &#039;remove&#039;]
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $fetch: &#039;EXTRA_LAZY&#039;
+    </dd>
+    </dl>
+            </section>
+
 </article>
                     <article
         class="
@@ -856,6 +882,25 @@ album count.</p>
     
     
     
+
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Photo-Model-Album.html#property_coverPath#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $type: &#039;string&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $nullable: true
+    </dd>
+    </dl>
+            </section>
 
 </article>
                     <article
@@ -891,6 +936,22 @@ album count.</p>
     
     
 
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Application-Model-Traits-TimestampableTrait.html#property_createdAt#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $type: &#039;datetime&#039;
+    </dd>
+    </dl>
+            </section>
+
 </article>
                     <article
         class="
@@ -924,6 +985,25 @@ album count.</p>
     
     
     
+
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Photo-Model-Album.html#property_endDateTime#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $type: &#039;datetime&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $nullable: true
+    </dd>
+    </dl>
+            </section>
 
 </article>
                     <article
@@ -960,6 +1040,35 @@ nullable.</p>
     
     
 
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $type: &#039;integer&#039;
+    </dd>
+    </dl>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\GeneratedValue">GeneratedValue</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $strategy: &#039;IDENTITY&#039;
+    </dd>
+    </dl>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Id">Id</abbr>]
+    </dt>
+    </dl>
+            </section>
+
 </article>
                     <article
         class="
@@ -994,6 +1103,22 @@ nullable.</p>
     
     
 
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Photo-Model-Album.html#property_name#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $type: &#039;string&#039;
+    </dd>
+    </dl>
+            </section>
+
 </article>
                     <article
         class="
@@ -1027,6 +1152,36 @@ nullable.</p>
     
     
     
+
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Photo-Model-Album.html#property_parent#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\JoinColumn">JoinColumn</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $name: &#039;parent_id&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $referencedColumnName: &#039;id&#039;
+    </dd>
+    </dl>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\ManyToOne">ManyToOne</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $targetEntity: self::class
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $inversedBy: &#039;children&#039;
+    </dd>
+    </dl>
+            </section>
 
 </article>
                     <article
@@ -1065,6 +1220,39 @@ photo count.</p>
     
     
 
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Photo-Model-Album.html#property_photos#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\OneToMany">OneToMany</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $targetEntity: \Photo\Model\Photo::class
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $mappedBy: &#039;album&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $cascade: [&#039;persist&#039;, &#039;remove&#039;]
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $fetch: &#039;EXTRA_LAZY&#039;
+    </dd>
+    </dl>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\OrderBy">OrderBy</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $value: [&#039;dateTime&#039; =&gt; &#039;ASC&#039;]
+    </dd>
+    </dl>
+            </section>
+
 </article>
                     <article
         class="
@@ -1098,6 +1286,22 @@ photo count.</p>
     
     
     
+
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Photo-Model-Album.html#property_published#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $type: &#039;boolean&#039;
+    </dd>
+    </dl>
+            </section>
 
 </article>
                     <article
@@ -1133,6 +1337,25 @@ photo count.</p>
     
     
 
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Photo-Model-Album.html#property_startDateTime#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $type: &#039;datetime&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $nullable: true
+    </dd>
+    </dl>
+            </section>
+
 </article>
                     <article
         class="
@@ -1166,6 +1389,22 @@ photo count.</p>
     
     
     
+
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Application-Model-Traits-TimestampableTrait.html#property_updatedAt#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $type: &#039;datetime&#039;
+    </dd>
+    </dl>
+            </section>
 
 </article>
             </section>
@@ -1212,6 +1451,8 @@ photo count.</p>
                 
             </dd>
             </dl>
+
+    
 
     
 
@@ -1273,6 +1514,8 @@ photo count.</p>
                                             </dl>
 
     
+
+    
 </article>
                     <article
         class="phpdocumentor-element
@@ -1311,6 +1554,8 @@ photo count.</p>
                 
             </dd>
             </dl>
+
+    
 
     
 
@@ -1356,6 +1601,8 @@ photo count.</p>
     
 
     
+
+    
 </article>
                     <article
         class="phpdocumentor-element
@@ -1385,6 +1632,8 @@ photo count.</p>
         </div>
     
     
+    
+
     
 
             <section>
@@ -1423,6 +1672,8 @@ photo count.</p>
     
     
 
+    
+
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Photo-Model-Album.html"><abbr title="\Photo\Model\Album">Album</abbr></a>&gt;</span>
@@ -1457,6 +1708,8 @@ photo count.</p>
         </div>
     
     
+    
+
     
 
             <section>
@@ -1494,6 +1747,8 @@ photo count.</p>
     
     
 
+    
+
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><abbr title="\DateTime">DateTime</abbr></span>
@@ -1528,6 +1783,8 @@ photo count.</p>
         </div>
     
     
+    
+
     
 
             <section>
@@ -1580,6 +1837,8 @@ photo count.</p>
                                     </dd>
                                             </dl>
 
+    
+
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">int|null</span>
@@ -1614,6 +1873,8 @@ photo count.</p>
         </div>
     
     
+    
+
     
 
             <section>
@@ -1654,6 +1915,8 @@ photo count.</p>
         </div>
     
     
+    
+
     
 
             <section>
@@ -1706,6 +1969,8 @@ photo count.</p>
 
     
 
+    
+
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">int</span>
@@ -1740,6 +2005,8 @@ photo count.</p>
         </div>
     
     
+    
+
     
 
             <section>
@@ -1778,6 +2045,8 @@ photo count.</p>
     
     
 
+    
+
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">bool</span>
@@ -1812,6 +2081,8 @@ photo count.</p>
         </div>
     
     
+    
+
     
 
             <section>
@@ -1850,6 +2121,8 @@ photo count.</p>
     
     
 
+    
+
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><abbr title="\DateTime">DateTime</abbr>|null</span>
@@ -1883,6 +2156,8 @@ photo count.</p>
         </div>
     
     
+    
+
     
 
             <section>
@@ -1919,6 +2194,8 @@ photo count.</p>
         </div>
     
     
+    
+
     
 
             <section>
@@ -1958,6 +2235,19 @@ photo count.</p>
     
 
     
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Application-Model-Traits-TimestampableTrait.html#method_prePersist#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\PrePersist">PrePersist</abbr>]
+    </dt>
+    </dl>
+            </section>
+
+    
 </article>
                     <article
         class="phpdocumentor-element
@@ -1988,6 +2278,19 @@ photo count.</p>
     
     
     
+
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Application-Model-Traits-TimestampableTrait.html#method_preUpdate#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\PreUpdate">PreUpdate</abbr>]
+    </dt>
+    </dl>
+            </section>
 
     
 </article>
@@ -2028,6 +2331,8 @@ photo count.</p>
                 
             </dd>
             </dl>
+
+    
 
     
 
@@ -2074,6 +2379,8 @@ photo count.</p>
     
 
     
+
+    
 </article>
                     <article
         class="phpdocumentor-element
@@ -2112,6 +2419,8 @@ photo count.</p>
                 
             </dd>
             </dl>
+
+    
 
     
 
@@ -2158,6 +2467,8 @@ photo count.</p>
     
 
     
+
+    
 </article>
                     <article
         class="phpdocumentor-element
@@ -2196,6 +2507,8 @@ photo count.</p>
                 
             </dd>
             </dl>
+
+    
 
     
 
@@ -2257,6 +2570,8 @@ photo count.</p>
                                             </dl>
 
     
+
+    
 </article>
                     <article
         class="phpdocumentor-element
@@ -2295,6 +2610,8 @@ photo count.</p>
                 
             </dd>
             </dl>
+
+    
 
     
 
@@ -2341,6 +2658,8 @@ photo count.</p>
     
 
     
+
+    
 </article>
                     <article
         class="phpdocumentor-element
@@ -2370,6 +2689,8 @@ photo count.</p>
         </div>
     
     
+    
+
     
 
             <section>
@@ -2407,6 +2728,8 @@ including all child objects.</p>
         </div>
     
     
+    
+
     
 
             <section>
@@ -2455,6 +2778,8 @@ including all child objects.</p>
     
 
     
+
+    
 </article>
                     <article
         class="phpdocumentor-element
@@ -2492,6 +2817,8 @@ including all child objects.</p>
                 
             </dd>
             </dl>
+
+    
 
     
 

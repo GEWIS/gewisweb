@@ -54,7 +54,7 @@
     Menu
 </label>
 <aside class="phpdocumentor-column -three phpdocumentor-sidebar">
-                    <section class="phpdocumentor-sidebar__category">
+                    <section class="phpdocumentor-sidebar__category -namespaces">
             <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="namespaces/activity.html" class="">Activity</a>
@@ -357,7 +357,7 @@
 </h4>
 
                         </section>
-                <section class="phpdocumentor-sidebar__category">
+                <section class="phpdocumentor-sidebar__category -packages">
             <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="packages/gewisweb.html" class="">gewisweb</a>
@@ -365,14 +365,14 @@
 
                         </section>
             
-    <section class="phpdocumentor-sidebar__category">
+    <section class="phpdocumentor-sidebar__category -reports">
         <h2 class="phpdocumentor-sidebar__category-header">Reports</h2>
                 <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/deprecated.html">Deprecated</a></h3>
         <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/errors.html">Errors</a></h3>
         <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/markers.html">Markers</a></h3>
     </section>
 
-    <section class="phpdocumentor-sidebar__category">
+    <section class="phpdocumentor-sidebar__category -indices">
         <h2 class="phpdocumentor-sidebar__category-header">Indices</h2>
         <h3 class="phpdocumentor-sidebar__root-package"><a href="indices/files.html">Files</a></h3>
     </section>
@@ -399,7 +399,7 @@
     
     
             <span class="phpdocumentor-element__extends">
-            Uses
+            uses
                             <a href="classes/Application-Model-Traits-IdentifiableTrait.html"><abbr title="\Application\Model\Traits\IdentifiableTrait">IdentifiableTrait</abbr></a>                    </span>
     </h2>
 
@@ -421,6 +421,19 @@
 </section>
 
 
+
+
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Decision-Model-Organ.html#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Entity">Entity</abbr>]
+    </dt>
+    </dl>
+            </section>
 
 
 
@@ -680,7 +693,6 @@ nullable.</dd>
 
 
 
-
         
 
         
@@ -723,6 +735,22 @@ nullable.</dd>
     
     
 
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Decision-Model-Organ.html#property_abbr#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $type: &#039;string&#039;
+    </dd>
+    </dl>
+            </section>
+
 </article>
                     <article
         class="
@@ -756,6 +784,25 @@ nullable.</dd>
     
     
     
+
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Decision-Model-Organ.html#property_abrogationDate#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $type: &#039;date&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $nullable: true
+    </dd>
+    </dl>
+            </section>
 
 </article>
                     <article
@@ -791,6 +838,80 @@ nullable.</dd>
     
     
 
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Decision-Model-Organ.html#property_foundation#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\JoinColumn">JoinColumn</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $name: &#039;r_meeting_type&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $referencedColumnName: &#039;meeting_type&#039;
+    </dd>
+    </dl>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\JoinColumn">JoinColumn</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $name: &#039;r_meeting_number&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $referencedColumnName: &#039;meeting_number&#039;
+    </dd>
+    </dl>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\JoinColumn">JoinColumn</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $name: &#039;r_decision_point&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $referencedColumnName: &#039;decision_point&#039;
+    </dd>
+    </dl>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\JoinColumn">JoinColumn</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $name: &#039;r_decision_number&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $referencedColumnName: &#039;decision_number&#039;
+    </dd>
+    </dl>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\JoinColumn">JoinColumn</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $name: &#039;r_sequence&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $referencedColumnName: &#039;sequence&#039;
+    </dd>
+    </dl>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\OneToOne">OneToOne</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $inversedBy: &#039;organ&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $targetEntity: \Decision\Model\SubDecision\Foundation::class
+    </dd>
+    </dl>
+            </section>
+
 </article>
                     <article
         class="
@@ -824,6 +945,22 @@ nullable.</dd>
     
     
     
+
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Decision-Model-Organ.html#property_foundationDate#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $type: &#039;date&#039;
+    </dd>
+    </dl>
+            </section>
 
 </article>
                     <article
@@ -860,6 +997,35 @@ nullable.</p>
     
     
 
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $type: &#039;integer&#039;
+    </dd>
+    </dl>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\GeneratedValue">GeneratedValue</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $strategy: &#039;IDENTITY&#039;
+    </dd>
+    </dl>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Id">Id</abbr>]
+    </dt>
+    </dl>
+            </section>
+
 </article>
                     <article
         class="
@@ -893,6 +1059,25 @@ nullable.</p>
     
     
     
+
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Decision-Model-Organ.html#property_members#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\OneToMany">OneToMany</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $mappedBy: &#039;organ&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $targetEntity: \Decision\Model\OrganMember::class
+    </dd>
+    </dl>
+            </section>
 
 </article>
                     <article
@@ -928,6 +1113,22 @@ nullable.</p>
     
     
 
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Decision-Model-Organ.html#property_name#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $type: &#039;string&#039;
+    </dd>
+    </dl>
+            </section>
+
 </article>
                     <article
         class="
@@ -961,6 +1162,28 @@ nullable.</p>
     
     
     
+
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Decision-Model-Organ.html#property_organInformation#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\OneToMany">OneToMany</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $mappedBy: &#039;organ&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $targetEntity: \Decision\Model\OrganInformation::class
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $cascade: [&#039;persist&#039;, &#039;remove&#039;]
+    </dd>
+    </dl>
+            </section>
 
 </article>
                     <article
@@ -996,6 +1219,114 @@ nullable.</p>
     
     
 
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Decision-Model-Organ.html#property_subdecisions#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\InverseJoinColumn">InverseJoinColumn</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $name: &#039;meeting_type&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $referencedColumnName: &#039;meeting_type&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $nullable: false
+    </dd>
+    </dl>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\InverseJoinColumn">InverseJoinColumn</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $name: &#039;meeting_number&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $referencedColumnName: &#039;meeting_number&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $nullable: false
+    </dd>
+    </dl>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\InverseJoinColumn">InverseJoinColumn</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $name: &#039;decision_point&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $referencedColumnName: &#039;decision_point&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $nullable: false
+    </dd>
+    </dl>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\InverseJoinColumn">InverseJoinColumn</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $name: &#039;decision_number&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $referencedColumnName: &#039;decision_number&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $nullable: false
+    </dd>
+    </dl>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\InverseJoinColumn">InverseJoinColumn</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $name: &#039;subdecision_sequence&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $referencedColumnName: &#039;sequence&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $nullable: false
+    </dd>
+    </dl>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\JoinColumn">JoinColumn</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $name: &#039;organ_id&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $referencedColumnName: &#039;id&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $nullable: false
+    </dd>
+    </dl>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\JoinTable">JoinTable</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $name: &#039;organs_subdecisions&#039;
+    </dd>
+    </dl>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\ManyToMany">ManyToMany</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $targetEntity: \Decision\Model\SubDecision::class
+    </dd>
+    </dl>
+            </section>
+
 </article>
                     <article
         class="
@@ -1029,6 +1360,25 @@ nullable.</p>
     
     
     
+
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Decision-Model-Organ.html#property_type#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $type: &#039;string&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $enumType: \Decision\Model\Enums\OrganTypes::class
+    </dd>
+    </dl>
+            </section>
 
 </article>
             </section>
@@ -1066,6 +1416,8 @@ nullable.</p>
         </div>
     
     
+    
+
     
 
     
@@ -1107,6 +1459,8 @@ nullable.</p>
                 
             </dd>
             </dl>
+
+    
 
     
 
@@ -1153,6 +1507,8 @@ nullable.</p>
     
 
     
+
+    
 </article>
                     <article
         class="phpdocumentor-element
@@ -1182,6 +1538,8 @@ nullable.</p>
         </div>
     
     
+    
+
     
 
             <section>
@@ -1220,6 +1578,8 @@ nullable.</p>
     
     
 
+    
+
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><abbr title="\DateTime">DateTime</abbr>|null</span>
@@ -1254,6 +1614,8 @@ nullable.</p>
         </div>
     
     
+    
+
     
 
             <section>
@@ -1292,6 +1654,8 @@ nullable.</p>
     
     
 
+    
+
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-SubDecision-Foundation.html"><abbr title="\Decision\Model\SubDecision\Foundation">Foundation</abbr></a></span>
@@ -1326,6 +1690,8 @@ nullable.</p>
         </div>
     
     
+    
+
     
 
             <section>
@@ -1378,6 +1744,8 @@ nullable.</p>
                                     </dd>
                                             </dl>
 
+    
+
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">int|null</span>
@@ -1412,6 +1780,8 @@ nullable.</p>
         </div>
     
     
+    
+
     
 
             <section>
@@ -1450,6 +1820,8 @@ nullable.</p>
     
     
 
+    
+
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">string</span>
@@ -1484,6 +1856,8 @@ nullable.</p>
         </div>
     
     
+    
+
     
 
             <section>
@@ -1526,6 +1900,8 @@ nullable.</p>
     
     
 
+    
+
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Decision-Model-OrganInformation.html"><abbr title="\Decision\Model\OrganInformation">OrganInformation</abbr></a>&gt;</span>
@@ -1562,6 +1938,8 @@ nullable.</p>
     
     
 
+    
+
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Decision-Model-SubDecision.html"><abbr title="\Decision\Model\SubDecision">SubDecision</abbr></a>&gt;</span>
@@ -1596,6 +1974,8 @@ nullable.</p>
         </div>
     
     
+    
+
     
 
             <section>
@@ -1645,6 +2025,8 @@ nullable.</p>
     
 
     
+
+    
 </article>
                     <article
         class="phpdocumentor-element
@@ -1683,6 +2065,8 @@ nullable.</p>
                 
             </dd>
             </dl>
+
+    
 
     
 
@@ -1729,6 +2113,8 @@ nullable.</p>
     
 
     
+
+    
 </article>
                     <article
         class="phpdocumentor-element
@@ -1767,6 +2153,8 @@ nullable.</p>
                 
             </dd>
             </dl>
+
+    
 
     
 
@@ -1813,6 +2201,8 @@ nullable.</p>
     
 
     
+
+    
 </article>
                     <article
         class="phpdocumentor-element
@@ -1855,6 +2245,8 @@ nullable.</p>
     
 
     
+
+    
 </article>
                     <article
         class="phpdocumentor-element
@@ -1893,6 +2285,8 @@ nullable.</p>
                 
             </dd>
             </dl>
+
+    
 
     
 
