@@ -102,7 +102,7 @@ endif; ?>
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="<?= $this->url('user/login') ?>">
+                                <a href="<?= $this->url('user/login', ['redirect_to' => base64_encode($this->serverUrl(true))]) ?>">
                                     <?= $this->translate('Login') ?>
                                 </a>
                             </li>
