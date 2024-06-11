@@ -24,7 +24,13 @@ use Laminas\View\Renderer\PhpRenderer;
                     <?php
                     if (null === $this->identity()): ?>
                         <li>
-                            <a href="<?= $this->url('user/login', ['user_type' => 'member']) ?>">
+                            <a href="<?= $this->url(
+                                'user/login',
+                                [
+                                    'user_type' => 'member',
+                                    'redirect_to' => base64_encode($this->serverUrl(true)),
+                                ],
+                            ) ?>">
                                 <?= $this->translate('Login') ?>
                             </a>
                         </li>

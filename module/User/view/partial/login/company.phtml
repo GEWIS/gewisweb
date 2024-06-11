@@ -13,7 +13,16 @@ use User\Form\CompanyUserLogin as CompanyUserLoginForm;
 
 $form->prepare();
 
-$form->setAttribute('action', $this->url('user/login', ['user_type' => 'company']));
+$form->setAttribute(
+    'action',
+    $this->url(
+        'user/login',
+        [
+            'user_type' => 'company',
+            'redirect_to' => base64_encode($this->serverUrl(true)),
+        ],
+    ),
+);
 $form->setAttribute('method', 'post');
 
 $form->setAttribute('role', 'form');

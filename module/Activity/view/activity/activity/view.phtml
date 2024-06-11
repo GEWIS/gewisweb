@@ -339,7 +339,13 @@ $this->headTitle($this->translate('Activities'));
                                                     ) ?>
                                                 </p>
                                             <?php endif; ?>
-                                            <a href="<?= $this->url('user/login', ['user_type' => 'member']) ?>">
+                                            <a href="<?= $this->url(
+                                                'user/login',
+                                                [
+                                                    'user_type' => 'member',
+                                                    'redirect_to' => base64_encode($this->serverUrl(true)),
+                                                ],
+                                            ) ?>">
                                                 <?= $this->translate('Login to view the subscribed members.') ?>
                                             </a>
                                         </td>
