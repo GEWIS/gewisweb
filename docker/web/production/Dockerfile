@@ -96,7 +96,7 @@ RUN npm run scss
 FROM gewisweb_web_production_base AS gewisweb_web_production
 
 # Copy patches for dependencies that cannot be patched through composer.
-COPY --from=web.docker-registry.gewis.nl/gewisweb_patches:latest . /code
+COPY --from=abc.docker-registry.gewis.nl/web/gewisweb/patches:latest . /code
 
 COPY --chown=www-data:www-data ./docker/web/production/php.ini /usr/local/etc/php/conf.d/default.ini
 COPY --chown=www-data:www-data ./docker/web/production/php-fpm.conf /usr/local/etc/php-fpm.d/zz-gewisweb.conf

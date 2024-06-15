@@ -171,11 +171,11 @@ updateglide:
 
 updatedocker:
 		@docker compose pull
-		@docker build --pull --no-cache -t web.docker-registry.gewis.nl/gewisweb_web:production -f docker/web/production/Dockerfile .
-		@docker build --pull --no-cache -t web.docker-registry.gewis.nl/gewisweb_web:development -f docker/web/development/Dockerfile .
-		@docker build --pull --no-cache -t web.docker-registry.gewis.nl/gewisweb_glide:latest -f docker/glide/Dockerfile docker/glide
-		@docker build --pull --no-cache -t web.docker-registry.gewis.nl/gewisweb_matomo:latest -f docker/matomo/Dockerfile docker/matomo
-		@docker build --pull --no-cache -t web.docker-registry.gewis.nl/gewisweb_nginx:latest -f docker/nginx/Dockerfile docker/nginx
+		@docker build --pull --no-cache -t abc.docker-registry.gewis.nl/web/gewisweb/web:production -f docker/web/production/Dockerfile .
+		@docker build --pull --no-cache -t abc.docker-registry.gewis.nl/web/gewisweb/web:development -f docker/web/development/Dockerfile .
+		@docker build --pull --no-cache -t abc.docker-registry.gewis.nl/web/gewisweb/glide:latest -f docker/glide/Dockerfile docker/glide
+		@docker build --pull --no-cache -t abc.docker-registry.gewis.nl/web/gewisweb/matomo:latest -f docker/matomo/Dockerfile docker/matomo
+		@docker build --pull --no-cache -t abc.docker-registry.gewis.nl/web/gewisweb/nginx:latest -f docker/nginx/Dockerfile docker/nginx
 
 all: build login push
 
@@ -196,22 +196,22 @@ builddev: buildwebdev buildglide buildmatomo buildnginx
 buildweb: buildwebprod buildwebdev
 
 buildwebprod:
-		@docker build --build-arg GIT_COMMIT="$(LAST_WEB_COMMIT)" -t web.docker-registry.gewis.nl/gewisweb_web:production -f docker/web/production/Dockerfile .
+		@docker build --build-arg GIT_COMMIT="$(LAST_WEB_COMMIT)" -t abc.docker-registry.gewis.nl/web/gewisweb/web:production -f docker/web/production/Dockerfile .
 
 buildwebdev:
-		@docker build --build-arg GIT_COMMIT="$(LAST_WEB_COMMIT)" -t web.docker-registry.gewis.nl/gewisweb_web:development -f docker/web/development/Dockerfile .
+		@docker build --build-arg GIT_COMMIT="$(LAST_WEB_COMMIT)" -t abc.docker-registry.gewis.nl/web/gewisweb/web:development -f docker/web/development/Dockerfile .
 
 buildglide:
-		@docker build -t web.docker-registry.gewis.nl/gewisweb_glide:latest -f docker/glide/Dockerfile docker/glide
+		@docker build -t abc.docker-registry.gewis.nl/web/gewisweb/glide:latest -f docker/glide/Dockerfile docker/glide
 
 buildmatomo:
-		@docker build -t web.docker-registry.gewis.nl/gewisweb_matomo:latest -f docker/matomo/Dockerfile docker/matomo
+		@docker build -t abc.docker-registry.gewis.nl/web/gewisweb/matomo:latest -f docker/matomo/Dockerfile docker/matomo
 
 buildnginx:
-		@docker build -t web.docker-registry.gewis.nl/gewisweb_nginx:latest -f docker/nginx/Dockerfile docker/nginx
+		@docker build -t abc.docker-registry.gewis.nl/web/gewisweb/nginx:latest -f docker/nginx/Dockerfile docker/nginx
 
 login:
-		@docker login web.docker-registry.gewis.nl
+		@docker login abc.docker-registry.gewis.nl
 
 push: pushweb pushglide pushmatomo pushnginx
 
@@ -222,16 +222,16 @@ pushdev: pushwebdev pushglide pushmatomo pushnginx
 pushweb: pushwebprod pushwebdev
 
 pushwebprod:
-		@docker push web.docker-registry.gewis.nl/gewisweb_web:production
+		@docker push abc.docker-registry.gewis.nl/web/gewisweb/web:production
 
 pushwebdev:
-		@docker push web.docker-registry.gewis.nl/gewisweb_web:development
+		@docker push abc.docker-registry.gewis.nl/web/gewisweb/web:development
 
 pushglide:
-		@docker push web.docker-registry.gewis.nl/gewisweb_glide:latest
+		@docker push abc.docker-registry.gewis.nl/web/gewisweb/glide:latest
 
 pushmatomo:
-		@docker push web.docker-registry.gewis.nl/gewisweb_matomo:latest
+		@docker push abc.docker-registry.gewis.nl/web/gewisweb/matomo:latest
 
 pushnginx:
-		@docker push web.docker-registry.gewis.nl/gewisweb_nginx:latest
+		@docker push abc.docker-registry.gewis.nl/web/gewisweb/nginx:latest
