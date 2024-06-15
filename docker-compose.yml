@@ -4,7 +4,7 @@
 
 services:
     nginx:
-        image: web.docker-registry.gewis.nl/gewisweb_nginx:latest
+        image: abc.docker-registry.gewis.nl/web/gewisweb/nginx:latest
         env_file:
             - .env
 #        environment:
@@ -27,7 +27,7 @@ services:
             - "9202:9202"
         restart: unless-stopped
     web:
-        image: web.docker-registry.gewis.nl/gewisweb_web:production
+        image: abc.docker-registry.gewis.nl/web/gewisweb/web:production
         env_file:
             - .env
 #        environment:
@@ -73,7 +73,7 @@ services:
             - gewisweb_network
         restart: unless-stopped
     glide:
-        image: web.docker-registry.gewis.nl/gewisweb_glide:latest
+        image: abc.docker-registry.gewis.nl/web/gewisweb/glide:latest
         env_file:
             - .env
 #        environment:
@@ -107,7 +107,7 @@ services:
             - gewisweb_network
         restart: unless-stopped
     matomo:
-        image: web.docker-registry.gewis.nl/gewisweb_matomo:latest
+        image: abc.docker-registry.gewis.nl/web/gewisweb/matomo:latest
         env_file:
             - .env
 #        environment:

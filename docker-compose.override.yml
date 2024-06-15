@@ -28,7 +28,7 @@ services:
             - "81:9201"
             - "82:9202"
     web:
-        image: web.docker-registry.gewis.nl/gewisweb_web:development
+        image: abc.docker-registry.gewis.nl/web/gewisweb/web:development
         build:
             dockerfile: docker/web/development/Dockerfile
             context: .

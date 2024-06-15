@@ -108,7 +108,7 @@ FROM gewisweb_web_development_base AS gewisweb_web_development
 
 # Copy patches for dependencies that cannot be patched through composer. If you are not a member of the
 # ApplicatieBeheerCommissie comment the line below.
-COPY --from=web.docker-registry.gewis.nl/gewisweb_patches:latest . /code
+COPY --from=abc.docker-registry.gewis.nl/web/gewisweb/patches:latest . /code
 
 COPY --chown=www-data:www-data ./docker/web/development/php.ini /usr/local/etc/php/conf.d/default.ini
 COPY --chown=www-data:www-data ./docker/web/development/php-fpm.conf /usr/local/etc/php-fpm.d/zz-gewisweb.conf
