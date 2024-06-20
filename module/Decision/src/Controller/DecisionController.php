@@ -18,6 +18,7 @@ use User\Permissions\NotAllowedException;
 
 use function end;
 use function explode;
+use function intval;
 use function preg_match;
 use function strlen;
 use function substr;
@@ -87,9 +88,9 @@ class DecisionController extends AbstractActionController
     public function viewAction(): ViewModel
     {
         $type = MeetingTypes::from($this->params()->fromRoute('type'));
-        $number = (int) $this->params()->fromRoute('number'); // 0
+        $number = $this->params()->fromRoute('number');
 
-        if (0 === $number) {
+        if (null === $number) {
             // view all meetings of certain type
 
             $view = new ViewModel(
@@ -104,7 +105,7 @@ class DecisionController extends AbstractActionController
             return $view;
         }
 
-        $meeting = $this->decisionService->getMeeting($type, $number);
+        $meeting = $this->decisionService->getMeeting($type, intval($number));
 
         if (null === $meeting) {
             return $this->notFoundAction();
