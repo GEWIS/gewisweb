@@ -20,4 +20,5 @@ Fixes GH-NNN.
 - [ ] Bug fix _(non-breaking change which fixes an issue)_
 - [ ] New feature _(non-breaking change which adds functionality)_
 - [ ] Breaking change _(fix or feature that would cause existing functionality to change)_
-- [ ] Documentation improvement
+- [ ] Documentation improvement _(no changes to code)_
+- [ ] Other _(please specify)_
