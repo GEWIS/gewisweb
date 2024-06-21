@@ -621,7 +621,7 @@ class Member
                 return $organMember->getInstallDate() <= $today
                     && (
                         null === $dischargeDate
-                        || $dischargeDate >= $today
+                        || $dischargeDate > $today
                     );
             },
         );
