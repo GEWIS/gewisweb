@@ -146,7 +146,7 @@ class Member extends BaseMapper
             ->leftJoin('om.organ', 'o')
             ->where('om.member = :member')
             ->andWhere('om.installDate <= CURRENT_TIMESTAMP()')
-            ->andWhere('om.dischargeDate IS NULL');
+            ->andWhere('om.dischargeDate IS NULL OR om.dischargeDate > CURRENT_TIMESTAMP()');
 
         $qb->setParameter('member', $member);
 
@@ -165,7 +165,8 @@ class Member extends BaseMapper
             ->from(OrganMemberModel::class, 'om')
             ->leftJoin('om.organ', 'o')
             ->where('om.member = :member')
-            ->andWhere('om.dischargeDate IS NOT NULL');
+            ->andWhere('om.dischargeDate IS NOT NULL')
+            ->andWhere('om.dischargeDate <= CURRENT_TIMESTAMP()');
 
         $qb->setParameter('member', $member);
 
