@@ -614,11 +614,15 @@ class Member
         $today = new DateTime();
 
         return $this->getOrganInstallations()->filter(
-            static function (OrganMember $organ) use ($today) {
-                $dischargeDate = $organ->getDischargeDate();
+            static function (OrganMember $organMember) use ($today) {
+                $dischargeDate = $organMember->getDischargeDate();
 
-                // Keep installation if not discharged or discharged in the future
-                return null === $dischargeDate || $dischargeDate >= $today;
+                // Keep installation iff installation is in the past, not discharged or discharged in the future.
+                return $organMember->getInstallDate() <= $today
+                    && (
+                        null === $dischargeDate
+                        || $dischargeDate >= $today
+                    );
             },
         );
     }
