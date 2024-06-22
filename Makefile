@@ -1,4 +1,4 @@
-.PHONY: help runprod rundev runtest runcoverage update updatecomposer updatepackage updateglide getvendordir phpstan phpcs phpcbf phpcsfix phpcsfixtypes build buildprod builddev login push pushprod pushdev update all prod dev
+.PHONY: help runprod rundev runtest runcoverage update updatecomposer updatepackage updateglide getvendordir phpstan phpcs phpcbf phpcsfix phpcsfixtypes build buildprod builddev update
 
 help:
 		@echo "Makefile commands:"
@@ -19,16 +19,9 @@ help:
 		@echo "build"
 		@echo "buildprod"
 		@echo "builddev"
-		@echo "login"
-		@echo "push"
-		@echo "pushprod"
-		@echo "pushdev"
 		@echo "update = updatecomposer updatepackage updatecss updateglide"
-		@echo "all = build login push"
-		@echo "prod = buildprod login pushprod"
-		@echo "dev = builddev login pushdev"
 
-.DEFAULT_GOAL := all
+.DEFAULT_GOAL := rundev
 
 SHELL = /bin/bash
 LAST_WEB_COMMIT := $(shell git rev-parse --short HEAD)
@@ -177,16 +170,6 @@ updatedocker:
 		@docker build --pull --no-cache -t abc.docker-registry.gewis.nl/web/gewisweb/matomo:latest -f docker/matomo/Dockerfile docker/matomo
 		@docker build --pull --no-cache -t abc.docker-registry.gewis.nl/web/gewisweb/nginx:latest -f docker/nginx/Dockerfile docker/nginx
 
-all: build login push
-
-prod: buildprod login pushprod
-
-dev: builddev login pushdev
-
-webprod: buildwebprod login pushwebprod
-
-webdev: buildwebdev login pushwebdev
-
 build: buildweb buildglide buildmatomo buildnginx
 
 buildprod: buildwebprod buildglide buildmatomo buildnginx
@@ -210,28 +193,4 @@ buildmatomo:
 buildnginx:
 		@docker build -t abc.docker-registry.gewis.nl/web/gewisweb/nginx:latest -f docker/nginx/Dockerfile docker/nginx
 
-login:
-		@docker login abc.docker-registry.gewis.nl
 
-push: pushweb pushglide pushmatomo pushnginx
-
-pushprod: pushwebprod pushglide pushmatomo pushnginx
-
-pushdev: pushwebdev pushglide pushmatomo pushnginx
-
-pushweb: pushwebprod pushwebdev
-
-pushwebprod:
-		@docker push abc.docker-registry.gewis.nl/web/gewisweb/web:production
-
-pushwebdev:
-		@docker push abc.docker-registry.gewis.nl/web/gewisweb/web:development
-
-pushglide:
-		@docker push abc.docker-registry.gewis.nl/web/gewisweb/glide:latest
-
-pushmatomo:
-		@docker push abc.docker-registry.gewis.nl/web/gewisweb/matomo:latest
-
-pushnginx:
-		@docker push abc.docker-registry.gewis.nl/web/gewisweb/nginx:latest
