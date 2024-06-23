@@ -17,7 +17,7 @@
         "ext-fileinfo": "*",
         "ext-gd": "*",
         "ext-intl": "*",
-        "ext-imagick": "^3.5.0",
+        "ext-imagick": "*",
         "ext-mbstring": "*",
         "ext-memcached": "^3.0.0",
         "ext-openssl": "*",

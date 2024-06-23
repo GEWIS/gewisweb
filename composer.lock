@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "838e16ce845cf49cdc498279db1aea1c",
+    "content-hash": "3e65bf0fa02f322033a7364795c506c1",
     "packages": [
         {
             "name": "brick/varexporter",
@@ -13503,7 +13503,7 @@
         "ext-fileinfo": "*",
         "ext-gd": "*",
         "ext-intl": "*",
-        "ext-imagick": "^3.5.0",
+        "ext-imagick": "*",
         "ext-mbstring": "*",
         "ext-memcached": "^3.0.0",
         "ext-openssl": "*",

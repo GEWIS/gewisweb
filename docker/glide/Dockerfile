@@ -19,9 +19,17 @@ RUN apk add --no-cache --virtual .build-deps \
         gd \
         opcache \
         zip \
-    && pecl install imagick \
-    && docker-php-ext-enable imagick \
-    && rm -r /tmp/pear \
+# START OF IMAGICK PATCH
+    # && pecl install imagick \
+    # Install Imagick from source as building it for PHP 8.3 keeps intermittently failing. This has been extensively
+    # documented at https://github.com/Imagick/imagick/issues/640. We do not need to patch anything, we will just use
+    # the current HEAD of the master branch (this is still 28f27044e435a2b203e32675e942eb8de620ee58).
+    && mkdir -p /usr/src/php/ext/imagick \
+    && curl -fsSL https://github.com/Imagick/imagick/archive/28f27044e435a2b203e32675e942eb8de620ee58.tar.gz | tar xvz -C "/usr/src/php/ext/imagick" --strip 1 \
+    && docker-php-ext-install imagick \
+    # && docker-php-ext-enable imagick \
+    # && rm -r /tmp/pear \
+# END OF IMAGICK PATCH
     && runtimeDeps="$( \
             scanelf --needed --nobanner --format '%n#p' --recursive /usr/local/lib/php/extensions \
             | tr ',' '\n' \
