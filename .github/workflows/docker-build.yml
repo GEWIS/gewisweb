@@ -14,16 +14,14 @@ concurrency:
     cancel-in-progress: true
 
 env:
-    IMAGE_NAME_GLIDE: ${{ vars.ABC_DOCKER_REGISTRY }}/web/gewisweb/glide
-    IMAGE_NAME_MATOMO: ${{ vars.ABC_DOCKER_REGISTRY }}/web/gewisweb/matomo
-    IMAGE_NAME_NGINX: ${{ vars.ABC_DOCKER_REGISTRY }}/web/gewisweb/nginx
-    IMAGE_NAME_WEB: ${{ vars.ABC_DOCKER_REGISTRY }}/web/gewisweb/web
     IS_RELEASE: ${{ startsWith(github.ref, 'refs/tags/') }}
 
 jobs:
     build:
         runs-on: ubuntu-latest
-
+        strategy:
+            matrix:
+                image: ['web', 'glide', 'matomo', 'nginx']
         steps:
             -   name: Checkout
                 uses: actions/checkout@v4
@@ -38,47 +36,14 @@ jobs:
                     username: ${{ secrets.SVC_GH_ABCWEB_USERNAME }}
                     password: ${{ secrets.SVC_GH_ABCWEB_PWD }}
 
-            -   name: Build and push web image
+            -   name: Build and push image
                 uses: docker/build-push-action@v6
                 with:
                     build-args: GIT_COMMIT=${{ github.sha }}
                     cache-from: type=gha
                     cache-to: type=gha,mode=max
-                    context: .
-                    file: ${{ env.IS_RELEASE && './docker/web/production/Dockerfile' || './docker/web/development/Dockerfile' }}
+                    context: ${{ matrix.image == 'web' && '.' || format('./docker/{0}', matrix.image) }}
+                    file: ${{ matrix.image == 'web' && (env.IS_RELEASE && './docker/web/production/Dockerfile' || './docker/web/development/Dockerfile') || format('./docker/{0}/Dockerfile', matrix.image) }}
                     platforms: linux/amd64
                     push: true
-                    tags: ${{ format('{0}:{1}', env.IMAGE_NAME_WEB, env.IS_RELEASE && format('{0},{1}:latest', github.ref_name, env.IMAGE_NAME_WEB) || 'development') }}
-
-            -   name: Build and push glide image
-                uses: docker/build-push-action@v6
-                with:
-                    cache-from: type=gha
-                    cache-to: type=gha,mode=max
-                    context: ./docker/glide
-                    file: ./docker/glide/Dockerfile
-                    platforms: linux/amd64
-                    push: true
-                    tags: ${{ format('{0}:{1}', env.IMAGE_NAME_GLIDE, env.IS_RELEASE && format('{0},{1}:latest', github.ref_name, env.IMAGE_NAME_GLIDE) || 'development') }}
-
-            -   name: Build and push matomo image
-                uses: docker/build-push-action@v6
-                with:
-                    cache-from: type=gha
-                    cache-to: type=gha,mode=max
-                    context: ./docker/matomo
-                    file: ./docker/matomo/Dockerfile
-                    platforms: linux/amd64
-                    push: true
-                    tags: ${{ format('{0}:{1}', env.IMAGE_NAME_MATOMO, env.IS_RELEASE && format('{0},{1}:latest', github.ref_name, env.IMAGE_NAME_MATOMO) || 'development') }}
-
-            -   name: Build and push nginx image
-                uses: docker/build-push-action@v6
-                with:
-                    cache-from: type=gha
-                    cache-to: type=gha,mode=max
-                    context: ./docker/nginx
-                    file: ./docker/nginx/Dockerfile
-                    platforms: linux/amd64
-                    push: true
-                    tags: ${{ format('{0}:{1}', env.IMAGE_NAME_NGINX, env.IS_RELEASE && format('{0},{1}:latest', github.ref_name, env.IMAGE_NAME_NGINX) || 'development') }}
+                    tags: ${{ format('{0}:{1}', format('{0}/web/gewisweb/{1}', vars.ABC_DOCKER_REGISTRY, matrix.image), env.IS_RELEASE && format('{0},{1}:latest', github.ref_name, format('{0}/web/gewisweb/{1}', vars.ABC_DOCKER_REGISTRY, matrix.image)) || 'development') }}
