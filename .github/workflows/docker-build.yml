@@ -14,7 +14,7 @@ concurrency:
     cancel-in-progress: true
 
 env:
-    IS_RELEASE: ${{ startsWith(github.ref, 'refs/tags/') }}
+    IS_RELEASE: ${{ format('{0}', startsWith(github.ref, 'refs/tags/')) }}
 
 jobs:
     build:
@@ -43,7 +43,7 @@ jobs:
                     cache-from: type=gha
                     cache-to: type=gha,mode=max
                     context: ${{ matrix.image == 'web' && '.' || format('./docker/{0}', matrix.image) }}
-                    file: ${{ matrix.image == 'web' && (env.IS_RELEASE && './docker/web/production/Dockerfile' || './docker/web/development/Dockerfile') || format('./docker/{0}/Dockerfile', matrix.image) }}
+                    file: ${{ matrix.image == 'web' && (env.IS_RELEASE == 'true' && './docker/web/production/Dockerfile' || './docker/web/development/Dockerfile') || format('./docker/{0}/Dockerfile', matrix.image) }}
                     platforms: linux/amd64
                     push: true
-                    tags: ${{ format('{0}:{1}', format('{0}/web/gewisweb/{1}', vars.ABC_DOCKER_REGISTRY, matrix.image), env.IS_RELEASE && format('{0},{1}:latest', github.ref_name, format('{0}/web/gewisweb/{1}', vars.ABC_DOCKER_REGISTRY, matrix.image)) || 'development') }}
+                    tags: ${{ format('{0}:{1}', format('{0}/web/gewisweb/{1}', vars.ABC_DOCKER_REGISTRY, matrix.image), env.IS_RELEASE == 'true' && format('{0},{1}:latest', github.ref_name, format('{0}/web/gewisweb/{1}', vars.ABC_DOCKER_REGISTRY, matrix.image)) || 'development') }}
