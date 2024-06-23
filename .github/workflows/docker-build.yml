@@ -26,6 +26,9 @@ jobs:
             -   name: Checkout
                 uses: actions/checkout@v4
 
+            -   name: Get short commit SHA
+                run: echo "SHORT_COMMIT_SHA=$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_ENV
+
             -   name: Set up Docker Buildx
                 uses: docker/setup-buildx-action@v3
 
@@ -39,7 +42,7 @@ jobs:
             -   name: Build and push image
                 uses: docker/build-push-action@v6
                 with:
-                    build-args: GIT_COMMIT=${{ github.sha }}
+                    build-args: GIT_COMMIT=${{ env.SHORT_COMMIT_SHA }}
                     cache-from: type=gha
                     cache-to: type=gha,mode=max
                     context: ${{ matrix.image == 'web' && '.' || format('./docker/{0}', matrix.image) }}
