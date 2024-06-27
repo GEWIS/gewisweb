@@ -1,0 +1,56 @@
+.balloon {
+    height: 125px;
+    width: 105px;
+    border-radius: 75% 75% 70% 70%;
+    position: relative;
+
+    &:before {
+        content: "";
+        height: 75px;
+        width: 1px;
+        padding: 1px;
+        background-color: #FDFD96;
+        display: block;
+        position: absolute;
+        top: 132px;
+        left: 51px;
+        margin: auto;
+    }
+
+    &:after {
+        content: "▲";
+        text-align: center;
+        display: block;
+        position: absolute;
+        color: inherit;
+        top: 115px;
+        left: 0;
+        right: 0;
+        margin: auto;
+    }
+}
+
+@keyframes float {
+    from {
+        transform: translateY(100vh);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(-300vh);
+        opacity: 0;
+    }
+}
+
+#balloon-container {
+    overflow: hidden;
+    z-index: 1000000;
+    pointer-events: none;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    margin: 0 auto;
+    height: 100vh;
+}
