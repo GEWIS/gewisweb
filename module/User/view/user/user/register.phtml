@@ -34,6 +34,27 @@ $this->headTitle($this->translate('Register'));
                             <h3><?= $this->translate('Register') ?></h3>
                         </div>
                         <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="alert alert-info">
+                                        <p>
+                                            <?= sprintf(
+                                                $this->translate('To get an account on the website, you must be a member of GEWIS. To read more about the benefits of membership and how to become a member, visit this %sinformation page%s.'),
+                                                '<a href="' . $this->url(
+                                                    'home/page',
+                                                    [
+                                                        'category' => 'vereniging',
+                                                        'categoryEn' => 'association',
+                                                        'sub_category' => 'lid-worden',
+                                                        'sub_categoryEn' => 'become-member',
+                                                    ],
+                                                ) . '">',
+                                                '</a>',
+                                            ) ?>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
                             <?= $this->form()->openTag($form); ?>
 
                             <?php
@@ -62,27 +83,7 @@ $this->headTitle($this->translate('Register'));
 
                             <?= $this->formElement($form->get('security')) ?>
 
-                            <?= $this->form()->closeTag($form); ?>
-                        </div>
-                        <div class="panel-footer">
-                            <p>
-                                <?= $this->translate('You can only register an account if you are a member of the association.') ?>
-                            </p>
-                            <p>
-                                <?= sprintf(
-                                    $this->translate('To read more about the benefits of becoming a member and how to become a member, go to this %sinformation page%s.'),
-                                    '<a href="' . $this->url(
-                                        'home/page',
-                                        [
-                                            'category' => 'vereniging',
-                                            'categoryEn' => 'association',
-                                            'sub_category' => 'lid-worden',
-                                            'sub_categoryEn' => 'become-member',
-                                        ],
-                                    ) . '">',
-                                    '</a>',
-                                ) ?>
-                            </p>
+                            <?= $this->form()->closeTag(); ?>
                         </div>
                     </div>
                 </div>
