@@ -198,6 +198,18 @@ endif; ?>
 <?= $this->partial('partial/privacy-widget.phtml') ?>
 
 <!-- Scripts -->
+<?php
+$currentDate = new DateTime();
+$targetDate = DateTime::createFromFormat('j n', '28 6');
+
+if ($currentDate->format('j n') === $targetDate->format('j n')) {
+    $this->inlineScript()->prependFile(
+        $this->basepath('js/balloons.js'),
+        'text/javascript',
+        ['nonce' => NONCE_REPLACEMENT_STRING],
+    );
+}
+?>
 <?= $this->inlineScript()
     ->prependFile(
         $this->basepath('js/bootstrap.min.js'),
