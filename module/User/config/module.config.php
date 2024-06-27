@@ -7,6 +7,7 @@ namespace User;
 use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Laminas\Router\Http\Literal;
 use Laminas\Router\Http\Segment;
+use User\Command\DeleteOldLoginAttempts;
 use User\Controller\ApiAdminController;
 use User\Controller\ApiAuthenticationController;
 use User\Controller\Factory\ApiAdminControllerFactory;
@@ -181,6 +182,11 @@ return [
         ],
         'template_map' => [
             'user_token/redirect' => __DIR__ . '/../view/user/api-authentication/redirect.phtml',
+        ],
+    ],
+    'laminas-cli' => [
+        'commands' => [
+            'user:gdpr:delete-old-loginattempts' => DeleteOldLoginAttempts::class,
         ],
     ],
     'doctrine' => [
