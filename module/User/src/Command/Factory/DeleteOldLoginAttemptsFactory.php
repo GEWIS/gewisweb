@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Activity\Command\Factory;
+namespace User\Command\Factory;
 
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Psr\Container\ContainerInterface;
