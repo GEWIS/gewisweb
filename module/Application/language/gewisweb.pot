@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: GEWISweb v2.8.6-685-g25c576feb-dirty\n"
+"Project-Id-Version: GEWISweb v2.8.6-687-g8b107f02d-dirty\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-27 19:14+0200\n"
+"POT-Creation-Date: 2024-06-27 19:26+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3772,7 +3772,9 @@ msgstr ""
 msgid "You cannot create new jobs in expired job packages."
 msgstr ""
 
-msgid "You cannot sign in to this account at this moment."
+msgid ""
+"You cannot sign in to this account at this moment. Contact the board for "
+"more information."
 msgstr ""
 
 msgid "You cannot subscribe to this activity at this moment in time"

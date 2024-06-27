@@ -55,7 +55,9 @@ class UserAdapter implements AdapterInterface
                 Result::FAILURE_UNCATEGORIZED,
                 null,
                 [
-                    $this->translator->translate('You cannot sign in to this account at this moment.'),
+                    $this->translator->translate(
+                        'You cannot sign in to this account at this moment. Contact the board for more information.',
+                    ),
                 ],
             );
         }
