@@ -14,3 +14,4 @@
 # 0 * * * * { . /code/config/bash.env && /code/publicarchive.sh; } > /code/data/logs/cron-publicarchive.log 2>&1
 # Automated GDPR related tasks below:
 # 0 3 * * * { . /code/config/bash.env && /usr/local/bin/php /code/web activity:gdpr:delete-old-signups; } > /code/data/logs/cron-gdpr-activity-signups.log 2>&1
+# 0 4 * * * { . /code/config/bash.env && /usr/local/bin/php /code/web user:gdpr:delete-old-loginattempts; } > /code/data/logs/cron-gdpr-user-loginattempts.log 2>&1

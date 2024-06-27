@@ -62,4 +62,14 @@ class LoginAttempt
 
         return $this->loginAttemptMapper->getFailedAttemptCount($since, $ip, $user) > $maxLoginAttempts;
     }
+
+    /**
+     * Delete all (failed) login attempts that are older than 3 months.
+     *
+     * We can automatically DELETE all login attempts at once instead of retrieving them and iterating over them.
+     */
+    public function deletedOldLoginAttempts(): void
+    {
+        $this->loginAttemptMapper->deleteLoginAttemptsOtherThan3Months();
+    }
 }

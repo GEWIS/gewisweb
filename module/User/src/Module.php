@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace User;
 
+use Activity\Command\Factory\DeleteOldLoginAttemptsFactory as DeleteOldLoginAttemptsCommandFactory;
 use Doctrine\Laminas\Hydrator\DoctrineObject;
 use Laminas\Authentication\AuthenticationService as LaminasAuthenticationService;
 use Laminas\Crypt\Password\Bcrypt;
@@ -21,6 +22,7 @@ use User\Authentication\Service\LoginAttempt as LoginAttemptService;
 use User\Authentication\Storage\CompanyUserSession;
 use User\Authentication\Storage\UserSession;
 use User\Authorization\AclServiceFactory;
+use User\Command\DeleteOldLoginAttempts as DeleteOldLoginAttemptsCommands;
 use User\Form\Activate as ActivateForm;
 use User\Form\ApiAppAuthorisation as ApiAppAuthorisationForm;
 use User\Form\ApiToken as ApiTokenForm;
@@ -395,6 +397,7 @@ class Module
                     return $remote->getIpAddress();
                 },
                 'user_service_acl' => AclServiceFactory::class,
+                DeleteOldLoginAttemptsCommands::class => DeleteOldLoginAttemptsCommandFactory::class,
             ],
         ];
     }

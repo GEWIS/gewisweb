@@ -70,6 +70,7 @@
         <exclude-pattern>module/Photo/src/Controller/Factory/Plugin/AlbumPluginFactory.php</exclude-pattern>
         <exclude-pattern>module/Photo/src/Controller/Factory/PhotoAdminControllerFactory.php</exclude-pattern>
         <exclude-pattern>module/Photo/src/Controller/Factory/TagControllerFactory.php</exclude-pattern>
+        <exclude-pattern>module/User/src/Command/Factory/DeleteOldLoginAttemptsFactory.php</exclude-pattern>
         <exclude-pattern>module/User/src/Controller/Factory/ApiAuthenticationControllerFactory.php</exclude-pattern>
         <exclude-pattern>module/User/src/Controller/Factory/UserControllerFactory.php</exclude-pattern>
         <exclude-pattern>module/User/src/Controller/Factory/ApiAdminControllerFactory.php</exclude-pattern>

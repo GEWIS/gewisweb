@@ -6,6 +6,7 @@ namespace User\Mapper;
 
 use Application\Mapper\BaseMapper;
 use Application\Model\IdentityInterface;
+use DateInterval;
 use DateTime;
 use Decision\Model\Member as MemberModel;
 use User\Model\CompanyUser as CompanyUserModel;
@@ -57,5 +58,19 @@ class LoginAttempt extends BaseMapper
     protected function getRepositoryName(): string
     {
         return LoginAttemptModel::class;
+    }
+
+    /**
+     * Delete all (failed) login attempts older than 3 months.
+     */
+    public function deleteLoginAttemptsOtherThan3Months(): void
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->delete($this->getRepositoryName(), 'l')
+            ->where('l.time <= :date');
+
+        $qb->setParameter('date', (new DateTime())->sub(new DateInterval('P3M')));
+
+        $qb->getQuery()->execute();
     }
 }
