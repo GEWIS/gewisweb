@@ -16456,15 +16456,15 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/User-Command-DeleteOldLoginAttempts.html#property_loginAttemptService"
         },                {
-            "fqsen": "\\Activity\\Command\\Factory\\DeleteOldLoginAttemptsFactory",
+            "fqsen": "\\User\\Command\\Factory\\DeleteOldLoginAttemptsFactory",
             "name": "DeleteOldLoginAttemptsFactory",
             "summary": "",
-            "url": "classes/Activity-Command-Factory-DeleteOldLoginAttemptsFactory.html"
+            "url": "classes/User-Command-Factory-DeleteOldLoginAttemptsFactory.html"
         },                {
-            "fqsen": "\\Activity\\Command\\Factory\\DeleteOldLoginAttemptsFactory\u003A\u003A__invoke\u0028\u0029",
+            "fqsen": "\\User\\Command\\Factory\\DeleteOldLoginAttemptsFactory\u003A\u003A__invoke\u0028\u0029",
             "name": "__invoke",
             "summary": "",
-            "url": "classes/Activity-Command-Factory-DeleteOldLoginAttemptsFactory.html#method___invoke"
+            "url": "classes/User-Command-Factory-DeleteOldLoginAttemptsFactory.html#method___invoke"
         },                {
             "fqsen": "\\User\\Controller\\ApiAdminController",
             "name": "ApiAdminController",
@@ -18810,6 +18810,11 @@ Search.appendIndex(
             "name": "Command",
             "summary": "",
             "url": "namespaces/user-command.html"
+        },                {
+            "fqsen": "\\User\\Command\\Factory",
+            "name": "Factory",
+            "summary": "",
+            "url": "namespaces/user-command-factory.html"
         },                {
             "fqsen": "\\User\\Controller",
             "name": "Controller",
