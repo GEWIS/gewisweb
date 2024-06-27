@@ -16221,6 +16221,11 @@ Search.appendIndex(
             "summary": "Check\u0020if\u0020there\u0020are\u0020too\u0020many\u0020login\u0020tries\u0020for\u0020a\u0020specific\u0020account.",
             "url": "classes/User-Authentication-Service-LoginAttempt.html#method_loginAttemptsExceeded"
         },                {
+            "fqsen": "\\User\\Authentication\\Service\\LoginAttempt\u003A\u003AdeletedOldLoginAttempts\u0028\u0029",
+            "name": "deletedOldLoginAttempts",
+            "summary": "Delete\u0020all\u0020\u0028failed\u0029\u0020login\u0020attempts\u0020that\u0020are\u0020older\u0020than\u00203\u0020months.",
+            "url": "classes/User-Authentication-Service-LoginAttempt.html#method_deletedOldLoginAttempts"
+        },                {
             "fqsen": "\\User\\Authentication\\Service\\LoginAttempt\u003A\u003A\u0024remoteAddress",
             "name": "remoteAddress",
             "summary": "",
@@ -16430,6 +16435,36 @@ Search.appendIndex(
             "name": "remoteAddress",
             "summary": "",
             "url": "classes/User-Authorization-GenericAclService.html#property_remoteAddress"
+        },                {
+            "fqsen": "\\User\\Command\\DeleteOldLoginAttempts",
+            "name": "DeleteOldLoginAttempts",
+            "summary": "",
+            "url": "classes/User-Command-DeleteOldLoginAttempts.html"
+        },                {
+            "fqsen": "\\User\\Command\\DeleteOldLoginAttempts\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/User-Command-DeleteOldLoginAttempts.html#method___construct"
+        },                {
+            "fqsen": "\\User\\Command\\DeleteOldLoginAttempts\u003A\u003Aexecute\u0028\u0029",
+            "name": "execute",
+            "summary": "",
+            "url": "classes/User-Command-DeleteOldLoginAttempts.html#method_execute"
+        },                {
+            "fqsen": "\\User\\Command\\DeleteOldLoginAttempts\u003A\u003A\u0024loginAttemptService",
+            "name": "loginAttemptService",
+            "summary": "",
+            "url": "classes/User-Command-DeleteOldLoginAttempts.html#property_loginAttemptService"
+        },                {
+            "fqsen": "\\Activity\\Command\\Factory\\DeleteOldLoginAttemptsFactory",
+            "name": "DeleteOldLoginAttemptsFactory",
+            "summary": "",
+            "url": "classes/Activity-Command-Factory-DeleteOldLoginAttemptsFactory.html"
+        },                {
+            "fqsen": "\\Activity\\Command\\Factory\\DeleteOldLoginAttemptsFactory\u003A\u003A__invoke\u0028\u0029",
+            "name": "__invoke",
+            "summary": "",
+            "url": "classes/Activity-Command-Factory-DeleteOldLoginAttemptsFactory.html#method___invoke"
         },                {
             "fqsen": "\\User\\Controller\\ApiAdminController",
             "name": "ApiAdminController",
@@ -16925,6 +16960,11 @@ Search.appendIndex(
             "name": "getRepositoryName",
             "summary": "",
             "url": "classes/User-Mapper-LoginAttempt.html#method_getRepositoryName"
+        },                {
+            "fqsen": "\\User\\Mapper\\LoginAttempt\u003A\u003AdeleteLoginAttemptsOtherThan3Months\u0028\u0029",
+            "name": "deleteLoginAttemptsOtherThan3Months",
+            "summary": "Delete\u0020all\u0020\u0028failed\u0029\u0020login\u0020attempts\u0020older\u0020than\u00203\u0020months.",
+            "url": "classes/User-Mapper-LoginAttempt.html#method_deleteLoginAttemptsOtherThan3Months"
         },                {
             "fqsen": "\\User\\Mapper\\NewCompanyUser",
             "name": "NewCompanyUser",
@@ -18765,6 +18805,11 @@ Search.appendIndex(
             "name": "Authorization",
             "summary": "",
             "url": "namespaces/user-authorization.html"
+        },                {
+            "fqsen": "\\User\\Command",
+            "name": "Command",
+            "summary": "",
+            "url": "namespaces/user-command.html"
         },                {
             "fqsen": "\\User\\Controller",
             "name": "Controller",
