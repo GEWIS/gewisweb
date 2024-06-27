@@ -1,3 +1,10 @@
+## [v4.2.1](https://github.com/GEWIS/gewisweb/tree/v4.2.1) (2024-06-27)
+
+* Added automatic 🎈🎈🎈 so @tomudding can sleep.
+* Added automatic removal of old login attempts in accordance with privacy policy.
+* Improved wording of the disabled account notice.
+* Improved wording of registration requirements.
+
 ## [v4.2.0](https://github.com/GEWIS/gewisweb/tree/v4.2.0) (2024-06-23)
 
 * Added 'Last Modified' timestamp to files in the Public Archive.
