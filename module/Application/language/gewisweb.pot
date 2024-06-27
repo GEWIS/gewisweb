@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: GEWISweb v2.8.6-633-g75efa226e-dirty\n"
+"Project-Id-Version: GEWISweb v2.8.6-685-g25c576feb-dirty\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-28 19:28+0100\n"
+"POT-Creation-Date: 2024-06-27 19:14+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2946,6 +2946,13 @@ msgstr ""
 msgid "Thumbnail photo to upload"
 msgstr ""
 
+#, php-format
+msgid ""
+"To get an account on the website, you must be a member of GEWIS. To read "
+"more about the benefits of membership and how to become a member, visit this "
+"%sinformation page%s."
+msgstr ""
+
 msgid ""
 "To optimally display your image on the overview page, please crop it below. "
 "The cropped aspect ratio is 16:9."
@@ -2954,12 +2961,6 @@ msgstr ""
 msgid ""
 "To optimally display your image your page, please crop it below. The cropped "
 "aspect ratio is 16:4."
-msgstr ""
-
-#, php-format
-msgid ""
-"To read more about the benefits of becoming a member and how to become a "
-"member, go to this %sinformation page%s."
 msgstr ""
 
 msgid "Toggle navigation"
@@ -3766,10 +3767,6 @@ msgid "You are not allowed to vote on this poll."
 msgstr ""
 
 msgid "You are not subscribed to this activity!"
-msgstr ""
-
-msgid ""
-"You can only register an account if you are a member of the association."
 msgstr ""
 
 msgid "You cannot create new jobs in expired job packages."
