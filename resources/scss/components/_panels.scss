@@ -104,6 +104,10 @@ $panel-link-color: #969696;
         > :last-child {
             margin-bottom: 0;
         }
+
+        > .table > tbody > tr > td {
+            padding: 0.6em 0;
+        }
     }
 
     .panel-heading + .panel-body {

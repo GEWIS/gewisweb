@@ -352,4 +352,10 @@ class Organ
 
         return null;
     }
+
+    public function isAbrogated(): bool
+    {
+        return null !== $this->abrogationDate
+            && (new DateTime()) >= $this->abrogationDate;
+    }
 }
