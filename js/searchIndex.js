@@ -9661,6 +9661,11 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020approved\u0020information\u0020for\u0020an\u0020organ.",
             "url": "classes/Decision-Model-Organ.html#method_getApprovedOrganInformation"
         },                {
+            "fqsen": "\\Decision\\Model\\Organ\u003A\u003AisAbrogated\u0028\u0029",
+            "name": "isAbrogated",
+            "summary": "",
+            "url": "classes/Decision-Model-Organ.html#method_isAbrogated"
+        },                {
             "fqsen": "\\Decision\\Model\\Organ\u003A\u003A\u0024abbr",
             "name": "abbr",
             "summary": "Abbreviation\u0020\u0028only\u0020for\u0020when\u0020organs\u0020are\u0020created\u0029.",
