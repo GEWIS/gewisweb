@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-27 19:26+0200\n"
-"PO-Revision-Date: 2024-06-27 19:26+0200\n"
+"POT-Creation-Date: 2024-07-17 21:45+0200\n"
+"PO-Revision-Date: 2024-07-17 21:47+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: en\n"
@@ -73,10 +73,6 @@ msgstr "%s was the <strong>%s</strong> during the association year %d/%d."
 msgid "%s wil be %s years old today!"
 msgstr "%s will be %s years old today!"
 
-#, php-format
-msgid "%s's activities"
-msgstr "%s's activities"
-
 msgid "(Update Pending)"
 msgstr "(Update Pending)"
 
@@ -109,6 +105,9 @@ msgstr "API Users"
 
 msgid "Abbreviation"
 msgstr "Abbreviation"
+
+msgid "Abrogation"
+msgstr "Abrogation"
 
 msgid "Abrogation Date"
 msgstr "Expiration Date"
@@ -1290,6 +1289,9 @@ msgstr "Focal length"
 msgid "Found %d %s matching your description"
 msgstr "Found %d %s matching your description"
 
+msgid "Foundation"
+msgstr "Foundation"
+
 msgid "Fraternities"
 msgstr "Fraternities"
 
@@ -1555,6 +1557,9 @@ msgstr "In this photo:"
 msgid "Inactief Lid"
 msgstr "Inactive Member"
 
+msgid "Inactive Members"
+msgstr "Inactive Members"
+
 msgid "Inactive members"
 msgstr "Inactive members"
 
@@ -1720,9 +1725,6 @@ msgstr "Log in to subscribe"
 
 msgid "Login"
 msgstr "Login"
-
-msgid "Login to view more information"
-msgstr "Login to view more information"
 
 msgid "Login to view the subscribed members."
 msgstr "Login to view the subscribed members."
@@ -1940,6 +1942,9 @@ msgstr "No Exception available"
 msgid "No GMM available."
 msgstr "No GMM available."
 
+msgid "No activities planned"
+msgstr "No activities planned"
+
 msgid "No date"
 msgstr "No date"
 
@@ -2040,6 +2045,9 @@ msgstr "Notifications"
 
 msgid "Number"
 msgstr "Number"
+
+msgid "Old Members"
+msgstr "Old Members"
 
 msgid "Old activities"
 msgstr "Old activities"

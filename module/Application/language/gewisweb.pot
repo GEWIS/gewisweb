@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: GEWISweb v2.8.6-687-g8b107f02d-dirty\n"
+"Project-Id-Version: GEWISweb v2.8.6-700-g4e6a53deb-dirty\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-27 19:26+0200\n"
+"POT-Creation-Date: 2024-07-17 21:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -72,10 +72,6 @@ msgstr ""
 msgid "%s wil be %s years old today!"
 msgstr ""
 
-#, php-format
-msgid "%s's activities"
-msgstr ""
-
 msgid "(Update Pending)"
 msgstr ""
 
@@ -107,6 +103,9 @@ msgid "API Users"
 msgstr ""
 
 msgid "Abbreviation"
+msgstr ""
+
+msgid "Abrogation"
 msgstr ""
 
 msgid "Abrogation Date"
@@ -1234,6 +1233,9 @@ msgstr ""
 msgid "Found %d %s matching your description"
 msgstr ""
 
+msgid "Foundation"
+msgstr ""
+
 msgid "Fraternities"
 msgstr ""
 
@@ -1462,6 +1464,9 @@ msgstr ""
 msgid "Inactief Lid"
 msgstr ""
 
+msgid "Inactive Members"
+msgstr ""
+
 msgid "Inactive members"
 msgstr ""
 
@@ -1620,9 +1625,6 @@ msgid "Log in to subscribe"
 msgstr ""
 
 msgid "Login"
-msgstr ""
-
-msgid "Login to view more information"
 msgstr ""
 
 msgid "Login to view the subscribed members."
@@ -1835,6 +1837,9 @@ msgstr ""
 msgid "No GMM available."
 msgstr ""
 
+msgid "No activities planned"
+msgstr ""
+
 msgid "No date"
 msgstr ""
 
@@ -1933,6 +1938,9 @@ msgid "Notifications"
 msgstr ""
 
 msgid "Number"
+msgstr ""
+
+msgid "Old Members"
 msgstr ""
 
 msgid "Old activities"

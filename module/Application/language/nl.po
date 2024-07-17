@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-27 19:26+0200\n"
-"PO-Revision-Date: 2024-06-27 19:26+0200\n"
+"POT-Creation-Date: 2024-07-17 21:45+0200\n"
+"PO-Revision-Date: 2024-07-17 21:46+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: nl\n"
@@ -73,10 +73,6 @@ msgstr "%s was de <strong>%s</strong> gedurende het verenigingsjaar %d/%d."
 msgid "%s wil be %s years old today!"
 msgstr "%s wordt vandaag %s jaar oud!"
 
-#, php-format
-msgid "%s's activities"
-msgstr "Activiteiten door %s"
-
 msgid "(Update Pending)"
 msgstr "(Update in behandeling)"
 
@@ -109,6 +105,9 @@ msgstr "API gebruikers"
 
 msgid "Abbreviation"
 msgstr "Afkorting"
+
+msgid "Abrogation"
+msgstr "Opheffing"
 
 msgid "Abrogation Date"
 msgstr "Datum van opheffen"
@@ -1301,6 +1300,9 @@ msgstr "Brandpuntsafstand"
 msgid "Found %d %s matching your description"
 msgstr "%d %s gevonden overeenkomend met je zoektermen"
 
+msgid "Foundation"
+msgstr "Oprichting"
+
 msgid "Fraternities"
 msgstr "Disputen"
 
@@ -1578,6 +1580,9 @@ msgstr "In deze foto:"
 msgid "Inactief Lid"
 msgstr "Inactief Lid"
 
+msgid "Inactive Members"
+msgstr "Inactieve leden"
+
 msgid "Inactive members"
 msgstr "Inactieve leden"
 
@@ -1743,9 +1748,6 @@ msgstr "Log in om in te schrijven"
 
 msgid "Login"
 msgstr "Login"
-
-msgid "Login to view more information"
-msgstr "Log in om meer informatie te zien"
 
 msgid "Login to view the subscribed members."
 msgstr "Login om de lijst met deelnemers te bekijken."
@@ -1964,6 +1966,9 @@ msgstr "Geen exceptie beschikbaar"
 msgid "No GMM available."
 msgstr "Geen ALV beschikbaar."
 
+msgid "No activities planned"
+msgstr "Geen activiteiten gepland"
+
 msgid "No date"
 msgstr "Geen datum"
 
@@ -2063,6 +2068,9 @@ msgstr "Meldingen"
 
 msgid "Number"
 msgstr "Getal"
+
+msgid "Old Members"
+msgstr "Oud leden"
 
 msgid "Old activities"
 msgstr "Oude activiteiten"
