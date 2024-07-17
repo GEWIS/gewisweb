@@ -23,7 +23,7 @@ proxy_ips[] = 172.*.*.*/8
 
 [log]
 log_writers[] = file
-log_level = DEBUG
+log_level = WARN
 
 [Plugins]
 ; list of plugins (in order they will be loaded) that are activated by default in the Matomo platform
