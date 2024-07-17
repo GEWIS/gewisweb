@@ -62,7 +62,36 @@ $this->headTitle($this->translate('Members'));
                 </table>
                 <?php
                 /* @var BoardMember[] $boardInstalls */
-                $boardInstalls = array_reverse($member->getBoardInstallations()->toArray());
+                $boardInstalls = $member->getBoardInstallations()->toArray();
+
+                // Ensure proper sorting of board installations; most recent installations first but keep original
+                // ordering when comparing within meetings.
+                usort($boardInstalls, static function(BoardMember $a, BoardMember $b) {
+                    $aInstallationDec = $a->getInstallationDec();
+                    $bInstallationDec = $b->getInstallationDec();
+
+                    // While using the spaceship comparator (`<=>`) would have been fancy, we would still have needed an
+                    // if statement to check against the outcome of that comparison not being zero. So we simply do it
+                    // the "old-school" way.
+
+                    // Compare the meeting numbers.
+                    if ($aInstallationDec->getMeetingNumber() !== $bInstallationDec->getMeetingNumber()) {
+                        return $aInstallationDec->getMeetingNumber() < $bInstallationDec->getMeetingNumber() ? 1 : -1;
+                    }
+
+                    // If the meeting numbers are the same, compare the decision points and numbers.
+                    if ($aInstallationDec->getDecisionPoint() !== $bInstallationDec->getDecisionPoint()) {
+                        return $aInstallationDec->getDecisionPoint() < $bInstallationDec->getDecisionPoint() ? -1 : 1;
+                    }
+
+                    if ($aInstallationDec->getDecisionNumber() !== $bInstallationDec->getDecisionNumber()) {
+                        return $aInstallationDec->getDecisionNumber() < $bInstallationDec->getDecisionNumber() ? -1 : 1;
+                    }
+
+                    // If all the above are the same, compare the sequence numbers.
+                    return $aInstallationDec->getSequence() < $bInstallationDec->getSequence() ? -1 : 1;
+                });
+
                 if (!empty($boardInstalls)):
                     $now = new DateTime('now');
                     $associationYear = AssociationYear::fromDate($now);
