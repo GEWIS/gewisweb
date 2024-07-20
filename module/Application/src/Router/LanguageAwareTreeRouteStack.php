@@ -162,7 +162,15 @@ class LanguageAwareTreeRouteStack extends TranslatorAwareTreeRouteStack
         // Check if the zeroth element of the stripped path is a supported language. Note that the zeroth element is
         // always defined due to the nature of the `explode()` call above.
         //
-        // Here are some example of that behaviour (note that `{baseUrl}` can be `domain/` or even `domain/path/`):
+        // All `/api` routes should not be language aware. As such, we do not allow using '{baseUrl}/{language}/api'.
+        if (
+            isset($strippedPathParts[1])
+            && 'api' === $strippedPathParts[1]
+        ) {
+            return null;
+        }
+
+        // Here are some example of standard behaviour (note that `{baseUrl}` can be `domain/` or even `domain/path/`):
         //
         // '{baseUrl}/en'
         // array(1) {
@@ -198,6 +206,10 @@ class LanguageAwareTreeRouteStack extends TranslatorAwareTreeRouteStack
 
             $session = new SessionContainer('lang');
             $session->lang = $language;
+        } elseif ('api' === $strippedPathParts[0]) {
+            // The language was not provided through the URL, but we are dealing with `/api` which should not be
+            // language aware. As such, we default to English to keep the router happy.
+            $language = Languages::EN->value;
         } else {
             // The language was not provided through the URL, so we need to determine it based on some other factors.
             $language = $this->getLanguage($request);
