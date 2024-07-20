@@ -668,7 +668,7 @@ class Member
                 $dischargeDate = $boardMember->getDischargeDate();
 
                 // Keep installation if not discharged or discharged in the future
-                return null === $dischargeDate || $dischargeDate >= $today;
+                return null === $dischargeDate || $dischargeDate > $today;
             },
         );
 
@@ -855,12 +855,12 @@ class Member
             // Installation was (before) today.
             if (
                 null === $releaseDate
-                || $releaseDate >= $now
+                || $releaseDate > $now
             ) {
                 // Not yet released or the release is the in the future.
                 if (
                     null === $dischargeDate
-                    || $dischargeDate >= $now
+                    || $dischargeDate > $now
                 ) {
                     // Not yet discharged or the discharge is in the future.
                     return true;
