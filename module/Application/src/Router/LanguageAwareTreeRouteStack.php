@@ -48,9 +48,13 @@ class LanguageAwareTreeRouteStack extends TranslatorAwareTreeRouteStack
         // Try to get the language, because we do not have access to the current request in this method we cannot add an
         // `else` clause to call `$this->getLanguage()` to get the language.
         $language = null;
-        if (isset($params['language'])) {
+        if (array_key_exists('language', $params)) {
             // The language is already defined in the parameters for the route, so we can use that. This happens when
             // calling `url()` from a view while manually setting `['language' => '{language}']`.
+            // We do not use `isset()` to ensure that we can also do this when we explicitly set the `language` key to
+            // `null` in the URL builder: `['language' => null]`. This is necessary for routes that do not use the
+            // language-aware router (i.e. the API), as filtering in the actual route stack definitions to check whether
+            // the route will hit `/api` is more work.
             $language = $params['language'];
         } elseif (is_callable([$translator, 'getLocale'])) {
             // Otherwise, try to get the language from the translator. Note that `is_callable` is preferred here as

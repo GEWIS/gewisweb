@@ -21,7 +21,7 @@ use Laminas\View\Renderer\PhpRenderer;
                             <h3><?= $this->translate('Infimum') ?></h3>
                             <p id="infimum-footer"><?= $this->translate('Loading an infimum...') ?></p>
                             <script type="text/javascript" nonce="<?= NONCE_REPLACEMENT_STRING ?>">
-                                fetch('<?= $this->url('infimum') ?>')
+                                fetch('<?= $this->url('infimum', ['language' => null]) ?>')
                                     .then(result => result.json())
                                     .then(function (data) {
                                         document.getElementById('infimum-footer').textContent = data['content'];
