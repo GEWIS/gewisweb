@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Decision\Mapper;
 
 use Application\Mapper\BaseMapper;
+use DateTime;
 use Decision\Model\Enums\OrganTypes;
 use Decision\Model\Organ as OrganModel;
 use Doctrine\ORM\NonUniqueResultException;
@@ -26,15 +27,19 @@ class Organ extends BaseMapper
      */
     public function findActive(?OrganTypes $type = null): array
     {
-        $criteria = [
-            'abrogationDate' => null,
-        ];
+        $qb = $this->getRepository()->createQueryBuilder('o');
+        $qb->where($qb->expr()->orX(
+            $qb->expr()->isNull('o.abrogationDate'),
+            $qb->expr()->gt('o.abrogationDate', ':now'),
+        ))
+            ->setParameter('now', new DateTime());
 
         if (null !== $type) {
-            $criteria['type'] = $type;
+            $qb->andWhere('o.type = :type')
+                ->setParameter('type', $type);
         }
 
-        return $this->getRepository()->findBy($criteria);
+        return $qb->getQuery()->getResult();
     }
 
     /**
@@ -42,12 +47,17 @@ class Organ extends BaseMapper
      */
     public function findActiveById(int $id): ?OrganModel
     {
-        return $this->getRepository()->findOneBy(
-            [
-                'id' => $id,
-                'abrogationDate' => null,
-            ],
-        );
+        $qb = $this->getRepository()->createQueryBuilder('o');
+        $qb->where('o.id = :id')
+            ->andWhere($qb->expr()->orX(
+                $qb->expr()->isNull('o.abrogationDate'),
+                $qb->expr()->gt('o.abrogationDate', ':now'),
+            ));
+
+        $qb->setParameter('id', $id)
+            ->setParameter('now', new DateTime());
+
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
     /**
@@ -58,7 +68,11 @@ class Organ extends BaseMapper
     public function findAbrogated(?OrganTypes $type = null): array
     {
         $qb = $this->getRepository()->createQueryBuilder('o');
-        $qb->where('o.abrogationDate IS NOT NULL')
+        $qb->where($qb->expr()->andX(
+            $qb->expr()->isNotNull('o.abrogationDate'),
+            $qb->expr()->lte('o.abrogationDate', ':now'),
+        ))
+            ->setParameter('now', new DateTime())
             ->orderBy('o.abrogationDate', 'DESC');
 
         if (null !== $type) {

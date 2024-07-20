@@ -68,6 +68,6 @@ class IsOrganMember implements AssertionInterface
         $now = new DateTime();
 
         return $organMember->getInstallDate() <= $now &&
-            (null === $organMember->getDischargeDate() || $organMember->getDischargeDate() >= $now);
+            (null === $organMember->getDischargeDate() || $organMember->getDischargeDate() > $now);
     }
 }
