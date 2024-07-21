@@ -152,6 +152,12 @@ class LanguageAwareTreeRouteStack extends TranslatorAwareTreeRouteStack
         // Store the original base URL (likely only just set above).
         $oldBaseUrl = $this->getBaseUrl();
 
+        // Do not allow direct access using /index.php. It is too difficult to properly configure this in NGINX, as we
+        // want to keep using the Laminas-generated 404 page and not a generic NGINX 404 page.
+        if (str_starts_with($oldBaseUrl, '/index.php')) {
+            return null;
+        }
+
         // Get the path from the URI, strip the base from it, and finally split it on `/`s.
         $uri = $request->getUri();
         $strippedPath = ltrim(
