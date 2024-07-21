@@ -9,6 +9,7 @@ use User\Form\CompanyUserLogin as CompanyUserLoginForm;
 /**
  * @var PhpRenderer|HelperTrait $this
  * @var CompanyUserLoginForm $form
+ * @var string $redirectTo
  */
 
 $form->prepare();
@@ -17,10 +18,8 @@ $form->setAttribute(
     'action',
     $this->url(
         'user/login',
-        [
-            'user_type' => 'company',
-            'redirect_to' => base64_encode($this->serverUrl(true)),
-        ],
+        ['user_type' => 'company'],
+        ['query' => ['redirect_to' => $redirectTo]],
     ),
 );
 $form->setAttribute('method', 'post');
@@ -62,8 +61,6 @@ $form->setAttribute('class', 'form-horizontal');
             <?= $this->formElementErrors($password, ['class' => 'help-block']); ?>
         </div>
     </div>
-
-    <?= $this->formInput($form->get('redirect')) ?>
 
     <div class="form-group">
         <div class="col-sm-offset-5 col-sm-7">

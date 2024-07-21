@@ -129,10 +129,8 @@ function formElementRender(
                                     $this->translate('Do you have a GEWIS account? <a href="%s">Log in to subscribe.</a>'),
                                     $this->url(
                                         'user/login',
-                                        [
-                                            'user_type' => 'member',
-                                            'redirect_to' => base64_encode($this->serverUrl(true)),
-                                        ],
+                                        ['user_type' => 'member'],
+                                        ['query' => ['redirect_to' => base64_encode($this->serverUrl(true))]],
                                     ),
                                 ) ?>
                             </strong> <?= $this->translate('Or subscribe without a GEWIS membership: ') ?>

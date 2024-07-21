@@ -12,8 +12,6 @@ use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
 use Laminas\View\Model\ViewModel;
-use User\Form\CompanyUserLogin as CompanyLoginForm;
-use User\Form\UserLogin as UserLoginForm;
 use User\Permissions\NotAllowedException;
 use User\Service\AclService;
 use User\Service\User as UserService;
@@ -44,18 +42,19 @@ class UserController extends AbstractActionController
         }
 
         $userType = $this->params()->fromRoute('user_type');
-        $redirectTo = $this->params()->fromRoute('redirect_to');
+        $redirectTo = $this->params()->fromQuery('redirect_to');
+
+        if ('company' === $userType) {
+            $form = $this->userService->getCompanyUserLoginForm();
+        } else {
+            $form = $this->userService->getUserLoginForm();
+        }
 
         /** @var Request $request */
         $request = $this->getRequest();
         if ($request->isPost()) {
-            if ('company' === $userType) {
-                $form = $this->userService->getCompanyUserLoginForm();
-            } else {
-                $form = $this->userService->getUserLoginForm();
-            }
-
             $form->setData($request->getPost()->toArray());
+
             if ($form->isValid()) {
                 $data = $form->getData();
 
@@ -67,48 +66,28 @@ class UserController extends AbstractActionController
 
                 if (null !== $login) {
                     return $this->redirect()->toUrl(
-                        $this->decodeRedirect(empty($data['redirect']) ? $redirectTo : $data['redirect']),
+                        $this->decodeRedirect($redirectTo),
                     );
                 }
             }
         }
 
-        return new ViewModel(
-            [
-                'form' => $this->handleRedirect($userType, $redirectTo),
-                'userType' => $userType,
-            ],
-        );
-    }
-
-    private function handleRedirect(
-        string $userType,
-        ?string $referer,
-    ): CompanyLoginForm|UserLoginForm {
-        if ('company' === $userType) {
-            $form = $this->userService->getCompanyUserLoginForm();
-        } else {
-            $form = $this->userService->getUserLoginForm();
-        }
-
-        if (null === $form->get('redirect')->getValue()) {
-            if (null !== $referer) {
-                $form->get('redirect')->setValue($referer);
-
-                return $form;
-            }
-
-            $form->get('redirect')->setValue(
-                base64_encode(
-                    $this->url()->fromRoute(
-                        route: 'home',
-                        options: ['force_canonical' => true],
-                    ),
+        if (null === $redirectTo) {
+            $redirectTo = base64_encode(
+                $this->url()->fromRoute(
+                    route: 'home',
+                    options: ['force_canonical' => true],
                 ),
             );
         }
 
-        return $form;
+        return new ViewModel(
+            [
+                'form' => $form,
+                'redirectTo' => $redirectTo,
+                'userType' => $userType,
+            ],
+        );
     }
 
     /**

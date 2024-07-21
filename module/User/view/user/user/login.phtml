@@ -10,6 +10,7 @@ use User\Form\UserLogin as UserLoginForm;
 /**
  * @var PhpRenderer|HelperTrait $this
  * @var CompanyUserLoginForm|UserLoginForm $form
+ * @var string $redirectTo
  * @var string $userType
  */
 
@@ -39,9 +40,21 @@ $isMember = ('member' === $userType);
                         <h3><?= $this->translate('Login') ?></h3>
                     </div>
                     <?php if ($isMember): ?>
-                        <?= $this->partial('partial/login/member.phtml', ['form' => $form]) ?>
+                        <?= $this->partial(
+                            'partial/login/member.phtml',
+                            [
+                                'form' => $form,
+                                'redirectTo' => $redirectTo,
+                            ],
+                        ) ?>
                     <?php else: ?>
-                        <?= $this->partial('partial/login/company.phtml', ['form' => $form]) ?>
+                        <?= $this->partial(
+                            'partial/login/company.phtml',
+                            [
+                                'form' => $form,
+                                'redirectTo' => $redirectTo,
+                            ],
+                        ) ?>
                     <?php endif; ?>
                 </div>
             </div>

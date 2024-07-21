@@ -227,7 +227,8 @@ function getOrganDescription($organInformation, $lang)
                             <p>
                                 <a href="<?= $this->url(
                                     'user/login',
-                                    ['redirect_to' => base64_encode($this->serverUrl(true))],
+                                    ['user_type' => 'member'],
+                                    ['query' => ['redirect_to' => base64_encode($this->serverUrl(true))]],
                                 ) ?>">
                                     <?= $this->translate('Login') ?>
                                 </a>

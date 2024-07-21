@@ -8,7 +8,6 @@ use Laminas\Authentication\Result;
 use Laminas\Filter\StringTrim;
 use Laminas\Form\Element\Csrf;
 use Laminas\Form\Element\Email;
-use Laminas\Form\Element\Hidden;
 use Laminas\Form\Element\Password;
 use Laminas\Form\Element\Submit;
 use Laminas\Form\Form;
@@ -53,13 +52,6 @@ class CompanyUserLogin extends Form implements InputFilterProviderInterface
                 'attributes' => [
                     'value' => $translator->translate('Log in as company'),
                 ],
-            ],
-        );
-
-        $this->add(
-            [
-                'name' => 'redirect',
-                'type' => Hidden::class,
             ],
         );
 

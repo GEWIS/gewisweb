@@ -9,18 +9,16 @@ use User\Form\UserLogin as UserLoginForm;
 /**
  * @var PhpRenderer|HelperTrait $this
  * @var UserLoginForm $form
+ * @var string $redirectTo
  */
 
 $form->prepare();
-
 $form->setAttribute(
     'action',
     $this->url(
         'user/login',
-        [
-            'user_type' => 'member',
-            'redirect_to' => base64_encode($this->serverUrl(true)),
-        ],
+        ['user_type' => 'member'],
+        ['query' => ['redirect_to' => $redirectTo]],
     ),
 );
 $form->setAttribute('method', 'post');
@@ -70,8 +68,6 @@ $form->setAttribute('class', 'form-horizontal');
             </label>
         </div>
     </div>
-
-    <?= $this->formInput($form->get('redirect')) ?>
 
     <div class="form-group">
         <div class="col-sm-offset-5 col-sm-7">
