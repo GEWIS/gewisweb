@@ -16591,11 +16591,6 @@ Search.appendIndex(
             "summary": "User\u0020login\u0020action.",
             "url": "classes/User-Controller-UserController.html#method_loginAction"
         },                {
-            "fqsen": "\\User\\Controller\\UserController\u003A\u003AhandleRedirect\u0028\u0029",
-            "name": "handleRedirect",
-            "summary": "",
-            "url": "classes/User-Controller-UserController.html#method_handleRedirect"
-        },                {
             "fqsen": "\\User\\Controller\\UserController\u003A\u003AdecodeRedirect\u0028\u0029",
             "name": "decodeRedirect",
             "summary": "Decode\u0020the\u0020base64\u0020encoded\u0020referer,\u0020if\u0020it\u0020is\u0020not\u0020valid\u0020always\u0020return\u0020the\u0020home\u0020page.",
