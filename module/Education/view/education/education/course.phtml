@@ -48,10 +48,8 @@ foreach ($documents as $document) {
                         $this->translate('If you want to view these documents, you can either <a href="%s">login</a> or access these documents on the campus.'),
                         $this->url(
                             'user/login',
-                            [
-                                'user_type' => 'member',
-                                'redirect_to' => base64_encode($this->serverUrl(true)),
-                            ],
+                            ['user_type' => 'member'],
+                            ['query' => ['redirect_to' => base64_encode($this->serverUrl(true))]],
                         ),
                     ) ?>
                 </p>

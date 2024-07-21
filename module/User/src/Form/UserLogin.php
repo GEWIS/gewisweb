@@ -7,7 +7,6 @@ namespace User\Form;
 use Laminas\Authentication\Result;
 use Laminas\Form\Element\Checkbox;
 use Laminas\Form\Element\Csrf;
-use Laminas\Form\Element\Hidden;
 use Laminas\Form\Element\Password;
 use Laminas\Form\Element\Submit;
 use Laminas\Form\Element\Text;
@@ -65,13 +64,6 @@ class UserLogin extends Form implements InputFilterProviderInterface
                     'unchecked_value' => '0',
                     'checked' => true,
                 ],
-            ],
-        );
-
-        $this->add(
-            [
-                'name' => 'redirect',
-                'type' => Hidden::class,
             ],
         );
 

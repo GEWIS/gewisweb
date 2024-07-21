@@ -45,10 +45,9 @@ return [
                     'login' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/login[/:user_type][/to/:redirect_to]',
+                            'route' => '/login[/:user_type]',
                             'constraints' => [
                                 'user_type' => '(company|member)',
-                                'redirect_to' => '[a-zA-Z0-9\+\=]+',
                             ],
                             'defaults' => [
                                 'action' => 'login',

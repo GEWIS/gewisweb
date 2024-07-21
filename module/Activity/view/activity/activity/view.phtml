@@ -272,10 +272,8 @@ $this->headTitle($this->translate('Activities'));
                         <?php if (!$isAllowedToSubscribe && $signupList->getOnlyGEWIS()): ?>
                             <a href="<?= $this->url(
                                 'user/login',
-                                [
-                                    'user_type' => 'member',
-                                    'redirect_to' => base64_encode($this->serverUrl(true)),
-                                ],
+                                ['user_type' => 'member'],
+                                ['query' => ['redirect_to' => base64_encode($this->serverUrl(true))]],
                             ) ?>"
                                class="btn btn-primary btn-lg">
                                 <span class="fas fa-user-plus"></span> <?= $this->translate('Log in to subscribe') ?>
@@ -341,10 +339,8 @@ $this->headTitle($this->translate('Activities'));
                                             <?php endif; ?>
                                             <a href="<?= $this->url(
                                                 'user/login',
-                                                [
-                                                    'user_type' => 'member',
-                                                    'redirect_to' => base64_encode($this->serverUrl(true)),
-                                                ],
+                                                ['user_type' => 'member'],
+                                                ['query' => ['redirect_to' => base64_encode($this->serverUrl(true))]],
                                             ) ?>">
                                                 <?= $this->translate('Login to view the subscribed members.') ?>
                                             </a>
