@@ -270,7 +270,7 @@ $this->scriptUrl()->requireUrl('member/search')
                             ) ?>"
                         <?php endif; ?>
                         data-profile-photo-url="<?= $this->url('photo/set_profile_photo', ['photo_id' => $item->getId()]) ?>"
-                        data-details-url="<?= $this->url('api_photo/details', ['photo_id' => $item->getId()]) ?>"
+                        data-details-url="<?= $this->url('api_photo/details', ['photo_id' => $item->getId(), 'language' => null]) ?>"
                         data-vote-url="<?= $this->url('photo/photo/vote', ['photo_id' => $item->getId()]) ?>"
                         <?php if (null !== $weeklyPhoto): ?>
                             data-weekly-date="<?= $weeklyPhoto->getWeek()->format('c') ?>"
