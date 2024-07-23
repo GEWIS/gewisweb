@@ -120,16 +120,16 @@ $this->headScript()
                                 </a>
                             </p>
                         <?php endif; ?>
-                        <?php if (null !== $this->localiseText($job->getWebsite())): ?>
+                        <?php if ('' !== ($website = $this->localiseText($job->getWebsite()))): ?>
                             <p class="job-website">
-                                <a href="<?= $this->localiseText($job->getWebsite()) ?>" rel="noreferrer">
+                                <a href="<?= $website ?>" rel="noreferrer">
                                     <?= $this->translate('View Website') ?>
                                 </a>
                             </p>
                         <?php endif; ?>
-                        <?php if (null !== $this->localiseText($job->getAttachment())): ?>
+                        <?php if ('' !== ($attachment = $this->localiseText($job->getAttachment()))): ?>
                             <p class="job-vacancy">
-                                <a href="<?= $this->fileUrl($this->localiseText($job->getAttachment())) ?>">
+                                <a href="<?= $this->fileUrl($attachment) ?>">
                                     <?= $this->translate('View Attachment') ?>
                                 </a>
                             </p>

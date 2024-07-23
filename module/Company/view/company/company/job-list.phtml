@@ -136,9 +136,9 @@ $this->headScript()
                                     <?= $this->escapeHtml($this->localiseText($job->getName())) ?>
                                 </h2>
                                 <p class="card-subtitle text-muted"><?= $this->escapeHtml($company->getName()) ?></p>
-                                <?php if (null !== $this->localiseText($job->getLocation())): ?>
+                                <?php if ('' !== ($location = $this->localiseText($job->getLocation()))): ?>
                                     <p class="job-location">
-                                        <?= $this->escapeHtml($this->localiseText($job->getLocation())) ?>
+                                        <?= $this->escapeHtml($location) ?>
                                     </p>
                                 <?php endif; ?>
                                 <div>

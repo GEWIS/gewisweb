@@ -22,13 +22,9 @@ $companyURL = $escaper->escapeHtmlAttr($this->localiseText($company->getWebsite(
         <div class="col-md-12">
             <h1 class="company-name">
                 <a href="<?= $companyURL ?>"><?= $this->escapeHtml($company->getName()) ?></a>
-                <?php
-                if (null !== $this->localiseText($company->getSlogan())):
-                ?>
-                    <small>&#124; <?= $this->escapeHtml($this->localiseText($company->getSlogan())) ?></small>
-                <?php
-                endif;
-                ?>
+                <?php if ('' !== ($slogan = $this->localiseText($company->getSlogan()))): ?>
+                    <small>&#124; <?= $this->escapeHtml($slogan) ?></small>
+                <?php endif; ?>
             </h1>
         </div>
         <div class="col-md-3">
