@@ -4,6 +4,7 @@ div.markdown {
      * Headings
      */
     $hx-scaling: 0.8;
+    overflow-wrap: break-word;
 
     h1 {
         font-size: $hx-scaling * 36px;
