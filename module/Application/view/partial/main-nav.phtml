@@ -41,14 +41,14 @@ endif; ?>
 <nav class="navbar navbar-gewis navbar-static-top rainbow" role="navigation">
     <div class="container">
         <div class="navbar-header navbar-left pull-left">
-            <a href="<?= $this->url('home') ?>" class="navbar-brand">
+            <a href="/<?= $lang ?>/" class="navbar-brand">
                 <div class="gi gewis-base"></div>
             </a>
         </div>
         <div class="navbar-header navbar-right pull-right">
             <ul class="nav navbar-nav pull-left no-collapse">
                 <li class="dropdown pull-right">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                    <a href="<?= $this->hashUrl() ?>" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false">
                         <span class="fas fa-globe-europe"></span>
                         <span class="sr-only"><?= $this->translate('Language settings') ?></span>
@@ -94,7 +94,7 @@ endif; ?>
                 <?php
                 if (null === $this->identity() && null === $this->companyIdentity()): ?>
                     <li class="dropdown pull-right">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                        <a href="<?= $this->hashUrl() ?>" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                            aria-expanded="false">
                             <span class="fas fa-user"></span>
                             <?= $this->translate('Members') ?>
@@ -129,7 +129,7 @@ endif; ?>
                     <?php
                     $company = $this->companyIdentity()->getCompany(); ?>
                     <li class="dropdown pull-right">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                        <a href="<?= $this->hashUrl() ?>" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                            aria-expanded="false">
                             <?= $this->escapeHtml($company->getName()) ?>
                             <span class="caret"></span>
@@ -157,7 +157,7 @@ endif; ?>
                     <?php
                     $member = $this->identity()->getMember(); ?>
                     <li class="dropdown pull-right">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                        <a href="<?= $this->hashUrl() ?>" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                            aria-expanded="false">
                             <?= $this->escapeHtml($member->getFirstName()) ?>
                             <span class="caret"></span>
@@ -306,13 +306,13 @@ endif; ?>
                             </a>
                         </li>
                         <li class="dropdown dropdown-submenu">
-                            <a href="#" role="button"
+                            <a href="<?= $this->hashUrl() ?>" role="button"
                                class="dropdown-toggle visible-sm visible-xs" data-toggle="dropdown" aria-haspopup="true"
                                aria-expanded="false">
                                 <?= $this->translate('Useful Information') ?>
                                 <span class="caret"></span>
                             </a>
-                            <a href="#" role="button"
+                            <a href="<?= $this->hashUrl() ?>" role="button"
                                class="hidden-sm hidden-xs">
                                 <?= $this->translate('Useful Information') ?>
                                 <span class="caret"></span>

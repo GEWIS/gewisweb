@@ -241,7 +241,7 @@ function getOrganDescription($organInformation, $lang)
                     </div>
                     <div class="list-group">
                         <?php if (empty($activities)): ?>
-                            <p class="list-group-item" href="#">
+                            <p class="list-group-item" href="<?= $this->hashUrl() ?>">
                                 <span class="list-group-item-text text-muted">
                                     <?= $this->translate('No activities planned') ?>
                                 </span>
