@@ -386,15 +386,16 @@
                                 <section>
                                         <ul class="phpdocumentor-breadcrumbs">
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/application.html">Application</a></li>
-            <li class="phpdocumentor-breadcrumb"><a href="namespaces/application-router.html">Router</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/application-view.html">View</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/application-view-helper.html">Helper</a></li>
     </ul>
 
     <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    LanguageAwareTreeRouteStack
+    HashUrl
 
         <span class="phpdocumentor-element__extends">
-        extends <abbr title="\Laminas\Mvc\I18n\Router\TranslatorAwareTreeRouteStack">TranslatorAwareTreeRouteStack</abbr>
+        extends <abbr title="\Laminas\View\Helper\AbstractHelper">AbstractHelper</abbr>
     </span>
     
             <div class="phpdocumentor-element__package">
@@ -413,13 +414,14 @@
 </div>
 
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Router/LanguageAwareTreeRouteStack.php"><a href="files/module-application-src-router-languageawaretreeroutestack.html"><abbr title="module/Application/src/Router/LanguageAwareTreeRouteStack.php">LanguageAwareTreeRouteStack.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/View/Helper/HashUrl.php"><a href="files/module-application-src-view-helper-hashurl.html"><abbr title="module/Application/src/View/Helper/HashUrl.php">HashUrl.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">27</span>
+    <span class="phpdocumentor-element-found-in__line">17</span>
 
     </aside>
 
-        
+            <p class="phpdocumentor-summary">View helper to generate URLs of the current page with a hash `#`.</p>
+
 
 
 
@@ -430,7 +432,7 @@
 
 <h3 id="toc">
     Table of Contents
-    <a href="classes/Application-Router-LanguageAwareTreeRouteStack.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Application-View-Helper-HashUrl.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h3>
 
@@ -444,57 +446,35 @@
 
 <h4 id="toc-properties">
     Properties
-    <a href="classes/Application-Router-LanguageAwareTreeRouteStack.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Application-View-Helper-HashUrl.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -property -private">
-    <a class="" href="classes/Application-Router-LanguageAwareTreeRouteStack.html#property_lastMatchedLanguage">$lastMatchedLanguage</a>
+    <a class="" href="classes/Application-View-Helper-HashUrl.html#property_serverUrlHelper">$serverUrlHelper</a>
     <span>
-                        &nbsp;: string|null            </span>
+                        &nbsp;: <abbr title="\Laminas\View\Helper\ServerUrl">ServerUrl</abbr>            </span>
 </dt>
 
     </dl>
 
 <h4 id="toc-methods">
     Methods
-    <a href="classes/Application-Router-LanguageAwareTreeRouteStack.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Application-View-Helper-HashUrl.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Application-Router-LanguageAwareTreeRouteStack.html#method_assemble">assemble()</a>
+    <a class="" href="classes/Application-View-Helper-HashUrl.html#method___construct">__construct()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Application-Router-LanguageAwareTreeRouteStack.html#method_getLastMatchedLanguage">getLastMatchedLanguage()</a>
-    <span>
-                                &nbsp;: string|null    </span>
-</dt>
-<dd>Get the last matched language from a request.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Application-Router-LanguageAwareTreeRouteStack.html#method_match">match()</a>
-    <span>
-                                &nbsp;: <abbr title="\Laminas\Router\RouteMatch">RouteMatch</abbr>|null    </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -private">
-    <a class="" href="classes/Application-Router-LanguageAwareTreeRouteStack.html#method_determinePreferredLanguageFromRequest">determinePreferredLanguageFromRequest()</a>
-    <span>
-                                &nbsp;: <a href="classes/Application-Model-Enums-Languages.html"><abbr title="\Application\Model\Enums\Languages">Languages</abbr></a>    </span>
-</dt>
-<dd>Determine the preferred language based on the `Accept-Language` header. If no language is the header is supported
-we always return English as the default language.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -private">
-    <a class="" href="classes/Application-Router-LanguageAwareTreeRouteStack.html#method_getLanguage">getLanguage()</a>
+    <a class="" href="classes/Application-View-Helper-HashUrl.html#method___invoke">__invoke()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
-<dd>Get the stored (preferred) language or try to determine it based on the request.</dd>
 
     </dl>
 
@@ -506,7 +486,7 @@ we always return English as the default language.</dd>
     <section class="phpdocumentor-properties">
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
-            <a href="classes/Application-Router-LanguageAwareTreeRouteStack.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Application-View-Helper-HashUrl.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
@@ -514,19 +494,19 @@ we always return English as the default language.</dd>
             phpdocumentor-element
             -property
             -private
-                                                        "
+                                                -read-only        "
 >
-    <h4 class="phpdocumentor-element__name" id="property_lastMatchedLanguage">
-        $lastMatchedLanguage
-        <a href="classes/Application-Router-LanguageAwareTreeRouteStack.html#property_lastMatchedLanguage" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_serverUrlHelper">
+        $serverUrlHelper
+        <a href="classes/Application-View-Helper-HashUrl.html#property_serverUrlHelper" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
-                                </span>
+                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Router/LanguageAwareTreeRouteStack.php"><a href="files/module-application-src-router-languageawaretreeroutestack.html"><abbr title="module/Application/src/Router/LanguageAwareTreeRouteStack.php">LanguageAwareTreeRouteStack.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/View/Helper/HashUrl.php"><a href="files/module-application-src-view-helper-hashurl.html"><abbr title="module/Application/src/View/Helper/HashUrl.php">HashUrl.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">29</span>
+    <span class="phpdocumentor-element-found-in__line">19</span>
 
     </aside>
 
@@ -534,9 +514,9 @@ we always return English as the default language.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">private</span>
-        <span class="phpdocumentor-signature__type">string|null</span>
-    <span class="phpdocumentor-signature__name">$lastMatchedLanguage</span>
-     = <span class="phpdocumentor-signature__default-value">null</span></code>
+        <span class="phpdocumentor-signature__type"><abbr title="\Laminas\View\Helper\ServerUrl">ServerUrl</abbr></span>
+    <span class="phpdocumentor-signature__name">$serverUrlHelper</span>
+    </code>
 
     
     
@@ -550,7 +530,7 @@ we always return English as the default language.</dd>
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/Application-Router-LanguageAwareTreeRouteStack.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Application-View-Helper-HashUrl.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
@@ -559,22 +539,22 @@ we always return English as the default language.</dd>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_assemble">
-        assemble()
-        <a href="classes/Application-Router-LanguageAwareTreeRouteStack.html#method_assemble" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method___construct">
+        __construct()
+        <a href="classes/Application-View-Helper-HashUrl.html#method___construct" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Router/LanguageAwareTreeRouteStack.php"><a href="files/module-application-src-router-languageawaretreeroutestack.html"><abbr title="module/Application/src/Router/LanguageAwareTreeRouteStack.php">LanguageAwareTreeRouteStack.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/View/Helper/HashUrl.php"><a href="files/module-application-src-view-helper-hashurl.html"><abbr title="module/Application/src/View/Helper/HashUrl.php">HashUrl.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">34</span>
+    <span class="phpdocumentor-element-found-in__line">19</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">assemble</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$params</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$options</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\View\Helper\ServerUrl">ServerUrl</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$serverUrlHelper</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -583,36 +563,15 @@ we always return English as the default language.</dd>
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$params</span>
-                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">[]</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$options</span>
-                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">[]</span>            </dt>
+                <span class="phpdocumentor-signature__argument__name">$serverUrlHelper</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\View\Helper\ServerUrl">ServerUrl</abbr></span>
+                            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
             </dd>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="classes/Application-Router-LanguageAwareTreeRouteStack.html#method_assemble#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">inheritDoc</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                             
-                                    </dd>
-                                            </dl>
 
     
 
@@ -624,204 +583,28 @@ we always return English as the default language.</dd>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getLastMatchedLanguage">
-        getLastMatchedLanguage()
-        <a href="classes/Application-Router-LanguageAwareTreeRouteStack.html#method_getLastMatchedLanguage" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method___invoke">
+        __invoke()
+        <a href="classes/Application-View-Helper-HashUrl.html#method___invoke" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Router/LanguageAwareTreeRouteStack.php"><a href="files/module-application-src-router-languageawaretreeroutestack.html"><abbr title="module/Application/src/Router/LanguageAwareTreeRouteStack.php">LanguageAwareTreeRouteStack.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/View/Helper/HashUrl.php"><a href="files/module-application-src-view-helper-hashurl.html"><abbr title="module/Application/src/View/Helper/HashUrl.php">HashUrl.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">254</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Get the last matched language from a request.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getLastMatchedLanguage</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-    
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">string|null</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_match">
-        match()
-        <a href="classes/Application-Router-LanguageAwareTreeRouteStack.html#method_match" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Router/LanguageAwareTreeRouteStack.php"><a href="files/module-application-src-router-languageawaretreeroutestack.html"><abbr title="module/Application/src/Router/LanguageAwareTreeRouteStack.php">LanguageAwareTreeRouteStack.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">137</span>
+    <span class="phpdocumentor-element-found-in__line">23</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">match</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Stdlib\RequestInterface">RequestInterface</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$request</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$pathOffset</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$options</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Laminas\Router\RouteMatch">RouteMatch</abbr>|null</span></code>
+                    <span class="phpdocumentor-signature__name">__invoke</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
     
     
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$request</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Stdlib\RequestInterface">RequestInterface</abbr></span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$pathOffset</span>
-                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$options</span>
-                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">[]</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="classes/Application-Router-LanguageAwareTreeRouteStack.html#method_match#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">inheritDoc</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                             
-                                    </dd>
-                                            </dl>
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><abbr title="\Laminas\Router\RouteMatch">RouteMatch</abbr>|null</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -private
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_determinePreferredLanguageFromRequest">
-        determinePreferredLanguageFromRequest()
-        <a href="classes/Application-Router-LanguageAwareTreeRouteStack.html#method_determinePreferredLanguageFromRequest" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Router/LanguageAwareTreeRouteStack.php"><a href="files/module-application-src-router-languageawaretreeroutestack.html"><abbr title="module/Application/src/Router/LanguageAwareTreeRouteStack.php">LanguageAwareTreeRouteStack.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">284</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Determine the preferred language based on the `Accept-Language` header. If no language is the header is supported
-we always return English as the default language.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
-                    <span class="phpdocumentor-signature__name">determinePreferredLanguageFromRequest</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Stdlib\RequestInterface">RequestInterface</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$request</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Application-Model-Enums-Languages.html"><abbr title="\Application\Model\Enums\Languages">Languages</abbr></a></span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$request</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Stdlib\RequestInterface">RequestInterface</abbr></span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Application-Model-Enums-Languages.html"><abbr title="\Application\Model\Enums\Languages">Languages</abbr></a></span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -private
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getLanguage">
-        getLanguage()
-        <a href="classes/Application-Router-LanguageAwareTreeRouteStack.html#method_getLanguage" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Router/LanguageAwareTreeRouteStack.php"><a href="files/module-application-src-router-languageawaretreeroutestack.html"><abbr title="module/Application/src/Router/LanguageAwareTreeRouteStack.php">LanguageAwareTreeRouteStack.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">262</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Get the stored (preferred) language or try to determine it based on the request.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
-                    <span class="phpdocumentor-signature__name">getLanguage</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Stdlib\RequestInterface">RequestInterface</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$request</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$request</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Laminas\Stdlib\RequestInterface">RequestInterface</abbr></span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
     
 
     
@@ -838,7 +621,7 @@ we always return English as the default language.</p>
     <div class="phpdocumentor-modal-bg" data-exit-button></div>
     <div class="phpdocumentor-modal-container">
         <div class="phpdocumentor-modal-content">
-            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/module/Application/src/Router/LanguageAwareTreeRouteStack.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
+            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/module/Application/src/View/Helper/HashUrl.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
         </div>
         <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
     </div>
@@ -937,26 +720,23 @@ we always return English as the default language.</p>
             <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                                            <li><a href="classes/Application-Router-LanguageAwareTreeRouteStack.html#toc-properties">Properties</a></li>
-                                                            <li><a href="classes/Application-Router-LanguageAwareTreeRouteStack.html#toc-methods">Methods</a></li>
+                                                            <li><a href="classes/Application-View-Helper-HashUrl.html#toc-properties">Properties</a></li>
+                                                            <li><a href="classes/Application-View-Helper-HashUrl.html#toc-methods">Methods</a></li>
                                     </ul>
             </li>
             
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li class=""><a href="classes/Application-Router-LanguageAwareTreeRouteStack.html#property_lastMatchedLanguage">$lastMatchedLanguage</a></li>
+                                                    <li class=""><a href="classes/Application-View-Helper-HashUrl.html#property_serverUrlHelper">$serverUrlHelper</a></li>
                                             </ul>
                 </li>
             
                         <li class="phpdocumentor-on-this-page-section__title">Methods</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                            <li class=""><a href="classes/Application-Router-LanguageAwareTreeRouteStack.html#method_assemble">assemble()</a></li>
-                                            <li class=""><a href="classes/Application-Router-LanguageAwareTreeRouteStack.html#method_getLastMatchedLanguage">getLastMatchedLanguage()</a></li>
-                                            <li class=""><a href="classes/Application-Router-LanguageAwareTreeRouteStack.html#method_match">match()</a></li>
-                                            <li class=""><a href="classes/Application-Router-LanguageAwareTreeRouteStack.html#method_determinePreferredLanguageFromRequest">determinePreferredLanguageFromRequest()</a></li>
-                                            <li class=""><a href="classes/Application-Router-LanguageAwareTreeRouteStack.html#method_getLanguage">getLanguage()</a></li>
+                                            <li class=""><a href="classes/Application-View-Helper-HashUrl.html#method___construct">__construct()</a></li>
+                                            <li class=""><a href="classes/Application-View-Helper-HashUrl.html#method___invoke">__invoke()</a></li>
                                     </ul>
             </li>
                     </ul>
@@ -976,7 +756,7 @@ we always return English as the default language.</p>
     </section>
 </section>
         </div>
-        <a href="classes/Application-Router-LanguageAwareTreeRouteStack.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/Application-View-Helper-HashUrl.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 
