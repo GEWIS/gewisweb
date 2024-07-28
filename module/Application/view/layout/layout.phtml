@@ -47,6 +47,14 @@ use Laminas\View\Renderer\PhpRenderer;
             $strippedPath = '';
         }
 
+        if (
+            '' !== $strippedPath
+            && !str_starts_with($strippedPath, '/')
+        ) {
+            // If not at the "root", add the slash back if it is not present.
+            $strippedPath = '/' . $strippedPath;
+        }
+
         $this->hrefLang()->setHrefLang(Languages::EN, $this->serverUrl($this->basePath('en' . $strippedPath)))
             ->setHrefLang(Languages::NL, $this->serverUrl($this->basePath('nl' . $strippedPath)));
     }
