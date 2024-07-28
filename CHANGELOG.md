@@ -1,3 +1,8 @@
+## [v4.3.1](https://github.com/GEWIS/gewisweb/tree/v4.3.1) (2024-07-28)
+
+* Fixed an issue where URLs starting with `index.php` would result in all URLs on that page being broken.
+* Fixed an issue where the alternate hreflangs would miss a slash if the language was not present in the URL.
+
 ## [v4.3.0](https://github.com/GEWIS/gewisweb/tree/v4.3.0) (2024-07-28)
 
 * Added list of inactive fraternity members to fraternity pages.
