@@ -1,3 +1,16 @@
+## [v4.3.0](https://github.com/GEWIS/gewisweb/tree/v4.3.0) (2024-07-28)
+
+* Added list of inactive fraternity members to fraternity pages.
+* Improved layout of public organ pages by moving (and adding new) details to a sidebar.
+* Improved layout of activity details when viewing an activity.
+* Fixed an issue where debug logging caused excessive storage utilisation.
+* Fixed an issue where installations of board members were incorrectly sorted.
+* Fixed an issue where the API routes were language-aware.
+* Fixed an issue where the URLs generated to redirect after login would cause unnecessary indexing by search engines.
+* Fixed an issue where it was possible to directly use `index.php` for routing.
+* Fixed an issue where company/job attachments/links would always be shown due to faulty logic.
+* Fixed an issue where wrapping of words in Markdown context was broken.
+
 ## [v4.2.1](https://github.com/GEWIS/gewisweb/tree/v4.2.1) (2024-06-27)
 
 * Added automatic 🎈🎈🎈 so @tomudding can sleep.
