@@ -45,6 +45,12 @@ class LanguageAwareTreeRouteStack extends TranslatorAwareTreeRouteStack
         // Store the original base URL.
         $oldBaseUrl = $this->getBaseUrl();
 
+        // Do not allow direct access using /index.php. As such, rewrite any link that is being assembled to be without
+        // it as base.
+        if (str_starts_with($oldBaseUrl, '/index.php')) {
+            $oldBaseUrl = '/';
+        }
+
         // Try to get the language, because we do not have access to the current request in this method we cannot add an
         // `else` clause to call `$this->getLanguage()` to get the language.
         $language = null;

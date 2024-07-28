@@ -9,6 +9,7 @@ use Application\View\Helper\Acl;
 use Application\View\Helper\Breadcrumbs;
 use Application\View\Helper\Diff;
 use Application\View\Helper\GlideUrl;
+use Application\View\Helper\HashUrl;
 use Application\View\Helper\HrefLang;
 use Application\View\Helper\ScriptUrl;
 use Company\Model\CompanyFeaturedPackage as CompanyFeaturedPackageModel;
@@ -37,6 +38,7 @@ use User\Model\CompanyUser as CompanyUserModel;
  * @method CompanyFeaturedPackageModel|null featuredCompanyPackage()
  * @method string fileUrl(string $path)
  * @method GlideUrl glideUrl()
+ * @method HashUrl hashUrl()
  * @method JobCategoryModel[] jobCategories()
  * @method string localisedTextElement(ElementInterface $element)
  * @method string localiseText(LocalisedTextModel $localisedText)

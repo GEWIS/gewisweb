@@ -17,6 +17,7 @@ use Application\View\Helper\Acl;
 use Application\View\Helper\Diff;
 use Application\View\Helper\FileUrl;
 use Application\View\Helper\GlideUrl;
+use Application\View\Helper\HashUrl;
 use Application\View\Helper\JobCategories;
 use Application\View\Helper\Markdown;
 use Application\View\Helper\ModuleIsActive;
@@ -31,6 +32,7 @@ use Laminas\Mvc\MvcEvent;
 use Laminas\Router\Http\TreeRouteStack;
 use Laminas\Router\RouteStackInterface;
 use Laminas\Validator\AbstractValidator;
+use Laminas\View\Helper\ServerUrl;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\ExternalLink\ExternalLinkExtension;
@@ -331,6 +333,12 @@ class Module
                     $helper->setUrlBuilder($container->get('glide_url_builder'));
 
                     return $helper;
+                },
+                'hashUrl' => static function (ContainerInterface $container) {
+                    $viewHelperManager = $container->get('ViewHelperManager');
+                    $serverUrlHelper = $viewHelperManager->get(ServerUrl::class);
+
+                    return new HashUrl($serverUrlHelper);
                 },
             ],
         ];

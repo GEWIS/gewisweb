@@ -127,7 +127,7 @@ use Laminas\View\Renderer\PhpRenderer;
                     <?php
                     if ($this->acl('education_service_acl')->isAllowed('course_document', 'upload')): ?>
                         <li class="dropdown <?= $this->moduleIsActive(['frontpage', 'exam']) ? 'active' : '' ?>">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                            <a href="<?= $this->hashUrl() ?>" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                aria-haspopup="true" aria-expanded="false">
                                 <?= $this->translate('Education') ?> <span class="caret"></span>
                             </a>
@@ -154,7 +154,7 @@ use Laminas\View\Renderer\PhpRenderer;
                     <?php
                     if ($this->acl('decision_service_acl')->isAllowed('meeting', 'upload_minutes')): ?>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                            <a href="<?= $this->hashUrl() ?>" class="dropdown-toggle" data-toggle="dropdown"
                                role="button" aria-haspopup="true" aria-expanded="false">
                                 <?= $this->translate('Meetings') ?> <span class="caret"></span>
                             </a>
@@ -218,7 +218,7 @@ use Laminas\View\Renderer\PhpRenderer;
                     <?php
                     if ($this->acl('user_service_acl')->isAllowed('apiuser', 'add')): ?>
                         <li class="dropdown <?= $this->moduleIsActive(['user']) ? 'active' : '' ?>">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                            <a href="<?= $this->hashUrl() ?>" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                aria-haspopup="true" aria-expanded="false">
                                 <?= $this->translate('Users') ?> <span class="caret"></span>
                             </a>
