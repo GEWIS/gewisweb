@@ -158,6 +158,10 @@ class LanguageAwareTreeRouteStack extends TranslatorAwareTreeRouteStack
         // Store the original base URL (likely only just set above).
         $oldBaseUrl = $this->getBaseUrl();
 
+        // Always try to get/set language. This ensures that we always have a language set if this is the very first
+        // request, and we do an early return (e.g. for `/api` or `/index.php`).
+        $this->getLanguage($request);
+
         // Do not allow direct access using /index.php. It is too difficult to properly configure this in NGINX, as we
         // want to keep using the Laminas-generated 404 page and not a generic NGINX 404 page.
         if (str_starts_with($oldBaseUrl, '/index.php')) {
