@@ -1,3 +1,8 @@
+## [v4.3.2](https://github.com/GEWIS/gewisweb/tree/v4.3.2) (2024-07-31)
+
+* Fixed an issue (again) where the URLs generated to redirect after login would explode.
+* Fixed an issue where certain routes would throw an exception if it were the first request in a session.
+
 ## [v4.3.1](https://github.com/GEWIS/gewisweb/tree/v4.3.1) (2024-07-28)
 
 * Fixed an issue where URLs starting with `index.php` would result in all URLs on that page being broken.
