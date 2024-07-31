@@ -93,6 +93,24 @@ endif; ?>
                 </li>
                 <?php
                 if (null === $this->identity() && null === $this->companyIdentity()): ?>
+                    <?php
+                    // Do NOT include the `redirect_to` parameter if it is already included (i.e. we are already on the
+                    // login page).
+                    $currentUrl = $this->serverUrl(true);
+                    $redirectTo = base64_encode($currentUrl);
+                    $loginUrl = $this->url(
+                        name: 'user/login',
+                        reuseMatchedParams: true,
+                    );
+
+                    if (!str_contains($currentUrl, 'redirect_to')) {
+                        $loginUrl = $this->url(
+                            name: 'user/login',
+                            options: ['query' => ['redirect_to' => base64_encode($this->serverUrl(true))]],
+                            reuseMatchedParams: true,
+                        );
+                    }
+                    ?>
                     <li class="dropdown pull-right">
                         <a href="<?= $this->hashUrl() ?>" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                            aria-expanded="false">
@@ -102,10 +120,7 @@ endif; ?>
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="<?= $this->url(
-                                    name: 'user/login',
-                                    options: ['query' => ['redirect_to' => base64_encode($this->serverUrl(true))]],
-                                ) ?>">
+                                <a href="<?= $loginUrl ?>">
                                     <?= $this->translate('Login') ?>
                                 </a>
                             </li>
