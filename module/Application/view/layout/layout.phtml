@@ -42,22 +42,15 @@ use Laminas\View\Renderer\PhpRenderer;
             $strippedPath = '';
         }
 
-        // If we are at the "root", remove the slash.
-        if ('/' === $strippedPath) {
-            $strippedPath = '';
-        }
-
-        if (
-            '' !== $strippedPath
-            && !str_starts_with($strippedPath, '/')
-        ) {
-            // If not at the "root", add the slash back if it is not present.
+        if (!str_starts_with($strippedPath, '/')) {
+            // Add a nice slash back, if we are at the "root" we will get `/{lang}/` instead of `/{lang}`. If not at the
+            // "root" we get `/{lang}/{...}` instead of `/{lang}{...}` (note: incorrect concat).
             $strippedPath = '/' . $strippedPath;
         }
 
         $this->hrefLang()->setHrefLang(Languages::EN, $this->serverUrl($this->basePath('en' . $strippedPath)))
             ->setHrefLang(Languages::NL, $this->serverUrl($this->basePath('nl' . $strippedPath)))
-            ->setHrefLang('x-default', $this->serverUrl($this->basePath(ltrim($strippedPath, '/'))));
+            ->setHrefLang('x-default', $this->serverUrl($this->basePath($strippedPath)));
     }
 
     echo $this->hrefLang();
