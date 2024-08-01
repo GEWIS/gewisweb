@@ -56,7 +56,8 @@ use Laminas\View\Renderer\PhpRenderer;
         }
 
         $this->hrefLang()->setHrefLang(Languages::EN, $this->serverUrl($this->basePath('en' . $strippedPath)))
-            ->setHrefLang(Languages::NL, $this->serverUrl($this->basePath('nl' . $strippedPath)));
+            ->setHrefLang(Languages::NL, $this->serverUrl($this->basePath('nl' . $strippedPath)))
+            ->setHrefLang('x-default', $this->serverUrl($this->basePath(ltrim($strippedPath, '/'))));
     }
 
     echo $this->hrefLang();
