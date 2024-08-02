@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: GEWISweb v2.8.6-700-g4e6a53deb-dirty\n"
+"Project-Id-Version: GEWISweb v2.8.6-731-g404d9b79c-dirty\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-17 21:45+0200\n"
+"POT-Creation-Date: 2024-08-02 23:25+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -165,6 +165,9 @@ msgid "Add Company"
 msgstr ""
 
 msgid "Add Course"
+msgstr ""
+
+msgid "Add Documents"
 msgstr ""
 
 msgid "Add Job"
