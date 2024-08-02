@@ -163,7 +163,9 @@ class DecisionController extends AbstractActionController
     public function authorizationsAction(): Response|ViewModel
     {
         if (!$this->aclService->isAllowed('create', 'authorization')) {
-            $this->flashMessenger()->addErrorMessage($this->translator->translate('You are not allowed to authorize someone'));
+            $this->flashMessenger()->addErrorMessage($this->translator
+                ->translate('You are not allowed to authorize someone'));
+
             // Also throw, in case the flashMessenger is not present on this page.
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to authorize someone'),
@@ -187,7 +189,9 @@ class DecisionController extends AbstractActionController
 
             if ($form->isValid()) {
                 if (null !== ($authorization = $this->decisionService->createAuthorization($form->getData()))) {
-                    $this->flashMessenger()->addSuccessMessage($this->translator->translate('Authorization Successful'));
+                    $this->flashMessenger()->addSuccessMessage($this->translator
+                        ->translate('Authorization Successful'));
+
                     return $this->redirect()->toRoute('decision/authorizations');
                 }
             }
@@ -209,7 +213,9 @@ class DecisionController extends AbstractActionController
     public function revokeAuthorizationAction(): Response|ViewModel
     {
         if (!$this->aclService->isAllowed('revoke', 'authorization')) {
-            $this->flashMessenger()->addErrorMessage($this->translator->translate('You are not allowed to revoke authorizations.'));
+            $this->flashMessenger()->addErrorMessage($this->translator
+                ->translate('You are not allowed to revoke authorizations.'));
+
             // Also throw, in case the flashMessenger is not present on this page.
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to revoke authorizations.'),
@@ -226,7 +232,8 @@ class DecisionController extends AbstractActionController
 
                     if ($form->isValid()) {
                         $this->decisionService->revokeAuthorization($authorization);
-                        $this->flashMessenger()->addSuccessMessage($this->translator->translate('Revocation Successful'));
+                        $this->flashMessenger()->addSuccessMessage($this->translator
+                            ->translate('Revocation Successful'));
                     }
                 }
             }
