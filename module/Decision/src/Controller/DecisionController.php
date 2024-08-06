@@ -13,6 +13,7 @@ use Laminas\Http\Response;
 use Laminas\Http\Response\Stream;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
+use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
 use Laminas\View\Model\ViewModel;
 use User\Permissions\NotAllowedException;
 
@@ -22,6 +23,10 @@ use function intval;
 use function preg_match;
 use function strlen;
 use function substr;
+
+/**
+ * @method FlashMessenger flashMessenger()
+ */
 
 class DecisionController extends AbstractActionController
 {
@@ -155,10 +160,12 @@ class DecisionController extends AbstractActionController
         );
     }
 
-    public function authorizationsAction(): ViewModel
+    public function authorizationsAction(): Response|ViewModel
     {
         if (!$this->aclService->isAllowed('create', 'authorization')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to authorize someone'));
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to authorize someone'),
+            );
         }
 
         $meeting = $this->decisionService->getLatestALV();
@@ -178,13 +185,10 @@ class DecisionController extends AbstractActionController
 
             if ($form->isValid()) {
                 if (null !== ($authorization = $this->decisionService->createAuthorization($form->getData()))) {
-                    return new ViewModel(
-                        [
-                            'meeting' => $meeting,
-                            'form' => $this->decisionService->getAuthorizationRevocationForm(),
-                            'authorization' => $authorization,
-                        ],
-                    );
+                    $this->flashMessenger()->addSuccessMessage($this->translator
+                        ->translate('Authorization Successful'));
+
+                    return $this->redirect()->toRoute('decision/authorizations');
                 }
             }
         }
@@ -220,6 +224,8 @@ class DecisionController extends AbstractActionController
 
                     if ($form->isValid()) {
                         $this->decisionService->revokeAuthorization($authorization);
+                        $this->flashMessenger()->addSuccessMessage($this->translator
+                            ->translate('Revocation Successful'));
                     }
                 }
             }

@@ -31,6 +31,8 @@ $nf = new NumberFormatter($this->plugin('translate')->getTranslator()->getLocale
 <br>
 <section class='section'>
     <div class='container'>
+        <?= $this->flashMessenger()->render('success', ['alert', 'alert-dismissible', 'alert-success'])?>
+        <?= $this->flashMessenger()->render('error', ['alert', 'alert-dismissible', 'alert-danger']) ?>
         <h1><?= $this->translate('Authorizations') ?></h1>
         <?php if (null === $meeting): ?>
             <?= $this->translate('There are no upcoming meetings for which you can authorize someone.

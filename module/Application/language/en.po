@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-02 23:25+0200\n"
-"PO-Revision-Date: 2024-08-02 23:28+0200\n"
+"POT-Creation-Date: 2024-08-03 20:08+0200\n"
+"PO-Revision-Date: 2024-08-04 15:14+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: en\n"
@@ -508,6 +508,9 @@ msgstr "Author"
 
 msgid "Authorise"
 msgstr "Authorise"
+
+msgid "Authorization Successful"
+msgstr "Authorization Successful"
 
 msgid "Authorizations"
 msgstr "Authorizations"
@@ -2441,6 +2444,9 @@ msgstr "Reset password"
 
 msgid "Retired fraternities"
 msgstr "Retired fraternities"
+
+msgid "Revocation Successful"
+msgstr "Revocation Successful"
 
 msgid "Revoke authorization"
 msgstr "Revoke authorization"
