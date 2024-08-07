@@ -16,6 +16,13 @@ use User\Form\UserLogin as UserLoginForm;
 
 $this->headTitle($this->translate('Log in'));
 
+if (false !== ($path = parse_url($this->serverUrl(true), PHP_URL_PATH))) {
+    $this->placeholder('canonicalLink')->set(sprintf(
+        '<link rel="canonical" href="%s">',
+        $this->serverUrl($path),
+    ));
+}
+
 $isMember = ('member' === $userType);
 ?>
 <section class="section">
