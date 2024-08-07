@@ -39,7 +39,7 @@ class AuthorizationRevocation extends Form implements InputFilterProviderInterfa
                 'name' => 'submit',
                 'type' => Submit::class,
                 'attributes' => [
-                    'value' => $translate->translate('Revoke authorization'),
+                    'value' => $translate->translate('Revoke Authorization'),
                 ],
             ],
         );
