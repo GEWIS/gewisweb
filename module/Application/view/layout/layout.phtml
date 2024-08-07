@@ -19,7 +19,7 @@ use Laminas\View\Renderer\PhpRenderer;
         ->appendName('viewport', 'width=device-width, initial-scale=1.0')
     ?>
 
-    <!-- Display alternate language links-->
+    <!-- START alternate language links -->
     <?php
     if (isset($_SERVER['REQUEST_URI'])) {
         $strippedPath = ltrim(
@@ -55,6 +55,10 @@ use Laminas\View\Renderer\PhpRenderer;
 
     echo $this->hrefLang();
     ?>
+    <!-- END alternate language links -->
+    <!-- START canonical link -->
+    <?= $this->placeholder('canonicalLink') ?>
+    <!-- END canonical link -->
 
     <!-- Preload fonts-->
     <?php
