@@ -11,7 +11,7 @@ RUN msgfmt en.po -o en -c --strict -v \
     && msgfmt nl.po -o nl -c --strict -v
 
 # Create a base image with all PHP dependencies.
-FROM php:8.3-fpm-alpine as gewisweb_web_production_base
+FROM php:8.3-fpm-alpine AS gewisweb_web_production_base
 WORKDIR /code
 
 RUN apk add --no-cache --virtual .build-deps \
@@ -87,7 +87,7 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 RUN composer install -o --no-dev
 
 # Compile the SCSS files.
-FROM node:lts-alpine as gewisweb_web_styles
+FROM node:lts-alpine AS gewisweb_web_styles
 WORKDIR /code
 
 COPY ./package.json ./package-lock.json ./

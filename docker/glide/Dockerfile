@@ -1,4 +1,4 @@
-FROM php:8.3-fpm-alpine as php-target
+FROM php:8.3-fpm-alpine AS php-target
 
 RUN apk add --no-cache --virtual .build-deps \
         $PHPIZE_DEPS \
@@ -41,7 +41,7 @@ RUN apk add --no-cache --virtual .build-deps \
     && echo 'Europe/Amsterdam' > /etc/timezone \
     && apk del .build-deps
 
-FROM php-target as composer-build
+FROM php-target AS composer-build
 WORKDIR /glide
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -49,7 +49,7 @@ COPY ./composer.json ./composer.lock ./
 
 RUN composer install -o --no-dev
 
-FROM php-target as glide
+FROM php-target AS glide
 WORKDIR /glide
 
 RUN mkdir cache \
