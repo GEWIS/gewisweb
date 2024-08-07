@@ -98,7 +98,7 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 RUN composer install
 
 # Compile the SCSS files.
-FROM node:lts-alpine as gewisweb_web_styles
+FROM node:lts-alpine AS gewisweb_web_styles
 WORKDIR /code
 
 COPY ./package.json ./package-lock.json ./
