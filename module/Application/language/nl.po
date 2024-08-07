@@ -2472,7 +2472,7 @@ msgstr "Disputen in ruste"
 msgid "Revocation Successful"
 msgstr "Intrekken van machtiging gelukt"
 
-msgid "Revoke authorization"
+msgid "Revoke Authorization"
 msgstr "Machtiging intrekken"
 
 msgid "Revoked"

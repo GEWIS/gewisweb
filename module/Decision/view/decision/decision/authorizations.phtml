@@ -52,7 +52,7 @@ You may still be able to authorize someone or revoke an authorization by contact
             <br><br>
             <button class="btn btn-primary pull-right" type="button" data-toggle="modal"
                     data-target="#revokeModal" aria-hidden="true" aria-controls="revokeModal">
-                Revoke Authorization
+                <?= $this->translate('Revoke Authorization') ?>
             </button>
             <!-- modal to revoke authorization -->
             <div class="modal fade" id="revokeModal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -63,7 +63,7 @@ You may still be able to authorize someone or revoke an authorization by contact
                                 <span aria-hidden="true">&times;</span>
                             </button>
                             <h4 class="modal-title">
-                                Revoke authorization
+                                <?= $this->translate('Revoke Authorization') ?>
                             </h4>
                         </div>
                         <div class="modal-body">
