@@ -1,3 +1,12 @@
+## [v4.4.0](https://github.com/GEWIS/gewisweb/tree/v4.4.0) (2024-08-24)
+
+* Added link to upload meeting documents directly from meetings.
+* Added informational messages for authorizations.
+* Improved language-aware link management.
+* Improved account registration process (now only called "activation").
+* Changed the method of revoking authorizations to a modal to require additional confirmation.
+* Changed frequency of syncs with GEWISDB (when healthy and syncs are not paused).
+
 ## [v4.3.2](https://github.com/GEWIS/gewisweb/tree/v4.3.2) (2024-07-31)
 
 * Fixed an issue (again) where the URLs generated to redirect after login would explode.
