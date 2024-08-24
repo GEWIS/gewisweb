@@ -25,7 +25,7 @@ class ControllerTest extends AbstractHttpControllerTestCase
 
     public function testUserRegisterActionCanBeAccessed(): void
     {
-        $this->dispatch('/user/register');
+        $this->dispatch('/user/activate');
         $this->assertResponseStatusCode(200);
     }
 

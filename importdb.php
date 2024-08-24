@@ -8,6 +8,68 @@ declare(strict_types=1);
  * It is a simple PostgreSQL to MySQL copy script.
  */
 
+$apiKey = getenv('GEWISDB_API_KEY');
+$apiHost = getenv('GEWISDB_API_HOST');
+
+if (
+    false === $apiKey
+    || false === $apiHost
+) {
+    echo 'API: no sync, environment variables are not set properly...' . PHP_EOL;
+    exit(1);
+}
+
+$ch = curl_init();
+
+$headers = [
+    sprintf('Authorization: Bearer %s', $apiKey),
+];
+
+curl_setopt($ch, CURLOPT_URL, $apiHost . '/health');
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+
+$response = curl_exec($ch);
+
+if (false === $response) {
+    echo 'API: no sync, unexpected cURL error...' . PHP_EOL;
+    curl_close($ch);
+    exit(1);
+}
+
+$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+if (
+    200 === $httpCode
+    || 403 === $httpCode
+) {
+    if (!json_validate($response)) {
+        echo 'API: no sync, invalid JSON returned...' . PHP_EOL;
+        curl_close($ch);
+        exit(1);
+    }
+
+    $health = json_decode($response, true);
+
+    if (
+        $health['healthy']
+        && !$health['sync_paused']
+    ) {
+        echo 'API: sync, healthy and syncs are allowed...' . PHP_EOL;
+    } else {
+        echo 'API: no sync, sync is paused or API is not healthy...' . PHP_EOL;
+        curl_close($ch);
+        exit(1);
+    }
+} else {
+    echo 'API: no sync, unexpected response...' . PHP_EOL;
+    curl_close($ch);
+    exit(1);
+}
+
+curl_close($ch);
+
 echo 'Commencing sync with GEWISDB...' . PHP_EOL;
 
 try {
@@ -182,7 +244,6 @@ PKS;
         /**
          * Removing old data
          */
-        
         // Tables without primary keys are skipped
         if (0 === count($pks[$table])) continue;
 

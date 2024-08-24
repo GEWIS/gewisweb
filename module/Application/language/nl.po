@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-03 20:08+0200\n"
-"PO-Revision-Date: 2024-08-04 15:14+0200\n"
+"POT-Creation-Date: 2024-08-24 21:14+0200\n"
+"PO-Revision-Date: 2024-08-24 21:15+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: nl\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.4.4\n"
 
 msgid " <strong>has a limited capacity</strong> and "
 msgstr " <strong>heeft een beperkte capaciteit</strong> en "
@@ -399,6 +399,14 @@ msgstr "Goedgekeurde polls"
 
 msgid "Approver"
 msgstr "Goedgekeurd door"
+
+#, php-format
+msgid ""
+"Are you a member but do not yet have an account for the website? %sClick "
+"here%s to request its activation."
+msgstr ""
+"Ben je lid maar heb je nog geen account voor de website? %sKlik hier%s om de "
+"activering aan te vragen."
 
 msgid ""
 "Are you looking for someone to help you with your courses? Send an email "
@@ -1302,6 +1310,9 @@ msgstr "Flits"
 msgid "Focal length"
 msgstr "Brandpuntsafstand"
 
+msgid "Forgot password?"
+msgstr "Wachtwoord vergeten?"
+
 #, php-format
 msgid "Found %d %s matching your description"
 msgstr "%d %s gevonden overeenkomend met je zoektermen"
@@ -1547,10 +1558,6 @@ msgstr ""
 "Als je niet in staat bent een ALV persoonlijk bij te wonen, maar je wilt "
 "toch dat je stem wordt gehoord, overweeg dan %seen ander lid%s te machtigen "
 "om jou te vertegenwoordingen."
-
-#, php-format
-msgid "If you don't have an account yet, go to the %sRegistration page%s"
-msgstr "Als je nog geen account hebt, ga naar de %sRegistratie pagina%s"
 
 #, php-format
 msgid "If you forgot your password, go to the %sPassword reset page%s"
@@ -2397,6 +2404,15 @@ msgstr "Onlangs afgekeurde vacatures"
 msgid "Recently Unapproved Jobs"
 msgstr "Nog niet goedgekeurde vacatures"
 
+#, php-format
+msgid ""
+"Recently joined GEWIS? Before you can log in, you need to activate your "
+"account and set a password, %sclick here%s to do so."
+msgstr ""
+"Bent je onlangs lid geworden van GEWIS? Voordat je kunt inloggen, moet je "
+"jouw account activeren en een wachtwoord instellen, %sklik hier%s om dat te "
+"doen."
+
 msgid "Recipient"
 msgstr "Ontvanger"
 
@@ -2405,9 +2421,6 @@ msgstr "Genereer opnieuw"
 
 msgid "Regenerate album cover"
 msgstr "Genereer album cover opnieuw"
-
-msgid "Register"
-msgstr "Registreer"
 
 msgid "Regulations"
 msgstr "Reguleringen"
@@ -2447,6 +2460,9 @@ msgstr "Hernoem vergaderstuk"
 
 msgid "Representative Information"
 msgstr "Informatie van vertegenwoordiger"
+
+msgid "Request Activation"
+msgstr "Activering aanvragen"
 
 msgid "Request a poll"
 msgstr "Vraag een poll aan"
@@ -4175,6 +4191,9 @@ msgstr ""
 
 msgid "Your account has been activated. You are now able to login."
 msgstr "Je account is geactiveerd. Je kunt nu inloggen."
+
+msgid "Your membership number can be found in the welcome e-mail."
+msgstr "Je lidmaatschapsnummer vind je in de welkomstmail."
 
 msgid "Your option has been added successfully"
 msgstr "De optie is succesvol toegevoegd"

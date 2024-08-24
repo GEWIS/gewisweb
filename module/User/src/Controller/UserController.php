@@ -124,30 +124,6 @@ class UserController extends AbstractActionController
     }
 
     /**
-     * User register action.
-     */
-    public function registerAction(): ViewModel
-    {
-        /** @var Request $request */
-        $request = $this->getRequest();
-
-        if ($request->isPost()) {
-            $newUser = $this->userService->register($request->getPost()->toArray());
-
-            if (null !== $newUser) {
-                return new ViewModel(['registered' => true]);
-            }
-        }
-
-        // show form
-        return new ViewModel(
-            [
-                'form' => $this->userService->getRegisterForm(),
-            ],
-        );
-    }
-
-    /**
      * Action to change password.
      */
     public function changePasswordAction(): ViewModel
@@ -229,6 +205,31 @@ class UserController extends AbstractActionController
         $userType = $this->params()->fromRoute('user_type');
         $code = (string) $this->params()->fromRoute('code');
 
+        /** @var Request $request */
+        $request = $this->getRequest();
+
+        // Handle request to obtain activation information.
+        if (
+            'member' === $userType
+            && '' === $code
+        ) {
+            if ($request->isPost()) {
+                $newUser = $this->userService->register($request->getPost()->toArray());
+
+                if (null !== $newUser) {
+                    return new ViewModel(['registered' => true]);
+                }
+            }
+
+            // show form
+            return new ViewModel(
+                [
+                    'registerForm' => $this->userService->getRegisterForm(),
+                ],
+            );
+        }
+
+        // Handle actual activation of accounts.
         if ('company' === $userType) {
             $newUser = $this->userService->getNewCompanyUser($code);
         } else {
@@ -246,8 +247,6 @@ class UserController extends AbstractActionController
             return $this->redirect()->toRoute('home');
         }
 
-        /** @var Request $request */
-        $request = $this->getRequest();
         $form = $this->userService->getActivateForm($userType);
 
         if ($request->isPost()) {

@@ -31,11 +31,23 @@ return [
                     'activate' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/activate/:user_type/:code',
+                            'route' => '/activate[/:user_type/:code]',
                             'constraints' => [
                                 'code' => '[a-zA-Z0-9]+',
                                 'user_type' => '(company|member)',
                             ],
+                            'defaults' => [
+                                'action' => 'activate',
+                                'user_type' => 'member',
+                            ],
+                        ],
+                    ],
+                    // The `register` endpoint only exists to handle cases where users click links in old e-mails.
+                    // TODO: remove after 1 January 2025.
+                    'register' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/register',
                             'defaults' => [
                                 'action' => 'activate',
                                 'user_type' => 'member',
@@ -96,15 +108,6 @@ return [
                                         'user_type' => 'member',
                                     ],
                                 ],
-                            ],
-                        ],
-                    ],
-                    'register' => [
-                        'type' => Literal::class,
-                        'options' => [
-                            'route' => '/register',
-                            'defaults' => [
-                                'action' => 'register',
                             ],
                         ],
                     ],
