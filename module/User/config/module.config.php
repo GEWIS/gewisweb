@@ -42,6 +42,18 @@ return [
                             ],
                         ],
                     ],
+                    // The `register` endpoint only exists to handle cases where users click links in old e-mails.
+                    // TODO: remove after 1 January 2025.
+                    'register' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/register',
+                            'defaults' => [
+                                'action' => 'activate',
+                                'user_type' => 'member',
+                            ],
+                        ],
+                    ],
                     'login' => [
                         'type' => Segment::class,
                         'options' => [
