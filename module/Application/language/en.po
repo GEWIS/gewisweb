@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-03 20:08+0200\n"
-"PO-Revision-Date: 2024-08-04 15:14+0200\n"
+"POT-Creation-Date: 2024-08-24 21:14+0200\n"
+"PO-Revision-Date: 2024-08-24 21:16+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: en\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.4.4\n"
 
 msgid " <strong>has a limited capacity</strong> and "
 msgstr " <strong>has a limited capacity</strong> and "
@@ -397,6 +397,14 @@ msgstr "Approved polls"
 
 msgid "Approver"
 msgstr "Approver"
+
+#, php-format
+msgid ""
+"Are you a member but do not yet have an account for the website? %sClick "
+"here%s to request its activation."
+msgstr ""
+"Are you a member but do not yet have an account for the website? %sClick "
+"here%s to request its activation."
 
 msgid ""
 "Are you looking for someone to help you with your courses? Send an email "
@@ -1291,6 +1299,9 @@ msgstr "Flash"
 msgid "Focal length"
 msgstr "Focal length"
 
+msgid "Forgot password?"
+msgstr "Forgot password?"
+
 #, php-format
 msgid "Found %d %s matching your description"
 msgstr "Found %d %s matching your description"
@@ -1525,10 +1536,6 @@ msgid ""
 msgstr ""
 "If you aren't able to attend a GMM in person but you want your voice to be "
 "heard, consider %sauthorizing another member%s to act on your behalf."
-
-#, php-format
-msgid "If you don't have an account yet, go to the %sRegistration page%s"
-msgstr "If you don't have an account yet, go to the %sRegistration page%s"
 
 #, php-format
 msgid "If you forgot your password, go to the %sPassword reset page%s"
@@ -2373,6 +2380,14 @@ msgstr "Recently Rejected Jobs"
 msgid "Recently Unapproved Jobs"
 msgstr "Recently Unapproved Jobs"
 
+#, php-format
+msgid ""
+"Recently joined GEWIS? Before you can log in, you need to activate your "
+"account and set a password, %sclick here%s to do so."
+msgstr ""
+"Recently joined GEWIS? Before you can log in, you need to activate your "
+"account and set a password, %sclick here%s to do so."
+
 msgid "Recipient"
 msgstr "Recipient"
 
@@ -2381,9 +2396,6 @@ msgstr "Regenerate"
 
 msgid "Regenerate album cover"
 msgstr "Regenerate album cover"
-
-msgid "Register"
-msgstr "Register"
 
 msgid "Regulations"
 msgstr "Regulations"
@@ -2423,6 +2435,9 @@ msgstr "Rename Meeting Document"
 
 msgid "Representative Information"
 msgstr "Representative Information"
+
+msgid "Request Activation"
+msgstr "Request Activation"
 
 msgid "Request a poll"
 msgstr "Request a poll"
@@ -4116,6 +4131,9 @@ msgstr ""
 
 msgid "Your account has been activated. You are now able to login."
 msgstr "Your account has been activated. You are now able to login."
+
+msgid "Your membership number can be found in the welcome e-mail."
+msgstr "Your membership number can be found in the welcome e-mail."
 
 msgid "Your option has been added successfully"
 msgstr "Your option has been added successfully"

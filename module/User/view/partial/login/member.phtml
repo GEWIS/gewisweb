@@ -27,6 +27,24 @@ $form->setAttribute('role', 'form');
 $form->setAttribute('class', 'form-horizontal');
 ?>
 <div class="panel-body">
+    <?php
+    $month = intval((new DateTime())->format('n'));
+    if (8 === $month || 9 === $month):
+    ?>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-info">
+                    <p>
+                        <?= sprintf(
+                            $this->translate('Recently joined GEWIS? Before you can log in, you need to activate your account and set a password, %sclick here%s to do so.'),
+                            '<a href="' . $this->url('user/activate') . '">',
+                            '</a>',
+                        ) ?>
+                    </p>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
     <?= $this->form()->openTag($form) ?>
     <?php
     $element = $form->get('login');
@@ -54,6 +72,9 @@ $form->setAttribute('class', 'form-horizontal');
         <div class="col-sm-7">
             <?= $this->formPassword($element) ?>
             <?= $this->formElementErrors($element, ['class' => 'help-block']); ?>
+            <a href="<?= $this->url('user/password/reset', ['user_type' => 'member']) ?>">
+                <?= $this->translate('Forgot password?') ?>
+            </a>
         </div>
     </div>
     <?php
@@ -83,12 +104,11 @@ $form->setAttribute('class', 'form-horizontal');
     <?= $this->form()->closeTag(); ?>
 </div>
 <div class="panel-footer">
-    <?php $url = $this->url('user/register'); ?>
     <p>
-        <?= sprintf($this->translate("If you don't have an account yet, go to the %sRegistration page%s"), '<a href="' . $url . '">', '</a>') ?>
-    </p>
-    <?php $url = $this->url('user/password/reset', ['user_type' => 'member']); ?>
-    <p>
-        <?= sprintf($this->translate("If you forgot your password, go to the %sPassword reset page%s"), '<a href="' . $url . '">', '</a>') ?>
+        <?= sprintf(
+            $this->translate('Are you a member but do not yet have an account for the website? %sClick here%s to request its activation.'),
+            '<a href="' . $this->url('user/activate') . '">',
+            '</a>',
+        ) ?>
     </p>
 </div>

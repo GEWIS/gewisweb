@@ -15,10 +15,10 @@ use Laminas\Validator\NotEmpty;
 
 class Register extends Form implements InputFilterProviderInterface
 {
-    public const ERROR_NO_EMAIL = 'no_email';
-    public const ERROR_MEMBER_NOT_EXISTS = 'member_not_exists';
-    public const ERROR_USER_ALREADY_EXISTS = 'user_already_exists';
-    public const ERROR_ALREADY_REGISTERED = 'already_registered';
+    public const string ERROR_NO_EMAIL = 'no_email';
+    public const string ERROR_MEMBER_NOT_EXISTS = 'member_not_exists';
+    public const string ERROR_USER_ALREADY_EXISTS = 'user_already_exists';
+    public const string ERROR_ALREADY_REGISTERED = 'already_registered';
 
     public function __construct(protected Translator $translator)
     {
@@ -39,7 +39,7 @@ class Register extends Form implements InputFilterProviderInterface
                 'name' => 'submit',
                 'type' => Submit::class,
                 'attributes' => [
-                    'value' => $translator->translate('Register'),
+                    'value' => $translator->translate('Request Activation'),
                 ],
             ],
         );

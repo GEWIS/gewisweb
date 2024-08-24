@@ -21,18 +21,11 @@ $this->headTitle($this->translate('Activate'));
 ?>
 <section class="section">
     <div class="container">
-        <?php if (isset($this->activated) && $this->activated): ?>
+        <?php if (isset($registered) && $registered): ?>
+            <?= $this->translate('Your account for the GEWIS website has been registered, check your inbox for an activation e-mail.') ?>
+        <?php elseif (isset($activated) && $activated): ?>
             <?= $this->translate('Your account has been activated. You are now able to login.') ?>
         <?php else: ?>
-            <?php
-            $form->prepare();
-
-            $form->setAttribute('action', $this->url('user/activate', ['user_type' => $userType, 'code' => $this->user->getCode()]));
-            $form->setAttribute('method', 'post');
-
-            $form->setAttribute('role', 'form');
-            $form->setAttribute('class', 'form-horizontal');
-            ?>
             <div class="row">
                 <div class="col-sm-10 col-sm-offset-1 col-md-7 col-md-offset-2 col-lg-6 col-lg-offset-3">
                     <div class="panel panel-default">
@@ -40,58 +33,133 @@ $this->headTitle($this->translate('Activate'));
                             <h3><?= $this->translate('Activate') ?></h3>
                         </div>
                         <div class="panel-body">
-                            <?= $this->form()->openTag($form); ?>
-                            <p>
+                            <?php if (isset($registerForm)): ?>
                                 <?php
-                                if ('company' === $userType) {
-                                    $name = $user->getCompany()->getRepresentativeName();
-                                } else {
-                                    $member = $user->getMember();
-                                    $name = $member->getFirstName() . ' ' . $member->getLastName();
-                                }
+                                $form = $registerForm;
+                                $form->prepare();
+
+                                $form->setAttribute('action', $this->url('user/activate'));
+                                $form->setAttribute('method', 'post');
+
+                                $form->setAttribute('role', 'form');
+                                $form->setAttribute('class', 'form-horizontal');
                                 ?>
-                                <?= sprintf($this->translate("Welcome %s. Create your password for the website and activate your account."), $name) ?>
-                            </p>
-                            <?php
-                            $element = $form->get('password');
-                            $element->setAttribute('class', 'form-control');
-                            $element->setAttribute('placeholder', $this->translate('Password'));
-                            $element->setAttribute('autocomplete', 'new-password');
-                            ?>
-                            <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
-                                <label for="<?= $element->getAttribute('id') ?>"
-                                       class="control-label col-sm-5"><?= $element->getLabel() ?></label>
-                                <div class="col-sm-7">
-                                    <?= $this->formPassword($element) ?>
-                                    <?= $this->formElementErrors($element, ['class' => 'help-block']) ?>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="alert alert-info">
+                                            <p>
+                                                <?= sprintf(
+                                                    $this->translate('To get an account on the website, you must be a member of GEWIS. To read more about the benefits of membership and how to become a member, visit this %sinformation page%s.'),
+                                                    '<a href="' . $this->url(
+                                                        'home/page',
+                                                        [
+                                                            'category' => 'vereniging',
+                                                            'categoryEn' => 'association',
+                                                            'sub_category' => 'lid-worden',
+                                                            'sub_categoryEn' => 'become-member',
+                                                        ],
+                                                    ) . '">',
+                                                    '</a>',
+                                                ) ?>
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <?php
-                            $element = $form->get('password_verify');
-                            $element->setAttribute('class', 'form-control');
-                            $element->setAttribute('placeholder', $this->translate('Verify password'));
-                            $element->setAttribute('autocomplete', 'new-password');
-                            ?>
-                            <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
-                                <label for="<?= $element->getAttribute('id') ?>"
-                                       class="control-label col-sm-5"><?= $element->getLabel() ?></label>
-                                <div class="col-sm-7">
-                                    <?= $this->formPassword($element) ?>
-                                    <?= $this->formElementErrors($element, ['class' => 'help-block']) ?>
-                                </div>
-                            </div>
+                                <?= $this->form()->openTag($form); ?>
 
-                            <div class="form-group">
-                                <div class="col-sm-offset-5 col-sm-7">
+                                <?php
+                                $element = $form->get('lidnr');
+                                $element->setAttribute('id', 'lidnr');
+                                $element->setAttribute('class', 'form-control');
+                                ?>
+                                <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+                                    <label for="<?= $element->getAttribute('id') ?>"
+                                           class="control-label col-sm-5"><?= $element->getLabel() ?></label>
+                                    <div class="col-sm-7">
+                                        <?= $this->formInput($element) ?>
+                                        <?= $this->formElementErrors($element, ['class' => 'help-block']); ?>
+                                        <p>
+                                            <?= $this->translate('Your membership number can be found in the welcome e-mail.') ?>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-offset-5 col-sm-7">
+                                        <?php
+                                        $submit = $form->get('submit');
+                                        $submit->setAttribute('class', 'btn btn-primary');
+                                        ?>
+                                        <?= $this->formRow($submit); ?>
+                                    </div>
+                                </div>
+
+                                <?= $this->formElement($form->get('security')) ?>
+
+                                <?= $this->form()->closeTag(); ?>
+                            <?php else: ?>
+                                <?php
+                                $form->prepare();
+
+                                $form->setAttribute('action', $this->url('user/activate', ['user_type' => $userType, 'code' => $user->getCode()]));
+                                $form->setAttribute('method', 'post');
+
+                                $form->setAttribute('role', 'form');
+                                $form->setAttribute('class', 'form-horizontal');
+                                ?>
+                                <?= $this->form()->openTag($form); ?>
+                                <p>
                                     <?php
-                                    $submit = $form->get('submit');
-                                    $submit->setAttribute('class', 'btn btn-primary');
+                                    if ('company' === $userType) {
+                                        $name = $user->getCompany()->getRepresentativeName();
+                                    } else {
+                                        $member = $user->getMember();
+                                        $name = $member->getFirstName() . ' ' . $member->getLastName();
+                                    }
                                     ?>
-                                    <?= $this->formRow($submit); ?>
+                                    <?= sprintf($this->translate("Welcome %s. Create your password for the website and activate your account."), $name) ?>
+                                </p>
+                                <?php
+                                $element = $form->get('password');
+                                $element->setAttribute('class', 'form-control');
+                                $element->setAttribute('placeholder', $this->translate('Password'));
+                                $element->setAttribute('autocomplete', 'new-password');
+                                ?>
+                                <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+                                    <label for="<?= $element->getAttribute('id') ?>"
+                                           class="control-label col-sm-5"><?= $element->getLabel() ?></label>
+                                    <div class="col-sm-7">
+                                        <?= $this->formPassword($element) ?>
+                                        <?= $this->formElementErrors($element, ['class' => 'help-block']) ?>
+                                    </div>
                                 </div>
-                            </div>
+                                <?php
+                                $element = $form->get('password_verify');
+                                $element->setAttribute('class', 'form-control');
+                                $element->setAttribute('placeholder', $this->translate('Verify password'));
+                                $element->setAttribute('autocomplete', 'new-password');
+                                ?>
+                                <div class="form-group<?= count($element->getMessages()) > 0 ? ' has-error' : '' ?>">
+                                    <label for="<?= $element->getAttribute('id') ?>"
+                                           class="control-label col-sm-5"><?= $element->getLabel() ?></label>
+                                    <div class="col-sm-7">
+                                        <?= $this->formPassword($element) ?>
+                                        <?= $this->formElementErrors($element, ['class' => 'help-block']) ?>
+                                    </div>
+                                </div>
 
-                            <?= $this->form()->closeTag(); ?>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-5 col-sm-7">
+                                        <?php
+                                        $submit = $form->get('submit');
+                                        $submit->setAttribute('class', 'btn btn-primary');
+                                        ?>
+                                        <?= $this->formRow($submit); ?>
+                                    </div>
+                                </div>
+
+                                <?= $this->form()->closeTag(); ?>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>

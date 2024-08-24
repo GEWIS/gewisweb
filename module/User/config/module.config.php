@@ -31,7 +31,7 @@ return [
                     'activate' => [
                         'type' => Segment::class,
                         'options' => [
-                            'route' => '/activate/:user_type/:code',
+                            'route' => '/activate[/:user_type/:code]',
                             'constraints' => [
                                 'code' => '[a-zA-Z0-9]+',
                                 'user_type' => '(company|member)',
@@ -96,15 +96,6 @@ return [
                                         'user_type' => 'member',
                                     ],
                                 ],
-                            ],
-                        ],
-                    ],
-                    'register' => [
-                        'type' => Literal::class,
-                        'options' => [
-                            'route' => '/register',
-                            'defaults' => [
-                                'action' => 'register',
                             ],
                         ],
                     ],

@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: GEWISweb v2.8.6-743-gc76a7302c-dirty\n"
+"Project-Id-Version: GEWISweb v2.8.6-747-ge3d122d45-dirty\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-07 22:17+0200\n"
+"POT-Creation-Date: 2024-08-24 21:14+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -380,6 +380,12 @@ msgid "Approved polls"
 msgstr ""
 
 msgid "Approver"
+msgstr ""
+
+#, php-format
+msgid ""
+"Are you a member but do not yet have an account for the website? %sClick "
+"here%s to request its activation."
 msgstr ""
 
 msgid ""
@@ -1235,6 +1241,9 @@ msgstr ""
 msgid "Focal length"
 msgstr ""
 
+msgid "Forgot password?"
+msgstr ""
+
 #, php-format
 msgid "Found %d %s matching your description"
 msgstr ""
@@ -1437,10 +1446,6 @@ msgstr ""
 msgid ""
 "If you aren't able to attend a GMM in person but you want your voice to be "
 "heard, consider %sauthorizing another member%s to act on your behalf."
-msgstr ""
-
-#, php-format
-msgid "If you don't have an account yet, go to the %sRegistration page%s"
 msgstr ""
 
 #, php-format
@@ -2247,6 +2252,12 @@ msgstr ""
 msgid "Recently Unapproved Jobs"
 msgstr ""
 
+#, php-format
+msgid ""
+"Recently joined GEWIS? Before you can log in, you need to activate your "
+"account and set a password, %sclick here%s to do so."
+msgstr ""
+
 msgid "Recipient"
 msgstr ""
 
@@ -2254,9 +2265,6 @@ msgid "Regenerate"
 msgstr ""
 
 msgid "Regenerate album cover"
-msgstr ""
-
-msgid "Register"
 msgstr ""
 
 msgid "Regulations"
@@ -2296,6 +2304,9 @@ msgid "Rename Meeting Document"
 msgstr ""
 
 msgid "Representative Information"
+msgstr ""
+
+msgid "Request Activation"
 msgstr ""
 
 msgid "Request a poll"
@@ -3864,6 +3875,9 @@ msgid ""
 msgstr ""
 
 msgid "Your account has been activated. You are now able to login."
+msgstr ""
+
+msgid "Your membership number can be found in the welcome e-mail."
 msgstr ""
 
 msgid "Your option has been added successfully"
