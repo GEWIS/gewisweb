@@ -16621,11 +16621,6 @@ Search.appendIndex(
             "summary": "User\u0020logout\u0020action.",
             "url": "classes/User-Controller-UserController.html#method_logoutAction"
         },                {
-            "fqsen": "\\User\\Controller\\UserController\u003A\u003AregisterAction\u0028\u0029",
-            "name": "registerAction",
-            "summary": "User\u0020register\u0020action.",
-            "url": "classes/User-Controller-UserController.html#method_registerAction"
-        },                {
             "fqsen": "\\User\\Controller\\UserController\u003A\u003AchangePasswordAction\u0028\u0029",
             "name": "changePasswordAction",
             "summary": "Action\u0020to\u0020change\u0020password.",
