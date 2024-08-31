@@ -2,13 +2,12 @@
 Hash: SHA512
 
 Contact: mailto:security@gewis.nl
-Expires: 2024-09-01T01:00:00.000Z
+Expires: 2025-09-01T00:00:00.000Z
 Encryption: https://pgp.surfnet.nl/pks/lookup?op=get&search=0x701F3551437E221A
 Preferred-Languages: en, nl
 
 # This policy can be found in multiple places, but applies to all applications listed in the policy
 Canonical: https://gewis.nl/.well-known/security.txt
-Canonical: https://www.gewis.nl/.well-known/security.txt
 Canonical: https://database.gewis.nl/.well-known/security.txt
 Canonical: https://sudosos.gewis.nl/.well-known/security.txt
 Canonical: https://latex.gewis.nl/.well-known/security.txt
@@ -18,17 +17,17 @@ Canonical: https://parelpracht.gewis.nl/.well-known/security.txt
 Policy: https://github.com/GEWIS/GEWIS/security/policy
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEmdeXXWSwTqSB7tHJfwZbKcXCCAcFAmUaq3wACgkQfwZbKcXC
-CAfjHA//S8fCdhJPNE9v97d1Qa+LB4eXO9RCF349+Wk7MzT/atIkxwojwTVm8n3F
-k7PHaMXajFHakqx3RGD/FEzzZ1h+wVmaPViZ15I1DF9O4s9zKIUMPWnnkCY5R5ZE
-xP7LT7ByLGcGw+cxMnnC3Jw7OGoGnrMcOK/kHDQDnvTM9JzWBfR6XyvoYbzRKlBf
-Ha/8oiq7A10yJgmNiSitDvzSEKM/LXP7tMFoQmbsDYePYqXDJUfQ9Iq2vvQpjqlF
-8EpYGkhsH57G5oV7BEmo/7le51jguaWn/JDdqIGJrFLooU/LXf+DP16PgxV18Uwa
-zvvBPXV4tr7dML+yaohnGVzDn+y4t987JefEkflxXrP9g2P59Nz3wKk1osnycqPY
-tD9ZOY8hWx15TPgU0QfhgBCDriz9KGDjnxJZo6UH8ylUXK3CSYFLSF0hFcr5unnq
-eAhk/dKpIPPag9oN4/7FYYWJxmq96YU3FRedsqmd230bbITsncuuUz8hoyDGhSER
-Z3AL4a/SDKlZN73ROh118gl7STUMPSLIHvE/XQgpXL3xTOXmxXkSu8IyMa7yF15k
-N5pFmQySXcrKXGzcOlDoN1Pz5VKCMaAHoqvTkLqOryPhpMP1VWm2AQMp4bbcAZ2M
-oE9YJs76WFNVMOHuMO7zcfOljLLYNofwc9eYzLU1AvGvj2VP2B0=
-=7vXc
+iQIzBAEBCgAdFiEEmdeXXWSwTqSB7tHJfwZbKcXCCAcFAmbTdK0ACgkQfwZbKcXC
+CAc/ihAAiTcl+56zl1f6k27o3/T411WWVOYWvmJYyvC31bLc36uajA+Em7ZZ0Xgy
+ExF3DcLdJkq+IDijSqza1j/wwppjhHCCSur3A0aReq2SxwcTxUPLCqu3/GFiftgd
+iN8U42owS01FbXSQvR0fnbWIgr+Ndng55J6vdCDlFfN7QBBl5fQFh2uHpoe8Bb7E
+ty1rJ2tYcC8XCtFPvP/1kQlN1hF00Udx7ho2Tle9Q+Fqo1VTkdorMRnsBmp7Sd2L
+2HPsBVmBmWCnNNbIBI65RmXS9ngOJaFg9bFo2YUHKRbneIlWlAHAkrMh8cHBFR7c
+q3bE9Jj8aIE6PL1QerB75n2d96gyR7U+UO55W24+Hq5nMXnYYQPHTVsmZFrGFPGh
+KpuO9ib7zKIOYqyVw8nYMlQ5Rq5DpIg7O9rASuxb6BeqD+diw/ceRaBTFGPKiW4e
+/xhWygA9nk/inp/gc1BXo/WFxlPZNrfe2fcTkKxa2iASXnGPhprIGhNZwNijL0jN
+gSokMo59yVsOqSvq0m4HcMzDJqFnQLfBg9UL/gma9BtNlke7+JN7AT+GPj/BIcS0
+W5z0f98XB32frZLYGk46g1daNV7FI2kL379jFIh7xRf3JjfKx6bBCC8gevBqET6A
+0xJkjq9ZE4NRYEfqjV9+tayTmdfmdY/buYngw02WUZim8k3HioA=
+=27r7
 -----END PGP SIGNATURE-----
