@@ -1,3 +1,7 @@
+## [v4.4.1](https://github.com/GEWIS/gewisweb/tree/v4.4.1) (2024-08-31)
+
+* Updated `security.txt`
+
 ## [v4.4.0](https://github.com/GEWIS/gewisweb/tree/v4.4.0) (2024-08-24)
 
 * Added link to upload meeting documents directly from meetings.
