@@ -22,7 +22,7 @@ class PollApproval extends Form implements InputFilterProviderInterface
                 'name' => 'expiryDate',
                 'type' => Date::class,
                 'options' => [
-                    'label' => $translator->translate('Expiration date for the poll (YYYY-MM-DD)'),
+                    'label' => $translator->translate('Expiration date for the poll'),
                     'format' => 'Y-m-d',
                 ],
             ],

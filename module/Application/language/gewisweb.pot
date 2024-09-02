@@ -1157,7 +1157,7 @@ msgstr ""
 msgid "Expiration date"
 msgstr ""
 
-msgid "Expiration date for the poll (YYYY-MM-DD)"
+msgid "Expiration date for the poll"
 msgstr ""
 
 msgid "Expired packages"

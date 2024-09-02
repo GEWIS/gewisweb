@@ -1224,8 +1224,8 @@ msgstr "Afloopdatum"
 msgid "Expiration date"
 msgstr "Verloopdatum"
 
-msgid "Expiration date for the poll (YYYY-MM-DD)"
-msgstr "Verloopdatum van de poll (JJJJ-MM-DD)"
+msgid "Expiration date for the poll"
+msgstr "Verloopdatum van de poll"
 
 msgid "Expired packages"
 msgstr "Verlopen pakketten"
