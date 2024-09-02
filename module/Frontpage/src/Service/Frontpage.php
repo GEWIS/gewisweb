@@ -24,6 +24,8 @@ use Photo\Service\Photo as PhotoService;
 use function abs;
 use function array_merge;
 use function array_slice;
+use function count;
+use function shuffle;
 use function usort;
 
 /**
@@ -88,7 +90,7 @@ class Frontpage
         $poll = $this->pollService->getNewestPoll();
         $pollDetails = $this->pollService->getPollDetails($poll);
         $pollDetails['poll'] = $poll;
-        $news = $this->getNewsItems();
+        $news = $this->getNewsItems($activities);
         $companyBanner = $this->companyService->getCurrentBanner();
 
         return [
@@ -145,31 +147,32 @@ class Frontpage
      * Returns a mixed array of news items and activities to display in the
      * news section.
      *
+     * @param ActivityModel[] $activities
+     *
      * @return array<array-key, ActivityModel|NewsItemModel>
      */
-    public function getNewsItems(): array
+    public function getNewsItems(array $activities): array
     {
         $count = $this->frontpageConfig['news_count'];
-        $activities = $this->getUpcomingActivities();
         $newsItems = $this->newsService->getLatestNewsItems($count);
-        $news = array_merge($activities, $newsItems);
-        usort($news, function ($a, $b) {
-            if (($a instanceof NewsItemModel) && ($b instanceof NewsItemModel)) {
-                if ($a->getPinned() === $b->getPinned()) {
-                    return $this->getItemTimestamp($a) - $this->getItemTimestamp($b);
-                }
 
-                return $a->getPinned() ? -1 : 1;
-            }
-
-            if (($a instanceof ActivityModel) && ($b instanceof ActivityModel)) {
+        usort($newsItems, function ($a, $b) {
+            if ($a->getPinned() === $b->getPinned()) {
                 return $this->getItemTimestamp($a) - $this->getItemTimestamp($b);
             }
 
-            return $a instanceof ActivityModel ? 1 : -1;
+            return $a->getPinned() ? -1 : 1;
         });
 
-        return array_slice($news, 0, $count);
+        $newsCount = count($newsItems);
+
+        if ($newsCount < $count) {
+            $remainingCount = $count - $newsCount;
+            shuffle($activities);
+            $newsItems = array_merge($newsItems, array_slice($activities, 0, $remainingCount));
+        }
+
+        return $newsItems;
     }
 
     /**
