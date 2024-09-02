@@ -1213,8 +1213,8 @@ msgstr "Expiration Date"
 msgid "Expiration date"
 msgstr "Expiration date"
 
-msgid "Expiration date for the poll (YYYY-MM-DD)"
-msgstr "Expiration date for the poll (YYYY-MM-DD)"
+msgid "Expiration date for the poll"
+msgstr "Expiration date for the poll"
 
 msgid "Expired packages"
 msgstr "Expired packages"
