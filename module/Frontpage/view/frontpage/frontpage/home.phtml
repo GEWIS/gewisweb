@@ -67,7 +67,15 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                         }
                         ?>
                         <article class="content-article">
-                            <h3><?= $this->escapeHtml($title) ?></h3>
+                            <?php if ($item instanceof ActivityModel): ?>
+                                <h3>
+                                    <a href="<?= $this->url('activity/view', ['id' => $item->getId()]) ?>">
+                                        <?= $this->escapeHtml($title) ?>
+                                    </a>
+                                </h3>
+                            <?php else: ?>
+                                <h3><?= $this->escapeHtml($title) ?></h3>
+                            <?php endif; ?>
                             <div style="position: relative; overflow: hidden;">
                                 <div class="reveal reveal-10 markdown">
                                     <?= $content ?>
