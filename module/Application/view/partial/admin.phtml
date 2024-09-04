@@ -21,8 +21,7 @@ use Laminas\View\Renderer\PhpRenderer;
             </div>
             <div id="navbar-admin" class="navbar-collapse collapse width" aria-expanded="false">
                 <ul class="nav navbar-nav">
-                    <?php
-                    if (null === $this->identity()): ?>
+                    <?php if (null === $this->identity()): ?>
                         <li>
                             <a href="<?= $this->url(
                                 'user/login',
@@ -32,10 +31,8 @@ use Laminas\View\Renderer\PhpRenderer;
                                 <?= $this->translate('Login') ?>
                             </a>
                         </li>
-                    <?php
-                    endif; ?>
-                    <?php
-                    if ($this->acl('activity_service_acl')->isAllowed('activity', 'viewAdmin')): ?>
+                    <?php endif; ?>
+                    <?php if ($this->acl('activity_service_acl')->isAllowed('activity_admin', 'view')): ?>
                         <li class="dropdown <?= $this->moduleIsActive(['activity']) ? 'active' : '' ?>">
                             <a href="<?= $this->url('activity_admin') ?>" class="dropdown-toggle" data-toggle="dropdown"
                                role="button" aria-haspopup="true" aria-expanded="false">
@@ -70,10 +67,8 @@ use Laminas\View\Renderer\PhpRenderer;
                                 endif; ?>
                             </ul>
                         </li>
-                    <?php
-                    endif; ?>
-                    <?php
-                    if ($this->acl('company_service_acl')->isAllowed('company', 'listAll')): ?>
+                    <?php endif; ?>
+                    <?php if ($this->acl('company_service_acl')->isAllowed('company_admin', 'view')): ?>
                         <li class="dropdown <?= $this->moduleIsActive(['company']) ? 'active' : '' ?>">
                             <a href="<?= $this->url('company_admin') ?>" class="dropdown-toggle" data-toggle="dropdown"
                                role="button" aria-haspopup="true" aria-expanded="false">
@@ -122,10 +117,8 @@ use Laminas\View\Renderer\PhpRenderer;
                                 endif; ?>
                             </ul>
                         </li>
-                    <?php
-                    endif; ?>
-                    <?php
-                    if ($this->acl('education_service_acl')->isAllowed('course_document', 'upload')): ?>
+                    <?php endif; ?>
+                    <?php if ($this->acl('education_service_acl')->isAllowed('education_admin', 'view')): ?>
                         <li class="dropdown <?= $this->moduleIsActive(['frontpage', 'exam']) ? 'active' : '' ?>">
                             <a href="<?= $this->hashUrl() ?>" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                aria-haspopup="true" aria-expanded="false">
@@ -149,10 +142,8 @@ use Laminas\View\Renderer\PhpRenderer;
                                 </li>
                             </ul>
                         </li>
-                    <?php
-                    endif; ?>
-                    <?php
-                    if ($this->acl('decision_service_acl')->isAllowed('meeting', 'upload_minutes')): ?>
+                    <?php endif; ?>
+                    <?php if ($this->acl('decision_service_acl')->isAllowed('decision_admin', 'view')): ?>
                         <li class="dropdown">
                             <a href="<?= $this->hashUrl() ?>" class="dropdown-toggle" data-toggle="dropdown"
                                role="button" aria-haspopup="true" aria-expanded="false">
@@ -176,62 +167,52 @@ use Laminas\View\Renderer\PhpRenderer;
                                 </li>
                             </ul>
                         </li>
-                    <?php
-                    endif; ?>
-                    <?php
-                    if ($this->acl('decision_service_acl')->isAllowed('organ', 'viewAdmin')): ?>
+                    <?php endif; ?>
+                    <?php if ($this->acl('decision_service_acl')->isAllowed('decision_admin', 'view')): ?>
                         <li>
                             <a href="<?= $this->url('admin_organ') ?>">
                                 <?= $this->translate('Organs') ?>
                             </a>
                         </li>
-                    <?php
-                    endif; ?>
-                    <?php
-                    if ($this->acl('frontpage_service_acl')->isAllowed('news_item', 'create')): ?>
+                    <?php endif; ?>
+                    <?php if ($this->acl('frontpage_service_acl')->isAllowed('news_item', 'create')): ?>
                         <li class="<?= $this->moduleIsActive(['frontpage', 'news']) ? 'active' : '' ?>">
                             <a href="<?= $this->url('admin_news') ?>"><?= $this->translate('News') ?></a>
                         </li>
                     <?php
                     endif; ?>
-                    <?php
-                    if ($this->acl('frontpage_service_acl')->isAllowed('page', 'create')): ?>
+                    <?php if ($this->acl('frontpage_service_acl')->isAllowed('page', 'create')): ?>
                         <li class="<?= $this->moduleIsActive(['frontpage', 'page']) ? 'active' : '' ?>">
                             <a href="<?= $this->url('admin_page') ?>"><?= $this->translate('Pages') ?></a>
                         </li>
-                    <?php
-                    endif; ?>
-                    <?php
-                    if ($this->acl('photo_service_acl')->isAllowed('album', 'nodate')): ?>
+                    <?php endif; ?>
+                    <?php if ($this->acl('photo_service_acl')->isAllowed('photo_admin', 'view')): ?>
                         <li>
                             <a href="<?= $this->url('admin_photo') ?>"><?= $this->translate('Photos') ?></a>
                         </li>
-                    <?php
-                    endif; ?>
-                    <?php
-                    if ($this->acl('frontpage_service_acl')->isAllowed('poll', 'approve')): ?>
+                    <?php endif; ?>
+                    <?php if ($this->acl('frontpage_service_acl')->isAllowed('poll', 'approve')): ?>
                         <li class="<?= $this->moduleIsActive(['frontpage', 'poll']) ? 'active' : '' ?>">
                             <a href="<?= $this->url('admin_poll') ?>"><?= $this->translate('Polls') ?></a>
                         </li>
-                    <?php
-                    endif; ?>
-                    <?php
-                    if ($this->acl('user_service_acl')->isAllowed('apiuser', 'add')): ?>
+                    <?php endif; ?>
+                    <?php if ($this->acl('user_service_acl')->isAllowed('user_admin', 'view')): ?>
                         <li class="dropdown <?= $this->moduleIsActive(['user']) ? 'active' : '' ?>">
                             <a href="<?= $this->hashUrl() ?>" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                aria-haspopup="true" aria-expanded="false">
                                 <?= $this->translate('Users') ?> <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li>
-                                    <a href="<?= $this->url('user_admin/api') ?>">
-                                        <?= $this->translate('API Users') ?>
-                                    </a>
-                                </li>
+                                <?php if ($this->acl('user_service_acl')->isAllowed('apiuser', 'add')): ?>
+                                    <li>
+                                        <a href="<?= $this->url('user_admin/api') ?>">
+                                            <?= $this->translate('API Users') ?>
+                                        </a>
+                                    </li>
+                                <?php endif; ?>
                             </ul>
                         </li>
-                    <?php
-                    endif; ?>
+                    <?php endif; ?>
                     <li class="stick-to-bottom">
                         <a href="https://github.com/gewis/gewisweb">
                             <span class="fab fa-github"></span> <?= getenv('GIT_COMMIT') ?>

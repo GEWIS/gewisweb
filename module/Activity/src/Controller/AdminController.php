@@ -441,7 +441,7 @@ class AdminController extends AbstractActionController
      */
     public function viewAction(): ViewModel
     {
-        if (!$this->aclService->isAllowed('viewAdmin', 'activity')) {
+        if (!$this->aclService->isAllowed('view', 'activity_admin')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to administer activities'));
         }
 

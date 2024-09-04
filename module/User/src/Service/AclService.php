@@ -87,8 +87,11 @@ class AclService extends GenericAclService
         // configure the user ACL
         $this->acl->addResource(new Resource('apiuser'));
         $this->acl->addResource(new Resource('user'));
+        // Define administration part of this module, however, sub-permissions must be manually configured.
+        $this->acl->addResource(new Resource('user_admin'));
 
-        // Do not allow the board to touch API tokens
+        // Do not allow the board to touch user administration / API tokens
+        $this->acl->deny(UserRoles::Board->value, 'user_admin');
         $this->acl->deny(UserRoles::Board->value, 'apiuser');
 
         $this->acl->allow(UserRoles::User->value, 'user', ['password_change']);

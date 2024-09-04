@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Frontpage\Service;
 
 use Frontpage\Model\Page as PageModel;
+use Laminas\Permissions\Acl\Resource\GenericResource as Resource;
 
 class AclService extends \User\Service\AclService
 {
@@ -24,11 +25,13 @@ class AclService extends \User\Service\AclService
     {
         parent::createAcl();
 
-        $this->acl->addResource('page');
-        $this->acl->addResource('poll');
-        $this->acl->addResource('poll_comment');
-        $this->acl->addResource('news_item');
-        $this->acl->addResource('infimum');
+        $this->acl->addResource(new Resource('page'));
+        $this->acl->addResource(new Resource('poll'));
+        $this->acl->addResource(new Resource('poll_comment'));
+        $this->acl->addResource(new Resource('news_item'));
+        $this->acl->addResource(new Resource('infimum'));
+        // Define administration part of this module, however, sub-permissions must be manually configured.
+        $this->acl->addResource(new Resource('frontpage_admin'));
 
         $this->acl->allow('user', 'infimum', 'view');
         $this->acl->allow('user', 'poll', ['vote', 'request']);
