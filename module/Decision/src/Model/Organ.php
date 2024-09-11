@@ -345,7 +345,7 @@ class Organ
     public function getApprovedOrganInformation(): ?OrganInformation
     {
         foreach ($this->organInformation as $information) {
-            if (null !== $information->getApprover()) {
+            if ($information->isApproved()) {
                 return $information;
             }
         }
