@@ -215,8 +215,11 @@ use Laminas\View\Renderer\PhpRenderer;
                         </li>
                     <?php endif; ?>
                     <li class="stick-to-bottom">
-                        <a href="https://github.com/gewis/gewisweb">
-                            <span class="fab fa-github"></span> <?= getenv('GIT_COMMIT') ?>
+                        <?php
+                        $commit = getenv('GIT_COMMIT');
+                        ?>
+                        <a href="https://github.com/gewis/gewisweb/commit/<?= $commit ?>">
+                            <span class="fab fa-github"></span> <?= $commit ?>
                         </a>
                     </li>
                 </ul>
