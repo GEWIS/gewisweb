@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Education\Service;
 
+use Laminas\Permissions\Acl\Resource\GenericResource as Resource;
+
 class AclService extends \User\Service\AclService
 {
     protected function createAcl(): void
@@ -11,9 +13,11 @@ class AclService extends \User\Service\AclService
         parent::createAcl();
 
         // add resource
-        $this->acl->addResource('education');
-        $this->acl->addResource('course_document');
-        $this->acl->addResource('course');
+        $this->acl->addResource(new Resource('education'));
+        $this->acl->addResource(new Resource('course_document'));
+        $this->acl->addResource(new Resource('course'));
+        // Define administration part of this module, however, sub-permissions must be manually configured.
+        $this->acl->addResource(new Resource('education_admin'));
 
         // users (logged in GEWIS members) are allowed to view
         // exams besides users, also people on the TU/e network are

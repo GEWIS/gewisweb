@@ -1,0 +1,68 @@
+<?php
+
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Decision\Model\Member as MemberModel;
+use Laminas\View\Renderer\PhpRenderer;
+use User\Model\User as UserModel;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var array $members
+ */
+
+$this->breadcrumbs()
+    ->addBreadcrumb($this->translate('Members'));
+?>
+<h1><?= $this->translate('Members') ?></h1>
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th><?= $this->translate('Name') ?></th>
+                <th><?= $this->translate('Type') ?></th>
+                <th><?= $this->translate('Activated') ?></th>
+                <th><?= $this->translate('Hidden') ?></th>
+                <th><?= $this->translate('Deleted') ?></th>
+                <th><?= $this->translate('Password Changed On') ?></th>
+                <th><?= $this->translate('Role(s)') ?></th>
+                <th><?= $this->translate('Membership Ends On') ?></th>
+                <th><?= $this->translate('Expires On') ?></th>
+            <tr>
+        </thead>
+        <tbody>
+            <?php for ($i = 0; $i < count($members); $i += 2): ?>
+                <?php
+                /** @var MemberModel $member */
+                $member = $members[$i];
+                /** @var UserModel|null $user */
+                $user = $members[$i + 1] ?? null;
+                $activated = null !== $user;
+                $deleted = $member->getDeleted();
+                ?>
+                <tr class="<?= !$activated ? 'info' : '' ?> <?= $member->isExpired() ? 'warning' : '' ?> <?= $deleted ? 'danger' : '' ?>">
+                    <td><?= $member->getLidnr() ?></td>
+                    <td><?= $this->escapeHtml($member->getFullName()) ?></td>
+                    <td><?= $member->getType()->getName($this->plugin('translate')->getTranslator()) ?></td>
+                    <td><span class="fas fa-circle-<?= $activated ? 'check' : 'xmark' ?>"></span></td>
+                    <td><span class="fas fa-circle-<?= $member->getHidden() ? 'check' : 'xmark' ?>"></span></td>
+                    <td><span class="fas fa-circle-<?= $member->getDeleted() ? 'check' : 'xmark' ?>"></span></td>
+                    <td><?= $activated ? ($user->getPasswordChangedOn()?->format(DateTimeInterface::ATOM) ?? '-') : $this->translate('N/A') ?></td>
+                    <td>
+                        <?php if ($activated && 0 !== $user->getRoles()->count()): ?>
+                            <?php foreach ($user->getRoles() as $role): ?>
+                                <?= $role->getRole()->value . ' (' . ($role->getExpiration()?->format(DateTimeInterface::ATOM) ?? '-') . ')'?>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            -
+                        <?php endif; ?>
+                    </td>
+                    <td><?= $member->getMembershipEndsOn()?->format(DateTimeInterface::ATOM) ?? $this->translate('N/A') ?></td>
+                    <td><?= $member->getExpiration()->format(DateTimeInterface::ATOM) ?></td>
+                </tr>
+            <?php endfor; ?>
+        </tbody>
+    </table>
+</div>

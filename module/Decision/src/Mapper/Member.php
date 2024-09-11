@@ -10,6 +10,8 @@ use Decision\Model\Organ as OrganModel;
 use Decision\Model\OrganMember as OrganMemberModel;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
+use User\Model\User as UserModel;
+use User\Model\UserRole as UserRoleModel;
 
 use function strtolower;
 
@@ -169,6 +171,31 @@ class Member extends BaseMapper
             ->andWhere('om.dischargeDate <= CURRENT_TIMESTAMP()');
 
         $qb->setParameter('member', $member);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Fetch all members including their associated user.
+     *
+     * NOTE: The ordering of the return array is not as you might expect. The actual result will be like:
+     *
+     * array{
+     *     0: MemberModel,
+     *     1: ?UserModel,
+     *     2: MemberModel,
+     *     3: ... (repeat pattern)
+     * }
+     *
+     * In other words, every 2 rows represent a single `Member`.
+     *
+     * @return array<array-key, MemberModel|UserModel|UserRoleModel|null>
+     */
+    public function findAllWithUserDetails(): array
+    {
+        $qb = $this->getRepository()->createQueryBuilder('m');
+        $qb->leftJoin(UserModel::class, 'u', 'WITH', 'm.lidnr = u.lidnr')
+            ->addSelect('u');
 
         return $qb->getQuery()->getResult();
     }

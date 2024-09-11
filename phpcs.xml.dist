@@ -73,6 +73,7 @@
         <exclude-pattern>module/User/src/Command/Factory/DeleteOldLoginAttemptsFactory.php</exclude-pattern>
         <exclude-pattern>module/User/src/Controller/Factory/ApiAuthenticationControllerFactory.php</exclude-pattern>
         <exclude-pattern>module/User/src/Controller/Factory/UserControllerFactory.php</exclude-pattern>
+        <exclude-pattern>module/User/src/Controller/Factory/UserAdminControllerFactory.php</exclude-pattern>
         <exclude-pattern>module/User/src/Controller/Factory/ApiAdminControllerFactory.php</exclude-pattern>
         <exclude-pattern>module/User/src/Mapper/Factory/ApiAppFactory.php</exclude-pattern>
         <exclude-pattern>module/User/src/Service/Factory/PwnedPasswordsFactory.php</exclude-pattern>

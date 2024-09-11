@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Activity\Service;
 
+use Laminas\Permissions\Acl\Resource\GenericResource as Resource;
 use User\Permissions\Assertion\IsCreatorOrOrganMember;
 
 class AclService extends \User\Service\AclService
@@ -12,13 +13,15 @@ class AclService extends \User\Service\AclService
     {
         parent::createAcl();
 
-        $this->acl->addResource('activity');
-        $this->acl->addResource('activityApi');
-        $this->acl->addResource('myActivities');
-        $this->acl->addResource('model');
-        $this->acl->addResource('activity_calendar_period');
-        $this->acl->addResource('activity_calendar_proposal');
-        $this->acl->addResource('signupList');
+        $this->acl->addResource(new Resource('activity'));
+        $this->acl->addResource(new Resource('activityApi'));
+        $this->acl->addResource(new Resource('myActivities'));
+        $this->acl->addResource(new Resource('model'));
+        $this->acl->addResource(new Resource('activity_calendar_period'));
+        $this->acl->addResource(new Resource('activity_calendar_proposal'));
+        $this->acl->addResource(new Resource('signupList'));
+        // Define administration part of this module, however, sub-permissions must be manually configured.
+        $this->acl->addResource(new Resource('activity_admin'));
 
         $this->acl->allow('guest', 'activity', ['view', 'viewCategory']);
         $this->acl->allow('guest', 'signupList', ['view', 'externalSignup']);
@@ -35,7 +38,7 @@ class AclService extends \User\Service\AclService
             ['view', 'viewDetails', 'signup', 'signoff', 'checkUserSignedUp'],
         );
 
-        $this->acl->allow('active_member', 'activity', ['create', 'viewAdmin', 'listCategories']);
+        $this->acl->allow('active_member', 'activity', ['create', 'listCategories']);
         $this->acl->allow(
             'active_member',
             'activity',
@@ -48,6 +51,7 @@ class AclService extends \User\Service\AclService
             ['adminSignup', 'viewParticipants', 'exportParticipants'],
             new IsCreatorOrOrganMember(),
         );
+        $this->acl->allow('active_member', 'activity_admin', 'view');
 
         $this->acl->allow('admin', 'activity', 'viewParticipantDetails');
         $this->acl->allow('admin', 'activity', 'approve');

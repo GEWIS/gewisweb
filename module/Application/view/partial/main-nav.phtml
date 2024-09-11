@@ -193,15 +193,21 @@ endif; ?>
                                     <?= $this->translate('Change password') ?>
                                 </a>
                             </li>
-                            <?php
-                            if ($this->acl('decision_service_acl')->isAllowed('organ', 'edit')): ?>
+                            <?php if (
+                                $this->acl('activity_service_acl')->isAllowed('activity_admin', 'view')
+                                || $this->acl('company_service_acl')->isAllowed('company_admin', 'view')
+                                || $this->acl('decision_service_acl')->isAllowed('decision_admin', 'view')
+                                || $this->acl('education_service_acl')->isAllowed('education_admin', 'view')
+                                || $this->acl('frontpage_service_acl')->isAllowed('frontpage_admin', 'view')
+                                || $this->acl('photo_service_acl')->isAllowed('photo_admin', 'view')
+                                || $this->acl('user_service_acl')->isAllowed('user_admin', 'view')
+                            ): ?>
                                 <li>
                                     <a href="<?= $this->url('admin') ?>">
                                         <?= $this->translate('Admin') ?>
                                     </a>
                                 </li>
-                            <?php
-                            endif; ?>
+                            <?php endif; ?>
                             <li>
                                 <a href="<?= $this->url('user/logout') ?>">
                                     <?= $this->translate('Logout') ?>

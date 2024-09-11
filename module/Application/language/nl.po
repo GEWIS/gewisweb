@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-24 21:14+0200\n"
-"PO-Revision-Date: 2024-08-24 21:15+0200\n"
+"POT-Creation-Date: 2024-09-11 14:50+0200\n"
+"PO-Revision-Date: 2024-09-11 14:51+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: nl\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 
 msgid " <strong>has a limited capacity</strong> and "
 msgstr " <strong>heeft een beperkte capaciteit</strong> en "
@@ -117,6 +117,9 @@ msgstr "Acties"
 
 msgid "Activate"
 msgstr "Activeer"
+
+msgid "Activated"
+msgstr "Geactiveerd"
 
 msgid "Active"
 msgstr "Actief"
@@ -944,6 +947,9 @@ msgstr "Verwijder dit nieuwsitem"
 msgid "Delete this page"
 msgstr "Verwijder deze pagina"
 
+msgid "Deleted"
+msgstr "Verwijderd"
+
 msgid "Description"
 msgstr "Beschrijving"
 
@@ -1229,6 +1235,9 @@ msgstr "Verloopdatum van de poll"
 
 msgid "Expired packages"
 msgstr "Verlopen pakketten"
+
+msgid "Expires On"
+msgstr "Verloopt op"
 
 msgid "Exposure time"
 msgstr "Belichtingstijd"
@@ -1850,6 +1859,9 @@ msgstr "Lidmaatschapsnummer"
 msgid "Members"
 msgstr "Leden"
 
+msgid "Membership Ends On"
+msgstr "Lidmaatschap eindigt op"
+
 msgid "Membership number"
 msgstr "Lidmaatschapsnummer"
 
@@ -2226,6 +2238,9 @@ msgstr "Deelnemers"
 msgid "Password"
 msgstr "Wachtwoord"
 
+msgid "Password Changed On"
+msgstr "Wachtwoord gewijzigd op"
+
 msgid "Password changed successfully"
 msgstr "Wachtwoord succesvol gewijzigd"
 
@@ -2497,6 +2512,9 @@ msgstr "Ingetrokken"
 #, php-format
 msgid "Revoked authorizations for GMM %d"
 msgstr "Ingetrokken machtigingen voor ALV %d"
+
+msgid "Role(s)"
+msgstr "Rol(len)"
 
 msgid "Root"
 msgstr "Root"
@@ -3712,6 +3730,9 @@ msgstr "Je hebt niet de rechten om optieperiodes te beheren"
 
 msgid "You are not allowed to administer polls"
 msgstr "Je hebt niet de rechten om poll-instellingen te beheren"
+
+msgid "You are not allowed to administer users"
+msgstr "Je hebt niet de rechten om gebruikers te beheren"
 
 msgid "You are not allowed to approve polls"
 msgstr "Je hebt niet de rechten om polls goed te keuren"

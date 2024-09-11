@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Decision\Service;
 
+use Laminas\Permissions\Acl\Resource\GenericResource as Resource;
+
 class AclService extends \User\Service\AclService
 {
     protected function createAcl(): void
@@ -11,21 +13,24 @@ class AclService extends \User\Service\AclService
         parent::createAcl();
 
         // add resources for this module
-        $this->acl->addResource('organ');
-        $this->acl->addResource('member');
-        $this->acl->addResource('decision');
-        $this->acl->addResource('meeting');
-        $this->acl->addResource('authorization');
-        $this->acl->addResource('files');
-        $this->acl->addResource('regulations');
-        $this->acl->addResource('gdpr');
+        $this->acl->addResource(new Resource('organ'));
+        $this->acl->addResource(new Resource('member'));
+        $this->acl->addResource(new Resource('decision'));
+        $this->acl->addResource(new Resource('meeting'));
+        $this->acl->addResource(new Resource('authorization'));
+        $this->acl->addResource(new Resource('files'));
+        $this->acl->addResource(new Resource('regulations'));
+        $this->acl->addResource(new Resource('gdpr'));
+        // Define administration part of this module, however, sub-permissions must be manually configured.
+        $this->acl->addResource(new Resource('decision_admin'));
 
         // users are allowed to view the organs
         $this->acl->allow('guest', 'organ', 'list');
         $this->acl->allow('user', 'organ', 'view');
 
         // Organ members are allowed to edit organ information of their own organs
-        $this->acl->allow('active_member', 'organ', ['edit', 'viewAdmin']);
+        $this->acl->allow('active_member', 'organ', 'edit');
+        $this->acl->allow('active_member', 'decision_admin', 'view');
 
         // users are allowed to view and search members
         $this->acl->allow('user', 'member', ['view', 'view_self', 'search', 'birthdays']);

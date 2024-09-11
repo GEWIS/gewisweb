@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: GEWISweb v2.8.6-747-ge3d122d45-dirty\n"
+"Project-Id-Version: GEWISweb v2.8.6-764-gabeeb8c00-dirty\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-24 21:14+0200\n"
+"POT-Creation-Date: 2024-09-11 14:50+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -115,6 +115,9 @@ msgid "Actions"
 msgstr ""
 
 msgid "Activate"
+msgstr ""
+
+msgid "Activated"
 msgstr ""
 
 msgid "Active"
@@ -893,6 +896,9 @@ msgstr ""
 msgid "Delete this page"
 msgstr ""
 
+msgid "Deleted"
+msgstr ""
+
 msgid "Description"
 msgstr ""
 
@@ -1161,6 +1167,9 @@ msgid "Expiration date for the poll"
 msgstr ""
 
 msgid "Expired packages"
+msgstr ""
+
+msgid "Expires On"
 msgstr ""
 
 msgid "Exposure time"
@@ -1719,6 +1728,9 @@ msgstr ""
 msgid "Members"
 msgstr ""
 
+msgid "Membership Ends On"
+msgstr ""
+
 msgid "Membership number"
 msgstr ""
 
@@ -2090,6 +2102,9 @@ msgstr ""
 msgid "Password"
 msgstr ""
 
+msgid "Password Changed On"
+msgstr ""
+
 msgid "Password changed successfully"
 msgstr ""
 
@@ -2341,6 +2356,9 @@ msgstr ""
 
 #, php-format
 msgid "Revoked authorizations for GMM %d"
+msgstr ""
+
+msgid "Role(s)"
 msgstr ""
 
 msgid "Root"
@@ -3431,6 +3449,9 @@ msgid "You are not allowed to administer option calendar periods"
 msgstr ""
 
 msgid "You are not allowed to administer polls"
+msgstr ""
+
+msgid "You are not allowed to administer users"
 msgstr ""
 
 msgid "You are not allowed to approve polls"

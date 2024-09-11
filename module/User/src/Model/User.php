@@ -57,6 +57,7 @@ class User implements IdentityInterface
     #[OneToMany(
         targetEntity: UserRole::class,
         mappedBy: 'lidnr',
+        fetch: 'EAGER',
     )]
     protected Collection $roles;
 

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Company\Service;
 
+use Laminas\Permissions\Acl\Resource\GenericResource as Resource;
+
 class AclService extends \User\Service\AclService
 {
     protected function createAcl(): void
@@ -11,11 +13,13 @@ class AclService extends \User\Service\AclService
         parent::createAcl();
 
         // Add resources
-        $this->acl->addResource('company');
-        $this->acl->addResource('job');
-        $this->acl->addResource('jobCategory');
-        $this->acl->addResource('jobLabel');
-        $this->acl->addResource('package');
+        $this->acl->addResource(new Resource('company'));
+        $this->acl->addResource(new Resource('job'));
+        $this->acl->addResource(new Resource('jobCategory'));
+        $this->acl->addResource(new Resource('jobLabel'));
+        $this->acl->addResource(new Resource('package'));
+        // Define administration part of this module, however, sub-permissions must be manually configured.
+        $this->acl->addResource(new Resource('company_admin'));
 
         // Guests can view banners and featured companies. They can also view and list only visible companies and
         // (their) jobs. Additionally, they can list (see) any visible categories and/or labels on jobs.
@@ -39,6 +43,11 @@ class AclService extends \User\Service\AclService
         // jobs, job categories, job labels, and packages. Furthermore, they can delete companies, jobs, and packages.
         // Additionally, they may approve edits to companies and jobs. Finally, they can list all categories and labels
         // (even invisible ones).
+        $this->acl->allow(
+            roles: 'company_admin',
+            resources: 'company_admin',
+            privileges: 'view',
+        );
         $this->acl->allow(
             roles: 'company_admin',
             resources: 'company',

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Photo\Service;
 
+use Laminas\Permissions\Acl\Resource\GenericResource as Resource;
 use User\Permissions\Assertion\IsAfterMembershipEndedAndNotTagged;
 
 class AclService extends \User\Service\AclService
@@ -13,10 +14,12 @@ class AclService extends \User\Service\AclService
         parent::createAcl();
 
         // add resources for this module
-        $this->acl->addResource('photo');
-        $this->acl->addResource('album');
-        $this->acl->addResource('tag');
-        $this->acl->addResource('vote');
+        $this->acl->addResource(new Resource('photo'));
+        $this->acl->addResource(new Resource('album'));
+        $this->acl->addResource(new Resource('tag'));
+        $this->acl->addResource(new Resource('vote'));
+        // Define administration part of this module, however, sub-permissions must be manually configured.
+        $this->acl->addResource(new Resource('photo_admin'));
 
         // Only users and 'the screen' are allowed to view photos (and its details) and albums
         $this->acl->allow('user', 'album', 'view');
