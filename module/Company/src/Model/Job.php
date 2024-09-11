@@ -34,6 +34,7 @@ class Job implements ResourceInterface
     use IdentifiableTrait;
     use TimestampableTrait;
     use ApprovableTrait;
+    /** @use UpdateProposableTrait<JobUpdateProposalModel> */
     use UpdateProposableTrait;
 
     /**

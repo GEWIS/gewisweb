@@ -240,7 +240,7 @@ $this->breadcrumbs()
         </div>
         <hr>
     </div>
-    <?php if ($old->getCategories()->count() !== 0 || $new->getCategories()->count() !== 0): ?>
+    <?php if (!$old->getCategories()->isEmpty() || !$new->getCategories()->isEmpty()): ?>
         <div class="col-md-12">
             <h2><?= $this->translate('Activity Categories') ?></h2>
         </div>
@@ -267,7 +267,7 @@ $this->breadcrumbs()
             <?php endforeach; ?>
         </div>
     <?php endif; ?>
-    <?php if ($old->getSignupLists()->count() !== 0 || $new->getSignupLists()->count() !== 0): ?>
+    <?php if (!$old->getSignupLists()->isEmpty() || !$new->getSignupLists()->isEmpty()): ?>
         <div class="col-md-12">
             <h2><?= $this->translate('Sign-up Lists') ?></h2>
         </div>

@@ -9,6 +9,7 @@ use Application\Service\FileStorage as FileStorageService;
 use Decision\Form\OrganInformation as OrganInformationForm;
 use Decision\Mapper\Member as MemberMapper;
 use Decision\Mapper\Organ as OrganMapper;
+use Decision\Mapper\OrganInformation as OrganInformationMappper;
 use Decision\Service\AclService;
 use Decision\Service\Organ as OrganService;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
@@ -32,6 +33,7 @@ class OrganFactory implements FactoryInterface
             $container->get(FileStorageService::class),
             $container->get(EmailService::class),
             $container->get(MemberMapper::class),
+            $container->get(OrganInformationMappper::class),
             $container->get(OrganMapper::class),
             $container->get(OrganInformationForm::class),
             $container->get('config')['organ_information'],

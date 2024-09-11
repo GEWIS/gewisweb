@@ -615,7 +615,7 @@ class Company
         $job->setPackage($package);
         $package->addJob($job);
 
-        // If the user can approve (changed to) jobs, directly approve the job.
+        // If the user can approve (changes to) jobs, directly approve the job.
         if ($this->aclService->isAllowed('approve', 'job')) {
             $job->setApproved(ApprovableStatus::Approved);
             $job->setApprovedAt(new DateTime());

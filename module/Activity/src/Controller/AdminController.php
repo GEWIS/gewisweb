@@ -96,7 +96,7 @@ class AdminController extends AbstractActionController
             throw new NotAllowedException($this->translator->translate('You are not allowed to update this activity'));
         }
 
-        if (0 !== $activity->getSignupLists()->count()) {
+        if (!$activity->getSignupLists()->isEmpty()) {
             $openingDates = [];
             $participants = 0;
 
@@ -144,11 +144,11 @@ class AdminController extends AbstractActionController
             }
         }
 
-        $updateProposal = $activity->getUpdateProposal();
+        $updateProposals = $activity->getUpdateProposals();
 
-        if (0 !== $updateProposal->count()) {
+        if (!$updateProposals->isEmpty()) {
             // If there already is an update proposal for this activity, show that instead of the original activity.
-            $activity = $updateProposal->first()->getNew();
+            $activity = $updateProposals->first()->getNew();
         }
 
         $activityData = $activity->toArray();
@@ -213,7 +213,7 @@ class AdminController extends AbstractActionController
 
             // If the activity does not have any sign-up lists there is no need
             // to check the participants or any sign-up lists.
-            if (0 === $activity->getSignupLists()->count()) {
+            if ($activity->getSignupLists()->isEmpty()) {
                 return $this->notFoundAction();
             }
 

@@ -27,32 +27,6 @@ $this->headTitle($organ->getName());
 $translator = $this->plugin('translate')->getTranslator();
 $lang = $translator->getLocale();
 $organInformation = $organ->getApprovedOrganInformation();
-function getOrganDescription($organInformation, $lang)
-{
-    if (null !== $organInformation) {
-        if ($lang === 'en') {
-            if (strlen($organInformation->getEnglishDescription()) > 0) {
-                return $organInformation->getEnglishDescription();
-            }
-
-            if (strlen($organInformation->getShortEnglishDescription()) > 0) {
-                return $organInformation->getShortEnglishDescription();
-            }
-        }
-
-        if (strlen($organInformation->getDutchDescription()) > 0) {
-            return $organInformation->getDutchDescription();
-        }
-
-        if (strlen($organInformation->getShortDutchDescription()) > 0) {
-            return $organInformation->getShortDutchDescription();
-        }
-    }
-
-    return '';
-
-}
-
 ?>
 <?php if (!isset($breadcrumb)): // only show breadcrumbs if they were not yet shown ?>
     <section class="section section-breadcrumb">
@@ -118,7 +92,19 @@ function getOrganDescription($organInformation, $lang)
         <div class="row">
             <div class="col-md-8">
                 <h1 class="h-wrap"><?= $this->escapeHtml($organ->getName()) ?></h1>
-                <?= $this->markdown(getOrganDescription($organInformation, $lang)) ?>
+                <?php if (null !== $organInformation && '' !== ($description = $this->localiseText($organInformation->getDescription()))): ?>
+                    <?= $this->markdown($description) ?>
+                <?php else: ?>
+                    <?php if (null !== $organInformation && '' !== ($shortDescription = $this->localiseText($organInformation->getTagline()))): ?>
+                        <?= $this->markdown($shortDescription) ?>
+                    <?php else: ?>
+                        <?= sprintf(
+                            $this->translate('We do not know much about %s, but we are sure they %s great.'),
+                            $this->escapeHtml($organ->getAbbr()),
+                            $organ->isAbrogated() ? $this->translate('were') : $this->translate('are'),
+                        ) ?>
+                    <?php endif; ?>
+                <?php endif; ?>
             </div>
             <div class="col-md-4">
                 <div class="panel panel-default">

@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace Decision\Service;
 
+use Application\Model\Enums\ApprovableStatus;
 use Application\Service\Email as EmailService;
 use Application\Service\FileStorage as FileStorageService;
+use DateTime;
 use Decision\Form\OrganInformation as OrganInformationForm;
 use Decision\Mapper\Member as MemberMapper;
 use Decision\Mapper\Organ as OrganMapper;
+use Decision\Mapper\OrganInformation as OrganInformationMapper;
 use Decision\Model\Enums\OrganTypes;
 use Decision\Model\Member as MemberModel;
 use Decision\Model\Organ as OrganModel;
@@ -59,6 +62,7 @@ class Organ
         private readonly FileStorageService $storageService,
         private readonly EmailService $emailService,
         private readonly MemberMapper $memberMapper,
+        private readonly OrganInformationMapper $organInformationMapper,
         private readonly OrganMapper $organMapper,
         private readonly OrganInformationForm $organInformationForm,
         private readonly array $organInformationConfig,
@@ -106,12 +110,6 @@ class Organ
      */
     public function getEditableOrgans(): array
     {
-        if (!$this->aclService->isAllowed('edit', 'organ')) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to edit organ information'),
-            );
-        }
-
         if ($this->aclService->isAllowed('editall', 'organ')) {
             return array_merge(
                 $this->findActiveOrgansByType(OrganTypes::Committee),
@@ -127,26 +125,18 @@ class Organ
     }
 
     /**
-     * Checks if the current user is allowed to edit the given organ.
+     * Checks if the current user is allowed to use the given organ.
      */
-    public function canEditOrgan(OrganModel $organ): bool
+    public function canUseOrgan(OrganModel $organ): bool
     {
-        if (!$this->aclService->isAllowed('edit', 'organ')) {
-            return false;
-        }
-
         if ($this->aclService->isAllowed('editall', 'organ')) {
             return true;
         }
 
-        $organs = $this->memberMapper->findOrgans($this->aclService->getUserIdentityOrThrowException()->getMember());
-        foreach ($organs as $memberOrgan) {
-            if ($memberOrgan->getId() === $organ->getId()) {
-                return true;
-            }
-        }
-
-        return false;
+        return $this->memberMapper->isMemberOfOrgan(
+            $this->aclService->getUserIdentityOrThrowException()->getMember(),
+            $organ,
+        );
     }
 
     /**
@@ -197,8 +187,49 @@ class Organ
     }
 
     /**
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
+     */
+    public function createOrganInformation(
+        OrganModel $organ,
+        array $data,
+    ): ?OrganInformationModel {
+        $form = $this->getOrganInformationForm();
+        $form->setData($data);
+        $form->bind(new OrganInformationModel());
+
+        if (!$form->isValid()) {
+            return null;
+        }
+
+        /** @var OrganInformationModel $organInformation */
+        $organInformation = $form->getData();
+        $organInformation->setOrgan($organ);
+
+        $this->updateOrganInformationImages($organInformation, $data);
+
+        // Automatically approve if a board member creates the organ information.
+        if ($this->aclService->isAllowed('approve', 'organ')) {
+            $organInformation->setApproved(ApprovableStatus::Approved);
+            $organInformation->setApprovedAt(new DateTime());
+            $organInformation->setApprover($this->aclService->getUserIdentityOrThrowException()->getMember());
+        } else {
+            $organInformation->setApproved(ApprovableStatus::Unapproved);
+
+            $this->emailService->sendEmail(
+                'organ_update',
+                'email/organ-update',
+                'Organ Profile Update',
+                ['organ' => $organInformation->getOrgan()],
+            );
+        }
+
+        $this->organInformationMapper->persist($organInformation);
+
+        return $organInformation;
+    }
+
+    /**
      * @throws ORMException
-     * @throws ImagickException
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
@@ -206,41 +237,20 @@ class Organ
         OrganInformationModel $organInformation,
         array $data,
     ): bool {
-        $config = $this->organInformationConfig;
-
-        if ($data['cover']['size'] > 0) {
-            $coverPath = $this->makeOrganInformationImage(
-                $data['cover']['tmp_name'],
-                floatval($data['coverCropX']),
-                floatval($data['coverCropY']),
-                floatval($data['coverCropWidth']),
-                floatval($data['coverCropHeight']),
-                $config['cover_width'],
-                $config['cover_height'],
-            );
-
-            $organInformation->setCoverPath($coverPath);
+        if ($this->aclService->isAllowed('approve', 'organ')) {
+            $organInformation->setApproved(ApprovableStatus::Approved);
+            $organInformation->setApprovedAt(new DateTime());
+            $organInformation->setApprover($this->aclService->getUserIdentityOrThrowException()->getMember());
+        } else {
+            $organInformation = clone $organInformation;
+            $organInformation->setApproved(ApprovableStatus::Unapproved);
+            $organInformation->setIsUpdate(true);
         }
 
-        if ($data['thumbnail']['size'] > 0) {
-            $thumbnailPath = $this->makeOrganInformationImage(
-                $data['thumbnail']['tmp_name'],
-                floatval($data['thumbnailCropX']),
-                floatval($data['thumbnailCropY']),
-                floatval($data['thumbnailCropWidth']),
-                floatval($data['thumbnailCropHeight']),
-                $config['thumbnail_width'],
-                $config['thumbnail_height'],
-            );
-
-            $organInformation->setThumbnailPath($thumbnailPath);
-        }
+        // Update after the approval check to ensure we always have the correct `$organInformation`.
+        $this->updateOrganInformationImages($organInformation, $data);
 
         $this->entityManager->flush();
-
-        if ($this->aclService->isAllowed('approve', 'organ')) {
-            $this->approveOrganInformation($organInformation);
-        }
 
         $this->emailService->sendEmail(
             'organ_update',
@@ -253,13 +263,52 @@ class Organ
     }
 
     /**
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
+     */
+    private function updateOrganInformationImages(
+        OrganInformationModel $organInformation,
+        array $data,
+    ): void {
+        $config = $this->organInformationConfig;
+
+        if ($data['cover']['size'] > 0) {
+            $coverPath = $this->generateOrganInformationImage(
+                $data['cover']['tmp_name'],
+                floatval($data['coverCropX']),
+                floatval($data['coverCropY']),
+                floatval($data['coverCropWidth']),
+                floatval($data['coverCropHeight']),
+                $config['cover_width'],
+                $config['cover_height'],
+            );
+
+            $organInformation->setCoverPath($coverPath);
+        }
+
+        // phpcs:ignore SlevomatCodingStandard.ControlStructures.EarlyExit.EarlyExitNotUsed
+        if ($data['thumbnail']['size'] > 0) {
+            $thumbnailPath = $this->generateOrganInformationImage(
+                $data['thumbnail']['tmp_name'],
+                floatval($data['thumbnailCropX']),
+                floatval($data['thumbnailCropY']),
+                floatval($data['thumbnailCropWidth']),
+                floatval($data['thumbnailCropHeight']),
+                $config['thumbnail_width'],
+                $config['thumbnail_height'],
+            );
+
+            $organInformation->setThumbnailPath($thumbnailPath);
+        }
+    }
+
+    /**
      * Create a thumbnail of the given file at the given location and scale.
      *
      * @param string $file        The file to create the thumbnail of
      * @param float  $x           The start x position in the image
      * @param float  $y           The start y position in the image
      * @param float  $width       The width of the area to crop
-     * @param float  $height      The height of the are to crop
+     * @param float  $height      The height of the area to crop
      * @param int    $thumbWidth  The width of the final thumbnail
      * @param int    $thumbHeight The height of the final thumbnail
      *
@@ -267,7 +316,7 @@ class Organ
      *
      * @throws ImagickException
      */
-    public function makeOrganInformationImage(
+    private function generateOrganInformationImage(
         string $file,
         float $x,
         float $y,
@@ -295,35 +344,18 @@ class Organ
     }
 
     /**
-     * @throws ORMException
-     */
-    public function approveOrganInformation(OrganInformationModel $organInformation): void
-    {
-        $em = $this->entityManager;
-        $oldInformation = $organInformation->getOrgan()->getApprovedOrganInformation();
-
-        if (null !== $oldInformation) {
-            $em->remove($oldInformation);
-        }
-
-        $user = $this->aclService->getUserIdentityOrThrowException()->getMember();
-        $organInformation->setApprover($user);
-        $em->flush();
-    }
-
-    /**
      * Get the OrganInformation form.
      */
-    public function getOrganInformationForm(OrganInformationModel $organInformation): OrganInformationForm
+    public function getOrganInformationForm(?OrganModel $organ = null): OrganInformationForm
     {
-        if (!$this->canEditOrgan($organInformation->getOrgan())) {
-            throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to edit this organ\'s information'),
-            );
+        $form = $this->organInformationForm;
+
+        if (null === $organ) {
+            return $form;
         }
 
-        $form = $this->organInformationForm;
-        $form->bind($organInformation);
+        // TODO: change this to be either the approved one or the latest update.
+        $form->bind($organ->getApprovedOrganInformation());
 
         return $form;
     }
@@ -331,14 +363,8 @@ class Organ
     /**
      * @throws ORMException
      */
-    public function getEditableOrganInformation(int $organId): OrganInformationModel|bool
+    public function getEditableOrganInformation(OrganModel $organ): ?OrganInformationModel
     {
-        $organ = $this->getOrgan($organId); //TODO: catch exception
-
-        if (null === $organ) {
-            return false;
-        }
-
         $em = $this->entityManager;
         $organInformation = null;
 
@@ -385,12 +411,16 @@ class Organ
      */
     public function getOrganMemberInformation(OrganModel $organ): array
     {
+        $now = new DateTime();
         $activeMembers = [];
         $inactiveMembers = [];
         $oldMembers = [];
 
         foreach ($organ->getMembers() as $install) {
-            if (null === $install->getDischargeDate()) {
+            if (
+                null === $install->getDischargeDate()
+                || $install->getDischargeDate() > $now
+            ) {
                 // current member
                 if ('Inactief Lid' === $install->getFunction()) {
                     // inactive

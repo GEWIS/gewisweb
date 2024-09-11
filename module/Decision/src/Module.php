@@ -11,7 +11,6 @@ use Decision\Controller\FileBrowser\LocalFileReader;
 use Decision\Form\Authorization as AuthorizationForm;
 use Decision\Form\AuthorizationRevocation as AuthorizationRevocationForm;
 use Decision\Form\Document as DocumentForm;
-use Decision\Form\Factory\OrganInformationFactory as OrganInformationFormFactory;
 use Decision\Form\Minutes as MinutesForm;
 use Decision\Form\OrganInformation as OrganInformationForm;
 use Decision\Form\ReorderDocument as ReorderDocumentForm;
@@ -23,6 +22,7 @@ use Decision\Mapper\MeetingDocument as MeetingDocumentMapper;
 use Decision\Mapper\MeetingMinutes as MeetingMinutesMapper;
 use Decision\Mapper\Member as MemberMapper;
 use Decision\Mapper\Organ as OrganMapper;
+use Decision\Mapper\OrganInformation as OrganInformationMapper;
 use Decision\Mapper\SubDecision as SubDecisionMapper;
 use Decision\Service\AclService;
 use Decision\Service\Decision as DecisionService;
@@ -75,6 +75,7 @@ class Module
                 MeetingMapper::class => BaseMapperFactory::class,
                 MeetingMinutesMapper::class => BaseMapperFactory::class,
                 MemberMapper::class => BaseMapperFactory::class,
+                OrganInformationMapper::class => BaseMapperFactory::class,
                 OrganMapper::class => BaseMapperFactory::class,
                 SubDecisionMapper::class => BaseMapperFactory::class,
                 // Forms
@@ -82,7 +83,7 @@ class Module
                 AuthorizationRevocationForm::class => BaseFormFactory::class,
                 DocumentForm::class => BaseFormFactory::class,
                 MinutesForm::class => BaseFormFactory::class,
-                OrganInformationForm::class => OrganInformationFormFactory::class,
+                OrganInformationForm::class => BaseFormFactory::class,
                 ReorderDocumentForm::class => BaseFormFactory::class,
                 SearchDecisionForm::class => BaseFormFactory::class,
                 'decision_hydrator' => static function (ContainerInterface $container) {

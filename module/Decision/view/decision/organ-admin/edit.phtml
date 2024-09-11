@@ -4,15 +4,18 @@ declare(strict_types=1);
 
 use Application\View\HelperTrait;
 use Decision\Form\OrganInformation as OrganInformationForm;
+use Decision\Model\Organ as OrganModel;
 use Decision\Service\AclService as DecisionAclService;
 use Laminas\View\Renderer\PhpRenderer;
 
 /**
  * @var PhpRenderer|HelperTrait $this
  * @var OrganInformationForm $form
+ * @var OrganModel $organ
  */
 
-$lang = $this->plugin('translate')->getTranslator()->getLocale();
+$translator = $this->plugin('translate')->getTranslator();
+$lang = $translator->getLocale();
 
 $this->headScript()
     ->appendFile(
@@ -94,47 +97,90 @@ $form->setAttribute('id', 'editForm');
     <?= $this->formElementErrors($element); ?>
 </div>
 
-<div class="form-group">
-    <?php
-    $element = $form->get('shortDutchDescription');
-    $element->setAttribute('class', 'form-control');
-    ?>
-    <?= $this->formLabel($element); ?>
-    <?= $this->formText($element); ?>
-    <?= $this->formElementErrors($element); ?>
+<div class="row">
+    <div class="col-md-12">
+        <h2><?= $this->translate('Information') ?></h2>
+        <p>
+            <?= sprintf(
+                $this->translate('What is your %s about? Fill in the blanks below.'),
+                $organ->getType()->getName($translator),
+            ) ?>
+        </p>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="control-label">
+                <span class="flag-icon flag-icon-nl"></span>
+                <?= $this->translate('Dutch') ?>
+            </label>
+        </div>
+        <hr>
+        <?php
+        $tagline = $form->get('tagline')
+            ->setAttribute('class', 'form-control form-control-dutch')
+            ->setAttribute('id', 'tagline-nl');
+        $tagline->setValue($this->localisedTextElement($tagline));
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($tagline) ?>">
+            <label for="<?= $tagline->getAttribute('id') ?>" class="control-label">
+                <?= $this->translate('Tagline') ?>
+            </label>
+            <?= $this->formText($tagline) ?>
+            <?= $this->formElementErrors($tagline) ?>
+        </div>
+        <?php
+        $description = $form->get('description')
+            ->setAttribute('class', 'form-control form-control-dutch')
+            ->setAttribute('style', 'width:100%; height:10em; resize:none')
+            ->setAttribute('id', 'description-nl');
+        $description->setValue($this->localisedTextElement($description));
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($description) ?>">
+            <label for="<?= $description->getAttribute('id') ?>" class="control-label label-required">
+                <?= $this->translate('Description') ?>
+            </label>
+            <?= $this->formTextarea($description) ?>
+            <?= $this->formElementErrors($description) ?>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="control-label">
+                <span class="flag-icon flag-icon-en"></span>
+                <?= $this->translate('English') ?>
+            </label>
+        </div>
+        <hr>
+        <?php
+        $taglineEn = $form->get('taglineEn')
+            ->setAttribute('class', 'form-control form-control-english')
+            ->setAttribute('id', 'tagline-en');
+        $taglineEn->setValue($this->localisedTextElement($taglineEn));
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($taglineEn) ?>">
+            <label for="<?= $taglineEn->getAttribute('id') ?>" class="control-label">
+                <?= $this->translate('Tagline') ?>
+            </label>
+            <?= $this->formText($taglineEn) ?>
+            <?= $this->formElementErrors($taglineEn) ?>
+        </div>
+        <?php
+        $descriptionEn = $form->get('description')
+            ->setAttribute('class', 'form-control form-control-english')
+            ->setAttribute('style', 'width:100%; height:10em; resize:none')
+            ->setAttribute('id', 'description-en');
+        $descriptionEn->setValue($this->localisedTextElement($descriptionEn));
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($descriptionEn) ?>">
+            <label for="<?= $descriptionEn->getAttribute('id') ?>" class="control-label label-required">
+                <?= $this->translate('Description') ?>
+            </label>
+            <?= $this->formTextarea($descriptionEn) ?>
+            <?= $this->formElementErrors($descriptionEn) ?>
+        </div>
+    </div>
 </div>
 
-<div class="form-group">
-    <?php
-    $element = $form->get('shortEnglishDescription');
-    $element->setAttribute('class', 'form-control');
-    ?>
-    <?= $this->formLabel($element); ?>
-    <?= $this->formText($element); ?>
-    <?= $this->formElementErrors($element); ?>
-</div>
-
-<div class="form-group">
-    <?php
-    $element = $form->get('dutchDescription');
-    $element->setAttribute('id', 'dutch-description')
-        ->setAttribute('class', 'form-control');
-    ?>
-    <?= $this->formLabel($element); ?>
-    <?= $this->formTextArea($element); ?>
-    <?= $this->formElementErrors($element); ?>
-</div>
-
-<div class="form-group">
-    <?php
-    $element = $form->get('englishDescription');
-    $element->setAttribute('id', 'english-description')
-        ->setAttribute('class', 'form-control');
-    ?>
-    <?= $this->formLabel($element); ?>
-    <?= $this->formTextArea($element); ?>
-    <?= $this->formElementErrors($element); ?>
-</div>
 <div class="form-group">
     <?php
     $element = $form->get('thumbnail');
@@ -177,7 +223,7 @@ foreach (['cover', 'thumbnail'] as $type) {
 ?>
 <?php
 $submit = $form->get('submit');
-$approve = $this->acl(DecisionAclService::class)->isAllowed('organ', 'approve') ? ' / ' . $this->translate('Approve') : '';
+$approve = $this->acl(DecisionAclService::class)->isAllowed('organInformation', 'approve') ? ' / ' . $this->translate('Approve') : '';
 $submit->setLabel($this->translate('Save') . $approve);
 $submit->setAttribute('class', 'btn btn-primary');
 ?>
@@ -186,7 +232,7 @@ $submit->setAttribute('class', 'btn btn-primary');
 <?= $this->form()->closeTag(); ?>
 <script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
     GEDITOR.MarkdownEditor
-        .create(document.querySelector('#dutch-description'), {
+        .create(document.querySelector('#description-nl'), {
             language: '<?= $lang ?>'
         })
         .catch(error => {
@@ -194,7 +240,7 @@ $submit->setAttribute('class', 'btn btn-primary');
         });
 
     GEDITOR.MarkdownEditor
-        .create(document.querySelector('#english-description'), {
+        .create(document.querySelector('#description-en'), {
             language: '<?= $lang ?>'
         })
         .catch(error => {
@@ -225,9 +271,6 @@ $submit->setAttribute('class', 'btn btn-primary');
             };
 
             reader.readAsDataURL(input.files[0]);
-            //reader.readAsArrayBuffer(input.files[0]);
-
-
         }
     }
 

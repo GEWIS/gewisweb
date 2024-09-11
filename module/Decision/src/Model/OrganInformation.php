@@ -4,20 +4,32 @@ declare(strict_types=1);
 
 namespace Decision\Model;
 
+use Application\Model\Traits\ApprovableTrait;
 use Application\Model\Traits\IdentifiableTrait;
-use Decision\Model\Member as MemberModel;
+use Application\Model\Traits\TimestampableTrait;
+use Application\Model\Traits\UpdateProposableTrait;
+use Decision\Model\Proposals\OrganInformationUpdate as OrganInformationUpdateProposalModel;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\OneToOne;
+use User\Permissions\Resource\OrganResourceInterface;
 
 /**
  * Organ information.
  */
 #[Entity]
-class OrganInformation
+class OrganInformation implements OrganResourceInterface
 {
     use IdentifiableTrait;
+    use TimestampableTrait;
+    use ApprovableTrait;
+    /** @use UpdateProposableTrait<OrganInformationUpdateProposalModel> */
+    use UpdateProposableTrait;
 
     #[ManyToOne(
         targetEntity: Organ::class,
@@ -49,40 +61,34 @@ class OrganInformation
     protected ?string $website = null;
 
     /**
-     * A short description of the organ in Dutch.
+     * The short description of the organ which is shown in cards.
      */
-    #[Column(
-        type: 'string',
-        nullable: true,
+    #[OneToOne(
+        targetEntity: DecisionLocalisedText::class,
+        cascade: ['persist', 'remove'],
+        orphanRemoval: true,
     )]
-    protected ?string $shortDutchDescription = null;
+    #[JoinColumn(
+        name: 'tagline_id',
+        referencedColumnName: 'id',
+        nullable: false,
+    )]
+    protected DecisionLocalisedText $tagline;
 
     /**
-     * A description of the organ in Dutch.
+     * The full description of the organ.
      */
-    #[Column(
-        type: 'text',
-        nullable: true,
+    #[OneToOne(
+        targetEntity: DecisionLocalisedText::class,
+        cascade: ['persist', 'remove'],
+        orphanRemoval: true,
     )]
-    protected ?string $dutchDescription = null;
-
-    /**
-     * A short description of the organ in English.
-     */
-    #[Column(
-        type: 'string',
-        nullable: true,
+    #[JoinColumn(
+        name: 'description_id',
+        referencedColumnName: 'id',
+        nullable: false,
     )]
-    protected ?string $shortEnglishDescription = null;
-
-    /**
-     * A description of the organ in English.
-     */
-    #[Column(
-        type: 'text',
-        nullable: true,
-    )]
-    protected ?string $englishDescription = null;
+    protected DecisionLocalisedText $description;
 
     /**
      * The cover photo to display for this organ.
@@ -103,11 +109,23 @@ class OrganInformation
     protected ?string $thumbnailPath = null;
 
     /**
-     * Who was the last one to approve this information. If null then nobody approved it.
+     * Proposed updates to this organ information
+     *
+     * @var Collection<array-key, OrganInformationUpdateProposalModel>
      */
-    #[ManyToOne(targetEntity: MemberModel::class)]
-    #[JoinColumn(referencedColumnName: 'lidnr')]
-    protected ?MemberModel $approver = null;
+    #[OneToMany(
+        targetEntity: OrganInformationUpdateProposalModel::class,
+        mappedBy: 'original',
+        cascade: ['persist', 'remove'],
+        orphanRemoval: true,
+        fetch: 'EXTRA_LAZY',
+    )]
+    protected Collection $updateProposals;
+
+    public function __construct()
+    {
+        $this->updateProposals = new ArrayCollection();
+    }
 
     public function getOrgan(): Organ
     {
@@ -139,54 +157,24 @@ class OrganInformation
         $this->website = $website;
     }
 
-    public function getShortDutchDescription(): ?string
+    public function getTagline(): DecisionLocalisedText
     {
-        return $this->shortDutchDescription;
+        return $this->tagline;
     }
 
-    public function setShortDutchDescription(?string $shortDutchDescription): void
+    public function setTagline(DecisionLocalisedText $tagline): void
     {
-        $this->shortDutchDescription = $shortDutchDescription;
+        $this->tagline = $tagline;
     }
 
-    public function getDutchDescription(): ?string
+    public function getDescription(): DecisionLocalisedText
     {
-        return $this->dutchDescription;
+        return $this->description;
     }
 
-    public function setDutchDescription(?string $dutchDescription): void
+    public function setDescription(DecisionLocalisedText $description): void
     {
-        $this->dutchDescription = $dutchDescription;
-    }
-
-    public function getShortEnglishDescription(): ?string
-    {
-        return $this->shortEnglishDescription;
-    }
-
-    public function setShortEnglishDescription(?string $shortEnglishDescription): void
-    {
-        $this->shortEnglishDescription = $shortEnglishDescription;
-    }
-
-    public function getEnglishDescription(): ?string
-    {
-        return $this->englishDescription;
-    }
-
-    public function setEnglishDescription(?string $englishDescription): void
-    {
-        $this->englishDescription = $englishDescription;
-    }
-
-    public function getApprover(): ?MemberModel
-    {
-        return $this->approver;
-    }
-
-    public function setApprover(?MemberModel $approver): void
-    {
-        $this->approver = $approver;
+        $this->description = $description;
     }
 
     public function getCoverPath(): ?string
@@ -209,8 +197,26 @@ class OrganInformation
         $this->thumbnailPath = $thumbnailPath;
     }
 
+    /**
+     * @return Collection<array-key, OrganInformationUpdateProposalModel>
+     */
+    public function getUpdateProposals(): Collection
+    {
+        return $this->updateProposals;
+    }
+
     public function __clone()
     {
         $this->id = null;
+    }
+
+    public function getResourceOrgan(): ?Organ
+    {
+        return $this->getOrgan();
+    }
+
+    public function getResourceId(): string
+    {
+        return 'organInformation';
     }
 }

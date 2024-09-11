@@ -11,9 +11,11 @@ use Decision\Controller\Factory\AdminControllerFactory;
 use Decision\Controller\Factory\AdminMemberControllerFactory;
 use Decision\Controller\Factory\DecisionControllerFactory;
 use Decision\Controller\Factory\MemberControllerFactory;
+use Decision\Controller\Factory\OrganAdminApprovalControllerFactory;
 use Decision\Controller\Factory\OrganAdminControllerFactory;
 use Decision\Controller\Factory\OrganControllerFactory;
 use Decision\Controller\MemberController;
+use Decision\Controller\OrganAdminApprovalController;
 use Decision\Controller\OrganAdminController;
 use Decision\Controller\OrganController;
 use Doctrine\ORM\Mapping\Driver\AttributeDriver;
@@ -368,15 +370,6 @@ return [
                 ],
                 'may_terminate' => true,
                 'child_routes' => [
-                    'default' => [
-                        'type' => Segment::class,
-                        'options' => [
-                            'route' => '[/:action]',
-                            'constraints' => [
-                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                            ],
-                        ],
-                    ],
                     'edit' => [
                         'type' => Segment::class,
                         'options' => [
@@ -392,6 +385,73 @@ return [
                 ],
                 'priority' => 100,
             ],
+            'admin_organ_approval' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route' => '/admin/organ/approval',
+                    'defaults' => [
+                        'controller' => OrganAdminApprovalController::class,
+                        'action' => 'index',
+                    ],
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'approval' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/organ-information/:organInformationId',
+                            'defaults' => [
+                                'action' => 'approval',
+                            ],
+                            'constraints' => [
+                                'organInformationId' => '\d+',
+                            ],
+                        ],
+                        'may_terminate' => true,
+                        'child_routes' => [
+                            'update' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/:type',
+                                    'defaults' => [
+                                        'action' => 'changeApprovalStatus',
+                                    ],
+                                    'constraints' => [
+                                        'type' => '(approve|disapprove|reset)',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                    'proposal' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/organ-information/proposal/:proposalId',
+                            'defaults' => [
+                                'action' => 'proposal',
+                            ],
+                            'constraints' => [
+                                'proposalId' => '\d+',
+                            ],
+                        ],
+                        'may_terminate' => true,
+                        'child_routes' => [
+                            'update' => [
+                                'type' => Segment::class,
+                                'options' => [
+                                    'route' => '/:type',
+                                    'defaults' => [
+                                        'action' => 'changeProposalStatus',
+                                    ],
+                                    'constraints' => [
+                                        'type' => '(apply|cancel)',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => [
@@ -400,6 +460,7 @@ return [
             AdminMemberController::class => AdminMemberControllerFactory::class,
             DecisionController::class => DecisionControllerFactory::class,
             MemberController::class => MemberControllerFactory::class,
+            OrganAdminApprovalController::class => OrganAdminApprovalControllerFactory::class,
             OrganAdminController::class => OrganAdminControllerFactory::class,
             OrganController::class => OrganControllerFactory::class,
         ],

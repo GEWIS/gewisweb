@@ -46,40 +46,40 @@ class OrganInformation extends Form implements InputFilterProviderInterface
 
         $this->add(
             [
-                'name' => 'shortDutchDescription',
+                'name' => 'tagline',
                 'type' => Text::class,
                 'options' => [
-                    'label' => $translator->translate('Short dutch description'),
+                    'label' => $translator->translate('Tagline'),
                 ],
             ],
         );
 
         $this->add(
             [
-                'name' => 'shortEnglishDescription',
+                'name' => 'taglineEn',
                 'type' => Text::class,
                 'options' => [
-                    'label' => $translator->translate('Short english description'),
+                    'label' => $translator->translate('Tagline'),
                 ],
             ],
         );
 
         $this->add(
             [
-                'name' => 'dutchDescription',
+                'name' => 'description',
                 'type' => Textarea::class,
                 'options' => [
-                    'label' => $translator->translate('Long dutch description'),
+                    'label' => $translator->translate('Description'),
                 ],
             ],
         );
 
         $this->add(
             [
-                'name' => 'englishDescription',
+                'name' => 'descriptionEn',
                 'type' => Textarea::class,
                 'options' => [
-                    'label' => $translator->translate('Long english description'),
+                    'label' => $translator->translate('Description'),
                 ],
             ],
         );
@@ -139,7 +139,7 @@ class OrganInformation extends Form implements InputFilterProviderInterface
             'email' => [
                 'required' => false,
             ],
-            'shortDutchDescription' => [
+            'tagline' => [
                 'required' => false,
                 'validators' => [
                     [
@@ -150,7 +150,7 @@ class OrganInformation extends Form implements InputFilterProviderInterface
                     ],
                 ],
             ],
-            'shortEnglishDescription' => [
+            'taglineEn' => [
                 'required' => false,
                 'validators' => [
                     [
@@ -161,8 +161,8 @@ class OrganInformation extends Form implements InputFilterProviderInterface
                     ],
                 ],
             ],
-            'dutchDescription' => [
-                'required' => false,
+            'description' => [
+                'required' => true,
                 'validators' => [
                     [
                         'name' => StringLength::class,
@@ -172,8 +172,8 @@ class OrganInformation extends Form implements InputFilterProviderInterface
                     ],
                 ],
             ],
-            'englishDescription' => [
-                'required' => false,
+            'descriptionEn' => [
+                'required' => true,
                 'validators' => [
                     [
                         'name' => StringLength::class,

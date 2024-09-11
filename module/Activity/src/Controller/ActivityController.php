@@ -79,7 +79,7 @@ class ActivityController extends AbstractActionController
         }
 
         // If the Activity has a sign-up list always display it by redirecting the request.
-        if (0 !== $activity->getSignupLists()->count()) {
+        if (!$activity->getSignupLists()->isEmpty()) {
             return $this->forward()->dispatch(
                 self::class,
                 [
@@ -263,7 +263,7 @@ class ActivityController extends AbstractActionController
 
             // Let user edit subscription details
             if (null !== ($signup = $this->signupMapper->getSignUp($signupList, $identity))) {
-                if (0 === $signupList->getFields()->count()) {
+                if ($signupList->getFields()->isEmpty()) {
                     return $this->redirect()->toRoute(
                         'activity/view/signuplist',
                         [

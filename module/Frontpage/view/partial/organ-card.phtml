@@ -33,7 +33,7 @@ $organInformation = $organ->getApprovedOrganInformation()
         <h6 class="card-subtitle text-muted"><?= $this->escapeHtml($organ->getName()) ?></h6>
         <p class="card-text">
             <?php if (null !== $organInformation): ?>
-                <?= $this->escapeHtml($lang === 'en' ? $organInformation->getShortEnglishDescription() : $organInformation->getShortDutchDescription()) ?>
+                <?= $this->escapeHtml($this->localiseText($organInformation->getTagline())) ?>
             <?php endif; ?>
         </p>
     </div>
