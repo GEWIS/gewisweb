@@ -70,14 +70,24 @@ trait ApprovableTrait
     )]
     protected ?ApprovableTextModel $approvableText = null;
 
-    public function getApproved(): ApprovableStatus
+    public function getApproval(): ApprovableStatus
     {
         return $this->approved;
     }
 
     public function isApproved(): bool
     {
-        return ApprovableStatus::Approved === $this->getApproved();
+        return ApprovableStatus::Approved === $this->getApproval();
+    }
+
+    public function isRejected(): bool
+    {
+        return ApprovableStatus::Rejected === $this->getApproval();
+    }
+
+    public function isUnapproved(): bool
+    {
+        return ApprovableStatus::Unapproved === $this->getApproval();
     }
 
     public function setApproved(ApprovableStatus $approved): void
@@ -122,7 +132,7 @@ trait ApprovableTrait
     {
         return [
             'id' => $this->getId(),
-            'approved' => $this->getApproved()->value,
+            'approved' => $this->getApproval()->value,
             'approvedAt' => $this->getApprovedAt()?->format(DateTimeInterface::ATOM),
             'approvableText' => $this->getApprovableText()?->getMessage(),
         ];
