@@ -415,7 +415,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Mapper/Member.php"><a href="files/module-decision-src-mapper-member.html"><abbr title="module/Decision/src/Mapper/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">19</span>
+    <span class="phpdocumentor-element-found-in__line">21</span>
 
     </aside>
 
@@ -511,6 +511,13 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <span>
                                 &nbsp;: array&lt;string|int, <abbr title="\Application\Mapper\T">T</abbr>&gt;    </span>
 </dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Decision-Mapper-Member.html#method_findAllWithUserDetails">findAllWithUserDetails()</a>
+    <span>
+                                &nbsp;: array&lt;string|int, <a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>|<a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a>|<a href="classes/User-Model-UserRole.html"><abbr title="\User\Model\UserRole">UserRole</abbr></a>|null&gt;    </span>
+</dt>
+<dd>Fetch all members including their associated user.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Decision-Mapper-Member.html#method_findBirthdayMembers">findBirthdayMembers()</a>
@@ -957,6 +964,54 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_findAllWithUserDetails">
+        findAllWithUserDetails()
+        <a href="classes/Decision-Mapper-Member.html#method_findAllWithUserDetails" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Mapper/Member.php"><a href="files/module-decision-src-mapper-member.html"><abbr title="module/Decision/src/Mapper/Member.php">Member.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">194</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Fetch all members including their associated user.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">findAllWithUserDetails</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>|<a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a>|<a href="classes/User-Model-UserRole.html"><abbr title="\User\Model\UserRole">UserRole</abbr></a>|null&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <section class="phpdocumentor-description"><p>NOTE: The ordering of the return array is not as you might expect. The actual result will be like:</p>
+<p>array{
+0: MemberModel,
+1: ?UserModel,
+2: MemberModel,
+3: ... (repeat pattern)
+}</p>
+<p>In other words, every 2 rows represent a single <code class="prettyprint">Member</code>.</p>
+</section>
+
+    
+    
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>|<a href="classes/User-Model-User.html"><abbr title="\User\Model\User">User</abbr></a>|<a href="classes/User-Model-UserRole.html"><abbr title="\User\Model\UserRole">UserRole</abbr></a>|null&gt;</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_findBirthdayMembers">
         findBirthdayMembers()
         <a href="classes/Decision-Mapper-Member.html#method_findBirthdayMembers" class="headerlink"><i class="fas fa-link"></i></a>
@@ -965,7 +1020,7 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Mapper/Member.php"><a href="files/module-decision-src-mapper-member.html"><abbr title="module/Decision/src/Mapper/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">89</span>
+    <span class="phpdocumentor-element-found-in__line">91</span>
 
     </aside>
 
@@ -1077,7 +1132,7 @@ We do not show members whose membership has expired or who are hidden</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Mapper/Member.php"><a href="files/module-decision-src-mapper-member.html"><abbr title="module/Decision/src/Mapper/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">26</span>
+    <span class="phpdocumentor-element-found-in__line">28</span>
 
     </aside>
 
@@ -1128,7 +1183,7 @@ We do not show members whose membership has expired or who are hidden</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Mapper/Member.php"><a href="files/module-decision-src-mapper-member.html"><abbr title="module/Decision/src/Mapper/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">141</span>
+    <span class="phpdocumentor-element-found-in__line">143</span>
 
     </aside>
 
@@ -1177,7 +1232,7 @@ We do not show members whose membership has expired or who are hidden</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Mapper/Member.php"><a href="files/module-decision-src-mapper-member.html"><abbr title="module/Decision/src/Mapper/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">161</span>
+    <span class="phpdocumentor-element-found-in__line">163</span>
 
     </aside>
 
@@ -1296,7 +1351,7 @@ We do not show members whose membership has expired or who are hidden</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Mapper/Member.php"><a href="files/module-decision-src-mapper-member.html"><abbr title="module/Decision/src/Mapper/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">121</span>
+    <span class="phpdocumentor-element-found-in__line">123</span>
 
     </aside>
 
@@ -1830,7 +1885,7 @@ We do not show members whose membership has expired or who are hidden</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Mapper/Member.php"><a href="files/module-decision-src-mapper-member.html"><abbr title="module/Decision/src/Mapper/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">45</span>
+    <span class="phpdocumentor-element-found-in__line">47</span>
 
     </aside>
 
@@ -2005,7 +2060,7 @@ function.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Mapper/Member.php"><a href="files/module-decision-src-mapper-member.html"><abbr title="module/Decision/src/Mapper/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">176</span>
+    <span class="phpdocumentor-element-found-in__line">203</span>
 
     </aside>
 
@@ -2158,6 +2213,7 @@ function.</p>
                                             <li class=""><a href="classes/Application-Mapper-BaseMapper.html#method_detach">detach()</a></li>
                                             <li class=""><a href="classes/Application-Mapper-BaseMapper.html#method_find">find()</a></li>
                                             <li class=""><a href="classes/Application-Mapper-BaseMapper.html#method_findAll">findAll()</a></li>
+                                            <li class=""><a href="classes/Decision-Mapper-Member.html#method_findAllWithUserDetails">findAllWithUserDetails()</a></li>
                                             <li class=""><a href="classes/Decision-Mapper-Member.html#method_findBirthdayMembers">findBirthdayMembers()</a></li>
                                             <li class=""><a href="classes/Application-Mapper-BaseMapper.html#method_findBy">findBy()</a></li>
                                             <li class=""><a href="classes/Decision-Mapper-Member.html#method_findByLidnr">findByLidnr()</a></li>

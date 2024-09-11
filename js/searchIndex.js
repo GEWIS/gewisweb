@@ -8071,6 +8071,11 @@ Search.appendIndex(
             "summary": "Find\u0020all\u0020past\u0020installations\u0020of\u0020a\u0020member.",
             "url": "classes/Decision-Mapper-Member.html#method_findHistoricalInstallations"
         },                {
+            "fqsen": "\\Decision\\Mapper\\Member\u003A\u003AfindAllWithUserDetails\u0028\u0029",
+            "name": "findAllWithUserDetails",
+            "summary": "Fetch\u0020all\u0020members\u0020including\u0020their\u0020associated\u0020user.",
+            "url": "classes/Decision-Mapper-Member.html#method_findAllWithUserDetails"
+        },                {
             "fqsen": "\\Decision\\Mapper\\Member\u003A\u003AgetRepositoryName\u0028\u0029",
             "name": "getRepositoryName",
             "summary": "",
@@ -16586,6 +16591,16 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/User-Controller-Factory-ApiAuthenticationControllerFactory.html#method___invoke"
         },                {
+            "fqsen": "\\User\\Controller\\Factory\\UserAdminControllerFactory",
+            "name": "UserAdminControllerFactory",
+            "summary": "",
+            "url": "classes/User-Controller-Factory-UserAdminControllerFactory.html"
+        },                {
+            "fqsen": "\\User\\Controller\\Factory\\UserAdminControllerFactory\u003A\u003A__invoke\u0028\u0029",
+            "name": "__invoke",
+            "summary": "",
+            "url": "classes/User-Controller-Factory-UserAdminControllerFactory.html#method___invoke"
+        },                {
             "fqsen": "\\User\\Controller\\Factory\\UserControllerFactory",
             "name": "UserControllerFactory",
             "summary": "",
@@ -16595,6 +16610,36 @@ Search.appendIndex(
             "name": "__invoke",
             "summary": "",
             "url": "classes/User-Controller-Factory-UserControllerFactory.html#method___invoke"
+        },                {
+            "fqsen": "\\User\\Controller\\UserAdminController",
+            "name": "UserAdminController",
+            "summary": "",
+            "url": "classes/User-Controller-UserAdminController.html"
+        },                {
+            "fqsen": "\\User\\Controller\\UserAdminController\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/User-Controller-UserAdminController.html#method___construct"
+        },                {
+            "fqsen": "\\User\\Controller\\UserAdminController\u003A\u003AindexAction\u0028\u0029",
+            "name": "indexAction",
+            "summary": "",
+            "url": "classes/User-Controller-UserAdminController.html#method_indexAction"
+        },                {
+            "fqsen": "\\User\\Controller\\UserAdminController\u003A\u003A\u0024aclService",
+            "name": "aclService",
+            "summary": "",
+            "url": "classes/User-Controller-UserAdminController.html#property_aclService"
+        },                {
+            "fqsen": "\\User\\Controller\\UserAdminController\u003A\u003A\u0024translator",
+            "name": "translator",
+            "summary": "",
+            "url": "classes/User-Controller-UserAdminController.html#property_translator"
+        },                {
+            "fqsen": "\\User\\Controller\\UserAdminController\u003A\u003A\u0024memberMapper",
+            "name": "memberMapper",
+            "summary": "",
+            "url": "classes/User-Controller-UserAdminController.html#property_memberMapper"
         },                {
             "fqsen": "\\User\\Controller\\UserController",
             "name": "UserController",
