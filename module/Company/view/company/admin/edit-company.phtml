@@ -117,9 +117,7 @@ $form->setAttribute('class', 'form-company');
             <?= $this->translate('Add Banner Package'); ?>
         </a>
     </div>
-    <?php
-    if ($company->getPackages()->count() > 0):
-    ?>
+    <?php if (!$company->getPackages()->isEmpty()): ?>
         <div class="col-md-12">
             <table class="table table-striped">
                 <thead>

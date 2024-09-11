@@ -24,7 +24,7 @@ $organInformation = $organ->getApprovedOrganInformation()
                 <span class="card-title"><?= $this->escapeHtml($organ->getAbbr()) ?></span>
                 <div class="card-details">
                     <?php if (null !== $organInformation): ?>
-                        <?= $lang === 'en' ? $organInformation->getShortEnglishDescription() : $organInformation->getShortDutchDescription() ?>
+                        <?= $this->escapeHtml($this->localiseText($organInformation->getTagline())) ?>
                     <?php endif; ?>
                 </div>
             </div><!-- card image -->

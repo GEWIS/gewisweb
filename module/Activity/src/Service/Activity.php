@@ -140,7 +140,7 @@ class Activity
     {
         $organ = $this->organService->getOrgan($organId);
 
-        if (!$this->organService->canEditOrgan($organ)) {
+        if (!$this->organService->canUseOrgan($organ)) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to create an activity for this organ'),
             );
@@ -446,8 +446,8 @@ class Activity
 
         $em = $this->entityManager;
 
-        if (0 !== $currentActivity->getUpdateProposal()->count()) {
-            $proposal = $currentActivity->getUpdateProposal()->first();
+        if (0 !== $currentActivity->getUpdateProposals()->count()) {
+            $proposal = $currentActivity->getUpdateProposals()->first();
             //Remove old update proposal
             $oldUpdate = $proposal->getNew();
             $proposal->setNew($newActivity);
