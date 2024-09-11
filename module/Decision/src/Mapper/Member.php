@@ -13,6 +13,7 @@ use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use User\Model\User as UserModel;
 use User\Model\UserRole as UserRoleModel;
+use Doctrine\ORM\QueryBuilder;
 
 use function strtolower;
 
@@ -117,12 +118,12 @@ class Member extends BaseMapper
     }
 
     /**
-     * Find all organs of this member.
-     *
-     * @return OrganModel[]
+     * Creates a `QueryBuilder` that returns all organs the member is in or a specific organ the member is in.
      */
-    public function findOrgans(MemberModel $member): array
-    {
+    private function createOrganMembershipQuery(
+        MemberModel $member,
+        ?OrganModel $organ = null,
+    ): QueryBuilder {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('DISTINCT o')
             ->from(OrganModel::class, 'o')
@@ -137,7 +138,36 @@ class Member extends BaseMapper
         $qb->setParameter('lidnr', $member->getLidnr())
             ->setParameter('now', new DateTime());
 
+        if ($organ !== null) {
+            $qb->andWhere('o.id = :organId')
+                ->setParameter('organId', $organ->getId());
+        }
+
+        return $qb;
+    }
+
+    /**
+     * Find all organs of this member.
+     *
+     * @return OrganModel[]
+     */
+    public function findOrgans(MemberModel $member): array
+    {
+        $qb = $this->createOrganMembershipQuery($member);
+
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Check if a member is in a specific organ.
+     */
+    public function isMemberOfOrgan(
+        MemberModel $member,
+        OrganModel $organ,
+    ): bool {
+        $qb = $this->createOrganMembershipQuery($member, $organ);
+
+        return !empty($qb->getQuery()->getResult());
     }
 
     /**

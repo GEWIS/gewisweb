@@ -12,6 +12,7 @@ use Decision\Form\Minutes as MinutesForm;
 use Decision\Form\OrganInformation as OrganInformationForm;
 use Decision\Form\ReorderDocument as ReorderDocumentForm;
 use Decision\Form\SearchDecision as SearchDecisionForm;
+use Decision\Hydrator\OrganInformation as OrganInformationHydrator;
 use Decision\Mapper\Authorization as AuthorizationMapper;
 use Decision\Mapper\Decision as DecisionMapper;
 use Decision\Mapper\Meeting as MeetingMapper;
@@ -19,6 +20,7 @@ use Decision\Mapper\MeetingDocument as MeetingDocumentMapper;
 use Decision\Mapper\MeetingMinutes as MeetingMinutesMapper;
 use Decision\Mapper\Member as MemberMapper;
 use Decision\Mapper\Organ as OrganMapper;
+use Decision\Mapper\OrganInformation as OrganInformationMapper;
 use Decision\Mapper\SubDecision as SubDecisionMapper;
 use Decision\Service\Decision as DecisionService;
 use Decision\Service\Gdpr as GdprService;
@@ -58,6 +60,7 @@ class Module
                     $storageService = $container->get('application_service_storage');
                     $emailService = $container->get('application_service_email');
                     $memberMapper = $container->get('decision_mapper_member');
+                    $organInformationMapper = $container->get('decision_mapper_organ_information');
                     $organMapper = $container->get('decision_mapper_organ');
                     $organInformationForm = $container->get('decision_form_organ_information');
                     $organInformationConfig = $container->get('config')['organ_information'];
@@ -69,6 +72,7 @@ class Module
                         $storageService,
                         $emailService,
                         $memberMapper,
+                        $organInformationMapper,
                         $organMapper,
                         $organInformationForm,
                         $organInformationConfig,
@@ -194,6 +198,11 @@ class Module
                         $container->get('doctrine.entitymanager.orm_default'),
                     );
                 },
+                'decision_mapper_organ_information' => static function (ContainerInterface $container) {
+                    return new OrganInformationMapper(
+                        $container->get('doctrine.entitymanager.orm_default'),
+                    );
+                },
                 'decision_mapper_meeting' => static function (ContainerInterface $container) {
                     return new MeetingMapper(
                         $container->get('doctrine.entitymanager.orm_default'),
@@ -253,7 +262,7 @@ class Module
                     $form = new OrganInformationForm(
                         $container->get(MvcTranslator::class),
                     );
-                    $form->setHydrator($container->get('decision_hydrator'));
+                    $form->setHydrator($container->get('decision_hydrator_organ_information'));
 
                     return $form;
                 },
@@ -268,6 +277,9 @@ class Module
                     return new DoctrineObject(
                         $container->get('doctrine.entitymanager.orm_default'),
                     );
+                },
+                'decision_hydrator_organ_information' => static function (ContainerInterface $container) {
+                    return new OrganInformationHydrator();
                 },
                 'decision_fileReader' => function (ContainerInterface $container) {
                     //NB: The returned object should implement the FileReader Interface.

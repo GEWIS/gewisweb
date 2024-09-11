@@ -22,29 +22,31 @@ $this->breadcrumbs()
         <tr>
             <th><?= $this->translate('Abbreviation') ?></th>
             <th><?= $this->translate('Name') ?></th>
-            <th><?= $this->translate('Approval status') ?></th>
+            <th><?= $this->translate('Approval Status') ?></th>
+            <th><?= $this->translate('Actions') ?></th>
         </tr>
         </thead>
         <tbody>
         <?php foreach ($organs as $organ): ?>
-            <?php $url = $this->url('admin_organ/edit', ['organ_id' => $organ->getId()]) ?>
+            <?php $url = $this->url('home/organ', ['abbr' => $organ->getAbbr(), 'type' => $organ->getType()->value]) ?>
             <tr>
                 <td><a href="<?= $url ?>"><?= $this->escapeHtml($organ->getAbbr()) ?></a></td>
                 <td><a href="<?= $url ?>"><?= $this->escapeHtml($organ->getName()) ?></a></td>
                 <td>
-                    <?php
-                    foreach ($organ->getOrganInformation() as $information) {
-                        if (null === $information->getApprover()) {
-                            echo '<span class="fas fa-circle-question"></span>&nbsp;';
-                        } else {
-                            echo '<span class="fas fa-circle-check"></span>&nbsp;';
-                        }
-                    }
-                    ?>
+                    <?php if (null !== ($organInformation = $organ->getDisplayableOrganInformation())): ?>
+                        <span class="fas <?= $organInformation->getApproval()->getIcon() ?>"></span>
+                        <?php if (!$organInformation->getUpdateProposals()->isEmpty()): ?>
+                            <?= $this->translate('Update Pending') ?>
+                        <?php endif; ?>
+                    <?php else: ?>
+                        <?= $this->translate('N/A') ?>
+                    <?php endif; ?>
+                </td>
+                <td>
+
                 </td>
             </tr>
         <?php endforeach; ?>
         </tbody>
     </table>
-
 </div>

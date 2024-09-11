@@ -182,6 +182,7 @@ if (isset($packages)) {
                 </div>
             </div>
         <?php elseif (isset($jobs)): ?>
+            <?php /** @var JobModel[] $jobs */ ?>
             <?php $isExpired = $package->isExpired(); ?>
             <div class="row">
                 <div class="col-md-12">
@@ -214,10 +215,7 @@ if (isset($packages)) {
                                             <?= $job->isActive() ? $this->translate('Yes') : $this->translate('No') ?>
                                         </td>
                                         <td>
-                                            <?php
-                                            $icons = ['fa-circle-question', 'fa-circle-check', 'fa-circle-xmark'];
-                                            ?>
-                                            <span class="fas <?= $icons[$job->getApproved()->value] ?>"></span>
+                                            <span class="fas <?= $job->getApproval()->getIcon() ?>"></span>
                                             <?php if (0 !== $job->getUpdateProposals()->count()): ?>
                                                 (<?= $this->translate('Yes') ?>)
                                             <?php endif; ?>
