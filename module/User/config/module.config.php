@@ -12,7 +12,9 @@ use User\Controller\ApiAdminController;
 use User\Controller\ApiAuthenticationController;
 use User\Controller\Factory\ApiAdminControllerFactory;
 use User\Controller\Factory\ApiAuthenticationControllerFactory;
+use User\Controller\Factory\UserAdminControllerFactory;
 use User\Controller\Factory\UserControllerFactory;
+use User\Controller\UserAdminController;
 use User\Controller\UserController;
 
 return [
@@ -155,6 +157,16 @@ return [
                             ],
                         ],
                     ],
+                    'members' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/members',
+                            'defaults' => [
+                                'controller' => UserAdminController::class,
+                                'action' => 'index',
+                            ],
+                        ],
+                    ],
                 ],
                 'priority' => 100,
             ],
@@ -175,6 +187,7 @@ return [
         'factories' => [
             ApiAdminController::class => ApiAdminControllerFactory::class,
             ApiAuthenticationController::class => ApiAuthenticationControllerFactory::class,
+            UserAdminController::class => UserAdminControllerFactory::class,
             UserController::class => UserControllerFactory::class,
         ],
     ],

@@ -94,6 +94,9 @@ class AclService extends GenericAclService
         $this->acl->deny(UserRoles::Board->value, 'user_admin');
         $this->acl->deny(UserRoles::Board->value, 'apiuser');
 
+        // Do not allow the board to see activation status
+        $this->acl->deny(UserRoles::Board->value, 'user', ['view_status']);
+
         $this->acl->allow(UserRoles::User->value, 'user', ['password_change']);
         $this->acl->allow(UserRoles::Company->value, 'user', ['password_change']);
     }

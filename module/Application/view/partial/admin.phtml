@@ -95,26 +95,21 @@ use Laminas\View\Renderer\PhpRenderer;
                                             <?= $this->translate('Approvals') ?>
                                         </a>
                                     </li>
-                                <?php
-                                endif; ?>
-                                <?php
-                                if ($this->acl('company_service_acl')->isAllowed('jobCategory', 'listAll')): ?>
+                                <?php endif; ?>
+                                <?php if ($this->acl('company_service_acl')->isAllowed('jobCategory', 'listAll')): ?>
                                     <li>
                                         <a href="<?= $this->url('company_admin/categories') ?>">
                                             <?= $this->translate('Categories') ?>
                                         </a>
                                     </li>
-                                <?php
-                                endif; ?>
-                                <?php
-                                if ($this->acl('company_service_acl')->isAllowed('jobLabel', 'listAll')): ?>
+                                <?php endif; ?>
+                                <?php if ($this->acl('company_service_acl')->isAllowed('jobLabel', 'listAll')): ?>
                                     <li>
                                         <a href="<?= $this->url('company_admin/labels') ?>">
                                             <?= $this->translate('Labels') ?>
                                         </a>
                                     </li>
-                                <?php
-                                endif; ?>
+                                <?php endif; ?>
                             </ul>
                         </li>
                     <?php endif; ?>
@@ -179,8 +174,7 @@ use Laminas\View\Renderer\PhpRenderer;
                         <li class="<?= $this->moduleIsActive(['frontpage', 'news']) ? 'active' : '' ?>">
                             <a href="<?= $this->url('admin_news') ?>"><?= $this->translate('News') ?></a>
                         </li>
-                    <?php
-                    endif; ?>
+                    <?php endif; ?>
                     <?php if ($this->acl('frontpage_service_acl')->isAllowed('page', 'create')): ?>
                         <li class="<?= $this->moduleIsActive(['frontpage', 'page']) ? 'active' : '' ?>">
                             <a href="<?= $this->url('admin_page') ?>"><?= $this->translate('Pages') ?></a>
@@ -207,6 +201,13 @@ use Laminas\View\Renderer\PhpRenderer;
                                     <li>
                                         <a href="<?= $this->url('user_admin/api') ?>">
                                             <?= $this->translate('API Users') ?>
+                                        </a>
+                                    </li>
+                                <?php endif; ?>
+                                <?php if ($this->acl('user_service_acl')->isAllowed('user', 'view_status')): ?>
+                                    <li>
+                                        <a href="<?= $this->url('user_admin/members') ?>">
+                                            <?= $this->translate('Members') ?>
                                         </a>
                                     </li>
                                 <?php endif; ?>
