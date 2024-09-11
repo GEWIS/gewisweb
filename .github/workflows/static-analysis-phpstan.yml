@@ -28,7 +28,7 @@ jobs:
 
         steps:
             -   name: Checkout head branch
-                uses: actions/checkout@v3
+                uses: actions/checkout@v4
 
             -   name: Install PHP
                 uses: shivammathur/setup-php@v2
@@ -50,7 +50,7 @@ jobs:
                     git checkout --detach temp-phpstanpr
 
             -   name: Install dependencies with Composer
-                uses: ramsey/composer-install@v2
+                uses: ramsey/composer-install@v3
 
             -   name: Load environment variables
                 uses: c-py/action-dotenv-to-setenv@v3
@@ -77,7 +77,7 @@ jobs:
                     git checkout -
 
             -   name: Install dependencies with Composer
-                uses: ramsey/composer-install@v2
+                uses: ramsey/composer-install@v3
 
             -   name: Load environment variables
                 uses: c-py/action-dotenv-to-setenv@v3
