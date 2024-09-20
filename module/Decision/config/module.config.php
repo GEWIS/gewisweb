@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Decision;
 
+use Application\Model\Enums\AuthTypes;
 use Decision\Controller\AdminController;
 use Decision\Controller\AdminMemberController;
 use Decision\Controller\DecisionController;
@@ -131,6 +132,7 @@ return [
                 'options' => [
                     'route' => '/admin/decision',
                     'defaults' => [
+                        'auth_type' => AuthTypes::User,
                         'controller' => AdminController::class,
                     ],
                 ],

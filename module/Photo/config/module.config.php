@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Photo;
 
+use Application\Model\Enums\AuthTypes;
 use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Laminas\Router\Http\Literal;
 use Laminas\Router\Http\Segment;
@@ -31,6 +32,7 @@ return [
                     'defaults' => [
                         'controller' => PhotoController::class,
                         'action' => 'index',
+                        'auth_type' => AuthTypes::User,
                     ],
                 ],
                 'may_terminate' => true,
@@ -181,6 +183,7 @@ return [
                     'defaults' => [
                         'controller' => AlbumAdminController::class,
                         'action' => 'index',
+                        'auth_type' => AuthTypes::User,
                     ],
                 ],
                 'may_terminate' => true,
@@ -348,6 +351,7 @@ return [
                     'defaults' => [
                         'controller' => ApiController::class,
                         'action' => 'index',
+                        'auth_type' => AuthTypes::Api,
                     ],
                 ],
                 'may_terminate' => true,

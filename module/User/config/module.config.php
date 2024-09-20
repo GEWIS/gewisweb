@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace User;
 
+use Application\Model\Enums\AuthTypes;
 use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Laminas\Router\Http\Literal;
 use Laminas\Router\Http\Segment;
@@ -120,6 +121,9 @@ return [
                 'type' => Literal::class,
                 'options' => [
                     'route' => '/admin/user',
+                    'defaults' => [
+                        'auth_type' => AuthTypes::User,
+                    ],
                 ],
                 'may_terminate' => false,
                 'child_routes' => [
@@ -177,6 +181,7 @@ return [
                     'defaults' => [
                         'controller' => ApiAuthenticationController::class,
                         'action' => 'token',
+                        'auth_type' => AuthTypes::User,
                     ],
                 ],
                 'priority' => 100,
