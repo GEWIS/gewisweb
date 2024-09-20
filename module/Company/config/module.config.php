@@ -16,6 +16,7 @@ use Company\Controller\Factory\CompanyControllerFactory;
 use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Laminas\Router\Http\Literal;
 use Laminas\Router\Http\Segment;
+use User\Listener\Authentication;
 
 return [
     'router' => [
@@ -124,6 +125,7 @@ return [
                     'route' => '/company',
                     'defaults' => [
                         'controller' => CompanyAccountController::class,
+                        'auth_type' => Authentication::AUTH_COMPANY_USER,
                     ],
                 ],
                 'may_terminate' => false,

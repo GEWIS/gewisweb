@@ -16,6 +16,7 @@ use User\Controller\Factory\UserAdminControllerFactory;
 use User\Controller\Factory\UserControllerFactory;
 use User\Controller\UserAdminController;
 use User\Controller\UserController;
+use User\Listener\Authentication;
 
 return [
     'router' => [
@@ -120,6 +121,9 @@ return [
                 'type' => Literal::class,
                 'options' => [
                     'route' => '/admin/user',
+                    'defaults' => [
+                        'auth_type' => Authentication::AUTH_USER,
+                    ],
                 ],
                 'may_terminate' => false,
                 'child_routes' => [
@@ -177,6 +181,7 @@ return [
                     'defaults' => [
                         'controller' => ApiAuthenticationController::class,
                         'action' => 'token',
+                        'auth_type' => Authentication::AUTH_USER,
                     ],
                 ],
                 'priority' => 100,
