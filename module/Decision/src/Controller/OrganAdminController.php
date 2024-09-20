@@ -4,29 +4,86 @@ declare(strict_types=1);
 
 namespace Decision\Controller;
 
+use Decision\Service\AclService;
 use Decision\Service\Organ as OrganService;
 use Laminas\Form\FormInterface;
 use Laminas\Http\Request;
 use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\Mvc\I18n\Translator;
 use Laminas\View\Model\ViewModel;
+
+use User\Permissions\NotAllowedException;
 
 use function array_merge_recursive;
 
 class OrganAdminController extends AbstractActionController
 {
-    public function __construct(private readonly OrganService $organService)
-    {
+    public function __construct(
+        private readonly AclService $aclService,
+        private readonly Translator $translator,
+        private readonly OrganService $organService,
+    ) {
     }
 
     /**
-     * Index action, shows all active organs.
+     * Index action, shows all active organs filtered for the user.
      */
     public function indexAction(): ViewModel
     {
+        if (!$this->aclService->isAllowed('viewAdmin', 'organ')) {
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to edit organ information'),
+            );
+        }
+
         return new ViewModel(
             [
                 'organs' => $this->organService->getEditableOrgans(),
+            ],
+        );
+    }
+
+    /**
+     *
+     */
+    public function createAction(): Response|ViewModel
+    {
+        $organId = (int) $this->params()->fromRoute('organ_id');
+        $organ = $this->organService->getOrgan($organId);
+
+        if (null === $organ) {
+            return $this->notFoundAction();
+        }
+
+        if (!$this->organService->canUseOrgan($organ)) {
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to create organ information for this organ'),
+            );
+        }
+
+        $form = $this->organService->getOrganInformationForm();
+
+        /** @var Request $request */
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+            $post = array_merge_recursive(
+                $request->getPost()->toArray(),
+                $request->getFiles()->toArray(),
+            );
+            $form->setData($post);
+
+            if ($form->isValid()) {
+                if (null !== ($organInformation = $this->organService->createOrganInformation($organ, $post))) {
+                    return $this->redirect()->toUrl($this->url()->fromRoute('admin_organ'));
+                }
+            }
+        }
+
+        return new ViewModel(
+            [
+                'form' => $form,
             ],
         );
     }
@@ -37,10 +94,22 @@ class OrganAdminController extends AbstractActionController
     public function editAction(): Response|ViewModel
     {
         $organId = (int) $this->params()->fromRoute('organ_id');
-        $organInformation = $this->organService->getEditableOrganInformation($organId);
+        $organ = $this->organService->getOrgan($organId);
+
+        if (null === $organ) {
+            return $this->notFoundAction();
+        }
+
+        $organInformation = $this->organService->getEditableOrganInformation($organ);
 
         if (false === $organInformation) {
             return $this->notFoundAction();
+        }
+
+        if (!$this->aclService->isAllowed('edit', $organInformation)) {
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to edit organ information'),
+            );
         }
 
         $form = $this->organService->getOrganInformationForm($organInformation);
@@ -70,6 +139,7 @@ class OrganAdminController extends AbstractActionController
         return new ViewModel(
             [
                 'form' => $form,
+                'organ' => $organ,
             ],
         );
     }

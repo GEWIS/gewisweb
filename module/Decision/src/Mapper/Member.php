@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Decision\Mapper;
 
 use Application\Mapper\BaseMapper;
+use DateTime;
 use Decision\Model\Member as MemberModel;
 use Decision\Model\Organ as OrganModel;
 use Decision\Model\OrganMember as OrganMemberModel;
@@ -12,6 +13,8 @@ use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use User\Model\User as UserModel;
 use User\Model\UserRole as UserRoleModel;
+
+use Doctrine\ORM\QueryBuilder;
 
 use function strtolower;
 
@@ -116,23 +119,55 @@ class Member extends BaseMapper
     }
 
     /**
-     * Find all organs of this member.
-     *
-     * @return OrganModel[]
+     * Creates a `QueryBuilder` that returns all organs the member is in or a specific organ the member is in.
      */
-    public function findOrgans(MemberModel $member): array
-    {
+    private function createOrganMembershipQuery(
+        MemberModel $member,
+        ?OrganModel $organ = null
+    ): QueryBuilder {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('DISTINCT o')
             ->from(OrganModel::class, 'o')
             ->join('o.members', 'om')
             ->join('om.member', 'm')
             ->where('m.lidnr = :lidnr')
-            ->andWhere('om.dischargeDate IS NULL');
+            ->andWhere($qb->expr()->orX(
+                $qb->expr()->isNull('om.dischargeDate'),
+                $qb->expr()->gt('om.dischargeDate', ':now')
+            ))
+            ->setParameter('lidnr', $member->getLidnr())
+            ->setParameter('now', new DateTime());
 
-        $qb->setParameter('lidnr', $member->getLidnr());
+        if ($organ !== null) {
+            $qb->andWhere('o.id = :organId')
+                ->setParameter('organId', $organ->getId());
+        }
+
+        return $qb;
+    }
+
+    /**
+     * Find all organs of this member.
+     *
+     * @return OrganModel[]
+     */
+    public function findOrgans(MemberModel $member): array
+    {
+        $qb = $this->createOrganMembershipQuery($member);
 
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Check if a member is in a specific organ.
+     */
+    public function isMemberOfOrgan(
+        MemberModel $member,
+        OrganModel $organ,
+    ): bool {
+        $qb = $this->createOrganMembershipQuery($member, $organ);
+
+        return !empty($qb->getQuery()->getResult());
     }
 
     /**
@@ -147,10 +182,14 @@ class Member extends BaseMapper
             ->from(OrganMemberModel::class, 'om')
             ->leftJoin('om.organ', 'o')
             ->where('om.member = :member')
-            ->andWhere('om.installDate <= CURRENT_TIMESTAMP()')
-            ->andWhere('om.dischargeDate IS NULL OR om.dischargeDate > CURRENT_TIMESTAMP()');
+            ->andWhere('om.installDate <= :now')
+            ->andWhere($qb->expr()->orX(
+                $qb->expr()->isNull('om.dischargeDate'),
+                $qb->expr()->gt('om.dischargeDate', ':now')
+            ));
 
-        $qb->setParameter('member', $member);
+        $qb->setParameter('member', $member)
+            ->setParameter('now', new DateTime());
 
         return $qb->getQuery()->getResult();
     }
@@ -167,10 +206,13 @@ class Member extends BaseMapper
             ->from(OrganMemberModel::class, 'om')
             ->leftJoin('om.organ', 'o')
             ->where('om.member = :member')
-            ->andWhere('om.dischargeDate IS NOT NULL')
-            ->andWhere('om.dischargeDate <= CURRENT_TIMESTAMP()');
+            ->andWhere($qb->expr()->andX(
+                $qb->expr()->isNotNull('om.dischargeDate'),
+                $qb->expr()->lte('om.dischargeDate', ':now')
+            ));
 
-        $qb->setParameter('member', $member);
+        $qb->setParameter('member', $member)
+            ->setParameter('now', new DateTime());
 
         return $qb->getQuery()->getResult();
     }

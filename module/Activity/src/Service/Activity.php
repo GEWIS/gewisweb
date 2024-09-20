@@ -140,7 +140,7 @@ class Activity
     {
         $organ = $this->organService->getOrgan($organId);
 
-        if (!$this->organService->canEditOrgan($organ)) {
+        if (!$this->organService->canUseOrgan($organ)) {
             throw new NotAllowedException(
                 $this->translator->translate('You are not allowed to create an activity for this organ'),
             );
