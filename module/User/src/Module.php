@@ -10,7 +10,6 @@ use Doctrine\Laminas\Hydrator\DoctrineObject;
 use Laminas\Authentication\AuthenticationService as LaminasAuthenticationService;
 use Laminas\Crypt\Password\Bcrypt;
 use Laminas\Http\PhpEnvironment\RemoteAddress;
-use Laminas\Http\Request as HttpRequest;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\Mvc\MvcEvent;
 use Laminas\ServiceManager\Factory\InvokableFactory;
@@ -43,6 +42,7 @@ use User\Form\Password as PasswordForm;
 use User\Form\Register as RegisterForm;
 use User\Form\UserLogin as UserLoginForm;
 use User\Form\UserReset as UserResetForm;
+use User\Listener\Authentication;
 use User\Mapper\ApiApp as ApiAppMapper;
 use User\Mapper\ApiAppAuthentication as ApiAppAuthenticationMapper;
 use User\Mapper\ApiUser as ApiUserMapper;
@@ -51,7 +51,6 @@ use User\Mapper\LoginAttempt as LoginAttemptMapper;
 use User\Mapper\NewCompanyUser as NewCompanyUserMapper;
 use User\Mapper\NewUser as NewUserMapper;
 use User\Mapper\User as UserMapper;
-use User\Permissions\NotAllowedException;
 use User\Service\AclService;
 use User\Service\ApiApp as ApiAppService;
 use User\Service\ApiUser as ApiUserService;
@@ -78,39 +77,43 @@ class Module
      */
     public function onBootstrap(MvcEvent $e): void
     {
+        $sm = $e->getApplication()->getServiceManager();
         $em = $e->getApplication()->getEventManager();
 
-        // check if the user has a valid API token
-        $request = $e->getRequest();
+        // Establish an identity of the user using the authentication listener.
+        /** @var AuthenticationService<UserSessionStorage, UserAdapter> $userAuthService */
+        $userAuthService = $sm->get('user_auth_user_service');
+        /** @var AuthenticationService<CompanyUserSessionStorage, CompanyUserAdapter> $companyUserAuthService */
+        $companyUserAuthService = $sm->get('user_auth_companyUser_service');
+        $apiUserAuthService = $sm->get(ApiAuthenticationService::class);
 
-        if (($request instanceof HttpRequest) && $request->getHeaders()->has('X-Auth-Token')) {
-            // check if this is a valid token
-            $token = $request->getHeader('X-Auth-Token')
-                ->getFieldValue();
-
-            $container = $e->getApplication()->getServiceManager();
-            $service = $container->get(ApiAuthenticationService::class);
-            $service->authenticate($token);
-        }
-
-        // this event listener will turn the request into '403 Forbidden' when
-        // there is a NotAllowedException
         $em->attach(
-            MvcEvent::EVENT_DISPATCH_ERROR,
-            static function ($e): void {
-                if (
-                    'error-exception' !== $e->getError()
-                    || null === $e->getParam('exception', null)
-                    || !($e->getParam('exception') instanceof NotAllowedException)
-                ) {
-                    return;
-                }
-
-                $e->getResult()->setTemplate(('production' === APP_ENV ? 'error/403' : 'error/debug/403'));
-                $e->getResponse()->setStatusCode(403);
-            },
+            MvcEvent::EVENT_ROUTE,
+            new Authentication(
+                $userAuthService,
+                $companyUserAuthService,
+                $apiUserAuthService,
+            ),
             -100,
         );
+
+        // Trigger unauthenticated and unauthorized events from auth checks.
+//        $em->attach(MvcEvent::EVENT_DISPATCH, fn() => new class {
+//            public function __invoke(MvcEvent $e): null
+//            {
+//                var_dump($e);
+//
+//                return null;
+//            }
+//        }, -10000);
+
+        // Catch unauthenticated and unauthorized events (manually or from controllers).
+//        $em->attach(MvcEvent::EVENT_DISPATCH_ERROR, new Authorization(), 1000);
+//        $em->attach(MvcEvent::EVENT_RENDER_ERROR, new Authorization(), 10);
+
+        // Format errors in case of dispatch errors after authentication
+//        $em->attach(MvcEvent::EVENT_DISPATCH_ERROR, new DispatchErrorFormatter(), 500);
+//        $em->attach(MvcEvent::EVENT_RENDER_ERROR, new DispatchErrorFormatter(), 5);
     }
 
     /**

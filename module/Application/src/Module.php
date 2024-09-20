@@ -20,6 +20,7 @@ use Exception;
 use Laminas\Cache\Storage\Adapter\Memcached;
 use Laminas\Cache\Storage\Adapter\MemcachedOptions;
 use Laminas\I18n\Translator\Translator as I18nTranslator;
+use Laminas\Mvc\Application as MvcApplication;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\Mvc\ModuleRouteListener;
 use Laminas\Mvc\MvcEvent;
@@ -46,36 +47,39 @@ class Module
 {
     public function onBootstrap(MvcEvent $e): void
     {
-        $eventManager = $e->getApplication()->getEventManager();
+        $application = $e->getApplication();
+        $serviceManager = $application->getServiceManager();
+        $eventManager = $application->getEventManager();
+        // TODO: test if the following is truly necessary
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
 
         // Attach listener for locale determination through the `LanguageAwareTreeRouteStack`.
-        $eventManager->attach(MvcEvent::EVENT_ROUTE, [$this, 'onRoute']);
+        $eventManager->attach(MvcEvent::EVENT_ROUTE, [$this, 'onRoute'], 100);
 
         $eventManager->attach(MvcEvent::EVENT_DISPATCH_ERROR, [$this, 'logError']);
-        $eventManager->attach(MvCEvent::EVENT_RENDER_ERROR, [$this, 'logError']);
+        $eventManager->attach(MvcEvent::EVENT_RENDER_ERROR, [$this, 'logError']);
 
         // Enable Laminas\Validator default translator
         /**
          * @psalm-suppress UnnecessaryVarAnnotation
          * @var MvcTranslator $mvcTranslator
          */
-        $mvcTranslator = $e->getApplication()->getServiceManager()->get(MvcTranslator::class);
+        $mvcTranslator = $serviceManager->get(MvcTranslator::class);
         AbstractValidator::setDefaultTranslator($mvcTranslator);
     }
 
-    public function logError(MvCEvent $e): void
+    public function logError(MvcEvent $e): void
     {
         $container = $e->getApplication()->getServiceManager();
         $logger = $container->get('logger');
 
-        if ('error-router-no-match' === $e->getError()) {
+        if (MvcApplication::ERROR_ROUTER_NO_MATCH === $e->getError()) {
             // not an interesting error
             return;
         }
 
-        if ('error-exception' === $e->getError()) {
+        if (MvcApplication::ERROR_EXCEPTION === $e->getError()) {
             $ex = $e->getParam('exception');
 
             if ($ex instanceof NotAllowedException) {
