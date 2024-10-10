@@ -71,7 +71,7 @@ $this->headTitle($this->translate('Polls'));
                             <strong><?= $this->escapeHtml($comment->getAuthor()) ?></strong>
                             <?php if ($this->acl('frontpage_service_acl')->isAllowed('poll_comment', 'view_user')): ?>
                                 <?php $lidnr = $comment->getUser()->getLidnr() ?>
-                                (<a href="<?= $this->url('member/view', ['lidnr' => $lidnr]) ?>"><?= $lidnr ?></a>)
+                                (<a href="<?= $this->url('member/view', ['lidnr' => $lidnr]) ?>"><?= $this->escapeHtml($comment->getUser()->getFullName()) ?></a>)
                                 <br>
                                 <?= $comment->getCreatedOn()->format('Y-m-d H:i:s') ?>
                             <?php endif ?>
