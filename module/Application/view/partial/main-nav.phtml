@@ -197,6 +197,7 @@ endif; ?>
                                 $this->acl('activity_service_acl')->isAllowed('activity_admin', 'view')
                                 || $this->acl('company_service_acl')->isAllowed('company_admin', 'view')
                                 || $this->acl('decision_service_acl')->isAllowed('decision_admin', 'view')
+                                || $this->acl('decision_service_acl')->isAllowed('decision_organ_admin', 'view')
                                 || $this->acl('education_service_acl')->isAllowed('education_admin', 'view')
                                 || $this->acl('frontpage_service_acl')->isAllowed('frontpage_admin', 'view')
                                 || $this->acl('photo_service_acl')->isAllowed('photo_admin', 'view')

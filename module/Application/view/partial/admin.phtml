@@ -163,7 +163,7 @@ use Laminas\View\Renderer\PhpRenderer;
                             </ul>
                         </li>
                     <?php endif; ?>
-                    <?php if ($this->acl('decision_service_acl')->isAllowed('decision_admin', 'view')): ?>
+                    <?php if ($this->acl('decision_service_acl')->isAllowed('decision_organ_admin', 'view')): ?>
                         <li>
                             <a href="<?= $this->url('admin_organ') ?>">
                                 <?= $this->translate('Organs') ?>
