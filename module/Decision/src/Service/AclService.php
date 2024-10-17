@@ -23,6 +23,7 @@ class AclService extends \User\Service\AclService
         $this->acl->addResource(new Resource('gdpr'));
         // Define administration part of this module, however, sub-permissions must be manually configured.
         $this->acl->addResource(new Resource('decision_admin'));
+        $this->acl->addResource(new Resource('decision_organ_admin'));
 
         // users are allowed to view the organs
         $this->acl->allow('guest', 'organ', 'list');
@@ -30,7 +31,7 @@ class AclService extends \User\Service\AclService
 
         // Organ members are allowed to edit organ information of their own organs
         $this->acl->allow('active_member', 'organ', 'edit');
-        $this->acl->allow('active_member', 'decision_admin', 'view');
+        $this->acl->allow('active_member', 'decision_organ_admin', 'view');
 
         // users are allowed to view and search members
         $this->acl->allow('user', 'member', ['view', 'view_self', 'search', 'birthdays']);
