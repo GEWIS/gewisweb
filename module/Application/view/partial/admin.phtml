@@ -40,31 +40,30 @@ use Laminas\View\Renderer\PhpRenderer;
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="<?= $this->url('activity_admin') ?>"><?= $this->translate(
-                                            'Overview'
-                                        ) ?></a>
+                                    <a href="<?= $this->url('activity_admin') ?>">
+                                        <?= $this->translate('Overview') ?>
+                                    </a>
                                 </li>
                                 <?php
                                 if ($this->acl('activity_service_acl')->isAllowed('activity', 'listCategories')): ?>
                                     <li>
-                                        <a href="<?= $this->url('activity_admin_categories') ?>"><?= $this->translate(
-                                                'Categories'
-                                            ) ?></a>
+                                        <a href="<?= $this->url('activity_admin_categories') ?>">
+                                            <?= $this->translate('Categories') ?>
+                                        </a>
                                     </li>
-                                <?php
-                                endif; ?>
+                                <?php endif; ?>
                                 <?php
                                 if ($this->acl('activity_service_acl')->isAllowed(
                                     'activity_calendar_period',
                                     'view'
-                                )): ?>
+                                )):
+                                ?>
                                     <li>
-                                        <a href="<?= $this->url('activity_admin_options') ?>"><?= $this->translate(
-                                                'Option Calendar'
-                                            ) ?></a>
+                                        <a href="<?= $this->url('activity_admin_options') ?>">
+                                            <?= $this->translate('Option Calendar') ?>
+                                        </a>
                                     </li>
-                                <?php
-                                endif; ?>
+                                <?php endif; ?>
                             </ul>
                         </li>
                     <?php endif; ?>
@@ -75,15 +74,13 @@ use Laminas\View\Renderer\PhpRenderer;
                                 <?= $this->translate('Career') ?> <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <?php
-                                if ($this->acl('company_service_acl')->isAllowed('company', 'listAll')): ?>
+                                <?php if ($this->acl('company_service_acl')->isAllowed('company', 'listAll')): ?>
                                     <li>
                                         <a href="<?= $this->url('company_admin') ?>">
                                             <?= $this->translate('Companies') ?>
                                         </a>
                                     </li>
-                                <?php
-                                endif; ?>
+                                <?php endif; ?>
                                 <?php
                                 if (
                                     $this->acl('company_service_acl')->isAllowed('company', 'approve')
@@ -146,48 +143,73 @@ use Laminas\View\Renderer\PhpRenderer;
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="<?= $this->url('decision_admin/minutes') ?>"><?= $this->translate(
-                                            'Minutes'
-                                        ) ?></a>
+                                    <a href="<?= $this->url('decision_admin/minutes') ?>">
+                                        <?= $this->translate('Minutes') ?>
+                                    </a>
                                 </li>
                                 <li>
-                                    <a href="<?= $this->url('decision_admin/document') ?>"><?= $this->translate(
-                                            'Documents'
-                                        ) ?></a>
+                                    <a href="<?= $this->url('decision_admin/document') ?>">
+                                        <?= $this->translate('Documents') ?>
+                                    </a>
                                 </li>
                                 <li>
-                                    <a href="<?= $this->url('decision_admin/authorizations') ?>"><?= $this->translate(
-                                            'Authorizations'
-                                        ) ?></a>
+                                    <a href="<?= $this->url('decision_admin/authorizations') ?>">
+                                        <?= $this->translate('Authorizations') ?>
+                                    </a>
                                 </li>
                             </ul>
                         </li>
                     <?php endif; ?>
                     <?php if ($this->acl('decision_service_acl')->isAllowed('decision_organ_admin', 'view')): ?>
-                        <li>
-                            <a href="<?= $this->url('admin_organ') ?>">
-                                <?= $this->translate('Organs') ?>
+                        <li class="dropdown">
+                            <a href="<?= $this->hashUrl() ?>" class="dropdown-toggle" data-toggle="dropdown"
+                               role="button" aria-haspopup="true" aria-expanded="false">
+                                <?= $this->translate('Organs') ?> <span class="caret"></span>
                             </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="<?= $this->url('admin_organ') ?>">
+                                        <?= $this->translate('Overview') ?>
+                                    </a>
+                                </li>
+                                <?php
+                                if ($this->acl('decision_service_acl')->isAllowed('organInformation', 'approve')):
+                                ?>
+                                    <li>
+                                        <a href="<?= $this->url('admin_organ_approval') ?>">
+                                            <?= $this->translate('Approvals') ?>
+                                        </a>
+                                    </li>
+                                <?php endif; ?>
+                            </ul>
                         </li>
                     <?php endif; ?>
                     <?php if ($this->acl('frontpage_service_acl')->isAllowed('news_item', 'create')): ?>
                         <li class="<?= $this->moduleIsActive(['frontpage', 'news']) ? 'active' : '' ?>">
-                            <a href="<?= $this->url('admin_news') ?>"><?= $this->translate('News') ?></a>
+                            <a href="<?= $this->url('admin_news') ?>">
+                                <?= $this->translate('News') ?>
+                            </a>
                         </li>
                     <?php endif; ?>
                     <?php if ($this->acl('frontpage_service_acl')->isAllowed('page', 'create')): ?>
                         <li class="<?= $this->moduleIsActive(['frontpage', 'page']) ? 'active' : '' ?>">
-                            <a href="<?= $this->url('admin_page') ?>"><?= $this->translate('Pages') ?></a>
+                            <a href="<?= $this->url('admin_page') ?>">
+                                <?= $this->translate('Pages') ?>
+                            </a>
                         </li>
                     <?php endif; ?>
                     <?php if ($this->acl('photo_service_acl')->isAllowed('photo_admin', 'view')): ?>
                         <li>
-                            <a href="<?= $this->url('admin_photo') ?>"><?= $this->translate('Photos') ?></a>
+                            <a href="<?= $this->url('admin_photo') ?>">
+                                <?= $this->translate('Photos') ?>
+                            </a>
                         </li>
                     <?php endif; ?>
                     <?php if ($this->acl('frontpage_service_acl')->isAllowed('poll', 'approve')): ?>
                         <li class="<?= $this->moduleIsActive(['frontpage', 'poll']) ? 'active' : '' ?>">
-                            <a href="<?= $this->url('admin_poll') ?>"><?= $this->translate('Polls') ?></a>
+                            <a href="<?= $this->url('admin_poll') ?>">
+                                <?= $this->translate('Polls') ?>
+                            </a>
                         </li>
                     <?php endif; ?>
                     <?php if ($this->acl('user_service_acl')->isAllowed('user_admin', 'view')): ?>
@@ -231,7 +253,9 @@ use Laminas\View\Renderer\PhpRenderer;
             <div class="container-admin">
                 <ol class="breadcrumb">
                     <li class="active">
-                        <a href="<?= $this->url('admin') ?>"><?= $this->translate('Admin') ?></a>
+                        <a href="<?= $this->url('admin') ?>">
+                            <?= $this->translate('Admin') ?>
+                        </a>
                     </li>
                     <?= $this->breadcrumbs() ?>
                 </ol>

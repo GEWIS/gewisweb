@@ -28,7 +28,7 @@ $this->breadcrumbs()
     ->addBreadcrumb($this->translate('Proposals'), true, $this->url('company_admin_approval'))
     ->addBreadcrumb($this->escapeHtml($this->localiseText($original->getName())));
 
-$originalApprovalState = $original->getApproved();
+$originalApprovalState = $original->getApproval();
 ?>
 <div class="row admin-section admin-approvable-overview">
     <div class="col-md-12">
@@ -282,8 +282,8 @@ $originalApprovalState = $original->getApproved();
     <div class="col-md-12">
         <?php
         if (
-            $original->getLabels()->count() !== 0
-            || $proposed->getLabels()->count() !== 0
+            !$original->getLabels()->isEmpty()
+            || !$proposed->getLabels()->isEmpty()
         ):
         ?>
             <?php

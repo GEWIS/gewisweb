@@ -10,7 +10,7 @@ use Application\Model\Traits\TimestampableTrait;
 use Application\Model\Traits\UpdateProposableTrait;
 use Company\Model\Enums\CompanyPackageTypes;
 use Company\Model\JobCategory as JobCategoryModel;
-use Company\Model\Proposals\CompanyUpdate as CompanyUpdateProposal;
+use Company\Model\Proposals\CompanyUpdate as CompanyUpdateProposalModel;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\Column;
@@ -38,6 +38,7 @@ class Company implements ResourceInterface
     use IdentifiableTrait;
     use TimestampableTrait;
     use ApprovableTrait;
+    /** @use UpdateProposableTrait<CompanyUpdateProposalModel> */
     use UpdateProposableTrait;
 
     /**
@@ -175,10 +176,10 @@ class Company implements ResourceInterface
     /**
      * Proposed updates to this company.
      *
-     * @var Collection<array-key, CompanyUpdateProposal>
+     * @var Collection<array-key, CompanyUpdateProposalModel>
      */
     #[OneToMany(
-        targetEntity: CompanyUpdateProposal::class,
+        targetEntity: CompanyUpdateProposalModel::class,
         mappedBy: 'original',
         fetch: 'EXTRA_LAZY',
     )]
@@ -448,7 +449,7 @@ class Company implements ResourceInterface
     }
 
     /**
-     * @return Collection<array-key, CompanyUpdateProposal>
+     * @return Collection<array-key, CompanyUpdateProposalModel>
      */
     public function getUpdateProposals(): Collection
     {
