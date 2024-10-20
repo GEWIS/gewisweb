@@ -3221,6 +3221,26 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/ActivityTest-Mapper-ActivityMapperTest.html#property_localisedText"
         },                {
+            "fqsen": "\\Application\\Migrations\\Version20241020212355",
+            "name": "Version20241020212355",
+            "summary": "phpcs\u003Adisable\u0020Generic.Files.LineLength.TooLong",
+            "url": "classes/Application-Migrations-Version20241020212355.html"
+        },                {
+            "fqsen": "\\Application\\Migrations\\Version20241020212355\u003A\u003AgetDescription\u0028\u0029",
+            "name": "getDescription",
+            "summary": "",
+            "url": "classes/Application-Migrations-Version20241020212355.html#method_getDescription"
+        },                {
+            "fqsen": "\\Application\\Migrations\\Version20241020212355\u003A\u003Aup\u0028\u0029",
+            "name": "up",
+            "summary": "",
+            "url": "classes/Application-Migrations-Version20241020212355.html#method_up"
+        },                {
+            "fqsen": "\\Application\\Migrations\\Version20241020212355\u003A\u003Adown\u0028\u0029",
+            "name": "down",
+            "summary": "",
+            "url": "classes/Application-Migrations-Version20241020212355.html#method_down"
+        },                {
             "fqsen": "\\Application\\Controller\\Factory\\IndexControllerFactory",
             "name": "IndexControllerFactory",
             "summary": "",
@@ -18440,6 +18460,11 @@ Search.appendIndex(
             "name": "Application",
             "summary": "",
             "url": "namespaces/application.html"
+        },                {
+            "fqsen": "\\Application\\Migrations",
+            "name": "Migrations",
+            "summary": "",
+            "url": "namespaces/application-migrations.html"
         },                {
             "fqsen": "\\Application\\Controller\\Factory",
             "name": "Factory",
