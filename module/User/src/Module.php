@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace User;
 
-use Activity\Command\Factory\DeleteOldLoginAttemptsFactory as DeleteOldLoginAttemptsCommandFactory;
 use Doctrine\Laminas\Hydrator\DoctrineObject;
 use Laminas\Authentication\AuthenticationService as LaminasAuthenticationService;
 use Laminas\Crypt\Password\Bcrypt;
@@ -23,6 +22,7 @@ use User\Authentication\Storage\CompanyUserSession;
 use User\Authentication\Storage\UserSession;
 use User\Authorization\AclServiceFactory;
 use User\Command\DeleteOldLoginAttempts as DeleteOldLoginAttemptsCommands;
+use User\Command\Factory\DeleteOldLoginAttemptsFactory as DeleteOldLoginAttemptsCommandFactory;
 use User\Form\Activate as ActivateForm;
 use User\Form\ApiAppAuthorisation as ApiAppAuthorisationForm;
 use User\Form\ApiToken as ApiTokenForm;

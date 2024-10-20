@@ -136,7 +136,6 @@
       <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher" />
       <path value="$PROJECT_DIR$/vendor/symfony/finder" />
       <path value="$PROJECT_DIR$/vendor/symfony/filesystem" />
-      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php72" />
       <path value="$PROJECT_DIR$/vendor/symfony/options-resolver" />
       <path value="$PROJECT_DIR$/vendor/symfony/process" />
       <path value="$PROJECT_DIR$/vendor/laminas/laminas-component-installer" />
@@ -252,6 +251,16 @@
       <path value="$PROJECT_DIR$/vendor/jfcherng/php-diff" />
       <path value="$PROJECT_DIR$/vendor/stella-maris/clock" />
       <path value="$PROJECT_DIR$/vendor/sebastian/resource-operations" />
+      <path value="$PROJECT_DIR$/vendor/react/cache" />
+      <path value="$PROJECT_DIR$/vendor/react/stream" />
+      <path value="$PROJECT_DIR$/vendor/react/child-process" />
+      <path value="$PROJECT_DIR$/vendor/react/socket" />
+      <path value="$PROJECT_DIR$/vendor/react/dns" />
+      <path value="$PROJECT_DIR$/vendor/react/event-loop" />
+      <path value="$PROJECT_DIR$/vendor/symfony/type-info" />
+      <path value="$PROJECT_DIR$/vendor/laminas/laminas-translator" />
+      <path value="$PROJECT_DIR$/vendor/clue/ndjson-react" />
+      <path value="$PROJECT_DIR$/vendor/evenement/evenement" />
     </include_path>
   </component>
   <component name="PhpInterpreters">

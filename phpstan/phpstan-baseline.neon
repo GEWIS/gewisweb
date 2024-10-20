@@ -1,5 +1,9 @@
 parameters:
     ignoreErrors:
+        - identifier:
+            missingType.iterableValue
+        - identifier:
+            missingType.generics
         - '#Call to an undefined method Laminas\\Stdlib\\RequestInterface::[a-zA-Z0-9_]+\(\)\.#'
         - '#Call to an undefined method Laminas\\Stdlib\\ResponseInterface::[a-zA-Z0-9_]+\(\)\.#'
         - "#Strict comparison using \\=\\=\\= between 'development' and 'production' will always evaluate to false\\.$#"
@@ -23,17 +27,21 @@ parameters:
         - '#Property User\\Model\\ApiApp\:\:\$claims type mapping mismatch\: backing type string of enum User\\Model\\Enums\\JWTClaims does not match database type array\<string\>.$#'
         - '#Property User\\Model\\ApiApp\:\:\$claims type mapping mismatch\: database can contain User\\Model\\Enums\\JWTClaims\|null but property expects array\<User\\Model\\Enums\\JWTClaims\>.$#'
         - '#Property User\\Model\\ApiApp\:\:\$claims type mapping mismatch\: property can contain array\<User\\Model\\Enums\\JWTClaims\> but database expects User\\Model\\Enums\\JWTClaims\|null.$#'
+        - '#Property User\\Model\\ApiApp\:\:\$claims type mapping mismatch\: database can contain array\<int, User\\Model\\Enums\\JWTClaims\>\|null but property expects array\<User\\Model\\Enums\\JWTClaims\>.$#'
         -
             message: '#Unreachable statement \- code above always terminates.$#'
-            path: ..//module/*/test/*
+            path: ../module/*/test/*
         -
             message: '#If condition is always true.$#'
-            path: ..//module/*/test/*
+            path: ../module/*/test/*
         - '#^Parameter \#1 \$valueMap of method PHPUnit\\Framework\\MockObject\\Builder\\InvocationMocker\<mixed\>\:\:willReturnMap\(\) expects array\<int, array\<int, mixed\>\>, array\<int, array\<int, mixed\>\|[a-zA-Z0-9\\_]+\> given.$#'
         - '#Return type \(array\) of method [a-zA-Z0-9_]+\\Form\\[a-zA-Z0-9_]+\:\:getInputFilterSpecification\(\) should be compatible with return type \(\*NEVER\*\) of method Laminas\\InputFilter\\InputFilterProviderInterface\:\:getInputFilterSpecification\(\)$#'
         - '#Return type \(array\) of method [a-zA-Z0-9_]+\\Form\\Fieldset\\[a-zA-Z0-9_]+\:\:getInputFilterSpecification\(\) should be compatible with return type \(\*NEVER\*\) of method Laminas\\InputFilter\\InputFilterProviderInterface\:\:getInputFilterSpecification\(\)$#'
         - '#^Conditional return type uses subject type TAdapter of User\\Authentication\\Adapter\\CompanyUserAdapter\|User\\Authentication\\Adapter\\UserAdapter which is not part of PHPDoc \@template tags.$#'
-        - '#Method User\\Mapper\\ApiAppAuthentication\:\:getFirstAndLastAuthenticationPerApiApp\(\) should return array\<array\{0\: User\\Model\\ApiApp, firstAuthentication\: DateTime, lastAuthentication\: DateTime\}\> but returns array\<int, array\{0\: User\\Model\\ApiApp\|null, firstAuthentication\: string\|null, lastAuthentication\: string\|null\}\>.$#'
+        - '#Method User\\Mapper\\ApiAppAuthentication\:\:getFirstAndLastAuthenticationPerApiApp\(\) should return array\<array\{0\: User\\Model\\ApiApp, firstAuthentication\: DateTime, lastAuthentication\: DateTime\}\> but returns array\<int, array\{0\: User\\Model\\ApiApp\|null, firstAuthentication\: string, lastAuthentication\: string\}\>.$#'
         - '#Static method ApplicationTest\\BaseControllerTest\:\:initServiceManager\(\) is unused.$#'
         - '#Method ApplicationTest\\BaseControllerTest\:\:bootstrapApplication\(\) is unused.$#'
         - '#Parameter \#1 \$data \(array\{contractNumber\: string\|null, startDate\: string, expirationDate\: string, published\: bool, article\: string\|null, articleEn\: string\|null\}\) of method Company\\Model\\CompanyFeaturedPackage\:\:exchangeArray\(\) should be compatible with parameter \$data \(array\{contractNumber\: string\|null, startDate\?\: string, expirationDate\?\: string, published\?\: bool\|string\}\) of method Company\\Model\\CompanyPackage\:\:exchangeArray\(\)$#'
+        -
+            message: '#^Parameter \#1 \$variables of class Laminas\\View\\Model\\JsonModel constructor expects array\<string, mixed\>\|ArrayAccess\<string, mixed\>\|Traversable\<string, mixed\>\|null, array\<int\<0, max\>, array\{id\: int, name\: string\|null, nameEn\: string\|null, beginTime\: DateTime, endTime\: DateTime, location\: string\|null, locationEn\: string\|null, costs\: string\|null, \.\.\.\}\> given\.$#'
+            path: ../module/Activity/src/Controller/ApiController.php
