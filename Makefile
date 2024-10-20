@@ -4,6 +4,9 @@ help:
 		@echo "Makefile commands:"
 		@echo "runprod"
 		@echo "rundev"
+		@echo "migrations-list - lists all migrations"
+		@echo "migrations-diff - creates a new migration"
+		@echo "migrations-execute VERSION=<version> - executes a specific migration"
 		@echo "updatecomposer"
 		@echo "updatepackage"
 		@echo "updatecss"
@@ -37,8 +40,20 @@ rundev: builddev
 		@make replenish
 		@docker compose exec web rm -rf data/cache/module-config-cache.application.config.cache.php
 
-updatedb: rundev
-		@docker compose exec -T web ./orm orm:schema-tool:update --force --no-interaction
+migration-list: replenish
+		@docker compose exec -T web ./orm migrations:list
+
+migration-diff: replenish
+		@docker compose exec -T web ./orm migrations:diff
+		@docker cp "$(shell docker compose ps -q web)":/code/module/Application/migrations ./module/Application/migrations
+
+migration-up: replenish migration-list
+		@read -p "Enter the migration version to execute (e.g., Application\\Migrations\\Version20241020212355 -- note escaping the backslashes is required): " version; \
+		docker compose exec -it web ./orm migrations:execute --up $$version
+
+migration-down: replenish migration-list
+		@read -p "Enter the migration version to down (e.g., Application\\Migrations\\Version20241020212355 -- note escaping the backslashes is required): " version; \
+		docker compose exec -it web ./orm migrations:execute --down $$version
 
 stop:
 		@docker compose down
@@ -50,7 +65,7 @@ runcoverage: loadenv
 		@vendor/phpunit/phpunit/phpunit --bootstrap ./bootstrap.php --configuration ./phpunit.xml --coverage-html ./coverage
 
 runworkflows:
-                @act -P ubuntu-latest=shivammathur/node:latest
+		@act -P ubuntu-latest=shivammathur/node:latest
 
 getvendordir:
 		@rm -Rf ./vendor
