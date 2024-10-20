@@ -81,18 +81,13 @@ class Meeting extends BaseMapper
         int $limit,
         MeetingTypes $type,
     ): array {
-        $qb = $this->getEntityManager()->createQueryBuilder();
-
         // Use yesterday because a meeting might still take place later on the day
         $date = new DateTime();
         $date->add(DateInterval::createFromDateString('yesterday'));
 
-        $qb->select('m, COUNT(d)')
-            ->from($this->getRepositoryName(), 'm')
+        $qb = $this->getRepository()->createQueryBuilder('m')
             ->where('m.date <= :date')
             ->andWhere('m.type = :type')
-            ->leftJoin('m.decisions', 'd')
-            ->groupBy('m')
             ->orderBy('m.date', 'DESC')
             ->setParameter('date', $date)
             ->setParameter('type', $type)

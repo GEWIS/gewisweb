@@ -16,8 +16,6 @@ use Laminas\View\Model\JsonModel;
 use Laminas\View\Model\ViewModel;
 use User\Permissions\NotAllowedException;
 
-use function array_column;
-
 class MemberController extends AbstractActionController
 {
     /**
@@ -43,17 +41,17 @@ class MemberController extends AbstractActionController
 
         // Get the latest 3 meetings of each type and flatten result
         $meetingsCollection = [
-            MeetingTypes::ALV->getAbbreviation($this->translator) => array_column(
-                $this->decisionService->getPastMeetings(3, MeetingTypes::ALV),
-                0,
+            MeetingTypes::ALV->getAbbreviation($this->translator) => $this->decisionService->getPastMeetings(
+                3,
+                MeetingTypes::ALV,
             ),
-            MeetingTypes::BV->getAbbreviation($this->translator) => array_column(
-                $this->decisionService->getPastMeetings(3, MeetingTypes::BV),
-                0,
+            MeetingTypes::BV->getAbbreviation($this->translator) => $this->decisionService->getPastMeetings(
+                3,
+                MeetingTypes::BV,
             ),
-            MeetingTypes::VV->getAbbreviation($this->translator) => array_column(
-                $this->decisionService->getPastMeetings(3, MeetingTypes::VV),
-                0,
+            MeetingTypes::VV->getAbbreviation($this->translator) => $this->decisionService->getPastMeetings(
+                3,
+                MeetingTypes::VV,
             ),
         ];
 
