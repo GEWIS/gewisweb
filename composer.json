@@ -73,7 +73,8 @@
         "setasign/fpdi": "2.3.6",
         "tecnickcom/tcpdf": "6.5.0",
         "jfcherng/php-diff": "^6.16.2",
-        "league/commonmark": "^2.4.2"
+        "league/commonmark": "^2.4.2",
+        "doctrine/migrations": "^3.8"
     },
     "require-dev": {
         "ext-pdo_sqlite": "*",
