@@ -58,8 +58,8 @@
         "laminas/laminas-stdlib": "^3.19.0",
         "laminas/laminas-validator": "^2.52.0",
         "laminas/laminas-view": "^2.34.0",
-        "doctrine/dbal": "^3.8.3",
-        "doctrine/orm": "^2.19.3",
+        "doctrine/dbal": "^3.9.3",
+        "doctrine/orm": "^2.20.0",
         "doctrine/doctrine-module": "^6.1.1",
         "doctrine/doctrine-orm-module": "^6.1.0",
         "doctrine/doctrine-laminas-hydrator": "^3.4.0",
@@ -145,7 +145,7 @@
     "extra": {
         "patches": {
             "doctrine/orm": {
-                "Fix issues with SubDecisions.": "https://raw.githubusercontent.com/GEWIS/orm/2.19.x/1-to-1-multiple-join-columns.patch"
+                "Fix issues with SubDecisions.": "https://raw.githubusercontent.com/GEWIS/orm/2.20.x/1-to-1-multiple-join-columns.patch"
             }
         }
     },
