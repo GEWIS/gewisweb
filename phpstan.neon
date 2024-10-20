@@ -5,8 +5,6 @@ includes:
 parameters:
     level: 6
     treatPhpDocTypesAsCertain: true
-    checkMissingIterableValueType: false
-    checkGenericClassInNonGenericObjectType: false
     reportUnmatchedIgnoredErrors: false
     bootstrapFiles:
         - bootstrap.php
