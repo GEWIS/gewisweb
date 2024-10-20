@@ -47,6 +47,9 @@ migration-diff: replenish
 		@docker compose exec -T web ./orm migrations:diff
 		@docker cp "$(shell docker compose ps -q web)":/code/module/Application/migrations ./module/Application/migrations
 
+migration-migrate: replenish
+		@docker compose exec -it web ./orm migrations:migrate
+
 migration-up: replenish migration-list
 		@read -p "Enter the migration version to execute (e.g., Application\\Migrations\\Version20241020212355 -- note escaping the backslashes is required): " version; \
 		docker compose exec -it web ./orm migrations:execute --up $$version
