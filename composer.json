@@ -100,7 +100,9 @@
         "psalm/plugin-phpunit": "^0.18.4",
         "maglnet/composer-require-checker": "^4.10.0",
         "icanhazstring/composer-unused": "^0.8.11",
-        "gewis/gewisphp-coding-standards": "^1.1.0"
+        "gewis/gewisphp-coding-standards": "^1.1.0",
+        "doctrine/data-fixtures": "^2.0",
+        "fakerphp/faker": "^1.23"
     },
     "replace": {
         "laminas/laminas-cache-storage-adapter-apc": "*",
