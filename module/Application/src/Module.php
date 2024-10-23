@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Application;
 
+use Application\Command\Factory\LoadFixturesFactory as LoadFixturesCommandFactory;
+use Application\Command\LoadFixtures as LoadFixturesCommand;
 use Application\Extensions\CommonMark\CompanyImage\CompanyImageExtension;
 use Application\Extensions\CommonMark\NoImage\NoImageExtension;
 use Application\Extensions\CommonMark\VideoIframe\VideoIframeExtension;
@@ -266,6 +268,7 @@ class Module
 
                     return new UrlBuilder($config['glide']['base_url'], $signature);
                 },
+                LoadFixturesCommand::class => LoadFixturesCommandFactory::class,
             ],
         ];
     }

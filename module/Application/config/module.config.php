@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Application;
 
+use Application\Command\LoadFixtures;
 use Application\Controller\Factory\IndexControllerFactory;
 use Application\Controller\IndexController;
 use Application\View\Helper\BootstrapElementError;
@@ -146,6 +147,11 @@ return [
             'message_open_format' => '<div%s><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><ul><li>',
             'message_close_string' => '</li></ul></div>',
             'message_separator_string' => '</li><li>',
+        ],
+    ],
+    'laminas-cli' => [
+        'commands' => [
+            'application:fixtures:load' => LoadFixtures::class,
         ],
     ],
     'doctrine' => [
