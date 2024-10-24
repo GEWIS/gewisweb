@@ -1,0 +1,22 @@
+<?php
+
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+
+/** @var PhpRenderer|HelperTrait $this */
+?>
+<section class="section">
+    <div class="container">
+        <h2><?= $this->translate('Unauthenticated') ?></h2>
+        <p><?= $this->translate('Log in to access this page.') ?></p>
+        <a href="<?= $this->url(
+            name: 'user/login',
+            options: ['query' => ['redirect_to' => base64_encode($this->serverUrl(true))]],
+        ) ?>">
+            <span class="fas fa-user"></span>
+            <?= $this->translate('Login') ?>
+        </a>
+    </div>
+</section>

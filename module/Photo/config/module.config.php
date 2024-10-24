@@ -20,6 +20,7 @@ use Photo\Controller\Factory\TagControllerFactory;
 use Photo\Controller\PhotoAdminController;
 use Photo\Controller\PhotoController;
 use Photo\Controller\TagController;
+use User\Listener\Authentication;
 
 return [
     'router' => [
@@ -31,6 +32,7 @@ return [
                     'defaults' => [
                         'controller' => PhotoController::class,
                         'action' => 'index',
+                        'auth_type' => Authentication::AUTH_USER,
                     ],
                 ],
                 'may_terminate' => true,
@@ -172,6 +174,7 @@ return [
                     'defaults' => [
                         'controller' => AlbumAdminController::class,
                         'action' => 'index',
+                        'auth_type' => Authentication::AUTH_USER,
                     ],
                 ],
                 'may_terminate' => true,
@@ -329,6 +332,7 @@ return [
                     'defaults' => [
                         'controller' => ApiController::class,
                         'action' => 'index',
+                        'auth_type' => Authentication::AUTH_API,
                     ],
                 ],
                 'may_terminate' => true,

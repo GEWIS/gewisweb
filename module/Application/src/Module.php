@@ -66,7 +66,7 @@ class Module
         $moduleRouteListener->attach($eventManager);
 
         // Attach listener for locale determination through the `LanguageAwareTreeRouteStack`.
-        $eventManager->attach(MvcEvent::EVENT_ROUTE, [$this, 'onRoute']);
+        $eventManager->attach(MvcEvent::EVENT_ROUTE, [$this, 'onRoute'], 100);
 
         $eventManager->attach(MvcEvent::EVENT_DISPATCH_ERROR, [$this, 'logError']);
         $eventManager->attach(MvCEvent::EVENT_RENDER_ERROR, [$this, 'logError']);
