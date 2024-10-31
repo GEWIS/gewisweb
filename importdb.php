@@ -78,7 +78,7 @@ try {
 
     $pgconn = new PDO(
         sprintf(
-            'pgsql:host=%s;port=%d;dbname=%s;options=\'--client_encoding=%s\'',
+            'pgsql:host=%s;port=%d;dbname=%s;sslmode=require;options=\'--client_encoding=%s\'',
             $config['host'],
             $config['port'],
             $config['dbname'],
@@ -107,6 +107,8 @@ try {
         [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES ' . $params['charset'] . ' COLLATE ' . $params['collate'],
+            PDO::MYSQL_ATTR_SSL_CAPATH => '/etc/ssl/certs/',
+            PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => true,
         ],
     );
 } catch (Exception|Error $e) {
