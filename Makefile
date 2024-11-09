@@ -60,6 +60,9 @@ migration-down: replenish migration-list
 		@read -p "Enter the migration version to down (e.g., Application\\Migrations\\Version20241020212355 -- note escaping the backslashes is required): " version; \
 		docker compose exec -it web ./orm migrations:execute --down $$version
 
+exec:
+		docker compose exec -it web $(cmd)
+
 stop:
 		@docker compose down
 
