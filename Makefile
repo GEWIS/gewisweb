@@ -26,8 +26,10 @@ help:
 
 .DEFAULT_GOAL := rundev
 
-SHELL = /bin/bash
+MODULE_DIR := ./module
 LAST_WEB_COMMIT := $(shell git rev-parse --short HEAD)
+SHELL := /bin/bash
+TRANSLATIONS_DIR := $(MODULE_DIR)/Application/language/
 
 runprod:
 		@docker compose -f docker-compose.yml up -d --remove-orphans
@@ -58,6 +60,9 @@ migration-down: replenish migration-list
 		@read -p "Enter the migration version to down (e.g., Application\\Migrations\\Version20241020212355 -- note escaping the backslashes is required): " version; \
 		docker compose exec -it web ./orm migrations:execute --down $$version
 
+exec:
+		docker compose exec -it web $(cmd)
+
 stop:
 		@docker compose down
 
@@ -82,6 +87,49 @@ replenish:
 		@docker compose exec web rm -rf data/cache/module-config-cache.application.config.cache.php
 		@docker compose exec web composer dump-autoload --dev
 		@docker compose exec web ./orm orm:generate-proxies
+
+translations:
+		@find $(MODULE_DIR) -iname "*.phtml" -print0 | sort -z | xargs -r0 xgettext \
+				--language=PHP \
+				--from-code=UTF-8 \
+				--keyword=translate \
+				--keyword=translatePlural:1,2 \
+				--output=$(TRANSLATIONS_DIR)/gewisweb.pot \
+				--force-po \
+				--no-location \
+				--sort-output \
+				--package-name=GEWISweb \
+				--package-version=$(shell git describe --dirty --always) \
+				--copyright-holder=GEWIS && \
+		find $(MODULE_DIR) -iname "*.php" -print0 | sort -z | xargs -r0 xgettext \
+				--language=PHP \
+				--from-code=UTF-8 \
+				--keyword=translate \
+				--keyword=translatePlural:1,2 \
+				--output=$(TRANSLATIONS_DIR)/gewisweb.pot \
+				--force-po \
+				--no-location \
+				--sort-output \
+				--package-name=GEWISweb \
+				--package-version=$(shell git describe --dirty --always) \
+				--copyright-holder=GEWIS \
+				--join-existing && \
+		xgettext $(TRANSLATIONS_DIR)/additional-strings \
+				--language=C \
+				--from-code=UTF-8 \
+				--extract-all \
+				--output=$(TRANSLATIONS_DIR)/gewisweb.pot \
+				--force-po \
+				--no-location \
+				--sort-output \
+				--package-name=GEWISweb \
+				--package-version=$(shell git describe --dirty --always) \
+				--copyright-holder=GEWIS \
+				--join-existing && \
+		msgmerge --sort-output -U $(TRANSLATIONS_DIR)/nl.po $(TRANSLATIONS_DIR)/gewisweb.pot && \
+		msgmerge --sort-output -U $(TRANSLATIONS_DIR)/en.po $(TRANSLATIONS_DIR)/gewisweb.pot && \
+		msgattrib --no-obsolete -o $(TRANSLATIONS_DIR)/en.po $(TRANSLATIONS_DIR)/en.po && \
+		msgattrib --no-obsolete -o $(TRANSLATIONS_DIR)/nl.po $(TRANSLATIONS_DIR)/nl.po
 
 update: updatecomposer updatepackage updatecss updateglide updatedocker
 
