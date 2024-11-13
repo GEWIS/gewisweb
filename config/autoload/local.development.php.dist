@@ -59,6 +59,11 @@ return [
                 'address' => getenv('MAIL_TO_ACTIVITY_CREATION_REQUIRE_GEFLITST_ADDRESS'),
                 'name' => getenv('MAIL_TO_ACTIVITY_CREATION_REQUIRE_GEFLITST_NAME'),
             ],
+            'activity_creation_require_GEFLITST_planka' => [
+                'address' => getenv('MAIL_TO_ACTIVITY_CREATION_REQUIRE_GEFLITST_PLANKA_ADDRESS'),
+                'key' => getenv('MAIL_TO_ACTIVITY_CREATION_REQUIRE_GEFLITST_PLANKA_KEY'),
+                'name' => getenv('MAIL_TO_ACTIVITY_CREATION_REQUIRE_GEFLITST_PLANKA_NAME'),
+            ],
         ],
     ],
 
