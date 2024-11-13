@@ -86,6 +86,9 @@ class Email
 
         $message->setFrom($this->emailConfig['from']['address'], $this->emailConfig['from']['name']);
         $message->setTo($this->emailConfig['to'][$type]['address'], $this->emailConfig['to'][$type]['name']);
+
+        $message = $this->processGEFLITST($type, $message);
+
         $message->setSubject(
             mb_encode_mimeheader(
                 $subject,
@@ -180,6 +183,9 @@ class Email
 
         $message->setFrom($this->emailConfig['from']['address'], $this->emailConfig['from']['name']);
         $message->setTo($this->emailConfig['to'][$type]['address'], $this->emailConfig['to'][$type]['name']);
+
+        $message = $this->processGEFLITST($type, $message);
+
         $message->setSubject(
             mb_encode_mimeheader(
                 $subject,
@@ -243,5 +249,20 @@ class Email
         $model->setTemplate($template);
 
         return $this->renderer->render($model);
+    }
+
+    private function processGEFLITST(
+        string $type,
+        Message $message,
+    ): Message {
+        if ('activity_creation_require_GEFLITST' !== $type) {
+            return $message;
+        }
+
+        $type = 'activity_creation_require_GEFLITST_planka';
+        $message->addTo($this->emailConfig['to'][$type]['address'], $this->emailConfig['to'][$type]['name']);
+        $message->getHeaders()->addHeaderLine('X-Planka-Board-Id', $this->emailConfig['to'][$type]['key']);
+
+        return $message;
     }
 }

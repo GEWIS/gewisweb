@@ -353,7 +353,10 @@ class Activity
             $subject = sprintf('%s: %s on %s', $organ->getAbbr(), $activityTitle, $activityTime);
 
             $organInfo = $organ->getApprovedOrganInformation();
-            if (null !== $organInfo && null !== $organInfo->getEmail()) {
+            if (
+                null !== $organInfo
+                && null !== $organInfo->getEmail()
+            ) {
                 $this->emailService->sendEmailAsOrgan(
                     $type,
                     $view,
@@ -362,7 +365,7 @@ class Activity
                     $organInfo,
                 );
             } else {
-                // The organ did not fill in it's email address, so send the email as the requested user.
+                // The organ did not fill in its e-mail address, so send the e-mail as the requested user.
                 $this->emailService->sendEmailAsUser(
                     $type,
                     $view,
