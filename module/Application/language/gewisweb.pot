@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: GEWISweb v2.8.6-764-gabeeb8c00-dirty\n"
+"Project-Id-Version: GEWISweb v2.8.6-797-g9074c8f18-dirty\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-11 14:50+0200\n"
+"POT-Creation-Date: 2024-11-13 21:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1677,8 +1677,8 @@ msgid "MMM d"
 msgstr ""
 
 msgid ""
-"Made with <3 by the ApplicatieBeheerCommissie and Web Commissie (2013 - "
-"2022)."
+"Made with <3 by the ApplicatieBeheerCommissie (2022 - now) and Web Commissie "
+"(2013 - 2022)."
 msgstr ""
 
 msgid "Mail address"
@@ -2651,6 +2651,14 @@ msgstr ""
 
 #, php-format
 msgid "The %s%s %s%s will be held on %s."
+msgstr ""
+
+msgid ""
+"The GEWIS website is open-source! Check out the repository on <a "
+"href=\"https://github.com/GEWIS/gewisweb\" target=\"_blank\"><span "
+"class=\"fab fa-github\"></span>GitHub</a>. Or visit our <a href=\"https://"
+"github.com/GEWIS\" target=\"_blank\">organisation</a> for more of our "
+"awesome open-source projects."
 msgstr ""
 
 msgid "The activity category was created successfully!"

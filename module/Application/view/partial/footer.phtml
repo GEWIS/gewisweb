@@ -46,11 +46,13 @@ use Laminas\View\Renderer\PhpRenderer;
                         endif ?>
                         <p>
                             &copy; 2013
-                            - <?= date('Y') ?> S.v. GEWIS. <?php
-                            echo $this->translate('All rights reserved.') ?>
+                            - <?= date('Y') ?> S.v. GEWIS. <?= $this->translate('All rights reserved.') ?>
                             <?= $this->translate(
-                                'Made with <3 by the ApplicatieBeheerCommissie and Web Commissie (2013 - 2022).'
+                                'Made with <3 by the ApplicatieBeheerCommissie (2022 - now) and Web Commissie (2013 - 2022).'
                             ) ?>
+                        </p>
+                        <p>
+                            <?= $this->translate('The GEWIS website is open-source! Check out the repository on <a href="https://github.com/GEWIS/gewisweb" target="_blank"><span class="fab fa-github"></span>GitHub</a>. Or visit our <a href="https://github.com/GEWIS" target="_blank">organisation</a> for more of our awesome open-source projects.') ?>
                         </p>
                     </div>
                     <div class="col-sm-4">
