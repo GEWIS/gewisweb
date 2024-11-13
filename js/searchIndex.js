@@ -4171,6 +4171,11 @@ Search.appendIndex(
             "summary": "Render\u0020a\u0020template\u0020with\u0020given\u0020variables.",
             "url": "classes/Application-Service-Email.html#method_render"
         },                {
+            "fqsen": "\\Application\\Service\\Email\u003A\u003AprocessGEFLITST\u0028\u0029",
+            "name": "processGEFLITST",
+            "summary": "",
+            "url": "classes/Application-Service-Email.html#method_processGEFLITST"
+        },                {
             "fqsen": "\\Application\\Service\\Email\u003A\u003A\u0024renderer",
             "name": "renderer",
             "summary": "",
