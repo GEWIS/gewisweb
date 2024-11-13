@@ -3241,6 +3241,41 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Application-Migrations-Version20241020212355.html#method_down"
         },                {
+            "fqsen": "\\Application\\Command\\Factory\\LoadFixturesFactory",
+            "name": "LoadFixturesFactory",
+            "summary": "",
+            "url": "classes/Application-Command-Factory-LoadFixturesFactory.html"
+        },                {
+            "fqsen": "\\Application\\Command\\Factory\\LoadFixturesFactory\u003A\u003A__invoke\u0028\u0029",
+            "name": "__invoke",
+            "summary": "",
+            "url": "classes/Application-Command-Factory-LoadFixturesFactory.html#method___invoke"
+        },                {
+            "fqsen": "\\Application\\Command\\LoadFixtures",
+            "name": "LoadFixtures",
+            "summary": "",
+            "url": "classes/Application-Command-LoadFixtures.html"
+        },                {
+            "fqsen": "\\Application\\Command\\LoadFixtures\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Application-Command-LoadFixtures.html#method___construct"
+        },                {
+            "fqsen": "\\Application\\Command\\LoadFixtures\u003A\u003Aexecute\u0028\u0029",
+            "name": "execute",
+            "summary": "",
+            "url": "classes/Application-Command-LoadFixtures.html#method_execute"
+        },                {
+            "fqsen": "\\Application\\Command\\LoadFixtures\u003A\u003AFIXTURES",
+            "name": "FIXTURES",
+            "summary": "",
+            "url": "classes/Application-Command-LoadFixtures.html#constant_FIXTURES"
+        },                {
+            "fqsen": "\\Application\\Command\\LoadFixtures\u003A\u003A\u0024entityManager",
+            "name": "entityManager",
+            "summary": "",
+            "url": "classes/Application-Command-LoadFixtures.html#property_entityManager"
+        },                {
             "fqsen": "\\Application\\Controller\\Factory\\IndexControllerFactory",
             "name": "IndexControllerFactory",
             "summary": "",
@@ -8521,6 +8556,11 @@ Search.appendIndex(
             "summary": "Decision\u0020model.",
             "url": "classes/Decision-Model-Decision.html"
         },                {
+            "fqsen": "\\Decision\\Model\\Decision\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Decision-Model-Decision.html#method___construct"
+        },                {
             "fqsen": "\\Decision\\Model\\Decision\u003A\u003AsetMeeting\u0028\u0029",
             "name": "setMeeting",
             "summary": "Set\u0020the\u0020meeting.",
@@ -11320,6 +11360,41 @@ Search.appendIndex(
             "name": "testAdminOrganActionCanBeAccessedAsAdmin",
             "summary": "",
             "url": "classes/DecisionTest-ControllerTest.html#method_testAdminOrganActionCanBeAccessedAsAdmin"
+        },                {
+            "fqsen": "\\DecisionTest\\Seeder\\MeetingFixture",
+            "name": "MeetingFixture",
+            "summary": "",
+            "url": "classes/DecisionTest-Seeder-MeetingFixture.html"
+        },                {
+            "fqsen": "\\DecisionTest\\Seeder\\MeetingFixture\u003A\u003Aload\u0028\u0029",
+            "name": "load",
+            "summary": "",
+            "url": "classes/DecisionTest-Seeder-MeetingFixture.html#method_load"
+        },                {
+            "fqsen": "\\DecisionTest\\Seeder\\MemberFixture",
+            "name": "MemberFixture",
+            "summary": "",
+            "url": "classes/DecisionTest-Seeder-MemberFixture.html"
+        },                {
+            "fqsen": "\\DecisionTest\\Seeder\\MemberFixture\u003A\u003Aload\u0028\u0029",
+            "name": "load",
+            "summary": "",
+            "url": "classes/DecisionTest-Seeder-MemberFixture.html#method_load"
+        },                {
+            "fqsen": "\\DecisionTest\\Seeder\\MemberFixture\u003A\u003AsetOtherMemberProperties\u0028\u0029",
+            "name": "setOtherMemberProperties",
+            "summary": "",
+            "url": "classes/DecisionTest-Seeder-MemberFixture.html#method_setOtherMemberProperties"
+        },                {
+            "fqsen": "\\DecisionTest\\Seeder\\MemberFixture\u003A\u003A\u0024faker",
+            "name": "faker",
+            "summary": "",
+            "url": "classes/DecisionTest-Seeder-MemberFixture.html#property_faker"
+        },                {
+            "fqsen": "\\DecisionTest\\Seeder\\MemberFixture\u003A\u003A\u0024now",
+            "name": "now",
+            "summary": "",
+            "url": "classes/DecisionTest-Seeder-MemberFixture.html#property_now"
         },                {
             "fqsen": "\\Education\\Controller\\AdminController",
             "name": "AdminController",
@@ -18391,6 +18466,36 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/UserTest-ControllerTest.html#method_testAdminUserApiActionCanBeAccessedAsAdmin"
         },                {
+            "fqsen": "\\UserTest\\Seeder\\UserFixture",
+            "name": "UserFixture",
+            "summary": "",
+            "url": "classes/UserTest-Seeder-UserFixture.html"
+        },                {
+            "fqsen": "\\UserTest\\Seeder\\UserFixture\u003A\u003Aload\u0028\u0029",
+            "name": "load",
+            "summary": "",
+            "url": "classes/UserTest-Seeder-UserFixture.html#method_load"
+        },                {
+            "fqsen": "\\UserTest\\Seeder\\UserFixture\u003A\u003AgetDependencies\u0028\u0029",
+            "name": "getDependencies",
+            "summary": "",
+            "url": "classes/UserTest-Seeder-UserFixture.html#method_getDependencies"
+        },                {
+            "fqsen": "\\UserTest\\Seeder\\UserRoleFixture",
+            "name": "UserRoleFixture",
+            "summary": "",
+            "url": "classes/UserTest-Seeder-UserRoleFixture.html"
+        },                {
+            "fqsen": "\\UserTest\\Seeder\\UserRoleFixture\u003A\u003Aload\u0028\u0029",
+            "name": "load",
+            "summary": "",
+            "url": "classes/UserTest-Seeder-UserRoleFixture.html#method_load"
+        },                {
+            "fqsen": "\\UserTest\\Seeder\\UserRoleFixture\u003A\u003AgetDependencies\u0028\u0029",
+            "name": "getDependencies",
+            "summary": "",
+            "url": "classes/UserTest-Seeder-UserRoleFixture.html#method_getDependencies"
+        },                {
             "fqsen": "\\",
             "name": "\\",
             "summary": "",
@@ -18465,6 +18570,16 @@ Search.appendIndex(
             "name": "Migrations",
             "summary": "",
             "url": "namespaces/application-migrations.html"
+        },                {
+            "fqsen": "\\Application\\Command\\Factory",
+            "name": "Factory",
+            "summary": "",
+            "url": "namespaces/application-command-factory.html"
+        },                {
+            "fqsen": "\\Application\\Command",
+            "name": "Command",
+            "summary": "",
+            "url": "namespaces/application-command.html"
         },                {
             "fqsen": "\\Application\\Controller\\Factory",
             "name": "Factory",
@@ -18700,6 +18815,11 @@ Search.appendIndex(
             "name": "DecisionTest",
             "summary": "",
             "url": "namespaces/decisiontest.html"
+        },                {
+            "fqsen": "\\DecisionTest\\Seeder",
+            "name": "Seeder",
+            "summary": "",
+            "url": "namespaces/decisiontest-seeder.html"
         },                {
             "fqsen": "\\Education",
             "name": "Education",
@@ -18965,5 +19085,10 @@ Search.appendIndex(
             "name": "UserTest",
             "summary": "",
             "url": "namespaces/usertest.html"
+        },                {
+            "fqsen": "\\UserTest\\Seeder",
+            "name": "Seeder",
+            "summary": "",
+            "url": "namespaces/usertest-seeder.html"
         }            ]
 );
