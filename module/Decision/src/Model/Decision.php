@@ -6,6 +6,7 @@ namespace Decision\Model;
 
 use Decision\Model\Enums\MeetingTypes;
 use Decision\Model\SubDecision\Annulment;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
@@ -52,6 +53,7 @@ class Decision
         enumType: MeetingTypes::class,
     )]
     protected MeetingTypes $meeting_type;
+
     /**
      * Meeting number.
      *
@@ -103,7 +105,12 @@ class Decision
         targetEntity: Annulment::class,
         mappedBy: 'target',
     )]
-    protected Annulment $annulledBy;
+    protected ?Annulment $annulledBy = null;
+
+    public function __construct()
+    {
+        $this->subdecisions = new ArrayCollection();
+    }
 
     /**
      * Set the meeting.

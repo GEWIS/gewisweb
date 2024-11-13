@@ -15,8 +15,8 @@ class AssociationYear
     /**
      * A GEWIS association year starts 01-07.
      */
-    public const ASSOCIATION_YEAR_START_MONTH = 7;
-    public const ASSOCIATION_YEAR_START_DAY = 1;
+    public const int ASSOCIATION_YEAR_START_MONTH = 7;
+    public const int ASSOCIATION_YEAR_START_DAY = 1;
 
     /** @var int the first calendar year of the association year */
     protected int $firstYear;
