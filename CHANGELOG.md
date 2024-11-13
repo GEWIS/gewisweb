@@ -1,3 +1,19 @@
+## [v4.5.0](https://github.com/GEWIS/gewisweb/tree/v4.5.0) (2024-11-13)
+
+* Added administrative user overview.
+* Added plankAPI integration for activities.
+* Added links to GitHub in global footer.
+* Improved mixing of activities in the news feed.
+* Improved handling of permissions for the admin interface.
+* Improved linking to current version of the website.
+* Improved viewing of poll comment authors for the board.
+* Improved development setup of the project by adding migrations and proper data seeding.
+* Improved security of connections to the databases.
+* Fixed an issue where poll approval dates could be confusing.
+* Fixed an issue where extra slashes could be added to URLs that were invalid.
+* Fixed an issue where permissions for `active_member` could be make it look like more permissions were granted than was the case.
+* Updated dependencies.
+
 ## [v4.4.1](https://github.com/GEWIS/gewisweb/tree/v4.4.1) (2024-08-31)
 
 * Updated `security.txt`
