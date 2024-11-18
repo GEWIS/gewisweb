@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Decision\Model;
 
 use Application\Model\Traits\TimestampableTrait;
+use Decision\Extensions\Doctrine\MeetingTypesType;
 use Decision\Model\Enums\MeetingTypes;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
@@ -27,10 +28,7 @@ class MeetingMinutes implements ResourceInterface
      * Meeting type.
      */
     #[Id]
-    #[Column(
-        type: 'string',
-        enumType: MeetingTypes::class,
-    )]
+    #[Column(type: MeetingTypesType::NAME)]
     protected MeetingTypes $meeting_type;
 
     /**
