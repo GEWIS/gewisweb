@@ -748,8 +748,8 @@ msgstr "Complaint or suggestion about TU/e education?"
 msgid "Complete agenda"
 msgstr "Complete agenda"
 
-msgid "Confidential Contact Person (CCP)"
-msgstr "Confidential Contact Person (CCP)"
+msgid "Confidential Peer Support (CPS)"
+msgstr "Confidential Peer Support (CPS)"
 
 msgid "Confirm authorization"
 msgstr "Confirm authorization"
