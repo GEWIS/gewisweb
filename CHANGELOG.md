@@ -1,3 +1,7 @@
+## [v4.5.1](https://github.com/GEWIS/gewisweb/tree/v4.5.1) (2024-11-20)
+
+* Fixed an issue where the URL for the CPS page was incorrect in the navbar.
+
 ## [v4.5.0](https://github.com/GEWIS/gewisweb/tree/v4.5.0) (2024-11-13)
 
 * Added administrative user overview.
