@@ -753,7 +753,7 @@ msgstr "Klacht of suggestie over TU/e onderwijs?"
 msgid "Complete agenda"
 msgstr "Volledige agenda"
 
-msgid "Confidential Contact Person (CCP)"
+msgid "Confidential Peer Support (CPS)"
 msgstr "Vertrouwenscontactpersonen (VCP)"
 
 msgid "Confirm authorization"

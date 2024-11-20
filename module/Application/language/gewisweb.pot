@@ -703,7 +703,7 @@ msgstr ""
 msgid "Complete agenda"
 msgstr ""
 
-msgid "Confidential Contact Person (CCP)"
+msgid "Confidential Peer Support (CPS)"
 msgstr ""
 
 msgid "Confirm authorization"
