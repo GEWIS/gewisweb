@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-13 21:40+0100\n"
-"PO-Revision-Date: 2024-11-13 21:42+0100\n"
+"POT-Creation-Date: 2024-11-27 16:20+0100\n"
+"PO-Revision-Date: 2024-11-27 16:22+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: nl\n"
@@ -1378,6 +1378,9 @@ msgstr "ALV"
 msgid "GMM %d (%s)"
 msgstr "ALV %d (%s)"
 
+msgid "GMM Bodies"
+msgstr "ALV-organen"
+
 msgid "GMM Committee"
 msgstr "ALV-Commissie"
 
@@ -2377,6 +2380,10 @@ msgstr "Posterbeleid"
 msgid "Previous"
 msgstr "Vorige"
 
+#, php-format
+msgid "Previous %s"
+msgstr "Eerdere %s"
+
 msgid "Previous exceptions"
 msgstr "Vorige excepties"
 
@@ -3009,6 +3016,10 @@ msgstr "Er bestaat al een vak met deze code"
 msgid "There are a few rules:"
 msgstr "Er zijn een paar regels:"
 
+#, php-format
+msgid "There are currently no %s installed."
+msgstr "Er zijn momenteel geen %s geïnstalleerd."
+
 msgid "There are currently no activity categories..."
 msgstr "Er zijn momenteel geen activiteitencategorieën..."
 
@@ -3025,6 +3036,10 @@ msgid ""
 msgstr ""
 "Er zijn momenteel geen samenvattingen beschikbaar. Stuur er zelf een in door "
 "te mailen naar"
+
+#, php-format
+msgid "There are no abrogated %s."
+msgstr "Er zijn geen opgeheven %s."
 
 msgid "There are no activities in the archive."
 msgstr "Er zijn geen activiteiten in het archief."

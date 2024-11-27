@@ -104,6 +104,54 @@ return [
                         ],
                         'priority' => 100,
                     ],
+                    'gmm_bodies' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => 'association/gmm-bodies',
+                            'defaults' => [
+                                'controller' => OrganController::class,
+                            ],
+                        ],
+                        'may_terminate' => false,
+                        'child_routes' => [
+                            'avc_list' => [
+                                'type' => Literal::class,
+                                'options' => [
+                                    'route' => '/gmm-committees',
+                                    'defaults' => [
+                                        'action' => 'avcList',
+                                    ],
+                                ],
+                            ],
+                            'avw_list' => [
+                                'type' => Literal::class,
+                                'options' => [
+                                    'route' => '/gmm-taskforces',
+                                    'defaults' => [
+                                        'action' => 'avwList',
+                                    ],
+                                ],
+                            ],
+                            'kcc_list' => [
+                                'type' => Literal::class,
+                                'options' => [
+                                    'route' => '/financial-audit-committees',
+                                    'defaults' => [
+                                        'action' => 'kccList',
+                                    ],
+                                ],
+                            ],
+                            'rva_list' => [
+                                'type' => Literal::class,
+                                'options' => [
+                                    'route' => '/advisory-boards',
+                                    'defaults' => [
+                                        'action' => 'rvaList',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
                 ],
             ],
             'admin_page' => [
@@ -389,6 +437,10 @@ return [
             'news-admin/edit' => __DIR__ . '/../view/frontpage/news-admin/edit.phtml',
             'organ/committee-list' => __DIR__ . '/../view/frontpage/organ/committee-list.phtml',
             'organ/fraternity-list' => __DIR__ . '/../view/frontpage/organ/fraternity-list.phtml',
+            'frontpage/organ/avc-list' => __DIR__ . '/../view/frontpage/organ/gmm-body.phtml',
+            'frontpage/organ/avw-list' => __DIR__ . '/../view/frontpage/organ/gmm-body.phtml',
+            'frontpage/organ/kcc-list' => __DIR__ . '/../view/frontpage/organ/gmm-body.phtml',
+            'frontpage/organ/rva-list' => __DIR__ . '/../view/frontpage/organ/gmm-body.phtml',
         ],
     ],
     'doctrine' => [

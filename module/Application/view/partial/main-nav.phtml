@@ -3,12 +3,14 @@
 declare(strict_types=1);
 
 use Application\View\HelperTrait;
+use Decision\Model\Enums\OrganTypes;
 use Laminas\View\Exception\RuntimeException;
 use Laminas\View\Renderer\PhpRenderer;
 
 /** @var PhpRenderer|HelperTrait $this */
 
-$lang = $this->plugin('translate')->getTranslator()->getLocale();
+$translator = $this->plugin('translate')->getTranslator();
+$lang = $translator->getLocale();
 ?>
 <?php
 if ($this->identity()?->getMember()->isBoardMember()): ?>
@@ -287,6 +289,41 @@ endif; ?>
                             <a href="<?= $this->url('home/fraternity_list') ?>">
                                 <?= $this->translate('Fraternities') ?>
                             </a>
+                        </li>
+                        <li class="dropdown dropdown-submenu">
+                            <a href="<?= $this->hashUrl() ?>" role="button"
+                               class="dropdown-toggle visible-sm visible-xs" data-toggle="dropdown" aria-haspopup="true"
+                               aria-expanded="false">
+                                <?= $this->translate('GMM Bodies') ?>
+                                <span class="caret"></span>
+                            </a>
+                            <a href="<?= $this->hashUrl() ?>" role="button"
+                               class="hidden-sm hidden-xs">
+                                <?= $this->translate('GMM Bodies') ?>
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="<?= $this->url('home/gmm_bodies/rva_list') ?>">
+                                        <?= OrganTypes::RvA->getPluralName($translator) ?>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= $this->url('home/gmm_bodies/kcc_list') ?>">
+                                        <?= OrganTypes::KCC->getPluralName($translator) ?>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= $this->url('home/gmm_bodies/avw_list') ?>">
+                                        <?= OrganTypes::AVW->getPluralName($translator) ?>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= $this->url('home/gmm_bodies/avc_list') ?>">
+                                        <?= OrganTypes::AVC->getPluralName($translator) ?>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li>
                             <a href="<?= $this->url(

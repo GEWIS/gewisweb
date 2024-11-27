@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: GEWISweb v2.8.6-797-g9074c8f18-dirty\n"
+"Project-Id-Version: GEWISweb v2.8.6-803-g35ae5011a-dirty\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-13 21:40+0100\n"
+"POT-Creation-Date: 2024-11-27 16:20+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1302,6 +1302,9 @@ msgstr ""
 msgid "GMM %d (%s)"
 msgstr ""
 
+msgid "GMM Bodies"
+msgstr ""
+
 msgid "GMM Committee"
 msgstr ""
 
@@ -2225,6 +2228,10 @@ msgstr ""
 msgid "Previous"
 msgstr ""
 
+#, php-format
+msgid "Previous %s"
+msgstr ""
+
 msgid "Previous exceptions"
 msgstr ""
 
@@ -2804,6 +2811,10 @@ msgstr ""
 msgid "There are a few rules:"
 msgstr ""
 
+#, php-format
+msgid "There are currently no %s installed."
+msgstr ""
+
 msgid "There are currently no activity categories..."
 msgstr ""
 
@@ -2816,6 +2827,10 @@ msgstr ""
 msgid ""
 "There are currently no summaries available. Consider submitting one yourself "
 "by sending an email to"
+msgstr ""
+
+#, php-format
+msgid "There are no abrogated %s."
 msgstr ""
 
 msgid "There are no activities in the archive."
