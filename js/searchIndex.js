@@ -8791,6 +8791,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Decision-Model-Enums-OrganTypes.html#method_getName"
         },                {
+            "fqsen": "\\Decision\\Model\\Enums\\OrganTypes\u003A\u003AgetPluralName\u0028\u0029",
+            "name": "getPluralName",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-OrganTypes.html#method_getPluralName"
+        },                {
             "fqsen": "\\Decision\\Model\\Enums\\OrganTypes\u003A\u003ACommittee",
             "name": "Committee",
             "summary": "",
@@ -12565,6 +12570,31 @@ Search.appendIndex(
             "name": "fraternityListAction",
             "summary": "",
             "url": "classes/Frontpage-Controller-OrganController.html#method_fraternityListAction"
+        },                {
+            "fqsen": "\\Frontpage\\Controller\\OrganController\u003A\u003AavcListAction\u0028\u0029",
+            "name": "avcListAction",
+            "summary": "",
+            "url": "classes/Frontpage-Controller-OrganController.html#method_avcListAction"
+        },                {
+            "fqsen": "\\Frontpage\\Controller\\OrganController\u003A\u003AavwListAction\u0028\u0029",
+            "name": "avwListAction",
+            "summary": "",
+            "url": "classes/Frontpage-Controller-OrganController.html#method_avwListAction"
+        },                {
+            "fqsen": "\\Frontpage\\Controller\\OrganController\u003A\u003AkccListAction\u0028\u0029",
+            "name": "kccListAction",
+            "summary": "",
+            "url": "classes/Frontpage-Controller-OrganController.html#method_kccListAction"
+        },                {
+            "fqsen": "\\Frontpage\\Controller\\OrganController\u003A\u003ArvaListAction\u0028\u0029",
+            "name": "rvaListAction",
+            "summary": "",
+            "url": "classes/Frontpage-Controller-OrganController.html#method_rvaListAction"
+        },                {
+            "fqsen": "\\Frontpage\\Controller\\OrganController\u003A\u003AgetBodies\u0028\u0029",
+            "name": "getBodies",
+            "summary": "",
+            "url": "classes/Frontpage-Controller-OrganController.html#method_getBodies"
         },                {
             "fqsen": "\\Frontpage\\Controller\\OrganController\u003A\u003AorganAction\u0028\u0029",
             "name": "organAction",
