@@ -29,4 +29,16 @@ enum OrganTypes: string
             self::RvA => $translator->translate('Advisory Board'),
         };
     }
+
+    public function getPluralName(Translator $translator): string
+    {
+        return match ($this) {
+            self::Committee => $translator->translate('Committees'),
+            self::AVC => $translator->translate('GMM Committees'),
+            self::Fraternity => $translator->translate('Fraternities'),
+            self::KCC => $translator->translate('Financial Audit Committees'),
+            self::AVW => $translator->translate('GMM Taskforces'),
+            self::RvA => $translator->translate('Advisory Boards'),
+        };
+    }
 }

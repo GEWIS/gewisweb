@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-13 21:40+0100\n"
-"PO-Revision-Date: 2024-11-13 21:41+0100\n"
+"POT-Creation-Date: 2024-11-27 16:20+0100\n"
+"PO-Revision-Date: 2024-11-27 16:21+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: en\n"
@@ -1365,6 +1365,9 @@ msgstr "GMM"
 msgid "GMM %d (%s)"
 msgstr "GMM %d (%s)"
 
+msgid "GMM Bodies"
+msgstr "GMM Bodies"
+
 msgid "GMM Committee"
 msgstr "GMM Committee"
 
@@ -2353,6 +2356,10 @@ msgstr "Poster Policy"
 msgid "Previous"
 msgstr "Previous"
 
+#, php-format
+msgid "Previous %s"
+msgstr "Previous %s"
+
 msgid "Previous exceptions"
 msgstr "Previous exceptions"
 
@@ -2982,6 +2989,10 @@ msgstr "There already exists a course with this code"
 msgid "There are a few rules:"
 msgstr "There are a few rules:"
 
+#, php-format
+msgid "There are currently no %s installed."
+msgstr "There are currently no %s installed."
+
 msgid "There are currently no activity categories..."
 msgstr "There are currently no activity categories..."
 
@@ -2997,6 +3008,10 @@ msgid ""
 msgstr ""
 "There are currently no summaries available. Consider submitting one yourself "
 "by sending an email to"
+
+#, php-format
+msgid "There are no abrogated %s."
+msgstr "There are no abrogated %s."
 
 msgid "There are no activities in the archive."
 msgstr "There are no activities in the archive."

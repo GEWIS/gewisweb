@@ -1,0 +1,77 @@
+<?php
+
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Decision\Model\Enums\OrganTypes;
+use Decision\Model\Organ as OrganModel;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var OrganModel[] $active
+ * @var OrganModel[] $abrogated
+ * @var OrganTypes $organType
+ */
+
+$translator = $this->plugin('translate')->getTranslator();
+$lang = $translator->getLocale();
+
+$namePlural = $organType->getPluralName($translator);
+
+$this->headTitle($namePlural);
+?>
+<section class="section">
+    <div class="container">
+        <h1><?= $namePlural ?></h1>
+        <div class="row">
+            <?php if (empty($active)): ?>
+                <div class="col-md-12">
+                    <p>
+                        <?= sprintf(
+                            $this->translate('There are currently no %s installed.'),
+                            $namePlural,
+                        ) ?>
+                    </p>
+                </div>
+            <?php else: ?>
+                <?php
+                foreach ($active as $avc) {
+                    echo $this->partial('partial/organ-card.phtml', [
+                        'organ' => $avc,
+                        'lang' => $lang,
+                    ]);
+                }
+                ?>
+            <?php endif; ?>
+        </div>
+        <hr>
+        <h3>
+            <?= sprintf(
+                $this->translate('Previous %s'),
+                $namePlural,
+            ) ?>
+        </h3>
+        <div class="row">
+            <?php if (empty($abrogated)): ?>
+                <div class="col-md-12">
+                    <p>
+                        <?= sprintf(
+                            $this->translate('There are no abrogated %s.'),
+                            $namePlural,
+                        ) ?>
+                    </p>
+                </div>
+            <?php else: ?>
+                <?php
+                foreach ($abrogated as $avc) {
+                    echo $this->partial('partial/organ-card.phtml', [
+                        'organ' => $avc,
+                        'lang' => $lang,
+                    ]);
+                }
+                ?>
+            <?php endif; ?>
+        </div>
+    </div>
+</section>

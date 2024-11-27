@@ -48,6 +48,35 @@ class OrganController extends AbstractActionController
         );
     }
 
+    public function avcListAction(): ViewModel
+    {
+        return $this->getBodies(OrganTypes::AVC);
+    }
+
+    public function avwListAction(): ViewModel
+    {
+        return $this->getBodies(OrganTypes::AVW);
+    }
+
+    public function kccListAction(): ViewModel
+    {
+        return $this->getBodies(OrganTypes::KCC);
+    }
+
+    public function rvaListAction(): ViewModel
+    {
+        return $this->getBodies(OrganTypes::RvA);
+    }
+
+    private function getBodies(OrganTypes $organType): ViewModel
+    {
+        return new ViewModel([
+            'organType' => $organType,
+            'active' => $this->organService->findActiveOrgansByType($organType),
+            'abrogated' => $this->organService->findAbrogatedOrgansByType($organType),
+        ]);
+    }
+
     public function organAction(): ViewModel
     {
         $type = OrganTypes::from($this->params()->fromRoute('type'));
