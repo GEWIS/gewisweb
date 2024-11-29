@@ -23,7 +23,8 @@ use Laminas\View\Renderer\PhpRenderer;
 // set title
 $this->headTitle($organ->getName());
 
-$lang = $this->plugin('translate')->getTranslator()->getLocale();
+$translator = $this->plugin('translate')->getTranslator();
+$lang = $translator->getLocale();
 $organInformation = $organ->getApprovedOrganInformation();
 function getOrganDescription($organInformation, $lang)
 {
@@ -57,22 +58,41 @@ function getOrganDescription($organInformation, $lang)
         <div class="container">
             <ol class="breadcrumb">
                 <li class="active">
+                    <a href="<?= $this->url(
+                        'home/page',
+                        [
+                            'category' => 'vereniging',
+                            'categoryEn' => 'association',
+                        ],
+                    ) ?>">
+                        <?= $this->translate('Association') ?>
+                    </a>
+                </li>
+                <li class="active">
                     <?php if (OrganTypes::Fraternity === $organ->getType()): ?>
                         <a href="<?= $this->url('home/fraternity_list') ?>">
-                            <?= $this->translate('Fraternities') ?>
+                            <?= OrganTypes::Fraternity->getPluralName($translator) ?>
                         </a>
                     <?php elseif (OrganTypes::Committee === $organ->getType()): ?>
                         <a href="<?= $this->url('home/committee_list') ?>">
-                            <?= $this->translate('Committees') ?>
+                            <?= OrganTypes::Committee->getPluralName($translator) ?>
                         </a>
                     <?php elseif (OrganTypes::AVC === $organ->getType()): ?>
-                        <?= $this->translate('GMM Committees') ?>
+                        <a href="<?= $this->url('home/gmm_bodies/avc_list') ?>">
+                            <?= OrganTypes::AVC->getPluralName($translator) ?>
+                        </a>
                     <?php elseif (OrganTypes::AVW === $organ->getType()): ?>
-                        <?= $this->translate('GMM Taskforces') ?>
+                        <a href="<?= $this->url('home/gmm_bodies/avw_list') ?>">
+                            <?= OrganTypes::AVW->getPluralName($translator) ?>
+                        </a>
                     <?php elseif (OrganTypes::KCC === $organ->getType()): ?>
-                        <?= $this->translate('Financial Audit Committees') ?>
+                        <a href="<?= $this->url('home/gmm_bodies/kcc_list') ?>">
+                            <?= OrganTypes::KCC->getPluralName($translator) ?>
+                        </a>
                     <?php elseif (OrganTypes::RvA === $organ->getType()): ?>
-                        <?= $this->translate('Advisory Boards') ?>
+                        <a href="<?= $this->url('home/gmm_bodies/rva_list') ?>">
+                            <?= OrganTypes::RvA->getPluralName($translator) ?>
+                        </a>
                     <?php endif; ?>
                 </li>
                 <li class="active">

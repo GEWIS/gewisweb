@@ -282,12 +282,12 @@ endif; ?>
                         </li>
                         <li>
                             <a href="<?= $this->url('home/committee_list') ?>">
-                                <?= $this->translate('Committees') ?>
+                                <?= OrganTypes::Committee->getPluralName($translator) ?>
                             </a>
                         </li>
                         <li>
                             <a href="<?= $this->url('home/fraternity_list') ?>">
-                                <?= $this->translate('Fraternities') ?>
+                                <?= OrganTypes::Fraternity->getPluralName($translator) ?>
                             </a>
                         </li>
                         <li class="dropdown dropdown-submenu">
