@@ -17,44 +17,65 @@ $this->headTitle($this->translate('Organ list'));
 ?>
 <section class="section">
     <div class="container">
-        <table class="table table-hover">
-            <thead>
-            <tr>
-                <th><?= $this->translate('Abbreviation') ?></th>
-                <th><?= $this->translate('Name') ?></th>
-                <th><?= $this->translate('Type') ?></th>
-                <?php if ($historical): ?>
-                    <th><?= $this->translate('Abrogation Date') ?></th>
-                <?php endif; ?>
-            </tr>
-            </thead>
-            <tbody>
-            <?php foreach ($organs as $organ): ?>
-                <?php $url = $this->url('organs/view', ['organ' => $organ->getId()]) ?>
-                <tr>
-                    <td>
-                        <a style="display: block; height: 100%; width:100%" href="<?= $url ?>">
-                            <?= $organ->getAbbr() ?>
+        <div class="row">
+            <div class="col-md-5 col-sm-5 col-xs-12">
+                <ul class="nav nav-pills">
+                    <li role="presentation" class="<?= $historical ? 'active' : '' ?>">
+                        <a href="<?= $this->url('organs') ?>">
+                            <?= $this->translate('Active') ?>
                         </a>
-                    </td>
-                    <td>
-                        <a style="display: block; height: 100%; width:100%" href="<?= $url ?>">
-                            <?= $organ->getName() ?>
+                    </li>
+                    <li role="presentation" class="<?= !$historical ? 'active' : '' ?>">
+                        <a href="<?= $this->url('organs/history') ?>">
+                            <?= $this->translate('Abrogated') ?>
                         </a>
-                    </td>
-                    <td>
-                        <a style="display: block; height: 100%; width:100%" href="<?= $url ?>">
-                            <?= $organ->getType()->getName($this->plugin('translate')->getTranslator()) ?>
-                        </a>
-                    </td>
-                    <?php if ($historical): ?>
-                        <td>
-                            <?= $organ->getAbrogationDate()?->format('Y-m-d') ?>
-                        </td>
-                    <?php endif; ?>
-                </tr>
-            <?php endforeach; ?>
-            </tbody>
-        </table>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th><?= $this->translate('Abbreviation') ?></th>
+                            <th><?= $this->translate('Name') ?></th>
+                            <th><?= $this->translate('Type') ?></th>
+                            <?php if ($historical): ?>
+                                <th><?= $this->translate('Abrogation Date') ?></th>
+                            <?php endif; ?>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($organs as $organ): ?>
+                            <?php $url = $this->url('organs/view', ['organ' => $organ->getId()]) ?>
+                            <tr>
+                                <td>
+                                    <a style="display: block; height: 100%; width:100%" href="<?= $url ?>">
+                                        <?= $this->escapeHtml($organ->getAbbr()) ?>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a style="display: block; height: 100%; width:100%" href="<?= $url ?>">
+                                        <?= $this->escapeHtml($organ->getName()) ?>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a style="display: block; height: 100%; width:100%" href="<?= $url ?>">
+                                        <?= $organ->getType()->getName($this->plugin('translate')->getTranslator()) ?>
+                                    </a>
+                                </td>
+                                <?php if ($historical): ?>
+                                    <td>
+                                        <?= $organ->getAbrogationDate()?->format('Y-m-d') ?>
+                                    </td>
+                                <?php endif; ?>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </section>

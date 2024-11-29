@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-27 16:20+0100\n"
-"PO-Revision-Date: 2024-11-27 16:21+0100\n"
+"POT-Creation-Date: 2024-11-29 19:59+0100\n"
+"PO-Revision-Date: 2024-11-29 19:59+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: en\n"
@@ -106,11 +106,14 @@ msgstr "API Users"
 msgid "Abbreviation"
 msgstr "Abbreviation"
 
+msgid "Abrogated"
+msgstr "Abrogated"
+
 msgid "Abrogation"
 msgstr "Abrogation"
 
 msgid "Abrogation Date"
-msgstr "Expiration Date"
+msgstr "Abrogation Date"
 
 msgid "Actions"
 msgstr "Actions"
@@ -1403,6 +1406,9 @@ msgstr "Global Value"
 
 msgid "Go to album"
 msgstr "Go to album"
+
+msgid "Go to public page"
+msgstr "Go to public page"
 
 msgid "Google Calendar"
 msgstr "Google Calendar"
