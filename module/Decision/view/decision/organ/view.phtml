@@ -20,7 +20,20 @@ $this->headTitle($organ->getName());
 <section class="section">
     <div class="container">
         <div class="row">
-            <h1><?= $this->escapeHtml($organ->getName()) ?> (<?= $this->escapeHtml($organ->getAbbr()) ?>)</h1>
+            <div class="page-header">
+                <div class="btn-toolbar pull-right">
+                    <a href="<?= $this->url(
+                        'home/organ',
+                        [
+                            'abbr' => $organ->getAbbr(),
+                            'type' => $organ->getType()->value,
+                        ],
+                    ) ?>" class="btn btn-default">
+                        <span class="fas fa-share-nodes"></span> <?= $this->translate('Go to public page') ?>
+                    </a>
+                </div>
+                <h1><?= $this->escapeHtml($organ->getName()) ?> <small>(<?= $this->escapeHtml($organ->getAbbr()) ?>)</small></h1>
+            </div>
             <div class="col-md-4">
                 <?php if (!empty($activeMembers)): ?>
                     <h2><?= $this->translate('Active members') ?></h2>
