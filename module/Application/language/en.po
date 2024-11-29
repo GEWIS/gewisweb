@@ -110,7 +110,7 @@ msgid "Abrogation"
 msgstr "Abrogation"
 
 msgid "Abrogation Date"
-msgstr "Expiration Date"
+msgstr "Abrogation Date"
 
 msgid "Actions"
 msgstr "Actions"
