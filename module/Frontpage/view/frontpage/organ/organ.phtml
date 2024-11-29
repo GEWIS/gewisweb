@@ -255,34 +255,36 @@ function getOrganDescription($organInformation, $lang)
                         <?php endif; ?>
                     </div>
                 </div>
-                <div class="panel panel-default agenda">
-                    <div class="panel-heading">
-                        <h3><?= $this->translate('Activities') ?></h3>
-                    </div>
-                    <div class="list-group">
-                        <?php if (empty($activities)): ?>
-                            <p class="list-group-item" href="<?= $this->hashUrl() ?>">
-                                <span class="list-group-item-text text-muted">
-                                    <?= $this->translate('No activities planned') ?>
-                                </span>
-                            </p>
-                        <?php else: ?>
-                            <?php foreach ($activities as $activity): ?>
-                                <a class="list-group-item"
-                                   href="<?= $this->url('activity/view', ['id' => $activity->getId()]) ?>">
+                <?php if (!$organ->isAbrogated()): ?>
+                    <div class="panel panel-default agenda">
+                        <div class="panel-heading">
+                            <h3><?= $this->translate('Activities') ?></h3>
+                        </div>
+                        <div class="list-group">
+                            <?php if (empty($activities)): ?>
+                                <p class="list-group-item" href="<?= $this->hashUrl() ?>">
+                                    <span class="list-group-item-text text-muted">
+                                        <?= $this->translate('No activities planned') ?>
+                                    </span>
+                                </p>
+                            <?php else: ?>
+                                <?php foreach ($activities as $activity): ?>
+                                    <a class="list-group-item"
+                                       href="<?= $this->url('activity/view', ['id' => $activity->getId()]) ?>">
 
-                                    <h4 class="list-group-item-heading"><?= $this->localiseText($activity->getName()) ?></h4>
-                                    <p class="list-group-item-text text-muted"><?= ucfirst($this->dateFormat($activity->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT)); ?></p>
-                                </a>
-                            <?php endforeach; ?>
-                        <?php endif; ?>
+                                        <h4 class="list-group-item-heading"><?= $this->localiseText($activity->getName()) ?></h4>
+                                        <p class="list-group-item-text text-muted"><?= ucfirst($this->dateFormat($activity->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT)); ?></p>
+                                    </a>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </div>
+                        <div class="panel-footer">
+                            <a href="<?= $this->url('activity') ?>" class="panel-footer__link">
+                                <?= $this->translate('Complete agenda') ?>
+                            </a>
+                        </div>
                     </div>
-                    <div class="panel-footer">
-                        <a href="<?= $this->url('activity') ?>" class="panel-footer__link">
-                            <?= $this->translate('Complete agenda') ?>
-                        </a>
-                    </div>
-                </div>
+                <?php endif; ?>
             </div>
         </div>
     </div>
