@@ -2,8 +2,15 @@
 
 declare(strict_types=1);
 
+use Activity\Service\AclService as ActivityAclService;
 use Application\View\HelperTrait;
+use Company\Service\AclService as CompanyAclService;
+use Decision\Service\AclService as DecisionAclService;
+use Education\Service\AclService as EducationAclService;
+use Frontpage\Service\AclService as FrontpageAclService;
 use Laminas\View\Renderer\PhpRenderer;
+use Photo\Service\AclService as PhotoAclService;
+use User\Service\AclService as UserAclService;
 
 /** @var PhpRenderer|HelperTrait $this */
 ?>
@@ -32,7 +39,7 @@ use Laminas\View\Renderer\PhpRenderer;
                             </a>
                         </li>
                     <?php endif; ?>
-                    <?php if ($this->acl('activity_service_acl')->isAllowed('activity_admin', 'view')): ?>
+                    <?php if ($this->acl(ActivityAclService::class)->isAllowed('activity_admin', 'view')): ?>
                         <li class="dropdown <?= $this->moduleIsActive(['activity']) ? 'active' : '' ?>">
                             <a href="<?= $this->url('activity_admin') ?>" class="dropdown-toggle" data-toggle="dropdown"
                                role="button" aria-haspopup="true" aria-expanded="false">
@@ -45,7 +52,7 @@ use Laminas\View\Renderer\PhpRenderer;
                                         ) ?></a>
                                 </li>
                                 <?php
-                                if ($this->acl('activity_service_acl')->isAllowed('activity', 'listCategories')): ?>
+                                if ($this->acl(ActivityAclService::class)->isAllowed('activity', 'listCategories')): ?>
                                     <li>
                                         <a href="<?= $this->url('activity_admin_categories') ?>"><?= $this->translate(
                                                 'Categories'
@@ -54,7 +61,7 @@ use Laminas\View\Renderer\PhpRenderer;
                                 <?php
                                 endif; ?>
                                 <?php
-                                if ($this->acl('activity_service_acl')->isAllowed(
+                                if ($this->acl(ActivityAclService::class)->isAllowed(
                                     'activity_calendar_period',
                                     'view'
                                 )): ?>
@@ -68,7 +75,7 @@ use Laminas\View\Renderer\PhpRenderer;
                             </ul>
                         </li>
                     <?php endif; ?>
-                    <?php if ($this->acl('company_service_acl')->isAllowed('company_admin', 'view')): ?>
+                    <?php if ($this->acl(CompanyAclService::class)->isAllowed('company_admin', 'view')): ?>
                         <li class="dropdown <?= $this->moduleIsActive(['company']) ? 'active' : '' ?>">
                             <a href="<?= $this->url('company_admin') ?>" class="dropdown-toggle" data-toggle="dropdown"
                                role="button" aria-haspopup="true" aria-expanded="false">
@@ -76,7 +83,7 @@ use Laminas\View\Renderer\PhpRenderer;
                             </a>
                             <ul class="dropdown-menu">
                                 <?php
-                                if ($this->acl('company_service_acl')->isAllowed('company', 'listAll')): ?>
+                                if ($this->acl(CompanyAclService::class)->isAllowed('company', 'listAll')): ?>
                                     <li>
                                         <a href="<?= $this->url('company_admin') ?>">
                                             <?= $this->translate('Companies') ?>
@@ -86,8 +93,8 @@ use Laminas\View\Renderer\PhpRenderer;
                                 endif; ?>
                                 <?php
                                 if (
-                                    $this->acl('company_service_acl')->isAllowed('company', 'approve')
-                                    || $this->acl('company_service_acl')->isAllowed('job', 'approve')
+                                    $this->acl(CompanyAclService::class)->isAllowed('company', 'approve')
+                                    || $this->acl(CompanyAclService::class)->isAllowed('job', 'approve')
                                 ):
                                     ?>
                                     <li>
@@ -96,14 +103,14 @@ use Laminas\View\Renderer\PhpRenderer;
                                         </a>
                                     </li>
                                 <?php endif; ?>
-                                <?php if ($this->acl('company_service_acl')->isAllowed('jobCategory', 'listAll')): ?>
+                                <?php if ($this->acl(CompanyAclService::class)->isAllowed('jobCategory', 'listAll')): ?>
                                     <li>
                                         <a href="<?= $this->url('company_admin/categories') ?>">
                                             <?= $this->translate('Categories') ?>
                                         </a>
                                     </li>
                                 <?php endif; ?>
-                                <?php if ($this->acl('company_service_acl')->isAllowed('jobLabel', 'listAll')): ?>
+                                <?php if ($this->acl(CompanyAclService::class)->isAllowed('jobLabel', 'listAll')): ?>
                                     <li>
                                         <a href="<?= $this->url('company_admin/labels') ?>">
                                             <?= $this->translate('Labels') ?>
@@ -113,7 +120,7 @@ use Laminas\View\Renderer\PhpRenderer;
                             </ul>
                         </li>
                     <?php endif; ?>
-                    <?php if ($this->acl('education_service_acl')->isAllowed('education_admin', 'view')): ?>
+                    <?php if ($this->acl(EducationAclService::class)->isAllowed('education_admin', 'view')): ?>
                         <li class="dropdown <?= $this->moduleIsActive(['frontpage', 'exam']) ? 'active' : '' ?>">
                             <a href="<?= $this->hashUrl() ?>" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                aria-haspopup="true" aria-expanded="false">
@@ -138,7 +145,7 @@ use Laminas\View\Renderer\PhpRenderer;
                             </ul>
                         </li>
                     <?php endif; ?>
-                    <?php if ($this->acl('decision_service_acl')->isAllowed('decision_admin', 'view')): ?>
+                    <?php if ($this->acl(DecisionAclService::class)->isAllowed('decision_admin', 'view')): ?>
                         <li class="dropdown">
                             <a href="<?= $this->hashUrl() ?>" class="dropdown-toggle" data-toggle="dropdown"
                                role="button" aria-haspopup="true" aria-expanded="false">
@@ -163,48 +170,48 @@ use Laminas\View\Renderer\PhpRenderer;
                             </ul>
                         </li>
                     <?php endif; ?>
-                    <?php if ($this->acl('decision_service_acl')->isAllowed('decision_organ_admin', 'view')): ?>
+                    <?php if ($this->acl(DecisionAclService::class)->isAllowed('decision_organ_admin', 'view')): ?>
                         <li>
                             <a href="<?= $this->url('admin_organ') ?>">
                                 <?= $this->translate('Organs') ?>
                             </a>
                         </li>
                     <?php endif; ?>
-                    <?php if ($this->acl('frontpage_service_acl')->isAllowed('news_item', 'create')): ?>
+                    <?php if ($this->acl(FrontpageAclService::class)->isAllowed('news_item', 'create')): ?>
                         <li class="<?= $this->moduleIsActive(['frontpage', 'news']) ? 'active' : '' ?>">
                             <a href="<?= $this->url('admin_news') ?>"><?= $this->translate('News') ?></a>
                         </li>
                     <?php endif; ?>
-                    <?php if ($this->acl('frontpage_service_acl')->isAllowed('page', 'create')): ?>
+                    <?php if ($this->acl(FrontpageAclService::class)->isAllowed('page', 'create')): ?>
                         <li class="<?= $this->moduleIsActive(['frontpage', 'page']) ? 'active' : '' ?>">
                             <a href="<?= $this->url('admin_page') ?>"><?= $this->translate('Pages') ?></a>
                         </li>
                     <?php endif; ?>
-                    <?php if ($this->acl('photo_service_acl')->isAllowed('photo_admin', 'view')): ?>
+                    <?php if ($this->acl(PhotoAclService::class)->isAllowed('photo_admin', 'view')): ?>
                         <li>
                             <a href="<?= $this->url('admin_photo') ?>"><?= $this->translate('Photos') ?></a>
                         </li>
                     <?php endif; ?>
-                    <?php if ($this->acl('frontpage_service_acl')->isAllowed('poll', 'approve')): ?>
+                    <?php if ($this->acl(FrontpageAclService::class)->isAllowed('poll', 'approve')): ?>
                         <li class="<?= $this->moduleIsActive(['frontpage', 'poll']) ? 'active' : '' ?>">
                             <a href="<?= $this->url('admin_poll') ?>"><?= $this->translate('Polls') ?></a>
                         </li>
                     <?php endif; ?>
-                    <?php if ($this->acl('user_service_acl')->isAllowed('user_admin', 'view')): ?>
+                    <?php if ($this->acl(UserAclService::class)->isAllowed('user_admin', 'view')): ?>
                         <li class="dropdown <?= $this->moduleIsActive(['user']) ? 'active' : '' ?>">
                             <a href="<?= $this->hashUrl() ?>" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                aria-haspopup="true" aria-expanded="false">
                                 <?= $this->translate('Users') ?> <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <?php if ($this->acl('user_service_acl')->isAllowed('apiuser', 'add')): ?>
+                                <?php if ($this->acl(UserAclService::class)->isAllowed('apiuser', 'add')): ?>
                                     <li>
                                         <a href="<?= $this->url('user_admin/api') ?>">
                                             <?= $this->translate('API Users') ?>
                                         </a>
                                     </li>
                                 <?php endif; ?>
-                                <?php if ($this->acl('user_service_acl')->isAllowed('user', 'view_status')): ?>
+                                <?php if ($this->acl(UserAclService::class)->isAllowed('user', 'view_status')): ?>
                                     <li>
                                         <a href="<?= $this->url('user_admin/members') ?>">
                                             <?= $this->translate('Members') ?>

@@ -8,6 +8,7 @@ use Frontpage\Model\{
     Poll as PollModel,
     PollVote as PollVoteModel,
 };
+use Frontpage\Service\AclService as FrontpageAclService;
 use Laminas\View\Renderer\PhpRenderer;
 
 /**
@@ -37,7 +38,7 @@ $this->headTitle($this->translate('Polls'));
                     <span class="fas fa-history"></span>
                     <?= $this->translate('Old polls') ?>
                 </a>
-                <?php if ($this->acl('frontpage_service_acl')->isAllowed('poll', 'request')): ?>
+                <?php if ($this->acl(FrontpageAclService::class)->isAllowed('poll', 'request')): ?>
                     <a href="<?= $this->url('poll/request') ?>" class="btn btn-primary">
                         <?= $this->translate('Request a poll') ?>
                     </a>
@@ -59,7 +60,7 @@ $this->headTitle($this->translate('Polls'));
             <p class="lead"><?= $this->translate('Unfortunately there currently is no poll :('); ?></p>
         <?php endif; ?>
 
-        <?php if (isset($poll) && $this->acl('frontpage_service_acl')->isAllowed('poll_comment', 'list')): ?>
+        <?php if (isset($poll) && $this->acl(FrontpageAclService::class)->isAllowed('poll_comment', 'list')): ?>
             <hr>
             <h2><?= $this->translate('Comments') ?></h2>
             <?php if (count($poll->getComments()) == 0): ?>
@@ -69,7 +70,7 @@ $this->headTitle($this->translate('Polls'));
                     <div class="row">
                         <div class="col-sm-2">
                             <strong><?= $this->escapeHtml($comment->getAuthor()) ?></strong>
-                            <?php if ($this->acl('frontpage_service_acl')->isAllowed('poll_comment', 'view_user')): ?>
+                            <?php if ($this->acl(FrontpageAclService::class)->isAllowed('poll_comment', 'view_user')): ?>
                                 <?php $lidnr = $comment->getUser()->getLidnr() ?>
                                 (<a href="<?= $this->url('member/view', ['lidnr' => $lidnr]) ?>"><?= $this->escapeHtml($comment->getUser()->getFullName()) ?></a>)
                                 <br>
@@ -84,7 +85,7 @@ $this->headTitle($this->translate('Polls'));
             <?php endif ?>
             <?php
             if (
-                $this->acl('frontpage_service_acl')->isAllowed('poll_comment', 'create')
+                $this->acl(FrontpageAclService::class)->isAllowed('poll_comment', 'create')
                 && isset($commentForm)
             ):
             ?>

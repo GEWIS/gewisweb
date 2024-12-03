@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Application\View\HelperTrait;
 use Laminas\View\Renderer\PhpRenderer;
 use Photo\Model\Photo as PhotoModel;
+use Photo\Service\AclService as PhotoAclService;
 
 /**
  * @var PhpRenderer|HelperTrait $this
@@ -14,7 +15,7 @@ use Photo\Model\Photo as PhotoModel;
 $this->scriptUrl()->requireUrl('photo/photo/tag/remove', ['photo_id', 'lidnr'])
     ->requireUrl('member/view', ['lidnr']);
 ?>
-<?php if ($this->acl('photo_service_acl')->isAllowed('tag', 'view')): ?>
+<?php if ($this->acl(PhotoAclService::class)->isAllowed('tag', 'view')): ?>
     <?php
     $tagCount = $photo->getTags()->count();
     $i = 1;
@@ -56,7 +57,7 @@ $this->scriptUrl()->requireUrl('photo/photo/tag/remove', ['photo_id', 'lidnr'])
         <?php endforeach; ?>
     </div>
 <?php endif; ?>
-<?php if ($this->acl('photo_service_acl')->isAllowed('tag', 'add')): ?>
+<?php if ($this->acl(PhotoAclService::class)->isAllowed('tag', 'add')): ?>
     <div class="form-group">
         <label for="tagSearch"><span class="fas fa-plus"></span> <?= $this->translate('Tag someone') ?>:</label>
         <input type="text" data-url="<?= $this->url(

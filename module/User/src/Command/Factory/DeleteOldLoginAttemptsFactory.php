@@ -19,9 +19,6 @@ class DeleteOldLoginAttemptsFactory implements FactoryInterface
         $requestedName,
         ?array $options = null,
     ): DeleteOldLoginAttempts {
-        /** @var LoginAttemptService $loginAttemptService */
-        $loginAttemptService = $container->get('user_service_loginattempt');
-
-        return new DeleteOldLoginAttempts($loginAttemptService);
+        return new DeleteOldLoginAttempts($container->get(LoginAttemptService::class));
     }
 }

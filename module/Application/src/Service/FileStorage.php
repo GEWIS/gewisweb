@@ -42,7 +42,7 @@ class FileStorage
     public function __construct(
         private readonly Translator $translator,
         private readonly array $storageConfig,
-        private readonly WatermarkService $watermarkService,
+        private readonly Watermark $watermarkService,
     ) {
     }
 

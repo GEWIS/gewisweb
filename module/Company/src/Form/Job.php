@@ -42,8 +42,8 @@ class Job extends LocalisableForm implements InputFilterProviderInterface
      * @param JobLabelModel[]    $labels
      */
     public function __construct(
-        private readonly JobMapper $mapper,
         Translator $translator,
+        private readonly JobMapper $mapper,
         array $categories,
         array $labels,
     ) {

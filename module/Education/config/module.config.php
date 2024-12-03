@@ -9,8 +9,11 @@ use Education\Controller\AdminController;
 use Education\Controller\EducationController;
 use Education\Controller\Factory\AdminControllerFactory;
 use Education\Controller\Factory\EducationControllerFactory;
+use Education\Service\Course as CourseService;
+use Education\View\Helper\ExamUrl;
 use Laminas\Router\Http\Literal;
 use Laminas\Router\Http\Segment;
+use Psr\Container\ContainerInterface;
 
 return [
     'router' => [
@@ -210,6 +213,18 @@ return [
     'view_manager' => [
         'template_path_stack' => [
             'education' => __DIR__ . '/../view/',
+        ],
+    ],
+    'view_helpers' => [
+        'factories' => [
+            'examUrl' => static function (ContainerInterface $container) {
+                $config = $container->get('config');
+                $helper = new ExamUrl();
+                $helper->setDir($config['education']['public_dir']);
+                $helper->setCourseService($container->get(CourseService::class));
+
+                return $helper;
+            },
         ],
     ],
     'doctrine' => [

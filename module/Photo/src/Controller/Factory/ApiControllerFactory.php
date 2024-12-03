@@ -7,6 +7,10 @@ namespace Photo\Controller\Factory;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Photo\Controller\ApiController;
+use Photo\Mapper\Tag as TagMapper;
+use Photo\Mapper\Vote as VoteMapper;
+use Photo\Service\AclService;
+use Photo\Service\Album as AlbumService;
 use Psr\Container\ContainerInterface;
 
 class ApiControllerFactory implements FactoryInterface
@@ -20,11 +24,11 @@ class ApiControllerFactory implements FactoryInterface
         ?array $options = null,
     ): ApiController {
         return new ApiController(
-            $container->get('photo_service_acl'),
+            $container->get(AclService::class),
             $container->get(MvcTranslator::class),
-            $container->get('photo_mapper_tag'),
-            $container->get('photo_mapper_vote'),
-            $container->get('photo_service_album'),
+            $container->get(TagMapper::class),
+            $container->get(VoteMapper::class),
+            $container->get(AlbumService::class),
         );
     }
 }

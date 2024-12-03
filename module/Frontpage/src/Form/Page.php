@@ -29,8 +29,8 @@ class Page extends Form implements InputFilterProviderInterface
     private ?FrontpageLocalisedText $currentName = null;
 
     public function __construct(
-        private readonly PageMapper $pageMapper,
         private readonly Translator $translator,
+        private readonly PageMapper $pageMapper,
     ) {
         parent::__construct();
 

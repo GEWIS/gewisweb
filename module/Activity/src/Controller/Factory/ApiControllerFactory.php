@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Activity\Controller\Factory;
 
 use Activity\Controller\ApiController;
+use Activity\Service\AclService;
+use Activity\Service\ActivityQuery;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Psr\Container\ContainerInterface;
 
@@ -19,8 +21,8 @@ class ApiControllerFactory implements FactoryInterface
         ?array $options = null,
     ): ApiController {
         return new ApiController(
-            $container->get('activity_service_acl'),
-            $container->get('activity_service_activityQuery'),
+            $container->get(AclService::class),
+            $container->get(ActivityQuery::class),
         );
     }
 }

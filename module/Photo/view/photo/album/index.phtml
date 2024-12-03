@@ -11,6 +11,7 @@ use Photo\Model\{
     VirtualAlbum,
     WeeklyAlbum,
 };
+use Photo\Service\AclService as PhotoAclService;
 use User\Permissions\Assertion\IsAfterMembershipEndedAndNotTagged;
 
 /**
@@ -170,7 +171,7 @@ $this->scriptUrl()->requireUrl('member/search')
                                 null !== $album->getStartDateTime()
                                 && null !== $album->getEndDateTime()
                             )
-                            || $this->acl('photo_service_acl')->isAllowed('album', 'nodate')
+                            || $this->acl(PhotoAclService::class)->isAllowed('album', 'nodate')
                         )
                         && !(new IsAfterMembershipEndedAndNotTagged())->assert(
                             // We can use a fake ACL as it is never used in the actual assertion (`getAcl()` is
@@ -193,7 +194,7 @@ $this->scriptUrl()->requireUrl('member/search')
         <?php
         $lidnr = $this->identity()->getLidnr();
         // Check permissions once, to prevent repeatedly retrieving the logged in `Member`.
-        $canViewMetadata = $this->acl('photo_service_acl')->isAllowed('photo', 'view_metadata');
+        $canViewMetadata = $this->acl(PhotoAclService::class)->isAllowed('photo', 'view_metadata');
         ?>
         <div class="pswp-gallery"
              data-recent-vote="<?= $hasRecentVote ? 'true' : 'false' ?>"
@@ -430,7 +431,7 @@ $this->scriptUrl()->requireUrl('member/search')
 
     lightbox.on('uiRegister', () => {
         // Register custom buttons.
-        <?php if ($this->acl('photo_service_acl')->isAllowed('photo', 'download')): ?>
+        <?php if ($this->acl(PhotoAclService::class)->isAllowed('photo', 'download')): ?>
             lightbox.pswp.ui.registerElement({
                 name: 'download-button',
                 appendTo: 'bar',
@@ -497,7 +498,7 @@ $this->scriptUrl()->requireUrl('member/search')
             });
         <?php endif; ?>
 
-        <?php if ($this->acl('photo_service_acl')->isAllowed('photo', 'view_metadata')): ?>
+        <?php if ($this->acl(PhotoAclService::class)->isAllowed('photo', 'view_metadata')): ?>
             lightbox.pswp.ui.registerElement({
                 name: 'metadata-button',
                 appendTo: 'bar',
@@ -550,7 +551,7 @@ $this->scriptUrl()->requireUrl('member/search')
             },
         });
 
-        <?php if ($this->acl('photo_service_acl')->isAllowed('vote', 'view')): ?>
+        <?php if ($this->acl(PhotoAclService::class)->isAllowed('vote', 'view')): ?>
             lightbox.pswp.ui.registerElement({
                 name: 'like-button',
                 appendTo: 'bar',
@@ -587,7 +588,7 @@ $this->scriptUrl()->requireUrl('member/search')
                         updateVotedState(el, pswp.currSlide.data.element.dataset.voted);
                     });
                 },
-                <?php if ($this->acl('photo_service_acl')->isAllowed('vote', 'add')): ?>
+                <?php if ($this->acl(PhotoAclService::class)->isAllowed('vote', 'add')): ?>
                     onClick: (event, el, pswp) => {
                         let currentSlide = pswp.currSlide.data.element;
                         let hasVoted = pswp.currSlide.data.element.dataset.voted;
@@ -618,7 +619,7 @@ $this->scriptUrl()->requireUrl('member/search')
             });
         <?php endif; ?>
 
-        <?php if ($this->acl('photo_service_acl')->isAllowed('tag', 'view')): ?>
+        <?php if ($this->acl(PhotoAclService::class)->isAllowed('tag', 'view')): ?>
             // Register the tagging system (but only if the user is allowed to see tags).
             lightbox.pswp.ui.registerElement({
                 name: 'tags-ui',
@@ -637,7 +638,7 @@ $this->scriptUrl()->requireUrl('member/search')
                                 document.querySelector('.pswp__button--profile-photo-button').classList.remove('pswp__button--hidden');
                             }
 
-                            <?php if ($this->acl('photo_service_acl')->isAllowed('tag', 'add')): ?>
+                            <?php if ($this->acl(PhotoAclService::class)->isAllowed('tag', 'add')): ?>
                                 addTagSearch(el, figTags);
                             <?php endif; ?>
                         }
@@ -676,7 +677,7 @@ $this->scriptUrl()->requireUrl('member/search')
                                     return `
                                         <span data-member="${member.lidnr}">
                                             <a href="${viewMemberUrl}">${member.fullName}</a>&nbsp;
-                                            <?php if ($this->acl('photo_service_acl')->isAllowed('tag', 'remove')): ?>
+                                            <?php if ($this->acl(PhotoAclService::class)->isAllowed('tag', 'remove')): ?>
                                                 <a class="remove-tag" href="${removeUrl}" data-tag-id="removeTag${member.id}">
                                                     <span class="fas fa-times" aria-hidden="true"></span>
                                                 </a>
@@ -685,7 +686,7 @@ $this->scriptUrl()->requireUrl('member/search')
                                         </span>`;
                                 }).join('')}
                             </div>
-                                <?php if ($this->acl('photo_service_acl')->isAllowed('tag', 'add')): ?>
+                                <?php if ($this->acl(PhotoAclService::class)->isAllowed('tag', 'add')): ?>
                                     <div class="form-group">
                                         <label for="tagSearch"><span class="fas fa-plus"></span> <?= $this->translate('Tag someone') ?>:</label>
                                         <input type="text"
@@ -698,7 +699,7 @@ $this->scriptUrl()->requireUrl('member/search')
                         // Replicate the tags UI to the actual figure DOM.
                         figTags.innerHTML = el.innerHTML;
 
-                        <?php if ($this->acl('photo_service_acl')->isAllowed('tag', 'add')): ?>
+                        <?php if ($this->acl(PhotoAclService::class)->isAllowed('tag', 'add')): ?>
                             addTagSearch(el, figTags);
                         <?php endif; ?>
                     });
@@ -734,7 +735,7 @@ $this->scriptUrl()->requireUrl('member/search')
             });
         <?php endif; ?>
 
-        <?php if ($this->acl('photo_service_acl')->isAllowed('photo', 'view_metadata')): ?>
+        <?php if ($this->acl(PhotoAclService::class)->isAllowed('photo', 'view_metadata')): ?>
             // Register the metadata UI.
             lightbox.pswp.ui.registerElement({
                 name: 'metadata-ui',
@@ -840,8 +841,8 @@ $this->scriptUrl()->requireUrl('member/search')
     });
 
     <?php if (
-        $this->acl('photo_service_acl')->isAllowed('tag', 'view')
-        && $this->acl('photo_service_acl')->isAllowed('vote', 'view')
+        $this->acl(PhotoAclService::class)->isAllowed('tag', 'view')
+        && $this->acl(PhotoAclService::class)->isAllowed('vote', 'view')
     ): ?>
         // Fetch the tags and voted status.
         lightbox.on('gettingData', ({slide}) => {

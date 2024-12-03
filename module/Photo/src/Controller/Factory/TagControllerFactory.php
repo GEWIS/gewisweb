@@ -7,6 +7,8 @@ namespace Photo\Controller\Factory;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Photo\Controller\TagController;
+use Photo\Service\AclService;
+use Photo\Service\Photo as PhotoService;
 use Psr\Container\ContainerInterface;
 
 class TagControllerFactory implements FactoryInterface
@@ -20,9 +22,9 @@ class TagControllerFactory implements FactoryInterface
         ?array $options = null,
     ): TagController {
         return new TagController(
-            $container->get('photo_service_acl'),
+            $container->get(AclService::class),
             $container->get(MvcTranslator::class),
-            $container->get('photo_service_photo'),
+            $container->get(PhotoService::class),
         );
     }
 }

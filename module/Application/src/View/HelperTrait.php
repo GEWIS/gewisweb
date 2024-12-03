@@ -30,6 +30,8 @@ use User\Model\CompanyUser as CompanyUserModel;
  * Other traits from laminas are already chained into this trait. This includes support for the FlashMessenger, Form,
  * and i18n view helpers.
  *
+ * phpcs:disable Generic.Files.LineLength.TooLong
+ *
  * @method Acl acl(string $factory)
  * @method string bootstrapElementError(ElementInterface $element)
  * @method Breadcrumbs breadcrumbs()

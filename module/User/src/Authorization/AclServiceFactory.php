@@ -40,15 +40,14 @@ class AclServiceFactory implements FactoryInterface
         $userAuthService = $container->get('user_auth_user_service');
         /** @var CompanyUserAuthenticationService<CompanyUserSession, CompanyUserAdapter> $companyUserAuthService */
         $companyUserAuthService = $container->get('user_auth_companyUser_service');
-        /** @var ApiAuthenticationService $apiUserAuthService */
-        $apiUserAuthService = $container->get('user_auth_apiUser_service');
+        $apiUserAuthService = $container->get(ApiAuthenticationService::class);
         /** @var string[] $tueRanges */
         $tueRanges = $container->get('config')['tue_ranges'];
         /** @var string $remoteAddress */
         $remoteAddress = $container->get('user_remoteaddress');
 
         return match ($requestedName) {
-            'activity_service_acl' => new ActivityAclService(
+            ActivityAclService::class => new ActivityAclService(
                 $translator,
                 $userAuthService,
                 $companyUserAuthService,
@@ -56,7 +55,7 @@ class AclServiceFactory implements FactoryInterface
                 $tueRanges,
                 $remoteAddress,
             ),
-            'company_service_acl' => new CompanyAclService(
+            CompanyAclService::class => new CompanyAclService(
                 $translator,
                 $userAuthService,
                 $companyUserAuthService,
@@ -64,7 +63,7 @@ class AclServiceFactory implements FactoryInterface
                 $tueRanges,
                 $remoteAddress,
             ),
-            'decision_service_acl' => new DecisionAclService(
+            DecisionAclService::class => new DecisionAclService(
                 $translator,
                 $userAuthService,
                 $companyUserAuthService,
@@ -72,7 +71,7 @@ class AclServiceFactory implements FactoryInterface
                 $tueRanges,
                 $remoteAddress,
             ),
-            'education_service_acl' => new EducationAclService(
+            EducationAclService::class => new EducationAclService(
                 $translator,
                 $userAuthService,
                 $companyUserAuthService,
@@ -80,7 +79,7 @@ class AclServiceFactory implements FactoryInterface
                 $tueRanges,
                 $remoteAddress,
             ),
-            'frontpage_service_acl' => new FrontpageAclService(
+            FrontpageAclService::class => new FrontpageAclService(
                 $translator,
                 $userAuthService,
                 $companyUserAuthService,
@@ -88,7 +87,7 @@ class AclServiceFactory implements FactoryInterface
                 $tueRanges,
                 $remoteAddress,
             ),
-            'photo_service_acl' => new PhotoAclService(
+            PhotoAclService::class => new PhotoAclService(
                 $translator,
                 $userAuthService,
                 $companyUserAuthService,
@@ -96,7 +95,7 @@ class AclServiceFactory implements FactoryInterface
                 $tueRanges,
                 $remoteAddress,
             ),
-            'user_service_acl' => new UserAclService(
+            UserAclService::class => new UserAclService(
                 $translator,
                 $userAuthService,
                 $companyUserAuthService,

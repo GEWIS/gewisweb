@@ -18,22 +18,12 @@ use function sprintf;
 
 class ReorderDocument extends Form implements InputFilterProviderInterface
 {
-    protected Translator $translator;
-
-    /**
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
-     */
-    public function __construct(
-        ?string $name = null,
-        array $options = [],
-    ) {
-        parent::__construct($name, $options);
+    public function __construct(private readonly Translator $translator)
+    {
+        parent::__construct('reorder-document');
 
         $this->setAttribute('method', 'post');
-    }
 
-    public function setupElements(): self
-    {
         $this->add(
             [
                 'name' => 'direction',
@@ -69,8 +59,6 @@ class ReorderDocument extends Form implements InputFilterProviderInterface
                 ],
             ],
         );
-
-        return $this;
     }
 
     public function getInputFilterSpecification(): array
@@ -93,13 +81,6 @@ class ReorderDocument extends Form implements InputFilterProviderInterface
                 ],
             ],
         ];
-    }
-
-    public function setTranslator(Translator $translator): self
-    {
-        $this->translator = $translator;
-
-        return $this;
     }
 
     /**

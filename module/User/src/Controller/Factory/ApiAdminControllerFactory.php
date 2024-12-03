@@ -7,6 +7,7 @@ namespace User\Controller\Factory;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Psr\Container\ContainerInterface;
 use User\Controller\ApiAdminController;
+use User\Service\ApiUser as ApiUserService;
 
 class ApiAdminControllerFactory implements FactoryInterface
 {
@@ -19,7 +20,7 @@ class ApiAdminControllerFactory implements FactoryInterface
         ?array $options = null,
     ): ApiAdminController {
         return new ApiAdminController(
-            $container->get('user_service_apiuser'),
+            $container->get(ApiUserService::class),
         );
     }
 }

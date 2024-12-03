@@ -57,6 +57,7 @@ class Tag extends BaseMapper
             ->addScalarResult('lidnr', 'lidnr', 'integer')
             ->addScalarResult('fullName', 'fullName');
 
+        // phpcs:disable Generic.Files.LineLength.TooLong -- no need to split this query more
         $sql = <<<'QUERY'
             SELECT
                 `t`.`id`,
@@ -66,6 +67,7 @@ class Tag extends BaseMapper
             LEFT JOIN `Tag` `t` ON `m`.`lidnr` = `t`.`member_id`
             WHERE `t`.`photo_id` = :photo_id
             QUERY;
+        // phpcs:enable Generic.Files.LineLength.TooLong
 
         $query = $this->getEntityManager()->createNativeQuery($sql, $rsm);
         $query->setParameter(':photo_id', $photoId);

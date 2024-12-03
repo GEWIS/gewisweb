@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Frontpage\Controller\Factory;
 
 use Frontpage\Controller\FrontpageController;
+use Frontpage\Service\Frontpage as FrontpageService;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Psr\Container\ContainerInterface;
 
@@ -19,7 +20,7 @@ class FrontpageControllerFactory implements FactoryInterface
         ?array $options = null,
     ): FrontpageController {
         return new FrontpageController(
-            $container->get('frontpage_service_frontpage'),
+            $container->get(FrontpageService::class),
         );
     }
 }

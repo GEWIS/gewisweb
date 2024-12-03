@@ -7,7 +7,10 @@ namespace User\Controller\Factory;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Psr\Container\ContainerInterface;
 use User\Controller\ApiAuthenticationController;
+use User\Form\ApiAppAuthorisation;
 use User\Mapper\ApiApp as ApiAppMapper;
+use User\Mapper\ApiAppAuthentication as ApiAppAuthenticationMapper;
+use User\Service\AclService;
 use User\Service\ApiApp as ApiAppService;
 
 class ApiAuthenticationControllerFactory implements FactoryInterface
@@ -21,11 +24,11 @@ class ApiAuthenticationControllerFactory implements FactoryInterface
         ?array $options = null,
     ): ApiAuthenticationController {
         return new ApiAuthenticationController(
-            $container->get('user_service_acl'),
+            $container->get(AclService::class),
             $container->get(ApiAppService::class),
-            $container->get('user_mapper_apiappauthentication'),
+            $container->get(ApiAppAuthenticationMapper::class),
             $container->get(ApiAppMapper::class),
-            $container->get('user_form_apiappauthorisation_initial'),
+            $container->get(ApiAppAuthorisation::class),
             $container->get('user_form_apiappauthorisation_reminder'),
         );
     }

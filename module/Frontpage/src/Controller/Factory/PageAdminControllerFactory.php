@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Frontpage\Controller\Factory;
 
 use Frontpage\Controller\PageAdminController;
+use Frontpage\Service\AclService;
+use Frontpage\Service\Page as PageService;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Psr\Container\ContainerInterface;
@@ -20,9 +22,9 @@ class PageAdminControllerFactory implements FactoryInterface
         ?array $options = null,
     ): PageAdminController {
         return new PageAdminController(
-            $container->get('frontpage_service_acl'),
+            $container->get(AclService::class),
             $container->get(MvcTranslator::class),
-            $container->get('frontpage_service_page'),
+            $container->get(PageService::class),
         );
     }
 }

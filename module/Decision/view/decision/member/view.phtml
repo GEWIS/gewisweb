@@ -7,6 +7,7 @@ use Decision\Model\{
     BoardMember,
     Member,
 };
+use Decision\Service\AclService as DecisionAclService;
 use Laminas\I18n\View\HelperTrait;
 use Laminas\View\Renderer\PhpRenderer;
 use Photo\Model\ProfilePhoto as ProfilePhotoModel;
@@ -28,7 +29,7 @@ $this->headTitle($this->translate('Members'));
         <div class="row">
             <div class="col-md-6">
                 <table class="table table-bordered">
-                    <?php if ($this->acl('decision_service_acl')->isAllowed('member', 'view_full')): ?>
+                    <?php if ($this->acl(DecisionAclService::class)->isAllowed('member', 'view_full')): ?>
                         <tr>
                             <th><?= $this->translate('Email') ?></th>
                             <td>
@@ -49,7 +50,7 @@ $this->headTitle($this->translate('Members'));
                         <th><?= $this->translate('Generation') ?></th>
                         <td><?= $member->getGeneration() ?></td>
                     </tr>
-                    <?php if ($this->acl('decision_service_acl')->isAllowed('member', 'view_full')): ?>
+                    <?php if ($this->acl(DecisionAclService::class)->isAllowed('member', 'view_full')): ?>
                         <tr>
                             <th><?= $this->translate('Membership type') ?></th>
                             <td><?= $member->getType()->getName($this->plugin('translate')->getTranslator()) ?></td>
@@ -213,7 +214,7 @@ $this->headTitle($this->translate('Members'));
                         <?php endforeach; ?>
                     </ul>
                 <?php endif; ?>
-                <?php if ($this->acl('decision_service_acl')->isAllowed('member', 'view_full')): ?>
+                <?php if ($this->acl(DecisionAclService::class)->isAllowed('member', 'view_full')): ?>
                     <h3><?= $this->translate('Addresses') ?></h3>
                     <?php foreach ($member->getAddresses() as $address): ?>
                         <h4><<?= $address->getType()->getName($this->plugin('translate')->getTranslator()) ?></h4>

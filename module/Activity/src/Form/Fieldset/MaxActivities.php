@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Activity\Form;
+namespace Activity\Form\Fieldset;
 
 use Laminas\Form\Element\Hidden;
 use Laminas\Form\Element\Number;

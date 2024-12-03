@@ -13,7 +13,8 @@ use function preg_match;
 
 class VimeoUrlParser implements VideoUrlParserInterface
 {
-    private const REGEX = '/(?:vimeo\.com\/(?:\d+|[^\/]+\/[^\/]+\/video\/|album\/[^\/]+\/video\/|channels\/[^\/]+\/|groups\/[^\/]+\/videos\/|ondemand\/[^\/]+\/)|player\.vimeo\.com\/video\/)(\d+)/';
+    // phpcs:ignore Generic.Files.LineLength.TooLong -- splitting regex is asking for trouble
+    private const string REGEX = '/(?:vimeo\.com\/(?:\d+|[^\/]+\/[^\/]+\/video\/|album\/[^\/]+\/video\/|channels\/[^\/]+\/|groups\/[^\/]+\/videos\/|ondemand\/[^\/]+\/)|player\.vimeo\.com\/video\/)(\d+)/';
 
     #[Override]
     public function parse(string $url): ?Video

@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace User\Controller\Factory;
 
+use Decision\Mapper\Member as MemberMapper;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Psr\Container\ContainerInterface;
 use User\Controller\UserAdminController;
+use User\Service\AclService;
 
 class UserAdminControllerFactory implements FactoryInterface
 {
@@ -20,9 +22,9 @@ class UserAdminControllerFactory implements FactoryInterface
         ?array $options = null,
     ): UserAdminController {
         return new UserAdminController(
-            $container->get('user_service_acl'),
+            $container->get(AclService::class),
             $container->get(MvcTranslator::class),
-            $container->get('decision_mapper_member'),
+            $container->get(MemberMapper::class),
         );
     }
 }

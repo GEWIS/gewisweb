@@ -35,8 +35,8 @@ class Company extends LocalisableForm implements InputFilterProviderInterface
     private ?string $currentRepresentativeEmail = null;
 
     public function __construct(
-        private readonly CompanyMapper $mapper,
         Translator $translator,
+        private readonly CompanyMapper $mapper,
     ) {
         // we want to ignore the name passed
         parent::__construct($translator);

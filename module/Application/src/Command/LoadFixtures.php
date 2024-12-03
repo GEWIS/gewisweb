@@ -52,8 +52,8 @@ class LoadFixtures extends Command
 
         $connection = $this->entityManager->getConnection();
         try {
-            // Temporarily disable FK constraint checks. This is necessary because large parts of our database do not have
-            // explicit CASCADEs set to prevent data loss when syncing with ReportDB (GEWISDB).
+            // Temporarily disable FK constraint checks. This is necessary because large parts of our database do not
+            // have explicit CASCADEs set to prevent data loss when syncing with ReportDB (GEWISDB).
             // The try-catch is necessary to hide some error messages (because the executeStatement).
             $connection->executeStatement('SET FOREIGN_KEY_CHECKS = 0');
             $executor->execute($loader->getFixtures());

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Activity\Model\Activity;
+use Activity\Service\AclService as ActivityAclService;
 use Application\View\HelperTrait;
 use Laminas\View\Renderer\PhpRenderer;
 
@@ -29,7 +30,7 @@ $this->headTitle($this->translate('Activities'));
                     <li role="presentation" class="<?= $category === 'career' ? 'active' : '' ?>">
                         <a href="<?= $this->url('activity/career') ?>"><?= $this->translate('Career Activities') ?></a>
                     </li>
-                    <?php if ($this->acl('activity_service_acl')->isAllowed('myActivities', 'view')): ?>
+                    <?php if ($this->acl(ActivityAclService::class)->isAllowed('myActivities', 'view')): ?>
                         <li role="presentation" class="<?= $category === 'my' ? 'active' : '' ?>">
                             <a href="<?= $this->url('activity/my') ?>"><?= $this->translate('My Activities') ?></a>
                         </li>
@@ -38,7 +39,7 @@ $this->headTitle($this->translate('Activities'));
             </div>
 
 
-            <?php if ($this->acl('activity_service_acl')->isAllowed('activity', 'create')): ?>
+            <?php if ($this->acl(ActivityAclService::class)->isAllowed('activity', 'create')): ?>
                 <div class="col-md-4 col-sm-4 col-xs-12 pull-right">
                     <a href="<?= $this->url('activity_admin/create') ?>" class="btn btn-primary pull-right">
                         <span class="fas fa-plus"></span>

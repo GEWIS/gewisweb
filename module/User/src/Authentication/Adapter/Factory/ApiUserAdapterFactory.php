@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace User\Mapper\Factory;
+namespace User\Authentication\Adapter\Factory;
 
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Psr\Container\ContainerInterface;
-use User\Mapper\ApiApp;
+use User\Authentication\Adapter\ApiUserAdapter;
+use User\Mapper\ApiUser as ApiUserMapper;
 
-class ApiAppFactory implements FactoryInterface
+class ApiUserAdapterFactory implements FactoryInterface
 {
     /**
      * @param string $requestedName
@@ -17,9 +18,9 @@ class ApiAppFactory implements FactoryInterface
         ContainerInterface $container,
         $requestedName,
         ?array $options = null,
-    ): ApiApp {
-        return new ApiApp(
-            $container->get('doctrine.entitymanager.orm_default'),
+    ): ApiUserAdapter {
+        return new ApiUserAdapter(
+            $container->get(ApiUserMapper::class),
         );
     }
 }
