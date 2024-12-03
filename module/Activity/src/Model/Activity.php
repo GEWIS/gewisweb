@@ -274,7 +274,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * @return Collection<array-key, ActivityUpdateProposal>
      */
-    public function getUpdateProposal(): Collection
+    public function getUpdateProposals(): Collection
     {
         return $this->updateProposal;
     }

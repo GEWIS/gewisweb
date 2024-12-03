@@ -73,7 +73,7 @@ $this->breadcrumbs()
                             <td><?= $this->escapeHtml($job->getName()->getValueEN()) ?></td>
                             <td><?= $this->escapeHtml($job->getPackage()->getCompany()->getName())?></td>
                             <td>
-                                <?php if (0 !== $job->getUpdateProposals()->count()): ?>
+                                <?php if (!$job->getUpdateProposals()->isEmpty()): ?>
                                     <a class="btn btn-xs btn-primary"
                                        href="<?= $this->url(
                                            'company_admin_approval/job_proposal',

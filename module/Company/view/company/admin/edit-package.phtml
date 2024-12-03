@@ -91,9 +91,8 @@ $form->setAttribute('class', 'form-company');
                 <td><?= $this->escapeHtml($this->localiseText($job->getName())) ?></td>
                 <td><?= $job->isActive() ? $this->translate('Yes') : $this->translate('No') ?></td>
                 <td>
-                    <?php $icons = ['fa-circle-question', 'fa-circle-check', 'fa-circle-xmark'] ?>
-                    <span class="fas <?= $icons[$job->getApproved()->value] ?>"></span>
-                    <?php if (0 !== $job->getUpdateProposals()->count()): ?>
+                    <span class="fas <?= $job->getApproval()->getIcon() ?>"></span>
+                    <?php if (!$job->getUpdateProposals()->isEmpty()): ?>
                         <a href="<?= $this->url(
                             'company_admin_approval/job_proposal',
                             ['proposalId' => $job->getUpdateProposals()->last()->getId()],

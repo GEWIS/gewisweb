@@ -13,4 +13,13 @@ enum ApprovableStatus: int
     case Unapproved = 0;
     case Approved = 1;
     case Rejected = 2;
+
+    public function getIcon(): string
+    {
+        return match ($this) {
+            self::Unapproved => 'fa-circle-question',
+            self::Approved => 'fa-circle-check',
+            self::Rejected => 'fa-circle-xmark',
+        };
+    }
 }
