@@ -25,41 +25,37 @@ $companyURL = $this->url(
     true // Reuse matched parameters
 );
 ?>
-<div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
-    <div class="company-grid-item grid-item col-md-12" id="company-<?= $escaper->escapeHtmlAttr(strval($company->getId())) ?>">
-        <div class="company-grid-content">
-            <a href="<?= $companyURL ?>" class="company-grid-logo">
-                <img alt="<?= $this->translate('Logo of') ?> <?= $escaper->escapeHtmlAttr($company->getName()) ?>"
-                     class="company-logo img-responsive"
-                     src="<?= $this->fileUrl($company->getLogo()) ?>"/>
-            </a>
-            <div class="company-grid-text">
-                <h4 class="company-name">
-                    <a href="<?= $companyURL ?>">
-                        <?= $this->escapeHtml($company->getName()) ?>
-                    </a>
-                </h4>
-                <p class="company-slogan">
-                    <em><?= $this->escapeHtml($this->localiseText($company->getSlogan())) ?></em>
-                </p>
-                <ul>
-                    <?php foreach ($jobCategories as $category): ?>
-                        <?php if (0 < ($activeJobsInCategory = $company->getNumberOfActiveJobs($category))): ?>
-                            <li>
-                                <a href="<?= $this->url(
-                                    'company/companyItem/joblist',
-                                    [
-                                        'companySlugName' => $company->getSlugName(),
-                                        'category' => $this->localiseText($category->getSlug()),
-                                    ],
-                                ) ?>">
-                                    <?= $activeJobsInCategory ?> <?= $this->escapeHtml($this->localiseText(1 === $activeJobsInCategory ? $category->getName() : $category->getPluralName())) ?>
-                                </a>
-                            </li>
-                        <?php endif ?>
-                    <?php endforeach; ?>
-                </ul>
-            </div>
-        </div>
+<div class="card company-card">
+    <a href="<?= $companyURL ?>">
+        <img src="<?= $this->fileUrl($company->getLogo()) ?>" class="card-image"
+             alt="<?= $this->translate('Logo of') ?> <?= $escaper->escapeHtmlAttr($company->getName()) ?>" />
+    </a>
+    <div class="card-body">
+        <a href="<?= $companyURL ?>">
+            <h5 class="card-title"><?= $this->escapeHtml($company->getName()) ?></h5>
+        </a>
+        <h6 class="card-subtitle text-muted"><?= $this->escapeHtml($this->localiseText($company->getSlogan())) ?></h6>
+        <ul>
+            <?php $allEmpty = true; ?>
+            <?php foreach ($jobCategories as $category): ?>
+                <?php if (0 < ($activeJobsInCategory = $company->getNumberOfActiveJobs($category))): ?>
+                    <?php $allEmpty = false; ?>
+                    <li>
+                        <a href="<?= $this->url(
+                            'company/companyItem/joblist',
+                            [
+                                'companySlugName' => $company->getSlugName(),
+                                'category' => $this->localiseText($category->getSlug()),
+                            ],
+                        ) ?>">
+                            <?= $activeJobsInCategory ?> <?= $this->escapeHtml($this->localiseText(1 === $activeJobsInCategory ? $category->getName() : $category->getPluralName())) ?>
+                        </a>
+                    </li>
+                <?php endif ?>
+            <?php endforeach; ?>
+            <?php if ($allEmpty): ?>
+                <a href="<?= $companyURL ?>" class="stretched-link"></a>
+            <?php endif; ?>
+        </ul>
     </div>
 </div>

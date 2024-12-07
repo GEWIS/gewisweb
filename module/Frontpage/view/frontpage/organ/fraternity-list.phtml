@@ -19,7 +19,7 @@ $this->headTitle($this->translate('Fraternities'));
         <h1><?= $this->translate('Fraternities') ?></h1>
         <p><?= $this->translate('Study association GEWIS obviously has several fraternities which contribute to the atmosphere at GEWIS and organize fun activities. Some fraternities have retired, but luckily new fraternities continue to be founded.') ?></p>
         <p><?= $this->translate('The currently active fraternities of GEWIS (in arbitrary order)') ?></p>
-        <div class="row">
+        <div class="card-grid">
             <?php
             $lang = $this->plugin('translate')->getTranslator()->getLocale();
 
@@ -35,7 +35,7 @@ $this->headTitle($this->translate('Fraternities'));
         <hr>
         <h3><?= $this->translate('Retired fraternities') ?></h3>
         <p><?= $this->translate('The following fraternities have retired:') ?></p>
-        <div class="row">
+        <div class="card-grid">
             <?php
             $lang = $this->plugin('translate')->getTranslator()->getLocale();
             foreach ($abrogatedFraternities as $fraternity) {

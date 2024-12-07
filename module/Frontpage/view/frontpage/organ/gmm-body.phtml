@@ -24,8 +24,8 @@ $this->headTitle($namePlural);
 <section class="section">
     <div class="container">
         <h1><?= $namePlural ?></h1>
-        <div class="row">
-            <?php if (empty($active)): ?>
+        <?php if (empty($active)): ?>
+            <div class="row">
                 <div class="col-md-12">
                     <p>
                         <?= sprintf(
@@ -34,7 +34,9 @@ $this->headTitle($namePlural);
                         ) ?>
                     </p>
                 </div>
-            <?php else: ?>
+            </div>
+        <?php else: ?>
+            <div class="card-grid">
                 <?php
                 foreach ($active as $avc) {
                     echo $this->partial('partial/organ-card.phtml', [
@@ -43,8 +45,8 @@ $this->headTitle($namePlural);
                     ]);
                 }
                 ?>
-            <?php endif; ?>
-        </div>
+            </div>
+        <?php endif; ?>
         <hr>
         <h3>
             <?= sprintf(
@@ -52,8 +54,8 @@ $this->headTitle($namePlural);
                 $namePlural,
             ) ?>
         </h3>
-        <div class="row">
-            <?php if (empty($abrogated)): ?>
+        <?php if (empty($abrogated)): ?>
+            <div class="row">
                 <div class="col-md-12">
                     <p>
                         <?= sprintf(
@@ -62,7 +64,9 @@ $this->headTitle($namePlural);
                         ) ?>
                     </p>
                 </div>
-            <?php else: ?>
+            </div>
+        <?php else: ?>
+            <div class="card-grid">
                 <?php
                 foreach ($abrogated as $avc) {
                     echo $this->partial('partial/organ-card.phtml', [
@@ -71,7 +75,7 @@ $this->headTitle($namePlural);
                     ]);
                 }
                 ?>
-            <?php endif; ?>
-        </div>
+            </div>
+        <?php endif; ?>
     </div>
 </section>
