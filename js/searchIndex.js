@@ -4696,6 +4696,31 @@ Search.appendIndex(
             "summary": "Array\u0020of\u0020all\u0020urls\u0020to\u0020make\u0020available.",
             "url": "classes/Application-View-Helper-ScriptUrl.html#property_urls"
         },                {
+            "fqsen": "\\Application\\View\\Helper\\TimeDiff",
+            "name": "TimeDiff",
+            "summary": "",
+            "url": "classes/Application-View-Helper-TimeDiff.html"
+        },                {
+            "fqsen": "\\Application\\View\\Helper\\TimeDiff\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Application-View-Helper-TimeDiff.html#method___construct"
+        },                {
+            "fqsen": "\\Application\\View\\Helper\\TimeDiff\u003A\u003A__invoke\u0028\u0029",
+            "name": "__invoke",
+            "summary": "",
+            "url": "classes/Application-View-Helper-TimeDiff.html#method___invoke"
+        },                {
+            "fqsen": "\\Application\\View\\Helper\\TimeDiff\u003A\u003AregisterTranslations\u0028\u0029",
+            "name": "registerTranslations",
+            "summary": "",
+            "url": "classes/Application-View-Helper-TimeDiff.html#method_registerTranslations"
+        },                {
+            "fqsen": "\\Application\\View\\Helper\\TimeDiff\u003A\u003A\u0024translator",
+            "name": "translator",
+            "summary": "",
+            "url": "classes/Application-View-Helper-TimeDiff.html#property_translator"
+        },                {
             "fqsen": "\\Application\\View\\Helper\\Truncate",
             "name": "Truncate",
             "summary": "",
