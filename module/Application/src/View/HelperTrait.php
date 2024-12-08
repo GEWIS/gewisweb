@@ -14,6 +14,7 @@ use Application\View\Helper\HrefLang;
 use Application\View\Helper\ScriptUrl;
 use Company\Model\CompanyFeaturedPackage as CompanyFeaturedPackageModel;
 use Company\Model\JobCategory as JobCategoryModel;
+use DateTime;
 use Laminas\Form\ElementInterface;
 use Laminas\Form\View\HelperTrait as FormHelperTrait;
 use Laminas\I18n\View\HelperTrait as I18nHelperTrait;
@@ -46,6 +47,7 @@ use User\Model\CompanyUser as CompanyUserModel;
  * @method bool moduleIsActive(array $conditions)
  * @method HrefLang hrefLang()
  * @method ScriptUrl scriptUrl()
+ * @method string timeDiff(DateTime $start, DateTime $end)
  * @method string truncate(string $text, int $length = 100, array $options = [])
  */
 trait HelperTrait

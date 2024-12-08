@@ -48,8 +48,21 @@ Styleguide: list-group
     }
 
     .agenda-item-body {
-        dd {
-            margin-left: 1em;
+        h4 {
+            margin-bottom: 0;
+        }
+
+        .markdown {
+            display: -webkit-box;
+            margin: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -webkit-line-clamp: 5;
+            -webkit-box-orient: vertical;
+        }
+
+        hr {
+            margin: 0.5rem 0 0.5rem 0;
         }
     }
 }

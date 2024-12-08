@@ -11,69 +11,89 @@ use Laminas\View\Renderer\PhpRenderer;
  * @var Activity[] $activities
  */
 ?>
-<ul class="list-group">
-    <?php if (0 !== count($activities)): ?>
-    <?php foreach ($activities as $activity): ?>
-        <li class="list-group-item agenda-item">
-            <div class="row">
-                <div class="agenda-item-heading col-md-2">
-                    <span class="badge badge-large">
-                        <span class="small">
-                            <?= strtr($this->dateFormat($activity->getBeginTime(), IntlDateFormatter::MEDIUM, IntlDateFormatter::NONE, null, $this->translate('MMM d')), array(' ' => '<br>')); ?>
+<?php if (0 !== count($activities)): ?>
+    <ul class="list-group">
+        <?php foreach ($activities as $activity): ?>
+            <li class="list-group-item agenda-item">
+                <div class="row">
+                    <div class="agenda-item-heading col-md-2 hidden-xs hidden-sm">
+                        <span class="badge badge-large">
+                            <span class="small">
+                                <?= strtr($this->dateFormat($activity->getBeginTime(), IntlDateFormatter::MEDIUM, IntlDateFormatter::NONE, null, $this->translate('MMM d')), array(' ' => '<br>')); ?>
+                            </span>
                         </span>
-                    </span>
-                </div>
-                <div class="agenda-item-body col-md-10">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h4>
-                                <a href="<?= $this->url('activity/view', ['id' => $activity->getId()]) ?>">
-                                    <?= $this->escapeHtml($this->localiseText($activity->getName())) ?>
-                                </a>
-                            </h4>
-                        </div>
-                        <div class="col-md-12">
-                            <?php foreach ($activity->getCategories() as $category): ?>
-                                <div class="chip chip-small chip-outlined">
-                                    <span class="chip-label">
-                                        <?= $this->escapeHtml($this->localiseText($category->getName())) ?>
-                                    </span>
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
-                        <div class="col-md-8 reveal reveal-10 markdown">
-                            <?= strip_tags(
-                                $this->markdown($this->localiseText($activity->getDescription())),
-                                ['<p>', '<del>', '<em>', '<strong>'],
-                            ) ?>
-                            <a class="reveal-button"><?= $this->translate('Continue reading') ?></a>
-                        </div>
-                        <div class="col-md-4">
-                            <dl>
-                                <dt><?= $this->translate('Start') ?></dt>
-                                <dd><?= $this->dateFormat($activity->getBeginTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT); ?></dd>
-                                <dt><?= $this->translate('End') ?></dt>
-                                <dd><?= $this->dateFormat($activity->getEndTime(), IntlDateFormatter::FULL, IntlDateFormatter::SHORT); ?></dd>
+                    </div>
+                    <div class="agenda-item-body col-xs-12 col-md-10">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>
+                                    <a href="<?= $this->url('activity/view', ['id' => $activity->getId()]) ?>">
+                                        <?= $this->escapeHtml($this->localiseText($activity->getName())) ?>
+                                    </a>
+                                </h4>
+                                <?php
+                                $beginTime = $activity->getBeginTime();
+                                $endTime = $activity->getEndTime();
+                                $currentYear = date('Y');
+                                $isSameDay = $beginTime->format('Y-m-d') === $endTime->format('Y-m-d');
 
-                                <dt><?= $this->translate('Location') ?></dt>
-                                <dd><?= $this->escapeHtml($this->localiseText($activity->getLocation())) ?></dd>
+                                if ($isSameDay) {
+                                    $beginDayPattern = ($beginTime->format('Y') === $currentYear) ? 'EEEE d MMM. HH:mm' : 'EEEE d MMM. yyyy HH:mm';
+                                    $beginDay = $this->dateFormat($beginTime, pattern: $beginDayPattern);
+                                    $endDay = $this->dateFormat($endTime, pattern: 'HH:mm');
+                                } else {
+                                    $beginDayPattern = ($beginTime->format('Y') === $currentYear) ? 'EEE. d MMM. (HH:mm)' : 'EEE. d MMM. yyyy (HH:mm)';
+                                    $endDayPattern = ($endTime->format('Y') === $currentYear) ? 'EEE. d MMM. (HH:mm)' : 'EEE. d MMM. yyyy (HH:mm)';
+                                    $beginDay = $this->dateFormat($beginTime, pattern: $beginDayPattern);
+                                    $endDay = $this->dateFormat($endTime, pattern: $endDayPattern);
+                                }
 
-                                <dt><?= $this->translate('Costs') ?></dt>
-                                <dd><?= $this->escapeHtml($this->localiseText($activity->getCosts())) ?></dd>
-                            </dl>
+                                $dateTimeString = sprintf('%s - %s', $beginDay, $endDay);
+
+                                $currentTime = new DateTime('now');
+                                $isOngoing = $currentTime >= $beginTime && $currentTime <= $endTime;
+                                ?>
+                                <p>
+                                    <?= $dateTimeString ?> <small class="text-muted">
+                                        <?php if ($isOngoing): ?>
+                                            <?= $this->translate('for another') ?> <?= $timeRemaining = $this->timeDiff($currentTime, $endTime) ?>
+                                        <?php elseif ($currentTime < $beginTime): ?>
+                                            <?= $this->translate('in') ?> <?= $this->timeDiff($currentTime, $beginTime) ?>
+                                        <?php endif; ?>
+                                    </small>
+                                </p>
+                            </div>
+                            <div class="col-md-12">
+                                <?php foreach ($activity->getCategories() as $category): ?>
+                                    <div class="chip chip-small chip-outlined">
+                                        <span class="chip-label">
+                                            <?= $this->escapeHtml($this->localiseText($category->getName())) ?>
+                                        </span>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                            <div class="col-md-12 markdown">
+                                <?= strip_tags(
+                                    $this->markdown($this->localiseText($activity->getDescription())),
+                                    ['<p>', '<del>', '<em>', '<strong>', '<a>'],
+                                ) ?>
+                            </div>
+                            <div class="col-md-12">
+                                <hr>
+                                <small class="text-muted">
+                                    <?= sprintf(
+                                        '%s - %s',
+                                        $this->escapeHtml($this->localiseText($activity->getCosts())),
+                                        $this->escapeHtml($this->localiseText($activity->getLocation())),
+                                    ) ?>
+                                </small>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </li>
-    <?php endforeach; ?>
-    <?php else: ?>
-        <ul><?= $this->translate('There are no activities.') ?></ul>
-    <?php endif; ?>
-</ul>
-
-<script type="application/javascript" nonce="<?= NONCE_REPLACEMENT_STRING ?>">
-    $(".reveal-button").click(function () {
-        $(this).parent().addClass("revealed");
-    });
-</script>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+<?php else: ?>
+    <p><?= $this->translate('There are no activities.') ?></p>
+<?php endif; ?>

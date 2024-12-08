@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-29 19:59+0100\n"
-"PO-Revision-Date: 2024-11-29 19:59+0100\n"
+"POT-Creation-Date: 2024-12-08 16:21+0100\n"
+"PO-Revision-Date: 2024-12-08 16:21+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: en\n"
@@ -4239,6 +4239,11 @@ msgid_plural "courses"
 msgstr[0] "course"
 msgstr[1] "courses"
 
+msgid "day"
+msgid_plural "days"
+msgstr[0] "day"
+msgstr[1] "days"
+
 msgid "disabled"
 msgstr "disabled"
 
@@ -4254,8 +4259,29 @@ msgstr "email to the board of GEWIS"
 msgid "enabled"
 msgstr "enabled"
 
+msgid "for another"
+msgstr "for another"
+
+msgid "hour"
+msgid_plural "hours"
+msgstr[0] "hour"
+msgstr[1] "hours"
+
+msgid "in"
+msgstr "in"
+
 msgid "in the spotlight"
 msgstr "in the spotlight"
+
+msgid "minute"
+msgid_plural "minutes"
+msgstr[0] "minute"
+msgstr[1] "minutes"
+
+msgid "month"
+msgid_plural "months"
+msgstr[0] "month"
+msgstr[1] "months"
 
 msgid "of"
 msgstr "of"
@@ -4263,6 +4289,11 @@ msgstr "of"
 #, php-format
 msgid "resolves to %s"
 msgstr "resolves to %s"
+
+msgid "second"
+msgid_plural "seconds"
+msgstr[0] "second"
+msgstr[1] "seconds"
 
 msgid "the organizing party"
 msgstr "the organizing party"
@@ -4287,6 +4318,16 @@ msgstr "unchanged new"
 
 msgid "unchanged old"
 msgstr "unchanged old"
+
+msgid "week"
+msgid_plural "weeks"
+msgstr[0] "week"
+msgstr[1] "weeks"
+
+msgid "year"
+msgid_plural "years"
+msgstr[0] "year"
+msgstr[1] "years"
 
 msgid "years"
 msgstr "years"

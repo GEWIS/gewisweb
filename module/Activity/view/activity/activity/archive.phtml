@@ -17,7 +17,7 @@ use Laminas\View\Renderer\PhpRenderer;
         <div class="container">
             <ul class="nav nav-pills head-menu">
                 <?php for ($i = count($years) - 1; $i >= max(0, count($years) - 5); $i--): ?>
-                    <li>
+                    <li class="<?= isset($year) && $year === $years[$i] ? 'active' : '' ?>">
                         <a href="<?= $this->url('activity/year', ['year' => $years[$i]]); ?>">
                             <?= $years[$i] ?>-<?= $years[$i] + 1 ?>
                         </a>
