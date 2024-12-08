@@ -469,6 +469,7 @@ class ActivityController extends AbstractActionController
         return new ViewModel(
             [
                 'years' => $years,
+                'year' => $year,
                 'activities' => $this->activityQueryService->getFinishedActivitiesByYear($year),
             ],
         );
