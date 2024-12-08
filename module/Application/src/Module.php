@@ -24,6 +24,7 @@ use Application\View\Helper\JobCategories;
 use Application\View\Helper\Markdown;
 use Application\View\Helper\ModuleIsActive;
 use Application\View\Helper\ScriptUrl;
+use Application\View\Helper\TimeDiff;
 use Exception;
 use Laminas\Cache\Storage\Adapter\Memcached;
 use Laminas\Cache\Storage\Adapter\MemcachedOptions;
@@ -342,6 +343,9 @@ class Module
                     $serverUrlHelper = $viewHelperManager->get(ServerUrl::class);
 
                     return new HashUrl($serverUrlHelper);
+                },
+                'timeDiff' => static function (ContainerInterface $container) {
+                    return new TimeDiff($container->get(MvcTranslator::class));
                 },
             ],
         ];
