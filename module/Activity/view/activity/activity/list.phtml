@@ -56,7 +56,7 @@ use Laminas\View\Renderer\PhpRenderer;
                                 <p>
                                     <?= $dateTimeString ?> <small class="text-muted">
                                         <?php if ($isOngoing): ?>
-                                            <?= $this->translate('for another') ?> <?= $timeRemaining = $this->timeDiff($currentTime, $endTime) ?>
+                                            <?= $this->translate('for') ?> <?= $timeRemaining = $this->timeDiff($currentTime, $endTime) ?>
                                         <?php elseif ($currentTime < $beginTime): ?>
                                             <?= $this->translate('in') ?> <?= $this->timeDiff($currentTime, $beginTime) ?>
                                         <?php endif; ?>
