@@ -54,7 +54,7 @@ use Laminas\View\Renderer\PhpRenderer;
                                 $isOngoing = $currentTime >= $beginTime && $currentTime <= $endTime;
                                 ?>
                                 <p>
-                                    <?= $dateTimeString ?> <small class="text-muted">
+                                    <?= ucfirst($dateTimeString) ?> <small class="text-muted">
                                         <?php if ($isOngoing): ?>
                                             <?= $this->translate('for') ?> <?= $timeRemaining = $this->timeDiff($currentTime, $endTime) ?>
                                         <?php elseif ($currentTime < $beginTime): ?>
