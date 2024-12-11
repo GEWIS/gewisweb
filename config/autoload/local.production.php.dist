@@ -105,6 +105,10 @@ return [
      * Settings for the league/commonmark Markdown converter.
      */
     'commonmark' => [
+        'autolink' => [
+            'allowed_protocols' => ['https', 'http'],
+            'default_protocol' => 'https',
+        ],
         'commonmark' => [
             'enable_em' => true,
             'enable_strong' => true,
@@ -128,5 +132,6 @@ return [
         'html_input' => 'escape',
         'allow_unsafe_links' => false,
         'max_nesting_level' => 100,
+        'max_delimiters_per_line' => 500,
     ],
 ];
