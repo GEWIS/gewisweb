@@ -117,7 +117,7 @@ function getOrganDescription($organInformation, $lang)
         <div class="row">
             <div class="col-md-8">
                 <h1 class="h-wrap"><?= $this->escapeHtml($organ->getName()) ?></h1>
-                <?php echo getOrganDescription($organInformation, $lang) ?>
+                <?= $this->markdown(getOrganDescription($organInformation, $lang)) ?>
             </div>
             <div class="col-md-4">
                 <div class="panel panel-default">
