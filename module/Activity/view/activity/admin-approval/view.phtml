@@ -173,7 +173,7 @@ $this->breadcrumbs()
         </div>
         <hr>
     </div>
-    <?php if ($activity->getCategories()->count() > 0): ?>
+    <?php if (!$activity->getCategories()->isEmpty()): ?>
         <div class="col-md-12">
             <h2><?= $this->translate('Activity Categories') ?></h2>
         </div>
@@ -187,7 +187,7 @@ $this->breadcrumbs()
             <?php endforeach; ?>
         </div>
     <?php endif; ?>
-    <?php if ($activity->getSignupLists()->count() > 0): ?>
+    <?php if (!$activity->getSignupLists()->isEmpty()): ?>
         <div class="col-md-12">
             <h2><?= $this->translate('Sign-up Lists') ?></h2>
         </div>
