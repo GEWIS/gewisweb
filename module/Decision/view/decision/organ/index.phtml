@@ -20,12 +20,12 @@ $this->headTitle($this->translate('Organ list'));
         <div class="row">
             <div class="col-md-5 col-sm-5 col-xs-12">
                 <ul class="nav nav-pills">
-                    <li role="presentation" class="<?= $historical ? 'active' : '' ?>">
+                    <li role="presentation" class="<?= !$historical ? 'active' : '' ?>">
                         <a href="<?= $this->url('organs') ?>">
                             <?= $this->translate('Active') ?>
                         </a>
                     </li>
-                    <li role="presentation" class="<?= !$historical ? 'active' : '' ?>">
+                    <li role="presentation" class="<?= $historical ? 'active' : '' ?>">
                         <a href="<?= $this->url('organs/history') ?>">
                             <?= $this->translate('Abrogated') ?>
                         </a>
