@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Decision\Mapper;
 
 use Application\Mapper\BaseMapper;
+use DateTime;
 use Decision\Model\Member as MemberModel;
 use Decision\Model\Organ as OrganModel;
 use Decision\Model\OrganMember as OrganMemberModel;
@@ -128,9 +129,13 @@ class Member extends BaseMapper
             ->join('o.members', 'om')
             ->join('om.member', 'm')
             ->where('m.lidnr = :lidnr')
-            ->andWhere('om.dischargeDate IS NULL');
+            ->andWhere($qb->expr()->orX(
+                $qb->expr()->isNull('om.dischargeDate'),
+                $qb->expr()->gt('om.dischargeDate', ':now'),
+            ));
 
-        $qb->setParameter('lidnr', $member->getLidnr());
+        $qb->setParameter('lidnr', $member->getLidnr())
+            ->setParameter('now', new DateTime());
 
         return $qb->getQuery()->getResult();
     }
@@ -147,10 +152,14 @@ class Member extends BaseMapper
             ->from(OrganMemberModel::class, 'om')
             ->leftJoin('om.organ', 'o')
             ->where('om.member = :member')
-            ->andWhere('om.installDate <= CURRENT_TIMESTAMP()')
-            ->andWhere('om.dischargeDate IS NULL OR om.dischargeDate > CURRENT_TIMESTAMP()');
+            ->andWhere('om.installDate <= :now')
+            ->andWhere($qb->expr()->orX(
+                $qb->expr()->isNull('om.dischargeDate'),
+                $qb->expr()->gt('om.dischargeDate', ':now'),
+            ));
 
-        $qb->setParameter('member', $member);
+        $qb->setParameter('member', $member)
+            ->setParameter('now', new DateTime());
 
         return $qb->getQuery()->getResult();
     }
@@ -167,10 +176,13 @@ class Member extends BaseMapper
             ->from(OrganMemberModel::class, 'om')
             ->leftJoin('om.organ', 'o')
             ->where('om.member = :member')
-            ->andWhere('om.dischargeDate IS NOT NULL')
-            ->andWhere('om.dischargeDate <= CURRENT_TIMESTAMP()');
+            ->andWhere($qb->expr()->andX(
+                $qb->expr()->isNotNull('om.dischargeDate'),
+                $qb->expr()->lte('om.dischargeDate', ':now'),
+            ));
 
-        $qb->setParameter('member', $member);
+        $qb->setParameter('member', $member)
+            ->setParameter('now', new DateTime());
 
         return $qb->getQuery()->getResult();
     }
