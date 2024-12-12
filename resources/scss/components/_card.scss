@@ -98,7 +98,20 @@
         .card-img,
         .card-image {
             aspect-ratio: unset;
+            max-height: 10rem;
             padding: 1.5rem;
+        }
+
+        > .card-img,
+        > .card-image {
+            margin: 0 auto;
+            width: fit-content;
+        }
+
+        > a:first-child:not(.stretched-link) {
+            display: flex;
+            justify-content: center;
+            align-content: center;
         }
     }
 
