@@ -48,40 +48,6 @@ class Album
     }
 
     /**
-     * Retrieves all the albums in the root directory or in the specified
-     * album.
-     *
-     * @param AlbumModel|null $album      The album to retrieve sub-albums of
-     * @param int             $start      the result to start at
-     * @param int|null        $maxResults max amount of results to return, null for infinite
-     *
-     * @return AlbumModel[]
-     */
-    public function getAlbums(
-        ?AlbumModel $album = null,
-        int $start = 0,
-        ?int $maxResults = null,
-    ): array {
-        if (!$this->aclService->isAllowed('view', 'album')) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to view albums'));
-        }
-
-        if (null === $album) {
-            return $this->albumMapper->getRootAlbums();
-        }
-
-        if ($album instanceof VirtualAlbumModel) {
-            return [];
-        }
-
-        return $this->albumMapper->getSubAlbums(
-            $album,
-            $start,
-            $maxResults,
-        );
-    }
-
-    /**
      * Returns all albums for a given association year.
      * In this context an association year is defined as the year which contains
      * the first day of the association year.

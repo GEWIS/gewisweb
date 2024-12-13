@@ -16,47 +16,6 @@ use Photo\Model\Album as AlbumModel;
 class Album extends BaseMapper
 {
     /**
-     * Returns all the subalbums of a given album.
-     *
-     * @param AlbumModel $parent     the parent album to retrieve the subalbum from
-     * @param int        $start      the result to start at
-     * @param int|null   $maxResults max amount of results to return, null for infinite
-     *
-     * @return AlbumModel[]
-     */
-    public function getSubAlbums(
-        AlbumModel $parent,
-        int $start = 0,
-        ?int $maxResults = null,
-    ): array {
-        $qb = $this->getRepository()->createQueryBuilder('a');
-        $qb->where('a.parent = ?1')
-            ->setParameter(1, $parent)
-            ->setFirstResult($start)
-            ->orderBy('a.startDateTime', 'ASC');
-
-        if (null !== $maxResults) {
-            $qb->setMaxResults($maxResults);
-        }
-
-        return $qb->getQuery()->getResult();
-    }
-
-    /**
-     * return all the sub-albums without a parent.
-     *
-     * @return AlbumModel[]
-     */
-    public function getRootAlbums(): array
-    {
-        $qb = $this->getRepository()->createQueryBuilder('a');
-        $qb->where('a.parent IS NULL')
-            ->orderBy('a.startDateTime', 'DESC');
-
-        return $qb->getQuery()->getResult();
-    }
-
-    /**
      * Gets all root albums with a start date between the specified dates.
      *
      * @param DateTime $start start date and time
