@@ -435,7 +435,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Mapper/Album.php"><a href="files/module-photo-src-mapper-album.html"><abbr title="module/Photo/src/Mapper/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">16</span>
+    <span class="phpdocumentor-element-found-in__line">18</span>
 
     </aside>
 
@@ -591,20 +591,6 @@
 <dd>Returns the root album containing the oldest photos.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Photo-Mapper-Album.html#method_getRootAlbums">getRootAlbums()</a>
-    <span>
-                                &nbsp;: array&lt;string|int, <a href="classes/Photo-Model-Album.html"><abbr title="\Photo\Model\Album">Album</abbr></a>&gt;    </span>
-</dt>
-<dd>return all the sub-albums without a parent.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Photo-Mapper-Album.html#method_getSubAlbums">getSubAlbums()</a>
-    <span>
-                                &nbsp;: array&lt;string|int, <a href="classes/Photo-Model-Album.html"><abbr title="\Photo\Model\Album">Album</abbr></a>&gt;    </span>
-</dt>
-<dd>Returns all the subalbums of a given album.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Application-Mapper-BaseMapper.html#method_persist">persist()</a>
     <span>
                                 &nbsp;: void    </span>
@@ -636,6 +622,13 @@
                                 &nbsp;: void    </span>
 </dt>
 <dd>Removes multiple studies.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Photo-Mapper-Album.html#method_search">search()</a>
+    <span>
+                                &nbsp;: array&lt;string|int, <a href="classes/Photo-Model-Album.html"><abbr title="\Photo\Model\Album">Album</abbr></a>&gt;    </span>
+</dt>
+<dd>Gets all root albums based on their name.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Application-Mapper-BaseMapper.html#method_transactional">transactional()</a>
@@ -1164,7 +1157,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Mapper/Album.php"><a href="files/module-photo-src-mapper-album.html"><abbr title="module/Photo/src/Mapper/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">67</span>
+    <span class="phpdocumentor-element-found-in__line">28</span>
 
     </aside>
 
@@ -1231,7 +1224,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Mapper/Album.php"><a href="files/module-photo-src-mapper-album.html"><abbr title="module/Photo/src/Mapper/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">92</span>
+    <span class="phpdocumentor-element-found-in__line">53</span>
 
     </aside>
 
@@ -1350,7 +1343,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Mapper/Album.php"><a href="files/module-photo-src-mapper-album.html"><abbr title="module/Photo/src/Mapper/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">103</span>
+    <span class="phpdocumentor-element-found-in__line">86</span>
 
     </aside>
 
@@ -1399,7 +1392,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Mapper/Album.php"><a href="files/module-photo-src-mapper-album.html"><abbr title="module/Photo/src/Mapper/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">123</span>
+    <span class="phpdocumentor-element-found-in__line">106</span>
 
     </aside>
 
@@ -1431,114 +1424,6 @@
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><a href="classes/Photo-Model-Album.html"><abbr title="\Photo\Model\Album">Album</abbr></a>|null</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getRootAlbums">
-        getRootAlbums()
-        <a href="classes/Photo-Mapper-Album.html#method_getRootAlbums" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Mapper/Album.php"><a href="files/module-photo-src-mapper-album.html"><abbr title="module/Photo/src/Mapper/Album.php">Album.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">50</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">return all the sub-albums without a parent.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getRootAlbums</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Photo-Model-Album.html"><abbr title="\Photo\Model\Album">Album</abbr></a>&gt;</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-    
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Photo-Model-Album.html"><abbr title="\Photo\Model\Album">Album</abbr></a>&gt;</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getSubAlbums">
-        getSubAlbums()
-        <a href="classes/Photo-Mapper-Album.html#method_getSubAlbums" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Mapper/Album.php"><a href="files/module-photo-src-mapper-album.html"><abbr title="module/Photo/src/Mapper/Album.php">Album.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">27</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Returns all the subalbums of a given album.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getSubAlbums</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Photo-Model-Album.html"><abbr title="\Photo\Model\Album">Album</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$parent</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$start</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">0</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$maxResults</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Photo-Model-Album.html"><abbr title="\Photo\Model\Album">Album</abbr></a>&gt;</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$parent</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Photo-Model-Album.html"><abbr title="\Photo\Model\Album">Album</abbr></a></span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>the parent album to retrieve the subalbum from</p>
-</section>
-
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$start</span>
-                : <span class="phpdocumentor-signature__argument__return-type">int</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">0</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>the result to start at</p>
-</section>
-
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$maxResults</span>
-                : <span class="phpdocumentor-signature__argument__return-type">int|null</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>max amount of results to return, null for infinite</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Photo-Model-Album.html"><abbr title="\Photo\Model\Album">Album</abbr></a>&gt;</span>
             </section>
 
 </article>
@@ -1898,6 +1783,57 @@
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_search">
+        search()
+        <a href="classes/Photo-Mapper-Album.html#method_search" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Mapper/Album.php"><a href="files/module-photo-src-mapper-album.html"><abbr title="module/Photo/src/Mapper/Album.php">Album.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">68</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Gets all root albums based on their name.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">search</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$query</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Photo-Model-Album.html"><abbr title="\Photo\Model\Album">Album</abbr></a>&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <section class="phpdocumentor-description"><p>Only returns published albums and grouping has to happen downstream at the consumers.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$query</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Photo-Model-Album.html"><abbr title="\Photo\Model\Album">Album</abbr></a>&gt;</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_transactional">
         transactional()
         <a href="classes/Application-Mapper-BaseMapper.html#method_transactional" class="headerlink"><i class="fas fa-link"></i></a>
@@ -2009,7 +1945,7 @@ function.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Photo/src/Mapper/Album.php"><a href="files/module-photo-src-mapper-album.html"><abbr title="module/Photo/src/Mapper/Album.php">Album.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">140</span>
+    <span class="phpdocumentor-element-found-in__line">123</span>
 
     </aside>
 
@@ -2171,13 +2107,12 @@ function.</p>
                                             <li class=""><a href="classes/Application-Mapper-BaseMapper.html#method_getEntityManager">getEntityManager()</a></li>
                                             <li class=""><a href="classes/Photo-Mapper-Album.html#method_getNewestAlbum">getNewestAlbum()</a></li>
                                             <li class=""><a href="classes/Photo-Mapper-Album.html#method_getOldestAlbum">getOldestAlbum()</a></li>
-                                            <li class=""><a href="classes/Photo-Mapper-Album.html#method_getRootAlbums">getRootAlbums()</a></li>
-                                            <li class=""><a href="classes/Photo-Mapper-Album.html#method_getSubAlbums">getSubAlbums()</a></li>
                                             <li class=""><a href="classes/Application-Mapper-BaseMapper.html#method_persist">persist()</a></li>
                                             <li class=""><a href="classes/Application-Mapper-BaseMapper.html#method_persistMultiple">persistMultiple()</a></li>
                                             <li class=""><a href="classes/Application-Mapper-BaseMapper.html#method_remove">remove()</a></li>
                                             <li class=""><a href="classes/Application-Mapper-BaseMapper.html#method_removeById">removeById()</a></li>
                                             <li class=""><a href="classes/Application-Mapper-BaseMapper.html#method_removeMultiple">removeMultiple()</a></li>
+                                            <li class=""><a href="classes/Photo-Mapper-Album.html#method_search">search()</a></li>
                                             <li class=""><a href="classes/Application-Mapper-BaseMapper.html#method_transactional">transactional()</a></li>
                                             <li class=""><a href="classes/Application-Mapper-BaseMapper.html#method_getRepository">getRepository()</a></li>
                                             <li class=""><a href="classes/Photo-Mapper-Album.html#method_getRepositoryName">getRepositoryName()</a></li>

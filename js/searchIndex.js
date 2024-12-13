@@ -4551,6 +4551,16 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Application-View-Helper-HashUrl.html#property_serverUrlHelper"
         },                {
+            "fqsen": "\\Application\\View\\Helper\\HighlightSearch",
+            "name": "HighlightSearch",
+            "summary": "",
+            "url": "classes/Application-View-Helper-HighlightSearch.html"
+        },                {
+            "fqsen": "\\Application\\View\\Helper\\HighlightSearch\u003A\u003A__invoke\u0028\u0029",
+            "name": "__invoke",
+            "summary": "Insert\u0020\u0060\u003Cmark\u003E\u0060\u0020around\u0020a\u0020search\u0020prompt\u0020in\u0020the\u0020content\u0020of\u0020a\u0020returned\u0020result.",
+            "url": "classes/Application-View-Helper-HighlightSearch.html#method___invoke"
+        },                {
             "fqsen": "\\Application\\View\\Helper\\HrefLang",
             "name": "HrefLang",
             "summary": "Helper\u0020for\u0020setting\u0020\u0060alternate\u0060\u0020\u0060hreflang\u0060\u0020tags.\u0020The\u0020normal\u0020\u0060HeadLink\u0060\u0020view\u0020helper\u0020of\u0020Laminas\u0020only\u0020allow\u0020us\u0020to\u0020set\u0020one\nand\u0020then\u0020overwrite\u0020only\u0020one\u0020tag,\u0020while\u0020we\u0020need\u0020more.",
@@ -14396,6 +14406,16 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Photo-Controller-PhotoController.html#method_indexAction"
         },                {
+            "fqsen": "\\Photo\\Controller\\PhotoController\u003A\u003AsearchAction\u0028\u0029",
+            "name": "searchAction",
+            "summary": "",
+            "url": "classes/Photo-Controller-PhotoController.html#method_searchAction"
+        },                {
+            "fqsen": "\\Photo\\Controller\\PhotoController\u003A\u003AfilterAlbums\u0028\u0029",
+            "name": "filterAlbums",
+            "summary": "If\u0020the\u0020membership\u0020of\u0020the\u0020member\u0020has\u0020ended,\u0020only\u0020show\u0020albums\u0020before\u0020the\u0020end\u0020date\u0020or\u0020in\u0020which\u0020they\u0020are\u0020tagged.",
+            "url": "classes/Photo-Controller-PhotoController.html#method_filterAlbums"
+        },                {
             "fqsen": "\\Photo\\Controller\\PhotoController\u003A\u003AdownloadAction\u0028\u0029",
             "name": "downloadAction",
             "summary": "",
@@ -14501,6 +14521,21 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Photo-Form-Album.html#property_translator"
         },                {
+            "fqsen": "\\Photo\\Form\\SearchAlbum",
+            "name": "SearchAlbum",
+            "summary": "",
+            "url": "classes/Photo-Form-SearchAlbum.html"
+        },                {
+            "fqsen": "\\Photo\\Form\\SearchAlbum\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Photo-Form-SearchAlbum.html#method___construct"
+        },                {
+            "fqsen": "\\Photo\\Form\\SearchAlbum\u003A\u003AgetInputFilterSpecification\u0028\u0029",
+            "name": "getInputFilterSpecification",
+            "summary": "Input\u0020filter\u0020specification.",
+            "url": "classes/Photo-Form-SearchAlbum.html#method_getInputFilterSpecification"
+        },                {
             "fqsen": "\\Photo\\Listener\\AlbumDate",
             "name": "AlbumDate",
             "summary": "Doctrine\u0020event\u0020listener\u0020class\u0020for\u0020Album\u0020and\u0020Photo\u0020entities.",
@@ -14561,16 +14596,6 @@ Search.appendIndex(
             "summary": "Mappers\u0020for\u0020Album.",
             "url": "classes/Photo-Mapper-Album.html"
         },                {
-            "fqsen": "\\Photo\\Mapper\\Album\u003A\u003AgetSubAlbums\u0028\u0029",
-            "name": "getSubAlbums",
-            "summary": "Returns\u0020all\u0020the\u0020subalbums\u0020of\u0020a\u0020given\u0020album.",
-            "url": "classes/Photo-Mapper-Album.html#method_getSubAlbums"
-        },                {
-            "fqsen": "\\Photo\\Mapper\\Album\u003A\u003AgetRootAlbums\u0028\u0029",
-            "name": "getRootAlbums",
-            "summary": "return\u0020all\u0020the\u0020sub\u002Dalbums\u0020without\u0020a\u0020parent.",
-            "url": "classes/Photo-Mapper-Album.html#method_getRootAlbums"
-        },                {
             "fqsen": "\\Photo\\Mapper\\Album\u003A\u003AgetAlbumsInDateRange\u0028\u0029",
             "name": "getAlbumsInDateRange",
             "summary": "Gets\u0020all\u0020root\u0020albums\u0020with\u0020a\u0020start\u0020date\u0020between\u0020the\u0020specified\u0020dates.",
@@ -14580,6 +14605,11 @@ Search.appendIndex(
             "name": "getAlbumsWithoutDate",
             "summary": "Retrieves\u0020all\u0020root\u0020albums\u0020which\u0020do\u0020not\u0020have\u0020a\u0020startDateTime\u0020specified.",
             "url": "classes/Photo-Mapper-Album.html#method_getAlbumsWithoutDate"
+        },                {
+            "fqsen": "\\Photo\\Mapper\\Album\u003A\u003Asearch\u0028\u0029",
+            "name": "search",
+            "summary": "Gets\u0020all\u0020root\u0020albums\u0020based\u0020on\u0020their\u0020name.",
+            "url": "classes/Photo-Mapper-Album.html#method_search"
         },                {
             "fqsen": "\\Photo\\Mapper\\Album\u003A\u003AgetNewestAlbum\u0028\u0029",
             "name": "getNewestAlbum",
@@ -15636,11 +15666,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Photo-Service-Album.html#method___construct"
         },                {
-            "fqsen": "\\Photo\\Service\\Album\u003A\u003AgetAlbums\u0028\u0029",
-            "name": "getAlbums",
-            "summary": "Retrieves\u0020all\u0020the\u0020albums\u0020in\u0020the\u0020root\u0020directory\u0020or\u0020in\u0020the\u0020specified\nalbum.",
-            "url": "classes/Photo-Service-Album.html#method_getAlbums"
-        },                {
             "fqsen": "\\Photo\\Service\\Album\u003A\u003AgetAlbumsByYear\u0028\u0029",
             "name": "getAlbumsByYear",
             "summary": "Returns\u0020all\u0020albums\u0020for\u0020a\u0020given\u0020association\u0020year.",
@@ -15721,6 +15746,16 @@ Search.appendIndex(
             "summary": "Get\u0020all\u0020unique\u0020albums\u0020a\u0020certain\u0020member\u0020is\u0020tagged\u0020in",
             "url": "classes/Photo-Service-Album.html#method_getAlbumsByMember"
         },                {
+            "fqsen": "\\Photo\\Service\\Album\u003A\u003AgetSearchAlbumForm\u0028\u0029",
+            "name": "getSearchAlbumForm",
+            "summary": "",
+            "url": "classes/Photo-Service-Album.html#method_getSearchAlbumForm"
+        },                {
+            "fqsen": "\\Photo\\Service\\Album\u003A\u003Asearch\u0028\u0029",
+            "name": "search",
+            "summary": "Search\u0020for\u0020albums.",
+            "url": "classes/Photo-Service-Album.html#method_search"
+        },                {
             "fqsen": "\\Photo\\Service\\Album\u003A\u003A\u0024aclService",
             "name": "aclService",
             "summary": "",
@@ -15770,6 +15805,11 @@ Search.appendIndex(
             "name": "albumForm",
             "summary": "",
             "url": "classes/Photo-Service-Album.html#property_albumForm"
+        },                {
+            "fqsen": "\\Photo\\Service\\Album\u003A\u003A\u0024searchAlbumForm",
+            "name": "searchAlbumForm",
+            "summary": "",
+            "url": "classes/Photo-Service-Album.html#property_searchAlbumForm"
         },                {
             "fqsen": "\\Photo\\Service\\AlbumCover",
             "name": "AlbumCover",
