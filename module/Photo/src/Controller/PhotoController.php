@@ -64,9 +64,62 @@ class PhotoController extends AbstractActionController
             }
         }
 
-        $albums = $this->albumService->getAlbumsByYear($year);
+        return new ViewModel(
+            [
+                'years' => $years,
+                'year' => $year,
+                'albums' => $this->filterAlbums($this->albumService->getAlbumsByYear($year)),
+            ],
+        );
+    }
 
-        // If the membership of the member has ended, only show albums before the end date or in which they are tagged
+    public function searchAction(): ViewModel
+    {
+        if (!$this->aclService->isAllowed('search', 'album')) {
+            throw new NotAllowedException($this->translator->translate('Not allowed to search albums'));
+        }
+
+        /** @var Request $request */
+        $request = $this->getRequest();
+        $form = $this->albumService->getSearchAlbumForm();
+
+        if ($request->isPost()) {
+            $form->setData($request->getPost()->toArray());
+
+            if ($form->isValid()) {
+                $result = $this->filterAlbums($this->albumService->search($form->getData()));
+
+                $groupedAlbums = [];
+                foreach ($result as $album) {
+                    $groupedAlbums[AssociationYear::fromDate($album->getStartDateTime())->getYear()][] = $album;
+                }
+
+                return new ViewModel(
+                    [
+                        'result' => $groupedAlbums,
+                        'prompt' => $form->getData()['query'],
+                        'form' => $form,
+                    ],
+                );
+            }
+        }
+
+        return new ViewModel(
+            [
+                'form' => $form,
+            ],
+        );
+    }
+
+    /**
+     * If the membership of the member has ended, only show albums before the end date or in which they are tagged.
+     *
+     * @param Album[] $albums
+     *
+     * @return Album[]
+     */
+    private function filterAlbums(array $albums): array
+    {
         if (null !== ($membershipEndsOn = $this->aclService->getUserIdentity()->getMember()->getMembershipEndsOn())) {
             $memberAlbumIds = array_map(
                 static function ($a) {
@@ -74,22 +127,16 @@ class PhotoController extends AbstractActionController
                 },
                 $this->albumService->getAlbumsByMember($this->aclService->getUserIdentity()->getMember()->getLidnr()),
             );
-            $albums = array_filter(
+
+            return array_filter(
                 $albums,
                 static function (Album $v) use ($membershipEndsOn, $memberAlbumIds) {
-                    return $membershipEndsOn > $v->getStartDateTime()
-                        || in_array($v->getId(), $memberAlbumIds);
+                    return $membershipEndsOn > $v->getStartDateTime() || in_array($v->getId(), $memberAlbumIds);
                 },
             );
         }
 
-        return new ViewModel(
-            [
-                'years' => $years,
-                'year' => $year,
-                'albums' => $albums,
-            ],
-        );
+        return $albums;
     }
 
     public function downloadAction(): ?Stream

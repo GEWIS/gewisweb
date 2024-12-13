@@ -15,43 +15,6 @@ use Laminas\View\Renderer\PhpRenderer;
  */
 
 $this->headTitle($this->translate('Search for decision'));
-
-/**
- * Insert `<mark>` around a search prompt in the content of a decision.
- */
-function highlightSearch(
-    string $decision,
-    string $search,
-): string {
-    // Convert the decision to something that is easily searchable (i.e. it MUST contain only Latin-ASCII characters).
-    $transliteratedDecision = transliterator_transliterate('Any-Latin; Latin-ASCII', $decision);
-    // Do the same for the search prompt, as otherwise searches WITH non-ASCII characters will not work.
-    $search = transliterator_transliterate('Any-Latin; Latin-ASCII', $search);
-
-    $offset = 0;
-    $output = '';
-    $length = mb_strlen($search);
-
-    // There is a very important assumption here; the transliterated version of the decision MUST be exactly as long as
-    // the original version. Otherwise, the insertion is done with an incorrect offset. As such, using `iconv` is NOT
-    // good as it will either extend (e.g. `€` becomes `EUR`) or completely remove characters (`//IGNORE` option).
-    while (false !== ($position = mb_stripos($transliteratedDecision, $search, $offset, 'UTF-8'))) {
-        // Progressively insert markers into the original decision.
-        $output .= sprintf('%s%s%s%s',
-            mb_substr($decision, $offset, $position - $offset, 'UTF-8'),
-            '<mark>',
-            mb_substr($decision, $position, $length, 'UTF-8'),
-            '</mark>',
-        );
-
-        $offset = $position + $length;
-    }
-
-    // Add the final part of the decision back.
-    $output .= mb_substr($decision, $offset, null, 'UTF-8');
-
-    return $output;
-}
 ?>
 <section class="section">
     <div class="container">
@@ -119,9 +82,9 @@ function highlightSearch(
                                 </a>
                             </strong>
                             <span class="decision-content">
-                                <?= highlightSearch(
-                                    $this->escapeHtml($decision->getContent()),
+                                <?= $this->highlightSearch(
                                     $this->escapeHtml($prompt),
+                                    $this->escapeHtml($decision->getContent()),
                                 ) ?>
                             </span>
                         </li>

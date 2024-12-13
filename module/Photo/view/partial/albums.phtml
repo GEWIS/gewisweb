@@ -8,41 +8,18 @@ use Photo\Model\Album as AlbumModel;
 
 /**
  * @var PhpRenderer|HelperTrait $this
- * @var bool $admin
+ * @var bool|null $admin
  * @var AlbumModel[] $albums
+ * @var string|null $prompt
  */
 
-$admin = isset($admin) && $admin;
-
-$classes = 'col-lg-3 col-md-4 col-xs-6';
-$url = 'photo/album';
-if ($admin) {
-    $classes = 'col-lg-2 col-md-3 col-xs-6';
-    $url = 'admin_photo/album';
-}
+$admin = $admin ?? null;
+$prompt = $prompt ?? null;
 ?>
-<?php $lastWeek = (new DateTime('now'))->sub(new DateInterval('P7D')); ?>
-<?php foreach ($albums as $album): ?>
-    <?php if ($album->getPhotoCount() > 0 || $admin): ?>
-        <div class="<?= $classes ?> thumb">
-            <a class="thumbnail"
-               href="<?= $this->url($url, ['album_id' => $album->getId(), 'album_type' => 'album']) ?>">
-                <?php if (null !== ($albumCover = $album->getCoverPath())): ?>
-                    <img class="img-responsive" src="<?= $this->fileUrl($albumCover) ?>" alt="">
-                <?php else: ?>
-                    <img class="img-responsive" src="/img/missing_cover.svg" alt="">
-                <?php endif; ?>
-                <div class="caption">
-                    <p>
-                        <?php if ($album->getCreatedAt() >= $lastWeek): ?>
-                            <span class="label label-primary">
-                                <?= $this->translate('NEW') ?>
-                            </span>&nbsp;
-                        <?php endif; ?>
-                        <?= $this->escapeHtml($album->getName()) ?>
-                    </p>
-                </div>
-            </a>
-        </div>
-    <?php endif; ?>
-<?php endforeach; ?>
+<div class="card-grid <?= $admin ? 'admin-grid' : '' ?>">
+    <?php foreach ($albums as $album): ?>
+        <?php if ($album->getPhotoCount() > 0 || $admin): ?>
+            <?= $this->partial('partial/album-card.phtml', ['album' => $album, 'admin' => $admin, 'prompt' => $prompt]) ?>
+        <?php endif; ?>
+    <?php endforeach; ?>
+</div>

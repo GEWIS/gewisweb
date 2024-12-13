@@ -10,6 +10,7 @@ use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\Mvc\MvcEvent;
 use Photo\Command\WeeklyPhoto;
 use Photo\Form\Album as AlbumForm;
+use Photo\Form\SearchAlbum as SearchAlbumForm;
 use Photo\Listener\AlbumDate as AlbumDateListener;
 use Photo\Listener\Remove as RemoveListener;
 use Photo\Mapper\Album as AlbumMapper;
@@ -69,6 +70,7 @@ class Module
                     $tagMapper = $container->get('photo_mapper_tag');
                     $weeklyPhotoMapper = $container->get('photo_mapper_weekly_photo');
                     $albumForm = $container->get('photo_form_album');
+                    $searchAlbumForm = $container->get('photo_form_albumSearch');
 
                     return new AlbumService(
                         $aclService,
@@ -81,6 +83,7 @@ class Module
                         $tagMapper,
                         $weeklyPhotoMapper,
                         $albumForm,
+                        $searchAlbumForm,
                     );
                 },
                 'photo_service_metadata' => static function () {
@@ -148,6 +151,11 @@ class Module
                     $form->setHydrator($container->get('photo_hydrator'));
 
                     return $form;
+                },
+                'photo_form_albumSearch' => static function (ContainerInterface $container) {
+                    return new SearchAlbumForm(
+                        $container->get(MvcTranslator::class),
+                    );
                 },
                 'photo_hydrator' => static function (ContainerInterface $container) {
                     return new DoctrineObject(

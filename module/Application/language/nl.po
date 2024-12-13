@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-10 09:16+0100\n"
-"PO-Revision-Date: 2024-12-10 09:25+0100\n"
+"POT-Creation-Date: 2024-12-14 00:00+0100\n"
+"PO-Revision-Date: 2024-12-14 00:01+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: nl\n"
@@ -2003,6 +2003,9 @@ msgstr "Geen ALV beschikbaar."
 msgid "No activities planned"
 msgstr "Geen activiteiten gepland"
 
+msgid "No albums were found."
+msgstr "Er zijn albums gevonden."
+
 msgid "No date"
 msgstr "Geen datum"
 
@@ -2063,6 +2066,9 @@ msgstr "Het is niet toegestaan om foto's te verplaatsen"
 
 msgid "Not allowed to remove tags."
 msgstr "Het is niet toegestaan om tags te verwijderen."
+
+msgid "Not allowed to search albums"
+msgstr "Het is niet toegestaan om albums te zoeken"
 
 msgid "Not allowed to search for members."
 msgstr "Het is niet toegestaan om te zoeken op leden."
@@ -2541,8 +2547,14 @@ msgstr "Gescand?"
 msgid "Search"
 msgstr "Zoek"
 
+msgid "Search Albums"
+msgstr "Albums zoeken"
+
 msgid "Search Infimum"
 msgstr "Infimum opzoeken"
+
+msgid "Search album"
+msgstr "Album zoeken"
 
 msgid "Search by keyword or meeting number"
 msgstr "Zoek met trefwoord of vergaderingsnummer"
@@ -4357,6 +4369,11 @@ msgid "second"
 msgid_plural "seconds"
 msgstr[0] "seconde"
 msgstr[1] "seconden"
+
+msgid "subalbum"
+msgid_plural "subalbums"
+msgstr[0] "subalbum"
+msgstr[1] "subalbums"
 
 msgid "the organizing party"
 msgstr "de organiserende partij"

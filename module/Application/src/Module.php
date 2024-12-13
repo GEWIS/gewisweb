@@ -20,6 +20,7 @@ use Application\View\Helper\Diff;
 use Application\View\Helper\FileUrl;
 use Application\View\Helper\GlideUrl;
 use Application\View\Helper\HashUrl;
+use Application\View\Helper\HighlightSearch;
 use Application\View\Helper\JobCategories;
 use Application\View\Helper\Markdown;
 use Application\View\Helper\ModuleIsActive;
@@ -343,6 +344,9 @@ class Module
                     $serverUrlHelper = $viewHelperManager->get(ServerUrl::class);
 
                     return new HashUrl($serverUrlHelper);
+                },
+                'highlightSearch' => static function () {
+                    return new HighlightSearch();
                 },
                 'timeDiff' => static function (ContainerInterface $container) {
                     return new TimeDiff($container->get(MvcTranslator::class));

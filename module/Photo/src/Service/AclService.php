@@ -22,7 +22,7 @@ class AclService extends \User\Service\AclService
         $this->acl->addResource(new Resource('photo_admin'));
 
         // Only users and 'the screen' are allowed to view photos (and its details) and albums
-        $this->acl->allow('user', 'album', 'view');
+        $this->acl->allow('user', 'album', ['view', 'search']);
         $this->acl->allow('user', 'photo', ['view', 'download', 'view_metadata']);
 
         $this->acl->allow('apiuser', 'photo', 'view');

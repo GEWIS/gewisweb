@@ -1,0 +1,82 @@
+<?php
+
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+use Photo\Model\Album as AlbumModel;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var bool $admin
+ * @var AlbumModel $album
+ */
+
+$admin = isset($admin) && $admin;
+
+$url = 'photo/album';
+if ($admin) {
+    $url = 'admin_photo/album';
+}
+
+$lastWeek = (new DateTime('now'))->sub(new DateInterval('P7D'));
+?>
+<div class="card">
+    <a class="stretched-link" href="<?= $this->url($url, ['album_id' => $album->getId(), 'album_type' => 'album']) ?>"></a>
+    <?php if (null !== ($albumCover = $album->getCoverPath())): ?>
+        <img class="card-image" src="<?= $this->fileUrl($albumCover) ?>" alt="">
+    <?php else: ?>
+        <img class="card-image" src="/img/missing_cover.svg" alt="">
+    <?php endif; ?>
+    <div class="card-body">
+        <h5 class="card-title">
+            <?php if (isset($prompt)): ?>
+                <?= $this->highlightSearch(
+                    $prompt,
+                    $this->escapeHtml($album->getName()),
+                ) ?>
+            <?php else: ?>
+                <?= $this->escapeHtml($album->getName()) ?>
+            <?php endif; ?>
+        </h5>
+        <h6 class="card-subtitle text-muted">
+            <?php
+            $beginTime = $album->getStartDateTime();
+            $endTime = $album->getEndDateTime();
+            ?>
+            <?php if (null !== $beginTime && null !== $endTime): ?>
+                <?php
+                $isSameDay = $beginTime->format('Y-m-d') === $endTime->format('Y-m-d');
+
+                if ($isSameDay) {
+                    $dateTimeString = $this->dateFormat($beginTime, pattern: 'EEEE d MMMM');
+                } else {
+                    $dateTimeString = sprintf(
+                        '%s - %s',
+                        $this->dateFormat($beginTime, pattern: 'EEE. d MMM.'),
+                        $this->dateFormat($endTime, pattern: 'EEE. d MMM.'),
+                    );
+                }
+                ?>
+                <?= ucfirst($dateTimeString) ?>
+            <?php endif; ?>
+        </h6>
+    </div>
+    <?php if (0 < $album->getAlbumCount() || $album->getCreatedAt() >= $lastWeek): ?>
+        <div class="card-footer text-muted">
+            <hr>
+            <?php if ($album->getCreatedAt() >= $lastWeek): ?>
+                <span class="label label-primary">
+                    <?= $this->translate('NEW') ?>
+                </span>
+            <?php endif; ?>
+            <?php if (0 < ($subAlbums = $album->getAlbumCount())): ?>
+                <span class="fas fa-folder-open"></span> <?= $subAlbums . ' ' . $this->translatePlural(
+                    'subalbum',
+                    'subalbums',
+                    $subAlbums,
+                ) ?>
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
+</div>

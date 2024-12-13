@@ -12,12 +12,12 @@ use Decision\Service\Member as MemberService;
 use Exception;
 use Laminas\Mvc\I18n\Translator;
 use Photo\Form\Album as AlbumForm;
+use Photo\Form\SearchAlbum as SearchAlbumForm;
 use Photo\Mapper\Album as AlbumMapper;
 use Photo\Mapper\Tag as TagMapper;
 use Photo\Mapper\WeeklyPhoto as WeeklyPhotoMapper;
 use Photo\Model\Album as AlbumModel;
 use Photo\Model\MemberAlbum as MemberAlbumModel;
-use Photo\Model\VirtualAlbum as VirtualAlbumModel;
 use Photo\Model\WeeklyAlbum as WeeklyAlbumModel;
 use Photo\Model\WeeklyPhoto as WeeklyPhotoModel;
 use Photo\Service\AlbumCover as AlbumCoverService;
@@ -44,41 +44,8 @@ class Album
         private readonly TagMapper $tagMapper,
         private readonly WeeklyPhotoMapper $weeklyPhotoMapper,
         private readonly AlbumForm $albumForm,
+        private readonly SearchAlbumForm $searchAlbumForm,
     ) {
-    }
-
-    /**
-     * Retrieves all the albums in the root directory or in the specified
-     * album.
-     *
-     * @param AlbumModel|null $album      The album to retrieve sub-albums of
-     * @param int             $start      the result to start at
-     * @param int|null        $maxResults max amount of results to return, null for infinite
-     *
-     * @return AlbumModel[]
-     */
-    public function getAlbums(
-        ?AlbumModel $album = null,
-        int $start = 0,
-        ?int $maxResults = null,
-    ): array {
-        if (!$this->aclService->isAllowed('view', 'album')) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to view albums'));
-        }
-
-        if (null === $album) {
-            return $this->albumMapper->getRootAlbums();
-        }
-
-        if ($album instanceof VirtualAlbumModel) {
-            return [];
-        }
-
-        return $this->albumMapper->getSubAlbums(
-            $album,
-            $start,
-            $maxResults,
-        );
     }
 
     /**
@@ -512,5 +479,24 @@ class Album
     public function getAlbumsByMember(int $lidnr): array
     {
         return $this->tagMapper->getAlbumsByMember($lidnr);
+    }
+
+    public function getSearchAlbumForm(): SearchAlbumForm
+    {
+        return $this->searchAlbumForm;
+    }
+
+    /**
+     * Search for albums.
+     *
+     * @param array $data Search data
+     *
+     * @return AlbumModel[]
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
+     */
+    public function search(array $data): array
+    {
+        return $this->albumMapper->search($data['query']);
     }
 }
