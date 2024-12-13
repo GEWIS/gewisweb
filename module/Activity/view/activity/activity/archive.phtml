@@ -11,11 +11,18 @@ use Laminas\View\Renderer\PhpRenderer;
  * @var array $years
  * @var ActivityModel[] $activities
  */
+
+if (isset($year)) {
+    $activeYearIndex = array_search($year, $years);
+    $isYearInDropdown = $activeYearIndex !== false && $activeYearIndex < count($years) - 5;
+} else {
+    $isYearInDropdown = false;
+}
 ?>
 <div class="content-container">
     <section class="section">
         <div class="container">
-            <ul class="nav nav-pills head-menu">
+            <ul class="nav nav-tabs head-menu">
                 <?php for ($i = count($years) - 1; $i >= max(0, count($years) - 5); $i--): ?>
                     <li class="<?= isset($year) && $year === $years[$i] ? 'active' : '' ?>">
                         <a href="<?= $this->url('activity/year', ['year' => $years[$i]]); ?>">
@@ -24,7 +31,7 @@ use Laminas\View\Renderer\PhpRenderer;
                     </li>
                 <?php endfor; ?>
                 <?php if (7 <= count($years)): ?>
-                    <li role="presentation" class="dropdown">
+                    <li role="presentation" class="dropdown <?= $isYearInDropdown ? 'active' : '' ?>">
                         <a class="dropdown-toggle"
                            data-toggle="dropdown"
                            href="<?= $this->hashUrl() ?>"
@@ -35,7 +42,7 @@ use Laminas\View\Renderer\PhpRenderer;
                         </a>
                         <ul class="dropdown-menu">
                             <?php for ($i = max(0, count($years) - 6); $i > 0; $i--): ?>
-                                <li>
+                                <li class="<?= isset($year) && $year === $years[$i] ? 'active' : '' ?>">
                                     <a href="<?= $this->url('activity/year', ['year' => $years[$i]]); ?>">
                                         <?= $years[$i] ?>-<?= $years[$i] + 1 ?>
                                     </a>

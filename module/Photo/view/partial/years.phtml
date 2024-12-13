@@ -18,6 +18,13 @@ $url = 'photo/year';
 if ($admin) {
     $url = 'admin_photo/album_year';
 }
+
+if (isset($year)) {
+    $activeYearIndex = array_search($year, $years);
+    $isYearInDropdown = $activeYearIndex !== false && $activeYearIndex < count($years) - 5;
+} else {
+    $isYearInDropdown = false;
+}
 ?>
 <div class="row">
     <div class="col-md-12">
@@ -30,7 +37,7 @@ if ($admin) {
                 </li>
             <?php endfor; ?>
             <?php if (7 <= count($years)): ?>
-                <li role="presentation" class="dropdown">
+                <li role="presentation" class="dropdown <?= $isYearInDropdown ? 'active' : '' ?>">
                     <a class="dropdown-toggle"
                        data-toggle="dropdown"
                        href="<?= $this->hashUrl() ?>"
@@ -41,7 +48,7 @@ if ($admin) {
                     </a>
                     <ul class="dropdown-menu">
                         <?php for ($i = max(0, count($years) - 6); $i > 0; $i--): ?>
-                            <li>
+                            <li class="<?= isset($year) && $year === $years[$i] ? 'active' : '' ?>">
                                 <a href="<?= $this->url($url, ['year' => $years[$i]]); ?>">
                                     <?= $years[$i] ?>/<?= $years[$i] + 1 ?>
                                 </a>
