@@ -20,15 +20,15 @@ $this->headTitle($this->translate('Photos'));
         <div class="container">
             <?= $this->partial('partial/years', ['years' => $years, 'year' => $year]) ?>
             <br>
-            <div class="row row-height-equal">
-                <?php if (0 !== count($albums)): ?>
-                    <?= $this->partial('partial/albums', ['albums' => $albums]) ?>
-                <?php else: ?>
+            <?php if (0 !== count($albums)): ?>
+                <?= $this->partial('partial/albums', ['albums' => $albums]) ?>
+            <?php else: ?>
+                <div class="row">
                     <div class="col-md-12">
                         <p><?= $this->translate('There are no photos in this year.') ?></p>
                     </div>
-                <?php endif; ?>
-            </div>
+                </div>
+            <?php endif; ?>
         </div>
     </section>
 </div>

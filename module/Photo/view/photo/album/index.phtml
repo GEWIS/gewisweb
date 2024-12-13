@@ -161,7 +161,7 @@ $this->scriptUrl()->requireUrl('member/search')
         if ($album->getAlbumCount() > 0):
         ?>
             <?php $lastWeek = (new DateTime('now'))->sub(new DateInterval('P7D')); ?>
-            <div class="row row-height-equal">
+            <div class="card-grid photo-full-grid">
                 <?php foreach ($album->getChildren() as $item): ?>
                     <?php
                     if (
@@ -182,31 +182,7 @@ $this->scriptUrl()->requireUrl('member/search')
                     ):
                         $shownAlbums++;
                     ?>
-                        <div class="col-lg-2 col-md-3 col-xs-6 thumb">
-                            <a class="thumbnail" href="<?= $this->url(
-                                'photo/album',
-                                [
-                                    'album_id' => $item->getId(),
-                                    'album_type' => 'album',
-                                ],
-                            ) ?>">
-                                <?php if (null !== ($albumCover = $item->getCoverPath())): ?>
-                                    <img class="img-responsive" src="<?= $this->fileUrl($albumCover) ?>" alt="">
-                                <?php else: ?>
-                                    <img class="img-responsive" src="/img/missing_cover.svg" alt="">
-                                <?php endif; ?>
-                                <div class="caption">
-                                    <p>
-                                        <?php if ($item->getCreatedAt() >= $lastWeek): ?>
-                                            <span class="label label-primary">
-                                                <?= $this->translate('NEW') ?>
-                                            </span>&nbsp;
-                                        <?php endif; ?>
-                                        <?= $this->escapeHtml($item->getName()); ?>
-                                    </p>
-                                </div>
-                            </a>
-                        </div>
+                        <?= $this->partial('partial/album-card.phtml', ['album' => $item]) ?>
                     <?php endif; ?>
                 <?php endforeach ?>
             </div>

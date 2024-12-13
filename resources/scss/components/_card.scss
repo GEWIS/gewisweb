@@ -25,6 +25,11 @@
             grid-template-columns: repeat(4, 1fr);
         }
 
+        &.admin-grid,
+        &.photo-full-grid {
+            grid-template-columns: repeat(6, 1fr);
+        }
+
         &.company-grid {
             grid-template-columns: repeat(3, 1fr);
         }
@@ -76,6 +81,10 @@
         font-weight: 600;
         margin: 0 0 0.75rem;
         color: $brand-primary;
+
+        > mark {
+            color: $brand-primary;
+        }
     }
 
     .card-subtitle {

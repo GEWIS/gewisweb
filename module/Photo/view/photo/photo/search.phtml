@@ -68,9 +68,7 @@ $this->headTitle($this->translate('Search Albums'));
                             <h3>
                                 <?= sprintf('%d/%d', $year, $year + 1)?>
                             </h3>
-                            <div class="row row-height-equal">
-                                <?= $this->partial('partial/albums', ['albums' => $albums, 'prompt' => $prompt]) ?>
-                            </div>
+                            <?= $this->partial('partial/albums', ['albums' => $albums, 'prompt' => $prompt]) ?>
                             <hr>
                         </div>
                     <?php endforeach; ?>

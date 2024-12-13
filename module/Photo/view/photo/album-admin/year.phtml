@@ -19,12 +19,12 @@ $this->breadcrumbs()
 ?>
 <?= $this->partial('partial/years', ['years' => $years, 'year' => $year, 'admin' => true]) ?>
 <br>
-<div class="row row-height-equal">
-    <?php if (0 !== count($albums)): ?>
-        <?= $this->partial('partial/albums', ['albums' => $albums, 'admin' => true]) ?>
-    <?php else: ?>
+<?php if (0 !== count($albums)): ?>
+    <?= $this->partial('partial/albums', ['albums' => $albums, 'admin' => true]) ?>
+<?php else: ?>
+    <div class="row">
         <div class="col-md-12">
             <p><?= $this->translate('There are no albums in this year.') ?></p>
         </div>
-    <?php endif; ?>
-</div>
+    </div>
+<?php endif; ?>
