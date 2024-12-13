@@ -39,7 +39,14 @@ if ($admin) {
                                 <?= $this->translate('NEW') ?>
                             </span>&nbsp;
                         <?php endif; ?>
-                        <?= $this->escapeHtml($album->getName()) ?>
+                        <?php if (isset($prompt)): ?>
+                            <?= $this->highlightSearch(
+                                $prompt,
+                                $this->escapeHtml($album->getName()),
+                            ) ?>
+                        <?php else: ?>
+                            <?= $this->escapeHtml($album->getName()) ?>
+                        <?php endif; ?>
                     </p>
                 </div>
             </a>

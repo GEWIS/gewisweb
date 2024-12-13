@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: GEWISweb v2.8.6-825-gf1cb50e12-dirty\n"
+"Project-Id-Version: GEWISweb v2.8.6-840-g3f7bbcd32-dirty\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-10 09:16+0100\n"
+"POT-Creation-Date: 2024-12-13 23:14+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1872,6 +1872,9 @@ msgstr ""
 msgid "No activities planned"
 msgstr ""
 
+msgid "No albums were found."
+msgstr ""
+
 msgid "No date"
 msgstr ""
 
@@ -1931,6 +1934,9 @@ msgid "Not allowed to move photos"
 msgstr ""
 
 msgid "Not allowed to remove tags."
+msgstr ""
+
+msgid "Not allowed to search albums"
 msgstr ""
 
 msgid "Not allowed to search for members."
@@ -2386,7 +2392,13 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
+msgid "Search Albums"
+msgstr ""
+
 msgid "Search Infimum"
+msgstr ""
+
+msgid "Search album"
 msgstr ""
 
 msgid "Search by keyword or meeting number"

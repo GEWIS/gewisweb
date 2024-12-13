@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-10 09:16+0100\n"
-"PO-Revision-Date: 2024-12-10 09:18+0100\n"
+"POT-Creation-Date: 2024-12-13 23:14+0100\n"
+"PO-Revision-Date: 2024-12-13 23:17+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: en\n"
@@ -1979,6 +1979,9 @@ msgstr "No GMM available."
 msgid "No activities planned"
 msgstr "No activities planned"
 
+msgid "No albums were found."
+msgstr "No albums were found."
+
 msgid "No date"
 msgstr "No date"
 
@@ -2040,6 +2043,9 @@ msgstr "Not allowed to move photos"
 
 msgid "Not allowed to remove tags."
 msgstr "Not allowed to remove tags."
+
+msgid "Not allowed to search albums"
+msgstr "Not allowed to search albums"
 
 msgid "Not allowed to search for members."
 msgstr "Not allowed to search for members."
@@ -2516,8 +2522,14 @@ msgstr "Scanned?"
 msgid "Search"
 msgstr "Search"
 
+msgid "Search Albums"
+msgstr "Search Albums"
+
 msgid "Search Infimum"
 msgstr "Search Infimum"
+
+msgid "Search album"
+msgstr "Search album"
 
 msgid "Search by keyword or meeting number"
 msgstr "Search by keyword or meeting number"

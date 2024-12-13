@@ -8,6 +8,8 @@ use Application\Mapper\BaseMapper;
 use DateTime;
 use Photo\Model\Album as AlbumModel;
 
+use function addcslashes;
+
 /**
  * Mappers for Album.
  *
@@ -52,6 +54,28 @@ class Album extends BaseMapper
     {
         $qb = $this->getRepository()->createQueryBuilder('a');
         $qb->where('a.startDateTime IS NULL');
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Gets all root albums based on their name.
+     *
+     * Only returns published albums and grouping has to happen downstream at the consumers.
+     *
+     * @return AlbumModel[]
+     */
+    public function search(string $query): array
+    {
+        $qb = $this->getRepository()->createQueryBuilder('a');
+        $qb->where('a.parent IS NULL')
+            ->andWhere('a.published = TRUE')
+            ->andWhere('a.startDateTime IS NOT NULL')
+            ->andWhere('a.endDateTime IS NOT NULL')
+            ->andWhere('a.name LIKE :query')
+            ->orderBy('a.startDateTime', 'DESC');
+
+        $qb->setParameter('query', '%' . addcslashes($query, '%_') . '%');
 
         return $qb->getQuery()->getResult();
     }

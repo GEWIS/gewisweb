@@ -129,6 +129,15 @@ return [
                             ],
                         ],
                     ],
+                    'search' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/search',
+                            'defaults' => [
+                                'action' => 'search',
+                            ],
+                        ],
+                    ],
                     'weekly' => [
                         'type' => Literal::class,
                         'options' => [

@@ -40,6 +40,7 @@ use User\Model\CompanyUser as CompanyUserModel;
  * @method string fileUrl(string $path)
  * @method GlideUrl glideUrl()
  * @method HashUrl hashUrl()
+ * @method string highlightSearch(string $query, string $content)
  * @method JobCategoryModel[] jobCategories()
  * @method string localisedTextElement(ElementInterface $element)
  * @method string localiseText(LocalisedTextModel $localisedText)

@@ -28,6 +28,19 @@ if (isset($year)) {
 ?>
 <div class="row">
     <div class="col-md-12">
+        <div class="btn-toolbar pull-right">
+            <?php if (!$admin): ?>
+                <a href="<?= $this->url('photo/search') ?>" class="btn btn-default">
+                    <span class="fas fa-magnifying-glass"></span>
+                    <?= $this->translate('Search') ?>
+                </a>
+            <?php else: ?>
+                <a href="<?= $this->url('admin_photo/album_create') ?>" class="btn btn-primary">
+                    <span class="fas fa-plus"></span>
+                    <?= $this->translate('Create Album') ?>
+                </a>
+            <?php endif; ?>
+        </div>
         <ul class="nav nav-tabs head-menu">
             <?php for ($i = count($years) - 1; $i >= max(0, count($years) - 5); $i--): ?>
                 <li class="<?= isset($year) && $year === $years[$i] ? 'active' : '' ?>">
@@ -63,10 +76,6 @@ if (isset($year)) {
                         <?= $this->translate('Undated') ?>
                     </a>
                 </li>
-                <a href="<?= $this->url('admin_photo/album_create') ?>" class="btn btn-primary pull-right">
-                    <span class="fas fa-plus"></span>
-                    <?= $this->translate('Create Album') ?>
-                </a>
             <?php endif; ?>
         </ul>
     </div>

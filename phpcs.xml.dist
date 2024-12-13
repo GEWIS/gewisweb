@@ -131,6 +131,7 @@
         <exclude-pattern>module/Frontpage/src/Form/PollOption.php</exclude-pattern>
         <exclude-pattern>module/Photo/src/Module.php</exclude-pattern>
         <exclude-pattern>module/Photo/src/Form/Album.php</exclude-pattern>
+        <exclude-pattern>module/Photo/src/Form/SearchAlbum.php</exclude-pattern>
         <exclude-pattern>module/User/src/Module.php</exclude-pattern>
         <exclude-pattern>module/User/src/Form/Activate.php</exclude-pattern>
         <exclude-pattern>module/User/src/Form/ApiToken.php</exclude-pattern>
