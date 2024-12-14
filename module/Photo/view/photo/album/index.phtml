@@ -182,7 +182,7 @@ $this->scriptUrl()->requireUrl('member/search')
                     ):
                         $shownAlbums++;
                     ?>
-                        <?= $this->partial('partial/album-card.phtml', ['album' => $item]) ?>
+                        <?= $this->partial('partial/album-card.phtml', ['album' => $item, 'config' => $config]) ?>
                     <?php endif; ?>
                 <?php endforeach ?>
             </div>

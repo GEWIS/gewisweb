@@ -10,6 +10,7 @@ use Photo\Model\Album as AlbumModel;
  * @var PhpRenderer|HelperTrait $this
  * @var bool|null $admin
  * @var AlbumModel[] $albums
+ * @var array $config
  * @var string|null $prompt
  */
 
@@ -19,7 +20,7 @@ $prompt = $prompt ?? null;
 <div class="card-grid <?= $admin ? 'admin-grid' : '' ?>">
     <?php foreach ($albums as $album): ?>
         <?php if ($album->getPhotoCount() > 0 || $admin): ?>
-            <?= $this->partial('partial/album-card.phtml', ['album' => $album, 'admin' => $admin, 'prompt' => $prompt]) ?>
+            <?= $this->partial('partial/album-card.phtml', ['album' => $album, 'admin' => $admin, 'config' => $config, 'prompt' => $prompt]) ?>
         <?php endif; ?>
     <?php endforeach; ?>
 </div>

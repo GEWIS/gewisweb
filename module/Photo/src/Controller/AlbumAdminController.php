@@ -104,6 +104,7 @@ class AlbumAdminController extends AbstractActionController
 
         return new ViewModel([
             'albums' => $this->albumService->getAlbumsByYear($year, false),
+            'config' => $this->photoConfig,
             'years' => $this->albumService->getAlbumYears(false),
             'year' => $year,
         ]);
@@ -122,6 +123,7 @@ class AlbumAdminController extends AbstractActionController
 
         return new ViewModel([
             'albums' => $this->albumService->getAlbumsWithoutDate(),
+            'config' => $this->photoConfig,
             'years' => $this->albumService->getAlbumYears(false),
         ]);
     }

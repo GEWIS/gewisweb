@@ -8,8 +8,10 @@ use Photo\Model\Album as AlbumModel;
 
 /**
  * @var PhpRenderer|HelperTrait $this
- * @var bool $admin
+ * @var bool|null $admin
  * @var AlbumModel $album
+ * @var array $config
+ * @var string|null $prompt
  */
 
 $admin = isset($admin) && $admin;
@@ -24,7 +26,13 @@ $lastWeek = (new DateTime('now'))->sub(new DateInterval('P7D'));
 <div class="card">
     <a class="stretched-link" href="<?= $this->url($url, ['album_id' => $album->getId(), 'album_type' => 'album']) ?>"></a>
     <?php if (null !== ($albumCover = $album->getCoverPath())): ?>
-        <img class="card-image" src="<?= $this->fileUrl($albumCover) ?>" alt="">
+        <?php
+        $albumCoverSize = [
+            'w' => $config['album_cover']['width'],
+            'h' => $config['album_cover']['height'],
+        ];
+        ?>
+        <img class="card-image" src="<?= $this->glideUrl()->getUrl($albumCover, $albumCoverSize) ?>" alt="">
     <?php else: ?>
         <img class="card-image" src="/img/missing_cover.svg" alt="">
     <?php endif; ?>

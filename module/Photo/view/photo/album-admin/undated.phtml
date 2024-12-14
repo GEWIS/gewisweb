@@ -9,6 +9,7 @@ use Photo\Model\Album as AlbumModel;
 /**
  * @var PhpRenderer|HelperTrait $this
  * @var AlbumModel[] $albums
+ * @var array $config
  * @var int[] $years
  */
 
@@ -19,7 +20,7 @@ $this->breadcrumbs()
 <?= $this->partial('partial/years', ['years' => $years, 'admin' => true]) ?>
 <br>
 <?php if (0 !== count($albums)): ?>
-    <?= $this->partial('partial/albums', ['albums' => $albums, 'admin' => true]) ?>
+    <?= $this->partial('partial/albums', ['albums' => $albums, 'admin' => true, 'config' => $config]) ?>
 <?php else: ?>
     <div class="row">
         <div class="col-md-12">

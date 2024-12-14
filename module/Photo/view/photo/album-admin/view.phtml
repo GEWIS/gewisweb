@@ -135,7 +135,7 @@ $this->breadcrumbs()
 </div>
 <br>
 <?php if (0 !== $album->getChildren()->count()): ?>
-    <?= $this->partial('partial/albums', ['albums' => $album->getChildren(), 'admin' => true]) ?>
+    <?= $this->partial('partial/albums', ['albums' => $album->getChildren(), 'admin' => true, 'config' => $config]) ?>
 <?php endif; ?>
 <div class="row">
     <div class="col-md-12">
