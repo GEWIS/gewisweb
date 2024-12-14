@@ -134,8 +134,8 @@ return [
             'height' => 1920,
         ],
         'album_cover' => [
-            'width' => 320,
-            'height' => 180,
+            'width' => 640,
+            'height' => 360,
             'inner_border' => 2,
             'outer_border' => 0,
             'cols' => 2,

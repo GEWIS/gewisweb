@@ -181,7 +181,7 @@ class AlbumCover
         array $images,
     ): void {
         $innerBorder = $this->photoConfig['album_cover']['inner_border'];
-        $outerBorder = $this->photoConfig['album_cover']['inner_border'];
+        $outerBorder = $this->photoConfig['album_cover']['outer_border'];
 
         //calculate the total size of all images inside the outer border
         $innerWidth = $this->photoConfig['album_cover']['width'] - 2 * $outerBorder;

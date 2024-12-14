@@ -69,6 +69,7 @@ class PhotoController extends AbstractActionController
                 'years' => $years,
                 'year' => $year,
                 'albums' => $this->filterAlbums($this->albumService->getAlbumsByYear($year)),
+                'config' => $this->photoConfig,
             ],
         );
     }
@@ -99,6 +100,7 @@ class PhotoController extends AbstractActionController
                         'result' => $groupedAlbums,
                         'prompt' => $form->getData()['query'],
                         'form' => $form,
+                        'config' => $this->photoConfig,
                     ],
                 );
             }
