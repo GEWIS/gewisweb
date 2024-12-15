@@ -208,7 +208,13 @@ endif; ?>
 $currentDate = new DateTime();
 $targetDate = DateTime::createFromFormat('j n', '28 6');
 
-if ($currentDate->format('j n') === $targetDate->format('j n')) {
+if (
+    $currentDate->format('j n') === $targetDate->format('j n')
+    || (
+        null !== $this->identity()
+        && $this->identity()->getMember()->getBirth()->format('m-d') === $currentDate->format('m-d')
+    )
+) {
     $this->inlineScript()->prependFile(
         $this->basepath('js/balloons.js'),
         'text/javascript',
