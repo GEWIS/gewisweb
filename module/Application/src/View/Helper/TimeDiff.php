@@ -26,13 +26,11 @@ class TimeDiff extends AbstractHelper
         DateTime $end,
     ): string {
         $diffInterval = $start->diff($end);
-        $days = false === $diffInterval->days ? 0 : $diffInterval->days;
-
         $diff = [
             'year' => $diffInterval->y,
             'month' => $diffInterval->m,
-            'week' => (int) floor($days / 7) % 4,
-            'day' => $days % 7,
+            'week' => (int) floor($diffInterval->d / 7),
+            'day' => $diffInterval->d % 7,
             'hour' => $diffInterval->h,
             'minute' => $diffInterval->i,
             'second' => $diffInterval->s,
@@ -40,7 +38,11 @@ class TimeDiff extends AbstractHelper
 
         $units = [];
         $result = [];
-        if (0 === $days) {
+        if (
+            0 === $diff['year']
+            && 0 === $diff['month']
+            && 0 === $diff['day']
+        ) {
             if (
                 0 === $diff['hour']
                 && 0 === $diff['minute']
