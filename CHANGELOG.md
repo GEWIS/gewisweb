@@ -1,3 +1,25 @@
+## [v4.7.0](https://github.com/GEWIS/gewisweb/tree/v4.7.0) (2024-12-16)
+
+* Added link to historical overview of BM/GMM bodies.
+* Added link to public BM/GMM body profile from the advanced overview.
+* Added search for photo albums.
+* Added 🎈🎈🎈.
+* Improved icon for sharing links of photos.
+* Improved card and grid system for BM/GMM bodies, companies, and jobs.
+* Improved activity overview with more information about the activity and time till activity/for how long the activity still lasts.
+* Improved layout of photo albums.
+* Improved rendering of album covers by using Glide.
+* Fixed an issue where there was no backlinking for GMM bodies in breadcrumbs.
+* Fixed an issue where abrogated bodies would still show (potential) upcoming activities on their public profile.
+* Fixed an issue where the translation for abrogation date was incorrect in the overview of abrogated bodies.
+* Fixed an issue where the name of a BM/GMM body could lead to XSS.
+* Fixed an issue where the two panels on the education page used incorrect styling.
+* Fixed an issue where the year selector for activities and photos would not show selection.
+* Fixed an issue where the comparisons for discharges and abrogations could be wrong.
+* Fixed an issue where the public profile of a BM/GMM body was not formatted with Markdown.
+* Fixed an issue where the activity/album year selectors were incorrectly styled.
+* Updated dependencies.
+
 ## [v4.6.0](https://github.com/GEWIS/gewisweb/tree/v4.6.0) (2024-11-27)
 
 * Added an overview for all types of GMM bodies to make it easier to view them.
