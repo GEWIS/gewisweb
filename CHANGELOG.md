@@ -1,3 +1,7 @@
+## [v4.7.1](https://github.com/GEWIS/gewisweb/tree/v4.7.1) (2024-12-16)
+
+* Fixed an issue where the time diff calculation for activities was off when there was only a whole number of weeks left.
+
 ## [v4.7.0](https://github.com/GEWIS/gewisweb/tree/v4.7.0) (2024-12-16)
 
 * Added link to historical overview of BM/GMM bodies.
