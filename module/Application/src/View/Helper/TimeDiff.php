@@ -41,6 +41,7 @@ class TimeDiff extends AbstractHelper
         if (
             0 === $diff['year']
             && 0 === $diff['month']
+            && 0 === $diff['week']
             && 0 === $diff['day']
         ) {
             if (
