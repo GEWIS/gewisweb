@@ -55,7 +55,7 @@ class TimeDiff extends AbstractHelper
                 $units = ['hour', 'minute'];
             }
         } else {
-            $units = ['year', 'month', 'week', 'day'];
+            $units = ['year', 'month', 'week', 'day', 'hour'];
         }
 
         foreach ($units as $unit) {
