@@ -1,4 +1,4 @@
-FROM matomo:5.1-fpm-alpine AS gewisweb_matomo
+FROM matomo:5.2-fpm-alpine AS gewisweb_matomo
 
 RUN apk add --no-cache --virtual .build-deps \
         tzdata \
@@ -29,4 +29,4 @@ RUN curl -L -o AnalyticsOptOut.zip \
 
 COPY --chown=www-data:www-data config.ini.php ./config/config.ini.php.template
 
-CMD ["/bin/sh" , "-c" , "envsubst '${MATOMO_DATABASE_HOST} ${MATOMO_DATABASE_PORT} ${MATOMO_DATABASE_USERNAME} ${MATOMO_DATABASE_PASSWORD} ${MATOMO_DATABASE_DBNAME}' < /var/www/html/config/config.ini.php.template > /var/www/html/config/config.ini.php && chown www-data:www-data /var/www/html/config/config.ini.php && php-fpm -F -O"]
+CMD ["/bin/sh" , "-c" , "envsubst '${MATOMO_DATABASE_HOST} ${MATOMO_DATABASE_PORT} ${MATOMO_DATABASE_USERNAME} ${MATOMO_DATABASE_PASSWORD} ${MATOMO_DATABASE_DBNAME} ${MATOMO_DATABASE_SSL}' < /var/www/html/config/config.ini.php.template > /var/www/html/config/config.ini.php && chown www-data:www-data /var/www/html/config/config.ini.php && php-fpm -F -O"]

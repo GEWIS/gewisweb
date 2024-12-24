@@ -11,6 +11,9 @@ adapter = PDO\MYSQL
 type = InnoDB
 schema = Mysql
 
+enable_ssl = ${MATOMO_DATABASE_SSL}
+ssl_ca_path = "/etc/ssl/certs/"
+
 [General]
 force_ssl=0
 assume_secure_protocol = 1
