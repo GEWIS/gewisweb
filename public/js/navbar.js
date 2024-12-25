@@ -1,14 +1,16 @@
 // Handle submenus
-$('li.dropdown-submenu [data-toggle=dropdown]').on('click', function(event) {
+$('li.dropdown-submenu > [data-toggle=dropdown]').on('click touchstart', function(event) {
     event.preventDefault();
     event.stopPropagation();
 
+    var parent = $(this).parent();
+
     // Also update aria-expanded for accessibility purposes.
-    if ($(this).parent().hasClass('open')) {
-        $(this).parent().removeClass('open');
+    if (parent.hasClass('open')) {
+        parent.removeClass('open');
         $(this).attr('aria-expanded', 'false');
     } else {
-        $(this).parent().addClass('open');
+        parent.addClass('open');
         $(this).attr('aria-expanded', 'true');
     }
 });
