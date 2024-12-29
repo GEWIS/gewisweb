@@ -13996,11 +13996,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Frontpage-Service-AclService.html"
         },                {
-            "fqsen": "\\Frontpage\\Service\\AclService\u003A\u003AsetPages\u0028\u0029",
-            "name": "setPages",
-            "summary": "",
-            "url": "classes/Frontpage-Service-AclService.html#method_setPages"
-        },                {
             "fqsen": "\\Frontpage\\Service\\AclService\u003A\u003AcreateAcl\u0028\u0029",
             "name": "createAcl",
             "summary": "",
@@ -18588,8 +18583,18 @@ Search.appendIndex(
         },                {
             "fqsen": "\\User\\Permissions\\Assertion\\IsAfterMembershipEndedAndNotTagged\u003A\u003Aassert\u0028\u0029",
             "name": "assert",
-            "summary": "Returns\u0020true\u0020if\u0020and\u0020only\u0020if\u0020the\u0020assertion\u0020conditions\u0020are\u0020met.",
+            "summary": "",
             "url": "classes/User-Permissions-Assertion-IsAfterMembershipEndedAndNotTagged.html#method_assert"
+        },                {
+            "fqsen": "\\User\\Permissions\\Assertion\\IsAllowedToViewPage",
+            "name": "IsAllowedToViewPage",
+            "summary": "Assertion\u0020to\u0020check\u0020if\u0020whoever\u0020is\u0020trying\u0020to\u0020view\u0020the\u0020page\u0020is\u0020allowed\u0020to\u0020view\u0020the\u0020page.",
+            "url": "classes/User-Permissions-Assertion-IsAllowedToViewPage.html"
+        },                {
+            "fqsen": "\\User\\Permissions\\Assertion\\IsAllowedToViewPage\u003A\u003Aassert\u0028\u0029",
+            "name": "assert",
+            "summary": "",
+            "url": "classes/User-Permissions-Assertion-IsAllowedToViewPage.html#method_assert"
         },                {
             "fqsen": "\\User\\Permissions\\Assertion\\IsCreator",
             "name": "IsCreator",
@@ -18598,7 +18603,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\User\\Permissions\\Assertion\\IsCreator\u003A\u003Aassert\u0028\u0029",
             "name": "assert",
-            "summary": "Returns\u0020true\u0020if\u0020and\u0020only\u0020if\u0020the\u0020assertion\u0020conditions\u0020are\u0020met.",
+            "summary": "",
             "url": "classes/User-Permissions-Assertion-IsCreator.html#method_assert"
         },                {
             "fqsen": "\\User\\Permissions\\Assertion\\IsCreatorOrOrganMember",
@@ -18608,7 +18613,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\User\\Permissions\\Assertion\\IsCreatorOrOrganMember\u003A\u003Aassert\u0028\u0029",
             "name": "assert",
-            "summary": "Returns\u0020true\u0020if\u0020and\u0020only\u0020if\u0020the\u0020assertion\u0020conditions\u0020are\u0020met.",
+            "summary": "",
             "url": "classes/User-Permissions-Assertion-IsCreatorOrOrganMember.html#method_assert"
         },                {
             "fqsen": "\\User\\Permissions\\Assertion\\IsOrganMember",
@@ -18618,7 +18623,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\User\\Permissions\\Assertion\\IsOrganMember\u003A\u003Aassert\u0028\u0029",
             "name": "assert",
-            "summary": "Returns\u0020true\u0020if\u0020and\u0020only\u0020if\u0020the\u0020assertion\u0020conditions\u0020are\u0020met.",
+            "summary": "",
             "url": "classes/User-Permissions-Assertion-IsOrganMember.html#method_assert"
         },                {
             "fqsen": "\\User\\Permissions\\Assertion\\IsOrganMember\u003A\u003AisCurrentMember\u0028\u0029",
