@@ -189,11 +189,9 @@ $viewModel = current($this->viewModel()->getCurrent()->getChildren());
 
 if (str_contains($viewModel->getTemplate(), 'admin')): ?>
     <?= $this->partial('partial/admin.phtml', ['content' => $this->content]) ?>
-<?php
-elseif (str_contains($viewModel->getTemplate(), 'company-account')): ?>
+<?php elseif (str_contains($viewModel->getTemplate(), 'company-account')): ?>
     <?= $this->partial('partial/company.phtml', ['content' => $this->content]) ?>
-<?php
-else: ?>
+<?php else: ?>
     <div class="content-container">
         <?= $this->content ?>
     </div>

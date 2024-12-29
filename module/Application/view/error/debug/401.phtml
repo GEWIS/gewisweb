@@ -1,0 +1,15 @@
+<?php
+
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+
+/** @var PhpRenderer|HelperTrait $this */
+?>
+<section class="section">
+    <div class="container">
+        <h1><?= $this->translate('403 Unauthenticated') ?></h1>
+        <h3><?= $this->exception->getMessage() ?></h3>
+    </div>
+</section>

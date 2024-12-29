@@ -23,6 +23,7 @@ use Activity\Controller\Factory\ApiControllerFactory;
 use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Laminas\Router\Http\Literal;
 use Laminas\Router\Http\Segment;
+use User\Listener\Authentication;
 
 return [
     'router' => [
@@ -449,6 +450,7 @@ return [
                     'defaults' => [
                         'controller' => ApiController::class,
                         'action' => 'list',
+                        'auth_type' => Authentication::AUTH_API,
                     ],
                 ],
                 'may_terminate' => false,
