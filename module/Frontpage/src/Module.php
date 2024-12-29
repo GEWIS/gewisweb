@@ -31,10 +31,7 @@ use Frontpage\Service\News as NewsService;
 use Frontpage\Service\Page as PageService;
 use Frontpage\Service\Poll as PollService;
 use Psr\Container\ContainerInterface;
-use RuntimeException;
 use User\Authorization\AclServiceFactory;
-
-use function sprintf;
 
 class Module
 {
@@ -58,28 +55,7 @@ class Module
         return [
             'factories' => [
                 // Services
-                AclService::class => static function (
-                    ContainerInterface $container,
-                    $requestedName,
-                    ?array $options = null,
-                ) {
-                    $aclService = (new AclServiceFactory())->__invoke($container, $requestedName, $options);
-
-                    if ($aclService instanceof AclService) {
-                        $pages = $container->get(PageMapper::class)->findAll();
-                        $aclService->setPages($pages);
-
-                        return $aclService;
-                    }
-
-                    throw new RuntimeException(
-                        sprintf(
-                            'Expected service of type %s, got service of type %s',
-                            AclService::class,
-                            $aclService::class,
-                        ),
-                    );
-                },
+                AclService::class => AclServiceFactory::class,
                 FrontpageService::class => FrontpageServiceFactory::class,
                 NewsService::class => NewsServiceFactory::class,
                 PageService::class => PageServiceFactory::class,
