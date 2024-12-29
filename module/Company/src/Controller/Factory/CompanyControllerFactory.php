@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Company\Controller\Factory;
 
 use Company\Controller\CompanyController;
+use Company\Service\Company as CompanyService;
+use Company\Service\CompanyQuery as CompanyQueryService;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Psr\Container\ContainerInterface;
 
@@ -19,8 +21,8 @@ class CompanyControllerFactory implements FactoryInterface
         ?array $options = null,
     ): CompanyController {
         return new CompanyController(
-            $container->get('company_service_company'),
-            $container->get('company_service_companyquery'),
+            $container->get(CompanyService::class),
+            $container->get(CompanyQueryService::class),
         );
     }
 }

@@ -7,6 +7,7 @@ use Decision\Model\{
     Meeting as MeetingModel,
     Member as MemberModel,
 };
+use Decision\Service\AclService as DecisionAclService;
 use Laminas\View\Renderer\PhpRenderer;
 
 /**
@@ -55,7 +56,7 @@ $this->headTitle($this->translate('Members'));
                         <div class="big-icon fas fa-beer"></div>
                         <div class="panel-heading"><?= $this->translate('SudoSOS') ?></div>
                     </a>
-                    <?php if ($this->acl('decision_service_acl')->isAllowed('authorization', 'create')): ?>
+                    <?php if ($this->acl(DecisionAclService::class)->isAllowed('authorization', 'create')): ?>
                         <a href="<?= $this->url('decision/authorizations') ?>" class="panel panel-image align-middle">
                             <div class="big-icon fas fa-file-signature"></div>
                             <div class="panel-heading"><?= $this->translate('Authorizations') ?></div>
@@ -77,7 +78,7 @@ $this->headTitle($this->translate('Members'));
                         <div class="big-icon fas fa-download"></div>
                         <div class="panel-heading"><?= $this->translate('Public archive') ?></div>
                     </a>
-                    <?php if ($this->acl('decision_service_acl')->isAllowed('member', 'search')): ?>
+                    <?php if ($this->acl(DecisionAclService::class)->isAllowed('member', 'search')): ?>
                         <a href="<?= $this->url('member/search') ?>" class="panel panel-image align-middle">
                             <div class="big-icon fas fa-search"></div>
                             <div class="panel-heading"><?= $this->translate('Find a member') ?></div>
@@ -226,7 +227,7 @@ $this->headTitle($this->translate('Members'));
                     </div>
                 </div>
             <?php endif; ?>
-            <?php if ($this->acl('decision_service_acl')->isAllowed('regulations', 'list')): ?>
+            <?php if ($this->acl(DecisionAclService::class)->isAllowed('regulations', 'list')): ?>
                 <div class="col-md-6 mt-2">
                     <h2><?= $this->translate('Regulations') ?></h2>
                     <ul>

@@ -27,7 +27,7 @@ class ActivityMapperTest extends TestCase
     {
         $this->setUpEntityManager();
 
-        $this->mapper = $this->serviceManager->get('activity_mapper_activity');
+        $this->mapper = $this->serviceManager->get(ActivityMapper::class);
 
         $this->setUpUser();
 

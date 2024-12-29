@@ -11,7 +11,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class CalendarNotify extends Command
 {
-    private ActivityCalendar $calendarService;
+    public function __construct(private readonly ActivityCalendar $calendarService)
+    {
+        parent::__construct();
+    }
 
     public function execute(
         InputInterface $input,
@@ -20,10 +23,5 @@ class CalendarNotify extends Command
         $this->calendarService->sendOverdueNotifications();
 
         return 1;
-    }
-
-    public function setCalendarService(ActivityCalendar $calendarService): void
-    {
-        $this->calendarService = $calendarService;
     }
 }

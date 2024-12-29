@@ -47,6 +47,7 @@ use User\Permissions\NotAllowedException;
  *
  * @psalm-import-type ActivityGdprArrayType from ActivityModel as ImportedActivityGdprArrayType
  * @psalm-import-type AddressGdprArrayType from AddressModel as ImportedAddressGdprArrayType
+ * @phpcs:ignore Generic.Files.LineLength.TooLong
  * @psalm-import-type ApiAppAuthenticationGdprArrayType from ApiAppAuthenticationModel as ImportedApiAppAuthenticationGdprArrayType
  * @psalm-type ImportedApprovableTraitGdprArrayType = array{
  *     id: int,

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Frontpage\Form;
 
-use Frontpage\Form\PollOption as PollOptionFieldset;
+use Frontpage\Form\Fieldset\PollOption as PollOptionFieldset;
 use Laminas\Filter\StringTrim;
 use Laminas\Form\Element\Collection;
 use Laminas\Form\Element\Submit;

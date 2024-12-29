@@ -11,7 +11,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class WeeklyPhoto extends Command
 {
-    private Photo $photoService;
+    public function __construct(private readonly Photo $photoService)
+    {
+        parent::__construct();
+    }
 
     public function execute(
         InputInterface $input,
@@ -28,10 +31,5 @@ class WeeklyPhoto extends Command
         echo 'Photo of the week set to photo: ' . $weeklyPhoto->getPhoto()->getId();
 
         return 1;
-    }
-
-    public function setPhotoService(Photo $photoService): void
-    {
-        $this->photoService = $photoService;
     }
 }

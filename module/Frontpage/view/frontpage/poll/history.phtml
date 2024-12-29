@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Application\View\HelperTrait;
+use Frontpage\Service\AclService as FrontpageAclService;
 use Laminas\Paginator\Paginator;
 use Laminas\View\Renderer\PhpRenderer;
 
@@ -33,7 +34,7 @@ $this->headTitle($this->translate('Poll history'));
                     <span class="fas fa-square-poll-horizontal"></span>
                     <?= $this->translate('Current poll') ?>
                 </a>
-                <?php if ($this->acl('frontpage_service_acl')->isAllowed('poll', 'request')): ?>
+                <?php if ($this->acl(FrontpageAclService::class)->isAllowed('poll', 'request')): ?>
                     <a href="<?= $this->url('poll/request') ?>" class="btn btn-primary">
                         <?= $this->translate('Request a poll') ?>
                     </a>

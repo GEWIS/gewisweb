@@ -13,7 +13,8 @@ use function preg_match;
 
 class YouTubeUrlParser implements VideoUrlParserInterface
 {
-    private const REGEX = '/(?:m\.)?(?:youtube\.com\/(?:watch\?v=|v\/|embed\/)|youtu\.be\/|youtube-nocookie\.com\/embed\/)([\w-]+)/';
+    // phpcs:ignore Generic.Files.LineLength.TooLong -- splitting regex is asking for trouble
+    private const string REGEX = '/(?:m\.)?(?:youtube\.com\/(?:watch\?v=|v\/|embed\/)|youtu\.be\/|youtube-nocookie\.com\/embed\/)([\w-]+)/';
 
     #[Override]
     public function parse(string $url): ?Video

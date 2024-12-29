@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Decision\Controller\Factory;
 
 use Decision\Controller\AdminMemberController;
+use Decision\Service\AclService;
+use Decision\Service\Gdpr as GdprService;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Psr\Container\ContainerInterface;
@@ -20,9 +22,9 @@ class AdminMemberControllerFactory implements FactoryInterface
         ?array $options = null,
     ): AdminMemberController {
         return new AdminMemberController(
-            $container->get('decision_service_acl'),
+            $container->get(AclService::class),
             $container->get(MvcTranslator::class),
-            $container->get('decision_service_gdpr'),
+            $container->get(GdprService::class),
         );
     }
 }

@@ -6,26 +6,16 @@ namespace Application;
 
 use Application\Command\Factory\LoadFixturesFactory as LoadFixturesCommandFactory;
 use Application\Command\LoadFixtures as LoadFixturesCommand;
-use Application\Extensions\CommonMark\CompanyImage\CompanyImageExtension;
-use Application\Extensions\CommonMark\NoImage\NoImageExtension;
-use Application\Extensions\CommonMark\VideoIframe\VideoIframeExtension;
 use Application\Router\Factory\LanguageAwareTreeRouteStackFactory;
 use Application\Router\LanguageAwareTreeRouteStack;
 use Application\Service\Email as EmailService;
+use Application\Service\Factory\EmailFactory as EmailServiceFactory;
+use Application\Service\Factory\FileStorageFactory as FileStorageServiceFactory;
+use Application\Service\Factory\InfimumFactory as InfimumServiceFactory;
+use Application\Service\Factory\WatermarkFactory;
 use Application\Service\FileStorage as FileStorageService;
 use Application\Service\Infimum as InfimumService;
-use Application\Service\WatermarkService;
-use Application\View\Helper\Acl;
-use Application\View\Helper\Diff;
-use Application\View\Helper\FileUrl;
-use Application\View\Helper\GlideUrl;
-use Application\View\Helper\HashUrl;
-use Application\View\Helper\HighlightSearch;
-use Application\View\Helper\JobCategories;
-use Application\View\Helper\Markdown;
-use Application\View\Helper\ModuleIsActive;
-use Application\View\Helper\ScriptUrl;
-use Application\View\Helper\TimeDiff;
+use Application\Service\Watermark;
 use Exception;
 use Laminas\Cache\Storage\Adapter\Memcached;
 use Laminas\Cache\Storage\Adapter\MemcachedOptions;
@@ -36,12 +26,6 @@ use Laminas\Mvc\MvcEvent;
 use Laminas\Router\Http\TreeRouteStack;
 use Laminas\Router\RouteStackInterface;
 use Laminas\Validator\AbstractValidator;
-use Laminas\View\Helper\ServerUrl;
-use League\CommonMark\Environment\Environment;
-use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
-use League\CommonMark\Extension\ExternalLink\ExternalLinkExtension;
-use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
-use League\CommonMark\MarkdownConverter;
 use League\Glide\Signatures\Signature;
 use League\Glide\Urls\UrlBuilder;
 use Locale;
@@ -50,9 +34,6 @@ use Monolog\Logger;
 use Override;
 use Psr\Container\ContainerInterface;
 use RuntimeException;
-use User\Authentication\Adapter\UserAdapter;
-use User\Authentication\AuthenticationService;
-use User\Authentication\Storage\UserSession;
 use User\Permissions\NotAllowedException;
 
 use function array_merge;
@@ -158,38 +139,10 @@ class Module
                 TreeRouteStack::class => [LanguageAwareTreeRouteStackFactory::class],
             ],
             'factories' => [
-                'application_service_email' => static function (ContainerInterface $container) {
-                    $renderer = $container->get('ViewRenderer');
-                    $transport = $container->get('user_mail_transport');
-                    $emailConfig = $container->get('config')['email'];
-
-                    return new EmailService($renderer, $transport, $emailConfig);
-                },
-                'application_service_infimum' => static function (ContainerInterface $container) {
-                    $infimumCache = $container->get('application_cache_infimum');
-                    $translator = $container->get(MvcTranslator::class);
-                    $infimumConfig = $container->get('config')['infimum'];
-
-                    return new InfimumService($infimumCache, $translator, $infimumConfig);
-                },
-                'application_service_storage' => static function (ContainerInterface $container) {
-                    $translator = $container->get(MvcTranslator::class);
-                    $storageConfig = $container->get('config')['storage'];
-                    $watermarkService = $container->get('application_service_watermark');
-
-                    return new FileStorageService($translator, $storageConfig, $watermarkService);
-                },
-                'application_service_watermark' => static function (ContainerInterface $container) {
-                    /** @var AuthenticationService<UserSession, UserAdapter> $authService */
-                    $authService = $container->get('user_auth_user_service');
-                    $remoteAddress = $container->get('user_remoteaddress');
-                    $watermarkConfig = $container->get('config')['watermark'];
-
-                    return new WatermarkService($authService, $remoteAddress, $watermarkConfig);
-                },
-                'application_get_languages' => static function () {
-                    return ['nl', 'en'];
-                },
+                EmailService::class => EmailServiceFactory::class,
+                InfimumService::class => InfimumServiceFactory::class,
+                FileStorageService::class => FileStorageServiceFactory::class,
+                Watermark::class => WatermarkFactory::class,
                 'application_cache_infimum' => static function () {
                     $cache = new Memcached();
                     $options = $cache->getOptions();
@@ -198,7 +151,7 @@ class Module
                         throw new RuntimeException('Unable to retrieve and set options for Memcached');
                     }
 
-                    // The TTL is 5 minutes (60 seconds * 5), as Supremum has a 5 minute cache on their end too. There
+                    // The TTL is 5 minutes (60 seconds * 5), as Supremum has a 5-minute cache on their end too. There
                     // is no need to keep requesting an infimum if we get the same one back for 5 minutes.
                     $options->setTtl(60 * 5);
                     $options->setServers([
@@ -271,86 +224,6 @@ class Module
                     return new UrlBuilder($config['glide']['base_url'], $signature);
                 },
                 LoadFixturesCommand::class => LoadFixturesCommandFactory::class,
-            ],
-        ];
-    }
-
-    /**
-     * Get view helper configuration.
-     */
-    public function getViewHelperConfig(): array
-    {
-        return [
-            'factories' => [
-                'acl' => static function (ContainerInterface $container) {
-                    $helper = new Acl();
-                    $helper->setServiceLocator($container);
-
-                    return $helper;
-                },
-                'scriptUrl' => static function () {
-                    return new ScriptUrl();
-                },
-                'moduleIsActive' => static function (ContainerInterface $container) {
-                    $helper = new ModuleIsActive();
-                    $helper->setServiceLocator($container);
-
-                    return $helper;
-                },
-                'jobCategories' => static function (ContainerInterface $container) {
-                    $companyQueryService = $container->get('company_service_companyquery');
-
-                    return new JobCategories($companyQueryService);
-                },
-                'fileUrl' => static function (ContainerInterface $container) {
-                    $helper = new FileUrl();
-                    $helper->setServiceLocator($container);
-
-                    return $helper;
-                },
-                'diff' => static function (ContainerInterface $container) {
-                    return new Diff($container->get('config')['php-diff']);
-                },
-                'markdown' => static function (ContainerInterface $container) {
-                    $environment = new Environment($container->get('config')['commonmark']);
-                    $environment->addExtension(new CommonMarkCoreExtension())
-                        ->addExtension(new GithubFlavoredMarkdownExtension())
-                        ->addExtension(new ExternalLinkExtension());
-
-                    // Create separate environment for companies.
-                    $companyEnvironment = clone $environment;
-                    $glide = new GlideUrl();
-                    $glide->setUrlBuilder($container->get('glide_url_builder'));
-                    $companyEnvironment->addExtension(new CompanyImageExtension($glide))
-                        ->addExtension(new VideoIframeExtension());
-
-                    // Do not render images in the default environment (activities, news items, etc.).
-                    $environment->addExtension(new NoImageExtension());
-
-                    return new Markdown(
-                        $container->get(MvcTranslator::class),
-                        new MarkdownConverter($environment),
-                        new MarkdownConverter($companyEnvironment),
-                    );
-                },
-                'glideUrl' => static function (ContainerInterface $container) {
-                    $helper = new GlideUrl();
-                    $helper->setUrlBuilder($container->get('glide_url_builder'));
-
-                    return $helper;
-                },
-                'hashUrl' => static function (ContainerInterface $container) {
-                    $viewHelperManager = $container->get('ViewHelperManager');
-                    $serverUrlHelper = $viewHelperManager->get(ServerUrl::class);
-
-                    return new HashUrl($serverUrlHelper);
-                },
-                'highlightSearch' => static function () {
-                    return new HighlightSearch();
-                },
-                'timeDiff' => static function (ContainerInterface $container) {
-                    return new TimeDiff($container->get(MvcTranslator::class));
-                },
             ],
         ];
     }

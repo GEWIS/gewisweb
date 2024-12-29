@@ -9,6 +9,7 @@ use Decision\Model\{
     Member as MemberModel,
     Organ as OrganModel,
 };
+use Decision\Service\AclService as DecisionAclService;
 use Laminas\View\Renderer\PhpRenderer;
 
 /**
@@ -143,7 +144,7 @@ function getOrganDescription($organInformation, $lang)
                                 </p>
                             </div>
                         <?php endif; ?>
-                        <?php if ($this->acl('decision_service_acl')->isAllowed('organ', 'view') && null !== $organInformation): ?>
+                        <?php if ($this->acl(DecisionAclService::class)->isAllowed('organ', 'view') && null !== $organInformation): ?>
                             <div class="list-group-item">
                                 <h4 class="list-group-item-heading">
                                     <?= $this->translate('Email') ?>
@@ -163,7 +164,7 @@ function getOrganDescription($organInformation, $lang)
                                 </a>
                             </div>
                         <?php endif; ?>
-                        <?php if ($this->acl('decision_service_acl')->isAllowed('organ', 'view')): ?>
+                        <?php if ($this->acl(DecisionAclService::class)->isAllowed('organ', 'view')): ?>
                             <?php if (!$organ->isAbrogated()): ?>
                                 <div class="list-group-item">
                                     <h4 class="list-group-item-heading" data-toggle="collapse" href="#collapseMembers" role="button" aria-expanded="false" aria-controls="collapseMembers">

@@ -15,7 +15,7 @@
       <code>getNew</code>
     </PossiblyFalseReference>
   </file>
-  <file src="module/Application/src/Service/WatermarkService.php">
+  <file src="module/Application/src/Service/Watermark.php">
     <TypeDoesNotContainNull>
       <code>$this-&gt;remoteAddress</code>
     </TypeDoesNotContainNull>

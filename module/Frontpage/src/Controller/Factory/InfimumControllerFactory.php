@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Frontpage\Controller\Factory;
 
+use Application\Service\Infimum as InfimumService;
 use Frontpage\Controller\InfimumController;
+use Frontpage\Service\AclService;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Psr\Container\ContainerInterface;
@@ -20,9 +22,9 @@ class InfimumControllerFactory implements FactoryInterface
         ?array $options = null,
     ): InfimumController {
         return new InfimumController(
-            $container->get('frontpage_service_acl'),
+            $container->get(AclService::class),
             $container->get(MvcTranslator::class),
-            $container->get('application_service_infimum'),
+            $container->get(InfimumService::class),
         );
     }
 }

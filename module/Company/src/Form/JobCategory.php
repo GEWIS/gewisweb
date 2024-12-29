@@ -29,8 +29,8 @@ class JobCategory extends Form implements InputFilterProviderInterface
     private ?string $currentSlugEn = null;
 
     public function __construct(
-        private readonly CategoryMapper $mapper,
         private readonly Translator $translator,
+        private readonly CategoryMapper $mapper,
     ) {
         // we want to ignore the name passed
         parent::__construct();

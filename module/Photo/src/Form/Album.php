@@ -17,7 +17,7 @@ use Laminas\Validator\StringLength;
 
 class Album extends Form implements InputFilterProviderInterface
 {
-    public function __construct(private Translator $translator)
+    public function __construct(private readonly Translator $translator)
     {
         parent::__construct();
 
@@ -94,6 +94,7 @@ class Album extends Form implements InputFilterProviderInterface
                             'pattern' => '/^[\p{L}\p{N}\-\.\:\@\^\&\*\?\!\(\)\'\"\s]+$/u',
                             'messages' => [
                                 Regex::NOT_MATCH => $this->translator->translate(
+                                    // phpcs:ignore Generic.Files.LineLength.TooLong -- user-visible strings should not be split
                                     'Album name can only contain letters, numbers, -, ., :, @, ^, &, *, ?, !, (, ), \', ", and spaces',
                                 ),
                             ],

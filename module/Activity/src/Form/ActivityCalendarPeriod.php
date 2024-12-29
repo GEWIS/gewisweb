@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Activity\Form;
 
+use Activity\Form\Fieldset\MaxActivities;
 use DateTime;
 use Laminas\Form\Element\Collection;
 use Laminas\Form\Element\DateTimeLocal;

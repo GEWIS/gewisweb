@@ -21,8 +21,8 @@ class HighlightSearch extends AbstractHelper
         string $query,
         string $content,
     ): string {
-        // Convert the decision to something that is easily searchable (i.e. it MUST contain only Latin-ASCII characters).
-        $transliteratedDecision = transliterator_transliterate('Any-Latin; Latin-ASCII', $content);
+        // Convert content to something that is easily searchable (i.e. it MUST contain only Latin-ASCII characters).
+        $transliteratedContent = transliterator_transliterate('Any-Latin; Latin-ASCII', $content);
         // Do the same for the search prompt, as otherwise searches WITH non-ASCII characters will not work.
         $query = transliterator_transliterate('Any-Latin; Latin-ASCII', $query);
 
@@ -30,11 +30,12 @@ class HighlightSearch extends AbstractHelper
         $output = '';
         $length = mb_strlen($query);
 
-        // There is a very important assumption here; the transliterated version of the decision MUST be exactly as long as
-        // the original version. Otherwise, the insertion is done with an incorrect offset. As such, using `iconv` is NOT
-        // good as it will either extend (e.g. `€` becomes `EUR`) or completely remove characters (`//IGNORE` option).
-        while (false !== ($position = mb_stripos($transliteratedDecision, $query, $offset, 'UTF-8'))) {
-            // Progressively insert markers into the original decision.
+        // There is a very important assumption here; the transliterated version of the content MUST be exactly as long
+        // as the original version. Otherwise, the marker insertion is done with an incorrect offset. As such, using
+        // `iconv` is NOT an option as it will either extend (e.g. `€` becomes `EUR`) or completely remove characters
+        // (i.e. the `//IGNORE` option).
+        while (false !== ($position = mb_stripos($transliteratedContent, $query, $offset, 'UTF-8'))) {
+            // Progressively insert markers into the original content.
             $output .= sprintf(
                 '%s%s%s%s',
                 mb_substr($content, $offset, $position - $offset, 'UTF-8'),
@@ -46,7 +47,7 @@ class HighlightSearch extends AbstractHelper
             $offset = $position + $length;
         }
 
-        // Add the final part of the decision back.
+        // Add the final part of the content back.
         $output .= mb_substr($content, $offset, null, 'UTF-8');
 
         return $output;

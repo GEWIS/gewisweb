@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace ApplicationTest;
 
+use Company\Mapper\Company as CompanyMapper;
 use Company\Model\Company;
 use Company\Model\CompanyLocalisedText;
 use DateInterval;
 use DateTime;
+use Decision\Mapper\Member as MemberMapper;
 use Decision\Model\Enums\MembershipTypes;
 use Decision\Model\Member;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -16,7 +18,13 @@ use Laminas\Mvc\ApplicationInterface;
 use Laminas\Mvc\Service\ServiceManagerConfig;
 use Laminas\ServiceManager\ServiceManager;
 use PHPUnit\Framework\MockObject\MockObject;
+use User\Authentication\Adapter\CompanyUserAdapter;
+use User\Authentication\Adapter\UserAdapter;
 use User\Authentication\AuthenticationService;
+use User\Authentication\Storage\CompanyUserSession;
+use User\Authentication\Storage\UserSession;
+use User\Mapper\CompanyUser as CompanyUserMapper;
+use User\Mapper\User as UserMapper;
 use User\Model\CompanyUser;
 use User\Model\Enums\UserRoles;
 use User\Model\NewCompanyUser;
@@ -131,8 +139,8 @@ trait BaseControllerTrait
 
     private function setUpMockCompanyUserAuthService(): void
     {
-        $storage = $this->serviceManager->get('user_auth_companyUser_storage');
-        $adapter = $this->serviceManager->get('user_auth_companyUser_adapter');
+        $storage = $this->serviceManager->get(CompanyUserSession::class);
+        $adapter = $this->serviceManager->get(CompanyUserAdapter::class);
 
         $this->companyUserAuthService = $this->getMockBuilder(AuthenticationService::class)
             ->setConstructorArgs([$storage, $adapter])
@@ -145,30 +153,30 @@ trait BaseControllerTrait
     {
         $entityManager = $this->serviceManager->get('doctrine.entitymanager.orm_default');
 
-        $this->companyMapper = $this->getMockBuilder(\Company\Mapper\Company::class)
+        $this->companyMapper = $this->getMockBuilder(CompanyMapper::class)
             ->setConstructorArgs([$entityManager])
             ->enableProxyingToOriginalMethods()
             ->getMock();
 
-        $this->serviceManager->setService('company_mapper_company', $this->companyMapper);
+        $this->serviceManager->setService(CompanyMapper::class, $this->companyMapper);
     }
 
     private function setUpMockCompanyUserMapper(): void
     {
         $entityManager = $this->serviceManager->get('doctrine.entitymanager.orm_default');
 
-        $this->companyUserMapper = $this->getMockBuilder(\User\Mapper\CompanyUser::class)
+        $this->companyUserMapper = $this->getMockBuilder(CompanyUserMapper::class)
             ->setConstructorArgs([$entityManager])
             ->enableProxyingToOriginalMethods()
             ->getMock();
 
-        $this->serviceManager->setService('user_mapper_companyUser', $this->companyUserMapper);
+        $this->serviceManager->setService(CompanyUserMapper::class, $this->companyUserMapper);
     }
 
     private function setUpMockUserAuthService(): void
     {
-        $storage = $this->serviceManager->get('user_auth_user_storage');
-        $adapter = $this->serviceManager->get('user_auth_user_adapter');
+        $storage = $this->serviceManager->get(UserSession::class);
+        $adapter = $this->serviceManager->get(UserAdapter::class);
 
         $this->userAuthService = $this->getMockBuilder(AuthenticationService::class)
             ->setConstructorArgs([$storage, $adapter])
@@ -181,24 +189,24 @@ trait BaseControllerTrait
     {
         $entityManager = $this->serviceManager->get('doctrine.entitymanager.orm_default');
 
-        $this->userMapper = $this->getMockBuilder(\User\Mapper\User::class)
+        $this->userMapper = $this->getMockBuilder(UserMapper::class)
             ->setConstructorArgs([$entityManager])
             ->enableProxyingToOriginalMethods()
             ->getMock();
 
-        $this->serviceManager->setService('user_mapper_user', $this->userMapper);
+        $this->serviceManager->setService(UserMapper::class, $this->userMapper);
     }
 
     private function setUpMockMemberMapper(): void
     {
         $entityManager = $this->serviceManager->get('doctrine.entitymanager.orm_default');
 
-        $this->memberMapper = $this->getMockBuilder(\Decision\Mapper\Member::class)
+        $this->memberMapper = $this->getMockBuilder(MemberMapper::class)
             ->setConstructorArgs([$entityManager])
             ->enableProxyingToOriginalMethods()
             ->getMock();
 
-        $this->serviceManager->setService('decision_mapper_member', $this->memberMapper);
+        $this->serviceManager->setService(MemberMapper::class, $this->memberMapper);
     }
 
     protected function setUpWithRole(string $role = 'user'): void

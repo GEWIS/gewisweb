@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Application\View\HelperTrait;
 use Decision\Model\Organ as OrganModel;
+use Decision\Service\AclService as DecisionAclService;
 use Laminas\View\Renderer\PhpRenderer;
 
 /**
@@ -39,7 +40,7 @@ $organInformation = $organ->getApprovedOrganInformation()
     <?php if (null !== $organInformation): ?>
         <div class="card-footer text-muted">
             <hr>
-            <?php if ($this->acl('decision_service_acl')->isAllowed('organ', 'view')): ?>
+            <?php if ($this->acl(DecisionAclService::class)->isAllowed('organ', 'view')): ?>
                 <span class="fas fa-envelope"></span>
             <?php endif; ?>
             <?php if (strlen($organInformation->getWebsite()) > 0): ?>

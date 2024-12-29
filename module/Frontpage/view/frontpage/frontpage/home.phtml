@@ -5,7 +5,9 @@ declare(strict_types=1);
 use Activity\Model\Activity as ActivityModel;
 use Application\View\HelperTrait;
 use Company\Model\CompanyBannerPackage as CompanyBannerPackageModel;
+use Decision\Service\AclService as DecisionAclService;
 use Frontpage\Model\NewsItem as NewsItemModel;
+use Frontpage\Service\AclService as FrontpageAclService;
 use Laminas\View\Renderer\PhpRenderer;
 use Photo\Model\Photo as PhotoModel;
 use Photo\Model\WeeklyPhoto as WeeklyPhotoModel;
@@ -99,7 +101,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                         });
                     </script>
                 </section>
-                <?php if (!empty($birthdays) && $this->acl('decision_service_acl')->isAllowed('member', 'birthdays')): ?>
+                <?php if (!empty($birthdays) && $this->acl(DecisionAclService::class)->isAllowed('member', 'birthdays')): ?>
                     <section class="content-section">
                         <div class="panel panel-default" style="overflow:hidden;">
                             <?php if (null !== $birthdayPhoto): ?>
@@ -269,7 +271,7 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                         </div>
                     </div>
                 <?php endif; ?>
-                <?php if ($this->acl('frontpage_service_acl')->isAllowed('infimum', 'view')): ?>
+                <?php if ($this->acl(FrontpageAclService::class)->isAllowed('infimum', 'view')): ?>
                     <div class="panel panel-default">
                         <div class="panel-heading panel-heading--full-height">
                             <h3><?= $this->translate('Infimum') ?></h3>

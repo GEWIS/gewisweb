@@ -19,9 +19,6 @@ class DeleteOldSignupsFactory implements FactoryInterface
         $requestedName,
         ?array $options = null,
     ): DeleteOldSignups {
-        /** @var SignupService $signupService */
-        $signupService = $container->get('activity_service_signup');
-
-        return new DeleteOldSignups($signupService);
+        return new DeleteOldSignups($container->get(SignupService::class));
     }
 }

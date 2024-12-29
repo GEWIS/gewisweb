@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Frontpage\Form;
+namespace Frontpage\Form\Fieldset;
 
 use Frontpage\Model\PollOption as PollOptionModel;
 use Laminas\Filter\StringTrim;

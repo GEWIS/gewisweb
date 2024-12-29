@@ -7,6 +7,9 @@ namespace Photo\Controller\Factory;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Photo\Controller\AlbumAdminController;
+use Photo\Service\AclService;
+use Photo\Service\Admin as AdminService;
+use Photo\Service\Album as AlbumService;
 use Psr\Container\ContainerInterface;
 
 class AlbumAdminControllerFactory implements FactoryInterface
@@ -20,10 +23,10 @@ class AlbumAdminControllerFactory implements FactoryInterface
         ?array $options = null,
     ): AlbumAdminController {
         return new AlbumAdminController(
-            $container->get('photo_service_acl'),
+            $container->get(AclService::class),
             $container->get(MvcTranslator::class),
-            $container->get('photo_service_admin'),
-            $container->get('photo_service_album'),
+            $container->get(AdminService::class),
+            $container->get(AlbumService::class),
             $container->get('config')['photo'],
         );
     }

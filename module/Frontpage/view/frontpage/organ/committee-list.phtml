@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Application\View\HelperTrait;
 use Decision\Model\Organ as OrganModel;
+use Decision\Service\AclService as DecisionAclService;
 use Laminas\View\Renderer\PhpRenderer;
 
 /**
@@ -22,7 +23,7 @@ $this->headTitle($this->translate('Committees'));
                         <a href="<?= $this->url('home/committee_historical_list') ?>" class="btn btn-default">
                             <span class="fas fa-history"></span> <?= $this->translate('Old committees') ?>
                         </a>
-                        <?php if ($this->acl('decision_service_acl')->isAllowed('organ', 'view')): ?>
+                        <?php if ($this->acl(DecisionAclService::class)->isAllowed('organ', 'view')): ?>
                             <a href="<?= $this->url(
                                 'home/page',
                                 [

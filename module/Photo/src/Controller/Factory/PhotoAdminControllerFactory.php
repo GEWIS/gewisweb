@@ -6,6 +6,8 @@ namespace Photo\Controller\Factory;
 
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Photo\Controller\PhotoAdminController;
+use Photo\Service\Album as AlbumService;
+use Photo\Service\Photo as PhotoService;
 use Psr\Container\ContainerInterface;
 
 class PhotoAdminControllerFactory implements FactoryInterface
@@ -19,8 +21,8 @@ class PhotoAdminControllerFactory implements FactoryInterface
         ?array $options = null,
     ): PhotoAdminController {
         return new PhotoAdminController(
-            $container->get('photo_service_album'),
-            $container->get('photo_service_photo'),
+            $container->get(AlbumService::class),
+            $container->get(PhotoService::class),
         );
     }
 }

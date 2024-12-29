@@ -6,6 +6,7 @@ use Application\View\HelperTrait;
 use Education\Model\Course as CourseModel;
 use Education\Model\Enums\ExamTypes;
 use Education\Model\Summary as SummaryModel;
+use Education\Service\AclService as EducationAclService;
 use Laminas\View\Renderer\PhpRenderer;
 
 /**
@@ -40,7 +41,7 @@ foreach ($documents as $document) {
             </div>
         </div>
         <hr>
-        <?php if (!$this->acl('education_service_acl')->isAllowed('course_document', 'download')): ?>
+        <?php if (!$this->acl(EducationAclService::class)->isAllowed('course_document', 'download')): ?>
             <div class="row">
                 <p><?= $this->translate('You are not allowed to view these documents!') ?></p>
                 <p>

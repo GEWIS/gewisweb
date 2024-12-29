@@ -116,8 +116,7 @@ return [
                     'files' => [
                         'type' => Regex::class,
                         'options' => [
-                            'regex' => '/files(?<path>' . (new Module())->getServiceConfig(
-                            )['filebrowser_valid_file'] . ')',
+                            'regex' => '/files(?<path>[^?*:;{}\\\]*)',
                             'defaults' => [
                                 'action' => 'files',
                             ],

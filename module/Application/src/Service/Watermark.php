@@ -23,7 +23,7 @@ use function tempnam;
 /**
  * @psalm-template TUserAuth of AuthenticationService<UserSession, UserAdapter>
  */
-class WatermarkService
+class Watermark
 {
     // The font size of the watermark
     private const FONT_SIZE_DIAGONAL = 32;

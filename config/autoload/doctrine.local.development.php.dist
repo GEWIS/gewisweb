@@ -36,7 +36,7 @@ return [
                     'dbname'   => getenv('DOCKER_DB_DATABASE'),
                     'charset' => 'utf8mb4',
                     'collate' => 'utf8mb4_unicode_ci',
-                    'driverOptions' => filter_var(getenv('DOCKER_DB_SSL') ?? false, FILTER_VALIDATE_BOOLEAN) ? [
+                    'driverOptions' => filter_var(getenv('DOCKER_DB_SSL', false), FILTER_VALIDATE_BOOLEAN) ? [
                         PDO::MYSQL_ATTR_SSL_CAPATH => '/etc/ssl/certs/',
                         PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => true,
                     ] : [],

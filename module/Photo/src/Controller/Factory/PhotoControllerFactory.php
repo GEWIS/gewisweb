@@ -7,6 +7,9 @@ namespace Photo\Controller\Factory;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Photo\Controller\PhotoController;
+use Photo\Service\AclService;
+use Photo\Service\Album as AlbumService;
+use Photo\Service\Photo as PhotoService;
 use Psr\Container\ContainerInterface;
 
 class PhotoControllerFactory implements FactoryInterface
@@ -21,9 +24,9 @@ class PhotoControllerFactory implements FactoryInterface
     ): PhotoController {
         return new PhotoController(
             $container->get(MvcTranslator::class),
-            $container->get('photo_service_acl'),
-            $container->get('photo_service_album'),
-            $container->get('photo_service_photo'),
+            $container->get(AclService::class),
+            $container->get(AlbumService::class),
+            $container->get(PhotoService::class),
             $container->get('config')['photo'],
         );
     }
