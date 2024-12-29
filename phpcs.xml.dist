@@ -140,6 +140,7 @@
         <exclude-pattern>module/User/src/Service/Factory/UserFactory.php</exclude-pattern>
         <!-- Permission assertions -->
         <exclude-pattern>module/User/src/Permissions/Assertion/IsAfterMembershipEndedAndNotTagged.php</exclude-pattern>
+        <exclude-pattern>module/User/src/Permissions/Assertion/IsAllowedToViewPage.php</exclude-pattern>
         <exclude-pattern>module/User/src/Permissions/Assertion/IsCreator.php</exclude-pattern>
         <exclude-pattern>module/User/src/Permissions/Assertion/IsCreatorOrOrganMember.php</exclude-pattern>
         <exclude-pattern>module/User/src/Permissions/Assertion/IsOrganMember.php</exclude-pattern>

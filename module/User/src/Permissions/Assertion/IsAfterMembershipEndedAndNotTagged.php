@@ -21,13 +21,7 @@ use User\Model\User;
 class IsAfterMembershipEndedAndNotTagged implements AssertionInterface
 {
     /**
-     * Returns true if and only if the assertion conditions are met.
-     *
-     * This method is passed the ACL, Role, Resource, and privilege to which the authorization query applies. If the
-     * $role, $resource, or $privilege parameters are null, it means that the query applies to all Roles, Resources, or
-     * privileges, respectively.
-     *
-     * @param string|null $privilege
+     * @inheritDoc
      */
     public function assert(
         Acl $acl,

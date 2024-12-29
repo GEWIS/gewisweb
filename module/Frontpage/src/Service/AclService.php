@@ -4,23 +4,11 @@ declare(strict_types=1);
 
 namespace Frontpage\Service;
 
-use Frontpage\Model\Page as PageModel;
 use Laminas\Permissions\Acl\Resource\GenericResource as Resource;
+use User\Permissions\Assertion\IsAllowedToViewPage;
 
 class AclService extends \User\Service\AclService
 {
-    /**
-     * @param PageModel[] $pages
-     */
-    public function setPages(array $pages): void
-    {
-        foreach ($pages as $page) {
-            $requiredRole = $page->getRequiredRole()->value;
-            $this->acl->addResource($page);
-            $this->acl->allow($requiredRole, $page, 'view');
-        }
-    }
-
     protected function createAcl(): void
     {
         parent::createAcl();
@@ -36,5 +24,7 @@ class AclService extends \User\Service\AclService
         $this->acl->allow('user', 'infimum', 'view');
         $this->acl->allow('user', 'poll', ['vote', 'request']);
         $this->acl->allow('user', 'poll_comment', ['view', 'create', 'list']);
+
+        $this->acl->allow(null, 'page', 'view', new IsAllowedToViewPage());
     }
 }
