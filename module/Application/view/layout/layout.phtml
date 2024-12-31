@@ -203,25 +203,50 @@ endif; ?>
 
 <?= $this->partial('partial/privacy-widget.phtml') ?>
 
-<!-- Scripts -->
-<?php
-$currentDate = new DateTime();
-$targetDate = DateTime::createFromFormat('j n', '28 6');
+<div id="gewis-festivities" style="position: fixed; width: 100vw; height: 100vh; pointer-events: none;">
+    <?php
+    $currentDate = new DateTime();
+    $targetDate = DateTime::createFromFormat('j n', '28 6');
 
-if (
-    $currentDate->format('j n') === $targetDate->format('j n')
-    || (
-        null !== $this->identity()
-        && $this->identity()->getMember()->getBirth()->format('m-d') === $currentDate->format('m-d')
-    )
-) {
-    $this->inlineScript()->prependFile(
-        $this->basepath('js/balloons.js'),
-        'text/javascript',
-        ['nonce' => NONCE_REPLACEMENT_STRING],
-    );
-}
-?>
+    if (
+        $currentDate->format('j n') === $targetDate->format('j n')
+        || (
+            null !== $this->identity()
+            && $this->identity()->getMember()->getBirth()->format('m-d') === $currentDate->format('m-d')
+        )
+    ) {
+        $this->inlineScript()->prependFile(
+            $this->basepath('js/balloons.js'),
+            'text/javascript',
+            ['nonce' => NONCE_REPLACEMENT_STRING],
+        );
+    }
+    ?>
+    <?php if (null !== $this->identity()): ?>
+        <?php
+        if (
+            $currentDate >= new DateTime('December 24')
+            && $currentDate <= new DateTime('December 31 23:59:59')
+        ) {
+            $this->inlineScript()->prependFile(
+                $this->basepath('js/snowstorm.js'),
+                'text/javascript',
+                ['nonce' => NONCE_REPLACEMENT_STRING],
+            );
+        }
+        ?>
+        <?php if ('01-01' === $currentDate->format('m-d')): ?>
+            <div class="firework"></div>
+            <div class="firework"></div>
+            <div class="firework"></div>
+            <div class="firework"></div>
+            <div class="firework"></div>
+            <div class="firework"></div>
+        <?php endif; ?>
+    <?php endif; ?>
+</div>
+
+<!-- Scripts -->
 <?= $this->inlineScript()
     ->prependFile(
         $this->basepath('js/bootstrap.min.js'),
