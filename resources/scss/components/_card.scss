@@ -47,7 +47,12 @@
         padding: 1.5rem 1.5rem 0 1.5rem;
         flex-grow: 1;
 
-        + .card-footer {
+        &:not(:has(~ .card-footer)):has(:last-child.card-title),
+        &:not(:has(~ .card-footer)):has(:last-child.card-subtitle) {
+            padding-bottom: 0.75rem;
+        }
+
+        & + .card-footer {
             padding: 0 1.5rem 1.5rem 1.5rem;
         }
     }
@@ -100,6 +105,13 @@
         text-overflow: ellipsis;
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
+    }
+
+    &.no-ar-image-card {
+        .card-img,
+        .card-image {
+            aspect-ratio: unset;
+        }
     }
 
     &.company-card,
