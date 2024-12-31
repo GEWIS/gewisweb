@@ -102,6 +102,13 @@
         -webkit-box-orient: vertical;
     }
 
+    &.no-ar-image-card {
+        .card-img,
+        .card-image {
+            aspect-ratio: unset;
+        }
+    }
+
     &.company-card,
     &.job-card {
         .card-img,

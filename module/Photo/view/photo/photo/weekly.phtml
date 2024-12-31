@@ -51,7 +51,7 @@ $this->headTitle($this->translate('Photos of the Week'));
 
             <h4><?= $this->translate('Old photos of the week') ?></h4>
             <hr>
-            <div class="row">
+            <div class="card-grid">
                 <?php foreach ($photosOfTheWeek as $year => $photoOfTheWeek): ?>
                     <?php
                     $lastWeeklyPhoto = $photoOfTheWeek->getPhoto();
@@ -62,24 +62,24 @@ $this->headTitle($this->translate('Photos of the Week'));
                         'h' => round($width * $ar)
                     ];
                     ?>
-                    <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                        <a class="thumbnail"
-                           href="<?= $this->url(
-                               'photo/album',
-                               [
-                                   'album_id' => $year,
-                                   'album_type' => 'weekly',
-                               ],
-                           ) ?>">
-                            <img
-                                class="img-responsive"
-                                src="<?= $this->glideUrl()->getUrl($lastWeeklyPhoto->getPath(), $smallSize) ?>"
-                                alt=""
-                            />
-                            <div class="caption">
+                    <div class="card no-ar-image-card">
+                        <a class="stretched-link" href="<?= $this->url(
+                            'photo/album',
+                            [
+                                'album_id' => $year,
+                                'album_type' => 'weekly',
+                            ],
+                        ) ?>"></a>
+                        <img
+                            class="card-image"
+                            src="<?= $this->glideUrl()->getUrl($lastWeeklyPhoto->getPath(), $smallSize) ?>"
+                            alt=""
+                        />
+                        <div class="card-body">
+                            <h5 class="card-title">
                                 <?= sprintf('%d/%d', $year, $year + 1) ?>
-                            </div>
-                        </a>
+                            </h5>
+                        </div>
                     </div>
                 <?php endforeach; ?>
             </div>
