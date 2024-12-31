@@ -1,0 +1,246 @@
+/*
+ * Adapted from https://alvaromontoro.com/blog/68002/creating-a-firework-effect-with-css
+ *
+ * Here are some alternative colours for the fireworks (as red is more fitting for GEWIS):
+ *  --color1: yellow;
+ *  --color2: khaki;
+ *  --color3: white;
+ *  --color4: lime;
+ *  --color5: gold;
+ *  --color6: mediumseagreen;
+ *
+ *  --color1: pink;
+ *  --color2: violet;
+ *  --color3: fuchsia;
+ *  --color4: orchid;
+ *  --color5: plum;
+ *  --color6: lavender;
+ *
+ *  --color1: cyan;
+ *  --color2: lightcyan;
+ *  --color3: lightblue;
+ *  --color4: PaleTurquoise;
+ *  --color5: SkyBlue;
+ *  --color6: lavender;
+ *
+ *  --color1: coral;
+ *  --color2: orange;
+ *  --color3: darkorange;
+ *  --color4: tomato;
+ *  --color5: orangered;
+ *  --color6: firebrick;
+ *
+ *  --color1: blue;
+ *  --color2: dodgerblue;
+ *  --color3: deepskyblue;
+ *  --color4: steelblue;
+ *  --color5: cornflowerblue;
+ *  --color6: lightsteelblue;
+ *
+ *  --color1: red;
+ *  --color2: crimson;
+ *  --color3: darkred;
+ *  --color4: firebrick;
+ *  --color5: indianred;
+ *  --color6: salmon;
+ */
+
+@keyframes firework {
+    0% {
+        transform: translate(var(--x), var(--initialY));
+        width: var(--initialSize);
+        opacity: 1;
+    }
+    50% {
+        width: 0.5vmin;
+        opacity: 1;
+    }
+    100% {
+        width: var(--finalSize);
+        opacity: 0;
+    }
+}
+
+.firework,
+.firework::before,
+.firework::after {
+    --initialSize: 0.5vmin;
+    --finalSize: 45vmin;
+    --particleSize: 0.25vmin;
+    --color1: #ff5733;
+    --color2: #ff6f61;
+    --color3: #ff2d00;
+    --color4: #b22222;
+    --color5: #d83434;
+    --color6: #a40000;
+    --y: -30vmin;
+    --x: -50%;
+    --initialY: 60vmin;
+    content: "";
+    animation: firework 2s infinite;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, var(--y));
+    width: var(--initialSize);
+    aspect-ratio: 1;
+    pointer-events: none;
+    background:
+        radial-gradient(circle, var(--color1) var(--particleSize), #000000 0) 50% 0%,
+        radial-gradient(circle, var(--color2) var(--particleSize), #000000 0) 100% 50%,
+        radial-gradient(circle, var(--color3) var(--particleSize), #000000 0) 50% 100%,
+        radial-gradient(circle, var(--color4) var(--particleSize), #000000 0) 0% 50%,
+
+        radial-gradient(circle, var(--color5) var(--particleSize), #000000 0) 80% 90%,
+        radial-gradient(circle, var(--color6) var(--particleSize), #000000 0) 95% 90%,
+        radial-gradient(circle, var(--color1) var(--particleSize), #000000 0) 90% 70%,
+        radial-gradient(circle, var(--color2) var(--particleSize), #000000 0) 100% 60%,
+        radial-gradient(circle, var(--color3) var(--particleSize), #000000 0) 55% 80%,
+        radial-gradient(circle, var(--color4) var(--particleSize), #000000 0) 70% 77%,
+
+        radial-gradient(circle, var(--color5) var(--particleSize), #000000 0) 22% 90%,
+        radial-gradient(circle, var(--color6) var(--particleSize), #000000 0) 45% 90%,
+        radial-gradient(circle, var(--color1) var(--particleSize), #000000 0) 33% 70%,
+        radial-gradient(circle, var(--color2) var(--particleSize), #000000 0) 10% 60%,
+        radial-gradient(circle, var(--color3) var(--particleSize), #000000 0) 31% 80%,
+        radial-gradient(circle, var(--color4) var(--particleSize), #000000 0) 28% 77%,
+        radial-gradient(circle, var(--color5) var(--particleSize), #000000 0) 13% 72%,
+
+        radial-gradient(circle, var(--color6) var(--particleSize), #000000 0) 80% 10%,
+        radial-gradient(circle, var(--color1) var(--particleSize), #000000 0) 95% 14%,
+        radial-gradient(circle, var(--color2) var(--particleSize), #000000 0) 90% 23%,
+        radial-gradient(circle, var(--color3) var(--particleSize), #000000 0) 100% 43%,
+        radial-gradient(circle, var(--color4) var(--particleSize), #000000 0) 85% 27%,
+        radial-gradient(circle, var(--color5) var(--particleSize), #000000 0) 77% 37%,
+        radial-gradient(circle, var(--color6) var(--particleSize), #000000 0) 60% 7%,
+
+        radial-gradient(circle, var(--color1) var(--particleSize), #000000 0) 22% 14%,
+        radial-gradient(circle, var(--color1) var(--particleSize), #000000 0) 45% 20%,
+        radial-gradient(circle, var(--color1) var(--particleSize), #000000 0) 33% 34%,
+        radial-gradient(circle, var(--color1) var(--particleSize), #000000 0) 10% 29%,
+        radial-gradient(circle, var(--color1) var(--particleSize), #000000 0) 31% 37%,
+        radial-gradient(circle, var(--color1) var(--particleSize), #000000 0) 28% 7%,
+        radial-gradient(circle, var(--color1) var(--particleSize), #000000 0) 13% 42%
+    ;
+    background-size: var(--initialSize) var(--initialSize);
+    background-repeat: no-repeat;
+}
+
+.firework::before {
+    --x: -50%;
+    --y: -50%;
+    --initialY: -50%;
+    transform: translate(-50%, -50%) rotate(40deg) scale(1.3) rotateY(40deg);
+}
+
+.firework::after {
+    --x: -50%;
+    --y: -50%;
+    --initialY: -50%;
+    transform: translate(-50%, -50%) rotate(170deg) scale(1.15) rotateY(-30deg);
+}
+
+.firework:nth-child(1) {
+    --x: -50%;
+    --initialY: 60vmin;
+    animation-delay: -1.8s;
+}
+
+.firework:nth-child(2) {
+    --x: 30vmin;
+    animation-delay: -0.25s;
+}
+
+.firework:nth-child(3) {
+    --x: -30vmin;
+    --y: -50vmin;
+    animation-delay: 0.75s;
+}
+
+.firework:nth-child(4) {
+    --x: 10vmin;
+    --y: -40vmin;
+    animation-delay: -0.8s;
+}
+
+.firework:nth-child(5) {
+    --x: -10vmin;
+    --y: -20vmin;
+    animation-delay: -0.15s;
+}
+
+.firework:nth-child(6) {
+    --x: 20vmin;
+    --y: -35vmin;
+    animation-delay: 3s;
+}
+
+.firework:nth-child(2),
+.firework:nth-child(2)::before,
+.firework:nth-child(2)::after {
+    --color1: #ff7f7f;
+    --color2: #ff4040;
+    --color3: #ff1c1c;
+    --color4: #c04000;
+    --color5: #b22222;
+    --color6: #ff3300;
+    --finalSize: 40vmin;
+    left: 20%;
+    top: 70%;
+}
+
+.firework:nth-child(3),
+.firework:nth-child(3)::before,
+.firework:nth-child(3)::after {
+    --color1: #990000;
+    --color2: #ff6347;
+    --color3: #ff4500;
+    --color4: #e25822;
+    --color5: #d70040;
+    --color6: #ff8c69;
+    --finalSize: 35vmin;
+    left: 60%;
+    top: 60%;
+}
+
+.firework:nth-child(4),
+.firework:nth-child(4)::before,
+.firework:nth-child(4)::after {
+    --color1: #ff4c4c;
+    --color2: #ff2d2d;
+    --color3: #c21807;
+    --color4: #b32400;
+    --color5: #ff5c5c;
+    --color6: #e60026;
+    --finalSize: 45vmin;
+    left: 40%;
+    top: 70%;
+}
+
+.firework:nth-child(5),
+.firework:nth-child(5)::before,
+.firework:nth-child(5)::after {
+    --color1: #a40000;
+    --color2: #ff4d4d;
+    --color3: #cc1100;
+    --color4: #ff2929;
+    --color5: #8b0000;
+    --color6: #ff1a00;
+    --finalSize: 35vmin;
+    left: 30%;
+    top: 50%;
+}
+
+.firework:nth-child(6),
+.firework:nth-child(6)::before,
+.firework:nth-child(6)::after {
+    --color1: #ff5c5c;
+    --color2: #ff0000;
+    --color3: #e32636;
+    --color4: #ff1a1a;
+    --color5: #cc0000;
+    --color6: #800000;
+    --finalSize: 55vmin;
+    left: 65%;
+    top: 55%;
+}

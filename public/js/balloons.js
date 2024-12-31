@@ -29,10 +29,9 @@ const getRandomStyles = () => {
 }
 
 const createBalloons = async (num) => {
-    const body = document.body;
     const balloonContainer = document.createElement('div');
     balloonContainer.id = 'balloon-container';
-    body.append(balloonContainer);
+    document.getElementById('gewis-festivities').append(balloonContainer);
 
     for (let i = 0; i < num; i++) {
         const balloon = document.createElement('div');
