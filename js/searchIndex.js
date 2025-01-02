@@ -2281,6 +2281,11 @@ Search.appendIndex(
             "summary": "Sets\u0020the\u0020closing\u0020DateTime\u0020of\u0020this\u0020SignupList.",
             "url": "classes/Activity-Model-SignupList.html#method_setCloseDate"
         },                {
+            "fqsen": "\\Activity\\Model\\SignupList\u003A\u003AisOpen\u0028\u0029",
+            "name": "isOpen",
+            "summary": "Whether\u0020the\u0020sign\u002Dup\u0020list\u0020period\u0020is\u0020now.",
+            "url": "classes/Activity-Model-SignupList.html#method_isOpen"
+        },                {
             "fqsen": "\\Activity\\Model\\SignupList\u003A\u003AgetOnlyGEWIS\u0028\u0029",
             "name": "getOnlyGEWIS",
             "summary": "Returns\u0020true\u0020if\u0020this\u0020SignupList\u0020is\u0020only\u0020available\u0020to\u0020members\u0020of\u0020GEWIS.",
