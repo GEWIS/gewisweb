@@ -54,7 +54,7 @@ use Laminas\View\Renderer\PhpRenderer;
                     ->setAttribute('id', 'contract-number');
                 ?>
                 <div class="form-group <?= $this->bootstrapElementError($contractNumber) ?>">
-                    <label for="<?= $contractNumber->getAttribute('id') ?>" class="control-label">
+                    <label for="<?= $contractNumber->getAttribute('id') ?>" class="control-label label-required">
                         <?= $contractNumber->getLabel() ?>
                     </label>
                     <?= $this->formText($contractNumber) ?>
