@@ -221,6 +221,19 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
+     * Whether the sign-up list period is now.
+     *
+     * NOTE: this does not indicate that one is able to sign up, that depends on other factors such as approval status
+     * of the actual activity.
+     */
+    public function isOpen(): bool
+    {
+        $now = new DateTime('now');
+
+        return $now >= $this->getOpenDate() && $now < $this->getCloseDate();
+    }
+
+    /**
      * Returns true if this SignupList is only available to members of GEWIS.
      */
     public function getOnlyGEWIS(): bool

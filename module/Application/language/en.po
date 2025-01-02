@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-02 11:44+0100\n"
-"PO-Revision-Date: 2025-01-02 11:44+0100\n"
+"POT-Creation-Date: 2025-01-02 13:17+0100\n"
+"PO-Revision-Date: 2025-01-02 13:18+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: en\n"
@@ -2602,6 +2602,18 @@ msgstr "Sign-up List"
 msgid "Sign-up Lists"
 msgstr "Sign-up Lists"
 
+#, php-format
+msgid "Sign-up closed on: %s"
+msgstr "Sign-up closed on: %s"
+
+#, php-format
+msgid "Sign-up closes: %s (in %s)"
+msgstr "Sign-up closes: %s (in %s)"
+
+#, php-format
+msgid "Sign-up opens: %s (in %s)"
+msgstr "Sign-up opens: %s (in %s)"
+
 msgid "Similar courses"
 msgstr "Similar courses"
 
@@ -4355,6 +4367,9 @@ msgid "week"
 msgid_plural "weeks"
 msgstr[0] "week"
 msgstr[1] "weeks"
+
+msgid "with multiple sign-up lists"
+msgstr "with multiple sign-up lists"
 
 msgid "year"
 msgid_plural "years"
