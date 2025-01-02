@@ -349,7 +349,7 @@ class Company
         }
 
         // Upload the logo of the company.
-        if (!$this->uploadFile($company, $data['logo'])) {
+        if (!$this->uploadFile($company, $data['logo'], required: true)) {
             return false;
         }
 
@@ -420,9 +420,10 @@ class Company
         CompanyModel|CompanyPackageModel|JobModel $entity,
         ?array $file,
         string $languageSuffix = '',
+        bool $required = false,
     ): bool {
         if (null === $file) {
-            return true;
+            return !$required;
         }
 
         // Check if there is an actual file and no errors occurred during the upload.
@@ -535,7 +536,7 @@ class Company
         $package->setCompany($company);
 
         if (CompanyPackageTypes::Banner === $type) {
-            if (!$this->uploadFile($package, $data['banner'])) {
+            if (!$this->uploadFile($package, $data['banner'], required: true)) {
                 return false;
             }
         }
