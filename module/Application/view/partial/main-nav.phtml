@@ -598,13 +598,7 @@ endif; ?>
                                     <?= $this->translate('Photos') ?>
                                 </a>
                             </li>
-                            <li>
-                                <a href="<?= $this->url('photo/weekly') ?>">
-                                    <?= $this->translate('Photo of the week') ?>
-                                </a>
-                            </li>
-                            <?php
-                            if (null != $this->identity()): ?>
+                            <?php if (null != $this->identity()): ?>
                                 <li>
                                     <a href="<?= $this->url(
                                         'photo/album',
@@ -613,11 +607,15 @@ endif; ?>
                                             'album_type' => 'member',
                                         ],
                                     ) ?>">
-                                        <?= $this->translate('My photo\'s') ?>
+                                        <?= $this->translate('My Photos') ?>
                                     </a>
                                 </li>
-                            <?php
-                            endif; ?>
+                            <?php endif; ?>
+                            <li>
+                                <a href="<?= $this->url('photo/weekly') ?>">
+                                    <?= $this->translate('Photo of the Week') ?>
+                                </a>
+                            </li>
                         </ul>
                     <?php
                     endif; ?>

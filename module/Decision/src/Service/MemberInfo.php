@@ -62,11 +62,11 @@ class MemberInfo
     public function getMembershipInfo(?int $lidnr = null): ?array
     {
         if (null === $lidnr && !$this->aclService->isAllowed('view_self', 'member')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to view membership info.'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to view membership info'));
         }
 
         if (null !== $lidnr && !$this->aclService->isAllowed('view', 'member')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to view members.'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to view members'));
         }
 
         if (null === $lidnr) {

@@ -47,7 +47,7 @@ class Member
                 || $lidnr !== $this->aclService->getUserIdentityOrThrowException()->getLidnr()
             )
         ) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to view members.'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to view members'));
         }
 
         return $this->memberMapper->findByLidnr($lidnr);

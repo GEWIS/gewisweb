@@ -48,7 +48,9 @@ class AlbumController extends AbstractActionController
             )
             && !$this->aclService->isAllowed('nodate', 'album')
         ) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to view albums without dates'));
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to view albums without dates'),
+            );
         }
 
         $hasRecentVote = $this->photoService->hasRecentVote();

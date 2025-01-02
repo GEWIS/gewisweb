@@ -57,7 +57,7 @@ class Page
         $page = $this->pageMapper->findPage($language, $category, $subCategory, $name);
 
         if (null !== $page && !$this->aclService->isAllowed('view', $page)) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to view this page.'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to view this page'));
         }
 
         return $page;

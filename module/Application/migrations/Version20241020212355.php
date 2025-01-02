@@ -9,6 +9,7 @@ use Doctrine\Migrations\AbstractMigration;
 
 /**
  * phpcs:disable Generic.Files.LineLength.TooLong
+ * phpcs:disable SlevomatCodingStandard.Functions.RequireMultiLineCall.RequiredMultiLineCall
  */
 final class Version20241020212355 extends AbstractMigration
 {
@@ -19,7 +20,6 @@ final class Version20241020212355 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-        // phpcs:disable SlevomatCodingStandard.Functions.RequireMultiLineCall.RequiredMultiLineCall
         $this->addSql('CREATE TABLE Activity (id INT AUTO_INCREMENT NOT NULL, name_id INT NOT NULL, location_id INT NOT NULL, costs_id INT NOT NULL, approver_id INT DEFAULT NULL, creator_id INT NOT NULL, description_id INT NOT NULL, organ_id INT DEFAULT NULL, company_id INT DEFAULT NULL, beginTime DATETIME NOT NULL, endTime DATETIME NOT NULL, status INT NOT NULL, isMyFuture TINYINT(1) NOT NULL, requireGEFLITST TINYINT(1) NOT NULL, UNIQUE INDEX UNIQ_55026B0C71179CD6 (name_id), UNIQUE INDEX UNIQ_55026B0C64D218E (location_id), UNIQUE INDEX UNIQ_55026B0C27D66E0D (costs_id), INDEX IDX_55026B0CBB23766C (approver_id), INDEX IDX_55026B0C61220EA6 (creator_id), UNIQUE INDEX UNIQ_55026B0CD9F966B (description_id), INDEX IDX_55026B0CE4445171 (organ_id), INDEX IDX_55026B0C979B1AD6 (company_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE ActivityCategoryAssignment (activity_id INT NOT NULL, activitycategory_id INT NOT NULL, INDEX IDX_480AC9B381C06096 (activity_id), INDEX IDX_480AC9B324EF5392 (activitycategory_id), PRIMARY KEY(activity_id, activitycategory_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE ActivityCalendarOption (id INT AUTO_INCREMENT NOT NULL, proposal_id INT NOT NULL, type VARCHAR(255) DEFAULT NULL, status VARCHAR(255) DEFAULT NULL, beginTime DATETIME NOT NULL, endTime DATETIME NOT NULL, modifiedBy_id INT DEFAULT NULL, INDEX IDX_503F8985F4792058 (proposal_id), INDEX IDX_503F8985D6A05076 (modifiedBy_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
@@ -202,13 +202,10 @@ final class Version20241020212355 extends AbstractMigration
         $this->addSql('ALTER TABLE Vote ADD CONSTRAINT FK_FA222A5A7E9E4C8C FOREIGN KEY (photo_id) REFERENCES Photo (id)');
         $this->addSql('ALTER TABLE Vote ADD CONSTRAINT FK_FA222A5AEBB4B8AD FOREIGN KEY (voter_id) REFERENCES Member (lidnr)');
         $this->addSql('ALTER TABLE WeeklyPhoto ADD CONSTRAINT FK_E5D6E8E07E9E4C8C FOREIGN KEY (photo_id) REFERENCES Photo (id)');
-        // phpcs:enable SlevomatCodingStandard.Functions.RequireMultiLineCall.RequiredMultiLineCall
     }
 
     public function down(Schema $schema): void
     {
-        // phpcs:disable SlevomatCodingStandard.Functions.RequireMultiLineCall.RequiredMultiLineCall
         $this->throwIrreversibleMigrationException();
-        // phpcs:enable SlevomatCodingStandard.Functions.RequireMultiLineCall.RequiredMultiLineCall
     }
 }

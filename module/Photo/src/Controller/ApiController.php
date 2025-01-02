@@ -61,7 +61,7 @@ class ApiController extends AbstractActionController
             !$this->aclService->isAllowed('view', 'tag')
             && !$this->aclService->isAllowed('view', 'vote')
         ) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to view photo details'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to view photo details'));
         }
 
         $photoId = (int) $this->params()->fromRoute('photo_id');

@@ -181,7 +181,7 @@ class Poll
 
         $poll = $pollOption->getPoll();
         if (!$this->canVote($poll)) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to vote on this poll.'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to vote on this poll'));
         }
 
         $pollVote = new PollVoteModel();

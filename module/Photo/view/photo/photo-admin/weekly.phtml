@@ -1,0 +1,76 @@
+<?php
+
+declare(strict_types=1);
+
+use Application\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+use Photo\Model\WeeklyPhoto as WeeklyPhotoModel;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var true|null $alreadyHidden
+ * @var true|null $noPhoto
+ * @var true|null $wrongTime
+ * @var WeeklyPhotoModel|null $potw
+ */
+
+$this->breadcrumbs()
+    ->addBreadcrumb($this->translate('Photo of the Week'));
+?>
+<div class="row">
+    <div class="col-md-12">
+        <h2><?= $this->translate('Photo of the Week') ?></h2>
+    </div>
+</div>
+<div class="row">
+    <?php if (isset($alreadyHidden) && $alreadyHidden): ?>
+        <div class="col-md-12">
+            <p>
+                <?= $this->translate('Photo of the Weekly photo is already hidden. You cannot unhide it.'); ?>
+            </p>
+        </div>
+    <?php elseif (isset($wrongTime) && $wrongTime): ?>
+        <div class="col-md-12">
+            <p>
+                <?= $this->translate('You can no longer hide the current Photo of the Week. Should it still be necessary to make the photo invisible (or even delete it) please contact the Application Management Committee immediately.'); ?>
+            </p>
+        </div>
+    <?php elseif (isset($noPhoto) && $noPhoto): ?>
+        <div class="col-md-12">
+            <p>
+                <?= $this->translate('There is no Photo of the Week that can be hidden.'); ?>
+            </p>
+        </div>
+    <?php else: ?>
+        <div class="col-md-6">
+            <?php
+            $photo = $potw->getPhoto();
+            $width = $config['large_thumb_size']['width'];
+            $largeSize = [
+                'w' => $width,
+                'h' => round($width * $photo->getAspectRatio())
+            ];
+            ?>
+            <a href="<?= $this->url(
+                'photo/album',
+                [
+                    'album_id' => $photo->getAlbum()->getId(),
+                    'album_type' => 'album',
+                    'photo_id' => $photo->getId(),
+                ],
+            ) ?>">
+                <img
+                    class="img-responsive"
+                    src="<?= $this->glideUrl()->getUrl($photo->getPath(), $largeSize) ?>"
+                    alt=""
+                />
+            </a>
+        </div>
+        <div class="col-md-6">
+            <form method="POST">
+                <input type="submit" name="submit" value="<?= $this->translate('Hide Photo of the Week') ?>"
+                       class="btn btn-danger"/>
+            </form>
+        </div>
+    <?php endif; ?>
+</div>

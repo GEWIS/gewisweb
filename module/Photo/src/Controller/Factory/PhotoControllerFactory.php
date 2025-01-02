@@ -23,8 +23,8 @@ class PhotoControllerFactory implements FactoryInterface
         ?array $options = null,
     ): PhotoController {
         return new PhotoController(
-            $container->get(MvcTranslator::class),
             $container->get(AclService::class),
+            $container->get(MvcTranslator::class),
             $container->get(AlbumService::class),
             $container->get(PhotoService::class),
             $container->get('config')['photo'],

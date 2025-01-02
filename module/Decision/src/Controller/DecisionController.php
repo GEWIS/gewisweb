@@ -129,7 +129,7 @@ class DecisionController extends AbstractActionController
     public function searchAction(): ViewModel
     {
         if (!$this->aclService->isAllowed('search', 'decision')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to search decisions.'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to search decisions'));
         }
 
         /** @var Request $request */

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-14 00:00+0100\n"
-"PO-Revision-Date: 2024-12-14 00:01+0100\n"
+"POT-Creation-Date: 2025-01-02 11:44+0100\n"
+"PO-Revision-Date: 2025-01-02 11:44+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: en\n"
@@ -299,6 +299,9 @@ msgstr ""
 
 msgid "Album title"
 msgstr "Album title"
+
+msgid "Albums"
+msgstr "Albums"
 
 msgid "Alcohol Policy"
 msgstr "Alcohol Policy"
@@ -1475,6 +1478,9 @@ msgstr ""
 msgid "Hidden"
 msgstr "Hidden"
 
+msgid "Hide Photo of the Week"
+msgstr "Hide Photo of the Week"
+
 msgid "Highlighted"
 msgstr "Highlighted"
 
@@ -1925,6 +1931,9 @@ msgstr "My Company"
 msgid "My Information"
 msgstr "My Information"
 
+msgid "My Photos"
+msgstr "My Photos"
+
 msgid "My activities"
 msgstr "My activities"
 
@@ -2007,78 +2016,6 @@ msgstr "No organ"
 
 msgid "None"
 msgstr "None"
-
-msgid "Not allowed to add photos."
-msgstr "Not allowed to add photos."
-
-msgid "Not allowed to add tags."
-msgstr "Not allowed to add tags."
-
-msgid "Not allowed to create albums"
-msgstr "Not allowed to create albums"
-
-msgid "Not allowed to delete albums."
-msgstr "Not allowed to delete albums."
-
-msgid "Not allowed to delete photos."
-msgstr "Not allowed to delete photos."
-
-msgid "Not allowed to download photos"
-msgstr "Not allowed to download photos"
-
-msgid "Not allowed to edit albums"
-msgstr "Not allowed to edit albums"
-
-msgid "Not allowed to edit albums."
-msgstr "Not allowed to edit albums."
-
-msgid "Not allowed to generate album covers."
-msgstr "Not allowed to generate album covers."
-
-msgid "Not allowed to move albums"
-msgstr "Not allowed to move albums"
-
-msgid "Not allowed to move photos"
-msgstr "Not allowed to move photos"
-
-msgid "Not allowed to remove tags."
-msgstr "Not allowed to remove tags."
-
-msgid "Not allowed to search albums"
-msgstr "Not allowed to search albums"
-
-msgid "Not allowed to search for members."
-msgstr "Not allowed to search for members."
-
-msgid "Not allowed to upload photos."
-msgstr "Not allowed to upload photos."
-
-msgid "Not allowed to view albums"
-msgstr "Not allowed to view albums"
-
-msgid "Not allowed to view albums without dates"
-msgstr "Not allowed to view albums without dates"
-
-msgid "Not allowed to view organ information"
-msgstr "Not allowed to view organ information"
-
-msgid "Not allowed to view photo details"
-msgstr "Not allowed to view photo details"
-
-msgid "Not allowed to view photos"
-msgstr "Not allowed to view photos"
-
-msgid "Not allowed to view previous photos of the week"
-msgstr "Not allowed to view previous photos of the week"
-
-msgid "Not allowed to view tags."
-msgstr "Not allowed to view tags."
-
-msgid "Not allowed to view the list of organs"
-msgstr "Not allowed to view the list of organs"
-
-msgid "Not allowed to vote for a photo of the week"
-msgstr "Not allowed to vote for a photo of the week"
 
 msgid "Notifications"
 msgstr "Notifications"
@@ -2260,11 +2197,14 @@ msgstr "Phone Number"
 msgid "Phone number"
 msgstr "Phone number"
 
+msgid "Photo of the Week"
+msgstr "Photo of the Week"
+
 msgid "Photo of the Week:<br> Week"
 msgstr "Photo of the Week:<br> Week"
 
-msgid "Photo of the week"
-msgstr "Photo of the week"
+msgid "Photo of the Weekly photo is already hidden. You cannot unhide it."
+msgstr "Photo of the Weekly photo is already hidden. You cannot unhide it."
 
 #, php-format
 msgid "Photo's of %s"
@@ -2789,8 +2729,8 @@ msgstr "Successfully unsubscribed"
 msgid "Successfully updated course information!"
 msgstr "Successfully updated course information!"
 
-msgid "Successfully updated subscription"
-msgstr "Successfully updated subscription"
+msgid "Successfully updated subscription!"
+msgstr "Successfully updated subscription!"
 
 msgid "SudoSOS"
 msgstr "SudoSOS"
@@ -3087,6 +3027,9 @@ msgstr "There currently is no poll."
 
 msgid "There is currently no option creation period planned."
 msgstr "There is currently no option creation period planned."
+
+msgid "There is no Photo of the Week that can be hidden."
+msgstr "There is no Photo of the Week that can be hidden."
 
 msgid "There is no company or update proposal that requires your approval."
 msgstr "There is no company or update proposal that requires your approval."
@@ -3699,8 +3642,8 @@ msgstr "You are currently using administrator privileges to use the website!"
 msgid "You are logged out."
 msgstr "You are logged out."
 
-msgid "You are not allowed authorize people."
-msgstr "You are not allowed authorize people."
+msgid "You are not allowed authorize people"
+msgstr "You are not allowed authorize people"
 
 msgid "You are not allowed to access the activities through the API"
 msgstr "You are not allowed to access the activities through the API"
@@ -3713,6 +3656,12 @@ msgstr "You are not allowed to add API tokens"
 
 msgid "You are not allowed to add courses"
 msgstr "You are not allowed to add courses"
+
+msgid "You are not allowed to add photos"
+msgstr "You are not allowed to add photos"
+
+msgid "You are not allowed to add tags"
+msgstr "You are not allowed to add tags"
 
 msgid "You are not allowed to administer activities"
 msgstr "You are not allowed to administer activities"
@@ -3849,8 +3798,11 @@ msgstr "You are not allowed to delete option calendar periods"
 msgid "You are not allowed to delete packages"
 msgstr "You are not allowed to delete packages"
 
-msgid "You are not allowed to delete pages."
-msgstr "You are not allowed to delete pages."
+msgid "You are not allowed to delete pages"
+msgstr "You are not allowed to delete pages"
+
+msgid "You are not allowed to delete photos"
+msgstr "You are not allowed to delete photos"
 
 msgid "You are not allowed to delete polls"
 msgstr "You are not allowed to delete polls"
@@ -3860,6 +3812,9 @@ msgstr "You are not allowed to delete this option"
 
 msgid "You are not allowed to download course documents"
 msgstr "You are not allowed to download course documents"
+
+msgid "You are not allowed to download photos"
+msgstr "You are not allowed to download photos"
 
 msgid "You are not allowed to edit albums"
 msgstr "You are not allowed to edit albums"
@@ -3900,8 +3855,8 @@ msgstr "You are not allowed to edit organ information"
 msgid "You are not allowed to edit packages"
 msgstr "You are not allowed to edit packages"
 
-msgid "You are not allowed to edit pages."
-msgstr "You are not allowed to edit pages."
+msgid "You are not allowed to edit pages"
+msgstr "You are not allowed to edit pages"
 
 msgid "You are not allowed to edit this organ's information"
 msgstr "You are not allowed to edit this organ's information"
@@ -3909,14 +3864,20 @@ msgstr "You are not allowed to edit this organ's information"
 msgid "You are not allowed to export member data"
 msgstr "You are not allowed to export member data"
 
+msgid "You are not allowed to generate album covers"
+msgstr "You are not allowed to generate album covers"
+
+msgid "You are not allowed to hide the photo of the week"
+msgstr "You are not allowed to hide the photo of the week"
+
 msgid "You are not allowed to list all job categories"
 msgstr "You are not allowed to list all job categories"
 
 msgid "You are not allowed to list all job labels"
 msgstr "You are not allowed to list all job labels"
 
-msgid "You are not allowed to list all news items."
-msgstr "You are not allowed to list all news items."
+msgid "You are not allowed to list all news items"
+msgstr "You are not allowed to list all news items"
 
 msgid "You are not allowed to list job categories"
 msgstr "You are not allowed to list job categories"
@@ -3924,11 +3885,17 @@ msgstr "You are not allowed to list job categories"
 msgid "You are not allowed to list job labels"
 msgstr "You are not allowed to list job labels"
 
-msgid "You are not allowed to list meetings."
-msgstr "You are not allowed to list meetings."
+msgid "You are not allowed to list meetings"
+msgstr "You are not allowed to list meetings"
 
 msgid "You are not allowed to list the companies"
 msgstr "You are not allowed to list the companies"
+
+msgid "You are not allowed to move albums"
+msgstr "You are not allowed to move albums"
+
+msgid "You are not allowed to move photos"
+msgstr "You are not allowed to move photos"
 
 msgid ""
 "You are not allowed to perform this action. If you are not logged in please "
@@ -3945,6 +3912,9 @@ msgstr "You are not allowed to remove API tokens"
 msgid "You are not allowed to remove external signups for this activity"
 msgstr "You are not allowed to remove external signups for this activity"
 
+msgid "You are not allowed to remove tags"
+msgstr "You are not allowed to remove tags"
+
 msgid "You are not allowed to rename meeting documents"
 msgstr "You are not allowed to rename meeting documents"
 
@@ -3954,8 +3924,14 @@ msgstr "You are not allowed to request polls"
 msgid "You are not allowed to revoke authorizations."
 msgstr "You are not allowed to revoke authorizations."
 
-msgid "You are not allowed to search decisions."
-msgstr "You are not allowed to search decisions."
+msgid "You are not allowed to search albums"
+msgstr "You are not allowed to search albums"
+
+msgid "You are not allowed to search decisions"
+msgstr "You are not allowed to search decisions"
+
+msgid "You are not allowed to search for members"
+msgstr "You are not allowed to search for members"
 
 msgid "You are not allowed to subscribe an external user to this sign-up list"
 msgstr "You are not allowed to subscribe an external user to this sign-up list"
@@ -3972,14 +3948,17 @@ msgstr "You are not allowed to update this activity"
 msgid "You are not allowed to upload exams"
 msgstr "You are not allowed to upload exams"
 
-msgid "You are not allowed to upload images."
-msgstr "You are not allowed to upload images."
+msgid "You are not allowed to upload images"
+msgstr "You are not allowed to upload images"
 
 msgid "You are not allowed to upload meeting documents."
 msgstr "You are not allowed to upload meeting documents."
 
 msgid "You are not allowed to upload meeting minutes."
 msgstr "You are not allowed to upload meeting minutes."
+
+msgid "You are not allowed to upload photos"
+msgstr "You are not allowed to upload photos"
 
 msgid "You are not allowed to use the external admin signup"
 msgstr "You are not allowed to use the external admin signup"
@@ -4008,8 +3987,8 @@ msgstr "You are not allowed to view albums without dates"
 msgid "You are not allowed to view all authorizations."
 msgstr "You are not allowed to view all authorizations."
 
-msgid "You are not allowed to view authorizations."
-msgstr "You are not allowed to view authorizations."
+msgid "You are not allowed to view authorizations"
+msgstr "You are not allowed to view authorizations"
 
 msgid "You are not allowed to view infima"
 msgstr "You are not allowed to view infima"
@@ -4017,20 +3996,35 @@ msgstr "You are not allowed to view infima"
 msgid "You are not allowed to view meeting documents."
 msgstr "You are not allowed to view meeting documents."
 
-msgid "You are not allowed to view meeting minutes."
-msgstr "You are not allowed to view meeting minutes."
+msgid "You are not allowed to view meeting minutes"
+msgstr "You are not allowed to view meeting minutes"
 
-msgid "You are not allowed to view meetings."
-msgstr "You are not allowed to view meetings."
+msgid "You are not allowed to view meetings"
+msgstr "You are not allowed to view meetings"
 
-msgid "You are not allowed to view members."
-msgstr "You are not allowed to view members."
+msgid "You are not allowed to view members"
+msgstr "You are not allowed to view members"
 
-msgid "You are not allowed to view membership info."
-msgstr "You are not allowed to view membership info."
+msgid "You are not allowed to view membership info"
+msgstr "You are not allowed to view membership info"
+
+msgid "You are not allowed to view organ information"
+msgstr "You are not allowed to view organ information"
+
+msgid "You are not allowed to view photo details"
+msgstr "You are not allowed to view photo details"
+
+msgid "You are not allowed to view photos"
+msgstr "You are not allowed to view photos"
+
+msgid "You are not allowed to view previous photos of the week"
+msgstr "You are not allowed to view previous photos of the week"
 
 msgid "You are not allowed to view sign-up lists"
 msgstr "You are not allowed to view sign-up lists"
+
+msgid "You are not allowed to view tags"
+msgstr "You are not allowed to view tags"
 
 msgid "You are not allowed to view the activities"
 msgstr "You are not allowed to view the activities"
@@ -4056,6 +4050,9 @@ msgstr "You are not allowed to view the featured company"
 msgid "You are not allowed to view the list of birthdays."
 msgstr "You are not allowed to view the list of birthdays."
 
+msgid "You are not allowed to view the list of organs"
+msgstr "You are not allowed to view the list of organs"
+
 msgid "You are not allowed to view the list of pages."
 msgstr "You are not allowed to view the list of pages."
 
@@ -4074,8 +4071,8 @@ msgstr "You are not allowed to view these documents!"
 msgid "You are not allowed to view this activity"
 msgstr "You are not allowed to view this activity"
 
-msgid "You are not allowed to view this page."
-msgstr "You are not allowed to view this page."
+msgid "You are not allowed to view this page"
+msgstr "You are not allowed to view this page"
 
 msgid "You are not allowed to view unapproved activities"
 msgstr "You are not allowed to view unapproved activities"
@@ -4100,11 +4097,23 @@ msgstr "You are not allowed to view update proposals of activities"
 msgid "You are not allowed to view update proposals of jobs"
 msgstr "You are not allowed to view update proposals of jobs"
 
-msgid "You are not allowed to vote on this poll."
-msgstr "You are not allowed to vote on this poll."
+msgid "You are not allowed to vote for a photo of the week"
+msgstr "You are not allowed to vote for a photo of the week"
+
+msgid "You are not allowed to vote on this poll"
+msgstr "You are not allowed to vote on this poll"
 
 msgid "You are not subscribed to this activity!"
 msgstr "You are not subscribed to this activity!"
+
+msgid ""
+"You can no longer hide the current Photo of the Week. Should it still be "
+"necessary to make the photo invisible (or even delete it) please contact the "
+"Application Management Committee immediately."
+msgstr ""
+"You can no longer hide the current Photo of the Week. Should it still be "
+"necessary to make the photo invisible (or even delete it) please contact the "
+"Application Management Committee immediately."
 
 msgid "You cannot create new jobs in expired job packages."
 msgstr "You cannot create new jobs in expired job packages."

@@ -24,7 +24,7 @@ class TagController extends AbstractActionController
     public function addAction(): JsonModel
     {
         if (!$this->aclService->isAllowed('add', 'tag')) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to add tags.'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to add tags'));
         }
 
         /** @var Request $request */
@@ -50,7 +50,7 @@ class TagController extends AbstractActionController
     public function removeAction(): JsonModel
     {
         if (!$this->aclService->isAllowed('remove', 'tag')) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to remove tags.'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to remove tags'));
         }
 
         /** @var Request $request */

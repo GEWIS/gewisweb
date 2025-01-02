@@ -59,7 +59,7 @@ class Admin
         bool $move = false,
     ): bool|PhotoModel {
         if (!$this->aclService->isAllowed('add', 'photo')) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to add photos.'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to add photos'));
         }
 
         $storagePath = $this->storageService->storeFile($path, false);
@@ -197,7 +197,7 @@ class Admin
     public function checkUploadAllowed(): void
     {
         if (!$this->aclService->isAllowed('upload', 'photo')) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to upload photos.'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to upload photos'));
         }
     }
 }

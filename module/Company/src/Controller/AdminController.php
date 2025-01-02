@@ -808,7 +808,7 @@ class AdminController extends AbstractActionController
             && !$this->aclService->isAllowed('create', 'job')
             && !$this->aclService->isAllowed('edit', 'job')
         ) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to upload images.'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to upload images'));
         }
 
         // Get parameter

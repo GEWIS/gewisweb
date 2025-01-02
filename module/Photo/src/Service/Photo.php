@@ -70,7 +70,7 @@ class Photo
         ?int $maxResults = null,
     ): array {
         if (!$this->aclService->isAllowed('view', 'photo')) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to view photos'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to view photos'));
         }
 
         return $this->photoMapper->getAlbumPhotos(
@@ -92,7 +92,7 @@ class Photo
         }
 
         if (!$this->aclService->isAllowed('download', $photo)) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to download photos'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to download photos'));
         }
 
         $path = $photo->getPath();
@@ -111,7 +111,7 @@ class Photo
     public function getPhoto(int $id): ?PhotoModel
     {
         if (!$this->aclService->isAllowed('view', 'photo')) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to view photos'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to view photos'));
         }
 
         return $this->photoMapper->find($id);
@@ -146,10 +146,6 @@ class Photo
      */
     public function deletePhoto(int $photoId): bool
     {
-        if (!$this->aclService->isAllowed('delete', 'photo')) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to delete photos.'));
-        }
-
         $photo = $this->getPhoto($photoId);
         if (null === $photo) {
             return false;
@@ -527,7 +523,7 @@ class Photo
         int $lidnr,
     ): ?TagModel {
         if (!$this->aclService->isAllowed('view', 'tag')) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to view tags.'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to view tags'));
         }
 
         return $this->tagMapper->findTag($photoId, $lidnr);
@@ -576,7 +572,7 @@ class Photo
     public function getTagsForMember(MemberModel $member): array
     {
         if (!$this->aclService->isAllowed('view', 'tag')) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to view tags.'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to view tags'));
         }
 
         return $this->tagMapper->getTagsByLidnr($member->getLidnr());
@@ -600,5 +596,16 @@ class Photo
         $lidnr = $this->aclService->getUserIdentityOrThrowException()->getLidnr();
 
         return $this->voteMapper->hasRecentVote($lidnr);
+    }
+
+    /**
+     * Hide a Photo of the Week.
+     */
+    public function hidePhotoOfTheWeek(WeeklyPhotoModel $potw): void
+    {
+        $potw->setHidden(true);
+
+        $this->weeklyPhotoMapper->persist($potw);
+        $this->weeklyPhotoMapper->flush();
     }
 }

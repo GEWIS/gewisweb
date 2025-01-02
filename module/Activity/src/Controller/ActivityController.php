@@ -274,7 +274,7 @@ class ActivityController extends AbstractActionController
                 }
 
                 $this->signupService->editSignUp($signup, $form->getData(FormInterface::VALUES_AS_ARRAY));
-                $message = $this->translator->translate('Successfully updated subscription');
+                $message = $this->translator->translate('Successfully updated subscription!');
             } else {
                 $this->signupService->signUp($signupList, $form->getData(FormInterface::VALUES_AS_ARRAY));
                 $message = $this->translator->translate('Successfully subscribed');

@@ -40,6 +40,12 @@ class WeeklyPhoto implements ResourceInterface
     )]
     protected Photo $photo;
 
+    /**
+     * If a photo of the week is hidden, it is not shown to visitors who are NOT logged in.
+     */
+    #[Column(type: 'boolean')]
+    protected bool $hidden = false;
+
     public function getWeek(): DateTime
     {
         return $this->week;
@@ -58,6 +64,16 @@ class WeeklyPhoto implements ResourceInterface
     public function setPhoto(Photo $photo): void
     {
         $this->photo = $photo;
+    }
+
+    public function isHidden(): bool
+    {
+        return $this->hidden;
+    }
+
+    public function setHidden(bool $hidden): void
+    {
+        $this->hidden = $hidden;
     }
 
     /**

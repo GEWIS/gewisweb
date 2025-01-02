@@ -42,7 +42,7 @@ class News
     public function getPaginatorAdapter(): DoctrinePaginator
     {
         if (!$this->aclService->isAllowed('list', 'news_item')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to list all news items.'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to list all news items'));
         }
 
         return $this->newsItemMapper->getPaginatorAdapter();
