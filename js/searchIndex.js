@@ -3353,7 +3353,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Application\\Migrations\\Version20241020212355",
             "name": "Version20241020212355",
-            "summary": "phpcs\u003Adisable\u0020Generic.Files.LineLength.TooLong",
+            "summary": "phpcs\u003Adisable\u0020Generic.Files.LineLength.TooLong\nphpcs\u003Adisable\u0020SlevomatCodingStandard.Functions.RequireMultiLineCall.RequiredMultiLineCall",
             "url": "classes/Application-Migrations-Version20241020212355.html"
         },                {
             "fqsen": "\\Application\\Migrations\\Version20241020212355\u003A\u003AgetDescription\u0028\u0029",
@@ -3370,6 +3370,26 @@ Search.appendIndex(
             "name": "down",
             "summary": "",
             "url": "classes/Application-Migrations-Version20241020212355.html#method_down"
+        },                {
+            "fqsen": "\\Application\\Migrations\\Version20250102092706",
+            "name": "Version20250102092706",
+            "summary": "phpcs\u003Adisable\u0020Generic.Files.LineLength.TooLong\nphpcs\u003Adisable\u0020SlevomatCodingStandard.Functions.RequireMultiLineCall.RequiredMultiLineCall",
+            "url": "classes/Application-Migrations-Version20250102092706.html"
+        },                {
+            "fqsen": "\\Application\\Migrations\\Version20250102092706\u003A\u003AgetDescription\u0028\u0029",
+            "name": "getDescription",
+            "summary": "",
+            "url": "classes/Application-Migrations-Version20250102092706.html#method_getDescription"
+        },                {
+            "fqsen": "\\Application\\Migrations\\Version20250102092706\u003A\u003Aup\u0028\u0029",
+            "name": "up",
+            "summary": "",
+            "url": "classes/Application-Migrations-Version20250102092706.html#method_up"
+        },                {
+            "fqsen": "\\Application\\Migrations\\Version20250102092706\u003A\u003Adown\u0028\u0029",
+            "name": "down",
+            "summary": "",
+            "url": "classes/Application-Migrations-Version20250102092706.html#method_down"
         },                {
             "fqsen": "\\Application\\Command\\Factory\\LoadFixturesFactory",
             "name": "LoadFixturesFactory",
@@ -14791,6 +14811,21 @@ Search.appendIndex(
             "summary": "Removes\u0020a\u0020photo\u0020from\u0020an\u0020album\u0020and\u0020deletes\u0020it.",
             "url": "classes/Photo-Controller-PhotoAdminController.html#method_deleteAction"
         },                {
+            "fqsen": "\\Photo\\Controller\\PhotoAdminController\u003A\u003AweeklyAction\u0028\u0029",
+            "name": "weeklyAction",
+            "summary": "",
+            "url": "classes/Photo-Controller-PhotoAdminController.html#method_weeklyAction"
+        },                {
+            "fqsen": "\\Photo\\Controller\\PhotoAdminController\u003A\u003A\u0024aclService",
+            "name": "aclService",
+            "summary": "",
+            "url": "classes/Photo-Controller-PhotoAdminController.html#property_aclService"
+        },                {
+            "fqsen": "\\Photo\\Controller\\PhotoAdminController\u003A\u003A\u0024translator",
+            "name": "translator",
+            "summary": "",
+            "url": "classes/Photo-Controller-PhotoAdminController.html#property_translator"
+        },                {
             "fqsen": "\\Photo\\Controller\\PhotoAdminController\u003A\u003A\u0024albumService",
             "name": "albumService",
             "summary": "",
@@ -14800,6 +14835,11 @@ Search.appendIndex(
             "name": "photoService",
             "summary": "",
             "url": "classes/Photo-Controller-PhotoAdminController.html#property_photoService"
+        },                {
+            "fqsen": "\\Photo\\Controller\\PhotoAdminController\u003A\u003A\u0024photoConfig",
+            "name": "photoConfig",
+            "summary": "",
+            "url": "classes/Photo-Controller-PhotoAdminController.html#property_photoConfig"
         },                {
             "fqsen": "\\Photo\\Controller\\PhotoController",
             "name": "PhotoController",
@@ -14851,15 +14891,15 @@ Search.appendIndex(
             "summary": "Store\u0020a\u0020vote\u0020for\u0020a\u0020photo.",
             "url": "classes/Photo-Controller-PhotoController.html#method_voteAction"
         },                {
-            "fqsen": "\\Photo\\Controller\\PhotoController\u003A\u003A\u0024translator",
-            "name": "translator",
-            "summary": "",
-            "url": "classes/Photo-Controller-PhotoController.html#property_translator"
-        },                {
             "fqsen": "\\Photo\\Controller\\PhotoController\u003A\u003A\u0024aclService",
             "name": "aclService",
             "summary": "",
             "url": "classes/Photo-Controller-PhotoController.html#property_aclService"
+        },                {
+            "fqsen": "\\Photo\\Controller\\PhotoController\u003A\u003A\u0024translator",
+            "name": "translator",
+            "summary": "",
+            "url": "classes/Photo-Controller-PhotoController.html#property_translator"
         },                {
             "fqsen": "\\Photo\\Controller\\PhotoController\u003A\u003A\u0024albumService",
             "name": "albumService",
@@ -15971,6 +16011,16 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Photo-Model-WeeklyPhoto.html#method_setPhoto"
         },                {
+            "fqsen": "\\Photo\\Model\\WeeklyPhoto\u003A\u003AisHidden\u0028\u0029",
+            "name": "isHidden",
+            "summary": "",
+            "url": "classes/Photo-Model-WeeklyPhoto.html#method_isHidden"
+        },                {
+            "fqsen": "\\Photo\\Model\\WeeklyPhoto\u003A\u003AsetHidden\u0028\u0029",
+            "name": "setHidden",
+            "summary": "",
+            "url": "classes/Photo-Model-WeeklyPhoto.html#method_setHidden"
+        },                {
             "fqsen": "\\Photo\\Model\\WeeklyPhoto\u003A\u003AgetResourceId\u0028\u0029",
             "name": "getResourceId",
             "summary": "Get\u0020the\u0020resource\u0020ID.",
@@ -15985,6 +16035,11 @@ Search.appendIndex(
             "name": "photo",
             "summary": "The\u0020photo\u0020of\u0020the\u0020week.",
             "url": "classes/Photo-Model-WeeklyPhoto.html#property_photo"
+        },                {
+            "fqsen": "\\Photo\\Model\\WeeklyPhoto\u003A\u003A\u0024hidden",
+            "name": "hidden",
+            "summary": "If\u0020a\u0020photo\u0020of\u0020the\u0020week\u0020is\u0020hidden,\u0020it\u0020is\u0020not\u0020shown\u0020to\u0020visitors\u0020who\u0020are\u0020NOT\u0020logged\u0020in.",
+            "url": "classes/Photo-Model-WeeklyPhoto.html#property_hidden"
         },                {
             "fqsen": "\\Photo\\Module",
             "name": "Module",
@@ -16520,6 +16575,11 @@ Search.appendIndex(
             "name": "hasRecentVote",
             "summary": "Checks\u0020if\u0020the\u0020currently\u0020logged\u002Din\u0020user\u0020has\u0020recently\u0020voted\u0020for\u0020a\u0020photo.",
             "url": "classes/Photo-Service-Photo.html#method_hasRecentVote"
+        },                {
+            "fqsen": "\\Photo\\Service\\Photo\u003A\u003AhidePhotoOfTheWeek\u0028\u0029",
+            "name": "hidePhotoOfTheWeek",
+            "summary": "Hide\u0020a\u0020Photo\u0020of\u0020the\u0020Week.",
+            "url": "classes/Photo-Service-Photo.html#method_hidePhotoOfTheWeek"
         },                {
             "fqsen": "\\Photo\\Service\\Photo\u003A\u003A\u0024aclService",
             "name": "aclService",
