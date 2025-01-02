@@ -328,6 +328,16 @@ return [
                             ],
                         ],
                     ],
+                    'weekly' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route' => '/weekly',
+                            'defaults' => [
+                                'controller' => PhotoAdminController::class,
+                                'action' => 'weekly',
+                            ],
+                        ],
+                    ],
                 ],
                 'priority' => 100,
             ],

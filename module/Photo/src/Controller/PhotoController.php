@@ -31,8 +31,8 @@ class PhotoController extends AbstractActionController
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
     public function __construct(
-        private readonly Translator $translator,
         private readonly AclService $aclService,
+        private readonly Translator $translator,
         private readonly AlbumService $albumService,
         private readonly PhotoService $photoService,
         private readonly array $photoConfig,
@@ -42,7 +42,7 @@ class PhotoController extends AbstractActionController
     public function indexAction(): ViewModel
     {
         if (!$this->aclService->isAllowed('view', 'album')) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to view albums'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to view albums'));
         }
 
         $years = $this->albumService->getAlbumYears();
@@ -77,7 +77,7 @@ class PhotoController extends AbstractActionController
     public function searchAction(): ViewModel
     {
         if (!$this->aclService->isAllowed('search', 'album')) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to search albums'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to search albums'));
         }
 
         /** @var Request $request */
@@ -144,7 +144,7 @@ class PhotoController extends AbstractActionController
     public function downloadAction(): ?Stream
     {
         if (!$this->aclService->isAllowed('download', 'photo')) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to download photos'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to download photos'));
         }
 
         $photoId = (int) $this->params()->fromRoute('photo_id');
@@ -159,7 +159,7 @@ class PhotoController extends AbstractActionController
     {
         if (!$this->aclService->isAllowed('view', 'photo')) {
             throw new NotAllowedException(
-                $this->translator->translate('Not allowed to view previous photos of the week'),
+                $this->translator->translate('You are not allowed to view previous photos of the week'),
             );
         }
 
@@ -216,7 +216,7 @@ class PhotoController extends AbstractActionController
     {
         if (!$this->aclService->isAllowed('add', 'vote')) {
             throw new NotAllowedException(
-                $this->translator->translate('Not allowed to vote for a photo of the week'),
+                $this->translator->translate('You are not allowed to vote for a photo of the week'),
             );
         }
 

@@ -446,7 +446,7 @@ class CompanyAccountController extends AbstractActionController
             && !$this->aclService->isAllowed('createOwn', 'job')
             && !$this->aclService->isAllowed('editOwn', 'job')
         ) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to upload images.'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to upload images'));
         }
 
         /** @var Request $request */

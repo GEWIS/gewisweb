@@ -19,6 +19,7 @@ use Laminas\Mvc\I18n\Translator;
 use Photo\Mapper\Tag as TagMapper;
 use Photo\Model\Photo as PhotoModel;
 use Photo\Model\Tag as TagModel;
+use Photo\Model\WeeklyPhoto as WeeklyPhotoModel;
 use Photo\Service\Photo as PhotoService;
 
 use function abs;
@@ -71,7 +72,7 @@ class Frontpage
      *     birthdays: BirthdaysArrayType,
      *     birthdayPhoto: ?PhotoModel,
      *     activities: ActivityModel[],
-     *     weeklyPhoto: ?PhotoModel,
+     *     weeklyPhoto: ?WeeklyPhotoModel,
      *     poll: array{
      *         canVote: bool,
      *         poll: ?PollModel,
@@ -97,7 +98,7 @@ class Frontpage
             'birthdays' => $birthdayInfo['birthdays'],
             'birthdayPhoto' => $birthdayInfo['tag']?->getPhoto(),
             'activities' => $activities,
-            'weeklyPhoto' => $weeklyPhoto?->getPhoto(),
+            'weeklyPhoto' => $weeklyPhoto,
             'poll' => $pollDetails,
             'news' => $news,
             'companyBanner' => $companyBanner,

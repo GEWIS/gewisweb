@@ -73,7 +73,9 @@ class Organ
     public function getOrgans(bool $abrogated = false): array
     {
         if (!$this->aclService->isAllowed('list', 'organ')) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to view the list of organs'));
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to view the list of organs'),
+            );
         }
 
         if (!$abrogated) {
@@ -89,7 +91,9 @@ class Organ
     public function getOrgan(int $id): ?OrganModel
     {
         if (!$this->aclService->isAllowed('view', 'organ')) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to view organ information'));
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to view organ information'),
+            );
         }
 
         return $this->organMapper->findOrgan($id);

@@ -94,7 +94,9 @@ class Album
     public function getAlbumsWithoutDate(): array
     {
         if (!$this->aclService->isAllowed('nodate', 'album')) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to view albums without dates'));
+            throw new NotAllowedException(
+                $this->translator->translate('You are not allowed to view albums without dates'),
+            );
         }
 
         return $this->albumMapper->getAlbumsWithoutDate();
@@ -145,7 +147,7 @@ class Album
         array $data,
     ): AlbumModel {
         if (!$this->aclService->isAllowed('create', 'album')) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to create albums'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to create albums'));
         }
 
         $album = new AlbumModel();
@@ -177,7 +179,7 @@ class Album
         string $type = 'album',
     ): MemberAlbumModel|AlbumModel|WeeklyAlbumModel|null {
         if (!$this->aclService->isAllowed('view', 'album')) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to view albums'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to view albums'));
         }
 
         $album = match ($type) {
@@ -191,7 +193,7 @@ class Album
             null !== $album
             && !$this->aclService->isAllowed('view', $album)
         ) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to view albums'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to view albums'));
         }
 
         return $album;
@@ -303,7 +305,7 @@ class Album
     public function updateAlbum(): bool
     {
         if (!$this->aclService->isAllowed('edit', 'album')) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to edit albums'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to edit albums'));
         }
 
         $this->albumMapper->flush();
@@ -321,7 +323,7 @@ class Album
     public function getAlbumForm(?int $albumId = null): AlbumForm
     {
         if (!$this->aclService->isAllowed('edit', 'album')) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to edit albums.'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to edit albums'));
         }
 
         $form = $this->albumForm;
@@ -349,7 +351,7 @@ class Album
         ?int $parentId,
     ): bool {
         if (!$this->aclService->isAllowed('move', 'album')) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to move albums'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to move albums'));
         }
 
         $album = $this->getAlbum($albumId);
@@ -383,7 +385,7 @@ class Album
     public function deleteAlbum(int $albumId): void
     {
         if (!$this->aclService->isAllowed('delete', 'album')) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to delete albums.'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to delete albums'));
         }
 
         $album = $this->getAlbum($albumId);
@@ -404,7 +406,7 @@ class Album
     public function generateAlbumCover(int $albumId): ?string
     {
         if (!$this->aclService->isAllowed('edit', 'album')) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to generate album covers.'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to generate album covers'));
         }
 
         $album = $this->getAlbum($albumId);
@@ -451,10 +453,6 @@ class Album
         int $photoId,
         int $albumId,
     ): bool {
-        if (!$this->aclService->isAllowed('move', 'album')) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to move photos'));
-        }
-
         $photo = $this->photoService->getPhoto($photoId);
         $album = $this->getAlbum($albumId);
 

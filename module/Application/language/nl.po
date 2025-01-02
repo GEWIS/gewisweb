@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-14 00:00+0100\n"
-"PO-Revision-Date: 2024-12-14 00:01+0100\n"
+"POT-Creation-Date: 2025-01-02 11:44+0100\n"
+"PO-Revision-Date: 2025-01-02 11:44+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: nl\n"
@@ -300,6 +300,9 @@ msgstr ""
 
 msgid "Album title"
 msgstr "Album titel"
+
+msgid "Albums"
+msgstr "Albums"
 
 msgid "Alcohol Policy"
 msgstr "Alcoholreglement"
@@ -1492,6 +1495,9 @@ msgstr ""
 msgid "Hidden"
 msgstr "Verborgen"
 
+msgid "Hide Photo of the Week"
+msgstr "Verberg Foto van de Week"
+
 msgid "Highlighted"
 msgstr "Uitgelicht"
 
@@ -1949,6 +1955,9 @@ msgstr "Mijn Bedrijf"
 msgid "My Information"
 msgstr "Mijn informatie"
 
+msgid "My Photos"
+msgstr "Mijn Foto’s"
+
 msgid "My activities"
 msgstr "Mijn activiteiten"
 
@@ -2030,78 +2039,6 @@ msgstr "Geen orgaan"
 
 msgid "None"
 msgstr "Geen"
-
-msgid "Not allowed to add photos."
-msgstr "Het is niet toegestaan om foto's toe te voegen."
-
-msgid "Not allowed to add tags."
-msgstr "Het is niet toegestaan om tags toe te voegen."
-
-msgid "Not allowed to create albums"
-msgstr "Het is niet toegestaan om albums te maken"
-
-msgid "Not allowed to delete albums."
-msgstr "Het is niet toegestaan om albums te verwijderen."
-
-msgid "Not allowed to delete photos."
-msgstr "Het is niet toegestaan om foto's te verwijderen."
-
-msgid "Not allowed to download photos"
-msgstr "Het is niet toegestaan om foto's te downloaden"
-
-msgid "Not allowed to edit albums"
-msgstr "Het is niet toegestaan om albums te wijzigen"
-
-msgid "Not allowed to edit albums."
-msgstr "Het is niet toegestaan om albums te wijzigen."
-
-msgid "Not allowed to generate album covers."
-msgstr "Het is niet toegestaan om albums-covers opnieuw te genereren."
-
-msgid "Not allowed to move albums"
-msgstr "Het is niet toegestaan om albums te verplaatsen"
-
-msgid "Not allowed to move photos"
-msgstr "Het is niet toegestaan om foto's te verplaatsen"
-
-msgid "Not allowed to remove tags."
-msgstr "Het is niet toegestaan om tags te verwijderen."
-
-msgid "Not allowed to search albums"
-msgstr "Het is niet toegestaan om albums te zoeken"
-
-msgid "Not allowed to search for members."
-msgstr "Het is niet toegestaan om te zoeken op leden."
-
-msgid "Not allowed to upload photos."
-msgstr "Het is niet toegestaan om foto's te uploaden."
-
-msgid "Not allowed to view albums"
-msgstr "Het is niet toegestaan om albums te zien"
-
-msgid "Not allowed to view albums without dates"
-msgstr "Het is niet toegestaan om albums te zien zonder data"
-
-msgid "Not allowed to view organ information"
-msgstr "Het is niet toegestaan om informatie over organen in te zien"
-
-msgid "Not allowed to view photo details"
-msgstr "Het is niet toegestaan om details van foto's te zien"
-
-msgid "Not allowed to view photos"
-msgstr "Het is niet toegestaan om foto's te zien"
-
-msgid "Not allowed to view previous photos of the week"
-msgstr "Not allowed to view previous photos of the week"
-
-msgid "Not allowed to view tags."
-msgstr "Het is niet toegestaan om tags te zien."
-
-msgid "Not allowed to view the list of organs"
-msgstr "Niet toegestaan om de lijst van organen te bekijken"
-
-msgid "Not allowed to vote for a photo of the week"
-msgstr "Het is niet toegestaan om te stemmen voor een foto van de week"
 
 msgid "Notifications"
 msgstr "Meldingen"
@@ -2283,11 +2220,16 @@ msgstr "Telefoonnummer"
 msgid "Phone number"
 msgstr "Telefoonnummer"
 
+msgid "Photo of the Week"
+msgstr "Foto van de Week"
+
 msgid "Photo of the Week:<br> Week"
 msgstr "Foto van de week<br> Week"
 
-msgid "Photo of the week"
-msgstr "Foto van de week"
+msgid "Photo of the Weekly photo is already hidden. You cannot unhide it."
+msgstr ""
+"De Foto van de Week is al verborgen. Je kunt de foto niet weer tevoorschijn "
+"halen."
 
 #, php-format
 msgid "Photo's of %s"
@@ -2814,7 +2756,7 @@ msgstr "Succesvol uitgeschreven"
 msgid "Successfully updated course information!"
 msgstr "Vakinformatie succesvol aangepast!"
 
-msgid "Successfully updated subscription"
+msgid "Successfully updated subscription!"
 msgstr "Inschrijving succesvol aangepast!"
 
 msgid "SudoSOS"
@@ -3121,6 +3063,9 @@ msgstr "Er is op het moment geen poll."
 
 msgid "There is currently no option creation period planned."
 msgstr "Er is momenteel geen optieperiode gepland."
+
+msgid "There is no Photo of the Week that can be hidden."
+msgstr "Er is geen Foto van de Week die verborgen kan worden."
 
 msgid "There is no company or update proposal that requires your approval."
 msgstr "Er is geen bedrijfs- of updatevoorstel die jouw goedkeuring vereist."
@@ -3741,8 +3686,8 @@ msgstr "Je gebruikt momenteel beheerdersprivileges om de website te gebruiken!"
 msgid "You are logged out."
 msgstr "Je bent uitgelogd."
 
-msgid "You are not allowed authorize people."
-msgstr "Je hebt niet de rechten om iemand te machtigen."
+msgid "You are not allowed authorize people"
+msgstr "Je hebt niet de rechten om iemand te machtigen"
 
 msgid "You are not allowed to access the activities through the API"
 msgstr "Je hebt niet de rechten om de activiteiten in te zien via de API"
@@ -3755,6 +3700,12 @@ msgstr "Je hebt niet de rechten om API tokens toe te voegen"
 
 msgid "You are not allowed to add courses"
 msgstr "Je hebt niet de rechten om vakken toe te voegen"
+
+msgid "You are not allowed to add photos"
+msgstr "Je hebt niet de rechten om foto's toe te voegen"
+
+msgid "You are not allowed to add tags"
+msgstr "Je hebt niet de rechten om tags toe te voegen"
 
 msgid "You are not allowed to administer activities"
 msgstr "Je hebt niet de rechten om activiteiten te beheren"
@@ -3897,8 +3848,11 @@ msgstr "Je hebt niet de rechten om optieperiodes te verwijderen"
 msgid "You are not allowed to delete packages"
 msgstr "Je hebt niet de rechten om pakketten te verwijderen"
 
-msgid "You are not allowed to delete pages."
-msgstr "Je hebt niet de rechten om pagina's te verwijderen."
+msgid "You are not allowed to delete pages"
+msgstr "Je hebt niet de rechten om pagina's te verwijderen"
+
+msgid "You are not allowed to delete photos"
+msgstr "Je hebt niet de rechten om foto's te verwijderen"
 
 msgid "You are not allowed to delete polls"
 msgstr "Je hebt niet de rechten om polls te verwijderen"
@@ -3908,6 +3862,9 @@ msgstr "Je hebt niet de rechten om deze optie te verwijderen"
 
 msgid "You are not allowed to download course documents"
 msgstr "Je hebt niet de rechten om documenten van vakken te downloaden"
+
+msgid "You are not allowed to download photos"
+msgstr "Je hebt niet de rechten om foto's te downloaden"
 
 msgid "You are not allowed to edit albums"
 msgstr "Je hebt niet de rechten om albums te wijzigen"
@@ -3948,8 +3905,8 @@ msgstr "Je hebt niet de rechten om organen te wijzigen"
 msgid "You are not allowed to edit packages"
 msgstr "Je hebt niet de rechten om pakketten te wijzigen"
 
-msgid "You are not allowed to edit pages."
-msgstr "Je hebt niet de rechten om pagina's te wijzigen."
+msgid "You are not allowed to edit pages"
+msgstr "Je hebt niet de rechten om pagina's te wijzigen"
 
 msgid "You are not allowed to edit this organ's information"
 msgstr "Je hebt niet de rechten om de informatie van dit orgaan te wijzigen"
@@ -3957,14 +3914,20 @@ msgstr "Je hebt niet de rechten om de informatie van dit orgaan te wijzigen"
 msgid "You are not allowed to export member data"
 msgstr "Je hebt niet de rechten om informatie over leden te exporteren"
 
+msgid "You are not allowed to generate album covers"
+msgstr "Je hebt niet de rechten om albums-covers opnieuw te genereren"
+
+msgid "You are not allowed to hide the photo of the week"
+msgstr "Not allowed to view previous photos of the week"
+
 msgid "You are not allowed to list all job categories"
 msgstr "Je hebt niet de rechten om alle vacaturecategorieën te bekijken"
 
 msgid "You are not allowed to list all job labels"
 msgstr "Je hebt niet de rechten om alle vacature-labels te bekijken"
 
-msgid "You are not allowed to list all news items."
-msgstr "Je hebt niet de rechten om alle nieuws items te bekijken."
+msgid "You are not allowed to list all news items"
+msgstr "Je hebt niet de rechten om alle nieuws items te bekijken"
 
 msgid "You are not allowed to list job categories"
 msgstr "Je hebt niet de rechten om vacaturecategorieën te bekijken"
@@ -3972,11 +3935,17 @@ msgstr "Je hebt niet de rechten om vacaturecategorieën te bekijken"
 msgid "You are not allowed to list job labels"
 msgstr "Je hebt niet de rechten om vacature-labels te bekijken"
 
-msgid "You are not allowed to list meetings."
-msgstr "Het is niet toegestaan om de lijst van vergaderingen te zien."
+msgid "You are not allowed to list meetings"
+msgstr "Je hebt niet de rechten om de lijst van vergaderingen te zien"
 
 msgid "You are not allowed to list the companies"
 msgstr "Je hebt niet de rechten om de lijst met bedrijven te zien"
+
+msgid "You are not allowed to move albums"
+msgstr "Je hebt niet de rechten om albums te verplaatsen"
+
+msgid "You are not allowed to move photos"
+msgstr "Je hebt niet de rechten om foto's te verplaatsen"
 
 msgid ""
 "You are not allowed to perform this action. If you are not logged in please "
@@ -3995,6 +3964,9 @@ msgstr ""
 "Je hebt niet de rechten om externe inschrijvingen te verwijderen voor deze "
 "activiteit"
 
+msgid "You are not allowed to remove tags"
+msgstr "Je hebt niet de rechten om tags te verwijderen"
+
 msgid "You are not allowed to rename meeting documents"
 msgstr "Je hebt niet de rechten om vergaderstukken te hernoemen"
 
@@ -4004,8 +3976,14 @@ msgstr "Je hebt niet de rechten om polls aan te vragen"
 msgid "You are not allowed to revoke authorizations."
 msgstr "Je hebt niet de rechten om machtigingen in te trekken."
 
-msgid "You are not allowed to search decisions."
-msgstr "Je hebt niet de rechten om besluiten te doorzoeken."
+msgid "You are not allowed to search albums"
+msgstr "Je hebt niet de rechten om albums te zoeken"
+
+msgid "You are not allowed to search decisions"
+msgstr "Je hebt niet de rechten om besluiten te doorzoeken"
+
+msgid "You are not allowed to search for members"
+msgstr "Je hebt niet de rechten om te zoeken op leden"
 
 msgid "You are not allowed to subscribe an external user to this sign-up list"
 msgstr ""
@@ -4023,16 +4001,19 @@ msgid "You are not allowed to update this activity"
 msgstr "Je hebt niet de rechten om deze activiteit te wijzigen"
 
 msgid "You are not allowed to upload exams"
-msgstr "Het is niet toegestaan om tentamens te uploaden"
+msgstr "Je hebt niet de rechten om tentamens te uploaden"
 
-msgid "You are not allowed to upload images."
-msgstr "Het is niet toegestaan om foto's te uploaden."
+msgid "You are not allowed to upload images"
+msgstr "Je hebt niet de rechten om afbeeldingen te uploaden"
 
 msgid "You are not allowed to upload meeting documents."
-msgstr "Het is niet toegestaan om vergaderstukken te uploaden."
+msgstr "Je hebt niet de rechten om vergaderstukken te uploaden."
 
 msgid "You are not allowed to upload meeting minutes."
-msgstr "Het is niet toegestaan om notulen te uploaden."
+msgstr "Je hebt niet de rechten om notulen te uploaden."
+
+msgid "You are not allowed to upload photos"
+msgstr "Je hebt niet de rechten om foto's te uploaden"
 
 msgid "You are not allowed to use the external admin signup"
 msgstr "Je hebt niet de rechten om een externe admin inschrijving te maken"
@@ -4061,29 +4042,44 @@ msgstr "Je hebt niet de rechten om ongedateerde albums te bekijken"
 msgid "You are not allowed to view all authorizations."
 msgstr "Je hebt niet de rechten om alle machtigingen te bekijken."
 
-msgid "You are not allowed to view authorizations."
-msgstr "Je hebt niet de rechten om all machtigingen te bekijken."
+msgid "You are not allowed to view authorizations"
+msgstr "Je hebt niet de rechten om all machtigingen te bekijken"
 
 msgid "You are not allowed to view infima"
 msgstr "Je hebt niet de rechten om infima te bekijken"
 
 msgid "You are not allowed to view meeting documents."
-msgstr "Het is niet toegestaan om vergaderstukken te zien."
+msgstr "Je hebt niet de rechten om vergaderstukken te zien."
 
-msgid "You are not allowed to view meeting minutes."
-msgstr "Het is niet toegestaan om notulen te zien."
+msgid "You are not allowed to view meeting minutes"
+msgstr "Je hebt niet de rechten om notulen te zien"
 
-msgid "You are not allowed to view meetings."
-msgstr "Het is niet toegestaan om vergaderingen te zien."
+msgid "You are not allowed to view meetings"
+msgstr "Je hebt niet de rechten om vergaderingen te zien"
 
-msgid "You are not allowed to view members."
-msgstr "Het is niet toegestaan om lidinformatie in te zien."
+msgid "You are not allowed to view members"
+msgstr "Je hebt niet de rechten om leden in te zien"
 
-msgid "You are not allowed to view membership info."
-msgstr "Het is niet toegestaan om lidinformatie in te zien."
+msgid "You are not allowed to view membership info"
+msgstr "Je hebt niet de rechten om lidinformatie in te zien"
+
+msgid "You are not allowed to view organ information"
+msgstr "Je hebt niet de rechten om informatie over organen in te zien"
+
+msgid "You are not allowed to view photo details"
+msgstr "Je hebt niet de rechten om details van foto's te zien"
+
+msgid "You are not allowed to view photos"
+msgstr "Je hebt niet de rechten om foto's te zien"
+
+msgid "You are not allowed to view previous photos of the week"
+msgstr "Not allowed to view previous photos of the week"
 
 msgid "You are not allowed to view sign-up lists"
 msgstr "Je hebt niet de rechten om inschrijflijsten te bekijken"
+
+msgid "You are not allowed to view tags"
+msgstr "Je hebt niet de rechten om tags te zien"
 
 msgid "You are not allowed to view the activities"
 msgstr "Je hebt niet de rechten om de activiteiten in te zien"
@@ -4109,7 +4105,10 @@ msgid "You are not allowed to view the featured company"
 msgstr "Je hebt niet de rechten om het uitgelichte bedrijf te zien"
 
 msgid "You are not allowed to view the list of birthdays."
-msgstr "Het is niet toegestaan om de lijst met verjaardagen te zien."
+msgstr "Je hebt niet de rechten om de lijst met verjaardagen te zien."
+
+msgid "You are not allowed to view the list of organs"
+msgstr "Niet toegestaan om de lijst van organen te bekijken"
 
 msgid "You are not allowed to view the list of pages."
 msgstr "Je hebt niet de rechten om de lijst met pagina's te bekijken."
@@ -4126,13 +4125,13 @@ msgstr ""
 "Je hebt niet de rechten om de goedkeuringsstatus van vacatures te bekijken"
 
 msgid "You are not allowed to view these documents!"
-msgstr "Het is niet toegestaan om document te zien."
+msgstr "Je hebt niet de rechten om document te zien!"
 
 msgid "You are not allowed to view this activity"
 msgstr "Je hebt niet de rechten om deze activiteit te bekijken"
 
-msgid "You are not allowed to view this page."
-msgstr "Je hebt niet de rechten om deze pagina te bekijken."
+msgid "You are not allowed to view this page"
+msgstr "Je hebt niet de rechten om deze pagina te bekijken"
 
 msgid "You are not allowed to view unapproved activities"
 msgstr "Je hebt niet de rechten om niet goedgekeurde activiteiten in te zien"
@@ -4159,11 +4158,23 @@ msgstr ""
 msgid "You are not allowed to view update proposals of jobs"
 msgstr "Je hebt niet de rechten om updatevoorstellen van vacatures te bekijken"
 
-msgid "You are not allowed to vote on this poll."
-msgstr "Je hebt niet de rechten om op deze poll te stemmen."
+msgid "You are not allowed to vote for a photo of the week"
+msgstr "Je hebt niet de rechten om te stemmen voor een foto van de week"
+
+msgid "You are not allowed to vote on this poll"
+msgstr "Je hebt niet de rechten om op deze poll te stemmen"
 
 msgid "You are not subscribed to this activity!"
 msgstr "Je bent niet ingeschreven voor deze activiteit!"
+
+msgid ""
+"You can no longer hide the current Photo of the Week. Should it still be "
+"necessary to make the photo invisible (or even delete it) please contact the "
+"Application Management Committee immediately."
+msgstr ""
+"Je kunt de huidige Foto van de Week niet langer verbergen. Mocht het toch "
+"nodig zijn om de foto onzichtbaar te maken (of zelfs te verwijderen) neem "
+"dan onmiddellijk contact op met de ApplicatieBeheerCommissie."
 
 msgid "You cannot create new jobs in expired job packages."
 msgstr "Je kan geen nieuwe vacatures maken in verlopen vacaturepakketen."

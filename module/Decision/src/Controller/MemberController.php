@@ -35,7 +35,7 @@ class MemberController extends AbstractActionController
     {
         if (!$this->aclService->isAllowed('view', 'meeting')) {
             throw new NotAllowedException(
-                $this->translator->translate('You are not allowed to view meetings.'),
+                $this->translator->translate('You are not allowed to view meetings'),
             );
         }
 
@@ -93,7 +93,7 @@ class MemberController extends AbstractActionController
     public function searchAction(): JsonModel|ViewModel
     {
         if (!$this->aclService->isAllowed('search', 'member')) {
-            throw new NotAllowedException($this->translator->translate('Not allowed to search for members.'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to search for members'));
         }
 
         $name = $this->params()->fromQuery('q');

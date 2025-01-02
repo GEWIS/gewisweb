@@ -89,7 +89,7 @@ class Decision
         ?MeetingTypes $type = null,
     ): array {
         if (!$this->aclService->isAllowed('list_meetings', 'decision')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to list meetings.'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to list meetings'));
         }
 
         return $this->meetingMapper->findAllMeetings($limit, $type);
@@ -108,7 +108,7 @@ class Decision
         MeetingTypes $type,
     ): array {
         if (!$this->aclService->isAllowed('list_meetings', 'decision')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to list meetings.'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to list meetings'));
         }
 
         return $this->meetingMapper->findPast($limit, $type);
@@ -120,7 +120,7 @@ class Decision
     public function getMeetingsByType(MeetingTypes $type): array
     {
         if (!$this->aclService->isAllowed('list_meetings', 'decision')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to list meetings.'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to list meetings'));
         }
 
         return $this->meetingMapper->findByType($type);
@@ -136,7 +136,7 @@ class Decision
         int $number,
     ): ?MeetingModel {
         if (!$this->aclService->isAllowed('view', 'meeting')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to view meetings.'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to view meetings'));
         }
 
         return $this->meetingMapper->findMeeting($type, $number);
@@ -194,7 +194,7 @@ class Decision
     public function getMeetingMinutesDownload(MeetingModel $meeting): ?Stream
     {
         if (!$this->aclService->isAllowed('view_minutes', 'meeting')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to view meeting minutes.'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to view meeting minutes'));
         }
 
         if (null === $meeting->getMinutes()) {
@@ -397,7 +397,7 @@ class Decision
     public function getUserAuthorization(MeetingModel $meeting): ?AuthorizationModel
     {
         if (!$this->aclService->isAllowed('view_own', 'authorization')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to view authorizations.'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to view authorizations'));
         }
 
         return $this->authorizationMapper->findUserAuthorization(
@@ -549,7 +549,7 @@ class Decision
     public function getAuthorizationForm(): AuthorizationForm
     {
         if (!$this->aclService->isAllowed('create', 'authorization')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed authorize people.'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed authorize people'));
         }
 
         return $this->authorizationForm;

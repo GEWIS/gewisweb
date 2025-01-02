@@ -74,7 +74,7 @@ class PageAdminController extends AbstractActionController
     public function editAction(): Response|ViewModel
     {
         if (!$this->aclService->isAllowed('edit', 'page')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to edit pages.'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to edit pages'));
         }
 
         $pageId = (int) $this->params()->fromRoute('page_id');
@@ -116,7 +116,7 @@ class PageAdminController extends AbstractActionController
     public function deleteAction(): Response
     {
         if (!$this->aclService->isAllowed('delete', 'page')) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to delete pages.'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to delete pages'));
         }
 
         $pageId = (int) $this->params()->fromRoute('page_id');
@@ -131,7 +131,7 @@ class PageAdminController extends AbstractActionController
             !$this->aclService->isAllowed('create', 'page')
             && !$this->aclService->isAllowed('edit', 'page')
         ) {
-            throw new NotAllowedException($this->translator->translate('You are not allowed to upload images.'));
+            throw new NotAllowedException($this->translator->translate('You are not allowed to upload images'));
         }
 
         /** @var Request $request */
