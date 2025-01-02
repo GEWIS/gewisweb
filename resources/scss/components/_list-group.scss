@@ -49,7 +49,11 @@ Styleguide: list-group
 
     .agenda-item-body {
         h4 {
-            margin-bottom: 0;
+            margin-bottom: 0.125rem;
+        }
+
+        .date-details {
+            line-height: 1.3;
         }
 
         .markdown {

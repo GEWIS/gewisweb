@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-02 11:44+0100\n"
-"PO-Revision-Date: 2025-01-02 11:44+0100\n"
+"POT-Creation-Date: 2025-01-02 13:17+0100\n"
+"PO-Revision-Date: 2025-01-02 13:18+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: nl\n"
@@ -2631,6 +2631,18 @@ msgstr "Inschrijflijst"
 msgid "Sign-up Lists"
 msgstr "Inschrijflijsten"
 
+#, php-format
+msgid "Sign-up closed on: %s"
+msgstr "Inschrijving gesloten op: %s"
+
+#, php-format
+msgid "Sign-up closes: %s (in %s)"
+msgstr "Inschrijving sluit: %s (over  %s)"
+
+#, php-format
+msgid "Sign-up opens: %s (in %s)"
+msgstr "Inschrijving opent: %s (over %s)"
+
 msgid "Similar courses"
 msgstr "Vergelijkbare vakken"
 
@@ -4418,6 +4430,9 @@ msgid "week"
 msgid_plural "weeks"
 msgstr[0] "week"
 msgstr[1] "weken"
+
+msgid "with multiple sign-up lists"
+msgstr "met meerdere inschrijflijsten"
 
 msgid "year"
 msgid_plural "years"

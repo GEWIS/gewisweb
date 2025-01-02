@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Activity\Model\Activity;
+use Activity\Model\SignupList as SignupListModel;
 use Application\View\HelperTrait;
 use Laminas\View\Renderer\PhpRenderer;
 
@@ -53,7 +54,7 @@ use Laminas\View\Renderer\PhpRenderer;
                                 $currentTime = new DateTime('now');
                                 $isOngoing = $currentTime >= $beginTime && $currentTime <= $endTime;
                                 ?>
-                                <p>
+                                <p class="date-details">
                                     <?= ucfirst($dateTimeString) ?> <small class="text-muted">
                                         <?php if ($isOngoing): ?>
                                             <?= $this->translate('for') ?> <?= $timeRemaining = $this->timeDiff($currentTime, $endTime) ?>
@@ -61,6 +62,59 @@ use Laminas\View\Renderer\PhpRenderer;
                                             <?= $this->translate('in') ?> <?= $this->timeDiff($currentTime, $beginTime) ?>
                                         <?php endif; ?>
                                     </small>
+                                    <?php
+                                    $signupLists = $activity->getSignupLists()->toArray();
+                                    $firstSignupList = reset($signupLists);
+                                    $hasMoreThanOne = count($signupLists) > 1;
+
+                                    if ($firstSignupList): ?>
+                                        <?php
+                                        /** @var SignupListModel $firstSignupList */
+                                        $openDatePattern = ($firstSignupList->getOpenDate()->format('Y') === $currentYear) ? 'EEE. d MMM. (HH:mm)' : 'EEE. d MMM. yyyy (HH:mm)';
+                                        $closeDatePattern = ($firstSignupList->getCloseDate()->format('Y') === $currentYear) ? 'EEE. d MMM. (HH:mm)' : 'EEE. d MMM. yyyy (HH:mm)';
+                                        $openDateFormatted = $this->dateFormat($firstSignupList->getOpenDate(), pattern: $openDatePattern);
+                                        $closeDateFormatted = $this->dateFormat($firstSignupList->getCloseDate(), pattern: $closeDatePattern);
+                                        $timeDiff = $firstSignupList->getCloseDate()->diff($currentTime);
+
+                                        if ($timeDiff->days >= 7) {
+                                            $textClass = 'text-muted';
+                                        } elseif ($timeDiff->days < 7 && $timeDiff->days >= 1) {
+                                            $textClass = 'text-warning';
+                                        } else {
+                                            $textClass = 'text-danger';
+                                        }
+                                        ?>
+                                        <br>
+                                        <?php if ($currentTime > $firstSignupList->getCloseDate()): ?>
+                                            <small class="text-muted">
+                                                <?php sprintf(
+                                                    $this->translate('Sign-up closed on: %s'),
+                                                    $closeDateFormatted,
+                                                ) ?>
+                                            </small>
+                                        <?php elseif (!$firstSignupList->isOpen()): ?>
+                                            <small class="text-muted">
+                                                <?= sprintf(
+                                                    $this->translate('Sign-up opens: %s (in %s)'),
+                                                    $openDateFormatted,
+                                                    $this->timeDiff($currentTime, $firstSignupList->getOpenDate()),
+                                                ) ?>
+                                            </small>
+                                        <?php else: ?>
+                                            <small class="<?= $textClass ?>">
+                                                <?= sprintf(
+                                                    $this->translate('Sign-up closes: %s (in %s)'),
+                                                    $closeDateFormatted,
+                                                    $this->timeDiff($currentTime, $firstSignupList->getCloseDate()),
+                                                ) ?>
+                                            </small>
+                                        <?php endif; ?>
+                                        <?php if ($hasMoreThanOne): ?>
+                                            <small class="text-muted">
+                                                <?= $this->translate('with multiple sign-up lists') ?>
+                                            </small>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
                                 </p>
                             </div>
                             <div class="col-md-12">
