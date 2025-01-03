@@ -230,7 +230,7 @@ class ActivityCalendar
 
         $organ = $option->getProposal()->getOrgan();
 
-        return null !== $organ && $this->organService->canEditOrgan($organ);
+        return null !== $organ && $this->organService->canUseOrgan($organ);
     }
 
     /**

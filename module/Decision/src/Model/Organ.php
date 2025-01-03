@@ -18,6 +18,7 @@ use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OneToOne;
+use Doctrine\ORM\Mapping\OrderBy;
 
 use function usort;
 
@@ -156,6 +157,7 @@ class Organ
         targetEntity: OrganInformation::class,
         cascade: ['persist', 'remove'],
     )]
+    #[OrderBy(['updatedAt' => 'DESC'])]
     protected Collection $organInformation;
 
     public function __construct()
@@ -340,12 +342,61 @@ class Organ
     }
 
     /**
+     * Get the different versions of {@link OrganInformation} for this organ.
+     *
+     * @return Collection<array-key, OrganInformation>
+     */
+    private function getOrganInformationWithoutProposals(): Collection
+    {
+        return $this->organInformation->filter(static function (OrganInformation $organInformation) {
+            return !$organInformation->isUpdate();
+        });
+    }
+
+    /**
+     * Get the displayable organ information with its status and proposal updates.
+     */
+    public function getDisplayableOrganInformation(): ?OrganInformation
+    {
+        $filtered = $this->getOrganInformationWithoutProposals();
+
+        // Check for the last approved OrganInformation.
+        $approved = $filtered->filter(static function (OrganInformation $organInformation) {
+            return $organInformation->isApproved();
+        })->last();
+
+        if (false !== $approved) {
+            return $approved;
+        }
+
+        // Check for the last rejected OrganInformation.
+        $rejected = $filtered->filter(static function (OrganInformation $organInformation) {
+            return $organInformation->isRejected();
+        })->last();
+
+        if (false !== $rejected) {
+            return $rejected;
+        }
+
+        // Check for any creation proposals.
+        $creationProposal = $this->organInformation->filter(static function (OrganInformation $organInformation) {
+            return $organInformation->isUnapproved();
+        })->last();
+
+        if (false !== $creationProposal) {
+            return $creationProposal;
+        }
+
+        return null;
+    }
+
+    /**
      * Returns the approved information for an organ.
      */
     public function getApprovedOrganInformation(): ?OrganInformation
     {
         foreach ($this->organInformation as $information) {
-            if (null !== $information->getApprover()) {
+            if ($information->isApproved()) {
                 return $information;
             }
         }

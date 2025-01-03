@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Decision\Service;
 
 use Laminas\Permissions\Acl\Resource\GenericResource as Resource;
+use User\Permissions\Assertion\IsOrganMember;
 
 class AclService extends \User\Service\AclService
 {
@@ -14,6 +15,7 @@ class AclService extends \User\Service\AclService
 
         // add resources for this module
         $this->acl->addResource(new Resource('organ'));
+        $this->acl->addResource(new Resource('organInformation'));
         $this->acl->addResource(new Resource('member'));
         $this->acl->addResource(new Resource('decision'));
         $this->acl->addResource(new Resource('meeting'));
@@ -30,7 +32,12 @@ class AclService extends \User\Service\AclService
         $this->acl->allow('user', 'organ', 'view');
 
         // Organ members are allowed to edit organ information of their own organs
-        $this->acl->allow('active_member', 'organ', 'edit');
+        $this->acl->allow(
+            'active_member',
+            'organInformation',
+            ['create', 'edit'],
+            new IsOrganMember(),
+        );
         $this->acl->allow('active_member', 'decision_organ_admin', 'view');
 
         // users are allowed to view and search members

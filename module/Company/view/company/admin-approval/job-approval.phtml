@@ -237,7 +237,7 @@ $this->breadcrumbs()
         <hr>
         <h2><?= $this->translate('Approval') ?></h2>
     </div>
-    <?php if (ApprovableStatus::Unapproved === $job->getApproved()): ?>
+    <?php if (ApprovableStatus::Unapproved === $job->getApproval()): ?>
         <div class="col-md-12">
             <p>
                 <?php if ($job->isPublished()): ?>
@@ -305,7 +305,7 @@ $this->breadcrumbs()
             echo $this->form()->closeTag();
             ?>
         </div>
-    <?php elseif (ApprovableStatus::Approved === $job->getApproved()): ?>
+    <?php elseif (ApprovableStatus::Approved === $job->getApproval()): ?>
         <div class="col-md-12">
             <p>
                 <?= sprintf(
@@ -332,7 +332,7 @@ $this->breadcrumbs()
             echo $this->form()->closeTag();
             ?>
         </div>
-    <?php elseif (ApprovableStatus::Rejected === $job->getApproved()): ?>
+    <?php elseif (ApprovableStatus::Rejected === $job->getApproval()): ?>
         <div class="col-md-12">
             <p>
                 <?php

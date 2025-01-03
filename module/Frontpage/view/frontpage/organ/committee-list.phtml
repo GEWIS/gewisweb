@@ -42,18 +42,24 @@ $this->headTitle($this->translate('Committees'));
                 </div>
             </div>
         </div>
-        <div class="card-grid">
-
-            <?php
-            $lang = $this->plugin('translate')->getTranslator()->getLocale();
-            foreach ($committees as $committee) {
-                echo $this->partial('partial/organ-card.phtml', [
-                    'organ' => $committee,
-                    'lang' => $lang,
-                ]);
-            }
-
-            ?>
-        </div>
+        <?php if (empty($committees)): ?>
+            <div class="row">
+                <div class="col-md-12">
+                    <p><?= $this->translate('There are currently no committees installed.') ?></p>
+                </div>
+            </div>
+        <?php else: ?>
+            <div class="card-grid">
+                <?php
+                $lang = $this->plugin('translate')->getTranslator()->getLocale();
+                foreach ($committees as $committee) {
+                    echo $this->partial('partial/organ-card.phtml', [
+                        'organ' => $committee,
+                        'lang' => $lang,
+                    ]);
+                }
+                ?>
+            </div>
+        <?php endif; ?>
     </div>
 </section>

@@ -289,7 +289,7 @@ class CompanyAccountController extends AbstractActionController
 
         $isJobRejected = false;
         $jobRejectedMessage = null;
-        if (ApprovableStatus::Rejected === $job->getApproved()) {
+        if (ApprovableStatus::Rejected === $job->getApproval()) {
             $isJobRejected = true;
             $jobRejectedMessage = $job->getApprovableText()?->getMessage();
         }
