@@ -20,7 +20,7 @@ $this->headTitle($this->translate('Edit Package'));
 
 $this->headScript()
     ->appendFile(
-        $this->basepath('js/company-create.js'),
+        $this->basepath('js/company-admin.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     );
@@ -164,7 +164,7 @@ $form->setAttribute('class', 'form-company');
     </div>
 </div>
 <script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
-    Company.updateForm();
+    Company.Admin.updateForm();
 
     document.querySelectorAll('.delete-job').forEach(job => {
         job.addEventListener('click', e => {
