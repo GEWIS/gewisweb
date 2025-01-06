@@ -24,7 +24,7 @@ $this->headTitle($this->translate('Edit Job'));
 
 $this->headScript()
     ->appendFile(
-        $this->basepath('js/company-create.js'),
+        $this->basepath('js/company-admin.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     )
@@ -120,7 +120,7 @@ $form->setAttribute('class', 'form-company');
 </div>
 <?= $this->form()->closeTag() ?>
 <script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
-    Company.updateForm();
+    Company.Admin.updateForm();
     Job.updateAllLabels();
     $('label[for^="labels-"]').on('click', function () {
         Job.toggleLabel($(this).data('label-id'));

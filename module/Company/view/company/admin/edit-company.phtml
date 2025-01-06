@@ -29,7 +29,7 @@ $this->breadcrumbs()
 
 $this->headScript()
     ->appendFile(
-        $this->basepath('js/company-create.js'),
+        $this->basepath('js/company-admin.js'),
         'text/javascript',
         ['nonce' => NONCE_REPLACEMENT_STRING],
     )
@@ -57,13 +57,6 @@ if ($isCompany) {
     // company_admin/company/edit/upload
     $uploadPath = '/admin/career/company/edit/' . $company->getSlugName() . '/upload';
 }
-
-$this->inlineScript()
-    ->appendFile(
-        $this->basepath('js/company-admin.js'),
-        'text/javascript',
-        ['nonce' => NONCE_REPLACEMENT_STRING],
-    );
 
 $this->scriptUrl()->requireUrls(
     [
@@ -246,7 +239,7 @@ $form->setAttribute('class', 'form-company');
     </div>
 </div>
 <script nonce="<?= NONCE_REPLACEMENT_STRING ?>">
-    Company.updateForm();
+    Company.Admin.updateForm();
 
     document.querySelectorAll('.delete-package').forEach(companyPackage => {
         companyPackage.addEventListener('click', e => {
