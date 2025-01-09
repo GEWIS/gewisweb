@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Activity\Mapper;
 
 use Activity\Model\ExternalSignup as ExternalSignupModel;
+use Activity\Model\Signup as SignupModel;
 use Activity\Model\SignupList as SignupListModel;
 use Activity\Model\UserSignup as UserSignupModel;
 use Application\Mapper\BaseMapper;
 use DateInterval;
 use DateTime;
 use Decision\Model\Member as MemberModel;
-use Doctrine\ORM\Query\Expr\Join;
 use User\Model\User as UserModel;
 
 /**
@@ -81,18 +81,20 @@ class Signup extends BaseMapper
     }
 
     /**
-     * Delete all sign-ups for activities that ended 5 years ago.
+     * Get all sign-ups for activities that ended 5 years ago.
+     *
+     * @return SignupModel[]
      */
-    public function deleteSignupsForActivitiesOlderThan5Years(): void
+    public function getSignupsOlderThan5Years(): array
     {
-        $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->delete($this->getRepositoryName(), 's')
-            ->join('s.signupList', 'l')
-            ->join('l.activity', 'a', Join::WITH, 'a.endTime <= :date');
+        $qb = $this->getRepository()->createQueryBuilder('s');
+        $qb->join('s.signupList', 'l')
+            ->join('l.activity', 'a')
+            ->where('a.endTime <= :date');
 
         $qb->setParameter('date', (new DateTime())->sub(new DateInterval('P5Y')));
 
-        $qb->getQuery()->execute();
+        return $qb->getQuery()->getResult();
     }
 
     protected function getRepositoryName(): string
