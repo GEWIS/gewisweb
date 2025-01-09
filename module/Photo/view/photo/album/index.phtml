@@ -390,13 +390,23 @@ $this->scriptUrl()->requireUrl('member/search')
         }
     };
 
-    Date.prototype.getWeekNumber = function() {
+    Date.prototype._getAdjustedUTCDate = function() {
         let d = new Date(Date.UTC(this.getFullYear(), this.getMonth(), this.getDate()));
         let dayNum = d.getUTCDay() || 7;
         d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+
+        return d;
+    };
+
+    Date.prototype.getWeekNumber = function() {
+        let d = this._getAdjustedUTCDate();
         let yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
 
-        return Math.ceil((((d - yearStart) / 86400000) + 1) / 7)
+        return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+    };
+
+    Date.prototype.getWeekYear = function() {
+        return this._getAdjustedUTCDate().getUTCFullYear();
     };
 </script>
 <script type="module" nonce="<?= NONCE_REPLACEMENT_STRING ?>">
@@ -768,7 +778,7 @@ $this->scriptUrl()->requireUrl('member/search')
                     if (undefined !== weeklyDate) {
                         let date = new Date(weeklyDate)
                         let currentWeek = date.getWeekNumber();
-                        el.innerHTML = `<span class="fas fa-award"></span> <?= $this->translate('Photo of the Week:<br> Week') ?> ${currentWeek} <?= $this->translate('of') ?> ${date.getUTCFullYear()}`;
+                        el.innerHTML = `<span class="fas fa-award"></span> <?= $this->translate('Photo of the Week:<br> Week') ?> ${currentWeek} <?= $this->translate('of') ?> ${date.getWeekYear()}`;
                         el.hidden = false;
                     } else {
                         el.hidden = true;
