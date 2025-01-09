@@ -1126,10 +1126,10 @@ Search.appendIndex(
             "summary": "Get\u0020all\u0020sign\u002Dups\u0020for\u0020a\u0020specific\u0020member.",
             "url": "classes/Activity-Mapper-Signup.html#method_findSignupsByMember"
         },                {
-            "fqsen": "\\Activity\\Mapper\\Signup\u003A\u003AdeleteSignupsForActivitiesOlderThan5Years\u0028\u0029",
-            "name": "deleteSignupsForActivitiesOlderThan5Years",
-            "summary": "Delete\u0020all\u0020sign\u002Dups\u0020for\u0020activities\u0020that\u0020ended\u00205\u0020years\u0020ago.",
-            "url": "classes/Activity-Mapper-Signup.html#method_deleteSignupsForActivitiesOlderThan5Years"
+            "fqsen": "\\Activity\\Mapper\\Signup\u003A\u003AgetSignupsOlderThan5Years\u0028\u0029",
+            "name": "getSignupsOlderThan5Years",
+            "summary": "Get\u0020all\u0020sign\u002Dups\u0020for\u0020activities\u0020that\u0020ended\u00205\u0020years\u0020ago.",
+            "url": "classes/Activity-Mapper-Signup.html#method_getSignupsOlderThan5Years"
         },                {
             "fqsen": "\\Activity\\Mapper\\Signup\u003A\u003AgetRepositoryName\u0028\u0029",
             "name": "getRepositoryName",

@@ -512,13 +512,6 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Activity-Mapper-Signup.html#method_deleteSignupsForActivitiesOlderThan5Years">deleteSignupsForActivitiesOlderThan5Years()</a>
-    <span>
-                                &nbsp;: void    </span>
-</dt>
-<dd>Delete all sign-ups for activities that ended 5 years ago.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Application-Mapper-BaseMapper.html#method_detach">detach()</a>
     <span>
                                 &nbsp;: void    </span>
@@ -594,6 +587,13 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
                                 &nbsp;: <a href="classes/Activity-Model-UserSignup.html"><abbr title="\Activity\Model\UserSignup">UserSignup</abbr></a>|null    </span>
 </dt>
 <dd>Get the signup object if it exists.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Activity-Mapper-Signup.html#method_getSignupsOlderThan5Years">getSignupsOlderThan5Years()</a>
+    <span>
+                                &nbsp;: array&lt;string|int, <a href="classes/Activity-Model-Signup.html"><abbr title="\Activity\Model\Signup">Signup</abbr></a>&gt;    </span>
+</dt>
+<dd>Get all sign-ups for activities that ended 5 years ago.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Activity-Mapper-Signup.html#method_isSignedUp">isSignedUp()</a>
@@ -809,41 +809,6 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
 
             </section>
 
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_deleteSignupsForActivitiesOlderThan5Years">
-        deleteSignupsForActivitiesOlderThan5Years()
-        <a href="classes/Activity-Mapper-Signup.html#method_deleteSignupsForActivitiesOlderThan5Years" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Mapper/Signup.php"><a href="files/module-activity-src-mapper-signup.html"><abbr title="module/Activity/src/Mapper/Signup.php">Signup.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">86</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Delete all sign-ups for activities that ended 5 years ago.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">deleteSignupsForActivitiesOlderThan5Years</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-    
-
-    
-
-    
 </article>
                     <article
         class="phpdocumentor-element
@@ -1468,6 +1433,45 @@ any of such objects can be persisted and/or removed from the base mapper.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_getSignupsOlderThan5Years">
+        getSignupsOlderThan5Years()
+        <a href="classes/Activity-Mapper-Signup.html#method_getSignupsOlderThan5Years" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Mapper/Signup.php"><a href="files/module-activity-src-mapper-signup.html"><abbr title="module/Activity/src/Mapper/Signup.php">Signup.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">88</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Get all sign-ups for activities that ended 5 years ago.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getSignupsOlderThan5Years</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Activity-Model-Signup.html"><abbr title="\Activity\Model\Signup">Signup</abbr></a>&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Activity-Model-Signup.html"><abbr title="\Activity\Model\Signup">Signup</abbr></a>&gt;</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_isSignedUp">
         isSignedUp()
         <a href="classes/Activity-Mapper-Signup.html#method_isSignedUp" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1985,7 +1989,7 @@ function.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Mapper/Signup.php"><a href="files/module-activity-src-mapper-signup.html"><abbr title="module/Activity/src/Mapper/Signup.php">Signup.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">98</span>
+    <span class="phpdocumentor-element-found-in__line">100</span>
 
     </aside>
 
@@ -2135,7 +2139,6 @@ function.</p>
                 <ul class="phpdocumentor-list -clean">
                                             <li class=""><a href="classes/Application-Mapper-BaseMapper.html#method___construct">__construct()</a></li>
                                             <li class=""><a href="classes/Application-Mapper-BaseMapper.html#method_count">count()</a></li>
-                                            <li class=""><a href="classes/Activity-Mapper-Signup.html#method_deleteSignupsForActivitiesOlderThan5Years">deleteSignupsForActivitiesOlderThan5Years()</a></li>
                                             <li class=""><a href="classes/Application-Mapper-BaseMapper.html#method_detach">detach()</a></li>
                                             <li class=""><a href="classes/Application-Mapper-BaseMapper.html#method_find">find()</a></li>
                                             <li class=""><a href="classes/Application-Mapper-BaseMapper.html#method_findAll">findAll()</a></li>
@@ -2148,6 +2151,7 @@ function.</p>
                                             <li class=""><a href="classes/Activity-Mapper-Signup.html#method_getExternalSignUp">getExternalSignUp()</a></li>
                                             <li class=""><a href="classes/Activity-Mapper-Signup.html#method_getNumberOfSignedUpMembers">getNumberOfSignedUpMembers()</a></li>
                                             <li class=""><a href="classes/Activity-Mapper-Signup.html#method_getSignUp">getSignUp()</a></li>
+                                            <li class=""><a href="classes/Activity-Mapper-Signup.html#method_getSignupsOlderThan5Years">getSignupsOlderThan5Years()</a></li>
                                             <li class=""><a href="classes/Activity-Mapper-Signup.html#method_isSignedUp">isSignedUp()</a></li>
                                             <li class=""><a href="classes/Application-Mapper-BaseMapper.html#method_persist">persist()</a></li>
                                             <li class=""><a href="classes/Application-Mapper-BaseMapper.html#method_persistMultiple">persistMultiple()</a></li>
