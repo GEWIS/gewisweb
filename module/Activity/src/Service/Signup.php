@@ -14,7 +14,6 @@ use Activity\Model\SignupFieldValue as SignupFieldValueModel;
 use Activity\Model\SignupList as SignupListModel;
 use Activity\Model\SignupOption as SignupOptionModel;
 use Activity\Model\UserSignup as UserSignupModel;
-use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
@@ -368,15 +367,6 @@ class Signup
 
             $this->entityManager->remove($signup);
         }
-    }
-
-    public static function isInSubscriptionWindow(
-        DateTime $openDate,
-        DateTime $closeDate,
-    ): bool {
-        $currentTime = new DateTime();
-
-        return $openDate < $currentTime && $currentTime < $closeDate;
     }
 
     /**

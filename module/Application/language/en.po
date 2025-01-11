@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-11 15:42+0100\n"
-"PO-Revision-Date: 2025-01-11 15:40+0100\n"
+"POT-Creation-Date: 2025-01-11 15:54+0100\n"
+"PO-Revision-Date: 2025-01-11 15:54+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: en\n"
@@ -622,6 +622,12 @@ msgstr "Cannot load tags"
 
 msgid "Cannot load vote"
 msgstr "Cannot load vote"
+
+msgid "Cannot subscribe external participant at this point in time"
+msgstr "Cannot subscribe external participant at this point in time"
+
+msgid "Cannot unsubscribe external participant at this point in time"
+msgstr "Cannot unsubscribe external participant at this point in time"
 
 msgid "Career"
 msgstr "Career"
