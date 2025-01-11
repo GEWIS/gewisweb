@@ -3181,11 +3181,6 @@ Search.appendIndex(
             "summary": "Delete\u0020all\u0020sign\u002Dups\u0020for\u0020activities\u0020that\u0020are\u0020older\u0020than\u00205\u0020years.",
             "url": "classes/Activity-Service-Signup.html#method_deleteOldSignups"
         },                {
-            "fqsen": "\\Activity\\Service\\Signup\u003A\u003AisInSubscriptionWindow\u0028\u0029",
-            "name": "isInSubscriptionWindow",
-            "summary": "",
-            "url": "classes/Activity-Service-Signup.html#method_isInSubscriptionWindow"
-        },                {
             "fqsen": "\\Activity\\Service\\Signup\u003A\u003AisAllowedToSubscribe\u0028\u0029",
             "name": "isAllowedToSubscribe",
             "summary": "Is\u0020the\u0020currently\u0020logged\u002Din\u0020user\u0020allowed\u0020to\u0020signup.",
