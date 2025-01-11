@@ -198,6 +198,10 @@ a.navbar-brand  {
             color: darken($gray, 3%);
             background-color: darken(#fff, 3%);
         }
+
+        > hr {
+            margin: 0;
+        }
     }
 
     .navbar-nav > li .dropdown-menu .dropdown-submenu {
