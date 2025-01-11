@@ -15,19 +15,19 @@ use Laminas\View\Renderer\PhpRenderer;
     <div class="col-md-12">
         <div class="row">
             <div class="col-md-2 overview-sidebar">
-                <strong><?= $this->translate('Name') ?></strong>
+                <strong><?= $this->translate('Sign-up List Name') ?></strong>
             </div>
             <div class="col-md-5">
                 <span class="approvable-property">
                     <span class="flag-icon flag-icon-nl"></span>
-                    <strong><?= $this->translate('Name') ?>:</strong>
+                    <strong><?= $this->translate('Sign-up List Name') ?>:</strong>
                 </span>
                 <?= $this->escapeHtml($signupList->getName()->getValueNL()) ?>
             </div>
             <div class="col-md-5">
                 <span class="approvable-property">
                     <span class="flag-icon flag-icon-en"></span>
-                    <strong><?= $this->translate('Name') ?>:</strong>
+                    <strong><?= $this->translate('Sign-up List Name') ?>:</strong>
                 </span>
                 <?= $this->escapeHtml($signupList->getName()->getValueEN()) ?>
             </div>
@@ -99,19 +99,19 @@ use Laminas\View\Renderer\PhpRenderer;
                         <hr>
                     </div>
                     <div class="col-md-2 overview-sidebar">
-                        <strong><?= $this->translate('Name') ?></strong>
+                        <strong><?= $this->translate('Field Name') ?></strong>
                     </div>
                     <div class="col-md-5">
                         <span class="approvable-property">
                             <span class="flag-icon flag-icon-nl"></span>
-                            <strong><?= $this->translate('Name') ?>:</strong>
+                            <strong><?= $this->translate('Field Name') ?>:</strong>
                         </span>
                         <?= $this->escapeHtml($field->getName()->getValueNL()) ?>
                     </div>
                     <div class="col-md-5">
                         <span class="approvable-property">
                             <span class="flag-icon flag-icon-en"></span>
-                            <strong><?= $this->translate('Name') ?>:</strong>
+                            <strong><?= $this->translate('Field Name') ?>:</strong>
                         </span>
                         <?= $this->escapeHtml($field->getName()->getValueEN()) ?>
                     </div>

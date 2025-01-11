@@ -51,7 +51,7 @@ use Laminas\View\Renderer\PhpRenderer;
                 ?>
                 <div class="form-group <?= $this->bootstrapElementError($name) ?>">
                     <label for="<?= $name->getAttribute('id') ?>" class="control-label">
-                        <?= $this->translate('Name') ?>
+                        <?= $name->getLabel() ?>
                         <span class="flag-icon flag-icon-nl"></span>
                     </label>
                     <?= $this->formText($name) ?>
@@ -67,7 +67,7 @@ use Laminas\View\Renderer\PhpRenderer;
                 ?>
                 <div class="form-group <?= $this->bootstrapElementError($nameEn) ?>">
                     <label for="<?= $nameEn->getAttribute('id') ?>" class="control-label">
-                        <?= $this->translate('Name') ?>
+                        <?= $name->getLabel() ?>
                         <span class="flag-icon flag-icon-en"></span>
                     </label>
                     <?= $this->formText($nameEn) ?>
