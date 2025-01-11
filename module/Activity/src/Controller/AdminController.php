@@ -305,6 +305,18 @@ class AdminController extends AbstractActionController
             throw new NotAllowedException($this->translator->translate('You are not allowed to use this form'));
         }
 
+        if (
+            !$signupList->isOpen()
+            || ActivityModel::STATUS_APPROVED !== $signupList->getActivity()->getStatus()
+        ) {
+            return $this->redirectActivityAdminRequest(
+                $activityId,
+                $signupListId,
+                false,
+                $this->translator->translate('Cannot subscribe external participant at this point in time'),
+            );
+        }
+
         /** @var Request $request */
         $request = $this->getRequest();
         $activityAdminSession = new SessionContainer('activityAdminRequest');
@@ -398,6 +410,18 @@ class AdminController extends AbstractActionController
 
         if (!$this->aclService->isAllowed('adminSignup', $signupList)) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to use this form'));
+        }
+
+        if (
+            !$signupList->isOpen()
+            || ActivityModel::STATUS_APPROVED !== $signupList->getActivity()->getStatus()
+        ) {
+            return $this->redirectActivityAdminRequest(
+                $signupList->getActivity()->getId(),
+                $signupList->getId(),
+                false,
+                $this->translator->translate('Cannot unsubscribe external participant at this point in time'),
+            );
         }
 
         /** @var Request $request */

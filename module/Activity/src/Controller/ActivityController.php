@@ -251,7 +251,7 @@ class ActivityController extends AbstractActionController
 
             // Ensure that the action is within the subscription window
             if (
-                !$this->signupService->isInSubscriptionWindow($signupList->getOpenDate(), $signupList->getCloseDate())
+                !$signupList->isOpen()
                 || ActivityModel::STATUS_APPROVED !== $signupList->getActivity()->getStatus()
             ) {
                 $error = $this->translator->translate('You cannot subscribe to this activity at this moment in time');
@@ -356,7 +356,7 @@ class ActivityController extends AbstractActionController
 
             // Ensure that the action is within the subscription window
             if (
-                !$this->signupService->isInSubscriptionWindow($signupList->getOpenDate(), $signupList->getCloseDate())
+                !$signupList->isOpen()
                 || ActivityModel::STATUS_APPROVED !== $signupList->getActivity()->getStatus()
             ) {
                 $error = $this->translator->translate('You cannot subscribe to this activity at this moment in time');
@@ -417,7 +417,7 @@ class ActivityController extends AbstractActionController
 
             // Ensure that the action is within the subscription window
             if (
-                !$this->signupService->isInSubscriptionWindow($signupList->getOpenDate(), $signupList->getCloseDate())
+                !$signupList->isOpen()
                 || ActivityModel::STATUS_APPROVED !== $signupList->getActivity()->getStatus()
             ) {
                 $error = $this->translator->translate(
