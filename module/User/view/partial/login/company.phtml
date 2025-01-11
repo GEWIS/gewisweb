@@ -59,6 +59,9 @@ $form->setAttribute('class', 'form-horizontal');
         <div class="col-sm-7">
             <?= $this->formPassword($password) ?>
             <?= $this->formElementErrors($password, ['class' => 'help-block']); ?>
+            <a href="<?= $this->url('user/password/reset', ['user_type' => 'company']) ?>">
+                <?= $this->translate('Forgot password?') ?>
+            </a>
         </div>
     </div>
 
@@ -76,10 +79,4 @@ $form->setAttribute('class', 'form-horizontal');
     </div>
 
     <?= $this->form()->closeTag(); ?>
-</div>
-<div class="panel-footer">
-    <?php $url = $this->url('user/password/reset', ['user_type' => 'company']); ?>
-    <p>
-        <?= sprintf($this->translate("If you forgot your password, go to the %sPassword reset page%s"), '<a href="' . $url . '">', '</a>') ?>
-    </p>
 </div>
