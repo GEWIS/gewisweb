@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: GEWISweb v2.8.6-872-ge4a2da519-dirty\n"
+"Project-Id-Version: GEWISweb v2.8.6-892-gb4dfcf33a-dirty\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-02 13:17+0100\n"
+"POT-Creation-Date: 2025-01-11 15:42+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1205,6 +1205,9 @@ msgstr ""
 msgid "Featured in language"
 msgstr ""
 
+msgid "Field Name"
+msgstr ""
+
 msgid ""
 "Fields that are marked with an '¹' will only be shared with the board and "
 "the organiser of the activity."
@@ -1470,10 +1473,6 @@ msgstr ""
 msgid ""
 "If you aren't able to attend a GMM in person but you want your voice to be "
 "heard, consider %sauthorizing another member%s to act on your behalf."
-msgstr ""
-
-#, php-format
-msgid "If you forgot your password, go to the %sPassword reset page%s"
 msgstr ""
 
 #, php-format
@@ -2451,6 +2450,9 @@ msgid "Shutter speed"
 msgstr ""
 
 msgid "Sign-up List"
+msgstr ""
+
+msgid "Sign-up List Name"
 msgstr ""
 
 msgid "Sign-up Lists"

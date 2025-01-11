@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-02 13:17+0100\n"
-"PO-Revision-Date: 2025-01-02 13:18+0100\n"
+"POT-Creation-Date: 2025-01-11 15:42+0100\n"
+"PO-Revision-Date: 2025-01-11 15:40+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: en\n"
@@ -1261,6 +1261,9 @@ msgstr "Featured company"
 msgid "Featured in language"
 msgstr "Featured in language"
 
+msgid "Field Name"
+msgstr "Field Name"
+
 msgid ""
 "Fields that are marked with an '¹' will only be shared with the board and "
 "the organiser of the activity."
@@ -1560,10 +1563,6 @@ msgid ""
 msgstr ""
 "If you aren't able to attend a GMM in person but you want your voice to be "
 "heard, consider %sauthorizing another member%s to act on your behalf."
-
-#, php-format
-msgid "If you forgot your password, go to the %sPassword reset page%s"
-msgstr "If you forgot your password, go to the %sPassword reset page%s"
 
 #, php-format
 msgid ""
@@ -2598,6 +2597,9 @@ msgstr "Shutter speed"
 
 msgid "Sign-up List"
 msgstr "Sign-up List"
+
+msgid "Sign-up List Name"
+msgstr "Sign-up List Name"
 
 msgid "Sign-up Lists"
 msgstr "Sign-up Lists"

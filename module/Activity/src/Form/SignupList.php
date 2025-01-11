@@ -32,7 +32,7 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
                 'name' => 'name',
                 'type' => Text::class,
                 'options' => [
-                    'label' => $this->translator->translate('Name'),
+                    'label' => $this->translator->translate('Sign-up List Name'),
                 ],
             ],
         );
@@ -42,7 +42,7 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
                 'name' => 'nameEn',
                 'type' => Text::class,
                 'options' => [
-                    'label' => $this->translator->translate('Name'),
+                    'label' => $this->translator->translate('Sign-up List Name'),
                 ],
             ],
         );

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-02 13:17+0100\n"
-"PO-Revision-Date: 2025-01-02 13:18+0100\n"
+"POT-Creation-Date: 2025-01-11 15:42+0100\n"
+"PO-Revision-Date: 2025-01-11 15:41+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: nl\n"
@@ -1272,6 +1272,9 @@ msgstr "Uitgelicht bedrijf"
 msgid "Featured in language"
 msgstr "Uitgelicht in taal"
 
+msgid "Field Name"
+msgstr "Veldnaam"
+
 msgid ""
 "Fields that are marked with an '¹' will only be shared with the board and "
 "the organiser of the activity."
@@ -1582,11 +1585,6 @@ msgstr ""
 "Als je niet in staat bent een ALV persoonlijk bij te wonen, maar je wilt "
 "toch dat je stem wordt gehoord, overweeg dan %seen ander lid%s te machtigen "
 "om jou te vertegenwoordingen."
-
-#, php-format
-msgid "If you forgot your password, go to the %sPassword reset page%s"
-msgstr ""
-"Als je je wachtwoord bent vergeten, ga naar de %sWachtwoord reset pagina %s"
 
 #, php-format
 msgid ""
@@ -2627,6 +2625,9 @@ msgstr "Sluitertijd"
 
 msgid "Sign-up List"
 msgstr "Inschrijflijst"
+
+msgid "Sign-up List Name"
+msgstr "Naam inschrijflijst"
 
 msgid "Sign-up Lists"
 msgstr "Inschrijflijsten"
