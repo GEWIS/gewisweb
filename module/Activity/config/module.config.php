@@ -232,6 +232,18 @@ return [
                             ],
                         ],
                     ],
+                    'markPresent' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/markPresent/:id',
+                            'constraints' => [
+                                'id' => '\d+',
+                            ],
+                            'defaults' => [
+                                'action' => 'markPresent',
+                            ],
+                        ],
+                    ],
                 ],
             ],
             'activity_calendar' => [

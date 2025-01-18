@@ -23,6 +23,9 @@ services:
         restart: unless-stopped
     nginx:
         build: docker/nginx
+        volumes:
+            - ./public/js:/code/public/js:ro
+            - ./public/css:/code/public/css:ro
         ports:
             - "80:9200"
             - "81:9201"
@@ -36,6 +39,10 @@ services:
             - mysql
         extra_hosts:
             - "host.docker.internal:host-gateway"
+        volumes:
+            - ./public/js:/code/public/js:rw
+            - ./public/css:/code/public/css:rw
+            - ./module:/code/module
     postfix:
         image: mailhog/mailhog
         env_file:
@@ -44,6 +51,9 @@ services:
             - "8025:8025"
     glide:
         build: docker/glide
+        volumes:
+            - ./public/js:/code/public/js:rw
+            - ./public/css:/code/public/css:rw
     matomo:
         build: docker/matomo
         depends_on:

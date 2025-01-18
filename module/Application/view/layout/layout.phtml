@@ -166,6 +166,11 @@ use Laminas\View\Renderer\PhpRenderer;
             $this->basepath('js/url-helper.js'),
             'text/javascript',
             ['nonce' => NONCE_REPLACEMENT_STRING],
+        )
+        ->appendFile(
+            $this->basepath('js/dist/stimulus-controllers.js'),
+            'module',
+            ['nonce' => NONCE_REPLACEMENT_STRING],
         ); ?>
 
     <?php

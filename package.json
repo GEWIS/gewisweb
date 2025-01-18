@@ -6,7 +6,10 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "scss": "sass --style compressed --no-source-map resources/scss/gewis-theme.scss:public/css/gewis-theme.css",
-        "watch": "sass --watch resources/scss/gewis-theme.scss:public/css"
+        "ts": "esbuild public/js/controllers/register-controllers.ts --bundle --outfile=./public/js/dist/stimulus-controllers.js --format=esm --minify=true",
+        "assets": "npm run scss && npm run ts",
+        "watch:scss": "sass --watch resources/scss/gewis-theme.scss:public/css/gewis-theme.css",
+        "watch:ts": "esbuild public/js/controllers/register-controllers.ts --bundle --outfile=./public/js/dist/stimulus-controllers.js --format=esm --sourcemap --watch"
     },
     "repository": {
         "type": "git",
@@ -21,7 +24,10 @@
         "url": "https://github.com/GEWIS/gewisweb/issues"
     },
     "homepage": "https://github.com/GEWIS/gewisweb#readme",
-    "dependencies": {
-        "sass": "^1.63.6"
+    "devDependencies": {
+        "@hotwired/stimulus": "^3.2.2",
+        "esbuild": "^0.24.2",
+        "sass": "^1.83.4",
+        "typescript": "^5.7.3"
     }
 }

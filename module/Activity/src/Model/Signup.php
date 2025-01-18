@@ -9,6 +9,7 @@ use Application\Model\Traits\TimestampableTrait;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\DiscriminatorColumn;
 use Doctrine\ORM\Mapping\DiscriminatorMap;
 use Doctrine\ORM\Mapping\Entity;
@@ -29,6 +30,7 @@ use Doctrine\ORM\Mapping\OneToMany;
  *     activity_id: int,
  *     signupList_id: int,
  *     fieldValues: ImportedSignupFieldValueGdprArrayType[],
+ *     present: bool,
  * }
  */
 #[Entity]
@@ -75,6 +77,12 @@ abstract class Signup
     )]
     protected Collection $fieldValues;
 
+    /**
+     * Determines if the user was present or not
+     */
+    #[Column(type: 'boolean')]
+    protected bool $present = false;
+
     public function __construct()
     {
         $this->fieldValues = new ArrayCollection();
@@ -107,6 +115,22 @@ abstract class Signup
     }
 
     /**
+     * Get presence of the user
+     */
+    public function getPresent(): bool
+    {
+        return $this->present;
+    }
+
+    /**
+     * Set presence of the user
+     */
+    public function setPresent(bool $present): void
+    {
+        $this->present = $present;
+    }
+
+    /**
      * Get the full name of the user whom signed up for the SignupList.
      */
     abstract public function getFullName(): string;
@@ -117,7 +141,8 @@ abstract class Signup
     abstract public function getEmail(): ?string;
 
     /**
-     * @return SignupGdprArrayType
+     * @return ((((string|null)[]|int)[]|int|string|null)[][]|int|string|null)[]
+     * @psalm-return array{id: int|null, createdAt: string, updatedAt: string, activity_id: int|null, signupList_id: int|null, fieldValues: array<array{id: int, value: string|null, option: array{id: int, value: array{valueEN: string|null, valueNL: string|null}}|null}>}
      */
     public function toGdprArray(): array
     {

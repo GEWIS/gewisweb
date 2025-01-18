@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-11 15:54+0100\n"
+"POT-Creation-Date: 2025-01-15 21:24+0100\n"
 "PO-Revision-Date: 2025-01-11 15:54+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -519,6 +519,9 @@ msgstr "Association"
 
 msgid "Attachment"
 msgstr "Attachment"
+
+msgid "Attendance mode"
+msgstr "Attendance mode"
 
 msgid "Author"
 msgstr "Author"
@@ -2022,6 +2025,9 @@ msgstr "No organ"
 msgid "None"
 msgstr "None"
 
+msgid "Not present"
+msgstr "Not present"
+
 msgid "Notifications"
 msgstr "Notifications"
 
@@ -2310,6 +2316,15 @@ msgstr "Polls awaiting approval"
 msgid "Poster Policy"
 msgstr "Poster Policy"
 
+msgid "Presence"
+msgstr "Presence"
+
+msgid "Presence mode is not open right now"
+msgstr "Presence mode is not open right now"
+
+msgid "Present"
+msgstr "Present"
+
 msgid "Previous"
 msgstr "Previous"
 
@@ -2482,6 +2497,9 @@ msgstr "Search by keyword or meeting number"
 msgid "Search for decision"
 msgstr "Search for decision"
 
+msgid "Search for name or email"
+msgstr "Search for name or email"
+
 msgid "Search query"
 msgstr "Search query"
 
@@ -2621,6 +2639,9 @@ msgstr "Sign-up closes: %s (in %s)"
 #, php-format
 msgid "Sign-up opens: %s (in %s)"
 msgstr "Sign-up opens: %s (in %s)"
+
+msgid "Signup not found"
+msgstr "Signup not found"
 
 msgid "Similar courses"
 msgstr "Similar courses"
@@ -4134,6 +4155,9 @@ msgstr ""
 "You can no longer hide the current Photo of the Week. Should it still be "
 "necessary to make the photo invisible (or even delete it) please contact the "
 "Application Management Committee immediately."
+
+msgid "You can only make POST requests to this endpoint"
+msgstr "You can only make POST requests to this endpoint"
 
 msgid "You cannot create new jobs in expired job packages."
 msgstr "You cannot create new jobs in expired job packages."

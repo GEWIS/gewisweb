@@ -55,7 +55,7 @@ class Signup extends BaseMapper
         return $this->getEntityManager()->getRepository(ExternalSignupModel::class)->find($signupId);
     }
 
-    public function getNumberOfSignedUpMembers(SignupListModel $signupList): int
+    public function getNumberOfSignedUpMembers(SignupListModel $signupList): string|int|float|bool|null
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('COUNT(s)')
@@ -95,6 +95,14 @@ class Signup extends BaseMapper
         $qb->setParameter('date', (new DateTime())->sub(new DateInterval('P5Y')));
 
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Get Signup by id
+     */
+    public function getSignupById(int $id): ?SignupModel
+    {
+        return $this->getEntityManager()->getRepository(SignupModel::class)->find($id);
     }
 
     protected function getRepositoryName(): string

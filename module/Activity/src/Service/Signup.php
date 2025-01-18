@@ -332,7 +332,7 @@ class Signup
         $this->entityManager->flush();
     }
 
-    public function getNumberOfSubscribedMembers(SignupListModel $signupList): int
+    public function getNumberOfSubscribedMembers(SignupListModel $signupList): ?scalar
     {
         return $this->signupMapper->getNumberOfSignedUpMembers($signupList);
     }

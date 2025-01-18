@@ -36,6 +36,7 @@ use User\Permissions\Resource\OrganResourceInterface;
  *     displaySubscribedNumber: bool,
  *     limitedCapacity: bool,
  *     fields: ImportedSignupFieldArrayType[],
+ *     presenceTaken: bool,
  * }
  * @psalm-import-type LocalisedTextGdprArrayType from LocalisedTextModel as ImportedLocalisedTextGdprArrayType
  * @psalm-import-type SignupFieldGdprArrayType from SignupField as ImportedSignupFieldGdprArrayType
@@ -48,6 +49,7 @@ use User\Permissions\Resource\OrganResourceInterface;
  *     displaySubscribedNumber: bool,
  *     limitedCapacity: bool,
  *     fields: ImportedSignupFieldGdprArrayType[],
+ *     presenceTaken: bool,
  * }
  */
 #[Entity]
@@ -122,8 +124,8 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
      * @var Collection<array-key, SignupField>
      */
     #[OneToMany(
-        targetEntity: SignupField::class,
         mappedBy: 'signupList',
+        targetEntity: SignupField::class,
         orphanRemoval: true,
     )]
     protected Collection $fields;
@@ -134,12 +136,18 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
      * @var Collection<array-key, Signup>
      */
     #[OneToMany(
-        targetEntity: Signup::class,
         mappedBy: 'signupList',
+        targetEntity: Signup::class,
         orphanRemoval: true,
     )]
     #[OrderBy(value: ['id' => 'ASC'])]
     protected Collection $signUps;
+
+    /**
+     * Determines if presence was taken for this SignupList
+     */
+    #[Column(type: 'boolean')]
+    protected bool $presenceTaken = false;
 
     public function __construct()
     {
@@ -300,9 +308,26 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
+     * Gets presenceTaken for this SignupList
+     */
+    public function isPresenceTaken(): bool
+    {
+        return $this->presenceTaken;
+    }
+
+    /**
+     * Sets presenceTaken for this SignupList
+     */
+    public function setPresenceTaken(bool $presenceTaken): void
+    {
+        $this->presenceTaken = $presenceTaken;
+    }
+
+    /**
      * Returns an associative array representation of this object.
      *
-     * @return SignupListArrayType
+     * @return (((string|null)[]|bool|int|string|null)[][]|DateTime|bool|int|string|null)[]
+     * @psalm-return array{id: int|null, name: string|null, nameEn: string|null, openDate: DateTime, closeDate: DateTime, onlyGEWIS: bool, displaySubscribedNumber: bool, limitedCapacity: bool, fields: list<array{id: int, maximumValue: int|null, minimumValue: int|null, name: string|null, nameEn: string|null, options: array<array-key, string|null>, optionsEn: array<array-key, string|null>, sensitive: bool, type: int}>}
      */
     public function toArray(): array
     {
@@ -325,7 +350,8 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
-     * @return SignupListGdprArrayType
+     * @return ((((((string|null)[]|int)[]|string|null)[]|bool|int|null)[]|string|null)[]|bool|int|string|null)[]
+     * @psalm-return array{id: int|null, name: array{valueEN: string|null, valueNL: string|null}, openDate: string, closeDate: string, onlyGEWIS: bool, displaySubscribedNumber: bool, limitedCapacity: bool, fields: array<array{id: int, sensitive: bool, name: array{valueEN: string|null, valueNL: string|null}, type: int, minimumValue: int|null, maximumValue: int|null, options: array<array{id: int, value: array{valueEN: string|null, valueNL: string|null}}>|null}>}
      */
     public function toGdprArray(): array
     {

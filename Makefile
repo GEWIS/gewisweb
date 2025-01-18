@@ -41,6 +41,9 @@ rundev: builddev
 		@docker compose up -d --remove-orphans
 		@make replenish
 		@docker compose exec web rm -rf data/cache/module-config-cache.application.config.cache.php
+		@make translations-compile
+		@npm install
+		@npm run assets
 
 migrate: replenish
 		@docker compose exec -it web ./orm migrations:migrate
@@ -84,9 +87,9 @@ getvendordir:
 
 replenish:
 		@docker cp ./public "$(shell docker compose ps -q web)":/code
-		@docker compose exec web chown -R www-data:www-data /code/public
+		@docker compose exec web chown -R web-user:web-user /code/public
 		@docker cp ./data "$(shell docker compose ps -q web)":/code
-		@docker compose exec web chown -R www-data:www-data /code/data
+		@docker compose exec web chown -R web-user:web-user /code/data
 		@docker compose exec web rm -rf data/cache/module-config-cache.application.config.cache.php
 		@docker compose exec web composer dump-autoload --dev
 		@docker compose exec web ./orm orm:generate-proxies
@@ -133,6 +136,10 @@ translations:
 		msgmerge --sort-output -U $(TRANSLATIONS_DIR)/en.po $(TRANSLATIONS_DIR)/gewisweb.pot && \
 		msgattrib --no-obsolete -o $(TRANSLATIONS_DIR)/en.po $(TRANSLATIONS_DIR)/en.po && \
 		msgattrib --no-obsolete -o $(TRANSLATIONS_DIR)/nl.po $(TRANSLATIONS_DIR)/nl.po
+
+translations-compile:
+		@msgfmt $(TRANSLATIONS_DIR)/en.po -o $(TRANSLATIONS_DIR)/en -c --strict -v
+		@msgfmt $(TRANSLATIONS_DIR)/nl.po -o $(TRANSLATIONS_DIR)/nl -c --strict -v
 
 update: updatecomposer updatepackage updatecss updateglide updatedocker
 
