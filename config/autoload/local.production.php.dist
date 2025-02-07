@@ -20,8 +20,8 @@ return [
      */
     'proxy' => [
         'enabled' => true,
-        'ip_addresses' => ['131.155.10.135', '131.155.69.202'],
-        'header' => 'X-Real-IP',
+        'ip_addresses' => ['131.155.10.0/27', '131.155.10.128/27', '131.155.69.202'],
+        'header' => 'X-Forwarded-For',
     ],
 
     /**

@@ -64,6 +64,13 @@ use User\Service\Factory\UserFactory as UserServiceFactory;
 use User\Service\PwnedPasswords as PwnedPasswordsService;
 use User\Service\User as UserService;
 
+use function array_map;
+use function array_merge;
+use function explode;
+use function ip2long;
+use function range;
+use function str_contains;
+
 class Module
 {
     /**
@@ -235,7 +242,35 @@ class Module
                 'user_remoteaddress' => static function (ContainerInterface $container) {
                     $remote = new RemoteAddress();
                     $isProxied = $container->get('config')['proxy']['enabled'];
-                    $trustedProxies = $container->get('config')['proxy']['ip_addresses'];
+                    $trustedProxies = array_merge(
+                        ...array_map(
+                            static function ($ip) {
+                                if (str_contains($ip, '/')) {
+                                    [$subnet, $bits] = explode('/', $ip);
+                                    $bits = (int) $bits;
+
+                                    // Ensure that the subnet is valid.
+                                    if (
+                                        0 > $bits
+                                        || 32 < $bits
+                                        || false === ip2long($subnet)
+                                    ) {
+                                        return [];
+                                    }
+
+                                    // Precompute the netmask and re-align the range.
+                                    $netmask = -1 << 32 - $bits;
+                                    $start = ip2long($subnet) & $netmask;
+                                    $end = ip2long($subnet) | ~$netmask;
+
+                                    return array_map('long2ip', range($start, $end));
+                                }
+
+                                return [$ip];
+                            },
+                            $container->get('config')['proxy']['ip_addresses'],
+                        ),
+                    );
                     $proxyHeader = $container->get('config')['proxy']['header'];
 
                     $remote->setUseProxy($isProxied)
