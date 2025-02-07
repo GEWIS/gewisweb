@@ -242,9 +242,10 @@ class Module
                 'user_remoteaddress' => static function (ContainerInterface $container) {
                     $remote = new RemoteAddress();
                     $isProxied = $container->get('config')['proxy']['enabled'];
+                    /** @psalm-suppress NamedArgumentNotAllowed */
                     $trustedProxies = array_merge(
                         ...array_map(
-                            static function ($ip) {
+                            static function (string $ip) {
                                 if (str_contains($ip, '/')) {
                                     [$subnet, $bits] = explode('/', $ip);
                                     $bits = (int) $bits;
