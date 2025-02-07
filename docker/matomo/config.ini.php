@@ -23,7 +23,8 @@ proxy_host_headers[] = HTTP_X_FORWARDED_HOST
 
 proxy_ips[] = 192.168.*.*/16
 proxy_ips[] = 172.*.*.*/8
-proxy_ips[] = 131.155.10.135
+proxy_ips[] = 131.155.10.0/27
+proxy_ips[] = 131.155.10.128/27
 proxy_ips[] = 131.155.69.202
 
 [log]
