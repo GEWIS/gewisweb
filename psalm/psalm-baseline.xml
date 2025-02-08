@@ -6,9 +6,17 @@
     </PossiblyFalseReference>
   </file>
   <file src="module/Activity/src/Controller/AdminController.php">
+    <InvalidArgument>
+      <code>$response</code>
+    </InvalidArgument>
     <PossiblyFalseReference>
       <code>getNew</code>
     </PossiblyFalseReference>
+  </file>
+  <file src="module/Activity/src/Controller/ApiController.php">
+    <InvalidArgument>
+      <code>$activitiesArray</code>
+    </InvalidArgument>
   </file>
   <file src="module/Activity/src/Service/Activity.php">
     <PossiblyFalseReference>

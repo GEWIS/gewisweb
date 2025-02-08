@@ -87,7 +87,7 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 RUN composer install -o --no-dev
 
 # Compile the SCSS files.
-FROM node:lts-alpine AS gewisweb_web_styles
+FROM node:lts-alpine AS gewisweb_web_assets
 WORKDIR /code
 
 COPY ./package.json ./package-lock.json ./
@@ -97,8 +97,9 @@ RUN mkdir public && mkdir public/scss && mkdir public/css
 
 COPY --from=gewisweb_web_production_base /code/vendor ./vendor
 COPY ./resources/scss ./resources/scss/
+COPY ./public/js/controllers ./public/js/controllers
 
-RUN npm run scss
+RUN npm run assets
 
 # Create the final image.
 FROM gewisweb_web_production_base AS gewisweb_web_production
@@ -120,7 +121,8 @@ RUN chmod 0775 ./docker-entrypoint.sh
 
 COPY --chown=www-data:www-data . /code
 COPY --chown=www-data:www-data --from=gewisweb_translations /code/*.mo /code/module/Application/language/
-COPY --chown=www-data:www-data --from=gewisweb_web_styles /code/public/css/gewis-theme.css /code/public/css/gewis-theme.css
+COPY --chown=www-data:www-data --from=gewisweb_web_assets /code/public/css/gewis-theme.css /code/public/css/gewis-theme.css
+COPY --chown=www-data:www-data --from=gewisweb_web_assets /code/public/js/dist /code/public/js/dist
 RUN cp -R ./vendor/fortawesome/font-awesome/sprites/. ./public/sprites/fontawesome
 RUN cp -R ./vendor/fortawesome/font-awesome/webfonts/. ./public/fonts/fontawesome
 

@@ -36,6 +36,7 @@ use User\Permissions\Resource\OrganResourceInterface;
  *     displaySubscribedNumber: bool,
  *     limitedCapacity: bool,
  *     fields: ImportedSignupFieldArrayType[],
+ *     presenceTaken: bool,
  * }
  * @psalm-import-type LocalisedTextGdprArrayType from LocalisedTextModel as ImportedLocalisedTextGdprArrayType
  * @psalm-import-type SignupFieldGdprArrayType from SignupField as ImportedSignupFieldGdprArrayType
@@ -48,6 +49,7 @@ use User\Permissions\Resource\OrganResourceInterface;
  *     displaySubscribedNumber: bool,
  *     limitedCapacity: bool,
  *     fields: ImportedSignupFieldGdprArrayType[],
+ *     presenceTaken: bool,
  * }
  */
 #[Entity]
@@ -122,8 +124,8 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
      * @var Collection<array-key, SignupField>
      */
     #[OneToMany(
-        targetEntity: SignupField::class,
         mappedBy: 'signupList',
+        targetEntity: SignupField::class,
         orphanRemoval: true,
     )]
     protected Collection $fields;
@@ -134,12 +136,18 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
      * @var Collection<array-key, Signup>
      */
     #[OneToMany(
-        targetEntity: Signup::class,
         mappedBy: 'signupList',
+        targetEntity: Signup::class,
         orphanRemoval: true,
     )]
     #[OrderBy(value: ['id' => 'ASC'])]
     protected Collection $signUps;
+
+    /**
+     * Determines if presence was taken for this SignupList
+     */
+    #[Column(type: 'boolean')]
+    protected bool $presenceTaken = false;
 
     public function __construct()
     {
@@ -300,6 +308,22 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
+     * Gets presenceTaken for this SignupList
+     */
+    public function isPresenceTaken(): bool
+    {
+        return $this->presenceTaken;
+    }
+
+    /**
+     * Sets presenceTaken for this SignupList
+     */
+    public function setPresenceTaken(bool $presenceTaken): void
+    {
+        $this->presenceTaken = $presenceTaken;
+    }
+
+    /**
      * Returns an associative array representation of this object.
      *
      * @return SignupListArrayType
@@ -320,6 +344,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
             'onlyGEWIS' => $this->getOnlyGEWIS(),
             'displaySubscribedNumber' => $this->getDisplaySubscribedNumber(),
             'limitedCapacity' => $this->getLimitedCapacity(),
+            'presenceTaken' => $this->isPresenceTaken(),
             'fields' => $fieldsArrays,
         ];
     }
@@ -343,6 +368,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
             'onlyGEWIS' => $this->getOnlyGEWIS(),
             'displaySubscribedNumber' => $this->getDisplaySubscribedNumber(),
             'limitedCapacity' => $this->getLimitedCapacity(),
+            'presenceTaken' => $this->isPresenceTaken(),
             'fields' => $fieldsArrays,
         ];
     }

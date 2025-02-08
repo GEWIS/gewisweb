@@ -63,7 +63,7 @@ class Signup extends BaseMapper
             ->where('s.signupList = :signupList')
             ->setParameter('signupList', $signupList);
 
-        return $qb->getQuery()->getSingleScalarResult();
+        return (int) $qb->getQuery()->getSingleScalarResult();
     }
 
     /**
@@ -95,6 +95,14 @@ class Signup extends BaseMapper
         $qb->setParameter('date', (new DateTime())->sub(new DateInterval('P5Y')));
 
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Get Signup by id
+     */
+    public function getSignupById(int $id): ?SignupModel
+    {
+        return $this->getEntityManager()->getRepository(SignupModel::class)->find($id);
     }
 
     protected function getRepositoryName(): string

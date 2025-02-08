@@ -45,3 +45,6 @@ parameters:
         -
             message: '#^Parameter \#1 \$variables of class Laminas\\View\\Model\\JsonModel constructor expects array\<string, mixed\>\|ArrayAccess\<string, mixed\>\|Traversable\<string, mixed\>\|null, array\<int\<0, max\>, array\{id\: int, name\: string\|null, nameEn\: string\|null, beginTime\: DateTime, endTime\: DateTime, location\: string\|null, locationEn\: string\|null, costs\: string\|null, \.\.\.\}\> given\.$#'
             path: ../module/Activity/src/Controller/ApiController.php
+        -
+            message: '#^Parameter \#1 \$variables of class Laminas\\View\\Model\\JsonModel constructor expects array\<string, mixed\>\|ArrayAccess\<string, mixed\>\|Traversable\<string, mixed\>\|null, array\<int\<0, max\>, int\|null\> given\.$#'
+            path: ../module/Activity/src/Controller/AdminController.php

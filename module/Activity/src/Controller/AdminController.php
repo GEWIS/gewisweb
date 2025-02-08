@@ -6,6 +6,7 @@ namespace Activity\Controller;
 
 use Activity\Mapper\Signup as SignupMapper;
 use Activity\Model\Activity as ActivityModel;
+use Activity\Model\Signup as SignupModel;
 use Activity\Service\AclService;
 use Activity\Service\Activity as ActivityService;
 use Activity\Service\ActivityQuery as ActivityQueryService;
@@ -25,6 +26,7 @@ use Laminas\Session\AbstractContainer;
 use Laminas\Session\Container as SessionContainer;
 use Laminas\Stdlib\Parameters;
 use Laminas\Stdlib\ParametersInterface;
+use Laminas\View\Model\JsonModel;
 use Laminas\View\Model\ViewModel;
 use User\Permissions\NotAllowedException;
 
@@ -508,5 +510,80 @@ class AdminController extends AbstractActionController
         }
 
         return new ViewModel($result);
+    }
+
+    public function markPresentAction(): JsonModel
+    {
+        if (!$this->getRequest()->isPost()) {
+            $this->getResponse()->setStatusCode(405);
+
+            return new JsonModel([
+                'Error' => $this->translator->translate('You can only make POST requests to this endpoint'),
+            ]);
+        }
+
+        $signupId = (int) $this->params()->fromRoute('id');
+        $signup = $this->signupMapper->getSignupById($signupId);
+
+        if (null === $signup) {
+            $this->getResponse()->setStatusCode(400);
+
+            return new JsonModel(['Error' => $this->translator->translate('Signup not found')]);
+        }
+
+        $signupList = $signup->getSignupList();
+        $activity = $signupList->getActivity();
+
+        if (!$this->aclService->isAllowed('viewParticipants', $signupList)) {
+            $this->getResponse()->setStatusCode(401);
+
+            return new JsonModel([
+                'Error' => $this->translator->translate(
+                    'You are not allowed to view the participants of this activity',
+                ),
+            ]);
+        }
+
+        $now = new DateTime();
+        $interval = new DateInterval('PT30M');
+        if (
+            ActivityModel::STATUS_APPROVED !== $activity->getStatus() ||
+            $now < $activity->getBeginTime()->sub($interval) ||
+            $now > $activity->getEndTime()->add($interval)
+        ) {
+            $this->getResponse()->setStatusCode(400);
+
+            return new JsonModel([
+                'Error' => $this->translator->translate(
+                    'Presence mode is not open right now',
+                ),
+            ]);
+        }
+
+        $entityManager = $this->signupMapper->getEntityManager();
+
+        $signup->setPresent(true);
+        $entityManager->persist($signup);
+
+        $signupList->setPresenceTaken(true);
+        $entityManager->persist($signupList);
+
+        $entityManager->flush();
+
+        /** @var SignupModel[] $signups */
+        $signups = $entityManager
+            ->getRepository(SignupModel::class)
+            ->findBy(['signupList' => $signup->getSignupList()->getActivity()->getId()]);
+
+        $response = [];
+        foreach ($signups as $signup) {
+            if (!$signup->isPresent()) {
+                continue;
+            }
+
+            $response[] = $signup->getId();
+        }
+
+        return new JsonModel($response);
     }
 }

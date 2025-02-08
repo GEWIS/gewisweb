@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-11 15:54+0100\n"
+"POT-Creation-Date: 2025-01-15 21:24+0100\n"
 "PO-Revision-Date: 2025-01-11 15:54+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -520,6 +520,9 @@ msgstr "Vereniging"
 
 msgid "Attachment"
 msgstr "Bijlage"
+
+msgid "Attendance mode"
+msgstr "Aanwezigheid modus"
 
 msgid "Author"
 msgstr "Auteur"
@@ -2044,6 +2047,9 @@ msgstr "Geen orgaan"
 msgid "None"
 msgstr "Geen"
 
+msgid "Not present"
+msgstr "Niet aanwezig"
+
 msgid "Notifications"
 msgstr "Meldingen"
 
@@ -2335,6 +2341,15 @@ msgstr "Niet goedgekeurde polls"
 msgid "Poster Policy"
 msgstr "Posterbeleid"
 
+msgid "Presence"
+msgstr "Aanwezigheid"
+
+msgid "Presence mode is not open right now"
+msgstr "Aanwezigheid modus is op dit moment niet open"
+
+msgid "Present"
+msgstr "Aanwezig"
+
 msgid "Previous"
 msgstr "Vorige"
 
@@ -2508,6 +2523,9 @@ msgstr "Zoek met trefwoord of vergaderingsnummer"
 msgid "Search for decision"
 msgstr "Zoek besluit"
 
+msgid "Search for name or email"
+msgstr "Zoek op naam of email"
+
 msgid "Search query"
 msgstr "Zoek query"
 
@@ -2649,6 +2667,9 @@ msgstr "Inschrijving sluit: %s (over  %s)"
 #, php-format
 msgid "Sign-up opens: %s (in %s)"
 msgstr "Inschrijving opent: %s (over %s)"
+
+msgid "Signup not found"
+msgstr "Aanmelding niet gevonden"
 
 msgid "Similar courses"
 msgstr "Vergelijkbare vakken"
@@ -4194,6 +4215,9 @@ msgstr ""
 "Je kunt de huidige Foto van de Week niet langer verbergen. Mocht het toch "
 "nodig zijn om de foto onzichtbaar te maken (of zelfs te verwijderen) neem "
 "dan onmiddellijk contact op met de ApplicatieBeheerCommissie."
+
+msgid "You can only make POST requests to this endpoint"
+msgstr "Je kunt alleen POST request maken naar dit endpoint"
 
 msgid "You cannot create new jobs in expired job packages."
 msgstr "Je kan geen nieuwe vacatures maken in verlopen vacaturepakketen."
