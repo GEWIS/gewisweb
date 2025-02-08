@@ -438,7 +438,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">53</span>
+    <span class="phpdocumentor-element-found-in__line">55</span>
 
     </aside>
 
@@ -495,6 +495,7 @@ onlyGEWIS: bool,
 displaySubscribedNumber: bool,
 limitedCapacity: bool,
 fields: ImportedSignupFieldArrayType[],
+presenceTaken: bool,
 }</p>
 </section>
 
@@ -513,6 +514,7 @@ onlyGEWIS: bool,
 displaySubscribedNumber: bool,
 limitedCapacity: bool,
 fields: ImportedSignupFieldGdprArrayType[],
+presenceTaken: bool,
 }</p>
 </section>
 
@@ -625,6 +627,13 @@ nullable.</dd>
                         &nbsp;: <abbr title="\DateTime">DateTime</abbr>            </span>
 </dt>
 <dd>The date and time the SignupList is open for signups.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a class="" href="classes/Activity-Model-SignupList.html#property_presenceTaken">$presenceTaken</a>
+    <span>
+                        &nbsp;: bool            </span>
+</dt>
+<dd>Determines if presence was taken for this SignupList</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Activity-Model-SignupList.html#property_signUps">$signUps</a>
@@ -744,6 +753,13 @@ when the user is not logged in.</dd>
 <dd>Whether the sign-up list period is now.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Activity-Model-SignupList.html#method_isPresenceTaken">isPresenceTaken()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+<dd>Gets presenceTaken for this SignupList</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Activity-Model-SignupList.html#method_setActivity">setActivity()</a>
     <span>
                                 &nbsp;: void    </span>
@@ -806,6 +822,13 @@ signed up when the user is not logged in.</dd>
 <dd>Sets the opening DateTime of this SignupList.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Activity-Model-SignupList.html#method_setPresenceTaken">setPresenceTaken()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>Sets presenceTaken for this SignupList</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Activity-Model-SignupList.html#method_setSignUps">setSignUps()</a>
     <span>
                                 &nbsp;: void    </span>
@@ -854,7 +877,7 @@ signed up when the user is not logged in.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">61</span>
+    <span class="phpdocumentor-element-found-in__line">63</span>
 
     </aside>
 
@@ -925,7 +948,7 @@ signed up when the user is not logged in.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">97</span>
+    <span class="phpdocumentor-element-found-in__line">99</span>
 
     </aside>
 
@@ -976,7 +999,7 @@ signed up when the user is not logged in.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">110</span>
+    <span class="phpdocumentor-element-found-in__line">112</span>
 
     </aside>
 
@@ -1028,7 +1051,7 @@ when the user is NOT logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">124</span>
+    <span class="phpdocumentor-element-found-in__line">126</span>
 
     </aside>
 
@@ -1056,10 +1079,10 @@ when the user is NOT logged in.</p>
         #[<abbr title="\Doctrine\ORM\Mapping\OneToMany">OneToMany</abbr>]
     </dt>
         <dd class="phpdocumentor-argument-list__entry">
-        $targetEntity: \Activity\Model\SignupField::class
+        $mappedBy: &#039;signupList&#039;
     </dd>
         <dd class="phpdocumentor-argument-list__entry">
-        $mappedBy: &#039;signupList&#039;
+        $targetEntity: \Activity\Model\SignupField::class
     </dd>
         <dd class="phpdocumentor-argument-list__entry">
         $orphanRemoval: true
@@ -1150,7 +1173,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">116</span>
+    <span class="phpdocumentor-element-found-in__line">118</span>
 
     </aside>
 
@@ -1201,7 +1224,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">76</span>
+    <span class="phpdocumentor-element-found-in__line">78</span>
 
     </aside>
 
@@ -1272,7 +1295,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">103</span>
+    <span class="phpdocumentor-element-found-in__line">105</span>
 
     </aside>
 
@@ -1323,7 +1346,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">91</span>
+    <span class="phpdocumentor-element-found-in__line">93</span>
 
     </aside>
 
@@ -1364,6 +1387,57 @@ nullable.</p>
             -protected
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="property_presenceTaken">
+        $presenceTaken
+        <a href="classes/Activity-Model-SignupList.html#property_presenceTaken" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">149</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Determines if presence was taken for this SignupList</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type">bool</span>
+    <span class="phpdocumentor-signature__name">$presenceTaken</span>
+     = <span class="phpdocumentor-signature__default-value">false</span></code>
+
+    
+    
+    
+
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Activity-Model-SignupList.html#property_presenceTaken#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $type: &#039;boolean&#039;
+    </dd>
+    </dl>
+            </section>
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="property_signUps">
         $signUps
         <a href="classes/Activity-Model-SignupList.html#property_signUps" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1374,7 +1448,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">136</span>
+    <span class="phpdocumentor-element-found-in__line">138</span>
 
     </aside>
 
@@ -1402,10 +1476,10 @@ nullable.</p>
         #[<abbr title="\Doctrine\ORM\Mapping\OneToMany">OneToMany</abbr>]
     </dt>
         <dd class="phpdocumentor-argument-list__entry">
-        $targetEntity: \Activity\Model\Signup::class
+        $mappedBy: &#039;signupList&#039;
     </dd>
         <dd class="phpdocumentor-argument-list__entry">
-        $mappedBy: &#039;signupList&#039;
+        $targetEntity: \Activity\Model\Signup::class
     </dd>
         <dd class="phpdocumentor-argument-list__entry">
         $orphanRemoval: true
@@ -1444,7 +1518,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">144</span>
+    <span class="phpdocumentor-element-found-in__line">152</span>
 
     </aside>
 
@@ -1478,7 +1552,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">289</span>
+    <span class="phpdocumentor-element-found-in__line">297</span>
 
     </aside>
 
@@ -1517,7 +1591,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">210</span>
+    <span class="phpdocumentor-element-found-in__line">218</span>
 
     </aside>
 
@@ -1556,7 +1630,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">256</span>
+    <span class="phpdocumentor-element-found-in__line">264</span>
 
     </aside>
 
@@ -1596,7 +1670,7 @@ when the user is not logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">168</span>
+    <span class="phpdocumentor-element-found-in__line">176</span>
 
     </aside>
 
@@ -1687,7 +1761,7 @@ when the user is not logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">273</span>
+    <span class="phpdocumentor-element-found-in__line">281</span>
 
     </aside>
 
@@ -1726,7 +1800,7 @@ when the user is not logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">181</span>
+    <span class="phpdocumentor-element-found-in__line">189</span>
 
     </aside>
 
@@ -1764,7 +1838,7 @@ when the user is not logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">239</span>
+    <span class="phpdocumentor-element-found-in__line">247</span>
 
     </aside>
 
@@ -1803,7 +1877,7 @@ when the user is not logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">194</span>
+    <span class="phpdocumentor-element-found-in__line">202</span>
 
     </aside>
 
@@ -1842,7 +1916,7 @@ when the user is not logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">369</span>
+    <span class="phpdocumentor-element-found-in__line">395</span>
 
     </aside>
 
@@ -1881,7 +1955,7 @@ when the user is not logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">353</span>
+    <span class="phpdocumentor-element-found-in__line">379</span>
 
     </aside>
 
@@ -1920,7 +1994,7 @@ when the user is not logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">361</span>
+    <span class="phpdocumentor-element-found-in__line">387</span>
 
     </aside>
 
@@ -1959,7 +2033,7 @@ when the user is not logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">152</span>
+    <span class="phpdocumentor-element-found-in__line">160</span>
 
     </aside>
 
@@ -1997,7 +2071,7 @@ when the user is not logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">229</span>
+    <span class="phpdocumentor-element-found-in__line">237</span>
 
     </aside>
 
@@ -2031,6 +2105,45 @@ of the actual activity.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_isPresenceTaken">
+        isPresenceTaken()
+        <a href="classes/Activity-Model-SignupList.html#method_isPresenceTaken" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">313</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Gets presenceTaken for this SignupList</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">isPresenceTaken</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_setActivity">
         setActivity()
         <a href="classes/Activity-Model-SignupList.html#method_setActivity" class="headerlink"><i class="fas fa-link"></i></a>
@@ -2039,7 +2152,7 @@ of the actual activity.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">297</span>
+    <span class="phpdocumentor-element-found-in__line">305</span>
 
     </aside>
 
@@ -2084,7 +2197,7 @@ of the actual activity.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">218</span>
+    <span class="phpdocumentor-element-found-in__line">226</span>
 
     </aside>
 
@@ -2129,7 +2242,7 @@ of the actual activity.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">265</span>
+    <span class="phpdocumentor-element-found-in__line">273</span>
 
     </aside>
 
@@ -2175,7 +2288,7 @@ signed up when the user is not logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">176</span>
+    <span class="phpdocumentor-element-found-in__line">184</span>
 
     </aside>
 
@@ -2264,7 +2377,7 @@ signed up when the user is not logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">281</span>
+    <span class="phpdocumentor-element-found-in__line">289</span>
 
     </aside>
 
@@ -2309,7 +2422,7 @@ signed up when the user is not logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">186</span>
+    <span class="phpdocumentor-element-found-in__line">194</span>
 
     </aside>
 
@@ -2353,7 +2466,7 @@ signed up when the user is not logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">247</span>
+    <span class="phpdocumentor-element-found-in__line">255</span>
 
     </aside>
 
@@ -2398,7 +2511,7 @@ signed up when the user is not logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">202</span>
+    <span class="phpdocumentor-element-found-in__line">210</span>
 
     </aside>
 
@@ -2435,6 +2548,51 @@ signed up when the user is not logged in.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_setPresenceTaken">
+        setPresenceTaken()
+        <a href="classes/Activity-Model-SignupList.html#method_setPresenceTaken" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">321</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Sets presenceTaken for this SignupList</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">setPresenceTaken</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$presenceTaken</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$presenceTaken</span>
+                : <span class="phpdocumentor-signature__argument__return-type">bool</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+    
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_setSignUps">
         setSignUps()
         <a href="classes/Activity-Model-SignupList.html#method_setSignUps" class="headerlink"><i class="fas fa-link"></i></a>
@@ -2443,7 +2601,7 @@ signed up when the user is not logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">160</span>
+    <span class="phpdocumentor-element-found-in__line">168</span>
 
     </aside>
 
@@ -2487,7 +2645,7 @@ signed up when the user is not logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">307</span>
+    <span class="phpdocumentor-element-found-in__line">331</span>
 
     </aside>
 
@@ -2526,7 +2684,7 @@ signed up when the user is not logged in.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/SignupList.php"><a href="files/module-activity-src-model-signuplist.html"><abbr title="module/Activity/src/Model/SignupList.php">SignupList.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">330</span>
+    <span class="phpdocumentor-element-found-in__line">355</span>
 
     </aside>
 
@@ -2672,6 +2830,7 @@ signed up when the user is not logged in.</p>
                                                     <li class=""><a href="classes/Activity-Model-SignupList.html#property_name">$name</a></li>
                                                     <li class=""><a href="classes/Activity-Model-SignupList.html#property_onlyGEWIS">$onlyGEWIS</a></li>
                                                     <li class=""><a href="classes/Activity-Model-SignupList.html#property_openDate">$openDate</a></li>
+                                                    <li class=""><a href="classes/Activity-Model-SignupList.html#property_presenceTaken">$presenceTaken</a></li>
                                                     <li class=""><a href="classes/Activity-Model-SignupList.html#property_signUps">$signUps</a></li>
                                             </ul>
                 </li>
@@ -2694,6 +2853,7 @@ signed up when the user is not logged in.</p>
                                             <li class=""><a href="classes/Activity-Model-SignupList.html#method_getResourceOrgan">getResourceOrgan()</a></li>
                                             <li class=""><a href="classes/Activity-Model-SignupList.html#method_getSignUps">getSignUps()</a></li>
                                             <li class=""><a href="classes/Activity-Model-SignupList.html#method_isOpen">isOpen()</a></li>
+                                            <li class=""><a href="classes/Activity-Model-SignupList.html#method_isPresenceTaken">isPresenceTaken()</a></li>
                                             <li class=""><a href="classes/Activity-Model-SignupList.html#method_setActivity">setActivity()</a></li>
                                             <li class=""><a href="classes/Activity-Model-SignupList.html#method_setCloseDate">setCloseDate()</a></li>
                                             <li class=""><a href="classes/Activity-Model-SignupList.html#method_setDisplaySubscribedNumber">setDisplaySubscribedNumber()</a></li>
@@ -2703,6 +2863,7 @@ signed up when the user is not logged in.</p>
                                             <li class=""><a href="classes/Activity-Model-SignupList.html#method_setName">setName()</a></li>
                                             <li class=""><a href="classes/Activity-Model-SignupList.html#method_setOnlyGEWIS">setOnlyGEWIS()</a></li>
                                             <li class=""><a href="classes/Activity-Model-SignupList.html#method_setOpenDate">setOpenDate()</a></li>
+                                            <li class=""><a href="classes/Activity-Model-SignupList.html#method_setPresenceTaken">setPresenceTaken()</a></li>
                                             <li class=""><a href="classes/Activity-Model-SignupList.html#method_setSignUps">setSignUps()</a></li>
                                             <li class=""><a href="classes/Activity-Model-SignupList.html#method_toArray">toArray()</a></li>
                                             <li class=""><a href="classes/Activity-Model-SignupList.html#method_toGdprArray">toGdprArray()</a></li>

@@ -376,6 +376,11 @@ Search.appendIndex(
             "summary": "Show\u0020a\u0020list\u0020of\u0020all\u0020activities\u0020this\u0020user\u0020can\u0020manage.",
             "url": "classes/Activity-Controller-AdminController.html#method_viewAction"
         },                {
+            "fqsen": "\\Activity\\Controller\\AdminController\u003A\u003AmarkPresentAction\u0028\u0029",
+            "name": "markPresentAction",
+            "summary": "",
+            "url": "classes/Activity-Controller-AdminController.html#method_markPresentAction"
+        },                {
             "fqsen": "\\Activity\\Controller\\AdminController\u003A\u003A\u0024aclService",
             "name": "aclService",
             "summary": "",
@@ -1130,6 +1135,11 @@ Search.appendIndex(
             "name": "getSignupsOlderThan5Years",
             "summary": "Get\u0020all\u0020sign\u002Dups\u0020for\u0020activities\u0020that\u0020ended\u00205\u0020years\u0020ago.",
             "url": "classes/Activity-Mapper-Signup.html#method_getSignupsOlderThan5Years"
+        },                {
+            "fqsen": "\\Activity\\Mapper\\Signup\u003A\u003AgetSignupById\u0028\u0029",
+            "name": "getSignupById",
+            "summary": "Get\u0020Signup\u0020by\u0020id",
+            "url": "classes/Activity-Mapper-Signup.html#method_getSignupById"
         },                {
             "fqsen": "\\Activity\\Mapper\\Signup\u003A\u003AgetRepositoryName\u0028\u0029",
             "name": "getRepositoryName",
@@ -2006,6 +2016,16 @@ Search.appendIndex(
             "summary": "Get\u0020all\u0020the\u0020extra\u0020field\u0020values.",
             "url": "classes/Activity-Model-Signup.html#method_getFieldValues"
         },                {
+            "fqsen": "\\Activity\\Model\\Signup\u003A\u003AisPresent\u0028\u0029",
+            "name": "isPresent",
+            "summary": "Get\u0020presence\u0020of\u0020the\u0020user",
+            "url": "classes/Activity-Model-Signup.html#method_isPresent"
+        },                {
+            "fqsen": "\\Activity\\Model\\Signup\u003A\u003AsetPresent\u0028\u0029",
+            "name": "setPresent",
+            "summary": "Set\u0020presence\u0020of\u0020the\u0020user",
+            "url": "classes/Activity-Model-Signup.html#method_setPresent"
+        },                {
             "fqsen": "\\Activity\\Model\\Signup\u003A\u003AgetFullName\u0028\u0029",
             "name": "getFullName",
             "summary": "Get\u0020the\u0020full\u0020name\u0020of\u0020the\u0020user\u0020whom\u0020signed\u0020up\u0020for\u0020the\u0020SignupList.",
@@ -2035,6 +2055,11 @@ Search.appendIndex(
             "name": "fieldValues",
             "summary": "Additional\u0020field\u0020values\u0020for\u0020this\u0020Signup.",
             "url": "classes/Activity-Model-Signup.html#property_fieldValues"
+        },                {
+            "fqsen": "\\Activity\\Model\\Signup\u003A\u003A\u0024present",
+            "name": "present",
+            "summary": "Determines\u0020if\u0020the\u0020user\u0020was\u0020present\u0020or\u0020not",
+            "url": "classes/Activity-Model-Signup.html#property_present"
         },                {
             "fqsen": "\\Activity\\Model\\SignupField",
             "name": "SignupField",
@@ -2326,6 +2351,16 @@ Search.appendIndex(
             "summary": "Sets\u0020the\u0020associated\u0020Activity.",
             "url": "classes/Activity-Model-SignupList.html#method_setActivity"
         },                {
+            "fqsen": "\\Activity\\Model\\SignupList\u003A\u003AisPresenceTaken\u0028\u0029",
+            "name": "isPresenceTaken",
+            "summary": "Gets\u0020presenceTaken\u0020for\u0020this\u0020SignupList",
+            "url": "classes/Activity-Model-SignupList.html#method_isPresenceTaken"
+        },                {
+            "fqsen": "\\Activity\\Model\\SignupList\u003A\u003AsetPresenceTaken\u0028\u0029",
+            "name": "setPresenceTaken",
+            "summary": "Sets\u0020presenceTaken\u0020for\u0020this\u0020SignupList",
+            "url": "classes/Activity-Model-SignupList.html#method_setPresenceTaken"
+        },                {
             "fqsen": "\\Activity\\Model\\SignupList\u003A\u003AtoArray\u0028\u0029",
             "name": "toArray",
             "summary": "Returns\u0020an\u0020associative\u0020array\u0020representation\u0020of\u0020this\u0020object.",
@@ -2395,6 +2430,11 @@ Search.appendIndex(
             "name": "signUps",
             "summary": "All\u0020the\u0020people\u0020who\u0020signed\u0020up\u0020for\u0020this\u0020SignupList.",
             "url": "classes/Activity-Model-SignupList.html#property_signUps"
+        },                {
+            "fqsen": "\\Activity\\Model\\SignupList\u003A\u003A\u0024presenceTaken",
+            "name": "presenceTaken",
+            "summary": "Determines\u0020if\u0020presence\u0020was\u0020taken\u0020for\u0020this\u0020SignupList",
+            "url": "classes/Activity-Model-SignupList.html#property_presenceTaken"
         },                {
             "fqsen": "\\Activity\\Model\\SignupOption",
             "name": "SignupOption",
@@ -3390,6 +3430,26 @@ Search.appendIndex(
             "name": "down",
             "summary": "",
             "url": "classes/Application-Migrations-Version20250102092706.html#method_down"
+        },                {
+            "fqsen": "\\Application\\Migrations\\Version20250114092913",
+            "name": "Version20250114092913",
+            "summary": "",
+            "url": "classes/Application-Migrations-Version20250114092913.html"
+        },                {
+            "fqsen": "\\Application\\Migrations\\Version20250114092913\u003A\u003AgetDescription\u0028\u0029",
+            "name": "getDescription",
+            "summary": "",
+            "url": "classes/Application-Migrations-Version20250114092913.html#method_getDescription"
+        },                {
+            "fqsen": "\\Application\\Migrations\\Version20250114092913\u003A\u003Aup\u0028\u0029",
+            "name": "up",
+            "summary": "",
+            "url": "classes/Application-Migrations-Version20250114092913.html#method_up"
+        },                {
+            "fqsen": "\\Application\\Migrations\\Version20250114092913\u003A\u003Adown\u0028\u0029",
+            "name": "down",
+            "summary": "",
+            "url": "classes/Application-Migrations-Version20250114092913.html#method_down"
         },                {
             "fqsen": "\\Application\\Command\\Factory\\LoadFixturesFactory",
             "name": "LoadFixturesFactory",

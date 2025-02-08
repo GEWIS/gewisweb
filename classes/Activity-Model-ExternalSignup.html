@@ -517,6 +517,13 @@
 nullable.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a class="" href="classes/Activity-Model-Signup.html#property_present">$present</a>
+    <span>
+                        &nbsp;: bool            </span>
+</dt>
+<dd>Determines if the user was present or not</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Activity-Model-Signup.html#property_signupList">$signupList</a>
     <span>
                         &nbsp;: <a href="classes/Activity-Model-SignupList.html"><abbr title="\Activity\Model\SignupList">SignupList</abbr></a>            </span>
@@ -592,6 +599,13 @@ nullable.</dd>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Activity-Model-Signup.html#method_isPresent">isPresent()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+<dd>Get presence of the user</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Application-Model-Traits-TimestampableTrait.html#method_prePersist">prePersist()</a>
     <span>
                                 &nbsp;: void    </span>
@@ -625,6 +639,13 @@ nullable.</dd>
                                 &nbsp;: void    </span>
 </dt>
 <dd>Setting the identifier manually will, in most instances, result in undefined behaviour. Use with caution!</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Activity-Model-Signup.html#method_setPresent">setPresent()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>Set presence of the user</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Activity-Model-Signup.html#method_setSignupList">setSignupList()</a>
@@ -789,7 +810,7 @@ nullable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Signup.php"><a href="files/module-activity-src-model-signup.html"><abbr title="module/Activity/src/Model/Signup.php">Signup.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">71</span>
+    <span class="phpdocumentor-element-found-in__line">73</span>
 
     </aside>
 
@@ -952,6 +973,57 @@ nullable.</p>
             -protected
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="property_present">
+        $present
+        <a href="classes/Activity-Model-Signup.html#property_present" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Signup.php"><a href="files/module-activity-src-model-signup.html"><abbr title="module/Activity/src/Model/Signup.php">Signup.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">83</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Determines if the user was present or not</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type">bool</span>
+    <span class="phpdocumentor-signature__name">$present</span>
+     = <span class="phpdocumentor-signature__default-value">false</span></code>
+
+    
+    
+    
+
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Activity-Model-Signup.html#property_present#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $type: &#039;boolean&#039;
+    </dd>
+    </dl>
+            </section>
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="property_signupList">
         $signupList
         <a href="classes/Activity-Model-Signup.html#property_signupList" class="headerlink"><i class="fas fa-link"></i></a>
@@ -962,7 +1034,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Signup.php"><a href="files/module-activity-src-model-signup.html"><abbr title="module/Activity/src/Model/Signup.php">Signup.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">55</span>
+    <span class="phpdocumentor-element-found-in__line">57</span>
 
     </aside>
 
@@ -1086,7 +1158,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Signup.php"><a href="files/module-activity-src-model-signup.html"><abbr title="module/Activity/src/Model/Signup.php">Signup.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">78</span>
+    <span class="phpdocumentor-element-found-in__line">86</span>
 
     </aside>
 
@@ -1197,7 +1269,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Signup.php"><a href="files/module-activity-src-model-signup.html"><abbr title="module/Activity/src/Model/Signup.php">Signup.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">104</span>
+    <span class="phpdocumentor-element-found-in__line">112</span>
 
     </aside>
 
@@ -1328,7 +1400,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Signup.php"><a href="files/module-activity-src-model-signup.html"><abbr title="module/Activity/src/Model/Signup.php">Signup.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">86</span>
+    <span class="phpdocumentor-element-found-in__line">94</span>
 
     </aside>
 
@@ -1388,6 +1460,45 @@ nullable.</p>
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><abbr title="\DateTime">DateTime</abbr></span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_isPresent">
+        isPresent()
+        <a href="classes/Activity-Model-Signup.html#method_isPresent" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Signup.php"><a href="files/module-activity-src-model-signup.html"><abbr title="module/Activity/src/Model/Signup.php">Signup.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">120</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Get presence of the user</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">isPresent</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
             </section>
 
 </article>
@@ -1624,6 +1735,51 @@ nullable.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_setPresent">
+        setPresent()
+        <a href="classes/Activity-Model-Signup.html#method_setPresent" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Signup.php"><a href="files/module-activity-src-model-signup.html"><abbr title="module/Activity/src/Model/Signup.php">Signup.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">128</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Set presence of the user</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">setPresent</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$present</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$present</span>
+                : <span class="phpdocumentor-signature__argument__return-type">bool</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+    
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_setSignupList">
         setSignupList()
         <a href="classes/Activity-Model-Signup.html#method_setSignupList" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1632,7 +1788,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Signup.php"><a href="files/module-activity-src-model-signup.html"><abbr title="module/Activity/src/Model/Signup.php">Signup.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">94</span>
+    <span class="phpdocumentor-element-found-in__line">102</span>
 
     </aside>
 
@@ -1677,7 +1833,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Signup.php"><a href="files/module-activity-src-model-signup.html"><abbr title="module/Activity/src/Model/Signup.php">Signup.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">143</span>
+    <span class="phpdocumentor-element-found-in__line">168</span>
 
     </aside>
 
@@ -1715,7 +1871,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Signup.php"><a href="files/module-activity-src-model-signup.html"><abbr title="module/Activity/src/Model/Signup.php">Signup.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">122</span>
+    <span class="phpdocumentor-element-found-in__line">146</span>
 
     </aside>
 
@@ -1945,6 +2101,7 @@ nullable.</p>
                                                     <li class=""><a href="classes/Activity-Model-Signup.html#property_fieldValues">$fieldValues</a></li>
                                                     <li class=""><a href="classes/Activity-Model-ExternalSignup.html#property_fullName">$fullName</a></li>
                                                     <li class=""><a href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id">$id</a></li>
+                                                    <li class=""><a href="classes/Activity-Model-Signup.html#property_present">$present</a></li>
                                                     <li class=""><a href="classes/Activity-Model-Signup.html#property_signupList">$signupList</a></li>
                                                     <li class=""><a href="classes/Application-Model-Traits-TimestampableTrait.html#property_updatedAt">$updatedAt</a></li>
                                             </ul>
@@ -1961,11 +2118,13 @@ nullable.</p>
                                             <li class=""><a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_getId">getId()</a></li>
                                             <li class=""><a href="classes/Activity-Model-Signup.html#method_getSignupList">getSignupList()</a></li>
                                             <li class=""><a href="classes/Application-Model-Traits-TimestampableTrait.html#method_getUpdatedAt">getUpdatedAt()</a></li>
+                                            <li class=""><a href="classes/Activity-Model-Signup.html#method_isPresent">isPresent()</a></li>
                                             <li class=""><a href="classes/Application-Model-Traits-TimestampableTrait.html#method_prePersist">prePersist()</a></li>
                                             <li class=""><a href="classes/Application-Model-Traits-TimestampableTrait.html#method_preUpdate">preUpdate()</a></li>
                                             <li class=""><a href="classes/Activity-Model-ExternalSignup.html#method_setEmail">setEmail()</a></li>
                                             <li class=""><a href="classes/Activity-Model-ExternalSignup.html#method_setFullName">setFullName()</a></li>
                                             <li class=""><a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_setId">setId()</a></li>
+                                            <li class=""><a href="classes/Activity-Model-Signup.html#method_setPresent">setPresent()</a></li>
                                             <li class=""><a href="classes/Activity-Model-Signup.html#method_setSignupList">setSignupList()</a></li>
                                             <li class=""><a href="classes/Activity-Model-Signup.html#method_toFormArray">toFormArray()</a></li>
                                             <li class=""><a href="classes/Activity-Model-Signup.html#method_toGdprArray">toGdprArray()</a></li>
