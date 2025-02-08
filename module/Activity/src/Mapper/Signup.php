@@ -55,7 +55,7 @@ class Signup extends BaseMapper
         return $this->getEntityManager()->getRepository(ExternalSignupModel::class)->find($signupId);
     }
 
-    public function getNumberOfSignedUpMembers(SignupListModel $signupList): string|int|float|bool|null
+    public function getNumberOfSignedUpMembers(SignupListModel $signupList): int
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('COUNT(s)')
@@ -63,7 +63,7 @@ class Signup extends BaseMapper
             ->where('s.signupList = :signupList')
             ->setParameter('signupList', $signupList);
 
-        return $qb->getQuery()->getSingleScalarResult();
+        return (int) $qb->getQuery()->getSingleScalarResult();
     }
 
     /**

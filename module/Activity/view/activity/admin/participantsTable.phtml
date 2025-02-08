@@ -14,6 +14,7 @@ use Laminas\View\Renderer\PhpRenderer;
 
 ?>
 <?php
+$activityApproved = ActivityModel::STATUS_APPROVED === $activity->getStatus();
 $attendanceModeTimeStarted = new DateTime() > $activity->getBeginTime()->modify('-30 min');
 $attendanceModeTimeEnded = new DateTime() > $activity->getEndTime()->modify('+30 min');
 ?>
@@ -31,8 +32,8 @@ $attendanceModeTimeEnded = new DateTime() > $activity->getEndTime()->modify('+30
             <th>#</th>
             <th><?= $this->translate('Name') ?></th>
             <th><?= $this->translate('Email') ?></th>
-            <?php if ($attendanceModeTimeStarted): ?>
-                <th><?= $this->translate("Presence")?></th>
+            <?php if ($activityApproved && $attendanceModeTimeStarted): ?>
+                <th><?= $this->translate('Presence')?></th>
             <?php endif ?>
             <th><?= $this->translate('Type') ?></th>
             <th><?= $this->translate('Generation') ?></th>
@@ -109,6 +110,11 @@ $attendanceModeTimeEnded = new DateTime() > $activity->getEndTime()->modify('+30
                     <?php
                     endif; ?>
                 </td>
+                <?php if ($activityApproved && $attendanceModeTimeStarted): ?>
+                    <td>
+                        <span class="fas <?= ($signup->isPresent()) ? 'fa-circle-check' : 'fa-circle-xmark' ?>"></span>
+                    </td>
+                <?php endif; ?>
                 <?php
                 if ($signup instanceof UserSignup): ?>
                     <td>
@@ -208,7 +214,7 @@ $attendanceModeTimeEnded = new DateTime() > $activity->getEndTime()->modify('+30
             </div>
         </div>
     <?php endif; ?>
-    <?php if (isset($signupList) && $attendanceModeTimeStarted && !$attendanceModeTimeEnded): ?>
+    <?php if (isset($signupList) && $activityApproved && $attendanceModeTimeStarted && !$attendanceModeTimeEnded): ?>
         <button class="btn btn-primary btn-lg" type="button"
                 aria-hidden="true" data-action="click->participants-table#enterAttendanceMode">
             <span class="fas fa-list"></span> <?= $this->translate('Attendance mode') ?>

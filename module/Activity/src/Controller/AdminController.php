@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Activity\Controller;
 
-use Activity\Mapper\Signup;
 use Activity\Mapper\Signup as SignupMapper;
 use Activity\Model\Activity as ActivityModel;
 use Activity\Model\Signup as SignupModel;
@@ -524,8 +523,8 @@ class AdminController extends AbstractActionController
         }
 
         $signupId = (int) $this->params()->fromRoute('id');
-        /** @var SignupModel $signup */
         $signup = $this->signupMapper->getSignupById($signupId);
+
         if (null === $signup) {
             $this->getResponse()->setStatusCode(400);
 
@@ -545,9 +544,12 @@ class AdminController extends AbstractActionController
             ]);
         }
 
+        $now = new DateTime();
+        $interval = new DateInterval('PT30M');
         if (
-            new DateTime() < $activity->getBeginTime()->modify('-30 min') ||
-            new DateTime() > $activity->getEndTime()->modify('+30 min')
+            ActivityModel::STATUS_APPROVED !== $activity->getStatus() ||
+            $now < $activity->getBeginTime()->sub($interval) ||
+            $now > $activity->getEndTime()->add($interval)
         ) {
             $this->getResponse()->setStatusCode(400);
 
@@ -568,14 +570,14 @@ class AdminController extends AbstractActionController
 
         $entityManager->flush();
 
-        /** @var Signup[] $signups */
+        /** @var SignupModel[] $signups */
         $signups = $entityManager
             ->getRepository(SignupModel::class)
             ->findBy(['signupList' => $signup->getSignupList()->getActivity()->getId()]);
 
         $response = [];
         foreach ($signups as $signup) {
-            if (!$signup->getPresent()) {
+            if (!$signup->isPresent()) {
                 continue;
             }
 

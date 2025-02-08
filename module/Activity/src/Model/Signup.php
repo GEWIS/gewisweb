@@ -117,7 +117,7 @@ abstract class Signup
     /**
      * Get presence of the user
      */
-    public function getPresent(): bool
+    public function isPresent(): bool
     {
         return $this->present;
     }
@@ -141,8 +141,7 @@ abstract class Signup
     abstract public function getEmail(): ?string;
 
     /**
-     * @return ((((string|null)[]|int)[]|int|string|null)[][]|int|string|null)[]
-     * @psalm-return array{id: int|null, createdAt: string, updatedAt: string, activity_id: int|null, signupList_id: int|null, fieldValues: array<array{id: int, value: string|null, option: array{id: int, value: array{valueEN: string|null, valueNL: string|null}}|null}>}
+     * @return SignupGdprArrayType
      */
     public function toGdprArray(): array
     {
@@ -158,6 +157,7 @@ abstract class Signup
             'updatedAt' => $this->getUpdatedAt()->format(DateTimeInterface::ATOM),
             'activity_id' => $this->getSignupList()->getActivity()->getId(),
             'signupList_id' => $this->getSignupList()->getId(),
+            'present' => $this->isPresent(),
             'fieldValues' => $fieldValues,
         ];
     }

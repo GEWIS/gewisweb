@@ -326,8 +326,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
     /**
      * Returns an associative array representation of this object.
      *
-     * @return (((string|null)[]|bool|int|string|null)[][]|DateTime|bool|int|string|null)[]
-     * @psalm-return array{id: int|null, name: string|null, nameEn: string|null, openDate: DateTime, closeDate: DateTime, onlyGEWIS: bool, displaySubscribedNumber: bool, limitedCapacity: bool, fields: list<array{id: int, maximumValue: int|null, minimumValue: int|null, name: string|null, nameEn: string|null, options: array<array-key, string|null>, optionsEn: array<array-key, string|null>, sensitive: bool, type: int}>}
+     * @return SignupListArrayType
      */
     public function toArray(): array
     {
@@ -345,13 +344,13 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
             'onlyGEWIS' => $this->getOnlyGEWIS(),
             'displaySubscribedNumber' => $this->getDisplaySubscribedNumber(),
             'limitedCapacity' => $this->getLimitedCapacity(),
+            'presenceTaken' => $this->isPresenceTaken(),
             'fields' => $fieldsArrays,
         ];
     }
 
     /**
-     * @return ((((((string|null)[]|int)[]|string|null)[]|bool|int|null)[]|string|null)[]|bool|int|string|null)[]
-     * @psalm-return array{id: int|null, name: array{valueEN: string|null, valueNL: string|null}, openDate: string, closeDate: string, onlyGEWIS: bool, displaySubscribedNumber: bool, limitedCapacity: bool, fields: array<array{id: int, sensitive: bool, name: array{valueEN: string|null, valueNL: string|null}, type: int, minimumValue: int|null, maximumValue: int|null, options: array<array{id: int, value: array{valueEN: string|null, valueNL: string|null}}>|null}>}
+     * @return SignupListGdprArrayType
      */
     public function toGdprArray(): array
     {
@@ -369,6 +368,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
             'onlyGEWIS' => $this->getOnlyGEWIS(),
             'displaySubscribedNumber' => $this->getDisplaySubscribedNumber(),
             'limitedCapacity' => $this->getLimitedCapacity(),
+            'presenceTaken' => $this->isPresenceTaken(),
             'fields' => $fieldsArrays,
         ];
     }

@@ -92,7 +92,6 @@ RUN composer install
 # Create the final image.
 FROM gewisweb_web_development_base AS gewisweb_web_development
 
-
 COPY --chown=web-user:web-user ./docker/web/development/php.ini /usr/local/etc/php/conf.d/default.ini
 COPY --chown=web-user:web-user ./docker/web/development/php-fpm.conf /usr/local/etc/php-fpm.d/zz-gewisweb.conf
 COPY --chown=web-user:web-user ./config/autoload/local.development.php.dist ./config/autoload/local.php
@@ -104,8 +103,7 @@ USER root
 COPY --chown=web-user:web-user ./docker/web/development/crontab /etc/cron.d/crontab
 RUN chmod 0644 /etc/cron.d/crontab && crontab /etc/cron.d/crontab
 
-user web-user
-
+USER web-user
 COPY --chown=web-user:web-user ./docker/web/development/docker-entrypoint.sh ./docker-entrypoint.sh
 RUN chmod 0775 ./docker-entrypoint.sh
 
