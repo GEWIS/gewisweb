@@ -91,7 +91,7 @@ FROM node:lts-alpine AS gewisweb_web_assets
 WORKDIR /code
 
 COPY ./package.json ./package-lock.json ./
-RUN npm install --omit=dev
+RUN npm ci
 
 RUN mkdir public && mkdir public/scss && mkdir public/css
 
