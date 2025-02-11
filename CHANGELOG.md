@@ -1,3 +1,29 @@
+## [v4.8.0](https://github.com/GEWIS/gewisweb/tree/v4.8.0) (2025-02-11)
+
+* Added ❄️🎆❄️🎆❄️🎆.
+* Added the option for the board to hide a Photo of the Week from anonymous users.
+* Added sign-up list deadlines to the activity overview.
+* Added functionality to mark participants of an activity as present/not present (thanks to @LuukBlankenstijn).
+* Improved activity overview time diff element.
+* Improved codebase for future development.
+* Improved handling of access privileges on custom pages.
+* Improved layout of Photos of the Week.
+* Improved error pages.
+* Improved navbar layout.
+* Improved naming of fields in activity creation form.
+* Fixed an issue where diagnostics were not properly reported.
+* Fixed an issue where submenus would not properly close on mobile phones.
+* Fixed an issue where the card layout would break when no footer was present.
+* Fixed an issue where a company could be created without a logo resulting in an error when viewing the company profile.
+* Fixed an issue where the contract number for a company package was not indicated as mandatory.
+* Fixed an issue where it was not possible to toggle the language of a company profile while editing the profile.
+* Fixed an issue where there was a disconnect between the year and week for Photos of the Week resulting in incorrect combinations (e.g. "Week 1 of 2024" in 2025).
+* Fixed an issue where automatic GDPR removal of old sign-ups was not working as expected.
+* Fixed an issue where admins could subscribe external participants to a sign-up list while the sign-up list was not open.
+* Fixed an issue where the Photo of the Week on the homepage would link to the wrong photo.
+* Fixed an issue where the new proxies were incorrectly recognised as client devices.
+* Updated dependencies.
+
 ## [v4.7.1](https://github.com/GEWIS/gewisweb/tree/v4.7.1) (2024-12-16)
 
 * Fixed an issue where the time diff calculation for activities was off when there was only a whole number of weeks left.
