@@ -16,6 +16,7 @@
         width: 100%;
         display: flex;
         margin-bottom: 1rem;
+
         .searchbar {
             width: 100%;
             font-size: 3rem;
@@ -31,31 +32,30 @@
         flex-grow: 1;
         overflow-y: auto;
         overflow-x: hidden;
+
         .result-list-message {
             font-size: 2rem;
             color: lightgray;
             width: 100%;
             text-align: center;
         }
+
         .result-element {
             border-bottom: solid darkgray 0.5px;
             display: flex;
             align-items: center;
+
             .text-container {
                 flex: 1;
                 overflow-x: hidden;
+
                 .name {
                     display: inline-block;
-                    font-size: 3rem;
-                    width: 100%;
-                }
-                .email {
-                    display: inline-block;
-                    color: gray;
-                    font-size: 2rem;
+                    font-size: 4rem;
                     width: 100%;
                 }
             }
+
             .mark-as-present {
                 background-color: forestgreen;
                 color: white;
@@ -70,6 +70,7 @@
                 text-align: center;
             }
         }
+
         .footer {
             width: 100%;
             height: 5rem;
@@ -96,6 +97,7 @@
         transition: all 0.5s ease-in-out;
 
         cursor: pointer;
+
         &:hover {
             opacity: 1;
         }

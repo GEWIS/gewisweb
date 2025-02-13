@@ -1,8 +1,9 @@
-import {Controller} from "@hotwired/stimulus";
+import { Controller } from "@hotwired/stimulus";
 
 interface TableRow {
-    id: number,
-    fields: string[]
+    id: number
+    name: string[]
+    email: string
     present: boolean
 }
 
@@ -30,17 +31,22 @@ export default class extends Controller {
     }
     declare markPresentUrlValue: string
 
-    private rows: TableRow[]|undefined;
+    private rows: TableRow[] | undefined;
     connect() {
         if (!this.rowTargets) {
             return
         }
         this.rows = Array.from(this.rowTargets.map(row => ({
             id: Number(row.getAttribute('data-search-id')),
-            fields: JSON.parse(row.getAttribute('data-search-fields') ?? ''),
+            name: JSON.parse(row.getAttribute('data-search-name') ?? ''),
+            email: String(row.getAttribute('data-search-email')),
             present: Boolean(row.getAttribute('data-present'))
         } as TableRow)))
         this.resetSearchBar()
+    }
+
+    disconnect(): void {
+        window.onpopstate = null;
     }
 
     /**
@@ -52,14 +58,24 @@ export default class extends Controller {
         // reset everything and focus the search bar
         this.resetSearchBar()
         this.resetResultList()
+        window.onpopstate = (event: PopStateEvent) => {
+            console.log('popstateevent');
+            event.preventDefault();
+            history.pushState(null, '', location.href);
+        }
     }
 
     leaveAttendanceMode() {
         this.searchViewTarget?.classList.add('hidden')
+        window.onpopstate = null;
     }
 
     updateSearchResults() {
         const query = this.searchBarTarget?.value
+
+        if (!this.resultListTarget) {
+            return
+        }
 
         if (!query || query.length === 0) {
             return this.resetResultList()
@@ -67,11 +83,12 @@ export default class extends Controller {
 
         const results: (TableRow & { score: number })[] = []
         this.rows?.forEach((row: TableRow) => {
+            const fields = [...row.name, row.email];
             let matchScore = 0
             let containsAny = false;
-            row.fields.forEach((field: string) => {
+            fields.forEach((field: string) => {
                 const score = field.toLowerCase().indexOf(query.toLowerCase())
-                matchScore += score < 0 ? 10000: score
+                matchScore += score < 0 ? 10000 : score
                 if (-1 !== score) {
                     containsAny = true
                 }
@@ -86,17 +103,7 @@ export default class extends Controller {
                 score: matchScore
             })
         })
-        results.sort((a,b) => a.score - b.score);
-        const displayRows = results
-            .map((row) => { return {
-                id: row.id,
-                fields: row.fields,
-                present: row.present,
-            } as TableRow})
-
-        if (!this.resultListTarget) {
-            return
-        }
+        results.sort((a, b) => a.score - b.score);
 
         this.resetResultList()
         if (0 === results.length) {
@@ -115,7 +122,10 @@ export default class extends Controller {
         const button = event.currentTarget as HTMLButtonElement
         const id = Number(button.getAttribute('data-' + this.identifier + '-id'))
 
-        await fetch(this.markPresentUrlValue.replace('-1', id.toString()), {method: 'POST'})
+        this.resetSearchBar()
+        this.resetResultList()
+
+        await fetch(this.markPresentUrlValue.replace('-1', id.toString()), { method: 'POST' })
             .then((response) => {
                 if (!response.ok) {
                     throw new Error(`Status: ${response.status}`)
@@ -130,12 +140,6 @@ export default class extends Controller {
             .catch((error) => {
                 console.error('Error making api call: ', error)
             });
-
-        if (!this.searchBarTarget) {
-            return
-        }
-        this.resetSearchBar()
-        this.resetResultList()
     }
 
 
@@ -167,8 +171,6 @@ export default class extends Controller {
             const id = Number(cell.getAttribute('data-row-id'))
             if (!unfinishedIds.includes(id)) {
                 cell.replaceChildren(this.getPresentTableCellValue())
-            } else {
-                cell.replaceChildren(this.getNotPresentTableCellValue())
             }
         })
     }
@@ -189,12 +191,10 @@ export default class extends Controller {
         const element = document.createElement('div')
         const textContainer = document.createElement('div')
         const nameSpan = document.createElement('span')
-        const emailSpan = document.createElement('span')
         const button = document.createElement('div')
         const checkMark = document.createElement('i')
 
         textContainer.appendChild(nameSpan)
-        textContainer.appendChild(emailSpan)
         element.appendChild(textContainer)
         element.appendChild(button)
         button.appendChild(checkMark)
@@ -202,14 +202,12 @@ export default class extends Controller {
         element.classList.add('result-element')
         textContainer.classList.add('text-container')
         nameSpan.classList.add('name')
-        emailSpan.classList.add('email')
         button.classList.add('mark-as-present')
 
         checkMark.classList.add('fa-solid')
         checkMark.classList.add('fa-check')
 
-        nameSpan.innerHTML = row.fields[0]
-        emailSpan.innerHTML = row.fields[1]
+        nameSpan.innerHTML = row.name.join(" ")
 
         button.setAttribute("data-action", "click->" + this.identifier + "#markAsPresent")
         button.setAttribute('data-' + this.identifier + '-id', row.id.toString())
@@ -220,17 +218,8 @@ export default class extends Controller {
     private getPresentTableCellValue() {
         // instead of just creating a new one we get it from the dom to make sure the translation is correct
         const div = this.presentTableCellTarget!.cloneNode(true) as HTMLTableCellElement
-        div.removeAttribute('data-'+this.identifier+'-target')
+        div.removeAttribute('data-' + this.identifier + '-target')
         div.classList.remove('hidden')
         return div as Node
     }
-
-    private getNotPresentTableCellValue() {
-        // instead of just creating a new one we get it from the dom to make sure the translation is correct
-        const div = this.notPresentTableCellTarget!.cloneNode(true) as HTMLTableCellElement
-        div.removeAttribute('data-'+this.identifier+'-target')
-        div.classList.remove('hidden')
-        return div as Node
-    }
-
 }

@@ -19,187 +19,193 @@ $attendanceModeTimeStarted = new DateTime() > $activity->getBeginTime()->modify(
 $attendanceModeTimeEnded = new DateTime() > $activity->getEndTime()->modify('+30 min');
 ?>
 <div data-controller="participants-table"
-    <?php if(isset($signupList)): ?>
-        data-participants-table-mark-present-url-value="<?= $this->escapeHtml($this->url(
-            'activity_admin/markPresent',
-            ['id' => -1],
-        ))?>"
-    <?php endif ?>
-    >
+    <?php if (isset($signupList)): ?>
+    data-participants-table-mark-present-url-value="<?= $this->escapeHtml($this->url(
+                                                        'activity_admin/markPresent',
+                                                        ['id' => -1],
+                                                    )) ?>"
+    <?php endif ?>>
     <table class="table table-bordered" style="width: 100%" border="1">
         <thead>
-        <tr>
-            <th>#</th>
-            <th><?= $this->translate('Name') ?></th>
-            <th><?= $this->translate('Email') ?></th>
-            <?php if ($activityApproved && $attendanceModeTimeStarted): ?>
-                <th><?= $this->translate('Presence')?></th>
-            <?php endif ?>
-            <th><?= $this->translate('Type') ?></th>
-            <th><?= $this->translate('Generation') ?></th>
-            <?php
-            if (isset($canSeeTimeOfSignup) && $canSeeTimeOfSignup): ?>
-                <th><?= $this->translate('Date and time') ?></th>
-            <?php
-            endif; ?>
-            <?php
-            if (!isset($signupList)): ?>
-                <th><?= $this->translate('Sign-up List') ?></th>
-            <?php
-            endif; ?>
-            <?php
-            if (isset($detailed) && isset($signupList)): ?>
-                <?php
-                foreach ($signupList->getFields() as $field): ?>
-                    <th>
-                        <?= $this->escapeHtml($this->localiseText($field->getName())) . ($field->isSensitive(
-                        ) ? '¹' : '') ?>
-                    </th>
-                <?php
-                endforeach; ?>
-            <?php
-            endif; ?>
-        </tr>
-        </thead>
-        <tbody>
-        <?php
-        $i = 1;
-        $allEmailAddresses = []; ?>
-        <?php
-        if (!isset($signupList)) {
-            $iterator = [];
-            foreach ($activity->getSignupLists() as $list) {
-                foreach ($list->getSignups() as $signup) {
-                    $iterator[] = $signup;
-                }
-            }
-        } else {
-            $iterator = $signupList->getSignUps();
-        } ?>
-        <?php
-        foreach ($iterator as $signup): ?>
-            <tr
-                data-participants-table-target="row"
-                data-search-id="<?= $this->escapeHtml($signup->getId())?>"
-                data-search-fields="<?= $this->escapeHtml(json_encode([$signup->getFullName(), $signup->getEmail()])) ?>"
-            >
-                <td>
-                    <?php
-                    echo $i;
-                    $i = $i + 1;
-
-                    $email = $signup->getEmail();
-                    if (null !== $email) {
-                        $email = $this->escapeHtml($email);
-                        $allEmailAddresses[] = $email;
-                    }
-                    ?>
-                </td>
-                <td data-participants-table-controller-name-value="<?= $this->escapeHtml($signup->getFullName()) ?>">
-                    <?= $this->escapeHtml($signup->getFullName()) ?>
-                </td>
-                <td>
-                    <?php
-                    if (null !== $email): ?>
-                        <a href="mailto:<?= $email ?>">
-                            <?= $email ?>
-                        </a>
-                    <?php
-                    else: ?>
-                        <?= $this->translate('Unknown') ?>
-                    <?php
-                    endif; ?>
-                </td>
+            <tr>
+                <th>#</th>
+                <th><?= $this->translate('Name') ?></th>
+                <th><?= $this->translate('Email') ?></th>
                 <?php if ($activityApproved && $attendanceModeTimeStarted): ?>
-                    <td>
-                        <span class="fas <?= ($signup->isPresent()) ? 'fa-circle-check' : 'fa-circle-xmark' ?>"></span>
-                    </td>
-                <?php endif; ?>
-                <?php
-                if ($signup instanceof UserSignup): ?>
-                    <td>
-                        <?= sprintf(
-                            $this->translate('User (%s)'),
-                            $signup->getUser()->getType()->getName($this->plugin('translate')->getTranslator()),
-                        ); ?>
-                    </td>
-                    <td><?= $signup->getUser()->getGeneration() ?></td>
-                <?php
-                else: ?>
-                    <td>
-                        <?= $this->translate('External') ?>
-                        <?php
-                        if (isset($externalSignoffForm)): ?>
-                            <?php
-                            $externalSignoffForm->setAttribute(
-                                'action',
-                                $this->url('activity_admin/externalSignoff', ['id' => $signup->getId()])
-                            );
-                            $externalSignoffForm->prepare();
-                            echo $this->form()->openTag($externalSignoffForm);
-                            echo $this->formElement($externalSignoffForm->get('security'));
-                            $submit = $externalSignoffForm->get('submit');
-                            $submit->setAttribute('class', 'btn btn-primary btn-xs');
-                            echo $this->formSubmit($submit);
-                            echo $this->form()->closeTag();
-                            ?>
-                        <?php
-                        endif; ?>
-                    </td>
-                    <td><?= $this->translate('N/A') ?></td>
-                <?php
-                endif; ?>
+                    <th><?= $this->translate('Presence') ?></th>
+                <?php endif ?>
+                <th><?= $this->translate('Type') ?></th>
+                <th><?= $this->translate('Generation') ?></th>
                 <?php
                 if (isset($canSeeTimeOfSignup) && $canSeeTimeOfSignup): ?>
-                    <td><?= $signup->getCreatedAt()->format('Y-m-d H:i:s') ?></td>
+                    <th><?= $this->translate('Date and time') ?></th>
                 <?php
                 endif; ?>
                 <?php
                 if (!isset($signupList)): ?>
-                    <td><?= $this->escapeHtml($this->localiseText($signup->getSignupList()->getName())) ?></td>
+                    <th><?= $this->translate('Sign-up List') ?></th>
                 <?php
                 endif; ?>
                 <?php
-                if (isset($detailed)): ?>
+                if (isset($detailed) && isset($signupList)): ?>
                     <?php
                     foreach ($signupList->getFields() as $field): ?>
-                        <?php
-                        foreach ($signup->getFieldValues() as $fieldValue): ?>
-                            <?php
-                            if ($fieldValue->getField()->getId() === $field->getId()): ?>
-                                <td>
-                                    <?php
-                                    switch ($field->getType()) {
-                                        case 0:
-                                            echo $this->escapeHtml($fieldValue->getValue());
-                                            break;
-                                        case 1:
-                                            if ($fieldValue->getValue() === "Yes") {
-                                                echo $this->translate('Yes');
-                                            } else {
-                                                echo $this->translate('No');
-                                            }
-                                            break;
-                                        case 2:
-                                            echo $fieldValue->getValue();
-                                            break;
-                                        case 3:
-                                            echo $this->localiseText($fieldValue->getOption()->getValue());
-                                            break;
-                                    }
-                                    ?>
-                                </td>
-                            <?php
-                            endif; ?>
-                        <?php
-                        endforeach; ?>
+                        <th>
+                            <?= $this->escapeHtml($this->localiseText($field->getName())) . ($field->isSensitive() ? '¹' : '') ?>
+                        </th>
                     <?php
                     endforeach; ?>
                 <?php
                 endif; ?>
             </tr>
-        <?php
-        endforeach; ?>
+        </thead>
+        <tbody>
+            <?php
+            $i = 1;
+            $allEmailAddresses = []; ?>
+            <?php
+            if (!isset($signupList)) {
+                $iterator = [];
+                foreach ($activity->getSignupLists() as $list) {
+                    foreach ($list->getSignups() as $signup) {
+                        $iterator[] = $signup;
+                    }
+                }
+            } else {
+                $iterator = $signupList->getSignUps();
+            } ?>
+            <?php
+            foreach ($iterator as $signup): ?>
+                <tr
+                    data-participants-table-target="row"
+                    data-search-id="<?= $this->escapeHtml($signup->getId()) ?>"
+                    data-search-name="<?= $this->escapeHtml(json_encode(explode(" ", $signup->getFullName()))) ?>"
+                    data-search-email="<?= $this->escapeHtml($signup->getEmail()) ?>"
+                    data-present="<?= $this->escapeHtml($signup->isPresent()) ?>">
+                    <td>
+                        <?php
+                        echo $i;
+                        $i = $i + 1;
+
+                        $email = $signup->getEmail();
+                        if (null !== $email) {
+                            $email = $this->escapeHtml($email);
+                            $allEmailAddresses[] = $email;
+                        }
+                        ?>
+                    </td>
+                    <td data-participants-table-controller-name-value="<?= $this->escapeHtml($signup->getFullName()) ?>">
+                        <?= $this->escapeHtml($signup->getFullName()) ?>
+                    </td>
+                    <td>
+                        <?php
+                        if (null !== $email): ?>
+                            <a href="mailto:<?= $email ?>">
+                                <?= $email ?>
+                            </a>
+                        <?php
+                        else: ?>
+                            <?= $this->translate('Unknown') ?>
+                        <?php
+                        endif; ?>
+                    </td>
+                    <?php if ($activityApproved && $attendanceModeTimeStarted): ?>
+                        <td
+                            style="text-align: center;"
+                            data-participants-table-target="presenceCell"
+                            data-row-id="<?= $this->escapeHtml($signup->getId()) ?>">
+                            <?php if ($signup->isPresent()) : ?>
+                                <span
+                                    class=" fas fa-check"
+                                    style="color: forestgreen"></span>
+                            <?php endif; ?>
+                        </td>
+                    <?php endif; ?>
+                    <?php
+                    if ($signup instanceof UserSignup): ?>
+                        <td>
+                            <?= sprintf(
+                                $this->translate('User (%s)'),
+                                $signup->getUser()->getType()->getName($this->plugin('translate')->getTranslator()),
+                            ); ?>
+                        </td>
+                        <td><?= $signup->getUser()->getGeneration() ?></td>
+                    <?php
+                    else: ?>
+                        <td>
+                            <?= $this->translate('External') ?>
+                            <?php
+                            if (isset($externalSignoffForm)): ?>
+                                <?php
+                                $externalSignoffForm->setAttribute(
+                                    'action',
+                                    $this->url('activity_admin/externalSignoff', ['id' => $signup->getId()])
+                                );
+                                $externalSignoffForm->prepare();
+                                echo $this->form()->openTag($externalSignoffForm);
+                                echo $this->formElement($externalSignoffForm->get('security'));
+                                $submit = $externalSignoffForm->get('submit');
+                                $submit->setAttribute('class', 'btn btn-primary btn-xs');
+                                echo $this->formSubmit($submit);
+                                echo $this->form()->closeTag();
+                                ?>
+                            <?php
+                            endif; ?>
+                        </td>
+                        <td><?= $this->translate('N/A') ?></td>
+                    <?php
+                    endif; ?>
+                    <?php
+                    if (isset($canSeeTimeOfSignup) && $canSeeTimeOfSignup): ?>
+                        <td><?= $signup->getCreatedAt()->format('Y-m-d H:i:s') ?></td>
+                    <?php
+                    endif; ?>
+                    <?php
+                    if (!isset($signupList)): ?>
+                        <td><?= $this->escapeHtml($this->localiseText($signup->getSignupList()->getName())) ?></td>
+                    <?php
+                    endif; ?>
+                    <?php
+                    if (isset($detailed)): ?>
+                        <?php
+                        foreach ($signupList->getFields() as $field): ?>
+                            <?php
+                            foreach ($signup->getFieldValues() as $fieldValue): ?>
+                                <?php
+                                if ($fieldValue->getField()->getId() === $field->getId()): ?>
+                                    <td>
+                                        <?php
+                                        switch ($field->getType()) {
+                                            case 0:
+                                                echo $this->escapeHtml($fieldValue->getValue());
+                                                break;
+                                            case 1:
+                                                if ($fieldValue->getValue() === "Yes") {
+                                                    echo $this->translate('Yes');
+                                                } else {
+                                                    echo $this->translate('No');
+                                                }
+                                                break;
+                                            case 2:
+                                                echo $fieldValue->getValue();
+                                                break;
+                                            case 3:
+                                                echo $this->localiseText($fieldValue->getOption()->getValue());
+                                                break;
+                                        }
+                                        ?>
+                                    </td>
+                                <?php
+                                endif; ?>
+                            <?php
+                            endforeach; ?>
+                        <?php
+                        endforeach; ?>
+                    <?php
+                    endif; ?>
+                </tr>
+            <?php
+            endforeach; ?>
         </tbody>
     </table>
     <?php if (!isset($pdf)): ?>
@@ -216,7 +222,7 @@ $attendanceModeTimeEnded = new DateTime() > $activity->getEndTime()->modify('+30
     <?php endif; ?>
     <?php if (isset($signupList) && $activityApproved && $attendanceModeTimeStarted && !$attendanceModeTimeEnded): ?>
         <button class="btn btn-primary btn-lg" type="button"
-                aria-hidden="true" data-action="click->participants-table#enterAttendanceMode">
+            aria-hidden="true" data-action="click->participants-table#enterAttendanceMode">
             <span class="fas fa-list"></span> <?= $this->translate('Attendance mode') ?>
         </button>
         <div style="height: 3px"></div>
@@ -224,8 +230,7 @@ $attendanceModeTimeEnded = new DateTime() > $activity->getEndTime()->modify('+30
     <div
         data-participants-table-target="searchView"
         class="attendance-mode hidden"
-        data-action="keydown.esc->participants-table#leaveAttendanceMode"
-    >
+        data-action="keydown.esc->participants-table#leaveAttendanceMode">
         <div class="header">
             <label for="searchbar">
             </label>
@@ -235,22 +240,18 @@ $attendanceModeTimeEnded = new DateTime() > $activity->getEndTime()->modify('+30
                 id="searchbar"
                 placeholder="<?= $this->translate('Search for name or email') ?>"
                 data-participants-table-target="searchBar"
-                data-action="input->participants-table#updateSearchResults"
-            >
+                data-action="input->participants-table#updateSearchResults">
         </div>
         <div class="result-list" data-participants-table-target="resultList">
 
         </div>
         <div class="exit-button" data-action="click->participants-table#leaveAttendanceMode">
-            <span class="fa fa-arrow-right-from-bracket">
-            </span>
+            <span class="fa fa-arrow-right-from-bracket"></span>
         </div>
-        <div class="hidden" style="color: forestgreen;" data-participants-table-target="presentTableCell">
-            <?= $this->translate('Present') ?>
-        </div>
-        <div class="hidden" style="color: red" data-participants-table-target="notPresentTableCell">
-            <?= $this->translate('Not present') ?>
+        <div class="hidden" data-participants-table-target="presentTableCell">
+            <span
+                class="fas fa-check"
+                style="color: forestgreen"></span>
         </div>
     </div>
 </div>
-
