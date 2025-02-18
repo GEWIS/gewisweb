@@ -9,32 +9,46 @@ let Photo = {
         /*
          * Pre size items such that we can do the layouting while the images are loading
          */
-        var sizer = $('.grid-sizer').width();
-        var gutter = $('.gutter-sizer').width();
-        $('figure.pswp-gallery__item > a > img').each(function (index) {
-            var item = $(this);
-            var ratio = sizer / item.data('width');
-            var height = Math.round(ratio * item.data('height'));
-            if (item.parent().parent().hasClass('potw-thumb')) {
-                item.attr('width', 2 * sizer + gutter);
-                item.attr('height', 2 * height + gutter);
-            } else {
-                item.attr('width', sizer);
-                item.attr('height', height);
-            }
-        });
+        function getElementWidth(selector) {
+            return document.querySelector(selector).offsetWidth;
+        }
 
+        function updateImageSizes() {
+            let sizer = getElementWidth('.grid-sizer');
+            let gutter = getElementWidth('.gutter-sizer');
+
+            document.querySelectorAll('figure.pswp-gallery__item > a > img').forEach(function (item) {
+                let ratio = sizer / item.dataset.width;
+                let height = Math.round(ratio * item.dataset.height);
+
+                if (item.closest('.potw-thumb')) {
+                    item.setAttribute('width', 2 * sizer + gutter);
+                    item.setAttribute('height', 2 * height + gutter);
+                } else {
+                    item.setAttribute('width', sizer);
+                    item.setAttribute('height', height);
+                }
+            });
+        }
+
+        updateImageSizes();
         let lazyLoadInstance = new LazyLoad({
             elements_selector: '.lazy-load',
         });
 
-        $('.pswp-gallery').masonry({
+        let msnry = new Masonry('.pswp-gallery', {
             itemSelector: '.pswp-gallery__item',
             columnWidth: '.grid-sizer',
             percentPosition: true,
             gutter: '.gutter-sizer',
             transitionDuration: 0,
             resize: true,
+        });
+
+        // Allow reflowing of the layout when changing the window aspect-ratio and/or size.
+        window.addEventListener('resize', function () {
+            updateImageSizes();
+            msnry.layout();
         });
     },
     initRemoveTag: element => {
