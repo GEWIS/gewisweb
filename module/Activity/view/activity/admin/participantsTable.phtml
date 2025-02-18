@@ -31,7 +31,14 @@ $attendanceModeTimeEnded = new DateTime() > $activity->getEndTime()->modify('+30
                 <th>#</th>
                 <th><?= $this->translate('Name') ?></th>
                 <th><?= $this->translate('Email') ?></th>
-                <?php if ($activityApproved && $attendanceModeTimeStarted): ?>
+                <?php if ((
+                    $activityApproved &&
+                    $attendanceModeTimeStarted &&
+                    !$attendanceModeTimeEnded
+                ) || (
+                    isset($signupList) &&
+                    $signupList?->isPresenceTaken()
+                )): ?>
                     <th><?= $this->translate('Presence') ?></th>
                 <?php endif ?>
                 <th><?= $this->translate('Type') ?></th>
@@ -109,7 +116,14 @@ $attendanceModeTimeEnded = new DateTime() > $activity->getEndTime()->modify('+30
                         <?php
                         endif; ?>
                     </td>
-                    <?php if ($activityApproved && $attendanceModeTimeStarted): ?>
+                    <?php if ((
+                        $activityApproved &&
+                        $attendanceModeTimeStarted &&
+                        !$attendanceModeTimeEnded
+                    ) || (
+                        isset($signupList) &&
+                        $signupList?->isPresenceTaken()
+                    )): ?>
                         <td
                             style="text-align: center;"
                             data-participants-table-target="presenceCell"
