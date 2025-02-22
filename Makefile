@@ -1,4 +1,4 @@
-.PHONY: help runprod rundev runtest runcoverage update updatecomposer updatepackage updateglide getvendordir phpstan phpcs phpcbf phpcsfix phpcsfixtypes build buildprod builddev update
+.PHONY: help runprod rundev runtest runcoverage update updatecomposer updatepackage updateglide getvendordir phpstan phpcs phpcbf build buildprod builddev update
 
 help:
 		@echo "Makefile commands:"
@@ -16,8 +16,6 @@ help:
 		@echo "phpstan"
 		@echo "phpcs"
 		@echo "phpcbf"
-		@echo "phpcsfix"
-		@echo "phpcsfixtypes"
 		@echo "replenish"
 		@echo "build"
 		@echo "buildprod"
@@ -199,14 +197,6 @@ phpcbf: loadenv
 
 phpcbfall: loadenv
 		@vendor/bin/phpcbf -p
-
-phpcsfix: loadenv
-		@vendor/bin/php-cs-fixer fix --cache-file=data/cache/.php-cs-fixer.cache --rules=@PSR1,@PSR12,@DoctrineAnnotation,@PHP82Migration,group_import,-single_import_per_statement module
-		@vendor/bin/php-cs-fixer fix --cache-file=data/cache/.php-cs-fixer.cache --rules=@PSR1,@PSR12,@DoctrineAnnotation,@PHP82Migration,group_import,-single_import_per_statement config
-
-phpcsfixrisky: loadenv
-		@vendor/bin/php-cs-fixer fix --cache-file=data/cache/.php-cs-fixer.cache --allow-risky=yes --rules=@PHP80Migration:risky,-declare_strict_types,-use_arrow_functions  module
-		@vendor/bin/php-cs-fixer fix --cache-file=data/cache/.php-cs-fixer.cache --allow-risky=yes --rules=@PHP80Migration:risky,-declare_strict_types,-use_arrow_functions  config
 
 checkcomposer: loadenv
 		@XDEBUG_MODE=off vendor/bin/composer-require-checker check composer.json

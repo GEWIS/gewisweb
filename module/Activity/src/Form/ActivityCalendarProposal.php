@@ -18,6 +18,9 @@ use User\Permissions\NotAllowedException;
 
 use function count;
 
+/**
+ * @psalm-suppress MissingTemplateParam
+ */
 class ActivityCalendarProposal extends Form implements InputFilterProviderInterface
 {
     private int $maxOptions;

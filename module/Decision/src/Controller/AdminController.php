@@ -126,7 +126,6 @@ class AdminController extends AbstractActionController
                 'number' => $number,
                 'type' => $type,
                 'success' => $success,
-                'reorderDocumentForm' => $this->decisionService->getReorderDocumentForm(),
             ],
         );
     }

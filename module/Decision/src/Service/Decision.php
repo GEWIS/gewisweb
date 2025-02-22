@@ -11,7 +11,6 @@ use Decision\Form\Authorization as AuthorizationForm;
 use Decision\Form\AuthorizationRevocation as AuthorizationRevocationForm;
 use Decision\Form\Document as DocumentForm;
 use Decision\Form\Minutes as MinutesForm;
-use Decision\Form\ReorderDocument as ReorderDocumentForm;
 use Decision\Form\SearchDecision as SearchDecisionForm;
 use Decision\Mapper\Authorization as AuthorizationMapper;
 use Decision\Mapper\Decision as DecisionMapper;
@@ -66,7 +65,6 @@ class Decision
         private readonly AuthorizationMapper $authorizationMapper,
         private readonly MinutesForm $minutesForm,
         private readonly DocumentForm $documentForm,
-        private readonly ReorderDocumentForm $reorderDocumentForm,
         private readonly SearchDecisionForm $searchDecisionForm,
         private readonly AuthorizationForm $authorizationForm,
         private readonly AuthorizationRevocationForm $authorizationRevocationForm,
@@ -535,15 +533,6 @@ class Decision
         }
 
         return $this->documentForm;
-    }
-
-    public function getReorderDocumentForm(): ReorderDocumentForm
-    {
-        $errorMessage = 'You are not allowed to modify meeting documents.';
-
-        $this->isAllowedOrFail('upload_document', 'meeting', $errorMessage);
-
-        return $this->reorderDocumentForm;
     }
 
     /**

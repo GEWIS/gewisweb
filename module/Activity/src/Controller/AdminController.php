@@ -514,8 +514,13 @@ class AdminController extends AbstractActionController
 
     public function markPresentAction(): JsonModel
     {
-        if (!$this->getRequest()->isPost()) {
-            $this->getResponse()->setStatusCode(405);
+        /** @var Request $request */
+        $request = $this->getRequest();
+        /** @var Response $response */
+        $response = $this->getResponse();
+
+        if (!$request->isPost()) {
+            $response->setStatusCode(405);
 
             return new JsonModel([
                 'Error' => $this->translator->translate('You can only make POST requests to this endpoint'),
@@ -526,7 +531,7 @@ class AdminController extends AbstractActionController
         $signup = $this->signupMapper->getSignupById($signupId);
 
         if (null === $signup) {
-            $this->getResponse()->setStatusCode(400);
+            $response->setStatusCode(400);
 
             return new JsonModel(['Error' => $this->translator->translate('Signup not found')]);
         }
@@ -535,7 +540,7 @@ class AdminController extends AbstractActionController
         $activity = $signupList->getActivity();
 
         if (!$this->aclService->isAllowed('viewParticipants', $signupList)) {
-            $this->getResponse()->setStatusCode(401);
+            $response->setStatusCode(401);
 
             return new JsonModel([
                 'Error' => $this->translator->translate(
@@ -551,7 +556,7 @@ class AdminController extends AbstractActionController
             $now < $activity->getBeginTime()->sub($interval) ||
             $now > $activity->getEndTime()->add($interval)
         ) {
-            $this->getResponse()->setStatusCode(400);
+            $response->setStatusCode(400);
 
             return new JsonModel([
                 'Error' => $this->translator->translate(

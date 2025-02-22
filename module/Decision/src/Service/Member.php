@@ -28,7 +28,7 @@ class Member
     ) {
     }
 
-    public const MIN_SEARCH_QUERY_LENGTH = 2;
+    public const int MIN_SEARCH_QUERY_LENGTH = 2;
 
     /**
      * Returns is the member is active.

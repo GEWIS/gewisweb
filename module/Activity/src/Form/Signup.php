@@ -23,11 +23,14 @@ use Laminas\Validator\StringLength;
 
 use function strval;
 
+/**
+ * @psalm-suppress MissingTemplateParam
+ */
 class Signup extends Form implements InputFilterProviderInterface
 {
-    public const USER = 1;
-    public const EXTERNAL_USER = 2;
-    public const EXTERNAL_ADMIN = 3;
+    public const int USER = 1;
+    public const int EXTERNAL_USER = 2;
+    public const int EXTERNAL_ADMIN = 3;
 
     protected int $type;
 

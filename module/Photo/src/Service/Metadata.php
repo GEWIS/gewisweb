@@ -37,7 +37,7 @@ class Metadata
     ): PhotoModel {
         $exif = exif_read_data($path, 'EXIF');
 
-        if ($exif) {
+        if (false !== $exif) {
             $photo->setArtist($exif['Artist'] ?? null);
             $photo->setCamera($exif['Model'] ?? null);
 

@@ -11,6 +11,9 @@ use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\NotEmpty;
 
+/**
+ * @psalm-suppress MissingTemplateParam
+ */
 class SearchAlbum extends Form implements InputFilterProviderInterface
 {
     public function __construct(Translator $translate)

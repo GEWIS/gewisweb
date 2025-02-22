@@ -17,6 +17,9 @@ use Laminas\Validator\EmailAddress;
 use Laminas\Validator\NotEmpty;
 use Laminas\Validator\StringLength;
 
+/**
+ * @psalm-suppress MissingTemplateParam
+ */
 class CompanyUserLogin extends Form implements InputFilterProviderInterface
 {
     public function __construct(

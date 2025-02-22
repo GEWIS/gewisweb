@@ -10,7 +10,6 @@ use Decision\Form\Authorization as AuthorizationForm;
 use Decision\Form\AuthorizationRevocation as AuthorizationRevocationForm;
 use Decision\Form\Document as DocumentForm;
 use Decision\Form\Minutes as MinutesForm;
-use Decision\Form\ReorderDocument as ReorderDocumentForm;
 use Decision\Form\SearchDecision as SearchDecisionForm;
 use Decision\Mapper\Authorization as AuthorizationMapper;
 use Decision\Mapper\Decision as DecisionMapper;
@@ -47,7 +46,6 @@ class DecisionFactory implements FactoryInterface
             $container->get(AuthorizationMapper::class),
             $container->get(MinutesForm::class),
             $container->get(DocumentForm::class),
-            $container->get(ReorderDocumentForm::class),
             $container->get(SearchDecisionForm::class),
             $container->get(AuthorizationForm::class),
             $container->get(AuthorizationRevocationForm::class),

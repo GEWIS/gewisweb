@@ -18,6 +18,9 @@ use Laminas\Validator\File\Extension;
 use Laminas\Validator\File\IsImage;
 use Laminas\Validator\StringLength;
 
+/**
+ * @psalm-suppress MissingTemplateParam
+ */
 class OrganInformation extends Form implements InputFilterProviderInterface
 {
     public function __construct(Translator $translator)

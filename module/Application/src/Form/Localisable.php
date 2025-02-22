@@ -11,6 +11,8 @@ use Laminas\Mvc\I18n\Translator;
 
 /**
  * A form which provides the basic structure for forms that utilise a model's {@link \Application\Model\LocalisedText}.
+ *
+ * @psalm-suppress MissingTemplateParam
  */
 abstract class Localisable extends Form implements InputFilterProviderInterface
 {

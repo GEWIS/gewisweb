@@ -14,7 +14,6 @@ use Decision\Form\Document as DocumentForm;
 use Decision\Form\Factory\OrganInformationFactory as OrganInformationFormFactory;
 use Decision\Form\Minutes as MinutesForm;
 use Decision\Form\OrganInformation as OrganInformationForm;
-use Decision\Form\ReorderDocument as ReorderDocumentForm;
 use Decision\Form\SearchDecision as SearchDecisionForm;
 use Decision\Mapper\Authorization as AuthorizationMapper;
 use Decision\Mapper\Decision as DecisionMapper;
@@ -83,7 +82,6 @@ class Module
                 DocumentForm::class => BaseFormFactory::class,
                 MinutesForm::class => BaseFormFactory::class,
                 OrganInformationForm::class => OrganInformationFormFactory::class,
-                ReorderDocumentForm::class => BaseFormFactory::class,
                 SearchDecisionForm::class => BaseFormFactory::class,
                 'decision_hydrator' => static function (ContainerInterface $container) {
                     return new DoctrineObject(

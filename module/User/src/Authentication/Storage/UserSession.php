@@ -21,8 +21,8 @@ use function strtotime;
 
 class UserSession extends SessionStorage
 {
-    private const JWT_COOKIE_NAME = 'GEWISSESSTOKEN';
-    private const JWT_KEY_ALGORITHM = 'RS256';
+    private const string JWT_COOKIE_NAME = 'GEWISSESSTOKEN';
+    private const string JWT_KEY_ALGORITHM = 'RS256';
 
     private bool $rememberMe;
 
@@ -65,7 +65,7 @@ class UserSession extends SessionStorage
         $key = $this->getPublicKey();
 
         // Check if the key is readable.
-        if (!$key) {
+        if (false === $key) {
             return false;
         }
 
@@ -133,7 +133,7 @@ class UserSession extends SessionStorage
         $key = $this->getPrivateKey();
 
         // Check if the key is readable.
-        if (!$key) {
+        if (false === $key) {
             return;
         }
 

@@ -48,11 +48,11 @@ trait BaseControllerTrait
     protected MockObject $userMapper;
     protected MockObject $memberMapper;
 
-    protected const LIDNR = 8000;
+    protected const int LIDNR = 8000;
     protected User $user;
     protected Member $member;
 
-    protected const COMPANY_ID = 42;
+    protected const int COMPANY_ID = 42;
     protected Company $company;
     protected CompanyUser $companyUser;
     protected NewCompanyUser $newCompanyUser;
@@ -155,7 +155,6 @@ trait BaseControllerTrait
 
         $this->companyMapper = $this->getMockBuilder(CompanyMapper::class)
             ->setConstructorArgs([$entityManager])
-            ->enableProxyingToOriginalMethods()
             ->getMock();
 
         $this->serviceManager->setService(CompanyMapper::class, $this->companyMapper);
@@ -167,7 +166,6 @@ trait BaseControllerTrait
 
         $this->companyUserMapper = $this->getMockBuilder(CompanyUserMapper::class)
             ->setConstructorArgs([$entityManager])
-            ->enableProxyingToOriginalMethods()
             ->getMock();
 
         $this->serviceManager->setService(CompanyUserMapper::class, $this->companyUserMapper);
@@ -191,7 +189,6 @@ trait BaseControllerTrait
 
         $this->userMapper = $this->getMockBuilder(UserMapper::class)
             ->setConstructorArgs([$entityManager])
-            ->enableProxyingToOriginalMethods()
             ->getMock();
 
         $this->serviceManager->setService(UserMapper::class, $this->userMapper);
@@ -203,7 +200,6 @@ trait BaseControllerTrait
 
         $this->memberMapper = $this->getMockBuilder(MemberMapper::class)
             ->setConstructorArgs([$entityManager])
-            ->enableProxyingToOriginalMethods()
             ->getMock();
 
         $this->serviceManager->setService(MemberMapper::class, $this->memberMapper);

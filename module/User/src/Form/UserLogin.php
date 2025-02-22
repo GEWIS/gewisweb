@@ -16,6 +16,9 @@ use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\NotEmpty;
 use Laminas\Validator\StringLength;
 
+/**
+ * @psalm-suppress MissingTemplateParam
+ */
 class UserLogin extends Form implements InputFilterProviderInterface
 {
     public function __construct(

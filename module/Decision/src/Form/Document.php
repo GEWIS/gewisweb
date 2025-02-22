@@ -15,6 +15,9 @@ use Laminas\Validator\File\Extension;
 use Laminas\Validator\File\MimeType;
 use Laminas\Validator\StringLength;
 
+/**
+ * @psalm-suppress MissingTemplateParam
+ */
 class Document extends Form implements InputFilterProviderInterface
 {
     public function __construct(Translator $translator)

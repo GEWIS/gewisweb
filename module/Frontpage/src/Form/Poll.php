@@ -17,6 +17,9 @@ use Laminas\Validator\StringLength;
 
 use function str_ends_with;
 
+/**
+ * @psalm-suppress MissingTemplateParam
+ */
 class Poll extends Form implements InputFilterProviderInterface
 {
     public function __construct(private readonly Translator $translator)

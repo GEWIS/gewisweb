@@ -9,6 +9,7 @@ use Laminas\Http\Header\Accept\FieldValuePart\LanguageFieldValuePart;
 use Laminas\Http\Header\AcceptLanguage;
 use Laminas\Mvc\I18n\Router\TranslatorAwareTreeRouteStack;
 use Laminas\Router\Exception\InvalidArgumentException;
+use Laminas\Router\Http\RouteInterface;
 use Laminas\Router\RouteMatch;
 use Laminas\Session\Container as SessionContainer;
 use Laminas\Stdlib\RequestInterface;
@@ -24,6 +25,11 @@ use function str_starts_with;
 use function strlen;
 use function substr;
 
+/**
+ * @template TRoute of RouteInterface
+ *
+ * @template-extends TranslatorAwareTreeRouteStack<TRoute>
+ */
 class LanguageAwareTreeRouteStack extends TranslatorAwareTreeRouteStack
 {
     private ?string $lastMatchedLanguage = null;
