@@ -8286,31 +8286,6 @@ Search.appendIndex(
             "summary": "Should\u0020return\u0020an\u0020array\u0020specification\u0020compatible\u0020with\n\u007B\u0040link\u0020\\Laminas\\InputFilter\\Factory\u003A\u003AcreateInputFilter\u0028\u0029\u007D.",
             "url": "classes/Decision-Form-OrganInformation.html#method_getInputFilterSpecification"
         },                {
-            "fqsen": "\\Decision\\Form\\ReorderDocument",
-            "name": "ReorderDocument",
-            "summary": "",
-            "url": "classes/Decision-Form-ReorderDocument.html"
-        },                {
-            "fqsen": "\\Decision\\Form\\ReorderDocument\u003A\u003A__construct\u0028\u0029",
-            "name": "__construct",
-            "summary": "",
-            "url": "classes/Decision-Form-ReorderDocument.html#method___construct"
-        },                {
-            "fqsen": "\\Decision\\Form\\ReorderDocument\u003A\u003AgetInputFilterSpecification\u0028\u0029",
-            "name": "getInputFilterSpecification",
-            "summary": "",
-            "url": "classes/Decision-Form-ReorderDocument.html#method_getInputFilterSpecification"
-        },                {
-            "fqsen": "\\Decision\\Form\\ReorderDocument\u003A\u003AgenerateIcon\u0028\u0029",
-            "name": "generateIcon",
-            "summary": "Returns\u0020an\u0020icon\u0020as\u0020a\u0020HTML\u0020string.",
-            "url": "classes/Decision-Form-ReorderDocument.html#method_generateIcon"
-        },                {
-            "fqsen": "\\Decision\\Form\\ReorderDocument\u003A\u003A\u0024translator",
-            "name": "translator",
-            "summary": "",
-            "url": "classes/Decision-Form-ReorderDocument.html#property_translator"
-        },                {
             "fqsen": "\\Decision\\Form\\SearchDecision",
             "name": "SearchDecision",
             "summary": "",
@@ -11181,11 +11156,6 @@ Search.appendIndex(
             "summary": "Get\u0020the\u0020Document\u0020form.",
             "url": "classes/Decision-Service-Decision.html#method_getDocumentForm"
         },                {
-            "fqsen": "\\Decision\\Service\\Decision\u003A\u003AgetReorderDocumentForm\u0028\u0029",
-            "name": "getReorderDocumentForm",
-            "summary": "",
-            "url": "classes/Decision-Service-Decision.html#method_getReorderDocumentForm"
-        },                {
             "fqsen": "\\Decision\\Service\\Decision\u003A\u003AgetSearchDecisionForm\u0028\u0029",
             "name": "getSearchDecisionForm",
             "summary": "Get\u0020the\u0020SearchDecision\u0020form.",
@@ -11270,11 +11240,6 @@ Search.appendIndex(
             "name": "documentForm",
             "summary": "",
             "url": "classes/Decision-Service-Decision.html#property_documentForm"
-        },                {
-            "fqsen": "\\Decision\\Service\\Decision\u003A\u003A\u0024reorderDocumentForm",
-            "name": "reorderDocumentForm",
-            "summary": "",
-            "url": "classes/Decision-Service-Decision.html#property_reorderDocumentForm"
         },                {
             "fqsen": "\\Decision\\Service\\Decision\u003A\u003A\u0024searchDecisionForm",
             "name": "searchDecisionForm",
