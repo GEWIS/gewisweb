@@ -8,6 +8,8 @@ concurrency:
     group: ${{ github.workflow }}-${{ github.ref }}
     cancel-in-progress: true
 
+permissions: {}
+
 jobs:
     psalm:
         name: Psalm
@@ -16,6 +18,8 @@ jobs:
         steps:
             -   name: Checkout head branch
                 uses: actions/checkout@v4
+                with:
+                    persist-credentials: false
 
             -   name: Install PHP
                 uses: shivammathur/setup-php@v2

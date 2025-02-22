@@ -13,6 +13,8 @@ concurrency:
     group: ${{ github.workflow }}-${{ github.ref }}
     cancel-in-progress: true
 
+permissions: {}
+
 env:
     IS_RELEASE: ${{ format('{0}', startsWith(github.ref, 'refs/tags/')) }}
 
@@ -25,6 +27,8 @@ jobs:
         steps:
             -   name: Checkout
                 uses: actions/checkout@v4
+                with:
+                    persist-credentials: false
 
             -   name: Get short commit SHA
                 run: echo "SHORT_COMMIT_SHA=$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_ENV

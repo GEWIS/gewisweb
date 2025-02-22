@@ -11,14 +11,20 @@ concurrency:
     group: ${{ github.workflow }}-${{ github.ref }}
     cancel-in-progress: true
 
+permissions: {}
+
 jobs:
     phpunit:
         name: phpDoc
         runs-on: ubuntu-latest
+        permissions:
+            contents: write
 
         steps:
             -   name: Checkout
                 uses: actions/checkout@v4
+                with:
+                    persist-credentials: false
 
             -   name: Install PHP
                 uses: shivammathur/setup-php@v2
