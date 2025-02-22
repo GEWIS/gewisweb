@@ -18,6 +18,9 @@ use Laminas\Validator\StringLength;
 
 use function explode;
 
+/**
+ * @psalm-suppress MissingTemplateParam
+ */
 class Course extends Form implements InputFilterProviderInterface
 {
     private ?string $currentCode = null;

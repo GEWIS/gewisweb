@@ -15,6 +15,9 @@ use Laminas\Validator\NotEmpty;
 use Laminas\Validator\Regex;
 use Laminas\Validator\StringLength;
 
+/**
+ * @psalm-suppress MissingTemplateParam
+ */
 class Album extends Form implements InputFilterProviderInterface
 {
     public function __construct(private readonly Translator $translator)

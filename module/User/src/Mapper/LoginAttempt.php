@@ -39,7 +39,7 @@ class LoginAttempt extends BaseMapper
                 ->setParameter('user', $user);
         }
 
-        return $qb->getQuery()->getSingleScalarResult();
+        return (int) $qb->getQuery()->getSingleScalarResult();
     }
 
     /**

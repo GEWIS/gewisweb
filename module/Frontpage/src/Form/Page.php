@@ -22,6 +22,9 @@ use User\Model\Enums\UserRoles;
 
 use function mb_strtolower;
 
+/**
+ * @psalm-suppress MissingTemplateParam
+ */
 class Page extends Form implements InputFilterProviderInterface
 {
     private ?FrontpageLocalisedText $currentCategory = null;

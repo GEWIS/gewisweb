@@ -26,10 +26,10 @@ use function tempnam;
 class Watermark
 {
     // The font size of the watermark
-    private const FONT_SIZE_DIAGONAL = 32;
-    private const FONT_SIZE_HORIZONTAL = 8;
-    private const FONT = 'freesansb';
-    private const TAG_FONT = 'times';
+    private const int FONT_SIZE_DIAGONAL = 32;
+    private const int FONT_SIZE_HORIZONTAL = 8;
+    private const string FONT = 'freesansb';
+    private const string TAG_FONT = 'times';
 
     /**
      * @psalm-param TUserAuth $authService

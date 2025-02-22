@@ -16,10 +16,11 @@ use Laminas\Validator\File\MimeType;
 
 /**
  * @psalm-import-type MeetingArrayType from MeetingMapper as ImportedMeetingArrayType
+ * @psalm-suppress MissingTemplateParam
  */
 class Minutes extends Form implements InputFilterProviderInterface
 {
-    public const ERROR_FILE_EXISTS = 'file_exists';
+    public const string ERROR_FILE_EXISTS = 'file_exists';
 
     public function __construct(private readonly Translator $translator)
     {

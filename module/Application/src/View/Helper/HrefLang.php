@@ -14,6 +14,11 @@ use function sprintf;
 /**
  * Helper for setting `alternate` `hreflang` tags. The normal `HeadLink` view helper of Laminas only allow us to set one
  * and then overwrite only one tag, while we need more.
+ *
+ * @template TKey of value-of<Languages>|'x-default'
+ * @template TValue of string
+ *
+ * @template-extends AbstractStandalone<TKey, TValue>
  */
 class HrefLang extends AbstractStandalone
 {
@@ -39,7 +44,10 @@ class HrefLang extends AbstractStandalone
             $language = $language->value;
         }
 
+        /** @psalm-var TKey $language */
         if (!$this->getContainer()->offsetExists($language)) {
+            // phpcs:ignore SlevomatCodingStandard.Commenting.InlineDocCommentDeclaration.MissingVariable
+            /** @var TValue $url */
             $this->getContainer()->offsetSet($language, $url);
         }
 

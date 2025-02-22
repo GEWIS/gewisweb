@@ -75,10 +75,10 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * Status codes for the activity.
      */
-    public const STATUS_TO_APPROVE = 1; // Activity needs to be approved
-    public const STATUS_APPROVED = 2;  // The activity is approved
-    public const STATUS_DISAPPROVED = 3; // The board disapproved the activity
-    public const STATUS_UPDATE = 4; // This activity is an update for some activity
+    public const int STATUS_TO_APPROVE = 1; // Activity needs to be approved
+    public const int STATUS_APPROVED = 2;  // The activity is approved
+    public const int STATUS_DISAPPROVED = 3; // The board disapproved the activity
+    public const int STATUS_UPDATE = 4; // This activity is an update for some activity
 
     /**
      * Name for the activity.

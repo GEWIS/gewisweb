@@ -12,6 +12,8 @@ use Laminas\InputFilter\InputFilterProviderInterface;
 /**
  * Specifies a form that is used to let a user do a modification request that does not require any other data, such as
  * signing off for activities, (dis)approving entities with an {@see \Application\Model\Traits\ApprovableTrait}.
+ *
+ * @psalm-suppress MissingTemplateParam
  */
 class ModifyRequest extends Form implements InputFilterProviderInterface
 {

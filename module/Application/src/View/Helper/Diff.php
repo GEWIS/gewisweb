@@ -9,9 +9,9 @@ use Laminas\View\Helper\AbstractHelper;
 
 class Diff extends AbstractHelper
 {
-    public const DIFF_RENDER_COMBINED = 'Combined';
-    public const DIFF_RENDER_INLINE = 'Inline';
-    public const DIFF_RENDER_SIDE_BY_SIDE = 'SideBySide';
+    public const string DIFF_RENDER_COMBINED = 'Combined';
+    public const string DIFF_RENDER_INLINE = 'Inline';
+    public const string DIFF_RENDER_SIDE_BY_SIDE = 'SideBySide';
 
     /**
      * While `php-diff` has a `RendererFactory` it requires the renderer type to be provided, this would mean that

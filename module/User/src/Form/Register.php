@@ -13,6 +13,9 @@ use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\Digits;
 use Laminas\Validator\NotEmpty;
 
+/**
+ * @psalm-suppress MissingTemplateParam
+ */
 class Register extends Form implements InputFilterProviderInterface
 {
     public const string ERROR_NO_EMAIL = 'no_email';

@@ -11,6 +11,9 @@ use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\Date as DateValidator;
 
+/**
+ * @psalm-suppress MissingTemplateParam
+ */
 class PollApproval extends Form implements InputFilterProviderInterface
 {
     public function __construct(Translator $translator)

@@ -9,6 +9,9 @@ use Laminas\Form\Element\Submit;
 use Laminas\Form\Form;
 use Laminas\Mvc\I18n\Translator;
 
+/**
+ * @psalm-suppress MissingTemplateParam
+ */
 class ApiAppAuthorisation extends Form
 {
     public function __construct(
