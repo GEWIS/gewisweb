@@ -14,20 +14,20 @@ Canonical: https://latex.gewis.nl/.well-known/security.txt
 Canonical: https://parelpracht.gewis.nl/.well-known/security.txt
 
 # The GEWIS disclosure policy can be found below and is signed with the aforementioned key
-Policy: https://github.com/GEWIS/GEWIS/security/policy
+Policy: https://github.com/GEWIS/.github/security/policy
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEmdeXXWSwTqSB7tHJfwZbKcXCCAcFAmbTdK0ACgkQfwZbKcXC
-CAc/ihAAiTcl+56zl1f6k27o3/T411WWVOYWvmJYyvC31bLc36uajA+Em7ZZ0Xgy
-ExF3DcLdJkq+IDijSqza1j/wwppjhHCCSur3A0aReq2SxwcTxUPLCqu3/GFiftgd
-iN8U42owS01FbXSQvR0fnbWIgr+Ndng55J6vdCDlFfN7QBBl5fQFh2uHpoe8Bb7E
-ty1rJ2tYcC8XCtFPvP/1kQlN1hF00Udx7ho2Tle9Q+Fqo1VTkdorMRnsBmp7Sd2L
-2HPsBVmBmWCnNNbIBI65RmXS9ngOJaFg9bFo2YUHKRbneIlWlAHAkrMh8cHBFR7c
-q3bE9Jj8aIE6PL1QerB75n2d96gyR7U+UO55W24+Hq5nMXnYYQPHTVsmZFrGFPGh
-KpuO9ib7zKIOYqyVw8nYMlQ5Rq5DpIg7O9rASuxb6BeqD+diw/ceRaBTFGPKiW4e
-/xhWygA9nk/inp/gc1BXo/WFxlPZNrfe2fcTkKxa2iASXnGPhprIGhNZwNijL0jN
-gSokMo59yVsOqSvq0m4HcMzDJqFnQLfBg9UL/gma9BtNlke7+JN7AT+GPj/BIcS0
-W5z0f98XB32frZLYGk46g1daNV7FI2kL379jFIh7xRf3JjfKx6bBCC8gevBqET6A
-0xJkjq9ZE4NRYEfqjV9+tayTmdfmdY/buYngw02WUZim8k3HioA=
-=27r7
+iQIzBAEBCgAdFiEEmdeXXWSwTqSB7tHJfwZbKcXCCAcFAme59/oACgkQfwZbKcXC
+CAfIxw/9FUEW0qnGzVObQeVXoPGzth5O3PlQw1eLJ+7ZJR0kusM9LcZXZpmNDcmA
+7WPvz1exET/jkVvipv9tC7TMVOwBDmBrpt2tukNujXJ/a6oyMTDNvRQKulw5ab/M
+fWClpAnX4iqFEFN3G6l/osO3elSdG8EDQwTPSlQZGc19geoIpl6HPLEU64HS2KFq
+XX1r9MD0wtA779UPEmfhQrzGsayr7OAXdMfg1DQkffMriJvr9e/tNK032KOg8uJ9
+E6SmT8Dsj6d4+EEIAY6wBNIPOY1/kES8KDmdjy4RoiU2MxX9mz7zW41Gg/l0BZSp
+qQUGNCMRIbOV1DdDpnAdCUPpRCQ2lGTdkHMSxQIhwlX+y96fgOyEq4wsLPFK1QSd
+TJxVuHktz3J5B0+CMxj0dahkQt+vuMa0SZqHdZ/uUIb8oPYDwT83Ext8+dgY4KUD
+dFKStlcvCDmH+jSq0oOqg14+NWyDYEPehedFHpNvghHP7C1zgXPvSPsYHJ0YbEB+
+kSSk197a+Uhz92jIkerXhphZHcjn7CVR0yWaDk+pq0Xrx1C980RmF82AY0JZGQHo
+YQavsKzh5Iky28A0sdFquQF0XV8Ujxa+BO4FtE1WsrYpcOxsA3JwcvdhI3Z6pOq8
+sJTG65LaIWedleCjB17Ryon2PpWv/MhW0FWDk/36U7kqjWQbViA=
+=zpnZ
 -----END PGP SIGNATURE-----
