@@ -15,6 +15,7 @@ use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
 use Laminas\View\Model\ViewModel;
+use Throwable;
 use User\Permissions\NotAllowedException;
 
 use function array_merge;
@@ -198,22 +199,41 @@ class AdminController extends AbstractActionController
         /** @var EnvironmentResponse $response */
         $response = $this->getResponse();
 
-        $form = $this->decisionService->getReorderDocumentForm()->setData($request->getPost()->toArray());
+        /** @var string|null $id */
+        $id = $request->getPost('id');
+        /** @var string|null $newPosition */
+        $newPosition = $request->getPost('position');
 
-        if (!$form->isValid()) {
+        if (
+            null === $id
+            || null === $newPosition
+        ) {
             return $response
-                ->setStatusCode(Response::STATUS_CODE_400) // Bad Request
-                ->setContent(Json::encode($form->getMessages()));
+                ->setStatusCode(Response::STATUS_CODE_400)
+                ->setContent(Json::encode(['error' => 'Document ID or position not provided']));
         }
 
-        $data = $form->getData();
-        $id = $data['document'];
-        $moveDown = 'down' === $data['direction'];
+        $id = (int) $id;
+        $newPosition = (int) $newPosition;
 
-        // Update ordering document
-        $this->decisionService->changePositionDocument($id, $moveDown);
+        if (
+            0 >= $id
+            || 0 > $newPosition
+        ) {
+            return $response
+                ->setStatusCode(Response::STATUS_CODE_400)
+                ->setContent(Json::encode(['error' => 'Invalid document ID or position']));
+        }
 
-        return $response->setStatusCode(Response::STATUS_CODE_204); // No Content (OK)
+        try {
+            $this->decisionService->changePositionDocument($id, $newPosition);
+
+            return $response->setStatusCode(Response::STATUS_CODE_204);
+        } catch (Throwable $e) {
+            return $response
+                ->setStatusCode(Response::STATUS_CODE_500)
+                ->setContent(Json::encode(['error' => $e->getMessage()]));
+        }
     }
 
     public function authorizationsAction(): ViewModel
