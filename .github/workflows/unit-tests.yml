@@ -12,6 +12,8 @@ concurrency:
     group: ${{ github.workflow }}-${{ github.ref }}
     cancel-in-progress: true
 
+permissions: {}
+
 jobs:
     phpunit:
         name: PHPUnit
@@ -20,6 +22,8 @@ jobs:
         steps:
             -   name: Checkout
                 uses: actions/checkout@v4
+                with:
+                    persist-credentials: false
 
             -   name: Install PHP
                 uses: shivammathur/setup-php@v2
