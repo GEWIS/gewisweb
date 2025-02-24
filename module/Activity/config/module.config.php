@@ -244,6 +244,15 @@ return [
                             ],
                         ],
                     ],
+                    'draw' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/draw',
+                            'defaults' => [
+                                'action' => 'draw',
+                            ],
+                        ],
+                    ],
                 ],
             ],
             'activity_calendar' => [

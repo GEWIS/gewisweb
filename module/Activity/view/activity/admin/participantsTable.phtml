@@ -24,6 +24,7 @@ $attendanceModeTimeEnded = new DateTime() > $activity->getEndTime()->modify('+30
                                                         'activity_admin/markPresent',
                                                         ['id' => -1],
                                                     )) ?>"
+    data-participants-table-draw-url-value="<?= $this->escapeHtml($this->url('activity_admin/draw')) ?>"
     <?php endif ?>>
     <table class="table table-bordered" style="width: 100%" border="1">
         <thead>
@@ -132,6 +133,11 @@ $attendanceModeTimeEnded = new DateTime() > $activity->getEndTime()->modify('+30
                                 <span
                                     class=" fas fa-check"
                                     style="color: forestgreen"></span>
+                            <?php endif ?>
+                            <?php if (!$signup->isDrawn() && !$signup->isPresent()): ?>
+                                <span
+                                    class=" fas fa-x"
+                                    style="color: red"></span>
                             <?php endif; ?>
                         </td>
                     <?php endif; ?>
@@ -234,12 +240,30 @@ $attendanceModeTimeEnded = new DateTime() > $activity->getEndTime()->modify('+30
             </div>
         </div>
     <?php endif; ?>
+    <?php if (isset($signupList) && $activityApproved && !$attendanceModeTimeEnded): ?>
+        <button class="btn btn-primary btn-lg" type="button"
+            aria-hidden="true" data-action="click->participants-table#showDrawModal">
+            <span class="fas fa-pencil"></span> <?= $this->translate('Draw') ?>
+        </button>
+        <div style="height: 3px"></div>
+    <?php endif; ?>
     <?php if (isset($signupList) && $activityApproved && $attendanceModeTimeStarted && !$attendanceModeTimeEnded): ?>
         <button class="btn btn-primary btn-lg" type="button"
             aria-hidden="true" data-action="click->participants-table#enterAttendanceMode">
             <span class="fas fa-list"></span> <?= $this->translate('Attendance mode') ?>
         </button>
         <div style="height: 3px"></div>
+    <dialog class="draw-modal" data-participants-table-target="drawModal">
+        <header class="header"><h2>Draw</h2></header>
+        <div class="body">
+            <p><?= $this->translate('Put the names of the people that have been drawn out in the text area. Please put one full name per line, without any additional comma\'s.') ?></p>
+            <textarea rows="8" cols="30" data-participants-table-target="drawTextarea"></textarea>
+        </div>
+        <footer class="footer">
+            <div class="btn btn-outline-secondary"data-action="click->participants-table#closeDrawModal"><?= $this->translate('Cancel') ?></div>
+            <div class="btn btn-primary"data-action="click->participants-table#submitDraw"><?= $this->translate('Confirm') ?></div>
+        </footer>
+    </dialog>
     <?php endif; ?>
     <div
         data-participants-table-target="searchView"

@@ -30,6 +30,7 @@ use Laminas\View\Model\JsonModel;
 use Laminas\View\Model\ViewModel;
 use User\Permissions\NotAllowedException;
 
+use function json_decode;
 use function min;
 
 /**
@@ -589,5 +590,37 @@ class AdminController extends AbstractActionController
         }
 
         return new JsonModel($response);
+    }
+
+    public function drawAction(): JsonModel
+    {
+        /** @var Request $request */
+        $request = $this->getRequest();
+        /** @var Response $response */
+        $response = $this->getResponse();
+        if (!$request->isPost()) {
+            $response->setStatusCode(405);
+
+            return new JsonModel([
+                'Error' => $this->translator->translate('You can only make POST requests to this endpoint'),
+            ]);
+        }
+
+        $ids = json_decode($request->getContent());
+
+        $entityManager = $this->signupMapper->getEntityManager();
+        foreach ($ids as $id) {
+            $signup = $this->signupMapper->getSignupById($id);
+            if (!$signup || $signup->isPresent()) {
+                continue;
+            }
+
+            $signup->setDrawn(false);
+            $entityManager->persist($signup);
+        }
+
+        $entityManager->flush();
+
+        return new JsonModel();
     }
 }

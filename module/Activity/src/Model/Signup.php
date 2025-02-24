@@ -83,6 +83,12 @@ abstract class Signup
     #[Column(type: 'boolean')]
     protected bool $present = false;
 
+    /**
+     * Determines if the user was drawn
+     */
+    #[Column(type: 'boolean')]
+    protected bool $drawn = false;
+
     public function __construct()
     {
         $this->fieldValues = new ArrayCollection();
@@ -128,6 +134,22 @@ abstract class Signup
     public function setPresent(bool $present): void
     {
         $this->present = $present;
+    }
+
+    /**
+     * Get draw status of the user
+     */
+    public function isDrawn(): bool
+    {
+        return $this->drawn;
+    }
+
+    /**
+     * Set the draw status of the user
+     */
+    public function setDrawn(bool $drawn): void
+    {
+        $this->drawn = $drawn;
     }
 
     /**

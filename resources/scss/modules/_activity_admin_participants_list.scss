@@ -103,3 +103,39 @@
         }
     }
 }
+
+.draw-modal {
+    padding: 0;
+    border: 1px solid;
+    outline: none;
+
+    .header {
+        background-color: $brand-primary;
+        color: white;
+        padding: 1rem;
+        margin-bottom: 1rem;
+
+        h2 {
+            color: white;
+            margin: 0;
+        }
+    }
+
+    .body {
+        padding-left: 1rem;
+        padding-right: 1rem;
+
+        textarea {
+            width: 400px;
+        }
+
+        p {
+            width: 400px;
+        }
+    }
+
+    .footer {
+        padding: 1rem;
+        text-align: right;
+    }
+}

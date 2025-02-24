@@ -16,6 +16,9 @@ export default class extends Controller {
         "presenceCell",
         "presentTableCell",
         "notPresentTableCell",
+        "drawButton",
+        "drawModal",
+        "drawTextarea",
     ];
     rowTargets: HTMLTableRowElement[] | undefined;
     searchViewTarget: HTMLDivElement | undefined;
@@ -24,12 +27,17 @@ export default class extends Controller {
     presenceCellTargets: HTMLTableCellElement[] | undefined
     presentTableCellTarget: HTMLTableCellElement | undefined
     notPresentTableCellTarget: HTMLTableCellElement | undefined
+    drawButtonTarget: HTMLDivElement | undefined;
+    drawModalTarget: HTMLDialogElement | undefined;
+    drawTextareaTarget: HTMLTextAreaElement | undefined;
 
 
     static values = {
-        markPresentUrl: String
+        markPresentUrl: String,
+        drawUrl: String
     }
     declare markPresentUrlValue: string
+    declare drawUrlValue: string;
 
     private rows: TableRow[] | undefined;
     connect() {
@@ -140,6 +148,51 @@ export default class extends Controller {
             .catch((error) => {
                 console.error('Error making api call: ', error)
             });
+    }
+
+    showDrawModal(): void {
+        if (!this.drawModalTarget) return;
+        this.drawModalTarget.showModal();
+    }
+
+    closeDrawModal(): void {
+        if (!this.drawModalTarget) return;
+        this.drawModalTarget.close();
+    }
+
+    async submitDraw(): Promise<void> {
+        const value = this.drawTextareaTarget?.value;
+        if (!value) {
+            this.closeDrawModal();
+            return;
+        }
+        const payload = value.split('\n').map((value: string) => {
+            let result;
+            this.rows!.forEach((row) => {
+                if (row.name.join(" ").trim().normalize() === value.trim().normalize() && !row.present) {
+                    console.log(row.id);
+                    result = row.id;
+                }
+            });
+            return result;
+        }).filter((id) => id !== undefined);
+
+        await fetch(this.drawUrlValue,
+            {
+                method: 'POST',
+                body: JSON.stringify(payload),
+            })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`Status: ${response.status}`)
+                }
+            })
+            .catch((error) => {
+                console.error('Error making api call: ', error)
+            }
+            );
+        location.reload();
+        this.closeDrawModal();
     }
 
 
