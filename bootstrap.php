@@ -1,6 +1,7 @@
 <?php
 
-define('APP_ENV', false !== getenv('APP_ENV') ?: 'production');
+$appEnv = getenv('APP_ENV');
+define('APP_ENV', false !== $appEnv ? $appEnv : 'production');
 
 // `NONCE_REPLACEMENT_STRING` is required for production, if not set we should not continue loading the application.
 if (APP_ENV === 'production') {
@@ -16,7 +17,8 @@ if (APP_ENV === 'production') {
     }
 }
 
-define('NONCE_REPLACEMENT_STRING', false !== getenv('NONCE_REPLACEMENT_STRING') ?: '');
+$nonceReplacementString = getenv('NONCE_REPLACEMENT_STRING');
+define('NONCE_REPLACEMENT_STRING', false !== $nonceReplacementString ? $nonceReplacementString : '');
 
 // make sure we are in the correct directory
 chdir(__DIR__);
