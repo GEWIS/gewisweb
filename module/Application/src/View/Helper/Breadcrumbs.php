@@ -11,6 +11,11 @@ use function sprintf;
 
 /**
  * Helper for setting and retrieving breadcrumbs.
+ *
+ * @template TKey of array-key
+ * @template TValue of array{name: non-empty-string, active: bool, url: string}
+ *
+ * @template-extends AbstractStandalone<TKey, TValue>
  */
 class Breadcrumbs extends AbstractStandalone
 {
@@ -31,6 +36,7 @@ class Breadcrumbs extends AbstractStandalone
         }
 
         if ('' !== $breadcrumb) {
+            /** @var TValue $item */
             $item = [
                 'name' => $breadcrumb,
                 'active' => $active,
@@ -52,7 +58,7 @@ class Breadcrumbs extends AbstractStandalone
     /**
      * Append
      *
-     * @param array{name: string, active: bool, url: string} $value
+     * @psalm-param TValue $value
      */
     public function append(array $value): AbstractContainer
     {
@@ -62,7 +68,7 @@ class Breadcrumbs extends AbstractStandalone
     /**
      * Prepend
      *
-     * @param array{name: string, active: bool, url: string} $value
+     * @psalm-param TValue $value
      */
     public function prepend(array $value): AbstractContainer
     {
@@ -72,7 +78,7 @@ class Breadcrumbs extends AbstractStandalone
     /**
      * Set
      *
-     * @param array{name: string, active: bool, url: string} $value
+     * @psalm-param TValue $value
      */
     public function set(array $value): AbstractContainer
     {

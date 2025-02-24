@@ -16,6 +16,9 @@ use Laminas\Validator\Callback;
 use Laminas\Validator\Date;
 use Throwable;
 
+/**
+ * @psalm-suppress MissingTemplateParam
+ */
 class ActivityCalendarPeriod extends Form implements InputFilterProviderInterface
 {
     public function __construct(private readonly Translator $translator)

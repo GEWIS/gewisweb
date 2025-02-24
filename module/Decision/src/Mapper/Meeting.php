@@ -141,7 +141,7 @@ class Meeting extends BaseMapper
         $qb->setParameter(':type', $meeting->getType());
         $qb->setParameter(':number', $meeting->getNumber());
 
-        return $qb->getQuery()->getSingleScalarResult();
+        return (int) $qb->getQuery()->getSingleScalarResult();
     }
 
     /**

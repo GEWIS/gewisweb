@@ -24,3 +24,11 @@
         }
     }
 }
+
+.list-draggable {
+    cursor: pointer;
+
+    & .dragging {
+        opacity: 0.75;
+    }
+}

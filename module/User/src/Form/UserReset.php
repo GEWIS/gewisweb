@@ -16,6 +16,9 @@ use Laminas\Validator\Digits;
 use Laminas\Validator\EmailAddress;
 use Laminas\Validator\NotEmpty;
 
+/**
+ * @psalm-suppress MissingTemplateParam
+ */
 class UserReset extends Form implements InputFilterProviderInterface
 {
     public function __construct(private readonly Translator $translator)

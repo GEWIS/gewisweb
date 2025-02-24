@@ -11,7 +11,6 @@ use Decision\Form\Authorization as AuthorizationForm;
 use Decision\Form\AuthorizationRevocation as AuthorizationRevocationForm;
 use Decision\Form\Document as DocumentForm;
 use Decision\Form\Minutes as MinutesForm;
-use Decision\Form\ReorderDocument as ReorderDocumentForm;
 use Decision\Form\SearchDecision as SearchDecisionForm;
 use Decision\Mapper\Authorization as AuthorizationMapper;
 use Decision\Mapper\Decision as DecisionMapper;
@@ -36,6 +35,10 @@ use Laminas\Mvc\I18n\Translator;
 use NumberFormatter;
 use User\Permissions\NotAllowedException;
 
+use function array_flip;
+use function array_search;
+use function array_splice;
+use function count;
 use function explode;
 use function intval;
 use function pathinfo;
@@ -62,7 +65,6 @@ class Decision
         private readonly AuthorizationMapper $authorizationMapper,
         private readonly MinutesForm $minutesForm,
         private readonly DocumentForm $documentForm,
-        private readonly ReorderDocumentForm $reorderDocumentForm,
         private readonly SearchDecisionForm $searchDecisionForm,
         private readonly AuthorizationForm $authorizationForm,
         private readonly AuthorizationRevocationForm $authorizationRevocationForm,
@@ -298,27 +300,28 @@ class Decision
     /**
      * Changes a document's position in the ordering.
      *
-     * The basic flow is (1) retrieve documents, (2) swap document positions,
-     * then (3) persist position. Unfortunately, I have to update the positions
-     * of all documents related to a meeting because of legacy. Old documents
-     * don't have a position yet, so they are set to 0 by default.
+     * The basic flow is (1) retrieve documents, (2) set document to new position,
+     * then (3) persist position of all documents related to a meeting.
+     * Old documents don't have a position yet, so they are set to 0 by default.
      *
      * FUTURE: When documents have display positions, simplify the code by only
      * mutating two rows.
      *
-     * @param int  $id       Document ID
-     * @param bool $moveDown If the document should be moved down in the ordering, defaults to TRUE
+     * @param int $id          Document ID
+     * @param int $newPosition The new position for the document
      *
      * @throws NotAllowedException
      * @throws InvalidArgumentException If the document doesn't exist.
      */
     public function changePositionDocument(
         int $id,
-        bool $moveDown = true,
+        int $newPosition,
     ): void {
-        $errorMessage = 'You are not allowed to modify meeting documents.';
-
-        $this->isAllowedOrFail('upload_document', 'meeting', $errorMessage);
+        $this->isAllowedOrFail(
+            'upload_document',
+            'meeting',
+            'You are not allowed to modify meeting documents.',
+        );
 
         // Documents are ordered because of @OrderBy annotation on the relation
         /** @var PersistentCollection $documents */
@@ -327,32 +330,38 @@ class Decision
             ->getMeeting()
             ->getDocuments();
 
-        // Create data structure to derive ordering, key is position and value
-        // is document ID
+        // Convert the collection to an array to manipulate
+        /** @var int[] $ordering */
         $ordering = $documents->map(static function (MeetingDocumentModel $document) {
             return $document->getId();
-        });
+        })->toArray();
 
-        $oldPosition = $ordering->indexOf($id);
-        $newPosition = true === $moveDown ? $oldPosition + 1 : $oldPosition - 1;
+        $oldPosition = array_search($id, $ordering);
 
-        // Do nothing if the document is already at the top/bottom
-        if ($newPosition < 0 || $newPosition > $ordering->count() - 1) {
+        if ($newPosition === $oldPosition) {
             return;
         }
 
-        // Swap positions
-        $ordering->set($oldPosition, $ordering->get($newPosition));
-        $ordering->set($newPosition, $id);
+        // Validate the new position
+        if (
+            $newPosition < 0
+            || $newPosition >= count($ordering)
+        ) {
+            throw new InvalidArgumentException('Invalid position');
+        }
 
-        // Persist new positions
-        $documents->map(function (MeetingDocumentModel $document) use ($ordering): void {
-            $position = $ordering->indexOf($document->getId());
+        // Remove the document from its old position and insert in new position.
+        array_splice($ordering, $oldPosition, 1);
+        array_splice($ordering, $newPosition, 0, [$id]);
 
+        // Flip array to make getting position easier.
+        $newPositions = array_flip($ordering);
+        foreach ($documents as $document) {
+            $position = $newPositions[$document->getId()];
             $document->setDisplayPosition($position);
 
             $this->meetingDocumentMapper->persist($document);
-        });
+        }
     }
 
     /**
@@ -524,15 +533,6 @@ class Decision
         }
 
         return $this->documentForm;
-    }
-
-    public function getReorderDocumentForm(): ReorderDocumentForm
-    {
-        $errorMessage = 'You are not allowed to modify meeting documents.';
-
-        $this->isAllowedOrFail('upload_document', 'meeting', $errorMessage);
-
-        return $this->reorderDocumentForm;
     }
 
     /**

@@ -1,10 +1,10 @@
 <?php
 
-define('APP_ENV', getenv('APP_ENV') ?: 'production');
+define('APP_ENV', false !== getenv('APP_ENV') ?: 'production');
 
 // `NONCE_REPLACEMENT_STRING` is required for production, if not set we should not continue loading the application.
 if (APP_ENV === 'production') {
-    if (!getenv('NONCE_REPLACEMENT_STRING')) {
+    if (false === getenv('NONCE_REPLACEMENT_STRING')) {
         throw new RuntimeException(
             "Could not find `NONCE_REPLACEMENT_STRING`.\n"
         );
@@ -16,7 +16,7 @@ if (APP_ENV === 'production') {
     }
 }
 
-define('NONCE_REPLACEMENT_STRING', getenv('NONCE_REPLACEMENT_STRING') ?: '');
+define('NONCE_REPLACEMENT_STRING', false !== getenv('NONCE_REPLACEMENT_STRING') ?: '');
 
 // make sure we are in the correct directory
 chdir(__DIR__);
@@ -44,7 +44,7 @@ class ConsoleRunner
     {
         // Retrieve configuration
         $appConfig = require __DIR__ . '/config/application.config.php';
-        if (APP_ENV === 'development' && file_exists(__DIR__ . '/config/development.config.php')) {
+        if ('production' !== APP_ENV && file_exists(__DIR__ . '/config/development.config.php')) {
             $appConfig = ArrayUtils::merge($appConfig, require __DIR__ . '/config/development.config.php');
         }
 

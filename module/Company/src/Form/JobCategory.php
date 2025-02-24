@@ -22,6 +22,9 @@ use Laminas\Validator\StringLength;
 
 use function mb_strtolower;
 
+/**
+ * @psalm-suppress MissingTemplateParam
+ */
 class JobCategory extends Form implements InputFilterProviderInterface
 {
     private ?string $currentSlug = null;

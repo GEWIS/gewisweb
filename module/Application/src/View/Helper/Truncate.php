@@ -45,7 +45,7 @@ class Truncate extends AbstractHelper
 
         $truncate = mb_substr($text, 0, $length - mb_strlen($ending));
 
-        if (!$exact) {
+        if (false === $exact) {
             $spacepos = mb_strrpos($truncate, ' ');
             $truncate = mb_substr($truncate, 0, $spacepos);
         }

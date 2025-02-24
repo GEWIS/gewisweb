@@ -11,6 +11,9 @@ use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\File\Extension;
 use Laminas\Validator\File\MimeType;
 
+/**
+ * @psalm-suppress MissingTemplateParam
+ */
 class TempUpload extends Form implements InputFilterProviderInterface
 {
     public function __construct(Translator $translator)

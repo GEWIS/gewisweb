@@ -13,6 +13,9 @@ use Laminas\Validator\Identical;
 use Laminas\Validator\NotEmpty;
 use Laminas\Validator\StringLength;
 
+/**
+ * @psalm-suppress MissingTemplateParam
+ */
 class Activate extends Form implements InputFilterProviderInterface
 {
     public function __construct(
