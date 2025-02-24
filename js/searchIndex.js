@@ -381,6 +381,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Activity-Controller-AdminController.html#method_markPresentAction"
         },                {
+            "fqsen": "\\Activity\\Controller\\AdminController\u003A\u003AdrawAction\u0028\u0029",
+            "name": "drawAction",
+            "summary": "",
+            "url": "classes/Activity-Controller-AdminController.html#method_drawAction"
+        },                {
             "fqsen": "\\Activity\\Controller\\AdminController\u003A\u003A\u0024aclService",
             "name": "aclService",
             "summary": "",
@@ -2026,6 +2031,16 @@ Search.appendIndex(
             "summary": "Set\u0020presence\u0020of\u0020the\u0020user",
             "url": "classes/Activity-Model-Signup.html#method_setPresent"
         },                {
+            "fqsen": "\\Activity\\Model\\Signup\u003A\u003AisDrawn\u0028\u0029",
+            "name": "isDrawn",
+            "summary": "Get\u0020draw\u0020status\u0020of\u0020the\u0020user",
+            "url": "classes/Activity-Model-Signup.html#method_isDrawn"
+        },                {
+            "fqsen": "\\Activity\\Model\\Signup\u003A\u003AsetDrawn\u0028\u0029",
+            "name": "setDrawn",
+            "summary": "Set\u0020the\u0020draw\u0020status\u0020of\u0020the\u0020user",
+            "url": "classes/Activity-Model-Signup.html#method_setDrawn"
+        },                {
             "fqsen": "\\Activity\\Model\\Signup\u003A\u003AgetFullName\u0028\u0029",
             "name": "getFullName",
             "summary": "Get\u0020the\u0020full\u0020name\u0020of\u0020the\u0020user\u0020whom\u0020signed\u0020up\u0020for\u0020the\u0020SignupList.",
@@ -2060,6 +2075,11 @@ Search.appendIndex(
             "name": "present",
             "summary": "Determines\u0020if\u0020the\u0020user\u0020was\u0020present\u0020or\u0020not",
             "url": "classes/Activity-Model-Signup.html#property_present"
+        },                {
+            "fqsen": "\\Activity\\Model\\Signup\u003A\u003A\u0024drawn",
+            "name": "drawn",
+            "summary": "Determines\u0020if\u0020the\u0020user\u0020was\u0020drawn",
+            "url": "classes/Activity-Model-Signup.html#property_drawn"
         },                {
             "fqsen": "\\Activity\\Model\\SignupField",
             "name": "SignupField",
@@ -3450,6 +3470,26 @@ Search.appendIndex(
             "name": "down",
             "summary": "",
             "url": "classes/Application-Migrations-Version20250114092913.html#method_down"
+        },                {
+            "fqsen": "\\Application\\Migrations\\Version20250218153504",
+            "name": "Version20250218153504",
+            "summary": "Auto\u002Dgenerated\u0020Migration\u003A\u0020Please\u0020modify\u0020to\u0020your\u0020needs\u0021",
+            "url": "classes/Application-Migrations-Version20250218153504.html"
+        },                {
+            "fqsen": "\\Application\\Migrations\\Version20250218153504\u003A\u003AgetDescription\u0028\u0029",
+            "name": "getDescription",
+            "summary": "",
+            "url": "classes/Application-Migrations-Version20250218153504.html#method_getDescription"
+        },                {
+            "fqsen": "\\Application\\Migrations\\Version20250218153504\u003A\u003Aup\u0028\u0029",
+            "name": "up",
+            "summary": "",
+            "url": "classes/Application-Migrations-Version20250218153504.html#method_up"
+        },                {
+            "fqsen": "\\Application\\Migrations\\Version20250218153504\u003A\u003Adown\u0028\u0029",
+            "name": "down",
+            "summary": "",
+            "url": "classes/Application-Migrations-Version20250218153504.html#method_down"
         },                {
             "fqsen": "\\Application\\Command\\Factory\\LoadFixturesFactory",
             "name": "LoadFixturesFactory",
