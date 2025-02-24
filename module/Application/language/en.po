@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-15 21:24+0100\n"
+"POT-Creation-Date: 2025-02-24 16:40+0100\n"
 "PO-Revision-Date: 2025-01-11 15:54+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -766,6 +766,9 @@ msgstr "Complete agenda"
 msgid "Confidential Peer Support (CPS)"
 msgstr "Confidential Peer Support (CPS)"
 
+msgid "Confirm"
+msgstr "Confirm"
+
 msgid "Confirm authorization"
 msgstr "Confirm authorization"
 
@@ -1028,6 +1031,9 @@ msgstr "Thursdays there is a %ssocial drink%s from 16.30 till 19.00."
 
 msgid "Download"
 msgstr "Download"
+
+msgid "Draw"
+msgstr "Draw"
 
 msgid "Dutch"
 msgstr "Dutch"
@@ -2025,9 +2031,6 @@ msgstr "No organ"
 msgid "None"
 msgstr "None"
 
-msgid "Not present"
-msgstr "Not present"
-
 msgid "Notifications"
 msgstr "Notifications"
 
@@ -2322,9 +2325,6 @@ msgstr "Presence"
 msgid "Presence mode is not open right now"
 msgstr "Presence mode is not open right now"
 
-msgid "Present"
-msgstr "Present"
-
 msgid "Previous"
 msgstr "Previous"
 
@@ -2355,6 +2355,13 @@ msgstr "Public archive"
 
 msgid "Published"
 msgstr "Published"
+
+msgid ""
+"Put the names of the people that have been drawn out in the text area. "
+"Please put one full name per line, without any additional comma's."
+msgstr ""
+"Put the names of the people that have been drawn out in the text area. "
+"Please put one full name per line, without any additional comma's."
 
 msgid "Question"
 msgstr "Question"

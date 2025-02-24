@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-15 21:24+0100\n"
+"POT-Creation-Date: 2025-02-24 16:40+0100\n"
 "PO-Revision-Date: 2025-01-11 15:54+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -771,6 +771,9 @@ msgstr "Volledige agenda"
 msgid "Confidential Peer Support (CPS)"
 msgstr "Vertrouwenscontactpersonen (VCP)"
 
+msgid "Confirm"
+msgstr "Bevestigen"
+
 msgid "Confirm authorization"
 msgstr "Bevestig machtiging"
 
@@ -1037,6 +1040,9 @@ msgstr "Donderdags is er %sborrel%s van 16.30 tot 19.00 uur."
 
 msgid "Download"
 msgstr "Downloaden"
+
+msgid "Draw"
+msgstr "Loting"
 
 msgid "Dutch"
 msgstr "Nederlands"
@@ -2047,9 +2053,6 @@ msgstr "Geen orgaan"
 msgid "None"
 msgstr "Geen"
 
-msgid "Not present"
-msgstr "Niet aanwezig"
-
 msgid "Notifications"
 msgstr "Meldingen"
 
@@ -2347,9 +2350,6 @@ msgstr "Aanwezigheid"
 msgid "Presence mode is not open right now"
 msgstr "Aanwezigheid modus is op dit moment niet open"
 
-msgid "Present"
-msgstr "Aanwezig"
-
 msgid "Previous"
 msgstr "Vorige"
 
@@ -2380,6 +2380,13 @@ msgstr "Openbaar Archief"
 
 msgid "Published"
 msgstr "Gepubliceerd"
+
+msgid ""
+"Put the names of the people that have been drawn out in the text area. "
+"Please put one full name per line, without any additional comma's."
+msgstr ""
+"Vul de name van de mensen die zijn uitgeloot in in het tekst vak. "
+"Per regel 1 volledige naam, zonder comma's"
 
 msgid "Question"
 msgstr "Vraag"
