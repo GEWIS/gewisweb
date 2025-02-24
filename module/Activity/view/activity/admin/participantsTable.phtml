@@ -246,6 +246,17 @@ $attendanceModeTimeEnded = new DateTime() > $activity->getEndTime()->modify('+30
             <span class="fas fa-pencil"></span> <?= $this->translate('Draw') ?>
         </button>
         <div style="height: 3px"></div>
+        <dialog class="draw-modal" data-participants-table-target="drawModal">
+            <header class="header"><h2>Draw</h2></header>
+            <div class="body">
+                <p><?= $this->translate('Put the names of the people that have been drawn out in the text area. Please put one full name per line, without any additional comma\'s.') ?></p>
+                <textarea rows="8" cols="30" data-participants-table-target="drawTextarea"></textarea>
+            </div>
+            <footer class="footer">
+                <div class="btn btn-outline-secondary"data-action="click->participants-table#closeDrawModal"><?= $this->translate('Cancel') ?></div>
+                <div class="btn btn-primary"data-action="click->participants-table#submitDraw"><?= $this->translate('Confirm') ?></div>
+            </footer>
+        </dialog>
     <?php endif; ?>
     <?php if (isset($signupList) && $activityApproved && $attendanceModeTimeStarted && !$attendanceModeTimeEnded): ?>
         <button class="btn btn-primary btn-lg" type="button"
@@ -253,17 +264,6 @@ $attendanceModeTimeEnded = new DateTime() > $activity->getEndTime()->modify('+30
             <span class="fas fa-list"></span> <?= $this->translate('Attendance mode') ?>
         </button>
         <div style="height: 3px"></div>
-    <dialog class="draw-modal" data-participants-table-target="drawModal">
-        <header class="header"><h2>Draw</h2></header>
-        <div class="body">
-            <p><?= $this->translate('Put the names of the people that have been drawn out in the text area. Please put one full name per line, without any additional comma\'s.') ?></p>
-            <textarea rows="8" cols="30" data-participants-table-target="drawTextarea"></textarea>
-        </div>
-        <footer class="footer">
-            <div class="btn btn-outline-secondary"data-action="click->participants-table#closeDrawModal"><?= $this->translate('Cancel') ?></div>
-            <div class="btn btn-primary"data-action="click->participants-table#submitDraw"><?= $this->translate('Confirm') ?></div>
-        </footer>
-    </dialog>
     <?php endif; ?>
     <div
         data-participants-table-target="searchView"
