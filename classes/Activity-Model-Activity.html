@@ -438,7 +438,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">70</span>
+    <span class="phpdocumentor-element-found-in__line">72</span>
 
     </aside>
 
@@ -519,6 +519,7 @@ organ: ?OrganModel,
 company: ?CompanyModel,
 isMyFuture: bool,
 requireGEFLITST: bool,
+requireZettle: bool,
 categories: ImportedActivityCategoryArrayType[],
 signupLists: ImportedSignupListArrayType[],
 }</p>
@@ -542,6 +543,7 @@ organ: ?int,
 company: ?int,
 isMyFuture: bool,
 requireGEFLITST: bool,
+requireZettle: bool,
 categories: ImportedActivityCategoryGdprArrayType[],
 signupLists: ImportedSignupListGdprArrayType[],
 }</p>
@@ -724,6 +726,13 @@ nullable.</dd>
 <dd>Whether this activity needs a GEFLITST photographer.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a class="" href="classes/Activity-Model-Activity.html#property_requireZettle">$requireZettle</a>
+    <span>
+                        &nbsp;: bool            </span>
+</dt>
+<dd>Whether this activity needs a Zettle.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Activity-Model-Activity.html#property_signupLists">$signupLists</a>
     <span>
                         &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Activity-Model-SignupList.html"><abbr title="\Activity\Model\SignupList">SignupList</abbr></a>&gt;            </span>
@@ -864,6 +873,12 @@ nullable.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Activity-Model-Activity.html#method_getRequireGEFLITST">getRequireGEFLITST()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Activity-Model-Activity.html#method_getRequireZettle">getRequireZettle()</a>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
@@ -1013,6 +1028,12 @@ nullable.</dd>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Activity-Model-Activity.html#method_setRequireZettle">setRequireZettle()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Activity-Model-Activity.html#method_setStatus">setStatus()</a>
     <span>
                                 &nbsp;: void    </span>
@@ -1052,7 +1073,7 @@ nullable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">79</span>
+    <span class="phpdocumentor-element-found-in__line">81</span>
 
     </aside>
 
@@ -1083,7 +1104,7 @@ nullable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">80</span>
+    <span class="phpdocumentor-element-found-in__line">82</span>
 
     </aside>
 
@@ -1114,7 +1135,7 @@ nullable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">78</span>
+    <span class="phpdocumentor-element-found-in__line">80</span>
 
     </aside>
 
@@ -1146,7 +1167,7 @@ nullable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">81</span>
+    <span class="phpdocumentor-element-found-in__line">83</span>
 
     </aside>
 
@@ -1193,7 +1214,7 @@ nullable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">143</span>
+    <span class="phpdocumentor-element-found-in__line">145</span>
 
     </aside>
 
@@ -1252,7 +1273,7 @@ nullable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">101</span>
+    <span class="phpdocumentor-element-found-in__line">103</span>
 
     </aside>
 
@@ -1303,7 +1324,7 @@ nullable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">194</span>
+    <span class="phpdocumentor-element-found-in__line">196</span>
 
     </aside>
 
@@ -1368,7 +1389,7 @@ nullable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">228</span>
+    <span class="phpdocumentor-element-found-in__line">230</span>
 
     </aside>
 
@@ -1430,7 +1451,7 @@ nullable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">128</span>
+    <span class="phpdocumentor-element-found-in__line">130</span>
 
     </aside>
 
@@ -1501,7 +1522,7 @@ nullable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">150</span>
+    <span class="phpdocumentor-element-found-in__line">152</span>
 
     </aside>
 
@@ -1563,7 +1584,7 @@ nullable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">177</span>
+    <span class="phpdocumentor-element-found-in__line">179</span>
 
     </aside>
 
@@ -1634,7 +1655,7 @@ nullable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">107</span>
+    <span class="phpdocumentor-element-found-in__line">109</span>
 
     </aside>
 
@@ -1750,7 +1771,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">238</span>
+    <span class="phpdocumentor-element-found-in__line">240</span>
 
     </aside>
 
@@ -1801,7 +1822,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">113</span>
+    <span class="phpdocumentor-element-found-in__line">115</span>
 
     </aside>
 
@@ -1872,7 +1893,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">86</span>
+    <span class="phpdocumentor-element-found-in__line">88</span>
 
     </aside>
 
@@ -1943,7 +1964,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">218</span>
+    <span class="phpdocumentor-element-found-in__line">220</span>
 
     </aside>
 
@@ -2005,7 +2026,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">244</span>
+    <span class="phpdocumentor-element-found-in__line">246</span>
 
     </aside>
 
@@ -2016,7 +2037,7 @@ nullable.</p>
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">bool</span>
     <span class="phpdocumentor-signature__name">$requireGEFLITST</span>
-    </code>
+     = <span class="phpdocumentor-signature__default-value">false</span></code>
 
     
     
@@ -2026,6 +2047,57 @@ nullable.</p>
     <section class="phpdocumentor-attributes">
         <h5 class="phpdocumentor-elements__header" id="attributes">
             Attributes <a href="classes/Activity-Model-Activity.html#property_requireGEFLITST#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $type: &#039;boolean&#039;
+    </dd>
+    </dl>
+            </section>
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_requireZettle">
+        $requireZettle
+        <a href="classes/Activity-Model-Activity.html#property_requireZettle" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">252</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Whether this activity needs a Zettle.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type">bool</span>
+    <span class="phpdocumentor-signature__name">$requireZettle</span>
+     = <span class="phpdocumentor-signature__default-value">false</span></code>
+
+    
+    
+    
+
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Activity-Model-Activity.html#property_requireZettle#attributes" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h5>
                     <dl class="phpdocumentor-argument-list">
@@ -2056,7 +2128,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">207</span>
+    <span class="phpdocumentor-element-found-in__line">209</span>
 
     </aside>
 
@@ -2116,7 +2188,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">160</span>
+    <span class="phpdocumentor-element-found-in__line">162</span>
 
     </aside>
 
@@ -2167,7 +2239,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">168</span>
+    <span class="phpdocumentor-element-found-in__line">170</span>
 
     </aside>
 
@@ -2226,7 +2298,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">247</span>
+    <span class="phpdocumentor-element-found-in__line">255</span>
 
     </aside>
 
@@ -2260,7 +2332,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">285</span>
+    <span class="phpdocumentor-element-found-in__line">293</span>
 
     </aside>
 
@@ -2304,7 +2376,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">292</span>
+    <span class="phpdocumentor-element-found-in__line">300</span>
 
     </aside>
 
@@ -2348,7 +2420,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">334</span>
+    <span class="phpdocumentor-element-found-in__line">342</span>
 
     </aside>
 
@@ -2392,7 +2464,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">327</span>
+    <span class="phpdocumentor-element-found-in__line">335</span>
 
     </aside>
 
@@ -2437,7 +2509,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">254</span>
+    <span class="phpdocumentor-element-found-in__line">262</span>
 
     </aside>
 
@@ -2475,7 +2547,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">385</span>
+    <span class="phpdocumentor-element-found-in__line">393</span>
 
     </aside>
 
@@ -2513,7 +2585,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">478</span>
+    <span class="phpdocumentor-element-found-in__line">496</span>
 
     </aside>
 
@@ -2551,7 +2623,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">445</span>
+    <span class="phpdocumentor-element-found-in__line">453</span>
 
     </aside>
 
@@ -2589,7 +2661,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">415</span>
+    <span class="phpdocumentor-element-found-in__line">423</span>
 
     </aside>
 
@@ -2627,7 +2699,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">483</span>
+    <span class="phpdocumentor-element-found-in__line">501</span>
 
     </aside>
 
@@ -2665,7 +2737,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">425</span>
+    <span class="phpdocumentor-element-found-in__line">433</span>
 
     </aside>
 
@@ -2703,7 +2775,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">395</span>
+    <span class="phpdocumentor-element-found-in__line">403</span>
 
     </aside>
 
@@ -2794,7 +2866,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">455</span>
+    <span class="phpdocumentor-element-found-in__line">463</span>
 
     </aside>
 
@@ -2832,7 +2904,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">405</span>
+    <span class="phpdocumentor-element-found-in__line">413</span>
 
     </aside>
 
@@ -2870,7 +2942,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">375</span>
+    <span class="phpdocumentor-element-found-in__line">383</span>
 
     </aside>
 
@@ -2908,7 +2980,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">435</span>
+    <span class="phpdocumentor-element-found-in__line">443</span>
 
     </aside>
 
@@ -2946,7 +3018,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">465</span>
+    <span class="phpdocumentor-element-found-in__line">473</span>
 
     </aside>
 
@@ -2954,6 +3026,44 @@ nullable.</p>
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getRequireGEFLITST</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getRequireZettle">
+        getRequireZettle()
+        <a href="classes/Activity-Model-Activity.html#method_getRequireZettle" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">483</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getRequireZettle</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -2984,7 +3094,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">584</span>
+    <span class="phpdocumentor-element-found-in__line">604</span>
 
     </aside>
 
@@ -3023,7 +3133,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">568</span>
+    <span class="phpdocumentor-element-found-in__line">588</span>
 
     </aside>
 
@@ -3062,7 +3172,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">576</span>
+    <span class="phpdocumentor-element-found-in__line">596</span>
 
     </aside>
 
@@ -3101,7 +3211,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">370</span>
+    <span class="phpdocumentor-element-found-in__line">378</span>
 
     </aside>
 
@@ -3140,7 +3250,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">264</span>
+    <span class="phpdocumentor-element-found-in__line">272</span>
 
     </aside>
 
@@ -3178,7 +3288,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">277</span>
+    <span class="phpdocumentor-element-found-in__line">285</span>
 
     </aside>
 
@@ -3216,7 +3326,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">305</span>
+    <span class="phpdocumentor-element-found-in__line">313</span>
 
     </aside>
 
@@ -3260,7 +3370,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">312</span>
+    <span class="phpdocumentor-element-found-in__line">320</span>
 
     </aside>
 
@@ -3304,7 +3414,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">356</span>
+    <span class="phpdocumentor-element-found-in__line">364</span>
 
     </aside>
 
@@ -3348,7 +3458,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">349</span>
+    <span class="phpdocumentor-element-found-in__line">357</span>
 
     </aside>
 
@@ -3393,7 +3503,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">259</span>
+    <span class="phpdocumentor-element-found-in__line">267</span>
 
     </aside>
 
@@ -3437,7 +3547,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">390</span>
+    <span class="phpdocumentor-element-found-in__line">398</span>
 
     </aside>
 
@@ -3481,7 +3591,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">450</span>
+    <span class="phpdocumentor-element-found-in__line">458</span>
 
     </aside>
 
@@ -3525,7 +3635,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">420</span>
+    <span class="phpdocumentor-element-found-in__line">428</span>
 
     </aside>
 
@@ -3569,7 +3679,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">488</span>
+    <span class="phpdocumentor-element-found-in__line">506</span>
 
     </aside>
 
@@ -3613,7 +3723,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">430</span>
+    <span class="phpdocumentor-element-found-in__line">438</span>
 
     </aside>
 
@@ -3657,7 +3767,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">400</span>
+    <span class="phpdocumentor-element-found-in__line">408</span>
 
     </aside>
 
@@ -3746,7 +3856,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">460</span>
+    <span class="phpdocumentor-element-found-in__line">468</span>
 
     </aside>
 
@@ -3790,7 +3900,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">410</span>
+    <span class="phpdocumentor-element-found-in__line">418</span>
 
     </aside>
 
@@ -3834,7 +3944,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">380</span>
+    <span class="phpdocumentor-element-found-in__line">388</span>
 
     </aside>
 
@@ -3878,7 +3988,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">440</span>
+    <span class="phpdocumentor-element-found-in__line">448</span>
 
     </aside>
 
@@ -3922,7 +4032,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">470</span>
+    <span class="phpdocumentor-element-found-in__line">478</span>
 
     </aside>
 
@@ -3958,6 +4068,50 @@ nullable.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_setRequireZettle">
+        setRequireZettle()
+        <a href="classes/Activity-Model-Activity.html#method_setRequireZettle" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">488</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">setRequireZettle</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$requireZettle</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$requireZettle</span>
+                : <span class="phpdocumentor-signature__argument__return-type">bool</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+    
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_setStatus">
         setStatus()
         <a href="classes/Activity-Model-Activity.html#method_setStatus" class="headerlink"><i class="fas fa-link"></i></a>
@@ -3966,7 +4120,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">269</span>
+    <span class="phpdocumentor-element-found-in__line">277</span>
 
     </aside>
 
@@ -4010,7 +4164,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">498</span>
+    <span class="phpdocumentor-element-found-in__line">516</span>
 
     </aside>
 
@@ -4049,7 +4203,7 @@ nullable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/Activity.php"><a href="files/module-activity-src-model-activity.html"><abbr title="module/Activity/src/Model/Activity.php">Activity.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">534</span>
+    <span class="phpdocumentor-element-found-in__line">553</span>
 
     </aside>
 
@@ -4210,6 +4364,7 @@ nullable.</p>
                                                     <li class=""><a href="classes/Activity-Model-Activity.html#property_name">$name</a></li>
                                                     <li class=""><a href="classes/Activity-Model-Activity.html#property_organ">$organ</a></li>
                                                     <li class=""><a href="classes/Activity-Model-Activity.html#property_requireGEFLITST">$requireGEFLITST</a></li>
+                                                    <li class=""><a href="classes/Activity-Model-Activity.html#property_requireZettle">$requireZettle</a></li>
                                                     <li class=""><a href="classes/Activity-Model-Activity.html#property_signupLists">$signupLists</a></li>
                                                     <li class=""><a href="classes/Activity-Model-Activity.html#property_status">$status</a></li>
                                                     <li class=""><a href="classes/Activity-Model-Activity.html#property_updateProposal">$updateProposal</a></li>
@@ -4238,6 +4393,7 @@ nullable.</p>
                                             <li class=""><a href="classes/Activity-Model-Activity.html#method_getName">getName()</a></li>
                                             <li class=""><a href="classes/Activity-Model-Activity.html#method_getOrgan">getOrgan()</a></li>
                                             <li class=""><a href="classes/Activity-Model-Activity.html#method_getRequireGEFLITST">getRequireGEFLITST()</a></li>
+                                            <li class=""><a href="classes/Activity-Model-Activity.html#method_getRequireZettle">getRequireZettle()</a></li>
                                             <li class=""><a href="classes/Activity-Model-Activity.html#method_getResourceCreator">getResourceCreator()</a></li>
                                             <li class=""><a href="classes/Activity-Model-Activity.html#method_getResourceId">getResourceId()</a></li>
                                             <li class=""><a href="classes/Activity-Model-Activity.html#method_getResourceOrgan">getResourceOrgan()</a></li>
@@ -4261,6 +4417,7 @@ nullable.</p>
                                             <li class=""><a href="classes/Activity-Model-Activity.html#method_setName">setName()</a></li>
                                             <li class=""><a href="classes/Activity-Model-Activity.html#method_setOrgan">setOrgan()</a></li>
                                             <li class=""><a href="classes/Activity-Model-Activity.html#method_setRequireGEFLITST">setRequireGEFLITST()</a></li>
+                                            <li class=""><a href="classes/Activity-Model-Activity.html#method_setRequireZettle">setRequireZettle()</a></li>
                                             <li class=""><a href="classes/Activity-Model-Activity.html#method_setStatus">setStatus()</a></li>
                                             <li class=""><a href="classes/Activity-Model-Activity.html#method_toArray">toArray()</a></li>
                                             <li class=""><a href="classes/Activity-Model-Activity.html#method_toGdprArray">toGdprArray()</a></li>

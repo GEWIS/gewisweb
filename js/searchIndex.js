@@ -1371,6 +1371,16 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Activity-Model-Activity.html#method_setRequireGEFLITST"
         },                {
+            "fqsen": "\\Activity\\Model\\Activity\u003A\u003AgetRequireZettle\u0028\u0029",
+            "name": "getRequireZettle",
+            "summary": "",
+            "url": "classes/Activity-Model-Activity.html#method_getRequireZettle"
+        },                {
+            "fqsen": "\\Activity\\Model\\Activity\u003A\u003AsetRequireZettle\u0028\u0029",
+            "name": "setRequireZettle",
+            "summary": "",
+            "url": "classes/Activity-Model-Activity.html#method_setRequireZettle"
+        },                {
             "fqsen": "\\Activity\\Model\\Activity\u003A\u003AgetCategories\u0028\u0029",
             "name": "getCategories",
             "summary": "",
@@ -1510,6 +1520,11 @@ Search.appendIndex(
             "name": "requireGEFLITST",
             "summary": "Whether\u0020this\u0020activity\u0020needs\u0020a\u0020GEFLITST\u0020photographer.",
             "url": "classes/Activity-Model-Activity.html#property_requireGEFLITST"
+        },                {
+            "fqsen": "\\Activity\\Model\\Activity\u003A\u003A\u0024requireZettle",
+            "name": "requireZettle",
+            "summary": "Whether\u0020this\u0020activity\u0020needs\u0020a\u0020Zettle.",
+            "url": "classes/Activity-Model-Activity.html#property_requireZettle"
         },                {
             "fqsen": "\\Activity\\Model\\ActivityCalendarOption",
             "name": "ActivityCalendarOption",
@@ -2601,10 +2616,10 @@ Search.appendIndex(
             "summary": "Creates\u0020options\u0020for\u0020both\u0020languages\u0020specified\u0020and\u0020adds\u0020it\u0020to\u0020\u0024field.",
             "url": "classes/Activity-Service-Activity.html#method_createSignupOption"
         },                {
-            "fqsen": "\\Activity\\Service\\Activity\u003A\u003ArequestGEFLITST\u0028\u0029",
-            "name": "requestGEFLITST",
+            "fqsen": "\\Activity\\Service\\Activity\u003A\u003ArequestFacility\u0028\u0029",
+            "name": "requestFacility",
             "summary": "",
-            "url": "classes/Activity-Service-Activity.html#method_requestGEFLITST"
+            "url": "classes/Activity-Service-Activity.html#method_requestFacility"
         },                {
             "fqsen": "\\Activity\\Service\\Activity\u003A\u003AcreateUpdateProposal\u0028\u0029",
             "name": "createUpdateProposal",
@@ -3490,6 +3505,26 @@ Search.appendIndex(
             "name": "down",
             "summary": "",
             "url": "classes/Application-Migrations-Version20250218153504.html#method_down"
+        },                {
+            "fqsen": "\\Application\\Migrations\\Version20250227142446",
+            "name": "Version20250227142446",
+            "summary": "phpcs\u003Adisable\u0020Generic.Files.LineLength.TooLong\nphpcs\u003Adisable\u0020SlevomatCodingStandard.Functions.RequireMultiLineCall.RequiredMultiLineCall",
+            "url": "classes/Application-Migrations-Version20250227142446.html"
+        },                {
+            "fqsen": "\\Application\\Migrations\\Version20250227142446\u003A\u003AgetDescription\u0028\u0029",
+            "name": "getDescription",
+            "summary": "",
+            "url": "classes/Application-Migrations-Version20250227142446.html#method_getDescription"
+        },                {
+            "fqsen": "\\Application\\Migrations\\Version20250227142446\u003A\u003Aup\u0028\u0029",
+            "name": "up",
+            "summary": "",
+            "url": "classes/Application-Migrations-Version20250227142446.html#method_up"
+        },                {
+            "fqsen": "\\Application\\Migrations\\Version20250227142446\u003A\u003Adown\u0028\u0029",
+            "name": "down",
+            "summary": "",
+            "url": "classes/Application-Migrations-Version20250227142446.html#method_down"
         },                {
             "fqsen": "\\Application\\Command\\Factory\\LoadFixturesFactory",
             "name": "LoadFixturesFactory",
