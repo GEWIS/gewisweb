@@ -2358,10 +2358,10 @@ msgstr "Published"
 
 msgid ""
 "Put the names of the people that have been drawn out in the text area. "
-"Please put one full name per line, without any additional comma's."
+"Please put one full name per line, without any additional commas."
 msgstr ""
 "Put the names of the people that have been drawn out in the text area. "
-"Please put one full name per line, without any additional comma's."
+"Please put one full name per line, without any additional commas."
 
 msgid "Question"
 msgstr "Question"

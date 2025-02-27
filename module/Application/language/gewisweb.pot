@@ -2230,7 +2230,7 @@ msgstr ""
 
 msgid ""
 "Put the names of the people that have been drawn out in the text area. "
-"Please put one full name per line, without any additional comma's."
+"Please put one full name per line, without any additional commas."
 msgstr ""
 
 msgid "Question"

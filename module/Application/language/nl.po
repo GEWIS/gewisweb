@@ -2383,10 +2383,10 @@ msgstr "Gepubliceerd"
 
 msgid ""
 "Put the names of the people that have been drawn out in the text area. "
-"Please put one full name per line, without any additional comma's."
+"Please put one full name per line, without any additional commas."
 msgstr ""
-"Vul de name van de mensen die zijn uitgeloot in in het tekst vak. "
-"Per regel 1 volledige naam, zonder comma's"
+"Vul de namen van de mensen die zijn uitgeloot in in het tekst vak. "
+"Per regel 1 volledige naam, zonder komma's."
 
 msgid "Question"
 msgstr "Vraag"
