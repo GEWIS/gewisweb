@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-24 16:40+0100\n"
-"PO-Revision-Date: 2025-01-11 15:54+0100\n"
+"POT-Creation-Date: 2025-02-27 15:29+0100\n"
+"PO-Revision-Date: 2025-02-27 15:30+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: en\n"
@@ -688,6 +688,9 @@ msgstr "Choose a meeting"
 msgid "Choose to which job package you want to transfer the selected jobs."
 msgstr "Choose to which job package you want to transfer the selected jobs."
 
+msgid "Choose which facilities you would like for this activity."
+msgstr "Choose which facilities you would like for this activity."
+
 msgid "Choose which options are applicable to this activity."
 msgstr "Choose which options are applicable to this activity."
 
@@ -1260,6 +1263,9 @@ msgstr "External applications"
 
 msgid "FAQ"
 msgstr "FAQ"
+
+msgid "Facilities"
+msgstr "Facilities"
 
 msgid "Family name"
 msgstr "Family name"
@@ -1921,17 +1927,11 @@ msgstr "Move Jobs"
 msgid "Move album"
 msgstr "Move album"
 
-msgid "Move down"
-msgstr "Move down"
-
 msgid "Move the album"
 msgstr "Move the album"
 
 msgid "Move the photos to another album"
 msgstr "Move the photos to another album"
-
-msgid "Move up"
-msgstr "Move up"
 
 msgid "Multiple days"
 msgstr "Multiple days"
@@ -3094,6 +3094,9 @@ msgstr "This activity has already started/ended and can no longer be updated."
 msgid "This activity needs a GEFLITST member to take photos"
 msgstr "This activity needs a GEFLITST member to take photos"
 
+msgid "This activity needs a Zettle for payments"
+msgstr "This activity needs a Zettle for payments"
+
 #, php-format
 msgid "This activity was approved by <strong>%s</strong>."
 msgstr "This activity was approved by <strong>%s</strong>."
@@ -3630,6 +3633,13 @@ msgid ""
 msgstr ""
 "When this is checked, GEFLITST will be notified that this activity needs a "
 "photographer."
+
+msgid ""
+"When this is checked, the treasurer will be notified that this activity "
+"needs a Zettle."
+msgstr ""
+"When this is checked, the treasurer will be notified that this activity "
+"needs a Zettle."
 
 msgid "Wrong form"
 msgstr "Wrong form"

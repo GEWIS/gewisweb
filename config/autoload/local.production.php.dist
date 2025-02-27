@@ -64,6 +64,10 @@ return [
                 'key' => getenv('MAIL_TO_ACTIVITY_CREATION_REQUIRE_GEFLITST_PLANKA_KEY'),
                 'name' => getenv('MAIL_TO_ACTIVITY_CREATION_REQUIRE_GEFLITST_PLANKA_NAME'),
             ],
+            'activity_creation_require_Zettle' => [
+                'address' => getenv('MAIL_TO_ACTIVITY_CREATION_REQUIRE_ZETTLE_ADDRESS'),
+                'name' => getenv('MAIL_TO_ACTIVITY_CREATION_REQUIRE_ZETTLE_NAME'),
+            ],
         ],
     ],
 

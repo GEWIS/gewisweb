@@ -154,6 +154,17 @@ class Activity extends LocalisableForm implements InputFilterProviderInterface
 
         $this->add(
             [
+                'name' => 'requireZettle',
+                'type' => Checkbox::class,
+                'options' => [
+                    'checked_value' => '1',
+                    'unchecked_value' => '0',
+                ],
+            ],
+        );
+
+        $this->add(
+            [
                 'name' => 'categories',
                 'type' => MultiCheckbox::class,
                 'options' => [

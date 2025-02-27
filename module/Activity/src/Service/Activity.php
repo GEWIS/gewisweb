@@ -90,7 +90,11 @@ class Activity
 
         // Send email to GEFLITST if user checked checkbox of GEFLITST
         if ($activity->getRequireGEFLITST()) {
-            $this->requestGEFLITST($activity, $member, $organ);
+            $this->requestFacility('GEFLITST', $activity, $member, $organ);
+        }
+
+        if ($activity->getRequireZettle()) {
+            $this->requestFacility('Zettle', $activity, $member, $organ);
         }
 
         return true;
@@ -179,6 +183,7 @@ class Activity
 
         $activity->setIsMyFuture(boolval($data['isMyFuture']));
         $activity->setRequireGEFLITST(boolval($data['requireGEFLITST']));
+        $activity->setRequireZettle(boolval($data['requireZettle']));
 
         // Not user provided input
         $activity->setCreator($user);
@@ -337,7 +342,11 @@ class Activity
         $em->flush();
     }
 
-    private function requestGEFLITST(
+    /**
+     * @psalm-param 'GEFLITST'|'Zettle' $facilityType
+     */
+    private function requestFacility(
+        string $facilityType,
         ActivityModel $activity,
         MemberModel $user,
         ?OrganModel $organ,
@@ -346,8 +355,8 @@ class Activity
         $activityTitle = $activity->getName()->getText('en');
         $activityTime = $activity->getBeginTime()->format('d-m-Y H:i');
 
-        $type = 'activity_creation_require_GEFLITST';
-        $view = 'email/activity_created_require_GEFLITST';
+        $type = sprintf('activity_creation_require_%s', $facilityType);
+        $view = sprintf('email/activity_created_require_%s', $facilityType);
 
         if (null !== $organ) {
             $subject = sprintf('%s: %s on %s', $organ->getAbbr(), $activityTitle, $activityTime);
@@ -526,7 +535,13 @@ class Activity
         // HTML forms do not know anything about booleans, hence we need to
         // convert the strings to something we can use.
         array_walk_recursive($proposal, static function (&$v, $k): void {
-            if (!in_array($k, ['isMyFuture', 'requireGEFLITST', 'onlyGEWIS', 'displaySubscribedNumber'], true)) {
+            if (
+                !in_array(
+                    $k,
+                    ['isMyFuture', 'requireGEFLITST', 'requireZettle', 'onlyGEWIS', 'displaySubscribedNumber'],
+                    true,
+                )
+            ) {
                 return;
             }
 
