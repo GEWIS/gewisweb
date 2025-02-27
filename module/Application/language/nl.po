@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-24 16:40+0100\n"
-"PO-Revision-Date: 2025-01-11 15:54+0100\n"
+"POT-Creation-Date: 2025-02-27 15:29+0100\n"
+"PO-Revision-Date: 2025-02-27 15:30+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: nl\n"
@@ -693,6 +693,9 @@ msgid "Choose to which job package you want to transfer the selected jobs."
 msgstr ""
 "Kies naar welk vacaturepakket je de geselecteerde vacatures wilt verplaatsen."
 
+msgid "Choose which facilities you would like for this activity."
+msgstr "Kies welke faciliteiten je wilt voor deze activiteit."
+
 msgid "Choose which options are applicable to this activity."
 msgstr "Kies welke opties van toepassing zijn op deze activiteit."
 
@@ -1271,6 +1274,9 @@ msgstr "Externe applicaties"
 
 msgid "FAQ"
 msgstr "FAQ"
+
+msgid "Facilities"
+msgstr "Faciliteiten"
 
 msgid "Family name"
 msgstr "Achternaam"
@@ -1944,17 +1950,11 @@ msgstr "Verplaats vacatures"
 msgid "Move album"
 msgstr "Verplaats album"
 
-msgid "Move down"
-msgstr "Verplaats omlaag"
-
 msgid "Move the album"
 msgstr "Verplaats het album"
 
 msgid "Move the photos to another album"
 msgstr "Verplaats de foto's naar een ander album"
-
-msgid "Move up"
-msgstr "Verplaats omhoog"
 
 msgid "Multiple days"
 msgstr "Meerdere dagen"
@@ -2385,8 +2385,8 @@ msgid ""
 "Put the names of the people that have been drawn out in the text area. "
 "Please put one full name per line, without any additional commas."
 msgstr ""
-"Vul de namen van de mensen die zijn uitgeloot in in het tekst vak. "
-"Per regel 1 volledige naam, zonder komma's."
+"Vul de namen van de mensen die zijn uitgeloot in in het tekst vak. Per regel "
+"1 volledige naam, zonder komma's."
 
 msgid "Question"
 msgstr "Vraag"
@@ -3130,6 +3130,9 @@ msgstr ""
 msgid "This activity needs a GEFLITST member to take photos"
 msgstr "Ik wil foto’s door GEFLITST van deze activiteit"
 
+msgid "This activity needs a Zettle for payments"
+msgstr "Deze activiteit heeft een Zettle nodig voor betalingen"
+
 #, php-format
 msgid "This activity was approved by <strong>%s</strong>."
 msgstr "Deze activiteit is goedgekeurd door <strong>%s</strong>."
@@ -3673,6 +3676,13 @@ msgid ""
 msgstr ""
 "Door dit te selecteren zal GEFLITST van deze activiteit op de hoogte "
 "gebracht worden."
+
+msgid ""
+"When this is checked, the treasurer will be notified that this activity "
+"needs a Zettle."
+msgstr ""
+"Door dit te selecteren zal de penningmeester van GEWIS van deze activiteit "
+"op de hoogte gebracht worden."
 
 msgid "Wrong form"
 msgstr "Verkeerd formulier"

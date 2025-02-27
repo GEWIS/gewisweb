@@ -45,6 +45,7 @@ use User\Permissions\Resource\OrganResourceInterface;
  *     company: ?CompanyModel,
  *     isMyFuture: bool,
  *     requireGEFLITST: bool,
+ *     requireZettle: bool,
  *     categories: ImportedActivityCategoryArrayType[],
  *     signupLists: ImportedSignupListArrayType[],
  * }
@@ -63,6 +64,7 @@ use User\Permissions\Resource\OrganResourceInterface;
  *     company: ?int,
  *     isMyFuture: bool,
  *     requireGEFLITST: bool,
+ *     requireZettle: bool,
  *     categories: ImportedActivityCategoryGdprArrayType[],
  *     signupLists: ImportedSignupListGdprArrayType[],
  * }
@@ -242,7 +244,13 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
      * Whether this activity needs a GEFLITST photographer.
      */
     #[Column(type: 'boolean')]
-    protected bool $requireGEFLITST;
+    protected bool $requireGEFLITST = false;
+
+    /**
+     * Whether this activity needs a Zettle.
+     */
+    #[Column(type: 'boolean')]
+    protected bool $requireZettle = false;
 
     public function __construct()
     {
@@ -472,6 +480,16 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
         $this->requireGEFLITST = $requireGEFLITST;
     }
 
+    public function getRequireZettle(): bool
+    {
+        return $this->requireZettle;
+    }
+
+    public function setRequireZettle(bool $requireZettle): void
+    {
+        $this->requireZettle = $requireZettle;
+    }
+
     /**
      * @return Collection<array-key, ActivityCategory>
      */
@@ -523,6 +541,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
             'company' => $this->getCompany(),
             'isMyFuture' => $this->getIsMyFuture(),
             'requireGEFLITST' => $this->getRequireGEFLITST(),
+            'requireZettle' => $this->getRequireZettle(),
             'categories' => $categoriesArrays,
             'signupLists' => $signupListsArrays,
         ];
@@ -557,6 +576,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
             'company' => $this->getCompany()?->getId(),
             'isMyFuture' => $this->getIsMyFuture(),
             'requireGEFLITST' => $this->getRequireGEFLITST(),
+            'requireZettle' => $this->getRequireZettle(),
             'categories' => $categoriesArrays,
             'signupLists' => $signupListsArrays,
         ];

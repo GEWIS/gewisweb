@@ -1,0 +1,39 @@
+For English, see below.
+
+L.s.<br/><br/>
+
+Er is een nieuwe activiteit aangemaakt op de GEWIS website waarvoor een Zettle nodig is.
+
+<h3><?= $this->escapeHtml($activity->getName()->getText("nl")) ?></h3>
+
+<p><?= $this->escapeHtml($activity->getDescription()->getText("nl")) ?></p>
+
+<br/>
+
+Ze zouden graag een antwoord van je horen. Kun je dat sturen naar '
+<strong><?= $this->escapeHtml($requester) ?></strong>'?
+Je kunt een antwoord sturen door te reageren op deze email.
+<br/><br/>
+
+Met vriendelijke groeten,<br/>
+De ApplicatieBeheerCommissie
+<hr/>
+
+L.s.<br/><br/>
+
+A new activity has been created on the GEWIS website that needs Zettle for payments.
+
+<h3><?= $this->escapeHtml($activity->getName()->getText("en")) ?></h3>
+
+<p><?= $this->escapeHtml($activity->getDescription()->getText("en")) ?></p>
+
+<br/>
+
+The organ that created this activity would love to have a reply back from you. Can you send this to '
+<strong><?= $this->escapeHtml($requester) ?></strong>'?
+You can send a response by replying to this email.
+<br/><br/>
+
+With kind regards,<br/>
+The ApplicatieBeheerCommissie
+<hr/>

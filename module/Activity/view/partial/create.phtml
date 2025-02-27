@@ -185,6 +185,14 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
             </label>
             <?= $this->formElementErrors($isMyFuture) ?>
         </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <h2><?= $this->translate('Facilities') ?></h2>
+        <p><?= $this->translate('Choose which facilities you would like for this activity.') ?></p>
+    </div>
+    <div class="col-md-6">
         <?php
         $requireGEFLITST = $form->get('requireGEFLITST')
             ->setAttribute('id', 'GEFLITST-check');
@@ -198,6 +206,20 @@ $lang = $this->plugin('translate')->getTranslator()->getLocale();
                       class="fas fa-info-circle" aria-hidden="true"></span>
             </label>
             <?= $this->formElementErrors($requireGEFLITST) ?>
+        </div>
+        <?php
+        $requireZettle = $form->get('requireZettle')
+            ->setAttribute('id', 'Zettle-check');
+        ?>
+        <div class="form-group <?= $this->bootstrapElementError($requireZettle) ?>">
+            <label for="<?= $requireZettle->getAttribute('id') ?>">
+                <?= $this->formCheckbox($requireZettle) ?>
+                <?= $this->translate('This activity needs a Zettle for payments') ?>
+                <span data-toggle="tooltip" data-placement="right"
+                      title="<?= $this->translate('When this is checked, the treasurer will be notified that this activity needs a Zettle.') ?>"
+                      class="fas fa-info-circle" aria-hidden="true"></span>
+            </label>
+            <?= $this->formElementErrors($requireZettle) ?>
         </div>
     </div>
 </div>

@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: GEWISweb 853208dd-dirty\n"
+"Project-Id-Version: GEWISweb v2.8.6-928-g3aa758ff9-dirty\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-24 16:40+0100\n"
+"POT-Creation-Date: 2025-02-27 15:29+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -643,6 +643,9 @@ msgstr ""
 msgid "Choose to which job package you want to transfer the selected jobs."
 msgstr ""
 
+msgid "Choose which facilities you would like for this activity."
+msgstr ""
+
 msgid "Choose which options are applicable to this activity."
 msgstr ""
 
@@ -1203,6 +1206,9 @@ msgid "External applications"
 msgstr ""
 
 msgid "FAQ"
+msgstr ""
+
+msgid "Facilities"
 msgstr ""
 
 msgid "Family name"
@@ -1814,16 +1820,10 @@ msgstr ""
 msgid "Move album"
 msgstr ""
 
-msgid "Move down"
-msgstr ""
-
 msgid "Move the album"
 msgstr ""
 
 msgid "Move the photos to another album"
-msgstr ""
-
-msgid "Move up"
 msgstr ""
 
 msgid "Multiple days"
@@ -2909,6 +2909,9 @@ msgstr ""
 msgid "This activity needs a GEFLITST member to take photos"
 msgstr ""
 
+msgid "This activity needs a Zettle for payments"
+msgstr ""
+
 #, php-format
 msgid "This activity was approved by <strong>%s</strong>."
 msgstr ""
@@ -3394,6 +3397,11 @@ msgstr ""
 msgid ""
 "When this is checked, GEFLITST will be notified that this activity needs a "
 "photographer."
+msgstr ""
+
+msgid ""
+"When this is checked, the treasurer will be notified that this activity "
+"needs a Zettle."
 msgstr ""
 
 msgid "Wrong form"

@@ -44,6 +44,7 @@ class ActivityMapperTest extends TestCase
         $this->object->setStatus(Activity::STATUS_APPROVED);
         $this->object->setIsMyFuture(false);
         $this->object->setRequireGEFLITST(false);
+        $this->object->setRequireZettle(false);
     }
 
     protected function setUpUser(): void
