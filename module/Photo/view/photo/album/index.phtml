@@ -57,10 +57,11 @@ $this->headTitle($this->translate('Photos'));
     );
 $this->headLink()->appendStylesheet($this->basepath('css/photoswipe.css'));
 
-$this->scriptUrl()->requireUrl('member/search')
+$this->scriptUrl()->requireUrl('home/organ', ['type', 'abbr'])
+    ->requireUrl('member/search')
     ->requireUrl('member/view', ['lidnr'])
-    ->requireUrl('photo/photo/tag/add', ['photo_id', 'lidnr'])
-    ->requireUrl('photo/photo/tag/remove', ['photo_id', 'lidnr']);
+    ->requireUrl('photo/photo/tag/add', ['photo_id', 'type', 'id'])
+    ->requireUrl('photo/photo/tag/remove', ['photo_id', 'type', 'id']);
 ?>
 <section class="section section-breadcrumb">
     <div class="container">
@@ -310,17 +311,18 @@ $this->scriptUrl()->requireUrl('member/search')
             },
             orientation: 'top',
             onSelect: function (suggestion) {
-                $.post(tagSearch.dataset.url.replace('lidnr', suggestion.data),
+                $.post(tagSearch.dataset.url.replace('tagged_id', suggestion.data),
                     { lidnr: suggestion.data }
                     , function (data) {
                         if (data.success) {
                             let removeURL = URLHelper.url('photo/photo/tag/remove', {
                                 'photo_id': data.tag.photo_id,
-                                'lidnr': data.tag.member_id
+                                'type': 'member',
+                                'id': data.tag.tagged_id
                             });
 
                             let memberURL = URLHelper.url('member/view', {
-                                'lidnr': data.tag.member_id
+                                'lidnr': data.tag.tagged_id
                             });
 
                             // Start writing the tag into the current slide.
@@ -668,43 +670,81 @@ $this->scriptUrl()->requireUrl('member/search')
                         let tagCount = tags.length;
                         let i = 1;
 
+                        let memberTags = tags.filter(tag => tag.tagged_type === 'member');
+                        let bodyTags = tags.filter(tag => tag.tagged_type === 'body');
+
                         el.innerHTML = `
                             <span class="tag-title ${(0 === tagCount) ? 'hidden' : ''}"><?= $this->translate('In this photo:') ?></span>
                             <span class="no-tag-title ${(0 !== tagCount) ? 'hidden' : ''}"><?= $this->translate('No one has been tagged in this photo yet. Tag someone you recognise now!')?></span>
                             <div class="tagList">
-                                ${tags.map((member) => {
-                                    // Since we are already looping through all tags here, we can directly check if one
-                                    // of the tags belongs to the current member. If so, show the "set as profile pic"
-                                    // button.
-                                    if (member.lidnr === lidnr) {
-                                        document.querySelector('.pswp__button--profile-photo-button').classList.remove('pswp__button--hidden');
-                                    }
+                                <div class="member-tags">
+                                    ${memberTags.map((member) => {
+                                        // Check if one of the tags belongs to the current member to show "set as profile pic" button.
+                                        if (member.tagged_id === lidnr) {
+                                            document.querySelector('.pswp__button--profile-photo-button').classList.remove('pswp__button--hidden');
+                                        }
 
-                                    let viewMemberUrl = URLHelper.url('member/view', {lidnr: member.lidnr});
-                                    let removeUrl = URLHelper.url('photo/photo/tag/remove', {photo_id: id, lidnr: member.lidnr});
-                                    let spacer = (i++ && i < tagCount) ? ',&nbsp' : ((i === tagCount) ? '<?= $this->translate('and') ?>' : '');
+                                        let viewMemberUrl = URLHelper.url('member/view', {lidnr: member.tagged_id});
+                                        let removeUrl = URLHelper.url('photo/photo/tag/remove', {photo_id: id, type: 'member', id: member.tagged_id});
+                                        let spacer = (i++ && i < tagCount) ? ',&nbsp' : ((i === tagCount) ? '<?= $this->translate('and') ?>' : '');
 
-                                    return `
-                                        <span data-member="${member.lidnr}">
-                                            <a href="${viewMemberUrl}">${member.fullName}</a>&nbsp;
-                                            <?php if ($this->acl(PhotoAclService::class)->isAllowed('tag', 'remove')): ?>
-                                                <a class="remove-tag" href="${removeUrl}" data-tag-id="removeTag${member.id}">
-                                                    <span class="fas fa-times" aria-hidden="true"></span>
-                                                </a>
-                                            <?php endif; ?>
-                                            <span class="tag-spacer">${spacer}</span>
-                                        </span>`;
-                                }).join('')}
+                                        return `
+                                            <span data-member="${member.tagged_id}">
+                                                <a href="${viewMemberUrl}">${member.tagged_name}</a>&nbsp;
+                                                    <?php if ($this->acl(PhotoAclService::class)->isAllowed('tag', 'remove')): ?>
+                                                        <a class="remove-tag" href="${removeUrl}" data-tag-id="removeTag${member.id}">
+                                                            <span class="fas fa-times" aria-hidden="true"></span>
+                                                        </a>
+                                                    <?php endif; ?>
+                                                <span class="tag-spacer">${spacer}</span>
+                                            </span>`;
+                                    }).join('')}
+                                </div>
+                                <div class="body-tags">
+                                    ${bodyTags.map((body) => {
+                                        let viewBodyUrl = URLHelper.url('home/organ', {type: body.body_type, abbr: body.tagged_name});
+                                        let removeUrl = URLHelper.url('photo/photo/tag/remove', {photo_id: id, type: 'body', id: body.tagged_id});
+                                        let spacer = (i++ && i < tagCount) ? ',&nbsp' : ((i === tagCount) ? '<?= $this->translate('and') ?>' : '');
+
+                                        return `
+                                            <span data-body="${body.tagged_id}">
+                                                <a href="${viewBodyUrl}">${body.tagged_name} (${body.body_type})</a>&nbsp;
+                                                    <?php if ($this->acl(PhotoAclService::class)->isAllowed('tag', 'remove')): ?>
+                                                        <a class="remove-tag" href="${removeUrl}" data-tag-id="removeTag${body.id}">
+                                                            <span class="fas fa-times" aria-hidden="true"></span>
+                                                        </a>
+                                                    <?php endif; ?>
+                                                <span class="tag-spacer">${spacer}</span>
+                                            </span>`;
+                                    }).join('')}
+                                    <button class="switch-to-body-tagging"><?= $this->translate('Tag a BM/GMM body') ?></button>
+                                </div>
                             </div>
-                                <?php if ($this->acl(PhotoAclService::class)->isAllowed('tag', 'add')): ?>
-                                    <div class="form-group">
-                                        <label for="tagSearch"><span class="fas fa-plus"></span> <?= $this->translate('Tag someone') ?>:</label>
-                                        <input type="text"
-                                            data-url="${URLHelper.url('photo/photo/tag/add', {photo_id: id, lidnr: 'lidnr'})}"
-                                            id="tagSearch" class="tagSearch" name="tagSearch">
-                                    </div>
-                                <?php endif; ?>
+                            <?php if ($this->acl(PhotoAclService::class)->isAllowed('tag', 'add')): ?>
+                                <div class="form-group member-tagging">
+                                    <label for="tagSearch"><span class="fas fa-plus"></span> <?= $this->translate('Tag someone') ?>:</label>
+                                    <input type="text"
+                                        data-url="${URLHelper.url('photo/photo/tag/add', {photo_id: id, type: 'member', id: 'tagged_id'})}"
+                                        id="tagSearch" class="tagSearch" name="tagSearch">
+                                </div>
+                                <div class="form-group body-tagging" style="display: none;">
+                                    <label for="bodyTagSearch"><span class="fas fa-plus"></span> <?= $this->translate('Tag a body') ?>:</label>
+                                    <input type="text"
+                                        data-url="${URLHelper.url('photo/photo/tag/add', {photo_id: id, type: 'body', id: 'tagged_id'})}"
+                                        id="bodyTagSearch" class="tagSearch" name="bodyTagSearch">
+                                </div>
+                            <?php endif; ?>
                         `;
+
+                        // Switch between member and body tagging
+                        const switchButton = document.querySelector('.switch-to-body-tagging');
+                        const memberTaggingForm = document.querySelector('.member-tagging');
+                        const bodyTaggingForm = document.querySelector('.body-tagging');
+
+                        switchButton.addEventListener('click', () => {
+                            memberTaggingForm.style.display = 'none';
+                            bodyTaggingForm.style.display = 'block';
+                        });
 
                         // Replicate the tags UI to the actual figure DOM.
                         figTags.innerHTML = el.innerHTML;

@@ -18,6 +18,8 @@ use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OneToOne;
+use Photo\Model\BodyTag as BodyTagModel;
+use Photo\Model\TaggableInterface;
 
 use function usort;
 
@@ -25,9 +27,11 @@ use function usort;
  * Organ entity.
  *
  * Note that this entity is derived from the decisions themself.
+ *
+ * @implements TaggableInterface<BodyTagModel>
  */
 #[Entity]
-class Organ
+class Organ implements TaggableInterface
 {
     use IdentifiableTrait;
 
@@ -158,11 +162,24 @@ class Organ
     )]
     protected Collection $organInformation;
 
+    /**
+     * Body tags.
+     *
+     * @var Collection<array-key, BodyTagModel>
+     */
+    #[OneToMany(
+        targetEntity: BodyTagModel::class,
+        mappedBy: 'body',
+        fetch: 'EXTRA_LAZY',
+    )]
+    protected Collection $tags;
+
     public function __construct()
     {
         $this->members = new ArrayCollection();
         $this->subdecisions = new ArrayCollection();
         $this->organInformation = new ArrayCollection();
+        $this->tags = new ArrayCollection();
     }
 
     /**
@@ -357,5 +374,10 @@ class Organ
     {
         return null !== $this->abrogationDate
             && (new DateTime()) >= $this->abrogationDate;
+    }
+
+    public function getTags(): Collection
+    {
+        return $this->tags;
     }
 }

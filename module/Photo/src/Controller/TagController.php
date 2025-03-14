@@ -33,8 +33,9 @@ class TagController extends AbstractActionController
 
         if ($request->isPost()) {
             $photoId = (int) $this->params()->fromRoute('photo_id');
-            $lidnr = (int) $this->params()->fromRoute('lidnr');
-            $tag = $this->photoService->addTag($photoId, $lidnr);
+            $type = $this->params()->fromRoute('type');
+            $id = (int) $this->params()->fromRoute('id');
+            $tag = $this->photoService->addTag($photoId, $type, $id);
 
             if (null === $tag) {
                 $result['success'] = false;
@@ -59,8 +60,9 @@ class TagController extends AbstractActionController
 
         if ($request->isPost()) {
             $photoId = (int) $this->params()->fromRoute('photo_id');
-            $lidnr = (int) $this->params()->fromRoute('lidnr');
-            $result['success'] = $this->photoService->removeTag($photoId, $lidnr);
+            $type = $this->params()->fromRoute('type');
+            $id = (int) $this->params()->fromRoute('id');
+            $result['success'] = $this->photoService->removeTag($photoId, $type, $id);
         }
 
         return new JsonModel($result);

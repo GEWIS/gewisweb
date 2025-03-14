@@ -6,6 +6,7 @@ namespace Photo\Service\Factory;
 
 use Application\Service\FileStorage as FileStorageService;
 use Decision\Service\Member as MemberService;
+use Decision\Service\Organ as OrganService;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Photo\Mapper\Photo as PhotoMapper;
@@ -31,6 +32,7 @@ class PhotoFactory implements FactoryInterface
             $container->get(AclService::class),
             $container->get(MvcTranslator::class),
             $container->get(MemberService::class),
+            $container->get(OrganService::class),
             $container->get(FileStorageService::class),
             $container->get(PhotoMapper::class),
             $container->get(TagMapper::class),

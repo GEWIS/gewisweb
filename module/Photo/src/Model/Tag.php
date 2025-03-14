@@ -6,15 +6,18 @@ namespace Photo\Model;
 
 use Application\Model\Traits\IdentifiableTrait;
 use Decision\Model\Member as MemberModel;
+use Doctrine\ORM\Mapping\DiscriminatorColumn;
+use Doctrine\ORM\Mapping\DiscriminatorMap;
 use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\InheritanceType;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
-use Doctrine\ORM\Mapping\Table;
-use Doctrine\ORM\Mapping\UniqueConstraint;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 
 /**
  * Tag.
+ *
+ * @template T of TaggableInterface
  *
  * @psalm-import-type PhotoGdprArrayType from Photo as ImportedPhotoGdprArrayType
  * @psalm-type TagGdprArrayType = array{
@@ -23,12 +26,18 @@ use Laminas\Permissions\Acl\Resource\ResourceInterface;
  * }
  */
 #[Entity]
-#[Table(name: 'Tag')]
-#[UniqueConstraint(
-    name: 'tag_idx',
-    columns: ['photo_id', 'member_id'],
+#[InheritanceType(value: 'SINGLE_TABLE')]
+#[DiscriminatorColumn(
+    name: 'type',
+    type: 'string',
 )]
-class Tag implements ResourceInterface
+#[DiscriminatorMap(
+    value: [
+        'body' => BodyTag::class,
+        'member' => MemberTag::class,
+    ],
+)]
+abstract class Tag implements ResourceInterface
 {
     use IdentifiableTrait;
 
@@ -43,25 +52,9 @@ class Tag implements ResourceInterface
     )]
     protected Photo $photo;
 
-    #[ManyToOne(
-        targetEntity: MemberModel::class,
-        inversedBy: 'tags',
-    )]
-    #[JoinColumn(
-        name: 'member_id',
-        referencedColumnName: 'lidnr',
-        nullable: false,
-    )]
-    protected MemberModel $member;
-
     public function getPhoto(): Photo
     {
         return $this->photo;
-    }
-
-    public function getMember(): MemberModel
-    {
-        return $this->member;
     }
 
     public function setPhoto(Photo $photo): void
@@ -69,10 +62,17 @@ class Tag implements ResourceInterface
         $this->photo = $photo;
     }
 
-    public function setMember(MemberModel $member): void
-    {
-        $this->member = $member;
-    }
+    /**
+     * @psalm-return T
+     */
+    abstract public function getTagged(): TaggableInterface;
+
+    /**
+     * @psalm-param T $tagged
+     */
+    abstract public function setTagged(TaggableInterface $tagged): void;
+
+    abstract public function getType(): string;
 
     /**
      * Returns the Tag as an associative array.
@@ -80,7 +80,8 @@ class Tag implements ResourceInterface
      * @return array{
      *     id: int,
      *     photo_id: int,
-     *     member_id: int,
+     *     type: string,
+     *     tagged_id: int,
      * }
      */
     public function toArray(): array
@@ -88,7 +89,8 @@ class Tag implements ResourceInterface
         return [
             'id' => $this->getId(),
             'photo_id' => $this->getPhoto()->getId(),
-            'member_id' => $this->getMember()->getLidnr(),
+            'type' => $this->getType(),
+            'tagged_id' => $this->getTagged()->getId(),
         ];
     }
 

@@ -19,11 +19,14 @@ use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OneToOne;
-use Photo\Model\Tag as TagModel;
+use Photo\Model\MemberTag as MemberTagModel;
+use Photo\Model\TaggableInterface;
 use User\Model\User as UserModel;
 
 /**
  * Member model.
+ *
+ * @implements TaggableInterface<MemberTagModel>
  *
  * @psalm-type MemberGdprArrayType = array{
  *     lidnr: int,
@@ -46,7 +49,7 @@ use User\Model\User as UserModel;
  * }
  */
 #[Entity]
-class Member
+class Member implements TaggableInterface
 {
     /**
      * The user.
@@ -267,10 +270,10 @@ class Member
     /**
      * Member tags.
      *
-     * @var Collection<array-key, TagModel>
+     * @var Collection<array-key, MemberTagModel>
      */
     #[OneToMany(
-        targetEntity: TagModel::class,
+        targetEntity: MemberTagModel::class,
         mappedBy: 'member',
         fetch: 'EXTRA_LAZY',
     )]
@@ -304,6 +307,11 @@ class Member
     public function getLidnr(): int
     {
         return $this->lidnr;
+    }
+
+    public function getId(): int
+    {
+        return $this->getLidnr();
     }
 
     /**
@@ -645,11 +653,6 @@ class Member
         return $this->boardInstallations;
     }
 
-    /**
-     * Get the tags.
-     *
-     * @return Collection<array-key, TagModel>
-     */
     public function getTags(): Collection
     {
         return $this->tags;
