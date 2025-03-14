@@ -19,6 +19,7 @@ use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OneToOne;
+use Photo\Model\HiddenPhoto as HiddenPhotoModel;
 use Photo\Model\Tag as TagModel;
 use User\Model\User as UserModel;
 
@@ -287,6 +288,17 @@ class Member
     )]
     protected Collection $keyGrantings;
 
+    /**
+     * Photos that are hidden on the profile page of this member.
+     *
+     * @var Collection<array-key, HiddenPhotoModel>
+     */
+    #[OneToMany(
+        targetEntity: HiddenPhotoModel::class,
+        mappedBy: 'member',
+    )]
+    protected Collection $hiddenPhotos;
+
     public function __construct()
     {
         $this->addresses = new ArrayCollection();
@@ -296,6 +308,7 @@ class Member
         $this->tags = new ArrayCollection();
         $this->lists = new ArrayCollection();
         $this->keyGrantings = new ArrayCollection();
+        $this->hiddenPhotos = new ArrayCollection();
     }
 
     /**
