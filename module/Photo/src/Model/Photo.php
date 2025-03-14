@@ -207,6 +207,18 @@ class Photo implements ResourceInterface
     protected Collection $profilePhotos;
 
     /**
+     * All profiles on which this photo should be hidden.
+     *
+     * @var Collection<array-key, HiddenPhoto>
+     */
+    #[OneToMany(
+        targetEntity: HiddenPhoto::class,
+        mappedBy: 'photo',
+        cascade: ['persist', 'remove'],
+    )]
+    protected Collection $hiddenPhotos;
+
+    /**
      * The corresponding WeeklyPhoto entity if this photo has been a weekly photo.
      */
     #[OneToOne(
@@ -230,6 +242,7 @@ class Photo implements ResourceInterface
         $this->tags = new ArrayCollection();
         $this->votes = new ArrayCollection();
         $this->profilePhotos = new ArrayCollection();
+        $this->hiddenPhotos = new ArrayCollection();
     }
 
     /**
@@ -342,6 +355,14 @@ class Photo implements ResourceInterface
     public function getTags(): Collection
     {
         return $this->tags;
+    }
+
+    /**
+     * @return Collection<array-key, HiddenPhoto>
+     */
+    public function getHiddenPhotos(): Collection
+    {
+        return $this->hiddenPhotos;
     }
 
     public function getTagCount(): int
@@ -506,6 +527,15 @@ class Photo implements ResourceInterface
     }
 
     /**
+     * Mark this photo hidden for a specific profile.
+     */
+    public function addHiddenPhoto(HiddenPhoto $hiddenPhoto): void
+    {
+        $hiddenPhoto->setPhoto($this);
+        $this->hiddenPhotos[] = $hiddenPhoto;
+    }
+
+    /**
      * @param ProfilePhoto[] $profilePhotos
      */
     public function addProfilePhotos(array $profilePhotos): void
@@ -543,6 +573,8 @@ class Photo implements ResourceInterface
     {
         return $this->profilePhotos;
     }
+
+
 
     /**
      * Returns an associative array representation of this object.

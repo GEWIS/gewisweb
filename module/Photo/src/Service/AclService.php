@@ -6,6 +6,7 @@ namespace Photo\Service;
 
 use Laminas\Permissions\Acl\Resource\GenericResource as Resource;
 use User\Permissions\Assertion\IsAfterMembershipEndedAndNotTagged;
+use User\Permissions\Assertion\IsOwner;
 
 class AclService extends \User\Service\AclService
 {
@@ -17,6 +18,7 @@ class AclService extends \User\Service\AclService
         $this->acl->addResource(new Resource('photo'));
         $this->acl->addResource(new Resource('album'));
         $this->acl->addResource(new Resource('tag'));
+        $this->acl->addResource(new Resource('hiddenPhoto'));
         $this->acl->addResource(new Resource('vote'));
         // Define administration part of this module, however, sub-permissions must be manually configured.
         $this->acl->addResource(new Resource('photo_admin'));
@@ -31,6 +33,13 @@ class AclService extends \User\Service\AclService
         // Users are allowed to view, remove and add tags, and view and add their votes
         $this->acl->allow('user', 'tag', ['view', 'add', 'remove']);
         $this->acl->allow('user', 'vote', ['view', 'add']);
+
+        $this->acl->allow(
+            'user',
+            'hiddenPhoto',
+            ['viewOwn', 'addOwn', 'removeOwn'],
+            new IsOwner(),
+        );
 
         // Graduates may not view photos/albums that were made after their membership ended.
         $this->acl->deny('graduate', 'album', 'view', new IsAfterMembershipEndedAndNotTagged());
