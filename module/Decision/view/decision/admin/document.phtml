@@ -113,10 +113,7 @@ else:
                 <table class="table table-striped table-hover table-documents">
                     <tbody>
                         <?php foreach ($meeting->getDocuments() as $document): ?>
-                            <tr data-id="<?= $document->getId() ?>" draggable="true" ondragstart="handleDragStart(event)"
-                                ondragover="handleDragOver(event)" ondrop="handleDrop(event)"
-                                ondragend="handleDragEnd(event)" class="list-draggable"
-                            >
+                            <tr data-id="<?= $document->getId() ?>" draggable="true" class="list-draggable">
                                 <td class="drag-handle"><span class="fas fa-arrows-up-down"></span></td>
                                 <td>
                                     <a href="<?= $this->url('decision/document', ['id' => $document->getId()]) ?>">
@@ -338,6 +335,13 @@ else:
                 draggingItem.classList.remove('dragging');
             }
         }
+
+        document.querySelectorAll('.list-draggable').forEach(row => {
+            row.addEventListener('dragstart', handleDragStart);
+            row.addEventListener('dragover', handleDragOver);
+            row.addEventListener('drop', handleDrop);
+            row.addEventListener('dragend', handleDragEnd);
+        });
 
         document.getElementById('meeting-selector').addEventListener('change', e => {
             window.location = '<?= $this->url('decision_admin/document') ?>/' + e.target.value;
