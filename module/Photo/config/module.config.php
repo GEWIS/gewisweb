@@ -63,9 +63,10 @@ return [
                             'tag' => [
                                 'type' => Segment::class,
                                 'options' => [
-                                    'route' => '/tag/:lidnr',
+                                    'route' => '/tag/:type/:id',
                                     'constraints' => [
-                                        'lidnr' => '[0-9]+',
+                                        'type' => '(body|member)',
+                                        'id' => '[0-9]+',
                                     ],
                                     'defaults' => [
                                         'controller' => TagController::class,

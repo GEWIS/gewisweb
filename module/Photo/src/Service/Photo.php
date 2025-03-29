@@ -9,6 +9,7 @@ use DateInterval;
 use DateTime;
 use Decision\Model\Member as MemberModel;
 use Decision\Service\Member as MemberService;
+use Decision\Service\Organ as OrganService;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\NoResultException;
 use Exception;
@@ -20,6 +21,8 @@ use Photo\Mapper\Tag as TagMapper;
 use Photo\Mapper\Vote as VoteMapper;
 use Photo\Mapper\WeeklyPhoto as WeeklyPhotoMapper;
 use Photo\Model\Album as AlbumModel;
+use Photo\Model\BodyTag as BodyTagModel;
+use Photo\Model\MemberTag as MemberTagModel;
 use Photo\Model\Photo as PhotoModel;
 use Photo\Model\ProfilePhoto as ProfilePhotoModel;
 use Photo\Model\Tag as TagModel;
@@ -45,6 +48,7 @@ class Photo
         private readonly AclService $aclService,
         private readonly Translator $translator,
         private readonly MemberService $memberService,
+        private readonly OrganService $organService,
         private readonly FileStorageService $storageService,
         private readonly PhotoMapper $photoMapper,
         private readonly TagMapper $tagMapper,
@@ -486,25 +490,39 @@ class Photo
     /**
      * Tags a user in the specified photo.
      *
+     * @psalm-param 'body'|'member' $type
      * @throws ORMException
      */
     public function addTag(
         int $photoId,
-        int $lidnr,
+        string $type,
+        int $id,
     ): ?TagModel {
-        if (null === $this->findTag($photoId, $lidnr)) {
+        if (null === $this->findTag($photoId, $type, $id)) {
             $photo = $this->getPhoto($photoId);
-            $member = $this->memberService->findMemberByLidnr($lidnr);
 
-            if (
-                null === $member
-                || $member->isExpired()
-            ) {
-                return null;
+            if ('body' === $type) {
+                $tagged = $this->organService->getOrgan($id);
+
+                if (null === $tagged) {
+                    return null;
+                }
+
+                $tag = new BodyTagModel();
+            } else {
+                $tagged = $this->memberService->findMemberByLidnr($id);
+
+                if (
+                    null === $tagged
+                    || $tagged->isExpired()
+                ) {
+                    return null;
+                }
+
+                $tag = new MemberTagModel();
             }
 
-            $tag = new TagModel();
-            $tag->setMember($member);
+            $tag->setTagged($tagged);
             $photo->addTag($tag);
 
             $this->photoMapper->flush();
@@ -517,16 +535,19 @@ class Photo
 
     /**
      * Retrieves a tag if it exists.
+     *
+     * @psalm-param 'body'|'member' $type
      */
     public function findTag(
         int $photoId,
-        int $lidnr,
+        string $type,
+        int $id,
     ): ?TagModel {
         if (!$this->aclService->isAllowed('view', 'tag')) {
             throw new NotAllowedException($this->translator->translate('You are not allowed to view tags'));
         }
 
-        return $this->tagMapper->findTag($photoId, $lidnr);
+        return $this->tagMapper->findTag($photoId, $type, $id);
     }
 
     /**
@@ -536,7 +557,7 @@ class Photo
         int $photoId,
         int $lidnr,
     ): bool {
-        $tag = $this->findTag($photoId, $lidnr);
+        $tag = $this->findTag($photoId, 'member', $lidnr);
 
         return null !== $tag;
     }
@@ -544,15 +565,18 @@ class Photo
     /**
      * Removes a tag.
      *
+     * @psalm-param 'body'|'member' $type
+     *
      * @return bool indicating whether removing the tag succeeded
      *
      * @throws ORMException
      */
     public function removeTag(
         int $photoId,
-        int $lidnr,
+        string $type,
+        int $id,
     ): bool {
-        $tag = $this->findTag($photoId, $lidnr);
+        $tag = $this->findTag($photoId, $type, $id);
 
         if (null !== $tag) {
             $this->tagMapper->remove($tag);
