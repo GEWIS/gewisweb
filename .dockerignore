@@ -57,6 +57,7 @@ public/data/meeting-notes/
 public/data/photo/
 public/styleguide/
 public/js/dist
+public/js/console-splash.js
 vendor/
 
 # Language binaries are created during the docker build process or using 'make compilelang'

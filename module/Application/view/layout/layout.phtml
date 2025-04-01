@@ -171,6 +171,11 @@ use Laminas\View\Renderer\PhpRenderer;
             $this->basepath('js/dist/stimulus-controllers.js'),
             'module',
             ['nonce' => NONCE_REPLACEMENT_STRING],
+        )
+        ->appendFile(
+            $this->basePath('js/console-splash.js'),
+            'text/javascript',
+            ['nonce' => NONCE_REPLACEMENT_STRING],
         ); ?>
 
     <?php
@@ -185,7 +190,6 @@ use Laminas\View\Renderer\PhpRenderer;
         _paq.push(['setSiteId', '1']);
     </script>
     <script src="<?= $matomoDomain . '/matomo.js' ?>" nonce="<?= NONCE_REPLACEMENT_STRING ?>" async defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/@gewis/splash@latest/index.js" nonce="<?= NONCE_REPLACEMENT_STRING ?>"></script>
 </head>
 <body>
 <?= $this->partial('partial/main-nav.phtml') ?>
