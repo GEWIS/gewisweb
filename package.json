@@ -7,7 +7,7 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "scss": "sass --style compressed --no-source-map resources/scss/gewis-theme.scss:public/css/gewis-theme.css",
         "ts": "esbuild public/js/controllers/register-controllers.ts --bundle --outfile=./public/js/dist/stimulus-controllers.js --format=esm --minify=true",
-        "assets": "npm run scss && npm run ts",
+        "assets": "npm run scss && npm run ts && cp ./node_modules/@gewis/splash/index.js ./public/js/console-splash.js",
         "watch:scss": "sass --watch resources/scss/gewis-theme.scss:public/css/gewis-theme.css",
         "watch:ts": "esbuild public/js/controllers/register-controllers.ts --bundle --outfile=./public/js/dist/stimulus-controllers.js --format=esm --sourcemap --watch"
     },
@@ -29,5 +29,8 @@
         "esbuild": "^0.24.2",
         "sass": "^1.83.4",
         "typescript": "^5.7.3"
+    },
+    "dependencies": {
+        "@gewis/splash": "^2.4.0"
     }
 }
