@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "guzzlehttp/psr7",
-            "version": "2.7.0",
+            "version": "2.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "a70f5c95fb43bc83f07c9c948baa0dc1829bf201"
+                "reference": "c2270caaabe631b3b44c85f99e5a04bbb8060d16"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/a70f5c95fb43bc83f07c9c948baa0dc1829bf201",
-                "reference": "a70f5c95fb43bc83f07c9c948baa0dc1829bf201",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/c2270caaabe631b3b44c85f99e5a04bbb8060d16",
+                "reference": "c2270caaabe631b3b44c85f99e5a04bbb8060d16",
                 "shasum": ""
             },
             "require": {
@@ -104,7 +104,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/psr7/issues",
-                "source": "https://github.com/guzzle/psr7/tree/2.7.0"
+                "source": "https://github.com/guzzle/psr7/tree/2.7.1"
             },
             "funding": [
                 {
@@ -120,7 +120,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-07-18T11:15:46+00:00"
+            "time": "2025-03-27T12:30:47+00:00"
         },
         {
             "name": "intervention/image",
@@ -340,16 +340,16 @@
         },
         {
             "name": "league/glide",
-            "version": "2.3.1",
+            "version": "2.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/glide.git",
-                "reference": "62fc5ebd579e013e7573c00d1fb7e083ed395f00"
+                "reference": "b8e946dd87c79a9dce3290707ab90b5b52602813"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/glide/zipball/62fc5ebd579e013e7573c00d1fb7e083ed395f00",
-                "reference": "62fc5ebd579e013e7573c00d1fb7e083ed395f00",
+                "url": "https://api.github.com/repos/thephpleague/glide/zipball/b8e946dd87c79a9dce3290707ab90b5b52602813",
+                "reference": "b8e946dd87c79a9dce3290707ab90b5b52602813",
                 "shasum": ""
             },
             "require": {
@@ -399,9 +399,9 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/glide/issues",
-                "source": "https://github.com/thephpleague/glide/tree/2.3.1"
+                "source": "https://github.com/thephpleague/glide/tree/2.3.2"
             },
-            "time": "2024-12-17T05:40:16+00:00"
+            "time": "2025-03-21T13:48:39+00:00"
         },
         {
             "name": "league/mime-type-detection",
