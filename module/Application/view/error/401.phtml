@@ -1,0 +1,31 @@
+<?php
+
+declare(strict_types=1);
+
+use Application\Model\Enums\AuthTypes;
+use Application\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var AuthTypes $auth_type
+ */
+?>
+<section class="section">
+    <div class="container">
+        <h2><?= $this->translate('Unauthenticated') ?></h2>
+        <p><?= $this->translate('Log in to access this page.') ?></p>
+        <a href="<?= $this->url(
+            name: 'user/login',
+            //params: ['user_type' => $auth_type->value],
+            options: ['query' => ['redirect_to' => base64_encode($this->serverUrl(true))]],
+        ) ?>">
+            <span class="fas fa-user"></span>
+            <?= sprintf(
+                $this->translate('Login as %s'),
+                'test'
+                // $auth_type->getName($this->plugin('translate')->getTranslator()),
+            ) ?>
+        </a>
+    </div>
+</section>

@@ -20,6 +20,7 @@ use Activity\Controller\Factory\AdminCategoryControllerFactory;
 use Activity\Controller\Factory\AdminControllerFactory;
 use Activity\Controller\Factory\AdminOptionControllerFactory;
 use Activity\Controller\Factory\ApiControllerFactory;
+use Application\Model\Enums\AuthTypes;
 use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Laminas\Router\Http\Literal;
 use Laminas\Router\Http\Segment;
@@ -470,6 +471,7 @@ return [
                     'defaults' => [
                         'controller' => ApiController::class,
                         'action' => 'list',
+                        'auth_type' => AuthTypes::Api,
                     ],
                 ],
                 'may_terminate' => false,
