@@ -550,11 +550,10 @@ class AdminController extends AbstractActionController
         }
 
         $now = new DateTime();
-        $interval = new DateInterval('PT30M');
         if (
             ActivityModel::STATUS_APPROVED !== $activity->getStatus() ||
-            $now < $activity->getBeginTime()->sub($interval) ||
-            $now > $activity->getEndTime()->add($interval)
+            $now < $activity->getBeginTime()->sub(new DateInterval('PT30M')) ||
+            $now > $activity->getEndTime()->add(new DateInterval('PT2H'))
         ) {
             $response->setStatusCode(400);
 
@@ -615,7 +614,12 @@ class AdminController extends AbstractActionController
                 continue;
             }
 
+            $signupList = $signup->getSignupList();
+
             $signup->setDrawn(false);
+            $signupList->setPresenceTaken(true);
+
+            $entityManager->persist($signupList);
             $entityManager->persist($signup);
         }
 
