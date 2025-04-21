@@ -20,6 +20,7 @@ use Photo\Mapper\Tag as TagMapper;
 use Photo\Mapper\Vote as VoteMapper;
 use Photo\Mapper\WeeklyPhoto as WeeklyPhotoMapper;
 use Photo\Model\Album as AlbumModel;
+use Photo\Model\HiddenPhoto as HiddenPhotoModel;
 use Photo\Model\Photo as PhotoModel;
 use Photo\Model\ProfilePhoto as ProfilePhotoModel;
 use Photo\Model\Tag as TagModel;
@@ -576,6 +577,61 @@ class Photo
         }
 
         return $this->tagMapper->getTagsByLidnr($member->getLidnr());
+    }
+
+    /**
+     * Hide a photo from the profile page of the logged-in member.
+     *
+     * @throws ORMException
+     */
+    public function addHiddenPhoto(int $photoId): ?HiddenPhotoModel
+    {
+        $lidnr = $this->aclService->getUserIdentityOrThrowException()->getLidnr();
+
+        if (null === $this->findHiddenPhoto($photoId, $lidnr)) {
+            $photo = $this->getPhoto($photoId);
+            $member = $this->memberService->findMemberByLidnr($lidnr);
+
+            if (
+                null === $member
+                || $member->isExpired()
+            ) {
+                return null;
+            }
+
+            $hiddenPhoto = new HiddenPhotoModel();
+            $hiddenPhoto->setMember($member);
+            $photo->addHiddenPhoto($hiddenPhoto);
+
+            $this->photoMapper->flush();
+
+            return $hiddenPhoto;
+        }
+
+        return null;
+    }
+
+    /**
+     * Removes a hiddenPhoto.
+     *
+     * @return bool indicating whether removing the hiddenPhoto succeeded
+     *
+     * @throws ORMException
+     */
+    public function removeHiddenPhoto(
+        int $photoId,
+        int $lidnr,
+    ): bool {
+        $hiddenPhoto = $this->findHiddenPhoto($photoId, $lidnr);
+
+        if (null !== $hiddenPhoto) {
+            $this->hiddenPhotoMapper->remove($hiddenPhoto);
+            $this->hiddenPhotoMapper->flush();
+
+            return true;
+        }
+
+        return false;
     }
 
     /**
