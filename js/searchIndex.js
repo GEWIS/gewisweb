@@ -9311,6 +9311,11 @@ Search.appendIndex(
             "summary": "Legacy\u0020functions",
             "url": "classes/Decision-Model-Enums-InstallationFunctions.html#enumcase_FoosballCoordinator"
         },                {
+            "fqsen": "\\Decision\\Model\\Enums\\InstallationFunctions\u003A\u003AProcurementOfficer",
+            "name": "ProcurementOfficer",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-InstallationFunctions.html#enumcase_ProcurementOfficer"
+        },                {
             "fqsen": "\\Decision\\Model\\Enums\\InstallationFunctions\u003A\u003AMember",
             "name": "Member",
             "summary": "Administrative\u0020functions",
