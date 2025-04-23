@@ -422,6 +422,9 @@
         </div>
     
     
+            <span class="phpdocumentor-element__extends">
+            uses
+                            <a href="classes/Application-Model-Traits-IdentifiableTrait.html"><abbr title="\Application\Model\Traits\IdentifiableTrait">IdentifiableTrait</abbr></a>                    </span>
     </h2>
 
 <div class="phpdocumentor-label-line">
@@ -432,7 +435,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Keyholder.php"><a href="files/module-decision-src-model-keyholder.html"><abbr title="module/Decision/src/Model/Keyholder.php">Keyholder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">22</span>
+    <span class="phpdocumentor-element-found-in__line">21</span>
 
     </aside>
 
@@ -494,11 +497,12 @@
 <dd>Installation.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Decision-Model-Keyholder.html#property_id">$id</a>
+    <a class="" href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id">$id</a>
     <span>
                         &nbsp;: int|null            </span>
 </dt>
-<dd>Id.</dd>
+<dd>The default value must be `null` to prevent issues with auto generating the value. The column is strictly not
+nullable.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Decision-Model-Keyholder.html#property_member">$member</a>
@@ -537,11 +541,11 @@
 <dd>Get the granting decision.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Decision-Model-Keyholder.html#method_getId">getId()</a>
+    <a class="" href="classes/Application-Model-Traits-IdentifiableTrait.html#method_getId">getId()</a>
     <span>
                                 &nbsp;: int|null    </span>
 </dt>
-<dd>Get the ID.</dd>
+<dd>Get the identifier of the object.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Decision-Model-Keyholder.html#method_getMember">getMember()</a>
@@ -558,6 +562,13 @@
 <dd>Get the withdrawn date.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Decision-Model-Keyholder.html#method_isCurrent">isCurrent()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+<dd>Get whether the key decision is still valid</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Decision-Model-Keyholder.html#method_setExpirationDate">setExpirationDate()</a>
     <span>
                                 &nbsp;: void    </span>
@@ -570,6 +581,13 @@
                                 &nbsp;: void    </span>
 </dt>
 <dd>Set the granting decision.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Application-Model-Traits-IdentifiableTrait.html#method_setId">setId()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>Setting the identifier manually will, in most instances, result in undefined behaviour. Use with caution!</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Decision-Model-Keyholder.html#method_setMember">setMember()</a>
@@ -615,7 +633,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Keyholder.php"><a href="files/module-decision-src-model-keyholder.html"><abbr title="module/Decision/src/Model/Keyholder.php">Keyholder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">50</span>
+    <span class="phpdocumentor-element-found-in__line">43</span>
 
     </aside>
 
@@ -666,7 +684,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Keyholder.php"><a href="files/module-decision-src-model-keyholder.html"><abbr title="module/Decision/src/Model/Keyholder.php">Keyholder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">56</span>
+    <span class="phpdocumentor-element-found-in__line">49</span>
 
     </aside>
 
@@ -767,19 +785,20 @@
 >
     <h4 class="phpdocumentor-element__name" id="property_id">
         $id
-        <a href="classes/Decision-Model-Keyholder.html#property_id" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Keyholder.php"><a href="files/module-decision-src-model-keyholder.html"><abbr title="module/Decision/src/Model/Keyholder.php">Keyholder.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/IdentifiableTrait.php"><a href="files/module-application-src-model-traits-identifiabletrait.html"><abbr title="module/Application/src/Model/Traits/IdentifiableTrait.php">IdentifiableTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">28</span>
+    <span class="phpdocumentor-element-found-in__line">20</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Id.</p>
+        <p class="phpdocumentor-summary">The default value must be `null` to prevent issues with auto generating the value. The column is strictly not
+nullable.</p>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
@@ -795,7 +814,7 @@
     
     <section class="phpdocumentor-attributes">
         <h5 class="phpdocumentor-elements__header" id="attributes">
-            Attributes <a href="classes/Decision-Model-Keyholder.html#property_id#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+            Attributes <a href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id#attributes" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h5>
                     <dl class="phpdocumentor-argument-list">
@@ -811,7 +830,7 @@
         #[<abbr title="\Doctrine\ORM\Mapping\GeneratedValue">GeneratedValue</abbr>]
     </dt>
         <dd class="phpdocumentor-argument-list__entry">
-        $strategy: &#039;AUTO&#039;
+        $strategy: &#039;IDENTITY&#039;
     </dd>
     </dl>
                     <dl class="phpdocumentor-argument-list">
@@ -839,7 +858,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Keyholder.php"><a href="files/module-decision-src-model-keyholder.html"><abbr title="module/Decision/src/Model/Keyholder.php">Keyholder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">36</span>
+    <span class="phpdocumentor-element-found-in__line">29</span>
 
     </aside>
 
@@ -907,7 +926,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Keyholder.php"><a href="files/module-decision-src-model-keyholder.html"><abbr title="module/Decision/src/Model/Keyholder.php">Keyholder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">85</span>
+    <span class="phpdocumentor-element-found-in__line">78</span>
 
     </aside>
 
@@ -966,7 +985,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Keyholder.php"><a href="files/module-decision-src-model-keyholder.html"><abbr title="module/Decision/src/Model/Keyholder.php">Keyholder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">118</span>
+    <span class="phpdocumentor-element-found-in__line">103</span>
 
     </aside>
 
@@ -1005,7 +1024,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Keyholder.php"><a href="files/module-decision-src-model-keyholder.html"><abbr title="module/Decision/src/Model/Keyholder.php">Keyholder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">134</span>
+    <span class="phpdocumentor-element-found-in__line">119</span>
 
     </aside>
 
@@ -1038,17 +1057,17 @@
 >
     <h4 class="phpdocumentor-element__name" id="method_getId">
         getId()
-        <a href="classes/Decision-Model-Keyholder.html#method_getId" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_getId" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Keyholder.php"><a href="files/module-decision-src-model-keyholder.html"><abbr title="module/Decision/src/Model/Keyholder.php">Keyholder.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/IdentifiableTrait.php"><a href="files/module-application-src-model-traits-identifiabletrait.html"><abbr title="module/Application/src/Model/Traits/IdentifiableTrait.php">IdentifiableTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">94</span>
+    <span class="phpdocumentor-element-found-in__line">30</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Get the ID.</p>
+        <p class="phpdocumentor-summary">Get the identifier of the object.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -1060,6 +1079,20 @@
     
     
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_getId#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">psalm-ignore-nullable-return</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
 
     
 
@@ -1083,7 +1116,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Keyholder.php"><a href="files/module-decision-src-model-keyholder.html"><abbr title="module/Decision/src/Model/Keyholder.php">Keyholder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">102</span>
+    <span class="phpdocumentor-element-found-in__line">87</span>
 
     </aside>
 
@@ -1122,7 +1155,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Keyholder.php"><a href="files/module-decision-src-model-keyholder.html"><abbr title="module/Decision/src/Model/Keyholder.php">Keyholder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">150</span>
+    <span class="phpdocumentor-element-found-in__line">135</span>
 
     </aside>
 
@@ -1153,6 +1186,45 @@
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_isCurrent">
+        isCurrent()
+        <a href="classes/Decision-Model-Keyholder.html#method_isCurrent" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Keyholder.php"><a href="files/module-decision-src-model-keyholder.html"><abbr title="module/Decision/src/Model/Keyholder.php">Keyholder.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">151</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Get whether the key decision is still valid</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">isCurrent</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_setExpirationDate">
         setExpirationDate()
         <a href="classes/Decision-Model-Keyholder.html#method_setExpirationDate" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1161,7 +1233,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Keyholder.php"><a href="files/module-decision-src-model-keyholder.html"><abbr title="module/Decision/src/Model/Keyholder.php">Keyholder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">126</span>
+    <span class="phpdocumentor-element-found-in__line">111</span>
 
     </aside>
 
@@ -1206,7 +1278,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Keyholder.php"><a href="files/module-decision-src-model-keyholder.html"><abbr title="module/Decision/src/Model/Keyholder.php">Keyholder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">142</span>
+    <span class="phpdocumentor-element-found-in__line">127</span>
 
     </aside>
 
@@ -1243,6 +1315,51 @@
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_setId">
+        setId()
+        <a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_setId" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/IdentifiableTrait.php"><a href="files/module-application-src-model-traits-identifiabletrait.html"><abbr title="module/Application/src/Model/Traits/IdentifiableTrait.php">IdentifiableTrait.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">38</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Setting the identifier manually will, in most instances, result in undefined behaviour. Use with caution!</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">setId</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$id</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$id</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int|null</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+    
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_setMember">
         setMember()
         <a href="classes/Decision-Model-Keyholder.html#method_setMember" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1251,7 +1368,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Keyholder.php"><a href="files/module-decision-src-model-keyholder.html"><abbr title="module/Decision/src/Model/Keyholder.php">Keyholder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">110</span>
+    <span class="phpdocumentor-element-found-in__line">95</span>
 
     </aside>
 
@@ -1296,7 +1413,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Keyholder.php"><a href="files/module-decision-src-model-keyholder.html"><abbr title="module/Decision/src/Model/Keyholder.php">Keyholder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">158</span>
+    <span class="phpdocumentor-element-found-in__line">143</span>
 
     </aside>
 
@@ -1442,7 +1559,7 @@
                     <ul class="phpdocumentor-list -clean">
                                                     <li class=""><a href="classes/Decision-Model-Keyholder.html#property_expirationDate">$expirationDate</a></li>
                                                     <li class=""><a href="classes/Decision-Model-Keyholder.html#property_grantingDec">$grantingDec</a></li>
-                                                    <li class=""><a href="classes/Decision-Model-Keyholder.html#property_id">$id</a></li>
+                                                    <li class=""><a href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id">$id</a></li>
                                                     <li class=""><a href="classes/Decision-Model-Keyholder.html#property_member">$member</a></li>
                                                     <li class=""><a href="classes/Decision-Model-Keyholder.html#property_withdrawnDate">$withdrawnDate</a></li>
                                             </ul>
@@ -1453,11 +1570,13 @@
                 <ul class="phpdocumentor-list -clean">
                                             <li class=""><a href="classes/Decision-Model-Keyholder.html#method_getExpirationDate">getExpirationDate()</a></li>
                                             <li class=""><a href="classes/Decision-Model-Keyholder.html#method_getGrantingDec">getGrantingDec()</a></li>
-                                            <li class=""><a href="classes/Decision-Model-Keyholder.html#method_getId">getId()</a></li>
+                                            <li class=""><a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_getId">getId()</a></li>
                                             <li class=""><a href="classes/Decision-Model-Keyholder.html#method_getMember">getMember()</a></li>
                                             <li class=""><a href="classes/Decision-Model-Keyholder.html#method_getWithdrawnDate">getWithdrawnDate()</a></li>
+                                            <li class=""><a href="classes/Decision-Model-Keyholder.html#method_isCurrent">isCurrent()</a></li>
                                             <li class=""><a href="classes/Decision-Model-Keyholder.html#method_setExpirationDate">setExpirationDate()</a></li>
                                             <li class=""><a href="classes/Decision-Model-Keyholder.html#method_setGrantingDec">setGrantingDec()</a></li>
+                                            <li class=""><a href="classes/Application-Model-Traits-IdentifiableTrait.html#method_setId">setId()</a></li>
                                             <li class=""><a href="classes/Decision-Model-Keyholder.html#method_setMember">setMember()</a></li>
                                             <li class=""><a href="classes/Decision-Model-Keyholder.html#method_setWithdrawnDate">setWithdrawnDate()</a></li>
                                     </ul>

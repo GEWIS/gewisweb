@@ -431,15 +431,44 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Enums/Languages.php"><a href="files/module-application-src-model-enums-languages.html"><abbr title="module/Application/src/Model/Enums/Languages.php">Languages.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">15</span>
+    <span class="phpdocumentor-element-found-in__line">24</span>
 
     </aside>
 
-            <p class="phpdocumentor-summary">The different languages supported by the website.</p>
+            <p class="phpdocumentor-summary">This enum contains the different languages that are supported by the website.</p>
 
 
+    <section class="phpdocumentor-description"><p>This is directly related to contents of decisions from GEWISDB. Be careful when making changes here and not there.</p>
+<p>LangParam is the format compatible with $translator-&gt;translate(locale: $langparam)
+Locale should be compatible with dates.</p>
+</section>
 
 
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Application-Model-Enums-Languages.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">psalm-type</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>LangParam = 'en'|'nl'</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">psalm-type</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Locale = 'en_GB'|'nl_NL'</p>
+</section>
+
+                                    </dd>
+                                            </dl>
 
 
 
@@ -465,15 +494,15 @@
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -case -">
-    <a class="" href="classes/Application-Model-Enums-Languages.html#enumcase_EN">EN</a>
+    <a class="" href="classes/Application-Model-Enums-Languages.html#enumcase_Dutch">Dutch</a>
     <span>
-                &nbsp;= &#039;en&#039;                    </span>
+                &nbsp;= &#039;dutch_netherlands&#039;                    </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -case -">
-    <a class="" href="classes/Application-Model-Enums-Languages.html#enumcase_NL">NL</a>
+    <a class="" href="classes/Application-Model-Enums-Languages.html#enumcase_English">English</a>
     <span>
-                &nbsp;= &#039;nl&#039;                    </span>
+                &nbsp;= &#039;english_greatbritain&#039;                    </span>
 </dt>
 
     </dl>
@@ -485,6 +514,35 @@
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Application-Model-Enums-Languages.html#method_fromLangParam">fromLangParam()</a>
+    <span>
+                                &nbsp;: <a href="classes/Application-Model-Enums-Languages.html"><abbr title="\Application\Model\Enums\Languages">Languages</abbr></a>    </span>
+</dt>
+<dd>Get the language from a language param (&#039;en&#039;, &#039;nl&#039;)</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Application-Model-Enums-Languages.html#method_fromLocale">fromLocale()</a>
+    <span>
+                                &nbsp;: <a href="classes/Application-Model-Enums-Languages.html"><abbr title="\Application\Model\Enums\Languages">Languages</abbr></a>    </span>
+</dt>
+<dd>Get the language from a locale (&#039;en_GB&#039;, &#039;nl_NL&#039;)</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Application-Model-Enums-Languages.html#method_getLangParam">getLangParam()</a>
+    <span>
+                                &nbsp;: <abbr title="\Application\Model\Enums\LangParam">LangParam</abbr>    </span>
+</dt>
+<dd>Get the language param (&#039;en&#039;, &#039;nl&#039;) from a language
+An explode is not possible because of psalm</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Application-Model-Enums-Languages.html#method_getLocale">getLocale()</a>
+    <span>
+                                &nbsp;: <abbr title="\Application\Model\Enums\Locale">Locale</abbr>    </span>
+</dt>
+<dd>Get the locale (&#039;en_GB&#039;, &#039;nl_NL&#039;) from a language</dd>
+
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Application-Model-Enums-Languages.html#method_getName">getName()</a>
     <span>
@@ -520,15 +578,15 @@
             -enum-case
         "
 >
-    <h4 class="phpdocumentor-element__name" id="enumcase_EN">
-        EN
-        <a href="classes/Application-Model-Enums-Languages.html#enumcase_EN" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="enumcase_English">
+        English
+        <a href="classes/Application-Model-Enums-Languages.html#enumcase_English" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Enums/Languages.php"><a href="files/module-application-src-model-enums-languages.html"><abbr title="module/Application/src/Model/Enums/Languages.php">Languages.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">17</span>
+    <span class="phpdocumentor-element-found-in__line">26</span>
 
     </aside>
 
@@ -547,15 +605,15 @@
             -enum-case
         "
 >
-    <h4 class="phpdocumentor-element__name" id="enumcase_NL">
-        NL
-        <a href="classes/Application-Model-Enums-Languages.html#enumcase_NL" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="enumcase_Dutch">
+        Dutch
+        <a href="classes/Application-Model-Enums-Languages.html#enumcase_Dutch" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Enums/Languages.php"><a href="files/module-application-src-model-enums-languages.html"><abbr title="module/Application/src/Model/Enums/Languages.php">Languages.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">18</span>
+    <span class="phpdocumentor-element-found-in__line">27</span>
 
     </aside>
 
@@ -580,6 +638,183 @@
         class="phpdocumentor-element
             -method
             -public
+                                    -static                    "
+>
+    <h4 class="phpdocumentor-element__name" id="method_fromLangParam">
+        fromLangParam()
+        <a href="classes/Application-Model-Enums-Languages.html#method_fromLangParam" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Enums/Languages.php"><a href="files/module-application-src-model-enums-languages.html"><abbr title="module/Application/src/Model/Enums/Languages.php">Languages.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">61</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Get the language from a language param (&#039;en&#039;, &#039;nl&#039;)</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">fromLangParam</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Application\Model\Enums\LangParam">LangParam</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$langParam</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Application-Model-Enums-Languages.html"><abbr title="\Application\Model\Enums\Languages">Languages</abbr></a></span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$langParam</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Application\Model\Enums\LangParam">LangParam</abbr></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Application-Model-Enums-Languages.html"><abbr title="\Application\Model\Enums\Languages">Languages</abbr></a></span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                    -static                    "
+>
+    <h4 class="phpdocumentor-element__name" id="method_fromLocale">
+        fromLocale()
+        <a href="classes/Application-Model-Enums-Languages.html#method_fromLocale" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Enums/Languages.php"><a href="files/module-application-src-model-enums-languages.html"><abbr title="module/Application/src/Model/Enums/Languages.php">Languages.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">74</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Get the language from a locale (&#039;en_GB&#039;, &#039;nl_NL&#039;)</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">fromLocale</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Application\Model\Enums\Locale">Locale</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$locale</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Application-Model-Enums-Languages.html"><abbr title="\Application\Model\Enums\Languages">Languages</abbr></a></span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$locale</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Application\Model\Enums\Locale">Locale</abbr></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Application-Model-Enums-Languages.html"><abbr title="\Application\Model\Enums\Languages">Languages</abbr></a></span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getLangParam">
+        getLangParam()
+        <a href="classes/Application-Model-Enums-Languages.html#method_getLangParam" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Enums/Languages.php"><a href="files/module-application-src-model-enums-languages.html"><abbr title="module/Application/src/Model/Enums/Languages.php">Languages.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">35</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Get the language param (&#039;en&#039;, &#039;nl&#039;) from a language
+An explode is not possible because of psalm</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getLangParam</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Application\Model\Enums\LangParam">LangParam</abbr></span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\Application\Model\Enums\LangParam">LangParam</abbr></span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getLocale">
+        getLocale()
+        <a href="classes/Application-Model-Enums-Languages.html#method_getLocale" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Enums/Languages.php"><a href="files/module-application-src-model-enums-languages.html"><abbr title="module/Application/src/Model/Enums/Languages.php">Languages.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">48</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Get the locale (&#039;en_GB&#039;, &#039;nl_NL&#039;) from a language</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getLocale</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Application\Model\Enums\Locale">Locale</abbr></span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\Application\Model\Enums\Locale">Locale</abbr></span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
                                                         "
 >
     <h4 class="phpdocumentor-element__name" id="method_getName">
@@ -590,7 +825,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Enums/Languages.php"><a href="files/module-application-src-model-enums-languages.html"><abbr title="module/Application/src/Model/Enums/Languages.php">Languages.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">20</span>
+    <span class="phpdocumentor-element-found-in__line">79</span>
 
     </aside>
 
@@ -638,7 +873,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Enums/Languages.php"><a href="files/module-application-src-model-enums-languages.html"><abbr title="module/Application/src/Model/Enums/Languages.php">Languages.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">45</span>
+    <span class="phpdocumentor-element-found-in__line">104</span>
 
     </aside>
 
@@ -676,7 +911,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Enums/Languages.php"><a href="files/module-application-src-model-enums-languages.html"><abbr title="module/Application/src/Model/Enums/Languages.php">Languages.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">31</span>
+    <span class="phpdocumentor-element-found-in__line">90</span>
 
     </aside>
 
@@ -812,14 +1047,18 @@
                             <li class="phpdocumentor-on-this-page-section__title">Cases</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li class=""><a href="classes/Application-Model-Enums-Languages.html#enumcase_EN">EN</a></li>
-                                                    <li class=""><a href="classes/Application-Model-Enums-Languages.html#enumcase_NL">NL</a></li>
+                                                    <li class=""><a href="classes/Application-Model-Enums-Languages.html#enumcase_English">English</a></li>
+                                                    <li class=""><a href="classes/Application-Model-Enums-Languages.html#enumcase_Dutch">Dutch</a></li>
                                             </ul>
                 </li>
             
                             <li class="phpdocumentor-on-this-page-section__title">Methods</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
+                                                    <li class=""><a href="classes/Application-Model-Enums-Languages.html#method_fromLangParam">fromLangParam()</a></li>
+                                                    <li class=""><a href="classes/Application-Model-Enums-Languages.html#method_fromLocale">fromLocale()</a></li>
+                                                    <li class=""><a href="classes/Application-Model-Enums-Languages.html#method_getLangParam">getLangParam()</a></li>
+                                                    <li class=""><a href="classes/Application-Model-Enums-Languages.html#method_getLocale">getLocale()</a></li>
                                                     <li class=""><a href="classes/Application-Model-Enums-Languages.html#method_getName">getName()</a></li>
                                                     <li class=""><a href="classes/Application-Model-Enums-Languages.html#method_stringValues">stringValues()</a></li>
                                                     <li class=""><a href="classes/Application-Model-Enums-Languages.html#method_values">values()</a></li>

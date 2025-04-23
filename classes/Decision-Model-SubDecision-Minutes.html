@@ -412,7 +412,7 @@
 
     <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    Discharge
+    Minutes
 
         <span class="phpdocumentor-element__extends">
         extends <a href="classes/Decision-Model-SubDecision.html"><abbr title="\Decision\Model\SubDecision">SubDecision</abbr></a>
@@ -434,25 +434,22 @@
 </div>
 
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Discharge.php"><a href="files/module-decision-src-model-subdecision-discharge.html"><abbr title="module/Decision/src/Model/SubDecision/Discharge.php">Discharge.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Minutes.php"><a href="files/module-decision-src-model-subdecision-minutes.html"><abbr title="module/Decision/src/Model/SubDecision/Minutes.php">Minutes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">18</span>
+    <span class="phpdocumentor-element-found-in__line">17</span>
 
     </aside>
 
-            <p class="phpdocumentor-summary">Discharge from organ.</p>
+            <p class="phpdocumentor-summary">Decisions on minutes.</p>
 
 
-    <section class="phpdocumentor-description"><p>This decision references to an installation. The given installation is
-'undone' by this discharge.</p>
-</section>
 
 
 
 
     <section class="phpdocumentor-attributes">
         <h5 class="phpdocumentor-elements__header" id="attributes">
-            Attributes <a href="classes/Decision-Model-SubDecision-Discharge.html#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+            Attributes <a href="classes/Decision-Model-SubDecision-Minutes.html#attributes" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h5>
                     <dl class="phpdocumentor-argument-list">
@@ -466,7 +463,7 @@
 
 <h3 id="toc">
     Table of Contents
-    <a href="classes/Decision-Model-SubDecision-Discharge.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Decision-Model-SubDecision-Minutes.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h3>
 
@@ -480,10 +477,24 @@
 
 <h4 id="toc-properties">
     Properties
-    <a href="classes/Decision-Model-SubDecision-Discharge.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Decision-Model-SubDecision-Minutes.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a class="" href="classes/Decision-Model-SubDecision-Minutes.html#property_approval">$approval</a>
+    <span>
+                        &nbsp;: bool            </span>
+</dt>
+<dd>If the minutes were approved.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a class="" href="classes/Decision-Model-SubDecision-Minutes.html#property_changes">$changes</a>
+    <span>
+                        &nbsp;: bool            </span>
+</dt>
+<dd>If there were changes made.</dd>
+
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Decision-Model-SubDecision.html#property_contentEN">$contentEN</a>
     <span>
@@ -520,11 +531,11 @@
 <dd>Decision point.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Decision-Model-SubDecision-Discharge.html#property_installation">$installation</a>
+    <a class="" href="classes/Decision-Model-SubDecision-Minutes.html#property_meeting">$meeting</a>
     <span>
-                        &nbsp;: <a href="classes/Decision-Model-SubDecision-Installation.html"><abbr title="\Decision\Model\SubDecision\Installation">Installation</abbr></a>            </span>
+                        &nbsp;: <a href="classes/Decision-Model-Meeting.html"><abbr title="\Decision\Model\Meeting">Meeting</abbr></a>            </span>
 </dt>
-<dd>Reference to the installation of a member.</dd>
+<dd>Reference to the meetings</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Decision-Model-SubDecision.html#property_meeting_number">$meeting_number</a>
@@ -558,10 +569,24 @@
 
 <h4 id="toc-methods">
     Methods
-    <a href="classes/Decision-Model-SubDecision-Discharge.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Decision-Model-SubDecision-Minutes.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Decision-Model-SubDecision-Minutes.html#method_getApproval">getApproval()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+<dd>Get approval status.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Decision-Model-SubDecision-Minutes.html#method_getChanges">getChanges()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+<dd>Get if changes were made.</dd>
+
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Decision-Model-SubDecision.html#method_getContentEN">getContentEN()</a>
     <span>
@@ -598,11 +623,11 @@
 <dd>Get the decision point number.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Decision-Model-SubDecision-Discharge.html#method_getInstallation">getInstallation()</a>
+    <a class="" href="classes/Decision-Model-SubDecision-Minutes.html#method_getMeeting">getMeeting()</a>
     <span>
-                                &nbsp;: <a href="classes/Decision-Model-SubDecision-Installation.html"><abbr title="\Decision\Model\SubDecision\Installation">Installation</abbr></a>    </span>
+                                &nbsp;: <a href="classes/Decision-Model-Meeting.html"><abbr title="\Decision\Model\Meeting">Meeting</abbr></a>    </span>
 </dt>
-<dd>Get installation.</dd>
+<dd>Get the target.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Decision-Model-SubDecision.html#method_getMeetingNumber">getMeetingNumber()</a>
@@ -633,6 +658,20 @@
 <dd>Get the sequence number.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Decision-Model-SubDecision-Minutes.html#method_setApproval">setApproval()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>Set approval status.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Decision-Model-SubDecision-Minutes.html#method_setChanges">setChanges()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>Set if changes were made.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Decision-Model-SubDecision.html#method_setContentEN">setContentEN()</a>
     <span>
                                 &nbsp;: void    </span>
@@ -654,11 +693,11 @@
 <dd>Set the decision.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Decision-Model-SubDecision-Discharge.html#method_setInstallation">setInstallation()</a>
+    <a class="" href="classes/Decision-Model-SubDecision-Minutes.html#method_setMeeting">setMeeting()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd>Set the installation.</dd>
+<dd>Set the target.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Decision-Model-SubDecision.html#method_setMember">setMember()</a>
@@ -690,9 +729,111 @@
     <section class="phpdocumentor-properties">
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
-            <a href="classes/Decision-Model-SubDecision-Discharge.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Decision-Model-SubDecision-Minutes.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_approval">
+        $approval
+        <a href="classes/Decision-Model-SubDecision-Minutes.html#property_approval" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Minutes.php"><a href="files/module-decision-src-model-subdecision-minutes.html"><abbr title="module/Decision/src/Model/SubDecision/Minutes.php">Minutes.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">40</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">If the minutes were approved.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type">bool</span>
+    <span class="phpdocumentor-signature__name">$approval</span>
+    </code>
+
+    
+    
+    
+
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Decision-Model-SubDecision-Minutes.html#property_approval#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $type: &#039;boolean&#039;
+    </dd>
+    </dl>
+            </section>
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_changes">
+        $changes
+        <a href="classes/Decision-Model-SubDecision-Minutes.html#property_changes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Minutes.php"><a href="files/module-decision-src-model-subdecision-minutes.html"><abbr title="module/Decision/src/Model/SubDecision/Minutes.php">Minutes.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">46</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">If there were changes made.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type">bool</span>
+    <span class="phpdocumentor-signature__name">$changes</span>
+    </code>
+
+    
+    
+    
+
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Decision-Model-SubDecision-Minutes.html#property_changes#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $type: &#039;boolean&#039;
+    </dd>
+    </dl>
+            </section>
+
+</article>
                     <article
         class="
             phpdocumentor-element
@@ -1016,27 +1157,27 @@
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_installation">
-        $installation
-        <a href="classes/Decision-Model-SubDecision-Discharge.html#property_installation" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_meeting">
+        $meeting
+        <a href="classes/Decision-Model-SubDecision-Minutes.html#property_meeting" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Discharge.php"><a href="files/module-decision-src-model-subdecision-discharge.html"><abbr title="module/Decision/src/Model/SubDecision/Discharge.php">Discharge.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Minutes.php"><a href="files/module-decision-src-model-subdecision-minutes.html"><abbr title="module/Decision/src/Model/SubDecision/Minutes.php">Minutes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">24</span>
+    <span class="phpdocumentor-element-found-in__line">23</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Reference to the installation of a member.</p>
+        <p class="phpdocumentor-summary">Reference to the meetings</p>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/Decision-Model-SubDecision-Installation.html"><abbr title="\Decision\Model\SubDecision\Installation">Installation</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$installation</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Decision-Model-Meeting.html"><abbr title="\Decision\Model\Meeting">Meeting</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$meeting</span>
     </code>
 
     
@@ -1046,7 +1187,7 @@
     
     <section class="phpdocumentor-attributes">
         <h5 class="phpdocumentor-elements__header" id="attributes">
-            Attributes <a href="classes/Decision-Model-SubDecision-Discharge.html#property_installation#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+            Attributes <a href="classes/Decision-Model-SubDecision-Minutes.html#property_meeting#attributes" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h5>
                     <dl class="phpdocumentor-argument-list">
@@ -1057,7 +1198,7 @@
         $name: &#039;r_meeting_type&#039;
     </dd>
         <dd class="phpdocumentor-argument-list__entry">
-        $referencedColumnName: &#039;meeting_type&#039;
+        $referencedColumnName: &#039;type&#039;
     </dd>
     </dl>
                     <dl class="phpdocumentor-argument-list">
@@ -1068,40 +1209,7 @@
         $name: &#039;r_meeting_number&#039;
     </dd>
         <dd class="phpdocumentor-argument-list__entry">
-        $referencedColumnName: &#039;meeting_number&#039;
-    </dd>
-    </dl>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\JoinColumn">JoinColumn</abbr>]
-    </dt>
-        <dd class="phpdocumentor-argument-list__entry">
-        $name: &#039;r_decision_point&#039;
-    </dd>
-        <dd class="phpdocumentor-argument-list__entry">
-        $referencedColumnName: &#039;decision_point&#039;
-    </dd>
-    </dl>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\JoinColumn">JoinColumn</abbr>]
-    </dt>
-        <dd class="phpdocumentor-argument-list__entry">
-        $name: &#039;r_decision_number&#039;
-    </dd>
-        <dd class="phpdocumentor-argument-list__entry">
-        $referencedColumnName: &#039;decision_number&#039;
-    </dd>
-    </dl>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\JoinColumn">JoinColumn</abbr>]
-    </dt>
-        <dd class="phpdocumentor-argument-list__entry">
-        $name: &#039;r_sequence&#039;
-    </dd>
-        <dd class="phpdocumentor-argument-list__entry">
-        $referencedColumnName: &#039;sequence&#039;
+        $referencedColumnName: &#039;number&#039;
     </dd>
     </dl>
                     <dl class="phpdocumentor-argument-list">
@@ -1109,10 +1217,10 @@
         #[<abbr title="\Doctrine\ORM\Mapping\OneToOne">OneToOne</abbr>]
     </dt>
         <dd class="phpdocumentor-argument-list__entry">
-        $targetEntity: \Decision\Model\SubDecision\Installation::class
+        $targetEntity: \Decision\Model\Meeting::class
     </dd>
         <dd class="phpdocumentor-argument-list__entry">
-        $inversedBy: &#039;discharge&#039;
+        $inversedBy: &#039;minutes&#039;
     </dd>
     </dl>
             </section>
@@ -1366,9 +1474,87 @@ this is not null or need to specify an inverse side can do so using an associati
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/Decision-Model-SubDecision-Discharge.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Decision-Model-SubDecision-Minutes.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getApproval">
+        getApproval()
+        <a href="classes/Decision-Model-SubDecision-Minutes.html#method_getApproval" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Minutes.php"><a href="files/module-decision-src-model-subdecision-minutes.html"><abbr title="module/Decision/src/Model/SubDecision/Minutes.php">Minutes.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">68</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Get approval status.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getApproval</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getChanges">
+        getChanges()
+        <a href="classes/Decision-Model-SubDecision-Minutes.html#method_getChanges" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Minutes.php"><a href="files/module-decision-src-model-subdecision-minutes.html"><abbr title="module/Decision/src/Model/SubDecision/Minutes.php">Minutes.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">84</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Get if changes were made.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getChanges</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+            </section>
+
+</article>
                     <article
         class="phpdocumentor-element
             -method
@@ -1570,23 +1756,23 @@ this is not null or need to specify an inverse side can do so using an associati
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getInstallation">
-        getInstallation()
-        <a href="classes/Decision-Model-SubDecision-Discharge.html#method_getInstallation" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_getMeeting">
+        getMeeting()
+        <a href="classes/Decision-Model-SubDecision-Minutes.html#method_getMeeting" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Discharge.php"><a href="files/module-decision-src-model-subdecision-discharge.html"><abbr title="module/Decision/src/Model/SubDecision/Discharge.php">Discharge.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Minutes.php"><a href="files/module-decision-src-model-subdecision-minutes.html"><abbr title="module/Decision/src/Model/SubDecision/Minutes.php">Minutes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">53</span>
+    <span class="phpdocumentor-element-found-in__line">52</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Get installation.</p>
+        <p class="phpdocumentor-summary">Get the target.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getInstallation</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-SubDecision-Installation.html"><abbr title="\Decision\Model\SubDecision\Installation">Installation</abbr></a></span></code>
+                    <span class="phpdocumentor-signature__name">getMeeting</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-Meeting.html"><abbr title="\Decision\Model\Meeting">Meeting</abbr></a></span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -1599,7 +1785,7 @@ this is not null or need to specify an inverse side can do so using an associati
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-SubDecision-Installation.html"><abbr title="\Decision\Model\SubDecision\Installation">Installation</abbr></a></span>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-Meeting.html"><abbr title="\Decision\Model\Meeting">Meeting</abbr></a></span>
             </section>
 
 </article>
@@ -1765,6 +1951,96 @@ this is not null or need to specify an inverse side can do so using an associati
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_setApproval">
+        setApproval()
+        <a href="classes/Decision-Model-SubDecision-Minutes.html#method_setApproval" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Minutes.php"><a href="files/module-decision-src-model-subdecision-minutes.html"><abbr title="module/Decision/src/Model/SubDecision/Minutes.php">Minutes.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">76</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Set approval status.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">setApproval</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$approval</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$approval</span>
+                : <span class="phpdocumentor-signature__argument__return-type">bool</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+    
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_setChanges">
+        setChanges()
+        <a href="classes/Decision-Model-SubDecision-Minutes.html#method_setChanges" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Minutes.php"><a href="files/module-decision-src-model-subdecision-minutes.html"><abbr title="module/Decision/src/Model/SubDecision/Minutes.php">Minutes.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">92</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Set if changes were made.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">setChanges</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$changes</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$changes</span>
+                : <span class="phpdocumentor-signature__argument__return-type">bool</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+    
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_setContentEN">
         setContentEN()
         <a href="classes/Decision-Model-SubDecision.html#method_setContentEN" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1900,23 +2176,23 @@ this is not null or need to specify an inverse side can do so using an associati
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_setInstallation">
-        setInstallation()
-        <a href="classes/Decision-Model-SubDecision-Discharge.html#method_setInstallation" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_setMeeting">
+        setMeeting()
+        <a href="classes/Decision-Model-SubDecision-Minutes.html#method_setMeeting" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Discharge.php"><a href="files/module-decision-src-model-subdecision-discharge.html"><abbr title="module/Decision/src/Model/SubDecision/Discharge.php">Discharge.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Minutes.php"><a href="files/module-decision-src-model-subdecision-minutes.html"><abbr title="module/Decision/src/Model/SubDecision/Minutes.php">Minutes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">61</span>
+    <span class="phpdocumentor-element-found-in__line">60</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Set the installation.</p>
+        <p class="phpdocumentor-summary">Set the target.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setInstallation</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-SubDecision-Installation.html"><abbr title="\Decision\Model\SubDecision\Installation">Installation</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$installation</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">setMeeting</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Meeting.html"><abbr title="\Decision\Model\Meeting">Meeting</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$meeting</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -1925,8 +2201,8 @@ this is not null or need to specify an inverse side can do so using an associati
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$installation</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-SubDecision-Installation.html"><abbr title="\Decision\Model\SubDecision\Installation">Installation</abbr></a></span>
+                <span class="phpdocumentor-signature__argument__name">$meeting</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Decision-Model-Meeting.html"><abbr title="\Decision\Model\Meeting">Meeting</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
@@ -2073,7 +2349,7 @@ this is not null or need to specify an inverse side can do so using an associati
     <div class="phpdocumentor-modal-bg" data-exit-button></div>
     <div class="phpdocumentor-modal-container">
         <div class="phpdocumentor-modal-content">
-            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/module/Decision/src/Model/SubDecision/Discharge.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
+            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/module/Decision/src/Model/SubDecision/Minutes.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
         </div>
         <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
     </div>
@@ -2172,20 +2448,22 @@ this is not null or need to specify an inverse side can do so using an associati
             <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                                            <li><a href="classes/Decision-Model-SubDecision-Discharge.html#toc-properties">Properties</a></li>
-                                                            <li><a href="classes/Decision-Model-SubDecision-Discharge.html#toc-methods">Methods</a></li>
+                                                            <li><a href="classes/Decision-Model-SubDecision-Minutes.html#toc-properties">Properties</a></li>
+                                                            <li><a href="classes/Decision-Model-SubDecision-Minutes.html#toc-methods">Methods</a></li>
                                     </ul>
             </li>
             
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
+                                                    <li class=""><a href="classes/Decision-Model-SubDecision-Minutes.html#property_approval">$approval</a></li>
+                                                    <li class=""><a href="classes/Decision-Model-SubDecision-Minutes.html#property_changes">$changes</a></li>
                                                     <li class=""><a href="classes/Decision-Model-SubDecision.html#property_contentEN">$contentEN</a></li>
                                                     <li class=""><a href="classes/Decision-Model-SubDecision.html#property_contentNL">$contentNL</a></li>
                                                     <li class=""><a href="classes/Decision-Model-SubDecision.html#property_decision">$decision</a></li>
                                                     <li class=""><a href="classes/Decision-Model-SubDecision.html#property_decision_number">$decision_number</a></li>
                                                     <li class=""><a href="classes/Decision-Model-SubDecision.html#property_decision_point">$decision_point</a></li>
-                                                    <li class=""><a href="classes/Decision-Model-SubDecision-Discharge.html#property_installation">$installation</a></li>
+                                                    <li class=""><a href="classes/Decision-Model-SubDecision-Minutes.html#property_meeting">$meeting</a></li>
                                                     <li class=""><a href="classes/Decision-Model-SubDecision.html#property_meeting_number">$meeting_number</a></li>
                                                     <li class=""><a href="classes/Decision-Model-SubDecision.html#property_meeting_type">$meeting_type</a></li>
                                                     <li class=""><a href="classes/Decision-Model-SubDecision.html#property_member">$member</a></li>
@@ -2196,20 +2474,24 @@ this is not null or need to specify an inverse side can do so using an associati
                         <li class="phpdocumentor-on-this-page-section__title">Methods</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
+                                            <li class=""><a href="classes/Decision-Model-SubDecision-Minutes.html#method_getApproval">getApproval()</a></li>
+                                            <li class=""><a href="classes/Decision-Model-SubDecision-Minutes.html#method_getChanges">getChanges()</a></li>
                                             <li class=""><a href="classes/Decision-Model-SubDecision.html#method_getContentEN">getContentEN()</a></li>
                                             <li class=""><a href="classes/Decision-Model-SubDecision.html#method_getContentNL">getContentNL()</a></li>
                                             <li class=""><a href="classes/Decision-Model-SubDecision.html#method_getDecision">getDecision()</a></li>
                                             <li class=""><a href="classes/Decision-Model-SubDecision.html#method_getDecisionNumber">getDecisionNumber()</a></li>
                                             <li class=""><a href="classes/Decision-Model-SubDecision.html#method_getDecisionPoint">getDecisionPoint()</a></li>
-                                            <li class=""><a href="classes/Decision-Model-SubDecision-Discharge.html#method_getInstallation">getInstallation()</a></li>
+                                            <li class=""><a href="classes/Decision-Model-SubDecision-Minutes.html#method_getMeeting">getMeeting()</a></li>
                                             <li class=""><a href="classes/Decision-Model-SubDecision.html#method_getMeetingNumber">getMeetingNumber()</a></li>
                                             <li class=""><a href="classes/Decision-Model-SubDecision.html#method_getMeetingType">getMeetingType()</a></li>
                                             <li class=""><a href="classes/Decision-Model-SubDecision.html#method_getMember">getMember()</a></li>
                                             <li class=""><a href="classes/Decision-Model-SubDecision.html#method_getSequence">getSequence()</a></li>
+                                            <li class=""><a href="classes/Decision-Model-SubDecision-Minutes.html#method_setApproval">setApproval()</a></li>
+                                            <li class=""><a href="classes/Decision-Model-SubDecision-Minutes.html#method_setChanges">setChanges()</a></li>
                                             <li class=""><a href="classes/Decision-Model-SubDecision.html#method_setContentEN">setContentEN()</a></li>
                                             <li class=""><a href="classes/Decision-Model-SubDecision.html#method_setContentNL">setContentNL()</a></li>
                                             <li class=""><a href="classes/Decision-Model-SubDecision.html#method_setDecision">setDecision()</a></li>
-                                            <li class=""><a href="classes/Decision-Model-SubDecision-Discharge.html#method_setInstallation">setInstallation()</a></li>
+                                            <li class=""><a href="classes/Decision-Model-SubDecision-Minutes.html#method_setMeeting">setMeeting()</a></li>
                                             <li class=""><a href="classes/Decision-Model-SubDecision.html#method_setMember">setMember()</a></li>
                                             <li class=""><a href="classes/Decision-Model-SubDecision.html#method_setSequence">setSequence()</a></li>
                                             <li class=""><a href="classes/Decision-Model-SubDecision.html#method_toGdprArray">toGdprArray()</a></li>
@@ -2232,7 +2514,7 @@ this is not null or need to specify an inverse side can do so using an associati
     </section>
 </section>
         </div>
-        <a href="classes/Decision-Model-SubDecision-Discharge.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/Decision-Model-SubDecision-Minutes.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 

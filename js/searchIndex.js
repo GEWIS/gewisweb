@@ -3526,6 +3526,26 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Application-Migrations-Version20250227142446.html#method_down"
         },                {
+            "fqsen": "\\Application\\Migrations\\Version20250423132841",
+            "name": "Version20250423132841",
+            "summary": "phpcs\u003Adisable\u0020Generic.Files.LineLength.TooLong\nphpcs\u003Adisable\u0020SlevomatCodingStandard.Functions.RequireMultiLineCall.RequiredMultiLineCall",
+            "url": "classes/Application-Migrations-Version20250423132841.html"
+        },                {
+            "fqsen": "\\Application\\Migrations\\Version20250423132841\u003A\u003AgetDescription\u0028\u0029",
+            "name": "getDescription",
+            "summary": "",
+            "url": "classes/Application-Migrations-Version20250423132841.html#method_getDescription"
+        },                {
+            "fqsen": "\\Application\\Migrations\\Version20250423132841\u003A\u003Aup\u0028\u0029",
+            "name": "up",
+            "summary": "",
+            "url": "classes/Application-Migrations-Version20250423132841.html#method_up"
+        },                {
+            "fqsen": "\\Application\\Migrations\\Version20250423132841\u003A\u003Adown\u0028\u0029",
+            "name": "down",
+            "summary": "",
+            "url": "classes/Application-Migrations-Version20250423132841.html#method_down"
+        },                {
             "fqsen": "\\Application\\Command\\Factory\\LoadFixturesFactory",
             "name": "LoadFixturesFactory",
             "summary": "",
@@ -4068,8 +4088,28 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Application\\Model\\Enums\\Languages",
             "name": "Languages",
-            "summary": "The\u0020different\u0020languages\u0020supported\u0020by\u0020the\u0020website.",
+            "summary": "This\u0020enum\u0020contains\u0020the\u0020different\u0020languages\u0020that\u0020are\u0020supported\u0020by\u0020the\u0020website.",
             "url": "classes/Application-Model-Enums-Languages.html"
+        },                {
+            "fqsen": "\\Application\\Model\\Enums\\Languages\u003A\u003AgetLangParam\u0028\u0029",
+            "name": "getLangParam",
+            "summary": "Get\u0020the\u0020language\u0020param\u0020\u0028\u0027en\u0027,\u0020\u0027nl\u0027\u0029\u0020from\u0020a\u0020language\nAn\u0020explode\u0020is\u0020not\u0020possible\u0020because\u0020of\u0020psalm",
+            "url": "classes/Application-Model-Enums-Languages.html#method_getLangParam"
+        },                {
+            "fqsen": "\\Application\\Model\\Enums\\Languages\u003A\u003AgetLocale\u0028\u0029",
+            "name": "getLocale",
+            "summary": "Get\u0020the\u0020locale\u0020\u0028\u0027en_GB\u0027,\u0020\u0027nl_NL\u0027\u0029\u0020from\u0020a\u0020language",
+            "url": "classes/Application-Model-Enums-Languages.html#method_getLocale"
+        },                {
+            "fqsen": "\\Application\\Model\\Enums\\Languages\u003A\u003AfromLangParam\u0028\u0029",
+            "name": "fromLangParam",
+            "summary": "Get\u0020the\u0020language\u0020from\u0020a\u0020language\u0020param\u0020\u0028\u0027en\u0027,\u0020\u0027nl\u0027\u0029",
+            "url": "classes/Application-Model-Enums-Languages.html#method_fromLangParam"
+        },                {
+            "fqsen": "\\Application\\Model\\Enums\\Languages\u003A\u003AfromLocale\u0028\u0029",
+            "name": "fromLocale",
+            "summary": "Get\u0020the\u0020language\u0020from\u0020a\u0020locale\u0020\u0028\u0027en_GB\u0027,\u0020\u0027nl_NL\u0027\u0029",
+            "url": "classes/Application-Model-Enums-Languages.html#method_fromLocale"
         },                {
             "fqsen": "\\Application\\Model\\Enums\\Languages\u003A\u003AgetName\u0028\u0029",
             "name": "getName",
@@ -4086,15 +4126,15 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Application-Model-Enums-Languages.html#method_stringValues"
         },                {
-            "fqsen": "\\Application\\Model\\Enums\\Languages\u003A\u003AEN",
-            "name": "EN",
+            "fqsen": "\\Application\\Model\\Enums\\Languages\u003A\u003AEnglish",
+            "name": "English",
             "summary": "",
-            "url": "classes/Application-Model-Enums-Languages.html#enumcase_EN"
+            "url": "classes/Application-Model-Enums-Languages.html#enumcase_English"
         },                {
-            "fqsen": "\\Application\\Model\\Enums\\Languages\u003A\u003ANL",
-            "name": "NL",
+            "fqsen": "\\Application\\Model\\Enums\\Languages\u003A\u003ADutch",
+            "name": "Dutch",
             "summary": "",
-            "url": "classes/Application-Model-Enums-Languages.html#enumcase_NL"
+            "url": "classes/Application-Model-Enums-Languages.html#enumcase_Dutch"
         },                {
             "fqsen": "\\Application\\Model\\IdentityInterface",
             "name": "IdentityInterface",
@@ -8928,7 +8968,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Decision\\Model\\BoardMember\u003A\u003A\u0024function",
             "name": "function",
-            "summary": "Function.",
+            "summary": "Function\u0020given.",
             "url": "classes/Decision-Model-BoardMember.html#property_function"
         },                {
             "fqsen": "\\Decision\\Model\\BoardMember\u003A\u003A\u0024installDate",
@@ -8955,11 +8995,6 @@ Search.appendIndex(
             "name": "Decision",
             "summary": "Decision\u0020model.",
             "url": "classes/Decision-Model-Decision.html"
-        },                {
-            "fqsen": "\\Decision\\Model\\Decision\u003A\u003A__construct\u0028\u0029",
-            "name": "__construct",
-            "summary": "",
-            "url": "classes/Decision-Model-Decision.html#method___construct"
         },                {
             "fqsen": "\\Decision\\Model\\Decision\u003A\u003AsetMeeting\u0028\u0029",
             "name": "setMeeting",
@@ -9001,15 +9036,25 @@ Search.appendIndex(
             "summary": "Get\u0020the\u0020decision\u0020number.",
             "url": "classes/Decision-Model-Decision.html#method_getNumber"
         },                {
-            "fqsen": "\\Decision\\Model\\Decision\u003A\u003AgetContent\u0028\u0029",
-            "name": "getContent",
-            "summary": "Get\u0020decision\u0020content.",
-            "url": "classes/Decision-Model-Decision.html#method_getContent"
+            "fqsen": "\\Decision\\Model\\Decision\u003A\u003AgetContentNL\u0028\u0029",
+            "name": "getContentNL",
+            "summary": "Get\u0020decision\u0020content\u0020in\u0020Dutch.",
+            "url": "classes/Decision-Model-Decision.html#method_getContentNL"
         },                {
-            "fqsen": "\\Decision\\Model\\Decision\u003A\u003AsetContent\u0028\u0029",
-            "name": "setContent",
-            "summary": "Set\u0020decision\u0020content.",
-            "url": "classes/Decision-Model-Decision.html#method_setContent"
+            "fqsen": "\\Decision\\Model\\Decision\u003A\u003AsetContentNL\u0028\u0029",
+            "name": "setContentNL",
+            "summary": "Set\u0020decision\u0020content\u0020in\u0020Dutch.",
+            "url": "classes/Decision-Model-Decision.html#method_setContentNL"
+        },                {
+            "fqsen": "\\Decision\\Model\\Decision\u003A\u003AgetContentEN\u0028\u0029",
+            "name": "getContentEN",
+            "summary": "Get\u0020decision\u0020content\u0020in\u0020English.",
+            "url": "classes/Decision-Model-Decision.html#method_getContentEN"
+        },                {
+            "fqsen": "\\Decision\\Model\\Decision\u003A\u003AsetContentEN\u0028\u0029",
+            "name": "setContentEN",
+            "summary": "Set\u0020decision\u0020content\u0020in\u0020English.",
+            "url": "classes/Decision-Model-Decision.html#method_setContentEN"
         },                {
             "fqsen": "\\Decision\\Model\\Decision\u003A\u003AgetSubdecisions\u0028\u0029",
             "name": "getSubdecisions",
@@ -9061,10 +9106,15 @@ Search.appendIndex(
             "summary": "Decision\u0020number.",
             "url": "classes/Decision-Model-Decision.html#property_number"
         },                {
-            "fqsen": "\\Decision\\Model\\Decision\u003A\u003A\u0024content",
-            "name": "content",
-            "summary": "Content.",
-            "url": "classes/Decision-Model-Decision.html#property_content"
+            "fqsen": "\\Decision\\Model\\Decision\u003A\u003A\u0024contentNL",
+            "name": "contentNL",
+            "summary": "Content\u0020in\u0020Dutch.",
+            "url": "classes/Decision-Model-Decision.html#property_contentNL"
+        },                {
+            "fqsen": "\\Decision\\Model\\Decision\u003A\u003A\u0024contentEN",
+            "name": "contentEN",
+            "summary": "Content\u0020in\u0020English.",
+            "url": "classes/Decision-Model-Decision.html#property_contentEN"
         },                {
             "fqsen": "\\Decision\\Model\\Decision\u003A\u003A\u0024subdecisions",
             "name": "subdecisions",
@@ -9100,6 +9150,176 @@ Search.appendIndex(
             "name": "Mail",
             "summary": "",
             "url": "classes/Decision-Model-Enums-AddressTypes.html#enumcase_Mail"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\BoardFunctions",
+            "name": "BoardFunctions",
+            "summary": "Enum\u0020with\u0020board\u0020functions\nThe\u0020values\u0020are\u0020in\u0020Dutch,\u0020because\u0020decisions\u0020are\u0020made\u0020in\u0020Dutch\u0020and\u0020thus\u0020this\u0020value\u0020is\u0020guaranteed\u0020to\u0020not\u0020change",
+            "url": "classes/Decision-Model-Enums-BoardFunctions.html"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\BoardFunctions\u003A\u003AisLegacy\u0028\u0029",
+            "name": "isLegacy",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-BoardFunctions.html#method_isLegacy"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\BoardFunctions\u003A\u003AgetName\u0028\u0029",
+            "name": "getName",
+            "summary": "Give\u0020the\u0020function\u0020name\u0020with\u0020the\u0020given\u0020translation.\u0020If\u0020no\u0020translator\u0020is\u0020given,\u0020we\u0020return\u0020the\u0020default\u0020language.",
+            "url": "classes/Decision-Model-Enums-BoardFunctions.html#method_getName"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\BoardFunctions\u003A\u003AgetFunctionsArray\u0028\u0029",
+            "name": "getFunctionsArray",
+            "summary": "Returns\u0020a\u0020list\u0020of\u0020functions\u0020\u0028and\u0020its\u0020translations\u0029",
+            "url": "classes/Decision-Model-Enums-BoardFunctions.html#method_getFunctionsArray"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\BoardFunctions\u003A\u003AgetMultilangArray\u0028\u0029",
+            "name": "getMultilangArray",
+            "summary": "Returns\u0020a\u0020list\u0020of\u0020functions\u0020\u0028and\u0020its\u0020translations\u0029",
+            "url": "classes/Decision-Model-Enums-BoardFunctions.html#method_getMultilangArray"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\BoardFunctions\u003A\u003AChair",
+            "name": "Chair",
+            "summary": "Current\u0020functions",
+            "url": "classes/Decision-Model-Enums-BoardFunctions.html#enumcase_Chair"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\BoardFunctions\u003A\u003ASecretary",
+            "name": "Secretary",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-BoardFunctions.html#enumcase_Secretary"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\BoardFunctions\u003A\u003ATreasurer",
+            "name": "Treasurer",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-BoardFunctions.html#enumcase_Treasurer"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\BoardFunctions\u003A\u003AEducation",
+            "name": "Education",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-BoardFunctions.html#enumcase_Education"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\BoardFunctions\u003A\u003AExternalAffairs",
+            "name": "ExternalAffairs",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-BoardFunctions.html#enumcase_ExternalAffairs"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\BoardFunctions\u003A\u003AInternalAffairs",
+            "name": "InternalAffairs",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-BoardFunctions.html#enumcase_InternalAffairs"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\BoardFunctions\u003A\u003APrOfficer",
+            "name": "PrOfficer",
+            "summary": "Legacy\u0020functions",
+            "url": "classes/Decision-Model-Enums-BoardFunctions.html#enumcase_PrOfficer"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\BoardFunctions\u003A\u003AViceChair",
+            "name": "ViceChair",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-BoardFunctions.html#enumcase_ViceChair"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\BoardFunctions\u003A\u003ABrandManager",
+            "name": "BrandManager",
+            "summary": "One\u002Doff\u0020functions",
+            "url": "classes/Decision-Model-Enums-BoardFunctions.html#enumcase_BrandManager"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\BoardFunctions\u003A\u003ACareerdevelopmentExternalAffairs",
+            "name": "CareerdevelopmentExternalAffairs",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-BoardFunctions.html#enumcase_CareerdevelopmentExternalAffairs"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\BoardFunctions\u003A\u003ADigitalInfrastructure",
+            "name": "DigitalInfrastructure",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-BoardFunctions.html#enumcase_DigitalInfrastructure"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\BoardFunctions\u003A\u003ADigitalInfrastructureEN",
+            "name": "DigitalInfrastructureEN",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-BoardFunctions.html#enumcase_DigitalInfrastructureEN"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\BoardFunctions\u003A\u003AInnovation",
+            "name": "Innovation",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-BoardFunctions.html#enumcase_Innovation"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\BoardFunctions\u003A\u003AInformation",
+            "name": "Information",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-BoardFunctions.html#enumcase_Information"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\InstallationFunctions",
+            "name": "InstallationFunctions",
+            "summary": "Enum\u0020with\u0020organ\u0020functions\nThe\u0020values\u0020are\u0020in\u0020Dutch,\u0020because\u0020decisions\u0020are\u0020made\u0020in\u0020Dutch\u0020and\u0020thus\u0020this\u0020value\u0020is\u0020guaranteed\u0020to\u0020not\u0020change",
+            "url": "classes/Decision-Model-Enums-InstallationFunctions.html"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\InstallationFunctions\u003A\u003AisLegacy\u0028\u0029",
+            "name": "isLegacy",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-InstallationFunctions.html#method_isLegacy"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\InstallationFunctions\u003A\u003AisAdministrative\u0028\u0029",
+            "name": "isAdministrative",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-InstallationFunctions.html#method_isAdministrative"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\InstallationFunctions\u003A\u003AgetName\u0028\u0029",
+            "name": "getName",
+            "summary": "Give\u0020the\u0020function\u0020name\u0020with\u0020the\u0020given\u0020translation.\u0020If\u0020no\u0020translator\u0020is\u0020given,\u0020we\u0020return\u0020the\u0020default\u0020language.",
+            "url": "classes/Decision-Model-Enums-InstallationFunctions.html#method_getName"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\InstallationFunctions\u003A\u003AgetFunctionsArray\u0028\u0029",
+            "name": "getFunctionsArray",
+            "summary": "Returns\u0020a\u0020list\u0020of\u0020functions\u0020\u0028and\u0020its\u0020translations\u0029",
+            "url": "classes/Decision-Model-Enums-InstallationFunctions.html#method_getFunctionsArray"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\InstallationFunctions\u003A\u003AgetMultilangArray\u0028\u0029",
+            "name": "getMultilangArray",
+            "summary": "Returns\u0020a\u0020list\u0020of\u0020functions\u0020\u0028and\u0020its\u0020translations\u0029",
+            "url": "classes/Decision-Model-Enums-InstallationFunctions.html#method_getMultilangArray"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\InstallationFunctions\u003A\u003AChair",
+            "name": "Chair",
+            "summary": "Current\u0020functions",
+            "url": "classes/Decision-Model-Enums-InstallationFunctions.html#enumcase_Chair"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\InstallationFunctions\u003A\u003ASecretary",
+            "name": "Secretary",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-InstallationFunctions.html#enumcase_Secretary"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\InstallationFunctions\u003A\u003ATreasurer",
+            "name": "Treasurer",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-InstallationFunctions.html#enumcase_Treasurer"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\InstallationFunctions\u003A\u003AViceChair",
+            "name": "ViceChair",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-InstallationFunctions.html#enumcase_ViceChair"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\InstallationFunctions\u003A\u003AOpperhoofd",
+            "name": "Opperhoofd",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-InstallationFunctions.html#enumcase_Opperhoofd"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\InstallationFunctions\u003A\u003APrOfficer",
+            "name": "PrOfficer",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-InstallationFunctions.html#enumcase_PrOfficer"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\InstallationFunctions\u003A\u003AFoosballCoordinator",
+            "name": "FoosballCoordinator",
+            "summary": "Legacy\u0020functions",
+            "url": "classes/Decision-Model-Enums-InstallationFunctions.html#enumcase_FoosballCoordinator"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\InstallationFunctions\u003A\u003AMember",
+            "name": "Member",
+            "summary": "Administrative\u0020functions",
+            "url": "classes/Decision-Model-Enums-InstallationFunctions.html#enumcase_Member"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\InstallationFunctions\u003A\u003AInactiveMember",
+            "name": "InactiveMember",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-InstallationFunctions.html#enumcase_InactiveMember"
         },                {
             "fqsen": "\\Decision\\Model\\Enums\\MeetingTypes",
             "name": "MeetingTypes",
@@ -9221,15 +9441,1265 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Decision-Model-Enums-OrganTypes.html#enumcase_RvA"
         },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions",
+            "name": "PostalRegions",
+            "summary": "Enum\u0020for\u0020the\u0020different\u0020many\u0020postal\u0020regions\u0020around\u0020the\u0020world.\u0020Based\u0020on\u0020data\u0020from\u0020PostNL\u0020and\u0020Wikipedia.\u0020Note\u003A\u0020not\u0020all\nof\u0020these\u0020regions\u0020use\u0020ZIP\u0020codes\u0020as\u0020part\u0020of\u0020their\u0020address\u0020format.",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AformValues\u0028\u0029",
+            "name": "formValues",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#method_formValues"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003Avalues\u0028\u0029",
+            "name": "values",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#method_values"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AAfghanistan",
+            "name": "Afghanistan",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Afghanistan"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003A\u00C5landIslands",
+            "name": "\u00C5landIslands",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_%C3%85landIslands"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AAlbania",
+            "name": "Albania",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Albania"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AAlgeria",
+            "name": "Algeria",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Algeria"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AAmericanSamoa",
+            "name": "AmericanSamoa",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_AmericanSamoa"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AAmericanVirginIslands",
+            "name": "AmericanVirginIslands",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_AmericanVirginIslands"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AAndorra",
+            "name": "Andorra",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Andorra"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AAngola",
+            "name": "Angola",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Angola"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AAnguilla",
+            "name": "Anguilla",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Anguilla"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AAntarctica",
+            "name": "Antarctica",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Antarctica"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AAntiguaBarbuda",
+            "name": "AntiguaBarbuda",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_AntiguaBarbuda"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AArgentina",
+            "name": "Argentina",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Argentina"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AArmenia",
+            "name": "Armenia",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Armenia"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AAruba",
+            "name": "Aruba",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Aruba"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AAscension",
+            "name": "Ascension",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Ascension"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AAustralia",
+            "name": "Australia",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Australia"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AAustria",
+            "name": "Austria",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Austria"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AAzerbaijan",
+            "name": "Azerbaijan",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Azerbaijan"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AAzores",
+            "name": "Azores",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Azores"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ABahamas",
+            "name": "Bahamas",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Bahamas"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ABahrain",
+            "name": "Bahrain",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Bahrain"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ABalearicIslands",
+            "name": "BalearicIslands",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_BalearicIslands"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ABangladesh",
+            "name": "Bangladesh",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Bangladesh"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ABarbados",
+            "name": "Barbados",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Barbados"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ABelarus",
+            "name": "Belarus",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Belarus"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ABelgium",
+            "name": "Belgium",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Belgium"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ABelize",
+            "name": "Belize",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Belize"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ABenin",
+            "name": "Benin",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Benin"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ABermuda",
+            "name": "Bermuda",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Bermuda"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ABhutan",
+            "name": "Bhutan",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Bhutan"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ABolivia",
+            "name": "Bolivia",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Bolivia"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ABonaire",
+            "name": "Bonaire",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Bonaire"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ABosniaHerzegovina",
+            "name": "BosniaHerzegovina",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_BosniaHerzegovina"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ABotswana",
+            "name": "Botswana",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Botswana"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ABouvet",
+            "name": "Bouvet",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Bouvet"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ABrazil",
+            "name": "Brazil",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Brazil"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ABritishIndianOceanTerritory",
+            "name": "BritishIndianOceanTerritory",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_BritishIndianOceanTerritory"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ABritishVirginIslands",
+            "name": "BritishVirginIslands",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_BritishVirginIslands"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ABrunei",
+            "name": "Brunei",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Brunei"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ABulgaria",
+            "name": "Bulgaria",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Bulgaria"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ABurkinaFaso",
+            "name": "BurkinaFaso",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_BurkinaFaso"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ABurundi",
+            "name": "Burundi",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Burundi"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ACambodia",
+            "name": "Cambodia",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Cambodia"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ACameroon",
+            "name": "Cameroon",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Cameroon"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ACanada",
+            "name": "Canada",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Canada"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ACanaryIslands",
+            "name": "CanaryIslands",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_CanaryIslands"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ACapeVerde",
+            "name": "CapeVerde",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_CapeVerde"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ACaymanIslands",
+            "name": "CaymanIslands",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_CaymanIslands"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ACentralAfricanRepublic",
+            "name": "CentralAfricanRepublic",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_CentralAfricanRepublic"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ACeuta",
+            "name": "Ceuta",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Ceuta"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AChad",
+            "name": "Chad",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Chad"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AChile",
+            "name": "Chile",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Chile"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AChina",
+            "name": "China",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_China"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AChristmasIsland",
+            "name": "ChristmasIsland",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_ChristmasIsland"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ACoconutIslands",
+            "name": "CoconutIslands",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_CoconutIslands"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AColombia",
+            "name": "Colombia",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Colombia"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AComores",
+            "name": "Comores",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Comores"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ACongoBrazzaville",
+            "name": "CongoBrazzaville",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_CongoBrazzaville"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ACongoKinshasa",
+            "name": "CongoKinshasa",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_CongoKinshasa"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ACookIslands",
+            "name": "CookIslands",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_CookIslands"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ACostaRica",
+            "name": "CostaRica",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_CostaRica"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AC\u00F4tedIvoire",
+            "name": "C\u00F4tedIvoire",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_C%C3%B4tedIvoire"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ACroatia",
+            "name": "Croatia",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Croatia"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ACuba",
+            "name": "Cuba",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Cuba"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ACura\u00E7ao",
+            "name": "Cura\u00E7ao",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Cura%C3%A7ao"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ACyprus",
+            "name": "Cyprus",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Cyprus"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ACzechRepublic",
+            "name": "CzechRepublic",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_CzechRepublic"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ADenmark",
+            "name": "Denmark",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Denmark"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ADjibouti",
+            "name": "Djibouti",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Djibouti"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ADominica",
+            "name": "Dominica",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Dominica"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ADominicanRepublic",
+            "name": "DominicanRepublic",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_DominicanRepublic"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AEcuador",
+            "name": "Ecuador",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Ecuador"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AEgypt",
+            "name": "Egypt",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Egypt"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AElSalvador",
+            "name": "ElSalvador",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_ElSalvador"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AEquatorialGuinea",
+            "name": "EquatorialGuinea",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_EquatorialGuinea"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AEritrea",
+            "name": "Eritrea",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Eritrea"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AEstonia",
+            "name": "Estonia",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Estonia"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AEthiopia",
+            "name": "Ethiopia",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Ethiopia"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AFalklandIslands",
+            "name": "FalklandIslands",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_FalklandIslands"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AFaroeIslands",
+            "name": "FaroeIslands",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_FaroeIslands"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AFiji",
+            "name": "Fiji",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Fiji"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AFinland",
+            "name": "Finland",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Finland"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AFrance",
+            "name": "France",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_France"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AFrenchGuiana",
+            "name": "FrenchGuiana",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_FrenchGuiana"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AFrenchPolynesia",
+            "name": "FrenchPolynesia",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_FrenchPolynesia"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AFrenchSouthernAntarcticLands",
+            "name": "FrenchSouthernAntarcticLands",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_FrenchSouthernAntarcticLands"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AGabon",
+            "name": "Gabon",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Gabon"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AGambia",
+            "name": "Gambia",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Gambia"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AGeorgia",
+            "name": "Georgia",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Georgia"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AGermany",
+            "name": "Germany",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Germany"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AGhana",
+            "name": "Ghana",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Ghana"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AGibraltar",
+            "name": "Gibraltar",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Gibraltar"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AGreece",
+            "name": "Greece",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Greece"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AGreenland",
+            "name": "Greenland",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Greenland"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AGrenada",
+            "name": "Grenada",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Grenada"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AGuadeloupe",
+            "name": "Guadeloupe",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Guadeloupe"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AGuam",
+            "name": "Guam",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Guam"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AGuatemala",
+            "name": "Guatemala",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Guatemala"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AGuernsey",
+            "name": "Guernsey",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Guernsey"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AGuinea",
+            "name": "Guinea",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Guinea"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AGuineaBissau",
+            "name": "GuineaBissau",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_GuineaBissau"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AGuyana",
+            "name": "Guyana",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Guyana"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AHaiti",
+            "name": "Haiti",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Haiti"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AHonduras",
+            "name": "Honduras",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Honduras"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AHongkong",
+            "name": "Hongkong",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Hongkong"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AHungary",
+            "name": "Hungary",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Hungary"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AIceland",
+            "name": "Iceland",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Iceland"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AIndia",
+            "name": "India",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_India"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AIndonesia",
+            "name": "Indonesia",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Indonesia"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AIran",
+            "name": "Iran",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Iran"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AIraq",
+            "name": "Iraq",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Iraq"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AIreland",
+            "name": "Ireland",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Ireland"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AIsleOfMan",
+            "name": "IsleOfMan",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_IsleOfMan"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AIsrael",
+            "name": "Israel",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Israel"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AItaly",
+            "name": "Italy",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Italy"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AJamaica",
+            "name": "Jamaica",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Jamaica"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AJapan",
+            "name": "Japan",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Japan"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AJersey",
+            "name": "Jersey",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Jersey"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AJordan",
+            "name": "Jordan",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Jordan"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AKazakhstan",
+            "name": "Kazakhstan",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Kazakhstan"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AKenya",
+            "name": "Kenya",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Kenya"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AKiribati",
+            "name": "Kiribati",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Kiribati"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AKosovo",
+            "name": "Kosovo",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Kosovo"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AKuwait",
+            "name": "Kuwait",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Kuwait"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AKyrgyzstan",
+            "name": "Kyrgyzstan",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Kyrgyzstan"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ALaos",
+            "name": "Laos",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Laos"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ALatvia",
+            "name": "Latvia",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Latvia"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ALebanon",
+            "name": "Lebanon",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Lebanon"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ALesotho",
+            "name": "Lesotho",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Lesotho"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ALiberia",
+            "name": "Liberia",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Liberia"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ALibia",
+            "name": "Libia",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Libia"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ALiechtenstein",
+            "name": "Liechtenstein",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Liechtenstein"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ALithuania",
+            "name": "Lithuania",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Lithuania"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ALuxembourg",
+            "name": "Luxembourg",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Luxembourg"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AMacau",
+            "name": "Macau",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Macau"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AMadagascar",
+            "name": "Madagascar",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Madagascar"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AMadeira",
+            "name": "Madeira",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Madeira"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AMalawi",
+            "name": "Malawi",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Malawi"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AMalaysia",
+            "name": "Malaysia",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Malaysia"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AMaldives",
+            "name": "Maldives",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Maldives"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AMali",
+            "name": "Mali",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Mali"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AMalta",
+            "name": "Malta",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Malta"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AMarshallIslands",
+            "name": "MarshallIslands",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_MarshallIslands"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AMartinique",
+            "name": "Martinique",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Martinique"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AMauritania",
+            "name": "Mauritania",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Mauritania"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AMauritius",
+            "name": "Mauritius",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Mauritius"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AMayotte",
+            "name": "Mayotte",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Mayotte"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AMexico",
+            "name": "Mexico",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Mexico"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AMicronesia",
+            "name": "Micronesia",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Micronesia"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AMoldavia",
+            "name": "Moldavia",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Moldavia"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AMonaco",
+            "name": "Monaco",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Monaco"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AMongolia",
+            "name": "Mongolia",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Mongolia"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AMontenegro",
+            "name": "Montenegro",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Montenegro"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AMontserrat",
+            "name": "Montserrat",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Montserrat"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AMorocco",
+            "name": "Morocco",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Morocco"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AMozambique",
+            "name": "Mozambique",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Mozambique"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AMyanmar",
+            "name": "Myanmar",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Myanmar"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ANamibia",
+            "name": "Namibia",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Namibia"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ANauru",
+            "name": "Nauru",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Nauru"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ANepal",
+            "name": "Nepal",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Nepal"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ANetherlands",
+            "name": "Netherlands",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Netherlands"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ANewCaledonia",
+            "name": "NewCaledonia",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_NewCaledonia"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ANewZealand",
+            "name": "NewZealand",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_NewZealand"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ANicaragua",
+            "name": "Nicaragua",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Nicaragua"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ANiger",
+            "name": "Niger",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Niger"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ANigeria",
+            "name": "Nigeria",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Nigeria"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ANiue",
+            "name": "Niue",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Niue"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ANorfolkIsland",
+            "name": "NorfolkIsland",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_NorfolkIsland"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ANorthKorea",
+            "name": "NorthKorea",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_NorthKorea"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ANorthMacedonia",
+            "name": "NorthMacedonia",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_NorthMacedonia"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ANorthernMarianaIslands",
+            "name": "NorthernMarianaIslands",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_NorthernMarianaIslands"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ANorway",
+            "name": "Norway",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Norway"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AOman",
+            "name": "Oman",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Oman"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003APakistan",
+            "name": "Pakistan",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Pakistan"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003APalestine",
+            "name": "Palestine",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Palestine"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003APanama",
+            "name": "Panama",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Panama"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003APapuaNewGuinea",
+            "name": "PapuaNewGuinea",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_PapuaNewGuinea"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AParaguay",
+            "name": "Paraguay",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Paraguay"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003APeru",
+            "name": "Peru",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Peru"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003APhilippines",
+            "name": "Philippines",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Philippines"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003APitcairnIslands",
+            "name": "PitcairnIslands",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_PitcairnIslands"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003APoland",
+            "name": "Poland",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Poland"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003APortugal",
+            "name": "Portugal",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Portugal"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003APuertoRico",
+            "name": "PuertoRico",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_PuertoRico"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AQatar",
+            "name": "Qatar",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Qatar"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ARomania",
+            "name": "Romania",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Romania"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ARussia",
+            "name": "Russia",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Russia"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ARwanda",
+            "name": "Rwanda",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Rwanda"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ASaba",
+            "name": "Saba",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Saba"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ASaintHelena",
+            "name": "SaintHelena",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_SaintHelena"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ASaintKittsNevis",
+            "name": "SaintKittsNevis",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_SaintKittsNevis"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ASaintLucia",
+            "name": "SaintLucia",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_SaintLucia"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ASaintMartin",
+            "name": "SaintMartin",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_SaintMartin"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ASaintVincentGrenadines",
+            "name": "SaintVincentGrenadines",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_SaintVincentGrenadines"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ASalomonIslands",
+            "name": "SalomonIslands",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_SalomonIslands"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ASamoa",
+            "name": "Samoa",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Samoa"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ASanMarino",
+            "name": "SanMarino",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_SanMarino"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ASaudiArabia",
+            "name": "SaudiArabia",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_SaudiArabia"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ASenegal",
+            "name": "Senegal",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Senegal"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ASerbia",
+            "name": "Serbia",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Serbia"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ASeychelles",
+            "name": "Seychelles",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Seychelles"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ASierraLeone",
+            "name": "SierraLeone",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_SierraLeone"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ASingapore",
+            "name": "Singapore",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Singapore"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ASintEustatius",
+            "name": "SintEustatius",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_SintEustatius"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ASlovakia",
+            "name": "Slovakia",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Slovakia"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ASlovenia",
+            "name": "Slovenia",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Slovenia"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ASomalia",
+            "name": "Somalia",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Somalia"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ASouthAfrica",
+            "name": "SouthAfrica",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_SouthAfrica"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ASouthKorea",
+            "name": "SouthKorea",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_SouthKorea"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ASouthSudan",
+            "name": "SouthSudan",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_SouthSudan"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ASpain",
+            "name": "Spain",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Spain"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ASriLanka",
+            "name": "SriLanka",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_SriLanka"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ASudan",
+            "name": "Sudan",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Sudan"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ASuriname",
+            "name": "Suriname",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Suriname"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ASvalbardJanMayen",
+            "name": "SvalbardJanMayen",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_SvalbardJanMayen"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ASwaziland",
+            "name": "Swaziland",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Swaziland"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ASweden",
+            "name": "Sweden",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Sweden"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ASwitzerland",
+            "name": "Switzerland",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Switzerland"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ASyria",
+            "name": "Syria",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Syria"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ATaiwan",
+            "name": "Taiwan",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Taiwan"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ATajikistan",
+            "name": "Tajikistan",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Tajikistan"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ATanzania",
+            "name": "Tanzania",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Tanzania"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AThailand",
+            "name": "Thailand",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Thailand"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ATimorLeste",
+            "name": "TimorLeste",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_TimorLeste"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ATogo",
+            "name": "Togo",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Togo"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ATokelau",
+            "name": "Tokelau",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Tokelau"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ATonga",
+            "name": "Tonga",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Tonga"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ATrinidadTobago",
+            "name": "TrinidadTobago",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_TrinidadTobago"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ATunisia",
+            "name": "Tunisia",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Tunisia"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ATurkiye",
+            "name": "Turkiye",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Turkiye"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ATurkmenistan",
+            "name": "Turkmenistan",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Turkmenistan"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003ATuvalu",
+            "name": "Tuvalu",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Tuvalu"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AUganda",
+            "name": "Uganda",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Uganda"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AUkraine",
+            "name": "Ukraine",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Ukraine"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AUnitedArabEmirates",
+            "name": "UnitedArabEmirates",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_UnitedArabEmirates"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AUnitedKingdom",
+            "name": "UnitedKingdom",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_UnitedKingdom"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AUnitedStates",
+            "name": "UnitedStates",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_UnitedStates"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AUruguay",
+            "name": "Uruguay",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Uruguay"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AUzbekistan",
+            "name": "Uzbekistan",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Uzbekistan"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AVanuatu",
+            "name": "Vanuatu",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Vanuatu"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AVaticanCity",
+            "name": "VaticanCity",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_VaticanCity"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AVenezuela",
+            "name": "Venezuela",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Venezuela"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AVietnam",
+            "name": "Vietnam",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Vietnam"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AWesternSahara",
+            "name": "WesternSahara",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_WesternSahara"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AYemen",
+            "name": "Yemen",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Yemen"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AZambia",
+            "name": "Zambia",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Zambia"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AZanzibar",
+            "name": "Zanzibar",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Zanzibar"
+        },                {
+            "fqsen": "\\Decision\\Model\\Enums\\PostalRegions\u003A\u003AZimbabwe",
+            "name": "Zimbabwe",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-PostalRegions.html#enumcase_Zimbabwe"
+        },                {
             "fqsen": "\\Decision\\Model\\Keyholder",
             "name": "Keyholder",
             "summary": "keyholder\u0020entity.",
             "url": "classes/Decision-Model-Keyholder.html"
-        },                {
-            "fqsen": "\\Decision\\Model\\Keyholder\u003A\u003AgetId\u0028\u0029",
-            "name": "getId",
-            "summary": "Get\u0020the\u0020ID.",
-            "url": "classes/Decision-Model-Keyholder.html#method_getId"
         },                {
             "fqsen": "\\Decision\\Model\\Keyholder\u003A\u003AgetMember\u0028\u0029",
             "name": "getMember",
@@ -9271,10 +10741,10 @@ Search.appendIndex(
             "summary": "Set\u0020the\u0020withdrawn\u0020date.",
             "url": "classes/Decision-Model-Keyholder.html#method_setWithdrawnDate"
         },                {
-            "fqsen": "\\Decision\\Model\\Keyholder\u003A\u003A\u0024id",
-            "name": "id",
-            "summary": "Id.",
-            "url": "classes/Decision-Model-Keyholder.html#property_id"
+            "fqsen": "\\Decision\\Model\\Keyholder\u003A\u003AisCurrent\u0028\u0029",
+            "name": "isCurrent",
+            "summary": "Get\u0020whether\u0020the\u0020key\u0020decision\u0020is\u0020still\u0020valid",
+            "url": "classes/Decision-Model-Keyholder.html#method_isCurrent"
         },                {
             "fqsen": "\\Decision\\Model\\Keyholder\u003A\u003A\u0024member",
             "name": "member",
@@ -9376,6 +10846,11 @@ Search.appendIndex(
             "summary": "Add\u0020a\u0020member.",
             "url": "classes/Decision-Model-MailingList.html#method_addMember"
         },                {
+            "fqsen": "\\Decision\\Model\\MailingList\u003A\u003AremoveMember\u0028\u0029",
+            "name": "removeMember",
+            "summary": "Remove\u0020a\u0020member.",
+            "url": "classes/Decision-Model-MailingList.html#method_removeMember"
+        },                {
             "fqsen": "\\Decision\\Model\\MailingList\u003A\u003AtoGdprArray\u0028\u0029",
             "name": "toGdprArray",
             "summary": "",
@@ -9431,11 +10906,6 @@ Search.appendIndex(
             "summary": "Get\u0020the\u0020meeting\u0020number.",
             "url": "classes/Decision-Model-Meeting.html#method_getNumber"
         },                {
-            "fqsen": "\\Decision\\Model\\Meeting\u003A\u003AgetMinutes\u0028\u0029",
-            "name": "getMinutes",
-            "summary": "",
-            "url": "classes/Decision-Model-Meeting.html#method_getMinutes"
-        },                {
             "fqsen": "\\Decision\\Model\\Meeting\u003A\u003AsetType\u0028\u0029",
             "name": "setType",
             "summary": "Set\u0020the\u0020meeting\u0020type.",
@@ -9486,6 +10956,11 @@ Search.appendIndex(
             "summary": "Add\u0020multiple\u0020documents.",
             "url": "classes/Decision-Model-Meeting.html#method_addDocuments"
         },                {
+            "fqsen": "\\Decision\\Model\\Meeting\u003A\u003AgetMinutes\u0028\u0029",
+            "name": "getMinutes",
+            "summary": "",
+            "url": "classes/Decision-Model-Meeting.html#method_getMinutes"
+        },                {
             "fqsen": "\\Decision\\Model\\Meeting\u003A\u003A\u0024type",
             "name": "type",
             "summary": "Meeting\u0020type.",
@@ -9505,6 +10980,11 @@ Search.appendIndex(
             "name": "decisions",
             "summary": "Decisions.",
             "url": "classes/Decision-Model-Meeting.html#property_decisions"
+        },                {
+            "fqsen": "\\Decision\\Model\\Meeting\u003A\u003A\u0024minutes",
+            "name": "minutes",
+            "summary": "",
+            "url": "classes/Decision-Model-Meeting.html#property_minutes"
         },                {
             "fqsen": "\\Decision\\Model\\Meeting\u003A\u003A\u0024documents",
             "name": "documents",
@@ -9801,6 +11281,11 @@ Search.appendIndex(
             "summary": "Get\u0020the\u0020installations.",
             "url": "classes/Decision-Model-Member.html#method_getInstallations"
         },                {
+            "fqsen": "\\Decision\\Model\\Member\u003A\u003AgetOrganInstallations\u0028\u0029",
+            "name": "getOrganInstallations",
+            "summary": "Get\u0020the\u0020organ\u0020installations.",
+            "url": "classes/Decision-Model-Member.html#method_getOrganInstallations"
+        },                {
             "fqsen": "\\Decision\\Model\\Member\u003A\u003AgetAuthenticationKey\u0028\u0029",
             "name": "getAuthenticationKey",
             "summary": "",
@@ -9810,6 +11295,26 @@ Search.appendIndex(
             "name": "setAuthenticationKey",
             "summary": "",
             "url": "classes/Decision-Model-Member.html#method_setAuthenticationKey"
+        },                {
+            "fqsen": "\\Decision\\Model\\Member\u003A\u003AhasReached16\u0028\u0029",
+            "name": "hasReached16",
+            "summary": "Member\u0020is\u0020at\u0020least\u002016\u0020years\u0020old\u0020on\u0020the\u0020given\u0020date.",
+            "url": "classes/Decision-Model-Member.html#method_hasReached16"
+        },                {
+            "fqsen": "\\Decision\\Model\\Member\u003A\u003AhasReached18\u0028\u0029",
+            "name": "hasReached18",
+            "summary": "Member\u0020is\u0020at\u0020least\u002018\u0020years\u0020old\u0020on\u0020the\u0020given\u0020date.",
+            "url": "classes/Decision-Model-Member.html#method_hasReached18"
+        },                {
+            "fqsen": "\\Decision\\Model\\Member\u003A\u003AhasReached21\u0028\u0029",
+            "name": "hasReached21",
+            "summary": "Member\u0020is\u0020at\u0020least\u002021\u0020years\u0020old\u0020on\u0020the\u0020given\u0020date.",
+            "url": "classes/Decision-Model-Member.html#method_hasReached21"
+        },                {
+            "fqsen": "\\Decision\\Model\\Member\u003A\u003AisOlderThan\u0028\u0029",
+            "name": "isOlderThan",
+            "summary": "",
+            "url": "classes/Decision-Model-Member.html#method_isOlderThan"
         },                {
             "fqsen": "\\Decision\\Model\\Member\u003A\u003AgetDeleted\u0028\u0029",
             "name": "getDeleted",
@@ -9821,10 +11326,55 @@ Search.appendIndex(
             "summary": "Set\u0020if\u0020the\u0020member\u0020is\u0020deleted.",
             "url": "classes/Decision-Model-Member.html#method_setDeleted"
         },                {
-            "fqsen": "\\Decision\\Model\\Member\u003A\u003AgetOrganInstallations\u0028\u0029",
-            "name": "getOrganInstallations",
-            "summary": "Get\u0020the\u0020organ\u0020installations.",
-            "url": "classes/Decision-Model-Member.html#method_getOrganInstallations"
+            "fqsen": "\\Decision\\Model\\Member\u003A\u003AgetAddresses\u0028\u0029",
+            "name": "getAddresses",
+            "summary": "Get\u0020all\u0020addresses.",
+            "url": "classes/Decision-Model-Member.html#method_getAddresses"
+        },                {
+            "fqsen": "\\Decision\\Model\\Member\u003A\u003AclearAddresses\u0028\u0029",
+            "name": "clearAddresses",
+            "summary": "Clear\u0020all\u0020addresses.",
+            "url": "classes/Decision-Model-Member.html#method_clearAddresses"
+        },                {
+            "fqsen": "\\Decision\\Model\\Member\u003A\u003AaddAddresses\u0028\u0029",
+            "name": "addAddresses",
+            "summary": "Add\u0020multiple\u0020addresses.",
+            "url": "classes/Decision-Model-Member.html#method_addAddresses"
+        },                {
+            "fqsen": "\\Decision\\Model\\Member\u003A\u003AaddAddress\u0028\u0029",
+            "name": "addAddress",
+            "summary": "Add\u0020an\u0020address.",
+            "url": "classes/Decision-Model-Member.html#method_addAddress"
+        },                {
+            "fqsen": "\\Decision\\Model\\Member\u003A\u003AisKeyholder\u0028\u0029",
+            "name": "isKeyholder",
+            "summary": "Is\u0020currently\u0020a\u0020keyholder.",
+            "url": "classes/Decision-Model-Member.html#method_isKeyholder"
+        },                {
+            "fqsen": "\\Decision\\Model\\Member\u003A\u003AgetLists\u0028\u0029",
+            "name": "getLists",
+            "summary": "Get\u0020mailing\u0020list\u0020subscriptions.",
+            "url": "classes/Decision-Model-Member.html#method_getLists"
+        },                {
+            "fqsen": "\\Decision\\Model\\Member\u003A\u003AaddList\u0028\u0029",
+            "name": "addList",
+            "summary": "Add\u0020a\u0020mailing\u0020list\u0020subscription.",
+            "url": "classes/Decision-Model-Member.html#method_addList"
+        },                {
+            "fqsen": "\\Decision\\Model\\Member\u003A\u003AaddLists\u0028\u0029",
+            "name": "addLists",
+            "summary": "Add\u0020multiple\u0020mailing\u0020lists.",
+            "url": "classes/Decision-Model-Member.html#method_addLists"
+        },                {
+            "fqsen": "\\Decision\\Model\\Member\u003A\u003AremoveList\u0028\u0029",
+            "name": "removeList",
+            "summary": "Remove\u0020a\u0020mailing\u0020list\u0020subscription.",
+            "url": "classes/Decision-Model-Member.html#method_removeList"
+        },                {
+            "fqsen": "\\Decision\\Model\\Member\u003A\u003AclearLists\u0028\u0029",
+            "name": "clearLists",
+            "summary": "Clear\u0020the\u0020lists.",
+            "url": "classes/Decision-Model-Member.html#method_clearLists"
         },                {
             "fqsen": "\\Decision\\Model\\Member\u003A\u003AgetCurrentOrganInstallations\u0028\u0029",
             "name": "getCurrentOrganInstallations",
@@ -9856,55 +11406,10 @@ Search.appendIndex(
             "summary": "Convert\u0020most\u0020relevant\u0020items\u0020to\u0020array.",
             "url": "classes/Decision-Model-Member.html#method_toGdprArray"
         },                {
-            "fqsen": "\\Decision\\Model\\Member\u003A\u003AgetAddresses\u0028\u0029",
-            "name": "getAddresses",
-            "summary": "Get\u0020all\u0020addresses.",
-            "url": "classes/Decision-Model-Member.html#method_getAddresses"
-        },                {
-            "fqsen": "\\Decision\\Model\\Member\u003A\u003AclearAddresses\u0028\u0029",
-            "name": "clearAddresses",
-            "summary": "Clear\u0020all\u0020addresses.",
-            "url": "classes/Decision-Model-Member.html#method_clearAddresses"
-        },                {
-            "fqsen": "\\Decision\\Model\\Member\u003A\u003AaddAddresses\u0028\u0029",
-            "name": "addAddresses",
-            "summary": "Add\u0020multiple\u0020addresses.",
-            "url": "classes/Decision-Model-Member.html#method_addAddresses"
-        },                {
-            "fqsen": "\\Decision\\Model\\Member\u003A\u003AaddAddress\u0028\u0029",
-            "name": "addAddress",
-            "summary": "Add\u0020an\u0020address.",
-            "url": "classes/Decision-Model-Member.html#method_addAddress"
-        },                {
-            "fqsen": "\\Decision\\Model\\Member\u003A\u003AgetLists\u0028\u0029",
-            "name": "getLists",
-            "summary": "Get\u0020mailing\u0020list\u0020subscriptions.",
-            "url": "classes/Decision-Model-Member.html#method_getLists"
-        },                {
-            "fqsen": "\\Decision\\Model\\Member\u003A\u003AaddList\u0028\u0029",
-            "name": "addList",
-            "summary": "Add\u0020a\u0020mailing\u0020list\u0020subscription.",
-            "url": "classes/Decision-Model-Member.html#method_addList"
-        },                {
-            "fqsen": "\\Decision\\Model\\Member\u003A\u003AaddLists\u0028\u0029",
-            "name": "addLists",
-            "summary": "Add\u0020multiple\u0020mailing\u0020lists.",
-            "url": "classes/Decision-Model-Member.html#method_addLists"
-        },                {
-            "fqsen": "\\Decision\\Model\\Member\u003A\u003AclearLists\u0028\u0029",
-            "name": "clearLists",
-            "summary": "Clear\u0020the\u0020lists.",
-            "url": "classes/Decision-Model-Member.html#method_clearLists"
-        },                {
             "fqsen": "\\Decision\\Model\\Member\u003A\u003AgetKeyGrantings\u0028\u0029",
             "name": "getKeyGrantings",
             "summary": "Get\u0020keyholderships.",
             "url": "classes/Decision-Model-Member.html#method_getKeyGrantings"
-        },                {
-            "fqsen": "\\Decision\\Model\\Member\u003A\u003AisKeyholder\u0028\u0029",
-            "name": "isKeyholder",
-            "summary": "Returns\u0020true\u0020if\u0020the\u0020member\u0020is\u0020currently\u0020granted\u0020a\u0020key\u0020code\u0020\u0028that\u0020is\u0020not\u0020withdrawn\u0020prematurely\u0029.",
-            "url": "classes/Decision-Model-Member.html#method_isKeyholder"
         },                {
             "fqsen": "\\Decision\\Model\\Member\u003A\u003AisBoardMember\u0028\u0029",
             "name": "isBoardMember",
@@ -9915,11 +11420,6 @@ Search.appendIndex(
             "name": "isCurrentBoard",
             "summary": "Check\u0020if\u0020this\u0020is\u0020a\u0020current\u0020board\u0020member.",
             "url": "classes/Decision-Model-Member.html#method_isCurrentBoard"
-        },                {
-            "fqsen": "\\Decision\\Model\\Member\u003A\u003Ais18Plus\u0028\u0029",
-            "name": "is18Plus",
-            "summary": "",
-            "url": "classes/Decision-Model-Member.html#method_is18Plus"
         },                {
             "fqsen": "\\Decision\\Model\\Member\u003A\u003AisExpired\u0028\u0029",
             "name": "isExpired",
@@ -9973,7 +11473,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Decision\\Model\\Member\u003A\u003A\u0024membershipEndsOn",
             "name": "membershipEndsOn",
-            "summary": "Date\u0020when\u0020the\u0020real\u0020membership\u0020\u0028\u0022ordinary\u0022\u0020or\u0020\u0022external\u0022\u0029\u0020of\u0020the\u0020member\u0020will\u0020have\u0020ended,\u0020in\u0020other\u0020words,\u0020from\u0020this\ndate\u0020onwards\u0020they\u0020are\u0020\u0022graduate\u0022.\u0020If\u0020\u0060null\u0060,\u0020the\u0020expiration\u0020is\u0020rolling\u0020and\u0020will\u0020be\u0020silently\u0020renewed\u0020if\u0020the\u0020member\nstill\u0020meets\u0020the\u0020requirements\u0020as\u0020set\u0020forth\u0020in\u0020the\u0020articles\u0020of\u0020association\u0020and\u0020internal\u0020regulations.",
+            "summary": "Date\u0020when\u0020the\u0020real\u0020membership\u0020\u0028\u0022ordinary\u0022\u0020or\u0020\u0022external\u0022\u0029\u0020of\u0020the\u0020member\u0020will\u0020have\u0020ended,\u0020in\u0020other\u0020words,\u0020from\u0020this\ndate\u0020onwards\u0020they\u0020are\u0020\u0022graduate\u0022.\u0020If\u0020\u0060null\u0060,\u0020the\u0020expiration\u0020is\u0020rolling\u0020and\u0020will\u0020be\u0020silently\u0020renewed\u0020if\u0020the\u0020member\nstill\u0020meets\u0020the\u0020requirements\u0020as\u0020set\u0020forth\u0020in\u0020the\u0020bylaws\u0020and\u0020internal\u0020regulations.",
             "url": "classes/Decision-Model-Member.html#property_membershipEndsOn"
         },                {
             "fqsen": "\\Decision\\Model\\Member\u003A\u003A\u0024birth",
@@ -9983,7 +11483,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Decision\\Model\\Member\u003A\u003A\u0024expiration",
             "name": "expiration",
-            "summary": "The\u0020date\u0020on\u0020which\u0020the\u0020membership\u0020of\u0020the\u0020member\u0020is\u0020set\u0020to\u0020expire\u0020and\u0020will\u0020therefore\u0020have\u0020to\u0020be\u0020renewed,\u0020which\nhappens\u0020either\u0020automatically\u0020or\u0020has\u0020to\u0020be\u0020done\u0020manually,\u0020as\u0020set\u0020forth\u0020in\u0020the\u0020articles\u0020of\u0020association\u0020and\u0020internal\nregulations.",
+            "summary": "The\u0020date\u0020on\u0020which\u0020the\u0020membership\u0020of\u0020the\u0020member\u0020is\u0020set\u0020to\u0020expire\u0020and\u0020will\u0020therefore\u0020have\u0020to\u0020be\u0020renewed,\u0020which\nhappens\u0020either\u0020automatically\u0020or\u0020has\u0020to\u0020be\u0020done\u0020manually,\u0020as\u0020set\u0020forth\u0020in\u0020the\u0020bylaws\u0020and\u0020internal\u0020regulations.",
             "url": "classes/Decision-Model-Member.html#property_expiration"
         },                {
             "fqsen": "\\Decision\\Model\\Member\u003A\u003A\u0024paid",
@@ -10026,6 +11526,11 @@ Search.appendIndex(
             "summary": "Board\u0020memberships.",
             "url": "classes/Decision-Model-Member.html#property_boardInstallations"
         },                {
+            "fqsen": "\\Decision\\Model\\Member\u003A\u003A\u0024keyGrantings",
+            "name": "keyGrantings",
+            "summary": "Keyholdership.",
+            "url": "classes/Decision-Model-Member.html#property_keyGrantings"
+        },                {
             "fqsen": "\\Decision\\Model\\Member\u003A\u003A\u0024authenticationKey",
             "name": "authenticationKey",
             "summary": "",
@@ -10040,11 +11545,6 @@ Search.appendIndex(
             "name": "tags",
             "summary": "Member\u0020tags.",
             "url": "classes/Decision-Model-Member.html#property_tags"
-        },                {
-            "fqsen": "\\Decision\\Model\\Member\u003A\u003A\u0024keyGrantings",
-            "name": "keyGrantings",
-            "summary": "Keyholdership.",
-            "url": "classes/Decision-Model-Member.html#property_keyGrantings"
         },                {
             "fqsen": "\\Decision\\Model\\Organ",
             "name": "Organ",
@@ -10130,11 +11630,6 @@ Search.appendIndex(
             "name": "addSubdecision",
             "summary": "Add\u0020a\u0020subdecision.",
             "url": "classes/Decision-Model-Organ.html#method_addSubdecision"
-        },                {
-            "fqsen": "\\Decision\\Model\\Organ\u003A\u003AgetSubdecisions\u0028\u0029",
-            "name": "getSubdecisions",
-            "summary": "Get\u0020all\u0020subdecisions\u0020of\u0020this\u0020organ.",
-            "url": "classes/Decision-Model-Organ.html#method_getSubdecisions"
         },                {
             "fqsen": "\\Decision\\Model\\Organ\u003A\u003AgetOrderedSubdecisions\u0028\u0029",
             "name": "getOrderedSubdecisions",
@@ -10366,6 +11861,11 @@ Search.appendIndex(
             "summary": "Organ\u0020member\u0020entity.",
             "url": "classes/Decision-Model-OrganMember.html"
         },                {
+            "fqsen": "\\Decision\\Model\\OrganMember\u003A\u003AgetId\u0028\u0029",
+            "name": "getId",
+            "summary": "",
+            "url": "classes/Decision-Model-OrganMember.html#method_getId"
+        },                {
             "fqsen": "\\Decision\\Model\\OrganMember\u003A\u003AsetOrgan\u0028\u0029",
             "name": "setOrgan",
             "summary": "Set\u0020the\u0020organ.",
@@ -10426,6 +11926,11 @@ Search.appendIndex(
             "summary": "Get\u0020the\u0020discharge\u0020date.",
             "url": "classes/Decision-Model-OrganMember.html#method_getDischargeDate"
         },                {
+            "fqsen": "\\Decision\\Model\\OrganMember\u003A\u003AisCurrent\u0028\u0029",
+            "name": "isCurrent",
+            "summary": "Get\u0020whether\u0020the\u0020organ\u0020membership\u0020has\u0020ended\u0020or\u0020was\u0020annulled",
+            "url": "classes/Decision-Model-OrganMember.html#method_isCurrent"
+        },                {
             "fqsen": "\\Decision\\Model\\OrganMember\u003A\u003A\u0024organ",
             "name": "organ",
             "summary": "Organ.",
@@ -10438,7 +11943,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Decision\\Model\\OrganMember\u003A\u003A\u0024function",
             "name": "function",
-            "summary": "Function.",
+            "summary": "Function\u0020given.",
             "url": "classes/Decision-Model-OrganMember.html#property_function"
         },                {
             "fqsen": "\\Decision\\Model\\OrganMember\u003A\u003A\u0024installDate",
@@ -10548,7 +12053,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Decision\\Model\\SubDecision\\Board\\Installation\u003A\u003A\u0024function",
             "name": "function",
-            "summary": "Function\u0020in\u0020the\u0020board.",
+            "summary": "Function\u0020given.",
             "url": "classes/Decision-Model-SubDecision-Board-Installation.html#property_function"
         },                {
             "fqsen": "\\Decision\\Model\\SubDecision\\Board\\Installation\u003A\u003A\u0024date",
@@ -10836,15 +12341,30 @@ Search.appendIndex(
             "summary": "Get\u0020the\u0020member.",
             "url": "classes/Decision-Model-SubDecision-Installation.html#method_getMember"
         },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\Installation\u003A\u003AsetMember\u0028\u0029",
+            "name": "setMember",
+            "summary": "Set\u0020the\u0020member.",
+            "url": "classes/Decision-Model-SubDecision-Installation.html#method_setMember"
+        },                {
             "fqsen": "\\Decision\\Model\\SubDecision\\Installation\u003A\u003AgetReappointments\u0028\u0029",
             "name": "getReappointments",
             "summary": "Get\u0020the\u0020reappointments,\u0020if\u0020they\u0020exist.",
             "url": "classes/Decision-Model-SubDecision-Installation.html#method_getReappointments"
         },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\Installation\u003A\u003AremoveReappointment\u0028\u0029",
+            "name": "removeReappointment",
+            "summary": "Removes\u0020the\u0020reappointments,\u0020if\u0020they\u0020exist.",
+            "url": "classes/Decision-Model-SubDecision-Installation.html#method_removeReappointment"
+        },                {
             "fqsen": "\\Decision\\Model\\SubDecision\\Installation\u003A\u003AgetDischarge\u0028\u0029",
             "name": "getDischarge",
             "summary": "Get\u0020the\u0020discharge,\u0020if\u0020it\u0020exists.",
             "url": "classes/Decision-Model-SubDecision-Installation.html#method_getDischarge"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\Installation\u003A\u003AclearDischarge\u0028\u0029",
+            "name": "clearDischarge",
+            "summary": "Clears\u0020the\u0020discharge,\u0020if\u0020it\u0020exists.",
+            "url": "classes/Decision-Model-SubDecision-Installation.html#method_clearDischarge"
         },                {
             "fqsen": "\\Decision\\Model\\SubDecision\\Installation\u003A\u003AgetOrganMember\u0028\u0029",
             "name": "getOrganMember",
@@ -10951,6 +12471,146 @@ Search.appendIndex(
             "summary": "When\u0020the\u0020granted\u0020keycode\u0020is\u0020prematurely\u0020revoked.",
             "url": "classes/Decision-Model-SubDecision-Key-Withdrawal.html#property_withdrawnOn"
         },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\Minutes",
+            "name": "Minutes",
+            "summary": "Decisions\u0020on\u0020minutes.",
+            "url": "classes/Decision-Model-SubDecision-Minutes.html"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\Minutes\u003A\u003AgetMeeting\u0028\u0029",
+            "name": "getMeeting",
+            "summary": "Get\u0020the\u0020target.",
+            "url": "classes/Decision-Model-SubDecision-Minutes.html#method_getMeeting"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\Minutes\u003A\u003AsetMeeting\u0028\u0029",
+            "name": "setMeeting",
+            "summary": "Set\u0020the\u0020target.",
+            "url": "classes/Decision-Model-SubDecision-Minutes.html#method_setMeeting"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\Minutes\u003A\u003AgetApproval\u0028\u0029",
+            "name": "getApproval",
+            "summary": "Get\u0020approval\u0020status.",
+            "url": "classes/Decision-Model-SubDecision-Minutes.html#method_getApproval"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\Minutes\u003A\u003AsetApproval\u0028\u0029",
+            "name": "setApproval",
+            "summary": "Set\u0020approval\u0020status.",
+            "url": "classes/Decision-Model-SubDecision-Minutes.html#method_setApproval"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\Minutes\u003A\u003AgetChanges\u0028\u0029",
+            "name": "getChanges",
+            "summary": "Get\u0020if\u0020changes\u0020were\u0020made.",
+            "url": "classes/Decision-Model-SubDecision-Minutes.html#method_getChanges"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\Minutes\u003A\u003AsetChanges\u0028\u0029",
+            "name": "setChanges",
+            "summary": "Set\u0020if\u0020changes\u0020were\u0020made.",
+            "url": "classes/Decision-Model-SubDecision-Minutes.html#method_setChanges"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\Minutes\u003A\u003A\u0024meeting",
+            "name": "meeting",
+            "summary": "Reference\u0020to\u0020the\u0020meetings",
+            "url": "classes/Decision-Model-SubDecision-Minutes.html#property_meeting"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\Minutes\u003A\u003A\u0024approval",
+            "name": "approval",
+            "summary": "If\u0020the\u0020minutes\u0020were\u0020approved.",
+            "url": "classes/Decision-Model-SubDecision-Minutes.html#property_approval"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\Minutes\u003A\u003A\u0024changes",
+            "name": "changes",
+            "summary": "If\u0020there\u0020were\u0020changes\u0020made.",
+            "url": "classes/Decision-Model-SubDecision-Minutes.html#property_changes"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\OrganRegulation",
+            "name": "OrganRegulation",
+            "summary": "SubDecision\u0020model.",
+            "url": "classes/Decision-Model-SubDecision-OrganRegulation.html"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\OrganRegulation\u003A\u003AsetOrganType\u0028\u0029",
+            "name": "setOrganType",
+            "summary": "Set\u0020the\u0020organ\u0020type",
+            "url": "classes/Decision-Model-SubDecision-OrganRegulation.html#method_setOrganType"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\OrganRegulation\u003A\u003AgetName\u0028\u0029",
+            "name": "getName",
+            "summary": "Get\u0020the\u0020name.",
+            "url": "classes/Decision-Model-SubDecision-OrganRegulation.html#method_getName"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\OrganRegulation\u003A\u003AsetName\u0028\u0029",
+            "name": "setName",
+            "summary": "Set\u0020the\u0020name.",
+            "url": "classes/Decision-Model-SubDecision-OrganRegulation.html#method_setName"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\OrganRegulation\u003A\u003AgetVersion\u0028\u0029",
+            "name": "getVersion",
+            "summary": "Get\u0020the\u0020version.",
+            "url": "classes/Decision-Model-SubDecision-OrganRegulation.html#method_getVersion"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\OrganRegulation\u003A\u003AsetVersion\u0028\u0029",
+            "name": "setVersion",
+            "summary": "Set\u0020the\u0020version.",
+            "url": "classes/Decision-Model-SubDecision-OrganRegulation.html#method_setVersion"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\OrganRegulation\u003A\u003AgetDate\u0028\u0029",
+            "name": "getDate",
+            "summary": "Get\u0020the\u0020date.",
+            "url": "classes/Decision-Model-SubDecision-OrganRegulation.html#method_getDate"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\OrganRegulation\u003A\u003AsetDate\u0028\u0029",
+            "name": "setDate",
+            "summary": "Set\u0020the\u0020date.",
+            "url": "classes/Decision-Model-SubDecision-OrganRegulation.html#method_setDate"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\OrganRegulation\u003A\u003AgetApproval\u0028\u0029",
+            "name": "getApproval",
+            "summary": "Get\u0020approval\u0020status.",
+            "url": "classes/Decision-Model-SubDecision-OrganRegulation.html#method_getApproval"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\OrganRegulation\u003A\u003AsetApproval\u0028\u0029",
+            "name": "setApproval",
+            "summary": "Set\u0020approval\u0020status.",
+            "url": "classes/Decision-Model-SubDecision-OrganRegulation.html#method_setApproval"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\OrganRegulation\u003A\u003AgetChanges\u0028\u0029",
+            "name": "getChanges",
+            "summary": "Get\u0020if\u0020changes\u0020were\u0020made.",
+            "url": "classes/Decision-Model-SubDecision-OrganRegulation.html#method_getChanges"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\OrganRegulation\u003A\u003AsetChanges\u0028\u0029",
+            "name": "setChanges",
+            "summary": "Set\u0020if\u0020changes\u0020were\u0020made.",
+            "url": "classes/Decision-Model-SubDecision-OrganRegulation.html#method_setChanges"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\OrganRegulation\u003A\u003A\u0024name",
+            "name": "name",
+            "summary": "Name\u0020of\u0020the\u0020organ.",
+            "url": "classes/Decision-Model-SubDecision-OrganRegulation.html#property_name"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\OrganRegulation\u003A\u003A\u0024organType",
+            "name": "organType",
+            "summary": "Type\u0020of\u0020the\u0020organ.",
+            "url": "classes/Decision-Model-SubDecision-OrganRegulation.html#property_organType"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\OrganRegulation\u003A\u003A\u0024version",
+            "name": "version",
+            "summary": "Version\u0020of\u0020the\u0020regulation.",
+            "url": "classes/Decision-Model-SubDecision-OrganRegulation.html#property_version"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\OrganRegulation\u003A\u003A\u0024date",
+            "name": "date",
+            "summary": "Date\u0020of\u0020the\u0020regulation.",
+            "url": "classes/Decision-Model-SubDecision-OrganRegulation.html#property_date"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\OrganRegulation\u003A\u003A\u0024approval",
+            "name": "approval",
+            "summary": "If\u0020the\u0020regulation\u0020was\u0020approved.",
+            "url": "classes/Decision-Model-SubDecision-OrganRegulation.html#property_approval"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\OrganRegulation\u003A\u003A\u0024changes",
+            "name": "changes",
+            "summary": "If\u0020there\u0020were\u0020changes\u0020made.",
+            "url": "classes/Decision-Model-SubDecision-OrganRegulation.html#property_changes"
+        },                {
             "fqsen": "\\Decision\\Model\\SubDecision\\Other",
             "name": "Other",
             "summary": "Entity\u0020for\u0020undefined\u0020decisions.",
@@ -11031,15 +12691,25 @@ Search.appendIndex(
             "summary": "Set\u0020the\u0020member.",
             "url": "classes/Decision-Model-SubDecision.html#method_setMember"
         },                {
-            "fqsen": "\\Decision\\Model\\SubDecision\u003A\u003AgetContent\u0028\u0029",
-            "name": "getContent",
-            "summary": "Get\u0020the\u0020content.",
-            "url": "classes/Decision-Model-SubDecision.html#method_getContent"
+            "fqsen": "\\Decision\\Model\\SubDecision\u003A\u003AgetContentNL\u0028\u0029",
+            "name": "getContentNL",
+            "summary": "Get\u0020the\u0020content\u0020in\u0020Dutch.",
+            "url": "classes/Decision-Model-SubDecision.html#method_getContentNL"
         },                {
-            "fqsen": "\\Decision\\Model\\SubDecision\u003A\u003AsetContent\u0028\u0029",
-            "name": "setContent",
-            "summary": "Set\u0020the\u0020content.",
-            "url": "classes/Decision-Model-SubDecision.html#method_setContent"
+            "fqsen": "\\Decision\\Model\\SubDecision\u003A\u003AsetContentNL\u0028\u0029",
+            "name": "setContentNL",
+            "summary": "Set\u0020the\u0020content\u0020in\u0020Dutch.",
+            "url": "classes/Decision-Model-SubDecision.html#method_setContentNL"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\u003A\u003AgetContentEN\u0028\u0029",
+            "name": "getContentEN",
+            "summary": "Get\u0020the\u0020content\u0020in\u0020English.",
+            "url": "classes/Decision-Model-SubDecision.html#method_getContentEN"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\u003A\u003AsetContentEN\u0028\u0029",
+            "name": "setContentEN",
+            "summary": "Set\u0020the\u0020content\u0020in\u0020English.",
+            "url": "classes/Decision-Model-SubDecision.html#method_setContentEN"
         },                {
             "fqsen": "\\Decision\\Model\\SubDecision\u003A\u003AtoGdprArray\u0028\u0029",
             "name": "toGdprArray",
@@ -11076,10 +12746,15 @@ Search.appendIndex(
             "summary": "Sub\u0020decision\u0020sequence\u0020number.",
             "url": "classes/Decision-Model-SubDecision.html#property_sequence"
         },                {
-            "fqsen": "\\Decision\\Model\\SubDecision\u003A\u003A\u0024content",
-            "name": "content",
-            "summary": "Content.",
-            "url": "classes/Decision-Model-SubDecision.html#property_content"
+            "fqsen": "\\Decision\\Model\\SubDecision\u003A\u003A\u0024contentNL",
+            "name": "contentNL",
+            "summary": "Content\u0020in\u0020Dutch.",
+            "url": "classes/Decision-Model-SubDecision.html#property_contentNL"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\u003A\u003A\u0024contentEN",
+            "name": "contentEN",
+            "summary": "Content\u0020in\u0020English.",
+            "url": "classes/Decision-Model-SubDecision.html#property_contentEN"
         },                {
             "fqsen": "\\Decision\\Model\\SubDecision\u003A\u003A\u0024member",
             "name": "member",
