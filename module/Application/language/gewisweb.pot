@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: GEWISweb v2.8.6-943-g90105b4b83-dirty\n"
+"Project-Id-Version: GEWISweb v2.8.6-943-g8a04e28f06-dirty\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-23 15:52+0200\n"
+"POT-Creation-Date: 2025-04-23 21:06+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1535,6 +1535,9 @@ msgid "Information for committees"
 msgstr ""
 
 msgid "Initials"
+msgstr ""
+
+msgid "Inkoper"
 msgstr ""
 
 msgid "Innovation Officer"

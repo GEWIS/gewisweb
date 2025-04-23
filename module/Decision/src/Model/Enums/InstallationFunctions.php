@@ -29,6 +29,7 @@ enum InstallationFunctions: string
 
     /** Legacy functions */
     case FoosballCoordinator = 'Tafelvoetbalcoordinator';
+    case ProcurementOfficer = 'Inkoper';
 
     /** Administrative functions */
     case Member = 'Lid';
@@ -36,7 +37,7 @@ enum InstallationFunctions: string
 
     public function isLegacy(): bool
     {
-        return in_array($this, [self::FoosballCoordinator]);
+        return in_array($this, [self::FoosballCoordinator, self::ProcurementOfficer]);
     }
 
     public function isAdministrative(): bool
@@ -66,6 +67,7 @@ enum InstallationFunctions: string
                 'Foosball Coordinator',
                 locale: $language?->getLangParam(),
             ),
+            self::ProcurementOfficer => $translator->translate('Inkoper', locale: $language?->getLangParam()),
             self::Member => $translator->translate('Member', locale: $language?->getLangParam()),
             self::InactiveMember => $translator->translate('Inactive Member', locale: $language?->getLangParam()),
         };
