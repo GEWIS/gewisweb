@@ -14,10 +14,10 @@ class LanguageHydratorStrategy implements StrategyInterface
         ?object $object = null,
     ): string {
         if ($value instanceof Languages) {
-            return $value->value;
+            return $value->getLangParam();
         }
 
-        return Languages::from($value)->value;
+        return Languages::fromLangParam($value)->getLangParam();
     }
 
     public function hydrate(
@@ -28,6 +28,6 @@ class LanguageHydratorStrategy implements StrategyInterface
             return $value;
         }
 
-        return Languages::from($value);
+        return Languages::fromLangParam($value);
     }
 }

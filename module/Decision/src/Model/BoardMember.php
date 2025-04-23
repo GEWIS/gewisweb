@@ -6,6 +6,7 @@ namespace Decision\Model;
 
 use Application\Model\Traits\IdentifiableTrait;
 use DateTime;
+use Decision\Model\Enums\BoardFunctions;
 use Decision\Model\SubDecision\Board\Installation as BoardInstallation;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
@@ -16,7 +17,7 @@ use Doctrine\ORM\Mapping\OneToOne;
 /**
  * Board member entity.
  *
- * Note that this entity is derived from the decisions themself.
+ * Note that this entity is derived from the decisions themselves.
  */
 #[Entity]
 class BoardMember
@@ -38,10 +39,13 @@ class BoardMember
     protected Member $member;
 
     /**
-     * Function.
+     * Function given.
      */
-    #[Column(type: 'string')]
-    protected string $function;
+    #[Column(
+        type: 'string',
+        enumType: BoardFunctions::class,
+    )]
+    protected BoardFunctions $function;
 
     /**
      * Installation date.
@@ -115,7 +119,7 @@ class BoardMember
     /**
      * Get the function.
      */
-    public function getFunction(): string
+    public function getFunction(): BoardFunctions
     {
         return $this->function;
     }
@@ -123,7 +127,7 @@ class BoardMember
     /**
      * Set the function.
      */
-    public function setFunction(string $function): void
+    public function setFunction(BoardFunctions $function): void
     {
         $this->function = $function;
     }

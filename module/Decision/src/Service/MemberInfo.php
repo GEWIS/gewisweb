@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Decision\Service;
 
 use Decision\Mapper\Member as MemberMapper;
+use Decision\Model\Enums\InstallationFunctions;
 use Decision\Model\Member as MemberModel;
 use Decision\Model\Organ as OrganModel;
 use Exception;
@@ -128,13 +129,13 @@ class MemberInfo
             }
 
             if (
-                'Lid' === $install->getFunction()
-                || 'Inactief Lid' === $install->getFunction()
+                InstallationFunctions::Member === $install->getFunction()
+                || InstallationFunctions::InactiveMember === $install->getFunction()
             ) {
                 continue;
             }
 
-            $function = $this->translator->translate($install->getFunction());
+            $function = $install->getFunction()->getName($this->translator);
             $memberships['current'][$foundationHash]['functions'][] = $function;
         }
 
@@ -149,13 +150,13 @@ class MemberInfo
             }
 
             if (
-                'Lid' === $install->getFunction()
-                || 'Inactief Lid' === $install->getFunction()
+                InstallationFunctions::Member === $install->getFunction()
+                || InstallationFunctions::InactiveMember === $install->getFunction()
             ) {
                 continue;
             }
 
-            $function = $this->translator->translate($install->getFunction());
+            $function = $install->getFunction()->getName($this->translator);
             $memberships['historical'][$foundationHash]['functions'][] = $function;
         }
 

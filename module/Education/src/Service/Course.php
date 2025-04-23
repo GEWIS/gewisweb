@@ -163,7 +163,7 @@ class Course
                         $document->setExamType(ExamTypes::from($documentData['examType']));
                     }
 
-                    $document->setLanguage(Languages::from($documentData['language']));
+                    $document->setLanguage(Languages::fromLangParam($documentData['language']));
                     $document->setScanned(boolval($documentData['scanned']));
                     $localFile = $temporaryEducationConfig['upload_' . $type . '_dir'] . '/' . $documentData['file'];
                     $document->setFilename($storage->storeFile($localFile));

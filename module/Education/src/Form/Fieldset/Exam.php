@@ -83,8 +83,8 @@ class Exam extends Fieldset implements InputFilterProviderInterface
                 'options' => [
                     'label' => $this->translator->translate('Language'),
                     'value_options' => [
-                        Languages::EN->value => Languages::EN->getName($this->translator),
-                        Languages::NL->value => Languages::NL->getName($this->translator),
+                        Languages::English->getLangParam() => Languages::English->getName($this->translator),
+                        Languages::Dutch->getLangParam() => Languages::Dutch->getName($this->translator),
                     ],
                 ],
             ],

@@ -29,7 +29,7 @@ class Decision extends BaseMapper
     {
         $qb = $this->getRepository()->createQueryBuilder('d');
         $qb->select('d, m')
-            ->where('d.content LIKE :query')
+            ->where('d.contentNL LIKE :query')
             ->join('d.meeting', 'm')
             ->orderBy('m.date', 'DESC')
             ->setMaxResults(100);

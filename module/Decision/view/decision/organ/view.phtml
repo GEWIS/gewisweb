@@ -3,13 +3,14 @@
 declare(strict_types=1);
 
 use Application\View\HelperTrait;
+use Decision\Model\Enums\InstallationFunctions;
 use Decision\Model\Member as MemberModel;
 use Decision\Model\Organ as OrganModel;
 use Laminas\View\Renderer\PhpRenderer;
 
 /**
  * @var PhpRenderer|HelperTrait $this
- * @var array<array-key, array{member: MemberModel, functions: array<array-key, string>}> $activeMembers
+ * @var array<array-key, array{member: MemberModel, functions: array<array-key, InstallationFunctions>}> $activeMembers
  * @var MemberModel[] $inactiveMembers
  * @var MemberModel[] $oldMembers
  * @var OrganModel $organ
@@ -51,7 +52,7 @@ $this->headTitle($organ->getName());
                                         implode(
                                             ', ',
                                             array_map(
-                                                fn (string $value): string => $this->translate($value),
+                                                fn (string $value): string => $value->getName($this->translator),
                                                 $membership['functions'],
                                             ),
                                         )
@@ -111,7 +112,7 @@ $this->headTitle($organ->getName());
                                 </a>
                             </strong>
                             <span class="decision-content">
-                                <?= $this->escapeHtml($subdecision->getContent()) ?>
+                                <?= $this->escapeHtml($subdecision->getContentNL()) ?>
                                 <a href="#<?= urlencode($extendedId) ?>" class="link-permalink">
                                     <span class="fa fa-link"></span>
                                 </a>

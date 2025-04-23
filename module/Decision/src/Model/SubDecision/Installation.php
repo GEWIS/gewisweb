@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Decision\Model\SubDecision;
 
+use Decision\Model\Enums\InstallationFunctions;
 use Decision\Model\Member;
 use Decision\Model\OrganMember;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -37,8 +38,11 @@ class Installation extends FoundationReference
     /**
      * Function given.
      */
-    #[Column(type: 'string')]
-    protected string $function;
+    #[Column(
+        type: 'string',
+        enumType: InstallationFunctions::class,
+    )]
+    protected InstallationFunctions $function;
 
     /**
      * Reappointment subdecisions if this installation was prolonged (can be done multiple times).
@@ -77,7 +81,7 @@ class Installation extends FoundationReference
     /**
      * Get the function.
      */
-    public function getFunction(): string
+    public function getFunction(): InstallationFunctions
     {
         return $this->function;
     }
@@ -85,7 +89,7 @@ class Installation extends FoundationReference
     /**
      * Set the function.
      */
-    public function setFunction(string $function): void
+    public function setFunction(InstallationFunctions $function): void
     {
         $this->function = $function;
     }
@@ -102,6 +106,14 @@ class Installation extends FoundationReference
     }
 
     /**
+     * Set the member.
+     */
+    public function setMember(Member $member): void
+    {
+        $this->member = $member;
+    }
+
+    /**
      * Get the reappointments, if they exist.
      *
      * @return Collection<array-key, Reappointment>
@@ -112,11 +124,31 @@ class Installation extends FoundationReference
     }
 
     /**
+     * Removes the reappointments, if they exist.
+     */
+    public function removeReappointment(Reappointment $reappointment): void
+    {
+        if (!$this->reappointments->contains($reappointment)) {
+            return;
+        }
+
+        $this->reappointments->removeElement($reappointment);
+    }
+
+    /**
      * Get the discharge, if it exists.
      */
     public function getDischarge(): ?Discharge
     {
         return $this->discharge;
+    }
+
+    /**
+     * Clears the discharge, if it exists.
+     */
+    public function clearDischarge(): void
+    {
+        $this->discharge = null;
     }
 
     /**

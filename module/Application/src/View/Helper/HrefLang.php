@@ -41,7 +41,7 @@ class HrefLang extends AbstractStandalone
         }
 
         if ($language instanceof Languages) {
-            $language = $language->value;
+            $language = $language->getLangParam();
         }
 
         /** @psalm-var TKey $language */

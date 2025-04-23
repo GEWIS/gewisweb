@@ -6,6 +6,7 @@ namespace Decision\Model;
 
 use Application\Model\Traits\IdentifiableTrait;
 use DateTime;
+use Decision\Model\Enums\InstallationFunctions;
 use Decision\Model\SubDecision\Installation;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
@@ -16,7 +17,7 @@ use Doctrine\ORM\Mapping\OneToOne;
 /**
  * Organ member entity.
  *
- * Note that this entity is derived from the decisions themself.
+ * Note that this entity is derived from the decisions themselves.
  */
 #[Entity]
 class OrganMember
@@ -46,10 +47,13 @@ class OrganMember
     protected Member $member;
 
     /**
-     * Function.
+     * Function given.
      */
-    #[Column(type: 'string')]
-    protected string $function;
+    #[Column(
+        type: 'string',
+        enumType: InstallationFunctions::class,
+    )]
+    protected InstallationFunctions $function;
 
     /**
      * Installation date.
@@ -96,6 +100,14 @@ class OrganMember
     protected ?DateTime $dischargeDate = null;
 
     /**
+     * @psalm-ignore-nullable-return
+     */
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    /**
      * Set the organ.
      */
     public function setOrgan(Organ $organ): void
@@ -130,7 +142,7 @@ class OrganMember
     /**
      * Set the function.
      */
-    public function setFunction(string $function): void
+    public function setFunction(InstallationFunctions $function): void
     {
         $this->function = $function;
     }
@@ -138,7 +150,7 @@ class OrganMember
     /**
      * Get the function.
      */
-    public function getFunction(): string
+    public function getFunction(): InstallationFunctions
     {
         return $this->function;
     }
@@ -189,5 +201,19 @@ class OrganMember
     public function getDischargeDate(): ?DateTime
     {
         return $this->dischargeDate;
+    }
+
+    /**
+     * Get whether the organ membership has ended or was annulled
+     */
+    public function isCurrent(): bool
+    {
+        $now = new DateTime();
+
+        return $this->getInstallDate() <= $now
+            && (
+                null === $this->getDischargeDate()
+                || $this->getDischargeDate() >= $now
+            );
     }
 }

@@ -6,6 +6,7 @@ namespace Decision\Model\SubDecision\Board;
 
 use DateTime;
 use Decision\Model\BoardMember;
+use Decision\Model\Enums\BoardFunctions;
 use Decision\Model\Member;
 use Decision\Model\SubDecision;
 use Doctrine\ORM\Mapping\AssociationOverride;
@@ -33,10 +34,13 @@ use Override;
 class Installation extends SubDecision
 {
     /**
-     * Function in the board.
+     * Function given.
      */
-    #[Column(type: 'string')]
-    protected string $function;
+    #[Column(
+        type: 'string',
+        enumType: BoardFunctions::class,
+    )]
+    protected BoardFunctions $function;
 
     /**
      * The date at which the installation is in effect.
@@ -74,7 +78,7 @@ class Installation extends SubDecision
     /**
      * Get the function.
      */
-    public function getFunction(): string
+    public function getFunction(): BoardFunctions
     {
         return $this->function;
     }
@@ -82,7 +86,7 @@ class Installation extends SubDecision
     /**
      * Set the function.
      */
-    public function setFunction(string $function): void
+    public function setFunction(BoardFunctions $function): void
     {
         $this->function = $function;
     }

@@ -118,13 +118,13 @@ $this->headScript()
                             <li id="<?= urlencode($id) ?>" class="link-permalink-container">
                                 <strong class="decision-meeting"><?= $id ?></strong>
                                 <span class="decision-content">
-                                    <?= $this->escapeHtml($decision->getContent()) ?>
+                                    <?= $this->escapeHtml($decision->getContentNL()) ?>
                                     <a href="#<?= urlencode($id) ?>" class="link-permalink">
                                         <span class="fa fa-link"></span>
                                     </a>
                                 </span>
                             </li>
-                        <?php endforeach ?>
+                        <?php endforeach; ?>
                     </ul>
                 </div>
             </div>

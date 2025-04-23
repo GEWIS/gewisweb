@@ -48,8 +48,8 @@ use Laminas\View\Renderer\PhpRenderer;
             $strippedPath = '/' . $strippedPath;
         }
 
-        $this->hrefLang()->setHrefLang(Languages::EN, $this->serverUrl($this->basePath('en' . $strippedPath)))
-            ->setHrefLang(Languages::NL, $this->serverUrl($this->basePath('nl' . $strippedPath)))
+        $this->hrefLang()->setHrefLang(Languages::English, $this->serverUrl($this->basePath('en' . $strippedPath)))
+            ->setHrefLang(Languages::Dutch, $this->serverUrl($this->basePath('nl' . $strippedPath)))
             ->setHrefLang('x-default', $this->serverUrl($this->basePath($strippedPath)));
     }
 
