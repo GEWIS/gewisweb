@@ -6,6 +6,7 @@ namespace Decision\Model;
 
 use DateTime;
 use Decision\Model\Enums\MeetingTypes;
+use Decision\Model\SubDecision\Minutes;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\Column;
@@ -55,6 +56,12 @@ class Meeting
     )]
     protected Collection $decisions;
 
+    #[OneToOne(
+        targetEntity: Minutes::class,
+        mappedBy: 'meeting',
+    )]
+    protected Minutes $minutes;
+
     /**
      * Documents.
      *
@@ -96,11 +103,6 @@ class Meeting
     public function getNumber(): int
     {
         return $this->number;
-    }
-
-    public function getMinutes(): ?MeetingMinutes
-    {
-        return $this->meetingMinutes;
     }
 
     /**
@@ -193,5 +195,10 @@ class Meeting
         foreach ($documents as $document) {
             $this->addDocument($document);
         }
+    }
+
+    public function getMinutes(): ?MeetingMinutes
+    {
+        return $this->meetingMinutes;
     }
 }

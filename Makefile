@@ -118,18 +118,6 @@ translations:
 				--package-version=$(shell git describe --dirty --always) \
 				--copyright-holder=GEWIS \
 				--join-existing && \
-		xgettext $(TRANSLATIONS_DIR)/additional-strings \
-				--language=C \
-				--from-code=UTF-8 \
-				--extract-all \
-				--output=$(TRANSLATIONS_DIR)/gewisweb.pot \
-				--force-po \
-				--no-location \
-				--sort-output \
-				--package-name=GEWISweb \
-				--package-version=$(shell git describe --dirty --always) \
-				--copyright-holder=GEWIS \
-				--join-existing && \
 		msgmerge --sort-output -U $(TRANSLATIONS_DIR)/nl.po $(TRANSLATIONS_DIR)/gewisweb.pot && \
 		msgmerge --sort-output -U $(TRANSLATIONS_DIR)/en.po $(TRANSLATIONS_DIR)/gewisweb.pot && \
 		msgattrib --no-obsolete -o $(TRANSLATIONS_DIR)/en.po $(TRANSLATIONS_DIR)/en.po && \

@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace Decision\Model;
 
+use Application\Model\Traits\IdentifiableTrait;
 use DateTime;
 use Decision\Model\SubDecision\Key\Granting as KeyGranting;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\GeneratedValue;
-use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToOne;
@@ -22,13 +21,7 @@ use Doctrine\ORM\Mapping\OneToOne;
 #[Entity]
 class Keyholder
 {
-    /**
-     * Id.
-     */
-    #[Id]
-    #[Column(type: 'integer')]
-    #[GeneratedValue(strategy: 'AUTO')]
-    protected ?int $id = null;
+    use IdentifiableTrait;
 
     /**
      * Member lidnr.
@@ -87,14 +80,6 @@ class Keyholder
         nullable: true,
     )]
     protected ?DateTime $withdrawnDate = null;
-
-    /**
-     * Get the ID.
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     /**
      * Get the member.
@@ -158,5 +143,19 @@ class Keyholder
     public function setWithdrawnDate(?DateTime $withdrawnDate): void
     {
         $this->withdrawnDate = $withdrawnDate;
+    }
+
+    /**
+     * Get whether the key decision is still valid
+     */
+    public function isCurrent(): bool
+    {
+        $now = new DateTime('today');
+
+        return $this->getExpirationDate() >= $now
+            && (
+                null === $this->getWithdrawnDate()
+                || $this->getWithdrawnDate() >= $now
+            );
     }
 }

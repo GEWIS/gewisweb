@@ -22,6 +22,8 @@ use Photo\Model\ProfilePhoto as ProfilePhotoModel;
 // set title
 $this->headTitle($this->escapeHtml($member->getFullName()));
 $this->headTitle($this->translate('Members'));
+
+$translator = $this->plugin('translate')->getTranslator();
 ?>
 <section class="section">
     <div class="container">
@@ -108,7 +110,7 @@ $this->headTitle($this->translate('Members'));
                                     <?= sprintf(
                                         $this->translate('%s is the upcoming <strong>%s</strong>.'),
                                         $this->escapeHtml($member->getFirstName()),
-                                        $this->escapeHtml($this->translate($boardInstall->getFunction())),
+                                        $this->escapeHtml($boardInstall->getFunction()->getName($translator)),
                                     )?>
                                 </li>
                             <?php elseif (
@@ -124,7 +126,7 @@ $this->headTitle($this->translate('Members'));
                                     <?= sprintf(
                                         $this->translate('%s is currently the <strong>%s</strong>.'),
                                         $this->escapeHtml($member->getFirstName()),
-                                        $this->escapeHtml($this->translate($boardInstall->getFunction())),
+                                        $this->escapeHtml($boardInstall->getFunction()->getName($translator)),
                                     ) ?>
                                 </li>
                             <?php else: ?>
@@ -134,7 +136,7 @@ $this->headTitle($this->translate('Members'));
                                         // phpcs:ignore Generic.Files.LineLength.TooLong -- user-visible strings should not be split
                                         $this->translate('%s was the <strong>%s</strong> during the association year %d/%d.'),
                                         $this->escapeHtml($member->getFirstName()),
-                                        $this->escapeHtml($this->translate($boardInstall->getFunction())),
+                                        $this->escapeHtml($boardInstall->getFunction()->getName($translator)),
                                         $startAssociationYear,
                                         $startAssociationYear + 1,
                                     ) ?>

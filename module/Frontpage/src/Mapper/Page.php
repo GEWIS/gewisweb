@@ -27,7 +27,7 @@ class Page extends BaseMapper
         ?string $subCategory = null,
         ?string $name = null,
     ): ?PageModel {
-        $queryLanguage = mb_strtoupper($language->value);
+        $queryLanguage = mb_strtoupper($language->getLangParam());
 
         $qb = $this->getRepository()->createQueryBuilder('p');
         $qb->innerJoin(

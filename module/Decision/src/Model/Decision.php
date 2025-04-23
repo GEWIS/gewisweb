@@ -78,12 +78,20 @@ class Decision
     protected int $number;
 
     /**
-     * Content.
+     * Content in Dutch.
      *
      * Generated from subdecisions.
      */
     #[Column(type: 'text')]
-    protected string $content;
+    protected string $contentNL;
+
+    /**
+     * Content in English.
+     *
+     * Generated from subdecisions.
+     */
+    #[Column(type: 'text')]
+    protected string $contentEN;
 
     /**
      * Subdecisions.
@@ -107,16 +115,13 @@ class Decision
     )]
     protected ?Annulment $annulledBy = null;
 
-    public function __construct()
-    {
-        $this->subdecisions = new ArrayCollection();
-    }
-
     /**
      * Set the meeting.
      */
     public function setMeeting(Meeting $meeting): void
     {
+        $this->subdecisions = new ArrayCollection();
+
         $meeting->addDecision($this);
         $this->meeting_type = $meeting->getType();
         $this->meeting_number = $meeting->getNumber();
@@ -180,19 +185,35 @@ class Decision
     }
 
     /**
-     * Get decision content.
+     * Get decision content in Dutch.
      */
-    public function getContent(): string
+    public function getContentNL(): string
     {
-        return $this->content;
+        return $this->contentNL;
     }
 
     /**
-     * Set decision content.
+     * Set decision content in Dutch.
      */
-    public function setContent(string $content): void
+    public function setContentNL(string $content): void
     {
-        $this->content = $content;
+        $this->contentNL = $content;
+    }
+
+    /**
+     * Get decision content in English.
+     */
+    public function getContentEN(): string
+    {
+        return $this->contentEN;
+    }
+
+    /**
+     * Set decision content in English.
+     */
+    public function setContentEN(string $content): void
+    {
+        $this->contentEN = $content;
     }
 
     /**

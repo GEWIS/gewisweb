@@ -187,6 +187,14 @@ class MailingList
     }
 
     /**
+     * Remove a member.
+     */
+    public function removeMember(Member $member): void
+    {
+        $this->members->removeElement($member);
+    }
+
+    /**
      * @return MailingListGdprArrayType
      */
     public function toGdprArray(): array

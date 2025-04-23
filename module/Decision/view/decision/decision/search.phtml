@@ -84,7 +84,7 @@ $this->headTitle($this->translate('Search for decision'));
                             <span class="decision-content">
                                 <?= $this->highlightSearch(
                                     $this->escapeHtml($prompt),
-                                    $this->escapeHtml($decision->getContent()),
+                                    $this->escapeHtml($decision->getContentNL()),
                                 ) ?>
                             </span>
                         </li>

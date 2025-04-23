@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Decision\Model;
 
 use Decision\Model\Enums\AddressTypes;
+use Decision\Model\Enums\PostalRegions;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Id;
@@ -60,11 +61,12 @@ class Address
 
     /**
      * Country.
-     *
-     * By default, netherlands.
      */
-    #[Column(type: 'string')]
-    protected string $country = 'netherlands';
+    #[Column(
+        type: 'string',
+        enumType: PostalRegions::class,
+    )]
+    protected PostalRegions $country;
 
     /**
      * Street.
@@ -131,7 +133,7 @@ class Address
     /**
      * Get the country.
      */
-    public function getCountry(): string
+    public function getCountry(): PostalRegions
     {
         return $this->country;
     }
@@ -139,7 +141,7 @@ class Address
     /**
      * Set the country.
      */
-    public function setCountry(string $country): void
+    public function setCountry(PostalRegions $country): void
     {
         $this->country = $country;
     }
@@ -235,7 +237,7 @@ class Address
             'number' => $this->getNumber(),
             'postalCode' => $this->getPostalCode(),
             'city' => $this->getCity(),
-            'postalRegion' => $this->getCountry(),
+            'postalRegion' => $this->getCountry()->value,
             'phone' => $this->getPhone(),
         ];
     }

@@ -131,7 +131,7 @@ $tables = [
     'Organ',
     'OrganMember',
     'organs_subdecisions',
-    'SubDecision'
+    'SubDecision',
 ];
 
 echo "Connection with GEWISDB and GEWISWEB set up" . PHP_EOL;
