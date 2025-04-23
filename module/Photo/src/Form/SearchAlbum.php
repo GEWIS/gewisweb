@@ -27,6 +27,9 @@ class SearchAlbum extends Form implements InputFilterProviderInterface
                 'options' => [
                     'label' => $translate->translate('Search album'),
                 ],
+                'attributes' => [
+                    'autofocus' => true,
+                ],
             ],
         );
 
