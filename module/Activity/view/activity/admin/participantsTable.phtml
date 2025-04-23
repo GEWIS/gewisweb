@@ -16,7 +16,7 @@ use Laminas\View\Renderer\PhpRenderer;
 <?php
 $activityApproved = ActivityModel::STATUS_APPROVED === $activity->getStatus();
 $attendanceModeTimeStarted = new DateTime() > $activity->getBeginTime()->modify('-30 min');
-$attendanceModeTimeEnded = new DateTime() > $activity->getEndTime()->modify('+30 min');
+$attendanceModeTimeEnded = new DateTime() > $activity->getEndTime()->modify('+2 hour');
 ?>
 <div data-controller="participants-table"
     <?php if (isset($signupList)): ?>
