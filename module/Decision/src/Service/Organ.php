@@ -44,10 +44,10 @@ use const PHP_INT_MAX;
 class Organ
 {
     private const array FUNCTION_ORDER = [
-        'Voorzitter',
-        'Secretaris',
-        'Penningmeester',
-        'Vice-Voorzitter',
+        InstallationFunctions::Chair,
+        InstallationFunctions::Secretary,
+        InstallationFunctions::Treasurer,
+        InstallationFunctions::ViceChair,
     ];
 
     /**
