@@ -148,7 +148,7 @@ $this->headTitle($this->translate('My Information'));
                     <table class="table table-bordered">
                         <tr>
                             <th><?= $this->translate('Country') ?></th>
-                            <td><?= $address->getCountry() ?></td>
+                            <td><?= $address->getCountry()->value ?></td>
                         </tr>
                         <tr>
                             <th><?= $this->translate('Street and number') ?></th>
