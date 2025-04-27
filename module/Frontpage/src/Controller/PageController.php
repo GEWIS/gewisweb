@@ -17,7 +17,7 @@ class PageController extends AbstractActionController
 
     public function pageAction(): ViewModel
     {
-        $language = Languages::from($this->params()->fromRoute('language'));
+        $language = Languages::fromLangParam($this->params()->fromRoute('language'));
         $category = $this->params()->fromRoute('category');
         $subCategory = $this->params()->fromRoute('sub_category');
         $name = $this->params()->fromRoute('name');

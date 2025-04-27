@@ -24,7 +24,7 @@ use function usort;
 /**
  * Organ entity.
  *
- * Note that this entity is derived from the decisions themself.
+ * Note that this entity is derived from the decisions themselves.
  */
 #[Entity]
 class Organ
@@ -293,16 +293,6 @@ class Organ
         }
 
         $this->subdecisions[] = $subdecision;
-    }
-
-    /**
-     * Get all subdecisions of this organ.
-     *
-     * @return Collection<array-key, SubDecision>
-     */
-    public function getSubdecisions(): Collection
-    {
-        return $this->subdecisions;
     }
 
     /**

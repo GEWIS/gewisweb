@@ -9,6 +9,7 @@ use Application\Service\FileStorage as FileStorageService;
 use Decision\Form\OrganInformation as OrganInformationForm;
 use Decision\Mapper\Member as MemberMapper;
 use Decision\Mapper\Organ as OrganMapper;
+use Decision\Model\Enums\InstallationFunctions;
 use Decision\Model\Enums\OrganTypes;
 use Decision\Model\Member as MemberModel;
 use Decision\Model\Organ as OrganModel;
@@ -43,10 +44,10 @@ use const PHP_INT_MAX;
 class Organ
 {
     private const array FUNCTION_ORDER = [
-        'Voorzitter',
-        'Secretaris',
-        'Penningmeester',
-        'Vice-Voorzitter',
+        InstallationFunctions::Chair,
+        InstallationFunctions::Secretary,
+        InstallationFunctions::Treasurer,
+        InstallationFunctions::ViceChair,
     ];
 
     /**
@@ -377,7 +378,7 @@ class Organ
      * @return array{
      *     activeMembers: array<int, array{
      *         member: MemberModel,
-     *         functions: string[],
+     *         functions: array<int, InstallationFunctions>,
      *     }>,
      *     inactiveMembers: array<int, MemberModel>,
      *     oldMembers: array<int, MemberModel>,
@@ -392,7 +393,7 @@ class Organ
         foreach ($organ->getMembers() as $install) {
             if (null === $install->getDischargeDate()) {
                 // current member
-                if ('Inactief Lid' === $install->getFunction()) {
+                if (InstallationFunctions::InactiveMember === $install->getFunction()) {
                     // inactive
                     if (!isset($inactiveMembers[$install->getMember()->getLidnr()])) {
                         $inactiveMembers[$install->getMember()->getLidnr()] = $install->getMember();
@@ -406,7 +407,7 @@ class Organ
                         ];
                     }
 
-                    if ('Lid' !== $install->getFunction()) {
+                    if (InstallationFunctions::Member !== $install->getFunction()) {
                         $activeMembers[$install->getMember()->getLidnr()]['functions'][] = $install->getFunction();
                     }
                 }

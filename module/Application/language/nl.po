@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-27 15:29+0100\n"
-"PO-Revision-Date: 2025-02-27 15:30+0100\n"
+"POT-Creation-Date: 2025-04-23 21:06+0200\n"
+"PO-Revision-Date: 2025-04-23 21:09+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: nl\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 
 msgid " <strong>has a limited capacity</strong> and "
 msgstr " <strong>heeft een beperkte capaciteit</strong> en "
@@ -640,6 +640,9 @@ msgstr "Carrière"
 msgid "Career Activities"
 msgstr "Carrière Activiteiten"
 
+msgid "Career Development and External Affairs Officer"
+msgstr "Commissaris Carrièreontwikkeling en Externe Betrekkingen"
+
 msgid "Career related"
 msgstr "Carrière gerelateerd"
 
@@ -648,6 +651,9 @@ msgstr "Categorieën"
 
 msgid "Category"
 msgstr "Categorie"
+
+msgid "Chair"
+msgstr "Voorzitter"
 
 msgid "Chair's Meeting"
 msgstr "Voorzittersvergadering"
@@ -719,24 +725,6 @@ msgstr "Commentaar op deze poll"
 
 msgid "Comments"
 msgstr "Commentaar"
-
-msgid "Commissaris Carrièreontwikkeling en Externe Betrekkingen"
-msgstr "Commissaris Carrièreontwikkeling en Externe Betrekkingen"
-
-msgid "Commissaris Externe Betrekkingen"
-msgstr "Commissaris Externe Betrekkingen"
-
-msgid "Commissaris Innovatie"
-msgstr "Commissaris Innovatie"
-
-msgid "Commissaris Interne Betrekkingen"
-msgstr "Commissaris Interne Betrekkingen"
-
-msgid "Commissaris Kennisbeheer"
-msgstr "Commissaris Kennisbeheer"
-
-msgid "Commissaris Onderwijs"
-msgstr "Commissaris Onderwijs"
 
 msgid "Committee"
 msgstr "Commissie"
@@ -1126,6 +1114,9 @@ msgstr "Bewerk orgaan informatie"
 msgid "Education"
 msgstr "Onderwijs"
 
+msgid "Education Officer"
+msgstr "Onderwijscommissaris"
+
 msgid "Education admin"
 msgstr "Onderwijs admin"
 
@@ -1269,6 +1260,9 @@ msgstr "Belichtingstijd"
 msgid "External"
 msgstr "Extern"
 
+msgid "External Affairs Officer"
+msgstr "Commissaris Externe Betrekkingen"
+
 msgid "External applications"
 msgstr "Externe applicaties"
 
@@ -1348,6 +1342,9 @@ msgstr "Flits"
 
 msgid "Focal length"
 msgstr "Brandpuntsafstand"
+
+msgid "Foosball Coordinator"
+msgstr "Tafelvoetbalcoordinator"
 
 msgid "Forgot password?"
 msgstr "Wachtwoord vergeten?"
@@ -1633,7 +1630,7 @@ msgstr ""
 msgid "In this photo:"
 msgstr "In deze foto:"
 
-msgid "Inactief Lid"
+msgid "Inactive Member"
 msgstr "Inactief Lid"
 
 msgid "Inactive Members"
@@ -1648,6 +1645,9 @@ msgstr "Infimum"
 msgid "Information"
 msgstr "Informatie"
 
+msgid "Information Officer"
+msgstr "Commissaris Kennisbeheer"
+
 msgid "Information for committees"
 msgstr "Informatie voor commissies"
 
@@ -1657,12 +1657,18 @@ msgstr "Initialen"
 msgid "Inkoper"
 msgstr "Inkoper"
 
+msgid "Innovation Officer"
+msgstr "Commissaris Innovatie"
+
 msgid "Interim"
 msgstr "Tussentijdse toets"
 
 #, php-format
 msgid "Interim test from %s (%s)"
 msgstr "Tussentijdse toets op %s (%s)"
+
+msgid "Internal Affairs Officer"
+msgstr "Commissaris Interne Betrekkingen"
 
 msgid "Internal Regulations"
 msgstr "Huishoudelijk reglement"
@@ -1774,9 +1780,6 @@ msgstr "Laatste wijziging lidmaatschap"
 
 msgid "Last name"
 msgstr "Achternaam"
-
-msgid "Lid"
-msgstr "Lid"
 
 msgid "Links"
 msgstr "Links"
@@ -2083,9 +2086,6 @@ msgstr "Oude polls"
 msgid "Older"
 msgstr "Ouder"
 
-msgid "Onderwijscommissaris"
-msgstr "Onderwijscommissaris"
-
 msgid ""
 "One of the courses is not valid (either it does not exist or is the same as "
 "the current course)"
@@ -2098,6 +2098,9 @@ msgstr "Sta alleen GEWIS leden toe"
 
 msgid "Open date and time"
 msgstr "Openingsdatum en -tijd"
+
+msgid "Opperhoofd"
+msgstr "Opperhoofd"
 
 #, php-format
 msgid "Option %s"
@@ -2188,7 +2191,7 @@ msgstr "Ander tentamenmateriaal van %s (%s)"
 msgid "Overview"
 msgstr "Overzicht"
 
-msgid "PR-Functionaris"
+msgid "PR Officer"
 msgstr "PR-Functionaris"
 
 msgid "Packages"
@@ -2214,9 +2217,6 @@ msgstr "Wachtwoord incorrect"
 
 msgid "Past option planning periods cannot be deleted."
 msgstr "Eerdere optieplanningsperioden kunnen niet worden verwijderd."
-
-msgid "Penningmeester"
-msgstr "Penningmeester"
 
 msgid "Period"
 msgstr "Periode"
@@ -2539,7 +2539,7 @@ msgstr "Zoek query"
 msgid "Search through the list of decisions accumulated from past meetings:"
 msgstr "Doorzoek de lijst van alle beslissingen van eerdere vergaderingen:"
 
-msgid "Secretaris"
+msgid "Secretary"
 msgstr "Secretaris"
 
 msgid "Select a job category"
@@ -2828,9 +2828,6 @@ msgstr "TU/e gast"
 
 msgid "TU/e Guest - Anyone who can access the website from within the TU/e"
 msgstr "TU/e gast - Iedereen die toegang heeft tot de website vanuit de TU/e"
-
-msgid "Tafelvoetbalcoordinator"
-msgstr "Tafelvoetbalcoordinator"
 
 msgid "Tag someone"
 msgstr "Tag iemand"
@@ -3309,6 +3306,9 @@ msgstr "Te veel login pogingen, probeer het later nog eens."
 msgid "Transfer Jobs"
 msgstr "Verplaats vacatures"
 
+msgid "Treasurer"
+msgstr "Penningmeester"
+
 msgid "Try alternate words or selections"
 msgstr "Probeer alternatieve woorden of selecties"
 
@@ -3503,11 +3503,8 @@ msgstr "Verifieer je wachtwoord"
 msgid "Verjaardagen"
 msgstr "Verjaardagen"
 
-msgid "Vice-Voorzitter"
+msgid "Vice-Chair"
 msgstr "Vice-Voorzitter"
-
-msgid "Vicevoorzitter"
-msgstr "Vicevoorzitter"
 
 msgid "View"
 msgstr "Toon"
@@ -3575,9 +3572,6 @@ msgstr "Bezoek de webshop"
 
 msgid "Visit webshop"
 msgstr "Bezoek webshop"
-
-msgid "Voorzitter"
-msgstr "Voorzitter"
 
 msgid "Vote for photo of the week"
 msgstr "Stem voor de foto van de week"

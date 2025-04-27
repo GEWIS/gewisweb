@@ -1,12 +1,17 @@
+<?php
+
+use Application\Model\Enums\Languages;
+
+?>
 For English, see below.
 
 L.s.<br/><br/>
 
 Er is een nieuwe activiteit aangemaakt op de GEWIS website waarvoor een Zettle nodig is.
 
-<h3><?= $this->escapeHtml($activity->getName()->getText("nl")) ?></h3>
+<h3><?= $this->escapeHtml($activity->getName()->getText(Languages::Dutch)) ?></h3>
 
-<p><?= $this->escapeHtml($activity->getDescription()->getText("nl")) ?></p>
+<p><?= $this->escapeHtml($activity->getDescription()->getText(Languages::Dutch)) ?></p>
 
 <br/>
 
@@ -23,9 +28,9 @@ L.s.<br/><br/>
 
 A new activity has been created on the GEWIS website that needs Zettle for payments.
 
-<h3><?= $this->escapeHtml($activity->getName()->getText("en")) ?></h3>
+<h3><?= $this->escapeHtml($activity->getName()->getText(Languages::English)) ?></h3>
 
-<p><?= $this->escapeHtml($activity->getDescription()->getText("en")) ?></p>
+<p><?= $this->escapeHtml($activity->getDescription()->getText(Languages::English)) ?></p>
 
 <br/>
 

@@ -94,7 +94,7 @@ class LanguageAwareTreeRouteStack extends TranslatorAwareTreeRouteStack
                 // There is no contract to enforce the following behaviour, but when linking to custom pages one should
                 // use `category(En)`, `sub_category(En)`, and `name(En)`. This follows the convention of the forms and
                 // should ensure that everything is as it should be.
-                if (Languages::EN->value === $language) {
+                if (Languages::English->getLangParam() === $language) {
                     // We switch the Dutch values with English values. By using `array_key_exists` instead of `isset` we
                     // can work with the optional `sub_category` and `name` values.
                     if (!isset($params['category'])) {
@@ -235,7 +235,7 @@ class LanguageAwareTreeRouteStack extends TranslatorAwareTreeRouteStack
         } elseif ('api' === $strippedPathParts[0]) {
             // The language was not provided through the URL, but we are dealing with `/api` which should not be
             // language aware. As such, we default to English to keep the router happy.
-            $language = Languages::EN->value;
+            $language = Languages::English->getLangParam();
         } else {
             // The language was not provided through the URL, so we need to determine it based on some other factors.
             $language = $this->getLanguage($request);
@@ -279,7 +279,7 @@ class LanguageAwareTreeRouteStack extends TranslatorAwareTreeRouteStack
 
         // We have not stored a (preferred) language for this session, it is likely this is the first request. Try to
         // determine the preferred language using the `Accept-Language` request header if it is present.
-        $lang = $this->determinePreferredLanguageFromRequest($request)->value;
+        $lang = $this->determinePreferredLanguageFromRequest($request)->getLangParam();
 
         // Store the (preferred) language in the session.
         $session->lang = $lang;
@@ -304,15 +304,15 @@ class LanguageAwareTreeRouteStack extends TranslatorAwareTreeRouteStack
                 $langString = $lang->getLanguage();
 
                 if (str_starts_with($langString, 'nl')) {
-                    return Languages::NL;
+                    return Languages::Dutch;
                 }
 
                 if (str_starts_with($langString, 'en')) {
-                    return Languages::EN;
+                    return Languages::English;
                 }
             }
         }
 
-        return Languages::EN;
+        return Languages::English;
     }
 }

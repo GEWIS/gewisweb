@@ -11,6 +11,7 @@ use Activity\Model\ActivityUpdateProposal as ActivityProposalModel;
 use Activity\Model\SignupField as SignupFieldModel;
 use Activity\Model\SignupList as SignupListModel;
 use Activity\Model\SignupOption as SignupOptionModel;
+use Application\Model\Enums\Languages;
 use Application\Service\Email as EmailService;
 use Company\Model\Company as CompanyModel;
 use Company\Service\Company as CompanyService;
@@ -352,7 +353,7 @@ class Activity
         ?OrganModel $organ,
     ): void {
         // Default to an English title, otherwise use the Dutch title
-        $activityTitle = $activity->getName()->getText('en');
+        $activityTitle = $activity->getName()->getText(Languages::English);
         $activityTime = $activity->getBeginTime()->format('d-m-Y H:i');
 
         $type = sprintf('activity_creation_require_%s', $facilityType);

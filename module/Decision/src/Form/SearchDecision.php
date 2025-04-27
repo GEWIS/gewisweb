@@ -27,6 +27,9 @@ class SearchDecision extends Form implements InputFilterProviderInterface
                 'options' => [
                     'label' => $translate->translate('Search query'),
                 ],
+                'attributes' => [
+                    'autofocus' => true,
+                ],
             ],
         );
 

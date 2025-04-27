@@ -24,7 +24,7 @@ class SubDecision extends BaseMapper
     {
         $qb = $this->getRepository()->createQueryBuilder('s');
         $qb->select('s')
-            ->where('s.content LIKE :full_name')
+            ->where('s.contentNL LIKE :full_name')
             ->orWhere('s.member = :member');
 
         $qb->setParameter('full_name', '%' . addcslashes($member->getFullName(), '%_') . '%')

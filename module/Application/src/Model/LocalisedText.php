@@ -69,21 +69,23 @@ abstract class LocalisedText
      *
      * @throws InvalidArgumentException
      */
-    public function getText(?string $locale = null): ?string
+    public function getText(?Languages $locale = null): ?string
     {
         if (null === $locale) {
             $locale = $this->getPreferredLocale();
+        } else {
+            $locale = $locale->getLangParam();
         }
 
         return match ($locale) {
-            'nl' => null !== $this->valueNL ? $this->valueNL : $this->valueEN,
-            'en' => null !== $this->valueEN ? $this->valueEN : $this->valueNL,
+            Languages::Dutch->getLangParam() => null !== $this->valueNL ? $this->valueNL : $this->valueEN,
+            Languages::English->getLangParam() => null !== $this->valueEN ? $this->valueEN : $this->valueNL,
             default => throw new InvalidArgumentException('Locale not supported: ' . $locale),
         };
     }
 
     /**
-     * @return string the preferred language: either 'nl'  or 'en'
+     * @psalm-return 'en'|'nl' - From {@link Languages::getLangParam()}.
      */
     private function getPreferredLocale(): string
     {
@@ -102,12 +104,12 @@ abstract class LocalisedText
         if (null === $locale) {
             $locale = $this->getPreferredLocale();
         } else {
-            $locale = $locale->value;
+            $locale = $locale->getLangParam();
         }
 
         return match ($locale) {
-            'nl' => $this->valueNL,
-            'en' => $this->valueEN,
+            Languages::Dutch->getLangParam() => $this->valueNL,
+            Languages::English->getLangParam() => $this->valueEN,
             default => throw new InvalidArgumentException('Locale not supported: ' . $locale),
         };
     }

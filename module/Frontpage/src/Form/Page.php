@@ -193,7 +193,7 @@ class Page extends Form implements InputFilterProviderInterface
 
         if (!$dutchRouteEqual) {
             $potentialDutchPage = $this->pageMapper->findPage(
-                Languages::NL,
+                Languages::Dutch,
                 $category,
                 '' === $subCategory ? null : $subCategory,
                 '' === $name ? null : $name,
@@ -225,7 +225,7 @@ class Page extends Form implements InputFilterProviderInterface
 
         if (!$englishRouteEqual) {
             $potentialEnglishPage = $this->pageMapper->findPage(
-                Languages::EN,
+                Languages::English,
                 $categoryEn,
                 '' === $subCategoryEn ? null : $subCategoryEn,
                 '' === $nameEn ? null : $nameEn,

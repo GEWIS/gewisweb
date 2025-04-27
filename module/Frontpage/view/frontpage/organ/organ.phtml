@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Activity\Model\Activity;
 use Application\View\HelperTrait;
 use Decision\Model\{
+    Enums\InstallationFunctions,
     Enums\OrganTypes,
     Member as MemberModel,
     Organ as OrganModel,
@@ -182,7 +183,7 @@ function getOrganDescription($organInformation, $lang)
                                                         (<?= implode(
                                                             ', ',
                                                             array_map(
-                                                                fn (string $value): string => $this->translate($value),
+                                                                fn (InstallationFunctions $value): string => $value->getName($translator),
                                                                 $membership['functions'],
                                                             ),
                                                         ) ?>)

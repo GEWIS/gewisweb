@@ -22,6 +22,8 @@ use Doctrine\ORM\Mapping\OneToOne;
 use Photo\Model\Tag as TagModel;
 use User\Model\User as UserModel;
 
+use function array_reduce;
+
 /**
  * Member model.
  *
@@ -67,7 +69,7 @@ class Member
         type: 'string',
         nullable: true,
     )]
-    protected ?string $email;
+    protected ?string $email = null;
 
     /**
      * Member's last name.
@@ -112,7 +114,7 @@ class Member
      * - graduate
      * - honorary
      *
-     * You can find the GEWIS statuten here: https://gewis.nl/vereniging/statuten/statuten.
+     * You can find the GEWIS statuten here: https://gewis.nl/association/regulations/articles-of-association.
      *
      * See artikel 7.
      */
@@ -131,7 +133,7 @@ class Member
     /**
      * Date when the real membership ("ordinary" or "external") of the member will have ended, in other words, from this
      * date onwards they are "graduate". If `null`, the expiration is rolling and will be silently renewed if the member
-     * still meets the requirements as set forth in the articles of association and internal regulations.
+     * still meets the requirements as set forth in the bylaws and internal regulations.
      */
     #[Column(
         type: 'date',
@@ -147,8 +149,7 @@ class Member
 
     /**
      * The date on which the membership of the member is set to expire and will therefore have to be renewed, which
-     * happens either automatically or has to be done manually, as set forth in the articles of association and internal
-     * regulations.
+     * happens either automatically or has to be done manually, as set forth in the bylaws and internal regulations.
      */
     #[Column(type: 'date')]
     protected DateTime $expiration;
@@ -245,6 +246,17 @@ class Member
     )]
     protected Collection $boardInstallations;
 
+    /**
+     * Keyholdership.
+     *
+     * @var Collection<array-key, Keyholder>
+     */
+    #[OneToMany(
+        targetEntity: Keyholder::class,
+        mappedBy: 'member',
+    )]
+    protected Collection $keyGrantings;
+
     #[Column(
         type: 'string',
         nullable: true,
@@ -276,26 +288,15 @@ class Member
     )]
     protected Collection $tags;
 
-    /**
-     * Keyholdership.
-     *
-     * @var Collection<array-key, Keyholder>
-     */
-    #[OneToMany(
-        targetEntity: Keyholder::class,
-        mappedBy: 'member',
-    )]
-    protected Collection $keyGrantings;
-
     public function __construct()
     {
         $this->addresses = new ArrayCollection();
         $this->installations = new ArrayCollection();
         $this->organInstallations = new ArrayCollection();
         $this->boardInstallations = new ArrayCollection();
-        $this->tags = new ArrayCollection();
-        $this->lists = new ArrayCollection();
         $this->keyGrantings = new ArrayCollection();
+        $this->lists = new ArrayCollection();
+        $this->tags = new ArrayCollection();
     }
 
     /**
@@ -563,6 +564,16 @@ class Member
         return $this->installations;
     }
 
+    /**
+     * Get the organ installations.
+     *
+     * @return Collection<array-key, OrganMember>
+     */
+    public function getOrganInstallations(): Collection
+    {
+        return $this->organInstallations;
+    }
+
     public function getAuthenticationKey(): ?string
     {
         return $this->authenticationKey;
@@ -571,6 +582,37 @@ class Member
     public function setAuthenticationKey(?string $authenticationKey): void
     {
         $this->authenticationKey = $authenticationKey;
+    }
+
+    /**
+     * Member is at least 16 years old on the given date.
+     */
+    public function hasReached16(DateTime $onDate = new DateTime()): bool
+    {
+        return $this->isOlderThan($onDate, 16);
+    }
+
+    /**
+     * Member is at least 18 years old on the given date.
+     */
+    public function hasReached18(DateTime $onDate = new DateTime()): bool
+    {
+        return $this->isOlderThan($onDate, 18);
+    }
+
+    /**
+     * Member is at least 21 years old on the given date.
+     */
+    public function hasReached21(DateTime $onDate = new DateTime()): bool
+    {
+        return $this->isOlderThan($onDate, 21);
+    }
+
+    private function isOlderThan(
+        DateTime $onDate,
+        int $years,
+    ): bool {
+        return $onDate->diff($this->getBirth())->y >= $years;
     }
 
     /**
@@ -590,13 +632,108 @@ class Member
     }
 
     /**
-     * Get the organ installations.
+     * Get all addresses.
      *
-     * @return Collection<array-key, OrganMember>
+     * @return Collection<array-key, Address>
      */
-    public function getOrganInstallations(): Collection
+    public function getAddresses(): Collection
     {
-        return $this->organInstallations;
+        return $this->addresses;
+    }
+
+    /**
+     * Clear all addresses.
+     */
+    public function clearAddresses(): void
+    {
+        $this->addresses = new ArrayCollection();
+    }
+
+    /**
+     * Add multiple addresses.
+     *
+     * @param Address[] $addresses
+     */
+    public function addAddresses(array $addresses): void
+    {
+        foreach ($addresses as $address) {
+            $this->addAddress($address);
+        }
+    }
+
+    /**
+     * Add an address.
+     */
+    public function addAddress(Address $address): void
+    {
+        $address->setMember($this);
+        $this->addresses[] = $address;
+    }
+
+    /**
+     * Is currently a keyholder.
+     */
+    public function isKeyholder(): bool
+    {
+        return array_reduce(
+            $this->keyGrantings->toArray(),
+            static function ($c, $kg) {
+                return $c || $kg->isCurrent();
+            },
+            false,
+        );
+    }
+
+    /**
+     * Get mailing list subscriptions.
+     *
+     * @return Collection<array-key, MailingList>
+     */
+    public function getLists(): Collection
+    {
+        return $this->lists;
+    }
+
+    /**
+     * Add a mailing list subscription.
+     *
+     * Note that this is the owning side.
+     */
+    public function addList(MailingList $list): void
+    {
+        $list->addMember($this);
+        $this->lists[] = $list;
+    }
+
+    /**
+     * Add multiple mailing lists.
+     *
+     * @param MailingList[] $lists
+     */
+    public function addLists(array $lists): void
+    {
+        foreach ($lists as $list) {
+            $this->addList($list);
+        }
+    }
+
+    /**
+     * Remove a mailing list subscription.
+     *
+     * Note that this is the owning side.
+     */
+    public function removeList(MailingList $list): void
+    {
+        $list->removeMember($this);
+        $this->lists->removeElement($list);
+    }
+
+    /**
+     * Clear the lists.
+     */
+    public function clearLists(): void
+    {
+        $this->lists = new ArrayCollection();
     }
 
     /**
@@ -709,86 +846,6 @@ class Member
     }
 
     /**
-     * Get all addresses.
-     *
-     * @return Collection<array-key, Address>
-     */
-    public function getAddresses(): Collection
-    {
-        return $this->addresses;
-    }
-
-    /**
-     * Clear all addresses.
-     */
-    public function clearAddresses(): void
-    {
-        $this->addresses = new ArrayCollection();
-    }
-
-    /**
-     * Add multiple addresses.
-     *
-     * @param Address[] $addresses
-     */
-    public function addAddresses(array $addresses): void
-    {
-        foreach ($addresses as $address) {
-            $this->addAddress($address);
-        }
-    }
-
-    /**
-     * Add an address.
-     */
-    public function addAddress(Address $address): void
-    {
-        $address->setMember($this);
-        $this->addresses[] = $address;
-    }
-
-    /**
-     * Get mailing list subscriptions.
-     *
-     * @return Collection<array-key, MailingList>
-     */
-    public function getLists(): Collection
-    {
-        return $this->lists;
-    }
-
-    /**
-     * Add a mailing list subscription.
-     *
-     * Note that this is the owning side.
-     */
-    public function addList(MailingList $list): void
-    {
-        $list->addMember($this);
-        $this->lists[] = $list;
-    }
-
-    /**
-     * Add multiple mailing lists.
-     *
-     * @param MailingList[] $lists
-     */
-    public function addLists(array $lists): void
-    {
-        foreach ($lists as $list) {
-            $this->addList($list);
-        }
-    }
-
-    /**
-     * Clear the lists.
-     */
-    public function clearLists(): void
-    {
-        $this->lists = new ArrayCollection();
-    }
-
-    /**
      * Get keyholderships.
      *
      * @return Collection<array-key, Keyholder>
@@ -796,35 +853,6 @@ class Member
     public function getKeyGrantings(): Collection
     {
         return $this->keyGrantings;
-    }
-
-    /**
-     * Returns true if the member is currently granted a key code (that is not withdrawn prematurely).
-     */
-    public function isKeyholder(): bool
-    {
-        if ($this->getKeyGrantings()->isEmpty()) {
-            return false;
-        }
-
-        $today = new DateTime('today');
-
-        $keyGrantings = $this->getKeyGrantings()->filter(
-            static function (Keyholder $keyholder) use ($today) {
-                $withdrawnOn = $keyholder->getWithdrawnDate();
-
-                if (
-                    null !== $withdrawnOn
-                    && $withdrawnOn <= $today
-                ) {
-                    return false;
-                }
-
-                return $today <= $keyholder->getExpirationDate();
-            },
-        );
-
-        return !$keyGrantings->isEmpty();
     }
 
     /**
@@ -869,11 +897,6 @@ class Member
         }
 
         return false;
-    }
-
-    public function is18Plus(): bool
-    {
-        return 18 <= (new DateTime('now'))->diff($this->getBirth())->y;
     }
 
     public function isExpired(): bool

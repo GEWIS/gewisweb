@@ -26,7 +26,7 @@ enum JWTClaims: string
             self::Email => $member->getEmail(),
             self::FamilyName => $member->getLastName(),
             self::GivenName => $member->getFirstName(),
-            self::Is18Plus => $member->is18Plus(),
+            self::Is18Plus => $member->hasReached18(),
             self::Lidnr => $member->getLidnr(),
             self::MembershipType => $member->getType()->value,
             self::MiddleName => $member->getMiddleName(),

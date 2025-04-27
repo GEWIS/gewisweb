@@ -22,7 +22,7 @@ $englishLink = $this->serverUrl(
             'category' => $page->getCategory()->getValueEN(),
             'sub_category' => $page->getSubCategory()->getValueEN(),
             'name' => $page->getName()->getValueEN(),
-            'language' => Languages::EN->value,
+            'language' => Languages::English->getLangParam(),
         ],
     ),
 );
@@ -33,17 +33,17 @@ $dutchLink = $this->serverUrl(
             'category' => $page->getCategory()->getValueNL(),
             'sub_category' => $page->getSubCategory()->getValueNL(),
             'name' => $page->getName()->getValueNL(),
-            'language' => Languages::NL->value,
+            'language' => Languages::Dutch->getLangParam(),
         ],
     ),
 );
 
 $this->hrefLang()->setHrefLang(
-    Languages::EN,
+    Languages::English,
     $englishLink,
 );
 $this->hrefLang()->setHrefLang(
-    Languages::NL,
+    Languages::Dutch,
     $dutchLink,
 );
 

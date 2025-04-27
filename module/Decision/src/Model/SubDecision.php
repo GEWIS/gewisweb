@@ -18,6 +18,8 @@ use Decision\Model\SubDecision\FoundationReference;
 use Decision\Model\SubDecision\Installation;
 use Decision\Model\SubDecision\Key\Granting as KeyGranting;
 use Decision\Model\SubDecision\Key\Withdrawal as KeyWithdrawal;
+use Decision\Model\SubDecision\Minutes;
+use Decision\Model\SubDecision\OrganRegulation;
 use Decision\Model\SubDecision\Other;
 use Decision\Model\SubDecision\Reappointment;
 use Doctrine\ORM\Mapping\Column;
@@ -38,6 +40,8 @@ use Doctrine\ORM\Mapping\ManyToOne;
  *     decision_point: int,
  *     decision_number: int,
  *     subdecision_sequence: int,
+ *     contentNL: string,
+ *     contentEN: string,
  *     ...,
  * }
  */
@@ -49,6 +53,7 @@ use Doctrine\ORM\Mapping\ManyToOne;
 )]
 #[DiscriminatorMap(
     value: [
+        'organ_regulation' => OrganRegulation::class,
         'foundation' => Foundation::class,
         'abrogation' => Abrogation::class,
         'installation' => Installation::class,
@@ -58,6 +63,7 @@ use Doctrine\ORM\Mapping\ManyToOne;
         'financial_statement' => Statement::class,
         'other' => Other::class,
         'annulment' => Annulment::class,
+        'minutes' => Minutes::class,
         'board_installation' => BoardInstallation::class,
         'board_release' => BoardRelease::class,
         'board_discharge' => BoardDischarge::class,
@@ -140,10 +146,16 @@ abstract class SubDecision
     protected int $sequence;
 
     /**
-     * Content.
+     * Content in Dutch.
      */
     #[Column(type: 'text')]
-    protected string $content;
+    protected string $contentNL;
+
+    /**
+     * Content in English.
+     */
+    #[Column(type: 'text')]
+    protected string $contentEN;
 
     /**
      * The member involved in this sub-decision.
@@ -245,19 +257,35 @@ abstract class SubDecision
     }
 
     /**
-     * Get the content.
+     * Get the content in Dutch.
      */
-    public function getContent(): string
+    public function getContentNL(): string
     {
-        return $this->content;
+        return $this->contentNL;
     }
 
     /**
-     * Set the content.
+     * Set the content in Dutch.
      */
-    public function setContent(string $content): void
+    public function setContentNL(string $content): void
     {
-        $this->content = $content;
+        $this->contentNL = $content;
+    }
+
+    /**
+     * Get the content in English.
+     */
+    public function getContentEN(): string
+    {
+        return $this->contentEN;
+    }
+
+    /**
+     * Set the content in English.
+     */
+    public function setContentEN(string $content): void
+    {
+        $this->contentEN = $content;
     }
 
     /**
@@ -271,7 +299,8 @@ abstract class SubDecision
             'decision_point' => $this->getDecisionPoint(),
             'decision_number' => $this->getDecisionNumber(),
             'subdecision_sequence' => $this->getSequence(),
-            'content' => $this->getContent(),
+            'contentNL' => $this->getContentNL(),
+            'contentEN' => $this->getContentEN(),
         ];
     }
 }
