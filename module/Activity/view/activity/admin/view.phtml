@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Activity\Model\Activity as ActivityModel;
+use Application\Model\Enums\Languages;
 use Application\View\HelperTrait;
 use Laminas\View\Renderer\PhpRenderer;
 
@@ -82,10 +83,10 @@ $this->breadcrumbs()
             <tr>
                 <td><?= $activity->getId() ?></td>
                 <td>
-                    <a href="<?= $this->url('activity/view', ['id' => $activity->getId()]) ?>"><?= $activity->getName()->getText("nl") ?></a>
+                    <a href="<?= $this->url('activity/view', ['id' => $activity->getId()]) ?>"><?= $activity->getName()->getText(Languages::Dutch) ?></a>
                 </td>
                 <td>
-                    <a href="<?= $this->url('activity/view', ['id' => $activity->getId()]) ?>"><?= $activity->getName()->getText("en") ?></a>
+                    <a href="<?= $this->url('activity/view', ['id' => $activity->getId()]) ?>"><?= $activity->getName()->getText(Languages::English) ?></a>
                 </td>
                 <td><?= $activity->getBeginTime()->format('Y-m-d') ?></td>
                 <td><?= (null === $activity->getOrgan()) ? $this->translate('None') : $this->escapeHtml($activity->getOrgan()->getAbbr()) ?></td>
