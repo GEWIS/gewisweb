@@ -23,11 +23,12 @@ enum BoardFunctions: string
     case Chair = 'Voorzitter';
     case Secretary = 'Secretaris';
     case Treasurer = 'Penningmeester';
-    case Education = 'Onderwijscommissaris';
+    case Education = 'Commissaris Onderwijs';
     case ExternalAffairs = 'Commissaris Externe Betrekkingen';
     case InternalAffairs = 'Commissaris Interne Betrekkingen';
 
     /** Legacy functions */
+    case LegacyEducation = 'Onderwijscommissaris';
     case PrOfficer = 'PR-Functionaris';
     case ViceChair = 'Vice-Voorzitter';
 
@@ -35,7 +36,6 @@ enum BoardFunctions: string
     case BrandManager = 'Brand Manager';
     case CareerdevelopmentExternalAffairs = 'Commissaris Carrièreontwikkeling en Externe Betrekkingen';
     case DigitalInfrastructure = 'Commissaris Digitale Infrastructuur';
-    case DigitalInfrastructureEN = 'Digital Infrastructure Officer'; //todo: change db value?
     case Innovation = 'Commissaris Innovatie';
     case Information = 'Commissaris Kennisbeheer';
 
@@ -75,6 +75,10 @@ enum BoardFunctions: string
                 'Internal Affairs Officer',
                 locale: $language?->getLangParam(),
             ),
+            self::LegacyEducation => $translator->translate(
+                'LEGACY Education Officer',
+                locale: $language?->getLangParam(),
+            ),
             self::PrOfficer => $translator->translate('PR Officer', locale: $language?->getLangParam()),
             self::ViceChair => $translator->translate('Vice-Chair', locale: $language?->getLangParam()),
             self::BrandManager => $translator->translate('Brand Manager', locale: $language?->getLangParam()),
@@ -83,10 +87,6 @@ enum BoardFunctions: string
                 locale: $language?->getLangParam(),
             ),
             self::DigitalInfrastructure => $translator->translate(
-                'Digital Infrastructure Officer',
-                locale: $language?->getLangParam(),
-            ),
-            self::DigitalInfrastructureEN => $translator->translate(
                 'Digital Infrastructure Officer',
                 locale: $language?->getLangParam(),
             ),
