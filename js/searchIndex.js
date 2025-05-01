@@ -2396,6 +2396,16 @@ Search.appendIndex(
             "summary": "Sets\u0020presenceTaken\u0020for\u0020this\u0020SignupList",
             "url": "classes/Activity-Model-SignupList.html#method_setPresenceTaken"
         },                {
+            "fqsen": "\\Activity\\Model\\SignupList\u003A\u003AisPromoted\u0028\u0029",
+            "name": "isPromoted",
+            "summary": "Get\u0020whether\u0020signup\u0020list\u0020is\u0020promoted.",
+            "url": "classes/Activity-Model-SignupList.html#method_isPromoted"
+        },                {
+            "fqsen": "\\Activity\\Model\\SignupList\u003A\u003AsetPromoted\u0028\u0029",
+            "name": "setPromoted",
+            "summary": "Set\u0020promoted\u0020state\u0020of\u0020signup\u0020list.",
+            "url": "classes/Activity-Model-SignupList.html#method_setPromoted"
+        },                {
             "fqsen": "\\Activity\\Model\\SignupList\u003A\u003AtoArray\u0028\u0029",
             "name": "toArray",
             "summary": "Returns\u0020an\u0020associative\u0020array\u0020representation\u0020of\u0020this\u0020object.",
@@ -2470,6 +2480,11 @@ Search.appendIndex(
             "name": "presenceTaken",
             "summary": "Determines\u0020if\u0020presence\u0020was\u0020taken\u0020for\u0020this\u0020SignupList",
             "url": "classes/Activity-Model-SignupList.html#property_presenceTaken"
+        },                {
+            "fqsen": "\\Activity\\Model\\SignupList\u003A\u003A\u0024promoted",
+            "name": "promoted",
+            "summary": "Determines\u0020if\u0020the\u0020signup\u0020list\u0020should\u0020appear\u0020before\u0020other\u0020signup\u0020lists\u0020on\u0020the\u0020same\u0020activity.",
+            "url": "classes/Activity-Model-SignupList.html#property_promoted"
         },                {
             "fqsen": "\\Activity\\Model\\SignupOption",
             "name": "SignupOption",
@@ -3545,6 +3560,26 @@ Search.appendIndex(
             "name": "down",
             "summary": "",
             "url": "classes/Application-Migrations-Version20250423132841.html#method_down"
+        },                {
+            "fqsen": "\\Application\\Migrations\\Version20250501112959",
+            "name": "Version20250501112959",
+            "summary": "phpcs\u003Adisable\u0020Generic.Files.LineLength.TooLong\nphpcs\u003Adisable\u0020SlevomatCodingStandard.Functions.RequireMultiLineCall.RequiredMultiLineCall",
+            "url": "classes/Application-Migrations-Version20250501112959.html"
+        },                {
+            "fqsen": "\\Application\\Migrations\\Version20250501112959\u003A\u003AgetDescription\u0028\u0029",
+            "name": "getDescription",
+            "summary": "",
+            "url": "classes/Application-Migrations-Version20250501112959.html#method_getDescription"
+        },                {
+            "fqsen": "\\Application\\Migrations\\Version20250501112959\u003A\u003Aup\u0028\u0029",
+            "name": "up",
+            "summary": "",
+            "url": "classes/Application-Migrations-Version20250501112959.html#method_up"
+        },                {
+            "fqsen": "\\Application\\Migrations\\Version20250501112959\u003A\u003Adown\u0028\u0029",
+            "name": "down",
+            "summary": "",
+            "url": "classes/Application-Migrations-Version20250501112959.html#method_down"
         },                {
             "fqsen": "\\Application\\Command\\Factory\\LoadFixturesFactory",
             "name": "LoadFixturesFactory",
