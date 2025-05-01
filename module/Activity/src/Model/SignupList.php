@@ -37,6 +37,7 @@ use User\Permissions\Resource\OrganResourceInterface;
  *     limitedCapacity: bool,
  *     fields: ImportedSignupFieldArrayType[],
  *     presenceTaken: bool,
+ *     promoted: bool,
  * }
  * @psalm-import-type LocalisedTextGdprArrayType from LocalisedTextModel as ImportedLocalisedTextGdprArrayType
  * @psalm-import-type SignupFieldGdprArrayType from SignupField as ImportedSignupFieldGdprArrayType
@@ -50,6 +51,7 @@ use User\Permissions\Resource\OrganResourceInterface;
  *     limitedCapacity: bool,
  *     fields: ImportedSignupFieldGdprArrayType[],
  *     presenceTaken: bool,
+ *     promoted: bool
  * }
  */
 #[Entity]
@@ -148,6 +150,12 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
      */
     #[Column(type: 'boolean')]
     protected bool $presenceTaken = false;
+
+    /**
+     * Determines if the signup list should appear before other signup lists on the same activity.
+     */
+    #[Column(type: 'boolean')]
+    protected bool $promoted = false;
 
     public function __construct()
     {
@@ -324,6 +332,22 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
     }
 
     /**
+     * Get whether signup list is promoted.
+     */
+    public function isPromoted(): bool
+    {
+        return $this->promoted;
+    }
+
+    /**
+     * Set promoted state of signup list.
+     */
+    public function setPromoted(bool $promoted): void
+    {
+        $this->promoted = $promoted;
+    }
+
+    /**
      * Returns an associative array representation of this object.
      *
      * @return SignupListArrayType
@@ -345,6 +369,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
             'displaySubscribedNumber' => $this->getDisplaySubscribedNumber(),
             'limitedCapacity' => $this->getLimitedCapacity(),
             'presenceTaken' => $this->isPresenceTaken(),
+            'promoted' => $this->isPromoted(),
             'fields' => $fieldsArrays,
         ];
     }
@@ -369,6 +394,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
             'displaySubscribedNumber' => $this->getDisplaySubscribedNumber(),
             'limitedCapacity' => $this->getLimitedCapacity(),
             'presenceTaken' => $this->isPresenceTaken(),
+            'promoted' => $this->isPromoted(),
             'fields' => $fieldsArrays,
         ];
     }

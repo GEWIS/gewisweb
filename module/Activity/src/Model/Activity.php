@@ -21,6 +21,7 @@ use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OneToOne;
+use Doctrine\ORM\Mapping\OrderBy;
 use User\Permissions\Resource\CreatorResourceInterface;
 use User\Permissions\Resource\OrganResourceInterface;
 
@@ -212,6 +213,10 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
         cascade: ['remove'],
         orphanRemoval: true,
     )]
+    #[OrderBy([
+        'promoted' => 'DESC',
+        'id' => 'ASC',
+    ])]
     protected Collection $signupLists;
 
     /**
