@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Decision\Model;
 
+use Decision\Extensions\Doctrine\MeetingTypesType;
 use Decision\Model\Enums\MeetingTypes;
 use Decision\Model\SubDecision\Annulment;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -48,10 +49,7 @@ class Decision
      * NOTE: This is a hack to make the meeting a primary key here.
      */
     #[Id]
-    #[Column(
-        type: 'string',
-        enumType: MeetingTypes::class,
-    )]
+    #[Column(type: MeetingTypesType::NAME)]
     protected MeetingTypes $meeting_type;
 
     /**
