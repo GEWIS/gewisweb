@@ -1,0 +1,45 @@
+<?php
+
+declare(strict_types=1);
+
+use Application\Model\Enums\AuthTypes;
+use Application\View\HelperTrait;
+use Laminas\View\Renderer\PhpRenderer;
+
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var AuthTypes $authType
+ */
+
+$translator = $this->plugin('translate')->getTranslator();
+?>
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2><?= $this->translate('401 Unauthenticated') ?></h2>
+            </div>
+            <div class="col-md-12">
+                <p>
+                    <?= sprintf(
+                        $this->translate('To view this page, you need to be logged in as a <strong>%s</strong>.'),
+                        $authType->getName($translator),
+                    ) ?>
+                </p>
+            </div>
+            <div class="col-md-12">
+                <a href="<?= $this->url(
+                    name: 'user/login',
+                    params: ['user_type' => $authType->value],
+                    options: ['query' => ['redirect_to' => base64_encode($this->serverUrl(true))]],
+                ) ?>" class="btn btn-primary">
+                    <span class="fas fa-user"></span>
+                    <?= sprintf(
+                        $this->translate('Login as %s'),
+                        $authType->getName($translator),
+                    ) ?>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

@@ -6,6 +6,7 @@ namespace Decision\Model;
 
 use DateInterval;
 use DateTime;
+use DateTimeImmutable;
 
 use function intval;
 use function sprintf;
@@ -47,11 +48,11 @@ class AssociationYear
     /**
      * Returns an instance of AssociationYear.
      *
-     * @param DateTime $dateTime date to find the AssociationYear for
+     * @param DateTime|DateTimeImmutable $dateTime date to find the AssociationYear for
      *
      * @return static
      */
-    public static function fromDate(DateTime $dateTime): static
+    public static function fromDate(DateTime|DateTimeImmutable $dateTime): static
     {
         $inst = new static();
         if (

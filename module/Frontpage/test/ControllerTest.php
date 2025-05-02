@@ -31,7 +31,7 @@ class ControllerTest extends AbstractHttpControllerTestCase
     public function testPollRequestActionIsForbidden(): void
     {
         $this->dispatch('/poll/request');
-        $this->assertResponseStatusCode(403);
+        $this->assertResponseStatusCode(401);
     }
 
     public function testPollRequestActionCanBeAccessedAsUser(): void

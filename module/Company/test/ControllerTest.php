@@ -42,8 +42,15 @@ class ControllerTest extends AbstractHttpControllerTestCase
         $this->assertResponseStatusCode(200);
     }
 
-    public function testCompanyAccountSelfActionCannotBeAccessed(): void
+    public function testCompanyAccountSelfActionUnauthenticated(): void
     {
+        $this->dispatch('/company/self');
+        $this->assertResponseStatusCode(401);
+    }
+
+    public function testCompanyAccountSelfActionCannotBeAccessAsUser(): void
+    {
+        $this->setUpWithRole();
         $this->dispatch('/company/self');
         $this->assertResponseStatusCode(403);
     }

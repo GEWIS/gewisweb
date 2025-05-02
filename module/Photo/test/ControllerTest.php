@@ -11,10 +11,10 @@ class ControllerTest extends AbstractHttpControllerTestCase
 {
     use BaseControllerTrait;
 
-    public function testPhotoActionIsForbidden(): void
+    public function testPhotoActionUnauthenticated(): void
     {
         $this->dispatch('/photo');
-        $this->assertResponseStatusCode(403);
+        $this->assertResponseStatusCode(401);
     }
 
     public function testPhotoActionCanBeAccessedAsUser(): void
@@ -22,6 +22,13 @@ class ControllerTest extends AbstractHttpControllerTestCase
         $this->setUpWithRole();
         $this->dispatch('/photo');
         $this->assertResponseStatusCode(200);
+    }
+
+    public function testPhotoActionCannotBeAccessedAsCompanyUser(): void
+    {
+        $this->setUpWithRole('company');
+        $this->dispatch('/photo');
+        $this->assertResponseStatusCode(403);
     }
 
     public function testPhotoYearActionCanBeAccessedAsUser(): void

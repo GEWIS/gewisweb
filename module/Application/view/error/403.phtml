@@ -2,33 +2,32 @@
 
 declare(strict_types=1);
 
+use Application\Model\Enums\AuthTypes;
 use Application\View\HelperTrait;
 use Laminas\View\Renderer\PhpRenderer;
 
-/** @var PhpRenderer|HelperTrait $this */
+/**
+ * @var PhpRenderer|HelperTrait $this
+ * @var AuthTypes $authType
+ * @var AuthTypes|null $expectedAuthType
+ */
 ?>
 <section class="section">
     <div class="container">
-        <?php
-        if (!empty($this->exception->getMessage())): ?>
-            <h2><?= $this->exception->getMessage() ?></h2>
-        <?php
-        else: ?>
-            <h2><?= $this->translate('You do not have the required privileges to view this page') ?></h2>
-        <?php
-        endif; ?>
-        <?php
-        if ($this->identity() === null): ?>
-            <p><?= $this->translate('You might be able to view this page by logging in') ?></p>
-            <a href="<?= $this->url(
-                name: 'user/login',
-                options: ['query' => ['redirect_to' => base64_encode($this->serverUrl(true))]],
-            ) ?>">
-                <span class="fas fa-user"></span>
-                <?= $this->translate('Login') ?>
+        <h2><?= $this->translate('403 Forbidden') ?></h2>
+        <?php if (!isset($expectedAuthType)): ?>
+            <?= $this->escapeHtml($exception->getMessage()) ?>
+        <?php else: ?>
+            <p>
+                <?= sprintf(
+                    $this->translate('You are currently logged in as <strong>%s</strong>. However, to access this page you need to be logged in as a <strong>%s</strong>.'),
+                    $authType->getName($this->plugin('translate')->getTranslator()),
+                    $expectedAuthType->getName($this->plugin('translate')->getTranslator()),
+                )?>
+            </p>
+            <a href="<?= $this->url('user/logout') ?>">
+                <?= $this->translate('Logout') ?>
             </a>
-
-        <?php
-        endif; ?>
+        <?php endif; ?>
     </div>
 </section>

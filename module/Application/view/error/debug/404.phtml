@@ -9,8 +9,8 @@ use Laminas\View\Renderer\PhpRenderer;
 ?>
 <section class="section">
     <div class="container">
-        <h1><?= $this->translate('A 404 error occurred') ?></h1>
-        <h2><?= $this->message ?></h2>
+        <h2><?= $this->translate('404 Page Not Found') ?></h2>
+        <h3><?= $this->message ?></h3>
 
         <?php
         if (isset($this->reason) && $this->reason): ?>

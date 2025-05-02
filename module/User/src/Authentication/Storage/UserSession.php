@@ -4,21 +4,34 @@ declare(strict_types=1);
 
 namespace User\Authentication\Storage;
 
-use DateTime;
+use DateInterval;
+use DateTimeImmutable;
+use Decision\Model\AssociationYear;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use Laminas\Authentication\Storage\Session as SessionStorage;
 use Laminas\Http\Header\SetCookie;
 use Laminas\Http\Request;
 use Laminas\Http\Response;
-use UnexpectedValueException;
+use Throwable;
 
 use function bin2hex;
 use function file_get_contents;
 use function is_readable;
-use function openssl_random_pseudo_bytes;
+use function min;
+use function random_bytes;
 use function strtotime;
 
+/**
+ * @psalm-type SessionTokenType = object{
+ *     iss: string,
+ *     sub: int,
+ *     exp: int,
+ *     iat: int,
+ *     uat: int,
+ *     nonce: string,
+ * }
+ */
 class UserSession extends SessionStorage
 {
     private const string JWT_COOKIE_NAME = 'GEWISSESSTOKEN';
@@ -87,8 +100,9 @@ class UserSession extends SessionStorage
         }
 
         try {
+            /** @psalm-var SessionTokenType $session */
             $session = JWT::decode($cookies[self::JWT_COOKIE_NAME], new Key($key, self::JWT_KEY_ALGORITHM));
-        } catch (UnexpectedValueException) {
+        } catch (Throwable) {
             // This is a generic exception thrown by the JWT library. To ensure that if something goes wrong while
             // decrypting the cookie, unset it. This ensures that people with the cookie do not end up in a loop.
             $this->clearCookie();
@@ -96,15 +110,32 @@ class UserSession extends SessionStorage
             return false;
         }
 
-        // Check if the session has not expired.
-        $now = (new DateTime())->getTimestamp();
-        if ($now >= $session->exp) {
+        // TODO: remove after 2025-12-31.
+        if (!isset($session->sub)) {
+            // This is an old session that has not yet been converted to the new format. Force a logout.
+            $this->clearCookie();
+
             return false;
         }
 
-        parent::write($session->lidnr);
+        // At this point the original JWT has been fully verified (including expiration checks). We know that the
+        // expiration has been checked for July 1st but not yet for the at most 90 days we allow. As such, we use the
+        // timestamp when the JWT was issued to determine this.
+        $now = new DateTimeImmutable();
+        $maxAllowedExpiration = (new DateTimeImmutable())
+            ->setTimestamp($session->iat)
+            ->add(new DateInterval('P90D'))
+            ->getTimestamp();
 
-        $this->saveSession($session->lidnr);
+        if ($now->getTimestamp() > $maxAllowedExpiration) {
+            $this->clearCookie();
+
+            return false;
+        }
+
+        parent::write($session->sub);
+
+        $this->saveSession($session->sub, $session);
 
         return true;
     }
@@ -127,9 +158,13 @@ class UserSession extends SessionStorage
 
     /**
      * Store the current session.
+     *
+     * @psalm-param SessionTokenType|null $previousSessionToken
      */
-    protected function saveSession(int $lidnr): void
-    {
+    protected function saveSession(
+        int $lidnr,
+        ?object $previousSessionToken = null,
+    ): void {
         $key = $this->getPrivateKey();
 
         // Check if the key is readable.
@@ -137,13 +172,32 @@ class UserSession extends SessionStorage
             return;
         }
 
+        // Set expiration to two weeks or July 1st (end of the current association year), whichever comes first.
+        $now = new DateTimeImmutable();
+        $forcedLogoutEndOfAssociationYear = AssociationYear::fromDate($now)
+            ->getEndDate()
+            ->add(new DateInterval('P1D'))
+            ->setTime(6, 0)
+            ->getTimestamp();
+
         $token = [
             'iss' => 'https://gewis.nl/',
-            'lidnr' => $lidnr,
-            'exp' => (new DateTime('+2 weeks'))->getTimestamp(),
-            'iat' => (new DateTime())->getTimestamp(),
-            'nonce' => bin2hex(openssl_random_pseudo_bytes(16)),
+            'sub' => $lidnr,
+            'nonce' => bin2hex(random_bytes(24)),
+            'exp' => min(
+                $now->add(new DateInterval('P14D'))->getTimestamp(),
+                $forcedLogoutEndOfAssociationYear,
+            ),
+            'uat' => $now->getTimestamp(),
         ];
+
+        if (null === $previousSessionToken) {
+            $token['iat'] = $now->getTimestamp();
+        } else {
+            // Do not update when the JWT was issued. Otherwise, it is possible to have endless sessions which are not a
+            // good security practice.
+            $token['iat'] = $previousSessionToken->iat;
+        }
 
         $jwt = JWT::encode($token, $key, self::JWT_KEY_ALGORITHM);
 

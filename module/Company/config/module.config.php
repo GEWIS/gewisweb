@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Company;
 
+use Application\Model\Enums\AuthTypes;
 use Application\View\Helper\Truncate;
 use Company\Controller\AdminApprovalController;
 use Company\Controller\AdminController;
@@ -123,6 +124,7 @@ return [
                 'options' => [
                     'route' => '/company',
                     'defaults' => [
+                        'auth_type' => AuthTypes::CompanyUser,
                         'controller' => CompanyAccountController::class,
                     ],
                 ],
@@ -260,6 +262,7 @@ return [
                 'options' => [
                     'route' => '/admin/career',
                     'defaults' => [
+                        'auth_type' => AuthTypes::Member,
                         'controller' => AdminController::class,
                         'action' => 'index',
                     ],
@@ -486,6 +489,7 @@ return [
                 'options' => [
                     'route' => '/admin/career/approval',
                     'defaults' => [
+                        'auth_type' => AuthTypes::Member,
                         'controller' => AdminApprovalController::class,
                         'action' => 'index',
                     ],
