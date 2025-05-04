@@ -87,7 +87,7 @@ abstract class Signup
      * Determines if the user was drawn
      */
     #[Column(type: 'boolean')]
-    protected bool $drawn = false;
+    protected bool $drawn = true;
 
     public function __construct()
     {
