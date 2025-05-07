@@ -360,7 +360,13 @@ class Activity
         $view = sprintf('email/activity_created_require_%s', $facilityType);
 
         if (null !== $organ) {
-            $subject = sprintf('%s: %s on %s', $organ->getAbbr(), $activityTitle, $activityTime);
+            $subject = sprintf(
+                '[%s] %s: %s on %s',
+                $facilityType,
+                $organ->getAbbr(),
+                $activityTitle,
+                $activityTime,
+            );
 
             $organInfo = $organ->getApprovedOrganInformation();
             if (
@@ -385,7 +391,12 @@ class Activity
                 );
             }
         } else {
-            $subject = sprintf('Member Initiative: %s on %s', $activityTitle, $activityTime);
+            $subject = sprintf(
+                '[%s] Member Initiative: %s on %s',
+                $facilityType,
+                $activityTitle,
+                $activityTime,
+            );
 
             $this->emailService->sendEmailAsUser(
                 $type,
