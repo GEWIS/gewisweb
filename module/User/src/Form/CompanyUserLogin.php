@@ -16,6 +16,7 @@ use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\EmailAddress;
 use Laminas\Validator\NotEmpty;
 use Laminas\Validator\StringLength;
+use Override;
 
 /**
  * @psalm-suppress MissingTemplateParam
@@ -103,6 +104,7 @@ class CompanyUserLogin extends Form implements InputFilterProviderInterface
         }
     }
 
+    #[Override]
     public function getInputFilterSpecification(): array
     {
         return [

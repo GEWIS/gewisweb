@@ -6,6 +6,7 @@ namespace Photo\Mapper;
 
 use Application\Mapper\BaseMapper;
 use Decision\Model\Member as MemberModel;
+use Override;
 use Photo\Model\Album as AlbumModel;
 use Photo\Model\MemberAlbum as MemberAlbumModel;
 use Photo\Model\Photo as PhotoModel;
@@ -110,6 +111,7 @@ class Photo extends BaseMapper
         return $qb->getQuery()->getResult();
     }
 
+    #[Override]
     protected function getRepositoryName(): string
     {
         return PhotoModel::class;

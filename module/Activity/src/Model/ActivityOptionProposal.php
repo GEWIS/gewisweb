@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
+use Override;
 use User\Permissions\Resource\OrganResourceInterface;
 
 /**
@@ -102,6 +103,7 @@ class ActivityOptionProposal implements OrganResourceInterface
     /**
      * Get the organ of this resource.
      */
+    #[Override]
     public function getResourceOrgan(): ?OrganModel
     {
         return $this->getOrgan();
@@ -120,6 +122,7 @@ class ActivityOptionProposal implements OrganResourceInterface
     /**
      * Returns the string identifier of the Resource.
      */
+    #[Override]
     public function getResourceId(): string
     {
         return (string) $this->getId();

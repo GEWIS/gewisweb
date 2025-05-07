@@ -19,6 +19,7 @@ use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\Date as DateValidator;
 use Laminas\Validator\Regex;
 use Laminas\Validator\StringLength;
+use Override;
 
 class Package extends LocalisableForm implements InputFilterProviderInterface
 {
@@ -123,6 +124,7 @@ class Package extends LocalisableForm implements InputFilterProviderInterface
         );
     }
 
+    #[Override]
     public function getInputFilterSpecification(): array
     {
         $filter = [];
@@ -196,6 +198,7 @@ class Package extends LocalisableForm implements InputFilterProviderInterface
     /**
      * @inheritDoc
      */
+    #[Override]
     protected function createLocalisedInputFilterSpecification(string $suffix = ''): array
     {
         return [

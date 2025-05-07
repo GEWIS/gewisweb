@@ -15,6 +15,7 @@ use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
 use Laminas\View\Model\ViewModel;
+use Override;
 use User\Permissions\NotAllowedException;
 
 use function end;
@@ -41,6 +42,7 @@ class DecisionController extends AbstractActionController
     /**
      * Index action, shows meetings.
      */
+    #[Override]
     public function indexAction(): ViewModel
     {
         return new ViewModel(

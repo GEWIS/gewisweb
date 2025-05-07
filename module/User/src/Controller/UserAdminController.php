@@ -8,6 +8,7 @@ use Decision\Mapper\Member as MemberMapper;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\View\Model\ViewModel;
+use Override;
 use User\Permissions\NotAllowedException;
 use User\Service\AclService;
 
@@ -20,6 +21,7 @@ class UserAdminController extends AbstractActionController
     ) {
     }
 
+    #[Override]
     public function indexAction(): ViewModel
     {
         if (!$this->aclService->isAllowed('view_status', 'user')) {

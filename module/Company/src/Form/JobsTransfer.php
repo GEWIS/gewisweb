@@ -12,6 +12,7 @@ use Laminas\Form\Element\Submit;
 use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
+use Override;
 
 /**
  * @psalm-suppress MissingTemplateParam
@@ -81,6 +82,7 @@ class JobsTransfer extends Form implements InputFilterProviderInterface
         return $this;
     }
 
+    #[Override]
     public function getInputFilterSpecification(): array
     {
         return [

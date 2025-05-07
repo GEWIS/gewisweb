@@ -14,6 +14,7 @@ use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Paginator\Paginator;
 use Laminas\View\Model\ViewModel;
+use Override;
 use User\Permissions\NotAllowedException;
 
 use function array_merge;
@@ -32,6 +33,7 @@ class PollController extends AbstractActionController
     /**
      * Displays the currently active poll.
      */
+    #[Override]
     public function indexAction(): ViewModel
     {
         $poll = $this->obtainPoll();

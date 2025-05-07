@@ -352,7 +352,7 @@ class Course
             $examData = $this->guessCourseDocumentData($file->getFilename());
 
             if ('summary' === $type) {
-                $examData['author'] = $this->guessSummaryAuthor($file->getFilename());
+                $examData['author'] = static::guessSummaryAuthor($file->getFilename());
             }
 
             $examData['file'] = $file->getFilename();
@@ -488,7 +488,7 @@ class Course
         $course->setName($data['name']);
 
         if (null !== $data['similar']) {
-            $similarCoursesCodes = explode(',', $data['similar']);
+            $similarCoursesCodes = explode(',', (string) $data['similar']);
 
             foreach ($similarCoursesCodes as $similarCourseCode) {
                 $similarCourse = $this->getCourse($similarCourseCode);
@@ -516,7 +516,7 @@ class Course
         $course->clearSimilarCoursesTo();
 
         if (null !== $data['similar']) {
-            $similarCoursesCodes = explode(',', $data['similar']);
+            $similarCoursesCodes = explode(',', (string) $data['similar']);
 
             foreach ($similarCoursesCodes as $similarCourseCode) {
                 $similarCourse = $this->getCourse($similarCourseCode);

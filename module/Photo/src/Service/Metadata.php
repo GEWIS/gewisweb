@@ -7,6 +7,7 @@ namespace Photo\Service;
 use DateTime;
 use Photo\Model\Photo as PhotoModel;
 
+use function abs;
 use function array_map;
 use function count;
 use function exif_read_data;
@@ -16,6 +17,8 @@ use function is_string;
 use function round;
 use function sprintf;
 use function str_contains;
+
+use const PHP_FLOAT_EPSILON;
 
 /**
  * Metadata service. This service implements all functionality related to
@@ -48,11 +51,11 @@ class Metadata
             }
 
             if (isset($exif['FocalLength'])) {
-                $photo->setFocalLength($this->frac2dec($exif['FocalLength']));
+                $photo->setFocalLength(self::frac2dec($exif['FocalLength']));
             }
 
             if (isset($exif['ExposureTime'])) {
-                $photo->setExposureTime($this->frac2dec($exif['ExposureTime']));
+                $photo->setExposureTime(self::frac2dec($exif['ExposureTime']));
             }
 
             if (isset($exif['ShutterSpeedValue'])) {
@@ -66,11 +69,11 @@ class Metadata
             $photo->setIso($exif['ISOSpeedRatings'] ?? null);
 
             if (isset($exif['GPSLongitude']) && isset($exif['GPSLongitudeRef'])) {
-                $photo->setLongitude($this->exifGpsToCoordinate($exif['GPSLongitude'], $exif['GPSLongitudeRef']));
+                $photo->setLongitude(self::exifGpsToCoordinate($exif['GPSLongitude'], $exif['GPSLongitudeRef']));
             }
 
             if (isset($exif['GPSLatitude']) && isset($exif['GPSLatitudeRef'])) {
-                $photo->setLatitude($this->exifGpsToCoordinate($exif['GPSLatitude'], $exif['GPSLatitudeRef']));
+                $photo->setLatitude(self::exifGpsToCoordinate($exif['GPSLatitude'], $exif['GPSLatitudeRef']));
             }
         } else {
             // We must have a date/time for a photo
@@ -92,9 +95,9 @@ class Metadata
      *
      * @param string $str the rational number, represented as num+'/'+den
      *
-     * @return float|int the decimal number, represented as float
+     * @return float the decimal number, represented as float
      */
-    private static function frac2dec(string $str): float|int
+    private static function frac2dec(string $str): float
     {
         if (!str_contains($str, '/')) {
             return (float) $str;
@@ -102,7 +105,7 @@ class Metadata
 
         [$n, $d] = explode('/', $str);
 
-        return (int) $n / (int) $d; //I assume stuff like '234/0' is not supported by EXIF.
+        return (float) $n / (float) $d; //I assume stuff like '234/0' is not supported by EXIF.
     }
 
     /**
@@ -112,9 +115,9 @@ class Metadata
      */
     private function exifGetShutter(string $shutterSpeed): ?string
     {
-        $apex = $this->frac2dec($shutterSpeed);
-        $shutter = 2 ** (-$apex);
-        if (0 === $shutter) {
+        $apex = self::frac2dec($shutterSpeed);
+        $shutter = 2.0 ** (-$apex);
+        if (abs(0.0 - $shutter) < PHP_FLOAT_EPSILON) {
             return null;
         }
 
@@ -122,7 +125,7 @@ class Metadata
             return round($shutter) . 's';
         }
 
-        return '1/' . round(1 / $shutter) . 's';
+        return '1/' . round(1.0 / $shutter) . 's';
     }
 
     /**
@@ -132,9 +135,9 @@ class Metadata
      */
     private function exifGetFstop(string $apertureValue): ?string
     {
-        $apex = $this->frac2dec($apertureValue);
-        $fstop = 2 ** ($apex / 2);
-        if (0 === $fstop) {
+        $apex = self::frac2dec($apertureValue);
+        $fstop = 2.0 ** ($apex / 2.0);
+        if (abs(0.0 - $fstop) < PHP_FLOAT_EPSILON) {
             return null;
         }
 
@@ -157,7 +160,7 @@ class Metadata
         }
 
         for ($i = 0; $i < 3; ++$i) {
-            $part = explode('/', $coordinate[$i]);
+            $part = explode('/', (string) $coordinate[$i]);
             if (1 === count($part)) {
                 $coordinate[$i] = $part[0];
                 continue;

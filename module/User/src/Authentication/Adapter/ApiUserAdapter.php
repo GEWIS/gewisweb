@@ -6,6 +6,7 @@ namespace User\Authentication\Adapter;
 
 use Laminas\Authentication\Adapter\AdapterInterface;
 use Laminas\Authentication\Result;
+use Override;
 use User\Mapper\ApiUser as ApiUserMapper;
 
 class ApiUserAdapter implements AdapterInterface
@@ -19,6 +20,7 @@ class ApiUserAdapter implements AdapterInterface
     /**
      * Try to authenticate.
      */
+    #[Override]
     public function authenticate(): Result
     {
         $user = $this->mapper->findByToken($this->token);

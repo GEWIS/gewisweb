@@ -6,6 +6,7 @@ namespace Education\Mapper;
 
 use Application\Mapper\BaseMapper;
 use Education\Model\Course as CourseModel;
+use Override;
 
 /**
  * Mappers for Courses.
@@ -47,6 +48,7 @@ class Course extends BaseMapper
         return $qb->getQuery()->getResult();
     }
 
+    #[Override]
     protected function getRepositoryName(): string
     {
         return CourseModel::class;

@@ -14,6 +14,7 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory as FakerFactory;
 use Faker\Generator;
+use Override;
 
 use function array_map;
 use function explode;
@@ -27,6 +28,7 @@ class MemberFixture extends AbstractFixture
     private Generator $faker;
     private DateTimeImmutable $now;
 
+    #[Override]
     public function load(ObjectManager $manager): void
     {
         $this->faker = FakerFactory::create();

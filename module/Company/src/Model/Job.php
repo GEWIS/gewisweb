@@ -21,6 +21,7 @@ use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OneToOne;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
+use Override;
 
 /**
  * Job model.
@@ -55,7 +56,7 @@ class Job implements ResourceInterface
         type: 'string',
         nullable: true,
     )]
-    protected ?string $contactName;
+    protected ?string $contactName = null;
 
     /**
      * The job's phone.
@@ -64,7 +65,7 @@ class Job implements ResourceInterface
         type: 'string',
         nullable: true,
     )]
-    protected ?string $contactPhone;
+    protected ?string $contactPhone = null;
 
     /**
      * The job's email.
@@ -73,7 +74,7 @@ class Job implements ResourceInterface
         type: 'string',
         nullable: true,
     )]
-    protected ?string $contactEmail;
+    protected ?string $contactEmail = null;
 
     /**
      * The job's display name.
@@ -527,6 +528,7 @@ class Job implements ResourceInterface
         ];
     }
 
+    #[Override]
     public function getResourceId(): string
     {
         return 'job';

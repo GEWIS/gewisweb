@@ -8,6 +8,7 @@ use Activity\Form\ActivityCalendarOption as ActivityCalendarOptionForm;
 use Activity\Service\ActivityCalendarForm as ActivityCalendarFormService;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Psr\Container\ContainerInterface;
 
 class ActivityCalendarOptionFactory implements FactoryInterface
@@ -15,6 +16,7 @@ class ActivityCalendarOptionFactory implements FactoryInterface
     /**
      * @param string $requestedName
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $requestedName,

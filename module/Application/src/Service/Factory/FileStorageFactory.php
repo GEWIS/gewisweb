@@ -8,6 +8,7 @@ use Application\Service\FileStorage as FileStorageService;
 use Application\Service\Watermark;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Psr\Container\ContainerInterface;
 
 class FileStorageFactory implements FactoryInterface
@@ -15,6 +16,7 @@ class FileStorageFactory implements FactoryInterface
     /**
      * @param string $requestedName
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $requestedName,

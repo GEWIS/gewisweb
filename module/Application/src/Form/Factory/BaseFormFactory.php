@@ -7,6 +7,7 @@ namespace Application\Form\Factory;
 use Laminas\Form\Form;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Psr\Container\ContainerInterface;
 
 class BaseFormFactory implements FactoryInterface
@@ -18,6 +19,7 @@ class BaseFormFactory implements FactoryInterface
      *
      * @return T
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $requestedName,

@@ -13,6 +13,7 @@ use Laminas\Router\Http\RouteInterface;
 use Laminas\Router\RouteMatch;
 use Laminas\Session\Container as SessionContainer;
 use Laminas\Stdlib\RequestInterface;
+use Override;
 
 use function array_key_exists;
 use function count;
@@ -37,6 +38,7 @@ class LanguageAwareTreeRouteStack extends TranslatorAwareTreeRouteStack
     /**
      * @inheritDoc
      */
+    #[Override]
     public function assemble(
         array $params = [],
         array $options = [],
@@ -140,6 +142,7 @@ class LanguageAwareTreeRouteStack extends TranslatorAwareTreeRouteStack
     /**
      * @inheritDoc
      */
+    #[Override]
     public function match(
         RequestInterface $request,
         $pathOffset = null,
@@ -178,7 +181,7 @@ class LanguageAwareTreeRouteStack extends TranslatorAwareTreeRouteStack
         $uri = $request->getUri();
         $strippedPath = ltrim(
             substr(
-                $uri->getPath(),
+                (string) $uri->getPath(),
                 strlen($oldBaseUrl),
             ),
             '/',

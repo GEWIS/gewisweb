@@ -7,6 +7,7 @@ namespace Activity\Mapper;
 use Activity\Model\ActivityOptionCreationPeriod as ActivityOptionCreationPeriodModel;
 use Application\Mapper\BaseMapper;
 use DateTime;
+use Override;
 
 /**
  * @template-extends BaseMapper<ActivityOptionCreationPeriodModel>
@@ -44,6 +45,7 @@ class ActivityOptionCreationPeriod extends BaseMapper
         return $qb->getQuery()->getResult();
     }
 
+    #[Override]
     protected function getRepositoryName(): string
     {
         return ActivityOptionCreationPeriodModel::class;

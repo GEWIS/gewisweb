@@ -9,6 +9,7 @@ use DateTime;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Override;
 use User\Model\Enums\UserRoles;
 use User\Model\User;
 use User\Model\UserRole;
@@ -17,6 +18,7 @@ use function range;
 
 class UserRoleFixture extends AbstractFixture implements DependentFixtureInterface
 {
+    #[Override]
     public function load(ObjectManager $manager): void
     {
         // Admins (8000 - 8002)
@@ -45,6 +47,7 @@ class UserRoleFixture extends AbstractFixture implements DependentFixtureInterfa
     /**
      * @return class-string[]
      */
+    #[Override]
     public function getDependencies(): array
     {
         return [

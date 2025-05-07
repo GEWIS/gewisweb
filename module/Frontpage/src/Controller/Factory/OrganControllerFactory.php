@@ -8,6 +8,7 @@ use Activity\Service\ActivityQuery as ActivityQueryService;
 use Decision\Service\Organ as OrganService;
 use Frontpage\Controller\OrganController;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Psr\Container\ContainerInterface;
 
 class OrganControllerFactory implements FactoryInterface
@@ -15,6 +16,7 @@ class OrganControllerFactory implements FactoryInterface
     /**
      * @param string $requestedName
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $requestedName,

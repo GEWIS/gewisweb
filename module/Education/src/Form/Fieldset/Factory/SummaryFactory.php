@@ -8,6 +8,7 @@ use Education\Form\Fieldset\Summary as SummaryFieldset;
 use Education\Model\Summary as SummaryModel;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Psr\Container\ContainerInterface;
 
 class SummaryFactory implements FactoryInterface
@@ -15,6 +16,7 @@ class SummaryFactory implements FactoryInterface
     /**
      * @param string $requestedName
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $requestedName,

@@ -131,7 +131,7 @@ class Photo
         $albumName = str_replace(' ', '-', $albumName);
         $extension = substr($photo->getPath(), strpos($photo->getPath(), '.'));
 
-        return $albumName . '-' . $photo->getDateTime()->format('Y') . '-' . $photo->getId() . $extension;
+        return $albumName . '-' . $photo->getDateTime()->format('Y') . '-' . (string) $photo->getId() . $extension;
     }
 
     /**
@@ -432,7 +432,7 @@ class Photo
         $tagged = count($photo->getTags()) > 0;
         $now = new DateTime();
         $age = $now->diff($photo->getDateTime(), true)->days;
-        $res = $occurences * (1 + 1 / $age);
+        $res = $occurences * (1 + 1.0 / $age);
 
         return $tagged ? 1.5 * $res : $res;
     }
@@ -445,8 +445,8 @@ class Photo
         $now = new DateTime();
         $age = $now->diff($photo->getDateTime(), true)->days;
 
-        $votes = $photo->getVoteCount();
-        $tags = $photo->getTagCount();
+        $votes = (float) $photo->getVoteCount();
+        $tags = (float) $photo->getTagCount();
 
         $baseRating = $votes / $tags ** 1.25;
         // Prevent division by zero.

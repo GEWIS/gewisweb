@@ -13,6 +13,7 @@ use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\File\Extension;
 use Laminas\Validator\File\MimeType;
+use Override;
 
 /**
  * @psalm-import-type MeetingArrayType from MeetingMapper as ImportedMeetingArrayType
@@ -100,6 +101,7 @@ class Minutes extends Form implements InputFilterProviderInterface
     /**
      * Input filter specification.
      */
+    #[Override]
     public function getInputFilterSpecification(): array
     {
         return [

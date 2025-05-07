@@ -14,6 +14,7 @@ use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToOne;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
+use Override;
 
 /**
  * ProfilePhoto.
@@ -122,6 +123,7 @@ class ProfilePhoto implements ResourceInterface
     /**
      * Get the resource Id.
      */
+    #[Override]
     public function getResourceId(): string
     {
         return 'profilePhoto';

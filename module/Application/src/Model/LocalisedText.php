@@ -78,8 +78,8 @@ abstract class LocalisedText
         }
 
         return match ($locale) {
-            Languages::Dutch->getLangParam() => null !== $this->valueNL ? $this->valueNL : $this->valueEN,
-            Languages::English->getLangParam() => null !== $this->valueEN ? $this->valueEN : $this->valueNL,
+            Languages::Dutch->getLangParam() => $this->valueNL ?? $this->valueEN,
+            Languages::English->getLangParam() => $this->valueEN ?? $this->valueNL,
             default => throw new InvalidArgumentException('Locale not supported: ' . $locale),
         };
     }

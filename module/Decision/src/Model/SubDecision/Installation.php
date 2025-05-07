@@ -108,6 +108,7 @@ class Installation extends FoundationReference
     /**
      * Set the member.
      */
+    #[Override]
     public function setMember(Member $member): void
     {
         $this->member = $member;

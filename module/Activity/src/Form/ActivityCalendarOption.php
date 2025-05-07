@@ -12,6 +12,7 @@ use Laminas\Form\Fieldset;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\Callback;
+use Override;
 use Throwable;
 
 class ActivityCalendarOption extends Fieldset implements InputFilterProviderInterface
@@ -67,6 +68,7 @@ class ActivityCalendarOption extends Fieldset implements InputFilterProviderInte
         );
     }
 
+    #[Override]
     public function getInputFilterSpecification(): array
     {
         return [

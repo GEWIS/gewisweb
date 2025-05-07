@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace User\Controller\Factory;
 
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Psr\Container\ContainerInterface;
 use User\Controller\ApiAuthenticationController;
 use User\Form\ApiAppAuthorisation;
@@ -18,6 +19,7 @@ class ApiAuthenticationControllerFactory implements FactoryInterface
     /**
      * @param string $requestedName
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $requestedName,

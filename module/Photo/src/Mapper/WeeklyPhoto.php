@@ -8,6 +8,7 @@ use Application\Mapper\BaseMapper;
 use DateInterval;
 use DateTime;
 use Decision\Model\AssociationYear;
+use Override;
 use Photo\Model\Photo as PhotoModel;
 use Photo\Model\WeeklyPhoto as WeeklyPhotoModel;
 
@@ -86,6 +87,7 @@ class WeeklyPhoto extends BaseMapper
         return $qb->getQuery()->getOneOrNullResult();
     }
 
+    #[Override]
     protected function getRepositoryName(): string
     {
         return WeeklyPhotoModel::class;

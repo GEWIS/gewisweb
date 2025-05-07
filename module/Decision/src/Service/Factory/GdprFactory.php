@@ -18,6 +18,7 @@ use Frontpage\Mapper\Poll as PollMapper;
 use Frontpage\Mapper\PollComment as PollCommentMapper;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Photo\Mapper\Photo as PhotoMapper;
 use Photo\Mapper\ProfilePhoto as ProfilePhotoMapper;
 use Photo\Mapper\Tag as TagMapper;
@@ -32,6 +33,7 @@ class GdprFactory implements FactoryInterface
     /**
      * @param string $requestedName
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $requestedName,

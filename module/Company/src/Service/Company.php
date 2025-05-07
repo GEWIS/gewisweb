@@ -126,11 +126,8 @@ class Company
         usort($startPackages, static function ($a, $b) {
             $aStart = $a->getStartingDate();
             $bStart = $b->getStartingDate();
-            if ($aStart === $bStart) {
-                return 0;
-            }
 
-            return $aStart < $bStart ? -1 : 1;
+            return $aStart <=> $bStart;
         });
 
         return $startPackages;
@@ -150,11 +147,8 @@ class Company
         usort($expirePackages, static function ($a, $b) {
             $aEnd = $a->getExpirationDate();
             $bEnd = $b->getExpirationDate();
-            if ($aEnd === $bEnd) {
-                return 0;
-            }
 
-            return $aEnd < $bEnd ? -1 : 1;
+            return $aEnd <=> $bEnd;
         });
 
         return $expirePackages;
@@ -439,7 +433,7 @@ class Company
             }
 
             // Save the file to persistent storage.
-            $path = $this->storageService->storeUploadedFile($file, 'company/' . $directory);
+            $path = $this->storageService->storeUploadedFile($file, 'company/' . (string) $directory);
 
             if ($entity instanceof CompanyModel) {
                 $oldPath = $entity->getLogo();
@@ -868,7 +862,7 @@ class Company
             if ($extensionValidator->isValid($files['upload'])) {
                 $fileName = $this->storageService->storeUploadedFile(
                     $files['upload'],
-                    'company/' . $company->getId(),
+                    'company/' . (string) $company->getId(),
                 );
 
                 return $this->storageConfig['public_dir'] . '/' . $fileName;

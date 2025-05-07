@@ -7,6 +7,7 @@ namespace User\Mapper;
 use Application\Mapper\BaseMapper;
 use DateTime;
 use Decision\Model\Member as MemberModel;
+use Override;
 use User\Model\User as UserModel;
 
 use function is_numeric;
@@ -69,6 +70,7 @@ class User extends BaseMapper
         return $qb->getQuery()->getOneOrNullResult();
     }
 
+    #[Override]
     protected function getRepositoryName(): string
     {
         return UserModel::class;

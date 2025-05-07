@@ -70,4 +70,19 @@
       <code>$_SERVER['SERVER_PROTOCOL']</code>
     </PossiblyUndefinedArrayOffset>
   </file>
+  <file src="module/User/src/Module.php">
+    <TypeDoesNotContainType>
+      <code>'production' === APP_ENV</code>
+    </TypeDoesNotContainType>
+  </file>
+  <file src="module/User/src/Authentication/Storage/UserSession.php">
+    <TypeDoesNotContainType>
+        <code>'production' === APP_ENV</code>
+    </TypeDoesNotContainType>
+  </file>
+  <file src="module/Application/config/module.config.php">
+    <TypeDoesNotContainType>
+        <code>'production' === APP_ENV</code>
+    </TypeDoesNotContainType>
+  </file>
 </files>

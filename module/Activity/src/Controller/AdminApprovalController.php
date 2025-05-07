@@ -99,19 +99,12 @@ class AdminApprovalController extends AbstractActionController
             return $this->notFoundAction();
         }
 
-        switch ($status) {
-            case 'approve':
-                $this->activityService->approve($activity);
-                break;
-            case 'disapprove':
-                $this->activityService->disapprove($activity);
-                break;
-            case 'reset':
-                $this->activityService->reset($activity);
-                break;
-            default:
-                throw new InvalidArgumentException('No such status ' . $status);
-        }
+        match ($status) {
+            'approve' => $this->activityService->approve($activity),
+            'disapprove' => $this->activityService->disapprove($activity),
+            'reset' => $this->activityService->reset($activity),
+            default => throw new InvalidArgumentException('No such status ' . $status),
+        };
 
         return $this->redirect()->toRoute('activity_admin');
     }

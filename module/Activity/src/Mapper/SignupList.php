@@ -6,6 +6,7 @@ namespace Activity\Mapper;
 
 use Activity\Model\SignupList as SignupListModel;
 use Application\Mapper\BaseMapper;
+use Override;
 
 /**
  * @template-extends BaseMapper<SignupListModel>
@@ -22,6 +23,7 @@ class SignupList extends BaseMapper
         ]);
     }
 
+    #[Override]
     protected function getRepositoryName(): string
     {
         return SignupListModel::class;

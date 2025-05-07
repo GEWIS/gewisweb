@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Activity\Mapper;
 
+use Activity\Model\ActivityCalendarOption;
 use Activity\Model\ActivityOptionProposal as ActivityOptionProposalModel;
 use Application\Mapper\BaseMapper;
 use DateTime;
+use Override;
 
 /**
  * @template-extends BaseMapper<ActivityOptionProposalModel>
@@ -28,7 +30,7 @@ class ActivityOptionProposal extends BaseMapper
         int $organId,
     ): array {
         $qb = $this->getRepository()->createQueryBuilder('b');
-        $qb->from('Activity\Model\ActivityCalendarOption', 'a')
+        $qb->from(ActivityCalendarOption::class, 'a')
             ->where('a.modifiedBy IS NULL')
             ->orWhere("a.status = 'approved'")
             ->andWhere('a.proposal = b.id')
@@ -42,6 +44,7 @@ class ActivityOptionProposal extends BaseMapper
         return $qb->getQuery()->getResult();
     }
 
+    #[Override]
     protected function getRepositoryName(): string
     {
         return ActivityOptionProposalModel::class;

@@ -7,6 +7,7 @@ namespace Company\Model;
 use Company\Model\Enums\CompanyPackageTypes;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
+use Override;
 
 /**
  * CompanyBannerPackage model.
@@ -39,6 +40,7 @@ class CompanyBannerPackage extends CompanyPackage
         $this->image = $image;
     }
 
+    #[Override]
     public function getType(): CompanyPackageTypes
     {
         return CompanyPackageTypes::Banner;
