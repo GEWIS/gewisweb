@@ -6,6 +6,7 @@ namespace Photo\Form\Factory;
 
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Photo\Form\Album as AlbumForm;
 use Psr\Container\ContainerInterface;
 
@@ -14,6 +15,7 @@ class AlbumFactory implements FactoryInterface
     /**
      * @param string $requestedName
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $requestedName,

@@ -8,6 +8,7 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Exception;
+use Override;
 
 use function array_merge;
 
@@ -31,6 +32,7 @@ class VirtualAlbum extends Album
      *
      * @return Album|null $parent
      */
+    #[Override]
     public function getParent(): ?Album
     {
         return null;
@@ -41,6 +43,7 @@ class VirtualAlbum extends Album
      *
      * @throws Exception
      */
+    #[Override]
     public function setParent(?Album $parent): void
     {
         throw new Exception('Method is not implemented');
@@ -51,6 +54,7 @@ class VirtualAlbum extends Album
      *
      * @return Collection<array-key, Album>
      */
+    #[Override]
     public function getChildren(): Collection
     {
         return new ArrayCollection();
@@ -59,6 +63,7 @@ class VirtualAlbum extends Album
     /**
      * @return Collection<array-key, Photo>
      */
+    #[Override]
     public function getPhotos(): Collection
     {
         return $this->photos;
@@ -67,6 +72,7 @@ class VirtualAlbum extends Album
     /**
      * Add a photo to an album.
      */
+    #[Override]
     public function addPhoto(Photo $photo): void
     {
         $this->photos[] = $photo;
@@ -91,6 +97,7 @@ class VirtualAlbum extends Album
      *
      * @throws Exception
      */
+    #[Override]
     public function addAlbum(Album $album): void
     {
         throw new Exception('Method is not implemented');
@@ -114,6 +121,7 @@ class VirtualAlbum extends Album
      *     albumCount: int,
      * }
      */
+    #[Override]
     public function toArrayWithChildren(): array
     {
         $array = $this->toArray();
@@ -146,6 +154,7 @@ class VirtualAlbum extends Album
      *     albumCount: int,
      * }
      */
+    #[Override]
     public function toArray(): array
     {
         return [
@@ -166,6 +175,7 @@ class VirtualAlbum extends Album
     /**
      * Get the amount of photos in the album.
      */
+    #[Override]
     public function getPhotoCount(bool $includeSubAlbums = false): int
     {
         return $this->photos->count();
@@ -174,6 +184,7 @@ class VirtualAlbum extends Album
     /**
      * Get the amount of subalbums in the album.
      */
+    #[Override]
     public function getAlbumCount(): int
     {
         return 0;

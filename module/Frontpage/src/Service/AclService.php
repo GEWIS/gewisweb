@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace Frontpage\Service;
 
 use Laminas\Permissions\Acl\Resource\GenericResource as Resource;
+use Override;
 use User\Permissions\Assertion\IsAllowedToViewPage;
 
 class AclService extends \User\Service\AclService
 {
+    #[Override]
     protected function createAcl(): void
     {
         parent::createAcl();

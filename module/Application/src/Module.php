@@ -51,10 +51,10 @@ class Module
         $moduleRouteListener->attach($eventManager);
 
         // Attach listener for locale determination through the `LanguageAwareTreeRouteStack`.
-        $eventManager->attach(MvcEvent::EVENT_ROUTE, [$this, 'onRoute']);
+        $eventManager->attach(MvcEvent::EVENT_ROUTE, $this->onRoute(...));
 
-        $eventManager->attach(MvcEvent::EVENT_DISPATCH_ERROR, [$this, 'logError']);
-        $eventManager->attach(MvCEvent::EVENT_RENDER_ERROR, [$this, 'logError']);
+        $eventManager->attach(MvcEvent::EVENT_DISPATCH_ERROR, $this->logError(...));
+        $eventManager->attach(MvCEvent::EVENT_RENDER_ERROR, $this->logError(...));
 
         // Enable Laminas\Validator default translator
         /**

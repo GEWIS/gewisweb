@@ -22,6 +22,7 @@ use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OneToOne;
 use Doctrine\ORM\Mapping\OrderBy;
+use Override;
 use User\Permissions\Resource\CreatorResourceInterface;
 use User\Permissions\Resource\OrganResourceInterface;
 
@@ -590,6 +591,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * Returns the string identifier of the Resource.
      */
+    #[Override]
     public function getResourceId(): string
     {
         return 'activity';
@@ -598,6 +600,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * Get the organ of this resource.
      */
+    #[Override]
     public function getResourceOrgan(): ?OrganModel
     {
         return $this->getOrgan();
@@ -606,6 +609,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
     /**
      * Get the creator of this resource.
      */
+    #[Override]
     public function getResourceCreator(): MemberModel
     {
         return $this->getCreator();

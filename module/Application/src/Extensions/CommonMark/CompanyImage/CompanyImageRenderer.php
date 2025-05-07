@@ -12,6 +12,7 @@ use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;
 use League\Config\ConfigurationInterface;
+use Override;
 use Stringable;
 
 use function str_starts_with;
@@ -26,6 +27,7 @@ class CompanyImageRenderer implements NodeRendererInterface
     ) {
     }
 
+    #[Override]
     public function render(
         Node $node,
         ChildNodeRendererInterface $childRenderer,

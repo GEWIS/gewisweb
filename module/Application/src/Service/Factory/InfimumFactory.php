@@ -7,6 +7,7 @@ namespace Application\Service\Factory;
 use Application\Service\Infimum as InfimumService;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Psr\Container\ContainerInterface;
 
 class InfimumFactory implements FactoryInterface
@@ -14,6 +15,7 @@ class InfimumFactory implements FactoryInterface
     /**
      * @param string $requestedName
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $requestedName,

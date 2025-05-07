@@ -20,6 +20,7 @@ use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Validator\EmailAddress;
 use Laminas\Validator\StringLength;
+use Override;
 
 use function strval;
 
@@ -176,6 +177,7 @@ class Signup extends Form implements InputFilterProviderInterface
     /**
      * Apparently, validators are automatically added, so this works.
      */
+    #[Override]
     public function getInputFilterSpecification(): array
     {
         $filter = [];

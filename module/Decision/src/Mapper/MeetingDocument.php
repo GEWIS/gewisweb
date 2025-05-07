@@ -7,6 +7,7 @@ namespace Decision\Mapper;
 use Application\Mapper\BaseMapper;
 use Decision\Model\MeetingDocument as MeetingDocumentModel;
 use InvalidArgumentException;
+use Override;
 
 use function sprintf;
 
@@ -33,6 +34,7 @@ class MeetingDocument extends BaseMapper
         return $document;
     }
 
+    #[Override]
     protected function getRepositoryName(): string
     {
         return MeetingDocumentModel::class;

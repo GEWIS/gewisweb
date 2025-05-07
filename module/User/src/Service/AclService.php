@@ -8,6 +8,7 @@ use Laminas\Mvc\I18n\Translator;
 use Laminas\Permissions\Acl\Acl;
 use Laminas\Permissions\Acl\Resource\GenericResource as Resource;
 use Laminas\Permissions\Acl\Role\GenericRole as Role;
+use Override;
 use User\Authentication\Adapter\CompanyUserAdapter;
 use User\Authentication\Adapter\UserAdapter;
 use User\Authentication\ApiAuthenticationService;
@@ -47,6 +48,7 @@ class AclService extends GenericAclService
         $this->createAcl();
     }
 
+    #[Override]
     protected function getAcl(): Acl
     {
         return $this->acl;

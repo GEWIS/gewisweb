@@ -10,6 +10,7 @@ use Decision\Model\Enums\OrganTypes;
 use Decision\Model\Organ as OrganModel;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
+use Override;
 
 /**
  * Mappers for organs.
@@ -146,6 +147,7 @@ class Organ extends BaseMapper
         return $qb->getQuery()->getSingleResult();
     }
 
+    #[Override]
     protected function getRepositoryName(): string
     {
         return OrganModel::class;

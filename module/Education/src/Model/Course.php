@@ -16,6 +16,7 @@ use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OrderBy;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
+use Override;
 
 use function implode;
 
@@ -205,6 +206,7 @@ class Course implements ResourceInterface
     /**
      * Get the resource ID.
      */
+    #[Override]
     public function getResourceId(): string
     {
         return 'course';

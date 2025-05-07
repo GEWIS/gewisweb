@@ -17,6 +17,7 @@ use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OneToOne;
+use Override;
 use RuntimeException;
 use User\Model\Enums\UserRoles;
 
@@ -174,6 +175,7 @@ class User implements IdentityInterface
         return $names;
     }
 
+    #[Override]
     public function getRoleId(): string
     {
         $roleNames = $this->getRoleNames();
@@ -251,6 +253,7 @@ class User implements IdentityInterface
     /**
      * Get the user's resource ID.
      */
+    #[Override]
     public function getResourceId(): string
     {
         return 'user';

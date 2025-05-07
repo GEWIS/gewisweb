@@ -6,6 +6,7 @@ namespace User\Mapper;
 
 use Application\Mapper\BaseMapper;
 use Company\Model\Company as CompanyModel;
+use Override;
 use User\Model\NewCompanyUser as NewCompanyUserModel;
 
 /**
@@ -43,6 +44,7 @@ class NewCompanyUser extends BaseMapper
         $qb->getQuery()->execute();
     }
 
+    #[Override]
     protected function getRepositoryName(): string
     {
         return NewCompanyUserModel::class;

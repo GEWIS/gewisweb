@@ -6,6 +6,7 @@ namespace Application\Service\Factory;
 
 use Application\Service\Email as EmailService;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Psr\Container\ContainerInterface;
 
 class EmailFactory implements FactoryInterface
@@ -13,6 +14,7 @@ class EmailFactory implements FactoryInterface
     /**
      * @param string $requestedName
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $requestedName,

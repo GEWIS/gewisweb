@@ -12,6 +12,7 @@ use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\StringLength;
+use Override;
 
 /**
  * @psalm-suppress MissingTemplateParam
@@ -88,6 +89,7 @@ class NewsItem extends Form implements InputFilterProviderInterface
      * Should return an array specification compatible with
      * {@link \Laminas\InputFilter\Factory::createInputFilter()}.
      */
+    #[Override]
     public function getInputFilterSpecification(): array
     {
         return [

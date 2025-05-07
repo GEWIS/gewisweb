@@ -28,6 +28,7 @@ use Laminas\Validator\File\MimeType;
 use Laminas\Validator\Regex;
 use Laminas\Validator\StringLength;
 use Laminas\Validator\Uri;
+use Override;
 
 use function intval;
 
@@ -262,6 +263,7 @@ class Job extends LocalisableForm implements InputFilterProviderInterface
         $this->currentSlug = $currentSlug;
     }
 
+    #[Override]
     public function getInputFilterSpecification(): array
     {
         $filter = parent::getInputFilterSpecification();
@@ -273,7 +275,7 @@ class Job extends LocalisableForm implements InputFilterProviderInterface
                     [
                         'name' => Callback::class,
                         'options' => [
-                            'callback' => [$this, 'isSlugUnique'],
+                            'callback' => $this->isSlugUnique(...),
                             'messages' => [
                                 Callback::INVALID_VALUE => $this->getTranslator()->translate(
                                     'This slug is already taken',
@@ -372,6 +374,7 @@ class Job extends LocalisableForm implements InputFilterProviderInterface
     /**
      * @inheritDoc
      */
+    #[Override]
     public function createLocalisedInputFilterSpecification(string $suffix = ''): array
     {
         return [

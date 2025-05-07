@@ -13,9 +13,8 @@ use function array_merge;
 use function ceil;
 use function count;
 use function floor;
-use function getrandmax;
 use function max;
-use function random_int;
+use function mt_rand;
 use function sys_get_temp_dir;
 
 /**
@@ -50,7 +49,7 @@ class AlbumCover
             return null;
         }
 
-        $tempFileName = sys_get_temp_dir() . '/CoverImage' . random_int(0, getrandmax()) . '.png';
+        $tempFileName = sys_get_temp_dir() . '/CoverImage' . mt_rand() . '.png';
         $cover->writeImage($tempFileName);
 
         return $this->storage->storeFile($tempFileName, false);

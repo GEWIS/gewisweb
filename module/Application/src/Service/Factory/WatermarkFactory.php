@@ -6,6 +6,7 @@ namespace Application\Service\Factory;
 
 use Application\Service\Watermark;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Psr\Container\ContainerInterface;
 use User\Authentication\Adapter\UserAdapter;
 use User\Authentication\AuthenticationService;
@@ -16,6 +17,7 @@ class WatermarkFactory implements FactoryInterface
     /**
      * @param string $requestedName
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $requestedName,

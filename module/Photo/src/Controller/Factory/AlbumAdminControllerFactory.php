@@ -6,6 +6,7 @@ namespace Photo\Controller\Factory;
 
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Photo\Controller\AlbumAdminController;
 use Photo\Service\AclService;
 use Photo\Service\Admin as AdminService;
@@ -17,6 +18,7 @@ class AlbumAdminControllerFactory implements FactoryInterface
     /**
      * @param string $requestedName
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $requestedName,

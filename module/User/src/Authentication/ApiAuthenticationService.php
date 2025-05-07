@@ -6,6 +6,7 @@ namespace User\Authentication;
 
 use Laminas\Authentication\AuthenticationServiceInterface;
 use Laminas\Authentication\Result;
+use Override;
 use User\Authentication\Adapter\ApiUserAdapter;
 use User\Model\ApiUser;
 
@@ -45,6 +46,7 @@ class ApiAuthenticationService implements AuthenticationServiceInterface
      * Authenticates against the authentication adapter. The default values must be `null` to be compatible with the
      * `AuthenticationServiceInterface`.
      */
+    #[Override]
     public function authenticate(?string $token = null): Result
     {
         $this->getAdapter()->setCredentials($token);
@@ -60,6 +62,7 @@ class ApiAuthenticationService implements AuthenticationServiceInterface
     /**
      * Returns true if and only if an identity is available.
      */
+    #[Override]
     public function hasIdentity(): bool
     {
         return null !== $this->identity;
@@ -68,6 +71,7 @@ class ApiAuthenticationService implements AuthenticationServiceInterface
     /**
      * Returns the authenticated ApiUser or null if no identity is available.
      */
+    #[Override]
     public function getIdentity(): ?ApiUser
     {
         return $this->identity;
@@ -76,6 +80,7 @@ class ApiAuthenticationService implements AuthenticationServiceInterface
     /**
      * Clears the identity.
      */
+    #[Override]
     public function clearIdentity(): void
     {
         $this->identity = null;

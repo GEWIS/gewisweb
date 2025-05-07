@@ -10,6 +10,7 @@ use Laminas\Http\Request;
 use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
+use Override;
 
 use function array_merge_recursive;
 
@@ -22,6 +23,7 @@ class OrganAdminController extends AbstractActionController
     /**
      * Index action, shows all active organs.
      */
+    #[Override]
     public function indexAction(): ViewModel
     {
         return new ViewModel(

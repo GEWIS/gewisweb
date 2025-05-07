@@ -12,6 +12,7 @@ use Activity\Service\Signup as SignupService;
 use Activity\Service\SignupListQuery as SignupListQueryService;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Psr\Container\ContainerInterface;
 
 class ActivityControllerFactory implements FactoryInterface
@@ -19,6 +20,7 @@ class ActivityControllerFactory implements FactoryInterface
     /**
      * @param string $requestedName
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $requestedName,

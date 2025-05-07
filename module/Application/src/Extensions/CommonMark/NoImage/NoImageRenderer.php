@@ -8,11 +8,13 @@ use League\CommonMark\Extension\CommonMark\Node\Inline\Image;
 use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
+use Override;
 
 use function sprintf;
 
 class NoImageRenderer implements NodeRendererInterface
 {
+    #[Override]
     public function render(
         Node $node,
         ChildNodeRendererInterface $childRenderer,

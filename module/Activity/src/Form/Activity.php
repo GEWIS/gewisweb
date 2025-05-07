@@ -22,6 +22,7 @@ use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\Callback;
 use Laminas\Validator\NotEmpty;
+use Override;
 use Throwable;
 
 class Activity extends LocalisableForm implements InputFilterProviderInterface
@@ -277,6 +278,7 @@ class Activity extends LocalisableForm implements InputFilterProviderInterface
      *
      * @throws DomainException
      */
+    #[Override]
     public function isValid(): bool
     {
         $valid = parent::isValid();
@@ -397,6 +399,7 @@ class Activity extends LocalisableForm implements InputFilterProviderInterface
      * Get the input filter. Will generate a different inputfilter depending on if the Dutch and/or English language
      * is set.
      */
+    #[Override]
     public function getInputFilterSpecification(): array
     {
         $filter = parent::getInputFilterSpecification();
@@ -418,7 +421,7 @@ class Activity extends LocalisableForm implements InputFilterProviderInterface
                                     'The activity must start before it ends.',
                                 ),
                             ],
-                            'callback' => [$this, 'beforeEndTime'],
+                            'callback' => $this->beforeEndTime(...),
                         ],
                     ],
                 ],
@@ -437,6 +440,7 @@ class Activity extends LocalisableForm implements InputFilterProviderInterface
     /**
      * @inheritDoc
      */
+    #[Override]
     protected function createLocalisedInputFilterSpecification(string $suffix = ''): array
     {
         return [

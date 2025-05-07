@@ -6,6 +6,7 @@ namespace User\Form\Factory;
 
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Psr\Container\ContainerInterface;
 use User\Form\CompanyUserLogin as CompanyUserLoginForm;
 
@@ -14,6 +15,7 @@ class CompanyUserLoginFactory implements FactoryInterface
     /**
      * @param string $requestedName
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $requestedName,

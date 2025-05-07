@@ -10,6 +10,7 @@ use Company\Mapper\Job as JobMapper;
 use Company\Mapper\Label as LabelMapper;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Psr\Container\ContainerInterface;
 
 class JobFactory implements FactoryInterface
@@ -17,6 +18,7 @@ class JobFactory implements FactoryInterface
     /**
      * @param string $requestedName
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $requestedName,

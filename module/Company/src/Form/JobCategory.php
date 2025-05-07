@@ -19,6 +19,7 @@ use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\Callback;
 use Laminas\Validator\Regex;
 use Laminas\Validator\StringLength;
+use Override;
 
 use function mb_strtolower;
 
@@ -120,6 +121,7 @@ class JobCategory extends Form implements InputFilterProviderInterface
         );
     }
 
+    #[Override]
     public function getInputFilterSpecification(): array
     {
         $filter = [
@@ -186,7 +188,7 @@ class JobCategory extends Form implements InputFilterProviderInterface
                     [
                         'name' => Callback::class,
                         'options' => [
-                            'callback' => [$this, 'isSlugUnique'],
+                            'callback' => $this->isSlugUnique(...),
                             'callbackOptions' => [
                                 'languageSuffix' => $languageSuffix,
                             ],
@@ -244,7 +246,7 @@ class JobCategory extends Form implements InputFilterProviderInterface
     ): bool {
         if (
             null !== $this->{'currentSlug' . $languageSuffix}
-            && mb_strtolower($this->{'currentSlug' . $languageSuffix}) === mb_strtolower($value)
+            && mb_strtolower((string) $this->{'currentSlug' . $languageSuffix}) === mb_strtolower($value)
         ) {
             return true;
         }

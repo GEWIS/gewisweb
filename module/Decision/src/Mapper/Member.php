@@ -11,6 +11,7 @@ use Decision\Model\Organ as OrganModel;
 use Decision\Model\OrganMember as OrganMemberModel;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
+use Override;
 use User\Model\User as UserModel;
 use User\Model\UserRole as UserRoleModel;
 
@@ -212,6 +213,7 @@ class Member extends BaseMapper
         return $qb->getQuery()->getResult();
     }
 
+    #[Override]
     protected function getRepositoryName(): string
     {
         return MemberModel::class;

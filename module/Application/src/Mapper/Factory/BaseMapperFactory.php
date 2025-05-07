@@ -6,6 +6,7 @@ namespace Application\Mapper\Factory;
 
 use Application\Mapper\BaseMapper;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Psr\Container\ContainerInterface;
 
 class BaseMapperFactory implements FactoryInterface
@@ -17,6 +18,7 @@ class BaseMapperFactory implements FactoryInterface
      *
      * @return T
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $requestedName,

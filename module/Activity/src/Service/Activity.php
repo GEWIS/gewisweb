@@ -317,13 +317,13 @@ class Activity
         $em = $this->entityManager;
 
         if (isset($data['options'])) {
-            $options = explode(',', $data['options']);
+            $options = explode(',', (string) $data['options']);
             $options = array_map('trim', $options);
             $numOptions = count($options);
         }
 
         if (isset($data['optionsEn'])) {
-            $optionsEn = explode(',', $data['optionsEn']);
+            $optionsEn = explode(',', (string) $data['optionsEn']);
             $optionsEn = array_map('trim', $optionsEn);
             $numOptions = count($optionsEn);
         }
@@ -577,7 +577,7 @@ class Activity
                     ) {
                         $proposal['signupLists'][$keyOuter]['fields'][$keyInner]['options'] = explode(
                             ',',
-                            $field['options'],
+                            (string) $field['options'],
                         );
                     }
 
@@ -592,7 +592,7 @@ class Activity
 
                     $proposal['signupLists'][$keyOuter]['fields'][$keyInner]['optionsEn'] = explode(
                         ',',
-                        $field['optionsEn'],
+                        (string) $field['optionsEn'],
                     );
                 }
             }

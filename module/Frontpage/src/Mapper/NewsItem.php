@@ -8,6 +8,7 @@ use Application\Mapper\BaseMapper;
 use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
 use Frontpage\Model\NewsItem as NewsItemModel;
+use Override;
 
 /**
  * Mappers for NewsItems.
@@ -42,6 +43,7 @@ class NewsItem extends BaseMapper
         return new DoctrineAdapter(new ORMPaginator($qb));
     }
 
+    #[Override]
     protected function getRepositoryName(): string
     {
         return NewsItemModel::class;

@@ -11,6 +11,7 @@ use Decision\Model\Enums\MeetingTypes;
 use Decision\Model\Meeting as MeetingModel;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
+use Override;
 
 use function is_int;
 
@@ -190,6 +191,7 @@ class Meeting extends BaseMapper
         return $qb->getQuery()->getResult();
     }
 
+    #[Override]
     protected function getRepositoryName(): string
     {
         return MeetingModel::class;

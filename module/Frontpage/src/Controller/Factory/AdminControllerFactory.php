@@ -6,6 +6,7 @@ namespace Frontpage\Controller\Factory;
 
 use Frontpage\Controller\AdminController;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Psr\Container\ContainerInterface;
 
 class AdminControllerFactory implements FactoryInterface
@@ -13,6 +14,7 @@ class AdminControllerFactory implements FactoryInterface
     /**
      * @param string $requestedName
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $requestedName,

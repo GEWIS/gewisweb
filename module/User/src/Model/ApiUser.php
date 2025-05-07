@@ -8,6 +8,7 @@ use Application\Model\IdentityInterface;
 use Application\Model\Traits\IdentifiableTrait;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
+use Override;
 
 /**
  * User model.
@@ -64,6 +65,7 @@ class ApiUser implements IdentityInterface
     /**
      * Get the API user's role ID.
      */
+    #[Override]
     public function getRoleId(): string
     {
         return 'apiuser';
@@ -72,6 +74,7 @@ class ApiUser implements IdentityInterface
     /**
      * Get the API user's resource ID.
      */
+    #[Override]
     public function getResourceId(): string
     {
         return 'api';

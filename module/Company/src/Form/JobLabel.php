@@ -12,6 +12,7 @@ use Laminas\Form\Element\Text;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\StringLength;
+use Override;
 
 class JobLabel extends LocalisableForm implements InputFilterProviderInterface
 {
@@ -74,6 +75,7 @@ class JobLabel extends LocalisableForm implements InputFilterProviderInterface
     /**
      * @inheritDoc
      */
+    #[Override]
     protected function createLocalisedInputFilterSpecification(string $suffix = ''): array
     {
         return [

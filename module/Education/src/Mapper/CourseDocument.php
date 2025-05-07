@@ -10,6 +10,7 @@ use Education\Model\Course as CourseModel;
 use Education\Model\CourseDocument as CourseDocumentModel;
 use Education\Model\Exam as ExamModel;
 use Education\Model\Summary as SummaryModel;
+use Override;
 
 use function addcslashes;
 
@@ -52,6 +53,7 @@ class CourseDocument extends BaseMapper
         return $qb->getQuery()->getResult();
     }
 
+    #[Override]
     protected function getRepositoryName(): string
     {
         return CourseDocumentModel::class;

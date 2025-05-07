@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace Activity\Service;
 
 use Laminas\Permissions\Acl\Resource\GenericResource as Resource;
+use Override;
 use User\Permissions\Assertion\IsCreatorOrOrganMember;
 
 class AclService extends \User\Service\AclService
 {
+    #[Override]
     protected function createAcl(): void
     {
         parent::createAcl();

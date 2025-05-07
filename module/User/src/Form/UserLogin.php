@@ -15,6 +15,7 @@ use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\NotEmpty;
 use Laminas\Validator\StringLength;
+use Override;
 
 /**
  * @psalm-suppress MissingTemplateParam
@@ -116,6 +117,7 @@ class UserLogin extends Form implements InputFilterProviderInterface
         }
     }
 
+    #[Override]
     public function getInputFilterSpecification(): array
     {
         return [

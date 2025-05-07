@@ -8,6 +8,7 @@ use Application\Model\IdentityInterface;
 use Application\Service\AbstractAclService;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Permissions\Acl\Role\RoleInterface;
+use Override;
 use User\Authentication\Adapter\CompanyUserAdapter;
 use User\Authentication\Adapter\UserAdapter;
 use User\Authentication\ApiAuthenticationService;
@@ -53,6 +54,7 @@ abstract class GenericAclService extends AbstractAclService
      * The role that should take precedence should be returned first.
      * This is because of the behaviour of {@link \Laminas\Permissions\Acl\Role\Registry}.
      */
+    #[Override]
     protected function getRole(): RoleInterface|string
     {
         if (null !== ($identity = $this->getIdentity())) {
@@ -66,6 +68,7 @@ abstract class GenericAclService extends AbstractAclService
         return 'guest';
     }
 
+    #[Override]
     public function getIdentity(): ?IdentityInterface
     {
         if ($this->userAuthService->hasIdentity()) {

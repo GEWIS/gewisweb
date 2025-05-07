@@ -14,6 +14,7 @@ use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\File\Extension;
 use Laminas\Validator\File\MimeType;
 use Laminas\Validator\StringLength;
+use Override;
 
 /**
  * @psalm-suppress MissingTemplateParam
@@ -68,6 +69,7 @@ class Document extends Form implements InputFilterProviderInterface
     /**
      * Input filter specification.
      */
+    #[Override]
     public function getInputFilterSpecification(): array
     {
         return [

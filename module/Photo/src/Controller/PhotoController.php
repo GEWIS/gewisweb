@@ -13,6 +13,7 @@ use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\View\Model\JsonModel;
 use Laminas\View\Model\ViewModel;
+use Override;
 use Photo\Model\Album;
 use Photo\Service\AclService;
 use Photo\Service\Album as AlbumService;
@@ -39,6 +40,7 @@ class PhotoController extends AbstractActionController
     ) {
     }
 
+    #[Override]
     public function indexAction(): ViewModel
     {
         if (!$this->aclService->isAllowed('view', 'album')) {

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace User\Mapper;
 
 use Application\Mapper\BaseMapper;
+use Override;
 use User\Model\ApiUser as ApiUserModel;
 
 /**
@@ -26,6 +27,7 @@ class ApiUser extends BaseMapper
         );
     }
 
+    #[Override]
     protected function getRepositoryName(): string
     {
         return ApiUserModel::class;

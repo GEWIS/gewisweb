@@ -7,6 +7,7 @@ namespace Decision\Mapper;
 use Application\Mapper\BaseMapper;
 use Decision\Model\Member as MemberModel;
 use Decision\Model\SubDecision as SubDecisionModel;
+use Override;
 
 use function addcslashes;
 
@@ -33,6 +34,7 @@ class SubDecision extends BaseMapper
         return $qb->getQuery()->getResult();
     }
 
+    #[Override]
     protected function getRepositoryName(): string
     {
         return SubDecisionModel::class;

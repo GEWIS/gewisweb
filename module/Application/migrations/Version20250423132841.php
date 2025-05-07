@@ -6,6 +6,7 @@ namespace Application\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
+use Override;
 
 /**
  * phpcs:disable Generic.Files.LineLength.TooLong
@@ -13,11 +14,13 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20250423132841 extends AbstractMigration
 {
+    #[Override]
     public function getDescription(): string
     {
         return 'Update reference models from GEWISDB/ReportDB. Includes improved handling of installation functions.';
     }
 
+    #[Override]
     public function up(Schema $schema): void
     {
         $this->addSql('ALTER TABLE Decision ADD contentEN LONGTEXT NOT NULL');
@@ -28,6 +31,7 @@ final class Version20250423132841 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_F0D6EE40EFBA85FF292FAD51 ON SubDecision (r_meeting_type, r_meeting_number)');
     }
 
+    #[Override]
     public function down(Schema $schema): void
     {
         $this->addSql('ALTER TABLE SubDecision DROP FOREIGN KEY FK_F0D6EE40EFBA85FF292FAD51');

@@ -17,6 +17,7 @@ use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\File\Extension;
 use Laminas\Validator\File\IsImage;
 use Laminas\Validator\StringLength;
+use Override;
 
 /**
  * @psalm-suppress MissingTemplateParam
@@ -133,6 +134,7 @@ class OrganInformation extends Form implements InputFilterProviderInterface
      * Should return an array specification compatible with
      * {@link \Laminas\InputFilter\Factory::createInputFilter()}.
      */
+    #[Override]
     public function getInputFilterSpecification(): array
     {
         return [

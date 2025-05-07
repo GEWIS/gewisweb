@@ -8,6 +8,7 @@ use Company\Controller\CompanyController;
 use Company\Service\Company as CompanyService;
 use Company\Service\CompanyQuery as CompanyQueryService;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Psr\Container\ContainerInterface;
 
 class CompanyControllerFactory implements FactoryInterface
@@ -15,6 +16,7 @@ class CompanyControllerFactory implements FactoryInterface
     /**
      * @param string $requestedName
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $requestedName,

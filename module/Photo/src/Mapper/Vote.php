@@ -7,6 +7,7 @@ namespace Photo\Mapper;
 use Application\Mapper\BaseMapper;
 use DateInterval;
 use DateTime;
+use Override;
 use Photo\Model\Vote as VoteModel;
 
 use function count;
@@ -88,6 +89,7 @@ class Vote extends BaseMapper
         );
     }
 
+    #[Override]
     protected function getRepositoryName(): string
     {
         return VoteModel::class;

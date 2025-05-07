@@ -6,6 +6,7 @@ namespace Company\Mapper;
 
 use Application\Mapper\BaseMapper;
 use Company\Model\Proposals\JobUpdate as JobUpdateModel;
+use Override;
 
 /**
  * Mappers for job update proposals.
@@ -14,6 +15,7 @@ use Company\Model\Proposals\JobUpdate as JobUpdateModel;
  */
 class JobUpdate extends BaseMapper
 {
+    #[Override]
     protected function getRepositoryName(): string
     {
         return JobUpdateModel::class;

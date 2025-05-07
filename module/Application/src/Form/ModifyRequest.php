@@ -8,6 +8,7 @@ use Laminas\Form\Element\Csrf;
 use Laminas\Form\Element\Submit;
 use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterProviderInterface;
+use Override;
 
 /**
  * Specifies a form that is used to let a user do a modification request that does not require any other data, such as
@@ -43,6 +44,7 @@ class ModifyRequest extends Form implements InputFilterProviderInterface
         );
     }
 
+    #[Override]
     public function getInputFilterSpecification(): array
     {
         return [];

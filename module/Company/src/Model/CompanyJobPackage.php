@@ -11,6 +11,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OrderBy;
+use Override;
 
 use function array_filter;
 use function count;
@@ -111,6 +112,7 @@ class CompanyJobPackage extends CompanyPackage
         $this->jobs->removeElement($job);
     }
 
+    #[Override]
     public function getType(): CompanyPackageTypes
     {
         return CompanyPackageTypes::Job;
