@@ -3581,6 +3581,26 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Application-Migrations-Version20250501112959.html#method_down"
         },                {
+            "fqsen": "\\Application\\Migrations\\Version20250506195523",
+            "name": "Version20250506195523",
+            "summary": "phpcs\u003Adisable\u0020Generic.Files.LineLength.TooLong\nphpcs\u003Adisable\u0020SlevomatCodingStandard.Functions.RequireMultiLineCall.RequiredMultiLineCall",
+            "url": "classes/Application-Migrations-Version20250506195523.html"
+        },                {
+            "fqsen": "\\Application\\Migrations\\Version20250506195523\u003A\u003AgetDescription\u0028\u0029",
+            "name": "getDescription",
+            "summary": "",
+            "url": "classes/Application-Migrations-Version20250506195523.html#method_getDescription"
+        },                {
+            "fqsen": "\\Application\\Migrations\\Version20250506195523\u003A\u003Aup\u0028\u0029",
+            "name": "up",
+            "summary": "",
+            "url": "classes/Application-Migrations-Version20250506195523.html#method_up"
+        },                {
+            "fqsen": "\\Application\\Migrations\\Version20250506195523\u003A\u003Adown\u0028\u0029",
+            "name": "down",
+            "summary": "",
+            "url": "classes/Application-Migrations-Version20250506195523.html#method_down"
+        },                {
             "fqsen": "\\Application\\Command\\Factory\\LoadFixturesFactory",
             "name": "LoadFixturesFactory",
             "summary": "",
