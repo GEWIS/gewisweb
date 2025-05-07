@@ -901,6 +901,6 @@ class Member
 
     public function isExpired(): bool
     {
-        return $this->getExpiration() < (new DateTime());
+        return $this->getExpiration() < new DateTime();
     }
 }
