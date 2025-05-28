@@ -49,16 +49,20 @@ $title = $this->escapeHtml($this->localiseText($poll->getQuestion()));
 
         <?php if ($showResults && $canVote): ?>
             <div class="radio">
-                <label style="word-wrap: break-word;">
-                    <input type="radio" value="<?= $option->getId() ?>" name="option">
-                    <h5 class="clearfix<?= $voted ? ' text-primary' : '' ?>">
-                        <?= $text ?>
-                    </h5>
-
-                </label>
-                <h5 class="clearfix<?= $voted ? ' text-primary' : '' ?>">
-                    <small class="pull-right"
-                           style="margin-top: 0.4em;"><?= $option->getVotesCount() === 1 ? $this->translate('1 vote') : sprintf($this->translate('%d votes'), $option->getVotesCount()) ?></small>
+                <h5 class="clearfix" style="word-wrap: break-word;">
+                    <label style="width: 100%;">
+                        <input type="radio" value="<?= $option->getId() ?>" name="option">
+                        <span class="h5<?= $voted ? ' text-primary' : '' ?>" style="vertical-align: sub;">
+                            <?= $text ?>
+                        </span>
+                        <small class="pull-right<?= $voted ? ' text-primary' : '' ?>" style="margin-top: 0.4em;">
+                            <?= $option->getVotesCount() . ' ' . $this->translatePlural(
+                                'vote',
+                                'votes',
+                                $option->getVotesCount(),
+                            ) ?>
+                        </small>
+                    </label>
                 </h5>
                 <div class="progress progress--poll">
                     <div class="progress-bar" style="width: <?= $percentages[$option->getId()] ?>%;"></div>
