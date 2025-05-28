@@ -8,6 +8,7 @@ use Application\Service\FileStorage as FileStorageService;
 use Decision\Service\Member as MemberService;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Photo\Form\Album as AlbumForm;
 use Photo\Form\SearchAlbum as SearchAlbumForm;
 use Photo\Mapper\Album as AlbumMapper;
@@ -24,6 +25,7 @@ class AlbumFactory implements FactoryInterface
     /**
      * @param string $requestedName
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $requestedName,

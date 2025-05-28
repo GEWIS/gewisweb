@@ -10,6 +10,7 @@ use Decision\Service\AclService;
 use Decision\Service\Member as MemberService;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Psr\Container\ContainerInterface;
 
 class MemberFactory implements FactoryInterface
@@ -17,6 +18,7 @@ class MemberFactory implements FactoryInterface
     /**
      * @param string $requestedName
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $requestedName,

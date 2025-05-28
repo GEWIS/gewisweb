@@ -16,6 +16,7 @@ use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\Callback;
 use Laminas\Validator\StringLength;
+use Override;
 use Throwable;
 
 class SignupList extends Fieldset implements InputFilterProviderInterface
@@ -137,6 +138,7 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
         }
     }
 
+    #[Override]
     public function getInputFilterSpecification(): array
     {
         return [
@@ -177,7 +179,7 @@ class SignupList extends Fieldset implements InputFilterProviderInterface
                                     'The sign-up list opening date and time must be before the sign-up list closes.',
                                 ),
                             ],
-                            'callback' => [$this, 'beforeCloseDate'],
+                            'callback' => $this->beforeCloseDate(...),
                         ],
                     ],
                 ],

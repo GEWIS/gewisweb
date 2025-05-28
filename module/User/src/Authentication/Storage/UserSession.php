@@ -11,6 +11,7 @@ use Laminas\Authentication\Storage\Session as SessionStorage;
 use Laminas\Http\Header\SetCookie;
 use Laminas\Http\Request;
 use Laminas\Http\Response;
+use Override;
 use UnexpectedValueException;
 
 use function bin2hex;
@@ -48,6 +49,7 @@ class UserSession extends SessionStorage
     /**
      * Defined by Laminas\Authentication\Storage\StorageInterface.
      */
+    #[Override]
     public function isEmpty(): bool
     {
         if (!parent::isEmpty()) {
@@ -114,6 +116,7 @@ class UserSession extends SessionStorage
      *
      * @inheritDoc
      */
+    #[Override]
     public function write($contents): void
     {
         parent::write($contents);
@@ -153,6 +156,7 @@ class UserSession extends SessionStorage
     /**
      * Defined by Laminas\Authentication\Storage\StorageInterface.
      */
+    #[Override]
     public function clear(): void
     {
         // Clear the session

@@ -220,7 +220,7 @@ class Decision
      */
     public function uploadMinutes(array $data): bool
     {
-        $parts = explode('/', $data['meeting']);
+        $parts = explode('/', (string) $data['meeting']);
         $meeting = $this->getMeeting(MeetingTypes::from($parts[0]), intval($parts[1]));
         $path = $this->storageService->storeUploadedFile($data['upload']);
 
@@ -250,7 +250,7 @@ class Decision
     {
         $path = $this->storageService->storeUploadedFile($data['upload']);
 
-        $meeting = explode('/', $data['meeting']);
+        $meeting = explode('/', (string) $data['meeting']);
         $meeting = $this->getMeeting(MeetingTypes::from($meeting[0]), intval($meeting[1]));
 
         $document = new MeetingDocumentModel();

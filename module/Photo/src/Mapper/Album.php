@@ -6,6 +6,7 @@ namespace Photo\Mapper;
 
 use Application\Mapper\BaseMapper;
 use DateTime;
+use Override;
 use Photo\Model\Album as AlbumModel;
 
 use function addcslashes;
@@ -120,6 +121,7 @@ class Album extends BaseMapper
         return empty($res) ? null : $res[0];
     }
 
+    #[Override]
     protected function getRepositoryName(): string
     {
         return AlbumModel::class;

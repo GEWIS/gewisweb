@@ -9,6 +9,7 @@ use Activity\Service\AclService;
 use Activity\Service\ActivityCategory as ActivityCategoryService;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Psr\Container\ContainerInterface;
 
 class AdminCategoryControllerFactory implements FactoryInterface
@@ -16,6 +17,7 @@ class AdminCategoryControllerFactory implements FactoryInterface
     /**
      * @param string $requestedName
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $requestedName,

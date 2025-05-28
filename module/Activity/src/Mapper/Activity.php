@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Activity\Mapper;
 
 use Activity\Model\Activity as ActivityModel;
+use Activity\Model\SignupList;
+use Activity\Model\UserSignup;
 use Application\Mapper\BaseMapper;
 use DateTime;
 use Decision\Model\Member as MemberModel;
@@ -13,6 +15,7 @@ use Doctrine\ORM\Query\Expr\Comparison;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
+use Override;
 use User\Model\User as UserModel;
 
 use function array_key_exists;
@@ -123,8 +126,8 @@ class Activity extends BaseMapper
     public function getUpcomingActivitiesSubscribedBy(UserModel $user): array
     {
         $qb = $this->getRepository()->createQueryBuilder('a');
-        $qb->from('Activity\Model\SignupList', 'b')
-            ->from('Activity\Model\UserSignup', 'c')
+        $qb->from(SignupList::class, 'b')
+            ->from(UserSignup::class, 'c')
             ->where('a.endTime > :now')
             ->setParameter('now', new DateTime())
             ->andWhere('a.status = :status')
@@ -326,6 +329,7 @@ class Activity extends BaseMapper
         return $qb->getQuery()->getResult();
     }
 
+    #[Override]
     protected function getRepositoryName(): string
     {
         return ActivityModel::class;

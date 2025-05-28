@@ -14,6 +14,7 @@ use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\Callback;
 use Laminas\Validator\Date;
+use Override;
 use Throwable;
 
 /**
@@ -96,6 +97,7 @@ class ActivityCalendarPeriod extends Form implements InputFilterProviderInterfac
         );
     }
 
+    #[Override]
     public function getInputFilterSpecification(): array
     {
         return [
@@ -127,7 +129,7 @@ class ActivityCalendarPeriod extends Form implements InputFilterProviderInterfac
                                     'The planning period must end after it starts.',
                                 ),
                             ],
-                            'callback' => [$this, 'afterOtherTime'],
+                            'callback' => $this->afterOtherTime(...),
                             'callbackOptions' => ['beginPlanningTime'],
                         ],
                     ],
@@ -150,7 +152,7 @@ class ActivityCalendarPeriod extends Form implements InputFilterProviderInterfac
                                     'The option period must start after the planning period ends.',
                                 ),
                             ],
-                            'callback' => [$this, 'afterOtherTime'],
+                            'callback' => $this->afterOtherTime(...),
                             'callbackOptions' => ['endPlanningTime'],
                         ],
                     ],
@@ -173,7 +175,7 @@ class ActivityCalendarPeriod extends Form implements InputFilterProviderInterfac
                                     'The option period must end after it starts.',
                                 ),
                             ],
-                            'callback' => [$this, 'afterOtherTime'],
+                            'callback' => $this->afterOtherTime(...),
                             'callbackOptions' => ['beginOptionTime'],
                         ],
                     ],

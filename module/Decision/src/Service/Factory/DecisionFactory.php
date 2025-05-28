@@ -21,6 +21,7 @@ use Decision\Service\AclService;
 use Decision\Service\Decision as DecisionService;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Psr\Container\ContainerInterface;
 
 class DecisionFactory implements FactoryInterface
@@ -28,6 +29,7 @@ class DecisionFactory implements FactoryInterface
     /**
      * @param string $requestedName
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $requestedName,

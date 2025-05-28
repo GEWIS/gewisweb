@@ -15,6 +15,7 @@ use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\Digits;
 use Laminas\Validator\EmailAddress;
 use Laminas\Validator\NotEmpty;
+use Override;
 
 /**
  * @psalm-suppress MissingTemplateParam
@@ -63,6 +64,7 @@ class UserReset extends Form implements InputFilterProviderInterface
         );
     }
 
+    #[Override]
     public function getInputFilterSpecification(): array
     {
         return [

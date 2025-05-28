@@ -12,6 +12,7 @@ use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\Digits;
 use Laminas\Validator\NotEmpty;
+use Override;
 
 /**
  * @psalm-suppress MissingTemplateParam
@@ -96,6 +97,7 @@ class Register extends Form implements InputFilterProviderInterface
         }
     }
 
+    #[Override]
     public function getInputFilterSpecification(): array
     {
         return [

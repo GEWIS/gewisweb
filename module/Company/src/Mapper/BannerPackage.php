@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Company\Mapper;
 
 use Company\Model\CompanyBannerPackage as CompanyBannerPackageModel;
+use Override;
 
 use function array_rand;
 
@@ -29,6 +30,7 @@ class BannerPackage extends Package
         return null;
     }
 
+    #[Override]
     protected function getRepositoryName(): string
     {
         return CompanyBannerPackageModel::class;

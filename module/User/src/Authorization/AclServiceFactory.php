@@ -12,6 +12,7 @@ use Frontpage\Service\AclService as FrontpageAclService;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Exception\InvalidArgumentException;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Photo\Service\AclService as PhotoAclService;
 use Psr\Container\ContainerInterface;
 use User\Authentication\Adapter\CompanyUserAdapter;
@@ -30,6 +31,7 @@ class AclServiceFactory implements FactoryInterface
     /**
      * @param string $requestedName
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $requestedName,

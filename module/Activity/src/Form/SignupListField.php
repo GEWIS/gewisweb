@@ -15,6 +15,7 @@ use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\Callback;
 use Laminas\Validator\NotEmpty;
+use Override;
 
 use function substr_count;
 
@@ -121,6 +122,7 @@ class SignupListField extends Fieldset implements InputFilterProviderInterface
         );
     }
 
+    #[Override]
     public function getInputFilterSpecification(): array
     {
         return [
@@ -203,7 +205,7 @@ class SignupListField extends Fieldset implements InputFilterProviderInterface
                             'callback' => static function ($value, $context = null) {
                                 return !((new NotEmpty())->isValid($context['nameEn']))
                                     || !((new NotEmpty())->isValid($context['name']))
-                                    || substr_count($context['options'], ',') === substr_count($value, ',');
+                                    || substr_count((string) $context['options'], ',') === substr_count($value, ',');
                             },
                         ],
                     ],

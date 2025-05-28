@@ -6,6 +6,7 @@ namespace Application\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
+use Override;
 
 /**
  * phpcs:disable Generic.Files.LineLength.TooLong
@@ -13,11 +14,13 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20241020212355 extends AbstractMigration
 {
+    #[Override]
     public function getDescription(): string
     {
         return 'Initial migration after adding support for Doctrine migrations.';
     }
 
+    #[Override]
     public function up(Schema $schema): void
     {
         $this->addSql('CREATE TABLE Activity (id INT AUTO_INCREMENT NOT NULL, name_id INT NOT NULL, location_id INT NOT NULL, costs_id INT NOT NULL, approver_id INT DEFAULT NULL, creator_id INT NOT NULL, description_id INT NOT NULL, organ_id INT DEFAULT NULL, company_id INT DEFAULT NULL, beginTime DATETIME NOT NULL, endTime DATETIME NOT NULL, status INT NOT NULL, isMyFuture TINYINT(1) NOT NULL, requireGEFLITST TINYINT(1) NOT NULL, UNIQUE INDEX UNIQ_55026B0C71179CD6 (name_id), UNIQUE INDEX UNIQ_55026B0C64D218E (location_id), UNIQUE INDEX UNIQ_55026B0C27D66E0D (costs_id), INDEX IDX_55026B0CBB23766C (approver_id), INDEX IDX_55026B0C61220EA6 (creator_id), UNIQUE INDEX UNIQ_55026B0CD9F966B (description_id), INDEX IDX_55026B0CE4445171 (organ_id), INDEX IDX_55026B0C979B1AD6 (company_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
@@ -204,6 +207,7 @@ final class Version20241020212355 extends AbstractMigration
         $this->addSql('ALTER TABLE WeeklyPhoto ADD CONSTRAINT FK_E5D6E8E07E9E4C8C FOREIGN KEY (photo_id) REFERENCES Photo (id)');
     }
 
+    #[Override]
     public function down(Schema $schema): void
     {
         $this->throwIrreversibleMigrationException();

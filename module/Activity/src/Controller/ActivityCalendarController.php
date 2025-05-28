@@ -13,6 +13,7 @@ use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\View\Model\ViewModel;
+use Override;
 use User\Permissions\NotAllowedException;
 
 class ActivityCalendarController extends AbstractActionController
@@ -30,6 +31,7 @@ class ActivityCalendarController extends AbstractActionController
     ) {
     }
 
+    #[Override]
     public function indexAction(): ViewModel
     {
         $config = $this->calendarConfig;

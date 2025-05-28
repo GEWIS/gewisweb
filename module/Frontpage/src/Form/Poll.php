@@ -14,6 +14,7 @@ use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\Callback;
 use Laminas\Validator\StringLength;
+use Override;
 
 use function str_ends_with;
 
@@ -75,6 +76,7 @@ class Poll extends Form implements InputFilterProviderInterface
      * Should return an array specification compatible with
      * {@link \Laminas\InputFilter\Factory::createInputFilter()}.
      */
+    #[Override]
     public function getInputFilterSpecification(): array
     {
         return [

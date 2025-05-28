@@ -12,6 +12,7 @@ use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
 use Laminas\View\Model\ViewModel;
+use Override;
 use User\Permissions\NotAllowedException;
 
 /**
@@ -29,6 +30,7 @@ class AdminCategoryController extends AbstractActionController
     /**
      * View all Categories.
      */
+    #[Override]
     public function indexAction(): ViewModel
     {
         $categories = $this->categoryService->findAll();

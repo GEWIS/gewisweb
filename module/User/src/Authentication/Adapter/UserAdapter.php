@@ -8,6 +8,7 @@ use Laminas\Authentication\Adapter\AdapterInterface;
 use Laminas\Authentication\Result;
 use Laminas\Crypt\Password\Bcrypt;
 use Laminas\Mvc\I18n\Translator;
+use Override;
 use SensitiveParameter;
 use User\Authentication\Service\LoginAttempt as LoginAttemptService;
 use User\Mapper\User as UserMapper;
@@ -31,6 +32,7 @@ class UserAdapter implements AdapterInterface
     /**
      * Try to authenticate.
      */
+    #[Override]
     public function authenticate(): Result
     {
         $user = $this->mapper->findByLogin($this->login);

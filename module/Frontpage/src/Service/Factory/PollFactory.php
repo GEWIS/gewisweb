@@ -14,6 +14,7 @@ use Frontpage\Service\AclService;
 use Frontpage\Service\Poll as PollService;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Psr\Container\ContainerInterface;
 
 class PollFactory implements FactoryInterface
@@ -21,6 +22,7 @@ class PollFactory implements FactoryInterface
     /**
      * @param string $requestedName
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $requestedName,

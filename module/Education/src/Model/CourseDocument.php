@@ -16,6 +16,7 @@ use Doctrine\ORM\Mapping\InheritanceType;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
+use Override;
 
 /**
  * @psalm-import-type CourseGdprArrayType from Course as ImportedCourseGdprArrayType
@@ -180,6 +181,7 @@ abstract class CourseDocument implements ResourceInterface
         ];
     }
 
+    #[Override]
     public function getResourceId(): string
     {
         return 'course_document';

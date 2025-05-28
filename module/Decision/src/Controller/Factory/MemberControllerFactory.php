@@ -11,6 +11,7 @@ use Decision\Service\Member as MemberService;
 use Decision\Service\MemberInfo as MemberInfoService;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Psr\Container\ContainerInterface;
 
 class MemberControllerFactory implements FactoryInterface
@@ -18,6 +19,7 @@ class MemberControllerFactory implements FactoryInterface
     /**
      * @param string $requestedName
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $requestedName,

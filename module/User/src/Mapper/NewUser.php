@@ -6,6 +6,7 @@ namespace User\Mapper;
 
 use Application\Mapper\BaseMapper;
 use Decision\Model\Member as MemberModel;
+use Override;
 use User\Model\NewUser as NewUserModel;
 
 /**
@@ -61,6 +62,7 @@ class NewUser extends BaseMapper
         $qb->getQuery()->execute();
     }
 
+    #[Override]
     protected function getRepositoryName(): string
     {
         return NewUserModel::class;

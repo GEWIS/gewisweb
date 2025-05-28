@@ -10,6 +10,7 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
 use Frontpage\Model\Poll as PollModel;
 use Frontpage\Model\PollVote as PollVoteModel;
+use Override;
 
 /**
  * Mappers for Polls.
@@ -117,6 +118,7 @@ class Poll extends BaseMapper
         return $qb->getQuery()->getResult();
     }
 
+    #[Override]
     protected function getRepositoryName(): string
     {
         return PollModel::class;

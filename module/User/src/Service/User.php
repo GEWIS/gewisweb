@@ -196,7 +196,7 @@ class User
 
         // save the data, and send email
         $newUser = new NewUserModel($member);
-        $newUser->setCode($this->generateCode());
+        $newUser->setCode(static::generateCode());
         $newUser->setTime(new DateTime());
 
         $this->newUserMapper->persist($newUser);
@@ -256,7 +256,7 @@ class User
 
         // create new activation
         $newUser = new NewUserModel($member);
-        $newUser->setCode($this->generateCode());
+        $newUser->setCode(static::generateCode());
         $newUser->setTime(new DateTime());
 
         $this->newUserMapper->persist($newUser);
@@ -293,7 +293,7 @@ class User
         }
 
         $newCompanyUser = new NewCompanyUserModel($company);
-        $newCompanyUser->setCode($this->generateCode());
+        $newCompanyUser->setCode(static::generateCode());
 
         $this->newCompanyUserMapper->persist($newCompanyUser);
         $this->emailService->sendCompanyPasswordLostMail($newCompanyUser, $company);

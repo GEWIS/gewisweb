@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Activity\Command;
 
 use Activity\Service\Signup as SignupService;
+use Override;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -21,6 +22,7 @@ class DeleteOldSignups extends Command
         parent::__construct();
     }
 
+    #[Override]
     protected function execute(
         InputInterface $input,
         OutputInterface $output,

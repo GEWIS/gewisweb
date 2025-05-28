@@ -7,6 +7,7 @@ namespace Activity\Form\Factory;
 use Activity\Form\SignupListField as SignupListFieldForm;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Psr\Container\ContainerInterface;
 
 class SignupListFieldFactory implements FactoryInterface
@@ -14,6 +15,7 @@ class SignupListFieldFactory implements FactoryInterface
     /**
      * @param string $requestedName
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $requestedName,

@@ -7,6 +7,7 @@ namespace User\Authentication;
 use Application\Model\IdentityInterface;
 use Laminas\Authentication\AuthenticationServiceInterface;
 use Laminas\Authentication\Result;
+use Override;
 use RuntimeException;
 use SensitiveParameter;
 use User\Authentication\Adapter\CompanyUserAdapter;
@@ -88,6 +89,7 @@ class AuthenticationService implements AuthenticationServiceInterface
      * Authenticates against the authentication adapter. The default values must be `null` to be compatible with the
      * `AuthenticationServiceInterface`. We can safely assume they are provided, but if not throw a `RuntimeException`.
      */
+    #[Override]
     public function authenticate(
         ?string $login = null,
         #[SensitiveParameter]
@@ -120,6 +122,7 @@ class AuthenticationService implements AuthenticationServiceInterface
     /**
      * Returns true if and only if an identity is available from storage.
      */
+    #[Override]
     public function hasIdentity(): bool
     {
         return !$this->getStorage()->isEmpty();
@@ -130,6 +133,7 @@ class AuthenticationService implements AuthenticationServiceInterface
      *
      * @psalm-return (TAdapter is CompanyUserAdapter ? (CompanyUser|null) : (User|null))
      */
+    #[Override]
     public function getIdentity(): ?IdentityInterface
     {
         if (!$this->hasIdentity()) {
@@ -145,6 +149,7 @@ class AuthenticationService implements AuthenticationServiceInterface
     /**
      * Clears the identity from persistent storage.
      */
+    #[Override]
     public function clearIdentity(): void
     {
         $this->getStorage()->clear();

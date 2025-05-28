@@ -7,6 +7,7 @@ namespace Application\View\Helper;
 use Application\Model\Enums\Languages;
 use InvalidArgumentException;
 use Laminas\View\Helper\Placeholder\Container\AbstractStandalone;
+use Override;
 
 use function is_string;
 use function sprintf;
@@ -54,6 +55,7 @@ class HrefLang extends AbstractStandalone
         return $this;
     }
 
+    #[Override]
     public function toString(): string
     {
         $output = '';

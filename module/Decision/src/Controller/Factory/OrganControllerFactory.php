@@ -7,6 +7,7 @@ namespace Decision\Controller\Factory;
 use Decision\Controller\OrganController;
 use Decision\Service\Organ as OrganService;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Psr\Container\ContainerInterface;
 
 class OrganControllerFactory implements FactoryInterface
@@ -14,6 +15,7 @@ class OrganControllerFactory implements FactoryInterface
     /**
      * @param string $requestedName
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $requestedName,

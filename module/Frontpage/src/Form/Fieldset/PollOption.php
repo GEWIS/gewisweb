@@ -12,6 +12,7 @@ use Laminas\Hydrator\ClassMethodsHydrator;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\StringLength;
+use Override;
 
 class PollOption extends Fieldset implements InputFilterProviderInterface
 {
@@ -43,6 +44,7 @@ class PollOption extends Fieldset implements InputFilterProviderInterface
         );
     }
 
+    #[Override]
     public function getInputFilterSpecification(): array
     {
         return [

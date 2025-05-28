@@ -11,6 +11,7 @@ use Activity\Service\AclService;
 use Activity\Service\ActivityCalendarForm as ActivityCalendarFormService;
 use Decision\Service\Organ as OrganService;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Psr\Container\ContainerInterface;
 
 class ActivityCalendarFormFactory implements FactoryInterface
@@ -18,6 +19,7 @@ class ActivityCalendarFormFactory implements FactoryInterface
     /**
      * @param string $requestedName
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $requestedName,
