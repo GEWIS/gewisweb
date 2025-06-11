@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-11 20:01+0200\n"
-"PO-Revision-Date: 2025-05-11 20:02+0200\n"
+"POT-Creation-Date: 2025-06-11 21:01+0200\n"
+"PO-Revision-Date: 2025-06-11 21:02+0200\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: en\n"
@@ -3540,6 +3540,12 @@ msgstr "Vote for photo of the week"
 
 msgid "Voted!"
 msgstr "Voted!"
+
+msgid "Voting Committee"
+msgstr "Voting Committee"
+
+msgid "Voting Committees"
+msgstr "Voting Committees"
 
 msgid "Want to be a tutor?"
 msgstr "Want to be a tutor?"

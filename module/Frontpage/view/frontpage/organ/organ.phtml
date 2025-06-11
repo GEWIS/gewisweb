@@ -95,6 +95,10 @@ function getOrganDescription($organInformation, $lang)
                         <a href="<?= $this->url('home/gmm_bodies/rva_list') ?>">
                             <?= OrganTypes::RvA->getPluralName($translator) ?>
                         </a>
+                    <?php elseif (OrganTypes::SC === $organ->getType()): ?>
+                        <a href="<?= $this->url('home/gmm_bodies/sc_list') ?>">
+                            <?= OrganTypes::SC->getPluralName($translator) ?>
+                        </a>
                     <?php endif; ?>
                 </li>
                 <li class="active">
