@@ -68,6 +68,11 @@ class OrganController extends AbstractActionController
         return $this->getBodies(OrganTypes::RvA);
     }
 
+    public function scListAction(): ViewModel
+    {
+        return $this->getBodies(OrganTypes::SC);
+    }
+
     private function getBodies(OrganTypes $organType): ViewModel
     {
         return new ViewModel([

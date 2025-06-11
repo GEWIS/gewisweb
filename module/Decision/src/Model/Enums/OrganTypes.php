@@ -17,6 +17,7 @@ enum OrganTypes: string
     case KCC = 'kcc';
     case AVW = 'avw';
     case RvA = 'rva';
+    case SC = 'sc';
 
     public function getName(Translator $translator): string
     {
@@ -27,6 +28,7 @@ enum OrganTypes: string
             self::KCC => $translator->translate('Financial Audit Committee'),
             self::AVW => $translator->translate('GMM Taskforce'),
             self::RvA => $translator->translate('Advisory Board'),
+            self::SC => $translator->translate('Voting Committee'),
         };
     }
 
@@ -39,6 +41,7 @@ enum OrganTypes: string
             self::KCC => $translator->translate('Financial Audit Committees'),
             self::AVW => $translator->translate('GMM Taskforces'),
             self::RvA => $translator->translate('Advisory Boards'),
+            self::SC => $translator->translate('Voting Committees'),
         };
     }
 }

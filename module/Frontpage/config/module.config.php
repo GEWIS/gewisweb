@@ -150,6 +150,15 @@ return [
                                     ],
                                 ],
                             ],
+                            'sc_list' => [
+                                'type' => Literal::class,
+                                'options' => [
+                                    'route' => '/voting-committees',
+                                    'defaults' => [
+                                        'action' => 'scList',
+                                    ],
+                                ],
+                            ],
                         ],
                     ],
                 ],

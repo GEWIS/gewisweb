@@ -121,6 +121,7 @@ class Organ
                 $this->findActiveOrgansByType(OrganTypes::AVW),
                 $this->findActiveOrgansByType(OrganTypes::KCC),
                 $this->findActiveOrgansByType(OrganTypes::RvA),
+                $this->findActiveOrgansByType(OrganTypes::SC),
             );
         }
 
