@@ -6,6 +6,7 @@ namespace Decision\Service;
 
 use Application\Service\Email as EmailService;
 use Application\Service\FileStorage as FileStorageService;
+use DateTime;
 use Decision\Form\OrganInformation as OrganInformationForm;
 use Decision\Mapper\Member as MemberMapper;
 use Decision\Mapper\Organ as OrganMapper;
@@ -390,9 +391,15 @@ class Organ
         $activeMembers = [];
         $inactiveMembers = [];
         $oldMembers = [];
+        $today = new DateTime();
 
         foreach ($organ->getMembers() as $install) {
-            if (null === $install->getDischargeDate()) {
+            $dischargeDate = $install->getDischargeDate();
+
+            if (
+                null === $dischargeDate
+                || $dischargeDate > $today
+            ) {
                 // current member
                 if (InstallationFunctions::InactiveMember === $install->getFunction()) {
                     // inactive
