@@ -450,6 +450,7 @@ return [
             'frontpage/organ/avw-list' => __DIR__ . '/../view/frontpage/organ/gmm-body.phtml',
             'frontpage/organ/kcc-list' => __DIR__ . '/../view/frontpage/organ/gmm-body.phtml',
             'frontpage/organ/rva-list' => __DIR__ . '/../view/frontpage/organ/gmm-body.phtml',
+            'frontpage/organ/sc-list' => __DIR__ . '/../view/frontpage/organ/gmm-body.phtml',
         ],
     ],
     'doctrine' => [
