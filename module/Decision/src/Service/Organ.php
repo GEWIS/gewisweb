@@ -394,6 +394,10 @@ class Organ
         $today = new DateTime();
 
         foreach ($organ->getMembers() as $install) {
+            if ($install->getInstallDate() > $today) {
+                continue;
+            }
+
             $dischargeDate = $install->getDischargeDate();
 
             if (
