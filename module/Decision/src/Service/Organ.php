@@ -30,9 +30,8 @@ use function array_merge;
 use function array_search;
 use function floatval;
 use function getimagesize;
-use function getrandmax;
 use function min;
-use function random_int;
+use function mt_rand;
 use function round;
 use function sys_get_temp_dir;
 use function usort;
@@ -291,7 +290,7 @@ class Organ
         $image->setimageformat('jpg');
 
         //Tempfile is used such that the file storage service can generate a filename
-        $tempFileName = sys_get_temp_dir() . '/ThumbImage' . random_int(0, getrandmax()) . '.jpg';
+        $tempFileName = sys_get_temp_dir() . '/ThumbImage' . mt_rand() . '.jpg';
         $image->writeImage($tempFileName);
 
         return $this->storageService->storeFile($tempFileName);

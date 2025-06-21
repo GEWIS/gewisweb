@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace Decision\Service;
 
 use Laminas\Permissions\Acl\Resource\GenericResource as Resource;
+use Override;
 
 class AclService extends \User\Service\AclService
 {
+    #[Override]
     protected function createAcl(): void
     {
         parent::createAcl();

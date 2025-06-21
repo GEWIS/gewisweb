@@ -6,9 +6,11 @@ namespace Education\Hydrator\Strategy;
 
 use Education\Model\Enums\ExamTypes;
 use Laminas\Hydrator\Strategy\StrategyInterface;
+use Override;
 
 class ExamTypeHydratorStrategy implements StrategyInterface
 {
+    #[Override]
     public function extract(
         mixed $value,
         ?object $object = null,
@@ -20,6 +22,7 @@ class ExamTypeHydratorStrategy implements StrategyInterface
         return ExamTypes::from($value)->value;
     }
 
+    #[Override]
     public function hydrate(
         mixed $value,
         ?array $data,

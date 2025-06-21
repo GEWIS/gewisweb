@@ -10,11 +10,13 @@ use Decision\Model\Enums\MeetingTypes;
 use Decision\Model\Meeting;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Persistence\ObjectManager;
+use Override;
 
 use function range;
 
 class MeetingFixture extends AbstractFixture
 {
+    #[Override]
     public function load(ObjectManager $manager): void
     {
         $today = new DateTime();

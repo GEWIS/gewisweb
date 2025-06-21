@@ -27,7 +27,7 @@ class ActivityCalendarOption
         type: 'string',
         nullable: true,
     )]
-    protected ?string $type;
+    protected ?string $type = null;
 
     /**
      * Status for the option.
@@ -36,7 +36,7 @@ class ActivityCalendarOption
         type: 'string',
         nullable: true,
     )]
-    protected ?string $status;
+    protected ?string $status = null;
 
     /**
      * The date and time the activity starts.
@@ -65,7 +65,7 @@ class ActivityCalendarOption
      */
     #[ManyToOne(targetEntity: MemberModel::class)]
     #[JoinColumn(referencedColumnName: 'lidnr')]
-    protected ?MemberModel $modifiedBy;
+    protected ?MemberModel $modifiedBy = null;
 
     public function getBeginTime(): DateTime
     {

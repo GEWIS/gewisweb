@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
+use Override;
 
 /**
  * Tag.
@@ -106,6 +107,7 @@ class Tag implements ResourceInterface
     /**
      * Get the resource ID.
      */
+    #[Override]
     public function getResourceId(): string
     {
         return 'tag';

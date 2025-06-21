@@ -11,6 +11,7 @@ use Company\Service\AclService;
 use Company\Service\Company as CompanyService;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Psr\Container\ContainerInterface;
 
 class AdminApprovalControllerFactory implements FactoryInterface
@@ -18,6 +19,7 @@ class AdminApprovalControllerFactory implements FactoryInterface
     /**
      * @param string $requestedName
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $requestedName,

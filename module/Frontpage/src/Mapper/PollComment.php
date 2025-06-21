@@ -7,6 +7,7 @@ namespace Frontpage\Mapper;
 use Application\Mapper\BaseMapper;
 use Decision\Model\Member as MemberModel;
 use Frontpage\Model\PollComment as PollCommentModel;
+use Override;
 
 /**
  * Mappers for poll comments.
@@ -30,6 +31,7 @@ class PollComment extends BaseMapper
         return $qb->getQuery()->getResult();
     }
 
+    #[Override]
     protected function getRepositoryName(): string
     {
         return PollCommentModel::class;

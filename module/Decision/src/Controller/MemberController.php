@@ -14,6 +14,7 @@ use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\View\Model\JsonModel;
 use Laminas\View\Model\ViewModel;
+use Override;
 use User\Permissions\NotAllowedException;
 
 class MemberController extends AbstractActionController
@@ -31,6 +32,7 @@ class MemberController extends AbstractActionController
     ) {
     }
 
+    #[Override]
     public function indexAction(): ViewModel
     {
         if (!$this->aclService->isAllowed('view', 'meeting')) {

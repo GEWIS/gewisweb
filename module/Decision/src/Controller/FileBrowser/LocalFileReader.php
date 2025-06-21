@@ -6,6 +6,7 @@ namespace Decision\Controller\FileBrowser;
 
 use Laminas\Http\Headers;
 use Laminas\Http\Response\Stream;
+use Override;
 
 use function end;
 use function explode;
@@ -35,6 +36,7 @@ class LocalFileReader implements FileReader
     ) {
     }
 
+    #[Override]
     public function downloadFile(string $path): bool|Stream
     {
         $fullPath = $this->root . $path;
@@ -66,6 +68,7 @@ class LocalFileReader implements FileReader
     /**
      * @return ?FileNode[]
      */
+    #[Override]
     public function listDir(string $path): ?array
     {
         // remove the trailing slash from the dir
@@ -130,11 +133,13 @@ class LocalFileReader implements FileReader
         return false;
     }
 
+    #[Override]
     public function isDir(string $path): bool
     {
         return is_dir($this->root . $path);
     }
 
+    #[Override]
     public function isAllowed(string $path): bool
     {
         $fullPath = $this->root . $path;

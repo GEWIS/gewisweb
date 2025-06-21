@@ -10,6 +10,7 @@ use Frontpage\Service\AclService;
 use Frontpage\Service\News as NewsService;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Psr\Container\ContainerInterface;
 
 class NewsFactory implements FactoryInterface
@@ -17,6 +18,7 @@ class NewsFactory implements FactoryInterface
     /**
      * @param string $requestedName
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $requestedName,

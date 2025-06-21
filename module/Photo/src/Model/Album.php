@@ -17,6 +17,7 @@ use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OrderBy;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
+use Override;
 
 /**
  * Album.
@@ -371,6 +372,7 @@ class Album implements ResourceInterface
     /**
      * Get the resource ID.
      */
+    #[Override]
     public function getResourceId(): string
     {
         return 'album';

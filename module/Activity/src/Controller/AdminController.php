@@ -605,7 +605,7 @@ class AdminController extends AbstractActionController
             ]);
         }
 
-        $ids = json_decode($request->getContent());
+        $ids = json_decode((string) $request->getContent());
 
         $entityManager = $this->signupMapper->getEntityManager();
         foreach ($ids as $id) {

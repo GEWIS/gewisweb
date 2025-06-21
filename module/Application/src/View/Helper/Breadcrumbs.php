@@ -6,6 +6,7 @@ namespace Application\View\Helper;
 
 use Laminas\View\Helper\Placeholder\Container\AbstractContainer;
 use Laminas\View\Helper\Placeholder\Container\AbstractStandalone;
+use Override;
 
 use function sprintf;
 
@@ -85,6 +86,7 @@ class Breadcrumbs extends AbstractStandalone
         return $this->append($value);
     }
 
+    #[Override]
     public function toString(): string
     {
         $output = '';

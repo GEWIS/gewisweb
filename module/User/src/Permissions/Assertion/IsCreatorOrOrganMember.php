@@ -8,6 +8,7 @@ use Laminas\Permissions\Acl\Acl;
 use Laminas\Permissions\Acl\Assertion\AssertionInterface;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 use Laminas\Permissions\Acl\Role\RoleInterface;
+use Override;
 
 /**
  * Assertion to check if the user has created the resource or if the user is a
@@ -18,6 +19,7 @@ class IsCreatorOrOrganMember implements AssertionInterface
     /**
      * @inheritDoc
      */
+    #[Override]
     public function assert(
         Acl $acl,
         ?RoleInterface $role = null,

@@ -18,6 +18,7 @@ use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OneToOne;
 use Doctrine\ORM\Mapping\PrePersist;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
+use Override;
 
 use function getimagesize;
 
@@ -584,6 +585,7 @@ class Photo implements ResourceInterface
     /**
      * Get the resource ID.
      */
+    #[Override]
     public function getResourceId(): string
     {
         return 'photo';

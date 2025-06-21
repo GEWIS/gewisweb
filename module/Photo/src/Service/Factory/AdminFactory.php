@@ -7,6 +7,7 @@ namespace Photo\Service\Factory;
 use Application\Service\FileStorage as FileStorageService;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Photo\Mapper\Photo as PhotoMapper;
 use Photo\Service\AclService;
 use Photo\Service\Admin as AdminService;
@@ -19,6 +20,7 @@ class AdminFactory implements FactoryInterface
     /**
      * @param string $requestedName
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $requestedName,

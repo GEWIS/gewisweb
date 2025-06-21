@@ -16,6 +16,7 @@ use Laminas\Mvc\I18n\Translator;
 use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
 use Laminas\View\Model\JsonModel;
 use Laminas\View\Model\ViewModel;
+use Override;
 use User\Permissions\NotAllowedException;
 
 /**
@@ -34,6 +35,7 @@ class AdminController extends AbstractActionController
     ) {
     }
 
+    #[Override]
     public function indexAction(): ViewModel
     {
         if (!$this->aclService->isAllowed('admin', 'education')) {

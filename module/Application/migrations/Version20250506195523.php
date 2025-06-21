@@ -6,6 +6,7 @@ namespace Application\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
+use Override;
 
 /**
  * phpcs:disable Generic.Files.LineLength.TooLong
@@ -13,17 +14,20 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20250506195523 extends AbstractMigration
 {
+    #[Override]
     public function getDescription(): string
     {
         return 'Fix broken CourseDocuments after application Language refactor (Version20250423132841).';
     }
 
+    #[Override]
     public function up(Schema $schema): void
     {
         $this->addSql('UPDATE `CourseDocument` SET `language`=\'english_greatbritain\' WHERE `language` = \'en\'');
         $this->addSql('UPDATE `CourseDocument` SET `language`=\'dutch_netherlands\' WHERE `language` = \'nl\'');
     }
 
+    #[Override]
     public function down(Schema $schema): void
     {
         $this->addSql('UPDATE `CourseDocument` SET `language`=\'en\' WHERE `language` = \'english_greatbritain\'');

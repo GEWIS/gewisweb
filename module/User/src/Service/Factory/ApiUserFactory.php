@@ -6,6 +6,7 @@ namespace User\Service\Factory;
 
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Psr\Container\ContainerInterface;
 use User\Form\ApiToken as ApiTokenForm;
 use User\Mapper\ApiUser as ApiUserMapper;
@@ -17,6 +18,7 @@ class ApiUserFactory implements FactoryInterface
     /**
      * @param string $requestedName
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $requestedName,

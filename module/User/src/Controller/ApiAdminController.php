@@ -8,6 +8,7 @@ use Laminas\Http\Request;
 use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
+use Override;
 use User\Service\ApiUser as ApiUserService;
 
 class ApiAdminController extends AbstractActionController
@@ -21,6 +22,7 @@ class ApiAdminController extends AbstractActionController
      *
      * Show all API tokens
      */
+    #[Override]
     public function indexAction(): ViewModel
     {
         return new ViewModel(

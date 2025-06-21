@@ -6,6 +6,7 @@ namespace Company\Mapper;
 
 use Application\Mapper\BaseMapper;
 use Company\Model\JobLabel as JobLabelModel;
+use Override;
 
 /**
  * Mappers for labels.
@@ -14,6 +15,7 @@ use Company\Model\JobLabel as JobLabelModel;
  */
 class Label extends BaseMapper
 {
+    #[Override]
     protected function getRepositoryName(): string
     {
         return JobLabeLModel::class;

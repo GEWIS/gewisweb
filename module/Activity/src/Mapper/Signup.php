@@ -12,6 +12,7 @@ use Application\Mapper\BaseMapper;
 use DateInterval;
 use DateTime;
 use Decision\Model\Member as MemberModel;
+use Override;
 use User\Model\User as UserModel;
 
 /**
@@ -105,6 +106,7 @@ class Signup extends BaseMapper
         return $this->getEntityManager()->getRepository(SignupModel::class)->find($id);
     }
 
+    #[Override]
     protected function getRepositoryName(): string
     {
         return UserSignupModel::class;

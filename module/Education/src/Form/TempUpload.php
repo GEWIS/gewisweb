@@ -10,6 +10,7 @@ use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\File\Extension;
 use Laminas\Validator\File\MimeType;
+use Override;
 
 /**
  * @psalm-suppress MissingTemplateParam
@@ -31,6 +32,7 @@ class TempUpload extends Form implements InputFilterProviderInterface
         );
     }
 
+    #[Override]
     public function getInputFilterSpecification(): array
     {
         return [

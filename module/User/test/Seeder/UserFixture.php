@@ -10,12 +10,14 @@ use DecisionTest\Seeder\MemberFixture;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Override;
 use User\Model\User;
 
 use function range;
 
 class UserFixture extends AbstractFixture implements DependentFixtureInterface
 {
+    #[Override]
     public function load(ObjectManager $manager): void
     {
         foreach (range(8000, 8199) as $lidnr) {
@@ -35,6 +37,7 @@ class UserFixture extends AbstractFixture implements DependentFixtureInterface
     /**
      * @return class-string[]
      */
+    #[Override]
     public function getDependencies(): array
     {
         return [

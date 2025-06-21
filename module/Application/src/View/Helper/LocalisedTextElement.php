@@ -26,11 +26,11 @@ class LocalisedTextElement extends AbstractHelper
                 return $currentValue;
             }
 
-            if (str_ends_with($currentValue->getAttribute('id'), 'en')) {
+            if (str_ends_with((string) $currentValue->getAttribute('id'), 'en')) {
                 return $currentValue->getValueEN();
             }
 
-            if (str_ends_with($currentValue->getAttribute('id'), 'nl')) {
+            if (str_ends_with((string) $currentValue->getAttribute('id'), 'nl')) {
                 return $currentValue->getValueNL();
             }
         }

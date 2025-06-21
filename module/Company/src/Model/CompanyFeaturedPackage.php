@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\OneToOne;
 use Exception;
+use Override;
 
 /**
  * CompanyFeaturedPackage model.
@@ -63,6 +64,7 @@ class CompanyFeaturedPackage extends CompanyPackage
         $this->article = $article;
     }
 
+    #[Override]
     public function getType(): CompanyPackageTypes
     {
         return CompanyPackageTypes::Featured;
@@ -71,6 +73,7 @@ class CompanyFeaturedPackage extends CompanyPackage
     /**
      * @return CompanyFeaturedPackageArrayType
      */
+    #[Override]
     public function toArray(): array
     {
         $array = parent::toArray();
@@ -92,6 +95,7 @@ class CompanyFeaturedPackage extends CompanyPackage
      *
      * @throws Exception
      */
+    #[Override]
     public function exchangeArray(array $data): void
     {
         parent::exchangeArray($data);

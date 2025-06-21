@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace User\Mapper;
 
 use Application\Mapper\BaseMapper;
+use Override;
 use User\Model\CompanyUser as CompanyUserModel;
 
 use function strtolower;
@@ -28,6 +29,7 @@ class CompanyUser extends BaseMapper
         return $qb->getQuery()->getOneOrNullResult();
     }
 
+    #[Override]
     protected function getRepositoryName(): string
     {
         return CompanyUserModel::class;

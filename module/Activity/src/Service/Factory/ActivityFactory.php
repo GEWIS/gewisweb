@@ -13,6 +13,7 @@ use Company\Service\Company as CompanyService;
 use Decision\Service\Organ as OrganService;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Psr\Container\ContainerInterface;
 
 class ActivityFactory implements FactoryInterface
@@ -20,6 +21,7 @@ class ActivityFactory implements FactoryInterface
     /**
      * @param string $requestedName
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $requestedName,

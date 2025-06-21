@@ -8,6 +8,7 @@ use Education\Controller\EducationController;
 use Education\Form\SearchCourse as SearchCourseForm;
 use Education\Service\Course as CourseService;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Psr\Container\ContainerInterface;
 
 class EducationControllerFactory implements FactoryInterface
@@ -15,6 +16,7 @@ class EducationControllerFactory implements FactoryInterface
     /**
      * @param string $requestedName
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $requestedName,

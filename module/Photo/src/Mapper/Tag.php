@@ -7,6 +7,7 @@ namespace Photo\Mapper;
 use Application\Mapper\BaseMapper;
 use Decision\Model\Member as MemberModel;
 use Doctrine\ORM\Query\ResultSetMapping;
+use Override;
 use Photo\Model\Photo as PhotoModel;
 use Photo\Model\Tag as TagModel;
 
@@ -142,6 +143,7 @@ class Tag extends BaseMapper
         return $res[0];
     }
 
+    #[Override]
     protected function getRepositoryName(): string
     {
         return TagModel::class;

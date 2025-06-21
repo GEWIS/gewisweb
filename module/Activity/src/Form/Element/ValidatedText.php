@@ -9,6 +9,7 @@ use Laminas\Form\Element\Text;
 use Laminas\InputFilter\InputProviderInterface;
 use Laminas\Validator\NotEmpty;
 use Laminas\Validator\ValidatorInterface;
+use Override;
 
 class ValidatedText extends Text implements InputProviderInterface
 {
@@ -33,6 +34,7 @@ class ValidatedText extends Text implements InputProviderInterface
      *
      * @inheritDoc
      */
+    #[Override]
     public function getInputSpecification(): array
     {
         $spec = [

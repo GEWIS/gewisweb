@@ -7,6 +7,7 @@ namespace Photo\Controller;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\View\Model\ViewModel;
+use Override;
 use Photo\Service\AclService;
 use Photo\Service\Album as AlbumService;
 use Photo\Service\Photo as PhotoService;
@@ -30,6 +31,7 @@ class AlbumController extends AbstractActionController
      * Shows a page with all photos in an album, the album is either an actual
      * album or a member's album.
      */
+    #[Override]
     public function indexAction(): ViewModel
     {
         $albumId = (int) $this->params()->fromRoute('album_id');

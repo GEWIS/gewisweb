@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Photo\Command;
 
+use Override;
 use Photo\Service\Photo;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -16,6 +17,7 @@ class WeeklyPhoto extends Command
         parent::__construct();
     }
 
+    #[Override]
     public function execute(
         InputInterface $input,
         OutputInterface $output,

@@ -7,6 +7,7 @@ namespace Frontpage\Form\Factory;
 use Frontpage\Form\PollApproval as PollApprovalForm;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Psr\Container\ContainerInterface;
 
 class PollApprovalFactory implements FactoryInterface
@@ -14,6 +15,7 @@ class PollApprovalFactory implements FactoryInterface
     /**
      * @param string $requestedName
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $requestedName,
