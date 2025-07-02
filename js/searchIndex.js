@@ -9301,6 +9301,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Decision-Model-Enums-BoardFunctions.html#enumcase_Information"
         },                {
+            "fqsen": "\\Decision\\Model\\Enums\\BoardFunctions\u003A\u003ACommunity",
+            "name": "Community",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-BoardFunctions.html#enumcase_Community"
+        },                {
             "fqsen": "\\Decision\\Model\\Enums\\InstallationFunctions",
             "name": "InstallationFunctions",
             "summary": "Enum\u0020with\u0020organ\u0020functions\nThe\u0020values\u0020are\u0020in\u0020Dutch,\u0020because\u0020decisions\u0020are\u0020made\u0020in\u0020Dutch\u0020and\u0020thus\u0020this\u0020value\u0020is\u0020guaranteed\u0020to\u0020not\u0020change",
