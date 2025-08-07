@@ -3601,6 +3601,26 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Application-Migrations-Version20250506195523.html#method_down"
         },                {
+            "fqsen": "\\Application\\Migrations\\Version20250807174014",
+            "name": "Version20250807174014",
+            "summary": "phpcs\u003Adisable\u0020Generic.Files.LineLength.TooLong\nphpcs\u003Adisable\u0020SlevomatCodingStandard.Functions.RequireMultiLineCall.RequiredMultiLineCall",
+            "url": "classes/Application-Migrations-Version20250807174014.html"
+        },                {
+            "fqsen": "\\Application\\Migrations\\Version20250807174014\u003A\u003AgetDescription\u0028\u0029",
+            "name": "getDescription",
+            "summary": "",
+            "url": "classes/Application-Migrations-Version20250807174014.html#method_getDescription"
+        },                {
+            "fqsen": "\\Application\\Migrations\\Version20250807174014\u003A\u003Aup\u0028\u0029",
+            "name": "up",
+            "summary": "",
+            "url": "classes/Application-Migrations-Version20250807174014.html#method_up"
+        },                {
+            "fqsen": "\\Application\\Migrations\\Version20250807174014\u003A\u003Adown\u0028\u0029",
+            "name": "down",
+            "summary": "",
+            "url": "classes/Application-Migrations-Version20250807174014.html#method_down"
+        },                {
             "fqsen": "\\Application\\Command\\Factory\\LoadFixturesFactory",
             "name": "LoadFixturesFactory",
             "summary": "",
@@ -10838,7 +10858,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Decision\\Model\\MailingList",
             "name": "MailingList",
-            "summary": "Mailing\u0020List\u0020model.",
+            "summary": "Mailing\u0020List\u0020model\u0020\u0028partial\u0029",
             "url": "classes/Decision-Model-MailingList.html"
         },                {
             "fqsen": "\\Decision\\Model\\MailingList\u003A\u003A__construct\u0028\u0029",
@@ -10876,50 +10896,10 @@ Search.appendIndex(
             "summary": "Set\u0020the\u0020dutch\u0020description.",
             "url": "classes/Decision-Model-MailingList.html#method_setNlDescription"
         },                {
-            "fqsen": "\\Decision\\Model\\MailingList\u003A\u003AgetDescription\u0028\u0029",
-            "name": "getDescription",
-            "summary": "Get\u0020the\u0020description.",
-            "url": "classes/Decision-Model-MailingList.html#method_getDescription"
-        },                {
-            "fqsen": "\\Decision\\Model\\MailingList\u003A\u003AsetDescription\u0028\u0029",
-            "name": "setDescription",
-            "summary": "Set\u0020the\u0020description.",
-            "url": "classes/Decision-Model-MailingList.html#method_setDescription"
-        },                {
-            "fqsen": "\\Decision\\Model\\MailingList\u003A\u003AgetOnForm\u0028\u0029",
-            "name": "getOnForm",
-            "summary": "Get\u0020if\u0020it\u0020should\u0020be\u0020on\u0020the\u0020form.",
-            "url": "classes/Decision-Model-MailingList.html#method_getOnForm"
-        },                {
-            "fqsen": "\\Decision\\Model\\MailingList\u003A\u003AsetOnForm\u0028\u0029",
-            "name": "setOnForm",
-            "summary": "Set\u0020if\u0020it\u0020should\u0020be\u0020on\u0020the\u0020form.",
-            "url": "classes/Decision-Model-MailingList.html#method_setOnForm"
-        },                {
-            "fqsen": "\\Decision\\Model\\MailingList\u003A\u003AgetDefaultSub\u0028\u0029",
-            "name": "getDefaultSub",
-            "summary": "Get\u0020if\u0020it\u0020is\u0020a\u0020default\u0020list.",
-            "url": "classes/Decision-Model-MailingList.html#method_getDefaultSub"
-        },                {
-            "fqsen": "\\Decision\\Model\\MailingList\u003A\u003AsetDefaultSub\u0028\u0029",
-            "name": "setDefaultSub",
-            "summary": "Set\u0020if\u0020it\u0020is\u0020a\u0020default\u0020list.",
-            "url": "classes/Decision-Model-MailingList.html#method_setDefaultSub"
-        },                {
-            "fqsen": "\\Decision\\Model\\MailingList\u003A\u003AgetMembers\u0028\u0029",
-            "name": "getMembers",
+            "fqsen": "\\Decision\\Model\\MailingList\u003A\u003AgetMailingListMemberships\u0028\u0029",
+            "name": "getMailingListMemberships",
             "summary": "Get\u0020subscribed\u0020members.",
-            "url": "classes/Decision-Model-MailingList.html#method_getMembers"
-        },                {
-            "fqsen": "\\Decision\\Model\\MailingList\u003A\u003AaddMember\u0028\u0029",
-            "name": "addMember",
-            "summary": "Add\u0020a\u0020member.",
-            "url": "classes/Decision-Model-MailingList.html#method_addMember"
-        },                {
-            "fqsen": "\\Decision\\Model\\MailingList\u003A\u003AremoveMember\u0028\u0029",
-            "name": "removeMember",
-            "summary": "Remove\u0020a\u0020member.",
-            "url": "classes/Decision-Model-MailingList.html#method_removeMember"
+            "url": "classes/Decision-Model-MailingList.html#method_getMailingListMemberships"
         },                {
             "fqsen": "\\Decision\\Model\\MailingList\u003A\u003AtoGdprArray\u0028\u0029",
             "name": "toGdprArray",
@@ -10928,7 +10908,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Decision\\Model\\MailingList\u003A\u003A\u0024name",
             "name": "name",
-            "summary": "Mailman\u002Didentifier\u0020\/\u0020name.",
+            "summary": "Name\u0020of\u0020the\u0020mailing\u0020list",
             "url": "classes/Decision-Model-MailingList.html#property_name"
         },                {
             "fqsen": "\\Decision\\Model\\MailingList\u003A\u003A\u0024nl_description",
@@ -10941,20 +10921,70 @@ Search.appendIndex(
             "summary": "English\u0020description\u0020of\u0020the\u0020mailing\u0020list.",
             "url": "classes/Decision-Model-MailingList.html#property_en_description"
         },                {
-            "fqsen": "\\Decision\\Model\\MailingList\u003A\u003A\u0024onForm",
-            "name": "onForm",
-            "summary": "If\u0020the\u0020mailing\u0020list\u0020should\u0020be\u0020on\u0020the\u0020form.",
-            "url": "classes/Decision-Model-MailingList.html#property_onForm"
-        },                {
-            "fqsen": "\\Decision\\Model\\MailingList\u003A\u003A\u0024defaultSub",
-            "name": "defaultSub",
-            "summary": "If\u0020members\u0020should\u0020be\u0020subscribed\u0020by\u0020default.",
-            "url": "classes/Decision-Model-MailingList.html#property_defaultSub"
-        },                {
-            "fqsen": "\\Decision\\Model\\MailingList\u003A\u003A\u0024members",
-            "name": "members",
+            "fqsen": "\\Decision\\Model\\MailingList\u003A\u003A\u0024mailingListMemberships",
+            "name": "mailingListMemberships",
             "summary": "Mailing\u0020list\u0020members.",
-            "url": "classes/Decision-Model-MailingList.html#property_members"
+            "url": "classes/Decision-Model-MailingList.html#property_mailingListMemberships"
+        },                {
+            "fqsen": "\\Decision\\Model\\MailingListMember",
+            "name": "MailingListMember",
+            "summary": "Mailing\u0020List\u0020Member\u0020model\u0020\u0028partial\u0029",
+            "url": "classes/Decision-Model-MailingListMember.html"
+        },                {
+            "fqsen": "\\Decision\\Model\\MailingListMember\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Decision-Model-MailingListMember.html#method___construct"
+        },                {
+            "fqsen": "\\Decision\\Model\\MailingListMember\u003A\u003AgetMailingList\u0028\u0029",
+            "name": "getMailingList",
+            "summary": "Get\u0020the\u0020mailing\u0020list.",
+            "url": "classes/Decision-Model-MailingListMember.html#method_getMailingList"
+        },                {
+            "fqsen": "\\Decision\\Model\\MailingListMember\u003A\u003AsetMailingList\u0028\u0029",
+            "name": "setMailingList",
+            "summary": "Set\u0020the\u0020mailing\u0020list.",
+            "url": "classes/Decision-Model-MailingListMember.html#method_setMailingList"
+        },                {
+            "fqsen": "\\Decision\\Model\\MailingListMember\u003A\u003AgetMember\u0028\u0029",
+            "name": "getMember",
+            "summary": "Get\u0020the\u0020member.",
+            "url": "classes/Decision-Model-MailingListMember.html#method_getMember"
+        },                {
+            "fqsen": "\\Decision\\Model\\MailingListMember\u003A\u003AsetMember\u0028\u0029",
+            "name": "setMember",
+            "summary": "Set\u0020the\u0020member.",
+            "url": "classes/Decision-Model-MailingListMember.html#method_setMember"
+        },                {
+            "fqsen": "\\Decision\\Model\\MailingListMember\u003A\u003AgetEmail\u0028\u0029",
+            "name": "getEmail",
+            "summary": "Get\u0020the\u0020email\u0020address\u0020of\u0020this\u0020subscription",
+            "url": "classes/Decision-Model-MailingListMember.html#method_getEmail"
+        },                {
+            "fqsen": "\\Decision\\Model\\MailingListMember\u003A\u003AsetEmail\u0028\u0029",
+            "name": "setEmail",
+            "summary": "Set\u0020the\u0020email\u0020address\u0020of\u0020this\u0020subscription",
+            "url": "classes/Decision-Model-MailingListMember.html#method_setEmail"
+        },                {
+            "fqsen": "\\Decision\\Model\\MailingListMember\u003A\u003AtoGdprArray\u0028\u0029",
+            "name": "toGdprArray",
+            "summary": "",
+            "url": "classes/Decision-Model-MailingListMember.html#method_toGdprArray"
+        },                {
+            "fqsen": "\\Decision\\Model\\MailingListMember\u003A\u003A\u0024mailingList",
+            "name": "mailingList",
+            "summary": "Mailing\u0020list.",
+            "url": "classes/Decision-Model-MailingListMember.html#property_mailingList"
+        },                {
+            "fqsen": "\\Decision\\Model\\MailingListMember\u003A\u003A\u0024member",
+            "name": "member",
+            "summary": "Member.",
+            "url": "classes/Decision-Model-MailingListMember.html#property_member"
+        },                {
+            "fqsen": "\\Decision\\Model\\MailingListMember\u003A\u003A\u0024email",
+            "name": "email",
+            "summary": "Email\u0020address\u0020on\u0020the\u0020list",
+            "url": "classes/Decision-Model-MailingListMember.html#property_email"
         },                {
             "fqsen": "\\Decision\\Model\\Meeting",
             "name": "Meeting",
@@ -11421,10 +11451,10 @@ Search.appendIndex(
             "summary": "Is\u0020currently\u0020a\u0020keyholder.",
             "url": "classes/Decision-Model-Member.html#method_isKeyholder"
         },                {
-            "fqsen": "\\Decision\\Model\\Member\u003A\u003AgetLists\u0028\u0029",
-            "name": "getLists",
+            "fqsen": "\\Decision\\Model\\Member\u003A\u003AgetMailingListMemberships\u0028\u0029",
+            "name": "getMailingListMemberships",
             "summary": "Get\u0020mailing\u0020list\u0020subscriptions.",
-            "url": "classes/Decision-Model-Member.html#method_getLists"
+            "url": "classes/Decision-Model-Member.html#method_getMailingListMemberships"
         },                {
             "fqsen": "\\Decision\\Model\\Member\u003A\u003AaddList\u0028\u0029",
             "name": "addList",
@@ -11435,16 +11465,6 @@ Search.appendIndex(
             "name": "addLists",
             "summary": "Add\u0020multiple\u0020mailing\u0020lists.",
             "url": "classes/Decision-Model-Member.html#method_addLists"
-        },                {
-            "fqsen": "\\Decision\\Model\\Member\u003A\u003AremoveList\u0028\u0029",
-            "name": "removeList",
-            "summary": "Remove\u0020a\u0020mailing\u0020list\u0020subscription.",
-            "url": "classes/Decision-Model-Member.html#method_removeList"
-        },                {
-            "fqsen": "\\Decision\\Model\\Member\u003A\u003AclearLists\u0028\u0029",
-            "name": "clearLists",
-            "summary": "Clear\u0020the\u0020lists.",
-            "url": "classes/Decision-Model-Member.html#method_clearLists"
         },                {
             "fqsen": "\\Decision\\Model\\Member\u003A\u003AgetCurrentOrganInstallations\u0028\u0029",
             "name": "getCurrentOrganInstallations",
@@ -11581,10 +11601,10 @@ Search.appendIndex(
             "summary": "Installations\u0020of\u0020this\u0020member.",
             "url": "classes/Decision-Model-Member.html#property_installations"
         },                {
-            "fqsen": "\\Decision\\Model\\Member\u003A\u003A\u0024lists",
-            "name": "lists",
+            "fqsen": "\\Decision\\Model\\Member\u003A\u003A\u0024mailingListMemberships",
+            "name": "mailingListMemberships",
             "summary": "Memberships\u0020of\u0020mailing\u0020lists.",
-            "url": "classes/Decision-Model-Member.html#property_lists"
+            "url": "classes/Decision-Model-Member.html#property_mailingListMemberships"
         },                {
             "fqsen": "\\Decision\\Model\\Member\u003A\u003A\u0024organInstallations",
             "name": "organInstallations",
