@@ -9,10 +9,12 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\OneToMany;
 
 /**
- * Mailing List model.
+ * Mailing List model (partial)
+ *
+ * ReportDB does not know about mailman and doesn't need to know.
  *
  * @psalm-type MailingListGdprArrayType = array{
  *     name: string,
@@ -24,7 +26,7 @@ use Doctrine\ORM\Mapping\ManyToMany;
 class MailingList
 {
     /**
-     * Mailman-identifier / name.
+     * Name of the mailing list
      */
     #[Id]
     #[Column(type: 'string')]
@@ -43,33 +45,19 @@ class MailingList
     protected string $en_description;
 
     /**
-     * If the mailing list should be on the form.
-     */
-    #[Column(type: 'boolean')]
-    protected bool $onForm;
-
-    /**
-     * If members should be subscribed by default.
-     *
-     * (when it is on the form, that means that the checkbox is checked by default)
-     */
-    #[Column(type: 'boolean')]
-    protected bool $defaultSub;
-
-    /**
      * Mailing list members.
      *
-     * @var Collection<array-key, Member>
+     * @var Collection<array-key, MailingListMember>
      */
-    #[ManyToMany(
-        targetEntity: Member::class,
-        mappedBy: 'lists',
+    #[OneToMany(
+        targetEntity: MailingListMember::class,
+        mappedBy: 'mailingList',
     )]
-    protected Collection $members;
+    protected Collection $mailingListMemberships;
 
     public function __construct()
     {
-        $this->members = new ArrayCollection();
+        $this->mailingListMemberships = new ArrayCollection();
     }
 
     /**
@@ -121,77 +109,13 @@ class MailingList
     }
 
     /**
-     * Get the description.
-     */
-    public function getDescription(): string
-    {
-        return $this->getNlDescription();
-    }
-
-    /**
-     * Set the description.
-     */
-    public function setDescription(string $description): void
-    {
-        $this->setNlDescription($description);
-    }
-
-    /**
-     * Get if it should be on the form.
-     */
-    public function getOnForm(): bool
-    {
-        return $this->onForm;
-    }
-
-    /**
-     * Set if it should be on the form.
-     */
-    public function setOnForm(bool $onForm): void
-    {
-        $this->onForm = $onForm;
-    }
-
-    /**
-     * Get if it is a default list.
-     */
-    public function getDefaultSub(): bool
-    {
-        return $this->defaultSub;
-    }
-
-    /**
-     * Set if it is a default list.
-     */
-    public function setDefaultSub(bool $default): void
-    {
-        $this->defaultSub = $default;
-    }
-
-    /**
      * Get subscribed members.
      *
-     * @return Collection<array-key, Member>
+     * @return Collection<array-key, MailingListMember>
      */
-    public function getMembers(): Collection
+    public function getMailingListMemberships(): Collection
     {
-        return $this->members;
-    }
-
-    /**
-     * Add a member.
-     */
-    public function addMember(Member $member): void
-    {
-        $this->members[] = $member;
-    }
-
-    /**
-     * Remove a member.
-     */
-    public function removeMember(Member $member): void
-    {
-        $this->members->removeElement($member);
+        return $this->mailingListMemberships;
     }
 
     /**
