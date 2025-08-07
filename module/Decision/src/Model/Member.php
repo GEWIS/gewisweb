@@ -13,10 +13,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\InverseJoinColumn;
 use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\JoinTable;
-use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OneToOne;
 use Photo\Model\Tag as TagModel;
@@ -207,22 +204,14 @@ class Member
     /**
      * Memberships of mailing lists.
      *
-     * @var Collection<array-key, MailingList>
+     * @var Collection<array-key, MailingListMember>
      */
-    #[ManyToMany(
-        targetEntity: MailingList::class,
-        inversedBy: 'members',
+    #[OneToMany(
+        targetEntity: MailingListMember::class,
+        mappedBy: 'member',
+        cascade: ['persist'],
     )]
-    #[JoinTable(name: 'members_mailinglists')]
-    #[JoinColumn(
-        name: 'lidnr',
-        referencedColumnName: 'lidnr',
-    )]
-    #[InverseJoinColumn(
-        name: 'name',
-        referencedColumnName: 'name',
-    )]
-    protected Collection $lists;
+    protected Collection $mailingListMemberships;
 
     /**
      * Organ memberships.
@@ -295,7 +284,7 @@ class Member
         $this->organInstallations = new ArrayCollection();
         $this->boardInstallations = new ArrayCollection();
         $this->keyGrantings = new ArrayCollection();
-        $this->lists = new ArrayCollection();
+        $this->mailingListMemberships = new ArrayCollection();
         $this->tags = new ArrayCollection();
     }
 
@@ -687,53 +676,36 @@ class Member
     /**
      * Get mailing list subscriptions.
      *
-     * @return Collection<array-key, MailingList>
+     * @return Collection<array-key, MailingListMember>
      */
-    public function getLists(): Collection
+    public function getMailingListMemberships(): Collection
     {
-        return $this->lists;
+        return $this->mailingListMemberships;
     }
 
     /**
      * Add a mailing list subscription.
-     *
-     * Note that this is the owning side.
      */
-    public function addList(MailingList $list): void
+    public function addList(MailingListMember $list): void
     {
-        $list->addMember($this);
-        $this->lists[] = $list;
+        if ($this->mailingListMemberships->contains($list)) {
+            return;
+        }
+
+        $list->setMember($this);
+        $this->mailingListMemberships->add($list);
     }
 
     /**
      * Add multiple mailing lists.
      *
-     * @param MailingList[] $lists
+     * @param MailingListMember[] $lists
      */
     public function addLists(array $lists): void
     {
         foreach ($lists as $list) {
             $this->addList($list);
         }
-    }
-
-    /**
-     * Remove a mailing list subscription.
-     *
-     * Note that this is the owning side.
-     */
-    public function removeList(MailingList $list): void
-    {
-        $list->removeMember($this);
-        $this->lists->removeElement($list);
-    }
-
-    /**
-     * Clear the lists.
-     */
-    public function clearLists(): void
-    {
-        $this->lists = new ArrayCollection();
     }
 
     /**
@@ -901,6 +873,6 @@ class Member
 
     public function isExpired(): bool
     {
-        return $this->getExpiration() < (new DateTime());
+        return $this->getExpiration() < new DateTime();
     }
 }

@@ -15,7 +15,7 @@ use Decision\Mapper\Member as MemberMapper;
 use Decision\Mapper\SubDecision as SubDecisionMapper;
 use Decision\Model\Address as AddressModel;
 use Decision\Model\Authorization as AuthorizationModel;
-use Decision\Model\MailingList as MailingListModel;
+use Decision\Model\MailingListMember as MailingListMemberModel;
 use Decision\Model\Member as MemberModel;
 use Decision\Model\SubDecision as SubDecisionModel;
 use Education\Mapper\CourseDocument as CourseDocumentMapper;
@@ -58,7 +58,7 @@ use User\Permissions\NotAllowedException;
  * @psalm-import-type AuthorizationGdprArrayType from AuthorizationModel as ImportedAuthorizationGdprArrayType
  * @psalm-import-type CourseDocumentGdprArrayType from CourseDocumentModel as ImportedCourseDocumentGdprArrayType
  * @psalm-import-type LoginAttemptGdprArrayType from LoginAttemptModel as ImportedLoginAttemptGdprArrayType
- * @psalm-import-type MailingListGdprArrayType from MailingListModel as ImportedMailingListGdprArrayType
+ * @psalm-import-type MailingListMemberGdprArrayType from MailingListMemberModel as ImportedMailingListMemberGdprArrayType
  * @psalm-import-type MemberGdprArrayType from MemberModel as ImportedMemberGdprArrayType
  * @psalm-import-type PhotoGdprArrayType from PhotoModel as ImportedPhotoGdprArrayType
  * @psalm-import-type PollGdprArrayType from PollModel as ImportedPollGdprArrayType
@@ -103,7 +103,7 @@ class Gdpr
      *         user_information: ?ImportedUserGdprArrayType,
      *         profile_photo: ?ImportedProfilePhotoGdprArrayType,
      *         addresses: ImportedAddressGdprArrayType[],
-     *         lists: ImportedMailingListGdprArrayType[],
+     *         lists: ImportedMailingListMemberGdprArrayType[],
      *         login_attempts: ImportedLoginAttemptGdprArrayType[],
      *         app_authentications: ImportedApiAppAuthenticationGdprArrayType[],
      *     },
@@ -163,9 +163,9 @@ class Gdpr
             $addresses[] = $address->toGdprArray();
         }
 
-        /** @var ImportedMailingListGdprArrayType[] $lists */
+        /** @var ImportedMailingListMemberGdprArrayType[] $lists */
         $lists = [];
-        foreach ($member->getLists() as $list) {
+        foreach ($member->getMailingListMemberships() as $list) {
             $lists[] = $list->toGdprArray();
         }
 
