@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Decision;
 
+use Application\Model\Enums\AuthTypes;
 use Decision\Controller\AdminController;
 use Decision\Controller\AdminMemberController;
 use Decision\Controller\DecisionController;
@@ -31,6 +32,7 @@ return [
                 'options' => [
                     'route' => '/decision',
                     'defaults' => [
+                        'auth_type' => AuthTypes::Member,
                         'controller' => DecisionController::class,
                         'action' => 'index',
                     ],
@@ -131,6 +133,7 @@ return [
                 'options' => [
                     'route' => '/admin/decision',
                     'defaults' => [
+                        'auth_type' => AuthTypes::Member,
                         'controller' => AdminController::class,
                     ],
                 ],
@@ -253,6 +256,7 @@ return [
                 'options' => [
                     'route' => '/organs',
                     'defaults' => [
+                        'auth_type' => AuthTypes::Member,
                         'controller' => OrganController::class,
                         'action' => 'index',
                     ],
@@ -288,6 +292,7 @@ return [
                 'options' => [
                     'route' => '/member',
                     'defaults' => [
+                        'auth_type' => AuthTypes::Member,
                         'controller' => MemberController::class,
                         'action' => 'index',
                     ],
@@ -362,6 +367,7 @@ return [
                 'options' => [
                     'route' => '/admin/organ',
                     'defaults' => [
+                        'auth_type' => AuthTypes::Member,
                         'controller' => OrganAdminController::class,
                         'action' => 'index',
                     ],

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Education;
 
+use Application\Model\Enums\AuthTypes;
 use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Education\Controller\AdminController;
 use Education\Controller\EducationController;
@@ -73,6 +74,7 @@ return [
                 'options' => [
                     'route' => '/admin/education',
                     'defaults' => [
+                        'auth_type' => AuthTypes::Member,
                         'controller' => AdminController::class,
                         'action' => 'index',
                     ],

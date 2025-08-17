@@ -20,6 +20,7 @@ use Activity\Controller\Factory\AdminCategoryControllerFactory;
 use Activity\Controller\Factory\AdminControllerFactory;
 use Activity\Controller\Factory\AdminOptionControllerFactory;
 use Activity\Controller\Factory\ApiControllerFactory;
+use Application\Model\Enums\AuthTypes;
 use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Laminas\Router\Http\Literal;
 use Laminas\Router\Http\Segment;
@@ -74,6 +75,7 @@ return [
                                 'signupList' => '\d+',
                             ],
                             'defaults' => [
+                                'auth_type' => AuthTypes::Member,
                                 'action' => 'signup',
                             ],
                         ],
@@ -119,6 +121,7 @@ return [
                         'options' => [
                             'route' => '/my',
                             'defaults' => [
+                                'auth_type' => AuthTypes::Member,
                                 'action' => 'index',
                                 'category' => 'my',
                             ],
@@ -155,6 +158,7 @@ return [
                 'options' => [
                     'route' => '/admin/activity',
                     'defaults' => [
+                        'auth_type' => AuthTypes::Member,
                         'controller' => AdminController::class,
                         'action' => 'view',
                     ],
@@ -260,6 +264,7 @@ return [
                 'options' => [
                     'route' => '/activity/calendar',
                     'defaults' => [
+                        'auth_type' => AuthTypes::Member,
                         'controller' => ActivityCalendarController::class,
                         'action' => 'index',
                     ],
@@ -301,6 +306,7 @@ return [
                 'options' => [
                     'route' => '/admin/activity/approval',
                     'defaults' => [
+                        'auth_type' => AuthTypes::Member,
                         'controller' => AdminApprovalController::class,
                     ],
                 ],
@@ -376,6 +382,7 @@ return [
                 'options' => [
                     'route' => '/admin/activity/categories',
                     'defaults' => [
+                        'auth_type' => AuthTypes::Member,
                         'controller' => AdminCategoryController::class,
                         'action' => 'index',
                     ],
@@ -422,6 +429,7 @@ return [
                 'options' => [
                     'route' => '/admin/activity/calendar',
                     'defaults' => [
+                        'auth_type' => AuthTypes::Member,
                         'controller' => AdminOptionController::class,
                         'action' => 'index',
                     ],
@@ -468,6 +476,7 @@ return [
                 'options' => [
                     'route' => '/api/activity',
                     'defaults' => [
+                        'auth_type' => AuthTypes::Api,
                         'controller' => ApiController::class,
                         'action' => 'list',
                     ],

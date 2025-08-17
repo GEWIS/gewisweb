@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Frontpage;
 
+use Application\Model\Enums\AuthTypes;
 use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Frontpage\Controller\AdminController;
 use Frontpage\Controller\Factory\AdminControllerFactory;
@@ -168,6 +169,7 @@ return [
                 'options' => [
                     'route' => '/admin/page',
                     'defaults' => [
+                        'auth_type' => AuthTypes::Member,
                         'controller' => PageAdminController::class,
                         'action' => 'index',
                     ],
@@ -247,6 +249,7 @@ return [
                         'options' => [
                             'route' => '/request',
                             'defaults' => [
+                                'auth_type' => AuthTypes::Member,
                                 'action' => 'request',
                             ],
                         ],
@@ -271,6 +274,7 @@ return [
                                 'poll_id' => '[0-9]+',
                             ],
                             'defaults' => [
+                                'auth_type' => AuthTypes::Member,
                                 'action' => 'vote',
                             ],
                         ],
@@ -283,6 +287,7 @@ return [
                                 'poll_id' => '[0-9]+',
                             ],
                             'defaults' => [
+                                'auth_type' => AuthTypes::Member,
                                 'action' => 'comment',
                             ],
                         ],
@@ -295,6 +300,7 @@ return [
                 'options' => [
                     'route' => '/admin/poll',
                     'defaults' => [
+                        'auth_type' => AuthTypes::Member,
                         'controller' => PollAdminController::class,
                         'action' => 'list',
                     ],
@@ -345,6 +351,7 @@ return [
                 'options' => [
                     'route' => '/admin/news',
                     'defaults' => [
+                        'auth_type' => AuthTypes::Member,
                         'controller' => NewsAdminController::class,
                         'action' => 'list',
                     ],
@@ -404,6 +411,7 @@ return [
                 'options' => [
                     'route' => '/admin',
                     'defaults' => [
+                        'auth_type' => AuthTypes::Member,
                         'controller' => AdminController::class,
                         'action' => 'index',
                     ],
