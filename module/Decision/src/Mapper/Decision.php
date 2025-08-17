@@ -7,6 +7,7 @@ namespace Decision\Mapper;
 use Application\Mapper\BaseMapper;
 use Decision\Model\Decision as DecisionModel;
 use Decision\Model\Enums\MeetingTypes;
+use Override;
 
 use function addcslashes;
 use function implode;
@@ -82,6 +83,7 @@ class Decision extends BaseMapper
         return $qb->getQuery()->getResult();
     }
 
+    #[Override]
     protected function getRepositoryName(): string
     {
         return DecisionModel::class;

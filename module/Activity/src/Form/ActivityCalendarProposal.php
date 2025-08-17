@@ -14,6 +14,7 @@ use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\Callback;
 use Laminas\Validator\NotEmpty;
 use Laminas\Validator\StringLength;
+use Override;
 use User\Permissions\NotAllowedException;
 
 use function count;
@@ -23,7 +24,7 @@ use function count;
  */
 class ActivityCalendarProposal extends Form implements InputFilterProviderInterface
 {
-    private int $maxOptions;
+    private readonly int $maxOptions;
 
     public function __construct(
         private readonly Translator $translator,
@@ -121,6 +122,7 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
     /**
      * Validate the form.
      */
+    #[Override]
     public function isValid(): bool
     {
         $valid = parent::isValid();
@@ -188,6 +190,7 @@ class ActivityCalendarProposal extends Form implements InputFilterProviderInterf
     /**
      * Input filter specification.
      */
+    #[Override]
     public function getInputFilterSpecification(): array
     {
         return [

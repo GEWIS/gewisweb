@@ -13,6 +13,7 @@ use Company\Model\CompanyPackage as CompanyPackageModel;
 use Company\Model\Enums\CompanyPackageTypes;
 use DateTime;
 use Doctrine\ORM\QueryBuilder;
+use Override;
 
 use function count;
 
@@ -144,6 +145,7 @@ class Package extends BaseMapper
         };
     }
 
+    #[Override]
     protected function getRepositoryName(): string
     {
         return CompanyJobPackageModel::class;

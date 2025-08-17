@@ -8,6 +8,7 @@ use Decision\Model\Member as MemberModel;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
+use Override;
 
 /**
  * Signup model.
@@ -28,6 +29,7 @@ class UserSignup extends Signup
     /**
      * Get the full name of the user whom signed up for the activity.
      */
+    #[Override]
     public function getFullName(): string
     {
         return $this->getUser()->getFullName();
@@ -52,6 +54,7 @@ class UserSignup extends Signup
     /**
      * Get the email address of the user whom signed up for the activity.
      */
+    #[Override]
     public function getEmail(): ?string
     {
         return $this->getUser()->getEmail();

@@ -11,6 +11,7 @@ use ApplicationTest\Mapper\BaseMapperTrait;
 use DateTime;
 use Decision\Model\Enums\MembershipTypes;
 use Decision\Model\Member;
+use Override;
 use PHPUnit\Framework\TestCase;
 use User\Model\User;
 
@@ -23,6 +24,7 @@ class ActivityMapperTest extends TestCase
     protected Member $member;
     private ActivityLocalisedText $localisedText;
 
+    #[Override]
     public function setUp(): void
     {
         $this->setUpEntityManager();

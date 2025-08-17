@@ -25,6 +25,7 @@ use Laminas\Validator\File\MimeType;
 use Laminas\Validator\Regex;
 use Laminas\Validator\StringLength;
 use Laminas\Validator\Uri;
+use Override;
 
 use function mb_strtolower;
 
@@ -223,6 +224,7 @@ class Company extends LocalisableForm implements InputFilterProviderInterface
      *
      * @inheritDoc
      */
+    #[Override]
     public function getInputFilterSpecification(): array
     {
         $filter = parent::getInputFilterSpecification();
@@ -255,7 +257,7 @@ class Company extends LocalisableForm implements InputFilterProviderInterface
                     [
                         'name' => Callback::class,
                         'options' => [
-                            'callback' => [$this, 'isSlugNameUnique'],
+                            'callback' => $this->isSlugNameUnique(...),
                             'messages' => [
                                 Callback::INVALID_VALUE => $this->getTranslator()->translate(
                                     'This slug is already taken',
@@ -356,7 +358,7 @@ class Company extends LocalisableForm implements InputFilterProviderInterface
                                     'The e-mail address must be unique across companies.',
                                 ),
                             ],
-                            'callback' => [$this, 'isRepresentativeEmailUnique'],
+                            'callback' => $this->isRepresentativeEmailUnique(...),
                         ],
                     ],
                 ],
@@ -451,6 +453,7 @@ class Company extends LocalisableForm implements InputFilterProviderInterface
     /**
      * @inheritDoc
      */
+    #[Override]
     protected function createLocalisedInputFilterSpecification(string $suffix = ''): array
     {
         return [

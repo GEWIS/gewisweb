@@ -10,6 +10,7 @@ use Company\Model\Job as JobModel;
 use Company\Model\Proposals\JobUpdate as JobUpdateModel;
 use Decision\Model\Member as MemberModel;
 use Doctrine\ORM\Query\Expr\Join;
+use Override;
 
 use function count;
 
@@ -190,6 +191,7 @@ class Job extends BaseMapper
         return $qb->getQuery()->getResult();
     }
 
+    #[Override]
     protected function getRepositoryName(): string
     {
         return JobModel::class;

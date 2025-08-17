@@ -12,6 +12,7 @@ use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\Identical;
 use Laminas\Validator\NotEmpty;
 use Laminas\Validator\StringLength;
+use Override;
 
 /**
  * @psalm-suppress MissingTemplateParam
@@ -65,6 +66,7 @@ class Password extends Form implements InputFilterProviderInterface
         );
     }
 
+    #[Override]
     public function getInputFilterSpecification(): array
     {
         return [

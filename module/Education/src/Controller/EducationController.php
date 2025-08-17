@@ -10,6 +10,7 @@ use Laminas\Http\Response;
 use Laminas\Http\Response\Stream;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
+use Override;
 
 class EducationController extends AbstractActionController
 {
@@ -19,6 +20,7 @@ class EducationController extends AbstractActionController
     ) {
     }
 
+    #[Override]
     public function indexAction(): ViewModel
     {
         /** @var array $query */

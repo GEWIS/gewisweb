@@ -13,6 +13,7 @@ use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\OneToOne;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
+use Override;
 
 /**
  * Meeting minutes.
@@ -85,6 +86,7 @@ class MeetingMinutes implements ResourceInterface
     /**
      * Get the resource ID.
      */
+    #[Override]
     public function getResourceId(): string
     {
         return 'meeting_minutes';

@@ -24,6 +24,7 @@ use Laminas\Session\Container as SessionContainer;
 use Laminas\Stdlib\Parameters;
 use Laminas\Stdlib\ParametersInterface;
 use Laminas\View\Model\ViewModel;
+use Override;
 
 use function count;
 use function date;
@@ -47,6 +48,7 @@ class ActivityController extends AbstractActionController
     /**
      * View all activities.
      */
+    #[Override]
     public function indexAction(): ViewModel
     {
         $category = $this->params()->fromRoute('category');

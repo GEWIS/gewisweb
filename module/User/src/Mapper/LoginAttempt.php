@@ -9,6 +9,7 @@ use Application\Model\IdentityInterface;
 use DateInterval;
 use DateTime;
 use Decision\Model\Member as MemberModel;
+use Override;
 use User\Model\CompanyUser as CompanyUserModel;
 use User\Model\LoginAttempt as LoginAttemptModel;
 use User\Model\User as UserModel;
@@ -55,6 +56,7 @@ class LoginAttempt extends BaseMapper
         return $qb->getQuery()->getResult();
     }
 
+    #[Override]
     protected function getRepositoryName(): string
     {
         return LoginAttemptModel::class;

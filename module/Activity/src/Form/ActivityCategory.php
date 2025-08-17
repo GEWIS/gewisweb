@@ -9,6 +9,7 @@ use Laminas\Form\Element\Submit;
 use Laminas\Form\Element\Text;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
+use Override;
 
 class ActivityCategory extends LocalisableForm implements InputFilterProviderInterface
 {
@@ -50,6 +51,7 @@ class ActivityCategory extends LocalisableForm implements InputFilterProviderInt
     /**
      * @inheritDoc
      */
+    #[Override]
     protected function createLocalisedInputFilterSpecification(string $suffix = ''): array
     {
         return [
@@ -72,6 +74,7 @@ class ActivityCategory extends LocalisableForm implements InputFilterProviderInt
     /**
      * Validate the form.
      */
+    #[Override]
     public function isValid(): bool
     {
         $valid = parent::isValid();

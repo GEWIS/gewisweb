@@ -15,6 +15,7 @@ use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Mvc\Plugin\FlashMessenger\FlashMessenger;
 use Laminas\View\Model\ViewModel;
+use Override;
 use User\Permissions\NotAllowedException;
 
 use function count;
@@ -33,6 +34,7 @@ class AdminOptionController extends AbstractActionController
     ) {
     }
 
+    #[Override]
     public function indexAction(): ViewModel
     {
         if (!$this->aclService->isAllowed('view', 'activity_calendar_period')) {

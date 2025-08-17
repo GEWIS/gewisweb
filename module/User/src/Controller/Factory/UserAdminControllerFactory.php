@@ -7,6 +7,7 @@ namespace User\Controller\Factory;
 use Decision\Mapper\Member as MemberMapper;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Psr\Container\ContainerInterface;
 use User\Controller\UserAdminController;
 use User\Service\AclService;
@@ -16,6 +17,7 @@ class UserAdminControllerFactory implements FactoryInterface
     /**
      * @param string $requestedName
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $requestedName,

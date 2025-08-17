@@ -9,6 +9,7 @@ use Laminas\Permissions\Acl\Acl;
 use Laminas\Permissions\Acl\Assertion\AssertionInterface;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 use Laminas\Permissions\Acl\Role\RoleInterface;
+use Override;
 
 /**
  * Assertion to check if whoever is trying to view the page is allowed to view the page.
@@ -18,6 +19,7 @@ class IsAllowedToViewPage implements AssertionInterface
     /**
      * @inheritDoc
      */
+    #[Override]
     public function assert(
         Acl $acl,
         ?RoleInterface $role = null,

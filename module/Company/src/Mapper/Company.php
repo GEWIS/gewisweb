@@ -10,6 +10,7 @@ use Company\Model\Company as CompanyModel;
 use Company\Model\Proposals\CompanyUpdate as CompanyUpdateModel;
 use Decision\Model\Member as MemberModel;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
+use Override;
 
 /**
  * Mappers for companies.
@@ -110,6 +111,7 @@ class Company extends BaseMapper
         return $qb->getQuery()->getResult();
     }
 
+    #[Override]
     protected function getRepositoryName(): string
     {
         return CompanyModel::class;

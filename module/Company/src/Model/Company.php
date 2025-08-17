@@ -21,6 +21,7 @@ use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OneToOne;
 use Exception;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
+use Override;
 
 use function array_filter;
 use function array_map;
@@ -71,7 +72,7 @@ class Company implements ResourceInterface
         type: 'string',
         nullable: true,
     )]
-    protected ?string $contactName;
+    protected ?string $contactName = null;
 
     /**
      * The company's contact address.
@@ -80,7 +81,7 @@ class Company implements ResourceInterface
         type: 'string',
         nullable: true,
     )]
-    protected ?string $contactAddress;
+    protected ?string $contactAddress = null;
 
     /**
      * The company's contact email address.
@@ -89,7 +90,7 @@ class Company implements ResourceInterface
         type: 'string',
         nullable: true,
     )]
-    protected ?string $contactEmail;
+    protected ?string $contactEmail = null;
 
     /**
      * The company's contact phone.
@@ -98,7 +99,7 @@ class Company implements ResourceInterface
         type: 'string',
         nullable: true,
     )]
-    protected ?string $contactPhone;
+    protected ?string $contactPhone = null;
 
     /**
      * Company slogan.
@@ -626,6 +627,7 @@ class Company implements ResourceInterface
         return $arraycopy;
     }
 
+    #[Override]
     public function getResourceId(): string
     {
         return 'company';

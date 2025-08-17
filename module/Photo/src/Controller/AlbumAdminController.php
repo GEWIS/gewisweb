@@ -12,6 +12,7 @@ use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\View\Model\JsonModel;
 use Laminas\View\Model\ViewModel;
+use Override;
 use Photo\Service\AclService;
 use Photo\Service\Admin as AdminService;
 use Photo\Service\Album as AlbumService;
@@ -35,6 +36,7 @@ class AlbumAdminController extends AbstractActionController
     /**
      * Retrieves the main photo admin index page.
      */
+    #[Override]
     public function indexAction(): ViewModel
     {
         if (!$this->aclService->isAllowed('edit', 'album')) {

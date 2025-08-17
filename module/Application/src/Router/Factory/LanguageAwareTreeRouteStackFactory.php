@@ -6,6 +6,7 @@ namespace Application\Router\Factory;
 
 use Laminas\Router\RouteStackInterface;
 use Laminas\ServiceManager\Factory\DelegatorFactoryInterface;
+use Override;
 use Psr\Container\ContainerInterface;
 
 final class LanguageAwareTreeRouteStackFactory implements DelegatorFactoryInterface
@@ -13,6 +14,7 @@ final class LanguageAwareTreeRouteStackFactory implements DelegatorFactoryInterf
     /**
      * @param string $name
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $name,

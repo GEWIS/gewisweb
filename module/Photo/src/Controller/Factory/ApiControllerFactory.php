@@ -6,6 +6,7 @@ namespace Photo\Controller\Factory;
 
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Photo\Controller\ApiController;
 use Photo\Mapper\Tag as TagMapper;
 use Photo\Mapper\Vote as VoteMapper;
@@ -18,6 +19,7 @@ class ApiControllerFactory implements FactoryInterface
     /**
      * @param string $requestedName
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $requestedName,

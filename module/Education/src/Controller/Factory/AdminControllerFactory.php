@@ -9,6 +9,7 @@ use Education\Service\AclService;
 use Education\Service\Course as CourseService;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Psr\Container\ContainerInterface;
 
 class AdminControllerFactory implements FactoryInterface
@@ -16,6 +17,7 @@ class AdminControllerFactory implements FactoryInterface
     /**
      * @param string $requestedName
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $requestedName,

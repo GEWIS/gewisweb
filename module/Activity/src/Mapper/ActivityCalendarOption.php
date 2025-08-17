@@ -10,6 +10,7 @@ use Application\Mapper\BaseMapper;
 use DateTime;
 use Decision\Model\Organ as OrganModel;
 use Exception;
+use Override;
 
 /**
  * @template-extends BaseMapper<ActivityCalendarOptionModel>
@@ -99,6 +100,7 @@ class ActivityCalendarOption extends BaseMapper
         return $qb->getQuery()->getResult();
     }
 
+    #[Override]
     protected function getRepositoryName(): string
     {
         return ActivityCalendarOptionModel::class;

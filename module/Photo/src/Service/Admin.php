@@ -21,10 +21,9 @@ use User\Permissions\NotAllowedException;
 
 use function array_values;
 use function explode;
-use function getrandmax;
 use function implode;
 use function move_uploaded_file;
-use function random_int;
+use function mt_rand;
 use function sprintf;
 use function sys_get_temp_dir;
 use function unlink;
@@ -132,7 +131,7 @@ class Admin
         $image->setImageOrientation(imagick::ORIENTATION_TOPLEFT);
 
         //Tempfile is used to generate sha1, not sure this is the best method
-        $tempFileName = sys_get_temp_dir() . '/ThumbImage' . random_int(0, getrandmax()) . '.png';
+        $tempFileName = sys_get_temp_dir() . '/ThumbImage' . mt_rand() . '.png';
         $image->writeImage($tempFileName);
 
         return $this->storageService->storeFile($tempFileName);
@@ -166,7 +165,7 @@ class Admin
          * We re-add the original extension so it can be preserved later on
          * when moving the file.
          */
-        $extension = explode('/', $files['file']['type'])[1];
+        $extension = explode('/', (string) $files['file']['type'])[1];
         $path = $files['file']['tmp_name'] . '.' . $extension;
         move_uploaded_file($files['file']['tmp_name'], $path);
 

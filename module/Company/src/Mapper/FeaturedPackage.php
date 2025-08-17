@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Company\Mapper;
 
 use Company\Model\CompanyFeaturedPackage as CompanyFeaturedPackageModel;
+use Override;
 
 use function array_rand;
 
@@ -30,6 +31,7 @@ class FeaturedPackage extends Package
         return null;
     }
 
+    #[Override]
     protected function getRepositoryName(): string
     {
         return CompanyFeaturedPackageModel::class;

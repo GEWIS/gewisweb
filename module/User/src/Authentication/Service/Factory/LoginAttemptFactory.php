@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace User\Authentication\Service\Factory;
 
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Psr\Container\ContainerInterface;
 use User\Authentication\Service\LoginAttempt as LoginAttemptService;
 use User\Mapper\LoginAttempt as LoginAttemptMapper;
@@ -14,6 +15,7 @@ class LoginAttemptFactory implements FactoryInterface
     /**
      * @param string $requestedName
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $requestedName,

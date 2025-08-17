@@ -7,6 +7,7 @@ namespace Decision\Mapper;
 use Application\Mapper\BaseMapper;
 use Decision\Model\Authorization as AuthorizationModel;
 use Decision\Model\Member as MemberModel;
+use Override;
 
 /**
  * Mappers for authorizations.
@@ -95,6 +96,7 @@ class Authorization extends BaseMapper
         return $qb->getQuery()->getResult();
     }
 
+    #[Override]
     protected function getRepositoryName(): string
     {
         return AuthorizationModel::class;

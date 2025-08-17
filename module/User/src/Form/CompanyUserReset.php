@@ -12,6 +12,7 @@ use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\EmailAddress;
+use Override;
 
 /**
  * @psalm-suppress MissingTemplateParam
@@ -50,6 +51,7 @@ class CompanyUserReset extends Form implements InputFilterProviderInterface
         );
     }
 
+    #[Override]
     public function getInputFilterSpecification(): array
     {
         return [

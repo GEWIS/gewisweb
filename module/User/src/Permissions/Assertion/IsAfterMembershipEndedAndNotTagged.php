@@ -9,6 +9,7 @@ use Laminas\Permissions\Acl\Acl;
 use Laminas\Permissions\Acl\Assertion\AssertionInterface;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 use Laminas\Permissions\Acl\Role\RoleInterface;
+use Override;
 use Photo\Model\Album;
 use Photo\Model\Photo;
 use Photo\Model\Tag;
@@ -23,6 +24,7 @@ class IsAfterMembershipEndedAndNotTagged implements AssertionInterface
     /**
      * @inheritDoc
      */
+    #[Override]
     public function assert(
         Acl $acl,
         ?RoleInterface $role = null,

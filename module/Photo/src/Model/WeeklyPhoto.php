@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\OneToOne;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
+use Override;
 
 /**
  * Maintains a list of the "Foto of the week".
@@ -79,6 +80,7 @@ class WeeklyPhoto implements ResourceInterface
     /**
      * Get the resource ID.
      */
+    #[Override]
     public function getResourceId(): string
     {
         return 'weeklyphoto';

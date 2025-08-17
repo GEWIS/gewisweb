@@ -16,6 +16,7 @@ use Decision\Mapper\Member as MemberMapper;
 use Decision\Service\Organ as OrganService;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Psr\Container\ContainerInterface;
 
 class ActivityCalendarFactory implements FactoryInterface
@@ -23,6 +24,7 @@ class ActivityCalendarFactory implements FactoryInterface
     /**
      * @param string $requestedName
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $requestedName,

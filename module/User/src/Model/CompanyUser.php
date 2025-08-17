@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\OneToOne;
+use Override;
 use User\Model\NewCompanyUser as NewCompanyUserModel;
 
 /**
@@ -112,6 +113,7 @@ class CompanyUser implements IdentityInterface
         $this->passwordChangedOn = $passwordChangedOn;
     }
 
+    #[Override]
     public function getRoleId(): string
     {
         return 'company';
@@ -120,6 +122,7 @@ class CompanyUser implements IdentityInterface
     /**
      * Get the user's resource ID.
      */
+    #[Override]
     public function getResourceId(): string
     {
         return 'company_user';

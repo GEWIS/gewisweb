@@ -6,6 +6,7 @@ namespace Photo\Mapper;
 
 use Application\Mapper\BaseMapper;
 use Exception;
+use Override;
 use Photo\Model\ProfilePhoto as ProfilePhotoModel;
 
 /**
@@ -32,6 +33,7 @@ class ProfilePhoto extends BaseMapper
         );
     }
 
+    #[Override]
     protected function getRepositoryName(): string
     {
         return ProfilePhotoModel::class;

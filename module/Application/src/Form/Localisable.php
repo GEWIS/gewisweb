@@ -8,6 +8,7 @@ use Laminas\Form\Element\Checkbox;
 use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
+use Override;
 
 /**
  * A form which provides the basic structure for forms that utilise a model's {@link \Application\Model\LocalisedText}.
@@ -51,6 +52,7 @@ abstract class Localisable extends Form implements InputFilterProviderInterface
         );
     }
 
+    #[Override]
     public function getInputFilterSpecification(): array
     {
         $filter = [];

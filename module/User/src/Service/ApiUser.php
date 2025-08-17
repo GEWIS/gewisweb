@@ -89,7 +89,7 @@ class ApiUser
         $apiUser = new ApiUserModel();
 
         $apiUser->setName($data['name']);
-        $apiUser->setToken($this->generateToken());
+        $apiUser->setToken(static::generateToken());
 
         $this->apiUserMapper->persist($apiUser);
 

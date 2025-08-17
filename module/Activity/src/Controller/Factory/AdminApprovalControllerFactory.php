@@ -10,6 +10,7 @@ use Activity\Service\Activity as ActivityService;
 use Activity\Service\ActivityQuery as ActivityQueryService;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Psr\Container\ContainerInterface;
 
 class AdminApprovalControllerFactory implements FactoryInterface
@@ -17,6 +18,7 @@ class AdminApprovalControllerFactory implements FactoryInterface
     /**
      * @param string $requestedName
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $requestedName,

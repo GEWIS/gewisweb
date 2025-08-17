@@ -15,6 +15,7 @@ use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\Callback;
 use Laminas\Validator\StringLength;
+use Override;
 
 use function explode;
 
@@ -72,6 +73,7 @@ class Course extends Form implements InputFilterProviderInterface
         );
     }
 
+    #[Override]
     public function getInputFilterSpecification(): array
     {
         return [
@@ -91,7 +93,7 @@ class Course extends Form implements InputFilterProviderInterface
                     [
                         'name' => Callback::class,
                         'options' => [
-                            'callback' => [$this, 'isCourseCodeUnique'],
+                            'callback' => $this->isCourseCodeUnique(...),
                             'messages' => [
                                 Callback::INVALID_VALUE => $this->translator->translate(
                                     'There already exists a course with this code',
@@ -115,7 +117,7 @@ class Course extends Form implements InputFilterProviderInterface
                     [
                         'name' => Callback::class,
                         'options' => [
-                            'callback' => [$this, 'areSimilarValid'],
+                            'callback' => $this->areSimilarValid(...),
                             'messages' => [
                                 Callback::INVALID_VALUE => $this->translator->translate(
                                     'One of the courses is not valid (either it does not exist or is the same as the '

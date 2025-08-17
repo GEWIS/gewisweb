@@ -8,6 +8,7 @@ use Doctrine\ORM\Query\AST\Functions\FunctionNode;
 use Doctrine\ORM\Query\Parser;
 use Doctrine\ORM\Query\SqlWalker;
 use Doctrine\ORM\Query\TokenType;
+use Override;
 
 /**
  * This extension adds SQL RAND() functionality to DQL for returning random
@@ -18,6 +19,7 @@ use Doctrine\ORM\Query\TokenType;
  */
 class Rand extends FunctionNode
 {
+    #[Override]
     public function parse(Parser $parser): void
     {
         $parser->match(TokenType::T_IDENTIFIER);
@@ -25,6 +27,7 @@ class Rand extends FunctionNode
         $parser->match(TokenType::T_CLOSE_PARENTHESIS);
     }
 
+    #[Override]
     public function getSql(SqlWalker $sqlWalker): string
     {
         return 'RAND()';

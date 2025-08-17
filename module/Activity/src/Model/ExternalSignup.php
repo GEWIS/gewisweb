@@ -6,6 +6,7 @@ namespace Activity\Model;
 
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
+use Override;
 
 /**
  * ExternalSignup model.
@@ -28,6 +29,7 @@ class ExternalSignup extends Signup
     /**
      * Gets the full name of the user who signed up for the activity.
      */
+    #[Override]
     public function getFullName(): string
     {
         return $this->fullName;
@@ -44,6 +46,7 @@ class ExternalSignup extends Signup
     /**
      * Get the email address of the user who signed up for the activity.
      */
+    #[Override]
     public function getEmail(): string
     {
         return $this->email;

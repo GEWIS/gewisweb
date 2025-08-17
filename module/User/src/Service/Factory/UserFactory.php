@@ -7,6 +7,7 @@ namespace User\Service\Factory;
 use Decision\Mapper\Member as MemberMapper;
 use Laminas\Mvc\I18n\Translator as MvcTranslator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Psr\Container\ContainerInterface;
 use User\Form\CompanyUserLogin as CompanyUserLoginForm;
 use User\Form\CompanyUserReset as CompanyUserResetForm;
@@ -27,6 +28,7 @@ class UserFactory implements FactoryInterface
     /**
      * @param string $requestedName
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $requestedName,

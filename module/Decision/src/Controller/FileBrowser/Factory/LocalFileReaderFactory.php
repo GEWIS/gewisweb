@@ -6,6 +6,7 @@ namespace Decision\Controller\FileBrowser\Factory;
 
 use Decision\Controller\FileBrowser\LocalFileReader;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Psr\Container\ContainerInterface;
 
 class LocalFileReaderFactory implements FactoryInterface
@@ -13,6 +14,7 @@ class LocalFileReaderFactory implements FactoryInterface
     /**
      * @param string $requestedName
      */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         $requestedName,

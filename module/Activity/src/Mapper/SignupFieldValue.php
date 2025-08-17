@@ -7,6 +7,7 @@ namespace Activity\Mapper;
 use Activity\Model\Signup as SignupModel;
 use Activity\Model\SignupFieldValue as SignupFieldValueModel;
 use Application\Mapper\BaseMapper;
+use Override;
 
 /**
  * @template-extends BaseMapper<SignupFieldValueModel>
@@ -23,6 +24,7 @@ class SignupFieldValue extends BaseMapper
         return $this->getRepository()->findBy(['signup' => $signup->getId()]);
     }
 
+    #[Override]
     protected function getRepositoryName(): string
     {
         return SignupFieldValueModel::class;

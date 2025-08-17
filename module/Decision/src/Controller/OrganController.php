@@ -7,6 +7,7 @@ namespace Decision\Controller;
 use Decision\Service\Organ as OrganService;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
+use Override;
 
 use function array_merge;
 
@@ -19,6 +20,7 @@ class OrganController extends AbstractActionController
     /**
      * Index action, shows all active organs.
      */
+    #[Override]
     public function indexAction(): ViewModel
     {
         return new ViewModel(

@@ -8,6 +8,7 @@ use Application\Mapper\BaseMapper;
 use Application\Model\Enums\Languages;
 use Doctrine\ORM\Query\Expr\Join;
 use Frontpage\Model\Page as PageModel;
+use Override;
 
 use function mb_strtoupper;
 
@@ -68,6 +69,7 @@ class Page extends BaseMapper
         return $qb->getQuery()->getOneOrNullResult();
     }
 
+    #[Override]
     protected function getRepositoryName(): string
     {
         return PageModel::class;

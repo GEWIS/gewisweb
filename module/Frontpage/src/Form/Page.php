@@ -18,6 +18,7 @@ use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\Regex;
 use Laminas\Validator\StringLength;
+use Override;
 use User\Model\Enums\UserRoles;
 
 use function mb_strtolower;
@@ -151,6 +152,7 @@ class Page extends Form implements InputFilterProviderInterface
         $this->currentName = $currentName;
     }
 
+    #[Override]
     public function isValid(): bool
     {
         $valid = parent::isValid();
@@ -264,6 +266,7 @@ class Page extends Form implements InputFilterProviderInterface
      * Should return an array specification compatible with
      * {@link \Laminas\InputFilter\Factory::createInputFilter()}.
      */
+    #[Override]
     public function getInputFilterSpecification(): array
     {
         $filter = [];

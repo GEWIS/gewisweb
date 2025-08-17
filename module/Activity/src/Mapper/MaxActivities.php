@@ -6,6 +6,7 @@ namespace Activity\Mapper;
 
 use Activity\Model\MaxActivities as MaxActivitiesModel;
 use Application\Mapper\BaseMapper;
+use Override;
 
 /**
  * @template-extends BaseMapper<MaxActivitiesModel>
@@ -31,6 +32,7 @@ class MaxActivities extends BaseMapper
         return empty($res) ? null : $res[0];
     }
 
+    #[Override]
     protected function getRepositoryName(): string
     {
         return MaxActivitiesModel::class;

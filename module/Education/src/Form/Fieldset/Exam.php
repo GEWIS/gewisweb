@@ -22,6 +22,7 @@ use Laminas\Validator\File\Exists;
 use Laminas\Validator\InArray;
 use Laminas\Validator\Regex;
 use Laminas\Validator\StringLength;
+use Override;
 
 class Exam extends Fieldset implements InputFilterProviderInterface
 {
@@ -111,6 +112,7 @@ class Exam extends Fieldset implements InputFilterProviderInterface
         $this->config = $config['education_temp'];
     }
 
+    #[Override]
     public function getInputFilterSpecification(): array
     {
         $dir = $this->config['upload_exam_dir'];
