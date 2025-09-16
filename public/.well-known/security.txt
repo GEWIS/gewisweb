@@ -2,8 +2,8 @@
 Hash: SHA512
 
 Contact: mailto:security@gewis.nl
-Expires: 2025-09-01T00:00:00.000Z
-Encryption: https://pgp.surfnet.nl/pks/lookup?op=get&search=0x701F3551437E221A
+Expires: 2027-09-01T00:00:00.000Z
+Encryption: https://pgp.surfnet.nl/pks/lookup?op=get&search=0x10C778679AEA14D0
 Preferred-Languages: en, nl
 
 # This policy can be found in multiple places, but applies to all applications listed in the policy
@@ -14,20 +14,11 @@ Canonical: https://latex.gewis.nl/.well-known/security.txt
 Canonical: https://parelpracht.gewis.nl/.well-known/security.txt
 
 # The GEWIS disclosure policy can be found below and is signed with the aforementioned key
-Policy: https://github.com/GEWIS/.github/security/policy
+Policy: https://github.com/GEWIS/.github/blob/main/SECURITY.md
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEmdeXXWSwTqSB7tHJfwZbKcXCCAcFAme59/oACgkQfwZbKcXC
-CAfIxw/9FUEW0qnGzVObQeVXoPGzth5O3PlQw1eLJ+7ZJR0kusM9LcZXZpmNDcmA
-7WPvz1exET/jkVvipv9tC7TMVOwBDmBrpt2tukNujXJ/a6oyMTDNvRQKulw5ab/M
-fWClpAnX4iqFEFN3G6l/osO3elSdG8EDQwTPSlQZGc19geoIpl6HPLEU64HS2KFq
-XX1r9MD0wtA779UPEmfhQrzGsayr7OAXdMfg1DQkffMriJvr9e/tNK032KOg8uJ9
-E6SmT8Dsj6d4+EEIAY6wBNIPOY1/kES8KDmdjy4RoiU2MxX9mz7zW41Gg/l0BZSp
-qQUGNCMRIbOV1DdDpnAdCUPpRCQ2lGTdkHMSxQIhwlX+y96fgOyEq4wsLPFK1QSd
-TJxVuHktz3J5B0+CMxj0dahkQt+vuMa0SZqHdZ/uUIb8oPYDwT83Ext8+dgY4KUD
-dFKStlcvCDmH+jSq0oOqg14+NWyDYEPehedFHpNvghHP7C1zgXPvSPsYHJ0YbEB+
-kSSk197a+Uhz92jIkerXhphZHcjn7CVR0yWaDk+pq0Xrx1C980RmF82AY0JZGQHo
-YQavsKzh5Iky28A0sdFquQF0XV8Ujxa+BO4FtE1WsrYpcOxsA3JwcvdhI3Z6pOq8
-sJTG65LaIWedleCjB17Ryon2PpWv/MhW0FWDk/36U7kqjWQbViA=
-=zpnZ
+iHUEARYKAB0WIQSCXUrehl0qqJZIP2oQx3hnmuoU0AUCaLdk3AAKCRAQx3hnmuoU
+0L8BAQDtDlPAO5eWQohz9nkfzFAaukfk+pnykK66PjXGOwFVVgD/S/AfioSgOigf
+xJ2F83MFIORMluMWbcxizo3mVji3TQg=
+=FZRe
 -----END PGP SIGNATURE-----
