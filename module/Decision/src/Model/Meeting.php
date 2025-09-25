@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Decision\Model;
 
 use DateTime;
+use Decision\Extensions\Doctrine\MeetingTypesType;
 use Decision\Model\Enums\MeetingTypes;
 use Decision\Model\SubDecision\Minutes;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -26,10 +27,7 @@ class Meeting
      * Meeting type.
      */
     #[Id]
-    #[Column(
-        type: 'string',
-        enumType: MeetingTypes::class,
-    )]
+    #[Column(type: MeetingTypesType::NAME)]
     protected MeetingTypes $type;
 
     /**

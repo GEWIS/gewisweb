@@ -20,6 +20,7 @@
 
 declare(strict_types=1);
 
+use Decision\Extensions\Doctrine\MeetingTypesType;
 use Doctrine\DBAL\Driver\PDO\MySQL\Driver;
 
 return [
@@ -40,6 +41,9 @@ return [
                         PDO::MYSQL_ATTR_SSL_CAPATH => '/etc/ssl/certs/',
                         PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => true,
                     ] : [],
+                ],
+                'doctrineTypeMappings' => [
+                    MeetingTypesType::NAME => MeetingTypesType::NAME,
                 ],
             ],
         ],
@@ -73,6 +77,9 @@ return [
                 ],
                 // Second level cache configuration (see doc to learn about configuration)
                 'second_level_cache' => [],
+                'types' => [
+                    MeetingTypesType::NAME => MeetingTypesType::class,
+                ],
             ],
         ],
         'migrations_configuration' => [
