@@ -35,7 +35,7 @@ trait ApprovableTrait
         type: 'integer',
         enumType: ApprovableStatus::class,
     )]
-    protected ApprovableStatus $approved;
+    private ApprovableStatus $approved;
 
     /**
      * The date when the entity was approved.
@@ -44,14 +44,14 @@ trait ApprovableTrait
         type: 'datetime',
         nullable: true,
     )]
-    protected ?DateTime $approvedAt = null;
+    private ?DateTime $approvedAt = null;
 
     /**
      * Who (dis)approved the entity using this trait?
      */
     #[ManyToOne(targetEntity: MemberModel::class)]
     #[JoinColumn(referencedColumnName: 'lidnr')]
-    protected ?MemberModel $approver = null;
+    private ?MemberModel $approver = null;
 
     /**
      * When the entity has been approved/rejected a message can be attached. Since we do not always need this message it
@@ -68,7 +68,7 @@ trait ApprovableTrait
         referencedColumnName: 'id',
         nullable: true,
     )]
-    protected ?ApprovableTextModel $approvableText = null;
+    private ?ApprovableTextModel $approvableText = null;
 
     public function getApproved(): ApprovableStatus
     {

@@ -19,7 +19,7 @@ class AssociationYear
     public const int ASSOCIATION_YEAR_START_DAY = 1;
 
     /** @var int the first calendar year of the association year */
-    protected int $firstYear;
+    private int $firstYear;
 
     /**
      * Declare constructor private to enforce the use of the static methods.

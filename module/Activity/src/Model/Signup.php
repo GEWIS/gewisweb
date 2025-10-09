@@ -63,7 +63,7 @@ abstract class Signup
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected SignupList $signupList;
+    private SignupList $signupList;
 
     /**
      * Additional field values for this Signup.
@@ -75,19 +75,19 @@ abstract class Signup
         mappedBy: 'signup',
         cascade: ['persist', 'remove'],
     )]
-    protected Collection $fieldValues;
+    private Collection $fieldValues;
 
     /**
      * Determines if the user was present or not
      */
     #[Column(type: 'boolean')]
-    protected bool $present = false;
+    private bool $present = false;
 
     /**
      * Determines if the user was drawn
      */
     #[Column(type: 'boolean')]
-    protected bool $drawn = true;
+    private bool $drawn = true;
 
     public function __construct()
     {

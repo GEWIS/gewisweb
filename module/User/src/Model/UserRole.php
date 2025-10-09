@@ -39,7 +39,7 @@ class UserRole
         referencedColumnName: 'lidnr',
         nullable: false,
     )]
-    protected User $lidnr;
+    private User $lidnr;
 
     /**
      * The user's role.
@@ -48,7 +48,7 @@ class UserRole
         type: 'string',
         enumType: UserRoles::class,
     )]
-    protected UserRoles $role;
+    private UserRoles $role;
 
     /**
      * Date after which this role has expired.
@@ -57,7 +57,7 @@ class UserRole
         type: 'datetime',
         nullable: true,
     )]
-    protected ?DateTime $expiration = null;
+    private ?DateTime $expiration = null;
 
     /**
      * Get the membership number.

@@ -48,7 +48,7 @@ abstract class CourseDocument implements ResourceInterface
      * Date of the exam.
      */
     #[Column(type: 'date')]
-    protected DateTime $date;
+    private DateTime $date;
 
     /**
      * The language of the exam.
@@ -57,13 +57,13 @@ abstract class CourseDocument implements ResourceInterface
         type: 'string',
         enumType: Languages::class,
     )]
-    protected Languages $language;
+    private Languages $language;
 
     /**
      * Filename of the exam.
      */
     #[Column(type: 'string')]
-    protected string $filename;
+    private string $filename;
 
     /**
      * The course to which this document belongs.
@@ -77,13 +77,13 @@ abstract class CourseDocument implements ResourceInterface
         referencedColumnName: 'code',
         nullable: false,
     )]
-    protected Course $course;
+    private Course $course;
 
     /**
      * Whether the uploaded document is scanned or not. This influences the quality of the watermarking service.
      */
     #[Column(type: 'boolean')]
-    protected bool $scanned;
+    private bool $scanned;
 
     /**
      * Get the date.

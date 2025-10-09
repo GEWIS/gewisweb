@@ -33,7 +33,7 @@ class Page implements ResourceInterface
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected FrontpageLocalisedText $category;
+    private FrontpageLocalisedText $category;
 
     /**
      * Sub-category of the page.
@@ -48,7 +48,7 @@ class Page implements ResourceInterface
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected FrontpageLocalisedText $subCategory;
+    private FrontpageLocalisedText $subCategory;
 
     /**
      * Name of the page.
@@ -63,7 +63,7 @@ class Page implements ResourceInterface
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected FrontpageLocalisedText $name;
+    private FrontpageLocalisedText $name;
 
     /**
      * Title of the page.
@@ -78,7 +78,7 @@ class Page implements ResourceInterface
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected FrontpageLocalisedText $title;
+    private FrontpageLocalisedText $title;
 
     /**
      * The HTML content of the page.
@@ -93,7 +93,7 @@ class Page implements ResourceInterface
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected FrontpageLocalisedText $content;
+    private FrontpageLocalisedText $content;
 
     /**
      * The minimal role required to view a page.
@@ -102,7 +102,7 @@ class Page implements ResourceInterface
         type: 'string',
         enumType: UserRoles::class,
     )]
-    protected UserRoles $requiredRole;
+    private UserRoles $requiredRole;
 
     public function getCategory(): FrontpageLocalisedText
     {

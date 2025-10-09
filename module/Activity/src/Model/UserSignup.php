@@ -23,7 +23,7 @@ class UserSignup extends Signup
         name: 'user_lidnr',
         referencedColumnName: 'lidnr',
     )]
-    protected MemberModel $user;
+    private MemberModel $user;
 
     /**
      * Get the full name of the user whom signed up for the activity.

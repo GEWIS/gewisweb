@@ -42,7 +42,7 @@ class Poll implements ResourceInterface
      * The date the poll expires.
      */
     #[Column(type: 'date')]
-    protected DateTime $expiryDate;
+    private DateTime $expiryDate;
 
     /**
      * The localised question for the poll.
@@ -57,7 +57,7 @@ class Poll implements ResourceInterface
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected FrontpageLocalisedText $question;
+    private FrontpageLocalisedText $question;
 
     /**
      * Poll options.
@@ -69,7 +69,7 @@ class Poll implements ResourceInterface
         mappedBy: 'poll',
         cascade: ['persist', 'remove'],
     )]
-    protected Collection $options;
+    private Collection $options;
 
     /**
      * Poll comments.
@@ -81,7 +81,7 @@ class Poll implements ResourceInterface
         mappedBy: 'poll',
         cascade: ['persist', 'remove'],
     )]
-    protected Collection $comments;
+    private Collection $comments;
 
     /**
      * Who approved this poll. If null then nobody approved it.
@@ -91,14 +91,14 @@ class Poll implements ResourceInterface
         referencedColumnName: 'lidnr',
         nullable: false,
     )]
-    protected MemberModel $creator;
+    private MemberModel $creator;
 
     /**
      * Who approved this poll. If null then nobody approved it.
      */
     #[ManyToOne(targetEntity: MemberModel::class)]
     #[JoinColumn(referencedColumnName: 'lidnr')]
-    protected ?MemberModel $approver = null;
+    private ?MemberModel $approver = null;
 
     public function __construct()
     {

@@ -21,13 +21,13 @@ class ApiUser implements IdentityInterface
      * Application name.
      */
     #[Column(type: 'string')]
-    protected string $name;
+    private string $name;
 
     /**
      * Authentication token.
      */
     #[Column(type: 'string')]
-    protected string $token;
+    private string $token;
 
     /**
      * Get the name.

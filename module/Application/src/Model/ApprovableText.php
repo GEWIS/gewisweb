@@ -18,7 +18,7 @@ class ApprovableText
          * The message accompanying the state of the approval.
          */
         #[Column(type: 'string')]
-        protected string $message,
+        private string $message,
     ) {
     }
 

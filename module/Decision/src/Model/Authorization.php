@@ -39,7 +39,7 @@ class Authorization
         name: 'authorizer',
         referencedColumnName: 'lidnr',
     )]
-    protected Member $authorizer;
+    private Member $authorizer;
 
     /**
      * Member receiving this authorization.
@@ -49,19 +49,19 @@ class Authorization
         name: 'recipient',
         referencedColumnName: 'lidnr',
     )]
-    protected Member $recipient;
+    private Member $recipient;
 
     /**
      * Meeting number.
      */
     #[Column(type: 'integer')]
-    protected int $meetingNumber;
+    private int $meetingNumber;
 
     /**
      * When the authorization was made.
      */
     #[Column(type: 'datetime')]
-    protected DateTime $createdAt;
+    private DateTime $createdAt;
 
     /**
      * When the authorization was revoked.
@@ -70,7 +70,7 @@ class Authorization
         type: 'datetime',
         nullable: true,
     )]
-    protected ?DateTime $revokedAt = null;
+    private ?DateTime $revokedAt = null;
 
     public function getAuthorizer(): Member
     {

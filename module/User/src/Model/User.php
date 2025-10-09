@@ -41,13 +41,13 @@ class User implements IdentityInterface
      */
     #[Id]
     #[Column(type: 'integer')]
-    protected int $lidnr;
+    private int $lidnr;
 
     /**
      * The user's password.
      */
     #[Column(type: 'string')]
-    protected string $password;
+    private string $password;
 
     /**
      * User roles.
@@ -59,7 +59,7 @@ class User implements IdentityInterface
         mappedBy: 'lidnr',
         fetch: 'EAGER',
     )]
-    protected Collection $roles;
+    private Collection $roles;
 
     /**
      * The corresponding member for this user.
@@ -73,7 +73,7 @@ class User implements IdentityInterface
         referencedColumnName: 'lidnr',
         nullable: false,
     )]
-    protected MemberModel $member;
+    private MemberModel $member;
 
     /**
      * Timestamp when the password was last changed.
@@ -82,7 +82,7 @@ class User implements IdentityInterface
         type: 'datetime',
         nullable: true,
     )]
-    protected ?DateTime $passwordChangedOn = null;
+    private ?DateTime $passwordChangedOn = null;
 
     public function __construct(?NewUser $newUser = null)
     {

@@ -39,7 +39,7 @@ class SignupOption
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected SignupField $field;
+    private SignupField $field;
 
     /**
      * The value of the option.
@@ -54,7 +54,7 @@ class SignupOption
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected ActivityLocalisedText $value;
+    private ActivityLocalisedText $value;
 
     public function getField(): SignupField
     {

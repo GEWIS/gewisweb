@@ -34,7 +34,7 @@ class SignupFieldValue
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected SignupField $field;
+    private SignupField $field;
 
     /**
      * Signup which the value belongs to.
@@ -48,7 +48,7 @@ class SignupFieldValue
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected Signup $signup;
+    private Signup $signup;
 
     /**
      * The value of the associated field, is not an option.
@@ -57,7 +57,7 @@ class SignupFieldValue
         type: 'string',
         nullable: true,
     )]
-    protected ?string $value = null;
+    private ?string $value = null;
 
     /**
      * The option chosen.
@@ -67,7 +67,7 @@ class SignupFieldValue
         name: 'option_id',
         referencedColumnName: 'id',
     )]
-    protected ?SignupOption $option = null;
+    private ?SignupOption $option = null;
 
     public function getField(): SignupField
     {

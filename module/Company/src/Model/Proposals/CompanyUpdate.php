@@ -27,7 +27,7 @@ class CompanyUpdate
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected CompanyModel $original;
+    private CompanyModel $original;
 
     /**
      * The proposed update of the company.
@@ -40,7 +40,7 @@ class CompanyUpdate
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected CompanyModel $proposal;
+    private CompanyModel $proposal;
 
     public function getOriginal(): CompanyModel
     {

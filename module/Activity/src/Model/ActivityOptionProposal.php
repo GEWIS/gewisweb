@@ -26,13 +26,13 @@ class ActivityOptionProposal implements OrganResourceInterface
      * Name for the activity option proposal.
      */
     #[Column(type: 'string')]
-    protected string $name;
+    private string $name;
 
     /**
      * Description for the activity option proposal.
      */
     #[Column(type: 'string')]
-    protected string $description;
+    private string $description;
 
     /**
      * Who created this activity option.
@@ -42,13 +42,13 @@ class ActivityOptionProposal implements OrganResourceInterface
         referencedColumnName: 'lidnr',
         nullable: false,
     )]
-    protected MemberModel $creator;
+    private MemberModel $creator;
 
     /**
      * The date and time the activity option was created.
      */
     #[Column(type: 'datetime')]
-    protected DateTime $creationTime;
+    private DateTime $creationTime;
 
     /**
      * Who created this activity proposal.
@@ -58,7 +58,7 @@ class ActivityOptionProposal implements OrganResourceInterface
         referencedColumnName: 'id',
         nullable: true,
     )]
-    protected ?OrganModel $organ = null;
+    private ?OrganModel $organ = null;
 
     /**
      * Who created this activity proposal, if not an organ.
@@ -67,7 +67,7 @@ class ActivityOptionProposal implements OrganResourceInterface
         type: 'string',
         nullable: true,
     )]
-    protected ?string $organAlt = null;
+    private ?string $organAlt = null;
 
     public function getName(): string
     {

@@ -31,14 +31,14 @@ class MeetingMinutes implements ResourceInterface
         type: 'string',
         enumType: MeetingTypes::class,
     )]
-    protected MeetingTypes $meeting_type;
+    private MeetingTypes $meeting_type;
 
     /**
      * Meeting number.
      */
     #[Id]
     #[Column(type: 'integer')]
-    protected int $meeting_number;
+    private int $meeting_number;
 
     /**
      * The corresponding meeting for these minutes.
@@ -57,13 +57,13 @@ class MeetingMinutes implements ResourceInterface
         referencedColumnName: 'number',
         nullable: false,
     )]
-    protected Meeting $meeting;
+    private Meeting $meeting;
 
     /**
      * The storage path.
      */
     #[Column(type: 'string')]
-    protected string $path;
+    private string $path;
 
     public function getPath(): string
     {

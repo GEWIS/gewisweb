@@ -6,7 +6,9 @@ namespace Decision\Model\SubDecision\Key;
 
 use DateTime;
 use Decision\Model\Keyholder;
+use Decision\Model\Member;
 use Decision\Model\SubDecision;
+use Decision\Model\Trait\MemberAwareTrait;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\OneToOne;
@@ -14,11 +16,13 @@ use Doctrine\ORM\Mapping\OneToOne;
 #[Entity]
 class Granting extends SubDecision
 {
+    use MemberAwareTrait;
+
     /**
      * Till when the keycode is granted.
      */
     #[Column(type: 'date')]
-    protected DateTime $until;
+    private DateTime $until;
 
     /**
      * Discharges.
@@ -27,7 +31,7 @@ class Granting extends SubDecision
         targetEntity: Withdrawal::class,
         mappedBy: 'granting',
     )]
-    protected ?Withdrawal $withdrawal = null;
+    private ?Withdrawal $withdrawal = null;
 
     /**
      * Keyholder reference.
@@ -36,7 +40,17 @@ class Granting extends SubDecision
         targetEntity: Keyholder::class,
         mappedBy: 'grantingDec',
     )]
-    protected Keyholder $keyholder;
+    private Keyholder $keyholder;
+
+    /**
+     * Get the member.
+     *
+     * @psalm-suppress InvalidNullableReturnType
+     */
+    public function getMember(): Member
+    {
+        return $this->member;
+    }
 
     /**
      * Get the date.

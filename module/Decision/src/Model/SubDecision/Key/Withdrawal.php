@@ -41,13 +41,13 @@ class Withdrawal extends SubDecision
         name: 'r_sequence',
         referencedColumnName: 'sequence',
     )]
-    protected Granting $granting;
+    private Granting $granting;
 
     /**
      * When the granted keycode is prematurely revoked.
      */
     #[Column(type: 'date')]
-    protected DateTime $withdrawnOn;
+    private DateTime $withdrawnOn;
 
     /**
      * Get the granting of the keycode.

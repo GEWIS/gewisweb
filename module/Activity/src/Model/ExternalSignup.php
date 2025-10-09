@@ -17,13 +17,13 @@ class ExternalSignup extends Signup
      * The full name of the external subscriber.
      */
     #[Column(type: 'string')]
-    protected string $fullName;
+    private string $fullName;
 
     /**
      * The email address of the external subscriber.
      */
     #[Column(type: 'string')]
-    protected string $email;
+    private string $email;
 
     /**
      * Gets the full name of the user who signed up for the activity.

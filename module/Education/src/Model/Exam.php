@@ -21,7 +21,7 @@ class Exam extends CourseDocument
         type: 'string',
         enumType: ExamTypes::class,
     )]
-    protected ExamTypes $examType;
+    private ExamTypes $examType;
 
     /**
      * Get the type.

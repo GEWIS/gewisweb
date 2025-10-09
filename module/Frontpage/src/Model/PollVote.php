@@ -39,7 +39,7 @@ class PollVote implements ResourceInterface
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected Poll $poll;
+    private Poll $poll;
 
     /**
      * The option which was chosen.
@@ -54,7 +54,7 @@ class PollVote implements ResourceInterface
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected PollOption $pollOption;
+    private PollOption $pollOption;
 
     /**
      * The user whom submitted this vote.
@@ -69,7 +69,7 @@ class PollVote implements ResourceInterface
         referencedColumnName: 'lidnr',
         nullable: false,
     )]
-    protected MemberModel $respondent;
+    private MemberModel $respondent;
 
     public function getPoll(): Poll
     {

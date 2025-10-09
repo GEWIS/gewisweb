@@ -35,13 +35,13 @@ class MaxActivities
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected OrganModel $organ;
+    private OrganModel $organ;
 
     /**
      * The value of the option.
      */
     #[Column(type: 'integer')]
-    protected int $value;
+    private int $value;
 
     /**
      * The associated period.
@@ -50,7 +50,7 @@ class MaxActivities
         targetEntity: ActivityOptionCreationPeriod::class,
         inversedBy: 'maxActivities',
     )]
-    protected ActivityOptionCreationPeriod $period;
+    private ActivityOptionCreationPeriod $period;
 
     public function getPeriod(): ActivityOptionCreationPeriod
     {

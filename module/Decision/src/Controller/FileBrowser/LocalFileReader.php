@@ -101,7 +101,7 @@ class LocalFileReader implements FileReader
     /**
      * @return false|string
      */
-    protected function interpretDirContent(
+    private function interpretDirContent(
         string $dirContent,
         string $fullPath,
     ): bool|string {
@@ -150,7 +150,7 @@ class LocalFileReader implements FileReader
         return str_starts_with($realFullPath, $realRoot);
     }
 
-    protected function isValidPathName(string $path): bool
+    private function isValidPathName(string $path): bool
     {
         return 1 === preg_match('#^' . $this->validFilepath . '$#', $path);
     }

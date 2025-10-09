@@ -22,37 +22,37 @@ class NewsItem implements ResourceInterface
      * The date the news item was written.
      */
     #[Column(type: 'date')]
-    protected DateTime $date;
+    private DateTime $date;
 
     /**
      * Dutch title of the news.
      */
     #[Column(type: 'string')]
-    protected string $dutchTitle;
+    private string $dutchTitle;
 
     /**
      * English title of the news.
      */
     #[Column(type: 'string')]
-    protected string $englishTitle;
+    private string $englishTitle;
 
     /**
      * The english HTML content of the news.
      */
     #[Column(type: 'text')]
-    protected string $englishContent;
+    private string $englishContent;
 
     /**
      * The english HTML content of the news.
      */
     #[Column(type: 'text')]
-    protected string $dutchContent;
+    private string $dutchContent;
 
     /**
      * Whether this news item is pinned to the top of the news section or not.
      */
     #[Column(type: 'boolean')]
-    protected bool $pinned;
+    private bool $pinned;
 
     public function getPinned(): bool
     {

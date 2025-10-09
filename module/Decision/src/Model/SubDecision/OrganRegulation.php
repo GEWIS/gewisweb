@@ -6,18 +6,22 @@ namespace Decision\Model\SubDecision;
 
 use DateTime;
 use Decision\Model\Enums\OrganTypes;
+use Decision\Model\Member;
 use Decision\Model\SubDecision;
+use Decision\Model\Trait\MemberAwareTrait;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 
 #[Entity]
 class OrganRegulation extends SubDecision
 {
+    use MemberAwareTrait;
+
     /**
      * Name of the organ.
      */
     #[Column(type: 'string')]
-    protected string $name;
+    private string $name;
 
     /**
      * Type of the organ.
@@ -26,7 +30,7 @@ class OrganRegulation extends SubDecision
         type: 'string',
         enumType: OrganTypes::class,
     )]
-    protected OrganTypes $organType;
+    private OrganTypes $organType;
 
     /**
      * Version of the regulation.
@@ -35,25 +39,35 @@ class OrganRegulation extends SubDecision
         type: 'string',
         length: 32,
     )]
-    protected string $version;
+    private string $version;
 
     /**
      * Date of the regulation.
      */
     #[Column(type: 'date')]
-    protected DateTime $date;
+    private DateTime $date;
 
     /**
      * If the regulation was approved.
      */
     #[Column(type: 'boolean')]
-    protected bool $approval;
+    private bool $approval;
 
     /**
      * If there were changes made.
      */
     #[Column(type: 'boolean')]
-    protected bool $changes;
+    private bool $changes;
+
+    /**
+     * Get the member.
+     *
+     * @psalm-suppress InvalidNullableReturnType
+     */
+    public function getMember(): Member
+    {
+        return $this->member;
+    }
 
     /**
      * Set the organ type

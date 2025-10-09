@@ -40,13 +40,13 @@ class Job implements ResourceInterface
      * The job's slug name.
      */
     #[Column(type: 'string')]
-    protected string $slugName;
+    private string $slugName;
 
     /**
      * The job's status.
      */
     #[Column(type: 'boolean')]
-    protected bool $published;
+    private bool $published;
 
     /**
      * The job's contact's name.
@@ -55,7 +55,7 @@ class Job implements ResourceInterface
         type: 'string',
         nullable: true,
     )]
-    protected ?string $contactName;
+    private ?string $contactName;
 
     /**
      * The job's phone.
@@ -64,7 +64,7 @@ class Job implements ResourceInterface
         type: 'string',
         nullable: true,
     )]
-    protected ?string $contactPhone;
+    private ?string $contactPhone;
 
     /**
      * The job's email.
@@ -73,7 +73,7 @@ class Job implements ResourceInterface
         type: 'string',
         nullable: true,
     )]
-    protected ?string $contactEmail;
+    private ?string $contactEmail;
 
     /**
      * The job's display name.
@@ -88,7 +88,7 @@ class Job implements ResourceInterface
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected CompanyLocalisedText $name;
+    private CompanyLocalisedText $name;
 
     /**
      * The job's location.
@@ -103,7 +103,7 @@ class Job implements ResourceInterface
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected CompanyLocalisedText $location;
+    private CompanyLocalisedText $location;
 
     /**
      * The job's website.
@@ -118,7 +118,7 @@ class Job implements ResourceInterface
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected CompanyLocalisedText $website;
+    private CompanyLocalisedText $website;
 
     /**
      * The job's description.
@@ -133,7 +133,7 @@ class Job implements ResourceInterface
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected CompanyLocalisedText $description;
+    private CompanyLocalisedText $description;
 
     /**
      * The location(url) of an attachment describing the job.
@@ -148,7 +148,7 @@ class Job implements ResourceInterface
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected CompanyLocalisedText $attachment;
+    private CompanyLocalisedText $attachment;
 
     /**
      * The job's package.
@@ -162,7 +162,7 @@ class Job implements ResourceInterface
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected CompanyJobPackage $package;
+    private CompanyJobPackage $package;
 
     /**
      * The job's category.
@@ -173,7 +173,7 @@ class Job implements ResourceInterface
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected JobCategory $category;
+    private JobCategory $category;
 
     /**
      * Job labels.
@@ -186,7 +186,7 @@ class Job implements ResourceInterface
         cascade: ['persist'],
     )]
     #[JoinTable(name: 'JobLabelAssignment')]
-    protected Collection $labels;
+    private Collection $labels;
 
     /**
      * Proposed updates to this job.
@@ -200,7 +200,7 @@ class Job implements ResourceInterface
         orphanRemoval: true,
         fetch: 'EXTRA_LAZY',
     )]
-    protected Collection $updateProposals;
+    private Collection $updateProposals;
 
     public function __construct()
     {

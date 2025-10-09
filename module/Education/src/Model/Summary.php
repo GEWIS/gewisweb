@@ -20,7 +20,7 @@ class Summary extends CourseDocument
         type: 'string',
         nullable: true,
     )]
-    protected ?string $author = null;
+    private ?string $author = null;
 
     /**
      * Get the author.

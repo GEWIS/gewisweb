@@ -35,13 +35,13 @@ class Organ
      * Abbreviation (only for when organs are created).
      */
     #[Column(type: 'string')]
-    protected string $abbr;
+    private string $abbr;
 
     /**
      * Name (only for when organs are created).
      */
     #[Column(type: 'string')]
-    protected string $name;
+    private string $name;
 
     /**
      * Type of the organ.
@@ -50,7 +50,7 @@ class Organ
         type: 'string',
         enumType: OrganTypes::class,
     )]
-    protected OrganTypes $type;
+    private OrganTypes $type;
 
     /**
      * Reference to foundation of organ.
@@ -79,13 +79,13 @@ class Organ
         name: 'r_sequence',
         referencedColumnName: 'sequence',
     )]
-    protected Foundation $foundation;
+    private Foundation $foundation;
 
     /**
      * Foundation date.
      */
     #[Column(type: 'date')]
-    protected DateTime $foundationDate;
+    private DateTime $foundationDate;
 
     /**
      * Abrogation date.
@@ -94,7 +94,7 @@ class Organ
         type: 'date',
         nullable: true,
     )]
-    protected ?DateTime $abrogationDate = null;
+    private ?DateTime $abrogationDate = null;
 
     /**
      * Reference to members.
@@ -105,7 +105,7 @@ class Organ
         mappedBy: 'organ',
         targetEntity: OrganMember::class,
     )]
-    protected Collection $members;
+    private Collection $members;
 
     /**
      * Reference to subdecisions.
@@ -144,7 +144,7 @@ class Organ
         referencedColumnName: 'sequence',
         nullable: false,
     )]
-    protected Collection $subdecisions;
+    private Collection $subdecisions;
 
     /**
      * All organInformation for this organ.
@@ -156,7 +156,7 @@ class Organ
         targetEntity: OrganInformation::class,
         cascade: ['persist', 'remove'],
     )]
-    protected Collection $organInformation;
+    private Collection $organInformation;
 
     public function __construct()
     {

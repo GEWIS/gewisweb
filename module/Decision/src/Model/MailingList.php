@@ -30,19 +30,19 @@ class MailingList
      */
     #[Id]
     #[Column(type: 'string')]
-    protected string $name;
+    private string $name;
 
     /**
      * Dutch description of the mailing list.
      */
     #[Column(type: 'text')]
-    protected string $nl_description;
+    private string $nl_description;
 
     /**
      * English description of the mailing list.
      */
     #[Column(type: 'text')]
-    protected string $en_description;
+    private string $en_description;
 
     /**
      * Mailing list members.
@@ -53,7 +53,7 @@ class MailingList
         targetEntity: MailingListMember::class,
         mappedBy: 'mailingList',
     )]
-    protected Collection $mailingListMemberships;
+    private Collection $mailingListMemberships;
 
     public function __construct()
     {

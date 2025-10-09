@@ -35,7 +35,7 @@ class ApiAppAuthentication
         referencedColumnName: 'lidnr',
         nullable: false,
     )]
-    protected User $user;
+    private User $user;
 
     /**
      * The application that got the authentication.
@@ -46,13 +46,13 @@ class ApiAppAuthentication
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected ApiApp $apiApp;
+    private ApiApp $apiApp;
 
     /**
      * Time of authentication.
      */
     #[Column(type: 'datetime')]
-    protected DateTime $time;
+    private DateTime $time;
 
     public function getUser(): User
     {

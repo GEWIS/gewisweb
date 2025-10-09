@@ -28,7 +28,7 @@ class ActivityUpdateProposal
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected Activity $old;
+    private Activity $old;
 
     /**
      * The new activity.
@@ -38,7 +38,7 @@ class ActivityUpdateProposal
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected Activity $new;
+    private Activity $new;
 
     public function getOld(): Activity
     {
