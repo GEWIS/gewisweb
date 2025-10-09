@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Decision\Model\SubDecision\Financial;
 
 use DateTime;
+use Decision\Model\Member;
 use Decision\Model\SubDecision;
+use Decision\Model\Trait\MemberAwareTrait;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 
@@ -15,6 +17,8 @@ use Doctrine\ORM\Mapping\Entity;
 #[Entity]
 class Budget extends SubDecision
 {
+    use MemberAwareTrait;
+
     /**
      * Name of the budget.
      */
@@ -47,6 +51,16 @@ class Budget extends SubDecision
      */
     #[Column(type: 'boolean')]
     private bool $changes;
+
+    /**
+     * Get the member.
+     *
+     * @psalm-suppress InvalidNullableReturnType
+     */
+    public function getMember(): Member
+    {
+        return $this->member;
+    }
 
     /**
      * Get the name.

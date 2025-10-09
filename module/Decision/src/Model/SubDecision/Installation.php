@@ -7,16 +7,15 @@ namespace Decision\Model\SubDecision;
 use Decision\Model\Enums\InstallationFunctions;
 use Decision\Model\Member;
 use Decision\Model\OrganMember;
+use Decision\Model\Trait\MemberAwareTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\AssociationOverride;
 use Doctrine\ORM\Mapping\AssociationOverrides;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OneToOne;
-use Override;
 
 /**
  * Installation into organ.
@@ -25,16 +24,13 @@ use Override;
 #[AssociationOverrides([
     new AssociationOverride(
         name: 'member',
-        joinColumns: new JoinColumn(
-            name: 'lidnr',
-            referencedColumnName: 'lidnr',
-            nullable: false,
-        ),
         inversedBy: 'installations',
     ),
 ])]
 class Installation extends FoundationReference
 {
+    use MemberAwareTrait;
+
     /**
      * Function given.
      */
@@ -99,7 +95,6 @@ class Installation extends FoundationReference
      *
      * @psalm-suppress InvalidNullableReturnType
      */
-    #[Override]
     public function getMember(): Member
     {
         return $this->member;

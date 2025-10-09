@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Decision\Model\SubDecision;
 
 use Decision\Model\Meeting;
+use Decision\Model\Member;
 use Decision\Model\SubDecision;
+use Decision\Model\Trait\MemberAwareTrait;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\JoinColumn;
@@ -17,6 +19,8 @@ use Doctrine\ORM\Mapping\OneToOne;
 #[Entity]
 class Minutes extends SubDecision
 {
+    use MemberAwareTrait;
+
     /**
      * Reference to the meetings
      */
@@ -45,6 +49,16 @@ class Minutes extends SubDecision
      */
     #[Column(type: 'boolean')]
     private bool $changes;
+
+    /**
+     * Get the member.
+     *
+     * @psalm-suppress InvalidNullableReturnType
+     */
+    public function getMember(): Member
+    {
+        return $this->member;
+    }
 
     /**
      * Get the target.

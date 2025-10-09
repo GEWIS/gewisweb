@@ -9,30 +9,19 @@ use Decision\Model\BoardMember;
 use Decision\Model\Enums\BoardFunctions;
 use Decision\Model\Member;
 use Decision\Model\SubDecision;
-use Doctrine\ORM\Mapping\AssociationOverride;
-use Doctrine\ORM\Mapping\AssociationOverrides;
+use Decision\Model\Trait\MemberAwareTrait;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\OneToOne;
-use Override;
 
 /**
  * Installation as board member.
  */
 #[Entity]
-#[AssociationOverrides([
-    new AssociationOverride(
-        name: 'member',
-        joinColumns: new JoinColumn(
-            name: 'lidnr',
-            referencedColumnName: 'lidnr',
-            nullable: false,
-        ),
-    ),
-])]
 class Installation extends SubDecision
 {
+    use MemberAwareTrait;
+
     /**
      * Function given.
      */
@@ -96,7 +85,6 @@ class Installation extends SubDecision
      *
      * @psalm-suppress InvalidNullableReturnType
      */
-    #[Override]
     public function getMember(): Member
     {
         return $this->member;
