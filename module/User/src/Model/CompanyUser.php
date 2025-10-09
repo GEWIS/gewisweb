@@ -25,13 +25,13 @@ class CompanyUser implements IdentityInterface
      */
     #[Id]
     #[Column(type: 'integer')]
-    protected int $id;
+    private int $id;
 
     /**
      * The company's password.
      */
     #[Column(type: 'string')]
-    protected string $password;
+    private string $password;
 
     /**
      * The company for this company user.
@@ -45,7 +45,7 @@ class CompanyUser implements IdentityInterface
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected CompanyModel $company;
+    private CompanyModel $company;
 
     /**
      * Timestamp when the password was last changed.
@@ -54,7 +54,7 @@ class CompanyUser implements IdentityInterface
         type: 'datetime',
         nullable: true,
     )]
-    protected ?DateTime $passwordChangedOn = null;
+    private ?DateTime $passwordChangedOn = null;
 
     public function __construct(NewCompanyUserModel $newCompanyUser)
     {

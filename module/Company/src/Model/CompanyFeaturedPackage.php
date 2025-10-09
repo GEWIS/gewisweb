@@ -38,7 +38,7 @@ class CompanyFeaturedPackage extends CompanyPackage
         name: 'article_id',
         referencedColumnName: 'id',
     )]
-    protected CompanyLocalisedText $article;
+    private CompanyLocalisedText $article;
 
     public function __construct()
     {

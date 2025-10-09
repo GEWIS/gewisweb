@@ -21,25 +21,25 @@ class ApiApp
      * Application ID.
      */
     #[Column(type: 'string')]
-    protected string $appId;
+    private string $appId;
 
     /**
      * Application secret.
      */
     #[Column(type: 'string')]
-    protected string $secret;
+    private string $secret;
 
     /**
      * Callback URL.
      */
     #[Column(type: 'string')]
-    protected string $callback;
+    private string $callback;
 
     /**
      * URL for the application when the user does not authorise access.
      */
     #[Column(type: 'string')]
-    protected string $url;
+    private string $url;
 
     /**
      * The claims that will be present in the JWT. If `null` only the member's id will be passed along.
@@ -51,7 +51,7 @@ class ApiApp
         nullable: true,
         enumType: JWTClaims::class,
     )]
-    protected array $claims;
+    private array $claims;
 
     public function getAppId(): string
     {

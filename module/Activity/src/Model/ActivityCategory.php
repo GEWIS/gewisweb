@@ -42,7 +42,7 @@ class ActivityCategory
         mappedBy: 'categories',
         cascade: ['persist'],
     )]
-    protected Collection $activities;
+    private Collection $activities;
 
     /**
      * Name for the Category.
@@ -57,7 +57,7 @@ class ActivityCategory
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected ActivityLocalisedText $name;
+    private ActivityLocalisedText $name;
 
     public function __construct()
     {

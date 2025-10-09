@@ -96,19 +96,19 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected ActivityLocalisedText $name;
+    private ActivityLocalisedText $name;
 
     /**
      * The date and time the activity starts.
      */
     #[Column(type: 'datetime')]
-    protected DateTime $beginTime;
+    private DateTime $beginTime;
 
     /**
      * The date and time the activity ends.
      */
     #[Column(type: 'datetime')]
-    protected DateTime $endTime;
+    private DateTime $endTime;
 
     /**
      * The location the activity is held at.
@@ -123,7 +123,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected ActivityLocalisedText $location;
+    private ActivityLocalisedText $location;
 
     /**
      * How much does it cost.
@@ -138,14 +138,14 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected ActivityLocalisedText $costs;
+    private ActivityLocalisedText $costs;
 
     /**
      * Who (dis)approved this activity?
      */
     #[ManyToOne(targetEntity: MemberModel::class)]
     #[JoinColumn(referencedColumnName: 'lidnr')]
-    protected ?MemberModel $approver = null;
+    private ?MemberModel $approver = null;
 
     /**
      * Who created this activity.
@@ -155,13 +155,13 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
         referencedColumnName: 'lidnr',
         nullable: false,
     )]
-    protected MemberModel $creator;
+    private MemberModel $creator;
 
     /**
      * What is the approval status      .
      */
     #[Column(type: 'integer')]
-    protected int $status;
+    private int $status;
 
     /**
      * The update proposal associated with this activity.
@@ -172,7 +172,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
         targetEntity: ActivityUpdateProposal::class,
         mappedBy: 'old',
     )]
-    protected Collection $updateProposal;
+    private Collection $updateProposal;
 
     /**
      * Activity description.
@@ -187,7 +187,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected ActivityLocalisedText $description;
+    private ActivityLocalisedText $description;
 
     /**
      * All additional Categories belonging to this activity.
@@ -200,7 +200,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
         cascade: ['persist'],
     )]
     #[JoinTable(name: 'ActivityCategoryAssignment')]
-    protected Collection $categories;
+    private Collection $categories;
 
     /**
      * All additional SignupLists belonging to this activity.
@@ -217,7 +217,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
         'promoted' => 'DESC',
         'id' => 'ASC',
     ])]
-    protected Collection $signupLists;
+    private Collection $signupLists;
 
     /**
      * Which organ organises this activity.
@@ -227,7 +227,7 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
         referencedColumnName: 'id',
         nullable: true,
     )]
-    protected ?OrganModel $organ = null;
+    private ?OrganModel $organ = null;
 
     /**
      * Which company organises this activity.
@@ -237,25 +237,25 @@ class Activity implements OrganResourceInterface, CreatorResourceInterface
         referencedColumnName: 'id',
         nullable: true,
     )]
-    protected ?CompanyModel $company = null;
+    private ?CompanyModel $company = null;
 
     /**
      * Is this a My Future related activity.
      */
     #[Column(type: 'boolean')]
-    protected bool $isMyFuture;
+    private bool $isMyFuture;
 
     /**
      * Whether this activity needs a GEFLITST photographer.
      */
     #[Column(type: 'boolean')]
-    protected bool $requireGEFLITST = false;
+    private bool $requireGEFLITST = false;
 
     /**
      * Whether this activity needs a Zettle.
      */
     #[Column(type: 'boolean')]
-    protected bool $requireZettle = false;
+    private bool $requireZettle = false;
 
     public function __construct()
     {

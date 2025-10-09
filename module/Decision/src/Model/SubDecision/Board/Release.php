@@ -47,13 +47,13 @@ class Release extends SubDecision
         name: 'r_sequence',
         referencedColumnName: 'sequence',
     )]
-    protected Installation $installation;
+    private Installation $installation;
 
     /**
      * Date of the discharge.
      */
     #[Column(type: 'date')]
-    protected DateTime $date;
+    private DateTime $date;
 
     /**
      * Get installation.

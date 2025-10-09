@@ -18,7 +18,7 @@ class Granting extends SubDecision
      * Till when the keycode is granted.
      */
     #[Column(type: 'date')]
-    protected DateTime $until;
+    private DateTime $until;
 
     /**
      * Discharges.
@@ -27,7 +27,7 @@ class Granting extends SubDecision
         targetEntity: Withdrawal::class,
         mappedBy: 'granting',
     )]
-    protected ?Withdrawal $withdrawal = null;
+    private ?Withdrawal $withdrawal = null;
 
     /**
      * Keyholder reference.
@@ -36,7 +36,7 @@ class Granting extends SubDecision
         targetEntity: Keyholder::class,
         mappedBy: 'grantingDec',
     )]
-    protected Keyholder $keyholder;
+    private Keyholder $keyholder;
 
     /**
      * Get the date.

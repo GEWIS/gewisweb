@@ -40,13 +40,13 @@ class Installation extends SubDecision
         type: 'string',
         enumType: BoardFunctions::class,
     )]
-    protected BoardFunctions $function;
+    private BoardFunctions $function;
 
     /**
      * The date at which the installation is in effect.
      */
     #[Column(type: 'date')]
-    protected DateTime $date;
+    private DateTime $date;
 
     /**
      * Discharge.
@@ -55,7 +55,7 @@ class Installation extends SubDecision
         targetEntity: Discharge::class,
         mappedBy: 'installation',
     )]
-    protected ?Discharge $discharge = null;
+    private ?Discharge $discharge = null;
 
     /**
      * Release.
@@ -64,7 +64,7 @@ class Installation extends SubDecision
         targetEntity: Release::class,
         mappedBy: 'installation',
     )]
-    protected ?Release $release = null;
+    private ?Release $release = null;
 
     /**
      * Board member reference.
@@ -73,7 +73,7 @@ class Installation extends SubDecision
         targetEntity: BoardMember::class,
         mappedBy: 'installationDec',
     )]
-    protected BoardMember $boardMember;
+    private BoardMember $boardMember;
 
     /**
      * Get the function.

@@ -97,7 +97,7 @@ abstract class SubDecision
         name: 'decision_number',
         referencedColumnName: 'number',
     )]
-    protected Decision $decision;
+    private Decision $decision;
 
     /**
      * Meeting type.
@@ -109,7 +109,7 @@ abstract class SubDecision
         type: 'string',
         enumType: MeetingTypes::class,
     )]
-    protected MeetingTypes $meeting_type;
+    private MeetingTypes $meeting_type;
 
     /**
      * Meeting number.
@@ -118,7 +118,7 @@ abstract class SubDecision
      */
     #[Id]
     #[Column(type: 'integer')]
-    protected int $meeting_number;
+    private int $meeting_number;
 
     /**
      * Decision point.
@@ -127,7 +127,7 @@ abstract class SubDecision
      */
     #[Id]
     #[Column(type: 'integer')]
-    protected int $decision_point;
+    private int $decision_point;
 
     /**
      * Decision number.
@@ -136,26 +136,26 @@ abstract class SubDecision
      */
     #[Id]
     #[Column(type: 'integer')]
-    protected int $decision_number;
+    private int $decision_number;
 
     /**
      * Sub decision sequence number.
      */
     #[Id]
     #[Column(type: 'integer')]
-    protected int $sequence;
+    private int $sequence;
 
     /**
      * Content in Dutch.
      */
     #[Column(type: 'text')]
-    protected string $contentNL;
+    private string $contentNL;
 
     /**
      * Content in English.
      */
     #[Column(type: 'text')]
-    protected string $contentEN;
+    private string $contentEN;
 
     /**
      * The member involved in this sub-decision.
@@ -169,7 +169,7 @@ abstract class SubDecision
         referencedColumnName: 'lidnr',
         nullable: true,
     )]
-    protected ?Member $member = null;
+    private ?Member $member = null;
 
     /**
      * Get the decision.

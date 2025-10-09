@@ -23,13 +23,13 @@ class NewUser
      */
     #[Id]
     #[Column(type: 'integer')]
-    protected int $lidnr;
+    private int $lidnr;
 
     /**
      * The user's activation code.
      */
     #[Column(type: 'string')]
-    protected string $code;
+    private string $code;
 
     /**
      * User's member.
@@ -40,7 +40,7 @@ class NewUser
         referencedColumnName: 'lidnr',
         nullable: false,
     )]
-    protected MemberModel $member;
+    private MemberModel $member;
 
     /**
      * Registration attempt timestamp.
@@ -49,7 +49,7 @@ class NewUser
         type: 'datetime',
         nullable: true,
     )]
-    protected ?DateTime $time = null;
+    private ?DateTime $time = null;
 
     public function __construct(MemberModel $member)
     {

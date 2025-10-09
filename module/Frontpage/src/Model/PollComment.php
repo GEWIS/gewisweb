@@ -41,7 +41,7 @@ class PollComment implements ResourceInterface
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected Poll $poll;
+    private Poll $poll;
 
     /**
      * User that posted the comment.
@@ -52,25 +52,25 @@ class PollComment implements ResourceInterface
         referencedColumnName: 'lidnr',
         nullable: false,
     )]
-    protected MemberModel $user;
+    private MemberModel $user;
 
     /**
      * Author of the comment.
      */
     #[Column(type: 'string')]
-    protected string $author;
+    private string $author;
 
     /**
      * Comment content.
      */
     #[Column(type: 'text')]
-    protected string $content;
+    private string $content;
 
     /**
      * Comment date.
      */
     #[Column(type: 'datetime')]
-    protected DateTime $createdOn;
+    private DateTime $createdOn;
 
     /**
      * Get the poll.

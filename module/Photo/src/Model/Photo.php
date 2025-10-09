@@ -57,7 +57,7 @@ class Photo implements ResourceInterface
      * Date and time when the photo was taken.
      */
     #[Column(type: 'datetime')]
-    protected DateTime $dateTime;
+    private DateTime $dateTime;
 
     /**
      * Artist/author.
@@ -66,7 +66,7 @@ class Photo implements ResourceInterface
         type: 'string',
         nullable: true,
     )]
-    protected ?string $artist = null;
+    private ?string $artist = null;
 
     /**
      * The type of camera used.
@@ -75,7 +75,7 @@ class Photo implements ResourceInterface
         type: 'string',
         nullable: true,
     )]
-    protected ?string $camera = null;
+    private ?string $camera = null;
 
     /**
      * Whether a flash has been used.
@@ -84,7 +84,7 @@ class Photo implements ResourceInterface
         type: 'boolean',
         nullable: true,
     )]
-    protected ?bool $flash = null;
+    private ?bool $flash = null;
 
     /**
      * The focal length of the lens, in mm.
@@ -93,7 +93,7 @@ class Photo implements ResourceInterface
         type: 'float',
         nullable: true,
     )]
-    protected ?float $focalLength = null;
+    private ?float $focalLength = null;
 
     /**
      * The exposure time, in seconds.
@@ -102,7 +102,7 @@ class Photo implements ResourceInterface
         type: 'float',
         nullable: true,
     )]
-    protected ?float $exposureTime = null;
+    private ?float $exposureTime = null;
 
     /**
      * The shutter speed.
@@ -111,7 +111,7 @@ class Photo implements ResourceInterface
         type: 'string',
         nullable: true,
     )]
-    protected ?string $shutterSpeed = null;
+    private ?string $shutterSpeed = null;
 
     /**
      * The lens aperture.
@@ -120,7 +120,7 @@ class Photo implements ResourceInterface
         type: 'string',
         nullable: true,
     )]
-    protected ?string $aperture = null;
+    private ?string $aperture = null;
 
     /**
      * Indicates the ISO Speed and ISO Latitude of the camera.
@@ -129,7 +129,7 @@ class Photo implements ResourceInterface
         type: 'smallint',
         nullable: true,
     )]
-    protected ?int $iso = null;
+    private ?int $iso = null;
 
     /**
      * Album in which the photo is.
@@ -143,13 +143,13 @@ class Photo implements ResourceInterface
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected Album $album;
+    private Album $album;
 
     /**
      * The path where the photo is located relative to the storage directory.
      */
     #[Column(type: 'string')]
-    protected string $path;
+    private string $path;
 
     /**
      * The GPS longitude of the location where the photo was taken.
@@ -158,7 +158,7 @@ class Photo implements ResourceInterface
         type: 'float',
         nullable: true,
     )]
-    protected ?float $longitude = null;
+    private ?float $longitude = null;
 
     /**
      * The GPS latitude of the location where the photo was taken.
@@ -167,7 +167,7 @@ class Photo implements ResourceInterface
         type: 'float',
         nullable: true,
     )]
-    protected ?float $latitude = null;
+    private ?float $latitude = null;
 
     /**
      * All the votes for this photo.
@@ -179,7 +179,7 @@ class Photo implements ResourceInterface
         mappedBy: 'photo',
         cascade: ['persist', 'remove'],
     )]
-    protected Collection $votes;
+    private Collection $votes;
 
     /**
      * All the tags for this photo.
@@ -191,7 +191,7 @@ class Photo implements ResourceInterface
         mappedBy: 'photo',
         cascade: ['persist', 'remove'],
     )]
-    protected Collection $tags;
+    private Collection $tags;
 
     /**
      * All the profile photos that use this photo.
@@ -204,7 +204,7 @@ class Photo implements ResourceInterface
         cascade: ['persist', 'remove'],
         fetch: 'EXTRA_LAZY',
     )]
-    protected Collection $profilePhotos;
+    private Collection $profilePhotos;
 
     /**
      * The corresponding WeeklyPhoto entity if this photo has been a weekly photo.
@@ -214,7 +214,7 @@ class Photo implements ResourceInterface
         mappedBy: 'photo',
         cascade: ['persist', 'remove'],
     )]
-    protected ?WeeklyPhoto $weeklyPhoto = null;
+    private ?WeeklyPhoto $weeklyPhoto = null;
 
     /**
      * The aspect ratio of the photo width/height.
@@ -223,7 +223,7 @@ class Photo implements ResourceInterface
         type: 'float',
         nullable: true,
     )]
-    protected ?float $aspectRatio = null;
+    private ?float $aspectRatio = null;
 
     public function __construct()
     {

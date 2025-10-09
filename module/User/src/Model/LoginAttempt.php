@@ -36,7 +36,7 @@ class LoginAttempt
         name: 'user_id',
         referencedColumnName: 'lidnr',
     )]
-    protected ?UserModel $user = null;
+    private ?UserModel $user = null;
 
     /**
      * The user for which the login was attempted.
@@ -46,19 +46,19 @@ class LoginAttempt
         name: 'company_id',
         referencedColumnName: 'id',
     )]
-    protected ?CompanyUserModel $companyUser = null;
+    private ?CompanyUserModel $companyUser = null;
 
     /**
      * The ip from which the login was attempted.
      */
     #[Column(type: 'string')]
-    protected string $ip;
+    private string $ip;
 
     /**
      * Attempt timestamp.
      */
     #[Column(type: 'datetime')]
-    protected DateTime $time;
+    private DateTime $time;
 
     public function getUser(): ?UserModel
     {

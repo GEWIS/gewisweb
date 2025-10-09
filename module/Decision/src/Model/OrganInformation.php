@@ -28,7 +28,7 @@ class OrganInformation
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected Organ $organ;
+    private Organ $organ;
 
     /**
      * The email address of the organ if available.
@@ -37,7 +37,7 @@ class OrganInformation
         type: 'string',
         nullable: true,
     )]
-    protected ?string $email = null;
+    private ?string $email = null;
 
     /**
      * The website of the organ if available.
@@ -46,7 +46,7 @@ class OrganInformation
         type: 'string',
         nullable: true,
     )]
-    protected ?string $website = null;
+    private ?string $website = null;
 
     /**
      * A short description of the organ in Dutch.
@@ -55,7 +55,7 @@ class OrganInformation
         type: 'string',
         nullable: true,
     )]
-    protected ?string $shortDutchDescription = null;
+    private ?string $shortDutchDescription = null;
 
     /**
      * A description of the organ in Dutch.
@@ -64,7 +64,7 @@ class OrganInformation
         type: 'text',
         nullable: true,
     )]
-    protected ?string $dutchDescription = null;
+    private ?string $dutchDescription = null;
 
     /**
      * A short description of the organ in English.
@@ -73,7 +73,7 @@ class OrganInformation
         type: 'string',
         nullable: true,
     )]
-    protected ?string $shortEnglishDescription = null;
+    private ?string $shortEnglishDescription = null;
 
     /**
      * A description of the organ in English.
@@ -82,7 +82,7 @@ class OrganInformation
         type: 'text',
         nullable: true,
     )]
-    protected ?string $englishDescription = null;
+    private ?string $englishDescription = null;
 
     /**
      * The cover photo to display for this organ.
@@ -91,7 +91,7 @@ class OrganInformation
         type: 'string',
         nullable: true,
     )]
-    protected ?string $coverPath = null;
+    private ?string $coverPath = null;
 
     /**
      * The thumbnail photo to display for this organ.
@@ -100,14 +100,14 @@ class OrganInformation
         type: 'string',
         nullable: true,
     )]
-    protected ?string $thumbnailPath = null;
+    private ?string $thumbnailPath = null;
 
     /**
      * Who was the last one to approve this information. If null then nobody approved it.
      */
     #[ManyToOne(targetEntity: MemberModel::class)]
     #[JoinColumn(referencedColumnName: 'lidnr')]
-    protected ?MemberModel $approver = null;
+    private ?MemberModel $approver = null;
 
     public function getOrgan(): Organ
     {

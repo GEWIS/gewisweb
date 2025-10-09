@@ -41,7 +41,7 @@ class JobLabel
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected CompanyLocalisedText $name;
+    private CompanyLocalisedText $name;
 
     /**
      * The abbreviation of the label.
@@ -56,7 +56,7 @@ class JobLabel
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected CompanyLocalisedText $abbreviation;
+    private CompanyLocalisedText $abbreviation;
 
     /**
      * The Assignments this Label belongs to.
@@ -68,7 +68,7 @@ class JobLabel
         mappedBy: 'labels',
         cascade: ['persist'],
     )]
-    protected Collection $jobs;
+    private Collection $jobs;
 
     public function __construct()
     {

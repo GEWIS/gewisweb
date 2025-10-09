@@ -32,7 +32,7 @@ class Vote
      * Date and time when the photo was voted for.
      */
     #[Column(type: 'datetime')]
-    protected DateTime $dateTime;
+    private DateTime $dateTime;
 
     /**
      * @param MemberModel $voter The member who voted
@@ -47,14 +47,14 @@ class Vote
             referencedColumnName: 'id',
             nullable: false,
         )]
-        protected Photo $photo,
+        private Photo $photo,
         #[ManyToOne(targetEntity: MemberModel::class)]
         #[JoinColumn(
             name: 'voter_id',
             referencedColumnName: 'lidnr',
             nullable: false,
         )]
-        protected MemberModel $voter,
+        private MemberModel $voter,
     ) {
         $this->dateTime = new DateTime();
     }

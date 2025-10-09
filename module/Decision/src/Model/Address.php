@@ -41,7 +41,7 @@ class Address
         referencedColumnName: 'lidnr',
         nullable: false,
     )]
-    protected Member $member;
+    private Member $member;
 
     /**
      * Type.
@@ -57,7 +57,7 @@ class Address
         type: 'string',
         enumType: AddressTypes::class,
     )]
-    protected AddressTypes $type;
+    private AddressTypes $type;
 
     /**
      * Country.
@@ -66,37 +66,37 @@ class Address
         type: 'string',
         enumType: PostalRegions::class,
     )]
-    protected PostalRegions $country;
+    private PostalRegions $country;
 
     /**
      * Street.
      */
     #[Column(type: 'string')]
-    protected string $street;
+    private string $street;
 
     /**
      * House number (+ suffix).
      */
     #[Column(type: 'string')]
-    protected string $number;
+    private string $number;
 
     /**
      * Postal code.
      */
     #[Column(type: 'string')]
-    protected string $postalCode;
+    private string $postalCode;
 
     /**
      * City.
      */
     #[Column(type: 'string')]
-    protected string $city;
+    private string $city;
 
     /**
      * Phone number.
      */
     #[Column(type: 'string')]
-    protected string $phone;
+    private string $phone;
 
     /**
      * Get the member.

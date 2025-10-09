@@ -21,7 +21,7 @@ class CompanyBannerPackage extends CompanyPackage
         type: 'string',
         nullable: true,
     )]
-    protected ?string $image = null;
+    private ?string $image = null;
 
     /**
      * Get the banner's image URL.

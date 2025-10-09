@@ -17,7 +17,7 @@ trait UpdateProposableTrait
      * Whether this entity is a proposed update for another entity.
      */
     #[Column(type: 'boolean')]
-    protected bool $isUpdate = false;
+    private bool $isUpdate = false;
 
     /**
      * Get whether this is a proposed update.

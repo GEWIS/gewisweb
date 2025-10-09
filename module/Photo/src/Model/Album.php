@@ -50,7 +50,7 @@ class Album implements ResourceInterface
         type: 'datetime',
         nullable: true,
     )]
-    protected ?DateTime $startDateTime = null;
+    private ?DateTime $startDateTime = null;
 
     /**
      * End date of photos in album.
@@ -59,13 +59,13 @@ class Album implements ResourceInterface
         type: 'datetime',
         nullable: true,
     )]
-    protected ?DateTime $endDateTime = null;
+    private ?DateTime $endDateTime = null;
 
     /**
      * Name of the album.
      */
     #[Column(type: 'string')]
-    protected string $name;
+    private string $name;
 
     /**
      * Parent album, null if there is no parent album.
@@ -78,7 +78,7 @@ class Album implements ResourceInterface
         name: 'parent_id',
         referencedColumnName: 'id',
     )]
-    protected ?Album $parent = null;
+    private ?Album $parent = null;
 
     /**
      * all the subalbums
@@ -93,7 +93,7 @@ class Album implements ResourceInterface
         cascade: ['persist', 'remove'],
         fetch: 'EXTRA_LAZY',
     )]
-    protected Collection $children;
+    private Collection $children;
 
     /**
      * all the photo's in this album.
@@ -118,13 +118,13 @@ class Album implements ResourceInterface
         type: 'string',
         nullable: true,
     )]
-    protected ?string $coverPath = null;
+    private ?string $coverPath = null;
 
     /**
      * Whether the album is published.
      */
     #[Column(type: 'boolean')]
-    protected bool $published = false;
+    private bool $published = false;
 
     public function __construct()
     {

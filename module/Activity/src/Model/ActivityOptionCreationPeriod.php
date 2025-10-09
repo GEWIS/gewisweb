@@ -27,25 +27,25 @@ class ActivityOptionCreationPeriod
      * The date and time the planning period starts.
      */
     #[Column(type: 'datetime')]
-    protected DateTime $beginPlanningTime;
+    private DateTime $beginPlanningTime;
 
     /**
      * The date and time the planning period ends.
      */
     #[Column(type: 'datetime')]
-    protected DateTime $endPlanningTime;
+    private DateTime $endPlanningTime;
 
     /**
      * The date and time the period for which options can be created starts.
      */
     #[Column(type: 'datetime')]
-    protected DateTime $beginOptionTime;
+    private DateTime $beginOptionTime;
 
     /**
      * The date and time the period for which options can be created ends.
      */
     #[Column(type: 'datetime')]
-    protected DateTime $endOptionTime;
+    private DateTime $endOptionTime;
 
     /**
      * The number of activities an organ can create in a period.
@@ -58,7 +58,7 @@ class ActivityOptionCreationPeriod
         cascade: ['remove'],
         orphanRemoval: true,
     )]
-    protected Collection $maxActivities;
+    private Collection $maxActivities;
 
     public function __construct()
     {

@@ -44,25 +44,25 @@ class Company implements ResourceInterface
      * The company's display name.
      */
     #[Column(type: 'string')]
-    protected string $name;
+    private string $name;
 
     /**
      * The company's slug version of the name. (username).
      */
     #[Column(type: 'string')]
-    protected string $slugName;
+    private string $slugName;
 
     /**
      * The name of the person representing the company. Is used for communications with the company.
      */
     #[Column(type: 'string')]
-    protected string $representativeName;
+    private string $representativeName;
 
     /**
      * The email address of the person representing the company. Is used for communications with the company.
      */
     #[Column(type: 'string')]
-    protected string $representativeEmail;
+    private string $representativeEmail;
 
     /**
      * The company's contact's name.
@@ -71,7 +71,7 @@ class Company implements ResourceInterface
         type: 'string',
         nullable: true,
     )]
-    protected ?string $contactName;
+    private ?string $contactName;
 
     /**
      * The company's contact address.
@@ -80,7 +80,7 @@ class Company implements ResourceInterface
         type: 'string',
         nullable: true,
     )]
-    protected ?string $contactAddress;
+    private ?string $contactAddress;
 
     /**
      * The company's contact email address.
@@ -89,7 +89,7 @@ class Company implements ResourceInterface
         type: 'string',
         nullable: true,
     )]
-    protected ?string $contactEmail;
+    private ?string $contactEmail;
 
     /**
      * The company's contact phone.
@@ -98,7 +98,7 @@ class Company implements ResourceInterface
         type: 'string',
         nullable: true,
     )]
-    protected ?string $contactPhone;
+    private ?string $contactPhone;
 
     /**
      * Company slogan.
@@ -113,7 +113,7 @@ class Company implements ResourceInterface
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected CompanyLocalisedText $slogan;
+    private CompanyLocalisedText $slogan;
 
     /**
      * Company logo.
@@ -122,7 +122,7 @@ class Company implements ResourceInterface
         type: 'string',
         nullable: true,
     )]
-    protected ?string $logo = null;
+    private ?string $logo = null;
 
     /**
      * Company description.
@@ -137,7 +137,7 @@ class Company implements ResourceInterface
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected CompanyLocalisedText $description;
+    private CompanyLocalisedText $description;
 
     /**
      * Company website.
@@ -152,13 +152,13 @@ class Company implements ResourceInterface
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected CompanyLocalisedText $website;
+    private CompanyLocalisedText $website;
 
     /**
      * Whether the company is published or not.
      */
     #[Column(type: 'boolean')]
-    protected bool $published;
+    private bool $published;
 
     /**
      * The company's packages.
@@ -170,7 +170,7 @@ class Company implements ResourceInterface
         mappedBy: 'company',
         cascade: ['persist', 'remove'],
     )]
-    protected Collection $packages;
+    private Collection $packages;
 
     /**
      * Proposed updates to this company.
@@ -182,7 +182,7 @@ class Company implements ResourceInterface
         mappedBy: 'original',
         fetch: 'EXTRA_LAZY',
     )]
-    protected Collection $updateProposals;
+    private Collection $updateProposals;
 
     public function __construct()
     {

@@ -26,13 +26,13 @@ class Foundation extends SubDecision
      * Abbreviation (only for when organs are created).
      */
     #[Column(type: 'string')]
-    protected string $abbr;
+    private string $abbr;
 
     /**
      * Name (only for when organs are created).
      */
     #[Column(type: 'string')]
-    protected string $name;
+    private string $name;
 
     /**
      * Type of the organ.
@@ -41,7 +41,7 @@ class Foundation extends SubDecision
         type: 'string',
         enumType: OrganTypes::class,
     )]
-    protected OrganTypes $organType;
+    private OrganTypes $organType;
 
     /**
      * References from other subdecisions to this organ.
@@ -52,7 +52,7 @@ class Foundation extends SubDecision
         targetEntity: FoundationReference::class,
         mappedBy: 'foundation',
     )]
-    protected Collection $references;
+    private Collection $references;
 
     /**
      * Organ entry for this organ.
@@ -61,7 +61,7 @@ class Foundation extends SubDecision
         targetEntity: Organ::class,
         mappedBy: 'foundation',
     )]
-    protected Organ $organ;
+    private Organ $organ;
 
     public function __construct()
     {

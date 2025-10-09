@@ -42,7 +42,7 @@ class Installation extends FoundationReference
         type: 'string',
         enumType: InstallationFunctions::class,
     )]
-    protected InstallationFunctions $function;
+    private InstallationFunctions $function;
 
     /**
      * Reappointment subdecisions if this installation was prolonged (can be done multiple times).
@@ -53,7 +53,7 @@ class Installation extends FoundationReference
         targetEntity: Reappointment::class,
         mappedBy: 'installation',
     )]
-    protected Collection $reappointments;
+    private Collection $reappointments;
 
     /**
      * Discharges.
@@ -62,7 +62,7 @@ class Installation extends FoundationReference
         targetEntity: Discharge::class,
         mappedBy: 'installation',
     )]
-    protected ?Discharge $discharge = null;
+    private ?Discharge $discharge = null;
 
     /**
      * The organmember reference.
@@ -71,7 +71,7 @@ class Installation extends FoundationReference
         targetEntity: OrganMember::class,
         mappedBy: 'installation',
     )]
-    protected OrganMember $organMember;
+    private OrganMember $organMember;
 
     public function __construct()
     {

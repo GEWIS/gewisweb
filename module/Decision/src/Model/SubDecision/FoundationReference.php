@@ -46,7 +46,7 @@ abstract class FoundationReference extends SubDecision
         name: 'r_sequence',
         referencedColumnName: 'sequence',
     )]
-    protected Foundation $foundation;
+    private Foundation $foundation;
 
     /**
      * Get organ foundation.

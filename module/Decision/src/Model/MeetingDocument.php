@@ -40,19 +40,19 @@ class MeetingDocument
         name: 'meeting_number',
         referencedColumnName: 'number',
     )]
-    protected Meeting $meeting;
+    private Meeting $meeting;
 
     /**
      * Name of the document.
      */
     #[Column(type: 'string')]
-    protected string $name;
+    private string $name;
 
     /**
      * Path of the document, relative to the storage directory.
      */
     #[Column(type: 'string')]
-    protected string $path;
+    private string $path;
 
     /**
      * Determines the order in which to display the document.
@@ -63,7 +63,7 @@ class MeetingDocument
         type: 'integer',
         options: ['default' => 0],
     )]
-    protected int $displayPosition;
+    private int $displayPosition;
 
     /**
      * Get the meeting.

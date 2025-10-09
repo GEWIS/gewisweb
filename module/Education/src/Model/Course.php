@@ -35,13 +35,13 @@ class Course implements ResourceInterface
      */
     #[Id]
     #[Column(type: 'string')]
-    protected string $code;
+    private string $code;
 
     /**
      * Course name.
      */
     #[Column(type: 'string')]
-    protected string $name;
+    private string $name;
 
     /**
      * Exams (and summaries) in this course.
@@ -53,7 +53,7 @@ class Course implements ResourceInterface
         mappedBy: 'course',
     )]
     #[OrderBy(value: ['date' => 'ASC'])]
-    protected Collection $documents;
+    private Collection $documents;
 
     /**
      * Courses that say they are similar to this course
@@ -64,7 +64,7 @@ class Course implements ResourceInterface
         targetEntity: self::class,
         mappedBy: 'similarCoursesTo',
     )]
-    protected Collection $similarCoursesFrom;
+    private Collection $similarCoursesFrom;
 
     /**
      * Courses similar to this course

@@ -31,7 +31,7 @@ class JobCategory
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected CompanyLocalisedText $name;
+    private CompanyLocalisedText $name;
 
     /**
      * The name of the category.
@@ -46,7 +46,7 @@ class JobCategory
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected CompanyLocalisedText $pluralName;
+    private CompanyLocalisedText $pluralName;
 
     /**
      * The slug of the category.
@@ -61,13 +61,13 @@ class JobCategory
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected CompanyLocalisedText $slug;
+    private CompanyLocalisedText $slug;
 
     /**
      * If the category is hidden.
      */
     #[Column(type: 'boolean')]
-    protected bool $hidden;
+    private bool $hidden;
 
     public function getHidden(): bool
     {

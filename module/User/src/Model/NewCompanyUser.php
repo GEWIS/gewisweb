@@ -23,13 +23,13 @@ class NewCompanyUser
      */
     #[Id]
     #[Column(type: 'integer')]
-    protected int $id;
+    private int $id;
 
     /**
      * The company's activation/reset code.
      */
     #[Column(type: 'string')]
-    protected string $code;
+    private string $code;
 
     /**
      * Date and time at which the activation or password reset was requested.
@@ -38,7 +38,7 @@ class NewCompanyUser
         type: 'datetime',
         nullable: true,
     )]
-    protected ?DateTime $time = null;
+    private ?DateTime $time = null;
 
     /**
      * The company for this company user.
@@ -49,7 +49,7 @@ class NewCompanyUser
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected CompanyModel $company;
+    private CompanyModel $company;
 
     public function __construct(CompanyModel $company)
     {

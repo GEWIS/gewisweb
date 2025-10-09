@@ -59,7 +59,7 @@ class SignupField
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected SignupList $signupList;
+    private SignupList $signupList;
 
     /**
      * The name of the SignupField.
@@ -74,20 +74,20 @@ class SignupField
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected ActivityLocalisedText $name;
+    private ActivityLocalisedText $name;
 
     /**
      * Whether this SignupField is sensitive. If it is sensitive, it is only visible to the board and the organiser of
      * the activity.
      */
     #[Column(type: 'boolean')]
-    protected bool $isSensitive = false;
+    private bool $isSensitive = false;
 
     /**
      * The type of the SignupField.
      */
     #[Column(type: 'integer')]
-    protected int $type;
+    private int $type;
 
     /**
      * The minimal value constraint for the ``number'' type.
@@ -96,7 +96,7 @@ class SignupField
         type: 'integer',
         nullable: true,
     )]
-    protected ?int $minimumValue = null;
+    private ?int $minimumValue = null;
 
     /**
      * The maximal value constraint for the ``number'' type.
@@ -105,7 +105,7 @@ class SignupField
         type: 'integer',
         nullable: true,
     )]
-    protected ?int $maximumValue = null;
+    private ?int $maximumValue = null;
 
     /**
      * The allowed options for the SignupField of the ``option'' type.
@@ -117,7 +117,7 @@ class SignupField
         mappedBy: 'field',
         orphanRemoval: true,
     )]
-    protected Collection $options;
+    private Collection $options;
 
     public function __construct()
     {

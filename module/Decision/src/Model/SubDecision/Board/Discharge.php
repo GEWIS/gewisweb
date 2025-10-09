@@ -45,7 +45,7 @@ class Discharge extends SubDecision
         name: 'r_sequence',
         referencedColumnName: 'sequence',
     )]
-    protected Installation $installation;
+    private Installation $installation;
 
     /**
      * Get installation.

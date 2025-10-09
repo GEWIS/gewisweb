@@ -35,7 +35,7 @@ class PollOption implements ResourceInterface
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected Poll $poll;
+    private Poll $poll;
 
     /**
      * The localised text for this option.
@@ -50,7 +50,7 @@ class PollOption implements ResourceInterface
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected FrontpageLocalisedText $text;
+    private FrontpageLocalisedText $text;
 
     /**
      * Votes for this option.
@@ -63,13 +63,13 @@ class PollOption implements ResourceInterface
         cascade: ['persist', 'remove'],
         fetch: 'EXTRA_LAZY',
     )]
-    protected Collection $votes;
+    private Collection $votes;
 
     #[Column(
         type: 'integer',
         options: ['default' => 0],
     )]
-    protected int $anonymousVotes = 0;
+    private int $anonymousVotes = 0;
 
     public function getPoll(): Poll
     {

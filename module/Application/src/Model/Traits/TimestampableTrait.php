@@ -20,13 +20,13 @@ trait TimestampableTrait
      * The date at which the entity was created.
      */
     #[Column(type: 'datetime')]
-    protected DateTime $createdAt;
+    private DateTime $createdAt;
 
     /**
      * The date at which the entity was updated.
      */
     #[Column(type: 'datetime')]
-    protected DateTime $updatedAt;
+    private DateTime $updatedAt;
 
     public function getCreatedAt(): DateTime
     {

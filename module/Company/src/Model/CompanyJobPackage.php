@@ -32,7 +32,7 @@ class CompanyJobPackage extends CompanyPackage
         cascade: ['persist', 'remove'],
     )]
     #[OrderBy(['updatedAt' => 'DESC'])]
-    protected Collection $jobs;
+    private Collection $jobs;
 
     public function __construct()
     {

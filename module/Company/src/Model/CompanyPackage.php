@@ -45,25 +45,25 @@ abstract class CompanyPackage
         type: 'string',
         nullable: true,
     )]
-    protected ?string $contractNumber = null;
+    private ?string $contractNumber = null;
 
     /**
      * The package's starting date.
      */
     #[Column(type: 'date')]
-    protected DateTime $starts;
+    private DateTime $starts;
 
     /**
      * The package's expiration date.
      */
     #[Column(type: 'date')]
-    protected DateTime $expires;
+    private DateTime $expires;
 
     /**
      * The package's published state.
      */
     #[Column(type: 'boolean')]
-    protected bool $published;
+    private bool $published;
 
     /**
      * The package's company.
@@ -72,7 +72,7 @@ abstract class CompanyPackage
         targetEntity: Company::class,
         inversedBy: 'packages',
     )]
-    protected Company $company;
+    private Company $company;
 
     public function __construct()
     {

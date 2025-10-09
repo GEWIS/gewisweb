@@ -72,7 +72,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected Activity $activity;
+    private Activity $activity;
 
     /**
      * The name of the SignupList.
@@ -87,38 +87,38 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected ActivityLocalisedText $name;
+    private ActivityLocalisedText $name;
 
     /**
      * The date and time the SignupList is open for signups.
      */
     #[Column(type: 'datetime')]
-    protected DateTime $openDate;
+    private DateTime $openDate;
 
     /**
      * The date and time after which the SignupList is no longer open.
      */
     #[Column(type: 'datetime')]
-    protected DateTime $closeDate;
+    private DateTime $closeDate;
 
     /**
      * Determines if people outside of GEWIS can sign up.
      */
     #[Column(type: 'boolean')]
-    protected bool $onlyGEWIS;
+    private bool $onlyGEWIS;
 
     /**
      * Determines if the number of signed up members should be displayed
      * when the user is NOT logged in.
      */
     #[Column(type: 'boolean')]
-    protected bool $displaySubscribedNumber;
+    private bool $displaySubscribedNumber;
 
     /**
      * If the sign-up list has limited capacity, we should show users a warning that this is the case.
      */
     #[Column(type: 'boolean')]
-    protected bool $limitedCapacity;
+    private bool $limitedCapacity;
 
     /**
      * All additional fields belonging to the activity.
@@ -130,7 +130,7 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
         targetEntity: SignupField::class,
         orphanRemoval: true,
     )]
-    protected Collection $fields;
+    private Collection $fields;
 
     /**
      * All the people who signed up for this SignupList.
@@ -143,19 +143,19 @@ class SignupList implements OrganResourceInterface, CreatorResourceInterface
         orphanRemoval: true,
     )]
     #[OrderBy(value: ['id' => 'ASC'])]
-    protected Collection $signUps;
+    private Collection $signUps;
 
     /**
      * Determines if presence was taken for this SignupList
      */
     #[Column(type: 'boolean')]
-    protected bool $presenceTaken = false;
+    private bool $presenceTaken = false;
 
     /**
      * Determines if the signup list should appear before other signup lists on the same activity.
      */
     #[Column(type: 'boolean')]
-    protected bool $promoted = false;
+    private bool $promoted = false;
 
     public function __construct()
     {

@@ -30,20 +30,20 @@ class Meeting
         type: 'string',
         enumType: MeetingTypes::class,
     )]
-    protected MeetingTypes $type;
+    private MeetingTypes $type;
 
     /**
      * Meeting number.
      */
     #[Id]
     #[Column(type: 'integer')]
-    protected int $number;
+    private int $number;
 
     /**
      * Meeting date.
      */
     #[Column(type: 'date')]
-    protected DateTime $date;
+    private DateTime $date;
 
     /**
      * Decisions.
@@ -54,13 +54,13 @@ class Meeting
         targetEntity: Decision::class,
         mappedBy: 'meeting',
     )]
-    protected Collection $decisions;
+    private Collection $decisions;
 
     #[OneToOne(
         targetEntity: Minutes::class,
         mappedBy: 'meeting',
     )]
-    protected Minutes $minutes;
+    private Minutes $minutes;
 
     /**
      * Documents.
@@ -72,7 +72,7 @@ class Meeting
         mappedBy: 'meeting',
     )]
     #[OrderBy(value: ['displayPosition' => 'ASC'])]
-    protected Collection $documents;
+    private Collection $documents;
 
     /**
      * The minutes for this meeting.
@@ -81,7 +81,7 @@ class Meeting
         targetEntity: MeetingMinutes::class,
         mappedBy: 'meeting',
     )]
-    protected ?MeetingMinutes $meetingMinutes = null;
+    private ?MeetingMinutes $meetingMinutes = null;
 
     public function __construct()
     {

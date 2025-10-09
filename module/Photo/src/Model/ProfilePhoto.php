@@ -39,7 +39,7 @@ class ProfilePhoto implements ResourceInterface
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected Photo $photo;
+    private Photo $photo;
 
     #[OneToOne(targetEntity: MemberModel::class)]
     #[JoinColumn(
@@ -47,19 +47,19 @@ class ProfilePhoto implements ResourceInterface
         referencedColumnName: 'lidnr',
         nullable: false,
     )]
-    protected MemberModel $member;
+    private MemberModel $member;
 
     /**
      * Date and time when the photo was taken.
      */
     #[Column(type: 'datetime')]
-    protected DateTime $dateTime;
+    private DateTime $dateTime;
 
     /**
      * Date and time when the photo was taken.
      */
     #[Column(type: 'boolean')]
-    protected bool $explicit;
+    private bool $explicit;
 
     public function getPhoto(): Photo
     {

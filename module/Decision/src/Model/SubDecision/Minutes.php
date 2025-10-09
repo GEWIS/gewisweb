@@ -32,19 +32,19 @@ class Minutes extends SubDecision
         name: 'r_meeting_number',
         referencedColumnName: 'number',
     )]
-    protected Meeting $meeting;
+    private Meeting $meeting;
 
     /**
      * If the minutes were approved.
      */
     #[Column(type: 'boolean')]
-    protected bool $approval;
+    private bool $approval;
 
     /**
      * If there were changes made.
      */
     #[Column(type: 'boolean')]
-    protected bool $changes;
+    private bool $changes;
 
     /**
      * Get the target.

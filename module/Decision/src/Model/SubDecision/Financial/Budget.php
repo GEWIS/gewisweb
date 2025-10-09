@@ -19,7 +19,7 @@ class Budget extends SubDecision
      * Name of the budget.
      */
     #[Column(type: 'string')]
-    protected string $name;
+    private string $name;
 
     /**
      * Version of the budget.
@@ -28,25 +28,25 @@ class Budget extends SubDecision
         type: 'string',
         length: 32,
     )]
-    protected string $version;
+    private string $version;
 
     /**
      * Date of the budget.
      */
     #[Column(type: 'date')]
-    protected DateTime $date;
+    private DateTime $date;
 
     /**
      * If the budget was approved.
      */
     #[Column(type: 'boolean')]
-    protected bool $approval;
+    private bool $approval;
 
     /**
      * If there were changes made.
      */
     #[Column(type: 'boolean')]
-    protected bool $changes;
+    private bool $changes;
 
     /**
      * Get the name.

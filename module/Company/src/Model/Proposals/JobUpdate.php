@@ -27,7 +27,7 @@ class JobUpdate
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected JobModel $original;
+    private JobModel $original;
 
     /**
      * The proposed update of the company.
@@ -40,7 +40,7 @@ class JobUpdate
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected JobModel $proposal;
+    private JobModel $proposal;
 
     /**
      * Get the original `Job`.

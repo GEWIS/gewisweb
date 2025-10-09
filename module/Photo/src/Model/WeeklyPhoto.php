@@ -24,7 +24,7 @@ class WeeklyPhoto implements ResourceInterface
      * The start date of the week the photo is based on.
      */
     #[Column(type: 'date')]
-    protected DateTime $week;
+    private DateTime $week;
 
     /**
      * The photo of the week.
@@ -38,13 +38,13 @@ class WeeklyPhoto implements ResourceInterface
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected Photo $photo;
+    private Photo $photo;
 
     /**
      * If a photo of the week is hidden, it is not shown to visitors who are NOT logged in.
      */
     #[Column(type: 'boolean')]
-    protected bool $hidden = false;
+    private bool $hidden = false;
 
     public function getWeek(): DateTime
     {

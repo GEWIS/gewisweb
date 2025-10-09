@@ -27,7 +27,7 @@ class ActivityCalendarOption
         type: 'string',
         nullable: true,
     )]
-    protected ?string $type;
+    private ?string $type;
 
     /**
      * Status for the option.
@@ -36,19 +36,19 @@ class ActivityCalendarOption
         type: 'string',
         nullable: true,
     )]
-    protected ?string $status;
+    private ?string $status;
 
     /**
      * The date and time the activity starts.
      */
     #[Column(type: 'datetime')]
-    protected DateTime $beginTime;
+    private DateTime $beginTime;
 
     /**
      * The date and time the activity ends.
      */
     #[Column(type: 'datetime')]
-    protected DateTime $endTime;
+    private DateTime $endTime;
 
     /**
      * To what activity proposal does the option belong.
@@ -58,14 +58,14 @@ class ActivityCalendarOption
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected ActivityOptionProposal $proposal;
+    private ActivityOptionProposal $proposal;
 
     /**
      * Who modified this activity option, if null then the option is not modified.
      */
     #[ManyToOne(targetEntity: MemberModel::class)]
     #[JoinColumn(referencedColumnName: 'lidnr')]
-    protected ?MemberModel $modifiedBy;
+    private ?MemberModel $modifiedBy;
 
     public function getBeginTime(): DateTime
     {

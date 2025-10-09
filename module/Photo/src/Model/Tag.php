@@ -41,7 +41,7 @@ class Tag implements ResourceInterface
         referencedColumnName: 'id',
         nullable: false,
     )]
-    protected Photo $photo;
+    private Photo $photo;
 
     #[ManyToOne(
         targetEntity: MemberModel::class,
@@ -52,7 +52,7 @@ class Tag implements ResourceInterface
         referencedColumnName: 'lidnr',
         nullable: false,
     )]
-    protected MemberModel $member;
+    private MemberModel $member;
 
     public function getPhoto(): Photo
     {
