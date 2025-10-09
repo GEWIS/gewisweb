@@ -491,12 +491,6 @@
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Frontpage-Model-PollOption.html#property_anonymousVotes">$anonymousVotes</a>
-    <span>
-                        &nbsp;: int            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id">$id</a>
     <span>
                         &nbsp;: int|null            </span>
@@ -504,21 +498,27 @@
 <dd>The default value must be `null` to prevent issues with auto generating the value. The column is strictly not
 nullable.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a class="" href="classes/Frontpage-Model-PollOption.html#property_anonymousVotes">$anonymousVotes</a>
+    <span>
+                        &nbsp;: int            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a class="" href="classes/Frontpage-Model-PollOption.html#property_poll">$poll</a>
     <span>
                         &nbsp;: <a href="classes/Frontpage-Model-Poll.html"><abbr title="\Frontpage\Model\Poll">Poll</abbr></a>            </span>
 </dt>
 <dd>Referenced poll.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a class="" href="classes/Frontpage-Model-PollOption.html#property_text">$text</a>
     <span>
                         &nbsp;: <a href="classes/Frontpage-Model-FrontpageLocalisedText.html"><abbr title="\Frontpage\Model\FrontpageLocalisedText">FrontpageLocalisedText</abbr></a>            </span>
 </dt>
 <dd>The localised text for this option.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a class="" href="classes/Frontpage-Model-PollOption.html#property_votes">$votes</a>
     <span>
                         &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Frontpage-Model-PollVote.html"><abbr title="\Frontpage\Model\PollVote">PollVote</abbr></a>&gt;            </span>
@@ -624,61 +624,6 @@ nullable.</dd>
             -protected
                                                                     "
 >
-    <h4 class="phpdocumentor-element__name" id="property_anonymousVotes">
-        $anonymousVotes
-        <a href="classes/Frontpage-Model-PollOption.html#property_anonymousVotes" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/PollOption.php"><a href="files/module-frontpage-src-model-polloption.html"><abbr title="module/Frontpage/src/Model/PollOption.php">PollOption.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">68</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type">int</span>
-    <span class="phpdocumentor-signature__name">$anonymousVotes</span>
-     = <span class="phpdocumentor-signature__default-value">0</span></code>
-
-    
-    
-    
-
-    
-    <section class="phpdocumentor-attributes">
-        <h5 class="phpdocumentor-elements__header" id="attributes">
-            Attributes <a href="classes/Frontpage-Model-PollOption.html#property_anonymousVotes#attributes" class="headerlink"><i class="fas fa-link"></i></a>
-
-        </h5>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
-    </dt>
-        <dd class="phpdocumentor-argument-list__entry">
-        $type: &#039;integer&#039;
-    </dd>
-        <dd class="phpdocumentor-argument-list__entry">
-        $options: [&#039;default&#039; =&gt; 0]
-    </dd>
-    </dl>
-            </section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                                    "
->
     <h4 class="phpdocumentor-element__name" id="property_id">
         $id
         <a href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id" class="headerlink"><i class="fas fa-link"></i></a>
@@ -743,7 +688,62 @@ nullable.</p>
         class="
             phpdocumentor-element
             -property
-            -protected
+            -private
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_anonymousVotes">
+        $anonymousVotes
+        <a href="classes/Frontpage-Model-PollOption.html#property_anonymousVotes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Frontpage/src/Model/PollOption.php"><a href="files/module-frontpage-src-model-polloption.html"><abbr title="module/Frontpage/src/Model/PollOption.php">PollOption.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">68</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">private</span>
+            <span class="phpdocumentor-signature__type">int</span>
+    <span class="phpdocumentor-signature__name">$anonymousVotes</span>
+     = <span class="phpdocumentor-signature__default-value">0</span></code>
+
+    
+    
+    
+
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Frontpage-Model-PollOption.html#property_anonymousVotes#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $type: &#039;integer&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $options: [&#039;default&#039; =&gt; 0]
+    </dd>
+    </dl>
+            </section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
                                                                     "
 >
     <h4 class="phpdocumentor-element__name" id="property_poll">
@@ -764,7 +764,7 @@ nullable.</p>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__visibility">private</span>
             <span class="phpdocumentor-signature__type"><a href="classes/Frontpage-Model-Poll.html"><abbr title="\Frontpage\Model\Poll">Poll</abbr></a></span>
     <span class="phpdocumentor-signature__name">$poll</span>
     </code>
@@ -816,7 +816,7 @@ nullable.</p>
         class="
             phpdocumentor-element
             -property
-            -protected
+            -private
                                                                     "
 >
     <h4 class="phpdocumentor-element__name" id="property_text">
@@ -837,7 +837,7 @@ nullable.</p>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__visibility">private</span>
             <span class="phpdocumentor-signature__type"><a href="classes/Frontpage-Model-FrontpageLocalisedText.html"><abbr title="\Frontpage\Model\FrontpageLocalisedText">FrontpageLocalisedText</abbr></a></span>
     <span class="phpdocumentor-signature__name">$text</span>
     </code>
@@ -889,7 +889,7 @@ nullable.</p>
         class="
             phpdocumentor-element
             -property
-            -protected
+            -private
                                                                     "
 >
     <h4 class="phpdocumentor-element__name" id="property_votes">
@@ -910,7 +910,7 @@ nullable.</p>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__visibility">private</span>
             <span class="phpdocumentor-signature__type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Frontpage-Model-PollVote.html"><abbr title="\Frontpage\Model\PollVote">PollVote</abbr></a>&gt;</span>
     <span class="phpdocumentor-signature__name">$votes</span>
     </code>
@@ -1537,8 +1537,8 @@ nullable.</p>
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li class=""><a href="classes/Frontpage-Model-PollOption.html#property_anonymousVotes">$anonymousVotes</a></li>
                                                     <li class=""><a href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id">$id</a></li>
+                                                    <li class=""><a href="classes/Frontpage-Model-PollOption.html#property_anonymousVotes">$anonymousVotes</a></li>
                                                     <li class=""><a href="classes/Frontpage-Model-PollOption.html#property_poll">$poll</a></li>
                                                     <li class=""><a href="classes/Frontpage-Model-PollOption.html#property_text">$text</a></li>
                                                     <li class=""><a href="classes/Frontpage-Model-PollOption.html#property_votes">$votes</a></li>

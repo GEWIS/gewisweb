@@ -496,77 +496,6 @@
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Application-Model-Traits-ApprovableTrait.html#property_approvableText">$approvableText</a>
-    <span>
-                        &nbsp;: <a href="classes/Application-Model-ApprovableText.html"><abbr title="\Application\Model\ApprovableText">ApprovableText</abbr></a>|null            </span>
-</dt>
-<dd>When the entity has been approved/rejected a message can be attached. Since we do not always need this message it
-has been replaced with another entity which we can EXTRA_LAZY load to ensure it is not always included.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Application-Model-Traits-ApprovableTrait.html#property_approved">$approved</a>
-    <span>
-                        &nbsp;: <a href="classes/Application-Model-Enums-ApprovableStatus.html"><abbr title="\Application\Model\Enums\ApprovableStatus">ApprovableStatus</abbr></a>            </span>
-</dt>
-<dd>State of the approval.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Application-Model-Traits-ApprovableTrait.html#property_approvedAt">$approvedAt</a>
-    <span>
-                        &nbsp;: <abbr title="\DateTime">DateTime</abbr>|null            </span>
-</dt>
-<dd>The date when the entity was approved.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Application-Model-Traits-ApprovableTrait.html#property_approver">$approver</a>
-    <span>
-                        &nbsp;: <a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>|null            </span>
-</dt>
-<dd>Who (dis)approved the entity using this trait?</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Company-Model-Company.html#property_contactAddress">$contactAddress</a>
-    <span>
-                        &nbsp;: string|null            </span>
-</dt>
-<dd>The company&#039;s contact address.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Company-Model-Company.html#property_contactEmail">$contactEmail</a>
-    <span>
-                        &nbsp;: string|null            </span>
-</dt>
-<dd>The company&#039;s contact email address.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Company-Model-Company.html#property_contactName">$contactName</a>
-    <span>
-                        &nbsp;: string|null            </span>
-</dt>
-<dd>The company&#039;s contact&#039;s name.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Company-Model-Company.html#property_contactPhone">$contactPhone</a>
-    <span>
-                        &nbsp;: string|null            </span>
-</dt>
-<dd>The company&#039;s contact phone.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Application-Model-Traits-TimestampableTrait.html#property_createdAt">$createdAt</a>
-    <span>
-                        &nbsp;: <abbr title="\DateTime">DateTime</abbr>            </span>
-</dt>
-<dd>The date at which the entity was created.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Company-Model-Company.html#property_description">$description</a>
-    <span>
-                        &nbsp;: <a href="classes/Company-Model-CompanyLocalisedText.html"><abbr title="\Company\Model\CompanyLocalisedText">CompanyLocalisedText</abbr></a>            </span>
-</dt>
-<dd>Company description.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id">$id</a>
     <span>
                         &nbsp;: int|null            </span>
@@ -574,84 +503,155 @@ has been replaced with another entity which we can EXTRA_LAZY load to ensure it 
 <dd>The default value must be `null` to prevent issues with auto generating the value. The column is strictly not
 nullable.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a class="" href="classes/Application-Model-Traits-ApprovableTrait.html#property_approvableText">$approvableText</a>
+    <span>
+                        &nbsp;: <a href="classes/Application-Model-ApprovableText.html"><abbr title="\Application\Model\ApprovableText">ApprovableText</abbr></a>|null            </span>
+</dt>
+<dd>When the entity has been approved/rejected a message can be attached. Since we do not always need this message it
+has been replaced with another entity which we can EXTRA_LAZY load to ensure it is not always included.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a class="" href="classes/Application-Model-Traits-ApprovableTrait.html#property_approved">$approved</a>
+    <span>
+                        &nbsp;: <a href="classes/Application-Model-Enums-ApprovableStatus.html"><abbr title="\Application\Model\Enums\ApprovableStatus">ApprovableStatus</abbr></a>            </span>
+</dt>
+<dd>State of the approval.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a class="" href="classes/Application-Model-Traits-ApprovableTrait.html#property_approvedAt">$approvedAt</a>
+    <span>
+                        &nbsp;: <abbr title="\DateTime">DateTime</abbr>|null            </span>
+</dt>
+<dd>The date when the entity was approved.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a class="" href="classes/Application-Model-Traits-ApprovableTrait.html#property_approver">$approver</a>
+    <span>
+                        &nbsp;: <a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>|null            </span>
+</dt>
+<dd>Who (dis)approved the entity using this trait?</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a class="" href="classes/Company-Model-Company.html#property_contactAddress">$contactAddress</a>
+    <span>
+                        &nbsp;: string|null            </span>
+</dt>
+<dd>The company&#039;s contact address.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a class="" href="classes/Company-Model-Company.html#property_contactEmail">$contactEmail</a>
+    <span>
+                        &nbsp;: string|null            </span>
+</dt>
+<dd>The company&#039;s contact email address.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a class="" href="classes/Company-Model-Company.html#property_contactName">$contactName</a>
+    <span>
+                        &nbsp;: string|null            </span>
+</dt>
+<dd>The company&#039;s contact&#039;s name.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a class="" href="classes/Company-Model-Company.html#property_contactPhone">$contactPhone</a>
+    <span>
+                        &nbsp;: string|null            </span>
+</dt>
+<dd>The company&#039;s contact phone.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a class="" href="classes/Application-Model-Traits-TimestampableTrait.html#property_createdAt">$createdAt</a>
+    <span>
+                        &nbsp;: <abbr title="\DateTime">DateTime</abbr>            </span>
+</dt>
+<dd>The date at which the entity was created.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a class="" href="classes/Company-Model-Company.html#property_description">$description</a>
+    <span>
+                        &nbsp;: <a href="classes/Company-Model-CompanyLocalisedText.html"><abbr title="\Company\Model\CompanyLocalisedText">CompanyLocalisedText</abbr></a>            </span>
+</dt>
+<dd>Company description.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a class="" href="classes/Application-Model-Traits-UpdateProposableTrait.html#property_isUpdate">$isUpdate</a>
     <span>
                         &nbsp;: bool            </span>
 </dt>
 <dd>Whether this entity is a proposed update for another entity.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a class="" href="classes/Company-Model-Company.html#property_logo">$logo</a>
     <span>
                         &nbsp;: string|null            </span>
 </dt>
 <dd>Company logo.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a class="" href="classes/Company-Model-Company.html#property_name">$name</a>
     <span>
                         &nbsp;: string            </span>
 </dt>
 <dd>The company&#039;s display name.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a class="" href="classes/Company-Model-Company.html#property_packages">$packages</a>
     <span>
                         &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Company-Model-CompanyPackage.html"><abbr title="\Company\Model\CompanyPackage">CompanyPackage</abbr></a>&gt;            </span>
 </dt>
 <dd>The company&#039;s packages.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a class="" href="classes/Company-Model-Company.html#property_published">$published</a>
     <span>
                         &nbsp;: bool            </span>
 </dt>
 <dd>Whether the company is published or not.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a class="" href="classes/Company-Model-Company.html#property_representativeEmail">$representativeEmail</a>
     <span>
                         &nbsp;: string            </span>
 </dt>
 <dd>The email address of the person representing the company. Is used for communications with the company.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a class="" href="classes/Company-Model-Company.html#property_representativeName">$representativeName</a>
     <span>
                         &nbsp;: string            </span>
 </dt>
 <dd>The name of the person representing the company. Is used for communications with the company.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a class="" href="classes/Company-Model-Company.html#property_slogan">$slogan</a>
     <span>
                         &nbsp;: <a href="classes/Company-Model-CompanyLocalisedText.html"><abbr title="\Company\Model\CompanyLocalisedText">CompanyLocalisedText</abbr></a>            </span>
 </dt>
 <dd>Company slogan.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a class="" href="classes/Company-Model-Company.html#property_slugName">$slugName</a>
     <span>
                         &nbsp;: string            </span>
 </dt>
 <dd>The company&#039;s slug version of the name. (username).</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a class="" href="classes/Application-Model-Traits-TimestampableTrait.html#property_updatedAt">$updatedAt</a>
     <span>
                         &nbsp;: <abbr title="\DateTime">DateTime</abbr>            </span>
 </dt>
 <dd>The date at which the entity was updated.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a class="" href="classes/Company-Model-Company.html#property_updateProposals">$updateProposals</a>
     <span>
                         &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Company-Model-Proposals-CompanyUpdate.html"><abbr title="\Company\Model\Proposals\CompanyUpdate">CompanyUpdate</abbr></a>&gt;            </span>
 </dt>
 <dd>Proposed updates to this company.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a class="" href="classes/Company-Model-Company.html#property_website">$website</a>
     <span>
                         &nbsp;: <a href="classes/Company-Model-CompanyLocalisedText.html"><abbr title="\Company\Model\CompanyLocalisedText">CompanyLocalisedText</abbr></a>            </span>
@@ -1091,606 +1091,6 @@ company.</dd>
             -protected
                                                                     "
 >
-    <h4 class="phpdocumentor-element__name" id="property_approvableText">
-        $approvableText
-        <a href="classes/Application-Model-Traits-ApprovableTrait.html#property_approvableText" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/ApprovableTrait.php"><a href="files/module-application-src-model-traits-approvabletrait.html"><abbr title="module/Application/src/Model/Traits/ApprovableTrait.php">ApprovableTrait.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">60</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">When the entity has been approved/rejected a message can be attached. Since we do not always need this message it
-has been replaced with another entity which we can EXTRA_LAZY load to ensure it is not always included.</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Application-Model-ApprovableText.html"><abbr title="\Application\Model\ApprovableText">ApprovableText</abbr></a>|null</span>
-    <span class="phpdocumentor-signature__name">$approvableText</span>
-     = <span class="phpdocumentor-signature__default-value">null</span></code>
-
-    
-    
-    
-
-    
-    <section class="phpdocumentor-attributes">
-        <h5 class="phpdocumentor-elements__header" id="attributes">
-            Attributes <a href="classes/Application-Model-Traits-ApprovableTrait.html#property_approvableText#attributes" class="headerlink"><i class="fas fa-link"></i></a>
-
-        </h5>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\JoinColumn">JoinColumn</abbr>]
-    </dt>
-        <dd class="phpdocumentor-argument-list__entry">
-        $name: &#039;approvableText_id&#039;
-    </dd>
-        <dd class="phpdocumentor-argument-list__entry">
-        $referencedColumnName: &#039;id&#039;
-    </dd>
-        <dd class="phpdocumentor-argument-list__entry">
-        $nullable: true
-    </dd>
-    </dl>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\OneToOne">OneToOne</abbr>]
-    </dt>
-        <dd class="phpdocumentor-argument-list__entry">
-        $targetEntity: \Application\Model\ApprovableText::class
-    </dd>
-        <dd class="phpdocumentor-argument-list__entry">
-        $cascade: [&#039;persist&#039;, &#039;remove&#039;]
-    </dd>
-        <dd class="phpdocumentor-argument-list__entry">
-        $fetch: &#039;EXTRA_LAZY&#039;
-    </dd>
-        <dd class="phpdocumentor-argument-list__entry">
-        $orphanRemoval: true
-    </dd>
-    </dl>
-            </section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_approved">
-        $approved
-        <a href="classes/Application-Model-Traits-ApprovableTrait.html#property_approved" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/ApprovableTrait.php"><a href="files/module-application-src-model-traits-approvabletrait.html"><abbr title="module/Application/src/Model/Traits/ApprovableTrait.php">ApprovableTrait.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">34</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">State of the approval.</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Application-Model-Enums-ApprovableStatus.html"><abbr title="\Application\Model\Enums\ApprovableStatus">ApprovableStatus</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$approved</span>
-    </code>
-
-    
-    
-    
-
-    
-    <section class="phpdocumentor-attributes">
-        <h5 class="phpdocumentor-elements__header" id="attributes">
-            Attributes <a href="classes/Application-Model-Traits-ApprovableTrait.html#property_approved#attributes" class="headerlink"><i class="fas fa-link"></i></a>
-
-        </h5>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
-    </dt>
-        <dd class="phpdocumentor-argument-list__entry">
-        $type: &#039;integer&#039;
-    </dd>
-        <dd class="phpdocumentor-argument-list__entry">
-        $enumType: \Application\Model\Enums\ApprovableStatus::class
-    </dd>
-    </dl>
-            </section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_approvedAt">
-        $approvedAt
-        <a href="classes/Application-Model-Traits-ApprovableTrait.html#property_approvedAt" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/ApprovableTrait.php"><a href="files/module-application-src-model-traits-approvabletrait.html"><abbr title="module/Application/src/Model/Traits/ApprovableTrait.php">ApprovableTrait.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">43</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">The date when the entity was approved.</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type"><abbr title="\DateTime">DateTime</abbr>|null</span>
-    <span class="phpdocumentor-signature__name">$approvedAt</span>
-     = <span class="phpdocumentor-signature__default-value">null</span></code>
-
-    
-    
-    
-
-    
-    <section class="phpdocumentor-attributes">
-        <h5 class="phpdocumentor-elements__header" id="attributes">
-            Attributes <a href="classes/Application-Model-Traits-ApprovableTrait.html#property_approvedAt#attributes" class="headerlink"><i class="fas fa-link"></i></a>
-
-        </h5>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
-    </dt>
-        <dd class="phpdocumentor-argument-list__entry">
-        $type: &#039;datetime&#039;
-    </dd>
-        <dd class="phpdocumentor-argument-list__entry">
-        $nullable: true
-    </dd>
-    </dl>
-            </section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_approver">
-        $approver
-        <a href="classes/Application-Model-Traits-ApprovableTrait.html#property_approver" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/ApprovableTrait.php"><a href="files/module-application-src-model-traits-approvabletrait.html"><abbr title="module/Application/src/Model/Traits/ApprovableTrait.php">ApprovableTrait.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">52</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Who (dis)approved the entity using this trait?</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>|null</span>
-    <span class="phpdocumentor-signature__name">$approver</span>
-     = <span class="phpdocumentor-signature__default-value">null</span></code>
-
-    
-    
-    
-
-    
-    <section class="phpdocumentor-attributes">
-        <h5 class="phpdocumentor-elements__header" id="attributes">
-            Attributes <a href="classes/Application-Model-Traits-ApprovableTrait.html#property_approver#attributes" class="headerlink"><i class="fas fa-link"></i></a>
-
-        </h5>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\JoinColumn">JoinColumn</abbr>]
-    </dt>
-        <dd class="phpdocumentor-argument-list__entry">
-        $referencedColumnName: &#039;lidnr&#039;
-    </dd>
-    </dl>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\ManyToOne">ManyToOne</abbr>]
-    </dt>
-        <dd class="phpdocumentor-argument-list__entry">
-        $targetEntity: \Decision\Model\Member::class
-    </dd>
-    </dl>
-            </section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_contactAddress">
-        $contactAddress
-        <a href="classes/Company-Model-Company.html#property_contactAddress" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">79</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">The company&#039;s contact address.</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type">string|null</span>
-    <span class="phpdocumentor-signature__name">$contactAddress</span>
-    </code>
-
-    
-    
-    
-
-    
-    <section class="phpdocumentor-attributes">
-        <h5 class="phpdocumentor-elements__header" id="attributes">
-            Attributes <a href="classes/Company-Model-Company.html#property_contactAddress#attributes" class="headerlink"><i class="fas fa-link"></i></a>
-
-        </h5>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
-    </dt>
-        <dd class="phpdocumentor-argument-list__entry">
-        $type: &#039;string&#039;
-    </dd>
-        <dd class="phpdocumentor-argument-list__entry">
-        $nullable: true
-    </dd>
-    </dl>
-            </section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_contactEmail">
-        $contactEmail
-        <a href="classes/Company-Model-Company.html#property_contactEmail" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">88</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">The company&#039;s contact email address.</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type">string|null</span>
-    <span class="phpdocumentor-signature__name">$contactEmail</span>
-    </code>
-
-    
-    
-    
-
-    
-    <section class="phpdocumentor-attributes">
-        <h5 class="phpdocumentor-elements__header" id="attributes">
-            Attributes <a href="classes/Company-Model-Company.html#property_contactEmail#attributes" class="headerlink"><i class="fas fa-link"></i></a>
-
-        </h5>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
-    </dt>
-        <dd class="phpdocumentor-argument-list__entry">
-        $type: &#039;string&#039;
-    </dd>
-        <dd class="phpdocumentor-argument-list__entry">
-        $nullable: true
-    </dd>
-    </dl>
-            </section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_contactName">
-        $contactName
-        <a href="classes/Company-Model-Company.html#property_contactName" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">70</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">The company&#039;s contact&#039;s name.</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type">string|null</span>
-    <span class="phpdocumentor-signature__name">$contactName</span>
-    </code>
-
-    
-    
-    
-
-    
-    <section class="phpdocumentor-attributes">
-        <h5 class="phpdocumentor-elements__header" id="attributes">
-            Attributes <a href="classes/Company-Model-Company.html#property_contactName#attributes" class="headerlink"><i class="fas fa-link"></i></a>
-
-        </h5>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
-    </dt>
-        <dd class="phpdocumentor-argument-list__entry">
-        $type: &#039;string&#039;
-    </dd>
-        <dd class="phpdocumentor-argument-list__entry">
-        $nullable: true
-    </dd>
-    </dl>
-            </section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_contactPhone">
-        $contactPhone
-        <a href="classes/Company-Model-Company.html#property_contactPhone" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">97</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">The company&#039;s contact phone.</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type">string|null</span>
-    <span class="phpdocumentor-signature__name">$contactPhone</span>
-    </code>
-
-    
-    
-    
-
-    
-    <section class="phpdocumentor-attributes">
-        <h5 class="phpdocumentor-elements__header" id="attributes">
-            Attributes <a href="classes/Company-Model-Company.html#property_contactPhone#attributes" class="headerlink"><i class="fas fa-link"></i></a>
-
-        </h5>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
-    </dt>
-        <dd class="phpdocumentor-argument-list__entry">
-        $type: &#039;string&#039;
-    </dd>
-        <dd class="phpdocumentor-argument-list__entry">
-        $nullable: true
-    </dd>
-    </dl>
-            </section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_createdAt">
-        $createdAt
-        <a href="classes/Application-Model-Traits-TimestampableTrait.html#property_createdAt" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/TimestampableTrait.php"><a href="files/module-application-src-model-traits-timestampabletrait.html"><abbr title="module/Application/src/Model/Traits/TimestampableTrait.php">TimestampableTrait.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">22</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">The date at which the entity was created.</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type"><abbr title="\DateTime">DateTime</abbr></span>
-    <span class="phpdocumentor-signature__name">$createdAt</span>
-    </code>
-
-    
-    
-    
-
-    
-    <section class="phpdocumentor-attributes">
-        <h5 class="phpdocumentor-elements__header" id="attributes">
-            Attributes <a href="classes/Application-Model-Traits-TimestampableTrait.html#property_createdAt#attributes" class="headerlink"><i class="fas fa-link"></i></a>
-
-        </h5>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
-    </dt>
-        <dd class="phpdocumentor-argument-list__entry">
-        $type: &#039;datetime&#039;
-    </dd>
-    </dl>
-            </section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_description">
-        $description
-        <a href="classes/Company-Model-Company.html#property_description" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">130</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Company description.</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Company-Model-CompanyLocalisedText.html"><abbr title="\Company\Model\CompanyLocalisedText">CompanyLocalisedText</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$description</span>
-    </code>
-
-    
-    
-    
-
-    
-    <section class="phpdocumentor-attributes">
-        <h5 class="phpdocumentor-elements__header" id="attributes">
-            Attributes <a href="classes/Company-Model-Company.html#property_description#attributes" class="headerlink"><i class="fas fa-link"></i></a>
-
-        </h5>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\JoinColumn">JoinColumn</abbr>]
-    </dt>
-        <dd class="phpdocumentor-argument-list__entry">
-        $name: &#039;description_id&#039;
-    </dd>
-        <dd class="phpdocumentor-argument-list__entry">
-        $referencedColumnName: &#039;id&#039;
-    </dd>
-        <dd class="phpdocumentor-argument-list__entry">
-        $nullable: false
-    </dd>
-    </dl>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\OneToOne">OneToOne</abbr>]
-    </dt>
-        <dd class="phpdocumentor-argument-list__entry">
-        $targetEntity: \Company\Model\CompanyLocalisedText::class
-    </dd>
-        <dd class="phpdocumentor-argument-list__entry">
-        $cascade: [&#039;persist&#039;, &#039;remove&#039;]
-    </dd>
-        <dd class="phpdocumentor-argument-list__entry">
-        $orphanRemoval: true
-    </dd>
-    </dl>
-            </section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                                    "
->
     <h4 class="phpdocumentor-element__name" id="property_id">
         $id
         <a href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1755,7 +1155,607 @@ nullable.</p>
         class="
             phpdocumentor-element
             -property
-            -protected
+            -private
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_approvableText">
+        $approvableText
+        <a href="classes/Application-Model-Traits-ApprovableTrait.html#property_approvableText" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/ApprovableTrait.php"><a href="files/module-application-src-model-traits-approvabletrait.html"><abbr title="module/Application/src/Model/Traits/ApprovableTrait.php">ApprovableTrait.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">60</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">When the entity has been approved/rejected a message can be attached. Since we do not always need this message it
+has been replaced with another entity which we can EXTRA_LAZY load to ensure it is not always included.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">private</span>
+            <span class="phpdocumentor-signature__type"><a href="classes/Application-Model-ApprovableText.html"><abbr title="\Application\Model\ApprovableText">ApprovableText</abbr></a>|null</span>
+    <span class="phpdocumentor-signature__name">$approvableText</span>
+     = <span class="phpdocumentor-signature__default-value">null</span></code>
+
+    
+    
+    
+
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Application-Model-Traits-ApprovableTrait.html#property_approvableText#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\JoinColumn">JoinColumn</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $name: &#039;approvableText_id&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $referencedColumnName: &#039;id&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $nullable: true
+    </dd>
+    </dl>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\OneToOne">OneToOne</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $targetEntity: \Application\Model\ApprovableText::class
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $cascade: [&#039;persist&#039;, &#039;remove&#039;]
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $fetch: &#039;EXTRA_LAZY&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $orphanRemoval: true
+    </dd>
+    </dl>
+            </section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_approved">
+        $approved
+        <a href="classes/Application-Model-Traits-ApprovableTrait.html#property_approved" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/ApprovableTrait.php"><a href="files/module-application-src-model-traits-approvabletrait.html"><abbr title="module/Application/src/Model/Traits/ApprovableTrait.php">ApprovableTrait.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">34</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">State of the approval.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">private</span>
+            <span class="phpdocumentor-signature__type"><a href="classes/Application-Model-Enums-ApprovableStatus.html"><abbr title="\Application\Model\Enums\ApprovableStatus">ApprovableStatus</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$approved</span>
+    </code>
+
+    
+    
+    
+
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Application-Model-Traits-ApprovableTrait.html#property_approved#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $type: &#039;integer&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $enumType: \Application\Model\Enums\ApprovableStatus::class
+    </dd>
+    </dl>
+            </section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_approvedAt">
+        $approvedAt
+        <a href="classes/Application-Model-Traits-ApprovableTrait.html#property_approvedAt" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/ApprovableTrait.php"><a href="files/module-application-src-model-traits-approvabletrait.html"><abbr title="module/Application/src/Model/Traits/ApprovableTrait.php">ApprovableTrait.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">43</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">The date when the entity was approved.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">private</span>
+            <span class="phpdocumentor-signature__type"><abbr title="\DateTime">DateTime</abbr>|null</span>
+    <span class="phpdocumentor-signature__name">$approvedAt</span>
+     = <span class="phpdocumentor-signature__default-value">null</span></code>
+
+    
+    
+    
+
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Application-Model-Traits-ApprovableTrait.html#property_approvedAt#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $type: &#039;datetime&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $nullable: true
+    </dd>
+    </dl>
+            </section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_approver">
+        $approver
+        <a href="classes/Application-Model-Traits-ApprovableTrait.html#property_approver" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/ApprovableTrait.php"><a href="files/module-application-src-model-traits-approvabletrait.html"><abbr title="module/Application/src/Model/Traits/ApprovableTrait.php">ApprovableTrait.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">52</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Who (dis)approved the entity using this trait?</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">private</span>
+            <span class="phpdocumentor-signature__type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>|null</span>
+    <span class="phpdocumentor-signature__name">$approver</span>
+     = <span class="phpdocumentor-signature__default-value">null</span></code>
+
+    
+    
+    
+
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Application-Model-Traits-ApprovableTrait.html#property_approver#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\JoinColumn">JoinColumn</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $referencedColumnName: &#039;lidnr&#039;
+    </dd>
+    </dl>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\ManyToOne">ManyToOne</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $targetEntity: \Decision\Model\Member::class
+    </dd>
+    </dl>
+            </section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_contactAddress">
+        $contactAddress
+        <a href="classes/Company-Model-Company.html#property_contactAddress" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">79</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">The company&#039;s contact address.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">private</span>
+            <span class="phpdocumentor-signature__type">string|null</span>
+    <span class="phpdocumentor-signature__name">$contactAddress</span>
+    </code>
+
+    
+    
+    
+
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Company-Model-Company.html#property_contactAddress#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $type: &#039;string&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $nullable: true
+    </dd>
+    </dl>
+            </section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_contactEmail">
+        $contactEmail
+        <a href="classes/Company-Model-Company.html#property_contactEmail" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">88</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">The company&#039;s contact email address.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">private</span>
+            <span class="phpdocumentor-signature__type">string|null</span>
+    <span class="phpdocumentor-signature__name">$contactEmail</span>
+    </code>
+
+    
+    
+    
+
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Company-Model-Company.html#property_contactEmail#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $type: &#039;string&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $nullable: true
+    </dd>
+    </dl>
+            </section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_contactName">
+        $contactName
+        <a href="classes/Company-Model-Company.html#property_contactName" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">70</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">The company&#039;s contact&#039;s name.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">private</span>
+            <span class="phpdocumentor-signature__type">string|null</span>
+    <span class="phpdocumentor-signature__name">$contactName</span>
+    </code>
+
+    
+    
+    
+
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Company-Model-Company.html#property_contactName#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $type: &#039;string&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $nullable: true
+    </dd>
+    </dl>
+            </section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_contactPhone">
+        $contactPhone
+        <a href="classes/Company-Model-Company.html#property_contactPhone" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">97</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">The company&#039;s contact phone.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">private</span>
+            <span class="phpdocumentor-signature__type">string|null</span>
+    <span class="phpdocumentor-signature__name">$contactPhone</span>
+    </code>
+
+    
+    
+    
+
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Company-Model-Company.html#property_contactPhone#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $type: &#039;string&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $nullable: true
+    </dd>
+    </dl>
+            </section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_createdAt">
+        $createdAt
+        <a href="classes/Application-Model-Traits-TimestampableTrait.html#property_createdAt" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Application/src/Model/Traits/TimestampableTrait.php"><a href="files/module-application-src-model-traits-timestampabletrait.html"><abbr title="module/Application/src/Model/Traits/TimestampableTrait.php">TimestampableTrait.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">22</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">The date at which the entity was created.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">private</span>
+            <span class="phpdocumentor-signature__type"><abbr title="\DateTime">DateTime</abbr></span>
+    <span class="phpdocumentor-signature__name">$createdAt</span>
+    </code>
+
+    
+    
+    
+
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Application-Model-Traits-TimestampableTrait.html#property_createdAt#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $type: &#039;datetime&#039;
+    </dd>
+    </dl>
+            </section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_description">
+        $description
+        <a href="classes/Company-Model-Company.html#property_description" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/Company.php"><a href="files/module-company-src-model-company.html"><abbr title="module/Company/src/Model/Company.php">Company.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">130</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Company description.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">private</span>
+            <span class="phpdocumentor-signature__type"><a href="classes/Company-Model-CompanyLocalisedText.html"><abbr title="\Company\Model\CompanyLocalisedText">CompanyLocalisedText</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$description</span>
+    </code>
+
+    
+    
+    
+
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Company-Model-Company.html#property_description#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\JoinColumn">JoinColumn</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $name: &#039;description_id&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $referencedColumnName: &#039;id&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $nullable: false
+    </dd>
+    </dl>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\OneToOne">OneToOne</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $targetEntity: \Company\Model\CompanyLocalisedText::class
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $cascade: [&#039;persist&#039;, &#039;remove&#039;]
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $orphanRemoval: true
+    </dd>
+    </dl>
+            </section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
                                                                     "
 >
     <h4 class="phpdocumentor-element__name" id="property_isUpdate">
@@ -1776,7 +1776,7 @@ nullable.</p>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__visibility">private</span>
             <span class="phpdocumentor-signature__type">bool</span>
     <span class="phpdocumentor-signature__name">$isUpdate</span>
      = <span class="phpdocumentor-signature__default-value">false</span></code>
@@ -1808,7 +1808,7 @@ nullable.</p>
         class="
             phpdocumentor-element
             -property
-            -protected
+            -private
                                                                     "
 >
     <h4 class="phpdocumentor-element__name" id="property_logo">
@@ -1829,7 +1829,7 @@ nullable.</p>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__visibility">private</span>
             <span class="phpdocumentor-signature__type">string|null</span>
     <span class="phpdocumentor-signature__name">$logo</span>
      = <span class="phpdocumentor-signature__default-value">null</span></code>
@@ -1864,7 +1864,7 @@ nullable.</p>
         class="
             phpdocumentor-element
             -property
-            -protected
+            -private
                                                                     "
 >
     <h4 class="phpdocumentor-element__name" id="property_name">
@@ -1885,7 +1885,7 @@ nullable.</p>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__visibility">private</span>
             <span class="phpdocumentor-signature__type">string</span>
     <span class="phpdocumentor-signature__name">$name</span>
     </code>
@@ -1917,7 +1917,7 @@ nullable.</p>
         class="
             phpdocumentor-element
             -property
-            -protected
+            -private
                                                                     "
 >
     <h4 class="phpdocumentor-element__name" id="property_packages">
@@ -1938,7 +1938,7 @@ nullable.</p>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__visibility">private</span>
             <span class="phpdocumentor-signature__type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Company-Model-CompanyPackage.html"><abbr title="\Company\Model\CompanyPackage">CompanyPackage</abbr></a>&gt;</span>
     <span class="phpdocumentor-signature__name">$packages</span>
     </code>
@@ -1976,7 +1976,7 @@ nullable.</p>
         class="
             phpdocumentor-element
             -property
-            -protected
+            -private
                                                                     "
 >
     <h4 class="phpdocumentor-element__name" id="property_published">
@@ -1997,7 +1997,7 @@ nullable.</p>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__visibility">private</span>
             <span class="phpdocumentor-signature__type">bool</span>
     <span class="phpdocumentor-signature__name">$published</span>
     </code>
@@ -2029,7 +2029,7 @@ nullable.</p>
         class="
             phpdocumentor-element
             -property
-            -protected
+            -private
                                                                     "
 >
     <h4 class="phpdocumentor-element__name" id="property_representativeEmail">
@@ -2050,7 +2050,7 @@ nullable.</p>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__visibility">private</span>
             <span class="phpdocumentor-signature__type">string</span>
     <span class="phpdocumentor-signature__name">$representativeEmail</span>
     </code>
@@ -2082,7 +2082,7 @@ nullable.</p>
         class="
             phpdocumentor-element
             -property
-            -protected
+            -private
                                                                     "
 >
     <h4 class="phpdocumentor-element__name" id="property_representativeName">
@@ -2103,7 +2103,7 @@ nullable.</p>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__visibility">private</span>
             <span class="phpdocumentor-signature__type">string</span>
     <span class="phpdocumentor-signature__name">$representativeName</span>
     </code>
@@ -2135,7 +2135,7 @@ nullable.</p>
         class="
             phpdocumentor-element
             -property
-            -protected
+            -private
                                                                     "
 >
     <h4 class="phpdocumentor-element__name" id="property_slogan">
@@ -2156,7 +2156,7 @@ nullable.</p>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__visibility">private</span>
             <span class="phpdocumentor-signature__type"><a href="classes/Company-Model-CompanyLocalisedText.html"><abbr title="\Company\Model\CompanyLocalisedText">CompanyLocalisedText</abbr></a></span>
     <span class="phpdocumentor-signature__name">$slogan</span>
     </code>
@@ -2208,7 +2208,7 @@ nullable.</p>
         class="
             phpdocumentor-element
             -property
-            -protected
+            -private
                                                                     "
 >
     <h4 class="phpdocumentor-element__name" id="property_slugName">
@@ -2229,7 +2229,7 @@ nullable.</p>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__visibility">private</span>
             <span class="phpdocumentor-signature__type">string</span>
     <span class="phpdocumentor-signature__name">$slugName</span>
     </code>
@@ -2261,7 +2261,7 @@ nullable.</p>
         class="
             phpdocumentor-element
             -property
-            -protected
+            -private
                                                                     "
 >
     <h4 class="phpdocumentor-element__name" id="property_updatedAt">
@@ -2282,7 +2282,7 @@ nullable.</p>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__visibility">private</span>
             <span class="phpdocumentor-signature__type"><abbr title="\DateTime">DateTime</abbr></span>
     <span class="phpdocumentor-signature__name">$updatedAt</span>
     </code>
@@ -2314,7 +2314,7 @@ nullable.</p>
         class="
             phpdocumentor-element
             -property
-            -protected
+            -private
                                                                     "
 >
     <h4 class="phpdocumentor-element__name" id="property_updateProposals">
@@ -2335,7 +2335,7 @@ nullable.</p>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__visibility">private</span>
             <span class="phpdocumentor-signature__type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Company-Model-Proposals-CompanyUpdate.html"><abbr title="\Company\Model\Proposals\CompanyUpdate">CompanyUpdate</abbr></a>&gt;</span>
     <span class="phpdocumentor-signature__name">$updateProposals</span>
     </code>
@@ -2373,7 +2373,7 @@ nullable.</p>
         class="
             phpdocumentor-element
             -property
-            -protected
+            -private
                                                                     "
 >
     <h4 class="phpdocumentor-element__name" id="property_website">
@@ -2394,7 +2394,7 @@ nullable.</p>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__visibility">private</span>
             <span class="phpdocumentor-signature__type"><a href="classes/Company-Model-CompanyLocalisedText.html"><abbr title="\Company\Model\CompanyLocalisedText">CompanyLocalisedText</abbr></a></span>
     <span class="phpdocumentor-signature__name">$website</span>
     </code>
@@ -5106,6 +5106,7 @@ company.</p>
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
+                                                    <li class=""><a href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id">$id</a></li>
                                                     <li class=""><a href="classes/Application-Model-Traits-ApprovableTrait.html#property_approvableText">$approvableText</a></li>
                                                     <li class=""><a href="classes/Application-Model-Traits-ApprovableTrait.html#property_approved">$approved</a></li>
                                                     <li class=""><a href="classes/Application-Model-Traits-ApprovableTrait.html#property_approvedAt">$approvedAt</a></li>
@@ -5116,7 +5117,6 @@ company.</p>
                                                     <li class=""><a href="classes/Company-Model-Company.html#property_contactPhone">$contactPhone</a></li>
                                                     <li class=""><a href="classes/Application-Model-Traits-TimestampableTrait.html#property_createdAt">$createdAt</a></li>
                                                     <li class=""><a href="classes/Company-Model-Company.html#property_description">$description</a></li>
-                                                    <li class=""><a href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id">$id</a></li>
                                                     <li class=""><a href="classes/Application-Model-Traits-UpdateProposableTrait.html#property_isUpdate">$isUpdate</a></li>
                                                     <li class=""><a href="classes/Company-Model-Company.html#property_logo">$logo</a></li>
                                                     <li class=""><a href="classes/Company-Model-Company.html#property_name">$name</a></li>

@@ -481,34 +481,6 @@
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Education-Model-Summary.html#property_author">$author</a>
-    <span>
-                        &nbsp;: string|null            </span>
-</dt>
-<dd>Author of the summary.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Education-Model-CourseDocument.html#property_course">$course</a>
-    <span>
-                        &nbsp;: <a href="classes/Education-Model-Course.html"><abbr title="\Education\Model\Course">Course</abbr></a>            </span>
-</dt>
-<dd>The course to which this document belongs.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Education-Model-CourseDocument.html#property_date">$date</a>
-    <span>
-                        &nbsp;: <abbr title="\DateTime">DateTime</abbr>            </span>
-</dt>
-<dd>Date of the exam.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Education-Model-CourseDocument.html#property_filename">$filename</a>
-    <span>
-                        &nbsp;: string            </span>
-</dt>
-<dd>Filename of the exam.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id">$id</a>
     <span>
                         &nbsp;: int|null            </span>
@@ -516,19 +488,12 @@
 <dd>The default value must be `null` to prevent issues with auto generating the value. The column is strictly not
 nullable.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Education-Model-CourseDocument.html#property_language">$language</a>
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a class="" href="classes/Education-Model-Summary.html#property_author">$author</a>
     <span>
-                        &nbsp;: <a href="classes/Application-Model-Enums-Languages.html"><abbr title="\Application\Model\Enums\Languages">Languages</abbr></a>            </span>
+                        &nbsp;: string|null            </span>
 </dt>
-<dd>The language of the exam.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Education-Model-CourseDocument.html#property_scanned">$scanned</a>
-    <span>
-                        &nbsp;: bool            </span>
-</dt>
-<dd>Whether the uploaded document is scanned or not. This influences the quality of the watermarking service.</dd>
+<dd>Author of the summary.</dd>
 
     </dl>
 
@@ -668,238 +633,6 @@ nullable.</dd>
             -protected
                                                                     "
 >
-    <h4 class="phpdocumentor-element__name" id="property_author">
-        $author
-        <a href="classes/Education-Model-Summary.html#property_author" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/Summary.php"><a href="files/module-education-src-model-summary.html"><abbr title="module/Education/src/Model/Summary.php">Summary.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">19</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Author of the summary.</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type">string|null</span>
-    <span class="phpdocumentor-signature__name">$author</span>
-     = <span class="phpdocumentor-signature__default-value">null</span></code>
-
-    
-    
-    
-
-    
-    <section class="phpdocumentor-attributes">
-        <h5 class="phpdocumentor-elements__header" id="attributes">
-            Attributes <a href="classes/Education-Model-Summary.html#property_author#attributes" class="headerlink"><i class="fas fa-link"></i></a>
-
-        </h5>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
-    </dt>
-        <dd class="phpdocumentor-argument-list__entry">
-        $type: &#039;string&#039;
-    </dd>
-        <dd class="phpdocumentor-argument-list__entry">
-        $nullable: true
-    </dd>
-    </dl>
-            </section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_course">
-        $course
-        <a href="classes/Education-Model-CourseDocument.html#property_course" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/CourseDocument.php"><a href="files/module-education-src-model-coursedocument.html"><abbr title="module/Education/src/Model/CourseDocument.php">CourseDocument.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">71</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">The course to which this document belongs.</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Education-Model-Course.html"><abbr title="\Education\Model\Course">Course</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$course</span>
-    </code>
-
-    
-    
-    
-
-    
-    <section class="phpdocumentor-attributes">
-        <h5 class="phpdocumentor-elements__header" id="attributes">
-            Attributes <a href="classes/Education-Model-CourseDocument.html#property_course#attributes" class="headerlink"><i class="fas fa-link"></i></a>
-
-        </h5>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\JoinColumn">JoinColumn</abbr>]
-    </dt>
-        <dd class="phpdocumentor-argument-list__entry">
-        $name: &#039;course_code&#039;
-    </dd>
-        <dd class="phpdocumentor-argument-list__entry">
-        $referencedColumnName: &#039;code&#039;
-    </dd>
-        <dd class="phpdocumentor-argument-list__entry">
-        $nullable: false
-    </dd>
-    </dl>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\ManyToOne">ManyToOne</abbr>]
-    </dt>
-        <dd class="phpdocumentor-argument-list__entry">
-        $targetEntity: \Education\Model\Course::class
-    </dd>
-        <dd class="phpdocumentor-argument-list__entry">
-        $inversedBy: &#039;documents&#039;
-    </dd>
-    </dl>
-            </section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_date">
-        $date
-        <a href="classes/Education-Model-CourseDocument.html#property_date" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/CourseDocument.php"><a href="files/module-education-src-model-coursedocument.html"><abbr title="module/Education/src/Model/CourseDocument.php">CourseDocument.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">50</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Date of the exam.</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type"><abbr title="\DateTime">DateTime</abbr></span>
-    <span class="phpdocumentor-signature__name">$date</span>
-    </code>
-
-    
-    
-    
-
-    
-    <section class="phpdocumentor-attributes">
-        <h5 class="phpdocumentor-elements__header" id="attributes">
-            Attributes <a href="classes/Education-Model-CourseDocument.html#property_date#attributes" class="headerlink"><i class="fas fa-link"></i></a>
-
-        </h5>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
-    </dt>
-        <dd class="phpdocumentor-argument-list__entry">
-        $type: &#039;date&#039;
-    </dd>
-    </dl>
-            </section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_filename">
-        $filename
-        <a href="classes/Education-Model-CourseDocument.html#property_filename" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/CourseDocument.php"><a href="files/module-education-src-model-coursedocument.html"><abbr title="module/Education/src/Model/CourseDocument.php">CourseDocument.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">65</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Filename of the exam.</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$filename</span>
-    </code>
-
-    
-    
-    
-
-    
-    <section class="phpdocumentor-attributes">
-        <h5 class="phpdocumentor-elements__header" id="attributes">
-            Attributes <a href="classes/Education-Model-CourseDocument.html#property_filename#attributes" class="headerlink"><i class="fas fa-link"></i></a>
-
-        </h5>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
-    </dt>
-        <dd class="phpdocumentor-argument-list__entry">
-        $type: &#039;string&#039;
-    </dd>
-    </dl>
-            </section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                                    "
->
     <h4 class="phpdocumentor-element__name" id="property_id">
         $id
         <a href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id" class="headerlink"><i class="fas fa-link"></i></a>
@@ -964,31 +697,31 @@ nullable.</p>
         class="
             phpdocumentor-element
             -property
-            -protected
+            -private
                                                                     "
 >
-    <h4 class="phpdocumentor-element__name" id="property_language">
-        $language
-        <a href="classes/Education-Model-CourseDocument.html#property_language" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_author">
+        $author
+        <a href="classes/Education-Model-Summary.html#property_author" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/CourseDocument.php"><a href="files/module-education-src-model-coursedocument.html"><abbr title="module/Education/src/Model/CourseDocument.php">CourseDocument.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/Summary.php"><a href="files/module-education-src-model-summary.html"><abbr title="module/Education/src/Model/Summary.php">Summary.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">56</span>
+    <span class="phpdocumentor-element-found-in__line">19</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">The language of the exam.</p>
+        <p class="phpdocumentor-summary">Author of the summary.</p>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Application-Model-Enums-Languages.html"><abbr title="\Application\Model\Enums\Languages">Languages</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$language</span>
-    </code>
+        <span class="phpdocumentor-signature__visibility">private</span>
+            <span class="phpdocumentor-signature__type">string|null</span>
+    <span class="phpdocumentor-signature__name">$author</span>
+     = <span class="phpdocumentor-signature__default-value">null</span></code>
 
     
     
@@ -997,7 +730,7 @@ nullable.</p>
     
     <section class="phpdocumentor-attributes">
         <h5 class="phpdocumentor-elements__header" id="attributes">
-            Attributes <a href="classes/Education-Model-CourseDocument.html#property_language#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+            Attributes <a href="classes/Education-Model-Summary.html#property_author#attributes" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h5>
                     <dl class="phpdocumentor-argument-list">
@@ -1008,60 +741,7 @@ nullable.</p>
         $type: &#039;string&#039;
     </dd>
         <dd class="phpdocumentor-argument-list__entry">
-        $enumType: \Application\Model\Enums\Languages::class
-    </dd>
-    </dl>
-            </section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_scanned">
-        $scanned
-        <a href="classes/Education-Model-CourseDocument.html#property_scanned" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Education/src/Model/CourseDocument.php"><a href="files/module-education-src-model-coursedocument.html"><abbr title="module/Education/src/Model/CourseDocument.php">CourseDocument.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">85</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Whether the uploaded document is scanned or not. This influences the quality of the watermarking service.</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type">bool</span>
-    <span class="phpdocumentor-signature__name">$scanned</span>
-    </code>
-
-    
-    
-    
-
-    
-    <section class="phpdocumentor-attributes">
-        <h5 class="phpdocumentor-elements__header" id="attributes">
-            Attributes <a href="classes/Education-Model-CourseDocument.html#property_scanned#attributes" class="headerlink"><i class="fas fa-link"></i></a>
-
-        </h5>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
-    </dt>
-        <dd class="phpdocumentor-argument-list__entry">
-        $type: &#039;boolean&#039;
+        $nullable: true
     </dd>
     </dl>
             </section>
@@ -1870,13 +1550,8 @@ nullable.</p>
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li class=""><a href="classes/Education-Model-Summary.html#property_author">$author</a></li>
-                                                    <li class=""><a href="classes/Education-Model-CourseDocument.html#property_course">$course</a></li>
-                                                    <li class=""><a href="classes/Education-Model-CourseDocument.html#property_date">$date</a></li>
-                                                    <li class=""><a href="classes/Education-Model-CourseDocument.html#property_filename">$filename</a></li>
                                                     <li class=""><a href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id">$id</a></li>
-                                                    <li class=""><a href="classes/Education-Model-CourseDocument.html#property_language">$language</a></li>
-                                                    <li class=""><a href="classes/Education-Model-CourseDocument.html#property_scanned">$scanned</a></li>
+                                                    <li class=""><a href="classes/Education-Model-Summary.html#property_author">$author</a></li>
                                             </ul>
                 </li>
             

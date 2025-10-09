@@ -481,20 +481,6 @@
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Activity-Model-ActivityCalendarOption.html#property_beginTime">$beginTime</a>
-    <span>
-                        &nbsp;: <abbr title="\DateTime">DateTime</abbr>            </span>
-</dt>
-<dd>The date and time the activity starts.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Activity-Model-ActivityCalendarOption.html#property_endTime">$endTime</a>
-    <span>
-                        &nbsp;: <abbr title="\DateTime">DateTime</abbr>            </span>
-</dt>
-<dd>The date and time the activity ends.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id">$id</a>
     <span>
                         &nbsp;: int|null            </span>
@@ -502,28 +488,42 @@
 <dd>The default value must be `null` to prevent issues with auto generating the value. The column is strictly not
 nullable.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a class="" href="classes/Activity-Model-ActivityCalendarOption.html#property_beginTime">$beginTime</a>
+    <span>
+                        &nbsp;: <abbr title="\DateTime">DateTime</abbr>            </span>
+</dt>
+<dd>The date and time the activity starts.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a class="" href="classes/Activity-Model-ActivityCalendarOption.html#property_endTime">$endTime</a>
+    <span>
+                        &nbsp;: <abbr title="\DateTime">DateTime</abbr>            </span>
+</dt>
+<dd>The date and time the activity ends.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a class="" href="classes/Activity-Model-ActivityCalendarOption.html#property_modifiedBy">$modifiedBy</a>
     <span>
                         &nbsp;: <a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>|null            </span>
 </dt>
 <dd>Who modified this activity option, if null then the option is not modified.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a class="" href="classes/Activity-Model-ActivityCalendarOption.html#property_proposal">$proposal</a>
     <span>
                         &nbsp;: <a href="classes/Activity-Model-ActivityOptionProposal.html"><abbr title="\Activity\Model\ActivityOptionProposal">ActivityOptionProposal</abbr></a>            </span>
 </dt>
 <dd>To what activity proposal does the option belong.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a class="" href="classes/Activity-Model-ActivityCalendarOption.html#property_status">$status</a>
     <span>
                         &nbsp;: string|null            </span>
 </dt>
 <dd>Status for the option.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a class="" href="classes/Activity-Model-ActivityCalendarOption.html#property_type">$type</a>
     <span>
                         &nbsp;: string|null            </span>
@@ -661,112 +661,6 @@ nullable.</dd>
             -protected
                                                                     "
 >
-    <h4 class="phpdocumentor-element__name" id="property_beginTime">
-        $beginTime
-        <a href="classes/Activity-Model-ActivityCalendarOption.html#property_beginTime" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/ActivityCalendarOption.php"><a href="files/module-activity-src-model-activitycalendaroption.html"><abbr title="module/Activity/src/Model/ActivityCalendarOption.php">ActivityCalendarOption.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">44</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">The date and time the activity starts.</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type"><abbr title="\DateTime">DateTime</abbr></span>
-    <span class="phpdocumentor-signature__name">$beginTime</span>
-    </code>
-
-    
-    
-    
-
-    
-    <section class="phpdocumentor-attributes">
-        <h5 class="phpdocumentor-elements__header" id="attributes">
-            Attributes <a href="classes/Activity-Model-ActivityCalendarOption.html#property_beginTime#attributes" class="headerlink"><i class="fas fa-link"></i></a>
-
-        </h5>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
-    </dt>
-        <dd class="phpdocumentor-argument-list__entry">
-        $type: &#039;datetime&#039;
-    </dd>
-    </dl>
-            </section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_endTime">
-        $endTime
-        <a href="classes/Activity-Model-ActivityCalendarOption.html#property_endTime" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/ActivityCalendarOption.php"><a href="files/module-activity-src-model-activitycalendaroption.html"><abbr title="module/Activity/src/Model/ActivityCalendarOption.php">ActivityCalendarOption.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">50</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">The date and time the activity ends.</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type"><abbr title="\DateTime">DateTime</abbr></span>
-    <span class="phpdocumentor-signature__name">$endTime</span>
-    </code>
-
-    
-    
-    
-
-    
-    <section class="phpdocumentor-attributes">
-        <h5 class="phpdocumentor-elements__header" id="attributes">
-            Attributes <a href="classes/Activity-Model-ActivityCalendarOption.html#property_endTime#attributes" class="headerlink"><i class="fas fa-link"></i></a>
-
-        </h5>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
-    </dt>
-        <dd class="phpdocumentor-argument-list__entry">
-        $type: &#039;datetime&#039;
-    </dd>
-    </dl>
-            </section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                                    "
->
     <h4 class="phpdocumentor-element__name" id="property_id">
         $id
         <a href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id" class="headerlink"><i class="fas fa-link"></i></a>
@@ -831,7 +725,113 @@ nullable.</p>
         class="
             phpdocumentor-element
             -property
-            -protected
+            -private
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_beginTime">
+        $beginTime
+        <a href="classes/Activity-Model-ActivityCalendarOption.html#property_beginTime" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/ActivityCalendarOption.php"><a href="files/module-activity-src-model-activitycalendaroption.html"><abbr title="module/Activity/src/Model/ActivityCalendarOption.php">ActivityCalendarOption.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">44</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">The date and time the activity starts.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">private</span>
+            <span class="phpdocumentor-signature__type"><abbr title="\DateTime">DateTime</abbr></span>
+    <span class="phpdocumentor-signature__name">$beginTime</span>
+    </code>
+
+    
+    
+    
+
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Activity-Model-ActivityCalendarOption.html#property_beginTime#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $type: &#039;datetime&#039;
+    </dd>
+    </dl>
+            </section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_endTime">
+        $endTime
+        <a href="classes/Activity-Model-ActivityCalendarOption.html#property_endTime" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/ActivityCalendarOption.php"><a href="files/module-activity-src-model-activitycalendaroption.html"><abbr title="module/Activity/src/Model/ActivityCalendarOption.php">ActivityCalendarOption.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">50</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">The date and time the activity ends.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">private</span>
+            <span class="phpdocumentor-signature__type"><abbr title="\DateTime">DateTime</abbr></span>
+    <span class="phpdocumentor-signature__name">$endTime</span>
+    </code>
+
+    
+    
+    
+
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Activity-Model-ActivityCalendarOption.html#property_endTime#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $type: &#039;datetime&#039;
+    </dd>
+    </dl>
+            </section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
                                                                     "
 >
     <h4 class="phpdocumentor-element__name" id="property_modifiedBy">
@@ -852,7 +852,7 @@ nullable.</p>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__visibility">private</span>
             <span class="phpdocumentor-signature__type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>|null</span>
     <span class="phpdocumentor-signature__name">$modifiedBy</span>
     </code>
@@ -892,7 +892,7 @@ nullable.</p>
         class="
             phpdocumentor-element
             -property
-            -protected
+            -private
                                                                     "
 >
     <h4 class="phpdocumentor-element__name" id="property_proposal">
@@ -913,7 +913,7 @@ nullable.</p>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__visibility">private</span>
             <span class="phpdocumentor-signature__type"><a href="classes/Activity-Model-ActivityOptionProposal.html"><abbr title="\Activity\Model\ActivityOptionProposal">ActivityOptionProposal</abbr></a></span>
     <span class="phpdocumentor-signature__name">$proposal</span>
     </code>
@@ -956,7 +956,7 @@ nullable.</p>
         class="
             phpdocumentor-element
             -property
-            -protected
+            -private
                                                                     "
 >
     <h4 class="phpdocumentor-element__name" id="property_status">
@@ -977,7 +977,7 @@ nullable.</p>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__visibility">private</span>
             <span class="phpdocumentor-signature__type">string|null</span>
     <span class="phpdocumentor-signature__name">$status</span>
     </code>
@@ -1012,7 +1012,7 @@ nullable.</p>
         class="
             phpdocumentor-element
             -property
-            -protected
+            -private
                                                                     "
 >
     <h4 class="phpdocumentor-element__name" id="property_type">
@@ -1033,7 +1033,7 @@ nullable.</p>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__visibility">private</span>
             <span class="phpdocumentor-signature__type">string|null</span>
     <span class="phpdocumentor-signature__name">$type</span>
     </code>
@@ -1858,9 +1858,9 @@ nullable.</p>
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
+                                                    <li class=""><a href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id">$id</a></li>
                                                     <li class=""><a href="classes/Activity-Model-ActivityCalendarOption.html#property_beginTime">$beginTime</a></li>
                                                     <li class=""><a href="classes/Activity-Model-ActivityCalendarOption.html#property_endTime">$endTime</a></li>
-                                                    <li class=""><a href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id">$id</a></li>
                                                     <li class=""><a href="classes/Activity-Model-ActivityCalendarOption.html#property_modifiedBy">$modifiedBy</a></li>
                                                     <li class=""><a href="classes/Activity-Model-ActivityCalendarOption.html#property_proposal">$proposal</a></li>
                                                     <li class=""><a href="classes/Activity-Model-ActivityCalendarOption.html#property_status">$status</a></li>

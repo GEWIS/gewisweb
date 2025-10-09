@@ -481,13 +481,6 @@
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Company-Model-JobCategory.html#property_hidden">$hidden</a>
-    <span>
-                        &nbsp;: bool            </span>
-</dt>
-<dd>If the category is hidden.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id">$id</a>
     <span>
                         &nbsp;: int|null            </span>
@@ -495,21 +488,28 @@
 <dd>The default value must be `null` to prevent issues with auto generating the value. The column is strictly not
 nullable.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a class="" href="classes/Company-Model-JobCategory.html#property_hidden">$hidden</a>
+    <span>
+                        &nbsp;: bool            </span>
+</dt>
+<dd>If the category is hidden.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a class="" href="classes/Company-Model-JobCategory.html#property_name">$name</a>
     <span>
                         &nbsp;: <a href="classes/Company-Model-CompanyLocalisedText.html"><abbr title="\Company\Model\CompanyLocalisedText">CompanyLocalisedText</abbr></a>            </span>
 </dt>
 <dd>The name of the category.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a class="" href="classes/Company-Model-JobCategory.html#property_pluralName">$pluralName</a>
     <span>
                         &nbsp;: <a href="classes/Company-Model-CompanyLocalisedText.html"><abbr title="\Company\Model\CompanyLocalisedText">CompanyLocalisedText</abbr></a>            </span>
 </dt>
 <dd>The name of the category.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a class="" href="classes/Company-Model-JobCategory.html#property_slug">$slug</a>
     <span>
                         &nbsp;: <a href="classes/Company-Model-CompanyLocalisedText.html"><abbr title="\Company\Model\CompanyLocalisedText">CompanyLocalisedText</abbr></a>            </span>
@@ -619,59 +619,6 @@ nullable.</dd>
             -protected
                                                                     "
 >
-    <h4 class="phpdocumentor-element__name" id="property_hidden">
-        $hidden
-        <a href="classes/Company-Model-JobCategory.html#property_hidden" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/JobCategory.php"><a href="files/module-company-src-model-jobcategory.html"><abbr title="module/Company/src/Model/JobCategory.php">JobCategory.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">69</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">If the category is hidden.</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type">bool</span>
-    <span class="phpdocumentor-signature__name">$hidden</span>
-    </code>
-
-    
-    
-    
-
-    
-    <section class="phpdocumentor-attributes">
-        <h5 class="phpdocumentor-elements__header" id="attributes">
-            Attributes <a href="classes/Company-Model-JobCategory.html#property_hidden#attributes" class="headerlink"><i class="fas fa-link"></i></a>
-
-        </h5>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
-    </dt>
-        <dd class="phpdocumentor-argument-list__entry">
-        $type: &#039;boolean&#039;
-    </dd>
-    </dl>
-            </section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                                    "
->
     <h4 class="phpdocumentor-element__name" id="property_id">
         $id
         <a href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id" class="headerlink"><i class="fas fa-link"></i></a>
@@ -736,7 +683,60 @@ nullable.</p>
         class="
             phpdocumentor-element
             -property
-            -protected
+            -private
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_hidden">
+        $hidden
+        <a href="classes/Company-Model-JobCategory.html#property_hidden" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/JobCategory.php"><a href="files/module-company-src-model-jobcategory.html"><abbr title="module/Company/src/Model/JobCategory.php">JobCategory.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">69</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">If the category is hidden.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">private</span>
+            <span class="phpdocumentor-signature__type">bool</span>
+    <span class="phpdocumentor-signature__name">$hidden</span>
+    </code>
+
+    
+    
+    
+
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Company-Model-JobCategory.html#property_hidden#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $type: &#039;boolean&#039;
+    </dd>
+    </dl>
+            </section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
                                                                     "
 >
     <h4 class="phpdocumentor-element__name" id="property_name">
@@ -757,7 +757,7 @@ nullable.</p>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__visibility">private</span>
             <span class="phpdocumentor-signature__type"><a href="classes/Company-Model-CompanyLocalisedText.html"><abbr title="\Company\Model\CompanyLocalisedText">CompanyLocalisedText</abbr></a></span>
     <span class="phpdocumentor-signature__name">$name</span>
     </code>
@@ -809,7 +809,7 @@ nullable.</p>
         class="
             phpdocumentor-element
             -property
-            -protected
+            -private
                                                                     "
 >
     <h4 class="phpdocumentor-element__name" id="property_pluralName">
@@ -830,7 +830,7 @@ nullable.</p>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__visibility">private</span>
             <span class="phpdocumentor-signature__type"><a href="classes/Company-Model-CompanyLocalisedText.html"><abbr title="\Company\Model\CompanyLocalisedText">CompanyLocalisedText</abbr></a></span>
     <span class="phpdocumentor-signature__name">$pluralName</span>
     </code>
@@ -882,7 +882,7 @@ nullable.</p>
         class="
             phpdocumentor-element
             -property
-            -protected
+            -private
                                                                     "
 >
     <h4 class="phpdocumentor-element__name" id="property_slug">
@@ -903,7 +903,7 @@ nullable.</p>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__visibility">private</span>
             <span class="phpdocumentor-signature__type"><a href="classes/Company-Model-CompanyLocalisedText.html"><abbr title="\Company\Model\CompanyLocalisedText">CompanyLocalisedText</abbr></a></span>
     <span class="phpdocumentor-signature__name">$slug</span>
     </code>
@@ -1545,8 +1545,8 @@ nullable.</p>
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li class=""><a href="classes/Company-Model-JobCategory.html#property_hidden">$hidden</a></li>
                                                     <li class=""><a href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id">$id</a></li>
+                                                    <li class=""><a href="classes/Company-Model-JobCategory.html#property_hidden">$hidden</a></li>
                                                     <li class=""><a href="classes/Company-Model-JobCategory.html#property_name">$name</a></li>
                                                     <li class=""><a href="classes/Company-Model-JobCategory.html#property_pluralName">$pluralName</a></li>
                                                     <li class=""><a href="classes/Company-Model-JobCategory.html#property_slug">$slug</a></li>

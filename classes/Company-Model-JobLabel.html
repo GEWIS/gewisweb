@@ -503,13 +503,6 @@ abbreviationEn: ?string,
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Company-Model-JobLabel.html#property_abbreviation">$abbreviation</a>
-    <span>
-                        &nbsp;: <a href="classes/Company-Model-CompanyLocalisedText.html"><abbr title="\Company\Model\CompanyLocalisedText">CompanyLocalisedText</abbr></a>            </span>
-</dt>
-<dd>The abbreviation of the label.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id">$id</a>
     <span>
                         &nbsp;: int|null            </span>
@@ -517,14 +510,21 @@ abbreviationEn: ?string,
 <dd>The default value must be `null` to prevent issues with auto generating the value. The column is strictly not
 nullable.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a class="" href="classes/Company-Model-JobLabel.html#property_abbreviation">$abbreviation</a>
+    <span>
+                        &nbsp;: <a href="classes/Company-Model-CompanyLocalisedText.html"><abbr title="\Company\Model\CompanyLocalisedText">CompanyLocalisedText</abbr></a>            </span>
+</dt>
+<dd>The abbreviation of the label.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a class="" href="classes/Company-Model-JobLabel.html#property_jobs">$jobs</a>
     <span>
                         &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Company-Model-Job.html"><abbr title="\Company\Model\Job">Job</abbr></a>&gt;            </span>
 </dt>
 <dd>The Assignments this Label belongs to.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a class="" href="classes/Company-Model-JobLabel.html#property_name">$name</a>
     <span>
                         &nbsp;: <a href="classes/Company-Model-CompanyLocalisedText.html"><abbr title="\Company\Model\CompanyLocalisedText">CompanyLocalisedText</abbr></a>            </span>
@@ -632,79 +632,6 @@ nullable.</dd>
             -protected
                                                                     "
 >
-    <h4 class="phpdocumentor-element__name" id="property_abbreviation">
-        $abbreviation
-        <a href="classes/Company-Model-JobLabel.html#property_abbreviation" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/JobLabel.php"><a href="files/module-company-src-model-joblabel.html"><abbr title="module/Company/src/Model/JobLabel.php">JobLabel.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">49</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">The abbreviation of the label.</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Company-Model-CompanyLocalisedText.html"><abbr title="\Company\Model\CompanyLocalisedText">CompanyLocalisedText</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$abbreviation</span>
-    </code>
-
-    
-    
-    
-
-    
-    <section class="phpdocumentor-attributes">
-        <h5 class="phpdocumentor-elements__header" id="attributes">
-            Attributes <a href="classes/Company-Model-JobLabel.html#property_abbreviation#attributes" class="headerlink"><i class="fas fa-link"></i></a>
-
-        </h5>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\JoinColumn">JoinColumn</abbr>]
-    </dt>
-        <dd class="phpdocumentor-argument-list__entry">
-        $name: &#039;abbreviation_id&#039;
-    </dd>
-        <dd class="phpdocumentor-argument-list__entry">
-        $referencedColumnName: &#039;id&#039;
-    </dd>
-        <dd class="phpdocumentor-argument-list__entry">
-        $nullable: false
-    </dd>
-    </dl>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\OneToOne">OneToOne</abbr>]
-    </dt>
-        <dd class="phpdocumentor-argument-list__entry">
-        $targetEntity: \Company\Model\CompanyLocalisedText::class
-    </dd>
-        <dd class="phpdocumentor-argument-list__entry">
-        $cascade: [&#039;persist&#039;, &#039;remove&#039;]
-    </dd>
-        <dd class="phpdocumentor-argument-list__entry">
-        $orphanRemoval: true
-    </dd>
-    </dl>
-            </section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                                    "
->
     <h4 class="phpdocumentor-element__name" id="property_id">
         $id
         <a href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id" class="headerlink"><i class="fas fa-link"></i></a>
@@ -769,7 +696,80 @@ nullable.</p>
         class="
             phpdocumentor-element
             -property
-            -protected
+            -private
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_abbreviation">
+        $abbreviation
+        <a href="classes/Company-Model-JobLabel.html#property_abbreviation" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Company/src/Model/JobLabel.php"><a href="files/module-company-src-model-joblabel.html"><abbr title="module/Company/src/Model/JobLabel.php">JobLabel.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">49</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">The abbreviation of the label.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">private</span>
+            <span class="phpdocumentor-signature__type"><a href="classes/Company-Model-CompanyLocalisedText.html"><abbr title="\Company\Model\CompanyLocalisedText">CompanyLocalisedText</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$abbreviation</span>
+    </code>
+
+    
+    
+    
+
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Company-Model-JobLabel.html#property_abbreviation#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\JoinColumn">JoinColumn</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $name: &#039;abbreviation_id&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $referencedColumnName: &#039;id&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $nullable: false
+    </dd>
+    </dl>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\OneToOne">OneToOne</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $targetEntity: \Company\Model\CompanyLocalisedText::class
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $cascade: [&#039;persist&#039;, &#039;remove&#039;]
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $orphanRemoval: true
+    </dd>
+    </dl>
+            </section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
                                                                     "
 >
     <h4 class="phpdocumentor-element__name" id="property_jobs">
@@ -790,7 +790,7 @@ nullable.</p>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__visibility">private</span>
             <span class="phpdocumentor-signature__type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Company-Model-Job.html"><abbr title="\Company\Model\Job">Job</abbr></a>&gt;</span>
     <span class="phpdocumentor-signature__name">$jobs</span>
     </code>
@@ -828,7 +828,7 @@ nullable.</p>
         class="
             phpdocumentor-element
             -property
-            -protected
+            -private
                                                                     "
 >
     <h4 class="phpdocumentor-element__name" id="property_name">
@@ -849,7 +849,7 @@ nullable.</p>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__visibility">private</span>
             <span class="phpdocumentor-signature__type"><a href="classes/Company-Model-CompanyLocalisedText.html"><abbr title="\Company\Model\CompanyLocalisedText">CompanyLocalisedText</abbr></a></span>
     <span class="phpdocumentor-signature__name">$name</span>
     </code>
@@ -1485,8 +1485,8 @@ nullable.</p>
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li class=""><a href="classes/Company-Model-JobLabel.html#property_abbreviation">$abbreviation</a></li>
                                                     <li class=""><a href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id">$id</a></li>
+                                                    <li class=""><a href="classes/Company-Model-JobLabel.html#property_abbreviation">$abbreviation</a></li>
                                                     <li class=""><a href="classes/Company-Model-JobLabel.html#property_jobs">$jobs</a></li>
                                                     <li class=""><a href="classes/Company-Model-JobLabel.html#property_name">$name</a></li>
                                             </ul>

@@ -427,6 +427,9 @@
         </div>
     
     
+            <span class="phpdocumentor-element__extends">
+            uses
+                            <a href="classes/Decision-Model-Trait-MemberAwareTrait.html"><abbr title="\Decision\Model\Trait\MemberAwareTrait">MemberAwareTrait</abbr></a>                    </span>
     </h2>
 
 <div class="phpdocumentor-label-line">
@@ -437,7 +440,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Financial/Budget.php"><a href="files/module-decision-src-model-subdecision-financial-budget.html"><abbr title="module/Decision/src/Model/SubDecision/Financial/Budget.php">Budget.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">15</span>
+    <span class="phpdocumentor-element-found-in__line">17</span>
 
     </aside>
 
@@ -482,98 +485,42 @@
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a class="" href="classes/Decision-Model-SubDecision-Financial-Budget.html#property_approval">$approval</a>
     <span>
                         &nbsp;: bool            </span>
 </dt>
 <dd>If the budget was approved.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a class="" href="classes/Decision-Model-SubDecision-Financial-Budget.html#property_changes">$changes</a>
     <span>
                         &nbsp;: bool            </span>
 </dt>
 <dd>If there were changes made.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Decision-Model-SubDecision.html#property_contentEN">$contentEN</a>
-    <span>
-                        &nbsp;: string            </span>
-</dt>
-<dd>Content in English.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Decision-Model-SubDecision.html#property_contentNL">$contentNL</a>
-    <span>
-                        &nbsp;: string            </span>
-</dt>
-<dd>Content in Dutch.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a class="" href="classes/Decision-Model-SubDecision-Financial-Budget.html#property_date">$date</a>
     <span>
                         &nbsp;: <abbr title="\DateTime">DateTime</abbr>            </span>
 </dt>
 <dd>Date of the budget.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Decision-Model-SubDecision.html#property_decision">$decision</a>
-    <span>
-                        &nbsp;: <a href="classes/Decision-Model-Decision.html"><abbr title="\Decision\Model\Decision">Decision</abbr></a>            </span>
-</dt>
-<dd>Decision.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Decision-Model-SubDecision.html#property_decision_number">$decision_number</a>
-    <span>
-                        &nbsp;: int            </span>
-</dt>
-<dd>Decision number.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Decision-Model-SubDecision.html#property_decision_point">$decision_point</a>
-    <span>
-                        &nbsp;: int            </span>
-</dt>
-<dd>Decision point.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Decision-Model-SubDecision.html#property_meeting_number">$meeting_number</a>
-    <span>
-                        &nbsp;: int            </span>
-</dt>
-<dd>Meeting number.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Decision-Model-SubDecision.html#property_meeting_type">$meeting_type</a>
-    <span>
-                        &nbsp;: <a href="classes/Decision-Model-Enums-MeetingTypes.html"><abbr title="\Decision\Model\Enums\MeetingTypes">MeetingTypes</abbr></a>            </span>
-</dt>
-<dd>Meeting type.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Decision-Model-SubDecision.html#property_member">$member</a>
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a class="" href="classes/Decision-Model-Trait-MemberAwareTrait.html#property_member">$member</a>
     <span>
                         &nbsp;: <a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>|null            </span>
 </dt>
 <dd>The member involved in this sub-decision.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a class="" href="classes/Decision-Model-SubDecision-Financial-Budget.html#property_name">$name</a>
     <span>
                         &nbsp;: string            </span>
 </dt>
 <dd>Name of the budget.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Decision-Model-SubDecision.html#property_sequence">$sequence</a>
-    <span>
-                        &nbsp;: int            </span>
-</dt>
-<dd>Sub decision sequence number.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a class="" href="classes/Decision-Model-SubDecision-Financial-Budget.html#property_version">$version</a>
     <span>
                         &nbsp;: string            </span>
@@ -659,9 +606,9 @@
 <dd>Get the meeting type.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Decision-Model-SubDecision.html#method_getMember">getMember()</a>
+    <a class="" href="classes/Decision-Model-SubDecision-Financial-Budget.html#method_getMember">getMember()</a>
     <span>
-                                &nbsp;: <a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>|null    </span>
+                                &nbsp;: <a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>    </span>
 </dt>
 <dd>Get the member.</dd>
 
@@ -729,7 +676,7 @@
 <dd>Set the decision.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Decision-Model-SubDecision.html#method_setMember">setMember()</a>
+    <a class="" href="classes/Decision-Model-Trait-MemberAwareTrait.html#method_setMember">setMember()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
@@ -779,7 +726,7 @@
         class="
             phpdocumentor-element
             -property
-            -protected
+            -private
                                                                     "
 >
     <h4 class="phpdocumentor-element__name" id="property_approval">
@@ -792,7 +739,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Financial/Budget.php"><a href="files/module-decision-src-model-subdecision-financial-budget.html"><abbr title="module/Decision/src/Model/SubDecision/Financial/Budget.php">Budget.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">42</span>
+    <span class="phpdocumentor-element-found-in__line">46</span>
 
     </aside>
 
@@ -800,7 +747,7 @@
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__visibility">private</span>
             <span class="phpdocumentor-signature__type">bool</span>
     <span class="phpdocumentor-signature__name">$approval</span>
     </code>
@@ -832,7 +779,7 @@
         class="
             phpdocumentor-element
             -property
-            -protected
+            -private
                                                                     "
 >
     <h4 class="phpdocumentor-element__name" id="property_changes">
@@ -845,7 +792,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Financial/Budget.php"><a href="files/module-decision-src-model-subdecision-financial-budget.html"><abbr title="module/Decision/src/Model/SubDecision/Financial/Budget.php">Budget.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">48</span>
+    <span class="phpdocumentor-element-found-in__line">52</span>
 
     </aside>
 
@@ -853,7 +800,7 @@
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__visibility">private</span>
             <span class="phpdocumentor-signature__type">bool</span>
     <span class="phpdocumentor-signature__name">$changes</span>
     </code>
@@ -885,113 +832,7 @@
         class="
             phpdocumentor-element
             -property
-            -protected
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_contentEN">
-        $contentEN
-        <a href="classes/Decision-Model-SubDecision.html#property_contentEN" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">157</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Content in English.</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$contentEN</span>
-    </code>
-
-    
-    
-    
-
-    
-    <section class="phpdocumentor-attributes">
-        <h5 class="phpdocumentor-elements__header" id="attributes">
-            Attributes <a href="classes/Decision-Model-SubDecision.html#property_contentEN#attributes" class="headerlink"><i class="fas fa-link"></i></a>
-
-        </h5>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
-    </dt>
-        <dd class="phpdocumentor-argument-list__entry">
-        $type: &#039;text&#039;
-    </dd>
-    </dl>
-            </section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_contentNL">
-        $contentNL
-        <a href="classes/Decision-Model-SubDecision.html#property_contentNL" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">151</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Content in Dutch.</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$contentNL</span>
-    </code>
-
-    
-    
-    
-
-    
-    <section class="phpdocumentor-attributes">
-        <h5 class="phpdocumentor-elements__header" id="attributes">
-            Attributes <a href="classes/Decision-Model-SubDecision.html#property_contentNL#attributes" class="headerlink"><i class="fas fa-link"></i></a>
-
-        </h5>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
-    </dt>
-        <dd class="phpdocumentor-argument-list__entry">
-        $type: &#039;text&#039;
-    </dd>
-    </dl>
-            </section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
+            -private
                                                                     "
 >
     <h4 class="phpdocumentor-element__name" id="property_date">
@@ -1004,7 +845,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Financial/Budget.php"><a href="files/module-decision-src-model-subdecision-financial-budget.html"><abbr title="module/Decision/src/Model/SubDecision/Financial/Budget.php">Budget.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">36</span>
+    <span class="phpdocumentor-element-found-in__line">40</span>
 
     </aside>
 
@@ -1012,7 +853,7 @@
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__visibility">private</span>
             <span class="phpdocumentor-signature__type"><abbr title="\DateTime">DateTime</abbr></span>
     <span class="phpdocumentor-signature__name">$date</span>
     </code>
@@ -1044,363 +885,20 @@
         class="
             phpdocumentor-element
             -property
-            -protected
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_decision">
-        $decision
-        <a href="classes/Decision-Model-SubDecision.html#property_decision" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">80</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Decision.</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Decision-Model-Decision.html"><abbr title="\Decision\Model\Decision">Decision</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$decision</span>
-    </code>
-
-    
-    
-    
-
-    
-    <section class="phpdocumentor-attributes">
-        <h5 class="phpdocumentor-elements__header" id="attributes">
-            Attributes <a href="classes/Decision-Model-SubDecision.html#property_decision#attributes" class="headerlink"><i class="fas fa-link"></i></a>
-
-        </h5>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\JoinColumn">JoinColumn</abbr>]
-    </dt>
-        <dd class="phpdocumentor-argument-list__entry">
-        $name: &#039;meeting_type&#039;
-    </dd>
-        <dd class="phpdocumentor-argument-list__entry">
-        $referencedColumnName: &#039;meeting_type&#039;
-    </dd>
-    </dl>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\JoinColumn">JoinColumn</abbr>]
-    </dt>
-        <dd class="phpdocumentor-argument-list__entry">
-        $name: &#039;meeting_number&#039;
-    </dd>
-        <dd class="phpdocumentor-argument-list__entry">
-        $referencedColumnName: &#039;meeting_number&#039;
-    </dd>
-    </dl>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\JoinColumn">JoinColumn</abbr>]
-    </dt>
-        <dd class="phpdocumentor-argument-list__entry">
-        $name: &#039;decision_point&#039;
-    </dd>
-        <dd class="phpdocumentor-argument-list__entry">
-        $referencedColumnName: &#039;point&#039;
-    </dd>
-    </dl>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\JoinColumn">JoinColumn</abbr>]
-    </dt>
-        <dd class="phpdocumentor-argument-list__entry">
-        $name: &#039;decision_number&#039;
-    </dd>
-        <dd class="phpdocumentor-argument-list__entry">
-        $referencedColumnName: &#039;number&#039;
-    </dd>
-    </dl>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\ManyToOne">ManyToOne</abbr>]
-    </dt>
-        <dd class="phpdocumentor-argument-list__entry">
-        $targetEntity: \Decision\Model\Decision::class
-    </dd>
-        <dd class="phpdocumentor-argument-list__entry">
-        $inversedBy: &#039;subdecisions&#039;
-    </dd>
-    </dl>
-            </section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_decision_number">
-        $decision_number
-        <a href="classes/Decision-Model-SubDecision.html#property_decision_number" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">137</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Decision number.</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type">int</span>
-    <span class="phpdocumentor-signature__name">$decision_number</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>NOTE: This is a hack to make the decision a primary key here.</p>
-</section>
-
-    
-    
-
-    
-    <section class="phpdocumentor-attributes">
-        <h5 class="phpdocumentor-elements__header" id="attributes">
-            Attributes <a href="classes/Decision-Model-SubDecision.html#property_decision_number#attributes" class="headerlink"><i class="fas fa-link"></i></a>
-
-        </h5>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
-    </dt>
-        <dd class="phpdocumentor-argument-list__entry">
-        $type: &#039;integer&#039;
-    </dd>
-    </dl>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\Id">Id</abbr>]
-    </dt>
-    </dl>
-            </section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_decision_point">
-        $decision_point
-        <a href="classes/Decision-Model-SubDecision.html#property_decision_point" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">128</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Decision point.</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type">int</span>
-    <span class="phpdocumentor-signature__name">$decision_point</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>NOTE: This is a hack to make the decision a primary key here.</p>
-</section>
-
-    
-    
-
-    
-    <section class="phpdocumentor-attributes">
-        <h5 class="phpdocumentor-elements__header" id="attributes">
-            Attributes <a href="classes/Decision-Model-SubDecision.html#property_decision_point#attributes" class="headerlink"><i class="fas fa-link"></i></a>
-
-        </h5>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
-    </dt>
-        <dd class="phpdocumentor-argument-list__entry">
-        $type: &#039;integer&#039;
-    </dd>
-    </dl>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\Id">Id</abbr>]
-    </dt>
-    </dl>
-            </section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_meeting_number">
-        $meeting_number
-        <a href="classes/Decision-Model-SubDecision.html#property_meeting_number" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">119</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Meeting number.</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type">int</span>
-    <span class="phpdocumentor-signature__name">$meeting_number</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>NOTE: This is a hack to make the decision a primary key here.</p>
-</section>
-
-    
-    
-
-    
-    <section class="phpdocumentor-attributes">
-        <h5 class="phpdocumentor-elements__header" id="attributes">
-            Attributes <a href="classes/Decision-Model-SubDecision.html#property_meeting_number#attributes" class="headerlink"><i class="fas fa-link"></i></a>
-
-        </h5>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
-    </dt>
-        <dd class="phpdocumentor-argument-list__entry">
-        $type: &#039;integer&#039;
-    </dd>
-    </dl>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\Id">Id</abbr>]
-    </dt>
-    </dl>
-            </section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_meeting_type">
-        $meeting_type
-        <a href="classes/Decision-Model-SubDecision.html#property_meeting_type" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">107</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Meeting type.</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Decision-Model-Enums-MeetingTypes.html"><abbr title="\Decision\Model\Enums\MeetingTypes">MeetingTypes</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$meeting_type</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>NOTE: This is a hack to make the decision a primary key here.</p>
-</section>
-
-    
-    
-
-    
-    <section class="phpdocumentor-attributes">
-        <h5 class="phpdocumentor-elements__header" id="attributes">
-            Attributes <a href="classes/Decision-Model-SubDecision.html#property_meeting_type#attributes" class="headerlink"><i class="fas fa-link"></i></a>
-
-        </h5>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
-    </dt>
-        <dd class="phpdocumentor-argument-list__entry">
-        $type: &#039;string&#039;
-    </dd>
-        <dd class="phpdocumentor-argument-list__entry">
-        $enumType: \Decision\Model\Enums\MeetingTypes::class
-    </dd>
-    </dl>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\Id">Id</abbr>]
-    </dt>
-    </dl>
-            </section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
+            -private
                                                                     "
 >
     <h4 class="phpdocumentor-element__name" id="property_member">
         $member
-        <a href="classes/Decision-Model-SubDecision.html#property_member" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Decision-Model-Trait-MemberAwareTrait.html#property_member" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Trait/MemberAwareTrait.php"><a href="files/module-decision-src-model-trait-memberawaretrait.html"><abbr title="module/Decision/src/Model/Trait/MemberAwareTrait.php">MemberAwareTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">166</span>
+    <span class="phpdocumentor-element-found-in__line">19</span>
 
     </aside>
 
@@ -1408,7 +906,7 @@
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__visibility">private</span>
             <span class="phpdocumentor-signature__type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>|null</span>
     <span class="phpdocumentor-signature__name">$member</span>
      = <span class="phpdocumentor-signature__default-value">null</span></code>
@@ -1423,7 +921,7 @@ this is not null or need to specify an inverse side can do so using an associati
     
     <section class="phpdocumentor-attributes">
         <h5 class="phpdocumentor-elements__header" id="attributes">
-            Attributes <a href="classes/Decision-Model-SubDecision.html#property_member#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+            Attributes <a href="classes/Decision-Model-Trait-MemberAwareTrait.html#property_member#attributes" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h5>
                     <dl class="phpdocumentor-argument-list">
@@ -1457,7 +955,7 @@ this is not null or need to specify an inverse side can do so using an associati
         class="
             phpdocumentor-element
             -property
-            -protected
+            -private
                                                                     "
 >
     <h4 class="phpdocumentor-element__name" id="property_name">
@@ -1470,7 +968,7 @@ this is not null or need to specify an inverse side can do so using an associati
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Financial/Budget.php"><a href="files/module-decision-src-model-subdecision-financial-budget.html"><abbr title="module/Decision/src/Model/SubDecision/Financial/Budget.php">Budget.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">21</span>
+    <span class="phpdocumentor-element-found-in__line">25</span>
 
     </aside>
 
@@ -1478,7 +976,7 @@ this is not null or need to specify an inverse side can do so using an associati
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__visibility">private</span>
             <span class="phpdocumentor-signature__type">string</span>
     <span class="phpdocumentor-signature__name">$name</span>
     </code>
@@ -1510,65 +1008,7 @@ this is not null or need to specify an inverse side can do so using an associati
         class="
             phpdocumentor-element
             -property
-            -protected
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_sequence">
-        $sequence
-        <a href="classes/Decision-Model-SubDecision.html#property_sequence" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">144</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Sub decision sequence number.</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type">int</span>
-    <span class="phpdocumentor-signature__name">$sequence</span>
-    </code>
-
-    
-    
-    
-
-    
-    <section class="phpdocumentor-attributes">
-        <h5 class="phpdocumentor-elements__header" id="attributes">
-            Attributes <a href="classes/Decision-Model-SubDecision.html#property_sequence#attributes" class="headerlink"><i class="fas fa-link"></i></a>
-
-        </h5>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
-    </dt>
-        <dd class="phpdocumentor-argument-list__entry">
-        $type: &#039;integer&#039;
-    </dd>
-    </dl>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\Id">Id</abbr>]
-    </dt>
-    </dl>
-            </section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
+            -private
                                                                     "
 >
     <h4 class="phpdocumentor-element__name" id="property_version">
@@ -1581,7 +1021,7 @@ this is not null or need to specify an inverse side can do so using an associati
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Financial/Budget.php"><a href="files/module-decision-src-model-subdecision-financial-budget.html"><abbr title="module/Decision/src/Model/SubDecision/Financial/Budget.php">Budget.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">27</span>
+    <span class="phpdocumentor-element-found-in__line">31</span>
 
     </aside>
 
@@ -1589,7 +1029,7 @@ this is not null or need to specify an inverse side can do so using an associati
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__visibility">private</span>
             <span class="phpdocumentor-signature__type">string</span>
     <span class="phpdocumentor-signature__name">$version</span>
     </code>
@@ -1642,7 +1082,7 @@ this is not null or need to specify an inverse side can do so using an associati
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Financial/Budget.php"><a href="files/module-decision-src-model-subdecision-financial-budget.html"><abbr title="module/Decision/src/Model/SubDecision/Financial/Budget.php">Budget.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">102</span>
+    <span class="phpdocumentor-element-found-in__line">116</span>
 
     </aside>
 
@@ -1681,7 +1121,7 @@ this is not null or need to specify an inverse side can do so using an associati
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Financial/Budget.php"><a href="files/module-decision-src-model-subdecision-financial-budget.html"><abbr title="module/Decision/src/Model/SubDecision/Financial/Budget.php">Budget.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">118</span>
+    <span class="phpdocumentor-element-found-in__line">132</span>
 
     </aside>
 
@@ -1720,7 +1160,7 @@ this is not null or need to specify an inverse side can do so using an associati
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">278</span>
+    <span class="phpdocumentor-element-found-in__line">248</span>
 
     </aside>
 
@@ -1759,7 +1199,7 @@ this is not null or need to specify an inverse side can do so using an associati
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">262</span>
+    <span class="phpdocumentor-element-found-in__line">232</span>
 
     </aside>
 
@@ -1798,7 +1238,7 @@ this is not null or need to specify an inverse side can do so using an associati
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Financial/Budget.php"><a href="files/module-decision-src-model-subdecision-financial-budget.html"><abbr title="module/Decision/src/Model/SubDecision/Financial/Budget.php">Budget.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">86</span>
+    <span class="phpdocumentor-element-found-in__line">100</span>
 
     </aside>
 
@@ -1837,7 +1277,7 @@ this is not null or need to specify an inverse side can do so using an associati
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">177</span>
+    <span class="phpdocumentor-element-found-in__line">163</span>
 
     </aside>
 
@@ -1876,7 +1316,7 @@ this is not null or need to specify an inverse side can do so using an associati
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">222</span>
+    <span class="phpdocumentor-element-found-in__line">208</span>
 
     </aside>
 
@@ -1915,7 +1355,7 @@ this is not null or need to specify an inverse side can do so using an associati
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">214</span>
+    <span class="phpdocumentor-element-found-in__line">200</span>
 
     </aside>
 
@@ -1954,7 +1394,7 @@ this is not null or need to specify an inverse side can do so using an associati
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">206</span>
+    <span class="phpdocumentor-element-found-in__line">192</span>
 
     </aside>
 
@@ -1993,7 +1433,7 @@ this is not null or need to specify an inverse side can do so using an associati
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">198</span>
+    <span class="phpdocumentor-element-found-in__line">184</span>
 
     </aside>
 
@@ -2026,13 +1466,13 @@ this is not null or need to specify an inverse side can do so using an associati
 >
     <h4 class="phpdocumentor-element__name" id="method_getMember">
         getMember()
-        <a href="classes/Decision-Model-SubDecision.html#method_getMember" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Decision-Model-SubDecision-Financial-Budget.html#method_getMember" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Financial/Budget.php"><a href="files/module-decision-src-model-subdecision-financial-budget.html"><abbr title="module/Decision/src/Model/SubDecision/Financial/Budget.php">Budget.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">246</span>
+    <span class="phpdocumentor-element-found-in__line">60</span>
 
     </aside>
 
@@ -2040,7 +1480,7 @@ this is not null or need to specify an inverse side can do so using an associati
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getMember</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>|null</span></code>
+                    <span class="phpdocumentor-signature__name">getMember</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a></span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -2048,12 +1488,28 @@ this is not null or need to specify an inverse side can do so using an associati
     
     
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Decision-Model-SubDecision-Financial-Budget.html#method_getMember#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">psalm-suppress</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>InvalidNullableReturnType</p>
+</section>
+
+                                    </dd>
+                                            </dl>
 
     
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a>|null</span>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Decision-Model-Member.html"><abbr title="\Decision\Model\Member">Member</abbr></a></span>
             </section>
 
 </article>
@@ -2071,7 +1527,7 @@ this is not null or need to specify an inverse side can do so using an associati
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Financial/Budget.php"><a href="files/module-decision-src-model-subdecision-financial-budget.html"><abbr title="module/Decision/src/Model/SubDecision/Financial/Budget.php">Budget.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">54</span>
+    <span class="phpdocumentor-element-found-in__line">68</span>
 
     </aside>
 
@@ -2110,7 +1566,7 @@ this is not null or need to specify an inverse side can do so using an associati
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">230</span>
+    <span class="phpdocumentor-element-found-in__line">216</span>
 
     </aside>
 
@@ -2149,7 +1605,7 @@ this is not null or need to specify an inverse side can do so using an associati
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Financial/Budget.php"><a href="files/module-decision-src-model-subdecision-financial-budget.html"><abbr title="module/Decision/src/Model/SubDecision/Financial/Budget.php">Budget.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">70</span>
+    <span class="phpdocumentor-element-found-in__line">84</span>
 
     </aside>
 
@@ -2188,7 +1644,7 @@ this is not null or need to specify an inverse side can do so using an associati
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Financial/Budget.php"><a href="files/module-decision-src-model-subdecision-financial-budget.html"><abbr title="module/Decision/src/Model/SubDecision/Financial/Budget.php">Budget.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">110</span>
+    <span class="phpdocumentor-element-found-in__line">124</span>
 
     </aside>
 
@@ -2233,7 +1689,7 @@ this is not null or need to specify an inverse side can do so using an associati
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Financial/Budget.php"><a href="files/module-decision-src-model-subdecision-financial-budget.html"><abbr title="module/Decision/src/Model/SubDecision/Financial/Budget.php">Budget.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">126</span>
+    <span class="phpdocumentor-element-found-in__line">140</span>
 
     </aside>
 
@@ -2278,7 +1734,7 @@ this is not null or need to specify an inverse side can do so using an associati
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">286</span>
+    <span class="phpdocumentor-element-found-in__line">256</span>
 
     </aside>
 
@@ -2323,7 +1779,7 @@ this is not null or need to specify an inverse side can do so using an associati
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">270</span>
+    <span class="phpdocumentor-element-found-in__line">240</span>
 
     </aside>
 
@@ -2368,7 +1824,7 @@ this is not null or need to specify an inverse side can do so using an associati
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Financial/Budget.php"><a href="files/module-decision-src-model-subdecision-financial-budget.html"><abbr title="module/Decision/src/Model/SubDecision/Financial/Budget.php">Budget.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">94</span>
+    <span class="phpdocumentor-element-found-in__line">108</span>
 
     </aside>
 
@@ -2413,7 +1869,7 @@ this is not null or need to specify an inverse side can do so using an associati
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">185</span>
+    <span class="phpdocumentor-element-found-in__line">171</span>
 
     </aside>
 
@@ -2452,13 +1908,13 @@ this is not null or need to specify an inverse side can do so using an associati
 >
     <h4 class="phpdocumentor-element__name" id="method_setMember">
         setMember()
-        <a href="classes/Decision-Model-SubDecision.html#method_setMember" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Decision-Model-Trait-MemberAwareTrait.html#method_setMember" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/Trait/MemberAwareTrait.php"><a href="files/module-decision-src-model-trait-memberawaretrait.html"><abbr title="module/Decision/src/Model/Trait/MemberAwareTrait.php">MemberAwareTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">254</span>
+    <span class="phpdocumentor-element-found-in__line">38</span>
 
     </aside>
 
@@ -2503,7 +1959,7 @@ this is not null or need to specify an inverse side can do so using an associati
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Financial/Budget.php"><a href="files/module-decision-src-model-subdecision-financial-budget.html"><abbr title="module/Decision/src/Model/SubDecision/Financial/Budget.php">Budget.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">62</span>
+    <span class="phpdocumentor-element-found-in__line">76</span>
 
     </aside>
 
@@ -2548,7 +2004,7 @@ this is not null or need to specify an inverse side can do so using an associati
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">238</span>
+    <span class="phpdocumentor-element-found-in__line">224</span>
 
     </aside>
 
@@ -2593,7 +2049,7 @@ this is not null or need to specify an inverse side can do so using an associati
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Financial/Budget.php"><a href="files/module-decision-src-model-subdecision-financial-budget.html"><abbr title="module/Decision/src/Model/SubDecision/Financial/Budget.php">Budget.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">78</span>
+    <span class="phpdocumentor-element-found-in__line">92</span>
 
     </aside>
 
@@ -2638,7 +2094,7 @@ this is not null or need to specify an inverse side can do so using an associati
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision.php"><a href="files/module-decision-src-model-subdecision.html"><abbr title="module/Decision/src/Model/SubDecision.php">SubDecision.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">294</span>
+    <span class="phpdocumentor-element-found-in__line">264</span>
 
     </aside>
 
@@ -2779,17 +2235,9 @@ this is not null or need to specify an inverse side can do so using an associati
                     <ul class="phpdocumentor-list -clean">
                                                     <li class=""><a href="classes/Decision-Model-SubDecision-Financial-Budget.html#property_approval">$approval</a></li>
                                                     <li class=""><a href="classes/Decision-Model-SubDecision-Financial-Budget.html#property_changes">$changes</a></li>
-                                                    <li class=""><a href="classes/Decision-Model-SubDecision.html#property_contentEN">$contentEN</a></li>
-                                                    <li class=""><a href="classes/Decision-Model-SubDecision.html#property_contentNL">$contentNL</a></li>
                                                     <li class=""><a href="classes/Decision-Model-SubDecision-Financial-Budget.html#property_date">$date</a></li>
-                                                    <li class=""><a href="classes/Decision-Model-SubDecision.html#property_decision">$decision</a></li>
-                                                    <li class=""><a href="classes/Decision-Model-SubDecision.html#property_decision_number">$decision_number</a></li>
-                                                    <li class=""><a href="classes/Decision-Model-SubDecision.html#property_decision_point">$decision_point</a></li>
-                                                    <li class=""><a href="classes/Decision-Model-SubDecision.html#property_meeting_number">$meeting_number</a></li>
-                                                    <li class=""><a href="classes/Decision-Model-SubDecision.html#property_meeting_type">$meeting_type</a></li>
-                                                    <li class=""><a href="classes/Decision-Model-SubDecision.html#property_member">$member</a></li>
+                                                    <li class=""><a href="classes/Decision-Model-Trait-MemberAwareTrait.html#property_member">$member</a></li>
                                                     <li class=""><a href="classes/Decision-Model-SubDecision-Financial-Budget.html#property_name">$name</a></li>
-                                                    <li class=""><a href="classes/Decision-Model-SubDecision.html#property_sequence">$sequence</a></li>
                                                     <li class=""><a href="classes/Decision-Model-SubDecision-Financial-Budget.html#property_version">$version</a></li>
                                             </ul>
                 </li>
@@ -2807,7 +2255,7 @@ this is not null or need to specify an inverse side can do so using an associati
                                             <li class=""><a href="classes/Decision-Model-SubDecision.html#method_getDecisionPoint">getDecisionPoint()</a></li>
                                             <li class=""><a href="classes/Decision-Model-SubDecision.html#method_getMeetingNumber">getMeetingNumber()</a></li>
                                             <li class=""><a href="classes/Decision-Model-SubDecision.html#method_getMeetingType">getMeetingType()</a></li>
-                                            <li class=""><a href="classes/Decision-Model-SubDecision.html#method_getMember">getMember()</a></li>
+                                            <li class=""><a href="classes/Decision-Model-SubDecision-Financial-Budget.html#method_getMember">getMember()</a></li>
                                             <li class=""><a href="classes/Decision-Model-SubDecision-Financial-Budget.html#method_getName">getName()</a></li>
                                             <li class=""><a href="classes/Decision-Model-SubDecision.html#method_getSequence">getSequence()</a></li>
                                             <li class=""><a href="classes/Decision-Model-SubDecision-Financial-Budget.html#method_getVersion">getVersion()</a></li>
@@ -2817,7 +2265,7 @@ this is not null or need to specify an inverse side can do so using an associati
                                             <li class=""><a href="classes/Decision-Model-SubDecision.html#method_setContentNL">setContentNL()</a></li>
                                             <li class=""><a href="classes/Decision-Model-SubDecision-Financial-Budget.html#method_setDate">setDate()</a></li>
                                             <li class=""><a href="classes/Decision-Model-SubDecision.html#method_setDecision">setDecision()</a></li>
-                                            <li class=""><a href="classes/Decision-Model-SubDecision.html#method_setMember">setMember()</a></li>
+                                            <li class=""><a href="classes/Decision-Model-Trait-MemberAwareTrait.html#method_setMember">setMember()</a></li>
                                             <li class=""><a href="classes/Decision-Model-SubDecision-Financial-Budget.html#method_setName">setName()</a></li>
                                             <li class=""><a href="classes/Decision-Model-SubDecision.html#method_setSequence">setSequence()</a></li>
                                             <li class=""><a href="classes/Decision-Model-SubDecision-Financial-Budget.html#method_setVersion">setVersion()</a></li>

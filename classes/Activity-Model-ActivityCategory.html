@@ -522,13 +522,6 @@ name: ImportedLocalisedTextGdprArrayType,
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Activity-Model-ActivityCategory.html#property_activities">$activities</a>
-    <span>
-                        &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Activity-Model-Activity.html"><abbr title="\Activity\Model\Activity">Activity</abbr></a>&gt;            </span>
-</dt>
-<dd>The Activities this Category belongs to.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id">$id</a>
     <span>
                         &nbsp;: int|null            </span>
@@ -536,7 +529,14 @@ name: ImportedLocalisedTextGdprArrayType,
 <dd>The default value must be `null` to prevent issues with auto generating the value. The column is strictly not
 nullable.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a class="" href="classes/Activity-Model-ActivityCategory.html#property_activities">$activities</a>
+    <span>
+                        &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Activity-Model-Activity.html"><abbr title="\Activity\Model\Activity">Activity</abbr></a>&gt;            </span>
+</dt>
+<dd>The Activities this Category belongs to.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a class="" href="classes/Activity-Model-ActivityCategory.html#property_name">$name</a>
     <span>
                         &nbsp;: <a href="classes/Activity-Model-ActivityLocalisedText.html"><abbr title="\Activity\Model\ActivityLocalisedText">ActivityLocalisedText</abbr></a>            </span>
@@ -633,65 +633,6 @@ nullable.</dd>
             -protected
                                                                     "
 >
-    <h4 class="phpdocumentor-element__name" id="property_activities">
-        $activities
-        <a href="classes/Activity-Model-ActivityCategory.html#property_activities" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/ActivityCategory.php"><a href="files/module-activity-src-model-activitycategory.html"><abbr title="module/Activity/src/Model/ActivityCategory.php">ActivityCategory.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">40</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">The Activities this Category belongs to.</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Activity-Model-Activity.html"><abbr title="\Activity\Model\Activity">Activity</abbr></a>&gt;</span>
-    <span class="phpdocumentor-signature__name">$activities</span>
-    </code>
-
-    
-    
-    
-
-    
-    <section class="phpdocumentor-attributes">
-        <h5 class="phpdocumentor-elements__header" id="attributes">
-            Attributes <a href="classes/Activity-Model-ActivityCategory.html#property_activities#attributes" class="headerlink"><i class="fas fa-link"></i></a>
-
-        </h5>
-                    <dl class="phpdocumentor-argument-list">
-    <dt class="phpdocumentor-argument-list__entry">
-        #[<abbr title="\Doctrine\ORM\Mapping\ManyToMany">ManyToMany</abbr>]
-    </dt>
-        <dd class="phpdocumentor-argument-list__entry">
-        $targetEntity: \Activity\Model\Activity::class
-    </dd>
-        <dd class="phpdocumentor-argument-list__entry">
-        $mappedBy: &#039;categories&#039;
-    </dd>
-        <dd class="phpdocumentor-argument-list__entry">
-        $cascade: [&#039;persist&#039;]
-    </dd>
-    </dl>
-            </section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                                    "
->
     <h4 class="phpdocumentor-element__name" id="property_id">
         $id
         <a href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id" class="headerlink"><i class="fas fa-link"></i></a>
@@ -756,7 +697,66 @@ nullable.</p>
         class="
             phpdocumentor-element
             -property
-            -protected
+            -private
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_activities">
+        $activities
+        <a href="classes/Activity-Model-ActivityCategory.html#property_activities" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Activity/src/Model/ActivityCategory.php"><a href="files/module-activity-src-model-activitycategory.html"><abbr title="module/Activity/src/Model/ActivityCategory.php">ActivityCategory.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">40</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">The Activities this Category belongs to.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">private</span>
+            <span class="phpdocumentor-signature__type"><abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Activity-Model-Activity.html"><abbr title="\Activity\Model\Activity">Activity</abbr></a>&gt;</span>
+    <span class="phpdocumentor-signature__name">$activities</span>
+    </code>
+
+    
+    
+    
+
+    
+    <section class="phpdocumentor-attributes">
+        <h5 class="phpdocumentor-elements__header" id="attributes">
+            Attributes <a href="classes/Activity-Model-ActivityCategory.html#property_activities#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h5>
+                    <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\ManyToMany">ManyToMany</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $targetEntity: \Activity\Model\Activity::class
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $mappedBy: &#039;categories&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $cascade: [&#039;persist&#039;]
+    </dd>
+    </dl>
+            </section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
                                                                     "
 >
     <h4 class="phpdocumentor-element__name" id="property_name">
@@ -777,7 +777,7 @@ nullable.</p>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__visibility">private</span>
             <span class="phpdocumentor-signature__type"><a href="classes/Activity-Model-ActivityLocalisedText.html"><abbr title="\Activity\Model\ActivityLocalisedText">ActivityLocalisedText</abbr></a></span>
     <span class="phpdocumentor-signature__name">$name</span>
     </code>
@@ -1364,8 +1364,8 @@ nullable.</p>
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li class=""><a href="classes/Activity-Model-ActivityCategory.html#property_activities">$activities</a></li>
                                                     <li class=""><a href="classes/Application-Model-Traits-IdentifiableTrait.html#property_id">$id</a></li>
+                                                    <li class=""><a href="classes/Activity-Model-ActivityCategory.html#property_activities">$activities</a></li>
                                                     <li class=""><a href="classes/Activity-Model-ActivityCategory.html#property_name">$name</a></li>
                                             </ul>
                 </li>
