@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: GEWISweb v2.8.6-971-ge5f83dd218-dirty\n"
+"Project-Id-Version: GEWISweb v2.8.6-983-gb87c9330b-dirty\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-02 19:30+0200\n"
+"POT-Creation-Date: 2025-12-03 18:18+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -397,12 +397,6 @@ msgid ""
 "here%s to request its activation."
 msgstr ""
 
-msgid ""
-"Are you looking for someone to help you with your courses? Send an email "
-"using one of the following links and we can help you find someone to tutor "
-"you."
-msgstr ""
-
 msgid "Are you sure that you want to approve this poll?"
 msgstr ""
 
@@ -528,6 +522,9 @@ msgid "Banner Package"
 msgstr ""
 
 msgid "Banner active"
+msgstr ""
+
+msgid "Become Tutor"
 msgstr ""
 
 msgid "Birth date"
@@ -1877,6 +1874,11 @@ msgstr ""
 msgid "Name (Plural)"
 msgstr ""
 
+msgid ""
+"Need help with your courses? Click the link below so we can match you with "
+"the right tutor."
+msgstr ""
+
 msgid "New password"
 msgstr ""
 
@@ -2312,6 +2314,9 @@ msgid "Representative Information"
 msgstr ""
 
 msgid "Request Activation"
+msgstr ""
+
+msgid "Request Tutoring"
 msgstr ""
 
 msgid "Request a poll"
@@ -3075,12 +3080,6 @@ msgstr ""
 msgid "Tutoring"
 msgstr ""
 
-msgid "Tutoring AM"
-msgstr ""
-
-msgid "Tutoring CS"
-msgstr ""
-
 msgid "Type"
 msgstr ""
 
@@ -3335,9 +3334,6 @@ msgid "Voting Committee"
 msgstr ""
 
 msgid "Voting Committees"
-msgstr ""
-
-msgid "Want to be a tutor?"
 msgstr ""
 
 msgid ""

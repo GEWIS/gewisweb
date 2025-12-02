@@ -155,20 +155,20 @@ $this->headTitle($this->translate('Education'));
                         <h3><?= $this->translate('Tutoring') ?></h3>
                     </div>
                     <div class="panel-body">
-                        <p><?= $this->translate('Are you looking for someone to help you with your courses? Send an email using one of the following links and we can help you find someone to tutor you.') ?></p>
+                        <p><?= $this->translate('Need help with your courses? Click the link below so we can match you with the right tutor.') ?></p>
                     </div>
                     <div class="panel-footer panel-footer--links">
-                        <a href="mailto:tutoringcs@gewis.nl" title="<?= $this->translate('Tutoring CS') ?>"
+                        <a href="https://gew.is/requesttutor" title="<?= $this->translate('Request Tutoring') ?>"
                            class="panel-footer__link"
-                           target="_blank"
-                           style="margin-right:12px;"><?= $this->translate('Tutoring CS') ?></a>
-                        <a href="mailto:tutoringam@gewis.nl" title="<?= $this->translate('Tutoring AM') ?>"
+                           target="_blank" rel="noopener noreferrer"
+                           style="margin-right:12px;">
+                            <?= $this->translate('Request Tutoring') ?>
+                        </a>
+                        <a href="https://gew.is/becometutor" title="<?= $this->translate('Become Tutor') ?>"
                            class="panel-footer__link"
-                           target="_blank"
-                           style="margin-right:12px;"><?= $this->translate('Tutoring AM') ?></a>
-                        <a href="mailto:co@gewis.nl" title="<?= $this->translate('Want to be a tutor?') ?>"
-                           class="panel-footer__link"
-                           target="_blank"><?= $this->translate('Want to be a tutor?') ?></a>
+                           target="_blank" rel="noopener noreferrer">
+                            <?= $this->translate('Become Tutor') ?>
+                        </a>
                     </div>
                 </div>
             </div>

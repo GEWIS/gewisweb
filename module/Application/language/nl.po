@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEWISweb 0.1.0-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-02 19:30+0200\n"
-"PO-Revision-Date: 2025-07-02 19:30+0200\n"
+"POT-Creation-Date: 2025-12-03 18:18+0100\n"
+"PO-Revision-Date: 2025-12-03 18:21+0100\n"
 "Last-Translator: Tom Udding <web@gewis.nl>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: nl\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.8\n"
 
 msgid " <strong>has a limited capacity</strong> and "
 msgstr " <strong>heeft een beperkte capaciteit</strong> en "
@@ -417,14 +417,6 @@ msgstr ""
 "Ben je lid maar heb je nog geen account voor de website? %sKlik hier%s om de "
 "activering aan te vragen."
 
-msgid ""
-"Are you looking for someone to help you with your courses? Send an email "
-"using one of the following links and we can help you find someone to tutor "
-"you."
-msgstr ""
-"Ben je op zoek naar iemand die kan helpen met je vakken? Stuur een email met "
-"een van de volgende links en dan zoeken we een tutor voor jou."
-
 msgid "Are you sure that you want to approve this poll?"
 msgstr "Weet je zeker dat je deze poll wilt goedkeuren?"
 
@@ -564,6 +556,9 @@ msgstr "Bannerpakket"
 
 msgid "Banner active"
 msgstr "Banner actief"
+
+msgid "Become Tutor"
+msgstr "Word tutor"
 
 msgid "Birth date"
 msgstr "Geboortedatum"
@@ -2007,6 +2002,13 @@ msgstr "Naam"
 msgid "Name (Plural)"
 msgstr "Naam (meervoud)"
 
+msgid ""
+"Need help with your courses? Click the link below so we can match you with "
+"the right tutor."
+msgstr ""
+"Hulp nodig bij je vakken? Klik op de onderstaande link, zodat we je aan de "
+"juiste tutor kunnen koppelen."
+
 msgid "New password"
 msgstr "Nieuw wachtwoord"
 
@@ -2471,6 +2473,9 @@ msgstr "Informatie van vertegenwoordiger"
 
 msgid "Request Activation"
 msgstr "Activering aanvragen"
+
+msgid "Request Tutoring"
+msgstr "Tutoring aanvragens"
 
 msgid "Request a poll"
 msgstr "Vraag een poll aan"
@@ -3327,12 +3332,6 @@ msgstr "Probeer een meer algemene zoekterm te gebruiken"
 msgid "Tutoring"
 msgstr "Tutors"
 
-msgid "Tutoring AM"
-msgstr "Tutors AM"
-
-msgid "Tutoring CS"
-msgstr "Tutors CS"
-
 msgid "Type"
 msgstr "Type"
 
@@ -3590,9 +3589,6 @@ msgstr "Stemcommissie"
 
 msgid "Voting Committees"
 msgstr "Stemcommissies"
-
-msgid "Want to be a tutor?"
-msgstr "Tutor worden?"
 
 msgid ""
 "Warning! This is an update to an unapproved job. Applying this update will "
