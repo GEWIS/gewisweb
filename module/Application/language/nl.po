@@ -2475,7 +2475,7 @@ msgid "Request Activation"
 msgstr "Activering aanvragen"
 
 msgid "Request Tutoring"
-msgstr "Tutoring aanvragens"
+msgstr "Tutoring aanvragen"
 
 msgid "Request a poll"
 msgstr "Vraag een poll aan"
