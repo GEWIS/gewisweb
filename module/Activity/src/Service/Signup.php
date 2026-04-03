@@ -367,6 +367,8 @@ class Signup
 
             $this->entityManager->remove($signup);
         }
+
+        $this->entityManager->flush();
     }
 
     /**
