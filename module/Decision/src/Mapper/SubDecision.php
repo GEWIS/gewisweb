@@ -15,6 +15,16 @@ use function addcslashes;
  */
 class SubDecision extends BaseMapper
 {
+    private const array MEMBER_AWARE_CLASSES = [
+        SubDecisionModel\Financial\Budget::class,
+        SubDecisionModel\Financial\Statement::class,
+        SubDecisionModel\Key\Granting::class,
+        SubDecisionModel\OrganRegulation::class,
+        SubDecisionModel\Installation::class,
+        SubDecisionModel\Board\Installation::class,
+        SubDecisionModel\Minutes::class,
+    ];
+
     /**
      * Search sub-decisions.
      *
@@ -23,15 +33,24 @@ class SubDecision extends BaseMapper
     public function findByMember(MemberModel $member): array
     {
         $qb = $this->getRepository()->createQueryBuilder('s');
-        $qb->select('s')
-            ->where('s.contentNL LIKE :full_name')
-            ->orWhere('s.member = :member');
+        $qb->where('s.contentNL LIKE :full_name')
+            ->setParameter('full_name', '%' . addcslashes($member->getFullName(), '%_') . '%');
 
-        $qb->setParameter('full_name', '%' . addcslashes($member->getFullName(), '%_') . '%')
-            ->setParameter('member', $member);
+        $results = $qb->getQuery()->getResult();
 
-        return $qb->getQuery()->getResult();
+        $em = $this->getEntityManager();
+        foreach (self::MEMBER_AWARE_CLASSES as $class) {
+            $repo = $em->getRepository($class);
+
+            $results = array_merge(
+                $results,
+                $repo->findBy(['member' => $member])
+            );
+        }
+
+        return $results;
     }
+
 
     protected function getRepositoryName(): string
     {
