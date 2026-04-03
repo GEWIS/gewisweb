@@ -8701,6 +8701,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Decision-Mapper-SubDecision.html#method_getRepositoryName"
         },                {
+            "fqsen": "\\Decision\\Mapper\\SubDecision\u003A\u003AMEMBER_AWARE_CLASSES",
+            "name": "MEMBER_AWARE_CLASSES",
+            "summary": "",
+            "url": "classes/Decision-Mapper-SubDecision.html#constant_MEMBER_AWARE_CLASSES"
+        },                {
             "fqsen": "\\Decision\\Model\\Address",
             "name": "Address",
             "summary": "Address\u0020model.",
