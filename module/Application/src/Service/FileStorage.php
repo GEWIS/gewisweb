@@ -193,7 +193,7 @@ class FileStorage
 
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $type = finfo_file($finfo, $file);
-        finfo_close($finfo);
+        finfo_close($finfo); // phpcs:ignore Generic.PHP.DeprecatedFunctions.Deprecated
 
         if ($watermarkPdf) {
             if ('application/pdf' !== $type) {

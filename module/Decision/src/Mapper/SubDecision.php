@@ -9,6 +9,7 @@ use Decision\Model\Member as MemberModel;
 use Decision\Model\SubDecision as SubDecisionModel;
 
 use function addcslashes;
+use function array_merge;
 
 /**
  * @template-extends BaseMapper<SubDecisionModel>
@@ -44,13 +45,12 @@ class SubDecision extends BaseMapper
 
             $results = array_merge(
                 $results,
-                $repo->findBy(['member' => $member])
+                $repo->findBy(['member' => $member]),
             );
         }
 
         return $results;
     }
-
 
     protected function getRepositoryName(): string
     {
