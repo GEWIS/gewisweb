@@ -113,15 +113,7 @@ $translator = $this->plugin('translate')->getTranslator();
                                         $this->escapeHtml($boardInstall->getFunction()->getName($translator)),
                                     )?>
                                 </li>
-                            <?php elseif (
-                                $start <= $installDate
-                                && $now <= $end
-                                && (
-                                    null === $boardInstall->getReleaseDate()
-                                    || null === $boardInstall->getDischargeDate()
-                                )
-                            ):
-                            ?>
+                            <?php elseif ($member->isCurrentBoard($boardInstall)): ?>
                                 <li>
                                     <?= sprintf(
                                         $this->translate('%s is currently the <strong>%s</strong>.'),

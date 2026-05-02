@@ -844,7 +844,7 @@ class Member
     /**
      * Check if this is a current board member.
      */
-    private function isCurrentBoard(BoardMember $boardMember): bool
+    public function isCurrentBoard(BoardMember $boardMember): bool
     {
         $now = new DateTime();
         $installDate = $boardMember->getInstallDate();
