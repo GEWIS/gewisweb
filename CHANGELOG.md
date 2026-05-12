@@ -1,3 +1,8 @@
+## [v4.9.1](https://github.com/GEWIS/gewisweb/tree/v4.9.1) (2026-05-12)
+
+* Fixed an issue where viewing voting committees would result in 404 errors.
+* Updated dependencies.
+
 ## [v4.9.0](https://github.com/GEWIS/gewisweb/tree/v4.9.0) (2026-05-12)
 
 * Added the ability to reorder meeting documents via drag-and-drop.
