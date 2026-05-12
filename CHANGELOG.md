@@ -1,3 +1,25 @@
+## [v4.9.0](https://github.com/GEWIS/gewisweb/tree/v4.9.0) (2026-05-12)
+
+* Added the ability to reorder meeting documents via drag-and-drop.
+* Added Zettle as an option for activity facilities.
+* Added a splash screen for the browser console.
+* Added autofocus to the album and decision search bars.
+* Added promoted ordering of sign-up lists.
+* Added the requested facility to activity email subjects.
+* Improved poll option spacing.
+* Improved tutor link handling.
+* Fixed multiple issues in attendance mode, including incorrect dialog rendering and default values.
+* Fixed an issue where thumbnails would not resize correctly when the layout changed.
+* Fixed an issue where inline drag-and-drop events would not function.
+* Fixed an issue where the console splash relied fully on external resources.
+* Fixed an issue with missing installation functions (e.g. `Inkoper`) and incorrect mappings.
+* Fixed issues with enum conversion (`PostalRegions`) and application language handling.
+* Fixed missing migrations for course documents.
+* Fixed improper membership checks for public BM/GMM body pages.
+* Updated dependencies.
+* Updated security-related files and disclosure policy references.
+* Updated various reference models, board functions, mailing lists, and association data from GEWISDB.
+
 ## [v4.8.0](https://github.com/GEWIS/gewisweb/tree/v4.8.0) (2025-02-11)
 
 * Added ❄️🎆❄️🎆❄️🎆.
