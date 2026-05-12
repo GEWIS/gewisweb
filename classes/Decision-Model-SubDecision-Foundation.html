@@ -508,6 +508,13 @@
 <dd>Type of the organ.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a class="" href="classes/Decision-Model-SubDecision-Foundation.html#property_purpose">$purpose</a>
+    <span>
+                        &nbsp;: string|null            </span>
+</dt>
+<dd>Purpose (only for when organs are created).</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a class="" href="classes/Decision-Model-SubDecision-Foundation.html#property_references">$references</a>
     <span>
                         &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Decision-Model-SubDecision-FoundationReference.html"><abbr title="\Decision\Model\SubDecision\FoundationReference">FoundationReference</abbr></a>&gt;            </span>
@@ -614,6 +621,13 @@ but are actually distinct.</dd>
 <dd>Get the type.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Decision-Model-SubDecision-Foundation.html#method_getPurpose">getPurpose()</a>
+    <span>
+                                &nbsp;: string|null    </span>
+</dt>
+<dd>Get the purpose.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Decision-Model-SubDecision-Foundation.html#method_getReferences">getReferences()</a>
     <span>
                                 &nbsp;: <abbr title="\Doctrine\Common\Collections\Collection">Collection</abbr>&lt;string|int, <a href="classes/Decision-Model-SubDecision-FoundationReference.html"><abbr title="\Decision\Model\SubDecision\FoundationReference">FoundationReference</abbr></a>&gt;    </span>
@@ -668,6 +682,13 @@ but are actually distinct.</dd>
                                 &nbsp;: void    </span>
 </dt>
 <dd>Set the type.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Decision-Model-SubDecision-Foundation.html#method_setPurpose">setPurpose()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>Set the purpose.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Decision-Model-SubDecision.html#method_setSequence">setSequence()</a>
@@ -816,7 +837,7 @@ but are actually distinct.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Foundation.php"><a href="files/module-decision-src-model-subdecision-foundation.html"><abbr title="module/Decision/src/Model/SubDecision/Foundation.php">Foundation.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">60</span>
+    <span class="phpdocumentor-element-found-in__line">69</span>
 
     </aside>
 
@@ -871,7 +892,7 @@ but are actually distinct.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Foundation.php"><a href="files/module-decision-src-model-subdecision-foundation.html"><abbr title="module/Decision/src/Model/SubDecision/Foundation.php">Foundation.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">40</span>
+    <span class="phpdocumentor-element-found-in__line">49</span>
 
     </aside>
 
@@ -916,6 +937,61 @@ but are actually distinct.</dd>
             -private
                                                                     "
 >
+    <h4 class="phpdocumentor-element__name" id="property_purpose">
+        $purpose
+        <a href="classes/Decision-Model-SubDecision-Foundation.html#property_purpose" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Foundation.php"><a href="files/module-decision-src-model-subdecision-foundation.html"><abbr title="module/Decision/src/Model/SubDecision/Foundation.php">Foundation.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">40</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Purpose (only for when organs are created).</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">private</span>
+            <span class="phpdocumentor-signature__type">string|null</span>
+    <span class="phpdocumentor-signature__name">$purpose</span>
+     = <span class="phpdocumentor-signature__default-value">null</span></code>
+
+    
+    
+    
+
+        
+            <section class="phpdocumentor-attributes">
+            <h5 class="phpdocumentor-elements__header" id="attributes">
+                Attributes <a href="classes/Decision-Model-SubDecision-Foundation.html#property_purpose#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+
+            </h5>
+                            <dl class="phpdocumentor-argument-list">
+    <dt class="phpdocumentor-argument-list__entry">
+        #[<abbr title="\Doctrine\ORM\Mapping\Column">Column</abbr>]
+    </dt>
+        <dd class="phpdocumentor-argument-list__entry">
+        $type: &#039;string&#039;
+    </dd>
+        <dd class="phpdocumentor-argument-list__entry">
+        $nullable: true
+    </dd>
+    </dl>
+                    </section>
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+                                                                    "
+>
     <h4 class="phpdocumentor-element__name" id="property_references">
         $references
         <a href="classes/Decision-Model-SubDecision-Foundation.html#property_references" class="headerlink"><i class="fas fa-link"></i></a>
@@ -926,7 +1002,7 @@ but are actually distinct.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Foundation.php"><a href="files/module-decision-src-model-subdecision-foundation.html"><abbr title="module/Decision/src/Model/SubDecision/Foundation.php">Foundation.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">51</span>
+    <span class="phpdocumentor-element-found-in__line">60</span>
 
     </aside>
 
@@ -986,7 +1062,7 @@ but are actually distinct.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Foundation.php"><a href="files/module-decision-src-model-subdecision-foundation.html"><abbr title="module/Decision/src/Model/SubDecision/Foundation.php">Foundation.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">66</span>
+    <span class="phpdocumentor-element-found-in__line">75</span>
 
     </aside>
 
@@ -1020,7 +1096,7 @@ but are actually distinct.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Foundation.php"><a href="files/module-decision-src-model-subdecision-foundation.html"><abbr title="module/Decision/src/Model/SubDecision/Foundation.php">Foundation.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">74</span>
+    <span class="phpdocumentor-element-found-in__line">83</span>
 
     </aside>
 
@@ -1254,7 +1330,7 @@ but are actually distinct.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Foundation.php"><a href="files/module-decision-src-model-subdecision-foundation.html"><abbr title="module/Decision/src/Model/SubDecision/Foundation.php">Foundation.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">141</span>
+    <span class="phpdocumentor-element-found-in__line">166</span>
 
     </aside>
 
@@ -1372,7 +1448,7 @@ but are actually distinct.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Foundation.php"><a href="files/module-decision-src-model-subdecision-foundation.html"><abbr title="module/Decision/src/Model/SubDecision/Foundation.php">Foundation.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">90</span>
+    <span class="phpdocumentor-element-found-in__line">99</span>
 
     </aside>
 
@@ -1411,7 +1487,7 @@ but are actually distinct.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Foundation.php"><a href="files/module-decision-src-model-subdecision-foundation.html"><abbr title="module/Decision/src/Model/SubDecision/Foundation.php">Foundation.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">132</span>
+    <span class="phpdocumentor-element-found-in__line">157</span>
 
     </aside>
 
@@ -1450,7 +1526,7 @@ but are actually distinct.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Foundation.php"><a href="files/module-decision-src-model-subdecision-foundation.html"><abbr title="module/Decision/src/Model/SubDecision/Foundation.php">Foundation.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">106</span>
+    <span class="phpdocumentor-element-found-in__line">131</span>
 
     </aside>
 
@@ -1481,6 +1557,45 @@ but are actually distinct.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_getPurpose">
+        getPurpose()
+        <a href="classes/Decision-Model-SubDecision-Foundation.html#method_getPurpose" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Foundation.php"><a href="files/module-decision-src-model-subdecision-foundation.html"><abbr title="module/Decision/src/Model/SubDecision/Foundation.php">Foundation.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">115</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Get the purpose.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getPurpose</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">string|null</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_getReferences">
         getReferences()
         <a href="classes/Decision-Model-SubDecision-Foundation.html#method_getReferences" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1489,7 +1604,7 @@ but are actually distinct.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Foundation.php"><a href="files/module-decision-src-model-subdecision-foundation.html"><abbr title="module/Decision/src/Model/SubDecision/Foundation.php">Foundation.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">124</span>
+    <span class="phpdocumentor-element-found-in__line">149</span>
 
     </aside>
 
@@ -1567,7 +1682,7 @@ but are actually distinct.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Foundation.php"><a href="files/module-decision-src-model-subdecision-foundation.html"><abbr title="module/Decision/src/Model/SubDecision/Foundation.php">Foundation.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">82</span>
+    <span class="phpdocumentor-element-found-in__line">91</span>
 
     </aside>
 
@@ -1747,7 +1862,7 @@ but are actually distinct.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Foundation.php"><a href="files/module-decision-src-model-subdecision-foundation.html"><abbr title="module/Decision/src/Model/SubDecision/Foundation.php">Foundation.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">98</span>
+    <span class="phpdocumentor-element-found-in__line">107</span>
 
     </aside>
 
@@ -1792,7 +1907,7 @@ but are actually distinct.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Foundation.php"><a href="files/module-decision-src-model-subdecision-foundation.html"><abbr title="module/Decision/src/Model/SubDecision/Foundation.php">Foundation.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">114</span>
+    <span class="phpdocumentor-element-found-in__line">139</span>
 
     </aside>
 
@@ -1811,6 +1926,51 @@ but are actually distinct.</p>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-argument-list__argument__name">$organType</span>
                 : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Decision-Model-Enums-OrganTypes.html"><abbr title="\Decision\Model\Enums\OrganTypes">OrganTypes</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+        
+    
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_setPurpose">
+        setPurpose()
+        <a href="classes/Decision-Model-SubDecision-Foundation.html#method_setPurpose" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="module/Decision/src/Model/SubDecision/Foundation.php"><a href="files/module-decision-src-model-subdecision-foundation.html"><abbr title="module/Decision/src/Model/SubDecision/Foundation.php">Foundation.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">123</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Set the purpose.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">setPurpose</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$purpose</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$purpose</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string|null</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
@@ -2025,6 +2185,7 @@ but are actually distinct.</p>
                                                     <li class=""><a href="classes/Decision-Model-SubDecision-Foundation.html#property_name">$name</a></li>
                                                     <li class=""><a href="classes/Decision-Model-SubDecision-Foundation.html#property_organ">$organ</a></li>
                                                     <li class=""><a href="classes/Decision-Model-SubDecision-Foundation.html#property_organType">$organType</a></li>
+                                                    <li class=""><a href="classes/Decision-Model-SubDecision-Foundation.html#property_purpose">$purpose</a></li>
                                                     <li class=""><a href="classes/Decision-Model-SubDecision-Foundation.html#property_references">$references</a></li>
                                             </ul>
                 </li>
@@ -2045,6 +2206,7 @@ but are actually distinct.</p>
                                             <li class=""><a href="classes/Decision-Model-SubDecision-Foundation.html#method_getName">getName()</a></li>
                                             <li class=""><a href="classes/Decision-Model-SubDecision-Foundation.html#method_getOrgan">getOrgan()</a></li>
                                             <li class=""><a href="classes/Decision-Model-SubDecision-Foundation.html#method_getOrganType">getOrganType()</a></li>
+                                            <li class=""><a href="classes/Decision-Model-SubDecision-Foundation.html#method_getPurpose">getPurpose()</a></li>
                                             <li class=""><a href="classes/Decision-Model-SubDecision-Foundation.html#method_getReferences">getReferences()</a></li>
                                             <li class=""><a href="classes/Decision-Model-SubDecision.html#method_getSequence">getSequence()</a></li>
                                             <li class=""><a href="classes/Decision-Model-SubDecision-Foundation.html#method_setAbbr">setAbbr()</a></li>
@@ -2053,6 +2215,7 @@ but are actually distinct.</p>
                                             <li class=""><a href="classes/Decision-Model-SubDecision.html#method_setDecision">setDecision()</a></li>
                                             <li class=""><a href="classes/Decision-Model-SubDecision-Foundation.html#method_setName">setName()</a></li>
                                             <li class=""><a href="classes/Decision-Model-SubDecision-Foundation.html#method_setOrganType">setOrganType()</a></li>
+                                            <li class=""><a href="classes/Decision-Model-SubDecision-Foundation.html#method_setPurpose">setPurpose()</a></li>
                                             <li class=""><a href="classes/Decision-Model-SubDecision.html#method_setSequence">setSequence()</a></li>
                                             <li class=""><a href="classes/Decision-Model-SubDecision.html#method_toGdprArray">toGdprArray()</a></li>
                                     </ul>

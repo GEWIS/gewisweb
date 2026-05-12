@@ -3621,6 +3621,26 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Application-Migrations-Version20250807174014.html#method_down"
         },                {
+            "fqsen": "\\Application\\Migrations\\Version20260512100037",
+            "name": "Version20260512100037",
+            "summary": "phpcs\u003Adisable\u0020Generic.Files.LineLength.TooLong\nphpcs\u003Adisable\u0020SlevomatCodingStandard.Functions.RequireMultiLineCall.RequiredMultiLineCall",
+            "url": "classes/Application-Migrations-Version20260512100037.html"
+        },                {
+            "fqsen": "\\Application\\Migrations\\Version20260512100037\u003A\u003AgetDescription\u0028\u0029",
+            "name": "getDescription",
+            "summary": "",
+            "url": "classes/Application-Migrations-Version20260512100037.html#method_getDescription"
+        },                {
+            "fqsen": "\\Application\\Migrations\\Version20260512100037\u003A\u003Aup\u0028\u0029",
+            "name": "up",
+            "summary": "",
+            "url": "classes/Application-Migrations-Version20260512100037.html#method_up"
+        },                {
+            "fqsen": "\\Application\\Migrations\\Version20260512100037\u003A\u003Adown\u0028\u0029",
+            "name": "down",
+            "summary": "",
+            "url": "classes/Application-Migrations-Version20260512100037.html#method_down"
+        },                {
             "fqsen": "\\Application\\Command\\Factory\\LoadFixturesFactory",
             "name": "LoadFixturesFactory",
             "summary": "",
@@ -9331,6 +9351,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Decision-Model-Enums-BoardFunctions.html#enumcase_Community"
         },                {
+            "fqsen": "\\Decision\\Model\\Enums\\BoardFunctions\u003A\u003ADigitalInnovation",
+            "name": "DigitalInnovation",
+            "summary": "",
+            "url": "classes/Decision-Model-Enums-BoardFunctions.html#enumcase_DigitalInnovation"
+        },                {
             "fqsen": "\\Decision\\Model\\Enums\\InstallationFunctions",
             "name": "InstallationFunctions",
             "summary": "Enum\u0020with\u0020organ\u0020functions\nThe\u0020values\u0020are\u0020in\u0020Dutch,\u0020because\u0020decisions\u0020are\u0020made\u0020in\u0020Dutch\u0020and\u0020thus\u0020this\u0020value\u0020is\u0020guaranteed\u0020to\u0020not\u0020change",
@@ -12346,6 +12371,16 @@ Search.appendIndex(
             "summary": "Set\u0020the\u0020name.",
             "url": "classes/Decision-Model-SubDecision-Foundation.html#method_setName"
         },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\Foundation\u003A\u003AgetPurpose\u0028\u0029",
+            "name": "getPurpose",
+            "summary": "Get\u0020the\u0020purpose.",
+            "url": "classes/Decision-Model-SubDecision-Foundation.html#method_getPurpose"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\Foundation\u003A\u003AsetPurpose\u0028\u0029",
+            "name": "setPurpose",
+            "summary": "Set\u0020the\u0020purpose.",
+            "url": "classes/Decision-Model-SubDecision-Foundation.html#method_setPurpose"
+        },                {
             "fqsen": "\\Decision\\Model\\SubDecision\\Foundation\u003A\u003AgetOrganType\u0028\u0029",
             "name": "getOrganType",
             "summary": "Get\u0020the\u0020type.",
@@ -12380,6 +12415,11 @@ Search.appendIndex(
             "name": "name",
             "summary": "Name\u0020\u0028only\u0020for\u0020when\u0020organs\u0020are\u0020created\u0029.",
             "url": "classes/Decision-Model-SubDecision-Foundation.html#property_name"
+        },                {
+            "fqsen": "\\Decision\\Model\\SubDecision\\Foundation\u003A\u003A\u0024purpose",
+            "name": "purpose",
+            "summary": "Purpose\u0020\u0028only\u0020for\u0020when\u0020organs\u0020are\u0020created\u0029.",
+            "url": "classes/Decision-Model-SubDecision-Foundation.html#property_purpose"
         },                {
             "fqsen": "\\Decision\\Model\\SubDecision\\Foundation\u003A\u003A\u0024organType",
             "name": "organType",
