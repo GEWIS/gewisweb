@@ -1,0 +1,10 @@
+.table {
+    --#{$prefix}table-bg: transparent;
+}
+
+@include color-mode(gewis-night) {
+    .table {
+        --#{$prefix}table-color: var(--#{$prefix}body-color);
+        --#{$prefix}table-hover-color: var(--#{$prefix}body-color);
+    }
+}

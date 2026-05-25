@@ -1,0 +1,36 @@
+localised_routes:
+    resource: '../src/Controller/'
+    type: attribute
+    prefix:
+        en: '/en'
+        nl: '/nl'
+    requirements:
+        _locale: 'en|nl'
+
+# The page route must be defined here. If it is an attribute in the PageController it requires a priority: -1 to ensure
+# that it does not "steal" the route from any other attribute-defined route.
+# And without the priority everything will land in the catch_all route below.
+page_route:
+    path: /{_locale}/{category}/{subCategory}/{name}
+    controller: App\Controller\Frontpage\PageController::index
+    requirements:
+        category: '[a-zA-Z][a-zA-Z0-9_-]*'
+        subCategory: '[a-zA-Z][a-zA-Z0-9_-]*'
+        name: '[a-zA-Z][a-zA-Z0-9_-]*'
+    defaults:
+        subCategory: null
+        name: null
+
+user_token:
+    path: /user/token/{app}
+    controller: App\Controller\User\UserController::token
+    requirements:
+        app: '[a-z][0-9a-z\_\-]{2,31}'
+
+# Catch everything that is not matched to allow stateful 404 errors.
+# Without this, due to the required language prefix, sessions are lost for 404 errors.
+catch_all:
+    path: /{wildcard}
+    controller: App\Controller\Frontpage\FrontpageController::notFound
+    requirements:
+        wildcard: .*

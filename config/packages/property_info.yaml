@@ -1,0 +1,4 @@
+# yaml-language-server: $schema=../../vendor/symfony/dependency-injection/Loader/schema/services.schema.json
+framework:
+    property_info:
+        with_constructor_extractor: true

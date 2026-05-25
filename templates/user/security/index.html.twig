@@ -1,0 +1,321 @@
+{% extends 'layout-sidebar.html.twig' %}
+
+{% block page_title %}{{ 'Security'|trans }}{% endblock %}
+
+{% block sidebar %}
+    {% if routePrefix == 'user_' %}
+        {% include 'partials/member-sidebar.html.twig' with {
+            'member': app.user.member,
+            'isSelf': true,
+            'activeRoute': 'security',
+        } %}
+    {% else %}
+        {% include 'partials/company-sidebar.html.twig' with {
+            'activeRoute': 'security',
+        } %}
+    {% endif %}
+{% endblock %}
+
+{% block contents %}
+<div class="row">
+    <div class="col-lg-6">
+        <div class="panel">
+            <div class="panel-heading">
+                <h3>{{ 'Change password'|trans }}</h3>
+            </div>
+            <div class="panel-body">
+                <p class="text-muted mb-2">
+                    {{ 'Pick a long, unique password - at least 16 characters and not found in any known data breach.'|trans }}
+                </p>
+                {{ form_start(form, {
+                    'action': path(routePrefix ~ 'security_index'),
+                    'method': 'POST',
+                }) }}
+                {{ form_row(form.currentPassword) }}
+                {{ form_row(form.plainPassword.first) }}
+                {{ form_row(form.plainPassword.second) }}
+                <button type="submit" class="btn btn-gewis-primary">
+                    <i class="fas fa-key"></i> {{ 'Change password'|trans }}
+                </button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="panel">
+            <div class="panel-heading d-flex align-items-center justify-content-between">
+                <h3>{{ 'Multi-factor authentication'|trans }}</h3>
+                {% if mfaEnabled %}
+                    <span class="badge badge-success">{{ 'Enabled'|trans }}</span>
+                {% else %}
+                    <span class="badge badge-secondary">{{ 'Disabled'|trans }}</span>
+                {% endif %}
+            </div>
+            <div class="panel-body">
+                <p class="text-muted mb-2">
+                    {{ 'Multi-factor authentication adds a second step at login: in addition to your password, you enter a time-based code from an authenticator app.'|trans }}
+                </p>
+                {% if mfaEnabled %}
+                    <div class="alert alert-success mb-2" role="alert">
+                        <i class="fas fa-shield-halved"></i>
+                        <span>{{ 'TOTP-based MFA is active on your account.'|trans }}</span>
+                    </div>
+                    <p class="text-muted small">
+                        {{ 'Backup codes are shown only at generation time. Regenerate to obtain a new set.'|trans }}
+                    </p>
+                    <div class="d-flex flex-wrap gap-2 mt-3">
+                        <button type="button" class="btn btn-outline-warning"
+                                data-bs-toggle="modal" data-bs-target="#modal-mfa-regenerate-backup-codes">
+                            <i class="fas fa-rotate"></i> {{ 'Regenerate backup codes'|trans }}
+                        </button>
+                        {% if mfaRequired|default(false) %}
+                            <button type="button" class="btn btn-outline-secondary ms-auto" disabled
+                                    title="{{ 'Required for your role'|trans }}">
+                                <i class="fas fa-lock"></i> {{ 'Disable MFA'|trans }}
+                            </button>
+                        {% else %}
+                            <button type="button" class="btn btn-outline-gewis-primary ms-auto"
+                                    data-bs-toggle="modal" data-bs-target="#modal-mfa-disable">
+                                <i class="fas fa-ban"></i> {{ 'Disable MFA'|trans }}
+                            </button>
+                        {% endif %}
+                    </div>
+                {% else %}
+                    {% if mfaRequired|default(false) %}
+                        <div class="alert alert-danger mb-2" role="alert">
+                            <i class="fas fa-triangle-exclamation"></i>
+                            <span>{{ 'Multi-factor authentication is required for your role. Privileged actions are unavailable until you enable it.'|trans }}</span>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-warning mb-2" role="alert">
+                            <i class="fas fa-triangle-exclamation"></i>
+                            <span>{{ 'You currently sign in with only a password. Adding MFA significantly reduces the risk of account takeover.'|trans }}</span>
+                        </div>
+                    {% endif %}
+                    <a href="{{ path(routePrefix ~ 'mfa_enable') }}" class="btn btn-gewis-primary">
+                        <i class="fas fa-shield-halved"></i> {{ 'Enable TOTP-based MFA'|trans }}
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="panel">
+            <div class="panel-heading d-flex flex-wrap align-items-center justify-content-between gap-2">
+                <h3>{{ 'Active Sessions'|trans }}</h3>
+                <span class="badge badge-secondary rounded-pill">
+                    {{ 'Active session(s): %count%'|trans({'%count%': sessions|length}) }}
+                </span>
+            </div>
+            <div class="panel-body">
+                <p class="text-muted mb-3">
+                    {{ 'Devices where your account is currently signed in. If you notice an unrecognised device or location, terminate that session immediately and consider changing your password.'|trans }}
+                </p>
+                <div class="d-flex flex-column gap-2 mb-4">
+                    {% for session in sessions %}
+                        {% set displayName %}
+                            {%- if session.browser and session.operatingSystem -%}
+                                {{ session.browser }} {{ 'on'|trans }} {{ session.operatingSystem }}
+                            {%- elseif session.browser -%}
+                                {{ session.browser }}
+                            {%- elseif session.operatingSystem -%}
+                                {{ session.operatingSystem }}
+                            {%- else -%}
+                                {{ 'Unknown device'|trans }}
+                            {%- endif -%}
+                        {% endset %}
+                        <div class="card{% if session.series == currentSeries %} border-primary{% endif %}" data-series="{{ session.series }}">
+                            <div class="card-body d-flex flex-wrap align-items-center gap-3">
+                                <div class="fs-3 flex-shrink-0">
+                                    {{ session.deviceType.icon }}
+                                </div>
+                                <div class="flex-grow-1" style="min-width: 0;">
+                                    <div class="d-flex flex-wrap align-items-center gap-2">
+                                        <strong>{{ displayName }}</strong>
+                                        {% if session.series == currentSeries %}
+                                            <span class="badge badge-primary">{{ 'This device'|trans }}</span>
+                                        {% elseif session.lastUsedAt > date('-30 minutes') %}
+                                            <span class="badge badge-success">{{ 'Active'|trans }}</span>
+                                        {% elseif session.lastUsedAt > date('-1 day') %}
+                                            <span class="badge badge-secondary">{{ 'Inactive'|trans }}</span>
+                                        {% else %}
+                                            <span class="badge badge-warning">{{ 'Stale'|trans }}</span>
+                                        {% endif %}
+                                    </div>
+                                    <div class="small text-muted mt-1 d-flex flex-wrap gap-3">
+                                        {% if session.ipAddress %}
+                                            <span><i class="fas fa-location-dot"></i> <code>{{ session.ipAddress }}</code></span>
+                                        {% endif %}
+                                        <span><i class="fas fa-clock-rotate-left"></i> {{ 'Last seen %date%'|trans({'%date%': session.lastUsedAt|date('M j, Y H:i')}) }}</span>
+                                        <span><i class="fas fa-calendar-day"></i> {{ 'Signed in %date%'|trans({'%date%': session.createdAt|date('M j, Y H:i')}) }}</span>
+                                    </div>
+                                    {% if session.userAgent %}
+                                        <div class="collapse mt-2" id="ua-{{ session.series }}">
+                                            <code class="small text-muted text-break">{{ session.userAgent }}</code>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="d-flex flex-column gap-2 flex-shrink-0">
+                                    {% if session.series != currentSeries %}
+                                        <button type="button"
+                                                class="btn btn-sm btn-outline-gewis-primary"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#modal-terminate-one"
+                                                data-action="{{ path(routePrefix ~ 'session_terminate', {'series': session.series}) }}"
+                                                data-csrf-token="{{ csrf_token('session_guard_terminate-' ~ session.series) }}"
+                                                data-name="{{ displayName }}">
+                                            <i class="fas fa-trash"></i> {{ 'Terminate'|trans }}
+                                        </button>
+                                    {% endif %}
+                                    {% if session.userAgent %}
+                                        <button type="button"
+                                                class="btn btn-sm btn-outline-secondary"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target="#ua-{{ session.series }}">
+                                            <i class="fas fa-circle-info"></i> {{ 'Details'|trans }}
+                                        </button>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 border-top pt-3">
+                    <p class="text-muted mb-0 small">
+                        {{ 'Improve security by signing out of other devices.'|trans }}
+                    </p>
+                    <div class="d-flex flex-wrap gap-2">
+                        <button type="button" class="btn btn-outline-gewis-primary" data-bs-toggle="modal" data-bs-target="#modal-terminate-others">
+                            {{ 'Log out other devices'|trans }}
+                        </button>
+                        <button type="button" class="btn btn-gewis-primary" data-bs-toggle="modal" data-bs-target="#modal-terminate-all">
+                            {{ 'Log out everywhere'|trans }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{# Modals #}
+{% if mfaEnabled %}
+<div class="modal fade" id="modal-mfa-regenerate-backup-codes" tabindex="-1" aria-labelledby="modal-mfa-regenerate-backup-codes-label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-mfa-regenerate-backup-codes-label">{{ 'Regenerate backup codes?'|trans }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ 'Close'|trans }}"></button>
+            </div>
+            <form method="POST" action="{{ path(routePrefix ~ 'mfa_regenerate_backup_codes') }}">
+                <div class="modal-body">
+                    <p class="mb-0">
+                        {{ 'Regenerate backup codes? Any codes you previously saved will stop working.'|trans }}
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('mfa_regenerate_backup_codes') }}">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'Cancel'|trans }}</button>
+                    <button type="submit" class="btn btn-outline-warning">
+                        <i class="fas fa-rotate"></i> {{ 'Regenerate backup codes'|trans }}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal-mfa-disable" tabindex="-1" aria-labelledby="modal-mfa-disable-label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-mfa-disable-label">{{ 'Disable MFA?'|trans }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ 'Close'|trans }}"></button>
+            </div>
+            <form method="POST" action="{{ path(routePrefix ~ 'mfa_disable') }}">
+                <div class="modal-body">
+                    <p class="mb-0">
+                        {{ 'Disable MFA on your account? Your existing TOTP secret and backup codes will be discarded.'|trans }}
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('mfa_disable') }}">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'Cancel'|trans }}</button>
+                    <button type="submit" class="btn btn-outline-gewis-primary">
+                        <i class="fas fa-ban"></i> {{ 'Disable MFA'|trans }}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endif %}
+<div class="modal fade" id="modal-terminate-one" data-controller="modal-form-target" tabindex="-1" aria-labelledby="modal-terminate-one-label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-terminate-one-label">{{ 'Terminate session?'|trans }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ 'Close'|trans }}"></button>
+            </div>
+            <form data-modal-form-target-target="form" method="POST" action="">
+                <div class="modal-body">
+                    <p class="mb-2">
+                        {{ 'Are you sure you want to terminate the session on this device?'|trans }}
+                    </p>
+                    <p class="mb-0"><strong data-modal-form-target-target="name"></strong></p>
+                    <p class="text-muted small mb-0 mt-2">
+                        {{ 'That device will be signed out immediately.'|trans }}
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" name="_csrf_token" value="" data-modal-form-target-target="csrfToken">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'Cancel'|trans }}</button>
+                    <button type="submit" class="btn btn-gewis-primary">{{ 'Terminate'|trans }}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal-terminate-others" tabindex="-1" aria-labelledby="modal-terminate-others-label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-terminate-others-label">{{ 'Log out other devices?'|trans }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ 'Close'|trans }}"></button>
+            </div>
+            <form method="POST" action="{{ path(routePrefix ~ 'session_terminate_others') }}">
+                <div class="modal-body">
+                    <p class="mb-0">{{ 'All sessions except this one will be signed out immediately.'|trans }}</p>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('session_guard_terminate_others') }}">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'Cancel'|trans }}</button>
+                    <button type="submit" class="btn btn-outline-gewis-primary">{{ 'Log out other devices'|trans }}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal-terminate-all" tabindex="-1" aria-labelledby="modal-terminate-all-label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-terminate-all-label">{{ 'Log out everywhere?'|trans }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ 'Close'|trans }}"></button>
+            </div>
+            <form method="POST" action="{{ path(routePrefix ~ 'session_terminate_all') }}">
+                <div class="modal-body">
+                    <p class="mb-0">
+                        {{ 'All sessions - including this one - will be terminated immediately. You will be redirected to the login page.'|trans }}
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('session_guard_terminate_all') }}">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'Cancel'|trans }}</button>
+                    <button type="submit" class="btn btn-gewis-primary">{{ 'Log out everywhere'|trans }}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

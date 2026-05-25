@@ -1,0 +1,63 @@
+name: PHP Static Analysis
+
+# Only run this action on pull requests (creation, synchronisation, and reopening).
+on: [pull_request]
+
+# Cancel running jobs that have become stale through updates to the ref (e.g., pushes to a pull request).
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
+permissions: {}
+
+jobs:
+    phpstan:
+        name: PHPStan
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+                with:
+                    persist-credentials: false
+
+            -   name: Install PHP
+                uses: shivammathur/setup-php@7c071dfe9dc99bdf297fa79cb49ea005b9fcadbc # 2.37.1
+                with:
+                    php-version: '8.5'
+                    extensions: amqp, apcu, gd, intl, pcntl, pdo_mysql, pdo_pgsql, pdo_sqlite, redis
+                    tools: cs2pr
+
+            -   name: Install dependencies with Composer
+                uses: ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda # 4.0.0
+
+            -   name: Run PHPStan
+                env:
+                    APP_ENV: test
+                run: vendor/bin/phpstan analyse -c phpstan.dist.neon --memory-limit 1G --no-progress --error-format=checkstyle | cs2pr
+
+    psalm:
+        name: Psalm
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+                with:
+                    persist-credentials: false
+
+            -   name: Install PHP
+                uses: shivammathur/setup-php@7c071dfe9dc99bdf297fa79cb49ea005b9fcadbc # 2.37.1
+                with:
+                    php-version: '8.5'
+                    extensions: amqp, apcu, gd, intl, pcntl, pdo_mysql, pdo_pgsql, pdo_sqlite, redis
+
+            -   name: Install dependencies with Composer
+                uses: ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda # 4.0.0
+
+            -   name: Run Psalm
+                run: vendor/bin/psalm --no-diff --no-cache --no-progress --output-format=github

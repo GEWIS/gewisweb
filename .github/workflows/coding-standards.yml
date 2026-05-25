@@ -16,6 +16,6 @@ permissions: {}
 
 jobs:
     php-codesniffer:
-        uses: 'GEWIS/gewisphp-coding-standards/.github/workflows/coding-standards.yml@1.2.1'
+        uses: 'GEWIS/gewisphp-coding-standards/.github/workflows/coding-standards.yml@1b07b06aa7edae903bb724066d1f5a4a4313742e' # 2.0.1
         with:
-            php-version: '8.3'
+            php-version: '8.5'

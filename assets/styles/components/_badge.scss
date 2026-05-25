@@ -1,0 +1,68 @@
+// Colour variants — generated from $theme-colors using the same CSS custom
+// properties the alert component uses (`--bs-{state}-bg-subtle`,
+// `--bs-{state}-text-emphasis`, `--bs-{state}-border-subtle`). Because those
+// tokens are redefined under `color-mode(gewis-night, true)` in `_root.scss`,
+// these badges automatically swap colour in dark mode — no extra
+// `color-mode()` block needed here.
+@each $state, $value in $theme-colors {
+    .badge-#{$state} {
+        --#{$prefix}badge-color: var(--#{$prefix}#{$state}-text-emphasis);
+        background-color: var(--#{$prefix}#{$state}-bg-subtle);
+        border: var(--#{$prefix}border-width) var(--#{$prefix}border-style)
+                var(--#{$prefix}#{$state}-border-subtle);
+    }
+}
+
+// Outlined: transparent fill, coloured border + text from the paired
+// `.badge-{state}` variant. Use as `class="badge badge-secondary badge-outlined"`.
+.badge-outlined {
+    background-color: transparent;
+}
+
+// Selectable: hidden input + label.badge pattern, mirroring Bootstrap's
+// `btn-check`. CSS-only — no JS needed.
+//
+// Usage:
+//   <input type="checkbox" class="badge-check" id="tag-1" autocomplete="off">
+//   <label class="badge badge-secondary" for="tag-1">Tag</label>
+.badge-check {
+    position: absolute;
+    clip: rect(0, 0, 0, 0);
+    pointer-events: none;
+}
+
+.badge-check:checked + .badge {
+    --#{$prefix}badge-color: var(--#{$prefix}body-emphasis-color);
+    box-shadow: 0 0 0 0.125rem var(--#{$prefix}focus-ring-color);
+}
+
+.badge-check:focus-visible + .badge {
+    box-shadow: 0 0 0 0.25rem var(--#{$prefix}focus-ring-color);
+}
+
+label.badge {
+    cursor: pointer;
+    user-select: none;
+}
+
+// Dismissible: layout modifier that makes room for an inner `.btn-close`.
+// The actual removal behaviour is left to the consumer — most use cases want
+// to update state (filter / form / etc.) rather than just hide the DOM node.
+//
+// Usage:
+//   <span class="badge badge-info badge-dismissible">
+//     Filter
+//     <button type="button" class="btn-close" aria-label="Close"></button>
+//   </span>
+.badge-dismissible {
+    padding-inline-end: 1.75rem;
+    position: relative;
+
+    .btn-close {
+        position: absolute;
+        inset-block-start: 0;
+        inset-inline-end: 0;
+        padding: 0.5em 0.625em;
+        font-size: 0.5em;
+    }
+}

@@ -1,0 +1,141 @@
+.navbar-gewis,
+.navbar-gewis-admin {
+    --#{$prefix}navbar-active-color: #{$nav-link-color};
+    --#{$prefix}navbar-bg: #{$navbar-bg};
+    --#{$prefix}navbar-bg-active: #{darken($gewis-red, 6%)};
+    --#{$prefix}navbar-bg-hover: #{darken($gewis-red, 9%)};
+    --#{$prefix}navbar-brand-color: #{$navbar-brand-color};
+    --#{$prefix}navbar-brand-hover-color: #{$navbar-brand-color};
+    --#{$prefix}navbar-toggler-icon-bg: #{escape-svg($navbar-light-toggler-icon-bg)};
+
+    background-color: var(--#{$prefix}navbar-bg);
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, 0.15), inset 0 -1px 0 rgba(255, 255, 255, 0.15);
+
+    // Disable box-shadow if special notice is present.
+    //&:not(:has(+ .special-notice)) {
+    //    box-shadow: none;
+    //}
+
+    .navbar-nav > .active > a,
+    .navbar-nav > .active > button {
+        background-color: var(--#{$prefix}navbar-bg-active);
+
+        &:hover,
+        &:focus {
+            background-color: var(--#{$prefix}navbar-bg-hover);
+        }
+    }
+
+    .dropdown-menu {
+        --#{$prefix}dropdown-bg: #{$dropdown-bg};
+        --#{$prefix}dropdown-spacer: #{$navbar-dropdown-spacer};
+
+        @include border-top-start-radius(0);
+        @include border-top-end-radius(0);
+        border-top-width: 0;
+
+        .dropdown-item {
+            --#{$prefix}dropdown-link-hover-bg: #{$dropdown-link-hover-bg};
+
+            &:active,
+            &.active {
+                --#{$prefix}dropdown-link-active-bg: #{$dropdown-link-active-bg};
+                --#{$prefix}dropdown-link-active-color: --#{$prefix}dropdown-link-color;
+            }
+        }
+    }
+
+    .dropdown-menu-end {
+        --#{$prefix}dropdown-min-width: 8rem;
+    }
+
+    .dropdown-toggle:after {
+        vertical-align: 0.1rem;
+    }
+
+    @include media-breakpoint-down(lg) {
+        &.navbar-expand {
+            .navbar-toggler {
+                display: unset !important;
+            }
+        }
+    }
+    .nav-link {
+        --#{$prefix}nav-link-color: #{$nav-link-color};
+        --#{$prefix}nav-link-hover-bg: #{$nav-link-hover-bg};
+        --#{$prefix}nav-link-hover-color: #{$nav-link-hover-color};
+
+        &:hover {
+            background-color: var(--#{$prefix}nav-link-hover-bg);
+        }
+    }
+
+    .navbar-toggler {
+        border: 0;
+    }
+
+    .offcanvas-lg {
+        --#{$prefix}offcanvas-bg: #{$navbar-bg};
+    }
+}
+
+.navbar-gewis-admin {
+    --#{$prefix}sidebar-bg: #{darken($navbar-bg, 5%)};
+
+    background-color: var(--#{$prefix}sidebar-bg);
+    box-shadow: inset 0 1px 5px -3px rgba(0, 0, 0, 0.3), -1px 0 5px -3px rgba(0, 0, 0, 0.3);
+    width: 3rem;
+
+    @include media-breakpoint-up(lg) {
+        width: 11.5rem;
+    }
+}
+
+.collapse-toggle {
+    display: block;
+    position: relative;
+    width: 100%;
+
+    @include caret("down", $vertical-align: 0.125rem);
+}
+
+@include color-mode(gewis-night) {
+    .navbar-gewis,
+    .navbar-gewis-admin {
+        --#{$prefix}navbar-active-color: #{$nav-link-color-dark};
+        --#{$prefix}navbar-bg: #{$navbar-bg-dark};
+        --#{$prefix}navbar-bg-active: #{$gray-700};
+        --#{$prefix}navbar-bg-hover: #{$gray-800};
+        --#{$prefix}navbar-brand-color: #{$navbar-brand-color-dark};
+        --#{$prefix}navbar-brand-hover-color: #{$navbar-brand-color-dark};
+        --#{$prefix}navbar-toggler-icon-bg: #{escape-svg($navbar-dark-toggler-icon-bg)};
+
+        .dropdown-menu {
+            --#{$prefix}dropdown-bg: #{$dropdown-bg-dark};
+
+            .dropdown-item {
+                --#{$prefix}dropdown-link-disabled-color: #{$dropdown-link-disabled-color-dark};
+                --#{$prefix}dropdown-link-hover-bg: #{$dropdown-link-hover-bg-dark};
+
+                &:active,
+                &.active {
+                    --#{$prefix}dropdown-link-active-bg: #{$dropdown-link-active-bg-dark};
+                    --#{$prefix}dropdown-link-active-color: #{$nav-link-color-dark};
+                }
+            }
+        }
+
+        .nav-link {
+            --#{$prefix}nav-link-color: #{$nav-link-color-dark};
+            --#{$prefix}nav-link-hover-bg: #{$nav-link-hover-bg-dark};
+        }
+
+        .offcanvas-lg {
+            --#{$prefix}offcanvas-bg: #{$navbar-bg-dark};
+        }
+    }
+
+    .navbar-gewis-admin {
+        --#{$prefix}sidebar-bg: #{lighten($navbar-bg-dark, 5%)};
+    }
+}

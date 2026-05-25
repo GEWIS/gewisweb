@@ -1,0 +1,41 @@
+# yaml-language-server: $schema=../../vendor/symfony/dependency-injection/Loader/schema/services.schema.json
+parameters:
+    app.session_prefix: 'gws_sess_'
+
+services:
+    app.security.remember_me.main:
+        class: App\Security\User\PersistentSignatureRememberMeHandler
+        autowire: true
+        arguments:
+            $userProvider: '@security.user.provider.concrete.user_provider'
+            $firewallName: 'main'
+            $tokenLifetime: 7776000
+            $cookieName: 'GWS_USER_REMEMBERME'
+
+    app.security.remember_me.company:
+        class: App\Security\User\PersistentSignatureRememberMeHandler
+        autowire: true
+        arguments:
+            $userProvider: '@security.user.provider.concrete.company_user_provider'
+            $firewallName: 'company'
+            $tokenLifetime: 604800
+            $cookieName: 'GWS_COMPANY_REMEMBERME'
+
+    App\Security\User\HandlerRegistry:
+        arguments:
+            $handlers:
+                main: '@app.security.remember_me.main'
+                company: '@app.security.remember_me.company'
+
+    # PHP session storage in Valkey. The session ID is stored on each Session row, letting us destroy a specific
+    # device's session by deleting its Valkey key.
+    Redis:
+        class: \Redis
+        factory: ['Symfony\Component\Cache\Adapter\RedisAdapter', 'createConnection']
+        arguments:
+            - '%env(VALKEY_DSN)%'
+
+    Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler:
+        arguments:
+            - '@Redis'
+            - { prefix: '%app.session_prefix%' }

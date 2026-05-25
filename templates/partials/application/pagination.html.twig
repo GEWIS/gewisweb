@@ -1,0 +1,59 @@
+{% if totalPages > 1 %}
+    {% set windowStart = max(1, page - 2) %}
+    {% set windowEnd = min(totalPages, page + 2) %}
+    <nav aria-label="{{ 'Pagination'|trans }}" class="d-flex flex-wrap align-items-center justify-content-between gap-2 mt-3">
+        <p class="text-muted small mb-0">
+            {{ 'Page %page% of %totalPages% (%totalCount% records)'|trans({'%page%': page, '%totalPages%': totalPages, '%totalCount%': totalCount}) }}
+        </p>
+        <ul class="pagination pagination-sm mb-0">
+            <li class="page-item {% if page <= 1 %}disabled{% endif %}">
+                <button type="button" class="page-link"
+                        data-action="live#action"
+                        data-live-action-param="gotoPage"
+                        data-live-page-param="{{ page - 1 }}"
+                        {% if page <= 1 %}disabled{% endif %}>
+                    {{ 'Previous'|trans }}
+                </button>
+            </li>
+            {% if windowStart > 1 %}
+                <li class="page-item">
+                    <button type="button" class="page-link"
+                            data-action="live#action"
+                            data-live-action-param="gotoPage"
+                            data-live-page-param="1">1</button>
+                </li>
+                {% if windowStart > 2 %}
+                    <li class="page-item disabled"><span class="page-link">&hellip;</span></li>
+                {% endif %}
+            {% endif %}
+            {% for p in windowStart..windowEnd %}
+                <li class="page-item {% if p == page %}active{% endif %}">
+                    <button type="button" class="page-link"
+                            data-action="live#action"
+                            data-live-action-param="gotoPage"
+                            data-live-page-param="{{ p }}">{{ p }}</button>
+                </li>
+            {% endfor %}
+            {% if windowEnd < totalPages %}
+                {% if windowEnd < totalPages - 1 %}
+                    <li class="page-item disabled"><span class="page-link">&hellip;</span></li>
+                {% endif %}
+                <li class="page-item">
+                    <button type="button" class="page-link"
+                            data-action="live#action"
+                            data-live-action-param="gotoPage"
+                            data-live-page-param="{{ totalPages }}">{{ totalPages }}</button>
+                </li>
+            {% endif %}
+            <li class="page-item {% if page >= totalPages %}disabled{% endif %}">
+                <button type="button" class="page-link"
+                        data-action="live#action"
+                        data-live-action-param="gotoPage"
+                        data-live-page-param="{{ page + 1 }}"
+                        {% if page >= totalPages %}disabled{% endif %}>
+                    {{ 'Next'|trans }}
+                </button>
+            </li>
+        </ul>
+    </nav>
+{% endif %}

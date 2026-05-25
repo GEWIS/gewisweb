@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=../../vendor/symfony/dependency-injection/Loader/schema/services.schema.json
+framework:
+    validation:
+        not_compromised_password:
+            enabled: true
+            endpoint: 'https://pwned-passwords.gewis.nl/api/%s'
+
+when@dev:
+    framework:
+        validation:
+            not_compromised_password: false
+
+when@test:
+    framework:
+        validation:
+            not_compromised_password: false

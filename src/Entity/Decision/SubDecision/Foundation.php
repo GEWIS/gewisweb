@@ -1,0 +1,178 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Entity\Decision\SubDecision;
+
+use App\Entity\Decision\Enums\OrganTypes;
+use App\Entity\Decision\Organ;
+use App\Entity\Decision\SubDecision;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\OneToOne;
+
+use function sprintf;
+
+/**
+ * Foundation of an organ.
+ */
+#[Entity]
+class Foundation extends SubDecision
+{
+    /**
+     * Abbreviation (only for when organs are created).
+     */
+    #[Column(type: Types::STRING)]
+    private string $abbr;
+
+    /**
+     * Name (only for when organs are created).
+     */
+    #[Column(type: Types::STRING)]
+    private string $name;
+
+    /**
+     * Purpose (only for when organs are created).
+     */
+    #[Column(
+        type: 'string',
+        nullable: true,
+    )]
+    private ?string $purpose = null;
+
+    /**
+     * Type of the organ.
+     */
+    #[Column(
+        type: Types::STRING,
+        enumType: OrganTypes::class,
+    )]
+    private OrganTypes $organType;
+
+    /**
+     * References from other subdecisions to this organ.
+     *
+     * @var Collection<array-key, FoundationReference>
+     */
+    #[OneToMany(
+        targetEntity: FoundationReference::class,
+        mappedBy: 'foundation',
+    )]
+    private Collection $references;
+
+    /**
+     * Organ entry for this organ.
+     */
+    #[OneToOne(
+        targetEntity: Organ::class,
+        mappedBy: 'foundation',
+    )]
+    private Organ $organ;
+
+    public function __construct()
+    {
+        $this->references = new ArrayCollection();
+    }
+
+    /**
+     * Get the abbreviation.
+     */
+    public function getAbbr(): string
+    {
+        return $this->abbr;
+    }
+
+    /**
+     * Set the abbreviation.
+     */
+    public function setAbbr(string $abbr): void
+    {
+        $this->abbr = $abbr;
+    }
+
+    /**
+     * Get the name.
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set the name.
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * Get the purpose.
+     */
+    public function getPurpose(): ?string
+    {
+        return $this->purpose;
+    }
+
+    /**
+     * Set the purpose.
+     */
+    public function setPurpose(?string $purpose): void
+    {
+        $this->purpose = $purpose;
+    }
+
+    /**
+     * Get the type.
+     */
+    public function getOrganType(): OrganTypes
+    {
+        return $this->organType;
+    }
+
+    /**
+     * Set the type.
+     */
+    public function setOrganType(OrganTypes $organType): void
+    {
+        $this->organType = $organType;
+    }
+
+    /**
+     * Get the references.
+     *
+     * @return Collection<array-key, FoundationReference>
+     */
+    public function getReferences(): Collection
+    {
+        return $this->references;
+    }
+
+    /**
+     * Get the referenced organ.
+     */
+    public function getOrgan(): Organ
+    {
+        return $this->organ;
+    }
+
+    /**
+     * Get a unique identifier for this foundation. It is used to distinguish between organs that share the same name
+     * but are actually distinct.
+     */
+    public function getHash(): string
+    {
+        return sprintf(
+            '%s-%d.%d.%d.%d',
+            $this->getMeetingType()->value,
+            $this->getMeetingNumber(),
+            $this->getDecisionPoint(),
+            $this->getDecisionNumber(),
+            $this->getSequence(),
+        );
+    }
+}

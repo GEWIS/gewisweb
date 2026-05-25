@@ -1,0 +1,29 @@
+.btn-gewis-primary {
+    --#{$prefix}btn-font-weight: 600;
+    --#{$prefix}btn-color: var(--bs-white);
+    --#{$prefix}btn-bg: #{$gewis-red};
+    --#{$prefix}btn-border-color: #{$gewis-red};
+    --#{$prefix}btn-hover-color: var(--bs-white);
+    --#{$prefix}btn-hover-bg: #{shade-color($gewis-red, 10%)};
+    --#{$prefix}btn-hover-border-color: #{shade-color($gewis-red, 10%)};
+    --#{$prefix}btn-active-color: var(--bs-btn-hover-color);
+    --#{$prefix}btn-active-bg: #{shade-color($gewis-red, 20%)};
+    --#{$prefix}btn-active-border-color: #{shade-color($gewis-red, 20%)};
+}
+
+.btn-outline-gewis-primary {
+    --#{$prefix}btn-font-weight: 600;
+    --#{$prefix}btn-bg: transparent;
+    --#{$prefix}btn-color: #{$gewis-red};
+    --#{$prefix}btn-border-color: #{$gewis-red};
+    --#{$prefix}btn-hover-color: var(--bs-white);
+    --#{$prefix}btn-hover-bg: #{$gewis-red};
+    --#{$prefix}btn-hover-border-color: #{$gewis-red};
+    --#{$prefix}btn-active-color: var(--bs-btn-hover-color);
+    --#{$prefix}btn-active-bg: #{shade-color($gewis-red, 20%)};
+    --#{$prefix}btn-active-border-color: #{shade-color($gewis-red, 20%)};
+    --#{$prefix}btn-disabled-color: #{$gewis-red};
+    --#{$prefix}btn-disabled-bg: transparent;
+    --#{$prefix}btn-disabled-border-color: #{$gewis-red};
+    --#{$prefix}gradient: none;
+}

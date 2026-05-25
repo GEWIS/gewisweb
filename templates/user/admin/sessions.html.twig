@@ -1,0 +1,158 @@
+{% extends 'layout-admin.html.twig' %}
+
+{% block page_title %}{{ 'Sessions'|trans|page_title }}{{ subjectLabel|page_title }}{{ parent() }}{% endblock %}
+
+{% block admin_breadcrumbs %}
+    <li class="breadcrumb-item active" aria-current="page">
+        <a href="{{ path('admin/users/index') }}">{{ 'Users'|trans }}</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">
+        <a href="{{ path(backRoute) }}">
+            {% if backRoute == 'admin/users/company-users/index' %}{{ 'Company Users'|trans }}{% else %}{{ 'Users'|trans }}{% endif %}
+        </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">
+        {{ 'Sessions'|trans }}: {{ subjectLabel }}
+    </li>
+{% endblock %}
+
+{% block contents %}
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+            <a href="{{ path(backRoute) }}" class="btn btn-outline-secondary">
+                <i class="fas fa-chevron-left"></i> {{ 'Back to overview'|trans }}
+            </a>
+            {% if sessions|length > 0 %}
+                <button type="button" class="btn btn-gewis-primary" data-bs-toggle="modal" data-bs-target="#modal-admin-terminate-all">
+                    <i class="fas fa-power-off"></i> {{ 'Terminate all sessions'|trans }}
+                </button>
+            {% endif %}
+        </div>
+
+        <div class="panel">
+            <div class="panel-heading d-flex flex-wrap align-items-center justify-content-between gap-2">
+                <h3>{{ 'Sessions for %name%'|trans({'%name%': subjectLabel}) }}</h3>
+                <span class="badge badge-secondary rounded-pill">
+                    {{ 'Active session(s): %count%'|trans({'%count%': sessions|length}) }}
+                </span>
+            </div>
+            <div class="panel-body">
+                {% if sessions|length == 0 %}
+                    <p class="text-muted mb-0">{{ 'No active sessions.'|trans }}</p>
+                {% else %}
+                    <div class="d-flex flex-column gap-2">
+                        {% for session in sessions %}
+                            {% set displayName %}
+                                {%- if session.browser and session.operatingSystem -%}
+                                    {{ session.browser }} {{ 'on'|trans }} {{ session.operatingSystem }}
+                                {%- elseif session.browser -%}
+                                    {{ session.browser }}
+                                {%- elseif session.operatingSystem -%}
+                                    {{ session.operatingSystem }}
+                                {%- else -%}
+                                    {{ 'Unknown device'|trans }}
+                                {%- endif -%}
+                            {% endset %}
+                            <div class="card" data-series="{{ session.series }}">
+                                <div class="card-body d-flex flex-wrap align-items-center gap-3">
+                                    <div class="fs-3 flex-shrink-0">
+                                        {{ session.deviceType.icon }}
+                                    </div>
+                                    <div class="flex-grow-1" style="min-width: 0;">
+                                        <div class="d-flex flex-wrap align-items-center gap-2">
+                                            <strong>{{ displayName }}</strong>
+                                            {% if session.lastUsedAt > date('-30 minutes') %}
+                                                <span class="badge badge-success">{{ 'Active'|trans }}</span>
+                                            {% elseif session.lastUsedAt > date('-1 day') %}
+                                                <span class="badge badge-secondary">{{ 'Inactive'|trans }}</span>
+                                            {% else %}
+                                                <span class="badge badge-warning">{{ 'Stale'|trans }}</span>
+                                            {% endif %}
+                                        </div>
+                                        <div class="small text-muted mt-1 d-flex flex-wrap gap-3">
+                                            {% if session.ipAddress %}
+                                                <span><i class="fas fa-location-dot"></i> <code>{{ session.ipAddress }}</code></span>
+                                            {% endif %}
+                                            <span><i class="fas fa-clock-rotate-left"></i> {{ 'Last seen %date%'|trans({'%date%': session.lastUsedAt|date('M j, Y H:i')}) }}</span>
+                                            <span><i class="fas fa-calendar-day"></i> {{ 'Signed in %date%'|trans({'%date%': session.createdAt|date('M j, Y H:i')}) }}</span>
+                                        </div>
+                                        {% if session.userAgent %}
+                                            <div class="collapse mt-2" id="ua-{{ session.series }}">
+                                                <code class="small text-muted text-break">{{ session.userAgent }}</code>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="d-flex flex-column gap-2 flex-shrink-0">
+                                        <button type="button"
+                                                class="btn btn-sm btn-outline-gewis-primary"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#modal-admin-terminate-one"
+                                                data-action="{{ path(terminateRoute, routeParams|merge({'series': session.series})) }}"
+                                                data-csrf-token="{{ csrf_token('admin_session_terminate-' ~ session.series) }}"
+                                                data-name="{{ displayName }}">
+                                            <i class="fas fa-trash"></i> {{ 'Terminate'|trans }}
+                                        </button>
+                                        {% if session.userAgent %}
+                                            <button type="button"
+                                                    class="btn btn-sm btn-outline-secondary"
+                                                    data-bs-toggle="collapse"
+                                                    data-bs-target="#ua-{{ session.series }}">
+                                                <i class="fas fa-circle-info"></i> {{ 'Details'|trans }}
+                                            </button>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-admin-terminate-one" data-controller="modal-form-target" tabindex="-1" aria-labelledby="modal-admin-terminate-one-label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-admin-terminate-one-label">{{ 'Terminate session?'|trans }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ 'Close'|trans }}"></button>
+            </div>
+            <form data-modal-form-target-target="form" method="POST" action="">
+                <div class="modal-body">
+                    <p class="mb-2">{{ 'Are you sure you want to terminate the session on this device?'|trans }}</p>
+                    <p class="mb-0"><strong data-modal-form-target-target="name"></strong></p>
+                    <p class="text-muted small mb-0 mt-2">{{ 'That device will be signed out immediately.'|trans }}</p>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" name="_csrf_token" value="" data-modal-form-target-target="csrfToken">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'Cancel'|trans }}</button>
+                    <button type="submit" class="btn btn-gewis-primary">{{ 'Terminate'|trans }}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-admin-terminate-all" tabindex="-1" aria-labelledby="modal-admin-terminate-all-label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-admin-terminate-all-label">{{ 'Terminate all sessions?'|trans }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ 'Close'|trans }}"></button>
+            </div>
+            <form method="POST" action="{{ path(terminateAllRoute, routeParams) }}">
+                <div class="modal-body">
+                    <p class="mb-0">{{ 'Every active session for this user will be terminated immediately.'|trans }}</p>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('admin_session_terminate_all') }}">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'Cancel'|trans }}</button>
+                    <button type="submit" class="btn btn-gewis-primary">{{ 'Terminate all'|trans }}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

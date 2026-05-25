@@ -1,0 +1,74 @@
+{% extends 'layout.html.twig' %}
+
+{% block pre_body %}
+    <div class="container-fluid p-0 m-0 w-100 jumbotron">
+        <img
+            alt="{{ 'GEWIS room impression'|trans }}"
+            src="{{ asset('images/panorama-960.webp') }}"
+            srcset="{{ asset('images/panorama-320.webp') }} 320w,
+            {{ asset('images/panorama-480.webp') }} 480w,
+            {{ asset('images/panorama-640.webp') }} 640w,
+            {{ asset('images/panorama-960.webp') }} 960w,
+            {{ asset('images/panorama-1280.webp') }} 1280w,
+            {{ asset('images/panorama-1920.webp') }} 1920w,
+            {{ asset('images/panorama-2560.webp') }} 2560w,
+            {{ asset('images/panorama-3840.webp') }} 3840w,
+            {{ asset('images/panorama-4096.webp') }} 4096w,
+            {{ asset('images/panorama-4480.webp') }} 4480w,
+            {{ asset('images/panorama-5120.webp') }} 5120w"
+            class="img-fluid">
+    </div>
+{% endblock %}
+
+{% block contents %}
+    <div class="row">
+        <main class="col-sm-7 col-md-8">
+            <section class="my-2">
+                <h1 class="display-6">{{ 'Study Association GEWIS'|trans }}</h1>
+                <p class="lead">
+                    {{ 'Welcome to the website of study association GEWIS, the study association of the department of Mathematics & Computer Science at Eindhoven University of Technology.'|trans }}
+                </p>
+            </section>
+            <section class="mb-2">
+                <h2>{{ 'News'|trans }}</h2>
+            </section>
+        </main>
+        <aside class="col-sm-5 col-md-4 ps-md-5">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3>{{ 'Agenda'|trans }}</h3>
+                </div>
+                {% if activities is not empty %}
+                    <div class="list-group list-group-flush">
+                        {% for activity in activities %}
+                            <a class="list-group-item list-group-item-action"
+                               href="{{ path('') }}">
+                                <h4 class="list-group-item-heading">{{ activity.getName.getText|localise_text }}</h4>
+                                <p class="list-group-item-text text-muted">{{ activity.getBeginTime|format_datetime('full', 'short', locale: app.request.locale)|capitalize }}</p>
+                            </a>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                <div class="panel-body">
+                    <small>
+                        {% trans with {'%link_start%': '<a href="https://bac.gewis.nl">', '%link_end%': '</a>'} %}
+                            On Thursdays, there is a %link_start%social drink%link_end% from 16.30 to 19.00.
+                        {% endtrans %}
+                    </small>
+                </div>
+                <div class="panel-footer">
+                    <a href="{{ path('activity/index') }}" class="panel-footer-link">
+                        {{ 'Complete agenda'|trans }}
+                    </a>
+                    <a
+                        href="https://www.google.com/calendar/embed?src=v23gq10ij44fhdsfdof1s613ak%40group.calendar.google.com&gsessionid=OK"
+                        title="{{ 'Google Calendar'|trans }}"
+                        class="panel-footer-link"
+                    >
+                        {{ 'iCal'|trans }}
+                    </a>
+                </div>
+            </div>
+        </aside>
+    </div>
+{% endblock %}

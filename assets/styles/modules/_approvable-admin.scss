@@ -1,0 +1,24 @@
+.admin-section {
+    h2 {
+        margin-bottom: 0;
+    }
+}
+
+.admin-approvable-overview {
+    .overview-header,
+    .overview-sidebar, {
+        @include media-breakpoint-down(sm) {
+            display: none !important;
+        }
+    }
+
+    .approvable-property {
+        @include media-breakpoint-down(md) {
+            display: inline-block;
+        }
+
+        @include media-breakpoint-up(md) {
+            display: none;
+        }
+    }
+}

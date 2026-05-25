@@ -1,0 +1,65 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}{{ 'Multi-factor authentication'|trans }}{% endblock %}
+
+{% block contents %}
+<div class="row justify-content-center">
+    <div class="col col-sm-10 col-lg-6 col-xl-4">
+        <div class="panel">
+            <div class="panel-heading">
+                <h3>{{ 'Multi-factor authentication'|trans }}</h3>
+            </div>
+            <div class="panel-body">
+                <p class="text-muted mb-3">
+                    {{ 'Enter the 6-digit code from your authenticator app, or one of your saved backup codes.'|trans }}
+                </p>
+
+                <form method="POST" action="{{ checkPathUrl ? checkPathUrl : path(checkPathRoute) }}">
+                    {% if isCsrfProtectionEnabled %}
+                        <input type="hidden" name="{{ csrfParameterName }}" value="{{ csrf_token(csrfTokenId) }}">
+                    {% endif %}
+
+                    <div class="form-floating mb-3">
+                        <input type="text"
+                               id="_auth_code"
+                               name="{{ authCodeParameterName }}"
+                               class="form-control{% if authenticationError %} is-invalid{% endif %}"
+                               placeholder="000000"
+                               autocomplete="one-time-code"
+                               pattern="\d{6}|[0-9a-f]{16}"
+                               title="{{ 'Enter a 6-digit authenticator code or a 16-character lowercase-hex backup code.'|trans }}"
+                               required autofocus>
+                        <label for="_auth_code">{{ 'auth_code'|trans({}, 'SchebTwoFactorBundle') }}</label>
+                        {% if authenticationError %}
+                            <div class="invalid-feedback d-block">
+                                {{ authenticationError|trans(authenticationErrorData, 'SchebTwoFactorBundle') }}
+                            </div>
+                            <p class="form-text small mt-2 mb-0">
+                                {{ 'If you entered a backup code, try the next unused one from your saved list. Each backup code works only once.'|trans }}
+                            </p>
+                        {% endif %}
+                    </div>
+
+                    {% if availableTwoFactorProviders|length > 1 %}
+                        <p class="small text-muted">
+                            {{ 'choose_provider'|trans({}, 'SchebTwoFactorBundle') }}:
+                            {% for provider in availableTwoFactorProviders %}
+                                <a href="{{ path('2fa_login', {'preferProvider': provider}) }}">{{ provider }}</a>{% if not loop.last %},{% endif %}
+                            {% endfor %}
+                        </p>
+                    {% endif %}
+
+                    <div class="d-flex flex-wrap gap-2 justify-content-between border-top pt-3">
+                        <a href="{{ logoutPath }}" class="btn btn-outline-secondary">
+                            {{ 'Cancel and sign out'|trans }}
+                        </a>
+                        <button type="submit" class="btn btn-gewis-primary">
+                            <i class="fas fa-shield-halved"></i> {{ 'Verify'|trans }}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

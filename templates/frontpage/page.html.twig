@@ -1,0 +1,41 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}{{ page.getTitle|localise_text|page_title }}{{ parent() }}{% endblock %}
+
+{% block breadcrumbs %}
+    <li class="breadcrumb-item active" aria-current="page">
+        <a href="{{ path('frontpage/index') }}">
+            {{ 'Home'|trans }}
+        </a>
+    </li>
+    {% for parent in parents %}
+        {% if null === parent %}
+            <li class="breadcrumb-item">...</li>
+        {% else %}
+            <li class="breadcrumb-item">
+                <a href="{{ page_path(
+                    category: parent.getCategory.getValueNL,
+                    categoryEn: parent.getCategory.getValueEN,
+                    subCategory: parent.getSubCategory.getValueNL,
+                    subCategoryEn: parent.getSubCategory.getValueEN,
+                    name: parent.getName.getValueNL,
+                    nameEn: parent.getName.getValueEN,
+                ) }}">
+                    {{ parent.getTitle|localise_text }}
+                </a>
+            </li>
+        {% endif %}
+    {% endfor %}
+    <li class="breadcrumb-item active">
+        {{ page.getTitle|localise_text }}
+    </li>
+{% endblock %}
+
+{% block contents %}
+    <div class="row">
+        <div class="col-md-12">
+            <h2>{{ page.getTitle|localise_text }}</h2>
+        </div>
+    </div>
+    {{ page.getContent|localise_text|raw }}
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}{{ 'Enable MFA'|trans }}{% endblock %}
+
+{% block contents %}
+<div class="row justify-content-center">
+    <div class="col col-sm-10 col-lg-6 col-xl-4">
+        <div class="panel">
+            <div class="panel-heading">
+                <h3>{{ 'Enable TOTP-based MFA'|trans }}</h3>
+            </div>
+            <div class="panel-body">
+                <ol class="mb-3">
+                    <li>{{ 'Install an authenticator app such as Ente Auth or 2FAS on your phone.'|trans }}</li>
+                    <li>{{ 'Scan the QR code below.'|trans }}</li>
+                    <li>{{ 'Enter the 6-digit code shown by the app to confirm the link.'|trans }}</li>
+                </ol>
+                <div class="d-flex justify-content-center mb-3">
+                    <img src="{{ qr_code_data_uri(provisioningUri, 'default', {size: 256, margin: 10}) }}"
+                         alt="{{ 'QR code'|trans }}" class="border rounded p-2 bg-white" width="256" height="256">
+                </div>
+                <p class="text-muted small mb-3">{{ 'Or enter this secret in your app manually:'|trans }}</p>
+                <code class="p-1 bg-light border rounded user-select-all" style="letter-spacing: 0.1rem;">
+                    {{ secret }}
+                </code>
+                <hr class="my-3">
+                {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                    <div class="form-floating mb-3">
+                        <input type="text"
+                               id="mfa_code"
+                               name="{{ form.code.vars.full_name }}"
+                               class="form-control{% if not form.code.vars.valid %} is-invalid{% endif %}"
+                               placeholder="000000"
+                               inputmode="numeric"
+                               pattern="[0-9]{6}"
+                               minlength="6" maxlength="6"
+                               autocomplete="one-time-code"
+                               required autofocus>
+                        <label for="mfa_code">{{ 'auth_code'|trans({}, 'SchebTwoFactorBundle') }}</label>
+                        {{ form_errors(form.code) }}
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <a href="{{ path(routePrefix ~ 'security_index') }}" class="btn btn-outline-secondary">
+                            {{ 'cancel'|trans({}, 'SchebTwoFactorBundle') }}
+                        </a>
+                        <button type="submit" class="btn btn-gewis-primary">
+                            {{ 'Verify and enable'|trans }}
+                        </button>
+                    </div>
+                    {{ form_widget(form['_csrf_token']) }}
+                {{ form_end(form, {'render_rest': false}) }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

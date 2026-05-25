@@ -1,0 +1,12 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}{{ 'Forbidden'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block contents %}
+    <div class="row text-center">
+        <div class="col-md-12">
+            <h3>{{ 'Access Denied'|trans }}</h3>
+            <p>{{ 'You do not have the required privileges to perform this action.'|trans }}</p>
+        </div>
+    </div>
+{% endblock %}

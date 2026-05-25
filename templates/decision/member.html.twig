@@ -1,0 +1,23 @@
+{% extends 'layout-sidebar.html.twig' %}
+
+{% block page_title %}{{ member.getFullName|page_title }}{{ parent() }}{% endblock %}
+
+{% set isSelf = is_granted(member.getSelfRole) %}
+
+{% block sidebar_label %}{{ member.getFullName }}{% endblock %}
+{% block sidebar %}
+    {% include 'partials/member-sidebar.html.twig' with {
+        'member': member,
+        'isSelf': isSelf,
+        'activeRoute': 'overview',
+    } %}
+{% endblock %}
+
+{% block contents %}
+    <h3>{{ member.getFullName }}</h3>
+    {% if isSelf %}
+        <p>{{ 'We are the same'|trans }}</p>
+    {% else %}
+        <p>{{ 'We are NOT the same'|trans }}</p>
+    {% endif %}
+{% endblock %}

@@ -1,38 +1,38 @@
-nbproject
-._*
-.~lock.*
-.*.sw?
-*~
-*.kate-swp
-.buildpath
-*.DS_Store
-.env
-.idea/sonarlint/
-.project
-.settings
-coverage/
-vendor/
-gewisweb-vagrant/
-node_modules/
-.sass-cache/
-.scannerwork/
-data/cache/phpstan/
-public/css/gewis-theme.css
-public/css/gewis-theme.css.map
-public/styleguide/
-autoload_classmap.php
-.mysql
-.vagrant/
-.vs/
-config/bash.env
-*.cache
-.idea/sonarlint.xml
-.idea/sonarlint-state.xml
-phpstan/phpstan-baseline-temp.neon
-phpstan/phpstan-baseline-pr.neon
-psalm/psalm-baseline-pr.xml
-docs/_site/
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
 
-# Language binaries are created during the docker build process or using 'make compilelang'
-*.mo
+###> phpunit/phpunit ###
+/phpunit.xml
+/.phpunit.cache/
+###< phpunit/phpunit ###
 
+###> symfony/phpunit-bridge ###
+.phpunit.result.cache
+/phpunit.xml
+###< symfony/phpunit-bridge ###
+
+###> symfony/asset-mapper ###
+/public/assets/
+/assets/vendor/
+###< symfony/asset-mapper ###
+
+/.idea/
+
+###> phpstan/phpstan ###
+phpstan.neon
+###< phpstan/phpstan ###
+###> symfonycasts/sass-bundle ###
+/public/assets/
+###< symfonycasts/sass-bundle ###
+
+###> squizlabs/php_codesniffer ###
+/.phpcs-cache
+/phpcs.xml
+###< squizlabs/php_codesniffer ###

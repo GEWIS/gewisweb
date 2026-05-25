@@ -1,0 +1,25 @@
+@import '../_variables.scss';
+
+.decision-meeting {
+    display: inline-block;
+    width: 100%;
+    color: $brand-primary;
+
+    @include media-breakpoint-up(md) {
+        & {
+            display: inline-block;
+            text-align: right;
+            width: 130px;
+        }
+    }
+}
+
+.decision-content {
+    @include media-breakpoint-up(md) {
+        & {
+            display: inline-block;
+            vertical-align: top;
+            width: calc(100% - 135px);
+        }
+    }
+}

@@ -1,0 +1,20 @@
+{% set overviewHref = isSelf ? path('members/me') : path('members/view', {'member': member.lidnr}) %}
+{% set photosHref = path('photo/album', {'type': 'member', 'album': member.lidnr}) %}
+
+<li class="nav-item {{ activeRoute == 'overview' ? 'active' : '' }}">
+    <a class="nav-link p-3" href="{{ overviewHref }}">
+        {{ 'Overview'|trans }}
+    </a>
+</li>
+<li class="nav-item {{ activeRoute == 'photos' ? 'active' : '' }}">
+    <a class="nav-link p-3" href="{{ photosHref }}">
+        {{ 'Photos'|trans }}
+    </a>
+</li>
+{% if isSelf %}
+    <li class="nav-item {{ activeRoute == 'security' ? 'active' : '' }}">
+        <a class="nav-link p-3" href="{{ path('user_security_index') }}">
+            {{ 'Security'|trans }}
+        </a>
+    </li>
+{% endif %}

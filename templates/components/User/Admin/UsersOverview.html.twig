@@ -1,0 +1,195 @@
+<div {{ attributes }}>
+    <div class="panel mb-3">
+        <div class="panel-body">
+            <div class="row g-3 align-items-end">
+                <div class="col-md-6">
+                    <label class="form-label" for="users-overview-search">{{ 'Search'|trans }}</label>
+                    <input type="search" class="form-control" id="users-overview-search"
+                           placeholder="{{ 'Search by name or membership number'|trans }}"
+                           data-model="debounce(300)|search"
+                           value="{{ this.search }}">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label" for="users-overview-type">{{ 'Membership type'|trans }}</label>
+                    <select class="form-select" id="users-overview-type" data-model="typeFilter">
+                        <option value="">{{ 'Any'|trans }}</option>
+                        {% for type in this.membershipTypes %}
+                            <option value="{{ type.value }}" {% if this.typeFilter == type.value %}selected{% endif %}>
+                                {{ type.label|trans }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-3 d-flex flex-wrap gap-3 align-items-end">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="filter-hidden" data-model="hiddenOnly" {% if this.hiddenOnly %}checked{% endif %}>
+                        <label class="form-check-label" for="filter-hidden">{{ 'Hidden'|trans }}</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="filter-deleted" data-model="deletedOnly" {% if this.deletedOnly %}checked{% endif %}>
+                        <label class="form-check-label" for="filter-deleted">{{ 'Deleted'|trans }}</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="filter-expired" data-model="expiredOnly" {% if this.expiredOnly %}checked{% endif %}>
+                        <label class="form-check-label" for="filter-expired">{{ 'Expired'|trans }}</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="filter-activated" data-model="activatedOnly" {% if this.activatedOnly %}checked{% endif %}>
+                        <label class="form-check-label" for="filter-activated">{{ 'Activated'|trans }}</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="filter-mfa" data-model="mfaOnly" {% if this.mfaOnly %}checked{% endif %}>
+                        <label class="form-check-label" for="filter-mfa">{{ 'MFA'|trans }}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel">
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>
+                                {% include 'partials/application/sort-header.html.twig' with {
+                                    'label': '#',
+                                    'column': 'lidnr',
+                                    'currentSort': this.sort,
+                                    'currentDirection': this.direction,
+                                } only %}
+                            </th>
+                            <th>
+                                {% include 'partials/application/sort-header.html.twig' with {
+                                    'label': 'Name'|trans,
+                                    'column': 'name',
+                                    'currentSort': this.sort,
+                                    'currentDirection': this.direction,
+                                } only %}
+                            </th>
+                            <th>
+                                {% include 'partials/application/sort-header.html.twig' with {
+                                    'label': 'Membership type'|trans,
+                                    'column': 'type',
+                                    'currentSort': this.sort,
+                                    'currentDirection': this.direction,
+                                } only %}
+                            </th>
+                            <th>{{ 'Status'|trans }}</th>
+                            <th>{{ 'MFA'|trans }}</th>
+                            <th>{{ 'Roles'|trans }}</th>
+                            <th class="text-end">{{ 'Actions'|trans }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in this.rows %}
+                            <tr>
+                                <td><code>{{ row.lidnr }}</code></td>
+                                <td>
+                                    {{ row.fullName }}
+                                    {% if not row.isActivated %}
+                                        <span class="badge badge-secondary ms-2">{{ 'Not activated'|trans }}</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {{ row.type.label|trans }}
+                                    {% if row.membershipEndsOn %}
+                                        <div class="text-muted small">{{ 'Ends'|trans }} {{ row.membershipEndsOn|date('Y-m-d') }}</div>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <div class="d-flex flex-wrap gap-1">
+                                        {% if row.hidden %}<span class="badge badge-warning">{{ 'Hidden'|trans }}</span>{% endif %}
+                                        {% if row.deleted %}<span class="badge badge-danger">{{ 'Deleted'|trans }}</span>{% endif %}
+                                        {% if row.expired %}<span class="badge badge-secondary">{{ 'Expired'|trans }}</span>{% endif %}
+                                        {% if not row.hidden and not row.deleted and not row.expired %}
+                                            <span class="badge badge-success">{{ 'Active'|trans }}</span>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                                <td>
+                                    {% if row.mfaEnabled %}
+                                        <span class="badge badge-success"><i class="fas fa-shield-halved"></i> {{ 'Enabled'|trans }}</span>
+                                    {% elseif row.isActivated %}
+                                        <span class="badge badge-secondary">{{ 'Disabled'|trans }}</span>
+                                    {% else %}
+                                        <span class="text-muted small">&ndash;</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <div class="d-flex flex-wrap gap-1">
+                                        {% for badge in row.roleBadges %}
+                                            <span class="badge badge-info" title="{{ badge.expiresAt ? 'Expires %date%'|trans({'%date%': badge.expiresAt|date('Y-m-d')}) : '' }}">
+                                                {{ badge.label }}{% if badge.expiresAt %} <small>({{ badge.expiresAt|date('Y-m-d') }})</small>{% endif %}
+                                            </span>
+                                        {% else %}
+                                            <span class="text-muted small">&ndash;</span>
+                                        {% endfor %}
+                                    </div>
+                                </td>
+                                <td class="text-end">
+                                    <div class="btn-group btn-group-sm" role="group">
+                                        <a href="{{ path('admin/users/sessions', {'lidnr': row.lidnr}) }}"
+                                           class="btn btn-outline-secondary {% if not row.isActivated %}disabled{% endif %}"
+                                           {% if not row.isActivated %}aria-disabled="true" tabindex="-1"{% endif %}>
+                                            <i class="fas fa-display"></i> {{ 'Sessions'|trans }}
+                                        </a>
+                                        <button type="button"
+                                                class="btn btn-outline-warning"
+                                                {% if not row.mfaEnabled %}disabled{% endif %}
+                                                data-bs-toggle="modal" data-bs-target="#modal-admin-mfa-reset"
+                                                data-action="{{ path('admin/users/mfa/reset', {'lidnr': row.lidnr}) }}"
+                                                data-name="{{ row.fullName }}"
+                                                data-csrf-token="{{ csrf_token('admin_mfa_reset-' ~ row.lidnr) }}">
+                                            <i class="fas fa-rotate-left"></i> {{ 'Reset MFA'|trans }}
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="7" class="text-center text-muted py-4">{{ 'No members match the current filters.'|trans }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            {% include 'partials/application/pagination.html.twig' with {
+                'page': this.page,
+                'totalPages': this.totalPages,
+                'totalCount': this.totalCount,
+            } only %}
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-admin-mfa-reset" data-controller="modal-form-target" tabindex="-1" aria-labelledby="modal-admin-mfa-reset-label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-admin-mfa-reset-label">{{ 'Reset MFA?'|trans }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ 'Close'|trans }}"></button>
+                </div>
+                <form data-modal-form-target-target="form" method="POST" action="">
+                    <div class="modal-body">
+                        <p>
+                            {{ 'You are about to reset multi-factor authentication for:'|trans }}
+                            <strong data-modal-form-target-target="name"></strong>
+                        </p>
+                        <p class="mb-0 small text-muted">
+                            {{ 'Their TOTP secret and backup codes will be discarded and every active session for the user will be terminated. Use this when a device has been lost or compromised.'|trans }}
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" name="_csrf_token" value="" data-modal-form-target-target="csrfToken">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'Cancel'|trans }}</button>
+                        <button type="submit" class="btn btn-warning">
+                            <i class="fas fa-rotate-left"></i> {{ 'Reset MFA'|trans }}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

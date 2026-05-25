@@ -1,0 +1,46 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}{{ 'Backup codes'|trans }}{% endblock %}
+
+{% block contents %}
+<div class="row justify-content-center">
+    <div class="col col-sm-10 col-lg-6 col-xl-4">
+        <div class="panel">
+            <div class="panel-heading">
+                <h3>{{ 'Backup codes'|trans }}</h3>
+            </div>
+            <div class="panel-body">
+                <div class="alert alert-danger d-flex align-items-start gap-2" role="alert">
+                    <i class="fas fa-triangle-exclamation mt-1 fs-4"></i>
+                    <div>
+                        <strong>{{ 'This is the only time these codes will be shown.'|trans }}</strong>
+                        <p class="mb-0">
+                            {{ 'Save them now: write them down, print this page, or store them in a secure place. Each code can be used once if you lose access to your authenticator app. When you regenerate, all previous codes are invalidated.'|trans }}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    {% for code in backupCodes %}
+                        <div class="col mb-3">
+                            <code class="p-2 border rounded bg-light user-select-all" style="letter-spacing: 0.1rem;">{{ code }}</code>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="d-flex flex-wrap justify-content-between gap-2 border-top pt-3">
+                    <button type="button" class="btn btn-outline-secondary"
+                            data-controller="print"
+                            data-action="click->print#trigger">
+                        <i class="fas fa-print"></i> {{ 'Print'|trans }}
+                    </button>
+
+                    <a href="{{ path(routePrefix ~ 'security_index') }}" class="btn btn-gewis-primary">
+                        {{ 'I saved them'|trans }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

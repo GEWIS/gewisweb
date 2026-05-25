@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}" class="h-100">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/x-icon" href="{{ asset('images/favicon.ico') }}">
+        <title>
+            {% block page_title %}
+                {{ 'Study Association GEWIS'|trans }}
+            {% endblock %}
+        </title>
+        {# Generate alternate hreflang links. NOTE: `app.current_route` is not defined for error pages. #}
+        {% if null !== app.current_route %}
+            {% for locale in supported_locales %}
+                {% set hreflang_url = page is not defined ? path(app.current_route, app.current_route_parameters|merge({_locale: locale})) : localised_page_path(page, locale) %}
+                <link rel="alternate" hreflang="{{ locale }}" href="{{ absolute_url(hreflang_url) }}" />
+            {% endfor %}
+        {% endif %}
+        {# Preload fonts files. #}
+        {% set fontPreloads = [
+            'fonts/raleway/raleway-v22-latin-500.woff2',
+            'fonts/raleway/raleway-v22-latin-600.woff2',
+            'fonts/raleway/raleway-v22-latin-regular.woff2',
+            'fonts/lato/lato-v22-latin-700.woff2',
+            'fonts/lato/lato-v22-latin-regular.woff2',
+            'fonts/lato/lato-v22-latin-italic.woff2',
+            'fonts/gewisicons/gewisicons.ttf',
+        ] %}
+        {% for font in fontPreloads %}
+            <link rel="preload" as="font" type="{{ font ends with '.ttf' ? 'font/ttf' : 'font/woff2' }}"
+                  href="{{ asset(font) }}" crossorigin="anonymous">
+        {% endfor %}
+        {# Load CSS #}
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('styles/app.scss') }}">
+            <link rel="stylesheet" href="{{ asset('@symfony/ux-live-component/live.min.css') }}">
+        {% endblock %}
+        {# Load critical JS #}
+        {% block javascripts %}
+            <script src="{{ asset('js/color-modes.js') }}" nonce="{{ csp_nonce('script') }}"></script>
+            {% block importmap %}{{ importmap('app', {'nonce': csp_nonce('script')}) }}{% endblock %}
+        {% endblock %}
+        {% if app.request.server.has('FRANKENPHP_HOT_RELOAD') %}
+            <meta name="frankenphp-hot-reload:url" content="{{ app.request.server.get('FRANKENPHP_HOT_RELOAD') }}">
+            <script src="https://cdn.jsdelivr.net/npm/idiomorph" nonce="{{ csp_nonce('script') }}"></script>
+            <script src="https://cdn.jsdelivr.net/npm/frankenphp-hot-reload/+esm" type="module" nonce="{{ csp_nonce('script') }}"></script>
+        {% endif %}
+        <script type="text/javascript" nonce="{{ csp_nonce('script') }}">
+            var _paq = window._paq = window._paq || [];
+            const matomoDomain = '{{ matomo_domain }}';
+            _paq.push(['trackPageView']);
+            _paq.push(['enableLinkTracking']);
+            _paq.push(['enableHeartBeatTimer']);
+            _paq.push(['setTrackerUrl', '{{ matomo_domain }}/matomo.php']);
+            _paq.push(['setSiteId', '1']);
+        </script>
+        <script src="{{ matomo_domain }}/matomo.js" nonce="{{ csp_nonce('script') }}" async defer></script>
+    </head>
+    <body class="d-flex flex-column h-100">
+        {% include 'partials/application/main-nav.html.twig' %}
+        {% block body %}{% endblock %}
+        {% include 'partials/application/toasts.html.twig' %}
+        {% include 'partials/application/privacy-widget.html.twig' %}
+        {# Load non-critical JS #}
+        {% block body_javascripts %}
+            <script src="{{ asset('js/privacy-widget.js') }}" nonce="{{ csp_nonce('script') }}"></script>
+            <script src="{{ asset('js/bootstrap.bundle.min.js') }}" nonce="{{ csp_nonce('script') }}"></script>
+        {% endblock %}
+        {% block gewis_festivities %}
+            <div id="gewis-festivities" style="position: fixed; width: 100vw; height: 100vh; pointer-events: none;">
+                {% set today_md = 'now'|date('m-d') %}
+                {% set today_yd = 'now'|date('j n') %}
+                {% set userBirthdayMd = null !== app.user and enum('App\\Entity\\User\\Enums\\UserTypes').User === app.user.getUserType
+                    ? app.user.getMember.getBirth|date('m-d')
+                    : null
+                %}
+                {% if ('28 6' === today_yd) or (null !== userBirthdayMd and userBirthdayMd === today_md) %}
+                    <script src="{{ asset('js/cosmetic/balloons.js') }}" nonce="{{ csp_nonce('script') }}"></script>
+                {% endif %}
+
+                {% if null !== app.user %}
+                    {% set nowU = 'now'|date('U') %}
+                    {% set startU = 'December 24 00:00:00'|date('U') %}
+                    {% set endU = 'December 31 23:59:59'|date('U') %}
+                    {% if nowU >= startU and nowU <= endU %}
+                        <script src="{{ asset('js/cosmetic/snowstorm.js') }}" nonce="{{ csp_nonce('script') }}"></script>
+                    {% endif %}
+
+                    {% if '01-01' === today_md %}
+                        <div class="firework"></div>
+                        <div class="firework"></div>
+                        <div class="firework"></div>
+                        <div class="firework"></div>
+                        <div class="firework"></div>
+                        <div class="firework"></div>
+                    {% endif %}
+                {% endif %}
+            </div>
+        {% endblock %}
+    </body>
+</html>

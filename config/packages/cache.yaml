@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../vendor/symfony/dependency-injection/Loader/schema/services.schema.json
+framework:
+    cache:
+        app: cache.adapter.redis
+        default_redis_provider: '%env(VALKEY_DSN)%'

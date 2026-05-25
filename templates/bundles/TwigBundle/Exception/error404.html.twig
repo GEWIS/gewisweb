@@ -1,0 +1,60 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}{{ 'Page Not Found'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% set messages = [
+    {
+        title: 'This page does not exist'|trans,
+        subtext: 'You assumed it was here. It was not. Q.E.D.'|trans
+    },
+    {
+        title: 'This page might be imaginary'|trans,
+        subtext: 'It exists only in the complex plane of wishful thinking.'|trans
+    },
+    {
+        title: 'This page has been divided by zero'|trans,
+        subtext: 'Reality collapsed. Please go back before the singularity spreads.'|trans
+    },
+    {
+        title: 'This page is asymptotically approaching existence'|trans,
+        subtext: 'It is getting closer... but it will never quite get there.'|trans
+    },
+    {
+        title: 'This page is not bijective'|trans,
+        subtext: 'Every input should map to an output. This one got lost.'|trans
+    },
+    {
+        title: 'Segmentation fault while accessing this page'|trans,
+        subtext: 'You tried to access memory outside the bounds of reality.'|trans
+    },
+    {
+        title: 'We found a pointer to <code>NULL</code> instead of this page'|trans,
+        subtext: 'Which is basically the same thing.'|trans
+    },
+    {
+        title: 'This page was garbage collected'|trans,
+        subtext: 'It had no references left.'|trans
+    },
+    {
+        title: 'This page is NP-hard to locate'|trans,
+        subtext: 'Approximate solutions welcome.'|trans
+    },
+    {
+        title: 'This page is undefined'|trans,
+        subtext: 'It was declared, but never initialised.'|trans
+    },
+    {
+        title: 'This page is a dangling pointer'|trans,
+        subtext: 'It is pointing somewhere. Just not here.'|trans
+    }
+] %}
+{% set selected = messages|shuffle|first %}
+
+{% block contents %}
+    <div class="row text-center">
+        <div class="col-md-12">
+            <h3>{{ selected.title|raw }}</h3>
+            <p>{{ selected.subtext }}</p>
+        </div>
+    </div>
+{% endblock %}

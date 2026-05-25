@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../vendor/symfony/dependency-injection/Loader/schema/services.schema.json
+framework:
+    router:
+        # Configure how to generate URLs in non-HTTP contexts, such as CLI commands.
+        # See https://symfony.com/doc/current/routing.html#generating-urls-in-commands
+        default_uri: '%env(string:DEFAULT_URI)%'
+
+when@prod:
+    framework:
+        router:
+            strict_requirements: null

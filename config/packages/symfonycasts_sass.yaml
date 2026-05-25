@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../vendor/symfony/dependency-injection/Loader/schema/services.schema.json
+symfonycasts_sass:
+    root_sass:
+        - 'assets/styles/app.scss'
+    sass_options:
+        style: 'compressed'
+        source_map: false

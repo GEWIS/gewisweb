@@ -1,0 +1,42 @@
+<footer class="footer mt-auto py-4 border-top text-secondary">
+    <div class="container">
+        <div class="row">
+            <div class="hidden-xs col-sm-2">
+                <div class="gi gewis-base" style="font-size: 7rem;"></div>
+            </div>
+            <div class="col-sm-10">
+                <div class="row">
+                    <div class="col-sm-9">
+                        {% if is_granted('ROLE_USER') %}
+                            <h4>{{ 'Infimum'|trans }}</h4>
+                            <p id="infimum-footer">{{ 'Loading an infimum...'|trans }}</p>
+                        {% endif %}
+                        <p class="mt-3">
+                            &copy; 2013
+                            - {{ 'now'|date('Y') }} S.v. GEWIS.
+                            {{ 'All rights reserved.'|trans }}
+                            {{ 'Made with <3 by the ApplicatieBeheerCommissie and Web Commissie (2013 - 2022).'|trans }}
+                        </p>
+                        <p class="mt-3">
+                            {{ 'The GEWIS website is open-source! Check out the repository on <a href="https://github.com/GEWIS/gewisweb" target="_blank"><span class="fab fa-github"></span>&nbsp;GitHub</a>. Or visit our <a href="https://github.com/GEWIS" target="_blank">organisation</a> for more of our awesome open-source projects.'|trans|raw }}
+                        </p>
+                    </div>
+                    <div class="col-sm-3">
+                        <span class="fas fa-address-book"></span>&nbsp;<a href="{{ page_path(
+                            category: 'vereniging',
+                            categoryEn: 'association',
+                            subCategory: 'contact',
+                            subCategoryEn: 'contact',
+                        ) }}">{{ 'Contact'|trans }}</a><br>
+                        <span class="fab fa-linkedin"></span>&nbsp;<a
+                            href="https://www.linkedin.com/company/study-association-gewis/">LinkedIn</a><br>
+                        <span class="fab fa-facebook-square"></span>&nbsp;<a
+                            href="https://www.facebook.com/svgewis/">Facebook</a><br>
+                        <span class="fab fa-instagram"></span>&nbsp;<a
+                            href="https://www.instagram.com/svgewis/">Instagram</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

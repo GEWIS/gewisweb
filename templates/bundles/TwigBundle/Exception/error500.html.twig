@@ -1,0 +1,12 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}{{ 'Internal Server Error'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block contents %}
+    <div class="row text-center">
+        <div class="col-md-12">
+            <h3>{{ 'Oh no! Something went wrong :('|trans }}</h3>
+            <p>{{ 'If this keeps occurring, please contact the Application Management Committee and let us know what you were doing when this error occurred. We will fix it as soon as possible.'|trans }}</p>
+        </div>
+    </div>
+{% endblock %}

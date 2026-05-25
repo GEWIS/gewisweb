@@ -1,0 +1,144 @@
+x-app-environment: &app_environment
+    # Variables that other infrastructure (Caddy mercure module, FrankenPHP,
+    # rabbitmq) needs are set here. App-level values (APP_SECRET,
+    # MAIL_FROM_ADDRESS, GEWISDB_API_KEY, SSH_*) are intentionally NOT set so
+    # they can be supplied by .env.local in dev (read by Symfony Runtime) and
+    # by the orchestrator in prod (see compose.production.yaml).
+    APP_ENV: "${APP_ENV:-prod}"
+    SERVER_NAME: "${SERVER_NAME:-localhost:80}, web:80"
+    DEFAULT_URI: "${DEFAULT_URI:-http://localhost}"
+    DATABASE_DSN: "pdo-mysql://${DOCKER_DB_USERNAME:-gewis}:${DOCKER_DB_PASSWORD:-gewis}@${DOCKER_DB_HOST:-mariadb}:${DOCKER_DB_PORT:-3306}/${DOCKER_DB_DATABASE:-gewis}?serverVersion=${DOCKER_DB_VERSION:-11.8.3-mariadb}&charset=${DOCKER_DB_CHARSET:-utf8mb4}&collation=${DOCKER_DB_COLLATION:-utf8mb4_uca1400_ai_ci}"
+    GEWISDB_DATABASE_DSN: "pgsql://${GEWISDB_DB_USERNAME:-gewisdb}:${GEWISDB_DB_PASSWORD:-gewisdb}@${GEWISDB_DB_HOST:-postgres}:${GEWISDB_DB_PORT:-5432}/${GEWISDB_DB_DATABASE:-gewisdb}?sslmode=require&charset=utf8"
+    GEWISDB_API_HOST: "${GEWISDB_API_HOST:-https://database.test.gewis.nl/api}"
+    MESSENGER_TRANSPORT_DSN: "amqp://${RABBITMQ_DEFAULT_USER:-guest}:${RABBITMQ_DEFAULT_PASS:-guest}@${RABBITMQ_HOST:-rabbitmq}:${RABBITMQ_PORT:-5672}"
+    VALKEY_DSN: "valkey://${VALKEY_HOST:-valkey}:${VALKEY_PORT:-6379}"
+    MATOMO_DOMAIN: "${MATOMO_DOMAIN:-http://localhost:82}"
+    MERCURE_URL: "${MERCURE_URL:-http://web/.well-known/mercure}"
+    MERCURE_PUBLIC_URL: "${MERCURE_PUBLIC_URL:-https://localhost/.well-known/mercure}"
+    MERCURE_JWT_SECRET: "${MERCURE_JWT_SECRET:-!ChangeThisMercureHubJWTSecretKey!}"
+    MERCURE_PUBLISHER_JWT_KEY: "${MERCURE_JWT_SECRET:-!ChangeThisMercureHubJWTSecretKey!}"
+    MERCURE_SUBSCRIBER_JWT_KEY: "${MERCURE_JWT_SECRET:-!ChangeThisMercureHubJWTSecretKey!}"
+
+x-app: &app
+    restart: unless-stopped
+    networks:
+        - gewisweb_network
+    depends_on:
+        mailer:
+            condition: service_started
+        valkey:
+            condition: service_healthy
+        rabbitmq:
+            condition: service_healthy
+    environment:
+        <<: *app_environment
+
+x-worker-volumes: &worker_volumes
+    - data:/app/data
+
+x-worker: &worker
+    <<: *app
+    entrypoint: []
+    volumes: *worker_volumes
+    deploy:
+        replicas: 1
+        update_config:
+            parallelism: 1
+            delay: 15s
+            order: start-first
+    healthcheck:
+        disable: true
+
+services:
+    web:
+        <<: *app
+        volumes:
+            - caddy_data:/data
+            - caddy_config:/config
+            - data:/app/data
+        ports:
+            - target: 80
+              published: 9200
+              protocol: tcp
+    messenger-high-priority:
+        <<: *worker
+        command: [ "php", "bin/console", "messenger:consume", "high_priority", "-vv", "--time-limit=600", "--limit=32", "--memory-limit=256M" ]
+    messenger-normal-priority:
+        <<: *worker
+        command: [ "php", "bin/console", "messenger:consume", "normal_priority", "-vv", "--time-limit=600", "--limit=32", "--memory-limit=256M" ]
+    messenger-bulk:
+        <<: *worker
+        command: [ "php", "bin/console", "messenger:consume", "bulk", "-vv", "--time-limit=600", "--limit=32", "--memory-limit=256M" ]
+    scheduler-default:
+        <<: *worker
+        command: [ "php", "bin/console", "messenger:consume", "scheduler_default", "-vv", "--time-limit=600", "--limit=32", "--memory-limit=256M" ]
+    scheduler-gdpr:
+        <<: *worker
+        command: [ "php", "bin/console", "messenger:consume", "scheduler_gdpr", "-vv", "--time-limit=600", "--limit=32", "--memory-limit=256M" ]
+    mailer:
+        image: axllent/mailpit
+        restart: unless-stopped
+        hostname: mailpit
+        ports:
+            - target: 1025
+              protocol: tcp
+        networks:
+            - gewisweb_network
+    valkey:
+        image: valkey/valkey:9.0-alpine
+        restart: unless-stopped
+        hostname: valkey
+        volumes:
+            - valkey_data:/data
+        networks:
+            - gewisweb_network
+        ports:
+            - target: 6379
+              protocol: tcp
+        healthcheck:
+            test: ["CMD", "valkey-cli", "ping"]
+            start_period: 10s
+            timeout: 10s
+            interval: 5s
+            retries: 5
+    rabbitmq:
+        image: rabbitmq:4.2-alpine
+        restart: unless-stopped
+        hostname: rabbitmq
+        environment:
+            RABBITMQ_NODENAME: rabbit@rabbitmq
+        volumes:
+            - rabbitmq_data:/var/lib/rabbitmq
+        networks:
+            - gewisweb_network
+        ports:
+            - target: 5672
+              protocol: tcp
+        healthcheck:
+            test: ["CMD-SHELL", "rabbitmq-diagnostics -q check_running && rabbitmq-diagnostics -q check_local_alarms"]
+            start_period: 10s
+            interval: 10s
+            timeout: 5s
+            retries: 5
+###> symfony/mercure-bundle ###
+###< symfony/mercure-bundle ###
+
+###> doctrine/doctrine-bundle ###
+###< doctrine/doctrine-bundle ###
+
+###> symfony/mailer ###
+###< symfony/mailer ###
+
+volumes:
+    caddy_data:
+    caddy_config:
+    data:
+    rabbitmq_data:
+    valkey_data:
+###> symfony/mercure-bundle ###
+###< symfony/mercure-bundle ###
+###> doctrine/doctrine-bundle ###
+###< doctrine/doctrine-bundle ###
+
+networks:
+    gewisweb_network:

@@ -1,0 +1,7 @@
+@each $state in map-keys($theme-colors) {
+    .toast-#{$state} {
+        --#{$prefix}toast-color: var(--#{$prefix}#{$state}-text-emphasis);
+        --#{$prefix}toast-bg: var(--#{$prefix}#{$state}-bg-subtle);
+        --#{$prefix}toast-border-color: var(--#{$prefix}#{$state}-border-subtle);
+    }
+}

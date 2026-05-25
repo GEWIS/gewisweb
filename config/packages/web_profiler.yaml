@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=../../vendor/symfony/dependency-injection/Loader/schema/services.schema.json
+when@dev:
+    web_profiler:
+        toolbar: true
+
+    framework:
+        profiler:
+            collect_serializer_data: true
+
+when@test:
+    framework:
+        profiler:
+            collect: false
+            collect_serializer_data: true
