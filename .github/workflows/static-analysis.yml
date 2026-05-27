@@ -27,8 +27,13 @@ jobs:
                 uses: shivammathur/setup-php@7c071dfe9dc99bdf297fa79cb49ea005b9fcadbc # 2.37.1
                 with:
                     php-version: '8.5'
-                    extensions: amqp, apcu, gd, intl, pcntl, pdo_mysql, pdo_pgsql, pdo_sqlite, redis
-                    tools: cs2pr
+                    extensions: 'amqp, apcu, gd, intl, pcntl, pdo_mysql, pdo_pgsql, pdo_sqlite, redis'
+                    tools: 'cs2pr'
+
+            -   name: Load environment variables
+                uses: c-py/action-dotenv-to-setenv@925b5d99a3f1e4bd7b4e9928be4e2491e29891d9 # v5
+                with:
+                    env-file: .env.test
 
             -   name: Install dependencies with Composer
                 uses: ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda # 4.0.0
@@ -54,7 +59,12 @@ jobs:
                 uses: shivammathur/setup-php@7c071dfe9dc99bdf297fa79cb49ea005b9fcadbc # 2.37.1
                 with:
                     php-version: '8.5'
-                    extensions: amqp, apcu, gd, intl, pcntl, pdo_mysql, pdo_pgsql, pdo_sqlite, redis
+                    extensions: 'amqp, apcu, gd, intl, pcntl, pdo_mysql, pdo_pgsql, pdo_sqlite, redis'
+
+            -   name: Load environment variables
+                uses: c-py/action-dotenv-to-setenv@925b5d99a3f1e4bd7b4e9928be4e2491e29891d9 # v5
+                with:
+                    env-file: .env.test
 
             -   name: Install dependencies with Composer
                 uses: ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda # 4.0.0
