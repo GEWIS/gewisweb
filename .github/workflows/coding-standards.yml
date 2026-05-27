@@ -16,6 +16,7 @@ permissions: {}
 
 jobs:
     php-codesniffer:
-        uses: 'GEWIS/gewisphp-coding-standards/.github/workflows/coding-standards.yml@1b07b06aa7edae903bb724066d1f5a4a4313742e' # 2.0.1
+        uses: 'GEWIS/gewisphp-coding-standards/.github/workflows/coding-standards.yml@dce5fc259bfe9a34e9571a6992046d70d7f09911' # 2.1.0
         with:
             php-version: '8.5'
+            extensions: 'amqp, apcu, gd, intl, pcntl, pdo_mysql, pdo_pgsql, pdo_sqlite, redis'

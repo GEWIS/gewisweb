@@ -6,7 +6,7 @@
                 "package": "doctrine/orm",
                 "description": "Fix issues with SubDecisions.",
                 "url": "https://raw.githubusercontent.com/GEWIS/orm/3.6.x/1-to-1-multiple-join-columns.patch",
-                "sha256": "6372fddb2ebae12dc32b13efda8aa6caed917ca93f6a12dee0b4e311478062db",
+                "sha256": "fa1b4afdec339c252abaf55293d6aa186cb8255983e70f5a37ab2c1a155ab861",
                 "depth": 1,
                 "extra": {
                     "provenance": "root"
