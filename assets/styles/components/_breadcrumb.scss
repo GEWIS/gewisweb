@@ -1,0 +1,25 @@
+.navbar-breadcrumb {
+    --#{$prefix}breadcrumb-bg: #{$breadcrumb-bg};
+
+    position: relative;
+    z-index: 1;
+
+    &:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: var(--#{$prefix}breadcrumb-bg);
+        z-index: -1;
+    }
+}
+
+@include color-mode(gewis-night) {
+    .navbar-breadcrumb,
+    .breadcrumb {
+        --#{$prefix}breadcrumb-bg: #{$breadcrumb-bg-dark};
+        --#{$prefix}breadcrumb-item-active-color: #{$breadcrumb-active-color-dark};
+    }
+}

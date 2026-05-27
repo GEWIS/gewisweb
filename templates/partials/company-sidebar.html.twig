@@ -1,0 +1,10 @@
+<li class="nav-item {{ activeRoute == 'overview' ? 'active' : '' }}">
+    <a class="nav-link p-3" href="{{ path('company/index') }}">
+        {{ 'My Company'|trans }}
+    </a>
+</li>
+<li class="nav-item {{ activeRoute == 'security' ? 'active' : '' }}">
+    <a class="nav-link p-3" href="{{ path('company_user_security_index') }}">
+        {{ 'Security'|trans }}
+    </a>
+</li>

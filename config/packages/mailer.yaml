@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../vendor/symfony/dependency-injection/Loader/schema/services.schema.json
+framework:
+    mailer:
+        dsn: '%env(MAILER_DSN)%'
+        envelope:
+            sender: 'Study Association GEWIS <%env(MAIL_FROM_ADDRESS)%>'

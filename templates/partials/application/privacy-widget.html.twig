@@ -1,0 +1,26 @@
+<div class="privacy-widget closed">
+    <div class="widget-popout">
+        <p>{{ 'GEWIS uses functional cookies to make the website function and analytical cookies to provide you with an optimal user experience. If you do not want analytical cookies, you can opt out below.'|trans }}</p>
+        <div class="widget-opt-out">
+            <input type="checkbox" id="opt-out" name="opt-out">
+            <label for="opt-out">
+                <strong>
+                    {{ 'Analytics are currently'|trans }}
+                    <span id="opt-out-status-false" hidden>{{ 'enabled'|trans }}</span>
+                    <span id="opt-out-status-true" hidden>{{ 'disabled'|trans }}</span>
+                    <span id="opt-out-status-disabled" hidden>{{ 'disabled (Do Not Track)'|trans }}</span>
+                    <span id="opt-out-status-unavailable">{{ 'unavailable'|trans }}</span>
+                </strong>
+            </label>
+        </div>
+        <div class="widget-dismiss">
+            <a href="">
+                {{ 'Privacy Policy'|trans }}
+            </a>
+            <button class="btn btn-gewis-primary">{{ 'Continue'|trans }}</button>
+        </div>
+    </div>
+    <div class="widget-button">
+        <div class="gi gewis-base"></div>
+    </div>
+</div>

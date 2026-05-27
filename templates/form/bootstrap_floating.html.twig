@@ -1,0 +1,18 @@
+{% use 'bootstrap_5_layout.html.twig' %}
+
+{# Override the form_row block #}
+{% block form_row %}
+    <div class="form-floating mb-2">
+        {{ form_widget(form) }}
+        {{ form_label(form) }}
+        {{ form_errors(form) }}
+    </div>
+{% endblock %}
+
+{# Override widget to ensure placeholder is set (required for floating labels) #}
+{% block form_widget_simple %}
+    {% set attr = attr|merge({
+        placeholder: label is defined ? label : ''
+    }) %}
+    {{ parent() }}
+{% endblock %}

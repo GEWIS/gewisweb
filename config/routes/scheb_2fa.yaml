@@ -1,0 +1,23 @@
+# MFA challenge form (rendered by scheb's built-in form controller) and its check endpoint.
+# One pair per firewall — the company firewall pattern ^/(en|nl)/company/... requires
+# the company variants to be locale-prefixed so they're matched by that firewall.
+
+user_mfa_challenge:
+    path: /user/mfa/challenge
+    defaults:
+        _controller: scheb_two_factor.form_controller::form
+
+user_mfa_challenge_check:
+    path: /user/mfa/challenge/check
+
+company_user_mfa_challenge:
+    path: /{_locale}/company/mfa/challenge
+    defaults:
+        _controller: scheb_two_factor.form_controller::form
+    requirements:
+        _locale: '%app.locales%'
+
+company_user_mfa_challenge_check:
+    path: /{_locale}/company/mfa/challenge/check
+    requirements:
+        _locale: '%app.locales%'

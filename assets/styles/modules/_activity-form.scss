@@ -1,0 +1,29 @@
+.form-activity {
+    .signup-lists-header {
+        display: none;
+
+        @include media-breakpoint-down(sm) {
+            display: none !important;
+        }
+    }
+
+    .signup-lists,
+    .signup-list-fields {
+        @import 'form_localisable_options';
+    }
+
+    .field,
+    .signup-list {
+        margin-bottom: 2rem;
+    }
+
+    @import 'form';
+}
+
+.form-signup {
+    @import 'form';
+}
+
+.container > section {
+    padding: 0;
+}

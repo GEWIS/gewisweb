@@ -1,0 +1,41 @@
+.flag-icon-background {
+    background-size: contain;
+    background-position: 50%;
+    background-repeat: no-repeat;
+}
+
+.flag-icon {
+    background-size: contain;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    position: relative;
+    display: inline-block;
+    width: 1.125rem;
+}
+
+.flag-icon:before {
+    content: "\00a0";
+}
+
+.flag-icon-en {
+    background-image: url('../images/en.svg');
+}
+
+.flag-icon-nl {
+    background-image: url('../images/nl.svg');
+}
+
+.dropdown-menu {
+    .flag-icon {
+        margin-right: 0.375rem;
+    }
+}
+
+ul.dropdown-menu.language {
+    display: flex !important;
+    flex-direction: column;
+
+    &.reverse {
+        flex-direction: column-reverse;
+    }
+}

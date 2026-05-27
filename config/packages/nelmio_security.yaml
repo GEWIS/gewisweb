@@ -1,0 +1,112 @@
+# yaml-language-server: $schema=../../vendor/symfony/dependency-injection/Loader/schema/services.schema.json
+nelmio_security:
+    clickjacking:
+        paths:
+            '^/.*': 'SAMEORIGIN'
+        content_types: []
+        hosts: []
+
+    content_type:
+        nosniff: true
+
+    csp:
+        enabled: true
+        compat_headers: false
+        hosts: []
+        content_types: []
+        hash:
+            algorithm: sha512
+        report_logger_service: monolog.logger.security
+        enforce:
+            level1_fallback: false
+            browser_adaptive: false
+            report-uri: '%router.request_context.base_url%/csp-reports'
+            default-src: ['none']
+            style-src: ['self', 'unsafe-inline']
+            font-src: ['self', 'data:']
+            prefetch-src: ['self']
+            frame-ancestors: ['self']
+            form-action: ['self']
+            base-uri: ['self']
+
+    referrer_policy:
+        enabled: true
+        policies:
+            - strict-origin-when-cross-origin
+
+    permissions_policy:
+        enabled: true
+        policies:
+            accelerometer:
+                - https://www.youtube-nocookie.com
+                - https://player.vimeo.com
+            ambient-light-sensor: []
+            attribution-reporting: ['self']
+            autoplay: []
+            bluetooth: []
+            browsing-topics: []
+            camera: []
+            captured-surface-control: []
+            compute-pressure: []
+            cross-origin-isolated: []
+            deferred-fetch: []
+            deferred-fetch-minimal: []
+            display-capture: []
+            encrypted-media:
+                - https://www.youtube-nocookie.com
+                - https://player.vimeo.com
+            fullscreen:
+                - self
+                - https://www.youtube-nocookie.com
+                - https://player.vimeo.com
+            gamepad: []
+            geolocation: []
+            gyroscope:
+                - https://www.youtube-nocookie.com
+                - https://player.vimeo.com
+            hid: []
+            identity-credentials-get: []
+            idle-detection: []
+            interest-cohort: []
+            language-detector: []
+            local-fonts: []
+            magnetometer: []
+            microphone: []
+            midi: []
+            otp-credentials: []
+            payment: []
+            picture-in-picture:
+                - https://www.youtube-nocookie.com
+                - https://player.vimeo.com
+            publickey-credentials-create: []
+            publickey-credentials-get: []
+            screen-wake-lock: []
+            serial: []
+            speaker-selection: []
+            storage-access: []
+            summarizer: []
+            translator: []
+            usb: []
+            web-share: []
+            window-management: []
+            xr-spatial-tracking: []
+
+when@prod:
+    nelmio_security:
+        csp:
+            enforce:
+                script-src: ['self', 'strict-dynamic', 'https://analytics.gewis.nl/'] # strict-dynamic breaks API platform docs
+                img-src: ['self', 'data:', 'https://images.gewis.nl']
+                connect-src: ['self', 'https://analytics.gewis.nl/', 'https://www.googleapis.com/calendar/']
+                child-src: ['self', 'https://analytics.gewis.nl/', 'https://www.youtube-nocookie.com/embed/', 'https://player.vimeo.com/video/']
+                upgrade-insecure-requests: true
+                block-all-mixed-content: true
+
+when@dev:
+    nelmio_security:
+        csp:
+            enforce:
+                script-src: ['self', 'http://localhost:82/', 'https://analytics.test.gewis.nl/'] # strict-dynamic breaks API platform docs
+                img-src: ['self', 'data:', 'http://localhost:81/', 'https://images.test.gewis.nl']
+                connect-src: ['self', 'http://localhost:82/', 'https://analytics.test.gewis.nl/', 'https://www.googleapis.com/calendar/']
+                child-src: ['self', 'http://localhost:82/', 'https://analytics.test.gewis.nl/', 'https://www.youtube-nocookie.com/embed/', 'https://player.vimeo.com/video/']

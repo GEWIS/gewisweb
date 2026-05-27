@@ -1,0 +1,16 @@
+# See the configuration reference at https://symfony.com/bundles/SchebTwoFactorBundle/current/configuration.html
+scheb_two_factor:
+    security_tokens:
+        - Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken
+        - Symfony\Component\Security\Http\Authenticator\Token\PostAuthenticationToken
+
+    totp:
+        enabled: true
+        issuer: 'GEWIS'
+        server_name: 'GEWIS.nl'
+        leeway: 15
+        template: 'user/security/mfa/challenge.html.twig'
+
+    backup_codes:
+        enabled: true
+        manager: App\Security\User\BackupCodeManager

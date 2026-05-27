@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../vendor/symfony/dependency-injection/Loader/schema/services.schema.json
+# see https://symfony.com/doc/current/reference/configuration/framework.html
+framework:
+    secret: '%env(APP_SECRET)%'
+    trusted_headers: ['X-Forwarded-For', 'X-Forwarded-Proto']
+
+    # Note that the session will be started ONLY if you read or write from it.
+    session:
+        enabled: true
+        cookie_samesite: strict
+        name: GWS_SESSION
+        handler_id: Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler
+
+    http_client:
+        scoped_clients:
+            gewisdb.client:
+                base_uri: '%env(GEWISDB_API_HOST)%'
+                auth_bearer: '%env(GEWISDB_API_KEY)%'
+
+when@test:
+    framework:
+        test: true
+        session:
+            storage_factory_id: session.storage.factory.mock_file

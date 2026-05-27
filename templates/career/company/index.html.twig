@@ -1,0 +1,12 @@
+{% extends 'layout-sidebar.html.twig' %}
+
+{% block page_title %}{{ 'Your Company'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block sidebar_label %}{{ 'Your Company'|trans }}{% endblock %}
+
+{% block sidebar %}
+    {% include 'partials/company-sidebar.html.twig' with {'activeRoute': 'overview'} %}
+{% endblock %}
+
+{% block contents %}
+{% endblock %}

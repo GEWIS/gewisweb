@@ -1,0 +1,147 @@
+/*
+Photo
+
+*/
+
+.grid-sizer {
+    float: left;
+}
+
+.gutter-sizer {
+    width: 0.5%;
+}
+
+.grid-sizer,
+.pswp-gallery__item {
+    margin-bottom: 0.5%;
+    width: 49%;
+
+    @include media-breakpoint-up(sm) {
+        width: 33%;
+    }
+
+    @include media-breakpoint-up(md) {
+        width: 24.5%;
+    }
+
+    @include media-breakpoint-up(lg) {
+        width: 16.2%;
+    }
+}
+
+.pswp-gallery__item.potw-thumb {
+    width: 98.498%;
+
+    @include media-breakpoint-up(sm) {
+        width: 66.499%;
+    }
+
+    @include media-breakpoint-up(md) {
+        width: 49.499%;
+    }
+
+    @include media-breakpoint-up(lg) {
+        width: 32.899%;
+    }
+}
+
+.pswp-gallery__item {
+    background-color: #d40026;
+    background-image: url('/img/missing_cover.svg');
+    background-size: cover;
+    background-position: center;
+    float: left;
+}
+
+.pswp-gallery__item img {
+    display: block;
+    max-width: 100%;
+}
+
+.tagSearch {
+    border: 0;
+    outline: none;
+    box-shadow: none;
+    background: transparent;
+    border-bottom: 1px solid black;
+    color: #fff;
+    border-color: #FFF;
+    font-size: 16px;
+}
+
+.tagSearch:focus {
+    outline:none;
+}
+
+.pulsing-dot {
+    background: $brand-primary;
+    border-radius: 50%;
+    height: 12px;
+    width: 12px;
+    position: absolute;
+    right: 6px;
+    bottom: 6px;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
+    transform: scale(1);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba($brand-primary, 0.7);
+    }
+
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 10px rgba($brand-primary, 0);
+    }
+
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba($brand-primary, 0);
+    }
+}
+
+.thumbnail .caption p {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin: 0;
+}
+
+.btn-hidden {
+    display: none;
+}
+
+.selectable-photo.selected {
+    &:after {
+        content: '✔';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 3rem;
+        color: #FFFFFF;
+        background-color: transparentize($brand-primary, 0.2);
+        border-radius: 50%;
+        width: 4rem;
+        height: 4rem;
+        line-height: 4rem;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: $brand-primary;
+        opacity: 0.4;
+        cursor: pointer;
+    }
+}

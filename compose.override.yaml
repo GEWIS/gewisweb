@@ -1,0 +1,140 @@
+x-app-development: &app_development
+    image: abc.docker-registry.gewis.nl/web/gewisweb/web:development
+    build:
+        context: .
+        dockerfile: Dockerfile
+        target: gewisweb_web_development
+    environment:
+        APP_ENV: "dev"
+    depends_on:
+        mariadb:
+            condition: service_healthy
+
+x-worker-dev-volumes: &worker_dev_volumes
+    - ./:/app
+    - ./data:/app/data
+
+services:
+    web:
+        <<: *app_development
+        restart: always
+        volumes:
+            - ./:/app
+            - ./data:/app/data
+            - ./docker/web/frankenphp/Caddyfile:/etc/frankenphp/Caddyfile:ro
+            - ./docker/web/frankenphp/conf.d/20-gewisweb.dev.ini:/usr/local/etc/php/app.conf.d/20-gewisweb.dev.ini:ro
+        environment:
+            FRANKENPHP_WORKER_CONFIG: "watch"
+            FRANKENPHP_SITE_CONFIG: "hot_reload"
+            # Require `anonymous` to allow Mercure to work without auth for `hot_reload`
+            MERCURE_EXTRA_DIRECTIVES: |
+                ui
+                anonymous
+            # See https://xdebug.org/docs/all_settings#mode
+            XDEBUG_MODE: "${XDEBUG_MODE:-off}"
+        ports:
+            - target: 80
+              published: 80
+              protocol: tcp
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+        tty: true
+    messenger-high-priority: &worker_dev
+        <<: *app_development
+        volumes: *worker_dev_volumes
+    messenger-normal-priority: *worker_dev
+    messenger-bulk: *worker_dev
+    scheduler-default: *worker_dev
+    scheduler-gdpr: *worker_dev
+    rabbitmq:
+        image: rabbitmq:4.2-management-alpine
+        ports:
+            - target: 5672
+              protocol: tcp
+            - target: 15672
+              published: 15672
+              protocol: tcp
+    matomo:
+        image: abc.docker-registry.gewis.nl/web/gewisweb/matomo:latest
+        build:
+            context: docker/matomo
+            dockerfile: Dockerfile
+        restart: unless-stopped
+        env_file:
+            - .env.local
+        volumes:
+            - matomo:/var/www/html:rw
+        networks:
+            - gewisweb_network
+        ports:
+            - target: 80
+              published: 82
+              protocol: tcp
+        depends_on:
+            mariadb:
+                condition: service_healthy
+    mariadb:
+        image: mariadb:11.8
+        restart: unless-stopped
+        env_file:
+            - .env.local
+        volumes:
+            - mariadb_data:/var/lib/mysql:rw
+        configs:
+            - source: init_matomo_db
+              target: /docker-entrypoint-initdb.d/matomo.sh
+              mode: 0644
+        networks:
+            - gewisweb_network
+        healthcheck:
+            test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+            start_period: 30s
+            interval: 10s
+            timeout: 5s
+            retries: 5
+    myadmin:
+        image: phpmyadmin/phpmyadmin:latest
+        restart: unless-stopped
+        env_file:
+            -   .env.local
+        depends_on:
+            mariadb:
+                condition: service_healthy
+        networks:
+            - gewisweb_network
+        ports:
+            - target: 80
+              published: 8080
+              protocol: tcp
+    mailer:
+        image: axllent/mailpit
+        ports:
+            - target: 8025
+              published: 8025
+              protocol: tcp
+        environment:
+            MP_SMTP_AUTH_ACCEPT_ANY: 1
+            MP_SMTP_AUTH_ALLOW_INSECURE: 1
+
+###> symfony/mercure-bundle ###
+###< symfony/mercure-bundle ###
+
+###> doctrine/doctrine-bundle ###
+###< doctrine/doctrine-bundle ###
+
+###> symfony/mailer ###
+###< symfony/mailer ###
+
+configs:
+    init_matomo_db:
+        content: |
+            mysql_note "Creating Matomo database and user"
+            docker_process_sql <<'EOF'
+                CREATE DATABASE `${MATOMO_DATABASE_DBNAME:-matomo}`;
+                CREATE USER '${MATOMO_DATABASE_USERNAME:-matomo}'@'%' IDENTIFIED BY '${MATOMO_DATABASE_PASSWORD:-matomo}';
+                GRANT ALL PRIVILEGES ON `${MATOMO_DATABASE_DBNAME:-matomo}`.* TO '${MATOMO_DATABASE_USERNAME:-matomo}'@'%';
+            EOF
+
+volumes:
+    mariadb_data:
+    matomo:

@@ -1,0 +1,67 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}{{ 'Log in'|trans }}{% endblock %}
+
+{% block contents %}
+    <div class="row justify-content-center">
+        <div class="col col-sm-10 col-lg-6 col-xl-4">
+            <div class="panel">
+                <nav class="nav nav-tabs nav-fill">
+                    <a href="{{ path('user_login') }}" class="nav-link {{ ('user' === type) ? 'active' : '' }}">
+                        {{ 'Members'|trans }}
+                    </a>
+                    <a href="{{ path('company_user_login') }}" class="nav-link disabled {{ ('company_user' === type) ? 'active' : '' }}">
+                        {{ 'Companies'|trans }}
+                    </a>
+                </nav>
+                <div class="panel-heading">
+                    <h3>{{ 'Login'|trans }}</h3>
+                </div>
+                <div class="panel-body">
+                    <form method="post">
+                        {% if app.user %}
+                            <div class="mb-3">
+                                {{ 'You are logged in as'|trans }} {{ app.user.userIdentifier }}, <a href="{{ path('user_logout') }}">{{ 'Logout'|trans }}</a>
+                            </div>
+                        {% else %}
+                            <div class="form-floating mb-2">
+                                <input type="text" value="{{ last_username }}" placeholder="{{ 'jane.doe@example.com'|trans }}" name="_username" id="username" class="form-control{% if error %} is-invalid{% endif %}" autocomplete="username" required autofocus>
+                                <label for="username">
+                                    {% if 'user' === type %}
+                                        {{ 'Email address or membership number'|trans }}
+                                    {% else %}
+                                        {{ 'Email address'|trans }}
+                                    {% endif %}
+                                </label>
+                            </div>
+                            <div class="form-floating mb-2">
+                                <input type="password" placeholder="****************" name="_password" id="password" class="form-control{% if error %} is-invalid{% endif %}" autocomplete="current-password" required>
+                                <label for="password">{{ 'Password'|trans }}</label>
+                                {% if error %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ error.messageKey|trans(error.messageData, 'security') }}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
+
+                            <div class="form-floating mb-2">
+                                {% set password_reset_request = 'user' === type ? 'user_forgot_password' : 'company_user_forgot_password' %}
+                                <a href="{{ path(password_reset_request) }}">
+                                    {{ 'Forgot password?'|trans }}
+                                </a>
+                            </div>
+
+                            <div class="d-grid">
+                                <button class="btn btn-gewis-primary" type="submit">
+                                    {{ 'Sign in'|trans }}
+                                </button>
+                            </div>
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

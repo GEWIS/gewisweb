@@ -1,0 +1,123 @@
+# yaml-language-server: $schema=../../vendor/symfony/dependency-injection/Loader/schema/services.schema.json
+doctrine:
+    dbal:
+        default_connection: default
+        connections:
+            default:
+                url: '%env(resolve:DATABASE_DSN)%'
+                profiling_collect_backtrace: '%kernel.debug%'
+            # Read-only source for the GEWISDB sync (see App\Command\Decision\ImportGewisdbCommand). TLS is required by
+            # the remote server; sslmode=require lives in the DSN. PgSQL trusts the system CA bundle at /etc/ssl/certs/
+            # which is present in both the dev and production images.
+            gewisdb:
+                url: '%env(resolve:GEWISDB_DATABASE_DSN)%'
+                profiling_collect_backtrace: '%kernel.debug%'
+    orm:
+        default_entity_manager: default
+        entity_managers:
+            default:
+                connection: default
+                naming_strategy: doctrine.orm.naming_strategy.default
+                # Second-level cache. Only `Member` is annotated for caching today. The entity changes at most twice per
+                # hour, during the GEWISDB sync. It writes via raw DBAL, not the ORM, so Doctrine cannot evict the
+                # region automatically. `ImportGewisdbCommand` evicts `member_region` itself on success. Do NOT add
+                # `User` or `UserRole` to the cache: MFA toggles and admin role grants must take effect immediately.
+                second_level_cache:
+                    enabled: true
+                    log_enabled: '%kernel.debug%'
+                    region_lifetime: 1800
+                    regions:
+                        member_region:
+                            lifetime: 1800
+                            cache_driver:
+                                type: pool
+                                pool: cache.app
+                dql:
+                    numeric_functions:
+                        RAND: App\Doctrine\Functions\Rand
+                        YEAR: App\Doctrine\Functions\Year
+                mappings:
+                    Activity:
+                        type: attribute
+                        is_bundle: false
+                        dir: '%kernel.project_dir%/src/Entity/Activity'
+                        prefix: 'App\Entity\Activity'
+                        alias: Activity
+                    Application:
+                        type: attribute
+                        is_bundle: false
+                        dir: '%kernel.project_dir%/src/Entity/Application'
+                        prefix: 'App\Entity\Application'
+                        alias: Application
+                    Company:
+                        type: attribute
+                        is_bundle: false
+                        dir: '%kernel.project_dir%/src/Entity/Career'
+                        prefix: 'App\Entity\Career'
+                        alias: Company
+                    Decision:
+                        type: attribute
+                        is_bundle: false
+                        dir: '%kernel.project_dir%/src/Entity/Decision'
+                        prefix: 'App\Entity\Decision'
+                        alias: Decision
+                    Education:
+                        type: attribute
+                        is_bundle: false
+                        dir: '%kernel.project_dir%/src/Entity/Education'
+                        prefix: 'App\Entity\Education'
+                        alias: Education
+                    Frontpage:
+                        type: attribute
+                        is_bundle: false
+                        dir: '%kernel.project_dir%/src/Entity/Frontpage'
+                        prefix: 'App\Entity\Frontpage'
+                        alias: Frontpage
+                    Photo:
+                        type: attribute
+                        is_bundle: false
+                        dir: '%kernel.project_dir%/src/Entity/Photo'
+                        prefix: 'App\Entity\Photo'
+                        alias: Photo
+                    User:
+                        type: attribute
+                        is_bundle: false
+                        dir: '%kernel.project_dir%/src/Entity/User'
+                        prefix: 'App\Entity\User'
+                        alias: User
+
+when@test:
+    doctrine:
+        dbal:
+            connections:
+                default:
+                    # "TEST_TOKEN" is typically set by ParaTest
+                    dbname_suffix: '_test%env(default::TEST_TOKEN)%'
+
+when@prod:
+    doctrine:
+        dbal:
+            connections:
+                default:
+                    # TLS to the production MariaDB. CAPATH points at the system CA bundle, which is present in the
+                    # production image. These are MySQL-specific PDO attributes, so they only apply to prod.
+                    options:
+                        !php/const Pdo\Mysql::ATTR_SSL_CAPATH: '/etc/ssl/certs/'
+                        !php/const Pdo\Mysql::ATTR_SSL_VERIFY_SERVER_CERT: true
+        orm:
+            entity_managers:
+                default:
+                    query_cache_driver:
+                        type: pool
+                        pool: doctrine.system_cache_pool
+                    result_cache_driver:
+                        type: pool
+                        pool: doctrine.result_cache_pool
+
+    framework:
+        cache:
+            pools:
+                doctrine.result_cache_pool:
+                    adapter: cache.app
+                doctrine.system_cache_pool:
+                    adapter: cache.system

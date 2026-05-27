@@ -1,0 +1,58 @@
+version: 2
+updates:
+    -   package-ecosystem: "composer"
+        directory: "/"
+        schedule:
+            interval: "weekly"
+        open-pull-requests-limit: 10
+        cooldown:
+            default-days: 7
+            semver-major-days: 30
+            semver-minor-days: 7
+            semver-patch-days: 7
+            include:
+                - "*"
+        groups:
+            symfony:
+                patterns:
+                    - "symfony/*"
+                    - "symfonycasts/*"
+            doctrine:
+                patterns:
+                    - "doctrine/*"
+                    - "doctrineencryptbundle/*"
+            api-platform:
+                patterns:
+                    - "api-platform/*"
+            dev-tools:
+                patterns:
+                    - "phpstan/*"
+                    - "psalm/*"
+                    - "vimeo/psalm"
+                    - "weirdan/doctrine-psalm-plugin"
+                    - "phpunit/*"
+                    - "gewis/gewisphp-coding-standards"
+
+    -   package-ecosystem: "docker"
+        directory: "/"
+        schedule:
+            interval: "weekly"
+        open-pull-requests-limit: 10
+        cooldown:
+            default-days: 7
+
+    -   package-ecosystem: "docker"
+        directory: "/docker/matomo"
+        schedule:
+            interval: "weekly"
+        open-pull-requests-limit: 10
+        cooldown:
+            default-days: 7
+
+    -   package-ecosystem: "github-actions"
+        directory: "/"
+        schedule:
+            interval: "weekly"
+        open-pull-requests-limit: 10
+        cooldown:
+            default-days: 7

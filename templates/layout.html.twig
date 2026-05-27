@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% block pre_body %}{% endblock %}
+    {% if block('breadcrumbs') is defined and block('breadcrumbs')|trim != '' %}
+        <nav class="breadcrumb m-0 py-0" aria-label="breadcrumb">
+            <div class="container d-flex flex-row">
+                <ol class="breadcrumb m-0">
+                    {{ block('breadcrumbs')|raw }}
+                </ol>
+            </div>
+        </nav>
+    {% endif %}
+    <div class="container flex-grow-1 pt-2">
+        {% block contents %}{% endblock %}
+    </div>
+    {% include 'partials/application/footer.html.twig' %}
+{% endblock %}

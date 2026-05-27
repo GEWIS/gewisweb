@@ -1,0 +1,8 @@
+.container-admin {
+    .navbar-sidebar,
+    .navbar-breadcrumb {
+        position: sticky !important;
+        top: var(--sticky-offset);
+        z-index: ($zindex-dropdown - 1) !important;
+    }
+}

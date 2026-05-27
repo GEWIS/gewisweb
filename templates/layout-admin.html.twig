@@ -1,0 +1,17 @@
+{% extends 'layout-sidebar.html.twig' %}
+
+{% block page_title %}{{ 'Administration'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block sidebar_label %}{{ 'Administration'|trans }}{% endblock %}
+{% block sidebar %}
+    {% include 'partials/admin-sidebar.html.twig' %}
+{% endblock %}
+
+{% block breadcrumbs %}
+    <li class="breadcrumb-item active" aria-current="page">
+        <a href="{{ path('admin/index') }}">
+            {{ 'Admin'|trans }}
+        </a>
+    </li>
+    {% block admin_breadcrumbs %}{% endblock %}
+{% endblock %}

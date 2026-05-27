@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="nl" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="t.WZn.q" resname="Enter a 6-digit authenticator code or a 16-character lowercase-hex backup code.">
+        <source>Enter a 6-digit authenticator code or a 16-character lowercase-hex backup code.</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="B9r0Hn5" resname="Error">
+        <source>Error</source>
+        <target>Fout</target>
+      </trans-unit>
+      <trans-unit id="0wZ1438" resname="Please enter a password.">
+        <source>Please enter a password.</source>
+        <target state="translated">Voer een wachtwoord in.</target>
+      </trans-unit>
+      <trans-unit id="J_hnQBi" resname="Please enter your current password.">
+        <source>Please enter your current password.</source>
+        <target state="translated">Voer je huidige wachtwoord in.</target>
+      </trans-unit>
+      <trans-unit id="KiCbLpc" resname="Please enter your password.">
+        <source>Please enter your password.</source>
+        <target state="translated">Voer je wachtwoord in.</target>
+      </trans-unit>
+      <trans-unit id="EkDZsyf" resname="Please enter your verification code.">
+        <source>Please enter your verification code.</source>
+        <target state="translated">Voer je verificatiecode in.</target>
+      </trans-unit>
+      <trans-unit id="r7EPETa" resname="Your password should be at least {{ limit }} characters.">
+        <source>Your password should be at least {{ limit }} characters.</source>
+        <target state="translated">Je wachtwoord moet uit minimaal {{ limit }} tekens bestaan.</target>
+      </trans-unit>
+      <trans-unit id="rLmtBmJ" resname="Your password should be at most {{ limit }} characters.">
+        <source>Your password should be at most {{ limit }} characters.</source>
+        <target state="translated">Je wachtwoord mag uit maximaal {{ limit }} tekens bestaan.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

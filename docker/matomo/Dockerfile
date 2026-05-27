@@ -1,13 +1,14 @@
-FROM matomo:5.10-fpm-alpine AS gewisweb_matomo
+FROM matomo:5.10-apache AS gewisweb_matomo
 
-RUN apk add --no-cache --virtual .build-deps \
+RUN apt-get update && apt-get install -y --no-install-recommends \
         tzdata \
-    && apk add --no-cache --virtual .runtime-deps \
-        gettext \
+        gettext-base \
         unzip \
-    && cp /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime \
+    && ln -fs /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime \
     && echo 'Europe/Amsterdam' > /etc/timezone \
-    && apk del .build-deps
+    && dpkg-reconfigure -f noninteractive tzdata \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN curl -o LogViewer.zip \
       https://plugins.matomo.org/api/2.0/plugins/LogViewer/download/latest \
@@ -26,7 +27,3 @@ RUN curl -L -o AnalyticsOptOut.zip \
       && unzip -j AnalyticsOptOut.zip -d "AnalyticsOptOut" \
       && rm AnalyticsOptOut.zip \
       && mv AnalyticsOptOut /usr/src/matomo/plugins
-
-COPY --chown=www-data:www-data config.ini.php ./config/config.ini.php.template
-
-CMD ["/bin/sh" , "-c" , "envsubst '${MATOMO_DATABASE_HOST} ${MATOMO_DATABASE_PORT} ${MATOMO_DATABASE_USERNAME} ${MATOMO_DATABASE_PASSWORD} ${MATOMO_DATABASE_DBNAME} ${MATOMO_DATABASE_SSL}' < /var/www/html/config/config.ini.php.template > /var/www/html/config/config.ini.php && chown www-data:www-data /var/www/html/config/config.ini.php && php-fpm -F -O"]

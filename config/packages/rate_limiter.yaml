@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=../../vendor/symfony/dependency-injection/Loader/schema/services.schema.json
+framework:
+    rate_limiter:
+        password_reset_ip:
+            policy: 'fixed_window'
+            limit: 5
+            interval: '15 minutes'
+        password_reset_credentials:
+            policy: 'fixed_window'
+            limit: 10
+            interval: '1 hour'
+        sudo_confirm_ip:
+            policy: 'fixed_window'
+            limit: 10
+            interval: '15 minutes'
+        sudo_confirm_credentials:
+            policy: 'fixed_window'
+            limit: 5
+            interval: '15 minutes'

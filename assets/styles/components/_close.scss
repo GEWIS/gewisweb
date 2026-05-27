@@ -1,0 +1,5 @@
+@include color-mode(gewis-night) {
+    .btn-close {
+        --#{$prefix}btn-close-filter: #{$btn-close-filter-dark};
+    }
+}

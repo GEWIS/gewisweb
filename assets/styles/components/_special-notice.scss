@@ -1,0 +1,70 @@
+/** Make sure body is larger than viewport to allow sticky to go past 100vh. */
+body {
+    --sticky-offset: 0px;
+
+    //min-height: 100% !important;
+    //height: auto;
+
+    &:has(.special-notice) {
+        --sticky-offset: 2rem;
+
+        @include media-breakpoint-down(sm) {
+            --sticky-offset: 3.5rem;
+        }
+    }
+
+    &:has(.special-notice + .special-notice) {
+        --sticky-offset: 4rem;
+
+        @include media-breakpoint-down(sm) {
+            --sticky-offset: 7rem;
+        }
+    }
+}
+
+.special-notice {
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, 0.15), inset 0 -1px 0 rgba(255, 255, 255, 0.15);
+    font-size: 0.75rem;
+    height: 2rem;
+    padding: 0.5rem 1.5rem;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    z-index: ($zindex-dropdown - 1) !important;
+
+    @include media-breakpoint-down(sm) {
+        height: 3.5rem;
+    }
+
+    + .special-notice {
+        top: 2rem;
+
+        @include media-breakpoint-down(sm) {
+            top: 3.5rem;
+        }
+    }
+
+    // Disable box-shadow if second special notice is present.
+    &:has(+ .special-notice) {
+        box-shadow: none;
+    }
+
+    &.admin-notice {
+        background-color: var(--#{$prefix}primary-bg-subtle);
+        color: var(--#{$prefix}primary-text-emphasis);
+    }
+
+    &.impersonator-notice {
+        background-color: var(--#{$prefix}info-bg-subtle);
+        color: var(--#{$prefix}info-text-emphasis);
+    }
+
+    &.mfa-enrolment-notice {
+        background-color: var(--#{$prefix}danger-bg-subtle);
+        color: var(--#{$prefix}danger-text-emphasis);
+    }
+
+    > p {
+        margin: 0;
+    }
+}

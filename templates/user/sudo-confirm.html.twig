@@ -1,0 +1,46 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}{{ 'Confirm your identity'|trans }}{% endblock %}
+
+{% block contents %}
+<div class="row justify-content-center">
+    <div class="col col-sm-10 col-lg-6 col-xl-4">
+        <div class="panel">
+            <div class="panel-heading">
+                <h3>{{ 'Confirm your identity'|trans }}</h3>
+            </div>
+            <div class="panel-body">
+                {% if mfa_enrolment_required() %}
+                    <div class="alert alert-warning" role="alert">
+                        <p class="mb-1">
+                            <strong>{{ 'Multi-factor authentication setup required'|trans }}</strong>
+                        </p>
+                        <p class="mb-0 small">
+                            {{ 'Administrators and board members must enable multi-factor authentication before accessing privileged pages. Confirm your password below to continue to the MFA setup screen.'|trans }}
+                        </p>
+                    </div>
+                {% endif %}
+                <p class="text-muted mb-3">
+                    {% if app.user and app.user.totpAuthenticationEnabled %}
+                        {{ 'For your protection, sensitive actions require you to re-enter your password and a verification code. This confirmation stays active for 10 minutes.'|trans }}
+                    {% else %}
+                        {{ 'For your protection, sensitive actions require you to re-enter your password. This confirmation stays active for 10 minutes.'|trans }}
+                    {% endif %}
+                </p>
+                {{ form_start(form, {'action': path(sudoConfirmRoute, {'next': next}), 'attr': {'novalidate': 'novalidate'}}) }}
+                    {{ form_errors(form) }}
+                    {{ form_row(form.password) }}
+                    {% if form.mfaCode is defined %}
+                        {{ form_row(form.mfaCode) }}
+                    {% endif %}
+                    <div class="d-grid">
+                        <button class="btn btn-gewis-primary" type="submit">
+                            {{ 'Confirm'|trans }}
+                        </button>
+                    </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

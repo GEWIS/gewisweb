@@ -1,0 +1,1354 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="nl" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="Bp.9tYU" resname="%count% session(s) terminated.">
+        <source>%count% session(s) terminated.</source>
+        <target state="translated">%count% sessie(s) beëindigd.</target>
+      </trans-unit>
+      <trans-unit id="6e8o.wA" resname="API">
+        <source>API</source>
+        <target state="translated">API</target>
+      </trans-unit>
+      <trans-unit id="gDAicwp" resname="API User">
+        <source>API User</source>
+        <target state="translated">API-gebruiker</target>
+      </trans-unit>
+      <trans-unit id="sjuuPkr" resname="API User - Authenticated automated program">
+        <source>API User - Authenticated automated program</source>
+        <target state="translated">API-gebruiker - Geauthenticeerd geautomatiseerd programma</target>
+      </trans-unit>
+      <trans-unit id="8HBiOAJ" resname="API Users">
+        <source>API Users</source>
+        <target state="translated">API-gebruikers</target>
+      </trans-unit>
+      <trans-unit id="5DOuCi7" resname="Access Denied">
+        <source>Access Denied</source>
+        <target state="translated">Toegang geweigerd</target>
+      </trans-unit>
+      <trans-unit id="1_MZEgP" resname="Actions">
+        <source>Actions</source>
+        <target state="translated">Acties</target>
+      </trans-unit>
+      <trans-unit id="xRdJNw0" resname="Activated">
+        <source>Activated</source>
+        <target state="translated">Geactiveerd</target>
+      </trans-unit>
+      <trans-unit id="JjO6Nuw" resname="Active">
+        <source>Active</source>
+        <target state="translated">Actief</target>
+      </trans-unit>
+      <trans-unit id="3cz4hJw" resname="Active Member">
+        <source>Active Member</source>
+        <target state="translated">Actief lid</target>
+      </trans-unit>
+      <trans-unit id="l8mGZWD" resname="Active Member - Authenticated member and in an organ">
+        <source>Active Member - Authenticated member and in an organ</source>
+        <target state="translated">Actief lid - Geauthenticeerd lid en in een orgaan</target>
+      </trans-unit>
+      <trans-unit id="l0bDq89" resname="Active Sessions">
+        <source>Active Sessions</source>
+        <target state="translated">Actieve sessies</target>
+      </trans-unit>
+      <trans-unit id="MFqdj1z" resname="Active session(s): %count%">
+        <source>Active session(s): %count%</source>
+        <target state="translated">Actieve sessie(s): %count%</target>
+      </trans-unit>
+      <trans-unit id="5UlyZC_" resname="Activities">
+        <source>Activities</source>
+        <target>Activiteiten</target>
+      </trans-unit>
+      <trans-unit id="BFqzH5q" resname="Activity Archive">
+        <source>Activity Archive</source>
+        <target state="translated">Activiteitenarchief</target>
+      </trans-unit>
+      <trans-unit id="kIqhHtP" resname="Admin">
+        <source>Admin</source>
+        <target>Admin</target>
+      </trans-unit>
+      <trans-unit id="XWWgO9v" resname="Admin - Board">
+        <source>Admin - Board</source>
+        <target state="translated">Admin - Bestuur</target>
+      </trans-unit>
+      <trans-unit id="mC1G8HI" resname="Admin - Tom">
+        <source>Admin - Tom</source>
+        <target state="translated">Admin - Tom</target>
+      </trans-unit>
+      <trans-unit id="mpHDX6N" resname="Administration">
+        <source>Administration</source>
+        <target state="translated">Administratie</target>
+      </trans-unit>
+      <trans-unit id="8E6GnDf" resname="Administrators and board members must enable multi-factor authentication before accessing privileged pages. Confirm your password below to continue to the MFA setup screen.">
+        <source>Administrators and board members must enable multi-factor authentication before accessing privileged pages. Confirm your password below to continue to the MFA setup screen.</source>
+        <target state="translated">Beheerders en bestuursleden moeten tweestapsverificatie inschakelen voordat zij bevoegde pagina's kunnen openen. Bevestig hieronder je wachtwoord om door te gaan naar het instelscherm.</target>
+      </trans-unit>
+      <trans-unit id="Opzn5Lx" resname="Advisory Board">
+        <source>Advisory Board</source>
+        <target state="translated">RvA</target>
+      </trans-unit>
+      <trans-unit id="v_reytF" resname="Advisory Boards">
+        <source>Advisory Boards</source>
+        <target state="translated">Raden van Advies</target>
+      </trans-unit>
+      <trans-unit id="iHRAo8z" resname="Agenda">
+        <source>Agenda</source>
+        <target state="translated">Agenda</target>
+      </trans-unit>
+      <trans-unit id="EkTt9Lc" resname="All rights reserved.">
+        <source>All rights reserved.</source>
+        <target state="translated">Alle rechten voorbehouden.</target>
+      </trans-unit>
+      <trans-unit id="d1Zj68S" resname="All sessions - including this one - will be terminated immediately. You will be redirected to the login page.">
+        <source>All sessions - including this one - will be terminated immediately. You will be redirected to the login page.</source>
+        <target state="translated">Alle sessies - inclusief deze - worden onmiddellijk beëindigen. Je wordt doorgestuurd naar de inlogpagina.</target>
+      </trans-unit>
+      <trans-unit id="NAlXmI2" resname="All sessions except this one will be signed out immediately.">
+        <source>All sessions except this one will be signed out immediately.</source>
+        <target state="translated">Alle sessies, behalve deze, worden onmiddellijk beëindigd.</target>
+      </trans-unit>
+      <trans-unit id="3eX.3WJ" resname="Analytics are currently">
+        <source>Analytics are currently</source>
+        <target state="translated">Analytics zijn momenteel</target>
+      </trans-unit>
+      <trans-unit id="YZX3vFh" resname="Answers">
+        <source>Answers</source>
+        <target>Antwoorden</target>
+      </trans-unit>
+      <trans-unit id="4O0HzTK" resname="Any">
+        <source>Any</source>
+        <target state="translated">Alle</target>
+      </trans-unit>
+      <trans-unit id="pb6Dt_Y" resname="Approvals">
+        <source>Approvals</source>
+        <target state="translated">Goedkeuringen</target>
+      </trans-unit>
+      <trans-unit id="2nmL.Dq" resname="Approximate solutions welcome.">
+        <source>Approximate solutions welcome.</source>
+        <target state="translated">Benaderende oplossingen zijn welkom.</target>
+      </trans-unit>
+      <trans-unit id="YrS2U1U" resname="Archive">
+        <source>Archive</source>
+        <target>Archief</target>
+      </trans-unit>
+      <trans-unit id="L_pe5Qa" resname="Are you sure you want to terminate the session on this device?">
+        <source>Are you sure you want to terminate the session on this device?</source>
+        <target state="translated">Weet je zeker dat je de sessie op dit apparaat wilt beëindigen?</target>
+      </trans-unit>
+      <trans-unit id="FzJGBxU" resname="Association">
+        <source>Association</source>
+        <target>Vereniging</target>
+      </trans-unit>
+      <trans-unit id="cfsy_RA" resname="Auto">
+        <source>Auto</source>
+        <target>Auto</target>
+      </trans-unit>
+      <trans-unit id="z1eSmfk" resname="BM">
+        <source>BM</source>
+        <target>BV</target>
+      </trans-unit>
+      <trans-unit id="Cyjuxdd" resname="Back to overview">
+        <source>Back to overview</source>
+        <target state="translated">Terug naar overzicht</target>
+      </trans-unit>
+      <trans-unit id="9PmFUn6" resname="Backup codes">
+        <source>Backup codes</source>
+        <target state="translated">Back-upcodes</target>
+      </trans-unit>
+      <trans-unit id="TcMIY.b" resname="Backup codes are shown only at generation time. Regenerate to obtain a new set.">
+        <source>Backup codes are shown only at generation time. Regenerate to obtain a new set.</source>
+        <target state="translated">Back-upcodes worden alleen weergegeven op het moment dat ze worden aangemaakt. Genereer ze opnieuw om een nieuwe set te krijgen.</target>
+      </trans-unit>
+      <trans-unit id="xpQOd56" resname="Backup codes have already been shown. Regenerate to get a new set.">
+        <source>Backup codes have already been shown. Regenerate to get a new set.</source>
+        <target state="translated">De back-upcodes zijn al weergegeven. Genereer nieuwe back-upcodes om een nieuwe set te krijgen.</target>
+      </trans-unit>
+      <trans-unit id="aUj7.8J" resname="Backup codes regenerated. The previous codes are no longer valid.">
+        <source>Backup codes regenerated. The previous codes are no longer valid.</source>
+        <target state="translated">De back-upcodes zijn opnieuw gegenereerd. De vorige back-upcodes zijn niet langer geldig.</target>
+      </trans-unit>
+      <trans-unit id="2X9WJ_P" resname="Board">
+        <source>Board</source>
+        <target>Bestuur</target>
+      </trans-unit>
+      <trans-unit id="hyxINgW" resname="Board Meeting">
+        <source>Board Meeting</source>
+        <target state="translated">Bestuursvergadering</target>
+      </trans-unit>
+      <trans-unit id="oqXX_GF" resname="Bodies">
+        <source>Bodies</source>
+        <target state="translated">Organen</target>
+      </trans-unit>
+      <trans-unit id="pg8.RVR" resname="Brand Manager">
+        <source>Brand Manager</source>
+        <target state="translated">Brand Manager</target>
+      </trans-unit>
+      <trans-unit id="xvpeTga" resname="CM">
+        <source>CM</source>
+        <target>VV</target>
+      </trans-unit>
+      <trans-unit id="C0vtgUR" resname="Calendar">
+        <source>Calendar</source>
+        <target state="translated">Kalender</target>
+      </trans-unit>
+      <trans-unit id="EhytB4v" resname="Cancel">
+        <source>Cancel</source>
+        <target state="translated">Annuleren</target>
+      </trans-unit>
+      <trans-unit id="_xJYHxM" resname="Cancel and sign out">
+        <source>Cancel and sign out</source>
+        <target state="translated">Annuleren en uitloggen</target>
+      </trans-unit>
+      <trans-unit id="uAlSxMg" resname="Career">
+        <source>Career</source>
+        <target>Carrière</target>
+      </trans-unit>
+      <trans-unit id="U.zrbEp" resname="Career Development and External Affairs Officer">
+        <source>Career Development and External Affairs Officer</source>
+        <target state="translated">Commissaris Carrièreontwikkeling en Externe Betrekkingen</target>
+      </trans-unit>
+      <trans-unit id="wmlL5M4" resname="Categories">
+        <source>Categories</source>
+        <target state="translated">Categorieën</target>
+      </trans-unit>
+      <trans-unit id="ROsdATY" resname="Chair">
+        <source>Chair</source>
+        <target>Voorzitter</target>
+      </trans-unit>
+      <trans-unit id="_b1IGZR" resname="Chair's Meeting">
+        <source>Chair's Meeting</source>
+        <target state="translated">Voorzittersvergadering</target>
+      </trans-unit>
+      <trans-unit id="EbzUhXX" resname="Change password">
+        <source>Change password</source>
+        <target state="translated">Wijzig wachtwoord</target>
+      </trans-unit>
+      <trans-unit id="qNghuqo" resname="Close">
+        <source>Close</source>
+        <target>Sluiten</target>
+      </trans-unit>
+      <trans-unit id="c1Os74Z" resname="Commissaris Digitale Innovatie">
+        <source>Commissaris Digitale Innovatie</source>
+        <target state="translated">Commissaris Digitale Innovatie</target>
+      </trans-unit>
+      <trans-unit id="z.j.Afi" resname="Commissaris Verenigingsontwikkeling">
+        <source>Commissaris Verenigingsontwikkeling</source>
+        <target state="translated">Commissaris Verenigingsontwikkeling</target>
+      </trans-unit>
+      <trans-unit id="ezI1TzC" resname="Committee">
+        <source>Committee</source>
+        <target>Commissie</target>
+      </trans-unit>
+      <trans-unit id="8PCvE1G" resname="Committees">
+        <source>Committees</source>
+        <target>Commissies</target>
+      </trans-unit>
+      <trans-unit id="BSDVdh6" resname="Companies">
+        <source>Companies</source>
+        <target state="translated">Bedrijven</target>
+      </trans-unit>
+      <trans-unit id="hTJSvu8" resname="Company">
+        <source>Company</source>
+        <target state="translated">Bedrijf</target>
+      </trans-unit>
+      <trans-unit id="n7uHqeM" resname="Company - Authenticated company representative">
+        <source>Company - Authenticated company representative</source>
+        <target state="translated">Bedrijf - Geauthenticeerde bedrijfsvertegenwoordiger</target>
+      </trans-unit>
+      <trans-unit id="M5qkgjU" resname="Company Admin">
+        <source>Company Admin</source>
+        <target state="translated">Bedrijfsadministratie</target>
+      </trans-unit>
+      <trans-unit id="ASrlzHa" resname="Company Admin - C4 members">
+        <source>Company Admin - C4 members</source>
+        <target state="translated">Bedrijfsadministratie - C4 leden</target>
+      </trans-unit>
+      <trans-unit id="sX0owWl" resname="Company Users">
+        <source>Company Users</source>
+        <target state="translated">Bedrijfsgebruikers</target>
+      </trans-unit>
+      <trans-unit id="EcOGjmx" resname="Complete agenda">
+        <source>Complete agenda</source>
+        <target state="translated">Volledige agenda</target>
+      </trans-unit>
+      <trans-unit id="stB18m_" resname="Confidential Contact Person (CCP)">
+        <source>Confidential Contact Person (CCP)</source>
+        <target state="translated">Vertrouwenscontactpersonen (VCP)</target>
+      </trans-unit>
+      <trans-unit id="pl9ndg." resname="Confirm">
+        <source>Confirm</source>
+        <target state="translated">Bevestigen</target>
+      </trans-unit>
+      <trans-unit id="aF4KZmI" resname="Confirm your identity">
+        <source>Confirm your identity</source>
+        <target state="translated">Bevestig je identiteit</target>
+      </trans-unit>
+      <trans-unit id="4iRtdnb" resname="Contact">
+        <source>Contact</source>
+        <target>Contact</target>
+      </trans-unit>
+      <trans-unit id="Xj30MRg" resname="Continue">
+        <source>Continue</source>
+        <target state="translated">Doorgaan</target>
+      </trans-unit>
+      <trans-unit id="lmE8cjL" resname="Courses">
+        <source>Courses</source>
+        <target state="translated">Vakken</target>
+      </trans-unit>
+      <trans-unit id="_mm3l_9" resname="Create">
+        <source>Create</source>
+        <target state="translated">Aanmaken</target>
+      </trans-unit>
+      <trans-unit id="BGi6GGx" resname="Create Activity">
+        <source>Create Activity</source>
+        <target state="translated">Activiteit maken</target>
+      </trans-unit>
+      <trans-unit id="ukaFrcB" resname="Current password">
+        <source>Current password</source>
+        <target state="translated">Huidig wachtwoord</target>
+      </trans-unit>
+      <trans-unit id="jGZfEE1" resname="Dark">
+        <source>Dark</source>
+        <target>Donker</target>
+      </trans-unit>
+      <trans-unit id="l9KZflr" resname="Deleted">
+        <source>Deleted</source>
+        <target state="translated">Verwijderd</target>
+      </trans-unit>
+      <trans-unit id="gsJV736" resname="Details">
+        <source>Details</source>
+        <target state="translated">Details</target>
+      </trans-unit>
+      <trans-unit id="7chmnoI" resname="Devices where your account is currently signed in. If you notice an unrecognised device or location, terminate that session immediately and consider changing your password.">
+        <source>Devices where your account is currently signed in. If you notice an unrecognised device or location, terminate that session immediately and consider changing your password.</source>
+        <target state="translated">Apparaten waarop je momenteel bent ingelogd. Als je een onbekend apparaat of een onbekende locatie opmerkt, beëindig dan onmiddellijk die sessie af en overweeg om je wachtwoord te wijzigen.</target>
+      </trans-unit>
+      <trans-unit id="N.JrwS." resname="Digital Infrastructure Officer">
+        <source>Digital Infrastructure Officer</source>
+        <target state="translated">Commissaris Digitale Infrastructuur</target>
+      </trans-unit>
+      <trans-unit id="N5u1_Kl" resname="Disable MFA">
+        <source>Disable MFA</source>
+        <target state="translated">MFA uitschakelen</target>
+      </trans-unit>
+      <trans-unit id="T3lIoBD" resname="Disable MFA on your account? Your existing TOTP secret and backup codes will be discarded.">
+        <source>Disable MFA on your account? Your existing TOTP secret and backup codes will be discarded.</source>
+        <target state="translated">Wil je MFA voor je account uitschakelen? Je huidige TOTP-code en back-upcodes worden dan verwijderd.</target>
+      </trans-unit>
+      <trans-unit id="qkz64jE" resname="Disable MFA?">
+        <source>Disable MFA?</source>
+        <target state="translated">MFA uitschakelen?</target>
+      </trans-unit>
+      <trans-unit id="tK64T0a" resname="Disabled">
+        <source>Disabled</source>
+        <target state="translated">Uitgeschakeld</target>
+      </trans-unit>
+      <trans-unit id="AdxkL_L" resname="Dutch">
+        <source>Dutch</source>
+        <target>Nederlands</target>
+      </trans-unit>
+      <trans-unit id="qVKCezd" resname="Education">
+        <source>Education</source>
+        <target>Educatie</target>
+      </trans-unit>
+      <trans-unit id="ktotS9I" resname="Education Officer">
+        <source>Education Officer</source>
+        <target state="translated">Onderwijscommissaris</target>
+      </trans-unit>
+      <trans-unit id="JZi_tm0" resname="Email">
+        <source>Email</source>
+        <target state="translated">E-mail</target>
+      </trans-unit>
+      <trans-unit id="3PkXx5O" resname="Email address">
+        <source>Email address</source>
+        <target state="translated">E-mailadres</target>
+      </trans-unit>
+      <trans-unit id="OP2PiOv" resname="Email address or membership number">
+        <source>Email address or membership number</source>
+        <target state="translated">E-mailadres of lidmaatschapsnummer</target>
+      </trans-unit>
+      <trans-unit id="PE3U1oD" resname="Enable MFA">
+        <source>Enable MFA</source>
+        <target state="translated">MFA inschakelen</target>
+      </trans-unit>
+      <trans-unit id="sC.duc0" resname="Enable MFA now">
+        <source>Enable MFA now</source>
+        <target state="translated">Schakel tweestapsverificatie nu in</target>
+      </trans-unit>
+      <trans-unit id="fL.cASb" resname="Enable TOTP-based MFA">
+        <source>Enable TOTP-based MFA</source>
+        <target state="translated">TOTP-gebaseerde MFA inschakelen</target>
+      </trans-unit>
+      <trans-unit id="FdpiKgY" resname="Enabled">
+        <source>Enabled</source>
+        <target state="translated">Ingeschakeld</target>
+      </trans-unit>
+      <trans-unit id="_ujLe_1" resname="Ends">
+        <source>Ends</source>
+        <target state="translated">Eindigt</target>
+      </trans-unit>
+      <trans-unit id="NR2RdXC" resname="English">
+        <source>English</source>
+        <target>Engels</target>
+      </trans-unit>
+      <trans-unit id="t.WZn.q" resname="Enter a 6-digit authenticator code or a 16-character lowercase-hex backup code.">
+        <source>Enter a 6-digit authenticator code or a 16-character lowercase-hex backup code.</source>
+        <target state="translated">Voer een 6-cijferige verificatiecode of een 16-tekens lange back-upcode in kleine letters (hexadecimaal) in.</target>
+      </trans-unit>
+      <trans-unit id="GbzeuAe" resname="Enter the 6-digit code from your authenticator app, or one of your saved backup codes.">
+        <source>Enter the 6-digit code from your authenticator app, or one of your saved backup codes.</source>
+        <target state="translated">Voer de 6-cijferige code in die je in je authenticator-app hebt ontvangen, of een van je opgeslagen back-upcodes.</target>
+      </trans-unit>
+      <trans-unit id="Vw9Ze4y" resname="Enter the 6-digit code shown by the app to confirm the link.">
+        <source>Enter the 6-digit code shown by the app to confirm the link.</source>
+        <target state="translated">Voer de 6-cijferige code in die in de app wordt weergegeven om de koppeling te bevestigen.</target>
+      </trans-unit>
+      <trans-unit id="U3hnjYE" resname="Every active session for this user will be terminated immediately.">
+        <source>Every active session for this user will be terminated immediately.</source>
+        <target state="translated">Alle actieve sessies van deze gebruiker worden direct beëindigd.</target>
+      </trans-unit>
+      <trans-unit id="xVvK.Uw" resname="Every input should map to an output. This one got lost.">
+        <source>Every input should map to an output. This one got lost.</source>
+        <target state="translated">Elke invoer moet een uitvoer als beeld hebben. Deze is verloren gegaan.</target>
+      </trans-unit>
+      <trans-unit id="q6.QUqh" resname="Exceptional Members">
+        <source>Exceptional Members</source>
+        <target state="translated">Uitzonderlijke leden</target>
+      </trans-unit>
+      <trans-unit id="eQiPQYt" resname="Exit impersonation">
+        <source>Exit impersonation</source>
+        <target state="translated">Verlaat de imitatiemodus</target>
+      </trans-unit>
+      <trans-unit id="srrpRxM" resname="Expired">
+        <source>Expired</source>
+        <target state="translated">Verlopen</target>
+      </trans-unit>
+      <trans-unit id="1oWfeif" resname="Expires %date%">
+        <source>Expires %date%</source>
+        <target state="translated">Verloopt %date%</target>
+      </trans-unit>
+      <trans-unit id="cq.wN9l" resname="External">
+        <source>External</source>
+        <target state="translated">Extern</target>
+      </trans-unit>
+      <trans-unit id="IYFdRYH" resname="External Affairs Officer">
+        <source>External Affairs Officer</source>
+        <target state="translated">Commissaris Externe Betrekkingen</target>
+      </trans-unit>
+      <trans-unit id="Lln6wAG" resname="FAQ">
+        <source>FAQ</source>
+        <target state="translated">FAQ</target>
+      </trans-unit>
+      <trans-unit id="idkT3DH" resname="Family name">
+        <source>Family name</source>
+        <target state="translated">Achternaam</target>
+      </trans-unit>
+      <trans-unit id="sQ4WiFu" resname="Featured">
+        <source>Featured</source>
+        <target state="translated">Uitgelicht</target>
+      </trans-unit>
+      <trans-unit id="2ul.IfN" resname="Final">
+        <source>Final</source>
+        <target state="translated">Eindexamen</target>
+      </trans-unit>
+      <trans-unit id="fDtYR1B" resname="Financial Audit Committee">
+        <source>Financial Audit Committee</source>
+        <target state="translated">KCC</target>
+      </trans-unit>
+      <trans-unit id="LoKQJVt" resname="Financial Audit Committees">
+        <source>Financial Audit Committees</source>
+        <target state="translated">Kas Controle Commissies</target>
+      </trans-unit>
+      <trans-unit id="O84mkAK" resname="Foosball Coordinator">
+        <source>Foosball Coordinator</source>
+        <target state="translated">Tafelvoetbalcoordinator</target>
+      </trans-unit>
+      <trans-unit id="8KTGDx6" resname="For your protection, sensitive actions require you to re-enter your password and a verification code. This confirmation stays active for 10 minutes.">
+        <source>For your protection, sensitive actions require you to re-enter your password and a verification code. This confirmation stays active for 10 minutes.</source>
+        <target state="translated">Voor jouw veiligheid moet je bij gevoelige handelingen opnieuw je wachtwoord en een verificatiecode invoeren. Deze bevestiging blijft 10 minuten geldig.</target>
+      </trans-unit>
+      <trans-unit id="umW8Rcp" resname="For your protection, sensitive actions require you to re-enter your password. This confirmation stays active for 10 minutes.">
+        <source>For your protection, sensitive actions require you to re-enter your password. This confirmation stays active for 10 minutes.</source>
+        <target state="translated">Voor jouw veiligheid moet je bij gevoelige handelingen opnieuw je wachtwoord invoeren. Deze bevestiging blijft 10 minuten geldig.</target>
+      </trans-unit>
+      <trans-unit id="dpBHSVe" resname="Forbidden">
+        <source>Forbidden</source>
+        <target state="translated">Verboden</target>
+      </trans-unit>
+      <trans-unit id="DxQEefv" resname="Forgot password?">
+        <source>Forgot password?</source>
+        <target state="translated">Wachtwoord vergeten?</target>
+      </trans-unit>
+      <trans-unit id="rQZe0DG" resname="Fraternities">
+        <source>Fraternities</source>
+        <target>Disputen</target>
+      </trans-unit>
+      <trans-unit id="TZOmMlF" resname="Fraternity">
+        <source>Fraternity</source>
+        <target>Dispuut</target>
+      </trans-unit>
+      <trans-unit id="kCLhNY7" resname="Frontpage">
+        <source>Frontpage</source>
+        <target state="translated">Voorpagina</target>
+      </trans-unit>
+      <trans-unit id="gfAnVGd" resname="GEWIS room impression">
+        <source>GEWIS room impression</source>
+        <target state="translated">GEWIS-ruimte</target>
+      </trans-unit>
+      <trans-unit id="BNCTQhu" resname="GEWIS song">
+        <source>GEWIS song</source>
+        <target state="translated">GEWIS-lied</target>
+      </trans-unit>
+      <trans-unit id="vASIhYc" resname="GEWIS uses functional cookies to make the website function and analytical cookies to provide you with an optimal user experience. If you do not want analytical cookies, you can opt out below.">
+        <source>GEWIS uses functional cookies to make the website function and analytical cookies to provide you with an optimal user experience. If you do not want analytical cookies, you can opt out below.</source>
+        <target state="translated">GEWIS gebruikt functionele cookies om de website te laten functioneren en analytische cookies om u een optimale gebruikerservaring te bieden. Als u geen analytische cookies wilt, kunt u zich hieronder afmelden.</target>
+      </trans-unit>
+      <trans-unit id="iEhlMpI" resname="GMM">
+        <source>GMM</source>
+        <target>ALV</target>
+      </trans-unit>
+      <trans-unit id="f2Kf5uH" resname="GMM Bodies">
+        <source>GMM Bodies</source>
+        <target state="translated">ALV-organen</target>
+      </trans-unit>
+      <trans-unit id="WTUrBlo" resname="GMM Committee">
+        <source>GMM Committee</source>
+        <target state="translated">ALV-Commissie</target>
+      </trans-unit>
+      <trans-unit id="uXUc7Gf" resname="GMM Committees">
+        <source>GMM Committees</source>
+        <target state="translated">ALV-Commissies</target>
+      </trans-unit>
+      <trans-unit id="xVOPm09" resname="GMM Taskforce">
+        <source>GMM Taskforce</source>
+        <target state="translated">ALV-Werkgroep</target>
+      </trans-unit>
+      <trans-unit id="bNBn1b6" resname="GMM Taskforces">
+        <source>GMM Taskforces</source>
+        <target state="translated">ALV-Werkgroepen</target>
+      </trans-unit>
+      <trans-unit id="xj3o.Ir" resname="General Members Meeting">
+        <source>General Members Meeting</source>
+        <target state="translated">Algemene Ledenvergadering</target>
+      </trans-unit>
+      <trans-unit id="3cwxgDa" resname="Given name">
+        <source>Given name</source>
+        <target state="translated">Voornaam</target>
+      </trans-unit>
+      <trans-unit id="USDCC8h" resname="Google Calendar">
+        <source>Google Calendar</source>
+        <target state="translated">Google Calendar</target>
+      </trans-unit>
+      <trans-unit id="668IPfl" resname="Graduate">
+        <source>Graduate</source>
+        <target state="translated">Afgestudeerde</target>
+      </trans-unit>
+      <trans-unit id="DGuX8O." resname="Graduate - Authenticated graduate">
+        <source>Graduate - Authenticated graduate</source>
+        <target state="translated">Afgestudeerde - Geauthenticeerde afgestudeerde</target>
+      </trans-unit>
+      <trans-unit id="p.fuLaB" resname="Guest">
+        <source>Guest</source>
+        <target state="translated">Gast</target>
+      </trans-unit>
+      <trans-unit id="QtetRCl" resname="Guest - Anyone who can access the website">
+        <source>Guest - Anyone who can access the website</source>
+        <target state="translated">Gast - Iedereen die toegang heeft tot de website</target>
+      </trans-unit>
+      <trans-unit id="bMJFh5R" resname="Hidden">
+        <source>Hidden</source>
+        <target state="translated">Verborgen</target>
+      </trans-unit>
+      <trans-unit id="ExFLJqx" resname="Home">
+        <source>Home</source>
+        <target state="translated">Home</target>
+      </trans-unit>
+      <trans-unit id="NuXVaKM" resname="Home address (parents)">
+        <source>Home address (parents)</source>
+        <target state="translated">Thuisadres (ouders)</target>
+      </trans-unit>
+      <trans-unit id="yfbliCe" resname="Honorary">
+        <source>Honorary</source>
+        <target state="translated">Erelid</target>
+      </trans-unit>
+      <trans-unit id="DGNp8kI" resname="Housing">
+        <source>Housing</source>
+        <target state="translated">Huisvesting</target>
+      </trans-unit>
+      <trans-unit id="ryOBxJh" resname="I saved them">
+        <source>I saved them</source>
+        <target state="translated">Ik heb ze bewaard</target>
+      </trans-unit>
+      <trans-unit id="9ZARzCI" resname="If there is an account associated with your email address, an email has just been sent containing a link that will allow you to reset your password. If you do not receive an email, please check your spam folder or try again later.">
+        <source>If there is an account associated with your email address, an email has just been sent containing a link that will allow you to reset your password. If you do not receive an email, please check your spam folder or try again later.</source>
+        <target state="translated">Als er een account aan jouw e-mailadres is gekoppeld, is er zojuist een e-mail verzonden met een link waarmee je jouw wachtwoord kunt resetten. Als je geen e-mail ontvangt, controleer dan jouw spamfolder of probeer het later nog eens.</target>
+      </trans-unit>
+      <trans-unit id="qIOTHsM" resname="If this keeps occurring, please contact the Application Management Committee and let us know what you were doing when this error occurred. We will fix it as soon as possible.">
+        <source>If this keeps occurring, please contact the Application Management Committee and let us know what you were doing when this error occurred. We will fix it as soon as possible.</source>
+        <target state="translated">Als deze fout zich blijft voordoen, neem dan contact op met de ApplicatieBeheerCommissie en laat ons weten wat je aan het doen was toen deze fout optrad. We zullen het zo snel mogelijk oplossen.</target>
+      </trans-unit>
+      <trans-unit id="IBCUP7U" resname="If you entered a backup code, try the next unused one from your saved list. Each backup code works only once.">
+        <source>If you entered a backup code, try the next unused one from your saved list. Each backup code works only once.</source>
+        <target state="translated">Als je een back-upcode hebt ingevoerd, probeer dan de volgende ongebruikte back-upcode uit je lijst met opgeslagen back-upcodes. Elke back-upcode kan maar één keer worden gebruikt.</target>
+      </trans-unit>
+      <trans-unit id="AZfPAZa" resname="Improve security by signing out of other devices.">
+        <source>Improve security by signing out of other devices.</source>
+        <target state="translated">Verhoog de veiligheid door je op andere apparaten af te melden.</target>
+      </trans-unit>
+      <trans-unit id="ybqiXt5" resname="Inactive">
+        <source>Inactive</source>
+        <target state="translated">Inactief</target>
+      </trans-unit>
+      <trans-unit id="NJIpFla" resname="Inactive Member">
+        <source>Inactive Member</source>
+        <target state="translated">Inactief Lid</target>
+      </trans-unit>
+      <trans-unit id="y0AxjNP" resname="Incorrect credentials.">
+        <source>Incorrect credentials.</source>
+        <target state="translated">Onjuiste inloggegevens.</target>
+      </trans-unit>
+      <trans-unit id="TYw82E6" resname="Incorrect current password.">
+        <source>Incorrect current password.</source>
+        <target state="translated">Het huidige wachtwoord is onjuist.</target>
+      </trans-unit>
+      <trans-unit id="502v5.l" resname="Infimum">
+        <source>Infimum</source>
+        <target state="translated">Infimum</target>
+      </trans-unit>
+      <trans-unit id="rJermFn" resname="Information Officer">
+        <source>Information Officer</source>
+        <target state="translated">Commissaris Kennisbeheer</target>
+      </trans-unit>
+      <trans-unit id="xtzVT5c" resname="Inkoper">
+        <source>Inkoper</source>
+        <target state="translated">Inkoper</target>
+      </trans-unit>
+      <trans-unit id="sn1Zy7." resname="Innovation Officer">
+        <source>Innovation Officer</source>
+        <target state="translated">Commissaris Innovatie</target>
+      </trans-unit>
+      <trans-unit id="Cwna8gR" resname="Install an authenticator app such as Ente Auth or 2FAS on your phone.">
+        <source>Install an authenticator app such as Ente Auth or 2FAS on your phone.</source>
+        <target state="translated">Installeer een authenticatie-app zoals Ente Auth of 2FAS op je telefoon.</target>
+      </trans-unit>
+      <trans-unit id="j3ZMNbB" resname="Interim">
+        <source>Interim</source>
+        <target state="translated">Tussentijdse toets</target>
+      </trans-unit>
+      <trans-unit id="_mXxQOc" resname="Internal Affairs Officer">
+        <source>Internal Affairs Officer</source>
+        <target state="translated">Commissaris Interne Betrekkingen</target>
+      </trans-unit>
+      <trans-unit id="eJBnsvx" resname="Internal Server Error">
+        <source>Internal Server Error</source>
+        <target state="translated">Interne fout van de server</target>
+      </trans-unit>
+      <trans-unit id="HEXPss6" resname="Is 18+?">
+        <source>Is 18+?</source>
+        <target state="translated">Is 18+?</target>
+      </trans-unit>
+      <trans-unit id="aNFdXt2" resname="It exists only in the complex plane of wishful thinking.">
+        <source>It exists only in the complex plane of wishful thinking.</source>
+        <target state="translated">Het bestaat alleen in het complexe vlak van wensdenken.</target>
+      </trans-unit>
+      <trans-unit id="T5F3zK_" resname="It had no references left.">
+        <source>It had no references left.</source>
+        <target state="translated">Er waren geen referenties meer.</target>
+      </trans-unit>
+      <trans-unit id="e04dGNe" resname="It is getting closer... but it will never quite get there.">
+        <source>It is getting closer... but it will never quite get there.</source>
+        <target state="translated">Het komt steeds dichterbij... maar het zal er nooit helemaal komen.</target>
+      </trans-unit>
+      <trans-unit id="KxP44Mh" resname="It is pointing somewhere. Just not here.">
+        <source>It is pointing somewhere. Just not here.</source>
+        <target state="translated">Het verwijst ergens naar. Alleen niet hier.</target>
+      </trans-unit>
+      <trans-unit id="ZMKVhSD" resname="It was declared, but never initialised.">
+        <source>It was declared, but never initialised.</source>
+        <target state="translated">Het werd gedeclareerd, maar nooit geïnitialiseerd.</target>
+      </trans-unit>
+      <trans-unit id="FPIW94w" resname="Jobs">
+        <source>Jobs</source>
+        <target state="translated">Vacatures</target>
+      </trans-unit>
+      <trans-unit id="n9QDfSe" resname="LEGACY Education Officer">
+        <source>LEGACY Education Officer</source>
+        <target state="translated">Onderwijscommissaris</target>
+      </trans-unit>
+      <trans-unit id="YqI5TFM" resname="Labels">
+        <source>Labels</source>
+        <target state="translated">Labels</target>
+      </trans-unit>
+      <trans-unit id="5q6OTdQ" resname="Language">
+        <source>Language</source>
+        <target state="translated">Taal</target>
+      </trans-unit>
+      <trans-unit id="7kVSOuO" resname="Last seen %date%">
+        <source>Last seen %date%</source>
+        <target state="translated">Laatst gezien op %date%</target>
+      </trans-unit>
+      <trans-unit id="7GDr10z" resname="Light">
+        <source>Light</source>
+        <target state="translated">Licht</target>
+      </trans-unit>
+      <trans-unit id="Dz0Nyiu" resname="Links">
+        <source>Links</source>
+        <target state="translated">Links</target>
+      </trans-unit>
+      <trans-unit id="sRyfMnf" resname="Loading an infimum...">
+        <source>Loading an infimum...</source>
+        <target state="translated">Een infimum aan het laden...</target>
+      </trans-unit>
+      <trans-unit id="RxIIlzy" resname="Log in">
+        <source>Log in</source>
+        <target state="translated">Inloggen</target>
+      </trans-unit>
+      <trans-unit id="N_oO8pX" resname="Log out everywhere">
+        <source>Log out everywhere</source>
+        <target state="translated">Overal uitloggen</target>
+      </trans-unit>
+      <trans-unit id="rwKAc38" resname="Log out everywhere?">
+        <source>Log out everywhere?</source>
+        <target state="translated">Overal uitloggen?</target>
+      </trans-unit>
+      <trans-unit id="rafP5aV" resname="Log out other devices">
+        <source>Log out other devices</source>
+        <target state="translated">Andere apparaten uitloggen</target>
+      </trans-unit>
+      <trans-unit id="_6zDG5l" resname="Log out other devices?">
+        <source>Log out other devices?</source>
+        <target state="translated">Andere apparaten uitloggen?</target>
+      </trans-unit>
+      <trans-unit id="4f3WEva" resname="Login">
+        <source>Login</source>
+        <target state="translated">Inloggen</target>
+      </trans-unit>
+      <trans-unit id="JKl2Twv" resname="Logout">
+        <source>Logout</source>
+        <target state="translated">Uitloggen</target>
+      </trans-unit>
+      <trans-unit id="Tej.Egk" resname="MFA">
+        <source>MFA</source>
+        <target state="translated">MFA</target>
+      </trans-unit>
+      <trans-unit id="YrnfPpK" resname="MFA disabled.">
+        <source>MFA disabled.</source>
+        <target state="translated">MFA is uitgeschakeld.</target>
+      </trans-unit>
+      <trans-unit id="MSIev_4" resname="MFA enabled. Save your backup codes now - they will not be shown again.">
+        <source>MFA enabled. Save your backup codes now - they will not be shown again.</source>
+        <target state="translated">MFA is ingeschakeld. Sla je back-upcodes nu op - ze worden daarna niet meer weergegeven.</target>
+      </trans-unit>
+      <trans-unit id="5NECjUT" resname="MFA reset and all sessions terminated.">
+        <source>MFA reset and all sessions terminated.</source>
+        <target state="translated">Tweestapsverificatie hersteld en alle sessies beëindigd.</target>
+      </trans-unit>
+      <trans-unit id="ptibmQ1" resname="Made with &lt;3 by the ApplicatieBeheerCommissie and Web Commissie (2013 - 2022).">
+        <source>Made with &lt;3 by the ApplicatieBeheerCommissie and Web Commissie (2013 - 2022).</source>
+        <target state="translated"><![CDATA[Met <3 gemaakt door de ApplicatieBeheerCommissie en Web Commissie (2013 - 2022).]]></target>
+      </trans-unit>
+      <trans-unit id="Vuyl_8H" resname="Mail address">
+        <source>Mail address</source>
+        <target state="translated">Postadres</target>
+      </trans-unit>
+      <trans-unit id="Cg3S2oo" resname="Member">
+        <source>Member</source>
+        <target state="translated">Lid</target>
+      </trans-unit>
+      <trans-unit id="Hk7eHA6" resname="Member - Authenticated member">
+        <source>Member - Authenticated member</source>
+        <target state="translated">Lid - Ingelogd lid</target>
+      </trans-unit>
+      <trans-unit id="Q.K16.b" resname="Member number">
+        <source>Member number</source>
+        <target state="translated">Lidmaatschapsnummer</target>
+      </trans-unit>
+      <trans-unit id="28HXF2a" resname="Members">
+        <source>Members</source>
+        <target state="translated">Leden</target>
+      </trans-unit>
+      <trans-unit id="8WkxWd7" resname="Membership number">
+        <source>Membership number</source>
+        <target state="translated">Lidmaatschapsnummer</target>
+      </trans-unit>
+      <trans-unit id="3MPObnt" resname="Membership type">
+        <source>Membership type</source>
+        <target state="translated">Type lidmaatschap</target>
+      </trans-unit>
+      <trans-unit id="p4brRXh" resname="Middle name">
+        <source>Middle name</source>
+        <target state="translated">Tussenvoegsels</target>
+      </trans-unit>
+      <trans-unit id="2khgmbM" resname="Multi-factor authentication">
+        <source>Multi-factor authentication</source>
+        <target state="translated">Multi-factor authenticatie</target>
+      </trans-unit>
+      <trans-unit id="olFlSnD" resname="Multi-factor authentication adds a second step at login: in addition to your password, you enter a time-based code from an authenticator app.">
+        <source>Multi-factor authentication adds a second step at login: in addition to your password, you enter a time-based code from an authenticator app.</source>
+        <target state="translated">Bij multi-factor authenticatie wordt er een tweede stap toegevoegd bij het inloggen: naast je wachtwoord voer je een tijdgebonden code in uit een authenticatie-app.</target>
+      </trans-unit>
+      <trans-unit id="kJyiVGV" resname="Multi-factor authentication cannot be disabled while it is required for your role.">
+        <source>Multi-factor authentication cannot be disabled while it is required for your role.</source>
+        <target state="translated">Tweestapsverificatie kan niet worden uitgeschakeld zolang deze voor jouw rol verplicht is.</target>
+      </trans-unit>
+      <trans-unit id="ssXNW8n" resname="Multi-factor authentication is not enabled for this user.">
+        <source>Multi-factor authentication is not enabled for this user.</source>
+        <target state="translated">Tweestapsverificatie is niet ingeschakeld voor deze gebruiker.</target>
+      </trans-unit>
+      <trans-unit id="8VCCb8O" resname="Multi-factor authentication is required for your role. Privileged actions are unavailable until you enable it.">
+        <source>Multi-factor authentication is required for your role. Privileged actions are unavailable until you enable it.</source>
+        <target state="translated">Tweestapsverificatie is verplicht voor jouw rol. Bevoegde acties zijn niet beschikbaar totdat je het inschakelt.</target>
+      </trans-unit>
+      <trans-unit id="IRYW7Yk" resname="Multi-factor authentication setup required">
+        <source>Multi-factor authentication setup required</source>
+        <target state="translated">Tweestapsverificatie instellen vereist</target>
+      </trans-unit>
+      <trans-unit id="eV413P5" resname="My Activities">
+        <source>My Activities</source>
+        <target state="translated">Mijn activiteiten</target>
+      </trans-unit>
+      <trans-unit id="EBFrhBY" resname="My Company">
+        <source>My Company</source>
+        <target state="translated">Mijn bedrijf</target>
+      </trans-unit>
+      <trans-unit id="a2XjW3Q" resname="My Information">
+        <source>My Information</source>
+        <target state="translated">Mijn gegevens</target>
+      </trans-unit>
+      <trans-unit id="Y4A_lV7" resname="My Photos">
+        <source>My Photos</source>
+        <target state="translated">Mijn foto's</target>
+      </trans-unit>
+      <trans-unit id="wbMeKOh" resname="Name">
+        <source>Name</source>
+        <target state="translated">Naam</target>
+      </trans-unit>
+      <trans-unit id="SSAtsR6" resname="Navigation">
+        <source>Navigation</source>
+        <target state="translated">Navigatie</target>
+      </trans-unit>
+      <trans-unit id="Zm.jZiK" resname="New password">
+        <source>New password</source>
+        <target state="translated">Nieuw wachtwoord</target>
+      </trans-unit>
+      <trans-unit id="XUSTYpl" resname="News">
+        <source>News</source>
+        <target state="translated">Nieuws</target>
+      </trans-unit>
+      <trans-unit id="gefhnBC" resname="Next">
+        <source>Next</source>
+        <target state="translated">Volgende</target>
+      </trans-unit>
+      <trans-unit id="cassPXA" resname="No active sessions.">
+        <source>No active sessions.</source>
+        <target state="translated">Geen actieve sessies.</target>
+      </trans-unit>
+      <trans-unit id="VROC54W" resname="No company users match the current filters.">
+        <source>No company users match the current filters.</source>
+        <target state="translated">Geen bedrijfsgebruikers voldoen aan de huidige filters.</target>
+      </trans-unit>
+      <trans-unit id="9CSQMgV" resname="No members match the current filters.">
+        <source>No members match the current filters.</source>
+        <target state="translated">Geen leden voldoen aan de huidige filters.</target>
+      </trans-unit>
+      <trans-unit id="5oWvzf3" resname="Not activated">
+        <source>Not activated</source>
+        <target state="translated">Niet geactiveerd</target>
+      </trans-unit>
+      <trans-unit id="fm8k4L1" resname="Oh no! Something went wrong :(">
+        <source>Oh no! Something went wrong :(</source>
+        <target state="translated">Oh nee! Er is iets misgegaan :(</target>
+      </trans-unit>
+      <trans-unit id="svuF9zU" resname="On Thursdays, there is a %link_start%social drink%link_end% from 16.30 to 19.00.">
+        <source>On Thursdays, there is a %link_start%social drink%link_end% from 16.30 to 19.00.</source>
+        <target state="translated">Donderdags is er een %link_start%borrel%link_end% van 16.30 tot 19.00.</target>
+      </trans-unit>
+      <trans-unit id="FJxCJQn" resname="Opperhoofd">
+        <source>Opperhoofd</source>
+        <target state="translated">Opperhoofd</target>
+      </trans-unit>
+      <trans-unit id="R0MDM0D" resname="Option Calendar">
+        <source>Option Calendar</source>
+        <target state="translated">Optiekalender</target>
+      </trans-unit>
+      <trans-unit id="PK.ZLoC" resname="Or enter this secret in your app manually:">
+        <source>Or enter this secret in your app manually:</source>
+        <target state="translated">Of voer deze geheime sleutel handmatig in je app in:</target>
+      </trans-unit>
+      <trans-unit id="ljfCRt6" resname="Ordinary">
+        <source>Ordinary</source>
+        <target state="translated">Gewoon</target>
+      </trans-unit>
+      <trans-unit id="aiFSOsy" resname="Other">
+        <source>Other</source>
+        <target state="translated">Overig</target>
+      </trans-unit>
+      <trans-unit id="HmgPmMV" resname="Overview">
+        <source>Overview</source>
+        <target state="translated">Overzicht</target>
+      </trans-unit>
+      <trans-unit id="ZKopsJj" resname="PR Officer">
+        <source>PR Officer</source>
+        <target state="translated">PR-Functionaris</target>
+      </trans-unit>
+      <trans-unit id="zvMpy.G" resname="Page %page% of %totalPages% (%totalCount% records)">
+        <source>Page %page% of %totalPages% (%totalCount% records)</source>
+        <target state="translated">Pagina %page% van %totalPages% (%totalCount% records)</target>
+      </trans-unit>
+      <trans-unit id="OAUqOCx" resname="Page Not Found">
+        <source>Page Not Found</source>
+        <target state="translated">Pagina niet gevonden</target>
+      </trans-unit>
+      <trans-unit id="1IhUdFE" resname="Pagination">
+        <source>Pagination</source>
+        <target state="translated">Paginering</target>
+      </trans-unit>
+      <trans-unit id="GqmFSHc" resname="Password">
+        <source>Password</source>
+        <target state="translated">Wachtwoord</target>
+      </trans-unit>
+      <trans-unit id="LTQgZqV" resname="Password updated successfully.">
+        <source>Password updated successfully.</source>
+        <target state="translated">Het wachtwoord is succesvol bijgewerkt.</target>
+      </trans-unit>
+      <trans-unit id="BRLrb5h" resname="Photos">
+        <source>Photos</source>
+        <target>Foto's</target>
+      </trans-unit>
+      <trans-unit id="dLpxDj_" resname="Photos of the Week">
+        <source>Photos of the Week</source>
+        <target state="translated">Foto's van de week</target>
+      </trans-unit>
+      <trans-unit id="C_d4kR9" resname="Pick a long, unique password - at least 16 characters and not found in any known data breach.">
+        <source>Pick a long, unique password - at least 16 characters and not found in any known data breach.</source>
+        <target state="translated">Kies een lang, uniek wachtwoord - minimaal 16 tekens lang en niet voorkomend in bekende datalekken.</target>
+      </trans-unit>
+      <trans-unit id="qT565tK" resname="Polls">
+        <source>Polls</source>
+        <target state="translated">Polls</target>
+      </trans-unit>
+      <trans-unit id="ouNrIYq" resname="Previous">
+        <source>Previous</source>
+        <target state="translated">Vorige</target>
+      </trans-unit>
+      <trans-unit id="WiX.dOS" resname="Print">
+        <source>Print</source>
+        <target state="translated">Afdrukken</target>
+      </trans-unit>
+      <trans-unit id="ILwjhLf" resname="Privacy Policy">
+        <source>Privacy Policy</source>
+        <target state="translated">Privacybeleid</target>
+      </trans-unit>
+      <trans-unit id="YRI5E0j" resname="QR code">
+        <source>QR code</source>
+        <target state="translated">QR-code</target>
+      </trans-unit>
+      <trans-unit id="9Iuz1j8" resname="Reality collapsed. Please go back before the singularity spreads.">
+        <source>Reality collapsed. Please go back before the singularity spreads.</source>
+        <target state="translated">De werkelijkheid stortte in. Ga alsjeblieft terug voordat de singulariteit zich verspreidt.</target>
+      </trans-unit>
+      <trans-unit id="wtanMIv" resname="Regenerate backup codes">
+        <source>Regenerate backup codes</source>
+        <target state="translated">Back-upcodes opnieuw genereren</target>
+      </trans-unit>
+      <trans-unit id="UrruIdI" resname="Regenerate backup codes?">
+        <source>Regenerate backup codes?</source>
+        <target state="translated">Back-upcodes opnieuw genereren?</target>
+      </trans-unit>
+      <trans-unit id="auK54_S" resname="Regenerate backup codes? Any codes you previously saved will stop working.">
+        <source>Regenerate backup codes? Any codes you previously saved will stop working.</source>
+        <target state="translated">Back-upcodes opnieuw genereren? Alle back-upcodes die je eerder hebt opgeslagen, werken dan niet meer.</target>
+      </trans-unit>
+      <trans-unit id="mMYpEzb" resname="Regulations">
+        <source>Regulations</source>
+        <target>Reglementen</target>
+      </trans-unit>
+      <trans-unit id="0GpRD.b" resname="Repeat password">
+        <source>Repeat password</source>
+        <target state="translated">Wachtwoord herhalen</target>
+      </trans-unit>
+      <trans-unit id="WiUb4Xm" resname="Representative">
+        <source>Representative</source>
+        <target state="translated">Vertegenwoordiger</target>
+      </trans-unit>
+      <trans-unit id="glQyOSe" resname="Required for your role">
+        <source>Required for your role</source>
+        <target state="translated">Verplicht voor jouw rol</target>
+      </trans-unit>
+      <trans-unit id="gHvOyV9" resname="Reset MFA">
+        <source>Reset MFA</source>
+        <target state="translated">Reset tweestapsverificatie</target>
+      </trans-unit>
+      <trans-unit id="7_nVQLy" resname="Reset MFA?">
+        <source>Reset MFA?</source>
+        <target state="translated">Tweestapsverificatie resetten?</target>
+      </trans-unit>
+      <trans-unit id="eyayNGN" resname="Reset your password">
+        <source>Reset your password</source>
+        <target state="translated">Wachtwoord resetten</target>
+      </trans-unit>
+      <trans-unit id="aq2eM8Q" resname="Roles">
+        <source>Roles</source>
+        <target state="translated">Rollen</target>
+      </trans-unit>
+      <trans-unit id="2Fymdn1" resname="Save them now: write them down, print this page, or store them in a secure place. Each code can be used once if you lose access to your authenticator app. When you regenerate, all previous codes are invalidated.">
+        <source>Save them now: write them down, print this page, or store them in a secure place. Each code can be used once if you lose access to your authenticator app. When you regenerate, all previous codes are invalidated.</source>
+        <target state="translated">Bewaar ze nu: schrijf ze op, druk deze pagina af of bewaar ze op een veilige plek. Elke code kan één keer worden gebruikt voor het geval je geen toegang meer hebt tot je authenticator-app. Wanneer je nieuwe codes genereert, worden alle eerdere codes ongeldig.</target>
+      </trans-unit>
+      <trans-unit id="ilkQJ_6" resname="Scan the QR code below.">
+        <source>Scan the QR code below.</source>
+        <target state="translated">Scan de onderstaande QR-code.</target>
+      </trans-unit>
+      <trans-unit id="SdNWA5t" resname="Search">
+        <source>Search</source>
+        <target state="translated">Zoeken</target>
+      </trans-unit>
+      <trans-unit id="YWrWXBq" resname="Search by company, representative name, or email">
+        <source>Search by company, representative name, or email</source>
+        <target state="translated">Zoek op bedrijf, vertegenwoordiger of e-mail</target>
+      </trans-unit>
+      <trans-unit id="SkCIc_t" resname="Search by name or membership number">
+        <source>Search by name or membership number</source>
+        <target state="translated">Zoek op naam of lidnummer</target>
+      </trans-unit>
+      <trans-unit id="ABM3Mr2" resname="Secretary">
+        <source>Secretary</source>
+        <target>Secretaris</target>
+      </trans-unit>
+      <trans-unit id="8dn7uBl" resname="Security">
+        <source>Security</source>
+        <target state="translated">Beveiliging</target>
+      </trans-unit>
+      <trans-unit id="h2pX2BJ" resname="Segmentation fault while accessing this page">
+        <source>Segmentation fault while accessing this page</source>
+        <target state="translated">Segmentatiefout bij het openen van deze pagina</target>
+      </trans-unit>
+      <trans-unit id="5XiCCZa" resname="Send password reset email">
+        <source>Send password reset email</source>
+        <target state="translated">Wachtwoord reset aanvragen</target>
+      </trans-unit>
+      <trans-unit id="K84Ihek" resname="Sessions">
+        <source>Sessions</source>
+        <target state="translated">Sessies</target>
+      </trans-unit>
+      <trans-unit id="R9ar2ea" resname="Sessions for %name%">
+        <source>Sessions for %name%</source>
+        <target state="translated">Sessies voor %name%</target>
+      </trans-unit>
+      <trans-unit id="iY2CUG5" resname="Set new password">
+        <source>Set new password</source>
+        <target state="translated">Nieuw wachtwoord instellen</target>
+      </trans-unit>
+      <trans-unit id="VXFwlwn" resname="Settings">
+        <source>Settings</source>
+        <target>Instellingen</target>
+      </trans-unit>
+      <trans-unit id="pNIxNSX" resname="Sign in">
+        <source>Sign in</source>
+        <target state="translated">Inloggen</target>
+      </trans-unit>
+      <trans-unit id="lIY1Kot" resname="Signed in %date%">
+        <source>Signed in %date%</source>
+        <target state="translated">Ingelogd op %date%</target>
+      </trans-unit>
+      <trans-unit id="oBphsD9" resname="Stale">
+        <source>Stale</source>
+        <target state="translated">Verouderd</target>
+      </trans-unit>
+      <trans-unit id="6xCSWiZ" resname="Status">
+        <source>Status</source>
+        <target state="translated">Status</target>
+      </trans-unit>
+      <trans-unit id="lgfw7Wf" resname="Student address">
+        <source>Student address</source>
+        <target state="translated">Studentadres</target>
+      </trans-unit>
+      <trans-unit id="O4UIX7e" resname="Study Association GEWIS">
+        <source>Study Association GEWIS</source>
+        <target>Studievereniging GEWIS</target>
+      </trans-unit>
+      <trans-unit id="2lJhxzM" resname="Subscribe">
+        <source>Subscribe</source>
+        <target state="translated">Inschrijven</target>
+      </trans-unit>
+      <trans-unit id="vTZphTn" resname="SudoSOS">
+        <source>SudoSOS</source>
+        <target>SudoSOS</target>
+      </trans-unit>
+      <trans-unit id="eSYZ1Ph" resname="TOTP-based MFA is active on your account.">
+        <source>TOTP-based MFA is active on your account.</source>
+        <target state="translated">MFA op basis van TOTP is ingeschakeld voor je account.</target>
+      </trans-unit>
+      <trans-unit id="KK.sVJs" resname="TU/e Guest">
+        <source>TU/e Guest</source>
+        <target state="translated">TU/e gast</target>
+      </trans-unit>
+      <trans-unit id="kbrjiPV" resname="TU/e Guest - Anyone who can access the website from within the TU/e">
+        <source>TU/e Guest - Anyone who can access the website from within the TU/e</source>
+        <target state="translated">TU/e gast - Iedereen die toegang heeft tot de website vanuit de TU/e</target>
+      </trans-unit>
+      <trans-unit id="OyEm9xf" resname="Terminate">
+        <source>Terminate</source>
+        <target state="translated">Beëindigen</target>
+      </trans-unit>
+      <trans-unit id="Qg_hdDf" resname="Terminate all">
+        <source>Terminate all</source>
+        <target state="translated">Alle beëindigen</target>
+      </trans-unit>
+      <trans-unit id="AveExrH" resname="Terminate all sessions">
+        <source>Terminate all sessions</source>
+        <target state="translated">Alle sessies beëindigen</target>
+      </trans-unit>
+      <trans-unit id="Z.S7fhD" resname="Terminate all sessions?">
+        <source>Terminate all sessions?</source>
+        <target state="translated">Alle sessies beëindigen?</target>
+      </trans-unit>
+      <trans-unit id="syzy0Jn" resname="Terminate session?">
+        <source>Terminate session?</source>
+        <target state="translated">Sessie beëindigen?</target>
+      </trans-unit>
+      <trans-unit id="Nv.ShUE" resname="That device will be signed out immediately.">
+        <source>That device will be signed out immediately.</source>
+        <target state="translated">Dat apparaat wordt onmiddellijk afgemeld.</target>
+      </trans-unit>
+      <trans-unit id="hEahyeO" resname="The GEWIS website is open-source! Check out the repository on &lt;a href=&quot;https://github.com/GEWIS/gewisweb&quot; target=&quot;_blank&quot;&gt;&lt;span class=&quot;fab fa-github&quot;&gt;&lt;/span&gt;&amp;nbsp;GitHub&lt;/a&gt;. Or visit our &lt;a href=&quot;https://github.com/GEWIS&quot; target=&quot;_blank&quot;&gt;organisation&lt;/a&gt; for more of our awesome open-source projects.">
+        <source>The GEWIS website is open-source! Check out the repository on &lt;a href="https://github.com/GEWIS/gewisweb" target="_blank"&gt;&lt;span class="fab fa-github"&gt;&lt;/span&gt;&amp;nbsp;GitHub&lt;/a&gt;. Or visit our &lt;a href="https://github.com/GEWIS" target="_blank"&gt;organisation&lt;/a&gt; for more of our awesome open-source projects.</source>
+        <target state="translated"><![CDATA[De GEWIS-website is open source! Bekijk de repository op <a href="https://github.com/GEWIS/gewisweb" target="_blank"><span class="fab fa-github"></span>&nbsp;GitHub</a>. Of bezoek onze <a href="https://github.com/GEWIS" target="_blank">organisatie</a> voor meer van onze geweldige open-sourceprojecten.]]></target>
+      </trans-unit>
+      <trans-unit id="tl9akBK" resname="Their TOTP secret and backup codes will be discarded and every active session for the user will be terminated. Use this when a device has been lost or compromised.">
+        <source>Their TOTP secret and backup codes will be discarded and every active session for the user will be terminated. Use this when a device has been lost or compromised.</source>
+        <target state="translated">Hun TOTP-geheim en back-upcodes worden weggegooid en alle actieve sessies van de gebruiker worden beëindigd. Gebruik dit wanneer een apparaat verloren of gecompromitteerd is.</target>
+      </trans-unit>
+      <trans-unit id="PL2fcxN" resname="Theme">
+        <source>Theme</source>
+        <target>Thema</target>
+      </trans-unit>
+      <trans-unit id="83TctTv" resname="This device">
+        <source>This device</source>
+        <target state="translated">Dit apparaat</target>
+      </trans-unit>
+      <trans-unit id="Gxgf.Ho" resname="This is the only time these codes will be shown.">
+        <source>This is the only time these codes will be shown.</source>
+        <target state="translated">Dit is de enige keer dat deze codes worden weergegeven.</target>
+      </trans-unit>
+      <trans-unit id="V.Ye_4R" resname="This page does not exist">
+        <source>This page does not exist</source>
+        <target state="translated">Deze pagina bestaat niet</target>
+      </trans-unit>
+      <trans-unit id="HHf2U.O" resname="This page has been divided by zero">
+        <source>This page has been divided by zero</source>
+        <target state="translated">Deze pagina is gedeeld door nul</target>
+      </trans-unit>
+      <trans-unit id="WuIPSuu" resname="This page is NP-hard to locate">
+        <source>This page is NP-hard to locate</source>
+        <target state="translated">Deze pagina is NP-hard te vinden</target>
+      </trans-unit>
+      <trans-unit id="qMSed6D" resname="This page is a dangling pointer">
+        <source>This page is a dangling pointer</source>
+        <target state="translated">Deze pagina is een dangling pointer</target>
+      </trans-unit>
+      <trans-unit id="dAIJM6Y" resname="This page is asymptotically approaching existence">
+        <source>This page is asymptotically approaching existence</source>
+        <target state="translated">Deze pagina nadert asymptotisch zijn bestaan</target>
+      </trans-unit>
+      <trans-unit id="tgF_q1R" resname="This page is not bijective">
+        <source>This page is not bijective</source>
+        <target state="translated">Deze pagina is niet bijectief</target>
+      </trans-unit>
+      <trans-unit id="_PLNjox" resname="This page is undefined">
+        <source>This page is undefined</source>
+        <target state="translated">Deze pagina is niet gedefinieerd</target>
+      </trans-unit>
+      <trans-unit id="GKLKGDL" resname="This page might be imaginary">
+        <source>This page might be imaginary</source>
+        <target state="translated">Deze pagina is mogelijk imaginair</target>
+      </trans-unit>
+      <trans-unit id="fJIT1yK" resname="This page was garbage collected">
+        <source>This page was garbage collected</source>
+        <target state="translated">Deze pagina is garbage collected</target>
+      </trans-unit>
+      <trans-unit id="5DLr8E1" resname="Toggle company menu">
+        <source>Toggle company menu</source>
+        <target state="translated">Klap navigatie in/uit</target>
+      </trans-unit>
+      <trans-unit id="OuCTMNj" resname="Toggle member menu">
+        <source>Toggle member menu</source>
+        <target state="translated">Klap navigatie in/uit</target>
+      </trans-unit>
+      <trans-unit id="bpjGtGX" resname="Toggle members menu">
+        <source>Toggle members menu</source>
+        <target state="translated">Klap navigatie in/uit</target>
+      </trans-unit>
+      <trans-unit id="FC.YH9X" resname="Toggle navigation">
+        <source>Toggle navigation</source>
+        <target state="translated">Klap navigatie in/uit</target>
+      </trans-unit>
+      <trans-unit id="jmK_5tr" resname="Treasurer">
+        <source>Treasurer</source>
+        <target>Penningmeester</target>
+      </trans-unit>
+      <trans-unit id="7ZQ9oWO" resname="Unknown device">
+        <source>Unknown device</source>
+        <target state="translated">Onbekend apparaat</target>
+      </trans-unit>
+      <trans-unit id="ZOvPU2x" resname="Upload exams">
+        <source>Upload exams</source>
+        <target state="translated">Upload tentamens</target>
+      </trans-unit>
+      <trans-unit id="WcwG01E" resname="Useful Information">
+        <source>Useful Information</source>
+        <target state="translated">Praktische informatie</target>
+      </trans-unit>
+      <trans-unit id="TkiKoB6" resname="User">
+        <source>User</source>
+        <target state="translated">Gebruiker</target>
+      </trans-unit>
+      <trans-unit id="8e6i5l6" resname="User - Authenticated member or graduate">
+        <source>User - Authenticated member or graduate</source>
+        <target state="translated">Gebruiker - Ingelogd lid of agestudeerde</target>
+      </trans-unit>
+      <trans-unit id="BCGjfox" resname="Users">
+        <source>Users</source>
+        <target state="translated">Gebruikers</target>
+      </trans-unit>
+      <trans-unit id="cO_280N" resname="VIRT">
+        <source>VIRT</source>
+        <target state="translated">VIRT</target>
+      </trans-unit>
+      <trans-unit id="cxaAFw2" resname="Verify">
+        <source>Verify</source>
+        <target state="translated">Controleer</target>
+      </trans-unit>
+      <trans-unit id="ba46OMh" resname="Verify and enable">
+        <source>Verify and enable</source>
+        <target state="translated">Controleer en schakel in</target>
+      </trans-unit>
+      <trans-unit id="VPGL.d2" resname="Vice-Chair">
+        <source>Vice-Chair</source>
+        <target>Vice-Voorzitter</target>
+      </trans-unit>
+      <trans-unit id="kPrgwUx" resname="Virtual Meeting">
+        <source>Virtual Meeting</source>
+        <target state="translated">Virtuele Vergadering</target>
+      </trans-unit>
+      <trans-unit id="50BTJRy" resname="Voting Committee">
+        <source>Voting Committee</source>
+        <target state="translated">Stemcommissie</target>
+      </trans-unit>
+      <trans-unit id="V0NxHk_" resname="Voting Committees">
+        <source>Voting Committees</source>
+        <target state="translated">Stemcommissies</target>
+      </trans-unit>
+      <trans-unit id="kL92atL" resname="We are NOT the same">
+        <source>We are NOT the same</source>
+        <target state="translated">Wij zijn NIET hetzelfde</target>
+      </trans-unit>
+      <trans-unit id="L7nMq4K" resname="We are the same">
+        <source>We are the same</source>
+        <target state="translated">Wij zijn hetzelfde</target>
+      </trans-unit>
+      <trans-unit id="jkUs8v1" resname="We found a pointer to &lt;code&gt;NULL&lt;/code&gt; instead of this page">
+        <source>We found a pointer to &lt;code&gt;NULL&lt;/code&gt; instead of this page</source>
+        <target state="translated"><![CDATA[We hebben een verwijzing naar <code>NULL</code> gevonden in plaats van deze pagina]]></target>
+      </trans-unit>
+      <trans-unit id="qLp0Jrc" resname="Welcome to the website of study association GEWIS, the study association of the department of Mathematics &amp; Computer Science at Eindhoven University of Technology.">
+        <source>Welcome to the website of study association GEWIS, the study association of the department of Mathematics &amp; Computer Science at Eindhoven University of Technology.</source>
+        <target state="translated"><![CDATA[Welkom op de website van studievereniging GEWIS, de studievereniging van de faculteit Wiskunde & Informatica aan de Technische Universiteit Eindhoven.]]></target>
+      </trans-unit>
+      <trans-unit id="qlyBI_b" resname="Well-being">
+        <source>Well-being</source>
+        <target state="translated">Welzijn</target>
+      </trans-unit>
+      <trans-unit id="klYLh_k" resname="Which is basically the same thing.">
+        <source>Which is basically the same thing.</source>
+        <target state="translated">Wat in feite hetzelfde is.</target>
+      </trans-unit>
+      <trans-unit id="vIs6CbG" resname="You are about to reset multi-factor authentication for:">
+        <source>You are about to reset multi-factor authentication for:</source>
+        <target state="translated">Je staat op het punt om tweestapsverificatie te resetten voor:</target>
+      </trans-unit>
+      <trans-unit id="ALw8bPa" resname="You are currently impersonating %name% (%lidnr%)!">
+        <source>You are currently impersonating %name% (%lidnr%)!</source>
+        <target state="translated">Je doet je nu voor als %name% (%lidnr%)!</target>
+      </trans-unit>
+      <trans-unit id="xpejvDq" resname="You are currently using administrator privileges to use the website!">
+        <source>You are currently using administrator privileges to use the website!</source>
+        <target state="translated">Je gebruikt momenteel beheerdersprivileges om de website te gebruiken!</target>
+      </trans-unit>
+      <trans-unit id="_vpO.88" resname="You are logged in as">
+        <source>You are logged in as</source>
+        <target state="translated">Je bent aangemeld als</target>
+      </trans-unit>
+      <trans-unit id="0oN.eFV" resname="You assumed it was here. It was not. Q.E.D.">
+        <source>You assumed it was here. It was not. Q.E.D.</source>
+        <target state="translated">Je ging ervan uit dat het hier was. Dat was niet zo. Q.E.D.</target>
+      </trans-unit>
+      <trans-unit id="ewDvGAp" resname="You cannot sign in to this account at this moment. Contact the board for more information.">
+        <source>You cannot sign in to this account at this moment. Contact the board for more information.</source>
+        <target state="translated">Je kunt je op dit moment niet aanmelden met dit account. Neem contact op met het bestuur voor meer informatie.</target>
+      </trans-unit>
+      <trans-unit id="nV.sPN9" resname="You currently sign in with only a password. Adding MFA significantly reduces the risk of account takeover.">
+        <source>You currently sign in with only a password. Adding MFA significantly reduces the risk of account takeover.</source>
+        <target state="translated">Momenteel logt je alleen in met een wachtwoord. Door MFA toe te voegen, wordt het risico op accountmisbruik aanzienlijk verkleind.</target>
+      </trans-unit>
+      <trans-unit id="OWPRxny" resname="You do not have the required privileges to perform this action.">
+        <source>You do not have the required privileges to perform this action.</source>
+        <target state="translated">Je hebt niet de vereiste rechten om deze actie uit te voeren.</target>
+      </trans-unit>
+      <trans-unit id="8yGcQq5" resname="You have sent too many requests in a short period of time. Please wait a few minutes before trying again.">
+        <source>You have sent too many requests in a short period of time. Please wait a few minutes before trying again.</source>
+        <target state="translated">Je hebt in korte tijd te veel verzoeken verzonden. Wacht een paar minuten voordat je het opnieuw probeert.</target>
+      </trans-unit>
+      <trans-unit id="1enhohb" resname="You tried to access memory outside the bounds of reality.">
+        <source>You tried to access memory outside the bounds of reality.</source>
+        <target state="translated">Je hebt geprobeerd om geheugen buiten de grenzen van de werkelijkheid te benaderen.</target>
+      </trans-unit>
+      <trans-unit id="jtm1hRo" resname="Your Company">
+        <source>Your Company</source>
+        <target state="translated">Jouw bedrijf</target>
+      </trans-unit>
+      <trans-unit id="23M6ORK" resname="Your password has been reset. You can now sign in with your new password.">
+        <source>Your password has been reset. You can now sign in with your new password.</source>
+        <target state="translated">Je wachtwoord is opnieuw ingesteld. Je kunt je nu aanmelden met je nieuwe wachtwoord.</target>
+      </trans-unit>
+      <trans-unit id="n0u0qZf" resname="Your password-reset link has expired or has already been used. Please request a new one.">
+        <source>Your password-reset link has expired or has already been used. Please request a new one.</source>
+        <target state="translated">De link om je wachtwoord opnieuw in te stellen is verlopen of is al gebruikt. Vraag een nieuwe aan.</target>
+      </trans-unit>
+      <trans-unit id="_VRI4dU" resname="Your session was ended for security reasons. Please sign in again.">
+        <source>Your session was ended for security reasons. Please sign in again.</source>
+        <target state="translated">Je sessie is om veiligheidsredenen beëindigd. Log opnieuw in.</target>
+      </trans-unit>
+      <trans-unit id="iYiRxKz" resname="disabled">
+        <source>disabled</source>
+        <target state="translated">uitgeschakeld</target>
+      </trans-unit>
+      <trans-unit id="fnwII.m" resname="disabled (Do Not Track)">
+        <source>disabled (Do Not Track)</source>
+        <target state="translated">uitgeschakeld (volg-me-niet)</target>
+      </trans-unit>
+      <trans-unit id="IRk0vUS" resname="enabled">
+        <source>enabled</source>
+        <target state="translated">ingeschakeld</target>
+      </trans-unit>
+      <trans-unit id="vT9fsZA" resname="iCal">
+        <source>iCal</source>
+        <target state="translated">iCal</target>
+      </trans-unit>
+      <trans-unit id="6.eCze3" resname="jane.doe@example.com">
+        <source>jane.doe@example.com</source>
+        <target state="translated">janneke.jansen@example.nl</target>
+      </trans-unit>
+      <trans-unit id="edSu_p6" resname="on">
+        <source>on</source>
+        <target state="translated">op</target>
+      </trans-unit>
+      <trans-unit id="W3MzJgn" resname="unavailable">
+        <source>unavailable</source>
+        <target state="translated">niet beschikbaar</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

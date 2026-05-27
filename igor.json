@@ -1,0 +1,22 @@
+{
+  "exclude": [
+      "docker/matomo",
+      "src/DataFixtures"
+  ],
+  "safe_namespaces": [
+    "Symfony\\",
+    "Doctrine\\"
+  ],
+  "scan_vendors": null,
+  "console_path": "bin/console",
+  "env": "dev",
+  "verbose": false,
+  "baseline": "",
+  "output": "",
+  "llm": {
+    "provider": "",
+    "api_url": "",
+    "api_key_env": "",
+    "model": ""
+  }
+}

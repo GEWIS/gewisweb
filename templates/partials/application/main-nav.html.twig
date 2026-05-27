@@ -1,0 +1,518 @@
+<nav class="navbar navbar-expand navbar-gewis rainbow">
+    <div class="container">
+        <a href="{{ path('frontpage/index') }}" class="navbar-brand">
+            <div class="gi gewis-base"></div>
+        </a>
+        <div class="offcanvas-lg offcanvas-end flex-grow-1" id="navbar-gewis-collapse" tabindex="-1"
+             data-bs-scroll="true" aria-labelledby="gws-offcanvas-label"
+        >
+            <div class="offcanvas-header px-4 pb-0">
+                <h5 class="offcanvas-title text-white" id="gws-offcanvas-label">GEWIS</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+                        aria-label="{{ 'Close'|trans }}" data-bs-target="#navbar-gewis-collapse">
+                </button>
+            </div>
+            <div class="offcanvas-body p-4 pt-0 p-lg-0">
+                <ul class="navbar-nav flex-row flex-wrap">
+                    <hr class="d-lg-none text-white-50">
+                    {% set frontpageActive = is_module_active(['frontpage', 'page']) %}
+                    <li class="nav-item col-12 col-lg-auto dropdown dropdown-hover {{ frontpageActive ? 'active default open' : '' }}">
+                        <a href="" role="button" aria-expanded="{{ frontpageActive ? 'true' : 'false' }}"
+                           class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true"
+                        >
+                            {{ 'Association'|trans }}
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="visible-sm visible-xs">
+                                <a href="{{ page_path(
+                                    category: 'vereniging',
+                                    categoryEn: 'association',
+                                ) }}"
+                                   class="dropdown-item">
+                                    {{ 'Association'|trans }}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ page_path(
+                                    category: 'vereniging',
+                                    categoryEn: 'association',
+                                    sub_category: 'bestuur',
+                                    sub_categoryEn: 'board',
+                                ) }}" class="dropdown-item">
+                                    {{ 'Board'|trans }}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="dropdown-item">
+                                    {{ enum('App\\Entity\\Decision\\Enums\\OrganTypes').Committee.pluralLabel|trans }}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="dropdown-item">
+                                    {{ enum('App\\Entity\\Decision\\Enums\\OrganTypes').Fraternity.pluralLabel|trans }}
+                                </a>
+                            </li>
+                            <li class="dropdown dropdown-submenu dropend">
+                                <button class="dropdown-item dropdown-toggle" data-bs-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
+                                    {{ 'GMM Bodies'|trans }}
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="#" class="dropdown-item">
+                                            {{ enum('App\\Entity\\Decision\\Enums\\OrganTypes').RvA.pluralLabel|trans }}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="dropdown-item">
+                                            {{ enum('App\\Entity\\Decision\\Enums\\OrganTypes').KCC.pluralLabel|trans }}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="dropdown-item">
+                                            {{ enum('App\\Entity\\Decision\\Enums\\OrganTypes').AVW.pluralLabel|trans }}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="dropdown-item">
+                                            {{ enum('App\\Entity\\Decision\\Enums\\OrganTypes').SC.pluralLabel|trans }}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="dropdown-item">
+                                            {{ enum('App\\Entity\\Decision\\Enums\\OrganTypes').AVC.pluralLabel|trans }}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="{{ page_path(
+                                    category: 'vereniging',
+                                    categoryEn: 'association',
+                                    sub_category: 'uitzonderlijke-leden',
+                                    sub_categoryEn: 'exceptional-members',
+                                ) }}" class="dropdown-item">
+                                    {{ 'Exceptional Members'|trans }}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ page_path(
+                                    category: 'vereniging',
+                                    categoryEn: 'association',
+                                    sub_category: 'lied',
+                                    sub_categoryEn: 'song',
+                                ) }}" class="dropdown-item">
+                                    {{ 'GEWIS song'|trans }}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ page_path(
+                                    category: 'vereniging',
+                                    categoryEn: 'association',
+                                    subCategory: 'reglementen',
+                                    subCategoryEn: 'regulations',
+                                ) }}" class="dropdown-item">
+                                    {{ 'Regulations'|trans }}
+                                </a>
+                            </li>
+                            <li class="dropdown dropdown-submenu dropend">
+                                <button class="dropdown-item dropdown-toggle" data-bs-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
+                                    {{ 'Useful Information'|trans }}
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="{{ page_path(
+                                            category: 'links',
+                                            categoryEn: 'links',
+                                        ) }}" class="dropdown-item">
+                                            {{ 'Links'|trans }}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ page_path(
+                                            category: 'welzijn',
+                                            categoryEn: 'wellbeing',
+                                        ) }}" class="dropdown-item">
+                                            {{ 'Well-being'|trans }}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ page_path(
+                                            category: 'welzijn',
+                                            categoryEn: 'wellbeing',
+                                            subCategory: 'vcp',
+                                            subCategoryEn: 'ccp',
+                                        ) }}" class="dropdown-item">
+                                            {{ 'Confidential Contact Person (CCP)'|trans }}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ page_path(
+                                            category: 'faq',
+                                            categoryEn: 'faq',
+                                        ) }}" class="dropdown-item">
+                                            {{ 'FAQ'|trans }}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ page_path(
+                                            category: 'welzijn',
+                                            categoryEn: 'wellbeing',
+                                            subCategory: 'huisvesting',
+                                            subCategoryEn: 'housing',
+                                        ) }}" class="dropdown-item">
+                                            {{ 'Housing'|trans }}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="{{ page_path(
+                                    category: 'vereniging',
+                                    categoryEn: 'association',
+                                    sub_category: 'contact',
+                                    sub_categoryEn: 'contact',
+                                ) }}" class="dropdown-item">
+                                    {{ 'Contact'|trans }}
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    {% set careerActive = is_module_active(['career']) %}
+                    <li class="nav-item col-12 col-lg-auto dropdown dropdown-hover {{ careerActive ? 'active default open' : '' }}">
+                        <button aria-haspopup="true" data-bs-toggle="dropdown" class="nav-link dropdown-toggle"
+                                aria-expanded="{{ careerActive ? 'true' : 'false' }}"
+                        >
+                            {{ 'Career'|trans }}
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            {% if null !== featured_company() %}
+                                <li>
+                                    <a href="{{ path('') }}" class="dropdown-item">
+                                        <span class="fas fa-star"></span>
+                                        {{ 'Featured'|trans }}:
+                                        {{ featuredCompanyPackage.getCompany.getName }}
+                                    </a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                            {% endif %}
+                            {% for category in job_categories() %}
+                                <li>
+                                    <a href="{{ path('') }}" class="dropdown-item">
+                                        {{ category.getName|localise_text }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    <li class="nav-item col-12 col-lg-auto {{ is_module_active(['education']) ? 'active' : '' }}">
+                        <a href="{{ path('education/index') }}" class="nav-link">
+                            {{ 'Education'|trans }}
+                        </a>
+                    </li>
+                    {% set activityActive = is_module_active(['activity']) %}
+                    <li class="nav-item col-12 col-lg-auto  dropdown dropdown-hover {{ activityActive ? 'active default open' : '' }}">
+                        <button aria-haspopup="true" data-bs-toggle="dropdown" class="nav-link dropdown-toggle"
+                                aria-expanded="{{ activityActive ? 'true' : 'false' }}"
+                        >
+                            {{ 'Activities'|trans }}
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="{{ path('activity/index') }}" class="dropdown-item {{ is_module_active(['activity', 'activity', 'index']) ? 'active' : '' }}">
+                                    {{ 'Overview'|trans }}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('activity/archive') }}" class="dropdown-item">
+                                    {{ 'Archive'|trans }}
+                                </a>
+                            </li>
+                            {% if is_granted('ROLE_USER') %}
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <a href="{{ path('activity/my') }}" class="dropdown-item">
+                                        {{ 'My Activities'|trans }}
+                                    </a>
+                                </li>
+                            {% endif %}
+                            {% if is_granted('ROLE_ACTIVE_MEMBER') %}
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <a href="{{ path('admin/activities/create') }}" class="dropdown-item">
+                                        {{ 'Create Activity'|trans }}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('admin/activities/calendar/index') }}" class="dropdown-item">
+                                        {{ 'Option Calendar'|trans }}
+                                    </a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </li>
+                    <li class="nav-item col-12 col-lg-auto dropdown dropdown-hover {{ is_module_active(['photo']) ? 'active' : '' }}">
+                        {% if is_granted('ROLE_USER') %}
+                            <button aria-haspopup="true" aria-expanded="false" data-bs-toggle="dropdown"
+                                    class="nav-link dropdown-toggle"
+                            >
+                                {{ 'Photos'|trans }}
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="{{ path('photo/index') }}" class="dropdown-item">
+                                        {{ 'Overview'|trans }}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('photo/weekly') }}" class="dropdown-item">
+                                        {{ 'Photos of the Week'|trans }}
+                                    </a>
+                                </li>
+                                {% if null !== app.user %}
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li>
+                                        <a href="{{ path('photo/album', {
+                                            album: app.user.getLidnr,
+                                            type: 'member',
+                                        }) }}" class="dropdown-item">
+                                            {{ 'My Photos'|trans }}
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        {% else %}
+                            <a href="{{ path('photo/index') }}" class="nav-link">
+                                {{ 'Photos'|trans }}
+                            </a>
+                        {% endif %}
+                    </li>
+                </ul>
+                {% if null !== app.user and app.user.getUserType === enum('App\\Entity\\User\\Enums\\UserTypes').User %}
+                    <hr class="d-lg-none text-white-50">
+                    <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
+                        <li class="nav-item col-12 col-lg-auto {{ is_module_active(['decision']) ? 'active' : '' }}">
+                            <a href="{{ path('members/index') }}" class="nav-link">
+                                {{ 'Members'|trans }}
+                            </a>
+                        </li>
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+        <div class="d-flex">
+            <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
+                <li class="nav-item dropdown">
+                    {% if null === app.user %}
+                        <button id="gws-members" type="button" aria-expanded="false" data-bs-toggle="dropdown"
+                                class="nav-link dropdown-toggle"
+                                aria-label="{{ 'Toggle members menu'|trans }}"
+                        >
+                            <span class="fas fa-user me-1"></span>
+                            <span id="gws-members-text">{{ 'Members'|trans }}</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="gws-members-text">
+                            <li>
+                                <a href="{{ path('user_login') }}" class="dropdown-item">
+                                    {{ 'Login'|trans }}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ page_path(
+                                    category: 'vereniging',
+                                    categoryEn: 'association',
+                                    sub_category: 'lid-worden',
+                                    sub_categoryEn: 'become-member',
+                                ) }}" class="dropdown-item">
+                                    {{ 'Subscribe'|trans }}
+                                </a>
+                            </li>
+                        </ul>
+                    {% elseif enum('App\\Entity\\User\\Enums\\UserTypes').CompanyUser === app.user.getUserType %}
+                        {% set company = app.user.getCompany %}
+                        <button id="gws-company" type="button" aria-expanded="false" data-bs-toggle="dropdown"
+                                class="nav-link dropdown-toggle"
+                                aria-label="{{ 'Toggle company menu'|trans }}"
+                        >
+                            <span id="gws-company-text">{{ company.getName }}</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="gws-company-text">
+                            <li>
+                                <a href="{{ path('company/index') }}" class="dropdown-item">
+                                    {{ 'My Company'|trans }}
+                                </a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a href="{{ path('company_user_logout') }}" class="dropdown-item">
+                                    {{ 'Logout'|trans }}
+                                </a>
+                            </li>
+                        </ul>
+                    {% elseif enum('App\\Entity\\User\\Enums\\UserTypes').User === app.user.getUserType %}
+                        <button id="gws-member" type="button" aria-expanded="false" data-bs-toggle="dropdown"
+                                class="nav-link dropdown-toggle"
+                                aria-label="{{ 'Toggle member menu'|trans }}"
+                        >
+                            <span id="gws-member-text">{{ app.user.getMember.getFirstName }}</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="gws-member-text">
+                            <li>
+                                <a href="{{ path('members/me') }}" class="dropdown-item">
+                                    {{ 'My Information'|trans }}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('user_token', {app: 'sudosos'}) }}" class="dropdown-item">
+                                    {{ 'SudoSOS'|trans }}
+                                </a>
+                            </li>
+                            {% if
+                                is_granted('ROLE_ACTIVE_MEMBER') or
+                                is_granted('ROLE_BOARD') or
+                                is_granted('ROLE_ADMIN')
+                            %}
+                                <li>
+                                    <a href="{{ path('admin/index') }}" class="dropdown-item">
+                                        {{ 'Admin'|trans }}
+                                    </a>
+                                </li>
+                            {% endif %}
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a href="{{ path('user_logout') }}" class="dropdown-item">
+                                    {{ 'Logout'|trans }}
+                                </a>
+                            </li>
+                        </ul>
+                    {% endif %}
+                </li>
+                <li class="nav-item py-4">
+                    <div class="vr d-flex h-100 mx-2 text-white"></div>
+                </li>
+                <li class="nav-item dropdown">
+                    <button class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button"
+                            aria-haspopup="true" aria-expanded="false" aria-label="{{ 'Settings'|trans }}"
+                    >
+                        <span class="fas fa-gear"></span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <h6 class="dropdown-header">{{ 'Language'|trans }}</h6>
+                        </li>
+                        {% for locale in supported_locales %}
+                            {% set is_disabled = locale === app.request.locale %}
+                            {% if null !== app.current_route %}
+                                {# Use route-based localisation when available. #}
+                                {% set altlang_url = page is not defined ? path(app.current_route, app.current_route_parameters|merge({_locale: locale})) : localised_page_path(page, locale) %}
+                            {% else %}
+                                {# Otherwise, we are in an error-state and construct the URL manually. #}
+                                {% set current_path = app.request.pathinfo %}
+                                {% if current_path starts with '/' ~ app.request.locale ~ '/' %}
+                                    {% set stripped_path = current_path|slice((app.request.locale|length + 1)) %}
+                                {% else %}
+                                    {% set stripped_path = current_path %}
+                                {% endif %}
+
+                                {% set altlang_url = '/' ~ locale ~ stripped_path %}
+                            {% endif %}
+                            <li translate="no">
+                                <a lang="{{ locale }}" hreflang="{{ locale }}" class="dropdown-item {{ is_disabled ? 'disabled' }}"
+                                   href="{{ altlang_url }}">
+                                    <span class="flag-icon flag-icon-{{ locale }}"></span>{{ locale|locale_name(locale) }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <h6 class="dropdown-header">{{ 'Theme'|trans }}</h6>
+                        </li>
+                        <li>
+                            <button type="button" class="dropdown-item d-flex align-items-center"
+                                    data-bs-theme-value="gewis-day" aria-pressed="false"
+                            >
+                                <span class="fas fa-sun fa-fw me-1"></span>
+                                {{ 'Light'|trans }}
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" class="dropdown-item d-flex align-items-center"
+                                    data-bs-theme-value="gewis-night" aria-pressed="false"
+                            >
+                                <span class="fas fa-moon fa-fw me-1"></span>
+                                {{ 'Dark'|trans }}
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" class="dropdown-item d-flex align-items-center"
+                                    data-bs-theme-value="auto" aria-pressed="false"
+                            >
+                                <span class="fas fa-star-half-stroke fa-fw me-1"></span>
+                                {{ 'Auto'|trans }}
+                            </button>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#navbar-gewis-collapse" aria-controls="navbar-gewis-collapse" aria-expanded="false"
+                    aria-label="{{ 'Toggle navigation'|trans }}"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </div>
+</nav>
+{% if mfa_enrolment_required() %}
+    <div class="special-notice mfa-enrolment-notice sticky-top">
+        <p class="text-center">
+            <strong>
+                {{ 'Multi-factor authentication is required for your role. Privileged actions are unavailable until you enable it.'|trans }}
+                <a href="{{ path('user_mfa_enable') }}">
+                    {{ 'Enable MFA now'|trans }}
+                </a>
+            </strong>
+        </p>
+    </div>
+{% endif %}
+{% if is_granted('ROLE_ADMIN') or is_granted('IS_IMPERSONATOR') %}
+    {# Always show impersonator notice first, to show that other notices are the effect of the impersonation. #}
+    {% if is_granted('IS_IMPERSONATOR') %}
+        <div class="special-notice impersonator-notice sticky-top">
+            <p class="text-center">
+                <strong>
+                    {{ 'You are currently impersonating %name% (%lidnr%)!'|trans({'%name%': app.user.getMember.getFullName, '%lidnr%': app.user.getMember.getLidnr}) }}
+                    <a href="{{ impersonation_exit_path(path('frontpage/index')) }}">
+                        {{ 'Exit impersonation'|trans }}
+                    </a>
+                </strong>
+            </p>
+        </div>
+    {% endif %}
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="special-notice admin-notice sticky-top">
+            <p class="text-center">
+                <strong>
+                    {{ 'You are currently using administrator privileges to use the website!'|trans }}
+                </strong>
+            </p>
+        </div>
+    {% endif %}
+{% endif %}

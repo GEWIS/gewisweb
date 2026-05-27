@@ -1,0 +1,22 @@
+{% extends 'layout-admin.html.twig' %}
+
+{% block page_title %}{{ 'Overview'|trans|page_title }}{{ 'Education'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block admin_breadcrumbs %}
+    <li class="breadcrumb-item active" aria-current="page">
+        <a href="{{ path('admin/education/index') }}">
+            {{ 'Education'|trans }}
+        </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">
+        {{ 'Overview'|trans }}
+    </li>
+{% endblock %}
+
+{% block contents %}
+    <div class="row">
+        <div class="col-md-12">
+            {# TODO #}
+        </div>
+    </div>
+{% endblock %}

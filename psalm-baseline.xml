@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="6.16.1@f1f5de594dc76faf8784e02d3dc4716c91c6f6ac">
+  <file src="src/Controller/Frontpage/PageController.php">
+    <ArgumentTypeCoercion>
+      <code><![CDATA[$request->getLocale()]]></code>
+    </ArgumentTypeCoercion>
+  </file>
+  <file src="src/Entity/Application/Enums/Languages.php">
+    <ArgumentTypeCoercion>
+      <code><![CDATA[explode('_', $locale)[0]]]></code>
+    </ArgumentTypeCoercion>
+  </file>
+  <file src="src/Repository/Photo/PhotoRepository.php">
+    <QueryBuilderSetParameter>
+      <code><![CDATA[$album]]></code>
+    </QueryBuilderSetParameter>
+  </file>
+  <file src="src/Repository/User/PasswordResetRepository.php">
+    <QueryBuilderSetParameter>
+      <code><![CDATA[$companyUser]]></code>
+      <code><![CDATA[$member]]></code>
+    </QueryBuilderSetParameter>
+  </file>
+  <file src="src/Repository/User/SessionRepository.php">
+    <QueryBuilderSetParameter>
+      <code><![CDATA[new DateTimeImmutable()]]></code>
+      <code><![CDATA[new DateTimeImmutable()]]></code>
+    </QueryBuilderSetParameter>
+  </file>
+  <file src="src/Twig/Extensions/LocaliseTextExtension.php">
+    <ArgumentTypeCoercion>
+      <code><![CDATA[Locale::getDefault()]]></code>
+    </ArgumentTypeCoercion>
+  </file>
+</files>

@@ -1,0 +1,15 @@
+<button type="button" class="btn btn-link btn-sm p-0 text-decoration-none"
+        data-action="live#action"
+        data-live-action-param="toggleSort"
+        data-live-column-param="{{ column }}">
+    <strong>{{ label }}</strong>
+    {% if currentSort == column %}
+        {% if currentDirection == 'asc' %}
+            <i class="fas fa-caret-up"></i>
+        {% else %}
+            <i class="fas fa-caret-down"></i>
+        {% endif %}
+    {% else %}
+        <i class="fas fa-sort text-muted"></i>
+    {% endif %}
+</button>

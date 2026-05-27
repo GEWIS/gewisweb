@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="nl" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="7HMaSLC" resname="auth_code">
+        <source>auth_code</source>
+        <target>Authenticatiecode</target>
+      </trans-unit>
+      <trans-unit id="WmbkJDd" resname="cancel">
+        <source>cancel</source>
+        <target>Annuleren</target>
+      </trans-unit>
+      <trans-unit id="RvoM6_N" resname="choose_provider">
+        <source>choose_provider</source>
+        <target>Kies een andere authenticatiemethode</target>
+      </trans-unit>
+      <trans-unit id="rivo3AY" resname="code_invalid">
+        <source>code_invalid</source>
+        <target>De verificatiecode is niet geldig.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

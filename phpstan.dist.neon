@@ -1,0 +1,28 @@
+includes:
+    - phpstan-baseline.neon
+
+parameters:
+    level: 6
+    bootstrapFiles:
+        - tests/bootstrap.php
+    doctrine:
+        objectManagerLoader: tests/object-manager.php
+        ormRepositoryClass: App\Entity
+    symfony:
+        containerXmlPath: var/cache/dev/App_KernelDevDebugContainer.xml
+#    scanDirectories:
+#        - var/cache/dev/Symfony/Config
+    scanFiles:
+        - vendor/symfony/dependency-injection/Loader/Configurator/ContainerConfigurator.php
+    paths:
+        - bin/
+        - config/
+        - public/
+        - src/
+        - tests/
+    excludePaths:
+        - config/reference.php
+    strictRules:
+        disallowedImplicitArrayCreation: false
+        overwriteVariablesWithLoop: false
+        noVariableVariables: false

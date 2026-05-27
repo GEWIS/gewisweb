@@ -1,250 +1,110 @@
-.PHONY: help runprod rundev runtest runcoverage update updatecomposer updatepackage updateglide getvendordir phpstan phpcs phpcbf build buildprod builddev update
+# Executables (local)
+DOCKER = docker
+# In dev we explicitly pass --env-file twice so compose substitution reads both
+# .env (committed defaults) and .env.local (developer overrides). Without this,
+# compose only reads .env and values in .env.local never reach the container —
+# meaning Caddy and Symfony see different secrets. Prod commands use the bare
+# `docker compose` so the orchestrator-injected env wins.
+DOCKER_COMP      = $(DOCKER) compose --env-file=.env --env-file=.env.local
+DOCKER_COMP_PROD = $(DOCKER) compose -f compose.yaml -f compose.production.yaml
 
-help:
-		@echo "Makefile commands:"
-		@echo "runprod"
-		@echo "rundev"
-		@echo "migrations-list - lists all migrations"
-		@echo "migrations-diff - creates a new migration"
-		@echo "migrations-execute VERSION=<version> - executes a specific migration"
-		@echo "updatecomposer"
-		@echo "updatepackage"
-		@echo "updatecss"
-		@echo "updateglide"
-		@echo "updatedocker"
-		@echo "getvendordir"
-		@echo "phpstan"
-		@echo "phpcs"
-		@echo "phpcbf"
-		@echo "replenish"
-		@echo "build"
-		@echo "buildprod"
-		@echo "builddev"
-		@echo "update = updatecomposer updatepackage updatecss updateglide"
+# Docker containers
+PHP_CONT = $(DOCKER_COMP) exec web
 
-.DEFAULT_GOAL := rundev
+# Executables
+PHP      = $(PHP_CONT) php
+COMPOSER = $(PHP_CONT) composer
+SYMFONY  = $(PHP) bin/console
 
-MODULE_DIR := ./module
-LAST_WEB_COMMIT := $(shell git rev-parse --short HEAD)
-SHELL := /bin/bash
-TRANSLATIONS_DIR := $(MODULE_DIR)/Application/language/
-
-runprod:
-		@docker compose -f docker-compose.yml up -d --remove-orphans
-
-runprodtest: buildprod
-		@docker compose -f docker-compose.yml up -d --remove-orphans
-
-rundev: builddev
-		@docker compose up -d --remove-orphans
-		@make replenish
-		@docker compose exec web rm -rf data/cache/module-config-cache.application.config.cache.php
-		@make translations-compile
-		@npm install
-		@npm run assets
-
-migrate: replenish
-		@docker compose exec -it web ./orm migrations:migrate
-
-migration-list: replenish
-		@docker compose exec -T web ./orm migrations:list
-
-migration-diff: replenish
-		@docker compose exec -T web ./orm migrations:diff
-		@docker cp "$(shell docker compose ps -q web)":/code/module/Application/migrations ./module/Application
-
-migration-up: replenish migration-list
-		@read -p "Enter the migration version to execute (e.g., Application\\Migrations\\Version20241020212355 -- note escaping the backslashes is required): " version; \
-		docker compose exec -it web ./orm migrations:execute --up $$version
-
-migration-down: replenish migration-list
-		@read -p "Enter the migration version to down (e.g., Application\\Migrations\\Version20241020212355 -- note escaping the backslashes is required): " version; \
-		docker compose exec -it web ./orm migrations:execute --down $$version
-
-seed: replenish
-		@docker compose exec -T web ./web application:fixtures:load
-
-exec:
-		docker compose exec -it web $(cmd)
-
-stop:
-		@docker compose down
-
-runtest: loadenv
-		@vendor/phpunit/phpunit/phpunit --bootstrap ./bootstrap.php --configuration ./phpunit.xml --stop-on-error --stop-on-failure
-
-runcoverage: loadenv
-		@vendor/phpunit/phpunit/phpunit --bootstrap ./bootstrap.php --configuration ./phpunit.xml --coverage-html ./coverage
-
-runworkflows:
-		@act -P ubuntu-latest=shivammathur/node:latest
-
-getvendordir:
-		@rm -Rf ./vendor
-		@docker cp "$(shell docker compose ps -q web)":/code/vendor ./vendor
-
-replenish:
-		@docker cp ./public "$(shell docker compose ps -q web)":/code
-		@docker compose exec web chown -R web-user:web-user /code/public
-		@docker cp ./data "$(shell docker compose ps -q web)":/code
-		@docker compose exec web chown -R web-user:web-user /code/data
-		@docker compose exec web rm -rf data/cache/module-config-cache.application.config.cache.php
-		@docker compose exec web composer dump-autoload --dev
-		@docker compose exec web ./orm orm:generate-proxies
-
-translations:
-		@find $(MODULE_DIR) -iname "*.phtml" -print0 | sort -z | xargs -r0 xgettext \
-				--language=PHP \
-				--from-code=UTF-8 \
-				--keyword=translate \
-				--keyword=translatePlural:1,2 \
-				--output=$(TRANSLATIONS_DIR)/gewisweb.pot \
-				--force-po \
-				--no-location \
-				--sort-output \
-				--package-name=GEWISweb \
-				--package-version=$(shell git describe --dirty --always) \
-				--copyright-holder=GEWIS && \
-		find $(MODULE_DIR) -iname "*.php" -print0 | sort -z | xargs -r0 xgettext \
-				--language=PHP \
-				--from-code=UTF-8 \
-				--keyword=translate \
-				--keyword=translatePlural:1,2 \
-				--output=$(TRANSLATIONS_DIR)/gewisweb.pot \
-				--force-po \
-				--no-location \
-				--sort-output \
-				--package-name=GEWISweb \
-				--package-version=$(shell git describe --dirty --always) \
-				--copyright-holder=GEWIS \
-				--join-existing && \
-		msgmerge --sort-output -U $(TRANSLATIONS_DIR)/nl.po $(TRANSLATIONS_DIR)/gewisweb.pot && \
-		msgmerge --sort-output -U $(TRANSLATIONS_DIR)/en.po $(TRANSLATIONS_DIR)/gewisweb.pot && \
-		msgattrib --no-obsolete -o $(TRANSLATIONS_DIR)/en.po $(TRANSLATIONS_DIR)/en.po && \
-		msgattrib --no-obsolete -o $(TRANSLATIONS_DIR)/nl.po $(TRANSLATIONS_DIR)/nl.po
-
-translations-compile:
-		@msgfmt $(TRANSLATIONS_DIR)/en.po -o $(TRANSLATIONS_DIR)/en -c --strict -v
-		@msgfmt $(TRANSLATIONS_DIR)/nl.po -o $(TRANSLATIONS_DIR)/nl -c --strict -v
-
-update: updatecomposer updatepackage updatecss updateglide updatedocker
-
-loadenv:
-		@set -o allexport
-		@source .env
-		@set +o allexport
-
-copyconf:
-		cp config/autoload/local.development.php.dist config/autoload/local.php
-		cp config/autoload/doctrine.local.development.php.dist config/autoload/doctrine.local.php
-		cp config/autoload/laminas-developer-tools.local.php.dist config/autoload/laminas-developer-tools.local.php
-
-phpstan:
-		@docker compose exec web echo "" > phpstan/phpstan-baseline-pr.neon
-		@docker compose exec web vendor/bin/phpstan analyse -c phpstan.neon --memory-limit 1G
-
-phpstanpr:
-		@git fetch --all
-		@git update-ref refs/heads/temp-phpstanpr refs/remotes/origin/main
-		@git checkout --detach temp-phpstanpr
-		@echo "" > phpstan/phpstan-baseline.neon
-		@echo "" > phpstan/phpstan-baseline-pr.neon
-		@make rundev
-		@docker compose exec web vendor/bin/phpstan analyse -c phpstan.neon --generate-baseline phpstan/phpstan-baseline-pr.neon --memory-limit 1G --no-progress
-		@git checkout -- phpstan/phpstan-baseline.neon
-		@git checkout -
-		@docker cp "$(shell docker compose ps -q web)":/code/phpstan/phpstan-baseline-pr.neon ./phpstan/phpstan-baseline-pr.neon
-		@make rundev
-		@docker compose exec web vendor/bin/phpstan analyse -c phpstan.neon --memory-limit 1G --no-progress
-
-psalm: loadenv
-		@echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?><files/>" > psalm/psalm-baseline-pr.xml
-		@vendor/bin/psalm --no-cache --no-diff
-
-psalmall: loadenv
-		@echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?><files/>" > psalm/psalm-baseline-pr.xml
-		@vendor/bin/psalm --no-cache --ignore-baseline --no-diff
-
-psalmdiff: loadenv
-		@echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?><files/>" > psalm/psalm-baseline-pr.xml
-		@vendor/bin/psalm --no-cache --show-info=true --diff
-
-psalmbaseline: loadenv
-		@echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?><files/>" > psalm/psalm-baseline-pr.xml
-		@vendor/bin/psalm --set-baseline=psalm/psalm-baseline.xml --no-cache --no-diff
-
-psalmfix: loadenv
-		@echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?><files/>" > psalm/psalm-baseline-pr.xml
-		@vendor/bin/psalm --no-cache --alter --issues=InvalidReturnType,InvalidNullableReturnType
-
-phpcs: loadenv
-		@vendor/bin/phpcs -p
-
-phpcbf: loadenv
-		@vendor/bin/phpcbf -p --filter=GitModified
-
-phpcbfall: loadenv
-		@vendor/bin/phpcbf -p
-
-checkcomposer: loadenv
-		@XDEBUG_MODE=off vendor/bin/composer-require-checker check composer.json
-
-checkcomposerunused: loadenv
-		@XDEBUG_MODE=off vendor/bin/composer-unused
-
-checkcomposeroutdated:
-		@composer outdated
-
-updatecomposer:
-		@docker cp ./composer.json "$(shell docker compose ps -q web)":/code/composer.json
-		@docker compose exec web php composer update -W
-		@docker cp "$(shell docker compose ps -q web)":/code/composer.lock ./composer.lock
-
-updatepackage:
-		@docker cp ./package.json "$(shell docker compose ps -q web)":/code/package.json
-		@docker compose exec web npm update
-		@docker cp "$(shell docker compose ps -q web)":/code/package-lock.json ./package-lock.json
-
-updatecss:
-		@docker cp ./public "$(shell docker compose ps -q web)":/code
-		@docker compose exec web chown -R www-data:www-data /code/public
-		@docker compose exec web npm run scss
-		@docker cp "$(shell docker compose ps -q web)":/code/public/css/gewis-theme.css ./public/css/gewis-theme.css
-
-updateglide:
-		@docker cp ./docker/glide/composer.json "$(shell docker compose ps -q glide)":/glide/composer.json
-		@docker compose exec glide composer update -W
-		@docker cp "$(shell docker compose ps -q glide)":/glide/composer.lock ./docker/glide/composer.lock
-
-updatedocker:
-		@docker compose pull
-		@docker build --pull --no-cache -t abc.docker-registry.gewis.nl/web/gewisweb/web:production -f docker/web/production/Dockerfile .
-		@docker build --pull --no-cache -t abc.docker-registry.gewis.nl/web/gewisweb/web:development -f docker/web/development/Dockerfile .
-		@docker build --pull --no-cache -t abc.docker-registry.gewis.nl/web/gewisweb/glide:latest -f docker/glide/Dockerfile docker/glide
-		@docker build --pull --no-cache -t abc.docker-registry.gewis.nl/web/gewisweb/matomo:latest -f docker/matomo/Dockerfile docker/matomo
-		@docker build --pull --no-cache -t abc.docker-registry.gewis.nl/web/gewisweb/nginx:latest -f docker/nginx/Dockerfile docker/nginx
-
-build: buildweb buildglide buildmatomo buildnginx
-
-buildprod: buildwebprod buildglide buildmatomo buildnginx
-
-builddev: buildwebdev buildglide buildmatomo buildnginx
-
-buildweb: buildwebprod buildwebdev
-
-buildwebprod:
-		@docker build --build-arg GIT_COMMIT="$(LAST_WEB_COMMIT)" -t abc.docker-registry.gewis.nl/web/gewisweb/web:production -f docker/web/production/Dockerfile .
+# Misc
+.DEFAULT_GOAL   = help
+.PHONY          : help seed translations lint lint-fix psalm psalm-all phpstan test start startprod down logs bash sf cc
+LAST_WEB_COMMIT := $(shell git rev-parse --short HEAD 2>/dev/null || echo abcabcabc)
 
 buildwebdev:
-		@docker build --build-arg GIT_COMMIT="$(LAST_WEB_COMMIT)" -t abc.docker-registry.gewis.nl/web/gewisweb/web:development -f docker/web/development/Dockerfile .
+	@$(DOCKER) build --build-arg GIT_COMMIT="$(LAST_WEB_COMMIT)" --target gewisweb_web_development -t abc.docker-registry.gewis.nl/web/gewisweb/web:development .
 
-buildglide:
-		@docker build -t abc.docker-registry.gewis.nl/web/gewisweb/glide:latest -f docker/glide/Dockerfile docker/glide
+buildwebtest:
+	@$(DOCKER) build --build-arg GIT_COMMIT="$(LAST_WEB_COMMIT)" --target gewisweb_web_test -t abc.docker-registry.gewis.nl/web/gewisweb/web:test .
+
+buildwebprod:
+	@$(DOCKER_COMP_PROD) build --build-arg GIT_COMMIT="$(LAST_WEB_COMMIT)"
 
 buildmatomo:
-		@docker build -t abc.docker-registry.gewis.nl/web/gewisweb/matomo:latest -f docker/matomo/Dockerfile docker/matomo
+	@$(DOCKER) build -t abc.docker-registry.gewis.nl/web/gewisweb/matomo:latest -f docker/matomo/Dockerfile docker/matomo
 
-buildnginx:
-		@docker build -t abc.docker-registry.gewis.nl/web/gewisweb/nginx:latest -f docker/nginx/Dockerfile docker/nginx
+## —— GEWISWEB —————————————————————————————————————————————————————————————————
+help: ## Outputs this help screen
+	@grep -E '(^[a-zA-Z0-9\./_-]+:.*?##.*$$)|(^##)' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}{printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/'
 
+seed: ## Seed the database with test data (run after `make start`)
+	@$(SYMFONY) doctrine:fixtures:load
 
+translations: ## Extract untranslated text to the XLIFF files (also removes entries no longer referenced in source)
+	@$(SYMFONY) translation:extract en --format=xlf --sort=asc --no-fill --force --clean
+	@$(SYMFONY) translation:extract nl --format=xlf --sort=asc --no-fill --force --clean
+
+igor: ## Run Igor (static linter to validate Symfony project for the persistent memory model of FrankenPHP)
+	@$(PHP) ./vendor/bin/igor-php .
+
+lint: ## Linter using PHP_CodeSniffer
+	@$(PHP) ./vendor/bin/phpcs -p
+
+lint-fix: ## Lint fix using phpcbf
+	@$(PHP) ./vendor/bin/phpcbf -p
+
+psalm: ## Static analysis using Psalm
+	@$(PHP) ./vendor/bin/psalm --no-cache --no-diff
+
+psalm-all: ## Static analysis using Psalm (ignores baseline)
+	@$(PHP) ./vendor/bin/psalm --no-cache --no-diff --ignore-baseline
+
+phpstan: ## Static analysis using PHPStan
+	@$(PHP) ./vendor/bin/phpstan analyse -c phpstan.dist.neon
+
+test: ## Start tests with phpunit, pass the parameter "c=" to add options to phpunit, example: make test c="--group e2e --stop-on-failure"
+	@$(eval c ?=)
+	@$(DOCKER_COMP) exec -e APP_ENV=test web bin/phpunit $(c)
+
+## —— Docker ———————————————————————————————————————————————————————————————————
+builddev: buildwebdev buildmatomo ## Builds the development Docker images
+
+buildprod: buildwebprod buildmatomo ## Builds the production Docker images
+
+.env.local: .env.local.dist
+	@if [ ! -f .env.local ]; then \
+		cp .env.local.dist .env.local; \
+		echo ".env.local created from .env.local.dist — review and update the REQUIRED values"; \
+	fi
+
+up: .env.local ## Start the development Docker images in detached mode (no logs)
+	@$(DOCKER_COMP) up --detach
+
+upprod: ## Start the production Docker images in detached mode (no logs)
+	@$(DOCKER_COMP_PROD) up --detach
+
+start: builddev up ## Build and start the development Docker containers
+
+startprod: buildprod upprod ## Build and start the production Docker images
+
+stop: ## Stop the docker hub
+	@$(DOCKER_COMP) down --remove-orphans
+
+logs: ## Show live logs
+	@$(DOCKER_COMP) logs --tail=0 --follow
+
+bash: ## Connect to the FrankenPHP container
+	@$(PHP_CONT) bash
+
+## —— Composer —————————————————————————————————————————————————————————————————
+composer: ## Run composer, pass the parameter "c=" to run a given command, example: make composer c='req symfony/orm-pack'
+	@$(eval c ?=)
+	@$(COMPOSER) $(c)
+
+## —— Symfony ——————————————————————————————————————————————————————————————————
+sf: ## List all Symfony commands or pass the parameter "c=" to run a given command, example: make sf c=about
+	@$(eval c ?=)
+	@$(SYMFONY) $(c)
+
+cc: c=c:c ## Clear the cache
+cc: sf

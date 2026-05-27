@@ -1,0 +1,3 @@
+# yaml-language-server: $schema=../../vendor/symfony/dependency-injection/Loader/schema/services.schema.json
+framework:
+    lock: '%env(VALKEY_DSN)%'

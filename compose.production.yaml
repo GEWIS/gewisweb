@@ -1,0 +1,90 @@
+x-app-build: &app_build
+    image: abc.docker-registry.gewis.nl/web/gewisweb/web:production
+    build:
+        context: .
+        dockerfile: Dockerfile
+        target: gewisweb_web_production
+    environment:
+        # Core application
+        APP_SECRET: "${APP_SECRET:?APP_SECRET must be set in production}"
+        SYMFONY_TRUSTED_PROXIES: "private_ranges"
+        SERVER_NAME: "${SERVER_NAME:?SERVER_NAME must be set in production}, web:80"
+        DEFAULT_URI: "${DEFAULT_URI:?DEFAULT_URI must be set in production}"
+        MAIL_FROM_ADDRESS: "${MAIL_FROM_ADDRESS:?MAIL_FROM_ADDRESS must be set in production}"
+        # Application database (DATABASE_DSN is built from these by compose.yaml).
+        DOCKER_DB_HOST: "${DOCKER_DB_HOST:?DOCKER_DB_HOST must be set in production}"
+        DOCKER_DB_PORT: "${DOCKER_DB_PORT:?DOCKER_DB_PORT must be set in production}"
+        DOCKER_DB_USERNAME: "${DOCKER_DB_USERNAME:?DOCKER_DB_USERNAME must be set in production}"
+        DOCKER_DB_PASSWORD: "${DOCKER_DB_PASSWORD:?DOCKER_DB_PASSWORD must be set in production}"
+        DOCKER_DB_DATABASE: "${DOCKER_DB_DATABASE:?DOCKER_DB_DATABASE must be set in production}"
+        DOCKER_DB_VERSION: "${DOCKER_DB_VERSION:?DOCKER_DB_VERSION must be set in production}"
+        DOCKER_DB_CHARSET: "${DOCKER_DB_CHARSET:?DOCKER_DB_CHARSET must be set in production}"
+        DOCKER_DB_COLLATION: "${DOCKER_DB_COLLATION:?DOCKER_DB_COLLATION must be set in production}"
+        # GEWISDB read-only database (GEWISDB_DATABASE_DSN is built from these by compose.yaml).
+        GEWISDB_DB_HOST: "${GEWISDB_DB_HOST:?GEWISDB_DB_HOST must be set in production}"
+        GEWISDB_DB_PORT: "${GEWISDB_DB_PORT:?GEWISDB_DB_PORT must be set in production}"
+        GEWISDB_DB_USERNAME: "${GEWISDB_DB_USERNAME:?GEWISDB_DB_USERNAME must be set in production}"
+        GEWISDB_DB_PASSWORD: "${GEWISDB_DB_PASSWORD:?GEWISDB_DB_PASSWORD must be set in production}"
+        GEWISDB_DB_DATABASE: "${GEWISDB_DB_DATABASE:?GEWISDB_DB_DATABASE must be set in production}"
+        # GEWISDB membership API
+        GEWISDB_API_HOST: "${GEWISDB_API_HOST:?GEWISDB_API_HOST must be set in production}"
+        GEWISDB_API_KEY: "${GEWISDB_API_KEY:?GEWISDB_API_KEY must be set in production}"
+        # RabbitMQ (MESSENGER_TRANSPORT_DSN is built from these by compose.yaml).
+        RABBITMQ_HOST: "${RABBITMQ_HOST:?RABBITMQ_HOST must be set in production}"
+        RABBITMQ_PORT: "${RABBITMQ_PORT:?RABBITMQ_PORT must be set in production}"
+        RABBITMQ_DEFAULT_USER: "${RABBITMQ_DEFAULT_USER:?RABBITMQ_DEFAULT_USER must be set in production}"
+        RABBITMQ_DEFAULT_PASS: "${RABBITMQ_DEFAULT_PASS:?RABBITMQ_DEFAULT_PASS must be set in production}"
+        # Valkey (VALKEY_DSN is built from these by compose.yaml).
+        VALKEY_HOST: "${VALKEY_HOST:?VALKEY_HOST must be set in production}"
+        VALKEY_PORT: "${VALKEY_PORT:?VALKEY_PORT must be set in production}"
+        # Mercure (PUBLISHER/SUBSCRIBER JWT keys are derived from MERCURE_JWT_SECRET in compose.yaml).
+        MERCURE_JWT_SECRET: "${MERCURE_JWT_SECRET:?MERCURE_JWT_SECRET must be set in production}"
+        MERCURE_PUBLIC_URL: "${MERCURE_PUBLIC_URL:?MERCURE_PUBLIC_URL must be set in production}"
+        # SSH archive sync (App\Command\Application\SyncPublicArchiveCommand)
+        SSH_REMOTE: "${SSH_REMOTE:?SSH_REMOTE must be set in production}"
+        SSH_USERNAME: "${SSH_USERNAME:?SSH_USERNAME must be set in production}"
+        SSH_PASSWORD: "${SSH_PASSWORD:?SSH_PASSWORD must be set in production}"
+        # Analytics
+        MATOMO_DOMAIN: "${MATOMO_DOMAIN:?MATOMO_DOMAIN must be set in production}"
+        # Glide image server
+        GLIDE_HOST: "${GLIDE_HOST:?GLIDE_HOST must be set in production}"
+        GLIDE_KEY: "${GLIDE_KEY:?GLIDE_KEY must be set in production}"
+        # Google Calendar (Option Calendar)
+        DOCKER_GOOGLE_API_KEY: "${DOCKER_GOOGLE_API_KEY:?DOCKER_GOOGLE_API_KEY must be set in production}"
+        DOCKER_GOOGLE_CALENDAR_KEY: "${DOCKER_GOOGLE_CALENDAR_KEY:?DOCKER_GOOGLE_CALENDAR_KEY must be set in production}"
+        # Supremum Infima API
+        DOCKER_SUPREMUM_API_KEY: "${DOCKER_SUPREMUM_API_KEY:?DOCKER_SUPREMUM_API_KEY must be set in production}"
+        # Course documents watermarking
+        WATERMARK_TAG: "${WATERMARK_TAG:?WATERMARK_TAG must be set in production}"
+        # Activity creation / organ update / poll creation mail routing
+        MAIL_TO_ACTIVITY_CREATION_ADDRESS: "${MAIL_TO_ACTIVITY_CREATION_ADDRESS:?MAIL_TO_ACTIVITY_CREATION_ADDRESS must be set in production}"
+        MAIL_TO_ACTIVITY_CREATION_NAME: "${MAIL_TO_ACTIVITY_CREATION_NAME:?MAIL_TO_ACTIVITY_CREATION_NAME must be set in production}"
+        MAIL_TO_ACTIVITY_CREATION_REQUIRE_GEFLITST_ADDRESS: "${MAIL_TO_ACTIVITY_CREATION_REQUIRE_GEFLITST_ADDRESS:?MAIL_TO_ACTIVITY_CREATION_REQUIRE_GEFLITST_ADDRESS must be set in production}"
+        MAIL_TO_ACTIVITY_CREATION_REQUIRE_GEFLITST_NAME: "${MAIL_TO_ACTIVITY_CREATION_REQUIRE_GEFLITST_NAME:?MAIL_TO_ACTIVITY_CREATION_REQUIRE_GEFLITST_NAME must be set in production}"
+        MAIL_TO_ACTIVITY_CREATION_REQUIRE_GEFLITST_PLANKA_ADDRESS: "${MAIL_TO_ACTIVITY_CREATION_REQUIRE_GEFLITST_PLANKA_ADDRESS:?MAIL_TO_ACTIVITY_CREATION_REQUIRE_GEFLITST_PLANKA_ADDRESS must be set in production}"
+        MAIL_TO_ACTIVITY_CREATION_REQUIRE_GEFLITST_PLANKA_KEY: "${MAIL_TO_ACTIVITY_CREATION_REQUIRE_GEFLITST_PLANKA_KEY:?MAIL_TO_ACTIVITY_CREATION_REQUIRE_GEFLITST_PLANKA_KEY must be set in production}"
+        MAIL_TO_ACTIVITY_CREATION_REQUIRE_GEFLITST_PLANKA_NAME: "${MAIL_TO_ACTIVITY_CREATION_REQUIRE_GEFLITST_PLANKA_NAME:?MAIL_TO_ACTIVITY_CREATION_REQUIRE_GEFLITST_PLANKA_NAME must be set in production}"
+        MAIL_TO_ACTIVITY_CREATION_REQUIRE_ZETTLE_ADDRESS: "${MAIL_TO_ACTIVITY_CREATION_REQUIRE_ZETTLE_ADDRESS:?MAIL_TO_ACTIVITY_CREATION_REQUIRE_ZETTLE_ADDRESS must be set in production}"
+        MAIL_TO_ACTIVITY_CREATION_REQUIRE_ZETTLE_NAME: "${MAIL_TO_ACTIVITY_CREATION_REQUIRE_ZETTLE_NAME:?MAIL_TO_ACTIVITY_CREATION_REQUIRE_ZETTLE_NAME must be set in production}"
+        MAIL_TO_ACTIVITY_CALENDAR_ADDRESS: "${MAIL_TO_ACTIVITY_CALENDAR_ADDRESS:?MAIL_TO_ACTIVITY_CALENDAR_ADDRESS must be set in production}"
+        MAIL_TO_ACTIVITY_CALENDAR_NAME: "${MAIL_TO_ACTIVITY_CALENDAR_NAME:?MAIL_TO_ACTIVITY_CALENDAR_NAME must be set in production}"
+        MAIL_TO_ORGAN_UPDATE_ADDRESS: "${MAIL_TO_ORGAN_UPDATE_ADDRESS:?MAIL_TO_ORGAN_UPDATE_ADDRESS must be set in production}"
+        MAIL_TO_ORGAN_UPDATE_NAME: "${MAIL_TO_ORGAN_UPDATE_NAME:?MAIL_TO_ORGAN_UPDATE_NAME must be set in production}"
+        MAIL_TO_POLL_CREATION_ADDRESS: "${MAIL_TO_POLL_CREATION_ADDRESS:?MAIL_TO_POLL_CREATION_ADDRESS must be set in production}"
+        MAIL_TO_POLL_CREATION_NAME: "${MAIL_TO_POLL_CREATION_NAME:?MAIL_TO_POLL_CREATION_NAME must be set in production}"
+
+services:
+    web: *app_build
+    messenger-high-priority: *app_build
+    messenger-normal-priority: *app_build
+    messenger-bulk: *app_build
+    scheduler-default: *app_build
+    scheduler-gdpr: *app_build
+    mailer:
+        environment:
+            MP_SMTP_RELAY_HOST: "${SMTP_SERVER:?SMTP_SERVER must be set in production}"
+            MP_SMTP_RELAY_PORT: "${SMTP_PORT:?SMTP_PORT must be set in production}"
+            MP_SMTP_RELAY_TLS: "true"
+            MP_SMTP_RELAY_AUTH: "login"
+            MP_SMTP_RELAY_USERNAME: "${SMTP_USERNAME:?SMTP_USERNAME must be set in production}"
+            MP_SMTP_RELAY_PASSWORD: "${SMTP_PASSWORD:?SMTP_PASSWORD must be set in production}"
