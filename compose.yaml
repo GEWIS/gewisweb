@@ -40,6 +40,17 @@ x-worker: &worker
     <<: *app
     entrypoint: []
     volumes: *worker_volumes
+    # Workers skip the entrypoint (and thus migrations); wait for web, which runs them. Restated in full because the
+    # `<<` merge replaces depends_on completely.
+    depends_on:
+        mailer:
+            condition: service_started
+        valkey:
+            condition: service_healthy
+        rabbitmq:
+            condition: service_healthy
+        web:
+            condition: service_healthy
     deploy:
         replicas: 1
         update_config:

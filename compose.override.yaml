@@ -4,6 +4,9 @@ x-app-development: &app_development
         context: .
         dockerfile: Dockerfile
         target: gewisweb_web_development
+        args:
+            USER_UID: "${UID:-1000}"
+            USER_GID: "${GID:-1000}"
     environment:
         APP_ENV: "dev"
     depends_on:
@@ -13,6 +16,7 @@ x-app-development: &app_development
 x-worker-dev-volumes: &worker_dev_volumes
     - ./:/app
     - ./data:/app/data
+    - ./var:/app/var
 
 services:
     web:
@@ -21,6 +25,7 @@ services:
         volumes:
             - ./:/app
             - ./data:/app/data
+            - ./var:/app/var
             - ./docker/web/frankenphp/Caddyfile:/etc/frankenphp/Caddyfile:ro
             - ./docker/web/frankenphp/conf.d/20-gewisweb.dev.ini:/usr/local/etc/php/app.conf.d/20-gewisweb.dev.ini:ro
         environment:

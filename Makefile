@@ -1,10 +1,8 @@
 # Executables (local)
 DOCKER = docker
-# In dev we explicitly pass --env-file twice so compose substitution reads both
-# .env (committed defaults) and .env.local (developer overrides). Without this,
-# compose only reads .env and values in .env.local never reach the container —
-# meaning Caddy and Symfony see different secrets. Prod commands use the bare
-# `docker compose` so the orchestrator-injected env wins.
+# In dev we explicitly pass --env-file twice so compose substitution reads both `.env` (committed defaults) and
+# `.env.local` (developer overrides). Without this, compose only reads `.env` and values in `.env.local` never reach the
+# container, meaning Caddy and Symfony see different secrets.
 DOCKER_COMP      = $(DOCKER) compose --env-file=.env --env-file=.env.local
 DOCKER_COMP_PROD = $(DOCKER) compose -f compose.yaml -f compose.production.yaml
 
@@ -20,9 +18,11 @@ SYMFONY  = $(PHP) bin/console
 .DEFAULT_GOAL   = help
 .PHONY          : help seed translations lint lint-fix psalm psalm-all phpstan test start startprod down logs bash sf cc
 LAST_WEB_COMMIT := $(shell git rev-parse --short HEAD 2>/dev/null || echo abcabcabc)
+HOST_UID        := $(shell id -u)
+HOST_GID        := $(shell id -g)
 
 buildwebdev:
-	@$(DOCKER) build --build-arg GIT_COMMIT="$(LAST_WEB_COMMIT)" --target gewisweb_web_development -t abc.docker-registry.gewis.nl/web/gewisweb/web:development .
+	@$(DOCKER) build --build-arg GIT_COMMIT="$(LAST_WEB_COMMIT)" --build-arg USER_UID="$(HOST_UID)" --build-arg USER_GID="$(HOST_GID)" --target gewisweb_web_development -t abc.docker-registry.gewis.nl/web/gewisweb/web:development .
 
 buildwebtest:
 	@$(DOCKER) build --build-arg GIT_COMMIT="$(LAST_WEB_COMMIT)" --target gewisweb_web_test -t abc.docker-registry.gewis.nl/web/gewisweb/web:test .
@@ -71,13 +71,16 @@ builddev: buildwebdev buildmatomo ## Builds the development Docker images
 
 buildprod: buildwebprod buildmatomo ## Builds the production Docker images
 
-.env.local: .env.local.dist
+setuplocalenv:
 	@if [ ! -f .env.local ]; then \
 		cp .env.local.dist .env.local; \
-		echo ".env.local created from .env.local.dist — review and update the REQUIRED values"; \
+		echo ".env.local created from .env.local.dist; alter it to your needs"; \
 	fi
 
-up: .env.local ## Start the development Docker images in detached mode (no logs)
+up: setuplocalenv ## Start the development Docker images in detached mode (no logs)
+	@# Create var/ as the host user first; otherwise Docker creates the bind-mount source as root and the non-root
+	@# container cannot write var/cache.
+	@mkdir -p var
 	@$(DOCKER_COMP) up --detach
 
 upprod: ## Start the production Docker images in detached mode (no logs)

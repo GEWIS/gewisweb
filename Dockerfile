@@ -75,6 +75,10 @@ CMD [ "frankenphp", "run", "--config", "/etc/frankenphp/Caddyfile" ]
 # GEWISWEB Development Image (local)
 FROM gewisweb_web_base AS gewisweb_web_development
 
+# Match the host user's UID/GID so files written through the bind mount are not root-owned.
+ARG USER_UID=1000
+ARG USER_GID=1000
+
 ENV APP_ENV=dev
 ENV XDEBUG_MODE=off
 ENV FRANKENPHP_WORKER_CONFIG=watch
@@ -95,15 +99,16 @@ RUN <<-EOF
         sudo
     install-php-extensions xdebug
     rm -rf /var/lib/apt/lists/*
-    useradd -m -s /bin/bash nonroot
+    groupadd -g "$USER_GID" nonroot
+    useradd -m -u "$USER_UID" -g "$USER_GID" -s /bin/bash nonroot
     echo "nonroot ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/nonroot
+    chown -R nonroot:nonroot /data/caddy /config/caddy
     git config --system --add safe.directory /app
 EOF
 
 COPY --link docker/web/frankenphp/conf.d/20-gewisweb.dev.ini $PHP_INI_DIR/app.conf.d/
 
-COPY --link composer.* symfony.* ./
-RUN composer install --no-cache --prefer-dist --no-autoloader --no-scripts --no-progress
+USER nonroot
 
 CMD [ "frankenphp", "run", "--config", "/etc/frankenphp/Caddyfile", "--watch" ]
 

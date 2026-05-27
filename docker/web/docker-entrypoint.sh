@@ -3,6 +3,10 @@ set -e
 
 if [ "$1" = 'frankenphp' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
     if [ "$APP_ENV" = "dev" ]; then
+        if [ -z "$(ls -A 'vendor/' 2>/dev/null)" ]; then
+            composer install --no-cache --prefer-dist --no-progress --no-interaction
+        fi
+
         if [ -z "$(ls -A 'public/assets/' 2>/dev/null)" ]; then
             rm -rf public/assets/
         fi

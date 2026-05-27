@@ -26,7 +26,7 @@
 
 	mercure {
 		transport bolt {
-			path /data/mercure.db
+			path /data/caddy/mercure.db
 			{$MERCURE_BOLT_EXTRA_DIRECTIVES}
 		}
 		publisher_jwt {env.MERCURE_PUBLISHER_JWT_KEY} {env.MERCURE_PUBLISHER_JWT_ALG}

@@ -61,11 +61,10 @@ To set up GEWISWEB locally, follow these steps:
 1. [Fork the repository](https://github.com/GEWIS/gewisweb/fork).
 2. Clone your fork (`git clone git@github.com:{username}/gewisweb.git`).
 3. Initialise submodules (`git submodule update --init`). This pulls the read-only `gewisweb-laminas/` reference of the pre-migration codebase.
-4. Copy the `.env.local.dist` file to `.env.local` and alter the file to your needs.
-5. Run `make start` to build and serve the website.
-6. Run `make seed` to get some test data (migrations will run automatically).
-7. Go to [`http://localhost/`](http://localhost/) in your browser and you are greeted with the GEWIS website.
-8. Log in with membership number `8000` and the password `gewiswebgewis`.
+4. Run `make start` to build and serve the website (a `.env.local` will be created for you; alter it to your needs).
+5. Run `make seed` to get some test data (migrations will run automatically).
+6. Go to [`http://localhost/`](http://localhost/) in your browser and you are greeted with the GEWIS website.
+7. Log in with membership number `8000` and the password `gewiswebgewis`.
 
 #### Other Accessible Services
 During development, several other services are accessible on your local machine:
