@@ -420,6 +420,9 @@
             "ref": "0df5844274d871b37fc3816c57a768ffc60a43a5"
         }
     },
+    "symfony/ux-calendar-link": {
+        "version": "3.x-dev"
+    },
     "symfony/ux-live-component": {
         "version": "2.32",
         "recipe": {

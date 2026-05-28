@@ -10,6 +10,7 @@ use App\Entity\Activity\ActivityLabel;
 use App\Entity\Activity\ActivityLocalisedText;
 use App\Entity\Activity\Enums\ActivityCategories;
 use App\Entity\Activity\SignupList;
+use App\Entity\Activity\UserSignup;
 use App\Entity\Decision\Member;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -366,6 +367,12 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
                         'onlyGEWIS' => true,
                         'displaySubscribedNumber' => true,
                         'limitedCapacity' => true,
+                        'subscribers' => [
+                            8005,
+                            8006,
+                            8007,
+                            8008,
+                        ],
                     ],
                 ],
             ],
@@ -580,6 +587,13 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
                 $signupList = $this->createSignupList($signupListData);
                 $activity->addSignupList($signupList);
                 $manager->persist($signupList);
+
+                foreach ($signupListData['subscribers'] ?? [] as $lidnr) {
+                    $signup = new UserSignup();
+                    $signup->setSignupList($signupList);
+                    $signup->setUser($this->getReference('member-' . $lidnr, Member::class));
+                    $manager->persist($signup);
+                }
             }
         }
 
@@ -597,6 +611,7 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
      *     limitedCapacity: bool,
      *     promoted?: bool,
      *     presenceTaken?: bool,
+     *     subscribers?: list<int>,
      * } $data
      */
     private function createSignupList(array $data): SignupList

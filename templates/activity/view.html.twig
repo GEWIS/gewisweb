@@ -2,5 +2,146 @@
 
 {% block page_title %}{{ activity.getName|localise_text|page_title }}{{ parent() }}{% endblock %}
 
+{% block structured_data %}
+    {% set organizerName = activity.getOrgan is not null
+        ? activity.getOrgan.getName
+        : (activity.getCompany is not null ? activity.getCompany.getName : 'Study Association GEWIS'|trans) %}
+    <script type="application/ld+json">
+        {{ {
+            '@context': 'https://schema.org',
+            '@type': 'Event',
+            'name': activity.getName|localise_text,
+            'startDate': activity.getBeginTime|date('c'),
+            'endDate': activity.getEndTime|date('c'),
+            'eventStatus': 'https://schema.org/EventScheduled',
+            'eventAttendanceMode': 'https://schema.org/OfflineEventAttendanceMode',
+            'location': {
+                '@type': 'Place',
+                'name': activity.getLocation|localise_text,
+            },
+            'organizer': {
+                '@type': 'Organization',
+                'name': organizerName,
+            },
+            'description': activity.getDescription|localise_text|markdown|striptags,
+            'url': url('activity/view', {'activity': activity.getId}),
+        }|json_encode|raw }}
+    </script>
+{% endblock %}
+
 {% block contents %}
+    <div class="row">
+        <main class="col-md-8">
+            <h1 class="mb-2">{{ activity.getName|localise_text }}</h1>
+            <div class="d-flex flex-wrap gap-1 mb-3">
+                {% if activity.getCategory.value not in ['other', 'uncategorised'] %}
+                    <span class="badge badge-info">{{ activity.getCategory|trans }}</span>
+                {% endif %}
+                {% for label in activity.getLabels %}
+                    <span class="badge badge-secondary">{{ label.getName|localise_text }}</span>
+                {% endfor %}
+            </div>
+            <div class="markdown">
+                {{ activity.getDescription|localise_text|markdown }}
+            </div>
+        </main>
+        <aside class="col-md-4">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3>{{ 'Details'|trans }}</h3>
+                </div>
+                <div class="list-group list-group-flush">
+                    <div class="list-group-item">
+                        <h3 class="h6 mb-1">{{ 'Start'|trans }}</h3>
+                        <p class="text-muted small mb-0">
+                            {% set start = activity.getBeginTime|format_datetime(pattern: 'EEEE d MMMM yyyy HH:mm', locale: app.request.locale) %}
+                            {{ start|first|upper ~ start|slice(1) }}
+                        </p>
+                    </div>
+                    <div class="list-group-item">
+                        <h3 class="h6 mb-1">{{ 'End'|trans }}</h3>
+                        <p class="text-muted small mb-0">
+                            {% set end = activity.getEndTime|format_datetime(pattern: 'EEEE d MMMM yyyy HH:mm', locale: app.request.locale) %}
+                            {{ end|first|upper ~ end|slice(1) }}
+                        </p>
+                    </div>
+                    {% set location = activity.getLocation|localise_text %}
+                    {% if location is not empty %}
+                        <div class="list-group-item">
+                            <h3 class="h6 mb-1">{{ 'Location'|trans }}</h3>
+                            <p class="text-muted small mb-0">{{ location }}</p>
+                        </div>
+                    {% endif %}
+                    {% set costs = activity.getCosts|localise_text %}
+                    {% if costs is not empty %}
+                        <div class="list-group-item">
+                            <h3 class="h6 mb-1">{{ 'Costs'|trans }}</h3>
+                            <p class="text-muted small mb-0">{{ costs }}</p>
+                        </div>
+                    {% endif %}
+                    {% if activity.getOrgan is not null or activity.getCompany is not null %}
+                        <div class="list-group-item">
+                            <h3 class="h6 mb-1">{{ 'Organised by'|trans }}</h3>
+                            <p class="text-muted small mb-0">
+                                {{ activity.getOrgan is not null ? activity.getOrgan.getName : activity.getCompany.getName }}
+                            </p>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="panel-footer dropdown">
+                    <button type="button" class="panel-footer-link btn btn-link p-0 dropdown-toggle"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-calendar-plus"></i> {{ 'Add to calendar'|trans }}
+                    </button>
+                    <ul class="dropdown-menu">
+                        {% for link in ux_calendar_links(calendarEvent) %}
+                            <li>
+                                <a class="dropdown-item" href="{{ link.url }}" target="_blank" rel="noopener">
+                                    {{ link.label }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <p class="text-muted small mt-3">
+        {{ 'Please contact %organizer% or the board (%email%) with any questions or concerns. Have fun!'|trans({
+            '%organizer%': activity.getOrgan is not null ? activity.getOrgan.getName : 'the organising party'|trans,
+            '%email%': 'cib@gewis.nl',
+        }) }}
+    </p>
+
+    {% if signupListViews is not empty %}
+        {% set activeLists = signupListViews|filter(list => not list.isClosed) %}
+        {% set closedLists = signupListViews|filter(list => list.isClosed) %}
+
+        {% if activeLists is not empty %}
+            <h2 class="h4 mt-4">{{ 'Sign-up lists'|trans }}</h2>
+            {# Auto-open the first list that is still open for sign-up; leave the rest collapsed. #}
+            {% set openedFirst = false %}
+            {% for list in activeLists %}
+                {% set autoOpen = not openedFirst and list.isOpen %}
+                {% if autoOpen %}{% set openedFirst = true %}{% endif %}
+                {% include 'partials/activity/signup-list.html.twig' with {
+                    'list': list,
+                    'collapseId': 'signup-list-active-' ~ loop.index,
+                    'open': autoOpen,
+                } only %}
+            {% endfor %}
+        {% endif %}
+
+        {% if closedLists is not empty %}
+            <h2 class="h4 mt-4 text-muted">{{ 'Closed sign-up lists'|trans }}</h2>
+            {% for list in closedLists %}
+                {% include 'partials/activity/signup-list.html.twig' with {
+                    'list': list,
+                    'collapseId': 'signup-list-closed-' ~ loop.index,
+                    'open': false,
+                } only %}
+            {% endfor %}
+        {% endif %}
+    {% endif %}
 {% endblock %}

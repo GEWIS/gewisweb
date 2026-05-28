@@ -85,6 +85,10 @@
         <source>Activity Archive</source>
         <target state="translated">Activity Archive</target>
       </trans-unit>
+      <trans-unit id="85z9UtL" resname="Add to calendar">
+        <source>Add to calendar</source>
+        <target>Add to calendar</target>
+      </trans-unit>
       <trans-unit id="kIqhHtP" resname="Admin">
         <source>Admin</source>
         <target state="translated">Admin</target>
@@ -257,6 +261,14 @@
         <source>Close</source>
         <target state="translated">Close</target>
       </trans-unit>
+      <trans-unit id="yRh1o7S" resname="Closed">
+        <source>Closed</source>
+        <target>Closed</target>
+      </trans-unit>
+      <trans-unit id="wt5TMsn" resname="Closed sign-up lists">
+        <source>Closed sign-up lists</source>
+        <target>Closed sign-up lists</target>
+      </trans-unit>
       <trans-unit id="c1Os74Z" resname="Commissaris Digitale Innovatie">
         <source>Commissaris Digitale Innovatie</source>
         <target state="translated">Digital Innovation Officer</target>
@@ -328,6 +340,10 @@
       <trans-unit id="Xj30MRg" resname="Continue">
         <source>Continue</source>
         <target state="translated">Continue</target>
+      </trans-unit>
+      <trans-unit id="LTGw.px" resname="Costs">
+        <source>Costs</source>
+        <target>Costs</target>
       </trans-unit>
       <trans-unit id="lmE8cjL" resname="Courses">
         <source>Courses</source>
@@ -424,6 +440,10 @@
       <trans-unit id="FdpiKgY" resname="Enabled">
         <source>Enabled</source>
         <target state="translated">Enabled</target>
+      </trans-unit>
+      <trans-unit id="kI3gFIV" resname="End">
+        <source>End</source>
+        <target>End</target>
       </trans-unit>
       <trans-unit id="_ujLe_1" resname="Ends">
         <source>Ends</source>
@@ -540,6 +560,10 @@
       <trans-unit id="kCLhNY7" resname="Frontpage">
         <source>Frontpage</source>
         <target state="translated">Frontpage</target>
+      </trans-unit>
+      <trans-unit id="ThCpIAB" resname="GEWIS members only">
+        <source>GEWIS members only</source>
+        <target>GEWIS members only</target>
       </trans-unit>
       <trans-unit id="gfAnVGd" resname="GEWIS room impression">
         <source>GEWIS room impression</source>
@@ -749,6 +773,10 @@
         <source>Light</source>
         <target state="translated">Light</target>
       </trans-unit>
+      <trans-unit id="JvvWrjE" resname="Limited capacity">
+        <source>Limited capacity</source>
+        <target>Limited capacity</target>
+      </trans-unit>
       <trans-unit id="Dz0Nyiu" resname="Links">
         <source>Links</source>
         <target state="translated">Links</target>
@@ -761,9 +789,17 @@
         <source>Loading an infimum...</source>
         <target state="translated">Loading an infimum...</target>
       </trans-unit>
+      <trans-unit id="nODxdW." resname="Location">
+        <source>Location</source>
+        <target>Location</target>
+      </trans-unit>
       <trans-unit id="RxIIlzy" resname="Log in">
         <source>Log in</source>
         <target state="translated">Log in</target>
+      </trans-unit>
+      <trans-unit id="oQ0iCjA" resname="Log in to view the subscribers.">
+        <source>Log in to view the subscribers.</source>
+        <target>Log in to view the subscribers.</target>
       </trans-unit>
       <trans-unit id="N_oO8pX" resname="Log out everywhere">
         <source>Log out everywhere</source>
@@ -929,9 +965,21 @@
         <source>No members match the current filters.</source>
         <target state="translated">No members match the current filters.</target>
       </trans-unit>
+      <trans-unit id="6I5cJhu" resname="No subscriptions yet.">
+        <source>No subscriptions yet.</source>
+        <target>No subscriptions yet.</target>
+      </trans-unit>
       <trans-unit id="5oWvzf3" resname="Not activated">
         <source>Not activated</source>
         <target state="translated">Not activated</target>
+      </trans-unit>
+      <trans-unit id="Q7CXr4n" resname="Not yet open">
+        <source>Not yet open</source>
+        <target>Not yet open</target>
+      </trans-unit>
+      <trans-unit id="ZV7YFQ7" resname="Number of subscriptions: %count%">
+        <source>Number of subscriptions: %count%</source>
+        <target>Number of subscriptions: %count%</target>
       </trans-unit>
       <trans-unit id="fm8k4L1" resname="Oh no! Something went wrong :(">
         <source>Oh no! Something went wrong :(</source>
@@ -944,6 +992,14 @@
       <trans-unit id="bnfrTZj" resname="Only with open sign-up">
         <source>Only with open sign-up</source>
         <target>Only with open sign-up</target>
+      </trans-unit>
+      <trans-unit id="_SqArFZ" resname="Open">
+        <source>Open</source>
+        <target>Open</target>
+      </trans-unit>
+      <trans-unit id="NYE98.0" resname="Open from %open% until %close%.">
+        <source>Open from %open% until %close%.</source>
+        <target>Open from %open% until %close%.</target>
       </trans-unit>
       <trans-unit id="FJxCJQn" resname="Opperhoofd">
         <source>Opperhoofd</source>
@@ -960,6 +1016,10 @@
       <trans-unit id="ljfCRt6" resname="Ordinary">
         <source>Ordinary</source>
         <target state="translated">Ordinary</target>
+      </trans-unit>
+      <trans-unit id="flkVGv3" resname="Organised by">
+        <source>Organised by</source>
+        <target>Organised by</target>
       </trans-unit>
       <trans-unit id="zvvKAKp" resname="Organising party">
         <source>Organising party</source>
@@ -1013,6 +1073,10 @@
         <source>Pick a long, unique password - at least 16 characters and not found in any known data breach.</source>
         <target state="translated">Pick a long, unique password - at least 16 characters and not found in any known data breach.</target>
       </trans-unit>
+      <trans-unit id="GqUZ23A" resname="Please contact %organizer% or the board (%email%) with any questions or concerns. Have fun!">
+        <source>Please contact %organizer% or the board (%email%) with any questions or concerns. Have fun!</source>
+        <target>Please contact %organizer% or the board (%email%) with any questions or concerns. Have fun!</target>
+      </trans-unit>
       <trans-unit id="qT565tK" resname="Polls">
         <source>Polls</source>
         <target state="translated">Polls</target>
@@ -1032,6 +1096,10 @@
       <trans-unit id="M8W_jVO" resname="Promo &amp; merchandise">
         <source>Promo &amp; merchandise</source>
         <target><![CDATA[Promo & merchandise]]></target>
+      </trans-unit>
+      <trans-unit id="R2eeY_o" resname="Promoted">
+        <source>Promoted</source>
+        <target>Promoted</target>
       </trans-unit>
       <trans-unit id="YRI5E0j" resname="QR code">
         <source>QR code</source>
@@ -1165,6 +1233,10 @@
         <source>Sign-up closes:</source>
         <target>Sign-up closes:</target>
       </trans-unit>
+      <trans-unit id="JiavS3V" resname="Sign-up lists">
+        <source>Sign-up lists</source>
+        <target>Sign-up lists</target>
+      </trans-unit>
       <trans-unit id="C3eGQtZ" resname="Sign-up opens:">
         <source>Sign-up opens:</source>
         <target>Sign-up opens:</target>
@@ -1184,6 +1256,10 @@
       <trans-unit id="oBphsD9" resname="Stale">
         <source>Stale</source>
         <target state="translated">Stale</target>
+      </trans-unit>
+      <trans-unit id="qpMwoA4" resname="Start">
+        <source>Start</source>
+        <target>Start</target>
       </trans-unit>
       <trans-unit id="6xCSWiZ" resname="Status">
         <source>Status</source>
@@ -1504,6 +1580,10 @@
       <trans-unit id="NpnxF2Z" resname="ongoing for %duration%">
         <source>ongoing for %duration%</source>
         <target>ongoing for %duration%</target>
+      </trans-unit>
+      <trans-unit id="CqfqdkM" resname="the organising party">
+        <source>the organising party</source>
+        <target>the organising party</target>
       </trans-unit>
       <trans-unit id="W3MzJgn" resname="unavailable">
         <source>unavailable</source>

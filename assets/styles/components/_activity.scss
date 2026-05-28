@@ -3,6 +3,16 @@
     cursor: pointer;
 }
 
+// Sign-up list accordion on the activity view page: rotate the chevron when its section is expanded.
+.signup-list-chevron {
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+}
+
+.signup-list-heading:not(.collapsed) .signup-list-chevron {
+    transform: rotate(180deg);
+}
+
 // Clamp the (rendered Markdown) activity description on overview pages until the user expands it.
 .activity-description-content {
     display: -webkit-box;
