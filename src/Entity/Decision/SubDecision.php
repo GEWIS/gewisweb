@@ -44,7 +44,7 @@ use Doctrine\ORM\Mapping\ManyToOne;
  *     subdecision_sequence: int,
  *     contentNL: string,
  *     contentEN: string,
- *     ...,
+ *     ...<string, mixed>,
  * }
  */
 #[Entity(repositoryClass: SubDecisionRepository::class)]
