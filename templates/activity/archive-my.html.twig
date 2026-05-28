@@ -1,0 +1,8 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}{{ 'My past activities'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block contents %}
+    <h1>{{ 'My past activities'|trans }}</h1>
+    {{ component('Activity:ActivityOverview', { subscribed: true, past: true }) }}
+{% endblock %}

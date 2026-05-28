@@ -3,4 +3,6 @@
 {% block page_title %}{{ 'Activity Archive'|trans|page_title }}{{ parent() }}{% endblock %}
 
 {% block contents %}
+    <h1>{{ 'Activity Archive'|trans }}</h1>
+    {{ component('Activity:ActivityOverview', { past: true, fromDate: yearStart, untilDate: yearEnd }) }}
 {% endblock %}

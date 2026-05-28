@@ -3,4 +3,6 @@
 {% block page_title %}{{ 'My Activities'|trans|page_title }}{{ parent() }}{% endblock %}
 
 {% block contents %}
+    <h1>{{ 'My upcoming activities'|trans }}</h1>
+    {{ component('Activity:ActivityOverview', { subscribed: true }) }}
 {% endblock %}

@@ -5,9 +5,25 @@
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
+      <trans-unit id="E69bPZ6" resname="%count% day|%count% days">
+        <source>%count% day|%count% days</source>
+        <target>%count% day|%count% days</target>
+      </trans-unit>
+      <trans-unit id="H3jnVKg" resname="%count% hour|%count% hours">
+        <source>%count% hour|%count% hours</source>
+        <target>%count% hour|%count% hours</target>
+      </trans-unit>
+      <trans-unit id="30tji6_" resname="%count% minute|%count% minutes">
+        <source>%count% minute|%count% minutes</source>
+        <target>%count% minute|%count% minutes</target>
+      </trans-unit>
       <trans-unit id="Bp.9tYU" resname="%count% session(s) terminated.">
         <source>%count% session(s) terminated.</source>
         <target state="translated">%count% session(s) terminated.</target>
+      </trans-unit>
+      <trans-unit id="KJO8tlf" resname="%count% week|%count% weeks">
+        <source>%count% week|%count% weeks</source>
+        <target>%count% week|%count% weeks</target>
       </trans-unit>
       <trans-unit id="6e8o.wA" resname="API">
         <source>API</source>
@@ -220,6 +236,10 @@
       <trans-unit id="wmlL5M4" resname="Categories">
         <source>Categories</source>
         <target state="translated">Categories</target>
+      </trans-unit>
+      <trans-unit id="tceoGZr" resname="Category">
+        <source>Category</source>
+        <target>Category</target>
       </trans-unit>
       <trans-unit id="ROsdATY" resname="Chair">
         <source>Chair</source>
@@ -469,6 +489,10 @@
         <source>Featured</source>
         <target state="translated">Featured</target>
       </trans-unit>
+      <trans-unit id="jqwP5Ri" resname="Filters">
+        <source>Filters</source>
+        <target>Filters</target>
+      </trans-unit>
       <trans-unit id="2ul.IfN" resname="Final">
         <source>Final</source>
         <target state="translated">Final</target>
@@ -508,6 +532,10 @@
       <trans-unit id="TZOmMlF" resname="Fraternity">
         <source>Fraternity</source>
         <target state="translated">Fraternity</target>
+      </trans-unit>
+      <trans-unit id="Ll4aq_." resname="From">
+        <source>From</source>
+        <target>From</target>
       </trans-unit>
       <trans-unit id="kCLhNY7" resname="Frontpage">
         <source>Frontpage</source>
@@ -725,6 +753,10 @@
         <source>Links</source>
         <target state="translated">Links</target>
       </trans-unit>
+      <trans-unit id="uU838DK" resname="Load more">
+        <source>Load more</source>
+        <target>Load more</target>
+      </trans-unit>
       <trans-unit id="sRyfMnf" resname="Loading an infimum...">
         <source>Loading an infimum...</source>
         <target state="translated">Loading an infimum...</target>
@@ -853,6 +885,14 @@
         <source>My Photos</source>
         <target state="translated">My Photos</target>
       </trans-unit>
+      <trans-unit id="2xos6Ug" resname="My past activities">
+        <source>My past activities</source>
+        <target>My past activities</target>
+      </trans-unit>
+      <trans-unit id="rbP4ntw" resname="My upcoming activities">
+        <source>My upcoming activities</source>
+        <target>My upcoming activities</target>
+      </trans-unit>
       <trans-unit id="wbMeKOh" resname="Name">
         <source>Name</source>
         <target state="translated">Name</target>
@@ -877,6 +917,10 @@
         <source>No active sessions.</source>
         <target state="translated">No active sessions.</target>
       </trans-unit>
+      <trans-unit id="FeP0dTL" resname="No activities match the current filters.">
+        <source>No activities match the current filters.</source>
+        <target>No activities match the current filters.</target>
+      </trans-unit>
       <trans-unit id="VROC54W" resname="No company users match the current filters.">
         <source>No company users match the current filters.</source>
         <target state="translated">No company users match the current filters.</target>
@@ -897,6 +941,10 @@
         <source>On Thursdays, there is a %link_start%social drink%link_end% from 16.30 to 19.00.</source>
         <target state="translated">On Thursdays, there is a %link_start%social drink%link_end% from 16.30 to 19.00.</target>
       </trans-unit>
+      <trans-unit id="bnfrTZj" resname="Only with open sign-up">
+        <source>Only with open sign-up</source>
+        <target>Only with open sign-up</target>
+      </trans-unit>
       <trans-unit id="FJxCJQn" resname="Opperhoofd">
         <source>Opperhoofd</source>
         <target state="translated">Opperhoofd</target>
@@ -912,6 +960,10 @@
       <trans-unit id="ljfCRt6" resname="Ordinary">
         <source>Ordinary</source>
         <target state="translated">Ordinary</target>
+      </trans-unit>
+      <trans-unit id="zvvKAKp" resname="Organising party">
+        <source>Organising party</source>
+        <target>Organising party</target>
       </trans-unit>
       <trans-unit id="aiFSOsy" resname="Other">
         <source>Other</source>
@@ -1053,6 +1105,10 @@
         <source>Search</source>
         <target state="translated">Search</target>
       </trans-unit>
+      <trans-unit id="ZNQdihj" resname="Search by activity name">
+        <source>Search by activity name</source>
+        <target>Search by activity name</target>
+      </trans-unit>
       <trans-unit id="YWrWXBq" resname="Search by company, representative name, or email">
         <source>Search by company, representative name, or email</source>
         <target state="translated">Search by company, representative name, or email</target>
@@ -1093,9 +1149,25 @@
         <source>Settings</source>
         <target state="translated">Settings</target>
       </trans-unit>
+      <trans-unit id="WDBuc7a" resname="Show less">
+        <source>Show less</source>
+        <target>Show less</target>
+      </trans-unit>
+      <trans-unit id="Vlj9mPs" resname="Show more">
+        <source>Show more</source>
+        <target>Show more</target>
+      </trans-unit>
       <trans-unit id="pNIxNSX" resname="Sign in">
         <source>Sign in</source>
         <target state="translated">Sign in</target>
+      </trans-unit>
+      <trans-unit id="4ufAWYB" resname="Sign-up closes:">
+        <source>Sign-up closes:</source>
+        <target>Sign-up closes:</target>
+      </trans-unit>
+      <trans-unit id="C3eGQtZ" resname="Sign-up opens:">
+        <source>Sign-up opens:</source>
+        <target>Sign-up opens:</target>
       </trans-unit>
       <trans-unit id="lIY1Kot" resname="Signed in %date%">
         <source>Signed in %date%</source>
@@ -1253,6 +1325,10 @@
         <source>Unknown device</source>
         <target state="translated">Unknown device</target>
       </trans-unit>
+      <trans-unit id=".b394XX" resname="Until">
+        <source>Until</source>
+        <target>Until</target>
+      </trans-unit>
       <trans-unit id="ZOvPU2x" resname="Upload exams">
         <source>Upload exams</source>
         <target state="translated">Upload exams</target>
@@ -1405,13 +1481,29 @@
         <source>iCal</source>
         <target state="translated">iCal</target>
       </trans-unit>
+      <trans-unit id="Q384Ly2" resname="in %duration%">
+        <source>in %duration%</source>
+        <target>in %duration%</target>
+      </trans-unit>
       <trans-unit id="6.eCze3" resname="jane.doe@example.com">
         <source>jane.doe@example.com</source>
         <target state="translated">jane.doe@example.com</target>
       </trans-unit>
+      <trans-unit id="huWr6j7" resname="less than a minute">
+        <source>less than a minute</source>
+        <target>less than a minute</target>
+      </trans-unit>
+      <trans-unit id="CC4UZ2j" resname="more deadlines">
+        <source>more deadlines</source>
+        <target>more deadlines</target>
+      </trans-unit>
       <trans-unit id="edSu_p6" resname="on">
         <source>on</source>
         <target state="translated">on</target>
+      </trans-unit>
+      <trans-unit id="NpnxF2Z" resname="ongoing for %duration%">
+        <source>ongoing for %duration%</source>
+        <target>ongoing for %duration%</target>
       </trans-unit>
       <trans-unit id="W3MzJgn" resname="unavailable">
         <source>unavailable</source>

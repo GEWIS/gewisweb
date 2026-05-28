@@ -18,9 +18,13 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
+use function addcslashes;
 use function array_key_exists;
+use function array_map;
 use function array_merge;
 use function count;
+use function mb_strtolower;
+use function trim;
 use function usort;
 
 /**
@@ -435,6 +439,238 @@ class ActivityRepository extends ServiceEntityRepository
             );
 
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Flexible query backing the activity overview pages (upcoming/archive, public/subscribed) with searching and
+     * filtering. Only approved activities are ever returned. Correlated EXISTS sub-queries keep the result at one row
+     * per activity, so the Paginator counts correctly without a collection fetch-join.
+     *
+     * @param bool        $past         false: upcoming (endTime > now, ASC); true: past (endTime < now, DESC)
+     * @param Member|null $subscribedBy when set, only activities this member has a (user) signup for
+     * @param string      $locale       'nl' searches the Dutch name, anything else the English name
+     * @param int[]       $labelIds     match activities having ANY of these labels
+     * @param int|null    $organId      identifier of the organising organ to filter on
+     *
+     * @return Paginator<Activity>
+     */
+    public function findForOverview(
+        bool $past,
+        ?Member $subscribedBy,
+        string $search,
+        string $locale,
+        ?ActivityCategories $category,
+        array $labelIds,
+        ?int $organId,
+        bool $openSignupOnly,
+        ?DateTime $from,
+        ?DateTime $until,
+        int $limit,
+        int $offset,
+    ): Paginator {
+        $qb = $this->createQueryBuilder('a');
+        // Fetch-join the to-one localised texts so they are hydrated in this single query instead of one lazy
+        // `SELECT ... FROM ActivityLocalisedText WHERE id = ?` per field per activity (N+1). These are to-one, so they
+        // do not multiply rows and the paginator's LIMIT keeps working.
+        $qb->addSelect(
+            'n',
+            'loc',
+            'cost',
+            'descr',
+        )
+            ->join(
+                'a.name',
+                'n',
+            )
+            ->join(
+                'a.location',
+                'loc',
+            )
+            ->join(
+                'a.costs',
+                'cost',
+            )
+            ->join(
+                'a.description',
+                'descr',
+            )
+            ->where('a.status = :status')
+            ->setParameter(
+                'status',
+                Activity::STATUS_APPROVED,
+            )
+            ->setParameter(
+                'now',
+                new DateTime(),
+                Types::DATETIME_MUTABLE,
+            );
+
+        if ($past) {
+            $qb->andWhere('a.endTime < :now')
+                ->orderBy(
+                    'a.beginTime',
+                    'DESC',
+                );
+        } else {
+            $qb->andWhere('a.endTime > :now')
+                ->orderBy(
+                    'a.beginTime',
+                    'ASC',
+                );
+        }
+
+        $search = trim($search);
+        if ('' !== $search) {
+            $column = 'nl' === $locale
+                ? 'n.valueNL'
+                : 'n.valueEN';
+            // Escape the LIKE wildcards (`%` and `_`) in user input so they are matched literally instead of acting as
+            // wildcards (see DecisionRepository::search). $column is a fixed internal field name, never user input.
+            $qb->andWhere('LOWER(' . $column . ') LIKE :needle')
+                ->setParameter(
+                    'needle',
+                    '%' . addcslashes(
+                        mb_strtolower($search),
+                        '%_',
+                    ) . '%',
+                );
+        }
+
+        if (null !== $category) {
+            $qb->andWhere('a.category = :category')
+                ->setParameter(
+                    'category',
+                    $category->value,
+                );
+        }
+
+        if (null !== $organId) {
+            $qb->andWhere('IDENTITY(a.organ) = :organId')
+                ->setParameter(
+                    'organId',
+                    $organId,
+                );
+        }
+
+        $entityManager = $this->getEntityManager();
+
+        if ([] !== $labelIds) {
+            $labelSubquery = $entityManager->createQueryBuilder()
+                ->select('1')
+                ->from(
+                    Activity::class,
+                    'a_lbl',
+                )
+                ->join(
+                    'a_lbl.labels',
+                    'lbl',
+                )
+                ->where('a_lbl = a')
+                ->andWhere('lbl.id IN (:labelIds)');
+
+            $qb->andWhere($qb->expr()->exists($labelSubquery->getDQL()))
+                ->setParameter(
+                    'labelIds',
+                    $labelIds,
+                );
+        }
+
+        if ($openSignupOnly) {
+            $openSignupSubquery = $entityManager->createQueryBuilder()
+                ->select('1')
+                ->from(
+                    SignupList::class,
+                    'sl_open',
+                )
+                ->where('sl_open.activity = a')
+                ->andWhere('sl_open.openDate <= :now')
+                ->andWhere('sl_open.closeDate > :now');
+
+            $qb->andWhere($qb->expr()->exists($openSignupSubquery->getDQL()));
+        }
+
+        if (null !== $subscribedBy) {
+            $subscriberSubquery = $entityManager->createQueryBuilder()
+                ->select('1')
+                ->from(
+                    UserSignup::class,
+                    'su',
+                )
+                ->join(
+                    'su.signupList',
+                    'sl_sub',
+                )
+                ->where('sl_sub.activity = a')
+                ->andWhere('su.user = :subscriber');
+
+            $qb->andWhere($qb->expr()->exists($subscriberSubquery->getDQL()))
+                ->setParameter(
+                    'subscriber',
+                    $subscribedBy,
+                    Member::class,
+                );
+        }
+
+        if (null !== $from) {
+            $qb->andWhere('a.beginTime >= :from')
+                ->setParameter(
+                    'from',
+                    $from,
+                    Types::DATETIME_MUTABLE,
+                );
+        }
+
+        if (null !== $until) {
+            $qb->andWhere('a.beginTime <= :until')
+                ->setParameter(
+                    'until',
+                    $until,
+                    Types::DATETIME_MUTABLE,
+                );
+        }
+
+        $paginator = new Paginator(
+            $qb,
+            false,
+        );
+        $paginator->getQuery()
+            ->setFirstResult($offset)
+            ->setMaxResults($limit);
+
+        return $paginator;
+    }
+
+    /**
+     * Returns the distinct organs that organise at least one approved activity, for the overview's organ filter.
+     *
+     * @return Organ[]
+     */
+    public function findOrganisingOrgans(): array
+    {
+        $rows = $this->createQueryBuilder('a')
+            ->select('DISTINCT IDENTITY(a.organ) AS organId')
+            ->where('a.status = :status')
+            ->setParameter(
+                'status',
+                Activity::STATUS_APPROVED,
+            )
+            ->andWhere('a.organ IS NOT NULL')
+            ->getQuery()
+            ->getScalarResult();
+
+        $organIds = array_map(
+            static fn (array $row): int => (int) $row['organId'],
+            $rows,
+        );
+
+        if ([] === $organIds) {
+            return [];
+        }
+
+        return $this->getEntityManager()->getRepository(Organ::class)->findBy(
+            ['id' => $organIds],
+            ['abbr' => 'ASC'],
+        );
     }
 
     /**

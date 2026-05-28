@@ -1,0 +1,24 @@
+// The whole activity list item is clickable (see activity_item_controller.js).
+.activity-list-item {
+    cursor: pointer;
+}
+
+// Clamp the (rendered Markdown) activity description on overview pages until the user expands it.
+.activity-description-content {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+
+    &.expanded {
+        display: block;
+        overflow: visible;
+        -webkit-line-clamp: none;
+        line-clamp: none;
+    }
+
+    > :last-child {
+        margin-bottom: 0;
+    }
+}

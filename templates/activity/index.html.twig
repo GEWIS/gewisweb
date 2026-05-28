@@ -3,4 +3,6 @@
 {% block page_title %}{{ 'Activities'|trans|page_title }}{{ parent() }}{% endblock %}
 
 {% block contents %}
+    <h1>{{ 'Activities'|trans }}</h1>
+    {{ component('Activity:ActivityOverview', { categoryFilter: initialCategory }) }}
 {% endblock %}
