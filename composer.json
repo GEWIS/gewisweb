@@ -21,7 +21,7 @@
         "dragonmantank/cron-expression": "^3.6",
         "endroid/qr-code-bundle": "^7.0.1",
         "fortawesome/font-awesome": "^7.2.0",
-        "matomo/device-detector": "^6.5",
+        "matomo/device-detector": "^6.5.1",
         "nelmio/cors-bundle": "^2.6.1",
         "nelmio/security-bundle": "^3.9",
         "nikic/php-parser": "^5.7.0",
@@ -74,7 +74,7 @@
         "twbs/bootstrap": "^5.3.8",
         "twig/extra-bundle": "^3.24.0",
         "twig/intl-extra": "^3.26.0",
-        "twig/twig": "^3.26.0"
+        "twig/twig": "^3.27.0"
     },
     "config": {
         "allow-plugins": {
@@ -163,13 +163,13 @@
         "gewis/gewisphp-coding-standards": "2.0.1",
         "igor-php/igor-php": "^0.6.3",
         "phpstan/extension-installer": "^1.4.3",
-        "phpstan/phpstan": "^2.1.56",
+        "phpstan/phpstan": "^2.2.0",
         "phpstan/phpstan-deprecation-rules": "^2.0.4",
         "phpstan/phpstan-doctrine": "^2.0.22",
         "phpstan/phpstan-phpunit": "^2.0.16",
         "phpstan/phpstan-strict-rules": "^2.0.11",
         "phpstan/phpstan-symfony": "^2.0.18",
-        "phpunit/phpunit": "^13.1.12",
+        "phpunit/phpunit": "^13.1.13",
         "psalm/plugin-phpunit": "^0.19.7",
         "psalm/plugin-symfony": "^5.3.0",
         "symfony/browser-kit": "8.0.*",
