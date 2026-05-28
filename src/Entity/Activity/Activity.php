@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity\Activity;
 
+use App\Entity\Activity\Enums\ActivityCategories;
 use App\Entity\Application\LocalisedText as LocalisedTextModel;
 use App\Entity\Application\Traits\IdentifiableTrait;
 use App\Entity\Career\Company as CompanyModel;
@@ -44,7 +45,7 @@ use Doctrine\ORM\Mapping\OrderBy;
  *     descriptionEn: ?string,
  *     organ: ?OrganModel,
  *     company: ?CompanyModel,
- *     isMyFuture: bool,
+ *     category: string,
  *     requireGEFLITST: bool,
  *     requireZettle: bool,
  *     labels: ImportedActivityLabelArrayType[],
@@ -63,7 +64,7 @@ use Doctrine\ORM\Mapping\OrderBy;
  *     description: ImportedLocalisedTextGdprArrayType,
  *     organ: ?int,
  *     company: ?int,
- *     isMyFuture: bool,
+ *     category: string,
  *     requireGEFLITST: bool,
  *     requireZettle: bool,
  *     labels: ImportedActivityLabelGdprArrayType[],
@@ -252,10 +253,13 @@ class Activity
     private ?CompanyModel $company = null;
 
     /**
-     * Is this a My Future related activity.
+     * The (single, mandatory) category of this activity.
      */
-    #[Column(type: Types::BOOLEAN)]
-    private bool $isMyFuture;
+    #[Column(
+        type: Types::STRING,
+        enumType: ActivityCategories::class,
+    )]
+    private ActivityCategories $category;
 
     /**
      * Whether this activity needs a GEFLITST photographer.
@@ -477,14 +481,14 @@ class Activity
         $this->company = $company;
     }
 
-    public function getIsMyFuture(): bool
+    public function getCategory(): ActivityCategories
     {
-        return $this->isMyFuture;
+        return $this->category;
     }
 
-    public function setIsMyFuture(bool $isMyFuture): void
+    public function setCategory(ActivityCategories $category): void
     {
-        $this->isMyFuture = $isMyFuture;
+        $this->category = $category;
     }
 
     public function getRequireGEFLITST(): bool
@@ -556,7 +560,7 @@ class Activity
             'descriptionEn' => $this->getDescription()->getValueEN(),
             'organ' => $this->getOrgan(),
             'company' => $this->getCompany(),
-            'isMyFuture' => $this->getIsMyFuture(),
+            'category' => $this->getCategory()->value,
             'requireGEFLITST' => $this->getRequireGEFLITST(),
             'requireZettle' => $this->getRequireZettle(),
             'labels' => $labelsArrays,
@@ -591,7 +595,7 @@ class Activity
             'description' => $this->getDescription()->toGdprArray(),
             'organ' => $this->getOrgan()?->getId(),
             'company' => $this->getCompany()?->getId(),
-            'isMyFuture' => $this->getIsMyFuture(),
+            'category' => $this->getCategory()->value,
             'requireGEFLITST' => $this->getRequireGEFLITST(),
             'requireZettle' => $this->getRequireZettle(),
             'labels' => $labelsArrays,
