@@ -6,7 +6,7 @@ namespace App\DataFixtures\Activity;
 
 use App\DataFixtures\Decision\MemberFixture;
 use App\Entity\Activity\Activity;
-use App\Entity\Activity\ActivityCategory;
+use App\Entity\Activity\ActivityLabel;
 use App\Entity\Activity\ActivityLocalisedText;
 use App\Entity\Activity\SignupList;
 use App\Entity\Decision\Member;
@@ -48,9 +48,9 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
                     'en' => 'An evening of films and popcorn.',
                     'nl' => 'Een avond vol films en popcorn.',
                 ],
-                'categories' => [
-                    ActivityCategoryFixture::REFERENCE_DUTCH_ONLY,
-                    ActivityCategoryFixture::REFERENCE_EXTERNALS,
+                'labels' => [
+                    ActivityLabelFixture::REFERENCE_DUTCH_ONLY,
+                    ActivityLabelFixture::REFERENCE_EXTERNALS,
                 ],
                 'signupLists' => [
                     [
@@ -93,9 +93,9 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
                     'en' => 'A hands-on workshop.',
                     'nl' => 'Een praktische workshop.',
                 ],
-                'categories' => [
-                    ActivityCategoryFixture::REFERENCE_MASTER,
-                    ActivityCategoryFixture::REFERENCE_ENGLISH_ONLY,
+                'labels' => [
+                    ActivityLabelFixture::REFERENCE_MASTER,
+                    ActivityLabelFixture::REFERENCE_ENGLISH_ONLY,
                 ],
                 'signupLists' => [
                     [
@@ -163,9 +163,9 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
                     'en' => 'A lunch lecture by an industry guest.',
                     'nl' => 'Een lunchlezing door een gast uit het bedrijfsleven.',
                 ],
-                'categories' => [
-                    ActivityCategoryFixture::REFERENCE_FIRST_YEAR,
-                    ActivityCategoryFixture::REFERENCE_ENGLISH_ONLY,
+                'labels' => [
+                    ActivityLabelFixture::REFERENCE_FIRST_YEAR,
+                    ActivityLabelFixture::REFERENCE_ENGLISH_ONLY,
                 ],
             ],
             // Upcoming, approved, organised by an active member, needs photographer + payment terminal.
@@ -233,10 +233,10 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
                     'en' => 'A day full of talks, followed by dinner.',
                     'nl' => 'Een dag vol lezingen, gevolgd door een diner.',
                 ],
-                'categories' => [
-                    ActivityCategoryFixture::REFERENCE_MASTER,
-                    ActivityCategoryFixture::REFERENCE_PHD,
-                    ActivityCategoryFixture::REFERENCE_ENGLISH_ONLY,
+                'labels' => [
+                    ActivityLabelFixture::REFERENCE_MASTER,
+                    ActivityLabelFixture::REFERENCE_PHD,
+                    ActivityLabelFixture::REFERENCE_ENGLISH_ONLY,
                 ],
                 'signupLists' => [
                     [
@@ -290,10 +290,10 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
                     'en' => 'Meet companies and explore your future career.',
                     'nl' => 'Ontmoet bedrijven en verken je toekomstige carrière.',
                 ],
-                'categories' => [
-                    ActivityCategoryFixture::REFERENCE_FIRST_YEAR,
-                    ActivityCategoryFixture::REFERENCE_BACHELOR,
-                    ActivityCategoryFixture::REFERENCE_MASTER,
+                'labels' => [
+                    ActivityLabelFixture::REFERENCE_FIRST_YEAR,
+                    ActivityLabelFixture::REFERENCE_BACHELOR,
+                    ActivityLabelFixture::REFERENCE_MASTER,
                 ],
                 'signupLists' => [
                     [
@@ -330,8 +330,8 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
             $activity->setRequireGEFLITST($data['requireGEFLITST']);
             $activity->setRequireZettle($data['requireZettle']);
 
-            foreach ($data['categories'] ?? [] as $categoryReference) {
-                $activity->addCategory($this->getReference($categoryReference, ActivityCategory::class));
+            foreach ($data['labels'] ?? [] as $labelReference) {
+                $activity->addLabel($this->getReference($labelReference, ActivityLabel::class));
             }
 
             $manager->persist($activity);
@@ -382,7 +382,7 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
     {
         return [
             MemberFixture::class,
-            ActivityCategoryFixture::class,
+            ActivityLabelFixture::class,
         ];
     }
 }
