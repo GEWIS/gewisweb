@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Repository\Activity;
 
 use App\Entity\Activity\Activity;
+use App\Entity\Activity\Enums\ActivityCategories;
 use App\Entity\Activity\SignupList;
 use App\Entity\Activity\UserSignup;
 use App\Entity\Decision\Member;
@@ -71,7 +72,11 @@ class ActivityRepository extends ServiceEntityRepository
 
         // For now 'career' is the only category, however this may change in the future
         if ('career' === $category) {
-            $qb->andWhere('a.isMyFuture = 1');
+            $qb->andWhere('a.category = :category')
+                ->setParameter(
+                    'category',
+                    ActivityCategories::Career->value,
+                );
         }
 
         $qb->setParameter(

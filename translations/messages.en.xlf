@@ -41,6 +41,10 @@
         <source>Active</source>
         <target state="translated">Active</target>
       </trans-unit>
+      <trans-unit id="lZsKsne" resname="Active &amp; social">
+        <source>Active &amp; social</source>
+        <target><![CDATA[Active & social]]></target>
+      </trans-unit>
       <trans-unit id="3cz4hJw" resname="Active Member">
         <source>Active Member</source>
         <target state="translated">Active Member</target>
@@ -112,6 +116,10 @@
       <trans-unit id="3eX.3WJ" resname="Analytics are currently">
         <source>Analytics are currently</source>
         <target state="translated">Analytics are currently</target>
+      </trans-unit>
+      <trans-unit id="2RsMs_8" resname="Announcement">
+        <source>Announcement</source>
+        <target>Announcement</target>
       </trans-unit>
       <trans-unit id="YZX3vFh" resname="Answers">
         <source>Answers</source>
@@ -269,9 +277,17 @@
         <source>Company Users</source>
         <target state="translated">Company Users</target>
       </trans-unit>
+      <trans-unit id="mXPg4vS" resname="Competition">
+        <source>Competition</source>
+        <target>Competition</target>
+      </trans-unit>
       <trans-unit id="EcOGjmx" resname="Complete agenda">
         <source>Complete agenda</source>
         <target state="translated">Complete agenda</target>
+      </trans-unit>
+      <trans-unit id="cydhnYq" resname="Conference">
+        <source>Conference</source>
+        <target>Conference</target>
       </trans-unit>
       <trans-unit id="stB18m_" resname="Confidential Contact Person (CCP)">
         <source>Confidential Contact Person (CCP)</source>
@@ -304,6 +320,10 @@
       <trans-unit id="BGi6GGx" resname="Create Activity">
         <source>Create Activity</source>
         <target state="translated">Create Activity</target>
+      </trans-unit>
+      <trans-unit id="EMb_Fre" resname="Cultural">
+        <source>Cultural</source>
+        <target>Cultural</target>
       </trans-unit>
       <trans-unit id="ukaFrcB" resname="Current password">
         <source>Current password</source>
@@ -633,6 +653,14 @@
         <source>Install an authenticator app such as Ente Auth or 2FAS on your phone.</source>
         <target state="translated">Install an authenticator app such as Ente Auth or 2FAS on your phone.</target>
       </trans-unit>
+      <trans-unit id="aIlBisN" resname="Interest list">
+        <source>Interest list</source>
+        <target>Interest list</target>
+      </trans-unit>
+      <trans-unit id="jhj4D5a" resname="Interest meeting">
+        <source>Interest meeting</source>
+        <target>Interest meeting</target>
+      </trans-unit>
       <trans-unit id="j3ZMNbB" resname="Interim">
         <source>Interim</source>
         <target state="translated">Interim</target>
@@ -752,6 +780,10 @@
       <trans-unit id="Vuyl_8H" resname="Mail address">
         <source>Mail address</source>
         <target state="translated">Mail address</target>
+      </trans-unit>
+      <trans-unit id="dQZZmIL" resname="Meeting">
+        <source>Meeting</source>
+        <target>Meeting</target>
       </trans-unit>
       <trans-unit id="Cg3S2oo" resname="Member">
         <source>Member</source>
@@ -905,6 +937,10 @@
         <source>Pagination</source>
         <target state="translated">Pagination</target>
       </trans-unit>
+      <trans-unit id="eI1dGQ5" resname="Party">
+        <source>Party</source>
+        <target>Party</target>
+      </trans-unit>
       <trans-unit id="GqmFSHc" resname="Password">
         <source>Password</source>
         <target state="translated">Password</target>
@@ -941,6 +977,10 @@
         <source>Privacy Policy</source>
         <target state="translated">Privacy Policy</target>
       </trans-unit>
+      <trans-unit id="M8W_jVO" resname="Promo &amp; merchandise">
+        <source>Promo &amp; merchandise</source>
+        <target><![CDATA[Promo & merchandise]]></target>
+      </trans-unit>
       <trans-unit id="YRI5E0j" resname="QR code">
         <source>QR code</source>
         <target state="translated">QR code</target>
@@ -948,6 +988,10 @@
       <trans-unit id="9Iuz1j8" resname="Reality collapsed. Please go back before the singularity spreads.">
         <source>Reality collapsed. Please go back before the singularity spreads.</source>
         <target state="translated">Reality collapsed. Please go back before the singularity spreads.</target>
+      </trans-unit>
+      <trans-unit id="3BS.OCQ" resname="Recreational">
+        <source>Recreational</source>
+        <target>Recreational</target>
       </trans-unit>
       <trans-unit id="wtanMIv" resname="Regenerate backup codes">
         <source>Regenerate backup codes</source>
@@ -992,6 +1036,10 @@
       <trans-unit id="aq2eM8Q" resname="Roles">
         <source>Roles</source>
         <target state="translated">Roles</target>
+      </trans-unit>
+      <trans-unit id="Nj16X3T" resname="Save the date">
+        <source>Save the date</source>
+        <target>Save the date</target>
       </trans-unit>
       <trans-unit id="2Fymdn1" resname="Save them now: write them down, print this page, or store them in a secure place. Each code can be used once if you lose access to your authenticator app. When you regenerate, all previous codes are invalidated.">
         <source>Save them now: write them down, print this page, or store them in a secure place. Each code can be used once if you lose access to your authenticator app. When you regenerate, all previous codes are invalidated.</source>
@@ -1052,6 +1100,14 @@
       <trans-unit id="lIY1Kot" resname="Signed in %date%">
         <source>Signed in %date%</source>
         <target state="translated">Signed in %date%</target>
+      </trans-unit>
+      <trans-unit id="e9EhDeS" resname="Social drink">
+        <source>Social drink</source>
+        <target>Social drink</target>
+      </trans-unit>
+      <trans-unit id="U_RKQ4r" resname="Sports">
+        <source>Sports</source>
+        <target>Sports</target>
       </trans-unit>
       <trans-unit id="oBphsD9" resname="Stale">
         <source>Stale</source>
@@ -1189,6 +1245,10 @@
         <source>Treasurer</source>
         <target state="translated">Treasurer</target>
       </trans-unit>
+      <trans-unit id="UryytzR" resname="Uncategorised">
+        <source>Uncategorised</source>
+        <target>Uncategorised</target>
+      </trans-unit>
       <trans-unit id="7ZQ9oWO" resname="Unknown device">
         <source>Unknown device</source>
         <target state="translated">Unknown device</target>
@@ -1253,6 +1313,10 @@
         <source>We found a pointer to &lt;code&gt;NULL&lt;/code&gt; instead of this page</source>
         <target state="translated"><![CDATA[We found a pointer to <code>NULL</code> instead of this page]]></target>
       </trans-unit>
+      <trans-unit id="jUNxBhp" resname="Weekend">
+        <source>Weekend</source>
+        <target>Weekend</target>
+      </trans-unit>
       <trans-unit id="qLp0Jrc" resname="Welcome to the website of study association GEWIS, the study association of the department of Mathematics &amp; Computer Science at Eindhoven University of Technology.">
         <source>Welcome to the website of study association GEWIS, the study association of the department of Mathematics &amp; Computer Science at Eindhoven University of Technology.</source>
         <target state="translated"><![CDATA[Welcome to the website of study association GEWIS, the study association of the department of Mathematics & Computer Science at Eindhoven University of Technology.]]></target>
@@ -1264,6 +1328,10 @@
       <trans-unit id="klYLh_k" resname="Which is basically the same thing.">
         <source>Which is basically the same thing.</source>
         <target state="translated">Which is basically the same thing.</target>
+      </trans-unit>
+      <trans-unit id="4EUNMUa" resname="Workshop">
+        <source>Workshop</source>
+        <target>Workshop</target>
       </trans-unit>
       <trans-unit id="vIs6CbG" resname="You are about to reset multi-factor authentication for:">
         <source>You are about to reset multi-factor authentication for:</source>

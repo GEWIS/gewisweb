@@ -8,6 +8,7 @@ use App\DataFixtures\Decision\MemberFixture;
 use App\Entity\Activity\Activity;
 use App\Entity\Activity\ActivityLabel;
 use App\Entity\Activity\ActivityLocalisedText;
+use App\Entity\Activity\Enums\ActivityCategories;
 use App\Entity\Activity\SignupList;
 use App\Entity\Decision\Member;
 use DateTime;
@@ -29,7 +30,7 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
                 'status' => Activity::STATUS_APPROVED,
                 'beginTime' => '-2 months 20:00',
                 'endTime' => '-2 months 23:30',
-                'isMyFuture' => false,
+                'category' => ActivityCategories::Recreational,
                 'requireGEFLITST' => false,
                 'requireZettle' => false,
                 'name' => [
@@ -74,7 +75,7 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
                 'status' => Activity::STATUS_APPROVED,
                 'beginTime' => '-3 weeks 19:30',
                 'endTime' => '-3 weeks 22:00',
-                'isMyFuture' => false,
+                'category' => ActivityCategories::Workshop,
                 'requireGEFLITST' => false,
                 'requireZettle' => false,
                 'name' => [
@@ -118,7 +119,7 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
                 'status' => Activity::STATUS_APPROVED,
                 'beginTime' => '+2 weeks 19:00',
                 'endTime' => '+2 weeks 23:00',
-                'isMyFuture' => false,
+                'category' => ActivityCategories::SocialDrink,
                 'requireGEFLITST' => false,
                 'requireZettle' => false,
                 'name' => [
@@ -144,7 +145,7 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
                 'status' => Activity::STATUS_TO_APPROVE,
                 'beginTime' => '+3 weeks 12:30',
                 'endTime' => '+3 weeks 14:00',
-                'isMyFuture' => false,
+                'category' => ActivityCategories::Education,
                 'requireGEFLITST' => false,
                 'requireZettle' => false,
                 'name' => [
@@ -175,7 +176,7 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
                 'status' => Activity::STATUS_APPROVED,
                 'beginTime' => '+1 month 17:00',
                 'endTime' => '+1 month 22:00',
-                'isMyFuture' => false,
+                'category' => ActivityCategories::Party,
                 'requireGEFLITST' => true,
                 'requireZettle' => true,
                 'name' => [
@@ -214,7 +215,7 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
                 'status' => Activity::STATUS_APPROVED,
                 'beginTime' => '+5 weeks 18:00',
                 'endTime' => '+5 weeks 23:59',
-                'isMyFuture' => false,
+                'category' => ActivityCategories::Conference,
                 'requireGEFLITST' => true,
                 'requireZettle' => true,
                 'name' => [
@@ -264,14 +265,14 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
                     ],
                 ],
             ],
-            // Upcoming My Future activity, approved, organised by an active (external) member.
+            // Upcoming career activity, approved, organised by an active (external) member.
             // Signup list open to non-GEWIS members.
             [
                 'creator' => 8018,
                 'status' => Activity::STATUS_APPROVED,
                 'beginTime' => '+6 weeks 13:00',
                 'endTime' => '+6 weeks 17:00',
-                'isMyFuture' => true,
+                'category' => ActivityCategories::Career,
                 'requireGEFLITST' => false,
                 'requireZettle' => false,
                 'name' => [
@@ -326,7 +327,7 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
             $activity->setEndTime(new DateTime($data['endTime']));
             $activity->setCreator($this->getReference('member-' . $data['creator'], Member::class));
             $activity->setStatus($data['status']);
-            $activity->setIsMyFuture($data['isMyFuture']);
+            $activity->setCategory($data['category']);
             $activity->setRequireGEFLITST($data['requireGEFLITST']);
             $activity->setRequireZettle($data['requireZettle']);
 
