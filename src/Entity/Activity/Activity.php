@@ -28,7 +28,7 @@ use Doctrine\ORM\Mapping\OrderBy;
 /**
  * Activity model.
  *
- * @psalm-import-type ActivityCategoryArrayType from ActivityCategory as ImportedActivityCategoryArrayType
+ * @psalm-import-type ActivityLabelArrayType from ActivityLabel as ImportedActivityLabelArrayType
  * @psalm-import-type SignupListArrayType from SignupList as ImportedSignupListArrayType
  * @psalm-type ActivityArrayType = array{
  *     id: int,
@@ -47,11 +47,11 @@ use Doctrine\ORM\Mapping\OrderBy;
  *     isMyFuture: bool,
  *     requireGEFLITST: bool,
  *     requireZettle: bool,
- *     categories: ImportedActivityCategoryArrayType[],
+ *     labels: ImportedActivityLabelArrayType[],
  *     signupLists: ImportedSignupListArrayType[],
  * }
  * @psalm-import-type LocalisedTextGdprArrayType from LocalisedTextModel as ImportedLocalisedTextGdprArrayType
- * @psalm-import-type ActivityCategoryGdprArrayType from ActivityCategory as ImportedActivityCategoryGdprArrayType
+ * @psalm-import-type ActivityLabelGdprArrayType from ActivityLabel as ImportedActivityLabelGdprArrayType
  * @psalm-import-type SignupListGdprArrayType from SignupList as ImportedSignupListGdprArrayType
  * @psalm-type ActivityGdprArrayType = array{
  *     id: int,
@@ -66,7 +66,7 @@ use Doctrine\ORM\Mapping\OrderBy;
  *     isMyFuture: bool,
  *     requireGEFLITST: bool,
  *     requireZettle: bool,
- *     categories: ImportedActivityCategoryGdprArrayType[],
+ *     labels: ImportedActivityLabelGdprArrayType[],
  *     signupLists: ImportedSignupListGdprArrayType[],
  * }
  */
@@ -202,17 +202,17 @@ class Activity
     private ActivityLocalisedText $description;
 
     /**
-     * All additional Categories belonging to this activity.
+     * All additional Labels belonging to this activity.
      *
-     * @var Collection<array-key, ActivityCategory>
+     * @var Collection<array-key, ActivityLabel>
      */
     #[ManyToMany(
-        targetEntity: ActivityCategory::class,
+        targetEntity: ActivityLabel::class,
         inversedBy: 'activities',
         cascade: ['persist'],
     )]
-    #[JoinTable(name: 'ActivityCategoryAssignment')]
-    private Collection $categories;
+    #[JoinTable(name: 'ActivityLabelAssignment')]
+    private Collection $labels;
 
     /**
      * All additional SignupLists belonging to this activity.
@@ -272,7 +272,7 @@ class Activity
     public function __construct()
     {
         $this->updateProposal = new ArrayCollection();
-        $this->categories = new ArrayCollection();
+        $this->labels = new ArrayCollection();
         $this->signupLists = new ArrayCollection();
     }
 
@@ -305,43 +305,43 @@ class Activity
     }
 
     /**
-     * @param ActivityCategory[] $categories
+     * @param ActivityLabel[] $labels
      */
-    public function addCategories(array $categories): void
+    public function addLabels(array $labels): void
     {
-        foreach ($categories as $category) {
-            $this->addCategory($category);
+        foreach ($labels as $label) {
+            $this->addLabel($label);
         }
     }
 
-    public function addCategory(ActivityCategory $category): void
+    public function addLabel(ActivityLabel $label): void
     {
-        if ($this->categories->contains($category)) {
+        if ($this->labels->contains($label)) {
             return;
         }
 
-        $this->categories->add($category);
-        $category->addActivity($this);
+        $this->labels->add($label);
+        $label->addActivity($this);
     }
 
     /**
-     * @param ActivityCategory[] $categories
+     * @param ActivityLabel[] $labels
      */
-    public function removeCategories(array $categories): void
+    public function removeLabels(array $labels): void
     {
-        foreach ($categories as $category) {
-            $this->removeCategory($category);
+        foreach ($labels as $label) {
+            $this->removeLabel($label);
         }
     }
 
-    public function removeCategory(ActivityCategory $category): void
+    public function removeLabel(ActivityLabel $label): void
     {
-        if (!$this->categories->contains($category)) {
+        if (!$this->labels->contains($label)) {
             return;
         }
 
-        $this->categories->removeElement($category);
-        $category->removeActivity($this);
+        $this->labels->removeElement($label);
+        $label->removeActivity($this);
     }
 
     /**
@@ -508,11 +508,11 @@ class Activity
     }
 
     /**
-     * @return Collection<array-key, ActivityCategory>
+     * @return Collection<array-key, ActivityLabel>
      */
-    public function getCategories(): Collection
+    public function getLabels(): Collection
     {
-        return $this->categories;
+        return $this->labels;
     }
 
     public function getCreator(): MemberModel
@@ -537,9 +537,9 @@ class Activity
             $signupListsArrays[] = $signupList->toArray();
         }
 
-        $categoriesArrays = [];
-        foreach ($this->getCategories() as $category) {
-            $categoriesArrays[] = $category->toArray();
+        $labelsArrays = [];
+        foreach ($this->getLabels() as $label) {
+            $labelsArrays[] = $label->toArray();
         }
 
         return [
@@ -559,7 +559,7 @@ class Activity
             'isMyFuture' => $this->getIsMyFuture(),
             'requireGEFLITST' => $this->getRequireGEFLITST(),
             'requireZettle' => $this->getRequireZettle(),
-            'categories' => $categoriesArrays,
+            'labels' => $labelsArrays,
             'signupLists' => $signupListsArrays,
         ];
     }
@@ -575,10 +575,10 @@ class Activity
             $signupListsArrays[] = $signupList->toGdprArray();
         }
 
-        /** @var ImportedActivityCategoryGdprArrayType[] $categoriesArrays */
-        $categoriesArrays = [];
-        foreach ($this->getCategories() as $category) {
-            $categoriesArrays[] = $category->toGdprArray();
+        /** @var ImportedActivityLabelGdprArrayType[] $labelsArrays */
+        $labelsArrays = [];
+        foreach ($this->getLabels() as $label) {
+            $labelsArrays[] = $label->toGdprArray();
         }
 
         return [
@@ -594,7 +594,7 @@ class Activity
             'isMyFuture' => $this->getIsMyFuture(),
             'requireGEFLITST' => $this->getRequireGEFLITST(),
             'requireZettle' => $this->getRequireZettle(),
-            'categories' => $categoriesArrays,
+            'labels' => $labelsArrays,
             'signupLists' => $signupListsArrays,
         ];
     }

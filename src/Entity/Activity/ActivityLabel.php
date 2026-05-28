@@ -6,7 +6,7 @@ namespace App\Entity\Activity;
 
 use App\Entity\Application\LocalisedText as LocalisedTextModel;
 use App\Entity\Application\Traits\IdentifiableTrait;
-use App\Repository\Activity\ActivityCategoryRepository;
+use App\Repository\Activity\ActivityLabelRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\Entity;
@@ -15,38 +15,38 @@ use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\OneToOne;
 
 /**
- * Activity Category model.
+ * Activity Label model.
  *
- * @psalm-type ActivityCategoryArrayType = array{
+ * @psalm-type ActivityLabelArrayType = array{
  *     id: int,
  *     name: ?string,
  *     nameEn: ?string,
  * }
  * @psalm-import-type LocalisedTextGdprArrayType from LocalisedTextModel as ImportedLocalisedTextGdprArrayType
- * @psalm-type ActivityCategoryGdprArrayType = array{
+ * @psalm-type ActivityLabelGdprArrayType = array{
  *     id: int,
  *     name: ImportedLocalisedTextGdprArrayType,
  * }
  */
-#[Entity(repositoryClass: ActivityCategoryRepository::class)]
-class ActivityCategory
+#[Entity(repositoryClass: ActivityLabelRepository::class)]
+class ActivityLabel
 {
     use IdentifiableTrait;
 
     /**
-     * The Activities this Category belongs to.
+     * The Activities this Label belongs to.
      *
      * @var Collection<array-key, Activity>
      */
     #[ManyToMany(
         targetEntity: Activity::class,
-        mappedBy: 'categories',
+        mappedBy: 'labels',
         cascade: ['persist'],
     )]
     private Collection $activities;
 
     /**
-     * Name for the Category.
+     * Name for the Label.
      */
     #[OneToOne(
         targetEntity: ActivityLocalisedText::class,
@@ -105,7 +105,7 @@ class ActivityCategory
     }
 
     /**
-     * @return ActivityCategoryArrayType
+     * @return ActivityLabelArrayType
      */
     public function toArray(): array
     {
@@ -117,7 +117,7 @@ class ActivityCategory
     }
 
     /**
-     * @return ActivityCategoryGdprArrayType
+     * @return ActivityLabelGdprArrayType
      */
     public function toGdprArray(): array
     {
