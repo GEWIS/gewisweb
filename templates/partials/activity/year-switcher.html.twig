@@ -1,0 +1,42 @@
+{# Association-year switcher (previous/next + dropdown). Params: route (route name), year (?int), years (int[]). Preserves the current query string so the active filters survive a year change. #}
+{% if years is not empty %}
+    {% set query = app.request.query.all %}
+    {# Jump to the nearest year actually present in the list, so gaps in a sparse list don't land on an empty year. #}
+    {% set newer_years = year is not null ? years|filter(y => y > year) : [] %}
+    {% set older_years = year is not null ? years|filter(y => y < year) : [] %}
+    {% set newer_url = newer_years is not empty ? path(route, query|merge({ year: min(newer_years) })) : null %}
+    {% set older_url = older_years is not empty ? path(route, query|merge({ year: max(older_years) })) : null %}
+
+    <div class="btn-group">
+        <a class="btn btn-outline-secondary {{ newer_url is null ? 'disabled' }}"
+           href="{{ newer_url ?? '#' }}" aria-label="{{ 'Newer'|trans }}">
+            <i class="fas fa-chevron-left"></i>
+        </a>
+        <div class="btn-group">
+            <button type="button" class="btn btn-outline-secondary dropdown-toggle"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                {{ year is not null ? (year ~ ' - ' ~ (year + 1)) : 'All years'|trans }}
+            </button>
+            <ul class="dropdown-menu">
+                <li>
+                    <a class="dropdown-item {{ year is null ? 'active' }}" href="{{ path(route, query) }}">
+                        {{ 'All years'|trans }}
+                    </a>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                {% for y in years %}
+                    <li>
+                        <a class="dropdown-item {{ year == y ? 'active' }}"
+                           href="{{ path(route, query|merge({ year: y })) }}">
+                            {{ y }} - {{ y + 1 }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <a class="btn btn-outline-secondary {{ older_url is null ? 'disabled' }}"
+           href="{{ older_url ?? '#' }}" aria-label="{{ 'Older'|trans }}">
+            <i class="fas fa-chevron-right"></i>
+        </a>
+    </div>
+{% endif %}

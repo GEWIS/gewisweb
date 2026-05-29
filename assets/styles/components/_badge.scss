@@ -1,9 +1,5 @@
-// Colour variants — generated from $theme-colors using the same CSS custom
-// properties the alert component uses (`--bs-{state}-bg-subtle`,
-// `--bs-{state}-text-emphasis`, `--bs-{state}-border-subtle`). Because those
-// tokens are redefined under `color-mode(gewis-night, true)` in `_root.scss`,
-// these badges automatically swap colour in dark mode — no extra
-// `color-mode()` block needed here.
+// Badges are like alerts, they use the same CSS custom properties (`--bs-{state}-bg-subtle`,
+// `--bs-{state}-text-emphasis`, `--bs-{state}-border-subtle`).
 @each $state, $value in $theme-colors {
     .badge-#{$state} {
         --#{$prefix}badge-color: var(--#{$prefix}#{$state}-text-emphasis);
@@ -13,14 +9,22 @@
     }
 }
 
-// Outlined: transparent fill, coloured border + text from the paired
-// `.badge-{state}` variant. Use as `class="badge badge-secondary badge-outlined"`.
+// Neutral badge variant. Built from the surface colours instead of the state colours, so it is subtle in both
+// `gewis-day` and `gewis-night`.
+.badge-tag {
+    --#{$prefix}badge-color: var(--#{$prefix}body-color);
+    background-color: var(--#{$prefix}secondary-bg);
+    border: var(--#{$prefix}border-width) var(--#{$prefix}border-style)
+            var(--#{$prefix}border-color);
+}
+
+// Outlined: transparent fill, coloured border + text from the paired `.badge-{state}` variant. Use as
+// `class="badge badge-secondary badge-outlined"`.
 .badge-outlined {
     background-color: transparent;
 }
 
-// Selectable: hidden input + label.badge pattern, mirroring Bootstrap's
-// `btn-check`. CSS-only — no JS needed.
+// Selectable: hidden input + label.badge pattern, mirroring Bootstrap's `btn-check`.
 //
 // Usage:
 //   <input type="checkbox" class="badge-check" id="tag-1" autocomplete="off">
@@ -43,26 +47,4 @@
 label.badge {
     cursor: pointer;
     user-select: none;
-}
-
-// Dismissible: layout modifier that makes room for an inner `.btn-close`.
-// The actual removal behaviour is left to the consumer — most use cases want
-// to update state (filter / form / etc.) rather than just hide the DOM node.
-//
-// Usage:
-//   <span class="badge badge-info badge-dismissible">
-//     Filter
-//     <button type="button" class="btn-close" aria-label="Close"></button>
-//   </span>
-.badge-dismissible {
-    padding-inline-end: 1.75rem;
-    position: relative;
-
-    .btn-close {
-        position: absolute;
-        inset-block-start: 0;
-        inset-inline-end: 0;
-        padding: 0.5em 0.625em;
-        font-size: 0.5em;
-    }
 }

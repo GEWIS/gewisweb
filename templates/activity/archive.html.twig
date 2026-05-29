@@ -3,4 +3,18 @@
 {% block page_title %}{{ 'Activity Archive'|trans|page_title }}{{ parent() }}{% endblock %}
 
 {% block contents %}
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+        <h1 class="mb-0">{{ 'Activity Archive'|trans }}</h1>
+
+        {% include 'partials/activity/year-switcher.html.twig' with {
+            route: 'activity/archive',
+            year: year,
+            years: years,
+        } only %}
+    </div>
+
+    {{ component('Activity:ActivityOverview', {
+        past: true,
+        year: year,
+    }) }}
 {% endblock %}

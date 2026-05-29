@@ -1,0 +1,85 @@
+{# Accordion panel for one sign-up list. Params: `list` (SignupListView), `collapseId` (string), `open` (bool). #}
+<div class="panel mb-3">
+    <button type="button"
+            class="panel-heading signup-list-heading d-flex justify-content-between align-items-start gap-2 w-100 border-0 bg-transparent text-start {% if not open %}collapsed{% endif %}"
+            data-bs-toggle="collapse" data-bs-target="#{{ collapseId }}"
+            aria-expanded="{{ open ? 'true' : 'false' }}" aria-controls="{{ collapseId }}">
+        <span>
+            <span class="d-flex flex-wrap align-items-center gap-1">
+                <span class="h5 mb-0">{{ list.name }}</span>
+                {% if list.promoted %}
+                    <i class="fas fa-star text-warning" title="{{ 'Promoted'|trans }}"></i>
+                {% endif %}
+            </span>
+            <span class="d-flex flex-wrap align-items-center gap-1 mt-1">
+                {% if list.isOpen %}
+                    <span class="badge badge-success">{{ 'Open'|trans }}</span>
+                {% elseif list.isClosed %}
+                    <span class="badge badge-danger">{{ 'Closed'|trans }}</span>
+                {% else %}
+                    <span class="badge badge-info">{{ 'Not yet open'|trans }}</span>
+                {% endif %}
+                {% if list.limitedCapacity %}
+                    <span class="badge badge-warning">{{ 'Limited capacity'|trans }}</span>
+                {% endif %}
+                {% if list.onlyGEWIS %}
+                    <span class="badge badge-tag">{{ 'GEWIS members only'|trans }}</span>
+                {% endif %}
+            </span>
+            <small class="text-muted d-block mt-1">
+                {{ 'Open from %open% until %close%.'|trans({
+                    '%open%': list.openDate|format_datetime(pattern: 'EEE d MMM. yyyy HH:mm', locale: app.request.locale),
+                    '%close%': list.closeDate|format_datetime(pattern: 'EEE d MMM. yyyy HH:mm', locale: app.request.locale),
+                }) }}
+            </small>
+        </span>
+        <i class="fas fa-chevron-down signup-list-chevron"></i>
+    </button>
+    <div class="collapse {% if open %}show{% endif %}" id="{{ collapseId }}">
+        <div class="panel-body">
+            {% if list.canViewDetails %}
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>{{ 'Name'|trans }}</th>
+                                {% for fieldName in list.fieldNames %}
+                                    <th>{{ fieldName }}</th>
+                                {% endfor %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in list.rows %}
+                                <tr>
+                                    <td>{{ row.position }}</td>
+                                    <td>{{ row.fullName }}</td>
+                                    {% for cell in row.cells %}
+                                        <td>
+                                            {% if cell.hidden %}
+                                                <span class="text-muted fst-italic">{{ 'Hidden'|trans }}</span>
+                                            {% else %}
+                                                {{ cell.value }}
+                                            {% endif %}
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="{{ 2 + list.fieldNames|length }}" class="text-center text-muted py-3">
+                                        {{ 'No subscriptions yet.'|trans }}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                {% if list.displaySubscribedNumber %}
+                    <p class="mb-1">{{ 'Number of subscriptions: %count%'|trans({'%count%': list.subscriberCount}) }}</p>
+                {% endif %}
+                <a href="{{ path('user_login') }}">{{ 'Log in to view the subscribers.'|trans }}</a>
+            {% endif %}
+        </div>
+    </div>
+</div>

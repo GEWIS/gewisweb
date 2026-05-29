@@ -1,0 +1,27 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}{{ 'My past activities'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block contents %}
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+        <h1 class="mb-0">{{ 'My past activities'|trans }}</h1>
+
+        <div class="btn-toolbar gap-2" role="toolbar">
+            <a class="btn btn-outline-secondary" href="{{ path('activity/my') }}">
+                <i class="fas fa-chevron-left"></i> {{ 'My upcoming activities'|trans }}
+            </a>
+
+            {% include 'partials/activity/year-switcher.html.twig' with {
+                route: 'activity/archive/my',
+                year: year,
+                years: years,
+            } only %}
+        </div>
+    </div>
+
+    {{ component('Activity:ActivityOverview', {
+        subscribed: true,
+        past: true,
+        year: year,
+    }) }}
+{% endblock %}

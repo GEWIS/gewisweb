@@ -4,9 +4,21 @@ declare(strict_types=1);
 
 namespace App\Controller\Activity;
 
+use App\Entity\Activity\Activity;
+use App\Entity\Application\Enums\Languages;
+use App\Entity\User\Enums\UserRoles;
+use App\Entity\User\User;
+use App\Repository\Activity\ActivityRepository;
+use App\View\Activity\SignupListView;
+use Locale;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Http\Attribute\CurrentUser;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\UX\CalendarLink\CalendarEvent;
 
 #[Route(
     path: '/activities',
@@ -14,17 +26,17 @@ use Symfony\Component\Routing\Attribute\Route;
 )]
 class ActivityController extends AbstractController
 {
+    public function __construct(
+        private readonly ActivityRepository $activityRepository,
+        private readonly TranslatorInterface $translator,
+    ) {
+    }
+
     #[Route(
         path: '',
         name: 'index',
     )]
-    #[Route(
-        path: '/{category}',
-        name: 'category',
-        requirements: ['category' => '[a-z][0-9a-z\_\-]{2,31}'],
-        defaults: ['category' => null],
-    )]
-    public function index(?string $category = null): Response
+    public function index(): Response
     {
         return $this->render('activity/index.html.twig');
     }
@@ -33,6 +45,7 @@ class ActivityController extends AbstractController
         path: '/my',
         name: 'my',
     )]
+    #[IsGranted(UserRoles::User->value)]
     public function my(): Response
     {
         return $this->render('activity/my.html.twig');
@@ -46,7 +59,34 @@ class ActivityController extends AbstractController
     )]
     public function archive(?int $year = null): Response
     {
-        return $this->render('activity/archive.html.twig');
+        return $this->render(
+            'activity/archive.html.twig',
+            [
+                'year' => $year,
+                'years' => $this->activityRepository->getApprovedActivityYears(),
+            ],
+        );
+    }
+
+    #[Route(
+        path: '/archive/my/{year}',
+        name: 'archive/my',
+        requirements: ['year' => '\d{4}'],
+        defaults: ['year' => null],
+    )]
+    #[IsGranted(UserRoles::User->value)]
+    public function myArchive(
+        #[CurrentUser]
+        User $user,
+        ?int $year = null,
+    ): Response {
+        return $this->render(
+            'activity/archive-my.html.twig',
+            [
+                'year' => $year,
+                'years' => $this->activityRepository->getSubscribedAssociationYears($user->getMember()),
+            ],
+        );
     }
 
     #[Route(
@@ -56,6 +96,53 @@ class ActivityController extends AbstractController
     )]
     public function view(int $activity): Response
     {
-        return $this->render('activity/view.html.twig');
+        $entity = $this->activityRepository->find($activity);
+        if (
+            null === $entity
+            || Activity::STATUS_APPROVED !== $entity->getStatus()
+        ) {
+            throw $this->createNotFoundException();
+        }
+
+        $canViewDetails = $this->isGranted(UserRoles::User->value);
+        $user = $this->getUser();
+        $viewerLidnr = $user instanceof User
+            ? $user->getMember()->getLidnr()
+            : null;
+
+        $signupListViews = [];
+        foreach ($entity->getSignupLists() as $signupList) {
+            $signupListViews[] = SignupListView::fromSignupList(
+                $signupList,
+                $canViewDetails,
+                $viewerLidnr,
+                $this->translator,
+            );
+        }
+
+        $language = 'nl' === Locale::getDefault()
+            ? Languages::Dutch
+            : Languages::English;
+
+        $calendarEvent = new CalendarEvent(
+            title: $entity->getName()->getText($language) ?? '',
+            start: $entity->getBeginTime(),
+            end: $entity->getEndTime(),
+            location: $entity->getLocation()->getText($language),
+            url: $this->generateUrl(
+                'activity/view',
+                ['activity' => $entity->getId()],
+                UrlGeneratorInterface::ABSOLUTE_URL,
+            ),
+        );
+
+        return $this->render(
+            'activity/view.html.twig',
+            [
+                'activity' => $entity,
+                'signupListViews' => $signupListViews,
+                'calendarEvent' => $calendarEvent,
+            ],
+        );
     }
 }

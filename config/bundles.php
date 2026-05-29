@@ -21,6 +21,7 @@ use Symfony\Bundle\MonologBundle\MonologBundle;
 use Symfony\Bundle\SecurityBundle\SecurityBundle;
 use Symfony\Bundle\TwigBundle\TwigBundle;
 use Symfony\Bundle\WebProfilerBundle\WebProfilerBundle;
+use Symfony\UX\CalendarLink\UXCalendarLinkBundle;
 use Symfony\UX\LiveComponent\LiveComponentBundle;
 use Symfony\UX\StimulusBundle\StimulusBundle;
 use Symfony\UX\TwigComponent\TwigComponentBundle;
@@ -61,4 +62,5 @@ return [
     SchebTwoFactorBundle::class => ['all' => true],
     EndroidQrCodeBundle::class => ['all' => true],
     AmbtaDoctrineEncryptBundle::class => ['all' => true],
+    UXCalendarLinkBundle::class => ['all' => true],
 ];

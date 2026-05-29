@@ -8,6 +8,8 @@ use Override;
 use Symfony\Contracts\Translation\TranslatableInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+use function array_filter;
+
 /**
  * Enum for the (single, mandatory) category of an activity.
  */
@@ -36,6 +38,19 @@ enum ActivityCategories: string implements TranslatableInterface
 
     // Only ever assigned to legacy activities by a migration; it must never be selectable for new activities.
     case Uncategorised = 'uncategorised';
+
+    /**
+     * All cases except the migration-only {@see self::Uncategorised}, for category selection and filtering.
+     *
+     * @return self[]
+     */
+    public static function selectableCases(): array
+    {
+        return array_filter(
+            self::cases(),
+            static fn (self $case): bool => self::Uncategorised !== $case,
+        );
+    }
 
     #[Override]
     public function trans(

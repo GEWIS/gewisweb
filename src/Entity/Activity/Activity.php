@@ -401,6 +401,58 @@ class Activity
         return $this->signupLists;
     }
 
+    /**
+     * The next sign-up list whose deadline is relevant to surface on overviews (see GH-2082): among the lists that have
+     * not yet closed, the currently-open one closing soonest, otherwise the one opening soonest. Null when all closed.
+     */
+    public function getRelevantSignupList(): ?SignupList
+    {
+        $now = new DateTime('now');
+        $open = null;
+        $upcoming = null;
+
+        foreach ($this->signupLists as $signupList) {
+            if ($signupList->getCloseDate() <= $now) {
+                continue;
+            }
+
+            if ($signupList->getOpenDate() <= $now) {
+                if (
+                    null === $open
+                    || $signupList->getCloseDate() < $open->getCloseDate()
+                ) {
+                    $open = $signupList;
+                }
+            } elseif (
+                null === $upcoming
+                || $signupList->getOpenDate() < $upcoming->getOpenDate()
+            ) {
+                $upcoming = $signupList;
+            }
+        }
+
+        return $open ?? $upcoming;
+    }
+
+    /**
+     * The number of sign-up lists that have not yet closed, i.e. that still have a relevant deadline.
+     */
+    public function countPendingSignupLists(): int
+    {
+        $now = new DateTime('now');
+        $count = 0;
+
+        foreach ($this->signupLists as $signupList) {
+            if ($signupList->getCloseDate() <= $now) {
+                continue;
+            }
+
+            ++$count;
+        }
+
+        return $count;
+    }
+
     public function getName(): ActivityLocalisedText
     {
         return $this->name;
