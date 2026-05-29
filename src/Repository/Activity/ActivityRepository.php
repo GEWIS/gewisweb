@@ -601,13 +601,13 @@ class ActivityRepository extends ServiceEntityRepository
                     'sl_sub',
                 )
                 ->where('sl_sub.activity = a')
-                ->andWhere('su.user = :subscriber');
+                ->andWhere('IDENTITY(su.user) = :subscriber');
 
             $qb->andWhere($qb->expr()->exists($subscriberSubquery->getDQL()))
                 ->setParameter(
                     'subscriber',
-                    $subscribedBy,
-                    Member::class,
+                    $subscribedBy->getLidnr(),
+                    Types::INTEGER,
                 );
         }
 
