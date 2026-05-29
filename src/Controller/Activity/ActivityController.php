@@ -6,22 +6,19 @@ namespace App\Controller\Activity;
 
 use App\Entity\Activity\Activity;
 use App\Entity\Application\Enums\Languages;
-use App\Entity\Decision\AssociationYear;
 use App\Entity\User\Enums\UserRoles;
 use App\Entity\User\User;
 use App\Repository\Activity\ActivityRepository;
 use App\View\Activity\SignupListView;
-use DateTime;
 use Locale;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\UX\CalendarLink\CalendarEvent;
-
-use function range;
 
 #[Route(
     path: '/activities',
@@ -33,31 +30,6 @@ class ActivityController extends AbstractController
         private readonly ActivityRepository $activityRepository,
         private readonly TranslatorInterface $translator,
     ) {
-    }
-
-    /**
-     * The association years (first calendar year) that have activities, newest first, for the archive year switcher.
-     *
-     * @return int[]
-     */
-    private function archiveYears(): array
-    {
-        $oldest = $this->activityRepository->getOldestActivity();
-        if (null === $oldest) {
-            return [];
-        }
-
-        $oldestYear = AssociationYear::fromDate($oldest->getBeginTime())->getYear();
-        $currentYear = AssociationYear::fromDate(new DateTime())->getYear();
-
-        if ($currentYear < $oldestYear) {
-            return [];
-        }
-
-        return range(
-            $currentYear,
-            $oldestYear,
-        );
     }
 
     #[Route(
@@ -91,19 +63,30 @@ class ActivityController extends AbstractController
             'activity/archive.html.twig',
             [
                 'year' => $year,
-                'years' => $this->archiveYears(),
+                'years' => $this->activityRepository->getApprovedActivityYears(),
             ],
         );
     }
 
     #[Route(
-        path: '/archive/my',
+        path: '/archive/my/{year}',
         name: 'archive/my',
+        requirements: ['year' => '\d{4}'],
+        defaults: ['year' => null],
     )]
     #[IsGranted(UserRoles::User->value)]
-    public function myArchive(): Response
-    {
-        return $this->render('activity/archive-my.html.twig');
+    public function myArchive(
+        #[CurrentUser]
+        User $user,
+        ?int $year = null,
+    ): Response {
+        return $this->render(
+            'activity/archive-my.html.twig',
+            [
+                'year' => $year,
+                'years' => $this->activityRepository->getSubscribedAssociationYears($user->getMember()),
+            ],
+        );
     }
 
     #[Route(

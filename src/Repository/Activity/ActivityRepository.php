@@ -8,6 +8,7 @@ use App\Entity\Activity\Activity;
 use App\Entity\Activity\Enums\ActivityCategories;
 use App\Entity\Activity\SignupList;
 use App\Entity\Activity\UserSignup;
+use App\Entity\Decision\AssociationYear;
 use App\Entity\Decision\Member;
 use App\Entity\Decision\Organ;
 use DateTime;
@@ -20,10 +21,12 @@ use Doctrine\Persistence\ManagerRegistry;
 
 use function addcslashes;
 use function array_key_exists;
+use function array_keys;
 use function array_map;
 use function array_merge;
 use function count;
 use function mb_strtolower;
+use function rsort;
 use function trim;
 use function usort;
 
@@ -382,6 +385,100 @@ class ActivityRepository extends ServiceEntityRepository
             ->setMaxResults($limit);
 
         return $paginator;
+    }
+
+    /**
+     * The association years (first calendar year) that have at least one approved, past activity, newest first, for
+     * the activity archive year switcher.
+     *
+     * @return int[]
+     */
+    public function getApprovedActivityYears(): array
+    {
+        /** @var list<array{beginTime: DateTime}> $rows */
+        $rows = $this->createQueryBuilder('a')
+            ->select('a.beginTime')
+            ->where('a.status = :status')
+            ->andWhere('a.endTime < :now')
+            ->setParameter(
+                'status',
+                Activity::STATUS_APPROVED,
+            )
+            ->setParameter(
+                'now',
+                new DateTime(),
+                Types::DATETIME_MUTABLE,
+            )
+            ->getQuery()
+            ->getResult();
+
+        return $this->associationYears($rows);
+    }
+
+    /**
+     * The association years (first calendar year) in which the given member has at least one sign-up for an approved,
+     * past activity, newest first, for the "My past activities" year switcher.
+     *
+     * @return int[]
+     */
+    public function getSubscribedAssociationYears(Member $member): array
+    {
+        /** @var list<array{beginTime: DateTime}> $rows */
+        $rows = $this->getEntityManager()->createQueryBuilder()
+            ->select('a.beginTime')
+            ->from(
+                UserSignup::class,
+                'su',
+            )
+            ->join(
+                'su.signupList',
+                'sl',
+            )
+            ->join(
+                'sl.activity',
+                'a',
+            )
+            ->where('IDENTITY(su.user) = :subscriber')
+            ->andWhere('a.status = :status')
+            ->andWhere('a.endTime < :now')
+            ->setParameter(
+                'subscriber',
+                $member->getLidnr(),
+                Types::INTEGER,
+            )
+            ->setParameter(
+                'status',
+                Activity::STATUS_APPROVED,
+            )
+            ->setParameter(
+                'now',
+                new DateTime(),
+                Types::DATETIME_MUTABLE,
+            )
+            ->getQuery()
+            ->getResult();
+
+        return $this->associationYears($rows);
+    }
+
+    /**
+     * Maps a list of activity begin times to their distinct association years (first calendar year), newest first.
+     *
+     * @param list<array{beginTime: DateTime}> $rows
+     *
+     * @return int[]
+     */
+    private function associationYears(array $rows): array
+    {
+        $years = [];
+        foreach ($rows as $row) {
+            $years[AssociationYear::fromDate($row['beginTime'])->getYear()] = true;
+        }
+
+        $years = array_keys($years);
+        rsort($years);
+
+        return $years;
     }
 
     /**

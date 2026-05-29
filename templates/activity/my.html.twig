@@ -3,6 +3,13 @@
 {% block page_title %}{{ 'My Activities'|trans|page_title }}{{ parent() }}{% endblock %}
 
 {% block contents %}
-    <h1>{{ 'My upcoming activities'|trans }}</h1>
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+        <h1 class="mb-0">{{ 'My upcoming activities'|trans }}</h1>
+
+        <a class="btn btn-outline-secondary" href="{{ path('activity/archive/my') }}">
+            {{ 'My past activities'|trans }} <i class="fas fa-chevron-right"></i>
+        </a>
+    </div>
+
     {{ component('Activity:ActivityOverview', { subscribed: true }) }}
 {% endblock %}

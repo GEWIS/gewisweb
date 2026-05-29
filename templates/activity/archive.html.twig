@@ -6,48 +6,11 @@
     <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
         <h1 class="mb-0">{{ 'Activity Archive'|trans }}</h1>
 
-        {% if years is not empty %}
-            {# Preserve the active filters (e.g. ?category=…) when switching years by carrying the current query string. #}
-            {% set query = app.request.query.all %}
-            {% set newer_url = year is not null and year < years|first
-                ? path('activity/archive', query|merge({ year: year + 1 })) : null %}
-            {% set older_url = year is not null and year > years|last
-                ? path('activity/archive', query|merge({ year: year - 1 })) : null %}
-
-            <div class="btn-group">
-                <a class="btn btn-outline-secondary {{ newer_url is null ? 'disabled' }}"
-                   href="{{ newer_url ?? '#' }}" aria-label="{{ 'Newer'|trans }}">
-                    <i class="fas fa-chevron-left"></i>
-                </a>
-                <div class="btn-group">
-                    <button type="button" class="btn btn-outline-secondary dropdown-toggle"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                        {{ year is not null ? (year ~ ' - ' ~ (year + 1)) : 'All years'|trans }}
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="dropdown-item {{ year is null ? 'active' }}"
-                               href="{{ path('activity/archive', query) }}">
-                                {{ 'All years'|trans }}
-                            </a>
-                        </li>
-                        <li><hr class="dropdown-divider"></li>
-                        {% for y in years %}
-                            <li>
-                                <a class="dropdown-item {{ year == y ? 'active' }}"
-                                   href="{{ path('activity/archive', query|merge({ year: y })) }}">
-                                    {{ y }} - {{ y + 1 }}
-                                </a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-                <a class="btn btn-outline-secondary {{ older_url is null ? 'disabled' }}"
-                   href="{{ older_url ?? '#' }}" aria-label="{{ 'Older'|trans }}">
-                    <i class="fas fa-chevron-right"></i>
-                </a>
-            </div>
-        {% endif %}
+        {% include 'partials/activity/year-switcher.html.twig' with {
+            route: 'activity/archive',
+            year: year,
+            years: years,
+        } only %}
     </div>
 
     {{ component('Activity:ActivityOverview', {
