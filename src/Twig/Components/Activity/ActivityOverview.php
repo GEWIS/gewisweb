@@ -107,6 +107,9 @@ final class ActivityOverview
     /** @var Paginator<Activity>|null */
     private ?Paginator $paginator = null;
 
+    /** @var Activity[]|null */
+    private ?array $activities = null;
+
     private bool $memberResolved = false;
     private ?Member $member = null;
 
@@ -129,14 +132,23 @@ final class ActivityOverview
      */
     public function getActivities(): array
     {
-        if (!$this->canQuery()) {
-            return [];
+        if (null !== $this->activities) {
+            return $this->activities;
         }
 
-        return iterator_to_array(
+        if (!$this->canQuery()) {
+            return $this->activities = [];
+        }
+
+        $activities = iterator_to_array(
             $this->getPaginator()->getIterator(),
             false,
         );
+
+        // Hydrate the sign-up lists for the whole page in one query so the per-item accessors do not N+1.
+        $this->activityRepository->primeSignupLists($activities);
+
+        return $this->activities = $activities;
     }
 
     /**

@@ -738,6 +738,37 @@ class ActivityRepository extends ServiceEntityRepository
     }
 
     /**
+     * Eager-loads the sign-up lists for the given activities in a single query, hydrating each activity's (otherwise
+     * lazy) `signupLists` collection. This avoids the N+1 that the overview's per-activity accessors
+     * ({@see Activity::getRelevantSignupList()}, {@see Activity::countPendingSignupLists()}) would otherwise trigger.
+     *
+     * @param Activity[] $activities
+     */
+    public function primeSignupLists(array $activities): void
+    {
+        if ([] === $activities) {
+            return;
+        }
+
+        $this->createQueryBuilder('a')
+            ->select(
+                'a',
+                'sl',
+            )
+            ->leftJoin(
+                'a.signupLists',
+                'sl',
+            )
+            ->where('a IN (:activities)')
+            ->setParameter(
+                'activities',
+                $activities,
+            )
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
      * Returns the distinct organs that organise at least one approved activity, for the overview's organ filter.
      *
      * @return Organ[]
