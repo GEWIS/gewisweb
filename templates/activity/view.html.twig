@@ -38,7 +38,7 @@
                     <span class="badge badge-info">{{ activity.getCategory|trans }}</span>
                 {% endif %}
                 {% for label in activity.getLabels %}
-                    <span class="badge badge-secondary">{{ label.getName|localise_text }}</span>
+                    <span class="badge badge-tag">{{ label.getName|localise_text }}</span>
                 {% endfor %}
             </div>
             <div class="markdown">
