@@ -30,8 +30,8 @@ use Doctrine\ORM\Mapping\OrderBy;
  *     id: int,
  *     name: ?string,
  *     nameEn: ?string,
- *     openDate: datetime,
- *     closeDate: datetime,
+ *     openDate: DateTime,
+ *     closeDate: DateTime,
  *     onlyGEWIS: bool,
  *     displaySubscribedNumber: bool,
  *     limitedCapacity: bool,
@@ -105,20 +105,20 @@ class SignupList
      * Determines if people outside of GEWIS can sign up.
      */
     #[Column(type: Types::BOOLEAN)]
-    private bool $onlyGEWIS;
+    private bool $onlyGEWIS = false;
 
     /**
      * Determines if the number of signed up members should be displayed
      * when the user is NOT logged in.
      */
     #[Column(type: Types::BOOLEAN)]
-    private bool $displaySubscribedNumber;
+    private bool $displaySubscribedNumber = false;
 
     /**
      * If the sign-up list has limited capacity, we should show users a warning that this is the case.
      */
     #[Column(type: Types::BOOLEAN)]
-    private bool $limitedCapacity;
+    private bool $limitedCapacity = false;
 
     /**
      * All additional fields belonging to the activity.
@@ -160,6 +160,36 @@ class SignupList
     public function __construct()
     {
         $this->signUps = new ArrayCollection();
+        $this->fields = new ArrayCollection();
+        // Initialise the required scalars/relations so a freshly-formed (not-yet-hydrated) list is form-ready;
+        // Doctrine bypasses the constructor when hydrating, so existing rows keep their persisted values.
+        $this->name = new ActivityLocalisedText();
+        $this->openDate = new DateTime();
+        $this->closeDate = new DateTime();
+    }
+
+    public function addField(SignupField $field): void
+    {
+        if ($this->fields->contains($field)) {
+            return;
+        }
+
+        $this->fields->add($field);
+        $field->setSignupList($this);
+    }
+
+    public function removeField(SignupField $field): void
+    {
+        $this->fields->removeElement($field);
+    }
+
+    /**
+     * Whether anyone has signed up for this list. Once true, the list's structure is frozen (only safe metadata may
+     * change) so existing sign-ups are never invalidated.
+     */
+    public function hasSignUps(): bool
+    {
+        return !$this->signUps->isEmpty();
     }
 
     /**

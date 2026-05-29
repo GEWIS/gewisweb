@@ -21,6 +21,7 @@
         "dragonmantank/cron-expression": "^3.6",
         "endroid/qr-code-bundle": "^7.0.1",
         "fortawesome/font-awesome": "^7.2.0",
+        "jfcherng/php-diff": "^7.0",
         "league/commonmark": "^2.8",
         "matomo/device-detector": "^6.5.1",
         "nelmio/cors-bundle": "^2.6.1",
@@ -71,6 +72,7 @@
         "symfony/ux-live-component": "^3.0.0",
         "symfony/validator": "8.0.*",
         "symfony/web-link": "8.0.*",
+        "symfony/workflow": "8.0.*",
         "symfony/yaml": "8.0.*",
         "symfonycasts/sass-bundle": "^0.10.0",
         "twbs/bootstrap": "^5.3.8",
@@ -90,7 +92,6 @@
         "bump-after-update": true,
         "preferred-install": {
             "doctrine/orm": "source",
-            "jfcherng/php-diff": "source",
             "*": "dist"
         },
         "sort-packages": true

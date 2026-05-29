@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Twig\Extensions;
 
 use App\Entity\Career\CompanyFeaturedPackage;
-use App\Entity\Career\JobCategory;
+use App\Entity\Career\VacancyCategory;
 use App\Repository\Career\CompanyFeaturedPackageRepository;
-use App\Repository\Career\JobCategoryRepository;
+use App\Repository\Career\VacancyCategoryRepository;
 use Override;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -16,7 +16,7 @@ class CareerExtension extends AbstractExtension
 {
     public function __construct(
         private readonly CompanyFeaturedPackageRepository $companyFeaturedPackageRepository,
-        private readonly JobCategoryRepository $jobCategoryRepository,
+        private readonly VacancyCategoryRepository $vacancyCategoryRepository,
     ) {
     }
 
@@ -32,8 +32,8 @@ class CareerExtension extends AbstractExtension
                 $this->getFeaturedCompany(...),
             ),
             new TwigFunction(
-                'job_categories',
-                $this->getJobCategories(...),
+                'vacancy_categories',
+                $this->getVacancyCategories(...),
             ),
         ];
     }
@@ -44,10 +44,10 @@ class CareerExtension extends AbstractExtension
     }
 
     /**
-     * @return JobCategory[]
+     * @return VacancyCategory[]
      */
-    public function getJobCategories(): array
+    public function getVacancyCategories(): array
     {
-        return $this->jobCategoryRepository->findVisibleCategories();
+        return $this->vacancyCategoryRepository->findVisibleCategories();
     }
 }

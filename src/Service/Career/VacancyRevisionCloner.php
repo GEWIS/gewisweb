@@ -1,0 +1,64 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Service\Career;
+
+use App\Entity\Application\RevisionInterface;
+use App\Entity\Career\CareerLocalisedText;
+use App\Entity\Career\VacancyRevision;
+use App\Workflow\RevisionClonerInterface;
+use Override;
+
+use function assert;
+
+/**
+ * Spawns the next Draft {@see VacancyRevision} from an existing one (for "changes requested", reopening, or editing
+ * an approved vacancy). The localised texts are deep-copied into fresh rows so orphan-removal can never delete the
+ * source revision's content; the contact details and category are copied by value. Authorship (member or company
+ * user) carries forward.
+ */
+final readonly class VacancyRevisionCloner implements RevisionClonerInterface
+{
+    #[Override]
+    public function supports(RevisionInterface $revision): bool
+    {
+        return $revision instanceof VacancyRevision;
+    }
+
+    #[Override]
+    public function cloneAsDraft(RevisionInterface $source): VacancyRevision
+    {
+        assert($source instanceof VacancyRevision);
+
+        $vacancy = $source->getVacancy();
+
+        $draft = new VacancyRevision();
+        $draft->setAuthor($source->getAuthor());
+        $draft->setAuthorCompanyUser($source->getAuthorCompanyUser());
+        $draft->setRevisionNumber($source->getRevisionNumber() + 1);
+        $draft->setPreviousRevision($source);
+        $draft->setName($this->copyText($source->getName()));
+        $draft->setLocation($this->copyText($source->getLocation()));
+        $draft->setWebsite($this->copyText($source->getWebsite()));
+        $draft->setDescription($this->copyText($source->getDescription()));
+        $draft->setAttachment($this->copyText($source->getAttachment()));
+        $draft->setContactName($source->getContactName());
+        $draft->setContactPhone($source->getContactPhone());
+        $draft->setContactEmail($source->getContactEmail());
+        $draft->setCategory($source->getCategory());
+
+        $vacancy->addRevision($draft);
+        $vacancy->setCurrentRevision($draft);
+
+        return $draft;
+    }
+
+    private function copyText(CareerLocalisedText $source): CareerLocalisedText
+    {
+        return new CareerLocalisedText(
+            $source->getValueEN(),
+            $source->getValueNL(),
+        );
+    }
+}

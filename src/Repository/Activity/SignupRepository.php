@@ -37,7 +37,11 @@ class SignupRepository extends ServiceEntityRepository
                 'l.activity',
                 'a',
             )
-            ->where('a.endTime <= DATE_SUB(CURRENT_TIMESTAMP(), 5, "YEAR")');
+            ->join(
+                'a.liveRevision',
+                'lr',
+            )
+            ->where("lr.endTime <= DATE_SUB(CURRENT_TIMESTAMP(), 5, 'YEAR')");
 
         return $qb->getQuery()->getResult();
     }

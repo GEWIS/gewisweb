@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Entity\Career;
 
 use App\Entity\Career\Enums\CompanyPackageTypes;
-use App\Entity\Career\JobCategory as JobCategoryModel;
+use App\Entity\Career\VacancyCategory as VacancyCategoryModel;
 use App\Repository\Career\CompanyJobPackageRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -24,12 +24,12 @@ use function count;
 class CompanyJobPackage extends CompanyPackage
 {
     /**
-     * The package's jobs.
+     * The package's vacancies.
      *
-     * @var Collection<array-key, Job>
+     * @var Collection<array-key, Vacancy>
      */
     #[OneToMany(
-        targetEntity: Job::class,
+        targetEntity: Vacancy::class,
         mappedBy: 'package',
         cascade: [
             'persist',
@@ -37,86 +37,75 @@ class CompanyJobPackage extends CompanyPackage
         ],
     )]
     #[OrderBy(['updatedAt' => 'DESC'])]
-    private Collection $jobs;
+    private Collection $vacancies;
 
     public function __construct()
     {
         parent::__construct();
 
-        $this->jobs = new ArrayCollection();
+        $this->vacancies = new ArrayCollection();
     }
 
     /**
-     * Get the jobs in the package.
+     * Get the vacancies in the package.
      *
-     * @return Collection<array-key, Job>
+     * @return Collection<array-key, Vacancy>
      */
-    public function getJobs(): Collection
+    public function getVacancies(): Collection
     {
-        return $this->jobs;
+        return $this->vacancies;
     }
 
     /**
-     * Get the jobs in the package, but without any that are actually update proposals.
+     * Get the number of vacancies in the package.
      *
-     * @return Collection<array-key, Job>
+     * @return int of vacancies in the package
      */
-    public function getJobsWithoutProposals(): Collection
-    {
-        return $this->jobs->filter(static function (Job $job) {
-            return !$job->isUpdate();
-        });
-    }
-
-    /**
-     * Get the number of jobs in the package.
-     *
-     * @return int of jobs in the package
-     */
-    public function getNumberOfActiveJobs(?JobCategoryModel $category = null): int
+    public function getNumberOfActiveJobs(?VacancyCategoryModel $category = null): int
     {
         return count($this->getJobsInCategory($category));
     }
 
     /**
-     * Get the jobs that are part of the given category.
+     * Get the vacancies that are part of the given category.
      *
-     * @return Job[]
+     * @return Vacancy[]
      */
-    public function getJobsInCategory(?JobCategoryModel $category = null): array
+    public function getJobsInCategory(?VacancyCategoryModel $category = null): array
     {
-        $filter = static function (Job $job) use ($category): bool {
+        $filter = static function (Vacancy $vacancy) use ($category): bool {
             if (null === $category) {
-                return $job->isActive() && $job->isApproved() && !$job->isUpdate();
+                return $vacancy->isActive();
             }
 
-            return $job->getCategory() === $category && $job->isActive() && $job->isApproved() && !$job->isUpdate();
+            return $vacancy->getCategory() === $category
+                && $vacancy->isActive();
         };
 
         return array_filter(
-            $this->jobs->toArray(),
+            $this->vacancies->toArray(),
             $filter,
         );
     }
 
     /**
-     * Adds a job to the package.
+     * Adds a vacancy to the package.
      *
-     * @param Job $job job to be added
+     * @param Vacancy $vacancy vacancy to be added
      */
-    public function addJob(Job $job): void
+    public function addVacancy(Vacancy $vacancy): void
     {
-        $this->jobs->add($job);
+        $this->vacancies->add($vacancy);
     }
 
     /**
-     * Removes a job from the package.
+     * Removes a vacancy from the package.
      *
-     * @param Job $job job to be removed
+     * @param Vacancy $vacancy vacancy to be removed
      */
-    public function removeJob(Job $job): void
+    public function removeVacancy(Vacancy $vacancy): void
     {
-        $this->jobs->removeElement($job);
+        $this->vacancies->removeElement($vacancy);
     }
 
     #[Override]

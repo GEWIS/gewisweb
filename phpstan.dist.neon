@@ -8,6 +8,10 @@ parameters:
     doctrine:
         objectManagerLoader: tests/object-manager.php
         ormRepositoryClass: App\Entity
+        # Allow a nullable PHP property to back a NOT NULL column: a field may be transiently null (e.g. an activity
+        # revision's schedule before the create form is filled in) yet is guaranteed non-null on persist by a NotBlank
+        # constraint, so the column stays NOT NULL while the property type stays honest about the empty draft state.
+        allowNullablePropertyForRequiredField: true
     symfony:
         containerXmlPath: var/cache/dev/App_KernelDevDebugContainer.xml
 #    scanDirectories:

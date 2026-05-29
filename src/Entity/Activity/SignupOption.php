@@ -57,6 +57,12 @@ class SignupOption
     )]
     private ActivityLocalisedText $value;
 
+    public function __construct()
+    {
+        // Form-ready default; Doctrine bypasses the constructor when hydrating existing rows.
+        $this->value = new ActivityLocalisedText();
+    }
+
     public function getField(): SignupField
     {
         return $this->field;

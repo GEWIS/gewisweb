@@ -40,9 +40,10 @@ final class MarkdownExtension extends AbstractExtension
     }
 
     /**
-     * Render Markdown to safe HTML. When $allowedTags is given (bare tag names, e.g. ['p', 'em', 'strong', 'a']),
-     * every other tag is stripped from the output — used on the overview to keep descriptions to inline formatting;
-     * pass nothing on the single activity page for the full rendering.
+     * Render Markdown to safe HTML.
+     *
+     * When $allowedTags is given (bare tag names, e.g. ['p', 'em', 'strong', 'a']), every other tag is stripped from
+     * the output. This is used on the activity overview to keep descriptions to inline formatting.
      *
      * @param string[]|null $allowedTags
      */

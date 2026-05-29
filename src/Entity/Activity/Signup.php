@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity\Activity;
 
+use App\Entity\Activity\Enums\SignupFieldTypes;
 use App\Entity\Application\Traits\IdentifiableTrait;
 use App\Entity\Application\Traits\TimestampableTrait;
 use App\Repository\Activity\SignupRepository;
@@ -198,9 +199,9 @@ abstract class Signup
         foreach ($this->getFieldValues() as $fieldValue) {
             $value = null;
 
-            if (3 === $fieldValue->getField()->getType()) {
+            if (SignupFieldTypes::Choice === $fieldValue->getField()->getType()) {
                 $value = $fieldValue->getOption()?->getId();
-            } elseif (1 === $fieldValue->getField()->getType()) {
+            } elseif (SignupFieldTypes::YesNo === $fieldValue->getField()->getType()) {
                 $value = 'Yes' === $fieldValue->getValue()
                     ? '1'
                     : '0';

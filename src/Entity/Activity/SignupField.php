@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity\Activity;
 
+use App\Entity\Activity\Enums\SignupFieldTypes;
 use App\Entity\Application\LocalisedText as LocalisedTextModel;
 use App\Entity\Application\Traits\IdentifiableTrait;
 use App\Repository\Activity\SignupFieldRepository;
@@ -25,7 +26,7 @@ use Doctrine\ORM\Mapping\OneToOne;
  *     sensitive: bool,
  *     name: ?string,
  *     nameEn: ?string,
- *     type: int,
+ *     type: string,
  *     minimumValue: ?int,
  *     maximumValue: ?int,
  *     options: array<array-key, ?string>,
@@ -37,7 +38,7 @@ use Doctrine\ORM\Mapping\OneToOne;
  *     id: int,
  *     sensitive: bool,
  *     name: ImportedLocalisedTextGdprArrayType,
- *     type: int,
+ *     type: string,
  *     minimumValue: ?int,
  *     maximumValue: ?int,
  *     options: ?ImportedSignupOptionGdprArrayType[],
@@ -88,8 +89,11 @@ class SignupField
     /**
      * The type of the SignupField.
      */
-    #[Column(type: Types::INTEGER)]
-    private int $type;
+    #[Column(
+        type: Types::STRING,
+        enumType: SignupFieldTypes::class,
+    )]
+    private SignupFieldTypes $type = SignupFieldTypes::Text;
 
     /**
      * The minimal value constraint for the ``number'' type.
@@ -124,6 +128,23 @@ class SignupField
     public function __construct()
     {
         $this->options = new ArrayCollection();
+        // Form-ready defaults; Doctrine bypasses the constructor when hydrating existing rows.
+        $this->name = new ActivityLocalisedText();
+    }
+
+    public function addOption(SignupOption $option): void
+    {
+        if ($this->options->contains($option)) {
+            return;
+        }
+
+        $this->options->add($option);
+        $option->setField($this);
+    }
+
+    public function removeOption(SignupOption $option): void
+    {
+        $this->options->removeElement($option);
     }
 
     public function getSignupList(): SignupList
@@ -164,12 +185,12 @@ class SignupField
         $this->name = $name;
     }
 
-    public function getType(): int
+    public function getType(): SignupFieldTypes
     {
         return $this->type;
     }
 
-    public function setType(int $type): void
+    public function setType(SignupFieldTypes $type): void
     {
         $this->type = $type;
     }
@@ -215,7 +236,7 @@ class SignupField
             'sensitive' => $this->isSensitive(),
             'name' => $this->getName()->getValueNL(),
             'nameEn' => $this->getName()->getValueEN(),
-            'type' => $this->getType(),
+            'type' => $this->getType()->value,
             'minimumValue' => $this->getMinimumValue(),
             'maximumValue' => $this->getMaximumValue(),
             'options' => $optionsArrays,
@@ -238,7 +259,7 @@ class SignupField
             'id' => $this->getId(),
             'sensitive' => $this->isSensitive(),
             'name' => $this->getName()->toGdprArray(),
-            'type' => $this->getType(),
+            'type' => $this->getType()->value,
             'minimumValue' => $this->getMinimumValue(),
             'maximumValue' => $this->getMaximumValue(),
             'options' => $options,

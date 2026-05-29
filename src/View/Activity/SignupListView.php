@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\View\Activity;
 
+use App\Entity\Activity\Enums\SignupFieldTypes;
 use App\Entity\Activity\Signup;
 use App\Entity\Activity\SignupField;
 use App\Entity\Activity\SignupList;
@@ -130,8 +131,8 @@ final readonly class SignupListView
             }
 
             return match ($field->getType()) {
-                1 => $translator->trans($fieldValue->getValue() ?? ''),
-                3 => $fieldValue->getOption()?->getValue()->getText($language) ?? '',
+                SignupFieldTypes::YesNo => $translator->trans($fieldValue->getValue() ?? ''),
+                SignupFieldTypes::Choice => $fieldValue->getOption()?->getValue()->getText($language) ?? '',
                 default => $fieldValue->getValue() ?? '',
             };
         }

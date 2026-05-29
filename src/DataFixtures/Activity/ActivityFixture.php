@@ -8,9 +8,12 @@ use App\DataFixtures\Decision\MemberFixture;
 use App\Entity\Activity\Activity;
 use App\Entity\Activity\ActivityLabel;
 use App\Entity\Activity\ActivityLocalisedText;
+use App\Entity\Activity\ActivityRevision;
+use App\Entity\Activity\ActivityRevisionComment;
 use App\Entity\Activity\Enums\ActivityCategories;
 use App\Entity\Activity\SignupList;
 use App\Entity\Activity\UserSignup;
+use App\Entity\Application\Enums\RevisionStatus;
 use App\Entity\Decision\Member;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -29,7 +32,7 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
             // exercises the same-day, past-year date format.
             [
                 'creator' => 8020,
-                'status' => Activity::STATUS_APPROVED,
+                'status' => RevisionStatus::Approved,
                 'beginTime' => '2024-02-20 19:00',
                 'endTime' => '2024-02-20 22:00',
                 'category' => ActivityCategories::Cultural,
@@ -55,7 +58,7 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
             // Past, multi-day, in a previous calendar year (fixed dates) — exercises the multi-day + year date format.
             [
                 'creator' => 8024,
-                'status' => Activity::STATUS_APPROVED,
+                'status' => RevisionStatus::Approved,
                 'beginTime' => '2025-12-12 17:00',
                 'endTime' => '2025-12-14 12:00',
                 'category' => ActivityCategories::Weekend,
@@ -100,7 +103,7 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
             // Past (already happened), approved, organised by a discharged member.
             [
                 'creator' => 8021,
-                'status' => Activity::STATUS_APPROVED,
+                'status' => RevisionStatus::Approved,
                 'beginTime' => '-2 months 20:00',
                 'endTime' => '-2 months 23:30',
                 'category' => ActivityCategories::Recreational,
@@ -153,7 +156,7 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
             // Closed signup list with presence taken.
             [
                 'creator' => 8023,
-                'status' => Activity::STATUS_APPROVED,
+                'status' => RevisionStatus::Approved,
                 'beginTime' => '-3 weeks 19:30',
                 'endTime' => '-3 weeks 22:00',
                 'category' => ActivityCategories::Workshop,
@@ -198,7 +201,7 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
             // borrel has no sign-up: a sign-up list can never still be open once the activity has started.
             [
                 'creator' => 8012,
-                'status' => Activity::STATUS_APPROVED,
+                'status' => RevisionStatus::Approved,
                 'beginTime' => '-1 hour',
                 'endTime' => '+3 hours',
                 'category' => ActivityCategories::SocialDrink,
@@ -225,7 +228,7 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
             // on an activity that has not started yet, so its sign-up can legitimately still be open.
             [
                 'creator' => 8013,
-                'status' => Activity::STATUS_APPROVED,
+                'status' => RevisionStatus::Approved,
                 'beginTime' => '+2 days 20:00',
                 'endTime' => '+2 days 23:00',
                 'category' => ActivityCategories::Recreational,
@@ -264,7 +267,7 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
             // Upcoming, approved, organised by a board member.
             [
                 'creator' => 8025,
-                'status' => Activity::STATUS_APPROVED,
+                'status' => RevisionStatus::Approved,
                 'beginTime' => '+2 weeks 19:00',
                 'endTime' => '+2 weeks 23:00',
                 'category' => ActivityCategories::SocialDrink,
@@ -303,7 +306,7 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
             // Upcoming, awaiting approval, organised by an active (external) member.
             [
                 'creator' => 8017,
-                'status' => Activity::STATUS_TO_APPROVE,
+                'status' => RevisionStatus::Submitted,
                 'beginTime' => '+3 weeks 12:30',
                 'endTime' => '+3 weeks 14:00',
                 'category' => ActivityCategories::Education,
@@ -334,7 +337,7 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
             // Has a single, currently open signup list with limited capacity.
             [
                 'creator' => 8010,
-                'status' => Activity::STATUS_APPROVED,
+                'status' => RevisionStatus::Approved,
                 'beginTime' => '+1 month 17:00',
                 'endTime' => '+1 month 22:00',
                 'category' => ActivityCategories::Party,
@@ -379,7 +382,7 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
             // Upcoming, approved, organised by a board member. Two signup lists, one promoted.
             [
                 'creator' => 8026,
-                'status' => Activity::STATUS_APPROVED,
+                'status' => RevisionStatus::Approved,
                 'beginTime' => '+5 weeks 18:00',
                 'endTime' => '+5 weeks 23:59',
                 'category' => ActivityCategories::Conference,
@@ -454,7 +457,7 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
             // Signup list open to non-GEWIS members.
             [
                 'creator' => 8018,
-                'status' => Activity::STATUS_APPROVED,
+                'status' => RevisionStatus::Approved,
                 'beginTime' => '+6 weeks 13:00',
                 'endTime' => '+6 weeks 17:00',
                 'category' => ActivityCategories::Career,
@@ -514,7 +517,7 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
             // Upcoming, multi-day (spans several days) — exercises the multi-day date format for future activities.
             [
                 'creator' => 8027,
-                'status' => Activity::STATUS_APPROVED,
+                'status' => RevisionStatus::Approved,
                 'beginTime' => '+7 weeks 09:00',
                 'endTime' => '+7 weeks +2 days 17:00',
                 'category' => ActivityCategories::Conference,
@@ -559,29 +562,47 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
         ];
 
         foreach ($activities as $data) {
-            $activity = new Activity();
-            $activity->setName(new ActivityLocalisedText($data['name']['en'], $data['name']['nl']));
-            $activity->setLocation(new ActivityLocalisedText($data['location']['en'], $data['location']['nl']));
-            $activity->setCosts(new ActivityLocalisedText($data['costs']['en'], $data['costs']['nl']));
-            $activity->setDescription(
-                new ActivityLocalisedText(
-                    $data['description']['en'],
-                    $data['description']['nl'],
-                ),
+            $creator = $this->getReference(
+                'member-' . $data['creator'],
+                Member::class,
             );
-            $activity->setBeginTime(new DateTime($data['beginTime']));
-            $activity->setEndTime(new DateTime($data['endTime']));
-            $activity->setCreator($this->getReference('member-' . $data['creator'], Member::class));
-            $activity->setStatus($data['status']);
-            $activity->setCategory($data['category']);
-            $activity->setRequireGEFLITST($data['requireGEFLITST']);
-            $activity->setRequireZettle($data['requireZettle']);
+
+            $activity = new Activity();
+            $activity->setCreator($creator);
 
             foreach ($data['labels'] ?? [] as $labelReference) {
                 $activity->addLabel($this->getReference($labelReference, ActivityLabel::class));
             }
 
+            // A seeded activity is a single-revision chain: revision 1 carries the content and its lifecycle state.
+            $revision = new ActivityRevision();
+            $revision->setAuthor($creator);
+            $revision->setRevisionNumber(1);
+            $revision->setStatus($data['status']);
+            $revision->setName(new ActivityLocalisedText($data['name']['en'], $data['name']['nl']));
+            $revision->setLocation(new ActivityLocalisedText($data['location']['en'], $data['location']['nl']));
+            $revision->setCosts(new ActivityLocalisedText($data['costs']['en'], $data['costs']['nl']));
+            $revision->setDescription(
+                new ActivityLocalisedText(
+                    $data['description']['en'],
+                    $data['description']['nl'],
+                ),
+            );
+            $revision->setBeginTime(new DateTime($data['beginTime']));
+            $revision->setEndTime(new DateTime($data['endTime']));
+            $revision->setCategory($data['category']);
+            $revision->setRequireGEFLITST($data['requireGEFLITST']);
+            $revision->setRequireZettle($data['requireZettle']);
+
+            $activity->addRevision($revision);
+            $activity->setCurrentRevision($revision);
+
+            if (RevisionStatus::Approved === $data['status']) {
+                $activity->setLiveRevision($revision);
+            }
+
             $manager->persist($activity);
+            $manager->persist($revision);
 
             foreach ($data['signupLists'] ?? [] as $signupListData) {
                 $signupList = $this->createSignupList($signupListData);
@@ -597,7 +618,245 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
             }
         }
 
+        $this->loadWorkflowExamples($manager);
+
         $manager->flush();
+    }
+
+    /**
+     * Seeds activities that exercise the revision workflow: one awaiting review, one bounced back with a
+     * changes-requested chain and a discussion thread, and one rejected with reviewer feedback.
+     */
+    private function loadWorkflowExamples(ObjectManager $manager): void
+    {
+        $boardA = $this->getReference(
+            'member-8025',
+            Member::class,
+        );
+        $boardB = $this->getReference(
+            'member-8026',
+            Member::class,
+        );
+
+        // In review: sits in the board's review queue (no live revision, so not publicly visible).
+        $hackathonCreator = $this->getReference(
+            'member-8013',
+            Member::class,
+        );
+        $hackathon = new Activity();
+        $hackathon->setCreator($hackathonCreator);
+        $hackathonRevision = $this->buildRevision(
+            [
+                'name' => [
+                    'en' => 'Hackathon',
+                    'nl' => 'Hackathon',
+                ],
+                'location' => [
+                    'en' => 'MetaForum',
+                    'nl' => 'MetaForum',
+                ],
+                'costs' => [
+                    'en' => 'Free',
+                    'nl' => 'Gratis',
+                ],
+                'description' => [
+                    'en' => 'A 24-hour hackathon.',
+                    'nl' => 'Een 24-uurs hackathon.',
+                ],
+                'beginTime' => '+8 weeks 18:00',
+                'endTime' => '+8 weeks +1 day 18:00',
+                'category' => ActivityCategories::Competition,
+            ],
+            RevisionStatus::InReview,
+            $hackathonCreator,
+            1,
+            null,
+        );
+        $hackathon->addRevision($hackathonRevision);
+        $hackathon->setCurrentRevision($hackathonRevision);
+        $manager->persist($hackathon);
+        $manager->persist($hackathonRevision);
+
+        // Changes requested: revision 1 is an immutable record with a discussion thread; revision 2 (draft) continues.
+        $beerCreator = $this->getReference(
+            'member-8010',
+            Member::class,
+        );
+        $beer = new Activity();
+        $beer->setCreator($beerCreator);
+        $beerRevision1 = $this->buildRevision(
+            [
+                'name' => [
+                    'en' => 'Beer Tasting',
+                    'nl' => 'Bierproeverij',
+                ],
+                'location' => [
+                    'en' => 'Common Room',
+                    'nl' => 'Huiskamer',
+                ],
+                'costs' => [
+                    'en' => '',
+                    'nl' => '',
+                ],
+                'description' => [
+                    'en' => 'Tasting of local beers.',
+                    'nl' => 'Proeverij van lokale bieren.',
+                ],
+                'beginTime' => '+4 weeks 20:00',
+                'endTime' => '+4 weeks 23:00',
+                'category' => ActivityCategories::SocialDrink,
+            ],
+            RevisionStatus::ChangesRequested,
+            $beerCreator,
+            1,
+            null,
+        );
+        $beerRevision1->setReviewer($boardA);
+        $beerRevision1->setReviewedAt(new DateTime('-2 days'));
+        $beer->addRevision($beerRevision1);
+        $manager->persist($beer);
+        $manager->persist($beerRevision1);
+        $this->comment(
+            $beerRevision1,
+            $boardA,
+            'Please add the price and confirm the location is booked.',
+            $manager,
+        );
+        $this->comment(
+            $beerRevision1,
+            $beerCreator,
+            'Updated the details — the room is booked and it is free for members.',
+            $manager,
+        );
+        $beerRevision2 = $this->buildRevision(
+            [
+                'name' => [
+                    'en' => 'Beer Tasting',
+                    'nl' => 'Bierproeverij',
+                ],
+                'location' => [
+                    'en' => 'Common Room (booked)',
+                    'nl' => 'Huiskamer (geboekt)',
+                ],
+                'costs' => [
+                    'en' => 'Free for members',
+                    'nl' => 'Gratis voor leden',
+                ],
+                'description' => [
+                    'en' => 'Tasting of local beers.',
+                    'nl' => 'Proeverij van lokale bieren.',
+                ],
+                'beginTime' => '+4 weeks 20:00',
+                'endTime' => '+4 weeks 23:00',
+                'category' => ActivityCategories::SocialDrink,
+            ],
+            RevisionStatus::Draft,
+            $beerCreator,
+            2,
+            $beerRevision1,
+        );
+        $beer->addRevision($beerRevision2);
+        $beer->setCurrentRevision($beerRevision2);
+        $manager->persist($beerRevision2);
+
+        // Rejected, with reviewer feedback.
+        $casinoCreator = $this->getReference(
+            'member-8012',
+            Member::class,
+        );
+        $casino = new Activity();
+        $casino->setCreator($casinoCreator);
+        $casinoRevision = $this->buildRevision(
+            [
+                'name' => [
+                    'en' => 'Casino Night',
+                    'nl' => 'Casinoavond',
+                ],
+                'location' => [
+                    'en' => 'Association Room',
+                    'nl' => 'Verenigingskamer',
+                ],
+                'costs' => [
+                    'en' => '10 euro',
+                    'nl' => '10 euro',
+                ],
+                'description' => [
+                    'en' => 'An evening of card games.',
+                    'nl' => 'Een avond vol kaartspellen.',
+                ],
+                'beginTime' => '+5 weeks 20:00',
+                'endTime' => '+5 weeks 23:30',
+                'category' => ActivityCategories::Recreational,
+            ],
+            RevisionStatus::Rejected,
+            $casinoCreator,
+            1,
+            null,
+        );
+        $casinoRevision->setReviewer($boardB);
+        $casinoRevision->setReviewedAt(new DateTime('-5 days'));
+        $casino->addRevision($casinoRevision);
+        $casino->setCurrentRevision($casinoRevision);
+        $manager->persist($casino);
+        $manager->persist($casinoRevision);
+        $this->comment(
+            $casinoRevision,
+            $boardB,
+            'Gambling activities are not permitted; please propose an alternative.',
+            $manager,
+        );
+    }
+
+    /**
+     * @psalm-param array{
+     *     name: array{en: string, nl: string},
+     *     location: array{en: string, nl: string},
+     *     costs: array{en: string, nl: string},
+     *     description: array{en: string, nl: string},
+     *     beginTime: string,
+     *     endTime: string,
+     *     category: ActivityCategories,
+     * } $content
+     */
+    private function buildRevision(
+        array $content,
+        RevisionStatus $status,
+        Member $author,
+        int $revisionNumber,
+        ?ActivityRevision $previous,
+    ): ActivityRevision {
+        $revision = new ActivityRevision();
+        $revision->setAuthor($author);
+        $revision->setStatus($status);
+        $revision->setRevisionNumber($revisionNumber);
+        $revision->setPreviousRevision($previous);
+        $revision->setName(new ActivityLocalisedText($content['name']['en'], $content['name']['nl']));
+        $revision->setLocation(new ActivityLocalisedText($content['location']['en'], $content['location']['nl']));
+        $revision->setCosts(new ActivityLocalisedText($content['costs']['en'], $content['costs']['nl']));
+        $revision->setDescription(
+            new ActivityLocalisedText(
+                $content['description']['en'],
+                $content['description']['nl'],
+            ),
+        );
+        $revision->setBeginTime(new DateTime($content['beginTime']));
+        $revision->setEndTime(new DateTime($content['endTime']));
+        $revision->setCategory($content['category']);
+
+        return $revision;
+    }
+
+    private function comment(
+        ActivityRevision $revision,
+        Member $author,
+        string $body,
+        ObjectManager $manager,
+    ): void {
+        $comment = new ActivityRevisionComment();
+        $comment->setRevision($revision);
+        $comment->setAuthor($author);
+        $comment->setBody($body);
+        $manager->persist($comment);
     }
 
     /**

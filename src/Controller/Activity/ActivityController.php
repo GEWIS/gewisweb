@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controller\Activity;
 
-use App\Entity\Activity\Activity;
 use App\Entity\Application\Enums\Languages;
 use App\Entity\User\Enums\UserRoles;
 use App\Entity\User\User;
@@ -99,7 +98,7 @@ class ActivityController extends AbstractController
         $entity = $this->activityRepository->find($activity);
         if (
             null === $entity
-            || Activity::STATUS_APPROVED !== $entity->getStatus()
+            || null === $entity->getLiveRevision()
         ) {
             throw $this->createNotFoundException();
         }

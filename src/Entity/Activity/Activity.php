@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Entity\Activity;
 
 use App\Entity\Activity\Enums\ActivityCategories;
-use App\Entity\Application\LocalisedText as LocalisedTextModel;
+use App\Entity\Application\LocalisedText;
+use App\Entity\Application\RevisableInterface;
+use App\Entity\Application\RevisionInterface;
 use App\Entity\Application\Traits\IdentifiableTrait;
 use App\Entity\Career\Company as CompanyModel;
 use App\Entity\Decision\Member as MemberModel;
@@ -15,19 +17,25 @@ use DateTime;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
-use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
-use Doctrine\ORM\Mapping\OneToOne;
 use Doctrine\ORM\Mapping\OrderBy;
+use Override;
+use RuntimeException;
+
+use function assert;
 
 /**
- * Activity model.
+ * Activity aggregate root.
+ *
+ * The stable identity, the sign-up graph (sign-up lists and their sign-ups), the organising party, the creator and
+ * the labels live here and survive across edits. The revisable, reviewable content (localised texts, schedule,
+ * category, facility flags) lives on the chain of {@see ActivityRevision}s. The publicly live version is
+ * {@see self::getLiveRevision()} (the latest approved revision); the working head is {@see self::getCurrentRevision()}.
  *
  * @psalm-import-type ActivityLabelArrayType from ActivityLabel as ImportedActivityLabelArrayType
  * @psalm-import-type SignupListArrayType from SignupList as ImportedSignupListArrayType
@@ -35,8 +43,8 @@ use Doctrine\ORM\Mapping\OrderBy;
  *     id: int,
  *     name: ?string,
  *     nameEn: ?string,
- *     beginTime: datetime,
- *     endTime: datetime,
+ *     beginTime: DateTime,
+ *     endTime: DateTime,
  *     location: ?string,
  *     locationEn: ?string,
  *     costs: ?string,
@@ -51,7 +59,7 @@ use Doctrine\ORM\Mapping\OrderBy;
  *     labels: ImportedActivityLabelArrayType[],
  *     signupLists: ImportedSignupListArrayType[],
  * }
- * @psalm-import-type LocalisedTextGdprArrayType from LocalisedTextModel as ImportedLocalisedTextGdprArrayType
+ * @psalm-import-type LocalisedTextGdprArrayType from LocalisedText as ImportedLocalisedTextGdprArrayType
  * @psalm-import-type ActivityLabelGdprArrayType from ActivityLabel as ImportedActivityLabelGdprArrayType
  * @psalm-import-type SignupListGdprArrayType from SignupList as ImportedSignupListGdprArrayType
  * @psalm-type ActivityGdprArrayType = array{
@@ -72,90 +80,9 @@ use Doctrine\ORM\Mapping\OrderBy;
  * }
  */
 #[Entity(repositoryClass: ActivityRepository::class)]
-class Activity
+class Activity implements RevisableInterface
 {
     use IdentifiableTrait;
-
-    /**
-     * Status codes for the activity.
-     */
-    public const int STATUS_TO_APPROVE = 1; // Activity needs to be approved
-    public const int STATUS_APPROVED = 2;  // The activity is approved
-    public const int STATUS_DISAPPROVED = 3; // The board disapproved the activity
-    public const int STATUS_UPDATE = 4; // This activity is an update for some activity
-
-    /**
-     * Name for the activity.
-     */
-    #[OneToOne(
-        targetEntity: ActivityLocalisedText::class,
-        cascade: [
-            'persist',
-            'remove',
-        ],
-        orphanRemoval: true,
-    )]
-    #[JoinColumn(
-        name: 'name_id',
-        referencedColumnName: 'id',
-        nullable: false,
-    )]
-    private ActivityLocalisedText $name;
-
-    /**
-     * The date and time the activity starts.
-     */
-    #[Column(type: Types::DATETIME_MUTABLE)]
-    private DateTime $beginTime;
-
-    /**
-     * The date and time the activity ends.
-     */
-    #[Column(type: Types::DATETIME_MUTABLE)]
-    private DateTime $endTime;
-
-    /**
-     * The location the activity is held at.
-     */
-    #[OneToOne(
-        targetEntity: ActivityLocalisedText::class,
-        cascade: [
-            'persist',
-            'remove',
-        ],
-        orphanRemoval: true,
-    )]
-    #[JoinColumn(
-        name: 'location_id',
-        referencedColumnName: 'id',
-        nullable: false,
-    )]
-    private ActivityLocalisedText $location;
-
-    /**
-     * How much does it cost.
-     */
-    #[OneToOne(
-        targetEntity: ActivityLocalisedText::class,
-        cascade: [
-            'persist',
-            'remove',
-        ],
-        orphanRemoval: true,
-    )]
-    #[JoinColumn(
-        name: 'costs_id',
-        referencedColumnName: 'id',
-        nullable: false,
-    )]
-    private ActivityLocalisedText $costs;
-
-    /**
-     * Who (dis)approved this activity?
-     */
-    #[ManyToOne(targetEntity: MemberModel::class)]
-    #[JoinColumn(referencedColumnName: 'lidnr')]
-    private ?MemberModel $approver = null;
 
     /**
      * Who created this activity.
@@ -168,39 +95,31 @@ class Activity
     private MemberModel $creator;
 
     /**
-     * What is the approval status      .
-     */
-    #[Column(type: Types::INTEGER)]
-    private int $status;
-
-    /**
-     * The update proposal associated with this activity.
+     * The full chain of revisions, newest first.
      *
-     * @var Collection<array-key, ActivityUpdateProposal>
+     * @var Collection<array-key, ActivityRevision>
      */
     #[OneToMany(
-        targetEntity: ActivityUpdateProposal::class,
-        mappedBy: 'old',
+        targetEntity: ActivityRevision::class,
+        mappedBy: 'activity',
+        cascade: ['persist'],
     )]
-    private Collection $updateProposal;
+    #[OrderBy(['revisionNumber' => 'DESC'])]
+    private Collection $revisions;
 
     /**
-     * Activity description.
+     * The working head of the chain (the most recent revision, regardless of state).
      */
-    #[OneToOne(
-        targetEntity: ActivityLocalisedText::class,
-        cascade: [
-            'persist',
-            'remove',
-        ],
-        orphanRemoval: true,
-    )]
-    #[JoinColumn(
-        name: 'description_id',
-        referencedColumnName: 'id',
-        nullable: false,
-    )]
-    private ActivityLocalisedText $description;
+    #[ManyToOne(targetEntity: ActivityRevision::class)]
+    #[JoinColumn(nullable: true)]
+    private ?ActivityRevision $currentRevision = null;
+
+    /**
+     * The publicly live revision (the latest approved one), or null when nothing has been approved yet.
+     */
+    #[ManyToOne(targetEntity: ActivityRevision::class)]
+    #[JoinColumn(nullable: true)]
+    private ?ActivityRevision $liveRevision = null;
 
     /**
      * All additional Labels belonging to this activity.
@@ -218,13 +137,14 @@ class Activity
     /**
      * All additional SignupLists belonging to this activity.
      *
+     * Deliberately no `cascade: ['remove']` / `orphanRemoval`: sign-up lists (and the sign-ups hanging off them) must
+     * survive across revisions and must never be cascade-deleted when content is revised.
+     *
      * @var Collection<array-key, SignupList>
      */
     #[OneToMany(
         targetEntity: SignupList::class,
         mappedBy: 'activity',
-        cascade: ['remove'],
-        orphanRemoval: true,
     )]
     #[OrderBy([
         'promoted' => 'DESC',
@@ -252,60 +172,77 @@ class Activity
     )]
     private ?CompanyModel $company = null;
 
-    /**
-     * The (single, mandatory) category of this activity.
-     */
-    #[Column(
-        type: Types::STRING,
-        enumType: ActivityCategories::class,
-    )]
-    private ActivityCategories $category;
-
-    /**
-     * Whether this activity needs a GEFLITST photographer.
-     */
-    #[Column(type: Types::BOOLEAN)]
-    private bool $requireGEFLITST = false;
-
-    /**
-     * Whether this activity needs a Zettle.
-     */
-    #[Column(type: Types::BOOLEAN)]
-    private bool $requireZettle = false;
-
     public function __construct()
     {
-        $this->updateProposal = new ArrayCollection();
+        $this->revisions = new ArrayCollection();
         $this->labels = new ArrayCollection();
         $this->signupLists = new ArrayCollection();
     }
 
-    public function getApprover(): ?MemberModel
+    /**
+     * @return Collection<array-key, ActivityRevision>
+     */
+    #[Override]
+    public function getRevisions(): Collection
     {
-        return $this->approver;
+        return $this->revisions;
     }
 
-    public function setApprover(?MemberModel $approver): void
+    public function addRevision(ActivityRevision $revision): void
     {
-        $this->approver = $approver;
+        if ($this->revisions->contains($revision)) {
+            return;
+        }
+
+        $this->revisions->add($revision);
+        $revision->setActivity($this);
     }
 
-    public function getStatus(): int
+    #[Override]
+    public function getCurrentRevision(): ?ActivityRevision
     {
-        return $this->status;
+        return $this->currentRevision;
     }
 
-    public function setStatus(int $status): void
+    public function setCurrentRevision(?ActivityRevision $currentRevision): void
     {
-        $this->status = $status;
+        $this->currentRevision = $currentRevision;
+    }
+
+    #[Override]
+    public function getLiveRevision(): ?ActivityRevision
+    {
+        return $this->liveRevision;
+    }
+
+    public function setLiveRevision(?ActivityRevision $liveRevision): void
+    {
+        $this->liveRevision = $liveRevision;
+    }
+
+    #[Override]
+    public function markRevisionLive(RevisionInterface $revision): void
+    {
+        if (!$revision instanceof ActivityRevision) {
+            throw new RuntimeException('An activity can only be made live by one of its own revisions.');
+        }
+
+        $this->setLiveRevision($revision);
     }
 
     /**
-     * @return Collection<array-key, ActivityUpdateProposal>
+     * The revision whose content is shown for this activity: the live (approved) one when present, otherwise the
+     * working head. Only ever null for an activity with no revisions at all, which never occurs once persisted.
      */
-    public function getUpdateProposal(): Collection
+    public function getDisplayRevision(): ActivityRevision
     {
-        return $this->updateProposal;
+        $revision = $this->liveRevision ?? $this->currentRevision;
+
+        if (null === $revision) {
+            throw new RuntimeException('Activity has no revision to display.');
+        }
+
+        return $revision;
     }
 
     /**
@@ -453,64 +390,22 @@ class Activity
         return $count;
     }
 
-    public function getName(): ActivityLocalisedText
+    /**
+     * @return Collection<array-key, ActivityLabel>
+     */
+    public function getLabels(): Collection
     {
-        return $this->name;
+        return $this->labels;
     }
 
-    public function setName(ActivityLocalisedText $name): void
+    public function getCreator(): MemberModel
     {
-        $this->name = $name;
+        return $this->creator;
     }
 
-    public function getBeginTime(): DateTime
+    public function setCreator(MemberModel $creator): void
     {
-        return $this->beginTime;
-    }
-
-    public function setBeginTime(DateTime $beginTime): void
-    {
-        $this->beginTime = $beginTime;
-    }
-
-    public function getEndTime(): DateTime
-    {
-        return $this->endTime;
-    }
-
-    public function setEndTime(DateTime $endTime): void
-    {
-        $this->endTime = $endTime;
-    }
-
-    public function getLocation(): ActivityLocalisedText
-    {
-        return $this->location;
-    }
-
-    public function setLocation(ActivityLocalisedText $location): void
-    {
-        $this->location = $location;
-    }
-
-    public function getCosts(): ActivityLocalisedText
-    {
-        return $this->costs;
-    }
-
-    public function setCosts(ActivityLocalisedText $costs): void
-    {
-        $this->costs = $costs;
-    }
-
-    public function getDescription(): ActivityLocalisedText
-    {
-        return $this->description;
-    }
-
-    public function setDescription(ActivityLocalisedText $description): void
-    {
-        $this->description = $description;
+        $this->creator = $creator;
     }
 
     public function getOrgan(): ?OrganModel
@@ -533,52 +428,97 @@ class Activity
         $this->company = $company;
     }
 
-    public function getCategory(): ActivityCategories
+    /**
+     * Display proxy. Read paths (templates, views, GDPR export) keep reading content straight off the activity; it
+     * delegates to the display revision (the live one when present, otherwise the working head).
+     */
+    public function getName(): ActivityLocalisedText
     {
-        return $this->category;
+        return $this->getDisplayRevision()->getName();
     }
 
-    public function setCategory(ActivityCategories $category): void
+    public function getLocation(): ActivityLocalisedText
     {
-        $this->category = $category;
+        return $this->getDisplayRevision()->getLocation();
+    }
+
+    public function getCosts(): ActivityLocalisedText
+    {
+        return $this->getDisplayRevision()->getCosts();
+    }
+
+    public function getDescription(): ActivityLocalisedText
+    {
+        return $this->getDisplayRevision()->getDescription();
+    }
+
+    public function getBeginTime(): DateTime
+    {
+        // A displayed revision is always persisted, and the form's NotBlank constraint guarantees a schedule, so this
+        // is never null in practice; the revision getter is only nullable to let a brand-new draft render empty fields.
+        $beginTime = $this->getDisplayRevision()->getBeginTime();
+        assert(null !== $beginTime);
+
+        return $beginTime;
+    }
+
+    public function getEndTime(): DateTime
+    {
+        $endTime = $this->getDisplayRevision()->getEndTime();
+        assert(null !== $endTime);
+
+        return $endTime;
+    }
+
+    public function getCategory(): ActivityCategories
+    {
+        return $this->getDisplayRevision()->getCategory();
     }
 
     public function getRequireGEFLITST(): bool
     {
-        return $this->requireGEFLITST;
-    }
-
-    public function setRequireGEFLITST(bool $requireGEFLITST): void
-    {
-        $this->requireGEFLITST = $requireGEFLITST;
+        return $this->getDisplayRevision()->getRequireGEFLITST();
     }
 
     public function getRequireZettle(): bool
     {
-        return $this->requireZettle;
-    }
-
-    public function setRequireZettle(bool $requireZettle): void
-    {
-        $this->requireZettle = $requireZettle;
+        return $this->getDisplayRevision()->getRequireZettle();
     }
 
     /**
-     * @return Collection<array-key, ActivityLabel>
+     * Returns the string identifier of the Resource.
      */
-    public function getLabels(): Collection
+    #[Override]
+    public function getResourceId(): string
     {
-        return $this->labels;
+        return 'activity';
     }
 
-    public function getCreator(): MemberModel
+    /**
+     * Get the organ of this resource.
+     */
+    #[Override]
+    public function getResourceOrgan(): ?OrganModel
     {
-        return $this->creator;
+        return $this->getOrgan();
     }
 
-    public function setCreator(MemberModel $creator): void
+    /**
+     * Activities are owned by their creator/organ, not by a company, so company-scoped editing never applies.
+     */
+    #[Override]
+    public function getResourceCompany(): ?CompanyModel
     {
-        $this->creator = $creator;
+        return null;
+    }
+
+    /**
+     * Get the creator of this resource.
+     */
+    #[Override]
+    public function getResourceCreator(): MemberModel
+    {
+        return $this->getCreator();
     }
 
     /**
@@ -653,29 +593,5 @@ class Activity
             'labels' => $labelsArrays,
             'signupLists' => $signupListsArrays,
         ];
-    }
-
-    /**
-     * Returns the string identifier of the Resource.
-     */
-    public function getResourceId(): string
-    {
-        return 'activity';
-    }
-
-    /**
-     * Get the organ of this resource.
-     */
-    public function getResourceOrgan(): ?OrganModel
-    {
-        return $this->getOrgan();
-    }
-
-    /**
-     * Get the creator of this resource.
-     */
-    public function getResourceCreator(): MemberModel
-    {
-        return $this->getCreator();
     }
 }
