@@ -1,83 +1,75 @@
 {% set now = date() %}
-<div class="list-group-item list-group-item-action activity-list-item" data-controller="activity-item"
+<div class="activity-list-item mb-4" data-controller="activity-item"
      data-activity-item-url-value="{{ path('activity/view', {'activity': activity.getId}) }}"
      data-action="click->activity-item#open">
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-start gap-1">
-        <h3 class="h5 mb-1">
-            <a href="{{ path('activity/view', {'activity': activity.getId}) }}">{{ activity.getName|localise_text }}</a>
-        </h3>
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-start gap-1 mb-2">
+        <div>
+            <h3 class="h5 mb-2">
+                <a href="{{ path('activity/view', {'activity': activity.getId}) }}">{{ activity.getName|localise_text }}</a>
+            </h3>
+            <div class="d-flex flex-wrap gap-1">
+                {% if activity.getCategory.value not in ['other', 'uncategorised'] %}
+                    <span class="badge badge-info">{{ activity.getCategory|trans }}</span>
+                {% endif %}
+                {% for label in activity.getLabels %}
+                    <span class="badge badge-secondary">{{ label.getName|localise_text }}</span>
+                {% endfor %}
+            </div>
+        </div>
         <span class="text-muted small text-md-end">
             {{ activity_date_range(activity.getBeginTime, activity.getEndTime) }}
-        </span>
-    </div>
-
-    {% set location = activity.getLocation|localise_text %}
-    {% set costs = activity.getCosts|localise_text %}
-    <div class="d-flex flex-column flex-md-row justify-content-between text-muted small mb-1 gap-1">
-        <span>
-            {% if location is not empty %}
-                <span class="me-3"><i class="fas fa-location-dot"></i> {{ location }}</span>
-            {% endif %}
-            {% if costs is not empty %}
-                <span><i class="fas fa-tag"></i> {{ costs }}</span>
+            {% if now.timestamp >= activity.getBeginTime.timestamp and now.timestamp <= activity.getEndTime.timestamp %}
+                <br><span class="text-success">{{ 'ongoing for %duration%'|trans({'%duration%': human_time_diff(now, activity.getEndTime)}) }}</span>
+            {% elseif now.timestamp < activity.getBeginTime.timestamp %}
+                <br><span>{{ 'in %duration%'|trans({'%duration%': human_time_diff(now, activity.getBeginTime)}) }}</span>
             {% endif %}
         </span>
-        {% if now.timestamp >= activity.getBeginTime.timestamp and now.timestamp <= activity.getEndTime.timestamp %}
-            <span class="text-success text-md-end">{{ 'ongoing for %duration%'|trans({'%duration%': human_time_diff(now, activity.getEndTime)}) }}</span>
-        {% elseif now.timestamp < activity.getBeginTime.timestamp %}
-            <span class="text-md-end">{{ 'in %duration%'|trans({'%duration%': human_time_diff(now, activity.getBeginTime)}) }}</span>
-        {% endif %}
     </div>
 
-    {% set signupList = activity.getRelevantSignupList %}
-    {% if signupList is not null %}
-        {% if signupList.isOpen %}
-            {% set secondsLeft = signupList.getCloseDate.timestamp - now.timestamp %}
-            {% set urgency = secondsLeft < 86400 ? 'text-danger' : (secondsLeft < 604800 ? 'text-warning' : 'text-muted') %}
-            <p class="small mb-1 {{ urgency }}">
-                <i class="fas fa-clock"></i>
-                {{ 'Sign-up closes:'|trans }}
-                {{ signupList.getCloseDate|format_datetime(pattern: 'EEE d MMM. HH:mm', locale: app.request.locale) }}
-                ({{ 'in %duration%'|trans({'%duration%': human_time_diff(now, signupList.getCloseDate)}) }})
-                {% if activity.countPendingSignupLists > 1 %}
-                    <span class="text-muted">({{ 'more deadlines'|trans }})</span>
-                {% endif %}
-            </p>
-        {% else %}
-            <p class="small mb-1 text-muted">
-                <i class="fas fa-clock"></i>
-                {{ 'Sign-up opens:'|trans }}
-                {{ signupList.getOpenDate|format_datetime(pattern: 'EEE d MMM. HH:mm', locale: app.request.locale) }}
-                ({{ 'in %duration%'|trans({'%duration%': human_time_diff(now, signupList.getOpenDate)}) }})
-                {% if activity.countPendingSignupLists > 1 %}
-                    <span>({{ 'more deadlines'|trans }})</span>
-                {% endif %}
-            </p>
-        {% endif %}
-    {% endif %}
-
-    <div class="d-flex flex-wrap gap-1 mb-1">
-        {% if activity.getCategory.value not in ['other', 'uncategorised'] %}
-            <span class="badge badge-info">{{ activity.getCategory|trans }}</span>
-        {% endif %}
-        {% for label in activity.getLabels %}
-            <span class="badge badge-secondary">{{ label.getName|localise_text }}</span>
-        {% endfor %}
-    </div>
-
-    {% set description = activity.getDescription|localise_text %}
-    {% if description is not empty %}
-        <div class="activity-description" data-controller="description-toggle"
-             data-description-toggle-more-value="{{ 'Show more'|trans }}"
-             data-description-toggle-less-value="{{ 'Show less'|trans }}">
-            <div class="activity-description-content" data-description-toggle-target="content">
-                {{ description|markdown(['p', 'del', 'em', 'strong', 'a']) }}
-            </div>
-            <button type="button" class="btn btn-link btn-sm p-0 d-none"
-                    data-description-toggle-target="button"
-                    data-action="description-toggle#toggle">
-                {{ 'Show more'|trans }}
-            </button>
+    <div class="activity-description mb-2" data-controller="description-toggle"
+         data-description-toggle-more-value="{{ 'Show more'|trans }}"
+         data-description-toggle-less-value="{{ 'Show less'|trans }}">
+        <div class="activity-description-content" data-description-toggle-target="content">
+            {{ activity.getDescription|localise_text|markdown(['p', 'del', 'em', 'strong', 'a']) }}
         </div>
-    {% endif %}
+        <button type="button" class="btn btn-link btn-sm p-0 d-none"
+                data-description-toggle-target="button"
+                data-action="description-toggle#toggle">
+            {{ 'Show more'|trans }}
+        </button>
+    </div>
+
+    <hr class="my-1">
+
+    <div class="text-muted small">
+        <span class="me-3"><i class="fas fa-location-dot"></i> {{ activity.getLocation|localise_text }}</span>
+        <span class="me-3"><i class="fas fa-tag"></i> {{ activity.getCosts|localise_text }}</span>
+        {% set signupList = activity.getRelevantSignupList %}
+        {% if null !== signupList %}
+            {% if signupList.isOpen %}
+                {% set secondsLeft = signupList.getCloseDate.timestamp - now.timestamp %}
+                {% set urgency = secondsLeft < 86400 ? 'text-danger' : (secondsLeft < 604800 ? 'text-warning' : '') %}
+                <span>
+                    <i class="fas fa-ticket"></i>
+                    {{ 'Sign-up closes:'|trans }}
+                    <span class="{{ urgency }}">
+                        {{ signupList.getCloseDate|format_datetime(pattern: 'EEE d MMM. HH:mm', locale: app.request.locale) }} ({{ 'in %duration%'|trans({'%duration%': human_time_diff(now, signupList.getCloseDate)}) }})
+                    </span>
+                    {% if activity.countPendingSignupLists > 1 %}
+                        <span class="text-muted">({{ 'more deadlines'|trans }})</span>
+                    {% endif %}
+                </span>
+            {% else %}
+                <span>
+                    <i class="fas fa-ticket"></i>
+                    {{ 'Sign-up opens:'|trans }}
+                    {{ signupList.getOpenDate|format_datetime(pattern: 'EEE d MMM. HH:mm', locale: app.request.locale) }}
+                    ({{ 'in %duration%'|trans({'%duration%': human_time_diff(now, signupList.getOpenDate)}) }})
+                    {% if activity.countPendingSignupLists > 1 %}
+                        <span>({{ 'more deadlines'|trans }})</span>
+                    {% endif %}
+                </span>
+            {% endif %}
+        {% endif %}
+    </div>
 </div>

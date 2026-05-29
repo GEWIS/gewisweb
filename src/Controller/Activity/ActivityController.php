@@ -11,6 +11,7 @@ use App\Entity\User\Enums\UserRoles;
 use App\Entity\User\User;
 use App\Repository\Activity\ActivityRepository;
 use App\View\Activity\SignupListView;
+use DateTime;
 use Locale;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,6 +20,8 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\UX\CalendarLink\CalendarEvent;
+
+use function range;
 
 #[Route(
     path: '/activities',
@@ -32,24 +35,38 @@ class ActivityController extends AbstractController
     ) {
     }
 
+    /**
+     * The association years (first calendar year) that have activities, newest first, for the archive year switcher.
+     *
+     * @return int[]
+     */
+    private function archiveYears(): array
+    {
+        $oldest = $this->activityRepository->getOldestActivity();
+        if (null === $oldest) {
+            return [];
+        }
+
+        $oldestYear = AssociationYear::fromDate($oldest->getBeginTime())->getYear();
+        $currentYear = AssociationYear::fromDate(new DateTime())->getYear();
+
+        if ($currentYear < $oldestYear) {
+            return [];
+        }
+
+        return range(
+            $currentYear,
+            $oldestYear,
+        );
+    }
+
     #[Route(
         path: '',
         name: 'index',
     )]
-    #[Route(
-        path: '/{category}',
-        name: 'category',
-        requirements: ['category' => '[a-z][0-9a-z\_\-]{2,31}'],
-        defaults: ['category' => null],
-        // Lower priority so static routes such as `/my` are not captured by this catch-all single-segment route.
-        priority: -10,
-    )]
-    public function index(?string $category = null): Response
+    public function index(): Response
     {
-        return $this->render(
-            'activity/index.html.twig',
-            ['initialCategory' => $category],
-        );
+        return $this->render('activity/index.html.twig');
     }
 
     #[Route(
@@ -70,20 +87,11 @@ class ActivityController extends AbstractController
     )]
     public function archive(?int $year = null): Response
     {
-        $yearStart = null;
-        $yearEnd = null;
-
-        if (null !== $year) {
-            $associationYear = AssociationYear::fromYear($year);
-            $yearStart = $associationYear->getStartDate()->format('Y-m-d');
-            $yearEnd = $associationYear->getEndDate()->format('Y-m-d');
-        }
-
         return $this->render(
             'activity/archive.html.twig',
             [
-                'yearStart' => $yearStart,
-                'yearEnd' => $yearEnd,
+                'year' => $year,
+                'years' => $this->archiveYears(),
             ],
         );
     }

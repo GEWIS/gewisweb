@@ -10,25 +10,25 @@
         <div class="collapse" id="activity-filters">
             <div class="panel-body">
                 <div class="row g-3 align-items-end">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <label class="form-label" for="activity-overview-search">{{ 'Search'|trans }}</label>
                     <input type="search" class="form-control" id="activity-overview-search"
                            placeholder="{{ 'Search by activity name'|trans }}"
                            data-model="debounce(300)|search"
                            value="{{ this.search }}">
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <label class="form-label" for="activity-overview-category">{{ 'Category'|trans }}</label>
-                    <select class="form-select" id="activity-overview-category" data-model="categoryFilter">
+                    <select class="form-select" id="activity-overview-category" data-model="category">
                         <option value="">{{ 'Any'|trans }}</option>
                         {% for category in this.categories %}
-                            <option value="{{ category.value }}" {% if this.categoryFilter == category.value %}selected{% endif %}>
+                            <option value="{{ category.value }}" {% if this.category == category.value %}selected{% endif %}>
                                 {{ category|trans }}
                             </option>
                         {% endfor %}
                     </select>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <label class="form-label" for="activity-overview-organ">{{ 'Organising party'|trans }}</label>
                     <select class="form-select" id="activity-overview-organ" data-model="organFilter">
                         <option value="">{{ 'Any'|trans }}</option>
@@ -78,8 +78,8 @@
 
     {% if this.past %}
         {% for year, activities in this.activitiesByAssociationYear %}
-            <h2 class="h4 mt-4 mb-2">{{ year }}</h2>
-            <div class="list-group mb-2">
+            <h2 class="h4 {{ loop.first ? 'mt-2' : 'mt-5' }} mb-3 pb-2 border-bottom">{{ year }}</h2>
+            <div class="mb-2">
                 {% for activity in activities %}
                     {% include 'partials/activity/list-item.html.twig' with {'activity': activity} only %}
                 {% endfor %}
@@ -88,7 +88,7 @@
             <p class="text-muted text-center py-4">{{ 'No activities match the current filters.'|trans }}</p>
         {% endfor %}
     {% else %}
-        <div class="list-group mb-2">
+        <div class="mb-2">
             {% for activity in this.activities %}
                 {% include 'partials/activity/list-item.html.twig' with {'activity': activity} only %}
             {% else %}

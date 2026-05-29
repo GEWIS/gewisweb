@@ -21,6 +21,7 @@ use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
+use Symfony\UX\LiveComponent\Metadata\UrlMapping;
 
 use function array_filter;
 use function array_map;
@@ -49,28 +50,56 @@ final class ActivityOverview
     #[LiveProp]
     public bool $past = false;
 
-    #[LiveProp(writable: true)]
+    // All the filters mirror themselves into the query string via the History API, so the state survives a reload and
+    // the address bar is itself a shareable link (the copy button just yields the same URL in one click).
+    #[LiveProp(
+        writable: true,
+        url: true,
+    )]
+    public ?string $category = null;
+
+    // The association year is part of the page path (/archive/{year}), set at mount time; not a live filter.
+    #[LiveProp]
+    public ?int $year = null;
+
+    #[LiveProp(
+        writable: true,
+        url: true,
+    )]
     public string $search = '';
 
-    #[LiveProp(writable: true)]
-    public ?string $categoryFilter = null;
-
     /** @var int[] */
-    #[LiveProp(writable: true)]
+    #[LiveProp(
+        writable: true,
+        url: new UrlMapping(as: 'labels'),
+    )]
     public array $labelFilters = [];
 
-    #[LiveProp(writable: true)]
+    #[LiveProp(
+        writable: true,
+        url: new UrlMapping(as: 'organ'),
+    )]
     public ?int $organFilter = null;
 
-    #[LiveProp(writable: true)]
+    #[LiveProp(
+        writable: true,
+        url: new UrlMapping(as: 'openSignup'),
+    )]
     public bool $openSignupOnly = false;
 
-    #[LiveProp(writable: true)]
+    #[LiveProp(
+        writable: true,
+        url: new UrlMapping(as: 'from'),
+    )]
     public ?string $fromDate = null;
 
-    #[LiveProp(writable: true)]
+    #[LiveProp(
+        writable: true,
+        url: new UrlMapping(as: 'until'),
+    )]
     public ?string $untilDate = null;
 
+    // Pagination state, deliberately not URL-synced.
     #[LiveProp(writable: true)]
     public int $limit = self::PAGE_SIZE;
 
@@ -139,14 +168,6 @@ final class ActivityOverview
     }
 
     /**
-     * @return ActivityCategories[]
-     */
-    public function getCategories(): array
-    {
-        return ActivityCategories::cases();
-    }
-
-    /**
      * @return ActivityLabel[]
      */
     public function getLabels(): array
@@ -163,6 +184,14 @@ final class ActivityOverview
     public function getOrgans(): array
     {
         return $this->activityRepository->findOrganisingOrgans();
+    }
+
+    /**
+     * @return ActivityCategories[]
+     */
+    public function getCategories(): array
+    {
+        return ActivityCategories::selectableCases();
     }
 
     /**
@@ -183,28 +212,64 @@ final class ActivityOverview
             subscribedBy: $this->subscribed ? $this->currentMember() : null,
             search: $this->search,
             locale: $this->requestStack->getCurrentRequest()?->getLocale() ?? 'en',
-            category: null !== $this->categoryFilter
-                ? ActivityCategories::tryFrom($this->categoryFilter)
+            category: null !== $this->category
+                ? ActivityCategories::tryFrom($this->category)
                 : null,
-            labelIds: array_values(
-                array_filter(
-                    array_map(
-                        'intval',
-                        $this->labelFilters,
-                    ),
-                    static fn (int $id): bool => $id > 0,
-                ),
-            ),
+            labelIds: $this->selectedLabelIds(),
             organId: $this->organFilter,
             openSignupOnly: $this->openSignupOnly,
-            from: $this->parseDate($this->fromDate),
-            until: $this->parseDate(
-                $this->untilDate,
-                true,
-            ),
+            from: $this->effectiveFrom(),
+            until: $this->effectiveUntil(),
             limit: $this->limit,
             offset: 0,
         );
+    }
+
+    /**
+     * @return int[]
+     */
+    private function selectedLabelIds(): array
+    {
+        return array_values(
+            array_filter(
+                array_map(
+                    'intval',
+                    $this->labelFilters,
+                ),
+                static fn (int $id): bool => $id > 0,
+            ),
+        );
+    }
+
+    /**
+     * The effective start of the time window: an explicit "from" filter, otherwise the start of the selected
+     * association year (archive), otherwise unbounded.
+     */
+    private function effectiveFrom(): ?DateTime
+    {
+        $explicit = $this->parseDate($this->fromDate);
+        if (null !== $explicit) {
+            return $explicit;
+        }
+
+        return null !== $this->year
+            ? AssociationYear::fromYear($this->year)->getStartDate()
+            : null;
+    }
+
+    private function effectiveUntil(): ?DateTime
+    {
+        $explicit = $this->parseDate(
+            $this->untilDate,
+            true,
+        );
+        if (null !== $explicit) {
+            return $explicit;
+        }
+
+        return null !== $this->year
+            ? AssociationYear::fromYear($this->year)->getEndDate()
+            : null;
     }
 
     private function currentMember(): ?Member

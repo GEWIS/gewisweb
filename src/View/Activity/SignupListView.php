@@ -15,7 +15,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Read-model of a {@see SignupList} for the activity view page. Pre-computes the localised name, the sign-up window,
- * the subscriber count and — when the viewer may see details — the subscriber rows, so the Twig stays declarative and
+ * the subscriber count and when the viewer may see details also the subscriber rows, so the Twig stays declarative and
  * free of permission/sensitivity/`instanceof` logic.
  */
 final readonly class SignupListView

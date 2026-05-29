@@ -11,7 +11,7 @@ final readonly class SignupRow
 {
     /**
      * @param list<array{hidden: bool, value: string}> $cells one cell per sign-up field, already formatted; `hidden`
-     *                                                         marks a sensitive field that is not the viewer's own
+     * marks a sensitive field that is not the viewer's own
      */
     public function __construct(
         public int $position,

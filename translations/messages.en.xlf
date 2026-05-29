@@ -133,6 +133,10 @@
         <source>All sessions except this one will be signed out immediately.</source>
         <target state="translated">All sessions except this one will be signed out immediately.</target>
       </trans-unit>
+      <trans-unit id="CdVO0Gm" resname="All years">
+        <source>All years</source>
+        <target state="translated">All years</target>
+      </trans-unit>
       <trans-unit id="3eX.3WJ" resname="Analytics are currently">
         <source>Analytics are currently</source>
         <target state="translated">Analytics are currently</target>
@@ -243,7 +247,7 @@
       </trans-unit>
       <trans-unit id="tceoGZr" resname="Category">
         <source>Category</source>
-        <target>Category</target>
+        <target state="translated">Category</target>
       </trans-unit>
       <trans-unit id="ROsdATY" resname="Chair">
         <source>Chair</source>
@@ -941,6 +945,10 @@
         <source>New password</source>
         <target state="translated">New password</target>
       </trans-unit>
+      <trans-unit id="VXC5Ldf" resname="Newer">
+        <source>Newer</source>
+        <target state="translated">Newer</target>
+      </trans-unit>
       <trans-unit id="XUSTYpl" resname="News">
         <source>News</source>
         <target state="translated">News</target>
@@ -984,6 +992,10 @@
       <trans-unit id="fm8k4L1" resname="Oh no! Something went wrong :(">
         <source>Oh no! Something went wrong :(</source>
         <target state="translated">Oh no! Something went wrong :(</target>
+      </trans-unit>
+      <trans-unit id="AxXKYah" resname="Older">
+        <source>Older</source>
+        <target state="translated">Older</target>
       </trans-unit>
       <trans-unit id="svuF9zU" resname="On Thursdays, there is a %link_start%social drink%link_end% from 16.30 to 19.00.">
         <source>On Thursdays, there is a %link_start%social drink%link_end% from 16.30 to 19.00.</source>

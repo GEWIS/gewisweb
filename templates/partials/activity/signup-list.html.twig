@@ -15,7 +15,7 @@
                 {% if list.isOpen %}
                     <span class="badge badge-success">{{ 'Open'|trans }}</span>
                 {% elseif list.isClosed %}
-                    <span class="badge badge-secondary">{{ 'Closed'|trans }}</span>
+                    <span class="badge badge-danger">{{ 'Closed'|trans }}</span>
                 {% else %}
                     <span class="badge badge-info">{{ 'Not yet open'|trans }}</span>
                 {% endif %}

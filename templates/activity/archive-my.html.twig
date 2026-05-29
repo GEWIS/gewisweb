@@ -4,5 +4,8 @@
 
 {% block contents %}
     <h1>{{ 'My past activities'|trans }}</h1>
-    {{ component('Activity:ActivityOverview', { subscribed: true, past: true }) }}
+    {{ component('Activity:ActivityOverview', {
+        subscribed: true,
+        past: true,
+    }) }}
 {% endblock %}
