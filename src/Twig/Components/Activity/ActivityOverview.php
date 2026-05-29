@@ -42,7 +42,7 @@ final class ActivityOverview
 {
     use DefaultActionTrait;
 
-    public const int PAGE_SIZE = 20;
+    public const int PAGE_SIZE = 15;
 
     #[LiveProp]
     public bool $subscribed = false;
@@ -99,8 +99,9 @@ final class ActivityOverview
     )]
     public ?string $untilDate = null;
 
-    // Pagination state, deliberately not URL-synced.
-    #[LiveProp(writable: true)]
+    // Pagination state: not URL-synced and not client-writable. Only the `loadMore` action grows it server-side, so a
+    // crafted request cannot ask for an arbitrarily large page.
+    #[LiveProp]
     public int $limit = self::PAGE_SIZE;
 
     /** @var Paginator<Activity>|null */
@@ -139,7 +140,7 @@ final class ActivityOverview
     }
 
     /**
-     * The activities grouped by association-year string (e.g. '2025-2026'), preserving the DESC order — for archives.
+     * The activities grouped by association-year string (e.g. '2025-2026'), preserving the `DESC` order for archives.
      *
      * @return array<string, Activity[]>
      */

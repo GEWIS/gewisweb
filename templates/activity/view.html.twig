@@ -25,7 +25,7 @@
             },
             'description': activity.getDescription|localise_text|markdown|striptags,
             'url': url('activity/view', {'activity': activity.getId}),
-        }|json_encode|raw }}
+        }|json_encode(constant('JSON_HEX_TAG') b-or constant('JSON_HEX_AMP') b-or constant('JSON_HEX_APOS') b-or constant('JSON_HEX_QUOT'))|raw }}
     </script>
 {% endblock %}
 

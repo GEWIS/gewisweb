@@ -17,8 +17,8 @@ use Twig\TwigFilter;
 use function strip_tags;
 
 /**
- * Renders Markdown to safe HTML, mirroring the configuration GEWIS used previously: raw HTML is escaped, unsafe links
- * are dropped, external links open safely in a new window, and images are not emitted (see {@link NoImageExtension}).
+ * Renders Markdown to safe HTML: raw HTML is escaped, unsafe links are dropped, external links open safely in a new
+ * window, and images are not allowed (see {@link NoImageExtension}).
  */
 final class MarkdownExtension extends AbstractExtension
 {
