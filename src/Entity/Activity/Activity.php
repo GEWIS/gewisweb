@@ -32,10 +32,11 @@ use function assert;
 /**
  * Activity aggregate root.
  *
- * The stable identity, the sign-up graph (sign-up lists and their sign-ups), the organising party, the creator and
- * the labels live here and survive across edits. The revisable, reviewable content (localised texts, schedule,
- * category, facility flags) lives on the chain of {@see ActivityRevision}s. The publicly live version is
- * {@see self::getLiveRevision()} (the latest approved revision); the working head is {@see self::getCurrentRevision()}.
+ * The stable identity, the organising party, the creator and the labels live here and survive across edits. The
+ * revisable, reviewable content (localised texts, schedule, category, facility flags) and the sign-up lists live on
+ * the chain of {@see ActivityRevision}s; on approval, existing sign-ups are migrated onto the newly-live revision's
+ * lists so they survive across edits. The publicly live version is {@see self::getLiveRevision()} (the latest approved
+ * revision); the working head is {@see self::getCurrentRevision()}.
  *
  * @psalm-import-type ActivityLabelArrayType from ActivityLabel as ImportedActivityLabelArrayType
  * @psalm-import-type SignupListArrayType from SignupList as ImportedSignupListArrayType
@@ -135,24 +136,6 @@ class Activity implements RevisableInterface
     private Collection $labels;
 
     /**
-     * All additional SignupLists belonging to this activity.
-     *
-     * Deliberately no `cascade: ['remove']` / `orphanRemoval`: sign-up lists (and the sign-ups hanging off them) must
-     * survive across revisions and must never be cascade-deleted when content is revised.
-     *
-     * @var Collection<array-key, SignupList>
-     */
-    #[OneToMany(
-        targetEntity: SignupList::class,
-        mappedBy: 'activity',
-    )]
-    #[OrderBy([
-        'promoted' => 'DESC',
-        'id' => 'ASC',
-    ])]
-    private Collection $signupLists;
-
-    /**
      * Which organ organises this activity.
      */
     #[ManyToOne(targetEntity: OrganModel::class)]
@@ -176,7 +159,6 @@ class Activity implements RevisableInterface
     {
         $this->revisions = new ArrayCollection();
         $this->labels = new ArrayCollection();
-        $this->signupLists = new ArrayCollection();
     }
 
     /**
@@ -286,61 +268,21 @@ class Activity implements RevisableInterface
     }
 
     /**
-     * Adds SignupLists to this activity.
+     * The sign-up lists of the publicly live revision (empty when nothing has been approved yet).
      *
-     * @param SignupList[] $signupLists
-     */
-    public function addSignupLists(array $signupLists): void
-    {
-        foreach ($signupLists as $signupList) {
-            $this->addSignupList($signupList);
-        }
-    }
-
-    public function addSignupList(SignupList $signupList): void
-    {
-        if ($this->signupLists->contains($signupList)) {
-            return;
-        }
-
-        $this->signupLists->add($signupList);
-        $signupList->setActivity($this);
-    }
-
-    /**
-     * Removes SignupLists from this activity.
-     *
-     * @param SignupList[] $signupLists
-     */
-    public function removeSignupLists(array $signupLists): void
-    {
-        foreach ($signupLists as $signupList) {
-            $this->removeSignupList($signupList);
-        }
-    }
-
-    public function removeSignupList(SignupList $signupList): void
-    {
-        if (!$this->signupLists->contains($signupList)) {
-            return;
-        }
-
-        $this->signupLists->removeElement($signupList);
-    }
-
-    /**
-     * Returns a Collection of SignupLists associated with this activity.
+     * Used for the public view, overviews, and GDPR export; the working revision's lists are edited through the form.
      *
      * @return Collection<array-key, SignupList>
      */
-    public function getSignupLists(): Collection
+    public function getLiveSignupLists(): Collection
     {
-        return $this->signupLists;
+        return $this->liveRevision?->getSignupLists() ?? new ArrayCollection();
     }
 
     /**
-     * The next sign-up list whose deadline is relevant to surface on overviews (see GH-2082): among the lists that have
-     * not yet closed, the currently-open one closing soonest, otherwise the one opening soonest. Null when all closed.
+     * The next sign-up list whose deadline is relevant to surface on overviews (see GH-2082): among the live revision's
+     * lists that have not yet closed, the currently-open one closing soonest, otherwise the one opening soonest. Null
+     * when all closed or nothing is live.
      */
     public function getRelevantSignupList(): ?SignupList
     {
@@ -348,7 +290,7 @@ class Activity implements RevisableInterface
         $open = null;
         $upcoming = null;
 
-        foreach ($this->signupLists as $signupList) {
+        foreach ($this->getLiveSignupLists() as $signupList) {
             if ($signupList->getCloseDate() <= $now) {
                 continue;
             }
@@ -372,14 +314,15 @@ class Activity implements RevisableInterface
     }
 
     /**
-     * The number of sign-up lists that have not yet closed, i.e. that still have a relevant deadline.
+     * The number of the live revision's sign-up lists that have not yet closed, i.e. that still have a relevant
+     * deadline.
      */
     public function countPendingSignupLists(): int
     {
         $now = new DateTime('now');
         $count = 0;
 
-        foreach ($this->signupLists as $signupList) {
+        foreach ($this->getLiveSignupLists() as $signupList) {
             if ($signupList->getCloseDate() <= $now) {
                 continue;
             }
@@ -529,7 +472,7 @@ class Activity implements RevisableInterface
     public function toArray(): array
     {
         $signupListsArrays = [];
-        foreach ($this->getSignupLists() as $signupList) {
+        foreach ($this->getDisplayRevision()->getSignupLists() as $signupList) {
             $signupListsArrays[] = $signupList->toArray();
         }
 
@@ -567,7 +510,7 @@ class Activity implements RevisableInterface
     {
         /** @var ImportedSignupListGdprArrayType[] $signupListsArrays */
         $signupListsArrays = [];
-        foreach ($this->getSignupLists() as $signupList) {
+        foreach ($this->getDisplayRevision()->getSignupLists() as $signupList) {
             $signupListsArrays[] = $signupList->toGdprArray();
         }
 

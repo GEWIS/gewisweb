@@ -28,20 +28,19 @@ class SignupRepository extends ServiceEntityRepository
      */
     public function getSignupsOlderThan5Years(): array
     {
+        // The activity's schedule lives on its revision; a sign-up's list belongs to the activity's live revision
+        // (sign-ups are migrated onto the newly-approved revision on every approval), so that revision's end time
+        // defines when the activity ended.
         $qb = $this->createQueryBuilder('s');
         $qb->join(
             's.signupList',
             'l',
         )
             ->join(
-                'l.activity',
-                'a',
+                'l.revision',
+                'r',
             )
-            ->join(
-                'a.liveRevision',
-                'lr',
-            )
-            ->where("lr.endTime <= DATE_SUB(CURRENT_TIMESTAMP(), 5, 'YEAR')");
+            ->where("r.endTime <= DATE_SUB(CURRENT_TIMESTAMP(), 5, 'YEAR')");
 
         return $qb->getQuery()->getResult();
     }

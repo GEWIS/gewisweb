@@ -20,14 +20,4 @@ class SignupListRepository extends ServiceEntityRepository
             SignupList::class,
         );
     }
-
-    public function getSignupListByIdAndActivity(
-        int $signupListId,
-        int $activityId,
-    ): ?SignupList {
-        return $this->findOneBy([
-            'id' => $signupListId,
-            'activity' => $activityId,
-        ]);
-    }
 }

@@ -110,7 +110,7 @@ class ActivityController extends AbstractController
             : null;
 
         $signupListViews = [];
-        foreach ($entity->getSignupLists() as $signupList) {
+        foreach ($entity->getLiveSignupLists() as $signupList) {
             $signupListViews[] = SignupListView::fromSignupList(
                 $signupList,
                 $canViewDetails,

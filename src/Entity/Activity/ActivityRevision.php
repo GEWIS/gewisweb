@@ -9,19 +9,23 @@ use App\Entity\Application\AbstractRevision;
 use App\Entity\Application\RevisableInterface;
 use App\Repository\Activity\ActivityRevisionRepository;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OneToOne;
+use Doctrine\ORM\Mapping\OrderBy;
 use Override;
 
 /**
  * An immutable snapshot of an {@see Activity}'s revisable content for one point in its revision chain. The stable
- * {@see Activity} owns the sign-up graph, organiser, creator and labels; everything that may be revised and reviewed
- * (the localised texts, the schedule, the category and the facility flags) lives here.
+ * {@see Activity} owns the organiser, creator and labels; everything that may be revised and reviewed (e.g. the
+ * localised texts, the schedule, the category, the facility flags and the sign-up lists) lives here.
  */
 #[Entity(repositoryClass: ActivityRevisionRepository::class)]
 #[HasLifecycleCallbacks]
@@ -124,10 +128,60 @@ class ActivityRevision extends AbstractRevision
     #[Column(type: Types::BOOLEAN)]
     private bool $requireZettle = false;
 
+    /**
+     * The sign-up lists for this revision. Each revision owns its own lists (cloned from the previous revision), so
+     * list changes are staged with the revision and only become public on approval; on approval, existing sign-ups
+     * are migrated from the outgoing live revision's lists onto these.
+     *
+     * @var Collection<array-key, SignupList>
+     */
+    #[OneToMany(
+        targetEntity: SignupList::class,
+        mappedBy: 'revision',
+        cascade: [
+            'persist',
+            'remove',
+        ],
+        orphanRemoval: true,
+    )]
+    #[OrderBy([
+        'promoted' => 'DESC',
+        'id' => 'ASC',
+    ])]
+    private Collection $signupLists;
+
+    public function __construct()
+    {
+        $this->signupLists = new ArrayCollection();
+    }
+
     #[Override]
     public function getRevisable(): RevisableInterface
     {
         return $this->activity;
+    }
+
+    /**
+     * @return Collection<array-key, SignupList>
+     */
+    public function getSignupLists(): Collection
+    {
+        return $this->signupLists;
+    }
+
+    public function addSignupList(SignupList $signupList): void
+    {
+        if ($this->signupLists->contains($signupList)) {
+            return;
+        }
+
+        $this->signupLists->add($signupList);
+        $signupList->setRevision($this);
+    }
+
+    public function removeSignupList(SignupList $signupList): void
+    {
+        $this->signupLists->removeElement($signupList);
     }
 
     public function getActivity(): Activity

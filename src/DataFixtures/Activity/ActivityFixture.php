@@ -606,7 +606,7 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
 
             foreach ($data['signupLists'] ?? [] as $signupListData) {
                 $signupList = $this->createSignupList($signupListData);
-                $activity->addSignupList($signupList);
+                $revision->addSignupList($signupList);
                 $manager->persist($signupList);
 
                 foreach ($signupListData['subscribers'] ?? [] as $lidnr) {

@@ -8,12 +8,14 @@ use App\Entity\Activity\Activity;
 use App\Entity\Activity\Enums\ActivityCategories;
 use App\Entity\Activity\SignupList;
 use App\Entity\Activity\UserSignup;
+use App\Entity\Application\Enums\RevisionStatus;
 use App\Entity\Decision\AssociationYear;
 use App\Entity\Decision\Member;
 use App\Entity\Decision\Organ;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -35,6 +37,143 @@ class ActivityRepository extends ServiceEntityRepository
             $registry,
             Activity::class,
         );
+    }
+
+    /**
+     * Activities for the admin overview whose working revision is NOT yet approved (drafts, submitted, in-review,
+     * rejected, closed), most recently touched first. Scoped to the member unless $all (the board "show everything").
+     *
+     * @param int[] $organIds
+     *
+     * @return Activity[]
+     */
+    public function findPendingForAdmin(
+        Member $member,
+        array $organIds,
+        bool $all,
+    ): array {
+        $qb = $this->adminOverviewQuery(
+            $member,
+            $organIds,
+            $all,
+        );
+        $qb->andWhere('cr.status <> :approved')
+            ->setParameter(
+                'approved',
+                RevisionStatus::Approved->value,
+            )
+            ->orderBy(
+                'cr.updatedAt',
+                'DESC',
+            );
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Approved activities for the admin overview, newest start first, paginated. Scoped to the member unless $all.
+     *
+     * @param int[] $organIds
+     *
+     * @return Paginator<Activity>
+     */
+    public function findApprovedForAdmin(
+        Member $member,
+        array $organIds,
+        bool $all,
+        int $page,
+        int $pageSize,
+    ): Paginator {
+        $qb = $this->adminOverviewQuery(
+            $member,
+            $organIds,
+            $all,
+        );
+        $qb->andWhere('cr.status = :approved')
+            ->setParameter(
+                'approved',
+                RevisionStatus::Approved->value,
+            )
+            ->orderBy(
+                'cr.beginTime',
+                'DESC',
+            );
+
+        $paginator = new Paginator(
+            $qb,
+            false,
+        );
+        $paginator->getQuery()
+            ->setFirstResult(($page - 1) * $pageSize)
+            ->setMaxResults($pageSize);
+
+        return $paginator;
+    }
+
+    /**
+     * Base query for the admin overview: fetch-join the working revision (and its name text, organ, company and
+     * author) so the row columns hydrate in one query, and scope to the member's own + their organs' activities
+     * unless $all.
+     *
+     * @param int[] $organIds
+     */
+    private function adminOverviewQuery(
+        Member $member,
+        array $organIds,
+        bool $all,
+    ): QueryBuilder {
+        $qb = $this->createQueryBuilder('a')
+            ->addSelect(
+                'cr',
+                'n',
+                'org',
+                'comp',
+                'au',
+                'prev',
+            )
+            ->join(
+                'a.currentRevision',
+                'cr',
+            )
+            ->join(
+                'cr.name',
+                'n',
+            )
+            ->leftJoin(
+                'a.organ',
+                'org',
+            )
+            ->leftJoin(
+                'a.company',
+                'comp',
+            )
+            ->leftJoin(
+                'cr.author',
+                'au',
+            )
+            ->leftJoin(
+                'cr.previousRevision',
+                'prev',
+            );
+
+        if (!$all) {
+            $qb->setParameter(
+                'creatorLidnr',
+                $member->getLidnr(),
+            );
+
+            if ([] === $organIds) {
+                $qb->andWhere('IDENTITY(a.creator) = :creatorLidnr');
+            } else {
+                $qb->andWhere('(IDENTITY(a.creator) = :creatorLidnr OR IDENTITY(a.organ) IN (:organIds))')
+                    ->setParameter(
+                        'organIds',
+                        $organIds,
+                    );
+            }
+        }
+
+        return $qb;
     }
 
     /**
@@ -72,9 +211,11 @@ class ActivityRepository extends ServiceEntityRepository
      */
     public function getSubscribedAssociationYears(Member $member): array
     {
+        // A sign-up's list belongs to the live revision (sign-ups are migrated onto it on approval), so that
+        // revision's schedule is the activity's live schedule.
         /** @var list<array{beginTime: DateTime}> $rows */
         $rows = $this->getEntityManager()->createQueryBuilder()
-            ->select('lr.beginTime')
+            ->select('r.beginTime')
             ->from(
                 UserSignup::class,
                 'su',
@@ -84,15 +225,16 @@ class ActivityRepository extends ServiceEntityRepository
                 'sl',
             )
             ->join(
-                'sl.activity',
-                'a',
+                'sl.revision',
+                'r',
             )
             ->join(
-                'a.liveRevision',
-                'lr',
+                'r.activity',
+                'a',
             )
             ->where('IDENTITY(su.user) = :subscriber')
-            ->andWhere('lr.endTime < :now')
+            ->andWhere('r.endTime < :now')
+            ->andWhere('IDENTITY(a.liveRevision) = r.id')
             ->setParameter(
                 'subscriber',
                 $member->getLidnr(),
@@ -271,7 +413,7 @@ class ActivityRepository extends ServiceEntityRepository
                     SignupList::class,
                     'sl_open',
                 )
-                ->where('sl_open.activity = a')
+                ->where('IDENTITY(sl_open.revision) = IDENTITY(a.liveRevision)')
                 ->andWhere('sl_open.openDate <= :now')
                 ->andWhere('sl_open.closeDate > :now');
 
@@ -289,7 +431,7 @@ class ActivityRepository extends ServiceEntityRepository
                     'su.signupList',
                     'sl_sub',
                 )
-                ->where('sl_sub.activity = a')
+                ->where('IDENTITY(sl_sub.revision) = IDENTITY(a.liveRevision)')
                 ->andWhere('IDENTITY(su.user) = :subscriber');
 
             $qb->andWhere($qb->expr()->exists($subscriberSubquery->getDQL()))
@@ -330,9 +472,10 @@ class ActivityRepository extends ServiceEntityRepository
     }
 
     /**
-     * Eager-loads the sign-up lists for the given activities in a single query, hydrating each activity's (otherwise
-     * lazy) `signupLists` collection. This avoids the N+1 that the overview's per-activity accessors
-     * ({@see Activity::getRelevantSignupList()}, {@see Activity::countPendingSignupLists()}) would otherwise trigger.
+     * Eager-loads the live revision's sign-up lists for the given activities in a single query, hydrating each
+     * activity's (otherwise lazy) live-revision `signupLists` collection. This avoids the N+1 that the overview's
+     * per-activity accessors ({@see Activity::getRelevantSignupList()}, {@see Activity::countPendingSignupLists()},
+     * which read {@see Activity::getLiveSignupLists()}) would otherwise trigger.
      *
      * @param Activity[] $activities
      */
@@ -345,10 +488,15 @@ class ActivityRepository extends ServiceEntityRepository
         $this->createQueryBuilder('a')
             ->select(
                 'a',
+                'lr',
                 'sl',
             )
             ->leftJoin(
-                'a.signupLists',
+                'a.liveRevision',
+                'lr',
+            )
+            ->leftJoin(
+                'lr.signupLists',
                 'sl',
             )
             ->where('a IN (:activities)')

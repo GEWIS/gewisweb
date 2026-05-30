@@ -21,6 +21,9 @@ use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OneToOne;
 use Doctrine\ORM\Mapping\OrderBy;
+use Doctrine\ORM\Mapping\UniqueConstraint;
+use Symfony\Bridge\Doctrine\Types\UuidType;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * SignupList model.
@@ -55,31 +58,49 @@ use Doctrine\ORM\Mapping\OrderBy;
  * }
  */
 #[Entity(repositoryClass: SignupListRepository::class)]
+#[UniqueConstraint(
+    name: 'signup_list_revision_lineage_uniq',
+    columns: [
+        'activity_revision_id',
+        'lineageId',
+    ],
+)]
 class SignupList
 {
     use IdentifiableTrait;
 
     /**
-     * The Activity this SignupList belongs to.
+     * The revision this SignupList belongs to. Each revision owns its own (cloned) lists, so list edits are staged
+     * with the rest of the revision and only become public when the revision is approved.
      */
     #[ManyToOne(
-        targetEntity: Activity::class,
+        targetEntity: ActivityRevision::class,
         cascade: ['persist'],
         inversedBy: 'signupLists',
     )]
     #[JoinColumn(
-        name: 'activity_id',
+        name: 'activity_revision_id',
         referencedColumnName: 'id',
         nullable: false,
     )]
-    private Activity $activity;
+    private ActivityRevision $revision;
+
+    /**
+     * Stable identity shared by every clone of this logical list across revisions. On approval, sign-ups are migrated
+     * from the outgoing live revision's list to the newly-approved revision's clone with the same lineage id.
+     */
+    #[Column(type: UuidType::NAME)]
+    private Uuid $lineageId;
 
     /**
      * The name of the SignupList.
      */
     #[OneToOne(
         targetEntity: ActivityLocalisedText::class,
-        cascade: ['persist'],
+        cascade: [
+            'persist',
+            'remove',
+        ],
         orphanRemoval: true,
     )]
     #[JoinColumn(
@@ -128,8 +149,13 @@ class SignupList
     #[OneToMany(
         mappedBy: 'signupList',
         targetEntity: SignupField::class,
+        cascade: [
+            'persist',
+            'remove',
+        ],
         orphanRemoval: true,
     )]
+    #[OrderBy(['id' => 'ASC'])]
     private Collection $fields;
 
     /**
@@ -166,6 +192,8 @@ class SignupList
         $this->name = new ActivityLocalisedText();
         $this->openDate = new DateTime();
         $this->closeDate = new DateTime();
+        // A brand-new list starts its own lineage; the cloner copies this id onto each clone.
+        $this->lineageId = Uuid::v4();
     }
 
     public function addField(SignupField $field): void
@@ -330,19 +358,47 @@ class SignupList
     }
 
     /**
-     * Returns the associated Activity.
+     * Whether this list has been attached to a revision yet. A brand-new list added through the form has none until
+     * it is bound; a cloned draft list already does (so its date/freeze rules look through its lineage).
      */
-    public function getActivity(): Activity
+    public function hasRevision(): bool
     {
-        return $this->activity;
+        return isset($this->revision);
     }
 
     /**
-     * Sets the associated Activity.
+     * Returns the owning revision.
      */
-    public function setActivity(Activity $activity): void
+    public function getRevision(): ActivityRevision
     {
-        $this->activity = $activity;
+        return $this->revision;
+    }
+
+    /**
+     * Sets the owning revision.
+     */
+    public function setRevision(ActivityRevision $revision): void
+    {
+        $this->revision = $revision;
+    }
+
+    /**
+     * Returns the activity this list ultimately belongs to (via its owning revision). Kept so resource/GDPR call
+     * sites that reach for the activity keep working unchanged.
+     */
+    public function getActivity(): Activity
+    {
+        return $this->revision->getActivity();
+    }
+
+    public function getLineageId(): Uuid
+    {
+        return $this->lineageId;
+    }
+
+    public function setLineageId(Uuid $lineageId): void
+    {
+        $this->lineageId = $lineageId;
     }
 
     /**

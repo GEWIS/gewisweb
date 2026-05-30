@@ -17,6 +17,7 @@ use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OneToOne;
+use Doctrine\ORM\Mapping\OrderBy;
 
 /**
  * SignupField model.
@@ -69,7 +70,10 @@ class SignupField
      */
     #[OneToOne(
         targetEntity: ActivityLocalisedText::class,
-        cascade: ['persist'],
+        cascade: [
+            'persist',
+            'remove',
+        ],
         orphanRemoval: true,
     )]
     #[JoinColumn(
@@ -121,8 +125,13 @@ class SignupField
     #[OneToMany(
         targetEntity: SignupOption::class,
         mappedBy: 'field',
+        cascade: [
+            'persist',
+            'remove',
+        ],
         orphanRemoval: true,
     )]
+    #[OrderBy(['id' => 'ASC'])]
     private Collection $options;
 
     public function __construct()

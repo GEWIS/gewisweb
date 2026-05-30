@@ -47,7 +47,10 @@ class SignupOption
      */
     #[OneToOne(
         targetEntity: ActivityLocalisedText::class,
-        cascade: ['persist'],
+        cascade: [
+            'persist',
+            'remove',
+        ],
         orphanRemoval: true,
     )]
     #[JoinColumn(
