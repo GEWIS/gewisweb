@@ -36,19 +36,25 @@ RUN <<-EOF
     rm -rf /var/lib/apt/lists/*
 EOF
 
-# Builders for AssetMapper
+# Builders for AssetMapper. The binaries are arch-specific, so select them based on the build target (set by BuildKit)
+# to avoid pulling linux-x64 binaries that only run through (failing) emulation on arm64 hosts (e.g. Apple Silicon).
+ARG TARGETARCH
 ARG SASS_VERSION=1.99.0
-ARG SASS_URL="https://github.com/sass/dart-sass/releases/download/${SASS_VERSION}/dart-sass-${SASS_VERSION}-linux-x64.tar.gz"
 ARG SWC_VERSION=v1.15.30
-ARG SWC_URL="https://github.com/swc-project/swc/releases/download/${SWC_VERSION}/swc-linux-x64-gnu"
 
-RUN set -eux; \
-    curl -OL --no-progress-meter "$SASS_URL"; \
-    tar -xzf dart-sass-${SASS_VERSION}-linux-x64.tar.gz -C /usr/local/bin --strip-components=1; \
-    rm -f dart-sass-${SASS_VERSION}-linux-x64.tar.gz; \
-    curl -OL --no-progress-meter "$SWC_URL"; \
-    mv swc-linux-x64-gnu /usr/local/bin/swc; \
-    chmod +x /usr/local/bin/swc;
+RUN <<-EOF
+    case "$TARGETARCH" in
+        amd64) SASS_ARCH=linux-x64; SWC_ARCH=linux-x64-gnu ;;
+        arm64) SASS_ARCH=linux-arm64; SWC_ARCH=linux-arm64-gnu ;;
+        *) echo "Unsupported architecture: ${TARGETARCH}" >&2; exit 1 ;;
+    esac
+    curl -OL --no-progress-meter "https://github.com/sass/dart-sass/releases/download/${SASS_VERSION}/dart-sass-${SASS_VERSION}-${SASS_ARCH}.tar.gz"
+    tar -xzf "dart-sass-${SASS_VERSION}-${SASS_ARCH}.tar.gz" -C /usr/local/bin --strip-components=1
+    rm -f "dart-sass-${SASS_VERSION}-${SASS_ARCH}.tar.gz"
+    curl -OL --no-progress-meter "https://github.com/swc-project/swc/releases/download/${SWC_VERSION}/swc-${SWC_ARCH}"
+    mv "swc-${SWC_ARCH}" /usr/local/bin/swc
+    chmod +x /usr/local/bin/swc
+EOF
 
 # https://getcomposer.org/doc/03-cli.md#composer-allow-superuser
 ENV COMPOSER_ALLOW_SUPERUSER=1
@@ -99,10 +105,14 @@ RUN <<-EOF
         sudo
     install-php-extensions xdebug
     rm -rf /var/lib/apt/lists/*
-    groupadd -g "$USER_GID" nonroot
+    # On macOS `id -g` returns 20 (staff), which already exists in the base image; reuse the existing group in that case
+    # instead of failing on a duplicate GID.
+    if ! getent group "$USER_GID" >/dev/null; then
+        groupadd -g "$USER_GID" nonroot
+    fi
     useradd -m -u "$USER_UID" -g "$USER_GID" -s /bin/bash nonroot
     echo "nonroot ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/nonroot
-    chown -R nonroot:nonroot /data/caddy /config/caddy
+    chown -R "$USER_UID:$USER_GID" /data/caddy /config/caddy
     git config --system --add safe.directory /app
 EOF
 
