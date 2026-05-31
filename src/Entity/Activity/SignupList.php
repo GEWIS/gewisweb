@@ -494,11 +494,12 @@ class SignupList
     }
 
     /**
-     * Get the organ of this resource.
+     * Get the organ of this resource. Mirrors the activity's edit-rights organ (anchored to the live revision), not
+     * this list's own revision's organ, so a draft cannot grant itself edit rights by changing the organiser.
      */
     public function getResourceOrgan(): ?OrganModel
     {
-        return $this->getActivity()->getOrgan();
+        return $this->getActivity()->getResourceOrgan();
     }
 
     /**

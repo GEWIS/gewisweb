@@ -19,9 +19,10 @@ use function assert;
 /**
  * Spawns the next Draft {@see ActivityRevision} from an existing one (for "changes requested", reopening, or editing
  * an approved activity). The localised texts are deep-copied into fresh rows so orphan-removal can never delete the
- * source revision's content; the schedule, category and flags are copied by value. The sign-up lists (with their
- * fields and options) are deep-cloned too, carrying their lineage id forward but never their sign-ups; on approval the
- * sign-ups are migrated from the outgoing live revision's lists onto these clones.
+ * source revision's content; the schedule, category and flags are copied by value, and the organ, company and labels
+ * (reference entities) are carried over by reference. The sign-up lists (with their fields and options) are
+ * deep-cloned too, carrying their lineage id forward but never their sign-ups; on approval the sign-ups are migrated
+ * from the outgoing live revision's lists onto these clones.
  */
 final readonly class ActivityRevisionCloner implements RevisionClonerInterface
 {
@@ -52,6 +53,11 @@ final readonly class ActivityRevisionCloner implements RevisionClonerInterface
         $draft->setCategory($source->getCategory());
         $draft->setRequireGEFLITST($source->getRequireGEFLITST());
         $draft->setRequireZettle($source->getRequireZettle());
+        // Organ and company are reference entities, copied by reference; the labels (also references) are re-assigned
+        // to the draft. Without this the draft would lose the organiser and labels carried by the source revision.
+        $draft->setOrgan($source->getOrgan());
+        $draft->setCompany($source->getCompany());
+        $draft->addLabels($source->getLabels()->toArray());
 
         foreach ($source->getSignupLists() as $list) {
             $draft->addSignupList($this->copySignupList($list));

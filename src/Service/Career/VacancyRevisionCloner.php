@@ -47,6 +47,8 @@ final readonly class VacancyRevisionCloner implements RevisionClonerInterface
         $draft->setContactPhone($source->getContactPhone());
         $draft->setContactEmail($source->getContactEmail());
         $draft->setCategory($source->getCategory());
+        // Labels (reference entities) are carried over to the draft; without this, editing would blank them.
+        $draft->addLabels($source->getLabels()->toArray());
 
         $vacancy->addRevision($draft);
         $vacancy->setCurrentRevision($draft);

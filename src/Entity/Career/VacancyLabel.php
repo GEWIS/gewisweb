@@ -66,20 +66,20 @@ class VacancyLabel
     private CareerLocalisedText $abbreviation;
 
     /**
-     * The Assignments this Label belongs to.
+     * The vacancy revisions this Label is assigned to (labels live on the revision so their changes are reviewable).
      *
-     * @var Collection<array-key, Vacancy>
+     * @var Collection<array-key, VacancyRevision>
      */
     #[ManyToMany(
-        targetEntity: Vacancy::class,
+        targetEntity: VacancyRevision::class,
         mappedBy: 'labels',
         cascade: ['persist'],
     )]
-    private Collection $vacancies;
+    private Collection $revisions;
 
     public function __construct()
     {
-        $this->vacancies = new ArrayCollection();
+        $this->revisions = new ArrayCollection();
     }
 
     /**
@@ -115,31 +115,31 @@ class VacancyLabel
     }
 
     /**
-     * Gets the vacancies associated with this label.
+     * Gets the vacancy revisions associated with this label.
      *
-     * @return Collection<array-key, Vacancy>
+     * @return Collection<array-key, VacancyRevision>
      */
-    public function getVacancies(): Collection
+    public function getRevisions(): Collection
     {
-        return $this->vacancies;
+        return $this->revisions;
     }
 
-    public function addVacancy(Vacancy $vacancy): void
+    public function addRevision(VacancyRevision $revision): void
     {
-        if ($this->vacancies->contains($vacancy)) {
+        if ($this->revisions->contains($revision)) {
             return;
         }
 
-        $this->vacancies->add($vacancy);
+        $this->revisions->add($revision);
     }
 
-    public function removeVacancy(Vacancy $vacancy): void
+    public function removeRevision(VacancyRevision $revision): void
     {
-        if (!$this->vacancies->contains($vacancy)) {
+        if (!$this->revisions->contains($revision)) {
             return;
         }
 
-        $this->vacancies->removeElement($vacancy);
+        $this->revisions->removeElement($revision);
     }
 
     /**

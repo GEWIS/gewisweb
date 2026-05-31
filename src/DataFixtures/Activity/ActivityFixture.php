@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\DataFixtures\Activity;
 
 use App\DataFixtures\Decision\MemberFixture;
+use App\DataFixtures\User\UserFixture;
 use App\Entity\Activity\Activity;
 use App\Entity\Activity\ActivityLabel;
 use App\Entity\Activity\ActivityLocalisedText;
@@ -15,6 +16,7 @@ use App\Entity\Activity\SignupList;
 use App\Entity\Activity\UserSignup;
 use App\Entity\Application\Enums\RevisionStatus;
 use App\Entity\Decision\Member;
+use App\Entity\User\User;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -570,10 +572,6 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
             $activity = new Activity();
             $activity->setCreator($creator);
 
-            foreach ($data['labels'] ?? [] as $labelReference) {
-                $activity->addLabel($this->getReference($labelReference, ActivityLabel::class));
-            }
-
             // A seeded activity is a single-revision chain: revision 1 carries the content and its lifecycle state.
             $revision = new ActivityRevision();
             $revision->setAuthor($creator);
@@ -593,6 +591,10 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
             $revision->setCategory($data['category']);
             $revision->setRequireGEFLITST($data['requireGEFLITST']);
             $revision->setRequireZettle($data['requireZettle']);
+
+            foreach ($data['labels'] ?? [] as $labelReference) {
+                $revision->addLabel($this->getReference($labelReference, ActivityLabel::class));
+            }
 
             $activity->addRevision($revision);
             $activity->setCurrentRevision($revision);
@@ -854,7 +856,9 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
     ): void {
         $comment = new ActivityRevisionComment();
         $comment->setRevision($revision);
-        $comment->setAuthor($author);
+        // The comment author is the member's user account (a CompanyUser would author careers comments); the board
+        // members who comment all have a seeded user.
+        $comment->setAuthor($this->getReference('user-' . $author->getLidnr(), User::class));
         $comment->setBody($body);
         $manager->persist($comment);
     }
@@ -897,6 +901,7 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
         return [
             MemberFixture::class,
             ActivityLabelFixture::class,
+            UserFixture::class,
         ];
     }
 }

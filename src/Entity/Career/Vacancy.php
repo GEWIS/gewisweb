@@ -18,8 +18,6 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\JoinTable;
-use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OrderBy;
@@ -29,10 +27,11 @@ use RuntimeException;
 /**
  * Vacancy aggregate root.
  *
- * The stable identity, the slug, the publication flag, the owning package and the labels live here and survive across
- * edits. The revisable, reviewable content (localised texts, contact details and category) lives on the chain of
- * {@see VacancyRevision}s. The publicly live version is {@see self::getLiveRevision()} (the latest approved revision);
- * the working head is {@see self::getCurrentRevision()}.
+ * The stable identity, the slug, the publication flag and the owning package live here and survive across edits. The
+ * revisable, reviewable content (localised texts, contact details, category and labels) lives on the chain of
+ * {@see VacancyRevision}s, so label changes go through review; the labels getter here is a display proxy to the
+ * display revision. The publicly live version is {@see self::getLiveRevision()} (the latest approved revision); the
+ * working head is {@see self::getCurrentRevision()}.
  *
  * @psalm-import-type VacancyLabelArrayType from VacancyLabel as ImportedVacancyLabelArrayType
  */
@@ -96,23 +95,9 @@ class Vacancy implements RevisableInterface
     #[JoinColumn(nullable: true)]
     private ?VacancyRevision $liveRevision = null;
 
-    /**
-     * Vacancy labels.
-     *
-     * @var Collection<array-key, VacancyLabel>
-     */
-    #[ManyToMany(
-        targetEntity: VacancyLabel::class,
-        inversedBy: 'vacancies',
-        cascade: ['persist'],
-    )]
-    #[JoinTable(name: 'VacancyLabelAssignment')]
-    private Collection $labels;
-
     public function __construct()
     {
         $this->revisions = new ArrayCollection();
-        $this->labels = new ArrayCollection();
     }
 
     /**
@@ -245,53 +230,14 @@ class Vacancy implements RevisableInterface
     }
 
     /**
-     * Get the labels. Returns an array of VacancyLabelAssignments.
+     * Display proxy: the labels of the display revision. Labels live on the revision now (so their changes are
+     * reviewed); the public view shows the approved set.
      *
      * @return Collection<array-key, VacancyLabel>
      */
     public function getLabels(): Collection
     {
-        return $this->labels;
-    }
-
-    /**
-     * @param VacancyLabel[] $labels
-     */
-    public function addLabels(array $labels): void
-    {
-        foreach ($labels as $label) {
-            $this->addLabel($label);
-        }
-    }
-
-    public function addLabel(VacancyLabel $label): void
-    {
-        if ($this->labels->contains($label)) {
-            return;
-        }
-
-        $this->labels->add($label);
-        $label->addVacancy($this);
-    }
-
-    /**
-     * @param VacancyLabel[] $labels
-     */
-    public function removeLabels(array $labels): void
-    {
-        foreach ($labels as $label) {
-            $this->removeLabel($label);
-        }
-    }
-
-    public function removeLabel(VacancyLabel $label): void
-    {
-        if (!$this->labels->contains($label)) {
-            return;
-        }
-
-        $this->labels->removeElement($label);
-        $label->removeVacancy($this);
+        return $this->getDisplayRevision()->getLabels();
     }
 
     /**

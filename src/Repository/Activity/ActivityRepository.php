@@ -112,8 +112,8 @@ class ActivityRepository extends ServiceEntityRepository
 
     /**
      * Base query for the admin overview: fetch-join the working revision (and its name text, organ, company and
-     * author) so the row columns hydrate in one query, and scope to the member's own + their organs' activities
-     * unless $all.
+     * author) so the row columns hydrate in one query, and scope to the member's own + their organs' activities (by the
+     * working revision's organ) unless `$all`.
      *
      * @param int[] $organIds
      */
@@ -140,11 +140,11 @@ class ActivityRepository extends ServiceEntityRepository
                 'n',
             )
             ->leftJoin(
-                'a.organ',
+                'cr.organ',
                 'org',
             )
             ->leftJoin(
-                'a.company',
+                'cr.company',
                 'comp',
             )
             ->leftJoin(
@@ -163,9 +163,21 @@ class ActivityRepository extends ServiceEntityRepository
             );
 
             if ([] === $organIds) {
-                $qb->andWhere('IDENTITY(a.creator) = :creatorLidnr');
+                $qb->andWhere(
+                    '(IDENTITY(a.creator) = :creatorLidnr OR IDENTITY(cr.author) = :creatorLidnr)',
+                );
             } else {
-                $qb->andWhere('(IDENTITY(a.creator) = :creatorLidnr OR IDENTITY(a.organ) IN (:organIds))')
+                // Scope organ visibility by the LIVE revision's organ (what the voter authorises), not the editable
+                // draft's organ, so a draft re-pointed to an unrelated organ never surfaces in that organ's overview.
+                $qb->leftJoin(
+                    'a.liveRevision',
+                    'lr',
+                )
+                    ->andWhere(
+                        '(IDENTITY(a.creator) = :creatorLidnr'
+                        . ' OR IDENTITY(cr.author) = :creatorLidnr'
+                        . ' OR IDENTITY(lr.organ) IN (:organIds))',
+                    )
                     ->setParameter(
                         'organIds',
                         $organIds,
@@ -376,7 +388,7 @@ class ActivityRepository extends ServiceEntityRepository
         }
 
         if (null !== $organId) {
-            $qb->andWhere('IDENTITY(a.organ) = :organId')
+            $qb->andWhere('IDENTITY(lr.organ) = :organId')
                 ->setParameter(
                     'organId',
                     $organId,
@@ -386,6 +398,7 @@ class ActivityRepository extends ServiceEntityRepository
         $entityManager = $this->getEntityManager();
 
         if ([] !== $labelIds) {
+            // Labels live on the revision now; the public overview filters by the live (approved) revision's labels.
             $labelSubquery = $entityManager->createQueryBuilder()
                 ->select('1')
                 ->from(
@@ -393,7 +406,11 @@ class ActivityRepository extends ServiceEntityRepository
                     'a_lbl',
                 )
                 ->join(
-                    'a_lbl.labels',
+                    'a_lbl.liveRevision',
+                    'lr_lbl',
+                )
+                ->join(
+                    'lr_lbl.labels',
                     'lbl',
                 )
                 ->where('a_lbl = a')
@@ -517,12 +534,12 @@ class ActivityRepository extends ServiceEntityRepository
     public function findOrganisingOrgans(): array
     {
         $rows = $this->createQueryBuilder('a')
-            ->select('DISTINCT IDENTITY(a.organ) AS organId')
+            ->select('DISTINCT IDENTITY(lr.organ) AS organId')
             ->join(
                 'a.liveRevision',
                 'lr',
             )
-            ->where('a.organ IS NOT NULL')
+            ->where('lr.organ IS NOT NULL')
             ->getQuery()
             ->getScalarResult();
 

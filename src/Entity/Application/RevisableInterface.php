@@ -20,6 +20,11 @@ use App\Entity\Decision\Organ;
 interface RevisableInterface
 {
     /**
+     * The aggregate's primary key, or null before it is persisted. All implementers key on an auto-increment id.
+     */
+    public function getId(): ?int;
+
+    /**
      * A short, stable string identifying the resource type (e.g. 'activity', 'company', or 'vacancy').
      */
     public function getResourceId(): string;

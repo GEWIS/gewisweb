@@ -7,6 +7,8 @@ namespace App\Entity\Activity;
 use App\Entity\Activity\Enums\ActivityCategories;
 use App\Entity\Application\AbstractRevision;
 use App\Entity\Application\RevisableInterface;
+use App\Entity\Career\Company as CompanyModel;
+use App\Entity\Decision\Organ as OrganModel;
 use App\Repository\Activity\ActivityRevisionRepository;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -16,6 +18,8 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OneToOne;
@@ -23,9 +27,11 @@ use Doctrine\ORM\Mapping\OrderBy;
 use Override;
 
 /**
- * An immutable snapshot of an {@see Activity}'s revisable content for one point in its revision chain. The stable
- * {@see Activity} owns the organiser, creator and labels; everything that may be revised and reviewed (e.g. the
- * localised texts, the schedule, the category, the facility flags and the sign-up lists) lives here.
+ * An immutable snapshot of an {@see Activity}'s revisable content for one point in its revision chain.
+ *
+ * The stable {@see Activity} owns only the identity and the (immutable) creator; everything that may be revised and
+ * reviewed (the organising organ and company, the labels, the localised texts, the schedule, the category, the facility
+ * flags and the sign-up lists) lives here.
  */
 #[Entity(repositoryClass: ActivityRevisionRepository::class)]
 #[HasLifecycleCallbacks]
@@ -150,9 +156,44 @@ class ActivityRevision extends AbstractRevision
     ])]
     private Collection $signupLists;
 
+    /**
+     * The organ organising this revision of the activity.
+     */
+    #[ManyToOne(targetEntity: OrganModel::class)]
+    #[JoinColumn(
+        referencedColumnName: 'id',
+        nullable: true,
+    )]
+    private ?OrganModel $organ = null;
+
+    /**
+     * The company organising this revision of the activity.
+     */
+    #[ManyToOne(targetEntity: CompanyModel::class)]
+    #[JoinColumn(
+        referencedColumnName: 'id',
+        nullable: true,
+    )]
+    private ?CompanyModel $company = null;
+
+    /**
+     * The labels of this revision of the activity. Each revision owns its own assignments (carried forward when a draft
+     * is cloned), so label changes are staged with the revision and only become public on approval.
+     *
+     * @var Collection<array-key, ActivityLabel>
+     */
+    #[ManyToMany(
+        targetEntity: ActivityLabel::class,
+        inversedBy: 'revisions',
+        cascade: ['persist'],
+    )]
+    #[JoinTable(name: 'ActivityRevisionLabelAssignment')]
+    private Collection $labels;
+
     public function __construct()
     {
         $this->signupLists = new ArrayCollection();
+        $this->labels = new ArrayCollection();
     }
 
     #[Override]
@@ -293,5 +334,73 @@ class ActivityRevision extends AbstractRevision
     public function setRequireZettle(bool $requireZettle): void
     {
         $this->requireZettle = $requireZettle;
+    }
+
+    public function getOrgan(): ?OrganModel
+    {
+        return $this->organ;
+    }
+
+    public function setOrgan(?OrganModel $organ): void
+    {
+        $this->organ = $organ;
+    }
+
+    public function getCompany(): ?CompanyModel
+    {
+        return $this->company;
+    }
+
+    public function setCompany(?CompanyModel $company): void
+    {
+        $this->company = $company;
+    }
+
+    /**
+     * @return Collection<array-key, ActivityLabel>
+     */
+    public function getLabels(): Collection
+    {
+        return $this->labels;
+    }
+
+    /**
+     * @param ActivityLabel[] $labels
+     */
+    public function addLabels(array $labels): void
+    {
+        foreach ($labels as $label) {
+            $this->addLabel($label);
+        }
+    }
+
+    public function addLabel(ActivityLabel $label): void
+    {
+        if ($this->labels->contains($label)) {
+            return;
+        }
+
+        $this->labels->add($label);
+        $label->addRevision($this);
+    }
+
+    /**
+     * @param ActivityLabel[] $labels
+     */
+    public function removeLabels(array $labels): void
+    {
+        foreach ($labels as $label) {
+            $this->removeLabel($label);
+        }
+    }
+
+    public function removeLabel(ActivityLabel $label): void
+    {
+        if (!$this->labels->contains($label)) {
+            return;
+        }
+
+        $this->labels->removeElement($label);
+        $label->removeRevision($this);
     }
 }

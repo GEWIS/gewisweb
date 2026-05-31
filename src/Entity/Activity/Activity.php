@@ -19,8 +19,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\JoinTable;
-use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OrderBy;
@@ -32,11 +30,12 @@ use function assert;
 /**
  * Activity aggregate root.
  *
- * The stable identity, the organising party, the creator and the labels live here and survive across edits. The
- * revisable, reviewable content (localised texts, schedule, category, facility flags) and the sign-up lists live on
- * the chain of {@see ActivityRevision}s; on approval, existing sign-ups are migrated onto the newly-live revision's
- * lists so they survive across edits. The publicly live version is {@see self::getLiveRevision()} (the latest approved
- * revision); the working head is {@see self::getCurrentRevision()}.
+ * Only the stable identity and the (immutable) creator live here and survive across edits. The revisable, reviewable
+ * content (the organising organ and company, the labels, the localised texts, the schedule, the category, the facility
+ * flags, and the sign-up lists) lives on the chain of {@see ActivityRevision}s, so every change to them goes through
+ * review; on approval, existing sign-ups are migrated onto the newly-live revision's lists so they survive across
+ * edits. The publicly live version is {@see self::getLiveRevision()} (the latest approved revision); the working head
+ * is {@see self::getCurrentRevision()}.
  *
  * @psalm-import-type ActivityLabelArrayType from ActivityLabel as ImportedActivityLabelArrayType
  * @psalm-import-type SignupListArrayType from SignupList as ImportedSignupListArrayType
@@ -122,43 +121,9 @@ class Activity implements RevisableInterface
     #[JoinColumn(nullable: true)]
     private ?ActivityRevision $liveRevision = null;
 
-    /**
-     * All additional Labels belonging to this activity.
-     *
-     * @var Collection<array-key, ActivityLabel>
-     */
-    #[ManyToMany(
-        targetEntity: ActivityLabel::class,
-        inversedBy: 'activities',
-        cascade: ['persist'],
-    )]
-    #[JoinTable(name: 'ActivityLabelAssignment')]
-    private Collection $labels;
-
-    /**
-     * Which organ organises this activity.
-     */
-    #[ManyToOne(targetEntity: OrganModel::class)]
-    #[JoinColumn(
-        referencedColumnName: 'id',
-        nullable: true,
-    )]
-    private ?OrganModel $organ = null;
-
-    /**
-     * Which company organises this activity.
-     */
-    #[ManyToOne(targetEntity: CompanyModel::class)]
-    #[JoinColumn(
-        referencedColumnName: 'id',
-        nullable: true,
-    )]
-    private ?CompanyModel $company = null;
-
     public function __construct()
     {
         $this->revisions = new ArrayCollection();
-        $this->labels = new ArrayCollection();
     }
 
     /**
@@ -228,46 +193,6 @@ class Activity implements RevisableInterface
     }
 
     /**
-     * @param ActivityLabel[] $labels
-     */
-    public function addLabels(array $labels): void
-    {
-        foreach ($labels as $label) {
-            $this->addLabel($label);
-        }
-    }
-
-    public function addLabel(ActivityLabel $label): void
-    {
-        if ($this->labels->contains($label)) {
-            return;
-        }
-
-        $this->labels->add($label);
-        $label->addActivity($this);
-    }
-
-    /**
-     * @param ActivityLabel[] $labels
-     */
-    public function removeLabels(array $labels): void
-    {
-        foreach ($labels as $label) {
-            $this->removeLabel($label);
-        }
-    }
-
-    public function removeLabel(ActivityLabel $label): void
-    {
-        if (!$this->labels->contains($label)) {
-            return;
-        }
-
-        $this->labels->removeElement($label);
-        $label->removeActivity($this);
-    }
-
-    /**
      * The sign-up lists of the publicly live revision (empty when nothing has been approved yet).
      *
      * Used for the public view, overviews, and GDPR export; the working revision's lists are edited through the form.
@@ -334,11 +259,14 @@ class Activity implements RevisableInterface
     }
 
     /**
+     * Display proxy: the labels of the display revision (organ/company/labels now live on the revision so their
+     * changes are reviewed; the public view shows the approved set).
+     *
      * @return Collection<array-key, ActivityLabel>
      */
     public function getLabels(): Collection
     {
-        return $this->labels;
+        return $this->getDisplayRevision()->getLabels();
     }
 
     public function getCreator(): MemberModel
@@ -351,24 +279,20 @@ class Activity implements RevisableInterface
         $this->creator = $creator;
     }
 
+    /**
+     * Display proxy (see {@see self::getLabels()}).
+     */
     public function getOrgan(): ?OrganModel
     {
-        return $this->organ;
+        return $this->getDisplayRevision()->getOrgan();
     }
 
-    public function setOrgan(?OrganModel $organ): void
-    {
-        $this->organ = $organ;
-    }
-
+    /**
+     * Display proxy (see {@see self::getLabels()}).
+     */
     public function getCompany(): ?CompanyModel
     {
-        return $this->company;
-    }
-
-    public function setCompany(?CompanyModel $company): void
-    {
-        $this->company = $company;
+        return $this->getDisplayRevision()->getCompany();
     }
 
     /**
@@ -438,16 +362,21 @@ class Activity implements RevisableInterface
     }
 
     /**
-     * Get the organ of this resource.
+     * The organ for edit-rights purposes: the one on the *live* (approved) revision, never the draft under edit.
+     *
+     * This ensures that organ-scoped ownership is bound to the last by-reviewer-known good state, so an editor cannot
+     * grant themselves or other organ members rights by changing the organ in a draft. The change will apply once the
+     * board approves it and it becomes live.
      */
     #[Override]
     public function getResourceOrgan(): ?OrganModel
     {
-        return $this->getOrgan();
+        return $this->getLiveRevision()?->getOrgan();
     }
 
     /**
-     * Activities are owned by their creator/organ, not by a company, so company-scoped editing never applies.
+     * Activities are owned by their creator/organ, not by a company: the organising company (now a reviewable field on
+     * the revision) is display/metadata only and never grants company-scoped edit rights, so this stays null.
      */
     #[Override]
     public function getResourceCompany(): ?CompanyModel

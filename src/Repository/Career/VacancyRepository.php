@@ -134,7 +134,7 @@ class VacancyRepository extends ServiceEntityRepository
 
         if (null !== $vacancyLabelId) {
             $qb->join(
-                'j.labels',
+                'lr.labels',
                 'l',
             )
                 ->andWhere('l.id = :vacancyLabelId')
