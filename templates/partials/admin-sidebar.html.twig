@@ -18,6 +18,13 @@
                         {{ 'Overview'|trans }}
                     </a>
                 </li>
+                {% if is_granted('ROLE_BOARD') %}
+                    <li>
+                        <a class="dropdown-item" href="{{ path('admin/activities/approvals/index') }}">
+                            {{ 'Approvals'|trans }}
+                        </a>
+                    </li>
+                {% endif %}
                 <li>
                     <a class="dropdown-item" href="{{ path('admin/activities/labels/index') }}">
                         {{ 'Labels'|trans }}

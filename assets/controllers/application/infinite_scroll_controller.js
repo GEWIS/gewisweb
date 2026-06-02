@@ -1,9 +1,11 @@
 import { Controller } from '@hotwired/stimulus';
 
 /**
- * Auto-loads the next batch of a live-component list when a sentinel scrolls into view, by clicking the (always
- * rendered) "Load more" button. Degrades gracefully: without IntersectionObserver the button stays usable on its own.
- * A short cooldown prevents firing a burst of requests while the sentinel remains visible.
+ * Autoloads the next batch of a live-component list when a sentinel scrolls into view, by clicking the (always
+ * rendered) "Load more" button.
+ *
+ * Without `IntersectionObserver` the button stays usable on its own. A short cooldown prevents firing a burst of
+ * requests while the sentinel remains visible.
  */
 export default class extends Controller {
     static targets = ['sentinel', 'button'];

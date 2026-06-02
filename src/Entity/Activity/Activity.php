@@ -362,16 +362,17 @@ class Activity implements RevisableInterface
     }
 
     /**
-     * The organ for edit-rights purposes: the one on the *live* (approved) revision, never the draft under edit.
+     * The organ for edit-rights purposes: the one on the *working* (current) revision, so an organ's members can
+     * collaborate on an as-yet-unapproved draft and a mid-draft re-assignment takes effect immediately.
      *
-     * This ensures that organ-scoped ownership is bound to the last by-reviewer-known good state, so an editor cannot
-     * grant themselves or other organ members rights by changing the organ in a draft. The change will apply once the
-     * board approves it and it becomes live.
+     * This is safe because the edit form only offers organs the user belongs to (and changing the organ already
+     * requires edit access), so nobody can pull an activity into an organ they are not in. The public/approved view
+     * still shows the live organ ({@see self::getOrgan()}), and the board reviews the change on approval.
      */
     #[Override]
     public function getResourceOrgan(): ?OrganModel
     {
-        return $this->getLiveRevision()?->getOrgan();
+        return $this->getCurrentRevision()?->getOrgan();
     }
 
     /**

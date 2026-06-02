@@ -1,0 +1,95 @@
+// Multi-step form navigation (form-stepper Stimulus controller). Numbered circles joined by connectors; the controller
+// toggles `.active` (current step) and `.is-complete` (already-passed steps) on each `.form-stepper__btn`.
+.form-stepper {
+    --#{$prefix}form-stepper-accent: #{$gewis-red};
+    --#{$prefix}form-stepper-on-accent: #{$white};
+    --#{$prefix}form-stepper-accent-subtle: #{rgba($gewis-red, 0.12)};
+
+    display: flex;
+    margin: 0 0 1.5rem;
+    padding: 0;
+    list-style: none;
+
+    &__step {
+        position: relative;
+        flex: 1 1 0;
+        min-inline-size: 0;
+        text-align: center;
+    }
+
+    // Connector line running from the previous step's circle to this one.
+    &__step:not(:first-child)::before {
+        content: '';
+        position: absolute;
+        inset-block-start: 1rem;
+        inset-inline-end: 50%;
+        inline-size: 100%;
+        block-size: 2px;
+        background-color: var(--#{$prefix}border-color);
+    }
+
+    &__step:not(:first-child):has(.active, .is-complete)::before {
+        background-color: var(--#{$prefix}form-stepper-accent);
+    }
+
+    &__btn {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.4rem;
+        inline-size: 100%;
+        padding: 0 0.25rem;
+        border: 0;
+        background: transparent;
+        color: var(--#{$prefix}secondary-color);
+
+        &:hover .form-stepper__label {
+            color: var(--#{$prefix}body-color);
+        }
+    }
+
+    &__num {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        inline-size: 2rem;
+        block-size: 2rem;
+        border: 2px solid var(--#{$prefix}border-color);
+        border-radius: 50%;
+        background-color: var(--#{$prefix}body-bg);
+        font-weight: 600;
+        line-height: 1;
+    }
+
+    &__label {
+        font-size: 0.875rem;
+
+        @include media-breakpoint-down(sm) {
+            display: none;
+        }
+    }
+
+    &__btn.active {
+        color: var(--#{$prefix}body-emphasis-color);
+
+        .form-stepper__num {
+            border-color: var(--#{$prefix}form-stepper-accent);
+            background-color: var(--#{$prefix}form-stepper-accent);
+            color: var(--#{$prefix}form-stepper-on-accent);
+        }
+    }
+
+    &__btn.is-complete .form-stepper__num {
+        border-color: var(--#{$prefix}form-stepper-accent);
+        // An opaque (theme-aware) base keeps the connector line hidden behind the circle, with the subtle red tint laid
+        // on top; an rgba() background alone would let the line bleed through and cross the number.
+        background-color: var(--#{$prefix}body-bg);
+        background-image: linear-gradient(
+            var(--#{$prefix}form-stepper-accent-subtle),
+            var(--#{$prefix}form-stepper-accent-subtle)
+        );
+        color: var(--#{$prefix}form-stepper-accent);
+    }
+}

@@ -1,0 +1,177 @@
+<div{{ attributes }}>
+    {% set statusBadge = {
+        'draft': 'badge-secondary',
+        'submitted': 'badge-info',
+        'in-review': 'badge-primary',
+        'changes-requested': 'badge-warning',
+        'rejected': 'badge-danger',
+        'closed': 'badge-secondary',
+        'approved': 'badge-success',
+    } %}
+    {% if this.isBoard %}
+        <div class="panel mb-3">
+            <div class="panel-body">
+                <div class="form-check form-switch mb-0">
+                    <input class="form-check-input" type="checkbox" id="show-all-activities"
+                           data-model="showAll" {{ showAll ? 'checked' }}>
+                    <label class="form-check-label" for="show-all-activities">
+                        {{ 'Show all activities'|trans }}
+                    </label>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% set pending = this.pendingRows %}
+    <div class="panel">
+        <div class="panel-heading">
+            <h3>{{ 'Pending'|trans }}</h3>
+        </div>
+        <div class="panel-body">
+            {% if pending is empty %}
+                <p class="text-muted mb-0">{{ 'No pending activities.'|trans }}</p>
+            {% else %}
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th>{{ 'Name (Dutch)'|trans }}</th>
+                                <th>{{ 'Name (English)'|trans }}</th>
+                                <th>{{ 'Organ'|trans }}</th>
+                                <th>{{ 'Company'|trans }}</th>
+                                <th>{{ 'Submitted by'|trans }}</th>
+                                <th>{{ 'Start'|trans }}</th>
+                                <th>{{ 'Status'|trans }}</th>
+                                <th class="text-end">{{ 'Actions'|trans }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in pending %}
+                                <tr>
+                                    <td>{{ row.nameNL }}</td>
+                                    <td>{{ row.nameEN }}</td>
+                                    <td>{{ row.organAbbr ?? '-' }}</td>
+                                    <td>{{ row.companyName ?? '-' }}</td>
+                                    <td>{{ row.submitter }}</td>
+                                    <td class="text-muted small">
+                                        {% if row.beginTime %}
+                                            {{ row.beginTime|format_datetime(pattern: 'd MMM yyyy HH:mm', locale: app.request.locale) }}
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <span class="badge {{ statusBadge[row.status.value] ?? 'badge-secondary' }}">{{ row.status|trans }}</span>
+                                        {% if row.changesRequested %}
+                                            <span class="badge badge-warning">{{ 'Changes requested'|trans }}</span>
+                                        {% endif %}
+                                        {% if row.isLive %}
+                                            <span class="badge badge-success">{{ 'Live'|trans }}</span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="text-end">
+                                        {% if row.isLive %}
+                                            <a href="{{ path('activity/view', {'activity': row.id}) }}"
+                                               class="btn btn-sm btn-outline-secondary" target="_blank" rel="noopener">
+                                                {{ 'View'|trans }}
+                                            </a>
+                                        {% endif %}
+                                        <a href="{{ path('admin/activities/edit', {'activity': row.id}) }}"
+                                           class="btn btn-sm btn-outline-primary">
+                                            {{ 'Edit'|trans }}
+                                        </a>
+                                        {% if row.status.value == 'draft' %}
+                                            <a href="{{ path('admin/activities/approvals/review', {'revision': row.revisionId}) }}"
+                                               class="btn btn-sm btn-success">
+                                                {{ 'Submit for review'|trans }}
+                                            </a>
+                                        {% elseif row.status.value in ['rejected', 'closed'] %}
+                                            <form method="post" class="d-inline"
+                                                  action="{{ path('admin/activities/reopen', {'activity': row.id}) }}">
+                                                <input type="hidden" name="_csrf_token"
+                                                       value="{{ csrf_token('activity_reopen-' ~ row.id) }}">
+                                                <button type="submit" class="btn btn-sm btn-outline-warning">
+                                                    {{ 'Reopen'|trans }}
+                                                </button>
+                                            </form>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    {# Potentially thousands of rows: collapsed by default and paginated. Collapse is driven by the `expanded` live
+       prop (not Bootstrap's client-side collapse) so it survives the Ajax re-render that pagination triggers. #}
+    <div class="panel">
+        <button type="button"
+                class="panel-heading signup-list-heading d-flex justify-content-between align-items-center w-100 border-0 bg-transparent text-start{{ expanded ? '' : ' collapsed' }}"
+                data-action="live#action" data-live-action-param="toggleApproved"
+                aria-expanded="{{ expanded ? 'true' : 'false' }}">
+            <h3 class="mb-0">
+                {{ 'Approved activities'|trans }}
+                <span class="badge badge-secondary ms-2">{{ this.approvedTotalCount }}</span>
+            </h3>
+            <i class="fas fa-chevron-down signup-list-chevron"></i>
+        </button>
+        {% if expanded %}
+            <div class="panel-body">
+                {% set approved = this.approvedRows %}
+                {% if approved is empty %}
+                    <p class="text-muted mb-0">{{ 'No approved activities.'|trans }}</p>
+                {% else %}
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th>{{ 'Name (Dutch)'|trans }}</th>
+                                    <th>{{ 'Name (English)'|trans }}</th>
+                                    <th>{{ 'Organ'|trans }}</th>
+                                    <th>{{ 'Company'|trans }}</th>
+                                    <th>{{ 'Submitted by'|trans }}</th>
+                                    <th>{{ 'Start'|trans }}</th>
+                                    <th class="text-end">{{ 'Actions'|trans }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for row in approved %}
+                                    <tr>
+                                        <td>{{ row.nameNL }}</td>
+                                        <td>{{ row.nameEN }}</td>
+                                        <td>{{ row.organAbbr ?? '-' }}</td>
+                                        <td>{{ row.companyName ?? '-' }}</td>
+                                        <td>{{ row.submitter }}</td>
+                                        <td class="text-muted small">
+                                            {% if row.beginTime %}
+                                                {{ row.beginTime|format_datetime(pattern: 'd MMM yyyy HH:mm', locale: app.request.locale) }}
+                                            {% endif %}
+                                        </td>
+                                        <td class="text-end">
+                                            <a href="{{ path('activity/view', {'activity': row.id}) }}"
+                                               class="btn btn-sm btn-outline-secondary" target="_blank" rel="noopener">
+                                                {{ 'View'|trans }}
+                                            </a>
+                                            {% if not row.passed %}
+                                                <a href="{{ path('admin/activities/edit', {'activity': row.id}) }}"
+                                                   class="btn btn-sm btn-outline-primary">
+                                                    {{ 'Revise'|trans }}
+                                                </a>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% include 'partials/application/pagination.html.twig' with {
+                        'page': page,
+                        'totalPages': this.approvedTotalPages,
+                        'totalCount': this.approvedTotalCount,
+                    } only %}
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</div>

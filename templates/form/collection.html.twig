@@ -1,0 +1,33 @@
+{# Renders a Symfony CollectionType with add/remove wired to the `form-collection` Stimulus controller. Nesting is
+   supported because each collection level uses a distinct prototype placeholder (__list__, __field__, __option__). #}
+{% block collection_widget %}
+    {% set has_prototype = allow_add and prototype is defined and prototype is not null %}
+    {% set placeholder = has_prototype ? (prototype.vars.name|split('[')|last|trim(']')) : '__name__' %}
+    <div {{ block('widget_container_attributes') }}
+         data-controller="form-collection"
+         data-form-collection-allow-delete-value="{{ allow_delete ? 'true' : 'false' }}"
+         data-form-collection-remove-label-value="{{ 'Remove'|trans }}"
+         {% if has_prototype %}
+             data-form-collection-prototype-value="{{ form_row(prototype)|e('html_attr') }}"
+             data-form-collection-prototype-name-value="{{ placeholder }}"
+         {% endif %}>
+        <div data-form-collection-target="entries">
+            {% for child in form %}
+                <div data-form-collection-target="entry" class="border rounded p-3 mb-2">
+                    {{ form_row(child) }}
+                    {% if allow_delete %}
+                        <button type="button" class="btn btn-sm btn-outline-danger mt-2"
+                                data-action="form-collection#remove">
+                            {{ 'Remove'|trans }}
+                        </button>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+        {% if allow_add %}
+            <button type="button" class="btn btn-sm btn-outline-secondary mt-2" data-action="form-collection#add">
+                {{ 'Add'|trans }}
+            </button>
+        {% endif %}
+    </div>
+{% endblock %}

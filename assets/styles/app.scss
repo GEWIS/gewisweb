@@ -58,8 +58,10 @@ $enable-negative-margins: true;
 @import 'components/buttons';
 @import 'components/badge';
 @import 'components/close';
+@import 'components/diff';
 @import 'components/fireworks';
 @import 'components/flag-icons';
+@import 'components/form';
 @import 'components/nav';
 @import 'components/navbar';
 @import 'components/panel';
@@ -70,14 +72,12 @@ $enable-negative-margins: true;
 
 // Module specific styles
 @import 'modules/activity-calendar';
-@import 'modules/activity-form';
 @import 'modules/admin';
 @import 'modules/approvable-admin';
 @import 'modules/ckeditor';
 @import 'modules/company';
 @import 'modules/company-form';
 @import 'modules/decision';
-@import 'modules/diff';
 @import 'modules/frontpage';
 @import 'modules/photo';
 @import 'modules/poll-form';

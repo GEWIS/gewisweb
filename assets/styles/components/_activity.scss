@@ -13,6 +13,27 @@
     transform: rotate(180deg);
 }
 
+// Sign-up list editor (activity create/edit form): number the collapsible list and question panels so collapsed ones
+// stay distinguishable. A CSS counter reflows automatically as entries are added or removed (see
+// collapsible_collection_controller.js); the prototype lives in a data attribute and is not counted.
+.signup-list-collection {
+    counter-reset: signup-list;
+
+    .signup-list-number::before {
+        counter-increment: signup-list;
+        content: counter(signup-list);
+    }
+}
+
+.signup-field-collection {
+    counter-reset: signup-field;
+
+    .signup-field-number::before {
+        counter-increment: signup-field;
+        content: counter(signup-field);
+    }
+}
+
 // Clamp the (rendered Markdown) activity description on overview pages until the user expands it.
 .activity-description-content {
     display: -webkit-box;

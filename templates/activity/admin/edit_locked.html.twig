@@ -1,0 +1,44 @@
+{% extends 'layout-admin.html.twig' %}
+
+{% block page_title %}{{ 'Activity is being edited'|trans|page_title }}{{ 'Activities'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block admin_breadcrumbs %}
+    <li class="breadcrumb-item active" aria-current="page">
+        <a href="{{ path('admin/activities/index') }}">{{ 'Activities'|trans }}</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">
+        {{ 'Edit'|trans }}
+    </li>
+{% endblock %}
+
+{% block contents %}
+    <div class="row">
+        <div class="col-md-8">
+            <div class="panel p-3">
+                <h1 class="h4">{{ 'This activity is being edited'|trans }}</h1>
+                <p>
+                    {% if lock is not null %}
+                        {{ '%name% is currently editing this activity (last active %time%).'|trans({
+                            '%name%': lock.holderDisplayName,
+                            '%time%': lock.lastPingAt|format_datetime(pattern: 'HH:mm', locale: app.request.locale),
+                        }) }}
+                    {% else %}
+                        {{ 'Someone is currently editing this activity.'|trans }}
+                    {% endif %}
+                </p>
+                <p class="text-muted small">{{ 'Try again once they are finished.'|trans }}</p>
+                <div class="d-flex flex-wrap gap-2">
+                    <a href="{{ path('admin/activities/index') }}" class="btn btn-secondary">
+                        {{ 'Back to overview'|trans }}
+                    </a>
+                    {% if is_granted('ROLE_BOARD') %}
+                        <a href="{{ path('admin/activities/edit', {'activity': activity.id, 'take': 1}) }}"
+                           class="btn btn-outline-danger">
+                            {{ 'Take over editing'|trans }}
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'layout-admin.html.twig' %}
+
+{% block page_title %}{{ 'Review'|trans|page_title }}{{ 'Activities'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block admin_breadcrumbs %}
+    <li class="breadcrumb-item active" aria-current="page">
+        <a href="{{ path('admin/activities/index') }}">
+            {{ 'Activities'|trans }}
+        </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">
+        {{ 'Review'|trans }}
+    </li>
+{% endblock %}
+
+{% block contents %}
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <h1 class="h3 mb-0">{{ 'Activities awaiting review'|trans }}</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            {% if revisions is empty %}
+                <p class="text-muted">{{ 'There is nothing to review right now.'|trans }}</p>
+            {% else %}
+                <table class="table table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th>{{ 'Name'|trans }}</th>
+                            <th>{{ 'Submitted by'|trans }}</th>
+                            <th>{{ 'Revision'|trans }}</th>
+                            <th>{{ 'Status'|trans }}</th>
+                            <th class="text-end">{{ 'Actions'|trans }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for revision in revisions %}
+                            <tr>
+                                <td>{{ revision.name|localise_text }}</td>
+                                <td class="text-muted small">{{ revision.authorDisplayName }}</td>
+                                <td class="text-muted small">#{{ revision.revisionNumber }}</td>
+                                <td><span class="badge badge-info">{{ revision.status|trans }}</span></td>
+                                <td class="text-end">
+                                    <a href="{{ path('admin/activities/approvals/review', {'revision': revision.getId}) }}"
+                                       class="btn btn-sm btn-primary">
+                                        {{ 'Review'|trans }}
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

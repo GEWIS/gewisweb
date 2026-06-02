@@ -16,3 +16,13 @@
     }) %}
     {{ parent() }}
 {% endblock %}
+
+{# A checkbox is not a floating-label control: `checkbox_widget` already renders the whole `.form-check` (input +
+   label), so wrapping it in `.form-floating` (the generic form_row above) breaks its layout. Render it plainly. #}
+{% block checkbox_row %}
+    <div class="mb-2">
+        {{ form_widget(form) }}
+        {{ form_help(form) }}
+        {{ form_errors(form) }}
+    </div>
+{% endblock %}

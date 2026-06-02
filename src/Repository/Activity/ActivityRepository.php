@@ -167,17 +167,13 @@ class ActivityRepository extends ServiceEntityRepository
                     '(IDENTITY(a.creator) = :creatorLidnr OR IDENTITY(cr.author) = :creatorLidnr)',
                 );
             } else {
-                // Scope organ visibility by the LIVE revision's organ (what the voter authorises), not the editable
-                // draft's organ, so a draft re-pointed to an unrelated organ never surfaces in that organ's overview.
-                $qb->leftJoin(
-                    'a.liveRevision',
-                    'lr',
+                // Scope organ visibility by the WORKING (current) revision's organ, matching the voter
+                // (RevisionVoter): an organ's members see -- and may edit -- the drafts assigned to their organ.
+                $qb->andWhere(
+                    '(IDENTITY(a.creator) = :creatorLidnr'
+                    . ' OR IDENTITY(cr.author) = :creatorLidnr'
+                    . ' OR IDENTITY(cr.organ) IN (:organIds))',
                 )
-                    ->andWhere(
-                        '(IDENTITY(a.creator) = :creatorLidnr'
-                        . ' OR IDENTITY(cr.author) = :creatorLidnr'
-                        . ' OR IDENTITY(lr.organ) IN (:organIds))',
-                    )
                     ->setParameter(
                         'organIds',
                         $organIds,

@@ -1,0 +1,415 @@
+{% extends 'layout-admin.html.twig' %}
+
+{# A localised text (a sign-up list's name) shown the same way as the Details panel: two flag-headed columns
+   (Dutch | English), each with the inline diff of that language's value. A null `old` shows just the new value (a new
+   or removed list, which has nothing to compare against); `struck` strikes both values through (a removed list). #}
+{% macro localised_flag_diff(old, new, renderer, struck) %}
+    <div class="row mb-2">
+        <div class="col-md-6">
+            <h6 class="text-muted small mb-1"><span class="flag-icon flag-icon-nl"></span> {{ 'Dutch'|trans }}</h6>
+            <div class="fw-semibold">{% if struck %}<s>{% endif %}{{ old is null ? new.valueNL : diff(old.valueNL, new.valueNL, renderer|default('Combined')) }}{% if struck %}</s>{% endif %}</div>
+        </div>
+        <div class="col-md-6">
+            <h6 class="text-muted small mb-1"><span class="flag-icon flag-icon-en"></span> {{ 'English'|trans }}</h6>
+            <div class="fw-semibold">{% if struck %}<s>{% endif %}{{ old is null ? new.valueEN : diff(old.valueEN, new.valueEN, renderer|default('Combined')) }}{% if struck %}</s>{% endif %}</div>
+        </div>
+    </div>
+{% endmacro %}
+
+{# One labelled field of a localised text block: a small label with the inline diff of a single language's value
+   below it. Renders nothing when the field is empty on both sides, so an unused language collapses to one note. #}
+{% macro field_diff(label, old, new, renderer) %}
+    {% set rendered = diff(old, new, renderer|default('Combined')) %}
+    {% if rendered|trim is not empty %}
+        <div class="mb-2">
+            <div class="text-muted small">{{ label }}</div>
+            <div>{{ rendered }}</div>
+        </div>
+    {% endif %}
+{% endmacro %}
+
+{# A single boolean list setting. With a `previous` counterpart a newly-enabled flag is green, a newly-disabled one
+   is shown struck-through in red, and an unchanged-but-on flag stays neutral; without one (a new/removed list) an
+   enabled flag is just shown neutral. An unchanged-off flag renders nothing. #}
+{% macro flag(label, new, old) %}
+    {% if old is not null and new and not old %}
+        <span class="badge badge-success">{{ label }}</span>
+    {% elseif old is not null and old and not new %}
+        <span class="badge badge-danger"><s>{{ label }}</s></span>
+    {% elseif new %}
+        <span class="badge badge-secondary">{{ label }}</span>
+    {% endif %}
+{% endmacro %}
+
+{# The window, settings and custom fields of one sign-up list. With a lineage-matched `previous` counterpart every
+   part is shown as a diff (current value, with the old one struck/annotated when it changed, mirroring the main
+   body above); without one (a new or removed list) it just shows the list's own values. #}
+{% macro signup_list_body(list, previous) %}
+    {% import _self as diffmacro %}
+    <div class="small mb-1">
+        <span class="text-muted">{{ 'Opens'|trans }}:</span> {{ list.openDate|date('M j, Y H:i') }}
+        {% if previous is not null and previous.openDate != list.openDate %}
+            <del class="text-danger">{{ previous.openDate|date('M j, Y H:i') }}</del>
+        {% endif %}
+        <span class="text-muted ms-2">{{ 'Closes'|trans }}:</span> {{ list.closeDate|date('M j, Y H:i') }}
+        {% if previous is not null and previous.closeDate != list.closeDate %}
+            <del class="text-danger">{{ previous.closeDate|date('M j, Y H:i') }}</del>
+        {% endif %}
+    </div>
+
+    {% set flags %}
+        {{ diffmacro.flag('Members only'|trans, list.onlyGEWIS, previous ? previous.onlyGEWIS : null) }}
+        {{ diffmacro.flag('Show sign-up count'|trans, list.displaySubscribedNumber, previous ? previous.displaySubscribedNumber : null) }}
+        {{ diffmacro.flag('Limited capacity'|trans, list.limitedCapacity, previous ? previous.limitedCapacity : null) }}
+        {{ diffmacro.flag('Promoted'|trans, list.promoted, previous ? previous.promoted : null) }}
+    {% endset %}
+    {% if flags|trim is not empty %}
+        <div class="mb-1">{{ flags }}</div>
+    {% endif %}
+
+    {# Custom fields, matched to the previous list's fields by position (mirroring the change detection in the
+       controller); trailing previous-only fields were removed. #}
+    {% set previousFields = previous is not null ? previous.fields.values : [] %}
+    {% if list.fields|length > 0 or previousFields|length > 0 %}
+        <ul class="list-unstyled small mb-0">
+            {% for field in list.fields %}
+                {% set prevField = previousFields[loop.index0] ?? null %}
+                <li class="mb-1">
+                    {% if previous is not null and prevField is null %}
+                        <span class="badge badge-success">{{ 'New field'|trans }}</span>
+                    {% endif %}
+                    <strong>
+                        {{ diff(prevField ? prevField.name.valueNL : null, field.name.valueNL) }}
+                        <span class="text-muted">/</span>
+                        {{ diff(prevField ? prevField.name.valueEN : null, field.name.valueEN) }}
+                    </strong>
+                    <span class="badge badge-secondary">{{ field.type|trans }}</span>
+                    {% if prevField is not null and prevField.type != field.type %}
+                        <span class="text-muted">({{ 'was'|trans }} {{ prevField.type|trans }})</span>
+                    {% endif %}
+                    {% if field.isSensitive %}<span class="badge badge-warning">{{ 'Sensitive'|trans }}</span>{% endif %}
+                    {% if 'number' == field.type.value and (field.minimumValue is not null or field.maximumValue is not null) %}
+                        <span class="text-muted">[{{ field.minimumValue ?? '…' }}, {{ field.maximumValue ?? '…' }}]</span>
+                    {% endif %}
+                    {% if field.options|length > 0 %}
+                        <div>{{ field.options|map(option => option.value|localise_text)|join(', ') }}</div>
+                    {% endif %}
+                </li>
+            {% endfor %}
+            {% for prevField in previousFields|slice(list.fields|length) %}
+                <li class="mb-1 text-danger">
+                    <span class="badge badge-danger">{{ 'Removed field'|trans }}</span>
+                    <s>{{ prevField.name|localise_text }}</s>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <span class="text-muted small">{{ 'No custom fields.'|trans }}</span>
+    {% endif %}
+{% endmacro %}
+
+{% block page_title %}{{ revision.name|localise_text|page_title }}{{ 'Review'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>{{ diff_styles() }}</style>
+{% endblock %}
+
+{% block admin_breadcrumbs %}
+    <li class="breadcrumb-item active" aria-current="page">
+        <a href="{{ path('admin/activities/index') }}">{{ 'Activities'|trans }}</a>
+    </li>
+    {% if is_granted('ROLE_BOARD') %}
+        <li class="breadcrumb-item active" aria-current="page">
+            <a href="{{ path('admin/activities/approvals/index') }}">{{ 'Review'|trans }}</a>
+        </li>
+    {% endif %}
+    <li class="breadcrumb-item active" aria-current="page">
+        {{ revision.name|localise_text }}
+    </li>
+{% endblock %}
+
+{% block contents %}
+    {% import _self as diffmacro %}
+    <div class="row">
+        <div class="col-md-9">
+            <h1 class="h3 mb-1">{{ revision.name|localise_text }}</h1>
+            <p class="text-muted">
+                {{ 'Revision #%number% by %author%: %status%'|trans({
+                    '%number%': revision.revisionNumber,
+                    '%author%': revision.authorDisplayName,
+                    '%status%': revision.status|trans,
+                }) }}
+                {% if previous is not null %}
+                    <br><span class="small">{{ 'Compared with revision #%number%.'|trans({'%number%': previous.revisionNumber}) }}</span>
+                {% else %}
+                    <br><span class="small">{{ 'This is the first revision; nothing to compare against.'|trans }}</span>
+                {% endif %}
+            </p>
+
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3>{{ 'General information'|trans }}</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-2">
+                            <h6 class="text-muted small mb-1">{{ 'Organising organ'|trans }}</h6>
+                            <div>
+                                {{ revision.organ ? revision.organ.abbr : ('None'|trans) }}
+                                {% if previous is not null and previous.organ != revision.organ %}
+                                    <span class="text-muted small">({{ 'was'|trans }} {{ previous.organ ? previous.organ.abbr : ('none'|trans) }})</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <h6 class="text-muted small mb-1">{{ 'Organising company'|trans }}</h6>
+                            <div>
+                                {{ revision.company ? revision.company.name : ('None'|trans) }}
+                                {% if previous is not null and previous.company != revision.company %}
+                                    <span class="text-muted small">({{ 'was'|trans }} {{ previous.company ? previous.company.name : ('none'|trans) }})</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <h6 class="text-muted small mb-1">{{ 'Date and time'|trans }}</h6>
+                        <div>{{ activity_date_range(revision.beginTime, revision.endTime) }}</div>
+                        {% if previous is not null and (previous.beginTime != revision.beginTime or previous.endTime != revision.endTime) %}
+                            <div class="text-muted small">{{ 'Was:'|trans }} {{ activity_date_range(previous.beginTime, previous.endTime) }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-2">
+                        <h6 class="text-muted small mb-1">{{ 'Category'|trans }}</h6>
+                        <div>
+                            <span class="badge badge-info">{{ revision.category|trans }}</span>
+                            {% if previous is not null and previous.category != revision.category %}
+                                <span class="text-muted small">({{ 'was'|trans }} <span class="badge badge-info">{{ previous.category|trans }}</span>)</span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <h6 class="text-muted small mb-1">{{ 'Labels'|trans }}</h6>
+                        <div>
+                            {% set previousLabelIds = previous is not null ? previous.labels|map(label => label.id) : [] %}
+                            {% set currentLabelIds = revision.labels|map(label => label.id) %}
+                            {% for label in revision.labels %}
+                                <span class="badge {{ previous is not null and label.id not in previousLabelIds ? 'badge-success' : 'badge-tag' }}">
+                                    {{ label.name|localise_text }}
+                                </span>
+                            {% else %}
+                                <span class="text-muted small">{{ 'No labels.'|trans }}</span>
+                            {% endfor %}
+                            {% if previous is not null %}
+                                {% for label in previous.labels|filter(label => label.id not in currentLabelIds) %}
+                                    <span class="badge badge-danger"><s>{{ label.name|localise_text }}</s></span>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="mb-0">
+                        <h6 class="text-muted small mb-1">{{ 'Facilities'|trans }}</h6>
+                        <div>
+                            {% set facilities %}
+                                {{ diffmacro.flag('GEFLITST'|trans, revision.requireGEFLITST, previous ? previous.requireGEFLITST : null) }}
+                                {{ diffmacro.flag('Zettle'|trans, revision.requireZettle, previous ? previous.requireZettle : null) }}
+                            {% endset %}
+                            {% if facilities|trim is empty %}
+                                <span class="text-muted small">{{ 'None'|trans }}</span>
+                            {% else %}
+                                {{ facilities }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3>{{ 'Details'|trans }}</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4 class="h6"><span class="flag-icon flag-icon-nl"></span> {{ 'Dutch'|trans }}</h4>
+                            <hr class="mt-1 mb-3">
+                            {% set dutch %}
+                                {{ diffmacro.field_diff('Name'|trans, previous ? previous.name.valueNL : null, revision.name.valueNL) }}
+                                {{ diffmacro.field_diff('Location'|trans, previous ? previous.location.valueNL : null, revision.location.valueNL) }}
+                                {{ diffmacro.field_diff('Costs'|trans, previous ? previous.costs.valueNL : null, revision.costs.valueNL) }}
+                                {{ diffmacro.field_diff('Description'|trans, previous ? previous.description.valueNL : null, revision.description.valueNL, 'Inline') }}
+                            {% endset %}
+                            {% if dutch|trim is empty %}
+                                <span class="text-muted small">{{ 'Not used in this revision.'|trans }}</span>
+                            {% else %}
+                                {{ dutch }}
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6">
+                            <h4 class="h6"><span class="flag-icon flag-icon-en"></span> {{ 'English'|trans }}</h4>
+                            <hr class="mt-1 mb-3">
+                            {% set english %}
+                                {{ diffmacro.field_diff('Name'|trans, previous ? previous.name.valueEN : null, revision.name.valueEN) }}
+                                {{ diffmacro.field_diff('Location'|trans, previous ? previous.location.valueEN : null, revision.location.valueEN) }}
+                                {{ diffmacro.field_diff('Costs'|trans, previous ? previous.costs.valueEN : null, revision.costs.valueEN) }}
+                                {{ diffmacro.field_diff('Description'|trans, previous ? previous.description.valueEN : null, revision.description.valueEN, 'Inline') }}
+                            {% endset %}
+                            {% if english|trim is empty %}
+                                <span class="text-muted small">{{ 'Not used in this revision.'|trans }}</span>
+                            {% else %}
+                                {{ english }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3>{{ 'Sign-up lists'|trans }}</h3>
+                </div>
+                <div class="panel-body">
+                    {% if signupListDiff.present is empty and signupListDiff.removed is empty %}
+                        <p class="text-muted small mb-0">{{ 'This activity has no sign-up lists.'|trans }}</p>
+                    {% else %}
+                        <div class="d-flex flex-column gap-3">
+                            {% for entry in signupListDiff.present %}
+                                <div class="border rounded p-3">
+                                    {% if entry.previous is null %}
+                                        <div class="mb-2"><span class="badge badge-success">{{ 'New list'|trans }}</span></div>
+                                        {{ diffmacro.localised_flag_diff(null, entry.list.name) }}
+                                    {% else %}
+                                        {{ diffmacro.localised_flag_diff(entry.previous.name, entry.list.name) }}
+                                    {% endif %}
+                                    {{ diffmacro.signup_list_body(entry.list, entry.previous) }}
+                                </div>
+                            {% endfor %}
+                            {% for list in signupListDiff.removed %}
+                                <div class="border rounded p-3 opacity-75">
+                                    <div class="mb-2"><span class="badge badge-danger">{{ 'Removed list'|trans }}</span></div>
+                                    {{ diffmacro.localised_flag_diff(null, list.name, struck=true) }}
+                                    {{ diffmacro.signup_list_body(list) }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <aside class="col-md-3">
+            <div class="panel p-3">
+                <h2 class="h5">{{ 'Actions'|trans }}</h2>
+                {% if migrationBlocked %}
+                    <div class="alert alert-warning small">
+                        {{ 'A sign-up list with existing sign-ups was changed in this revision, so the live sign-ups cannot be carried over and it can no longer be submitted or approved.'|trans }}
+                        {% if canDiscard %}
+                            {{ 'Discard this draft to return to the live version, then revise it again without changing that list.'|trans }}
+                        {% else %}
+                            {{ 'Reject it or request changes so it can be revised again from the live version.'|trans }}
+                        {% endif %}
+                    </div>
+                {% endif %}
+                {{ form_start(decisionForm, {'action': path('admin/activities/approvals/decide', {'revision': revision.getId})}) }}
+                    {# The message field is only present for a decision (reviewer feedback) or a resubmission
+                       (the organiser's required response); a fresh submit / start review / close gets no field. #}
+                    {% if decisionForm.message is defined %}
+                        {{ form_row(decisionForm.message) }}
+                    {% endif %}
+                    {# The progressing action is prominent (full-width, solid); the negative actions are smaller
+                       outline buttons inline below it. Each tier self-sizes to whatever the workflow enabled. #}
+                    <div class="d-grid gap-2">
+                        {% if decisionForm.submit is defined %}
+                            {{ form_widget(decisionForm.submit, {'attr': {'class': 'btn btn-success'}}) }}
+                        {% endif %}
+                        {% if decisionForm.start_review is defined %}
+                            {{ form_widget(decisionForm.start_review, {'attr': {'class': 'btn btn-primary'}}) }}
+                        {% endif %}
+                        {% if decisionForm.approve is defined %}
+                            {{ form_widget(decisionForm.approve, {'attr': {'class': 'btn btn-success'}}) }}
+                        {% endif %}
+                    </div>
+                    {% if decisionForm.request_changes is defined or decisionForm.reject is defined or decisionForm.close is defined %}
+                        <div class="d-flex flex-wrap gap-2 mt-2">
+                            {% if decisionForm.request_changes is defined %}
+                                {{ form_widget(decisionForm.request_changes, {'attr': {'class': 'btn btn-sm btn-outline-warning'}}) }}
+                            {% endif %}
+                            {% if decisionForm.reject is defined %}
+                                {{ form_widget(decisionForm.reject, {'attr': {'class': 'btn btn-sm btn-outline-danger'}}) }}
+                            {% endif %}
+                            {% if decisionForm.close is defined %}
+                                {{ form_widget(decisionForm.close, {'attr': {'class': 'btn btn-sm btn-outline-danger'}}) }}
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {{ form_end(decisionForm) }}
+                {% if canDiscard %}
+                    <button type="button" class="btn btn-sm btn-outline-danger w-100 mt-2"
+                            data-bs-toggle="modal" data-bs-target="#modal-discard-draft">
+                        {{ 'Discard draft'|trans }}
+                    </button>
+                {% endif %}
+            </div>
+
+            <div class="panel p-3">
+                <h2 class="h5">{{ 'Discussion'|trans }}</h2>
+                <p class="text-muted small mb-2">
+                    {{ 'Visible to the organisers and the board. Use it to ask a question or leave a note.'|trans }}
+                </p>
+                {% if comments is empty %}
+                    <p class="text-muted small">{{ 'No comments yet.'|trans }}</p>
+                {% else %}
+                    <ul class="list-group mb-3">
+                        {% for comment in comments %}
+                            <li class="list-group-item">
+                                <div class="d-flex justify-content-between">
+                                    <strong>{{ comment.authorDisplayName }}</strong>
+                                    <span class="text-muted small">
+                                        {{ comment.getCreatedAt|format_datetime(pattern: 'd MMM yyyy HH:mm', locale: app.request.locale) }}
+                                        · {{ 'rev. #%n%'|trans({'%n%': comment.revision.revisionNumber}) }}
+                                    </span>
+                                </div>
+                                <div class="mt-1">{{ comment.body|nl2br }}</div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                <form method="post" action="{{ path('admin/activities/approvals/comment', {'revision': revision.getId}) }}">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('activity_review_comment-' ~ revision.getId) }}">
+                    <div class="mb-2">
+                        <label for="comment-message" class="form-label">{{ 'Add a comment'|trans }}</label>
+                        <textarea id="comment-message" name="message" class="form-control" rows="2"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-sm btn-outline-primary">{{ 'Comment'|trans }}</button>
+                </form>
+            </div>
+        </aside>
+    </div>
+
+    {% if canDiscard %}
+        <div class="modal fade" id="modal-discard-draft" tabindex="-1" aria-labelledby="modal-discard-draft-label" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal-discard-draft-label">{{ 'Discard draft?'|trans }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ 'Close'|trans }}"></button>
+                    </div>
+                    <form method="post" action="{{ path('admin/activities/approvals/discard', {'revision': revision.getId}) }}">
+                        <div class="modal-body">
+                            <p class="mb-0">{{ 'The changes in this draft will be lost and the activity will return to its live version.'|trans }}</p>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('activity_discard-' ~ revision.getId) }}">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'Cancel'|trans }}</button>
+                            <button type="submit" class="btn btn-danger">{{ 'Discard draft'|trans }}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

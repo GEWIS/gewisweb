@@ -27,7 +27,10 @@ use function array_filter;
 use function array_map;
 use function array_values;
 use function count;
+use function explode;
+use function is_array;
 use function iterator_to_array;
+use function strval;
 use function trim;
 
 /**
@@ -119,6 +122,41 @@ final class ActivityOverview
         private readonly Security $security,
         private readonly RequestStack $requestStack,
     ) {
+    }
+
+    /**
+     * Pre-select the label filter from the query string on a full page load. ux-live-component v3 hydrates scalar
+     * url-mapped props server-side but leaves an array prop ({@see $labelFilters}) empty, and the filter panel is
+     * `data-live-ignore`, so the client-side sync never re-checks the boxes. Reading the ids here makes a shared or
+     * reloaded `?labels=` URL pre-select them. Runs only on the initial render, not on live re-renders.
+     */
+    public function mount(): void
+    {
+        $request = $this->requestStack->getCurrentRequest();
+        if (
+            null === $request
+            || !$request->query->has('labels')
+        ) {
+            return;
+        }
+
+        $raw = $request->query->all()['labels'];
+        $values = is_array($raw)
+            ? $raw
+            : explode(
+                ',',
+                strval($raw),
+            );
+
+        $this->labelFilters = array_values(
+            array_filter(
+                array_map(
+                    'intval',
+                    $values,
+                ),
+                static fn (int $id): bool => $id > 0,
+            ),
+        );
     }
 
     #[LiveAction]

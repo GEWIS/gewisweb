@@ -30,24 +30,19 @@ framework:
                 submit:
                     from: draft
                     to: submitted
-                # A reviewer may explicitly claim a submission, but the board can also decide straight from `submitted`.
+                # A submission must first be claimed for review; approve/reject/request_changes only become
+                # reachable once the revision is `in-review`, never straight from `submitted`.
                 start_review:
                     from: submitted
                     to: in-review
                 request_changes:
-                    from:
-                        - submitted
-                        - in-review
+                    from: in-review
                     to: changes-requested
                 reject:
-                    from:
-                        - submitted
-                        - in-review
+                    from: in-review
                     to: rejected
                 approve:
-                    from:
-                        - submitted
-                        - in-review
+                    from: in-review
                     to: approved
                 close:
                     from: rejected

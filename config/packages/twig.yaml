@@ -1,7 +1,12 @@
 # yaml-language-server: $schema=../../vendor/symfony/dependency-injection/Loader/schema/services.schema.json
 twig:
     file_name_pattern: '*.twig'
-    form_themes: ['bootstrap_5_layout.html.twig', 'form/bootstrap_floating.html.twig']
+    form_themes:
+        - 'bootstrap_5_layout.html.twig'
+        - 'form/bootstrap_floating.html.twig'
+        - 'form/collection.html.twig'
+        - 'form/localised_text.html.twig'
+        - 'form/signup_list_collection.html.twig'
     globals:
         supported_locales: '%kernel.enabled_locales%'
         matomo_domain: '%env(MATOMO_DOMAIN)%'

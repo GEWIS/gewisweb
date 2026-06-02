@@ -190,16 +190,43 @@ class ActivityRevision extends AbstractRevision
     #[JoinTable(name: 'ActivityRevisionLabelAssignment')]
     private Collection $labels;
 
+    /**
+     * The audit trail of in-place edits to this revision (who saved it, when, what changed), oldest first; appended
+     * automatically on every member-driven save.
+     *
+     * @var Collection<array-key, ActivityRevisionEdit>
+     */
+    #[OneToMany(
+        targetEntity: ActivityRevisionEdit::class,
+        mappedBy: 'revision',
+        cascade: [
+            'persist',
+            'remove',
+        ],
+        orphanRemoval: true,
+    )]
+    #[OrderBy(['editedAt' => 'ASC'])]
+    private Collection $editHistory;
+
     public function __construct()
     {
         $this->signupLists = new ArrayCollection();
         $this->labels = new ArrayCollection();
+        $this->editHistory = new ArrayCollection();
     }
 
     #[Override]
     public function getRevisable(): RevisableInterface
     {
         return $this->activity;
+    }
+
+    /**
+     * @return Collection<array-key, ActivityRevisionEdit>
+     */
+    public function getEditHistory(): Collection
+    {
+        return $this->editHistory;
     }
 
     /**
