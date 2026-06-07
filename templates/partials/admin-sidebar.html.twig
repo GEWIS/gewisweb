@@ -24,12 +24,12 @@
                             {{ 'Approvals'|trans }}
                         </a>
                     </li>
+                    <li>
+                        <a class="dropdown-item" href="{{ path('admin/activities/labels/index') }}">
+                            {{ 'Labels'|trans }}
+                        </a>
+                    </li>
                 {% endif %}
-                <li>
-                    <a class="dropdown-item" href="{{ path('admin/activities/labels/index') }}">
-                        {{ 'Labels'|trans }}
-                    </a>
-                </li>
                 <li>
                     <a class="dropdown-item" href="{{ path('admin/activities/calendar/index') }}">
                         {{ 'Option Calendar'|trans }}
