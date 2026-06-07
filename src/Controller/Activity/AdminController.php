@@ -15,6 +15,7 @@ use App\Entity\User\User;
 use App\Form\Activity\ActivityType;
 use App\Repository\Activity\ActivityRevisionCommentRepository;
 use App\Security\Application\RevisionVoter;
+use App\Service\Activity\SignupAdminWindow;
 use App\Service\Application\EditLockService;
 use App\Workflow\RevisionClonerRegistry;
 use DateTime;
@@ -33,6 +34,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 use function assert;
 use function is_int;
+use function strval;
 
 #[Route(
     path: '/admin/activities',
@@ -409,12 +411,58 @@ class AdminController extends AbstractController
     }
 
     /**
+     * The sign-ups page: a table per (live) sign-up list of everyone who signed up, with their answers,
+     * membership type, attendance marking and a bulk-email composer. The table, marking and email all live in the
+     * {@see \App\Twig\Components\Activity\Admin\SignupOverview} live component embedded by the template, which
+     * re-asserts access on every action.
+     */
+    #[Route(
+        path: '/{activity}/signups',
+        name: 'signups',
+        requirements: ['activity' => '\d+'],
+        methods: ['GET'],
+    )]
+    public function signups(Activity $activity): Response
+    {
+        // Organisers (creator, revision author, organ member) and the board may view sign-up details.
+        $this->denyAccessUnlessGranted(
+            RevisionVoter::VIEW,
+            $activity,
+        );
+
+        // Sign-ups only exist on the publicly live (approved) revision; there is nothing to show otherwise.
+        if (null === $activity->getLiveRevision()) {
+            throw $this->createNotFoundException();
+        }
+
+        // Organisers lose access a week after the activity ends; the board keeps it (e.g. for GDPR follow-up).
+        if (
+            !SignupAdminWindow::canView(
+                $activity->getEndTime(),
+                $this->isGranted(UserRoles::Board->value),
+            )
+        ) {
+            $this->addFlash(
+                AlertTypes::Warning->value,
+                $this->translator->trans('You can no longer view the sign-ups of this activity.'),
+            );
+
+            return $this->redirectToRoute('admin/activities/index');
+        }
+
+        return $this->render(
+            'activity/admin/signups.html.twig',
+            ['activity' => $activity],
+        );
+    }
+
+    /**
      * Session key under which the version an in-place edit started from is stamped (per activity), so the
      * optimistic-lock check on save reads a server-trusted base version instead of a client-submitted one.
      */
     private function editVersionKey(Activity $activity): string
     {
-        return 'activity-edit-base-version-' . $activity->getId();
+        return 'activity-edit-base-version-' . strval($activity->getId());
     }
 
     /**

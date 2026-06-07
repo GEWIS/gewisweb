@@ -12,7 +12,15 @@ use App\Entity\Activity\ActivityLocalisedText;
 use App\Entity\Activity\ActivityRevision;
 use App\Entity\Activity\ActivityRevisionComment;
 use App\Entity\Activity\Enums\ActivityCategories;
+use App\Entity\Activity\Enums\AllocationMethod;
+use App\Entity\Activity\Enums\DrawCutoffRule;
+use App\Entity\Activity\Enums\SignupFieldTypes;
+use App\Entity\Activity\ExternalSignup;
+use App\Entity\Activity\Signup;
+use App\Entity\Activity\SignupField;
+use App\Entity\Activity\SignupFieldValue;
 use App\Entity\Activity\SignupList;
+use App\Entity\Activity\SignupOption;
 use App\Entity\Activity\UserSignup;
 use App\Entity\Application\Enums\RevisionStatus;
 use App\Entity\Decision\Member;
@@ -22,6 +30,8 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Override;
+
+use function is_array;
 
 class ActivityFixture extends Fixture implements DependentFixtureInterface
 {
@@ -192,10 +202,92 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
                         ],
                         'openDate' => '-6 weeks 12:00',
                         'closeDate' => '-4 weeks 12:00',
-                        'onlyGEWIS' => true,
+                        'onlyGEWIS' => false,
                         'displaySubscribedNumber' => true,
                         'limitedCapacity' => true,
+                        'capacity' => 3,
+                        'allocationMethod' => AllocationMethod::ConditionalDraw,
+                        'drawCutoffRule' => DrawCutoffRule::OnClose,
+                        'drawnAt' => '-4 weeks 12:00',
+                        'drawnBy' => 8025,
                         'presenceTaken' => true,
+                        // A closed, past, limited-capacity list exercising the full flow: 3 admitted (capacity 3) of
+                        // whom 2 attended and 1 was a no-show, plus 2 on the waiting list (one a non-member external) —
+                        // an obvious backfill opportunity. Also covers extra fields and mixed membership types.
+                        'fields' => [
+                            [
+                                'type' => SignupFieldTypes::Text,
+                                'name' => [
+                                    'en' => 'Dietary requirements',
+                                    'nl' => 'Dieetwensen',
+                                ],
+                            ],
+                            [
+                                'type' => SignupFieldTypes::Choice,
+                                'name' => [
+                                    'en' => 'T-shirt size',
+                                    'nl' => 'T-shirtmaat',
+                                ],
+                                'options' => [
+                                    [
+                                        'en' => 'S',
+                                        'nl' => 'S',
+                                    ],
+                                    [
+                                        'en' => 'M',
+                                        'nl' => 'M',
+                                    ],
+                                    [
+                                        'en' => 'L',
+                                        'nl' => 'L',
+                                    ],
+                                ],
+                            ],
+                        ],
+                        'subscribers' => [
+                            [
+                                'member' => 8005, // ordinary — admitted, attended
+                                'drawn' => true,
+                                'present' => true,
+                                'answers' => [
+                                    'Dietary requirements' => 'Vegetarian',
+                                    'T-shirt size' => 'M',
+                                ],
+                            ],
+                            [
+                                'member' => 8006, // ordinary — admitted, attended
+                                'drawn' => true,
+                                'present' => true,
+                                'answers' => ['T-shirt size' => 'L'],
+                            ],
+                            [
+                                'member' => 8015, // external member — admitted, no-show
+                                'drawn' => true,
+                                'present' => false,
+                                'answers' => [
+                                    'Dietary requirements' => 'None',
+                                    'T-shirt size' => 'S',
+                                ],
+                            ],
+                            [
+                                'member' => 8155, // graduate — waiting list
+                                'drawn' => false,
+                                'present' => false,
+                                'answers' => ['T-shirt size' => 'M'],
+                            ],
+                        ],
+                        'externals' => [
+                            [
+                                'fullName' => 'Alex Visitor', // non-member — waiting list
+                                'email' => 'alex.visitor@example.org',
+                                'drawn' => false,
+                                'present' => false,
+                                'answers' => [
+                                    'Dietary requirements' => 'Gluten-free',
+                                    'T-shirt size' => 'L',
+                                ],
+                            ],
+                        ],
                     ],
                 ],
             ],
@@ -372,6 +464,11 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
                         'onlyGEWIS' => true,
                         'displaySubscribedNumber' => true,
                         'limitedCapacity' => true,
+                        // Upcoming limited list whose draw has not happened yet (sign-up still open, so the draw is
+                        // blocked): all 4 sign-ups default to the waiting list, capacity 2 → "Admitted: 0 / 2".
+                        'capacity' => 2,
+                        'allocationMethod' => AllocationMethod::ConditionalDraw,
+                        'drawCutoffRule' => DrawCutoffRule::OnClose,
                         'subscribers' => [
                             8005,
                             8006,
@@ -452,6 +549,10 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
                         'onlyGEWIS' => true,
                         'displaySubscribedNumber' => false,
                         'limitedCapacity' => true,
+                        'capacity' => 40,
+                        // An external party (the venue) allocates the seats; admission is recorded by hand.
+                        'allocationMethod' => AllocationMethod::ExternalParty,
+                        'externalPolicyUrl' => 'https://example.org/venue-policy',
                     ],
                 ],
             ],
@@ -558,6 +659,59 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
                         'onlyGEWIS' => true,
                         'displaySubscribedNumber' => true,
                         'limitedCapacity' => true,
+                        'capacity' => 30,
+                        // A bespoke selection (study-phase mix); admission is recorded by hand.
+                        'allocationMethod' => AllocationMethod::Custom,
+                        'customMethodDescription' => 'Selected to balance bachelor, master and PhD attendees.',
+                    ],
+                ],
+            ],
+            // Upcoming, approved, board-organised, with a CLOSED limited sign-up list — so the board draw is testable
+            // end-to-end (sign-up over, activity still in the future, more sign-ups than places, not yet drawn).
+            [
+                'creator' => 8025,
+                'status' => RevisionStatus::Approved,
+                'beginTime' => '+10 days 19:00',
+                'endTime' => '+10 days 23:00',
+                'category' => ActivityCategories::Recreational,
+                'requireGEFLITST' => false,
+                'requireZettle' => false,
+                'name' => [
+                    'en' => 'Excursion',
+                    'nl' => 'Excursie',
+                ],
+                'location' => [
+                    'en' => 'Brewery',
+                    'nl' => 'Brouwerij',
+                ],
+                'costs' => [
+                    'en' => '15 euro',
+                    'nl' => '15 euro',
+                ],
+                'description' => [
+                    'en' => 'A guided brewery tour with limited places.',
+                    'nl' => 'Een rondleiding door een brouwerij met beperkt aantal plaatsen.',
+                ],
+                'signupLists' => [
+                    [
+                        'name' => [
+                            'en' => 'Attendance',
+                            'nl' => 'Aanwezigheid',
+                        ],
+                        'openDate' => '-2 weeks 12:00',
+                        'closeDate' => '-1 day 12:00',
+                        'onlyGEWIS' => true,
+                        'displaySubscribedNumber' => true,
+                        'limitedCapacity' => true,
+                        'capacity' => 2,
+                        'allocationMethod' => AllocationMethod::ConditionalDraw,
+                        'drawCutoffRule' => DrawCutoffRule::OnClose,
+                        'subscribers' => [
+                            8005,
+                            8006,
+                            8007,
+                            8008,
+                        ],
                     ],
                 ],
             ],
@@ -611,11 +765,68 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
                 $revision->addSignupList($signupList);
                 $manager->persist($signupList);
 
-                foreach ($signupListData['subscribers'] ?? [] as $lidnr) {
+                // Sign-up fields (and their options for Choice fields), keyed by English name so a subscriber's
+                // answers can reference them. Fields/options cascade-persist through the list.
+                $fields = [];
+                foreach ($signupListData['fields'] ?? [] as $fieldData) {
+                    $field = new SignupField();
+                    $field->setName(new ActivityLocalisedText($fieldData['name']['en'], $fieldData['name']['nl']));
+                    $field->setType($fieldData['type']);
+                    $signupList->addField($field);
+
+                    $options = [];
+                    foreach ($fieldData['options'] ?? [] as $optionData) {
+                        $option = new SignupOption();
+                        $option->setValue(new ActivityLocalisedText($optionData['en'], $optionData['nl']));
+                        $field->addOption($option);
+                        $options[$optionData['en']] = $option;
+                    }
+
+                    $fields[$fieldData['name']['en']] = [
+                        'field' => $field,
+                        'options' => $options,
+                    ];
+                }
+
+                foreach ($signupListData['subscribers'] ?? [] as $subscriber) {
+                    // A subscriber is either a bare lidnr or a richer array with presence and field answers.
+                    $entry = is_array($subscriber)
+                        ? $subscriber
+                        : ['member' => $subscriber];
+
                     $signup = new UserSignup();
                     $signup->setSignupList($signupList);
-                    $signup->setUser($this->getReference('member-' . $lidnr, Member::class));
+                    $signup->setUser($this->getReference('member-' . $entry['member'], Member::class));
+                    // A sign-up to a limited list starts on the waiting list (not drawn) until the organiser admits it;
+                    // a sign-up to an unlimited list is admitted automatically. The future public subscribe flow MUST
+                    // apply this same rule (drawn = !limitedCapacity) when it creates sign-ups.
+                    $signup->setDrawn($entry['drawn'] ?? !$signupList->getLimitedCapacity());
+                    $signup->setPresent($entry['present'] ?? false);
                     $manager->persist($signup);
+
+                    $this->addFieldAnswers(
+                        $signup,
+                        $fields,
+                        $entry['answers'] ?? [],
+                        $manager,
+                    );
+                }
+
+                foreach ($signupListData['externals'] ?? [] as $external) {
+                    $signup = new ExternalSignup();
+                    $signup->setSignupList($signupList);
+                    $signup->setFullName($external['fullName']);
+                    $signup->setEmail($external['email']);
+                    $signup->setDrawn($external['drawn']);
+                    $signup->setPresent($external['present']);
+                    $manager->persist($signup);
+
+                    $this->addFieldAnswers(
+                        $signup,
+                        $fields,
+                        $external['answers'],
+                        $manager,
+                    );
                 }
             }
         }
@@ -872,9 +1083,18 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
      *     onlyGEWIS: bool,
      *     displaySubscribedNumber: bool,
      *     limitedCapacity: bool,
+     *     capacity?: int,
+     *     allocationMethod?: AllocationMethod,
+     *     drawCutoffRule?: DrawCutoffRule,
+     *     externalPolicyUrl?: string,
+     *     customMethodDescription?: string,
+     *     drawnAt?: string,
+     *     drawnBy?: int,
      *     promoted?: bool,
      *     presenceTaken?: bool,
-     *     subscribers?: list<int>,
+     *     fields?: list<array<string, mixed>>,
+     *     subscribers?: list<int|array<string, mixed>>,
+     *     externals?: list<array<string, mixed>>,
      * } $data
      */
     private function createSignupList(array $data): SignupList
@@ -886,10 +1106,54 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
         $signupList->setOnlyGEWIS($data['onlyGEWIS']);
         $signupList->setDisplaySubscribedNumber($data['displaySubscribedNumber']);
         $signupList->setLimitedCapacity($data['limitedCapacity']);
+        $signupList->setCapacity($data['capacity'] ?? null);
+        $signupList->setAllocationMethod($data['allocationMethod'] ?? AllocationMethod::FirstComeFirstServed);
+        $signupList->setDrawCutoffRule($data['drawCutoffRule'] ?? null);
+        $signupList->setExternalPolicyUrl($data['externalPolicyUrl'] ?? null);
+        $signupList->setCustomMethodDescription($data['customMethodDescription'] ?? null);
         $signupList->setPromoted($data['promoted'] ?? false);
         $signupList->setPresenceTaken($data['presenceTaken'] ?? false);
 
+        // A list that has already been drawn carries its lock + audit (a board member, by lidnr).
+        if (isset($data['drawnAt'], $data['drawnBy'])) {
+            $signupList->setDrawnAt(new DateTime($data['drawnAt']));
+            $signupList->setDrawnBy($this->getReference('member-' . $data['drawnBy'], Member::class));
+        }
+
         return $signupList;
+    }
+
+    /**
+     * Attach a sign-up's answers to the given fields. Choice answers reference an option by its English value; every
+     * other type stores the raw string.
+     *
+     * @param array<string, array{field: SignupField, options: array<string, SignupOption>}> $fields  by field name
+     * @param array<string, string>                                                          $answers by field name
+     */
+    private function addFieldAnswers(
+        Signup $signup,
+        array $fields,
+        array $answers,
+        ObjectManager $manager,
+    ): void {
+        foreach ($answers as $fieldName => $answer) {
+            if (!isset($fields[$fieldName])) {
+                continue;
+            }
+
+            $field = $fields[$fieldName]['field'];
+            $fieldValue = new SignupFieldValue();
+            $fieldValue->setSignup($signup);
+            $fieldValue->setField($field);
+
+            if (SignupFieldTypes::Choice === $field->getType()) {
+                $fieldValue->setOption($fields[$fieldName]['options'][$answer] ?? null);
+            } else {
+                $fieldValue->setValue($answer);
+            }
+
+            $manager->persist($fieldValue);
+        }
     }
 
     /**

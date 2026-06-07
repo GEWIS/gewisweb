@@ -73,6 +73,10 @@
                                                class="btn btn-sm btn-outline-secondary" target="_blank" rel="noopener">
                                                 {{ 'View'|trans }}
                                             </a>
+                                            <a href="{{ path('admin/activities/signups', {'activity': row.id}) }}"
+                                               class="btn btn-sm btn-outline-secondary">
+                                                {{ 'Sign-ups'|trans }}
+                                            </a>
                                         {% endif %}
                                         <a href="{{ path('admin/activities/edit', {'activity': row.id}) }}"
                                            class="btn btn-sm btn-outline-primary">
@@ -152,6 +156,10 @@
                                             <a href="{{ path('activity/view', {'activity': row.id}) }}"
                                                class="btn btn-sm btn-outline-secondary" target="_blank" rel="noopener">
                                                 {{ 'View'|trans }}
+                                            </a>
+                                            <a href="{{ path('admin/activities/signups', {'activity': row.id}) }}"
+                                               class="btn btn-sm btn-outline-secondary">
+                                                {{ 'Sign-ups'|trans }}
                                             </a>
                                             {% if not row.passed %}
                                                 <a href="{{ path('admin/activities/edit', {'activity': row.id}) }}"

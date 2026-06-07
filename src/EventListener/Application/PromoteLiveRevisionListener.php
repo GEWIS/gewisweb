@@ -6,7 +6,6 @@ namespace App\EventListener\Application;
 
 use App\Entity\Activity\ActivityRevision;
 use App\Entity\Application\RevisionInterface;
-use App\EventListener\Activity\MigrateSignupsOnApprovalListener;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\Workflow\Event\EnteredEvent;
 

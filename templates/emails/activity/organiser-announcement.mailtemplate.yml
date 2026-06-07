@@ -1,0 +1,31 @@
+# This is a GEWIS mailings template
+# A message sent by an activity organiser to the sign-ups of an activity
+---
+# All mailings require some settings. These can be set here. Don't forget to set the title ("Algemene mededeling; tekst zelf invoeren")
+version: 1.1
+settings:
+    title: "Message from the organiser regarding {{ACTIVITY_NAME}}"
+    email: "{{ORGANISER_EMAIL}}"
+    lang: en-UK
+    follow: false
+
+# A mailing consists of a series of messageblocks, each with their own type
+# The available types are "header", "topblock", "activities", "activityfooter", "extramessage" and "tinyfooter"
+messageblocks:
+
+    # Each mailing must have a header to make the template shine! It contains the title and the date.
+    - type: "header"
+      title: "{{ACTIVITY_NAME}}"
+      date: 2024-01-01 # Note that this date needs to be updated
+
+    # This is the first block which is shown on top of the message. Recommended for most messages
+    - type: topblock
+      title: "{{SUBJECT}}"
+      contentHTML: >
+          Dear {{FULL_NAME}},<br/><br/>
+
+          {{BODY}}
+
+    - type: tinyfooter
+      contentHTML: >
+          You receive this email because you signed up for {{ACTIVITY_NAME}}.<br/>You can reply directly to this email to reach the organiser.

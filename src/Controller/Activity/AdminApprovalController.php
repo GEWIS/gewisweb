@@ -380,10 +380,12 @@ class AdminApprovalController extends AbstractController
 
     /**
      * Match the revision's sign-up lists to the previous revision's by lineage, so the review screen can pair each
-     * list with its counterpart (for a field-by-field diff) and flag the ones that are new or were removed.
+     * list with its counterpart (for a field-by-field diff) and flag the ones that are new or were removed. Each
+     * present entry also carries `liveAdmitted`: how many sign-ups are already admitted (drawn) on the live revision's
+     * counterpart, so the screen can warn when a lowered capacity would sit below the people already let in.
      *
      * @return array{
-     *     present: list<array{list: SignupList, previous: SignupList|null}>,
+     *     present: list<array{list: SignupList, previous: SignupList|null, liveAdmitted: int}>,
      *     removed: list<SignupList>,
      * }
      */
@@ -396,6 +398,27 @@ class AdminApprovalController extends AbstractController
             $previousByLineage[$list->getLineageId()->toRfc4122()] = $list;
         }
 
+        // How many are already admitted on each live list (by lineage), so a capacity drop below it can be flagged.
+        // Only meaningful for a live list that was itself limited: on an unlimited list every sign-up is drawn by
+        // default (no draw ever ran), so counting it would raise a bogus "capacity below admitted" warning.
+        $liveAdmittedByLineage = [];
+        foreach ($revision->getActivity()->getLiveRevision()?->getSignupLists() ?? [] as $liveList) {
+            if (!$liveList->getLimitedCapacity()) {
+                continue;
+            }
+
+            $admitted = 0;
+            foreach ($liveList->getSignUps() as $signup) {
+                if (!$signup->isDrawn()) {
+                    continue;
+                }
+
+                ++$admitted;
+            }
+
+            $liveAdmittedByLineage[$liveList->getLineageId()->toRfc4122()] = $admitted;
+        }
+
         $present = [];
         $seen = [];
         foreach ($revision->getSignupLists() as $list) {
@@ -405,6 +428,7 @@ class AdminApprovalController extends AbstractController
             $present[] = [
                 'list' => $list,
                 'previous' => $counterpart,
+                'liveAdmitted' => $liveAdmittedByLineage[$key] ?? 0,
             ];
         }
 

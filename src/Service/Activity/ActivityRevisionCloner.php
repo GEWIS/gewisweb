@@ -97,6 +97,21 @@ final readonly class ActivityRevisionCloner implements RevisionClonerInterface
         $list->setOnlyGEWIS($source->getOnlyGEWIS());
         $list->setDisplaySubscribedNumber($source->getDisplaySubscribedNumber());
         $list->setLimitedCapacity($source->getLimitedCapacity());
+        $list->setCapacity($source->getCapacity());
+        // The draw lock + its audit carry across revisions, like presence does, so an approved re-edit keeps a list
+        // that was already drawn locked.
+        $list->setDrawnAt($source->getDrawnAt());
+        $list->setDrawnBy($source->getDrawnBy());
+        // Allocation method + its per-method settings are list config, carried forward like the other settings.
+        $list->setAllocationMethod($source->getAllocationMethod());
+        $list->setDrawCutoffRule($source->getDrawCutoffRule());
+        $cutoffAt = $source->getDrawCutoffAt();
+        $list->setDrawCutoffAt(null !== $cutoffAt ? clone $cutoffAt : null);
+        $list->setDrawAfterDurationHours($source->getDrawAfterDurationHours());
+        $list->setExternalPolicyUrl($source->getExternalPolicyUrl());
+        $list->setExternalForceOrdering($source->getExternalForceOrdering());
+        $list->setExternalPaymentByExternal($source->getExternalPaymentByExternal());
+        $list->setCustomMethodDescription($source->getCustomMethodDescription());
         $list->setPresenceTaken($source->isPresenceTaken());
         $list->setPromoted($source->isPromoted());
         // Carry the lineage forward so approval can migrate the live sign-ups onto this clone.

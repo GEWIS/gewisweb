@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Entity\Activity;
 
+use App\Entity\Activity\Enums\SignupFieldTypes;
+use App\Entity\Application\Enums\Languages;
 use App\Entity\Application\Traits\IdentifiableTrait;
 use App\Repository\Activity\SignupFieldValueRepository;
 use Doctrine\DBAL\Types\Types;
@@ -11,6 +13,7 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * SignupFieldValue model.
@@ -118,6 +121,21 @@ class SignupFieldValue
     public function setOption(?SignupOption $option): void
     {
         $this->option = $option;
+    }
+
+    /**
+     * The human-readable, localised value for display: yes/no answers are translated, choice answers resolve to the
+     * option's localised text, everything else is the raw string.
+     */
+    public function displayValue(
+        TranslatorInterface $translator,
+        Languages $language,
+    ): string {
+        return match ($this->getField()->getType()) {
+            SignupFieldTypes::YesNo => $translator->trans($this->getValue() ?? ''),
+            SignupFieldTypes::Choice => $this->getOption()?->getValue()->getText($language) ?? '',
+            default => $this->getValue() ?? '',
+        };
     }
 
     /**

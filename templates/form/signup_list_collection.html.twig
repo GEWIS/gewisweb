@@ -17,21 +17,49 @@
             <i class="fas fa-chevron-down signup-list-chevron"></i>
         </button>
         <div class="collapse show" id="{{ collapse_id }}">
-            <div class="panel-body">
+            <div class="panel-body" data-controller="signup-list">
                 <div class="row">
-                    {# General settings: opening/closing window and the flags. #}
                     <div class="col-md-3">
                         {{ form_row(child.openDate) }}
                         {{ form_row(child.closeDate) }}
                         {{ form_row(child.onlyGEWIS) }}
                         {{ form_row(child.displaySubscribedNumber) }}
-                        {{ form_row(child.limitedCapacity) }}
+                        {{ form_row(child.limitedCapacity, {'attr': {
+                            'data-signup-list-target': 'limited',
+                            'data-action': 'change->signup-list#apply',
+                        }}) }}
+                        <div data-signup-list-target="capacity">
+                            {{ form_row(child.capacity) }}
+                        </div>
                         {{ form_row(child.promoted) }}
                     </div>
-                    {# The translated content: the list name and its custom questions. #}
                     <div class="col-md-9">
                         {{ form_row(child.name) }}
                         {{ form_row(child.fields) }}
+                    </div>
+                </div>
+                {# Allocation method + its per-method settings; shown only when limited, and only the selected
+                   method's (and cutoff rule's) sub-fields, driven by the signup-list controller. #}
+                <div data-signup-list-target="methodBlock">
+                    {{ form_row(child.allocationMethod, {'attr': {
+                        'data-signup-list-target': 'method',
+                        'data-action': 'change->signup-list#apply',
+                    }}) }}
+                    <div data-signup-list-target="conditional">
+                        {{ form_row(child.drawCutoffRule, {'attr': {
+                            'data-signup-list-target': 'rule',
+                            'data-action': 'change->signup-list#apply',
+                        }}) }}
+                        <div data-signup-list-target="cutoffAt">{{ form_row(child.drawCutoffAt) }}</div>
+                        <div data-signup-list-target="durationHours">{{ form_row(child.drawAfterDurationHours) }}</div>
+                    </div>
+                    <div data-signup-list-target="external">
+                        {{ form_row(child.externalPolicyUrl) }}
+                        {{ form_row(child.externalForceOrdering) }}
+                        {{ form_row(child.externalPaymentByExternal) }}
+                    </div>
+                    <div data-signup-list-target="custom">
+                        {{ form_row(child.customMethodDescription) }}
                     </div>
                 </div>
                 {{ form_rest(child) }}

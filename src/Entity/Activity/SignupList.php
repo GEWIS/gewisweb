@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Entity\Activity;
 
+use App\Entity\Activity\Enums\AllocationMethod;
+use App\Entity\Activity\Enums\DrawCutoffRule;
 use App\Entity\Application\LocalisedText as LocalisedTextModel;
 use App\Entity\Application\Traits\IdentifiableTrait;
 use App\Entity\Decision\Member as MemberModel;
@@ -38,6 +40,15 @@ use Symfony\Component\Uid\Uuid;
  *     onlyGEWIS: bool,
  *     displaySubscribedNumber: bool,
  *     limitedCapacity: bool,
+ *     capacity: ?int,
+ *     allocationMethod: string,
+ *     drawCutoffRule: ?string,
+ *     drawCutoffAt: ?DateTime,
+ *     drawAfterDurationHours: ?int,
+ *     externalPolicyUrl: ?string,
+ *     externalForceOrdering: bool,
+ *     externalPaymentByExternal: bool,
+ *     customMethodDescription: ?string,
  *     fields: ImportedSignupFieldArrayType[],
  *     presenceTaken: bool,
  *     promoted: bool,
@@ -52,6 +63,15 @@ use Symfony\Component\Uid\Uuid;
  *     onlyGEWIS: bool,
  *     displaySubscribedNumber: bool,
  *     limitedCapacity: bool,
+ *     capacity: ?int,
+ *     allocationMethod: string,
+ *     drawCutoffRule: ?string,
+ *     drawCutoffAt: ?string,
+ *     drawAfterDurationHours: ?int,
+ *     externalPolicyUrl: ?string,
+ *     externalForceOrdering: bool,
+ *     externalPaymentByExternal: bool,
+ *     customMethodDescription: ?string,
  *     fields: ImportedSignupFieldGdprArrayType[],
  *     presenceTaken: bool,
  *     promoted: bool
@@ -140,6 +160,104 @@ class SignupList
      */
     #[Column(type: Types::BOOLEAN)]
     private bool $limitedCapacity = false;
+
+    /**
+     * The maximum number of admitted sign-ups when {@see self::$limitedCapacity} is set; null when unlimited.
+     * Subscribees to a limited list must first be drawn (admitted) up to this number before attendance can be taken.
+     */
+    #[Column(
+        type: Types::INTEGER,
+        nullable: true,
+    )]
+    private ?int $capacity = null;
+
+    /**
+     * When the admission draw was performed and locked, or null if it has not been drawn yet. A non-null value marks
+     * the draw as immutable: the bulk draw can no longer be re-run, only individual admissions adjusted. Mirrors the
+     * reviewer/reviewedAt audit on {@see \App\Entity\Application\AbstractRevision}.
+     */
+    #[Column(
+        type: Types::DATETIME_MUTABLE,
+        nullable: true,
+    )]
+    private ?DateTime $drawnAt = null;
+
+    /**
+     * The board member who performed (and locked) the draw, if any.
+     */
+    #[ManyToOne(targetEntity: MemberModel::class)]
+    #[JoinColumn(
+        referencedColumnName: 'lidnr',
+        nullable: true,
+    )]
+    private ?MemberModel $drawnBy = null;
+
+    /**
+     * How the limited places are allocated among subscribers (only meaningful when {@see self::$limitedCapacity}).
+     */
+    #[Column(
+        type: Types::STRING,
+        enumType: AllocationMethod::class,
+    )]
+    private AllocationMethod $allocationMethod = AllocationMethod::FirstComeFirstServed;
+
+    /**
+     * For an {@see AllocationMethod::ConditionalDraw}: when the draw should be performed.
+     */
+    #[Column(
+        type: Types::STRING,
+        nullable: true,
+        enumType: DrawCutoffRule::class,
+    )]
+    private ?DrawCutoffRule $drawCutoffRule = null;
+
+    /**
+     * For {@see DrawCutoffRule::IfFullBefore}: the moment the list must be full by.
+     */
+    #[Column(
+        type: Types::DATETIME_MUTABLE,
+        nullable: true,
+    )]
+    private ?DateTime $drawCutoffAt = null;
+
+    /**
+     * For {@see DrawCutoffRule::AfterDurationOpen}: how many hours after opening the draw happens.
+     */
+    #[Column(
+        type: Types::INTEGER,
+        nullable: true,
+    )]
+    private ?int $drawAfterDurationHours = null;
+
+    /**
+     * For an {@see AllocationMethod::ExternalParty}: a URL describing the external party's allocation policy.
+     */
+    #[Column(
+        type: Types::STRING,
+        nullable: true,
+    )]
+    private ?string $externalPolicyUrl = null;
+
+    /**
+     * For an {@see AllocationMethod::ExternalParty}: whether the external party dictates the ordering of admissions.
+     */
+    #[Column(type: Types::BOOLEAN)]
+    private bool $externalForceOrdering = false;
+
+    /**
+     * For an {@see AllocationMethod::ExternalParty}: whether payment is collected by the external party.
+     */
+    #[Column(type: Types::BOOLEAN)]
+    private bool $externalPaymentByExternal = false;
+
+    /**
+     * For a {@see AllocationMethod::Custom}: a free-form description of how places are allocated.
+     */
+    #[Column(
+        type: Types::TEXT,
+        nullable: true,
+    )]
+    private ?string $customMethodDescription = null;
 
     /**
      * All additional fields belonging to the activity.
@@ -308,6 +426,16 @@ class SignupList
     }
 
     /**
+     * Whether the sign-up period has ended. Not the inverse of {@see self::isOpen()}: a list before its open date is
+     * neither open nor closed. Drawing/admission only makes sense once subscriptions can no longer change, i.e. once
+     * this is true.
+     */
+    public function isClosed(): bool
+    {
+        return new DateTime('now') >= $this->getCloseDate();
+    }
+
+    /**
      * Returns true if this SignupList is only available to members of GEWIS.
      */
     public function getOnlyGEWIS(): bool
@@ -355,6 +483,130 @@ class SignupList
     public function setLimitedCapacity(bool $limitedCapacity): void
     {
         $this->limitedCapacity = $limitedCapacity;
+    }
+
+    /**
+     * The maximum number of admitted sign-ups (only meaningful when limited capacity); null when unlimited.
+     */
+    public function getCapacity(): ?int
+    {
+        return $this->capacity;
+    }
+
+    public function setCapacity(?int $capacity): void
+    {
+        $this->capacity = $capacity;
+    }
+
+    /**
+     * When the draw was performed and locked; null while not yet drawn. A non-null value means the draw is locked.
+     */
+    public function getDrawnAt(): ?DateTime
+    {
+        return $this->drawnAt;
+    }
+
+    public function setDrawnAt(?DateTime $drawnAt): void
+    {
+        $this->drawnAt = $drawnAt;
+    }
+
+    /**
+     * Whether the admission draw has been performed and locked.
+     */
+    public function isDrawLocked(): bool
+    {
+        return null !== $this->drawnAt;
+    }
+
+    public function getDrawnBy(): ?MemberModel
+    {
+        return $this->drawnBy;
+    }
+
+    public function setDrawnBy(?MemberModel $drawnBy): void
+    {
+        $this->drawnBy = $drawnBy;
+    }
+
+    public function getAllocationMethod(): AllocationMethod
+    {
+        return $this->allocationMethod;
+    }
+
+    public function setAllocationMethod(AllocationMethod $allocationMethod): void
+    {
+        $this->allocationMethod = $allocationMethod;
+    }
+
+    public function getDrawCutoffRule(): ?DrawCutoffRule
+    {
+        return $this->drawCutoffRule;
+    }
+
+    public function setDrawCutoffRule(?DrawCutoffRule $drawCutoffRule): void
+    {
+        $this->drawCutoffRule = $drawCutoffRule;
+    }
+
+    public function getDrawCutoffAt(): ?DateTime
+    {
+        return $this->drawCutoffAt;
+    }
+
+    public function setDrawCutoffAt(?DateTime $drawCutoffAt): void
+    {
+        $this->drawCutoffAt = $drawCutoffAt;
+    }
+
+    public function getDrawAfterDurationHours(): ?int
+    {
+        return $this->drawAfterDurationHours;
+    }
+
+    public function setDrawAfterDurationHours(?int $drawAfterDurationHours): void
+    {
+        $this->drawAfterDurationHours = $drawAfterDurationHours;
+    }
+
+    public function getExternalPolicyUrl(): ?string
+    {
+        return $this->externalPolicyUrl;
+    }
+
+    public function setExternalPolicyUrl(?string $externalPolicyUrl): void
+    {
+        $this->externalPolicyUrl = $externalPolicyUrl;
+    }
+
+    public function getExternalForceOrdering(): bool
+    {
+        return $this->externalForceOrdering;
+    }
+
+    public function setExternalForceOrdering(bool $externalForceOrdering): void
+    {
+        $this->externalForceOrdering = $externalForceOrdering;
+    }
+
+    public function getExternalPaymentByExternal(): bool
+    {
+        return $this->externalPaymentByExternal;
+    }
+
+    public function setExternalPaymentByExternal(bool $externalPaymentByExternal): void
+    {
+        $this->externalPaymentByExternal = $externalPaymentByExternal;
+    }
+
+    public function getCustomMethodDescription(): ?string
+    {
+        return $this->customMethodDescription;
+    }
+
+    public function setCustomMethodDescription(?string $customMethodDescription): void
+    {
+        $this->customMethodDescription = $customMethodDescription;
     }
 
     /**
@@ -454,6 +706,15 @@ class SignupList
             'onlyGEWIS' => $this->getOnlyGEWIS(),
             'displaySubscribedNumber' => $this->getDisplaySubscribedNumber(),
             'limitedCapacity' => $this->getLimitedCapacity(),
+            'capacity' => $this->getCapacity(),
+            'allocationMethod' => $this->getAllocationMethod()->value,
+            'drawCutoffRule' => $this->getDrawCutoffRule()?->value,
+            'drawCutoffAt' => $this->getDrawCutoffAt(),
+            'drawAfterDurationHours' => $this->getDrawAfterDurationHours(),
+            'externalPolicyUrl' => $this->getExternalPolicyUrl(),
+            'externalForceOrdering' => $this->getExternalForceOrdering(),
+            'externalPaymentByExternal' => $this->getExternalPaymentByExternal(),
+            'customMethodDescription' => $this->getCustomMethodDescription(),
             'presenceTaken' => $this->isPresenceTaken(),
             'promoted' => $this->isPromoted(),
             'fields' => $fieldsArrays,
@@ -479,6 +740,15 @@ class SignupList
             'onlyGEWIS' => $this->getOnlyGEWIS(),
             'displaySubscribedNumber' => $this->getDisplaySubscribedNumber(),
             'limitedCapacity' => $this->getLimitedCapacity(),
+            'capacity' => $this->getCapacity(),
+            'allocationMethod' => $this->getAllocationMethod()->value,
+            'drawCutoffRule' => $this->getDrawCutoffRule()?->value,
+            'drawCutoffAt' => $this->getDrawCutoffAt()?->format(DateTimeInterface::ATOM),
+            'drawAfterDurationHours' => $this->getDrawAfterDurationHours(),
+            'externalPolicyUrl' => $this->getExternalPolicyUrl(),
+            'externalForceOrdering' => $this->getExternalForceOrdering(),
+            'externalPaymentByExternal' => $this->getExternalPaymentByExternal(),
+            'customMethodDescription' => $this->getCustomMethodDescription(),
             'presenceTaken' => $this->isPresenceTaken(),
             'promoted' => $this->isPromoted(),
             'fields' => $fieldsArrays,

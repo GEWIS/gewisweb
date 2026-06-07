@@ -6,7 +6,6 @@ namespace App\Twig\Extensions;
 
 use App\Entity\Application\Enums\Languages;
 use App\Entity\Application\LocalisedText as LocalisedTextModel;
-use Locale;
 use Override;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -33,6 +32,6 @@ class LocaliseTextExtension extends AbstractExtension
 
     public function localiseText(LocalisedTextModel $localisedText): string
     {
-        return $localisedText->getText(Languages::fromLangParam(Locale::getDefault())) ?? '';
+        return $localisedText->getText(Languages::current()) ?? '';
     }
 }

@@ -27,9 +27,4 @@
       <code><![CDATA[new DateTimeImmutable()]]></code>
     </QueryBuilderSetParameter>
   </file>
-  <file src="src/Twig/Extensions/LocaliseTextExtension.php">
-    <ArgumentTypeCoercion>
-      <code><![CDATA[Locale::getDefault()]]></code>
-    </ArgumentTypeCoercion>
-  </file>
 </files>

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Entity\Activity;
 
 use App\Entity\Activity\Enums\SignupFieldTypes;
+use App\Entity\Application\Enums\Languages;
 use App\Entity\Application\Traits\IdentifiableTrait;
 use App\Entity\Application\Traits\TimestampableTrait;
 use App\Repository\Activity\SignupRepository;
@@ -21,6 +22,7 @@ use Doctrine\ORM\Mapping\InheritanceType;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Signup model.
@@ -90,10 +92,13 @@ abstract class Signup
     private bool $present = false;
 
     /**
-     * Determines if the user was drawn
+     * Whether this sign-up has been admitted (drawn). Defaults to false -- the safe default: on a limited-capacity
+     * list a sign-up starts on the waiting list until a draw admits it, so a creation path that forgets to set this
+     * can never silently bypass capacity. An unlimited list has no draw, so its creation path admits explicitly
+     * (drawn = !limitedCapacity); see ActivityFixture and the public subscribe flow.
      */
     #[Column(type: Types::BOOLEAN)]
-    private bool $drawn = true;
+    private bool $drawn = false;
 
     public function __construct()
     {
@@ -124,6 +129,28 @@ abstract class Signup
     public function getFieldValues(): Collection
     {
         return $this->fieldValues;
+    }
+
+    /**
+     * The formatted, localised answer this sign-up gave for a particular field, or an empty string if it has none.
+     */
+    public function displayValueForField(
+        SignupField $field,
+        TranslatorInterface $translator,
+        Languages $language,
+    ): string {
+        foreach ($this->getFieldValues() as $fieldValue) {
+            if ($fieldValue->getField()->getId() !== $field->getId()) {
+                continue;
+            }
+
+            return $fieldValue->displayValue(
+                $translator,
+                $language,
+            );
+        }
+
+        return '';
     }
 
     /**

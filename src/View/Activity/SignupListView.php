@@ -4,14 +4,10 @@ declare(strict_types=1);
 
 namespace App\View\Activity;
 
-use App\Entity\Activity\Enums\SignupFieldTypes;
-use App\Entity\Activity\Signup;
-use App\Entity\Activity\SignupField;
 use App\Entity\Activity\SignupList;
 use App\Entity\Activity\UserSignup;
 use App\Entity\Application\Enums\Languages;
 use DateTime;
-use Locale;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -30,6 +26,7 @@ final readonly class SignupListView
         public DateTime $openDate,
         public DateTime $closeDate,
         public bool $limitedCapacity,
+        public ?int $capacity,
         public bool $onlyGEWIS,
         public bool $displaySubscribedNumber,
         public bool $promoted,
@@ -48,9 +45,7 @@ final readonly class SignupListView
         ?int $viewerLidnr,
         TranslatorInterface $translator,
     ): self {
-        $language = 'nl' === Locale::getDefault()
-            ? Languages::Dutch
-            : Languages::English;
+        $language = Languages::current();
 
         $fields = $signupList->getFields()->toArray();
         $fieldNames = [];
@@ -82,9 +77,8 @@ final readonly class SignupListView
 
                     $cells[] = [
                         'hidden' => false,
-                        'value' => self::formatFieldValue(
+                        'value' => $signup->displayValueForField(
                             $field,
-                            $signup,
                             $translator,
                             $language,
                         ),
@@ -104,39 +98,16 @@ final readonly class SignupListView
             openDate: $signupList->getOpenDate(),
             closeDate: $signupList->getCloseDate(),
             limitedCapacity: $signupList->getLimitedCapacity(),
+            capacity: $signupList->getCapacity(),
             onlyGEWIS: $signupList->getOnlyGEWIS(),
             displaySubscribedNumber: $signupList->getDisplaySubscribedNumber(),
             promoted: $signupList->isPromoted(),
             isOpen: $signupList->isOpen(),
-            isClosed: $signupList->getCloseDate() < new DateTime('now'),
+            isClosed: $signupList->isClosed(),
             subscriberCount: $signupList->getSignUps()->count(),
             canViewDetails: $canViewDetails,
             fieldNames: $fieldNames,
             rows: $rows,
         );
-    }
-
-    /**
-     * Formats a sign-up field value by its type: 0 = text, 1 = yes/no (translated), 2 = number, 3 = option (localised).
-     */
-    private static function formatFieldValue(
-        SignupField $field,
-        Signup $signup,
-        TranslatorInterface $translator,
-        Languages $language,
-    ): string {
-        foreach ($signup->getFieldValues() as $fieldValue) {
-            if ($fieldValue->getField()->getId() !== $field->getId()) {
-                continue;
-            }
-
-            return match ($field->getType()) {
-                SignupFieldTypes::YesNo => $translator->trans($fieldValue->getValue() ?? ''),
-                SignupFieldTypes::Choice => $fieldValue->getOption()?->getValue()->getText($language) ?? '',
-                default => $fieldValue->getValue() ?? '',
-            };
-        }
-
-        return '';
     }
 }

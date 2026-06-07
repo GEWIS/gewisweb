@@ -3,7 +3,7 @@
     cursor: pointer;
 }
 
-// Sign-up list accordion on the activity view page: rotate the chevron when its section is expanded.
+// Sign-up list accordion (public activity view + admin sign-ups overview): rotate the chevron when expanded.
 .signup-list-chevron {
     transition: transform 0.2s ease;
     flex-shrink: 0;

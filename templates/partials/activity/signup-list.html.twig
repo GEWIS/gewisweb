@@ -5,13 +5,13 @@
             data-bs-toggle="collapse" data-bs-target="#{{ collapseId }}"
             aria-expanded="{{ open ? 'true' : 'false' }}" aria-controls="{{ collapseId }}">
         <span>
-            <span class="d-flex flex-wrap align-items-center gap-1">
+            <span class="d-flex flex-wrap align-items-center gap-1 mb-1">
                 <span class="h5 mb-0">{{ list.name }}</span>
                 {% if list.promoted %}
                     <i class="fas fa-star text-warning" title="{{ 'Promoted'|trans }}"></i>
                 {% endif %}
             </span>
-            <span class="d-flex flex-wrap align-items-center gap-1 mt-1">
+            <span class="d-flex flex-wrap align-items-center gap-1 mb-1">
                 {% if list.isOpen %}
                     <span class="badge badge-success">{{ 'Open'|trans }}</span>
                 {% elseif list.isClosed %}
@@ -20,13 +20,19 @@
                     <span class="badge badge-info">{{ 'Not yet open'|trans }}</span>
                 {% endif %}
                 {% if list.limitedCapacity %}
-                    <span class="badge badge-warning">{{ 'Limited capacity'|trans }}</span>
+                    <span class="badge badge-warning">
+                        {%- if list.capacity is not null -%}
+                            {{ 'Limited capacity (%capacity%)'|trans({'%capacity%': list.capacity}) }}
+                        {%- else -%}
+                            {{ 'Limited capacity'|trans }}
+                        {%- endif -%}
+                    </span>
                 {% endif %}
                 {% if list.onlyGEWIS %}
                     <span class="badge badge-tag">{{ 'GEWIS members only'|trans }}</span>
                 {% endif %}
             </span>
-            <small class="text-muted d-block mt-1">
+            <small class="text-muted d-block">
                 {{ 'Open from %open% until %close%.'|trans({
                     '%open%': list.openDate|format_datetime(pattern: 'EEE d MMM. yyyy HH:mm', locale: app.request.locale),
                     '%close%': list.closeDate|format_datetime(pattern: 'EEE d MMM. yyyy HH:mm', locale: app.request.locale),

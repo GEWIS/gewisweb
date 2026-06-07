@@ -25,6 +25,10 @@
         <source>Enter a start date and time.</source>
         <target state="translated">Voer een startdatum en -tijd in.</target>
       </trans-unit>
+      <trans-unit id="HTVqG9b" resname="Enter a valid URL (starting with http:// or https://).">
+        <source>Enter a valid URL (starting with http:// or https://).</source>
+        <target>Voer een geldige URL in (beginnend met http:// of https://).</target>
+      </trans-unit>
       <trans-unit id="vUFOGmp" resname="Enter an end date and time.">
         <source>Enter an end date and time.</source>
         <target state="translated">Voer een einddatum en -tijd in.</target>

@@ -39,6 +39,7 @@ framework:
             # Route your messages to the transports
             # 'App\Message\YourMessage': async
             'App\Message\User\PasswordResetRequestEmail': high_priority
+            'App\Message\Activity\OrganiserAnnouncementEmail': bulk
 
 when@test:
     framework:

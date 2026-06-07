@@ -107,6 +107,7 @@ abstract class AbstractRevisionComment
      * Enforce that a comment has exactly one author; never both and never neither.
      *
      * Should be registered as a callback on every concrete subclass via its
+     *
      * @see \Doctrine\ORM\Mapping\HasLifecycleCallbacks}.
      */
     #[PrePersist]

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity\Application\Enums;
 
+use Locale as IntlLocale;
 use Symfony\Component\Translation\TranslatableMessage;
 
 use function array_map;
@@ -74,6 +75,20 @@ enum Languages: string
     public static function fromLocale(string $locale): Languages
     {
         return self::fromLangParam(explode('_', $locale)[0]);
+    }
+
+    /**
+     * The language of the current request, derived from the active locale. The intl locale is a plain string, so the
+     * narrowing to a supported language happens here, once, instead of at every call site.
+     */
+    public static function current(): Languages
+    {
+        // The intl locale is a plain string, so match it here rather than coerce it into the strict fromLangParam():
+        // fall back to English for anything but Dutch, matching the behaviour the call sites previously hand-rolled.
+        return match (IntlLocale::getDefault()) {
+            'nl', 'nl_NL' => self::Dutch,
+            default => self::English,
+        };
     }
 
     public function label(): TranslatableMessage

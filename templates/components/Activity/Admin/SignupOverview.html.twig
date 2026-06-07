@@ -1,0 +1,417 @@
+<div{{ attributes }}>
+    {% if this.feedback %}
+        <div class="alert alert-{{ this.feedbackType }}">{{ this.feedback }}</div>
+    {% endif %}
+
+    {% set listViews = this.listViews %}
+    {% set canMark = this.canMarkPresence %}
+    {% set isBoard = this.isBoard %}
+    {% set admissionOpen = this.admissionOpen %}
+
+    {% if attendanceListId is not null %}
+        {# Attendance mode: a focused, mobile-first view for marking presence on a phone: a big search box and
+           full-width tappable rows (the whole row toggles present), instead of the cramped table toggle. #}
+        {% set list = listViews|filter(l => l.listId == attendanceListId)|first %}
+        {% if list %}
+            <div class="panel mb-3">
+                <div class="panel-heading d-flex flex-wrap justify-content-between align-items-center gap-2">
+                    <span class="d-flex flex-column">
+                        <span class="h5 mb-0">{{ 'Take attendance'|trans }}</span>
+                        <small class="text-muted">
+                            {{ list.name }} &middot;
+                            {{ 'Present: %count%'|trans({'%count%': list.presentCount}) }} / {{ list.limitedCapacity ? list.admittedCount : list.subscriberCount }}
+                        </small>
+                    </span>
+                    <button type="button" class="btn btn-gewis-primary btn-lg"
+                            data-action="live#action" data-live-action-param="exitAttendance">
+                        <i class="fas fa-check"></i> {{ 'Done'|trans }}
+                    </button>
+                </div>
+                <div class="panel-body">
+                    <input type="search" class="form-control form-control-lg mb-3"
+                           placeholder="{{ 'Search for a name or email'|trans }}"
+                           data-model="debounce(200)|filter" value="{{ filter }}">
+                    <div class="list-group">
+                        {# On a limited-capacity list you take attendance only of the admittees (drawn). #}
+                        {% set attendanceRows = list.limitedCapacity ? list.rows|filter(r => r.drawn) : list.rows %}
+                        {% for row in attendanceRows %}
+                            <button type="button"
+                                    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3{{ row.present ? ' list-group-item-success' }}"
+                                    data-action="live#action" data-live-action-param="togglePresent"
+                                    data-live-signup-id-param="{{ row.signupId }}">
+                                <span class="text-start">
+                                    <span class="fw-semibold fs-5">{{ row.fullName }}</span>
+                                    <small class="d-block text-muted">
+                                        {{ row.membershipTypeLabel }}{% if row.external %} &middot; {{ 'Non-member'|trans }}{% endif %}
+                                    </small>
+                                </span>
+                                <span class="fs-2 ms-2">
+                                    {% if row.present %}
+                                        <i class="fas fa-circle-check text-success"></i>
+                                    {% else %}
+                                        <i class="far fa-circle text-muted"></i>
+                                    {% endif %}
+                                </span>
+                            </button>
+                        {% else %}
+                            <div class="text-center text-muted py-4">{{ 'No sign-ups found.'|trans }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% else %}
+        <div class="panel mb-3">
+            <div class="panel-body">
+                <label class="form-label" for="signup-filter">{{ 'Filter by name or email'|trans }}</label>
+                <input type="search" class="form-control" id="signup-filter"
+                       placeholder="{{ 'Filter by name or email'|trans }}"
+                       data-model="debounce(300)|filter" value="{{ filter }}">
+                {% if not canMark %}
+                    <small class="text-muted d-block mt-2">
+                        <i class="fas fa-info-circle"></i>
+                        {{ 'Attendance can only be marked from 30 minutes before the activity until a day after it ends.'|trans }}
+                    </small>
+                {% endif %}
+            </div>
+        </div>
+
+        {% for list in listViews %}
+            {# External-party/custom lists are admitted by hand (no draw, no lock). #}
+            {% set isManual = list.allocationMethod.isManual %}
+            {% set collapseId = 'signup-list-' ~ list.listId %}
+            <div class="panel mb-3">
+                {# Client-side Bootstrap collapse, matching the public activity view
+                   (templates/partials/activity/signup-list.html.twig): the rotating chevron and the smooth toggle are
+                   pure Bootstrap with no live round-trip. An open list survives the live re-renders triggered by the
+                   actions below because the component's ExternalMutationTracker re-applies the client-added
+                   `show`/`collapsed` classes across each DOM morph. #}
+                <button type="button"
+                        class="panel-heading signup-list-heading d-flex justify-content-between align-items-start gap-2 w-100 border-0 bg-transparent text-start collapsed"
+                        data-bs-toggle="collapse" data-bs-target="#{{ collapseId }}"
+                        aria-expanded="false" aria-controls="{{ collapseId }}">
+                    <span>
+                        <span class="d-flex flex-wrap align-items-center gap-1 mb-1">
+                            <span class="h5 mb-0">{{ list.name }}</span>
+                            {% if list.promoted %}
+                                <i class="fas fa-star text-warning" title="{{ 'Promoted'|trans }}"></i>
+                            {% endif %}
+                        </span>
+                        <span class="d-flex flex-wrap align-items-center gap-1 ">
+                            {% if list.isOpen %}
+                                <span class="badge badge-success">{{ 'Open'|trans }}</span>
+                            {% elseif list.isClosed %}
+                                <span class="badge badge-danger">{{ 'Closed'|trans }}</span>
+                            {% else %}
+                                <span class="badge badge-info">{{ 'Not yet open'|trans }}</span>
+                            {% endif %}
+                            {% if list.limitedCapacity %}
+                                <span class="badge badge-warning">
+                                    {%- if list.capacity is not null -%}
+                                        {{ 'Limited capacity (%capacity%)'|trans({'%capacity%': list.capacity}) }}
+                                    {%- else -%}
+                                        {{ 'Limited capacity'|trans }}
+                                    {%- endif -%}
+                                </span>
+                            {% endif %}
+                            <span class="badge badge-secondary">
+                                {{ 'Sign-ups: %count%'|trans({'%count%': list.subscriberCount}) }}
+                            </span>
+                            {% if list.limitedCapacity and list.drawLocked %}
+                                <span class="badge {{ list.capacity is not null and list.admittedCount > list.capacity ? 'badge-danger' : 'badge-info' }}">
+                                    {{ 'Admitted: %admitted% / %capacity%'|trans({'%admitted%': list.admittedCount, '%capacity%': list.capacity ?? '?'}) }}
+                                </span>
+                            {% endif %}
+                            {% if list.presenceTaken %}
+                                <span class="badge badge-success">
+                                    {{ 'Present: %count%'|trans({'%count%': list.presentCount}) }}
+                                </span>
+                            {% endif %}
+                            {% if list.onlyGEWIS %}
+                                <span class="badge badge-tag">{{ 'GEWIS members only'|trans }}</span>
+                            {% endif %}
+                        </span>
+                    </span>
+                    <i class="fas fa-chevron-down signup-list-chevron"></i>
+                </button>
+                <div class="collapse" id="{{ collapseId }}">
+                    <div class="panel-body border-bottom">
+                        <dl class="row mb-0 small">
+                            <dt class="col-sm-4 col-lg-3">{{ 'Sign-up window'|trans }}</dt>
+                            <dd class="col-sm-8 col-lg-9 mb-2">
+                                {{ 'Open from %open% until %close%.'|trans({
+                                    '%open%': list.openDate|format_datetime(pattern: 'EEE d MMM. yyyy HH:mm', locale: app.request.locale),
+                                    '%close%': list.closeDate|format_datetime(pattern: 'EEE d MMM. yyyy HH:mm', locale: app.request.locale),
+                                }) }}
+                            </dd>
+                            <dt class="col-sm-4 col-lg-3">{{ 'Subscriber count shown publicly'|trans }}</dt>
+                            <dd class="col-sm-8 col-lg-9 mb-2">{{ list.displaySubscribedNumber ? 'Yes'|trans : 'No'|trans }}</dd>
+                        </dl>
+                    </div>
+
+                    <div class="panel-body border-bottom d-flex flex-wrap align-items-center gap-2">
+                        {% if canMark %}
+                            <button type="button" class="btn btn-sm btn-success"
+                                    data-action="live#action" data-live-action-param="enterAttendance"
+                                    data-live-list-id-param="{{ list.listId }}">
+                                <i class="fas fa-clipboard-check"></i> {{ 'Take attendance'|trans }}
+                            </button>
+                        {% endif %}
+                        <button type="button" class="btn btn-sm btn-outline-secondary"
+                                data-action="live#action" data-live-action-param="selectAll"
+                                data-live-list-id-param="{{ list.listId }}">
+                            {{ 'Select all'|trans }}
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary"
+                                data-action="live#action" data-live-action-param="clearSelection"
+                                data-live-list-id-param="{{ list.listId }}">
+                            {{ 'Clear selection'|trans }}
+                        </button>
+                        <button type="button" class="btn btn-sm btn-gewis-primary"
+                                data-action="live#action" data-live-action-param="openComposer"
+                                data-live-list-id-param="{{ list.listId }}">
+                            <i class="fas fa-envelope"></i> {{ 'Email sign-ups'|trans }}
+                        </button>
+                        {% if list.fieldColumns is not empty %}
+                            {# Per-list column chooser: hide custom-field columns that clutter a wide table. Toggling
+                               re-renders the component; the dropdown stays open thanks to data-bs-auto-close="outside"
+                               plus the live component's ExternalMutationTracker preserving Bootstrap's `show` across
+                               the DOM morph. #}
+                            <div class="dropdown ms-auto">
+                                <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle"
+                                        data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                                    <i class="fas fa-table-columns"></i> {{ 'Columns'|trans }}
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end p-2">
+                                    {% for field in list.fieldColumns %}
+                                        <li>
+                                            <label class="dropdown-item d-flex align-items-center gap-2 mb-0">
+                                                <input type="checkbox" class="form-check-input mt-0"
+                                                       {{ field.hidden ? '' : 'checked' }}
+                                                       data-action="live#action" data-live-action-param="toggleFieldColumn"
+                                                       data-live-field-id-param="{{ field.id }}">
+                                                {{ field.name }}
+                                            </label>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                {% if list.limitedCapacity %}
+                    {# Admission is driven by the allocation method: first-come and conditional-draw run a board draw
+                       that auto-locks (once sign-up closes, up to a day after the activity ends); external-party and
+                       custom are admitted by hand. After a draw (or for a manual method) board and organisers adjust
+                       individuals over the same window. #}
+                    {% set isFcfs = list.allocationMethod.value == 'first-come-first-served' %}
+                    {% set drawAction = isFcfs ? 'drawFirstCome' : 'drawLottery' %}
+                    {% set drawIcon = isFcfs ? 'fa-list-ol' : 'fa-dice' %}
+                    {% set drawLabel = isFcfs ? 'First-come-first-served'|trans : 'Random draw'|trans %}
+                    {% set drawReady = list.isClosed and admissionOpen and list.capacity is not null %}
+                    {% set drawConfirm = 'Run the draw now? This admits people up to capacity and it cannot be undone.'|trans %}
+                    <div class="panel-body border-bottom">
+                        <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+                            <span class="d-flex flex-wrap align-items-center gap-2">
+                                <strong>{{ 'Admission'|trans }}</strong>
+                                <span class="badge badge-tag">{{ list.allocationMethod|trans }}</span>
+                                <span class="badge {{ list.capacity is not null and list.admittedCount > list.capacity ? 'badge-danger' : 'badge-secondary' }}">
+                                    {{ 'Admitted: %admitted% / %capacity%'|trans({'%admitted%': list.admittedCount, '%capacity%': list.capacity ?? '∞'}) }}
+                                </span>
+                            </span>
+                            {% if list.drawLocked or isManual %}
+                                <span class="d-flex flex-wrap gap-2">
+                                    <button type="button" class="btn btn-sm btn-outline-gewis-primary"
+                                            data-action="live#action" data-live-action-param="openComposer"
+                                            data-live-list-id-param="{{ list.listId }}" data-live-scope-param="admitted">
+                                        <i class="fas fa-envelope"></i> {{ 'Email admittees'|trans }}
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary"
+                                            data-action="live#action" data-live-action-param="openComposer"
+                                            data-live-list-id-param="{{ list.listId }}" data-live-scope-param="waitlisted">
+                                        <i class="fas fa-envelope"></i> {{ 'Email the waiting list'|trans }}
+                                    </button>
+                                </span>
+                            {% elseif isBoard %}
+                                <button type="button" class="btn btn-sm btn-outline-gewis-primary" {{ drawReady ? '' : 'disabled' }}
+                                        data-bs-toggle="modal" data-bs-target="#confirm-modal"
+                                        data-confirm-title="{{ 'Run the draw?'|trans }}"
+                                        data-confirm-message="{{ drawConfirm }}"
+                                        data-confirm-label="{{ 'Run the draw'|trans }}"
+                                        data-confirm-live-action="{{ drawAction }}"
+                                        data-confirm-live-args='{"listId": {{ list.listId }}}'>
+                                    <i class="fas {{ drawIcon }}"></i> {{ drawLabel }}
+                                </button>
+                            {% endif %}
+                        </div>
+                        <small class="text-muted d-block mt-2">
+                            {% if isManual %}
+                                {{ admissionOpen ? 'Admit people by hand with the toggles below.'|trans : 'Admission is closed.'|trans }}
+                            {% elseif list.drawLocked %}
+                                {{ 'Drawn by %name% on %date%.'|trans({
+                                    '%name%': list.drawnByName ?? '?',
+                                    '%date%': list.drawnAt ? list.drawnAt|format_datetime(pattern: 'd MMM yyyy HH:mm', locale: app.request.locale) : '',
+                                }) }}
+                                {{ admissionOpen ? 'You can still admit from the waiting list or remove a no-show until shortly after the activity.'|trans : 'Admission is closed.'|trans }}
+                            {% elseif not isBoard %}
+                                {{ 'Waiting for the board to perform the draw.'|trans }}
+                            {% elseif not list.isClosed %}
+                                {{ 'The draw can be run once sign-up has closed.'|trans }}
+                            {% elseif not admissionOpen %}
+                                {{ 'Admission is closed.'|trans }}
+                            {% else %}
+                                {{ 'Running the draw admits people up to capacity and locks it; you can adjust individuals afterwards.'|trans }}
+                            {% endif %}
+                        </small>
+                    </div>
+                {% endif %}
+
+                {% if composingListId == list.listId %}
+                    <div class="panel-body border-bottom">
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <div class="form-floating">
+                                    <select class="form-select" id="email-scope-{{ list.listId }}" data-model="norender|scope">
+                                        {% for option in this.getRecipientScopes(list.limitedCapacity) %}
+                                            <option value="{{ option.value }}" {% if this.scope == option.value %}selected{% endif %}>
+                                                {{ option|trans }}{% if option.value == 'selected' %} ({{ list.selectedCount }}){% endif %}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                    <label for="email-scope-{{ list.listId }}">{{ 'Recipients'|trans }}</label>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="email-subject-{{ list.listId }}" required
+                                           placeholder="{{ 'Subject'|trans }}"
+                                           data-model="norender|emailSubject" value="{{ emailSubject }}">
+                                    <label for="email-subject-{{ list.listId }}">{{ 'Subject'|trans }} <span class="text-danger" aria-hidden="true">*</span></label>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-floating">
+                                    {# Floating-label textareas need an explicit height (rows is ignored once floating). #}
+                                    <textarea class="form-control" id="email-body-{{ list.listId }}" required
+                                              placeholder="{{ 'Message'|trans }}" style="height: 160px;"
+                                              data-model="norender|emailBody">{{ emailBody }}</textarea>
+                                    <label for="email-body-{{ list.listId }}">{{ 'Message'|trans }} <span class="text-danger" aria-hidden="true">*</span></label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 d-flex justify-content-end gap-2">
+                                <button type="button" class="btn btn-outline-secondary"
+                                        data-action="live#action" data-live-action-param="closeComposer">
+                                    {{ 'Cancel'|trans }}
+                                </button>
+                                <button type="button" class="btn btn-gewis-primary"
+                                        data-bs-toggle="modal" data-bs-target="#confirm-modal"
+                                        data-confirm-title="{{ 'Send this email?'|trans }}"
+                                        data-confirm-message="{{ 'The selected recipients will receive this email immediately. This cannot be undone.'|trans }}"
+                                        data-confirm-label="{{ 'Send'|trans }}"
+                                        data-confirm-live-action="sendEmail"
+                                        data-confirm-live-args='{"listId": {{ list.listId }}}'>
+                                    <i class="fas fa-paper-plane"></i> {{ 'Send'|trans }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>#</th>
+                                    <th>{{ 'Name'|trans }}</th>
+                                    <th>{{ 'Type'|trans }}</th>
+                                    <th>{{ 'Generation'|trans }}</th>
+                                    <th>{{ 'Signed up at'|trans }}</th>
+                                    {% for field in list.fieldColumns %}
+                                        {% if not field.hidden %}
+                                            <th>{{ field.name }}</th>
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% if list.limitedCapacity %}
+                                        <th class="text-center">{{ 'Admitted'|trans }}</th>
+                                    {% endif %}
+                                    <th class="text-center">{{ 'Present'|trans }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for row in list.rows %}
+                                    <tr>
+                                        <td>
+                                            <input type="checkbox" class="form-check-input" data-model="selected"
+                                                   value="{{ row.signupId }}" {{ row.signupId in selected ? 'checked' }}>
+                                        </td>
+                                        <td>{{ row.position }}</td>
+                                        <td>
+                                            {{ row.fullName }}
+                                            {% if list.limitedCapacity and not row.drawn %}
+                                                <span class="badge badge-secondary">{{ 'Waiting list'|trans }}</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {{ row.membershipTypeLabel }}
+                                            {% if row.external %}
+                                                <span class="badge badge-tag">{{ 'Non-member'|trans }}</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ row.generation ?? ('N/A'|trans) }}</td>
+                                        <td class="text-muted small">
+                                            {{ row.signedUpAt|format_datetime(pattern: 'd MMM yyyy HH:mm', locale: app.request.locale) }}
+                                        </td>
+                                        {% for field in list.fieldColumns %}
+                                            {% if not field.hidden %}
+                                                <td>{{ row.cells[loop.index0].value }}</td>
+                                            {% endif %}
+                                        {% endfor %}
+                                        {% if list.limitedCapacity %}
+                                            <td class="text-center">
+                                                <div class="form-check form-switch d-inline-block mb-0">
+                                                    {# Manual admit/un-admit once the draw is locked (or for a manual method), until shortly after the activity. #}
+                                                    <input class="form-check-input" type="checkbox"
+                                                           {{ row.drawn ? 'checked' }} {{ ((list.drawLocked or isManual) and admissionOpen) ? '' : 'disabled' }}
+                                                           aria-label="{{ 'Admitted'|trans }}"
+                                                           data-action="live#action"
+                                                           data-live-action-param="toggleAdmission"
+                                                           data-live-signup-id-param="{{ row.signupId }}">
+                                                </div>
+                                            </td>
+                                        {% endif %}
+                                        <td class="text-center">
+                                            <div class="form-check form-switch d-inline-block mb-0">
+                                                {# Present requires admission on a limited list; disabled until drawn. #}
+                                                <input class="form-check-input" type="checkbox"
+                                                       {{ row.present ? 'checked' }} {{ (canMark and (not list.limitedCapacity or row.drawn)) ? '' : 'disabled' }}
+                                                       aria-label="{{ 'Present'|trans }}"
+                                                       data-action="live#action"
+                                                       data-live-action-param="togglePresent"
+                                                       data-live-signup-id-param="{{ row.signupId }}">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="{{ (list.limitedCapacity ? 8 : 7) + list.visibleFieldCount }}" class="text-center text-muted py-3">
+                                            {{ 'No sign-ups yet.'|trans }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="panel mb-3">
+                <div class="panel-body text-center text-muted py-4">
+                    {{ 'This activity has no sign-up lists.'|trans }}
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
