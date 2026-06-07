@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\View\User\Admin;
+namespace App\ViewModel\User\Admin;
 
 use App\Entity\User\CompanyUser;
 

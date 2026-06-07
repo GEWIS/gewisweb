@@ -17,7 +17,7 @@ use App\Entity\User\User;
 use App\Message\Activity\OrganiserAnnouncementEmail;
 use App\Security\Application\RevisionVoter;
 use App\Service\Activity\SignupAdminWindow;
-use App\View\Activity\Admin\SignupAdminListView;
+use App\ViewModel\Activity\Admin\SignupAdminListView;
 use DateTime;
 use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\EntityManagerInterface;

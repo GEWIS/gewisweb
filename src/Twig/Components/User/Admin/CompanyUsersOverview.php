@@ -7,7 +7,7 @@ namespace App\Twig\Components\User\Admin;
 use App\Entity\User\CompanyUser;
 use App\Entity\User\Enums\UserRoles;
 use App\Repository\User\CompanyUserRepository;
-use App\View\User\Admin\CompanyUserRow;
+use App\ViewModel\User\Admin\CompanyUserRow;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;

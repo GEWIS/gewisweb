@@ -8,7 +8,7 @@ use App\Entity\Application\Enums\Languages;
 use App\Entity\User\Enums\UserRoles;
 use App\Entity\User\User;
 use App\Repository\Activity\ActivityRepository;
-use App\View\Activity\SignupListView;
+use App\ViewModel\Activity\SignupListView;
 use Locale;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;

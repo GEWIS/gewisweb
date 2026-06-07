@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\View\Activity;
+namespace App\ViewModel\Activity;
 
 use App\Entity\Activity\SignupList;
 use App\Entity\Activity\UserSignup;

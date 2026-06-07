@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\View\Activity\Admin;
+namespace App\ViewModel\Activity\Admin;
 
 use App\Entity\Activity\Enums\AllocationMethod;
 use App\Entity\Activity\SignupList;
@@ -17,7 +17,7 @@ use function trim;
 
 /**
  * Read-model of one {@see SignupList} for the admin sign-ups page. The privileged counterpart of
- * {@see \App\View\Activity\SignupListView}: it exposes every subscriber with their contact details, membership type,
+ * {@see \App\ViewModel\Activity\SignupListView}: it exposes every subscriber with their contact details, membership type,
  * attendance/admission flags and all field answers (no sensitivity masking), so the Twig stays free of
  * permission/`instanceof`/formatting logic.
  */

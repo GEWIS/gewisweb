@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\View\Activity\Admin;
+namespace App\ViewModel\Activity\Admin;
 
 use App\Entity\Activity\Activity;
 use App\Entity\Application\Enums\RevisionStatus;

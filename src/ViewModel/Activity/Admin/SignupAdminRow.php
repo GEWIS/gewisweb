@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\View\Activity\Admin;
+namespace App\ViewModel\Activity\Admin;
 
 use DateTime;
 
 /**
  * A single subscriber row in the admin sign-ups table. This is the privileged superset of
- * {@see \App\View\Activity\SignupRow}: it carries the contact details, membership type, attendance/admission flags and
+ * {@see \App\ViewModel\Activity\SignupRow}: it carries the contact details, membership type, attendance/admission flags and
  * every field answer (no sensitive-field masking, as this screen is organiser/board-only).
  */
 final readonly class SignupAdminRow

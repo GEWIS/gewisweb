@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\View\Activity;
+namespace App\ViewModel\Activity;
 
 /**
  * A single row in the read-only "current subscriptions" table of a sign-up list.
