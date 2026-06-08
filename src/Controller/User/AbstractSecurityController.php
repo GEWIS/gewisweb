@@ -20,6 +20,7 @@ use App\Security\User\BackupCodeManager;
 use App\Security\User\HandlerRegistry;
 use App\Security\User\MfaPolicy;
 use App\Security\User\SudoMode;
+use App\Service\Application\AltchaSolutionGuard;
 use App\Service\User\SessionManager;
 use DateInterval;
 use DateTime;
@@ -113,6 +114,7 @@ abstract class AbstractSecurityController extends AbstractController
         #[Autowire(service: 'limiter.password_reset_credentials')]
         RateLimiterFactory $passwordResetCredentialsLimiter,
         MessageBusInterface $bus,
+        AltchaSolutionGuard $altchaSolutionGuard,
     ): Response {
         $form = $this->createForm(
             PasswordResetRequestFormType::class,
@@ -131,6 +133,17 @@ abstract class AbstractSecurityController extends AbstractController
                     'type' => $this->userType,
                 ],
             );
+        }
+
+        // Single-use: the local Altcha validator accepts a solved proof-of-work repeatedly within its signature
+        // window, so reject a replay even though the captcha just validated.
+        if (!$altchaSolutionGuard->consume(strval($form->get('security')->getData()))) {
+            $this->addFlash(
+                AlertTypes::Danger->value,
+                $this->translator->trans('Please complete the verification again and resubmit.'),
+            );
+
+            return $this->redirectToRoute($this->routePrefix . 'forgot_password');
         }
 
         // Consume both limiters at the same time. To ensure that if an IP gets limited, the credentials also gets
