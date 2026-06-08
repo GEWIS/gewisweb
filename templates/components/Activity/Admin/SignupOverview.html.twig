@@ -172,6 +172,14 @@
                                 data-live-list-id-param="{{ list.listId }}">
                             <i class="fas fa-envelope"></i> {{ 'Email sign-ups'|trans }}
                         </button>
+                        {% if list.isOpen %}
+                            {# Manual external add is a normal page (it carries the dynamic sign-up form); a redirect back
+                               here refreshes this component. #}
+                            <a class="btn btn-sm btn-outline-success"
+                               href="{{ path('admin/activities/add_external_signup', {'activity': this.activity.getId, 'signupList': list.listId}) }}">
+                                <i class="fas fa-user-plus"></i> {{ 'Add external participant'|trans }}
+                            </a>
+                        {% endif %}
                         {% if list.fieldColumns is not empty %}
                             {# Per-list column chooser: hide custom-field columns that clutter a wide table. Toggling
                                re-renders the component; the dropdown stays open thanks to data-bs-auto-close="outside"

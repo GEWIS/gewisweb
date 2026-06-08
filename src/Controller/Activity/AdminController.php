@@ -8,14 +8,18 @@ use App\Entity\Activity\Activity;
 use App\Entity\Activity\ActivityLocalisedText;
 use App\Entity\Activity\ActivityRevision;
 use App\Entity\Activity\Enums\ActivityCategories;
+use App\Entity\Activity\SignupList;
 use App\Entity\Application\Enums\AlertTypes;
 use App\Entity\Application\Enums\RevisionStatus;
 use App\Entity\User\Enums\UserRoles;
 use App\Entity\User\User;
 use App\Form\Activity\ActivityType;
+use App\Form\Activity\SignupType;
 use App\Repository\Activity\ActivityRevisionCommentRepository;
+use App\Repository\Activity\ExternalSignupRepository;
 use App\Security\Application\RevisionVoter;
 use App\Service\Activity\SignupAdminWindow;
+use App\Service\Activity\SignupManager;
 use App\Service\Application\EditLockService;
 use App\Workflow\RevisionClonerRegistry;
 use DateTime;
@@ -453,6 +457,137 @@ class AdminController extends AbstractController
         return $this->render(
             'activity/admin/signups.html.twig',
             ['activity' => $activity],
+        );
+    }
+
+    /**
+     * Manually add an external (non-member) participant to a sign-up list, for an organiser or the board. Reuses the
+     * public sign-up form (organiser mode: name + e-mail + the list's fields, but no captcha and no agreement
+     * checkbox) and creates the sign-up already-verified (no double opt-in e-mail). Allowed only while the list is
+     * open, mirroring the public sign-up window.
+     */
+    #[Route(
+        path: '/{activity}/signups/{signupList}/add-external',
+        name: 'add_external_signup',
+        requirements: [
+            'activity' => '\d+',
+            'signupList' => '\d+',
+        ],
+        methods: [
+            'GET',
+            'POST',
+        ],
+    )]
+    public function addExternalSignup(
+        Activity $activity,
+        SignupList $signupList,
+        Request $request,
+        SignupManager $signupManager,
+        ExternalSignupRepository $externalSignupRepository,
+    ): Response {
+        $this->denyAccessUnlessGranted(
+            RevisionVoter::VIEW,
+            $activity,
+        );
+
+        // The list must be this activity's publicly live list; a crafted id must not reach a draft or another activity.
+        if (
+            $signupList->getActivity() !== $activity
+            || $activity->getLiveRevision() !== $signupList->getRevision()
+        ) {
+            throw $this->createNotFoundException();
+        }
+
+        if (!$signupList->isOpen()) {
+            $this->addFlash(
+                AlertTypes::Warning->value,
+                $this->translator->trans('This sign-up list is not open, so you cannot add a participant.'),
+            );
+
+            return $this->redirectToRoute(
+                'admin/activities/signups',
+                ['activity' => $activity->getId()],
+            );
+        }
+
+        // Externals must never land on a members-only list (the public guest path rejects this too).
+        if ($signupList->getOnlyGEWIS()) {
+            $this->addFlash(
+                AlertTypes::Warning->value,
+                $this->translator->trans(
+                    'This sign-up list is for GEWIS members only, so you cannot add an external participant.',
+                ),
+            );
+
+            return $this->redirectToRoute(
+                'admin/activities/signups',
+                ['activity' => $activity->getId()],
+            );
+        }
+
+        $form = $this->createForm(
+            SignupType::class,
+            null,
+            [
+                'signupList' => $signupList,
+                'mode' => SignupType::MODE_ORGANISER,
+            ],
+        )->handleRequest($request);
+
+        if (
+            $form->isSubmitted()
+            && $form->isValid()
+        ) {
+            /** @var array<string, mixed> $data */
+            $data = $form->getData();
+            $email = strval($data['email'] ?? '');
+
+            // Mirror the public path: do not create a second sign-up for an address already on this list.
+            if (
+                null !== $externalSignupRepository->findOneByListAndEmail(
+                    $signupList,
+                    $email,
+                )
+            ) {
+                $this->addFlash(
+                    AlertTypes::Warning->value,
+                    $this->translator->trans('Someone with this e-mail address is already signed up for this list.'),
+                );
+
+                return $this->redirectToRoute(
+                    'admin/activities/signups',
+                    ['activity' => $activity->getId()],
+                );
+            }
+
+            $signupManager->addExternalSignupByOrganiser(
+                $signupList,
+                strval($data['fullName'] ?? ''),
+                $email,
+                SignupType::extractFieldData(
+                    $signupList,
+                    $data,
+                ),
+            );
+
+            $this->addFlash(
+                AlertTypes::Success->value,
+                $this->translator->trans('The external participant has been added.'),
+            );
+
+            return $this->redirectToRoute(
+                'admin/activities/signups',
+                ['activity' => $activity->getId()],
+            );
+        }
+
+        return $this->render(
+            'activity/admin/add-external-signup.html.twig',
+            [
+                'form' => $form,
+                'activity' => $activity,
+                'signupList' => $signupList,
+            ],
         );
     }
 

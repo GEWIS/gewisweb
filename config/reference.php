@@ -2075,6 +2075,35 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     enable_secret_generation?: bool|Param, // Default: true
  *     secret?: scalar|Param|null, // Default: null
  * }
+ * @psalm-type AltchaConfig = array{
+ *     enable?: bool|Param, // Default: true
+ *     floating?: bool|Param, // Default: false
+ *     overlay?: array{
+ *         enabled?: bool|Param, // Default: false
+ *         content?: scalar|Param|null, // CSS selector for overlay content // Default: null
+ *     },
+ *     use_stimulus?: bool|Param|null, // Default: null
+ *     cost?: int|Param, // Default: 5000
+ *     counter_min?: int|Param, // Default: 5000
+ *     counter_max?: int|Param, // Default: 10000
+ *     timeout?: float|Param, // Default: 30.0
+ *     max_number?: int|Param, // Deprecated: The "max_number" option is deprecated and will be removed. // Default: 100000
+ *     expires?: scalar|Param|null, // Default: "+15 minute"
+ *     include_script?: bool|Param|null, // Default: null
+ *     hide_logo?: bool|Param, // Default: false
+ *     hide_footer?: bool|Param, // Default: false
+ *     altcha_js_path?: scalar|Param|null, // Default: "https://cdn.jsdelivr.net/npm/altcha/dist/main/altcha.min.js"
+ *     altcha_js_i18n_path?: scalar|Param|null, // Default: "https://cdn.jsdelivr.net/npm/altcha/dist/i18n/all.min.js"
+ *     hmacKey?: scalar|Param|null, // Deprecated: The "hmacKey" option is deprecated, use "hmacSignature" instead. // Default: null
+ *     hmacAlgorithm?: scalar|Param|null, // Default: "SHA-256"
+ *     hmacSignature?: scalar|Param|null,
+ *     hmacKeySignature?: scalar|Param|null, // Default: null
+ *     sentinel?: bool|array{ // Enable usage of sentinel, if enabled: - the widget will use the /v1/challenge endpoint to retrieve a new challenge instead of your app; - the challenge resolution will be validated againt /v1/verify/signature endpoint that ensure protection againt replay attacks; - the hmacKey provided in configuration is not used anymore. More information available at https://altcha.org/docs/v2/server-integration/
+ *         enabled?: bool|Param, // Default: false
+ *         base_url?: scalar|Param|null, // Your sentinel instance url, eg: https://sentinel.example.com
+ *         api_key?: scalar|Param|null, // Your sentinel client api key
+ *     },
+ * }
  * @psalm-type ConfigType = array{
  *     imports?: ImportsConfig,
  *     parameters?: ParametersConfig,
@@ -2098,6 +2127,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     scheb_two_factor?: SchebTwoFactorConfig,
  *     endroid_qr_code?: EndroidQrCodeConfig,
  *     ambta_doctrine_encrypt?: AmbtaDoctrineEncryptConfig,
+ *     altcha?: AltchaConfig,
  *     "when@dev"?: array{
  *         imports?: ImportsConfig,
  *         parameters?: ParametersConfig,
@@ -2124,6 +2154,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         scheb_two_factor?: SchebTwoFactorConfig,
  *         endroid_qr_code?: EndroidQrCodeConfig,
  *         ambta_doctrine_encrypt?: AmbtaDoctrineEncryptConfig,
+ *         altcha?: AltchaConfig,
  *     },
  *     "when@prod"?: array{
  *         imports?: ImportsConfig,
@@ -2148,6 +2179,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         scheb_two_factor?: SchebTwoFactorConfig,
  *         endroid_qr_code?: EndroidQrCodeConfig,
  *         ambta_doctrine_encrypt?: AmbtaDoctrineEncryptConfig,
+ *         altcha?: AltchaConfig,
  *     },
  *     "when@test"?: array{
  *         imports?: ImportsConfig,
@@ -2173,6 +2205,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         scheb_two_factor?: SchebTwoFactorConfig,
  *         endroid_qr_code?: EndroidQrCodeConfig,
  *         ambta_doctrine_encrypt?: AmbtaDoctrineEncryptConfig,
+ *         altcha?: AltchaConfig,
  *     },
  *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias
  *         imports?: ImportsConfig,

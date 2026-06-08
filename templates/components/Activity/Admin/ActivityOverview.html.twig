@@ -79,7 +79,7 @@
                                             </a>
                                         {% endif %}
                                         <a href="{{ path('admin/activities/edit', {'activity': row.id}) }}"
-                                           class="btn btn-sm btn-outline-primary">
+                                           class="btn btn-sm btn-outline-gewis-primary">
                                             {{ 'Edit'|trans }}
                                         </a>
                                         {% if row.status.value == 'draft' %}
@@ -163,7 +163,7 @@
                                             </a>
                                             {% if not row.passed %}
                                                 <a href="{{ path('admin/activities/edit', {'activity': row.id}) }}"
-                                                   class="btn btn-sm btn-outline-primary">
+                                                   class="btn btn-sm btn-outline-gewis-primary">
                                                     {{ 'Revise'|trans }}
                                                 </a>
                                             {% endif %}

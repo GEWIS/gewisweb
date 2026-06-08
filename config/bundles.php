@@ -26,6 +26,7 @@ use Symfony\UX\LiveComponent\LiveComponentBundle;
 use Symfony\UX\StimulusBundle\StimulusBundle;
 use Symfony\UX\TwigComponent\TwigComponentBundle;
 use Symfonycasts\SassBundle\SymfonycastsSassBundle;
+use Tito10047\AltchaBundle\AltchaBundle;
 use Twig\Extra\TwigExtraBundle\TwigExtraBundle;
 
 return [
@@ -63,4 +64,5 @@ return [
     EndroidQrCodeBundle::class => ['all' => true],
     AmbtaDoctrineEncryptBundle::class => ['all' => true],
     UXCalendarLinkBundle::class => ['all' => true],
+    AltchaBundle::class => ['all' => true],
 ];

@@ -33,7 +33,7 @@
                     </a>
                     {% if is_granted('ROLE_BOARD') %}
                         <a href="{{ path('admin/activities/edit', {'activity': activity.id, 'take': 1}) }}"
-                           class="btn btn-outline-danger">
+                           class="btn btn-outline-gewis-primary">
                             {{ 'Take over editing'|trans }}
                         </a>
                     {% endif %}

@@ -41,6 +41,20 @@ class UserSignupRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    /**
+     * The member's own sign-up on a list, if any. Drives double-sign-up prevention and targets the edit/unsubscribe
+     * actions.
+     */
+    public function findOneByListAndMember(
+        SignupList $signupList,
+        Member $member,
+    ): ?UserSignup {
+        return $this->findOneBy([
+            'signupList' => $signupList,
+            'user' => $member,
+        ]);
+    }
+
     public function getNumberOfSignedUpMembers(SignupList $signupList): int
     {
         $qb = $this->createQueryBuilder('s');

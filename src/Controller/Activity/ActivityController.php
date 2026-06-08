@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Controller\Activity;
 
+use App\Entity\Activity\Activity;
 use App\Entity\Application\Enums\Languages;
 use App\Entity\User\Enums\UserRoles;
 use App\Entity\User\User;
 use App\Repository\Activity\ActivityRepository;
+use App\Repository\Activity\ExternalSignupVerificationRepository;
 use App\ViewModel\Activity\SignupListView;
 use Locale;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,6 +29,7 @@ class ActivityController extends AbstractController
 {
     public function __construct(
         private readonly ActivityRepository $activityRepository,
+        private readonly ExternalSignupVerificationRepository $verificationRepository,
         private readonly TranslatorInterface $translator,
     ) {
     }
@@ -103,6 +106,15 @@ class ActivityController extends AbstractController
             throw $this->createNotFoundException();
         }
 
+        return $this->renderActivityView($entity);
+    }
+
+    /**
+     * Render the public activity page. The per-list sign-up UI is a live component (member) or a server-rendered guest
+     * panel, so this only needs the read-model views and the calendar event.
+     */
+    private function renderActivityView(Activity $entity): Response
+    {
         $canViewDetails = $this->isGranted(UserRoles::User->value);
         $user = $this->getUser();
         $viewerLidnr = $user instanceof User
@@ -116,6 +128,7 @@ class ActivityController extends AbstractController
                 $canViewDetails,
                 $viewerLidnr,
                 $this->translator,
+                $this->verificationRepository->findPendingExternalSignupIdsForList($signupList),
             );
         }
 

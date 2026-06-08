@@ -4,8 +4,55 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "607344e2bb879b53315079542801793c",
+    "content-hash": "07201ac1a715976e33199410ec349e81",
     "packages": [
+        {
+            "name": "altcha-org/altcha",
+            "version": "v2.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/altcha-org/altcha-lib-php.git",
+                "reference": "1028107ae5455edd92b27aa2de0fa9e278e2f2ff"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/altcha-org/altcha-lib-php/zipball/1028107ae5455edd92b27aa2de0fa9e278e2f2ff",
+                "reference": "1028107ae5455edd92b27aa2de0fa9e278e2f2ff",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.72",
+                "phpstan/extension-installer": "^1.4",
+                "phpstan/phpstan": "^2.1",
+                "phpstan/phpstan-phpunit": "^2.0",
+                "phpunit/phpunit": "^10.5 || ^11.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "AltchaOrg\\Altcha\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Regeci",
+                    "email": "536331+ovx@users.noreply.github.com"
+                }
+            ],
+            "description": "A lightweight PHP library for creating and verifying ALTCHA challenges.",
+            "support": {
+                "issues": "https://github.com/altcha-org/altcha-lib-php/issues",
+                "source": "https://github.com/altcha-org/altcha-lib-php/tree/v2.0.2"
+            },
+            "time": "2026-04-29T07:31:42+00:00"
+        },
         {
             "name": "api-platform/doctrine-common",
             "version": "v4.3.6",
@@ -12140,6 +12187,100 @@
                 "source": "https://github.com/SymfonyCasts/sass-bundle/tree/v0.10.0"
             },
             "time": "2026-04-09T11:29:28+00:00"
+        },
+        {
+            "name": "tito10047/altcha-bundle",
+            "version": "3.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tito10047/altcha-bundle.git",
+                "reference": "9a5c11cdcbbcbc8e6df9814e3493dc4e7bc6fd0b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tito10047/altcha-bundle/zipball/9a5c11cdcbbcbc8e6df9814e3493dc4e7bc6fd0b",
+                "reference": "9a5c11cdcbbcbc8e6df9814e3493dc4e7bc6fd0b",
+                "shasum": ""
+            },
+            "require": {
+                "altcha-org/altcha": "^v2.0",
+                "php": ">=8.2",
+                "symfony/console": "^6.4|^7.4|^8.0",
+                "symfony/form": "^6.4|^7.4|^8.0",
+                "symfony/http-client": "^6.4|^7.4|^8.0",
+                "symfony/translation": "^6.4|^7.4|^8.0",
+                "symfony/twig-bundle": "^6.4|^7.4|^8.0",
+                "symfony/validator": "^6.4|^7.4|^8.0",
+                "symfony/yaml": "^6.4|^7.4|^8.0"
+            },
+            "require-dev": {
+                "dbrekelmans/bdi": "^1.4",
+                "ext-ctype": "*",
+                "ext-iconv": "*",
+                "phpstan/phpstan": "^1.8",
+                "phpstan/phpstan-symfony": "^1.2",
+                "phpunit/phpunit": "^10.5",
+                "rector/rector": "^0.14.5",
+                "symfony/asset-mapper": "^6.4|^7.4|^8.0",
+                "symfony/debug-bundle": "^6.4|7.4.*|^8.0",
+                "symfony/dotenv": "^6.4|7.4.*|^8.0",
+                "symfony/framework-bundle": "^6.4|^7.4|^8.0",
+                "symfony/panther": "^v2.4.0",
+                "symfony/runtime": "^6.4|7.4.*|^8.0",
+                "symfony/stimulus-bundle": "^2.30",
+                "symfony/web-profiler-bundle": "^6.4|7.4.*|^8.0",
+                "symfony/webpack-encore-bundle": "^2.3",
+                "twig/twig": "^2.12|^3.21.1"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "symfony": {
+                    "require": "8.0.*"
+                },
+                "public-dir": "./tests/App/AssetMapper/public",
+                "branch-alias": {
+                    "dev-main": "2.0-dev"
+                },
+                "symfony-web-dir": "./tests/App/AssetMapper/public"
+            },
+            "autoload": {
+                "psr-4": {
+                    "Tito10047\\AltchaBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Hugo Posnic",
+                    "homepage": "https://github.com/Huluti",
+                    "role": "Founder of package"
+                },
+                {
+                    "name": "Jozef Môstka",
+                    "email": "kontakt@vsetkosada.sk",
+                    "homepage": "https://vsetkosada.sk/en",
+                    "role": "Main developer of package"
+                }
+            ],
+            "description": "A simple package to help integrate Altcha on Symfony.",
+            "keywords": [
+                "ALTCHA",
+                "Symfony Bundle",
+                "bundle",
+                "captcha",
+                "form",
+                "form security",
+                "symfony",
+                "symfony-ux"
+            ],
+            "support": {
+                "issues": "https://github.com/tito10047/altcha-bundle/issues",
+                "source": "https://github.com/tito10047/altcha-bundle/tree/3.1.0"
+            },
+            "time": "2026-05-22T09:32:05+00:00"
         },
         {
             "name": "twbs/bootstrap",

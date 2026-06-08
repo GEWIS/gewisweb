@@ -497,6 +497,15 @@
             "assets/styles/app.scss"
         ]
     },
+    "tito10047/altcha-bundle": {
+        "version": "3.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "2.0",
+            "ref": "64d5bc8d22b01ee6917ed754613fa5befc1ac486"
+        }
+    },
     "twig/extra-bundle": {
         "version": "v3.22.2"
     }

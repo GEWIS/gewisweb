@@ -1,0 +1,58 @@
+{% extends 'layout-admin.html.twig' %}
+
+{% block page_title %}{{ 'Add external participant'|trans|page_title }}{{ activity.getName|localise_text|page_title }}{{ parent() }}{% endblock %}
+
+{% block admin_breadcrumbs %}
+    <li class="breadcrumb-item">
+        <a href="{{ path('admin/activities/index') }}">{{ 'Activities'|trans }}</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="{{ path('admin/activities/signups', {'activity': activity.getId}) }}">{{ activity.getName|localise_text }}</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">{{ 'Add external participant'|trans }}</li>
+{% endblock %}
+
+{% block contents %}
+    <div class="row justify-content-center">
+        <div class="col col-sm-10 col-lg-6 col-xl-4">
+            <div class="d-flex justify-content-between align-items-center gap-2 mb-3">
+                <div>
+                    <h1 class="h3 mb-1">{{ 'Add external participant'|trans }}</h1>
+                    <p class="text-muted mb-0">{{ signupList.getName|localise_text }}</p>
+                </div>
+                <a href="{{ path('admin/activities/signups', {'activity': activity.getId}) }}" class="btn btn-outline-secondary">
+                    <i class="fas fa-arrow-left"></i> {{ 'Back'|trans }}
+                </a>
+            </div>
+
+            <div class="panel">
+                <div class="panel-body">
+                    {{ form_start(form) }}
+                        {{ form_errors(form) }}
+                        {{ form_row(form.fullName) }}
+                        {{ form_row(form.email) }}
+                        {% for child in form %}
+                            {% if child.vars.name starts with 'field_' %}
+                                {{ form_row(child) }}
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if signupList.fields|filter(f => f.isSensitive)|length > 0 %}
+                            <p class="text-muted small mb-3"><em>
+                                {{ '¹ Fields marked with this symbol are only shared with the board and the organiser of the activity.'|trans }}
+                            </em></p>
+                        {% endif %}
+
+                        <p class="text-muted small">
+                            {{ 'The participant is added immediately, without email verification.'|trans }}
+                        </p>
+
+                        <button type="submit" class="btn btn-gewis-primary">
+                            <i class="fas fa-user-plus"></i> {{ 'Add participant'|trans }}
+                        </button>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

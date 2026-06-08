@@ -35,4 +35,7 @@ return [
         'version' => '5.4.4',
         'type' => 'css',
     ],
+    'altcha/dist/main/altcha.i18n.js' => [
+        'version' => '3.0.11',
+    ],
 ];

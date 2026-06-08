@@ -143,5 +143,11 @@
                 } only %}
             {% endfor %}
         {% endif %}
+
+        {% if is_granted('ROLE_USER') %}
+            {# Shared confirm-modal driving each list component's unsubscribe live action; rendered once per page,
+               OUTSIDE the live components. #}
+            {% include 'partials/application/confirm-modal.html.twig' %}
+        {% endif %}
     {% endif %}
 {% endblock %}

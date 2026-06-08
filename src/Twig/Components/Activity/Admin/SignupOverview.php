@@ -7,6 +7,7 @@ namespace App\Twig\Components\Activity\Admin;
 use App\Entity\Activity\Activity;
 use App\Entity\Activity\Enums\AllocationMethod;
 use App\Entity\Activity\Enums\RecipientScope;
+use App\Entity\Activity\ExternalSignup;
 use App\Entity\Activity\Signup;
 use App\Entity\Activity\SignupList;
 use App\Entity\Application\Enums\AlertTypes;
@@ -15,6 +16,7 @@ use App\Entity\Decision\Member;
 use App\Entity\User\Enums\UserRoles;
 use App\Entity\User\User;
 use App\Message\Activity\OrganiserAnnouncementEmail;
+use App\Repository\Activity\ExternalSignupVerificationRepository;
 use App\Security\Application\RevisionVoter;
 use App\Service\Activity\SignupAdminWindow;
 use App\ViewModel\Activity\Admin\SignupAdminListView;
@@ -124,6 +126,7 @@ final class SignupOverview
         private readonly EntityManagerInterface $entityManager,
         private readonly MessageBusInterface $messageBus,
         private readonly string $internalAffairsEmail,
+        private readonly ExternalSignupVerificationRepository $verificationRepository,
     ) {
     }
 
@@ -148,6 +151,7 @@ final class SignupOverview
                 $this->filter,
                 $selected,
                 $hiddenFields,
+                $this->verificationRepository->findPendingExternalSignupIdsForList($signupList),
             );
         }
 
@@ -350,7 +354,9 @@ final class SignupOverview
                 return;
             }
 
-            $signups = $list->getSignUps()->toArray();
+            // Only confirmed sign-ups take part in the draw: an external guest who has not verified their email is not
+            // yet a real participant and must neither be admitted nor take up a capacity slot.
+            $signups = $this->confirmedSignups($list);
             if ($shuffle) {
                 $signups = new Randomizer()->shuffleArray($signups);
             }
@@ -460,7 +466,7 @@ final class SignupOverview
         }
 
         $selected = $this->selectedIds();
-        foreach ($list->getSignUps() as $signup) {
+        foreach ($this->confirmedSignups($list) as $signup) {
             $id = $signup->getId();
             if (
                 null === $id
@@ -710,7 +716,7 @@ final class SignupOverview
         // Normalise once: the $selected LiveProp holds checkbox-supplied strings, while getId() is an int.
         $selected = $this->selectedIds();
         $recipients = [];
-        foreach ($signupList->getSignUps() as $signup) {
+        foreach ($this->confirmedSignups($signupList) as $signup) {
             $include = match ($scope) {
                 RecipientScope::All => true,
                 RecipientScope::Selected => in_array(
@@ -748,7 +754,7 @@ final class SignupOverview
     private function findOwnedSignup(int $signupId): ?Signup
     {
         foreach ($this->activity->getLiveSignupLists() as $signupList) {
-            foreach ($signupList->getSignUps() as $signup) {
+            foreach ($this->confirmedSignups($signupList) as $signup) {
                 if ($signup->getId() === $signupId) {
                     return $signup;
                 }
@@ -767,6 +773,35 @@ final class SignupOverview
         }
 
         return null;
+    }
+
+    /**
+     * A list's sign-ups excluding externals still awaiting e-mail verification: an unconfirmed external is not a real
+     * participant, so it must never be drawn, e-mailed, toggled or counted.
+     *
+     * @return Signup[]
+     */
+    private function confirmedSignups(SignupList $signupList): array
+    {
+        $pending = $this->verificationRepository->findPendingExternalSignupIdsForList($signupList);
+
+        $signups = [];
+        foreach ($signupList->getSignUps() as $signup) {
+            if (
+                $signup instanceof ExternalSignup
+                && in_array(
+                    $signup->getId(),
+                    $pending,
+                    true,
+                )
+            ) {
+                continue;
+            }
+
+            $signups[] = $signup;
+        }
+
+        return $signups;
     }
 
     private function assertBoard(): void

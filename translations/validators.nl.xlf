@@ -7,7 +7,7 @@
     <body>
       <trans-unit id="mUY7qf3" resname="At least one language must be used.">
         <source>At least one language must be used.</source>
-        <target state="translated">Er moet ten minste één taal worden gebruikt.</target>
+        <target>Er moet ten minste één taal worden gebruikt.</target>
       </trans-unit>
       <trans-unit id="SDwIA.h" resname="Describe how you addressed the requested changes before resubmitting.">
         <source>Describe how you addressed the requested changes before resubmitting.</source>
@@ -21,6 +21,10 @@
         <source>Enter a closing date and time.</source>
         <target state="translated">Voer een sluitingsdatum en -tijd in.</target>
       </trans-unit>
+      <trans-unit id="iGXOSQU" resname="Enter a full name.">
+        <source>Enter a full name.</source>
+        <target>Voer een volledige naam in.</target>
+      </trans-unit>
       <trans-unit id="HSarwc." resname="Enter a start date and time.">
         <source>Enter a start date and time.</source>
         <target state="translated">Voer een startdatum en -tijd in.</target>
@@ -28,6 +32,18 @@
       <trans-unit id="HTVqG9b" resname="Enter a valid URL (starting with http:// or https://).">
         <source>Enter a valid URL (starting with http:// or https://).</source>
         <target>Voer een geldige URL in (beginnend met http:// of https://).</target>
+      </trans-unit>
+      <trans-unit id=".b8V4j1" resname="Enter a valid e-mail address.">
+        <source>Enter a valid e-mail address.</source>
+        <target>Voer een geldig e-mailadres in.</target>
+      </trans-unit>
+      <trans-unit id="8a1ZW3W" resname="Enter a value between {{ min }} and {{ max }}.">
+        <source>Enter a value between {{ min }} and {{ max }}.</source>
+        <target>Voer een waarde tussen {{ min }} en {{ max }} in.</target>
+      </trans-unit>
+      <trans-unit id="xta3Az_" resname="Enter an e-mail address.">
+        <source>Enter an e-mail address.</source>
+        <target>Voer een e-mailadres in.</target>
       </trans-unit>
       <trans-unit id="vUFOGmp" resname="Enter an end date and time.">
         <source>Enter an end date and time.</source>
@@ -73,9 +89,17 @@
         <source>The activity must start in the future.</source>
         <target state="translated">De activiteit moet in de toekomst beginnen.</target>
       </trans-unit>
+      <trans-unit id="TmZUGRA" resname="The e-mail address may not be longer than {{ limit }} characters.">
+        <source>The e-mail address may not be longer than {{ limit }} characters.</source>
+        <target>Het e-mailadres mag niet langer zijn dan {{ limit }} tekens.</target>
+      </trans-unit>
       <trans-unit id="IMKkCvz" resname="The end time must be after the start time.">
         <source>The end time must be after the start time.</source>
         <target state="translated">De eindtijd moet na de starttijd liggen.</target>
+      </trans-unit>
+      <trans-unit id="Oed6bKp" resname="The full name may not be longer than {{ limit }} characters.">
+        <source>The full name may not be longer than {{ limit }} characters.</source>
+        <target>De volledige naam mag niet langer zijn dan {{ limit }} tekens.</target>
       </trans-unit>
       <trans-unit id="k8QayhA" resname="The sign-up list must close before the activity starts.">
         <source>The sign-up list must close before the activity starts.</source>
@@ -88,6 +112,14 @@
       <trans-unit id="bCKzvG1" resname="The sign-up list must open in the future.">
         <source>The sign-up list must open in the future.</source>
         <target state="translated">De inschrijflijst moet in de toekomst openen.</target>
+      </trans-unit>
+      <trans-unit id="z.p0Rex" resname="This field is required.">
+        <source>This field is required.</source>
+        <target>Dit veld is verplicht.</target>
+      </trans-unit>
+      <trans-unit id=".XKorDo" resname="You must agree to the activity and alcohol policies to sign up.">
+        <source>You must agree to the activity and alcohol policies to sign up.</source>
+        <target>Je moet akkoord gaan met het activiteiten- en alcoholbeleid om je in te schrijven.</target>
       </trans-unit>
       <trans-unit id="r7EPETa" resname="Your password should be at least {{ limit }} characters.">
         <source>Your password should be at least {{ limit }} characters.</source>

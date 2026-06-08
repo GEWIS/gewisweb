@@ -101,6 +101,10 @@
         <source>Activity Archive</source>
         <target state="translated">Activity Archive</target>
       </trans-unit>
+      <trans-unit id="YwgVFXF" resname="Activity Policy">
+        <source>Activity Policy</source>
+        <target>Activity Policy</target>
+      </trans-unit>
       <trans-unit id="jnVAzRZ" resname="Activity is being edited">
         <source>Activity is being edited</source>
         <target state="translated">Activity is being edited</target>
@@ -131,7 +135,11 @@
       </trans-unit>
       <trans-unit id="f6Zehi0" resname="Add external participant">
         <source>Add external participant</source>
-        <target state="translated">Add external participant</target>
+        <target>Add external participant</target>
+      </trans-unit>
+      <trans-unit id="lNDxGt1" resname="Add participant">
+        <source>Add participant</source>
+        <target>Add participant</target>
       </trans-unit>
       <trans-unit id="85z9UtL" resname="Add to calendar">
         <source>Add to calendar</source>
@@ -193,6 +201,10 @@
         <source>Agenda</source>
         <target state="translated">Agenda</target>
       </trans-unit>
+      <trans-unit id="fYnyoGU" resname="Alcohol Policy">
+        <source>Alcohol Policy</source>
+        <target>Alcohol Policy</target>
+      </trans-unit>
       <trans-unit id="EkTt9Lc" resname="All rights reserved.">
         <source>All rights reserved.</source>
         <target state="translated">All rights reserved.</target>
@@ -213,13 +225,13 @@
         <source>All years</source>
         <target state="translated">All years</target>
       </trans-unit>
-      <trans-unit id="wt2iCCE" resname="Allocation">
-        <source>Allocation</source>
-        <target>Allocation</target>
-      </trans-unit>
       <trans-unit id="_jGMIZg" resname="Allocation method">
         <source>Allocation method</source>
         <target>Allocation method</target>
+      </trans-unit>
+      <trans-unit id="taPikxw" resname="Almost there! Check your e-mail to confirm your sign-up.">
+        <source>Almost there! Check your e-mail to confirm your sign-up.</source>
+        <target>Almost there! Check your e-mail to confirm your sign-up.</target>
       </trans-unit>
       <trans-unit id="3eX.3WJ" resname="Analytics are currently">
         <source>Analytics are currently</source>
@@ -264,6 +276,10 @@
       <trans-unit id="L_pe5Qa" resname="Are you sure you want to terminate the session on this device?">
         <source>Are you sure you want to terminate the session on this device?</source>
         <target state="translated">Are you sure you want to terminate the session on this device?</target>
+      </trans-unit>
+      <trans-unit id="bvVDE9v" resname="Are you sure you want to unsubscribe from this sign-up list?">
+        <source>Are you sure you want to unsubscribe from this sign-up list?</source>
+        <target>Are you sure you want to unsubscribe from this sign-up list?</target>
       </trans-unit>
       <trans-unit id="FzJGBxU" resname="Association">
         <source>Association</source>
@@ -345,10 +361,6 @@
         <source>Capacity</source>
         <target>Capacity</target>
       </trans-unit>
-      <trans-unit id="CQAvJ1X" resname="Capacity is below the %count% already admitted">
-        <source>Capacity is below the %count% already admitted</source>
-        <target>Capacity is below the %count% already admitted</target>
-      </trans-unit>
       <trans-unit id="uAlSxMg" resname="Career">
         <source>Career</source>
         <target state="translated">Career</target>
@@ -392,6 +404,10 @@
       <trans-unit id="bacf._y" resname="Choice">
         <source>Choice</source>
         <target state="translated">Choice</target>
+      </trans-unit>
+      <trans-unit id="0gvXpmO" resname="Choose an option">
+        <source>Choose an option</source>
+        <target>Choose an option</target>
       </trans-unit>
       <trans-unit id="vZloDGs" resname="Choose when the draw happens">
         <source>Choose when the draw happens</source>
@@ -493,6 +509,10 @@
         <source>Confirm</source>
         <target state="translated">Confirm</target>
       </trans-unit>
+      <trans-unit id="AQfghoF" resname="Confirm sign-up">
+        <source>Confirm sign-up</source>
+        <target>Confirm sign-up</target>
+      </trans-unit>
       <trans-unit id="aF4KZmI" resname="Confirm your identity">
         <source>Confirm your identity</source>
         <target state="translated">Confirm your identity</target>
@@ -569,6 +589,10 @@
         <source>Devices where your account is currently signed in. If you notice an unrecognised device or location, terminate that session immediately and consider changing your password.</source>
         <target state="translated">Devices where your account is currently signed in. If you notice an unrecognised device or location, terminate that session immediately and consider changing your password.</target>
       </trans-unit>
+      <trans-unit id="s.f1kym" resname="Did not receive the confirmation email? Resend it.">
+        <source>Did not receive the confirmation email? Resend it.</source>
+        <target state="translated">Did not receive the confirmation email? Resend it.</target>
+      </trans-unit>
       <trans-unit id="N.JrwS." resname="Digital Infrastructure Officer">
         <source>Digital Infrastructure Officer</source>
         <target state="translated">Digital Infrastructure Officer</target>
@@ -604,6 +628,10 @@
       <trans-unit id="NPw9WPH" resname="Discussion">
         <source>Discussion</source>
         <target state="translated">Discussion</target>
+      </trans-unit>
+      <trans-unit id="9uS1kR." resname="Do you have a GEWIS account?">
+        <source>Do you have a GEWIS account?</source>
+        <target>Do you have a GEWIS account?</target>
       </trans-unit>
       <trans-unit id="fZqz0Um" resname="Done">
         <source>Done</source>
@@ -645,6 +673,10 @@
         <source>Dutch</source>
         <target state="translated">Dutch</target>
       </trans-unit>
+      <trans-unit id="USdJZXt" resname="E-mail address">
+        <source>E-mail address</source>
+        <target>E-mail address</target>
+      </trans-unit>
       <trans-unit id="M.l1CPU" resname="Edit">
         <source>Edit</source>
         <target state="translated">Edit</target>
@@ -656,6 +688,14 @@
       <trans-unit id="HVDBcL4" resname="Edit activity">
         <source>Edit activity</source>
         <target state="translated">Edit activity</target>
+      </trans-unit>
+      <trans-unit id="MOCb9jo" resname="Edit sign-up">
+        <source>Edit sign-up</source>
+        <target>Edit sign-up</target>
+      </trans-unit>
+      <trans-unit id="E4Bhrqz" resname="Edit your sign-up">
+        <source>Edit your sign-up</source>
+        <target>Edit your sign-up</target>
       </trans-unit>
       <trans-unit id="qVKCezd" resname="Education">
         <source>Education</source>
@@ -732,6 +772,10 @@
       <trans-unit id="Vw9Ze4y" resname="Enter the 6-digit code shown by the app to confirm the link.">
         <source>Enter the 6-digit code shown by the app to confirm the link.</source>
         <target state="translated">Enter the 6-digit code shown by the app to confirm the link.</target>
+      </trans-unit>
+      <trans-unit id="s.xcLfE" resname="Enter the email address you signed up with and we will send you a new confirmation link.">
+        <source>Enter the email address you signed up with and we will send you a new confirmation link.</source>
+        <target state="translated">Enter the email address you signed up with and we will send you a new confirmation link.</target>
       </trans-unit>
       <trans-unit id="U3hnjYE" resname="Every active session for this user will be terminated immediately.">
         <source>Every active session for this user will be terminated immediately.</source>
@@ -857,6 +901,10 @@
         <source>Frontpage</source>
         <target state="translated">Frontpage</target>
       </trans-unit>
+      <trans-unit id="i9.ArB8" resname="Full name">
+        <source>Full name</source>
+        <target>Full name</target>
+      </trans-unit>
       <trans-unit id="ylzLZFJ" resname="GEFLITST">
         <source>GEFLITST</source>
         <target state="translated">GEFLITST</target>
@@ -937,6 +985,10 @@
         <source>Guest - Anyone who can access the website</source>
         <target state="translated">Guest - Anyone who can access the website</target>
       </trans-unit>
+      <trans-unit id="yTvE6dJ" resname="Have a GEWIS account? Log in to sign up.">
+        <source>Have a GEWIS account? Log in to sign up.</source>
+        <target>Have a GEWIS account? Log in to sign up.</target>
+      </trans-unit>
       <trans-unit id="bMJFh5R" resname="Hidden">
         <source>Hidden</source>
         <target state="translated">Hidden</target>
@@ -957,9 +1009,17 @@
         <source>Housing</source>
         <target state="translated">Housing</target>
       </trans-unit>
+      <trans-unit id="a7nK6J2" resname="I agree to the">
+        <source>I agree to the</source>
+        <target>I agree to the</target>
+      </trans-unit>
       <trans-unit id="ryOBxJh" resname="I saved them">
         <source>I saved them</source>
         <target state="translated">I saved them</target>
+      </trans-unit>
+      <trans-unit id="hCpHRRl" resname="If a pending sign-up exists for this e-mail address, we have sent a new confirmation link.">
+        <source>If a pending sign-up exists for this e-mail address, we have sent a new confirmation link.</source>
+        <target>If a pending sign-up exists for this e-mail address, we have sent a new confirmation link.</target>
       </trans-unit>
       <trans-unit id="9ZARzCI" resname="If there is an account associated with your email address, an email has just been sent containing a link that will allow you to reset your password. If you do not receive an email, please check your spam folder or try again later.">
         <source>If there is an account associated with your email address, an email has just been sent containing a link that will allow you to reset your password. If you do not receive an email, please check your spam folder or try again later.</source>
@@ -1117,6 +1177,14 @@
         <source>Log in</source>
         <target state="translated">Log in</target>
       </trans-unit>
+      <trans-unit id="ddeK6we" resname="Log in to sign up">
+        <source>Log in to sign up</source>
+        <target>Log in to sign up</target>
+      </trans-unit>
+      <trans-unit id="wUNC_jY" resname="Log in to sign up.">
+        <source>Log in to sign up.</source>
+        <target>Log in to sign up.</target>
+      </trans-unit>
       <trans-unit id="oQ0iCjA" resname="Log in to view the subscribers.">
         <source>Log in to view the subscribers.</source>
         <target>Log in to view the subscribers.</target>
@@ -1168,6 +1236,10 @@
       <trans-unit id="Vuyl_8H" resname="Mail address">
         <source>Mail address</source>
         <target state="translated">Mail address</target>
+      </trans-unit>
+      <trans-unit id="xDpozAE" resname="Manage your sign-up">
+        <source>Manage your sign-up</source>
+        <target>Manage your sign-up</target>
       </trans-unit>
       <trans-unit id="5LERsNC" resname="Maximum value (number type)">
         <source>Maximum value (number type)</source>
@@ -1537,6 +1609,10 @@
         <source>Pick a long, unique password - at least 16 characters and not found in any known data breach.</source>
         <target state="translated">Pick a long, unique password - at least 16 characters and not found in any known data breach.</target>
       </trans-unit>
+      <trans-unit id="HEW6n8h" resname="Please complete the verification again and resubmit.">
+        <source>Please complete the verification again and resubmit.</source>
+        <target>Please complete the verification again and resubmit.</target>
+      </trans-unit>
       <trans-unit id="GqUZ23A" resname="Please contact %organizer% or the board (%email%) with any questions or concerns. Have fun!">
         <source>Please contact %organizer% or the board (%email%) with any questions or concerns. Have fun!</source>
         <target>Please contact %organizer% or the board (%email%) with any questions or concerns. Have fun!</target>
@@ -1544,10 +1620,6 @@
       <trans-unit id="lwY.3Bl" resname="Please provide both a subject and a message.">
         <source>Please provide both a subject and a message.</source>
         <target>Please provide both a subject and a message.</target>
-      </trans-unit>
-      <trans-unit id="ngK4Psc" resname="Policy">
-        <source>Policy</source>
-        <target>Policy</target>
       </trans-unit>
       <trans-unit id="qT565tK" resname="Polls">
         <source>Polls</source>
@@ -1669,6 +1741,10 @@
         <source>Required to request changes or reject.</source>
         <target state="translated">Required to request changes or reject.</target>
       </trans-unit>
+      <trans-unit id="UJ54wLL" resname="Resend confirmation email">
+        <source>Resend confirmation email</source>
+        <target state="translated">Resend confirmation email</target>
+      </trans-unit>
       <trans-unit id="gHvOyV9" resname="Reset MFA">
         <source>Reset MFA</source>
         <target state="translated">Reset MFA</target>
@@ -1723,7 +1799,7 @@
       </trans-unit>
       <trans-unit id="LYBYnfv" resname="Run the draw now? This admits people up to capacity and it cannot be undone.">
         <source>Run the draw now? This admits people up to capacity and it cannot be undone.</source>
-        <target state="translated">Run the draw now? This admits people up to capacity and it cannot be undone.</target>
+        <target>Run the draw now? This admits people up to capacity and it cannot be undone.</target>
       </trans-unit>
       <trans-unit id="9_oAgP." resname="Run the draw?">
         <source>Run the draw?</source>
@@ -1732,6 +1808,10 @@
       <trans-unit id="FVM0TC8" resname="Running the draw admits people up to capacity and locks it; you can adjust individuals afterwards.">
         <source>Running the draw admits people up to capacity and locks it; you can adjust individuals afterwards.</source>
         <target>Running the draw admits people up to capacity and locks it; you can adjust individuals afterwards.</target>
+      </trans-unit>
+      <trans-unit id="516349u" resname="Save changes">
+        <source>Save changes</source>
+        <target>Save changes</target>
       </trans-unit>
       <trans-unit id="5iw3OqK" resname="Save draft">
         <source>Save draft</source>
@@ -1803,7 +1883,7 @@
       </trans-unit>
       <trans-unit id=".8LX2fr" resname="Send this email?">
         <source>Send this email?</source>
-        <target state="translated">Send this email?</target>
+        <target>Send this email?</target>
       </trans-unit>
       <trans-unit id="8YIUjez" resname="Sensitive">
         <source>Sensitive</source>
@@ -1853,6 +1933,18 @@
         <source>Sign in</source>
         <target state="translated">Sign in</target>
       </trans-unit>
+      <trans-unit id="eCAq286" resname="Sign up">
+        <source>Sign up</source>
+        <target>Sign up</target>
+      </trans-unit>
+      <trans-unit id="FRSHA1K" resname="Sign up as a guest">
+        <source>Sign up as a guest</source>
+        <target>Sign up as a guest</target>
+      </trans-unit>
+      <trans-unit id="q1glo44" resname="Sign up for '%name%'">
+        <source>Sign up for '%name%'</source>
+        <target>Sign up for '%name%'</target>
+      </trans-unit>
       <trans-unit id="4ufAWYB" resname="Sign-up closes:">
         <source>Sign-up closes:</source>
         <target>Sign-up closes:</target>
@@ -1896,6 +1988,10 @@
       <trans-unit id="rEFt4Rj" resname="Someone is currently editing this activity.">
         <source>Someone is currently editing this activity.</source>
         <target state="translated">Someone is currently editing this activity.</target>
+      </trans-unit>
+      <trans-unit id="NBNMRBH" resname="Someone with this e-mail address is already signed up for this list.">
+        <source>Someone with this e-mail address is already signed up for this list.</source>
+        <target>Someone with this e-mail address is already signed up for this list.</target>
       </trans-unit>
       <trans-unit id="U_RKQ4r" resname="Sports">
         <source>Sports</source>
@@ -2025,13 +2121,21 @@
         <source>The draw can be run once sign-up has closed.</source>
         <target>The draw can be run once sign-up has closed.</target>
       </trans-unit>
+      <trans-unit id="mBj7E_w" resname="The external participant has been added.">
+        <source>The external participant has been added.</source>
+        <target>The external participant has been added.</target>
+      </trans-unit>
       <trans-unit id="juj8ffI" resname="The external party dictates the order of admissions">
         <source>The external party dictates the order of admissions</source>
         <target>The external party dictates the order of admissions</target>
       </trans-unit>
+      <trans-unit id="QoOti88" resname="The participant is added immediately, without email verification.">
+        <source>The participant is added immediately, without email verification.</source>
+        <target state="translated">The participant is added immediately, without email verification.</target>
+      </trans-unit>
       <trans-unit id="TUHVFZ1" resname="The selected recipients will receive this email immediately. This cannot be undone.">
         <source>The selected recipients will receive this email immediately. This cannot be undone.</source>
-        <target state="translated">The selected recipients will receive this email immediately. This cannot be undone.</target>
+        <target>The selected recipients will receive this email immediately. This cannot be undone.</target>
       </trans-unit>
       <trans-unit id="tl9akBK" resname="Their TOTP secret and backup codes will be discarded and every active session for the user will be terminated. Use this when a device has been lost or compromised.">
         <source>Their TOTP secret and backup codes will be discarded and every active session for the user will be terminated. Use this when a device has been lost or compromised.</source>
@@ -2133,6 +2237,18 @@
         <source>This revision was changed elsewhere; reload the page and try again.</source>
         <target state="translated">This revision was changed elsewhere; reload the page and try again.</target>
       </trans-unit>
+      <trans-unit id="OCKUhV9" resname="This sign-up list is closed, so your sign-up can no longer be changed.">
+        <source>This sign-up list is closed, so your sign-up can no longer be changed.</source>
+        <target>This sign-up list is closed, so your sign-up can no longer be changed.</target>
+      </trans-unit>
+      <trans-unit id="1Jl7zkR" resname="This sign-up list is for GEWIS members only, so you cannot add an external participant.">
+        <source>This sign-up list is for GEWIS members only, so you cannot add an external participant.</source>
+        <target>This sign-up list is for GEWIS members only, so you cannot add an external participant.</target>
+      </trans-unit>
+      <trans-unit id="yKrMuEv" resname="This sign-up list is not open, so you cannot add a participant.">
+        <source>This sign-up list is not open, so you cannot add a participant.</source>
+        <target>This sign-up list is not open, so you cannot add a participant.</target>
+      </trans-unit>
       <trans-unit id="5DLr8E1" resname="Toggle company menu">
         <source>Toggle company menu</source>
         <target state="translated">Toggle company menu</target>
@@ -2148,6 +2264,14 @@
       <trans-unit id="FC.YH9X" resname="Toggle navigation">
         <source>Toggle navigation</source>
         <target state="translated">Toggle navigation</target>
+      </trans-unit>
+      <trans-unit id="FnG76JW" resname="Too many requests. Please try again later.">
+        <source>Too many requests. Please try again later.</source>
+        <target>Too many requests. Please try again later.</target>
+      </trans-unit>
+      <trans-unit id="NSq0kpw" resname="Too many sign-up attempts. Please try again later.">
+        <source>Too many sign-up attempts. Please try again later.</source>
+        <target>Too many sign-up attempts. Please try again later.</target>
       </trans-unit>
       <trans-unit id="jmK_5tr" resname="Treasurer">
         <source>Treasurer</source>
@@ -2168,6 +2292,14 @@
       <trans-unit id="7ZQ9oWO" resname="Unknown device">
         <source>Unknown device</source>
         <target state="translated">Unknown device</target>
+      </trans-unit>
+      <trans-unit id="TeuL_GQ" resname="Unsubscribe">
+        <source>Unsubscribe</source>
+        <target>Unsubscribe</target>
+      </trans-unit>
+      <trans-unit id="SfRsC7I" resname="Unsubscribe?">
+        <source>Unsubscribe?</source>
+        <target>Unsubscribe?</target>
       </trans-unit>
       <trans-unit id=".b394XX" resname="Until">
         <source>Until</source>
@@ -2317,6 +2449,10 @@
         <source>You are logged in as</source>
         <target state="translated">You are logged in as</target>
       </trans-unit>
+      <trans-unit id="aRT9wOd" resname="You are signed up.">
+        <source>You are signed up.</source>
+        <target>You are signed up.</target>
+      </trans-unit>
       <trans-unit id="0oN.eFV" resname="You assumed it was here. It was not. Q.E.D.">
         <source>You assumed it was here. It was not. Q.E.D.</source>
         <target state="translated">You assumed it was here. It was not. Q.E.D.</target>
@@ -2340,6 +2476,10 @@
       <trans-unit id="OWPRxny" resname="You do not have the required privileges to perform this action.">
         <source>You do not have the required privileges to perform this action.</source>
         <target state="translated">You do not have the required privileges to perform this action.</target>
+      </trans-unit>
+      <trans-unit id="lAXDq5A" resname="You have been unsubscribed.">
+        <source>You have been unsubscribed.</source>
+        <target>You have been unsubscribed.</target>
       </trans-unit>
       <trans-unit id="8yGcQq5" resname="You have sent too many requests in a short period of time. Please wait a few minutes before trying again.">
         <source>You have sent too many requests in a short period of time. Please wait a few minutes before trying again.</source>
@@ -2377,9 +2517,29 @@
         <source>Your session was ended for security reasons. Please sign in again.</source>
         <target state="translated">Your session was ended for security reasons. Please sign in again.</target>
       </trans-unit>
+      <trans-unit id="C8K9Nl3" resname="Your sign-up has been updated.">
+        <source>Your sign-up has been updated.</source>
+        <target>Your sign-up has been updated.</target>
+      </trans-unit>
+      <trans-unit id="1sjQXa1" resname="Your sign-up is confirmed! We have e-mailed you a link to manage it.">
+        <source>Your sign-up is confirmed! We have e-mailed you a link to manage it.</source>
+        <target>Your sign-up is confirmed! We have e-mailed you a link to manage it.</target>
+      </trans-unit>
+      <trans-unit id="fb2caF1" resname="Your sign-up will be visible to all visitors of the website once you confirm it via the email we send you.">
+        <source>Your sign-up will be visible to all visitors of the website once you confirm it via the email we send you.</source>
+        <target state="translated">Your sign-up will be visible to all visitors of the website once you confirm it via the email we send you.</target>
+      </trans-unit>
+      <trans-unit id="rX8Q.Ne" resname="Your sign-up will be visible to other members and graduates.">
+        <source>Your sign-up will be visible to other members and graduates.</source>
+        <target>Your sign-up will be visible to other members and graduates.</target>
+      </trans-unit>
       <trans-unit id="ScQ2_ao" resname="Zettle">
         <source>Zettle</source>
         <target state="translated">Zettle</target>
+      </trans-unit>
+      <trans-unit id="mC5UFtS" resname="and">
+        <source>and</source>
+        <target>and</target>
       </trans-unit>
       <trans-unit id="iYiRxKz" resname="disabled">
         <source>disabled</source>
@@ -2440,6 +2600,10 @@
       <trans-unit id="A0Prwbn" resname="was">
         <source>was</source>
         <target state="translated">was</target>
+      </trans-unit>
+      <trans-unit id="AdY3YcR" resname="¹ Fields marked with this symbol are only shared with the board and the organiser of the activity.">
+        <source>¹ Fields marked with this symbol are only shared with the board and the organiser of the activity.</source>
+        <target>¹ Fields marked with this symbol are only shared with the board and the organiser of the activity.</target>
       </trans-unit>
     </body>
   </file>

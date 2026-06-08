@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\ViewModel\Activity\Admin;
 
 use App\Entity\Activity\Enums\AllocationMethod;
+use App\Entity\Activity\ExternalSignup;
 use App\Entity\Activity\SignupList;
 use App\Entity\Activity\UserSignup;
 use App\Entity\Application\Enums\Languages;
@@ -61,9 +62,11 @@ final readonly class SignupAdminListView
     }
 
     /**
-     * @param string $filter         case-insensitive name/email substring; empty matches everyone
-     * @param int[]  $selectedIds    signup ids the organiser ticked; drives each list's selected count
-     * @param int[]  $hiddenFieldIds ids of the sign-up fields whose column the organiser hid
+     * @param string $filter                   case-insensitive name/email substring; empty matches everyone
+     * @param int[]  $selectedIds              signup ids the organiser ticked; drives each list's selected count
+     * @param int[]  $hiddenFieldIds           ids of the sign-up fields whose column the organiser hid
+     * @param int[]  $pendingExternalSignupIds external sign-ups still awaiting e-mail verification; excluded entirely
+     *                                         (an unconfirmed sign-up is not yet a real participant)
      */
     public static function fromSignupList(
         SignupList $signupList,
@@ -71,6 +74,7 @@ final readonly class SignupAdminListView
         string $filter = '',
         array $selectedIds = [],
         array $hiddenFieldIds = [],
+        array $pendingExternalSignupIds = [],
     ): self {
         $language = Languages::current();
 
@@ -101,10 +105,25 @@ final readonly class SignupAdminListView
 
         $rows = [];
         $position = 1;
+        $subscriberCount = 0;
         $presentCount = 0;
         $admittedCount = 0;
         $selectedCount = 0;
         foreach ($signupList->getSignUps() as $signup) {
+            // Hide externals that have not confirmed their e-mail: not real participants, must not be counted or drawn.
+            if (
+                $signup instanceof ExternalSignup
+                && in_array(
+                    $signup->getId(),
+                    $pendingExternalSignupIds,
+                    true,
+                )
+            ) {
+                continue;
+            }
+
+            ++$subscriberCount;
+
             if ($signup->isPresent()) {
                 ++$presentCount;
             }
@@ -197,7 +216,7 @@ final readonly class SignupAdminListView
             drawnByName: $signupList->getDrawnBy()?->getFullName(),
             isOpen: $signupList->isOpen(),
             isClosed: $signupList->isClosed(),
-            subscriberCount: $signupList->getSignUps()->count(),
+            subscriberCount: $subscriberCount,
             presentCount: $presentCount,
             admittedCount: $admittedCount,
             selectedCount: $selectedCount,

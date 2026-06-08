@@ -339,16 +339,16 @@
                                 {{ form_widget(decisionForm.request_changes, {'attr': {'class': 'btn btn-sm btn-outline-warning'}}) }}
                             {% endif %}
                             {% if decisionForm.reject is defined %}
-                                {{ form_widget(decisionForm.reject, {'attr': {'class': 'btn btn-sm btn-outline-danger'}}) }}
+                                {{ form_widget(decisionForm.reject, {'attr': {'class': 'btn btn-sm btn-outline-gewis-primary'}}) }}
                             {% endif %}
                             {% if decisionForm.close is defined %}
-                                {{ form_widget(decisionForm.close, {'attr': {'class': 'btn btn-sm btn-outline-danger'}}) }}
+                                {{ form_widget(decisionForm.close, {'attr': {'class': 'btn btn-sm btn-outline-gewis-primary'}}) }}
                             {% endif %}
                         </div>
                     {% endif %}
                 {{ form_end(decisionForm) }}
                 {% if canDiscard %}
-                    <button type="button" class="btn btn-sm btn-outline-danger w-100 mt-2"
+                    <button type="button" class="btn btn-sm btn-outline-gewis-primary w-100 mt-2"
                             data-bs-toggle="modal" data-bs-target="#modal-discard-draft">
                         {{ 'Discard draft'|trans }}
                     </button>
@@ -384,7 +384,7 @@
                         <label for="comment-message" class="form-label">{{ 'Add a comment'|trans }}</label>
                         <textarea id="comment-message" name="message" class="form-control" rows="2"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-sm btn-outline-primary">{{ 'Comment'|trans }}</button>
+                    <button type="submit" class="btn btn-sm btn-outline-gewis-primary">{{ 'Comment'|trans }}</button>
                 </form>
             </div>
         </aside>
@@ -405,7 +405,7 @@
                         <div class="modal-footer">
                             <input type="hidden" name="_csrf_token" value="{{ csrf_token('activity_discard-' ~ revision.getId) }}">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'Cancel'|trans }}</button>
-                            <button type="submit" class="btn btn-danger">{{ 'Discard draft'|trans }}</button>
+                            <button type="submit" class="btn btn-gewis-primary">{{ 'Discard draft'|trans }}</button>
                         </div>
                     </form>
                 </div>

@@ -65,7 +65,7 @@
                 {{ form_rest(child) }}
                 {# A list with sign-ups (here or on its live lineage counterpart) is frozen and must not be removed. #}
                 {% if not child.vars.frozen %}
-                    <button type="button" class="btn btn-sm btn-outline-danger mt-2"
+                    <button type="button" class="btn btn-sm btn-outline-gewis-primary mt-2"
                             data-action="collapsible-collection#remove">
                         <i class="fas fa-trash"></i> {{ remove_label }}
                     </button>
@@ -131,7 +131,7 @@
                 {{ form_rest(child) }}
                 {# A frozen list's fields collection is disabled and ignores its submissions, so don't offer remove. #}
                 {% if not child.vars.disabled %}
-                    <button type="button" class="btn btn-sm btn-outline-danger mt-2"
+                    <button type="button" class="btn btn-sm btn-outline-gewis-primary mt-2"
                             data-action="collapsible-collection#remove">
                         <i class="fas fa-trash"></i> {{ remove_label }}
                     </button>

@@ -40,11 +40,22 @@ export default class extends Controller {
             return;
         }
 
-        this._trigger = trigger;
         this._action = trigger.dataset.confirmLiveAction ?? null;
         this._args = trigger.dataset.confirmLiveArgs
             ? JSON.parse(trigger.dataset.confirmLiveArgs)
             : {};
+
+        // getComponent() does a STRICT lookup keyed by the component's ROOT element (the [data-controller~="live"]
+        // node), not a closest() from a descendant — so passing the trigger button (a descendant) never matches and
+        // rejects with "Component not found". Resolve the root from the trigger here, at show-time while the trigger is
+        // still attached: a re-render between opening and confirming (e.g. a data-model field blurring on click) can
+        // detach the trigger, and a detached node's closest() returns null — whereas the root element and the resolved
+        // component instance both survive re-renders. `.catch(() => null)` is attached eagerly so a cancelled modal
+        // never logs an unhandled rejection.
+        const root = trigger.closest('[data-controller~="live"]');
+        this._componentPromise = null !== this._action && null !== root
+            ? getComponent(root).catch(() => null)
+            : null;
 
         if (this.hasTitleTarget && trigger.dataset.confirmTitle !== undefined) {
             this.titleTarget.textContent = trigger.dataset.confirmTitle;
@@ -61,19 +72,13 @@ export default class extends Controller {
 
     async _onConfirm() {
         // The confirm button also carries data-bs-dismiss, so Bootstrap closes the modal; here we just run the action.
-        if (null === this._action || undefined === this._trigger) {
+        if (null === this._componentPromise) {
             return;
         }
 
-        // getComponent() resolves by a component's ROOT element (an exact WeakMap lookup, no DOM walk), so resolve
-        // from the live root the trigger lives in -- the trigger button is only a descendant and would never match,
-        // leaving the action silently un-run.
-        const root = this._trigger.closest('[data-controller~="live"]');
-        if (null === root) {
-            return;
+        const component = await this._componentPromise;
+        if (null !== component) {
+            component.action(this._action, this._args);
         }
-
-        const component = await getComponent(root);
-        component.action(this._action, this._args);
     }
 }

@@ -8,6 +8,12 @@
                     "@symfony/ux-live-component/dist/live.min.css": false
                 }
             }
+        },
+        "@tito10047/altcha-bundle": {
+            "altcha": {
+                "enabled": true,
+                "fetch": "eager"
+            }
         }
     },
     "entrypoints": []
