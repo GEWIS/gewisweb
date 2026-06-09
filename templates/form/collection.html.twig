@@ -1,12 +1,15 @@
 {# Renders a Symfony CollectionType with add/remove wired to the `form-collection` Stimulus controller. Nesting is
-   supported because each collection level uses a distinct prototype placeholder (__list__, __field__, __option__). #}
+   supported because each collection level uses a distinct prototype placeholder (__list__, __field__, __option__).
+   Pass a `remove_label` variable (e.g. `form_row(form.options, {'remove_label': 'Remove option'|trans})`) to name
+   what a remove button removes; it falls back to a generic "Remove". #}
 {% block collection_widget %}
     {% set has_prototype = allow_add and prototype is defined and prototype is not null %}
     {% set placeholder = has_prototype ? (prototype.vars.name|split('[')|last|trim(']')) : '__name__' %}
+    {% set remove_label = remove_label|default('Remove'|trans) %}
     <div {{ block('widget_container_attributes') }}
          data-controller="form-collection"
          data-form-collection-allow-delete-value="{{ allow_delete ? 'true' : 'false' }}"
-         data-form-collection-remove-label-value="{{ 'Remove'|trans }}"
+         data-form-collection-remove-label-value="{{ remove_label }}"
          {% if has_prototype %}
              data-form-collection-prototype-value="{{ form_row(prototype)|e('html_attr') }}"
              data-form-collection-prototype-name-value="{{ placeholder }}"
@@ -18,7 +21,7 @@
                     {% if allow_delete %}
                         <button type="button" class="btn btn-sm btn-outline-gewis-primary mt-2"
                                 data-action="form-collection#remove">
-                            {{ 'Remove'|trans }}
+                            <i class="fas fa-trash"></i> {{ remove_label }}
                         </button>
                     {% endif %}
                 </div>

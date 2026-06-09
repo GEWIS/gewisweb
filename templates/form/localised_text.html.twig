@@ -1,14 +1,28 @@
 {# Renders a LocalisedTextType (a Dutch + an English value) as two mirrored columns, so a bilingual field shows both
-   translations side by side. The compound's own label (e.g. "Name", "Question", "Option") sits above the split and
-   each column is a floating-label input labelled with its language. Used wherever a localised text is rendered as a
-   whole -- the sign-up list name and the custom-field questions/options. The activity "Information" panel renders the
-   valueNL / valueEN children directly, so it keeps its full-height mirrored columns and is not affected by this block. #}
+   translations side by side. Like the activity "Information" panel, each column is headed by its language's flag (but
+   without that panel's enable-checkbox) and each input carries the field's own label (e.g. "Name", "Question",
+   "Option") as its floating label, so the compound renders no separate label of its own. Used wherever a localised
+   text is rendered as a whole -- the sign-up list name and the custom-field questions/options. The "Information" panel
+   renders the valueNL / valueEN children directly, so it keeps its full-height mirrored columns and is not affected by
+   this block. #}
 {% block localised_text_row %}
+    {% set field_label = form.vars.label|trans %}
     <div class="mb-2">
-        {{ form_label(form) }}
         <div class="row">
-            <div class="col-md-6">{{ form_row(form.valueNL, {'attr': {'data-localised-fields-target': 'dutch'}}) }}</div>
-            <div class="col-md-6">{{ form_row(form.valueEN, {'attr': {'data-localised-fields-target': 'english'}}) }}</div>
+            <div class="col-md-6">
+                <div class="mb-1"><span class="flag-icon flag-icon-nl"></span> {{ 'Dutch'|trans }}</div>
+                {{ form_row(form.valueNL, {
+                    'label': field_label,
+                    'attr': {'data-localised-fields-target': 'dutch'},
+                }) }}
+            </div>
+            <div class="col-md-6">
+                <div class="mb-1"><span class="flag-icon flag-icon-en"></span> {{ 'English'|trans }}</div>
+                {{ form_row(form.valueEN, {
+                    'label': field_label,
+                    'attr': {'data-localised-fields-target': 'english'},
+                }) }}
+            </div>
         </div>
         {{ form_errors(form) }}
     </div>

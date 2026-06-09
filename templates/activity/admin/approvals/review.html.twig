@@ -23,7 +23,7 @@
     {% if rendered|trim is not empty %}
         <div class="mb-2">
             <div class="text-muted small">{{ label }}</div>
-            <div>{{ rendered }}</div>
+            <div>{{ rendered|raw }}</div>
         </div>
     {% endif %}
 {% endmacro %}
@@ -31,7 +31,7 @@
 {# A single boolean list setting. With a `previous` counterpart a newly-enabled flag is green, a newly-disabled one
    is shown struck-through in red, and an unchanged-but-on flag stays neutral; without one (a new/removed list) an
    enabled flag is just shown neutral. An unchanged-off flag renders nothing. #}
-{% macro flag(label, new, old) %}
+{% macro flag(label, old, new) %}
     {% if old is not null and new and not old %}
         <span class="badge badge-success">{{ label }}</span>
     {% elseif old is not null and old and not new %}
@@ -58,10 +58,10 @@
     </div>
 
     {% set flags %}
-        {{ diffmacro.flag('Members only'|trans, list.onlyGEWIS, previous ? previous.onlyGEWIS : null) }}
-        {{ diffmacro.flag('Show sign-up count'|trans, list.displaySubscribedNumber, previous ? previous.displaySubscribedNumber : null) }}
-        {{ diffmacro.flag('Limited capacity'|trans, list.limitedCapacity, previous ? previous.limitedCapacity : null) }}
-        {{ diffmacro.flag('Promoted'|trans, list.promoted, previous ? previous.promoted : null) }}
+        {{ diffmacro.flag('Members only'|trans, previous ? previous.onlyGEWIS : null, list.onlyGEWIS) }}
+        {{ diffmacro.flag('Show sign-up count'|trans, previous ? previous.displaySubscribedNumber : null, list.displaySubscribedNumber) }}
+        {{ diffmacro.flag('Limited capacity'|trans, previous ? previous.limitedCapacity : null, list.limitedCapacity) }}
+        {{ diffmacro.flag('Promoted'|trans, previous ? previous.promoted : null, list.promoted) }}
     {% endset %}
     {% if flags|trim is not empty %}
         <div class="mb-1">{{ flags }}</div>
@@ -215,8 +215,8 @@
                         <h6 class="text-muted small mb-1">{{ 'Facilities'|trans }}</h6>
                         <div>
                             {% set facilities %}
-                                {{ diffmacro.flag('GEFLITST'|trans, revision.requireGEFLITST, previous ? previous.requireGEFLITST : null) }}
-                                {{ diffmacro.flag('Zettle'|trans, revision.requireZettle, previous ? previous.requireZettle : null) }}
+                                {{ diffmacro.flag('GEFLITST'|trans, previous ? previous.requireGEFLITST : null, revision.requireGEFLITST) }}
+                                {{ diffmacro.flag('Zettle'|trans, previous ? previous.requireZettle : null, revision.requireZettle) }}
                             {% endset %}
                             {% if facilities|trim is empty %}
                                 <span class="text-muted small">{{ 'None'|trans }}</span>

@@ -24,6 +24,7 @@
                         {{ form_row(child.closeDate) }}
                         {{ form_row(child.onlyGEWIS) }}
                         {{ form_row(child.displaySubscribedNumber) }}
+                        {{ form_row(child.promoted) }}
                         {{ form_row(child.limitedCapacity, {'attr': {
                             'data-signup-list-target': 'limited',
                             'data-action': 'change->signup-list#apply',
@@ -31,35 +32,35 @@
                         <div data-signup-list-target="capacity">
                             {{ form_row(child.capacity) }}
                         </div>
-                        {{ form_row(child.promoted) }}
+                        {# Allocation method + its per-method settings; shown only when limited, and only the selected
+                           method's (and cutoff rule's) sub-fields, driven by the signup-list controller. #}
+                        <div data-signup-list-target="methodBlock">
+                            {{ form_row(child.allocationMethod, {'attr': {
+                                'data-signup-list-target': 'method',
+                                'data-action': 'change->signup-list#apply',
+                            }}) }}
+                            <div data-signup-list-target="conditional">
+                                {{ form_row(child.drawCutoffRule, {'attr': {
+                                    'data-signup-list-target': 'rule',
+                                    'data-action': 'change->signup-list#apply',
+                                }}) }}
+                                <div data-signup-list-target="cutoffAt">{{ form_row(child.drawCutoffAt) }}</div>
+                                <div data-signup-list-target="durationHours">{{ form_row(child.drawAfterDurationHours) }}</div>
+                            </div>
+                            <div data-signup-list-target="external">
+                                {{ form_row(child.externalPolicyUrl) }}
+                                {{ form_row(child.externalForceOrdering) }}
+                                {{ form_row(child.externalPaymentByExternal) }}
+                            </div>
+                            <div data-signup-list-target="custom">
+                                {{ form_row(child.customMethodDescription) }}
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-9">
+                    <div class="col-md-auto d-none d-md-flex px-0"><div class="vr"></div></div>
+                    <div class="col-md">
                         {{ form_row(child.name) }}
                         {{ form_row(child.fields) }}
-                    </div>
-                </div>
-                {# Allocation method + its per-method settings; shown only when limited, and only the selected
-                   method's (and cutoff rule's) sub-fields, driven by the signup-list controller. #}
-                <div data-signup-list-target="methodBlock">
-                    {{ form_row(child.allocationMethod, {'attr': {
-                        'data-signup-list-target': 'method',
-                        'data-action': 'change->signup-list#apply',
-                    }}) }}
-                    <div data-signup-list-target="conditional">
-                        {{ form_row(child.drawCutoffRule, {'attr': {
-                            'data-signup-list-target': 'rule',
-                            'data-action': 'change->signup-list#apply',
-                        }}) }}
-                        <div data-signup-list-target="cutoffAt">{{ form_row(child.drawCutoffAt) }}</div>
-                        <div data-signup-list-target="durationHours">{{ form_row(child.drawAfterDurationHours) }}</div>
-                    </div>
-                    <div data-signup-list-target="external">
-                        {{ form_row(child.externalPolicyUrl) }}
-                        {{ form_row(child.externalForceOrdering) }}
-                        {{ form_row(child.externalPaymentByExternal) }}
-                    </div>
-                    <div data-signup-list-target="custom">
-                        {{ form_row(child.customMethodDescription) }}
                     </div>
                 </div>
                 {{ form_rest(child) }}
@@ -79,7 +80,7 @@
     {% import _self as helper %}
     {% set has_prototype = allow_add and prototype is defined and prototype is not null %}
     {% set placeholder = has_prototype ? (prototype.vars.name|split('[')|last|trim(']')) : '__list__' %}
-    {% set remove_label = 'Remove'|trans %}
+    {% set remove_label = 'Remove sign-up list'|trans %}
     <div id="{{ id }}" class="signup-list-collection"
          data-controller="collapsible-collection"
          data-collapsible-collection-prototype-name-value="{{ placeholder }}"
@@ -114,11 +115,13 @@
                field, seeding/clearing the options as the type changes. #}
             <div class="panel-body" data-controller="signup-field">
                 {{ form_row(child.name) }}
-                {{ form_row(child.type, {'attr': {
-                    'data-signup-field-target': 'type',
-                    'data-action': 'change->signup-field#typeChanged',
-                }}) }}
-                {{ form_row(child.isSensitive) }}
+                <div class="row align-items-center mb-2">
+                    <div class="col-md-6">{{ form_row(child.type, {'attr': {
+                        'data-signup-field-target': 'type',
+                        'data-action': 'change->signup-field#typeChanged',
+                    }}) }}</div>
+                    <div class="col-md-6">{{ form_row(child.isSensitive) }}</div>
+                </div>
                 <div data-signup-field-target="number">
                     <div class="row">
                         <div class="col-md-6">{{ form_row(child.minimumValue) }}</div>
@@ -126,7 +129,7 @@
                     </div>
                 </div>
                 <div data-signup-field-target="choice">
-                    {{ form_row(child.options) }}
+                    {{ form_row(child.options, {'remove_label': 'Remove option'|trans}) }}
                 </div>
                 {{ form_rest(child) }}
                 {# A frozen list's fields collection is disabled and ignores its submissions, so don't offer remove. #}
@@ -145,7 +148,7 @@
     {% import _self as helper %}
     {% set has_prototype = allow_add and prototype is defined and prototype is not null %}
     {% set placeholder = has_prototype ? (prototype.vars.name|split('[')|last|trim(']')) : '__field__' %}
-    {% set remove_label = 'Remove'|trans %}
+    {% set remove_label = 'Remove question'|trans %}
     <div id="{{ id }}" class="signup-field-collection"
          data-controller="collapsible-collection"
          data-collapsible-collection-prototype-name-value="{{ placeholder }}"

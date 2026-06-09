@@ -52,7 +52,10 @@ export default class extends Controller {
         button.type = 'button';
         button.className = 'btn btn-sm btn-outline-gewis-primary mt-2';
         button.setAttribute('data-action', 'form-collection#remove');
-        button.textContent = this.removeLabelValue || 'Remove';
+
+        const icon = document.createElement('i');
+        icon.className = 'fas fa-trash';
+        button.append(icon, ` ${this.removeLabelValue || 'Remove'}`);
 
         return button;
     }

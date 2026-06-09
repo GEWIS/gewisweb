@@ -237,7 +237,7 @@ class SignupListType extends AbstractType
                 'fields',
                 CollectionType::class,
                 [
-                    'label' => t('Custom fields'),
+                    'label' => false,
                     'entry_type' => SignupFieldType::class,
                     'entry_options' => ['label' => false],
                     'allow_add' => true,

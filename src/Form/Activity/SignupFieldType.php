@@ -73,7 +73,7 @@ class SignupFieldType extends AbstractType
                 'options',
                 CollectionType::class,
                 [
-                    'label' => t('Options (choice type)'),
+                    'label' => false,
                     'entry_type' => SignupOptionType::class,
                     'entry_options' => ['label' => false],
                     'allow_add' => true,

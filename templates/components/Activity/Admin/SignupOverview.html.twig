@@ -149,64 +149,6 @@
                         </dl>
                     </div>
 
-                    <div class="panel-body border-bottom d-flex flex-wrap align-items-center gap-2">
-                        {% if canMark %}
-                            <button type="button" class="btn btn-sm btn-success"
-                                    data-action="live#action" data-live-action-param="enterAttendance"
-                                    data-live-list-id-param="{{ list.listId }}">
-                                <i class="fas fa-clipboard-check"></i> {{ 'Take attendance'|trans }}
-                            </button>
-                        {% endif %}
-                        <button type="button" class="btn btn-sm btn-outline-secondary"
-                                data-action="live#action" data-live-action-param="selectAll"
-                                data-live-list-id-param="{{ list.listId }}">
-                            {{ 'Select all'|trans }}
-                        </button>
-                        <button type="button" class="btn btn-sm btn-outline-secondary"
-                                data-action="live#action" data-live-action-param="clearSelection"
-                                data-live-list-id-param="{{ list.listId }}">
-                            {{ 'Clear selection'|trans }}
-                        </button>
-                        <button type="button" class="btn btn-sm btn-gewis-primary"
-                                data-action="live#action" data-live-action-param="openComposer"
-                                data-live-list-id-param="{{ list.listId }}">
-                            <i class="fas fa-envelope"></i> {{ 'Email sign-ups'|trans }}
-                        </button>
-                        {% if list.isOpen %}
-                            {# Manual external add is a normal page (it carries the dynamic sign-up form); a redirect back
-                               here refreshes this component. #}
-                            <a class="btn btn-sm btn-outline-success"
-                               href="{{ path('admin/activities/add_external_signup', {'activity': this.activity.getId, 'signupList': list.listId}) }}">
-                                <i class="fas fa-user-plus"></i> {{ 'Add external participant'|trans }}
-                            </a>
-                        {% endif %}
-                        {% if list.fieldColumns is not empty %}
-                            {# Per-list column chooser: hide custom-field columns that clutter a wide table. Toggling
-                               re-renders the component; the dropdown stays open thanks to data-bs-auto-close="outside"
-                               plus the live component's ExternalMutationTracker preserving Bootstrap's `show` across
-                               the DOM morph. #}
-                            <div class="dropdown ms-auto">
-                                <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle"
-                                        data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
-                                    <i class="fas fa-table-columns"></i> {{ 'Columns'|trans }}
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-end p-2">
-                                    {% for field in list.fieldColumns %}
-                                        <li>
-                                            <label class="dropdown-item d-flex align-items-center gap-2 mb-0">
-                                                <input type="checkbox" class="form-check-input mt-0"
-                                                       {{ field.hidden ? '' : 'checked' }}
-                                                       data-action="live#action" data-live-action-param="toggleFieldColumn"
-                                                       data-live-field-id-param="{{ field.id }}">
-                                                {{ field.name }}
-                                            </label>
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                        {% endif %}
-                    </div>
-
                 {% if list.limitedCapacity %}
                     {# Admission is driven by the allocation method: first-come and conditional-draw run a board draw
                        that auto-locks (once sign-up closes, up to a day after the activity ends); external-party and
@@ -273,6 +215,64 @@
                         </small>
                     </div>
                 {% endif %}
+
+                    <div class="panel-body border-bottom d-flex flex-wrap align-items-center gap-2">
+                        {% if canMark %}
+                            <button type="button" class="btn btn-sm btn-success"
+                                    data-action="live#action" data-live-action-param="enterAttendance"
+                                    data-live-list-id-param="{{ list.listId }}">
+                                <i class="fas fa-clipboard-check"></i> {{ 'Take attendance'|trans }}
+                            </button>
+                        {% endif %}
+                        <button type="button" class="btn btn-sm btn-outline-secondary"
+                                data-action="live#action" data-live-action-param="selectAll"
+                                data-live-list-id-param="{{ list.listId }}">
+                            {{ 'Select all'|trans }}
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary"
+                                data-action="live#action" data-live-action-param="clearSelection"
+                                data-live-list-id-param="{{ list.listId }}">
+                            {{ 'Clear selection'|trans }}
+                        </button>
+                        <button type="button" class="btn btn-sm btn-gewis-primary"
+                                data-action="live#action" data-live-action-param="openComposer"
+                                data-live-list-id-param="{{ list.listId }}">
+                            <i class="fas fa-envelope"></i> {{ 'Email sign-ups'|trans }}
+                        </button>
+                        {% if list.isOpen %}
+                            {# Manual external add is a normal page (it carries the dynamic sign-up form); a redirect back
+                               here refreshes this component. #}
+                            <a class="btn btn-sm btn-outline-success"
+                               href="{{ path('admin/activities/add_external_signup', {'activity': this.activity.getId, 'signupList': list.listId}) }}">
+                                <i class="fas fa-user-plus"></i> {{ 'Add external participant'|trans }}
+                            </a>
+                        {% endif %}
+                        {% if list.fieldColumns is not empty %}
+                            {# Per-list column chooser: hide custom-field columns that clutter a wide table. Toggling
+                               re-renders the component; the dropdown stays open thanks to data-bs-auto-close="outside"
+                               plus the live component's ExternalMutationTracker preserving Bootstrap's `show` across
+                               the DOM morph. #}
+                            <div class="dropdown ms-auto">
+                                <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle"
+                                        data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                                    <i class="fas fa-table-columns"></i> {{ 'Columns'|trans }}
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end p-2">
+                                    {% for field in list.fieldColumns %}
+                                        <li>
+                                            <label class="dropdown-item d-flex align-items-center gap-2 mb-0">
+                                                <input type="checkbox" class="form-check-input mt-0"
+                                                       {{ field.hidden ? '' : 'checked' }}
+                                                       data-action="live#action" data-live-action-param="toggleFieldColumn"
+                                                       data-live-field-id-param="{{ field.id }}">
+                                                {{ field.name }}
+                                            </label>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endif %}
+                    </div>
 
                 {% if composingListId == list.listId %}
                     <div class="panel-body border-bottom">
