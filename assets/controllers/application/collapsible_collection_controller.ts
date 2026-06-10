@@ -17,13 +17,20 @@ export default class extends Controller {
         index: Number,
     };
 
-    connect() {
+    declare readonly entriesTarget: HTMLElement;
+
+    declare readonly prototypeValue: string;
+    declare readonly prototypeNameValue: string;
+    declare readonly hasIndexValue: boolean;
+    declare indexValue: number;
+
+    connect(): void {
         if (!this.hasIndexValue) {
             this.indexValue = this.entriesTarget.querySelectorAll(':scope > [data-collapsible-collection-target="entry"]').length;
         }
     }
 
-    add(event) {
+    add(event: Event): void {
         event.preventDefault();
 
         const html = this.prototypeValue.replaceAll(this.prototypeNameValue, String(this.indexValue));
@@ -31,12 +38,12 @@ export default class extends Controller {
         const template = document.createElement('template');
         template.innerHTML = html.trim();
 
-        this.entriesTarget.appendChild(template.content.firstElementChild);
+        this.entriesTarget.appendChild(template.content.firstElementChild!);
         this.indexValue += 1;
     }
 
-    remove(event) {
+    remove(event: Event): void {
         event.preventDefault();
-        event.currentTarget.closest('[data-collapsible-collection-target="entry"]').remove();
+        (event.currentTarget as HTMLElement).closest('[data-collapsible-collection-target="entry"]')?.remove();
     }
 }

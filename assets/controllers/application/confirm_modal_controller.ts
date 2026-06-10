@@ -1,5 +1,6 @@
 import { Controller } from '@hotwired/stimulus';
 import { getComponent } from '@symfony/ux-live-component';
+import type { Component } from '@symfony/ux-live-component';
 
 /**
  * Drives the shared confirmation modal for live-component actions. A trigger button opens the modal declaratively and
@@ -18,7 +19,18 @@ import { getComponent } from '@symfony/ux-live-component';
 export default class extends Controller {
     static targets = ['title', 'message', 'confirm'];
 
-    connect() {
+    declare readonly hasTitleTarget: boolean;
+    declare readonly titleTarget: HTMLElement;
+    declare readonly hasMessageTarget: boolean;
+    declare readonly messageTarget: HTMLElement;
+    declare readonly hasConfirmTarget: boolean;
+    declare readonly confirmTarget: HTMLElement;
+
+    private _action: string | null = null;
+    private _args: Record<string, unknown> = {};
+    private _componentPromise: Promise<Component | null> | null = null;
+
+    connect(): void {
         this._onShow = this._onShow.bind(this);
         this._onConfirm = this._onConfirm.bind(this);
         this.element.addEventListener('show.bs.modal', this._onShow);
@@ -27,15 +39,15 @@ export default class extends Controller {
         }
     }
 
-    disconnect() {
+    disconnect(): void {
         this.element.removeEventListener('show.bs.modal', this._onShow);
         if (this.hasConfirmTarget) {
             this.confirmTarget.removeEventListener('click', this._onConfirm);
         }
     }
 
-    _onShow(event) {
-        const trigger = event.relatedTarget;
+    _onShow(event: Event): void {
+        const trigger = (event as Event & { relatedTarget?: HTMLElement }).relatedTarget;
         if (!trigger) {
             return;
         }
@@ -52,7 +64,7 @@ export default class extends Controller {
         // detach the trigger, and a detached node's closest() returns null — whereas the root element and the resolved
         // component instance both survive re-renders. `.catch(() => null)` is attached eagerly so a cancelled modal
         // never logs an unhandled rejection.
-        const root = trigger.closest('[data-controller~="live"]');
+        const root = trigger.closest<HTMLElement>('[data-controller~="live"]');
         this._componentPromise = null !== this._action && null !== root
             ? getComponent(root).catch(() => null)
             : null;
@@ -70,14 +82,14 @@ export default class extends Controller {
         }
     }
 
-    async _onConfirm() {
+    async _onConfirm(): Promise<void> {
         // The confirm button also carries data-bs-dismiss, so Bootstrap closes the modal; here we just run the action.
         if (null === this._componentPromise) {
             return;
         }
 
         const component = await this._componentPromise;
-        if (null !== component) {
+        if (null !== component && null !== this._action) {
             component.action(this._action, this._args);
         }
     }

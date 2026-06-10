@@ -16,12 +16,18 @@ import { Controller } from '@hotwired/stimulus';
 export default class extends Controller {
     static targets = ['type', 'number', 'choice'];
 
-    connect() {
+    declare readonly typeTarget: HTMLSelectElement;
+    declare readonly hasNumberTarget: boolean;
+    declare readonly numberTarget: HTMLElement;
+    declare readonly hasChoiceTarget: boolean;
+    declare readonly choiceTarget: HTMLElement;
+
+    connect(): void {
         // Only set visibility on connect (an existing field keeps its saved options); seeding/clearing is user-driven.
         this.apply();
     }
 
-    typeChanged() {
+    typeChanged(): void {
         if ('choice' === this.typeTarget.value) {
             if (0 === this.optionEntries().length) {
                 this.addOption();
@@ -33,7 +39,7 @@ export default class extends Controller {
         this.apply();
     }
 
-    apply() {
+    apply(): void {
         const type = this.typeTarget.value;
 
         if (this.hasNumberTarget) {
@@ -45,23 +51,23 @@ export default class extends Controller {
         }
     }
 
-    optionEntries() {
+    optionEntries(): HTMLElement[] {
         if (!this.hasChoiceTarget) {
             return [];
         }
 
-        return this.choiceTarget.querySelectorAll('[data-form-collection-target="entry"]');
+        return Array.from(this.choiceTarget.querySelectorAll<HTMLElement>('[data-form-collection-target="entry"]'));
     }
 
-    addOption() {
+    addOption(): void {
         // Reuse the options' own form-collection "add" button so the prototype/index logic stays in one place.
-        const addButton = this.choiceTarget.querySelector('[data-action~="form-collection#add"]');
+        const addButton = this.choiceTarget.querySelector<HTMLButtonElement>('[data-action~="form-collection#add"]');
         if (null !== addButton) {
             addButton.click();
         }
     }
 
-    clearOptions() {
+    clearOptions(): void {
         this.optionEntries().forEach((entry) => {
             entry.remove();
         });

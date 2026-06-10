@@ -10,7 +10,15 @@ import { Controller } from '@hotwired/stimulus';
 export default class extends Controller {
     static targets = ['sentinel', 'button'];
 
-    connect() {
+    declare readonly hasSentinelTarget: boolean;
+    declare readonly sentinelTarget: HTMLElement;
+    declare readonly hasButtonTarget: boolean;
+    declare readonly buttonTarget: HTMLElement;
+
+    private cooldown = false;
+    private observer: IntersectionObserver | null = null;
+
+    connect(): void {
         if (!('IntersectionObserver' in window) || !this.hasSentinelTarget) {
             return;
         }
@@ -31,7 +39,7 @@ export default class extends Controller {
         this.observer.observe(this.sentinelTarget);
     }
 
-    disconnect() {
+    disconnect(): void {
         if (this.observer) {
             this.observer.disconnect();
         }

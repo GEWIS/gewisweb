@@ -25,7 +25,25 @@ export default class extends Controller {
         idle: { type: Number, default: 300000 },
     };
 
-    connect() {
+    declare readonly pingUrlValue: string;
+    declare readonly hasReleaseUrlValue: boolean;
+    declare readonly releaseUrlValue: string;
+    declare readonly csrfTokenValue: string;
+    declare readonly hasLostMessageValue: boolean;
+    declare readonly lostMessageValue: string;
+    declare readonly intervalValue: number;
+    declare readonly idleValue: number;
+
+    private lastActivity = 0;
+    private lost = false;
+    private submitting = false;
+    private inflight: AbortController | null = null;
+    private timer = 0;
+    private _onActivity!: () => void;
+    private _onSubmit!: () => void;
+    private _onUnload!: () => void;
+
+    connect(): void {
         this.lastActivity = Date.now();
         this.lost = false;
         this.submitting = false;
@@ -47,7 +65,7 @@ export default class extends Controller {
         this.timer = window.setInterval(() => this._tick(), this.intervalValue);
     }
 
-    disconnect() {
+    disconnect(): void {
         window.clearInterval(this.timer);
         // Abort an in-flight ping so its response cannot land after disconnect and lock down a detached element.
         this.inflight?.abort();
@@ -57,7 +75,7 @@ export default class extends Controller {
         window.removeEventListener('beforeunload', this._onUnload);
     }
 
-    async _tick() {
+    async _tick(): Promise<void> {
         if (this.lost) {
             return;
         }
@@ -90,14 +108,16 @@ export default class extends Controller {
         }
     }
 
-    _onLost() {
+    _onLost(): void {
         this.lost = true;
         window.clearInterval(this.timer);
 
         // Lock down the form so a stale editor cannot submit over whoever took over.
-        this.element.querySelectorAll('input, select, textarea, button').forEach((field) => {
-            field.disabled = true;
-        });
+        this.element
+            .querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement | HTMLButtonElement>('input, select, textarea, button')
+            .forEach((field) => {
+                field.disabled = true;
+            });
 
         if (this.hasLostMessageValue) {
             const banner = document.createElement('div');
@@ -108,7 +128,7 @@ export default class extends Controller {
         }
     }
 
-    _release() {
+    _release(): void {
         if (this.lost || this.submitting || !this.hasReleaseUrlValue) {
             return;
         }
@@ -116,7 +136,7 @@ export default class extends Controller {
         navigator.sendBeacon(this.releaseUrlValue, this._body());
     }
 
-    _body() {
+    _body(): FormData {
         const body = new FormData();
         body.append('_csrf_token', this.csrfTokenValue);
 

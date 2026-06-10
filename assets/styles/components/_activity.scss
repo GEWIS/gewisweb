@@ -1,4 +1,4 @@
-// The whole activity list item is clickable (see activity_item_controller.js).
+// The whole activity list item is clickable (see activity_item_controller.ts).
 .activity-list-item {
     cursor: pointer;
 }
@@ -15,7 +15,7 @@
 
 // Sign-up list editor (activity create/edit form): number the collapsible list and question panels so collapsed ones
 // stay distinguishable. A CSS counter reflows automatically as entries are added or removed (see
-// collapsible_collection_controller.js); the prototype lives in a data attribute and is not counted.
+// collapsible_collection_controller.ts); the prototype lives in a data attribute and is not counted.
 .signup-list-collection {
     counter-reset: signup-list;
 

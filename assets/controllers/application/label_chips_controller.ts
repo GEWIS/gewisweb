@@ -1,5 +1,11 @@
 import { Controller } from '@hotwired/stimulus';
 
+interface LabelOption {
+    input: HTMLInputElement;
+    row: HTMLElement;
+    text: string;
+}
+
 /**
  * Turn a plain checkbox group into a chip control: the selected options render as dismissible badges and a typeahead
  * adds the not-yet-selected ones. Nothing is shown until an option is selected. Reused by the activity create/edit form
@@ -27,11 +33,23 @@ export default class extends Controller {
         noResults: String,
     };
 
-    connect() {
+    declare readonly placeholderValue: string;
+    declare readonly removeLabelValue: string;
+    declare readonly noResultsValue: string;
+
+    private options: LabelOption[] = [];
+    private matches: LabelOption[] = [];
+    private activeIndex = -1;
+    private blurTimer = 0;
+    private chips!: HTMLDivElement;
+    private input!: HTMLInputElement;
+    private menu!: HTMLUListElement;
+
+    connect(): void {
         // The native checkboxes are the source of truth; read them, hide their rows, and drive them from the chips.
-        this.options = Array.from(this.element.querySelectorAll('input[type="checkbox"]')).map((input) => ({
+        this.options = Array.from(this.element.querySelectorAll<HTMLInputElement>('input[type="checkbox"]')).map((input) => ({
             input,
-            row: input.closest('.form-check') ?? input.parentElement,
+            row: (input.closest('.form-check') ?? input.parentElement) as HTMLElement,
             text: this.labelTextFor(input),
         }));
         this.options.forEach((option) => { option.row.hidden = true; });
@@ -42,17 +60,17 @@ export default class extends Controller {
         this.refresh();
     }
 
-    disconnect() {
+    disconnect(): void {
         window.clearTimeout(this.blurTimer);
     }
 
-    labelTextFor(input) {
+    labelTextFor(input: HTMLInputElement): string {
         const label = input.labels?.[0] ?? this.element.querySelector(`label[for="${input.id}"]`);
 
         return (label?.textContent ?? '').trim();
     }
 
-    buildScaffolding() {
+    buildScaffolding(): void {
         this.chips = document.createElement('div');
         this.chips.className = 'd-flex flex-wrap gap-2 mb-2';
 
@@ -82,12 +100,12 @@ export default class extends Controller {
         this.element.prepend(this.chips, combo);
     }
 
-    refresh() {
+    refresh(): void {
         this.renderChips();
         this.renderMenu();
     }
 
-    renderChips() {
+    renderChips(): void {
         this.chips.replaceChildren();
         this.options.filter((option) => option.input.checked).forEach((option) => {
             const chip = document.createElement('span');
@@ -105,13 +123,13 @@ export default class extends Controller {
         });
     }
 
-    openAndFilter() {
+    openAndFilter(): void {
         this.activeIndex = -1;
         this.renderMenu();
         this.open();
     }
 
-    renderMenu() {
+    renderMenu(): void {
         const query = this.input.value.trim().toLowerCase();
         this.matches = this.options.filter(
             (option) => !option.input.checked && option.text.toLowerCase().includes(query),
@@ -145,7 +163,7 @@ export default class extends Controller {
         });
     }
 
-    onKeydown(event) {
+    onKeydown(event: KeyboardEvent): void {
         switch (event.key) {
             case 'ArrowDown':
                 event.preventDefault();
@@ -177,7 +195,7 @@ export default class extends Controller {
         }
     }
 
-    move(delta) {
+    move(delta: number): void {
         if (0 === this.matches.length) {
             return;
         }
@@ -186,7 +204,7 @@ export default class extends Controller {
         this.renderMenu();
     }
 
-    toggle(option, checked) {
+    toggle(option: LabelOption, checked: boolean): void {
         option.input.checked = checked;
         option.input.dispatchEvent(new Event('input', { bubbles: true }));
         option.input.dispatchEvent(new Event('change', { bubbles: true }));
@@ -201,12 +219,12 @@ export default class extends Controller {
         }
     }
 
-    open() {
+    open(): void {
         this.menu.classList.add('show');
         this.input.setAttribute('aria-expanded', 'true');
     }
 
-    close() {
+    close(): void {
         this.menu.classList.remove('show');
         this.input.setAttribute('aria-expanded', 'false');
     }

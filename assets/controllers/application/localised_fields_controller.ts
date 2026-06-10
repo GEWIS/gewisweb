@@ -1,5 +1,7 @@
 import { Controller } from '@hotwired/stimulus';
 
+type LocalisedField = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
+
 /**
  * Enable/disable the Dutch and English variants of localised fields with two language checkboxes.
  *
@@ -16,28 +18,35 @@ import { Controller } from '@hotwired/stimulus';
 export default class extends Controller {
     static targets = ['dutchToggle', 'englishToggle', 'dutch', 'english'];
 
-    connect() {
+    declare readonly hasDutchToggleTarget: boolean;
+    declare readonly dutchToggleTarget: HTMLInputElement;
+    declare readonly hasEnglishToggleTarget: boolean;
+    declare readonly englishToggleTarget: HTMLInputElement;
+    declare readonly dutchTargets: LocalisedField[];
+    declare readonly englishTargets: LocalisedField[];
+
+    connect(): void {
         this.apply();
     }
 
-    apply() {
+    apply(): void {
         this.dutchTargets.forEach((field) => { field.disabled = !this.dutchEnabled(); });
         this.englishTargets.forEach((field) => { field.disabled = !this.englishEnabled(); });
     }
 
-    dutchTargetConnected(field) {
+    dutchTargetConnected(field: LocalisedField): void {
         field.disabled = !this.dutchEnabled();
     }
 
-    englishTargetConnected(field) {
+    englishTargetConnected(field: LocalisedField): void {
         field.disabled = !this.englishEnabled();
     }
 
-    dutchEnabled() {
+    dutchEnabled(): boolean {
         return !this.hasDutchToggleTarget || this.dutchToggleTarget.checked;
     }
 
-    englishEnabled() {
+    englishEnabled(): boolean {
         return !this.hasEnglishToggleTarget || this.englishToggleTarget.checked;
     }
 }

@@ -3,17 +3,24 @@ import { Controller } from '@hotwired/stimulus';
 export default class extends Controller {
     static targets = ['form', 'name', 'csrfToken'];
 
-    connect() {
+    declare readonly hasFormTarget: boolean;
+    declare readonly formTarget: HTMLFormElement;
+    declare readonly hasNameTarget: boolean;
+    declare readonly nameTarget: HTMLElement;
+    declare readonly hasCsrfTokenTarget: boolean;
+    declare readonly csrfTokenTarget: HTMLInputElement;
+
+    connect(): void {
         this._onShow = this._onShow.bind(this);
         this.element.addEventListener('show.bs.modal', this._onShow);
     }
 
-    disconnect() {
+    disconnect(): void {
         this.element.removeEventListener('show.bs.modal', this._onShow);
     }
 
-    _onShow(event) {
-        const trigger = event.relatedTarget;
+    _onShow(event: Event): void {
+        const trigger = (event as Event & { relatedTarget?: HTMLElement }).relatedTarget;
         if (!trigger) {
             return;
         }

@@ -26,11 +26,18 @@ export default class extends Controller {
         'conditional', 'rule', 'cutoffAt', 'durationHours', 'external', 'custom',
     ];
 
-    connect() {
+    declare readonly hasLimitedTarget: boolean;
+    declare readonly limitedTarget: HTMLInputElement;
+    declare readonly hasMethodTarget: boolean;
+    declare readonly methodTarget: HTMLSelectElement;
+    declare readonly hasRuleTarget: boolean;
+    declare readonly ruleTarget: HTMLSelectElement;
+
+    connect(): void {
         this.apply();
     }
 
-    apply() {
+    apply(): void {
         const limited = this.hasLimitedTarget && this.limitedTarget.checked;
         const method = this.hasMethodTarget ? this.methodTarget.value : '';
         const rule = this.hasRuleTarget ? this.ruleTarget.value : '';
@@ -45,10 +52,11 @@ export default class extends Controller {
         this.setHidden('durationHours', !(conditional && 'after-duration-open' === rule));
     }
 
-    setHidden(name, hidden) {
+    setHidden(name: string, hidden: boolean): void {
         const capitalised = name.charAt(0).toUpperCase() + name.slice(1);
-        if (this[`has${capitalised}Target`]) {
-            this[`${name}Target`].hidden = hidden;
+        const self = this as unknown as Record<string, boolean | HTMLElement | undefined>;
+        if (self[`has${capitalised}Target`]) {
+            (self[`${name}Target`] as HTMLElement).hidden = hidden;
         }
     }
 }

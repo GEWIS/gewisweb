@@ -17,13 +17,22 @@ export default class extends Controller {
         index: Number,
     };
 
-    connect() {
+    declare readonly entriesTarget: HTMLElement;
+
+    declare readonly prototypeValue: string;
+    declare readonly prototypeNameValue: string;
+    declare readonly allowDeleteValue: boolean;
+    declare readonly removeLabelValue: string;
+    declare readonly hasIndexValue: boolean;
+    declare indexValue: number;
+
+    connect(): void {
         if (!this.hasIndexValue) {
             this.indexValue = this.entriesTarget.querySelectorAll(':scope > [data-form-collection-target="entry"]').length;
         }
     }
 
-    add(event) {
+    add(event: Event): void {
         event.preventDefault();
 
         const placeholder = this.prototypeNameValue || '__name__';
@@ -42,12 +51,12 @@ export default class extends Controller {
         this.indexValue += 1;
     }
 
-    remove(event) {
+    remove(event: Event): void {
         event.preventDefault();
-        event.currentTarget.closest('[data-form-collection-target="entry"]').remove();
+        (event.currentTarget as HTMLElement).closest('[data-form-collection-target="entry"]')?.remove();
     }
 
-    removeButton() {
+    removeButton(): HTMLButtonElement {
         const button = document.createElement('button');
         button.type = 'button';
         button.className = 'btn btn-sm btn-outline-gewis-primary mt-2';

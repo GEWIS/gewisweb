@@ -1,23 +1,23 @@
 import { startStimulusApp } from '@symfony/stimulus-bundle';
 
 // Application-wide, domain-agnostic controllers.
-import CollapsibleCollectionController from './controllers/application/collapsible_collection_controller.js';
-import ConfirmModalController from './controllers/application/confirm_modal_controller.js';
-import DescriptionToggleController from './controllers/application/description_toggle_controller.js';
-import EditLockController from './controllers/application/edit_lock_controller.js';
-import FormCollectionController from './controllers/application/form_collection_controller.js';
-import FormStepperController from './controllers/application/form_stepper_controller.js';
-import InfiniteScrollController from './controllers/application/infinite_scroll_controller.js';
-import LabelChipsController from './controllers/application/label_chips_controller.js';
-import LocalisedFieldsController from './controllers/application/localised_fields_controller.js';
-import ModalCloseController from './controllers/application/modal_close_controller.js';
-import ModalFormTargetController from './controllers/application/modal_form_target_controller.js';
-import PrintController from './controllers/application/print_controller.js';
+import CollapsibleCollectionController from './controllers/application/collapsible_collection_controller.ts';
+import ConfirmModalController from './controllers/application/confirm_modal_controller.ts';
+import DescriptionToggleController from './controllers/application/description_toggle_controller.ts';
+import EditLockController from './controllers/application/edit_lock_controller.ts';
+import FormCollectionController from './controllers/application/form_collection_controller.ts';
+import FormStepperController from './controllers/application/form_stepper_controller.ts';
+import InfiniteScrollController from './controllers/application/infinite_scroll_controller.ts';
+import LabelChipsController from './controllers/application/label_chips_controller.ts';
+import LocalisedFieldsController from './controllers/application/localised_fields_controller.ts';
+import ModalCloseController from './controllers/application/modal_close_controller.ts';
+import ModalFormTargetController from './controllers/application/modal_form_target_controller.ts';
+import PrintController from './controllers/application/print_controller.ts';
 
 // Activity-specific controllers.
-import ActivityItemController from './controllers/activity/activity_item_controller.js';
-import SignupFieldController from './controllers/activity/signup_field_controller.js';
-import SignupListController from './controllers/activity/signup_list_controller.js';
+import ActivityItemController from './controllers/activity/activity_item_controller.ts';
+import SignupFieldController from './controllers/activity/signup_field_controller.ts';
+import SignupListController from './controllers/activity/signup_list_controller.ts';
 
 const app = startStimulusApp();
 

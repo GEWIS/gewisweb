@@ -1,4 +1,5 @@
 import { Controller } from '@hotwired/stimulus';
+import type { ActionEvent } from '@hotwired/stimulus';
 
 /**
  * Page a single long form into sequential steps without changing how it submits: every step stays in the DOM (hidden,
@@ -25,12 +26,24 @@ import { Controller } from '@hotwired/stimulus';
 export default class extends Controller {
     static targets = ['step', 'tab', 'back', 'next', 'submit'];
 
-    connect() {
+    declare readonly stepTargets: HTMLElement[];
+    declare readonly tabTargets: HTMLElement[];
+    declare readonly hasBackTarget: boolean;
+    declare readonly backTarget: HTMLElement;
+    declare readonly hasNextTarget: boolean;
+    declare readonly nextTarget: HTMLElement;
+    declare readonly hasSubmitTarget: boolean;
+    declare readonly submitTarget: HTMLButtonElement;
+
+    private current = 0;
+    private initialised = false;
+
+    connect(): void {
         this.current = this.firstStepWithError();
         this.render();
     }
 
-    firstStepWithError() {
+    firstStepWithError(): number {
         const index = this.stepTargets.findIndex(
             (step) => null !== step.querySelector('.is-invalid, .invalid-feedback'),
         );
@@ -38,26 +51,26 @@ export default class extends Controller {
         return index >= 0 ? index : 0;
     }
 
-    next() {
+    next(): void {
         if (this.current < this.stepTargets.length - 1) {
             this.current += 1;
             this.render();
         }
     }
 
-    previous() {
+    previous(): void {
         if (this.current > 0) {
             this.current -= 1;
             this.render();
         }
     }
 
-    goto(event) {
+    goto(event: ActionEvent): void {
         this.current = event.params.index;
         this.render();
     }
 
-    render() {
+    render(): void {
         const last = this.stepTargets.length - 1;
 
         this.stepTargets.forEach((step, index) => { step.hidden = index !== this.current; });

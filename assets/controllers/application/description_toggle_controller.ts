@@ -8,7 +8,15 @@ export default class extends Controller {
     static targets = ['content', 'button'];
     static values = { more: String, less: String };
 
-    connect() {
+    declare readonly hasContentTarget: boolean;
+    declare readonly contentTarget: HTMLElement;
+    declare readonly hasButtonTarget: boolean;
+    declare readonly buttonTarget: HTMLElement;
+
+    declare readonly moreValue: string;
+    declare readonly lessValue: string;
+
+    connect(): void {
         if (!this.hasContentTarget || !this.hasButtonTarget) {
             return;
         }
@@ -21,7 +29,7 @@ export default class extends Controller {
         });
     }
 
-    toggle() {
+    toggle(): void {
         const expanded = this.contentTarget.classList.toggle('expanded');
         this.buttonTarget.textContent = expanded ? this.lessValue : this.moreValue;
     }
