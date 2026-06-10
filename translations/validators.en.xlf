@@ -117,6 +117,10 @@
         <source>This field is required.</source>
         <target>This field is required.</target>
       </trans-unit>
+      <trans-unit id="7IsK8li" resname="You may only assign an organising organ that you are installed in.">
+        <source>You may only assign an organising organ that you are installed in.</source>
+        <target>You may only assign an organising organ that you are installed in.</target>
+      </trans-unit>
       <trans-unit id=".XKorDo" resname="You must agree to the activity and alcohol policies to sign up.">
         <source>You must agree to the activity and alcohol policies to sign up.</source>
         <target>You must agree to the activity and alcohol policies to sign up.</target>

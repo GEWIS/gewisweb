@@ -25,10 +25,12 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 use function array_values;
 use function Symfony\Component\Translation\t;
@@ -63,6 +65,7 @@ class ActivityRevisionType extends AbstractType
     public function __construct(
         private readonly Security $security,
         private readonly OrganRepository $organRepository,
+        private readonly TranslatorInterface $translator,
     ) {
     }
 
@@ -224,13 +227,21 @@ class ActivityRevisionType extends AbstractType
                 ],
             );
 
+        // The organ the revision already carries when editing starts. keepBoundOrgan() lets an out-of-reach co-owner
+        // organ survive a save, so guardOrganAssignment() must recognise it as allowed; captured here by reference.
+        $boundOrganId = null;
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) use ($selectableOrgans): void {
+            function (FormEvent $event) use ($selectableOrgans, &$boundOrganId): void {
                 $this->keepBoundOrgan(
                     $event,
                     $selectableOrgans,
                 );
+
+                $revision = $event->getData();
+                $boundOrganId = $revision instanceof ActivityRevision
+                    ? $revision->getOrgan()?->getId()
+                    : null;
             },
         );
         $builder->addEventListener(
@@ -240,6 +251,16 @@ class ActivityRevisionType extends AbstractType
         $builder->addEventListener(
             FormEvents::POST_SET_DATA,
             $this->disableScheduleWhenStarted(...),
+        );
+        $builder->addEventListener(
+            FormEvents::POST_SUBMIT,
+            function (FormEvent $event) use ($selectableOrgans, &$boundOrganId): void {
+                $this->guardOrganAssignment(
+                    $event,
+                    $selectableOrgans,
+                    $boundOrganId,
+                );
+            },
         );
     }
 
@@ -328,6 +349,53 @@ class ActivityRevisionType extends AbstractType
             EntityType::class,
             $this->organFieldOptions($choices),
         );
+    }
+
+    /**
+     * Defence in depth for the authorisation invariant that an activity's organ
+     * ({@see \App\Entity\Activity\Activity::getResourceOrgan()}, read straight from the working revision) is only ever
+     * one the editor may organise for. The organ field already limits its choices to {@see selectableOrgans()} (plus
+     * the organ the revision already had, kept by {@see keepBoundOrgan()}) and the EntityType validates a submission
+     * against that list -- but because the chosen organ becomes an edit-rights anchor the moment it is saved, re-assert
+     * it here instead of trusting the field configuration: reject a submitted organ that is neither selectable nor the
+     * one already bound.
+     *
+     * @param Organ[]  $selectableOrgans the organs offered to this user, resolved once in buildForm()
+     * @param int|null $boundOrganId     the organ the revision carried before this submit, allowed to survive
+     */
+    private function guardOrganAssignment(
+        FormEvent $event,
+        array $selectableOrgans,
+        ?int $boundOrganId,
+    ): void {
+        $revision = $event->getData();
+        if (!$revision instanceof ActivityRevision) {
+            return;
+        }
+
+        $organ = $revision->getOrgan();
+        if (null === $organ) {
+            return;
+        }
+
+        $organId = $organ->getId();
+        if ($organId === $boundOrganId) {
+            return;
+        }
+
+        foreach ($selectableOrgans as $selectable) {
+            if ($selectable->getId() === $organId) {
+                return;
+            }
+        }
+
+        $event->getForm()->get('organ')->addError(new FormError(
+            $this->translator->trans(
+                'You may only assign an organising organ that you are installed in.',
+                [],
+                'validators',
+            ),
+        ));
     }
 
     /**

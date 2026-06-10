@@ -12,6 +12,7 @@ use App\Repository\Application\EditLockRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use LogicException;
+use RuntimeException;
 
 use function sprintf;
 
@@ -58,13 +59,27 @@ final readonly class EditLockService
             $resource->getResourceId(),
             $this->key($resource),
         );
-        $connection->executeQuery(
+        $granted = $connection->executeQuery(
             'SELECT GET_LOCK(?, ?)',
             [
                 $mutex,
                 self::ACQUIRE_TIMEOUT_SECONDS,
             ],
-        );
+        )->fetchOne();
+        // GET_LOCK() returns 1 when granted, 0 when the wait timed out and NULL on error. Without the mutex the
+        // find-then-insert below is exactly the TOCTOU race we are guarding against, so never fall through unguarded:
+        // a NULL is an infrastructure fault worth surfacing, a timeout means another acquisition holds the mutex
+        // mid-flight, so report the resource as momentarily blocked (the caller already handles a null lock).
+        if (null === $granted) {
+            throw new RuntimeException(sprintf(
+                'Failed to obtain the edit-lock mutex %s.',
+                $mutex,
+            ));
+        }
+
+        if (1 !== (int) $granted) {
+            return null;
+        }
 
         try {
             $lock = $this->find($resource);

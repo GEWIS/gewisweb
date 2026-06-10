@@ -66,7 +66,7 @@ export default class extends Controller {
         this._pending = null !== action && null !== root
             ? {
                 action,
-                args: trigger.dataset.confirmLiveArgs ? JSON.parse(trigger.dataset.confirmLiveArgs) : {},
+                args: this._parseArgs(trigger.dataset.confirmLiveArgs),
                 component: getComponent(root).catch(() => null),
             }
             : null;
@@ -83,6 +83,25 @@ export default class extends Controller {
             this.confirmTarget.textContent = trigger.dataset.confirmLabel;
         }
     };
+
+    // Parse the trigger's data-confirm-live-args. The value is server-rendered JSON, so a parse failure means a
+    // templating slip, not user input: swallow it (logging to the console) and fall back to no args rather than letting
+    // an uncaught SyntaxError leave the confirm button silently dead.
+    private _parseArgs(raw: string | undefined): Record<string, unknown> {
+        if (!raw) {
+            return {};
+        }
+
+        try {
+            const parsed: unknown = JSON.parse(raw);
+
+            return typeof parsed === 'object' && null !== parsed ? (parsed as Record<string, unknown>) : {};
+        } catch {
+            console.error('confirm-modal: ignoring malformed data-confirm-live-args', raw);
+
+            return {};
+        }
+    }
 
     private readonly _onConfirm = async (): Promise<void> => {
         // The confirm button also carries data-bs-dismiss, so Bootstrap closes the modal; here we just run the action.

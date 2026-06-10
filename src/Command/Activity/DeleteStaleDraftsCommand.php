@@ -167,22 +167,29 @@ final class DeleteStaleDraftsCommand extends Command
      */
     private function deleteActivity(Activity $activity): void
     {
-        // The edit lock (if any) has no foreign key to the activity, so drop it explicitly before the activity goes.
-        $this->editLockService->purge($activity);
+        // Atomic per activity: the FK-nulling and the row removals are two separate flushes (the nulls must reach the
+        // database first so the deletes are unambiguous), so wrap both in a single transaction. Otherwise a crash
+        // between the flushes would commit the half-deleted state -- an activity pointing at no revision while its
+        // revisions still exist, which getDisplayRevision() then chokes on -- until the next run repairs it.
+        $this->entityManager->wrapInTransaction(function () use ($activity): void {
+            // The edit lock (if any) has no foreign key to the activity, so drop it explicitly before it goes.
+            $this->editLockService->purge($activity);
 
-        $activity->setCurrentRevision(null);
-        $activity->setLiveRevision(null);
+            $activity->setCurrentRevision(null);
+            $activity->setLiveRevision(null);
 
-        foreach ($activity->getRevisions() as $revision) {
-            $revision->setPreviousRevision(null);
-        }
+            foreach ($activity->getRevisions() as $revision) {
+                $revision->setPreviousRevision(null);
+            }
 
-        $this->entityManager->flush();
+            $this->entityManager->flush();
 
-        foreach ($activity->getRevisions() as $revision) {
-            $this->draftDiscarder->removeRevision($revision);
-        }
+            foreach ($activity->getRevisions() as $revision) {
+                $this->draftDiscarder->removeRevision($revision);
+            }
 
-        $this->entityManager->remove($activity);
+            $this->entityManager->remove($activity);
+            $this->entityManager->flush();
+        });
     }
 }

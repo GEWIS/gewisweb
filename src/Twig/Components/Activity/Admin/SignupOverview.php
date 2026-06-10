@@ -10,6 +10,7 @@ use App\Entity\Activity\Enums\RecipientScope;
 use App\Entity\Activity\ExternalSignup;
 use App\Entity\Activity\Signup;
 use App\Entity\Activity\SignupList;
+use App\Entity\Activity\UserSignup;
 use App\Entity\Application\Enums\AlertTypes;
 use App\Entity\Application\Enums\Languages;
 use App\Entity\Decision\Member;
@@ -144,6 +145,8 @@ final class SignupOverview
             return $this->listViews;
         }
 
+        $this->primeSignups();
+
         $views = [];
         $selected = $this->selectedIds();
         $hiddenFields = $this->hiddenFieldIds();
@@ -159,6 +162,55 @@ final class SignupOverview
         }
 
         return $this->listViews = $views;
+    }
+
+    /**
+     * Eagerly load the sign-ups and the associations each row reads -- the member behind a user sign-up (its type and
+     * generation are columns that ride along) and every answer's field and option -- for this activity's live lists in
+     * a fixed number of queries. Without this, building the table lazy-loads the member and the field values per row:
+     * an N+1 that grows with the number of sign-ups.
+     */
+    private function primeSignups(): void
+    {
+        $lists = $this->activity->getLiveSignupLists()->toArray();
+        if ([] === $lists) {
+            return;
+        }
+
+        // Each list's sign-ups in one query, instead of one lazy load per list.
+        $this->entityManager
+            ->createQuery(
+                'SELECT sl, s FROM ' . SignupList::class . ' sl LEFT JOIN sl.signUps s WHERE sl IN (:lists)',
+            )
+            ->setParameter(
+                'lists',
+                $lists,
+            )
+            ->getResult();
+
+        // The member behind every user sign-up in one query.
+        $this->entityManager
+            ->createQuery(
+                'SELECT us, u FROM ' . UserSignup::class . ' us JOIN us.user u WHERE us.signupList IN (:lists)',
+            )
+            ->setParameter(
+                'lists',
+                $lists,
+            )
+            ->getResult();
+
+        // Every answer with its field and option in one query, so displayValueForField() never lazy-loads per row.
+        $this->entityManager
+            ->createQuery(
+                'SELECT s, fv, f, o FROM ' . Signup::class . ' s'
+                . ' LEFT JOIN s.fieldValues fv LEFT JOIN fv.field f LEFT JOIN fv.option o'
+                . ' WHERE s.signupList IN (:lists)',
+            )
+            ->setParameter(
+                'lists',
+                $lists,
+            )
+            ->getResult();
     }
 
     /**

@@ -8,8 +8,9 @@ use App\Entity\Activity\ActivityRevision;
 use App\Entity\Activity\SignupField;
 use App\Entity\Activity\SignupList;
 use App\Entity\Activity\SignupOption;
+use App\Entity\Application\AbstractRevision;
 use App\Entity\Application\RevisionInterface;
-use App\Workflow\RevisionClonerInterface;
+use App\Workflow\AbstractRevisionCloner;
 use DateTime;
 use Override;
 
@@ -21,9 +22,10 @@ use function assert;
  * source revision's content; the schedule, category and flags are copied by value, and the organ, company and labels
  * (reference entities) are carried over by reference. The sign-up lists (with their fields and options) are
  * deep-cloned too, carrying their lineage id forward but never their sign-ups; on approval the sign-ups are migrated
- * from the outgoing live revision's lists onto these clones.
+ * from the outgoing live revision's lists onto these clones. The shared workflow wiring lives in
+ * {@see AbstractRevisionCloner}.
  */
-final readonly class ActivityRevisionCloner implements RevisionClonerInterface
+final readonly class ActivityRevisionCloner extends AbstractRevisionCloner
 {
     #[Override]
     public function supports(RevisionInterface $revision): bool
@@ -32,17 +34,28 @@ final readonly class ActivityRevisionCloner implements RevisionClonerInterface
     }
 
     #[Override]
-    public function cloneAsDraft(RevisionInterface $source): ActivityRevision
+    protected function spawnDraft(RevisionInterface $source): ActivityRevision
     {
         assert($source instanceof ActivityRevision);
 
         $activity = $source->getActivity();
 
         $draft = new ActivityRevision();
-        $draft->setAuthor($source->getAuthor());
-        $draft->setAuthorCompanyUser($source->getAuthorCompanyUser());
-        $draft->setRevisionNumber($source->getRevisionNumber() + 1);
         $draft->setPreviousRevision($source);
+        $activity->addRevision($draft);
+        $activity->setCurrentRevision($draft);
+
+        return $draft;
+    }
+
+    #[Override]
+    protected function copyContent(
+        RevisionInterface $source,
+        AbstractRevision $draft,
+    ): void {
+        assert($source instanceof ActivityRevision);
+        assert($draft instanceof ActivityRevision);
+
         $draft->setName($source->getName()->copy());
         $draft->setLocation($source->getLocation()->copy());
         $draft->setCosts($source->getCosts()->copy());
@@ -61,11 +74,6 @@ final readonly class ActivityRevisionCloner implements RevisionClonerInterface
         foreach ($source->getSignupLists() as $list) {
             $draft->addSignupList($this->copySignupList($list));
         }
-
-        $activity->addRevision($draft);
-        $activity->setCurrentRevision($draft);
-
-        return $draft;
     }
 
     private function copyDate(?DateTime $source): ?DateTime

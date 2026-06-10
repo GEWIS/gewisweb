@@ -117,6 +117,10 @@
         <source>This field is required.</source>
         <target>Dit veld is verplicht.</target>
       </trans-unit>
+      <trans-unit id="7IsK8li" resname="You may only assign an organising organ that you are installed in.">
+        <source>You may only assign an organising organ that you are installed in.</source>
+        <target>Je mag alleen een organiserend orgaan toewijzen waarin je geïnstalleerd bent.</target>
+      </trans-unit>
       <trans-unit id=".XKorDo" resname="You must agree to the activity and alcohol policies to sign up.">
         <source>You must agree to the activity and alcohol policies to sign up.</source>
         <target>Je moet akkoord gaan met het activiteiten- en alcoholbeleid om je in te schrijven.</target>
