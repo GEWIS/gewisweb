@@ -18,8 +18,8 @@ use function trim;
 
 /**
  * Read-model of one {@see SignupList} for the admin sign-ups page. The privileged counterpart of
- * {@see \App\ViewModel\Activity\SignupListView}: it exposes every subscriber with their contact details, membership type,
- * attendance/admission flags and all field answers (no sensitivity masking), so the Twig stays free of
+ * {@see \App\ViewModel\Activity\SignupListView}: it exposes every subscriber with their contact details, membership
+ * type, attendance/admission flags and all field answers (no sensitivity masking), so the Twig stays free of
  * permission/`instanceof`/formatting logic.
  */
 final readonly class SignupAdminListView

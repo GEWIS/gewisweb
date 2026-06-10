@@ -8,7 +8,8 @@ use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 
 /**
- * Auto-generated Migration: Please modify to your needs!
+ * phpcs:disable Generic.Files.LineLength.TooLong
+ * phpcs:disable SlevomatCodingStandard.Functions.RequireMultiLineCall.RequiredMultiLineCall
  */
 final class Version20260606184222 extends AbstractMigration
 {

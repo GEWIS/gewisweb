@@ -4,7 +4,7 @@ Guidance for AI coding agents working in this repository. Humans should read `RE
 
 ## What this project is
 
-GEWISWEB is the GEWIS member-facing website. It serves activities, decisions, photos, education materials, custom pages, and a careers portal for partner companies. The codebase was just migrated from Laminas MVC to Symfony 8; some structure is still settling — `tests/` is empty save for bootstrap files, `src/ApiResource/` is empty, and a number of `src/Service/<Domain>/` directories are `.gitignore`-only placeholders. Treat the present-day layout as authoritative, but expect to see Laminas-shaped patterns lurking in older code paths.
+GEWISWEB is the GEWIS member-facing website. It serves activities, decisions, photos, education materials, custom pages, and a careers portal for partner companies. The codebase was recently migrated from Laminas MVC to Symfony 8; some structure is still settling — `tests/` is empty save for bootstrap files, `src/ApiResource/` is empty, and the `src/Service/{Decision,Education,Photo}/` directories are still `.gitignore`-only placeholders. Treat the present-day layout as authoritative, but expect to see Laminas-shaped patterns lurking in older code paths.
 
 ## Pre-migration reference
 
@@ -23,39 +23,59 @@ GEWISWEB is the GEWIS member-facing website. It serves activities, decisions, ph
 - **FrankenPHP worker mode** (Dockerfile `FROM dunglas/frankenphp`). Worker-mode safety is non-negotiable here — see the Care section below.
 - **API Platform 4** (`config/packages/api_platform.yaml`, all stateless). `src/ApiResource/` is currently empty pending migration of the Laminas-era REST surface.
 - **Symfony Messenger** over RabbitMQ in dev, in-memory in test (`config/packages/messenger.yaml`). **Scheduler** in `src/Scheduler/`.
-- **Twig + Stimulus + Live Components**, Bootstrap 5, Font Awesome 7, Sass via `symfonycasts/sass-bundle`, asset-mapper.
+- **Symfony Workflow** drives the revision/approval lifecycle (`config/packages/workflow.yaml`) — see the Revision workflow section.
+- **Twig + Stimulus + Live Components**, Bootstrap 5, Font Awesome 7, Sass via `symfonycasts/sass-bundle`, asset-mapper. Stimulus controllers are **TypeScript**, compiled by `sensiolabs/typescript-bundle` (SWC) — see the Frontend assets section.
+- **Altcha** (`tito10047/altcha-bundle`, `config/packages/altcha.yaml`) — self-hosted proof-of-work captcha on public forms (external activity sign-up, password-reset request). `App\Service\Application\AltchaSolutionGuard` blocks replay of solved challenges.
 - **Mercure** for SSE; **Mailer** with MailPit in dev; **Notifier**; **Matomo** analytics; **scheb/2fa** for MFA.
 - Runs under Docker via `docker compose`; most `make` targets shell into the `web` container.
 
 ## Module layout
 
-Most folders under `src/` are split by domain (Activity, Career, Decision, Education, Frontpage, Photo, User, …): `Command/`, `Controller/`, `DataFixtures/`, `Entity/`, `EventListener/`, `Form/`, `Message/`, `MessageHandler/`, `Repository/`, `Security/`, `Service/`. `Scheduler/` and `Twig/` are flat; `ApiResource/` is empty for now. When adding to a domain, follow the sibling pattern — don't invent a new home.
+Most folders under `src/` are split by domain (Activity, Career, Decision, Education, Frontpage, Photo, User, …): `Command/`, `Controller/`, `DataFixtures/`, `Entity/`, `EventListener/`, `Form/`, `Message/`, `MessageHandler/`, `Repository/`, `Security/`, `Service/`, `ViewModel/`. `Scheduler/`, `Twig/`, and `Workflow/` are flat; `ApiResource/` is empty for now. When adding to a domain, follow the sibling pattern — don't invent a new home.
 
 ```
 src/
   ApiResource/      API Platform resources will live here
   Command/          #[AsCommand]-tagged console commands
+  CommonMark/       Markdown rendering extensions
   Controller/       feature controllers
   DataFixtures/     seed data (member 8000 / password "gewiswebgewis")
+  Doctrine/         Doctrine infrastructure (custom types, functions, …)
   Entity/           Doctrine entities with attribute mapping; some domains also have Enums/ and Traits/ subfolders (e.g. Entity/User/)
-  EventListener/    #[AsEventListener] listeners
+  EventListener/    #[AsEventListener] listeners (incl. workflow guards/transition listeners)
   Form/             Symfony Form types
   Kernel.php
   Message/          Messenger message classes
   MessageHandler/   #[AsMessageHandler] handlers
   Repository/       Doctrine repositories
   Scheduler/        Symfony Scheduler providers (flat)
-  Security/         UserChecker, voters (SudoVoter), remember-me handler
-  Service/          domain services (several per-domain folders are empty placeholders)
+  Security/         UserChecker, voters (SudoVoter, RevisionVoter), remember-me handler
+  Service/          domain services (Decision/Education/Photo are still empty placeholders)
   Twig/             Extensions/ for custom Twig extensions; Components/<Namespace>/ for Live components (mirror src/Controller layout — e.g. User/Admin/UsersOverview)
+  Validator/        custom constraint validators
+  ViewModel/        immutable read models for templates, mirrors domain structure (e.g. ViewModel/Activity/Admin/SignupAdminRow)
+  Workflow/         revision-workflow plumbing: marking store, RevisionCloner implementations + registry
 config/             framework + per-bundle config under packages/
 migrations/         Doctrine migration files at repo root
 templates/          Twig templates, mirrors src/Controller layout; components/<Namespace>/ holds Live component templates, partials/application/ holds stateless includes
 translations/       .xlf files for en/nl
-assets/             Stimulus controllers, Sass, vendored Bootstrap/FA assets
+assets/             TypeScript Stimulus controllers, Sass, vendored assets
 tests/              bootstrap.php + object-manager.php only — no tests yet
 gewisweb-laminas/   git submodule: pre-migration Laminas codebase, read-only reference
 ```
+
+Prefer passing a `ViewModel` to a template over handing it entities or loose arrays when the view needs derived/aggregated data — see `src/ViewModel/Activity/` for the convention (final readonly classes, no behaviour beyond accessors).
+
+## Revision workflow
+
+Activities, companies, and vacancies are created and edited through a revision-based approval workflow. This is the dominant pattern on the current branch — read it before touching any of those domains.
+
+- **Contracts** in `src/Entity/Application/`: `RevisableInterface` (the stable aggregate: `Activity`, `Career\Company`, `Career\Vacancy` — identity, revision chain, `markRevisionLive()`), `RevisionInterface` / `AbstractRevision` (a MappedSuperclass snapshotting all editable content per revision: `ActivityRevision`, `CompanyRevision`, `VacancyRevision`), and `Enums/RevisionStatus`.
+- **Lifecycle** (`config/packages/workflow.yaml`, state machine `revision`): draft → submitted → in-review → { approved | changes-requested | rejected → closed }. The marking store is custom (`App\Workflow\RevisionStatusMarkingStore`, bridges the status enum). Only a *draft* revision is mutable; approval promotes it to the live revision.
+- **Guards & side effects** are event listeners, not workflow config: `EventListener/Application/RevisionGuardListener` delegates to `App\Security\Application\RevisionVoter` (organ/creator/company scoping); `SpawnNextDraftListener` clones a new draft after changes-requested; `PromoteLiveRevisionListener` / `MigrateSignupsOnApprovalListener` run on approval.
+- **Cloning**: each domain implements `App\Workflow\RevisionClonerInterface` (deep copy, bump revision number, link `previousRevision`), routed through `RevisionClonerRegistry`. A new revisable domain adds a cloner — never bespoke copy logic.
+- **Edit locking**: `Entity/Application/EditLock` + `Service/Application/EditLockService` give one user at a time exclusive editing (90-second ping TTL, serialized via MariaDB `GET_LOCK`, reviewers can force-take). The `application/edit_lock_controller.ts` Stimulus controller does the pinging.
+- **Activity sign-ups** are versioned with the revision: each `ActivityRevision` owns clones of its `SignupList`s, matched across revisions by `lineageId`; on approval `Service/Activity/SignupListMigrator` carries live sign-ups over (and guards block approval if migration would lose data). All sign-up writes go through `Service/Activity/SignupManager` — members sign up directly, external guests get double-opt-in email verification plus Altcha.
 
 ## Routing & locale
 
@@ -76,6 +96,12 @@ Two template locations, deliberately distinct:
 - **`templates/partials/application/`** holds stateless `{% include %}` fragments — sidebars, pagination, sort headers, etc. Anything reused by multiple components belongs here, not co-located inside `templates/components/`. Files use kebab-case without a leading underscore (`pagination.html.twig`, `sort-header.html.twig`).
 
 Render components from a regular template with `{{ component('User:Admin:UsersOverview') }}` (or `<twig:User:Admin:UsersOverview />`). Live-component action handlers re-render the component on the server, so any locale-dependent output (translations, date formatting) depends on the locale-prefixed route above.
+
+## Frontend assets
+
+- **Stimulus controllers are TypeScript.** They live in `assets/controllers/<domain>/` (`activity/`, `application/`, …) and are named `*_controller.ts`. Write new controllers in TypeScript — never plain JS. The single exception is `assets/controllers/csrf_protection_controller.js`, which is recipe-managed by Symfony Flex; leave it as JS so recipe updates apply cleanly.
+- TS is compiled by `sensiolabs/typescript-bundle` via SWC (`.swcrc`, wired in `config/packages/asset_mapper.yaml`). **SWC strips types but does not type-check** — there is no `tsc` or eslint gate, so type errors surface at runtime. Be precise with DOM/Stimulus typings and verify behaviour in the browser (see Validating changes below).
+- Sass lives in `assets/styles/`; third-party JS is vendored under `assets/vendor/` (asset-mapper, no `package.json`/npm). In dev, the entrypoint watches `assets/` and recompiles automatically.
 
 ## Security & users
 
@@ -125,16 +151,25 @@ Don't introduce factory classes here. That's a Laminas idiom and has no place in
 
 ## Static analysis & tests
 
-Run these inside the `web` container (the `make` targets handle that for you) before claiming work is done:
+Run these inside the `web` container (the `make` targets handle that for you). **`make lint` (after `make lint-fix`), `make phpstan`, and `make psalm` must pass for any change** — they are not optional; do not claim work done while one of them fails. Add `make lint-twig` whenever templates changed and `make igor` for any non-trivial change.
 
 | Command | What it does |
 |---|---|
-| `make lint` / `make lint-fix` | PHPCS / PHPCBF against `GEWISPHPCodingStandards`. |
-| `make phpstan` | PHPStan analysis (baseline in repo root). |
-| `make psalm` / `make psalm-all` | Psalm with and without `psalm-baseline.xml`. |
+| `make lint` / `make lint-fix` | PHPCS / PHPCBF against `GEWISPHPCodingStandards`. Run `lint-fix` first, then `lint` must be clean. |
+| `make phpstan` | PHPStan analysis (baseline in repo root). Must pass. |
+| `make psalm` / `make psalm-all` | Psalm with and without `psalm-baseline.xml`. `make psalm` must pass. |
+| `make lint-twig` | `lint:twig` over `templates/` — validates Twig syntax. Run whenever you add or edit a template. |
 | `make igor` | Validates the codebase for FrankenPHP worker-mode safety. **Run this for any non-trivial change.** |
 | `make test` | PHPUnit inside the `web` container under `APP_ENV=test`. Note: `tests/` is currently almost empty — passing tests is a low bar today. |
-| `make translations` | Extracts translatable strings into `translations/{messages,validators}.{en,nl}.xlf`. Run this whenever you add or edit a user-facing string in PHP, Twig, or a form type — never hand-roll `bin/console translation:extract`, the Makefile target sets the project's expected flags (`--sort=asc --no-fill --force --clean`). Dutch entries land empty; humans translate them. `--clean` removes entries no longer referenced in source — safe for the `validators` domain because Symfony falls back to the vendor `validators.{en,nl}.xlf` for any key not in the project file. |
+| `make translations` | Extracts translatable strings into `translations/{messages,validators}.{en,nl}.xlf`. Run this whenever you add or edit a user-facing string in PHP, Twig, or a form type — never hand-roll `bin/console translation:extract`, the Makefile target sets the project's expected flags (`--sort=asc --no-fill --force --clean`). `--clean` removes entries no longer referenced in source — safe for the `validators` domain because Symfony falls back to the vendor `validators.{en,nl}.xlf` for any key not in the project file. **Extraction alone is not enough — see below.** |
+
+**After `make translations`:** because of `--no-fill`, new entries land with an empty `<target/>` in *both* the `en` and `nl` files. Find them with
+
+```sh
+grep -rn -e '<target/>' -e '<target></target>' translations/
+```
+
+then fill every one: `en` targets get the source text verbatim; `nl` targets get your best Dutch translation. Always list the Dutch translations you wrote in your final report so a human can review (and correct) them — never leave empty targets behind silently.
 
 When a new error hits a baseline, fix it rather than extending the baseline. Baselines are for legacy debt, not new code.
 
@@ -155,6 +190,12 @@ For form types: wrap user-facing labels and `invalid_message` strings with `t()`
 Hot reload covers almost everything in dev: FrankenPHP's `hot_reload` reloads PHP workers on source changes, and the dev entrypoint (`docker/web/docker-entrypoint.sh`) runs `sass:build --watch` plus an `inotifywait` loop that recompiles the asset map whenever `assets/` changes. You should very rarely need `make cc` or a container restart — reach for them only if something genuinely won't budge.
 
 Other locally-exposed services (per `README.md`): phpMyAdmin on `:8080`, MailPit on `:8025`, RabbitMQ management on `:15672`, Matomo on `:82`.
+
+### Validating changes in the browser
+
+CSRF protection is **stateless** (`config/packages/csrf.yaml`: `stateless_token_ids: [submit, authenticate, logout]`) — validation relies on a double-submit cookie plus Origin/Referer checks, with `assets/controllers/csrf_protection_controller.js` generating the token client-side. A hand-crafted `curl` POST therefore fails CSRF by design. **Do not "verify" forms, login, or sign-up flows with curl** — a 4xx proves nothing about your change, and you cannot bypass the protection.
+
+Instead, validate interactive flows in a real browser with Playwright (use your own browser tooling — there is no Playwright setup in this repo) against `http://localhost` (the `web` container publishes port 80). Seed first with `make seed`, then log in as member `8000` / password `gewiswebgewis`. Outbound mail is visible in MailPit on `:8025` (useful for external sign-up verification and password-reset flows).
 
 ## API Platform
 
@@ -188,6 +229,8 @@ Cache strategy is `READ_ONLY`. Member is never mutated through the ORM (only ins
 - **Two user entities.** Any new authorization logic must reason about both `User` and `CompanyUser`. Don't assume `$this->getUser()` returns a member.
 - **Custom remember-me.** The per-firewall handlers, cookie names, and lifetimes are deliberate (90 days for members, 7 days for companies). Read `security.yaml` and `session.yaml` before touching them.
 - **Decisions are historical record.** Don't "fix" past data by editing decision rows; model corrections as new decisions / sub-decisions. Same rule as GEWISDB.
+- **Non-draft revisions are immutable.** Only a `draft` revision may be edited; everything after submission is history. To change approved content, spawn a new draft via the cloner registry and run it through the workflow — never mutate a submitted/approved `*Revision` row directly.
+- **CSRF can't be curl'd.** Stateless CSRF + Origin checks mean scripted POSTs fail by design — validate flows with Playwright in a real browser (see Validating changes in the browser).
 - **Empty placeholder directories** (`src/Service/<Domain>/`, `tests/`, `src/ApiResource/`) reflect in-progress migration state. If you need a service for a domain, that empty folder is the right home — don't invent a new convention.
 - **No factories.** Never introduce factory classes; this is a Symfony codebase now.
 - **Build artifacts.** Treat `vendor/`, `var/`, `public/build/`, `public/assets/` as read-only.

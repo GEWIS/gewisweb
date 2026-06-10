@@ -87,8 +87,8 @@ class SignupType extends AbstractType
     }
 
     /**
-     * Pre-fill values for editing, keyed like the form. {@see Signup::toFormArray()} already encodes choice/yes-no; only
-     * numbers need casting back to int for {@see IntegerType}.
+     * Pre-fill values for editing, keyed like the form. {@see Signup::toFormArray()} already encodes choice/yes-no;
+     * only numbers need casting back to int for {@see IntegerType}.
      *
      * @return array<string, mixed>
      */

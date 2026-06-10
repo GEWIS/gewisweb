@@ -9,6 +9,9 @@ use Doctrine\Migrations\AbstractMigration;
 
 /**
  * Add the allocation method (and its per-method settings) to a sign-up list (GH-1799 foundation).
+ *
+ * phpcs:disable Generic.Files.LineLength.TooLong
+ * phpcs:disable SlevomatCodingStandard.Functions.RequireMultiLineCall.RequiredMultiLineCall
  */
 final class Version20260606184826 extends AbstractMigration
 {

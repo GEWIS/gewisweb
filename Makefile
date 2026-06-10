@@ -16,7 +16,7 @@ SYMFONY  = $(PHP) bin/console
 
 # Misc
 .DEFAULT_GOAL   = help
-.PHONY          : help seed translations lint lint-fix psalm psalm-all phpstan test start startprod down logs bash sf cc
+.PHONY          : help seed translations lint lint-fix lint-twig psalm psalm-all phpstan test start startprod down logs bash sf cc
 LAST_WEB_COMMIT := $(shell git rev-parse --short HEAD 2>/dev/null || echo abcabcabc)
 HOST_UID        := $(shell id -u)
 HOST_GID        := $(shell id -g)
@@ -52,6 +52,9 @@ lint: ## Linter using PHP_CodeSniffer
 
 lint-fix: ## Lint fix using phpcbf
 	@$(PHP) ./vendor/bin/phpcbf -p
+
+lint-twig: ## Validate Twig templates
+	@$(SYMFONY) lint:twig templates
 
 psalm: ## Static analysis using Psalm
 	@$(PHP) ./vendor/bin/psalm --no-cache --no-diff
