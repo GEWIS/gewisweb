@@ -11,6 +11,7 @@ use App\Entity\Activity\SignupList;
 use DateTimeImmutable;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
 use function array_map;
@@ -90,15 +91,22 @@ class ExternalSignupVerificationRepository extends ServiceEntityRepository
      */
     public function findExpiredUnverifiedSignups(): array
     {
-        // Select the sign-ups directly (DISTINCT + fetch-join): a sign-up that ever held more than one expired Verify
-        // token must be returned once, and this avoids a lazy-load query per row in the prune loop.
+        // Select the sign-ups directly (DISTINCT, with the sign-up as the root alias): a sign-up that ever held more
+        // than one expired Verify token must be returned once, and this avoids a lazy-load query per row in the prune
+        // loop.
         /** @var ExternalSignup[] $signups */
-        $signups = $this->createQueryBuilder('v')
+        $signups = $this->getEntityManager()->createQueryBuilder()
             ->select('es')
             ->distinct()
-            ->innerJoin(
-                'v.externalSignup',
+            ->from(
+                ExternalSignup::class,
                 'es',
+            )
+            ->innerJoin(
+                ExternalSignupVerification::class,
+                'v',
+                Join::WITH,
+                'v.externalSignup = es',
             )
             ->where('v.purpose = :purpose')
             ->andWhere('v.expiresAt <= :now')

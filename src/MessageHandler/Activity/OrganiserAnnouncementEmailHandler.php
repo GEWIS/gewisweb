@@ -36,6 +36,7 @@ class OrganiserAnnouncementEmailHandler
                 ))
                 ->subject($message->getSubject())
                 ->htmlTemplate('emails/activity/organiser-announcement.html.twig')
+                ->replyTo($replyTo)
                 ->context([
                     'subject' => $message->getSubject(),
                     'body' => $message->getBody(),
@@ -43,10 +44,6 @@ class OrganiserAnnouncementEmailHandler
                     'name' => $recipient['name'],
                     'organiserEmail' => $replyTo,
                 ]);
-
-            if (null !== $replyTo) {
-                $email->replyTo($replyTo);
-            }
 
             try {
                 $this->mailer->send($email);
