@@ -148,15 +148,7 @@ final class ActivityOverview
                 strval($raw),
             );
 
-        $this->labelFilters = array_values(
-            array_filter(
-                array_map(
-                    'intval',
-                    $values,
-                ),
-                static fn (int $id): bool => $id > 0,
-            ),
-        );
+        $this->labelFilters = self::positiveIntIds($values);
     }
 
     #[LiveAction]
@@ -281,11 +273,25 @@ final class ActivityOverview
      */
     private function selectedLabelIds(): array
     {
+        return self::positiveIntIds($this->labelFilters);
+    }
+
+    /**
+     * Normalise a raw list of label-id values into a clean, re-indexed list of positive ints (dropping blanks, zero and
+     * negatives). Shared by mount() (query-string parsing) and selectedLabelIds() (paginator filtering) so the two can
+     * never drift.
+     *
+     * @param array<mixed> $values
+     *
+     * @return int[]
+     */
+    private static function positiveIntIds(array $values): array
+    {
         return array_values(
             array_filter(
                 array_map(
                     'intval',
-                    $this->labelFilters,
+                    $values,
                 ),
                 static fn (int $id): bool => $id > 0,
             ),

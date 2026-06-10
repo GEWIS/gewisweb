@@ -1,0 +1,11 @@
+{# The six leading cells shared by the pending and approved activity-overview rows. Pass `{ row: row } only`. #}
+<td>{{ row.nameNL }}</td>
+<td>{{ row.nameEN }}</td>
+<td>{{ row.organAbbr ?? '-' }}</td>
+<td>{{ row.companyName ?? '-' }}</td>
+<td>{{ row.submitter }}</td>
+<td class="text-muted small">
+    {% if row.beginTime %}
+        {{ row.beginTime|format_datetime(pattern: 'd MMM yyyy HH:mm', locale: app.request.locale) }}
+    {% endif %}
+</td>

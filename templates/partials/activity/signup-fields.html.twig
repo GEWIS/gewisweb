@@ -1,0 +1,7 @@
+{# The sign-up form's custom fields (those prefixed `field_`), rendered in order. Shared by the member, external-guest,
+   manage and organiser-added sign-up forms. Pass the form with `{ form: form } only`. #}
+{% for child in form %}
+    {% if child.vars.name starts with 'field_' %}
+        {{ form_row(child) }}
+    {% endif %}
+{% endfor %}

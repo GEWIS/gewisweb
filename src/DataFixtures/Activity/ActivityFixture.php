@@ -727,22 +727,13 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
             $activity->setCreator($creator);
 
             // A seeded activity is a single-revision chain: revision 1 carries the content and its lifecycle state.
-            $revision = new ActivityRevision();
-            $revision->setAuthor($creator);
-            $revision->setRevisionNumber(1);
-            $revision->setStatus($data['status']);
-            $revision->setName(new ActivityLocalisedText($data['name']['en'], $data['name']['nl']));
-            $revision->setLocation(new ActivityLocalisedText($data['location']['en'], $data['location']['nl']));
-            $revision->setCosts(new ActivityLocalisedText($data['costs']['en'], $data['costs']['nl']));
-            $revision->setDescription(
-                new ActivityLocalisedText(
-                    $data['description']['en'],
-                    $data['description']['nl'],
-                ),
+            $revision = $this->buildRevision(
+                $data,
+                $data['status'],
+                $creator,
+                1,
+                null,
             );
-            $revision->setBeginTime(new DateTime($data['beginTime']));
-            $revision->setEndTime(new DateTime($data['endTime']));
-            $revision->setCategory($data['category']);
             $revision->setRequireGEFLITST($data['requireGEFLITST']);
             $revision->setRequireZettle($data['requireZettle']);
 
@@ -1029,7 +1020,8 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
      *     beginTime: string,
      *     endTime: string,
      *     category: ActivityCategories,
-     * } $content
+     *     ...<string, mixed>,
+     * } $content the activity content; the main loop passes a wider row (with creator, labels, sign-up lists, …)
      */
     private function buildRevision(
         array $content,

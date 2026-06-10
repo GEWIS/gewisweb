@@ -11,7 +11,6 @@ export default class extends Controller {
     declare readonly csrfTokenTarget: HTMLInputElement;
 
     connect(): void {
-        this._onShow = this._onShow.bind(this);
         this.element.addEventListener('show.bs.modal', this._onShow);
     }
 
@@ -19,8 +18,8 @@ export default class extends Controller {
         this.element.removeEventListener('show.bs.modal', this._onShow);
     }
 
-    _onShow(event: Event): void {
-        const trigger = (event as Event & { relatedTarget?: HTMLElement }).relatedTarget;
+    private readonly _onShow = (event: Event & { relatedTarget?: HTMLElement }): void => {
+        const trigger = event.relatedTarget;
         if (!trigger) {
             return;
         }
@@ -36,5 +35,5 @@ export default class extends Controller {
         if (this.hasCsrfTokenTarget && trigger.dataset.csrfToken !== undefined) {
             this.csrfTokenTarget.value = trigger.dataset.csrfToken;
         }
-    }
+    };
 }

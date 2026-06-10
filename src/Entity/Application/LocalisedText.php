@@ -22,7 +22,11 @@ abstract class LocalisedText
 {
     use IdentifiableTrait;
 
-    public function __construct(
+    /**
+     * Final so every concrete subclass shares this exact signature, which lets {@see self::copy()} safely use
+     * `new static()` (no subclass can introduce extra required constructor arguments).
+     */
+    final public function __construct(
         #[Column(
             type: Types::TEXT,
             nullable: true,
@@ -34,6 +38,18 @@ abstract class LocalisedText
         )]
         protected ?string $valueNL = null,
     ) {
+    }
+
+    /**
+     * A fresh, unpersisted copy of this localised text (same concrete subtype, no id), for deep-copying revision
+     * content so orphan-removal can never delete the source revision's row.
+     */
+    public function copy(): static
+    {
+        return new static(
+            $this->valueEN,
+            $this->valueNL,
+        );
     }
 
     public function getValueEN(): ?string

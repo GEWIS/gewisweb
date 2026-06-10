@@ -1,14 +1,14 @@
 {# Renders the activity's sign-up lists -- and each list's custom fields -- as collapsible panels, reusing the same
    collapse strategy as the read-only accordion on the activity view page (templates/partials/activity/signup-list.html.twig):
    a `.panel` with a `.panel-heading` collapse toggle button, the rotating `.signup-list-chevron`, and a `.collapse.show`
-   body. Each panel is open by default. Add/remove is driven by the generic `collapsible-collection` Stimulus controller;
+   body. Each panel is open by default. Add/remove is driven by the generic `form-collection` Stimulus controller;
    the prototype already contains the whole panel, so adding an entry clones it with its placeholder (`__list__` /
    `__field__`) replaced by a fresh index, keeping the collapse target ids unique. The nested option collection keeps the
    generic `collection` form theme. #}
 
 {# --- Sign-up list --------------------------------------------------------------------------------------------- #}
 {% macro signup_list_panel(child, collapse_id, remove_label) %}
-    <div class="panel mb-3" data-collapsible-collection-target="entry">
+    <div class="panel mb-3" data-form-collection-target="entry">
         <button type="button"
                 class="panel-heading signup-list-heading d-flex justify-content-between align-items-center gap-2 w-100 border-0 bg-transparent text-start"
                 data-bs-toggle="collapse" data-bs-target="#{{ collapse_id }}"
@@ -67,7 +67,7 @@
                 {# A list with sign-ups (here or on its live lineage counterpart) is frozen and must not be removed. #}
                 {% if not child.vars.frozen %}
                     <button type="button" class="btn btn-sm btn-outline-gewis-primary mt-2"
-                            data-action="collapsible-collection#remove">
+                            data-action="form-collection#remove">
                         <i class="fas fa-trash"></i> {{ remove_label }}
                     </button>
                 {% endif %}
@@ -82,18 +82,18 @@
     {% set placeholder = has_prototype ? (prototype.vars.name|split('[')|last|trim(']')) : '__list__' %}
     {% set remove_label = 'Remove sign-up list'|trans %}
     <div id="{{ id }}" class="signup-list-collection"
-         data-controller="collapsible-collection"
-         data-collapsible-collection-prototype-name-value="{{ placeholder }}"
+         data-controller="form-collection"
+         data-form-collection-prototype-name-value="{{ placeholder }}"
          {% if has_prototype %}
-             data-collapsible-collection-prototype-value="{{ helper.signup_list_panel(prototype, 'signup-list-' ~ placeholder, remove_label)|e('html_attr') }}"
+             data-form-collection-prototype-value="{{ helper.signup_list_panel(prototype, 'signup-list-' ~ placeholder, remove_label)|e('html_attr') }}"
          {% endif %}>
-        <div data-collapsible-collection-target="entries">
+        <div data-form-collection-target="entries">
             {% for child in form %}
                 {{ helper.signup_list_panel(child, 'signup-list-' ~ loop.index0, remove_label) }}
             {% endfor %}
         </div>
         {% if allow_add %}
-            <button type="button" class="btn btn-sm btn-outline-secondary" data-action="collapsible-collection#add">
+            <button type="button" class="btn btn-sm btn-outline-secondary" data-action="form-collection#add">
                 <i class="fas fa-plus"></i> {{ 'Add a sign-up list'|trans }}
             </button>
         {% endif %}
@@ -102,7 +102,7 @@
 
 {# --- Custom field (question) ---------------------------------------------------------------------------------- #}
 {% macro signup_field_panel(child, collapse_id, remove_label) %}
-    <div class="panel mb-3" data-collapsible-collection-target="entry">
+    <div class="panel mb-3" data-form-collection-target="entry">
         <button type="button"
                 class="panel-heading signup-list-heading d-flex justify-content-between align-items-center gap-2 w-100 border-0 bg-transparent text-start"
                 data-bs-toggle="collapse" data-bs-target="#{{ collapse_id }}"
@@ -129,13 +129,13 @@
                     </div>
                 </div>
                 <div data-signup-field-target="choice">
-                    {{ form_row(child.options, {'remove_label': 'Remove option'|trans}) }}
+                    {{ form_row(child.options, {'add_label': 'Add option'|trans, 'remove_label': 'Remove option'|trans}) }}
                 </div>
                 {{ form_rest(child) }}
                 {# A frozen list's fields collection is disabled and ignores its submissions, so don't offer remove. #}
                 {% if not child.vars.disabled %}
                     <button type="button" class="btn btn-sm btn-outline-gewis-primary mt-2"
-                            data-action="collapsible-collection#remove">
+                            data-action="form-collection#remove">
                         <i class="fas fa-trash"></i> {{ remove_label }}
                     </button>
                 {% endif %}
@@ -150,19 +150,19 @@
     {% set placeholder = has_prototype ? (prototype.vars.name|split('[')|last|trim(']')) : '__field__' %}
     {% set remove_label = 'Remove question'|trans %}
     <div id="{{ id }}" class="signup-field-collection"
-         data-controller="collapsible-collection"
-         data-collapsible-collection-prototype-name-value="{{ placeholder }}"
+         data-controller="form-collection"
+         data-form-collection-prototype-name-value="{{ placeholder }}"
          {% if has_prototype %}
-             data-collapsible-collection-prototype-value="{{ helper.signup_field_panel(prototype, prototype.vars.id ~ '-collapse', remove_label)|e('html_attr') }}"
+             data-form-collection-prototype-value="{{ helper.signup_field_panel(prototype, prototype.vars.id ~ '-collapse', remove_label)|e('html_attr') }}"
          {% endif %}>
-        <div data-collapsible-collection-target="entries">
+        <div data-form-collection-target="entries">
             {% for child in form %}
                 {{ helper.signup_field_panel(child, child.vars.id ~ '-collapse', remove_label) }}
             {% endfor %}
         </div>
         {# A frozen list's fields collection is disabled and ignores its submissions, so don't offer to add either. #}
         {% if allow_add and not disabled %}
-            <button type="button" class="btn btn-sm btn-outline-secondary" data-action="collapsible-collection#add">
+            <button type="button" class="btn btn-sm btn-outline-secondary" data-action="form-collection#add">
                 <i class="fas fa-plus"></i> {{ 'Add a question'|trans }}
             </button>
         {% endif %}

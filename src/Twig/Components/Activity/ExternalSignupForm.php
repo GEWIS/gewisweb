@@ -12,6 +12,7 @@ use App\Repository\Activity\ExternalSignupRepository;
 use App\Repository\Activity\SignupListRepository;
 use App\Service\Activity\SignupManager;
 use App\Service\Application\AltchaSolutionGuard;
+use App\Twig\Components\Concerns\FlashesTrait;
 use Override;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -20,7 +21,6 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\FlashBagAwareSessionInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
@@ -53,6 +53,7 @@ final class ExternalSignupForm
 {
     use ComponentWithFormTrait;
     use DefaultActionTrait;
+    use FlashesTrait;
 
     #[LiveProp]
     public SignupListEntity $signupList;
@@ -175,7 +176,10 @@ final class ExternalSignupForm
             );
         }
 
-        $this->flashSuccess($this->translator->trans('Almost there! Check your e-mail to confirm your sign-up.'));
+        $this->flash(
+            'success',
+            $this->translator->trans('Almost there! Check your e-mail to confirm your sign-up.'),
+        );
 
         return new RedirectResponse(
             $this->urlGenerator->generate(
@@ -198,18 +202,5 @@ final class ExternalSignupForm
         ) {
             throw new AccessDeniedException();
         }
-    }
-
-    private function flashSuccess(string $message): void
-    {
-        $session = $this->requestStack->getSession();
-        if (!($session instanceof FlashBagAwareSessionInterface)) {
-            return;
-        }
-
-        $session->getFlashBag()->add(
-            'success',
-            $message,
-        );
     }
 }

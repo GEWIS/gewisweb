@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Service\Activity;
 
-use App\Entity\Activity\ActivityLocalisedText;
 use App\Entity\Activity\ActivityRevision;
 use App\Entity\Activity\SignupField;
 use App\Entity\Activity\SignupList;
@@ -44,10 +43,10 @@ final readonly class ActivityRevisionCloner implements RevisionClonerInterface
         $draft->setAuthorCompanyUser($source->getAuthorCompanyUser());
         $draft->setRevisionNumber($source->getRevisionNumber() + 1);
         $draft->setPreviousRevision($source);
-        $draft->setName($this->copyText($source->getName()));
-        $draft->setLocation($this->copyText($source->getLocation()));
-        $draft->setCosts($this->copyText($source->getCosts()));
-        $draft->setDescription($this->copyText($source->getDescription()));
+        $draft->setName($source->getName()->copy());
+        $draft->setLocation($source->getLocation()->copy());
+        $draft->setCosts($source->getCosts()->copy());
+        $draft->setDescription($source->getDescription()->copy());
         $draft->setBeginTime($this->copyDate($source->getBeginTime()));
         $draft->setEndTime($this->copyDate($source->getEndTime()));
         $draft->setCategory($source->getCategory());
@@ -69,14 +68,6 @@ final readonly class ActivityRevisionCloner implements RevisionClonerInterface
         return $draft;
     }
 
-    private function copyText(ActivityLocalisedText $source): ActivityLocalisedText
-    {
-        return new ActivityLocalisedText(
-            $source->getValueEN(),
-            $source->getValueNL(),
-        );
-    }
-
     private function copyDate(?DateTime $source): ?DateTime
     {
         return null !== $source
@@ -91,7 +82,7 @@ final readonly class ActivityRevisionCloner implements RevisionClonerInterface
     private function copySignupList(SignupList $source): SignupList
     {
         $list = new SignupList();
-        $list->setName($this->copyText($source->getName()));
+        $list->setName($source->getName()->copy());
         $list->setOpenDate(clone $source->getOpenDate());
         $list->setCloseDate(clone $source->getCloseDate());
         $list->setOnlyGEWIS($source->getOnlyGEWIS());
@@ -127,7 +118,7 @@ final readonly class ActivityRevisionCloner implements RevisionClonerInterface
     private function copySignupField(SignupField $source): SignupField
     {
         $field = new SignupField();
-        $field->setName($this->copyText($source->getName()));
+        $field->setName($source->getName()->copy());
         $field->setType($source->getType());
         $field->setIsSensitive($source->isSensitive());
         $field->setMinimumValue($source->getMinimumValue());
@@ -143,7 +134,7 @@ final readonly class ActivityRevisionCloner implements RevisionClonerInterface
     private function copySignupOption(SignupOption $source): SignupOption
     {
         $option = new SignupOption();
-        $option->setValue($this->copyText($source->getValue()));
+        $option->setValue($source->getValue()->copy());
 
         return $option;
     }

@@ -13,9 +13,9 @@ use App\Entity\Decision\Organ;
 use App\Entity\User\Enums\UserRoles;
 use App\Entity\User\User;
 use App\Form\Application\LocalisedTextType;
+use App\Form\DisablesFieldsTrait;
 use App\Repository\Decision\OrganRepository;
 use DateTime;
-use Locale;
 use Override;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -49,6 +49,8 @@ use function trim;
  */
 class ActivityRevisionType extends AbstractType
 {
+    use DisablesFieldsTrait;
+
     /**
      * Schedule fields that become read-only once the activity has started; changing them afterwards is a
      * (highly exceptional) database-level edit.
@@ -69,9 +71,11 @@ class ActivityRevisionType extends AbstractType
         FormBuilderInterface $builder,
         array $options,
     ): void {
-        $language = 'nl' === Locale::getDefault()
-            ? Languages::Dutch
-            : Languages::English;
+        $language = Languages::current();
+
+        // Resolved once and shared between the field's initial choices and keepBoundOrgan() below, so a render issues
+        // the underlying findActive() query a single time.
+        $selectableOrgans = $this->selectableOrgans();
 
         // The localised text fields carry no label of their own; the create/edit template lays them out in mirrored
         // Dutch/English columns and labels each row by field name there.
@@ -149,7 +153,7 @@ class ActivityRevisionType extends AbstractType
                 EntityType::class,
                 // Restricted to the organs the user may organise for; a co-owner's out-of-reach current organ is kept
                 // in the list by keepBoundOrgan() so a save never silently drops it.
-                $this->organFieldOptions($this->selectableOrgans()),
+                $this->organFieldOptions($selectableOrgans),
             )
             ->add(
                 'company',
@@ -222,7 +226,12 @@ class ActivityRevisionType extends AbstractType
 
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
-            $this->keepBoundOrgan(...),
+            function (FormEvent $event) use ($selectableOrgans): void {
+                $this->keepBoundOrgan(
+                    $event,
+                    $selectableOrgans,
+                );
+            },
         );
         $builder->addEventListener(
             FormEvents::POST_SET_DATA,
@@ -289,9 +298,13 @@ class ActivityRevisionType extends AbstractType
      * Editing must never silently drop an organ the user cannot otherwise pick (e.g. the creator of an activity whose
      * organising organ they are no longer installed in): keep the revision's current organ in the choice list so a
      * save preserves it.
+     *
+     * @param Organ[] $selectableOrgans the choices already wired onto the field in buildForm()
      */
-    private function keepBoundOrgan(FormEvent $event): void
-    {
+    private function keepBoundOrgan(
+        FormEvent $event,
+        array $selectableOrgans,
+    ): void {
         $revision = $event->getData();
         if (!$revision instanceof ActivityRevision) {
             return;
@@ -302,7 +315,7 @@ class ActivityRevisionType extends AbstractType
             return;
         }
 
-        $choices = $this->selectableOrgans();
+        $choices = $selectableOrgans;
         foreach ($choices as $choice) {
             if ($choice->getId() === $organ->getId()) {
                 return;
@@ -363,14 +376,9 @@ class ActivityRevisionType extends AbstractType
 
         $form = $event->getForm();
         foreach (self::LOCK_AFTER_START as $name) {
-            $config = $form->get($name)->getConfig();
-            $options = $config->getOptions();
-            $options['disabled'] = true;
-
-            $form->add(
+            $this->disableField(
+                $form,
                 $name,
-                $config->getType()->getInnerType()::class,
-                $options,
             );
         }
     }

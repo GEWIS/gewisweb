@@ -29,6 +29,7 @@ use Doctrine\ORM\OptimisticLockException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -248,14 +249,9 @@ class AdminController extends AbstractController
         if (null !== $revision->getId()) {
             $baseVersion = $request->getSession()->get($this->editVersionKey($activity));
             if (!is_int($baseVersion)) {
-                $this->addFlash(
-                    AlertTypes::Warning->value,
+                return $this->flashAndBackToEdit(
+                    $activity,
                     $this->translator->trans('Your edit session expired; reopen the activity and try again.'),
-                );
-
-                return $this->redirectToRoute(
-                    'admin/activities/edit',
-                    ['activity' => $activity->getId()],
                 );
             }
 
@@ -266,14 +262,9 @@ class AdminController extends AbstractController
                     $baseVersion,
                 );
             } catch (OptimisticLockException) {
-                $this->addFlash(
-                    AlertTypes::Warning->value,
+                return $this->flashAndBackToEdit(
+                    $activity,
                     $this->translator->trans('This revision was changed elsewhere; reload the page and try again.'),
-                );
-
-                return $this->redirectToRoute(
-                    'admin/activities/edit',
-                    ['activity' => $activity->getId()],
                 );
             }
         }
@@ -499,29 +490,21 @@ class AdminController extends AbstractController
         }
 
         if (!$signupList->isOpen()) {
-            $this->addFlash(
+            return $this->flashAndBackToSignups(
+                $activity,
                 AlertTypes::Warning->value,
                 $this->translator->trans('This sign-up list is not open, so you cannot add a participant.'),
-            );
-
-            return $this->redirectToRoute(
-                'admin/activities/signups',
-                ['activity' => $activity->getId()],
             );
         }
 
         // Externals must never land on a members-only list (the public guest path rejects this too).
         if ($signupList->getOnlyGEWIS()) {
-            $this->addFlash(
+            return $this->flashAndBackToSignups(
+                $activity,
                 AlertTypes::Warning->value,
                 $this->translator->trans(
                     'This sign-up list is for GEWIS members only, so you cannot add an external participant.',
                 ),
-            );
-
-            return $this->redirectToRoute(
-                'admin/activities/signups',
-                ['activity' => $activity->getId()],
             );
         }
 
@@ -549,14 +532,10 @@ class AdminController extends AbstractController
                     $email,
                 )
             ) {
-                $this->addFlash(
+                return $this->flashAndBackToSignups(
+                    $activity,
                     AlertTypes::Warning->value,
                     $this->translator->trans('Someone with this e-mail address is already signed up for this list.'),
-                );
-
-                return $this->redirectToRoute(
-                    'admin/activities/signups',
-                    ['activity' => $activity->getId()],
                 );
             }
 
@@ -570,14 +549,10 @@ class AdminController extends AbstractController
                 ),
             );
 
-            $this->addFlash(
+            return $this->flashAndBackToSignups(
+                $activity,
                 AlertTypes::Success->value,
                 $this->translator->trans('The external participant has been added.'),
-            );
-
-            return $this->redirectToRoute(
-                'admin/activities/signups',
-                ['activity' => $activity->getId()],
             );
         }
 
@@ -588,6 +563,43 @@ class AdminController extends AbstractController
                 'activity' => $activity,
                 'signupList' => $signupList,
             ],
+        );
+    }
+
+    /**
+     * Re-flash a warning and send the author back to the edit page (shared by the optimistic-lock failure arms).
+     */
+    private function flashAndBackToEdit(
+        Activity $activity,
+        string $message,
+    ): RedirectResponse {
+        $this->addFlash(
+            AlertTypes::Warning->value,
+            $message,
+        );
+
+        return $this->redirectToRoute(
+            'admin/activities/edit',
+            ['activity' => $activity->getId()],
+        );
+    }
+
+    /**
+     * Flash a message and send the organiser back to the sign-ups page (shared by the add-external-signup arms).
+     */
+    private function flashAndBackToSignups(
+        Activity $activity,
+        string $type,
+        string $message,
+    ): RedirectResponse {
+        $this->addFlash(
+            $type,
+            $message,
+        );
+
+        return $this->redirectToRoute(
+            'admin/activities/signups',
+            ['activity' => $activity->getId()],
         );
     }
 

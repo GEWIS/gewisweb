@@ -137,6 +137,10 @@
         <source>Add external participant</source>
         <target>Add external participant</target>
       </trans-unit>
+      <trans-unit id="zdY09QS" resname="Add option">
+        <source>Add option</source>
+        <target>Add option</target>
+      </trans-unit>
       <trans-unit id="lNDxGt1" resname="Add participant">
         <source>Add participant</source>
         <target>Add participant</target>
@@ -2109,7 +2113,7 @@
         <source>That recipient group is not available for this sign-up list.</source>
         <target>That recipient group is not available for this sign-up list.</target>
       </trans-unit>
-      <trans-unit id="hEahyeO" resname="The GEWIS website is open-source! Check out the repository on &lt;a href=&quot;https://github.com/GEWIS/gewisweb&quot; target=&quot;_blank&quot;>&lt;span class=&quot;fab fa-github&quot;>&lt;/span>&amp;nbsp;GitHub&lt;/a>. Or visit our &lt;a href=&quot;https://github.com/GEWIS&quot; target=&quot;_blank&quot;>organisation&lt;/a> for more of our awesome open-source projects.">
+      <trans-unit id="hEahyeO" resname="The GEWIS website is open-source! Check out the repository on &lt;a href=&quot;https://github.com/GEWIS/gewisweb&quot; target=&quot;_blank&quot;&gt;&lt;span class=&quot;fab fa-github&quot;&gt;&lt;/span&gt;&amp;nbsp;GitHub&lt;/a&gt;. Or visit our &lt;a href=&quot;https://github.com/GEWIS&quot; target=&quot;_blank&quot;&gt;organisation&lt;/a&gt; for more of our awesome open-source projects.">
         <source>The GEWIS website is open-source! Check out the repository on &lt;a href="https://github.com/GEWIS/gewisweb" target="_blank"&gt;&lt;span class="fab fa-github"&gt;&lt;/span&gt;&amp;nbsp;GitHub&lt;/a&gt;. Or visit our &lt;a href="https://github.com/GEWIS" target="_blank"&gt;organisation&lt;/a&gt; for more of our awesome open-source projects.</source>
         <target state="translated"><![CDATA[The GEWIS website is open-source! Check out the repository on <a href="https://github.com/GEWIS/gewisweb" target="_blank"><span class="fab fa-github"></span>&nbsp;GitHub</a>. Or visit our <a href="https://github.com/GEWIS" target="_blank">organisation</a> for more of our awesome open-source projects.]]></target>
       </trans-unit>
@@ -2393,7 +2397,7 @@
         <source>We are the same</source>
         <target state="translated">We are the same</target>
       </trans-unit>
-      <trans-unit id="jkUs8v1" resname="We found a pointer to &lt;code>NULL&lt;/code> instead of this page">
+      <trans-unit id="jkUs8v1" resname="We found a pointer to &lt;code&gt;NULL&lt;/code&gt; instead of this page">
         <source>We found a pointer to &lt;code&gt;NULL&lt;/code&gt; instead of this page</source>
         <target state="translated"><![CDATA[We found a pointer to <code>NULL</code> instead of this page]]></target>
       </trans-unit>

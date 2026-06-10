@@ -31,11 +31,7 @@
                         {{ form_errors(form) }}
                         {{ form_row(form.fullName) }}
                         {{ form_row(form.email) }}
-                        {% for child in form %}
-                            {% if child.vars.name starts with 'field_' %}
-                                {{ form_row(child) }}
-                            {% endif %}
-                        {% endfor %}
+                        {% include 'partials/activity/signup-fields.html.twig' with { form: form } only %}
 
                         {% if signupList.fields|filter(f => f.isSensitive)|length > 0 %}
                             <p class="text-muted small mb-3"><em>

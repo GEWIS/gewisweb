@@ -9,12 +9,12 @@ use App\Entity\Activity\ExternalSignup;
 use App\Form\Activity\SignupType;
 use App\Service\Activity\ExternalSignupTokenResolver;
 use App\Service\Activity\SignupManager;
+use App\Twig\Components\Concerns\FlashesTrait;
 use Override;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\Session\FlashBagAwareSessionInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -42,6 +42,7 @@ final class ExternalSignupManage
 {
     use ComponentWithFormTrait;
     use DefaultActionTrait;
+    use FlashesTrait;
 
     #[LiveProp]
     public string $token = '';
@@ -165,7 +166,10 @@ final class ExternalSignupManage
 
         if ($this->isEditable()) {
             $this->signupManager->withdraw($signup);
-            $this->flashSuccess($this->translator->trans('You have been unsubscribed.'));
+            $this->flash(
+                'success',
+                $this->translator->trans('You have been unsubscribed.'),
+            );
         }
 
         return new RedirectResponse(
@@ -173,19 +177,6 @@ final class ExternalSignupManage
                 'activity/view',
                 ['activity' => $activityId],
             ),
-        );
-    }
-
-    private function flashSuccess(string $message): void
-    {
-        $session = $this->requestStack->getSession();
-        if (!($session instanceof FlashBagAwareSessionInterface)) {
-            return;
-        }
-
-        $session->getFlashBag()->add(
-            'success',
-            $message,
         );
     }
 }

@@ -45,9 +45,11 @@ final readonly class SignupListMigrator
         ActivityRevision $outgoing,
         ActivityRevision $incoming,
     ): void {
+        $byLineage = $this->lineageMap($incoming);
         $blocker = $this->firstBlocker(
             $outgoing,
             $incoming,
+            $byLineage,
         );
         if (null !== $blocker) {
             throw new RuntimeException(sprintf(
@@ -57,7 +59,6 @@ final readonly class SignupListMigrator
             ));
         }
 
-        $byLineage = $this->lineageMap($incoming);
         foreach ($outgoing->getSignupLists() as $oldList) {
             if ($oldList->getSignUps()->isEmpty()) {
                 continue;
@@ -73,12 +74,15 @@ final readonly class SignupListMigrator
     /**
      * The reason the incoming revision cannot inherit the live sign-ups, or null if it can: every sign-up outgoing list
      * must have a lineage-matched clone with an identical field/option layout in the incoming revision.
+     *
+     * @param array<string, SignupList>|null $byLineage the incoming lineage map, built on demand when not supplied
      */
     private function firstBlocker(
         ActivityRevision $outgoing,
         ActivityRevision $incoming,
+        ?array $byLineage = null,
     ): ?string {
-        $byLineage = $this->lineageMap($incoming);
+        $byLineage ??= $this->lineageMap($incoming);
         foreach ($outgoing->getSignupLists() as $oldList) {
             if ($oldList->getSignUps()->isEmpty()) {
                 continue;

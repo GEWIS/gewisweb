@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Service\Career;
 
 use App\Entity\Application\RevisionInterface;
-use App\Entity\Career\CareerLocalisedText;
 use App\Entity\Career\CompanyRevision;
 use App\Workflow\RevisionClonerInterface;
 use Override;
@@ -38,9 +37,9 @@ final readonly class CompanyRevisionCloner implements RevisionClonerInterface
         $draft->setAuthorCompanyUser($source->getAuthorCompanyUser());
         $draft->setRevisionNumber($source->getRevisionNumber() + 1);
         $draft->setPreviousRevision($source);
-        $draft->setSlogan($this->copyText($source->getSlogan()));
-        $draft->setDescription($this->copyText($source->getDescription()));
-        $draft->setWebsite($this->copyText($source->getWebsite()));
+        $draft->setSlogan($source->getSlogan()->copy());
+        $draft->setDescription($source->getDescription()->copy());
+        $draft->setWebsite($source->getWebsite()->copy());
         $draft->setLogo($source->getLogo());
         $draft->setContactName($source->getContactName());
         $draft->setContactAddress($source->getContactAddress());
@@ -51,13 +50,5 @@ final readonly class CompanyRevisionCloner implements RevisionClonerInterface
         $company->setCurrentRevision($draft);
 
         return $draft;
-    }
-
-    private function copyText(CareerLocalisedText $source): CareerLocalisedText
-    {
-        return new CareerLocalisedText(
-            $source->getValueEN(),
-            $source->getValueNL(),
-        );
     }
 }

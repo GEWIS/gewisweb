@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity\User;
 
+use App\Entity\Application\Traits\SelectorTokenTrait;
 use App\Entity\Decision\Member;
 use App\Entity\User\Enums\UserTypes;
 use App\Repository\User\PasswordResetRepository;
@@ -29,7 +30,7 @@ use InvalidArgumentException;
 )]
 class PasswordReset
 {
-    public const string HASH_ALGO = 'sha256';
+    use SelectorTokenTrait;
 
     #[Id]
     #[GeneratedValue]
@@ -53,15 +54,6 @@ class PasswordReset
     #[ManyToOne(targetEntity: CompanyUser::class)]
     #[JoinColumn(nullable: true)]
     private ?CompanyUser $companyUser = null;
-
-    #[Column(type: Types::STRING)]
-    protected string $selector;
-
-    #[Column(type: Types::STRING)]
-    protected string $hashedToken;
-
-    #[Column(type: Types::DATETIME_IMMUTABLE)]
-    protected DateTimeImmutable $expiresAt;
 
     /**
      * Ephemeral hash linking the email-link click (stage 1) to the form-render request (stage 2). Cleared on first
@@ -108,26 +100,6 @@ class PasswordReset
         $this->userType = null !== $member
             ? UserTypes::User
             : UserTypes::CompanyUser;
-    }
-
-    public function isExpired(): bool
-    {
-        return $this->expiresAt <= new DateTimeImmutable('now');
-    }
-
-    public function getExpiresAt(): DateTimeImmutable
-    {
-        return $this->expiresAt;
-    }
-
-    public function getHashedToken(): string
-    {
-        return $this->hashedToken;
-    }
-
-    public function getSelector(): string
-    {
-        return $this->selector;
     }
 
     public function getId(): ?int

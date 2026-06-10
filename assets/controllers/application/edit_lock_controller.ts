@@ -39,9 +39,21 @@ export default class extends Controller {
     private submitting = false;
     private inflight: AbortController | null = null;
     private timer = 0;
-    private _onActivity!: () => void;
-    private _onSubmit!: () => void;
-    private _onUnload!: () => void;
+
+    private readonly _onActivity = (): void => {
+        this.lastActivity = Date.now();
+    };
+
+    // Submitting the form is itself a navigation, so the beforeunload handler would otherwise race a lock release
+    // against the save the server is about to perform. Flag the submit so `_release()` skips it; the server releases
+    // the lock once the save succeeds.
+    private readonly _onSubmit = (): void => {
+        this.submitting = true;
+    };
+
+    private readonly _onUnload = (): void => {
+        this._release();
+    };
 
     connect(): void {
         this.lastActivity = Date.now();
@@ -49,17 +61,9 @@ export default class extends Controller {
         this.submitting = false;
         this.inflight = null;
 
-        this._onActivity = () => { this.lastActivity = Date.now(); };
         this.element.addEventListener('mousedown', this._onActivity);
         this.element.addEventListener('keydown', this._onActivity);
-
-        // Submitting the form is itself a navigation, so the beforeunload handler below would otherwise race a lock
-        // release against the save the server is about to perform. Flag the submit so `_release()` skips it; the server
-        // releases the lock once the save succeeds.
-        this._onSubmit = () => { this.submitting = true; };
         this.element.addEventListener('submit', this._onSubmit);
-
-        this._onUnload = () => this._release();
         window.addEventListener('beforeunload', this._onUnload);
 
         this.timer = window.setInterval(() => this._tick(), this.intervalValue);

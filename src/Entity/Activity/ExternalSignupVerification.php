@@ -6,6 +6,7 @@ namespace App\Entity\Activity;
 
 use App\Entity\Activity\Enums\ExternalSignupVerificationPurpose;
 use App\Entity\Application\Traits\IdentifiableTrait;
+use App\Entity\Application\Traits\SelectorTokenTrait;
 use App\Repository\Activity\ExternalSignupVerificationRepository;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
@@ -31,8 +32,7 @@ use Doctrine\ORM\Mapping\ManyToOne;
 class ExternalSignupVerification
 {
     use IdentifiableTrait;
-
-    public const string HASH_ALGO = 'sha256';
+    use SelectorTokenTrait;
 
     /**
      * The external sign-up this token belongs to.
@@ -51,15 +51,6 @@ class ExternalSignupVerification
         enumType: ExternalSignupVerificationPurpose::class,
     )]
     private ExternalSignupVerificationPurpose $purpose;
-
-    #[Column(type: Types::STRING)]
-    private string $selector;
-
-    #[Column(type: Types::STRING)]
-    private string $hashedToken;
-
-    #[Column(type: Types::DATETIME_IMMUTABLE)]
-    private DateTimeImmutable $expiresAt;
 
     public function __construct(
         ExternalSignup $externalSignup,
@@ -83,25 +74,5 @@ class ExternalSignupVerification
     public function getPurpose(): ExternalSignupVerificationPurpose
     {
         return $this->purpose;
-    }
-
-    public function getSelector(): string
-    {
-        return $this->selector;
-    }
-
-    public function getHashedToken(): string
-    {
-        return $this->hashedToken;
-    }
-
-    public function getExpiresAt(): DateTimeImmutable
-    {
-        return $this->expiresAt;
-    }
-
-    public function isExpired(): bool
-    {
-        return $this->expiresAt <= new DateTimeImmutable('now');
     }
 }

@@ -35,12 +35,7 @@
                     <table class="table table-hover align-middle mb-0">
                         <thead>
                             <tr>
-                                <th>{{ 'Name (Dutch)'|trans }}</th>
-                                <th>{{ 'Name (English)'|trans }}</th>
-                                <th>{{ 'Organ'|trans }}</th>
-                                <th>{{ 'Company'|trans }}</th>
-                                <th>{{ 'Submitted by'|trans }}</th>
-                                <th>{{ 'Start'|trans }}</th>
+                                {% include 'partials/activity/admin/overview-header-cells.html.twig' %}
                                 <th>{{ 'Status'|trans }}</th>
                                 <th class="text-end">{{ 'Actions'|trans }}</th>
                             </tr>
@@ -48,16 +43,7 @@
                         <tbody>
                             {% for row in pending %}
                                 <tr>
-                                    <td>{{ row.nameNL }}</td>
-                                    <td>{{ row.nameEN }}</td>
-                                    <td>{{ row.organAbbr ?? '-' }}</td>
-                                    <td>{{ row.companyName ?? '-' }}</td>
-                                    <td>{{ row.submitter }}</td>
-                                    <td class="text-muted small">
-                                        {% if row.beginTime %}
-                                            {{ row.beginTime|format_datetime(pattern: 'd MMM yyyy HH:mm', locale: app.request.locale) }}
-                                        {% endif %}
-                                    </td>
+                                    {% include 'partials/activity/admin/overview-row-cells.html.twig' with { row: row } only %}
                                     <td>
                                         <span class="badge {{ statusBadge[row.status.value] ?? 'badge-secondary' }}">{{ row.status|trans }}</span>
                                         {% if row.changesRequested %}
@@ -130,28 +116,14 @@
                         <table class="table table-hover align-middle mb-0">
                             <thead>
                                 <tr>
-                                    <th>{{ 'Name (Dutch)'|trans }}</th>
-                                    <th>{{ 'Name (English)'|trans }}</th>
-                                    <th>{{ 'Organ'|trans }}</th>
-                                    <th>{{ 'Company'|trans }}</th>
-                                    <th>{{ 'Submitted by'|trans }}</th>
-                                    <th>{{ 'Start'|trans }}</th>
+                                    {% include 'partials/activity/admin/overview-header-cells.html.twig' %}
                                     <th class="text-end">{{ 'Actions'|trans }}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for row in approved %}
                                     <tr>
-                                        <td>{{ row.nameNL }}</td>
-                                        <td>{{ row.nameEN }}</td>
-                                        <td>{{ row.organAbbr ?? '-' }}</td>
-                                        <td>{{ row.companyName ?? '-' }}</td>
-                                        <td>{{ row.submitter }}</td>
-                                        <td class="text-muted small">
-                                            {% if row.beginTime %}
-                                                {{ row.beginTime|format_datetime(pattern: 'd MMM yyyy HH:mm', locale: app.request.locale) }}
-                                            {% endif %}
-                                        </td>
+                                        {% include 'partials/activity/admin/overview-row-cells.html.twig' with { row: row } only %}
                                         <td class="text-end">
                                             <a href="{{ path('activity/view', {'activity': row.id}) }}"
                                                class="btn btn-sm btn-outline-secondary" target="_blank" rel="noopener">

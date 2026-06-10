@@ -65,81 +65,93 @@
             </div>
         </div>
 
-        <div class="panel">
-            <div class="panel-heading">
-                <h3>{{ 'Category and labels'|trans }}</h3>
-            </div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-md-4">{{ form_row(form.currentRevision.category) }}</div>
-                    <div class="col-md-8">
-                        {# Renders the labels as removable chips with a typeahead; the EntityType checkboxes stay as the
-                           bound source of truth (label-chips just hides and drives them). The field label stays outside
-                           the controller element so it is not displaced by the injected chips/typeahead. #}
-                        {{ form_label(form.currentRevision.labels) }}
-                        <div data-controller="label-chips"
-                             data-label-chips-placeholder-value="{{ 'Search labels…'|trans }}"
-                             data-label-chips-remove-label-value="{{ 'Remove'|trans }}"
-                             data-label-chips-no-results-value="{{ 'No matching labels'|trans }}">
-                            {{ form_widget(form.currentRevision.labels) }}
-                            {{ form_errors(form.currentRevision.labels) }}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h3>{{ 'Category and labels'|trans }}</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-4">{{ form_row(form.currentRevision.category) }}</div>
+                            <div class="col-md-8">
+                                {# Renders the labels as removable chips with a typeahead; the EntityType checkboxes stay as the
+                                   bound source of truth (label-chips just hides and drives them). The field label stays outside
+                                   the controller element so it is not displaced by the injected chips/typeahead. #}
+                                {{ form_label(form.currentRevision.labels) }}
+                                <div data-controller="label-chips"
+                                     data-label-chips-placeholder-value="{{ 'Search labels…'|trans }}"
+                                     data-label-chips-remove-label-value="{{ 'Remove'|trans }}"
+                                     data-label-chips-no-results-value="{{ 'No matching labels'|trans }}">
+                                    {{ form_widget(form.currentRevision.labels) }}
+                                    {{ form_errors(form.currentRevision.labels) }}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="panel">
-            <div class="panel-heading">
-                <h3>{{ 'Facilities'|trans }}</h3>
-            </div>
-            <div class="panel-body">
-                {{ form_row(form.currentRevision.requireGEFLITST) }}
-                {{ form_row(form.currentRevision.requireZettle) }}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h3>{{ 'Facilities'|trans }}</h3>
+                    </div>
+                    <div class="panel-body">
+                        {{ form_row(form.currentRevision.requireGEFLITST) }}
+                        {{ form_row(form.currentRevision.requireZettle) }}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     {# Step 2 -- Details (the bilingual texts a potential subscriber reads) #}
     <div data-form-stepper-target="step">
-        <div class="panel">
-            <div class="panel-heading">
-                <h3>{{ 'Information'|trans }}</h3>
-                <p class="text-muted small mb-0">
-                    {{ 'Enable Dutch and/or English and fill in the fields below. At least one language must be used.'|trans }}
-                </p>
-            </div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-md-6">
-                        {{ form_row(form.currentRevision.languageDutch, {
-                            'label': '<span class="flag-icon flag-icon-nl"></span> ' ~ ('Dutch'|trans),
-                            'label_html': true,
-                            'attr': {
-                                'data-localised-fields-target': 'dutchToggle',
-                                'data-action': 'change->localised-fields#apply',
-                            },
-                        }) }}
-                        <hr>
-                        {{ form_row(form.currentRevision.name.valueNL, {'label': 'Name'|trans, 'attr': {'data-localised-fields-target': 'dutch'}}) }}
-                        {{ form_row(form.currentRevision.location.valueNL, {'label': 'Location'|trans, 'attr': {'data-localised-fields-target': 'dutch'}}) }}
-                        {{ form_row(form.currentRevision.costs.valueNL, {'label': 'Costs'|trans, 'attr': {'data-localised-fields-target': 'dutch'}}) }}
-                        {{ form_row(form.currentRevision.description.valueNL, {'label': 'Description'|trans, 'attr': {'data-localised-fields-target': 'dutch'}}) }}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h3>{{ 'Information'|trans }}</h3>
+                        <p class="text-muted small mb-0">
+                            {{ 'Enable Dutch and/or English and fill in the fields below. At least one language must be used.'|trans }}
+                        </p>
                     </div>
-                    <div class="col-md-6">
-                        {{ form_row(form.currentRevision.languageEnglish, {
-                            'label': '<span class="flag-icon flag-icon-en"></span> ' ~ ('English'|trans),
-                            'label_html': true,
-                            'attr': {
-                                'data-localised-fields-target': 'englishToggle',
-                                'data-action': 'change->localised-fields#apply',
-                            },
-                        }) }}
-                        <hr>
-                        {{ form_row(form.currentRevision.name.valueEN, {'label': 'Name'|trans, 'attr': {'data-localised-fields-target': 'english'}}) }}
-                        {{ form_row(form.currentRevision.location.valueEN, {'label': 'Location'|trans, 'attr': {'data-localised-fields-target': 'english'}}) }}
-                        {{ form_row(form.currentRevision.costs.valueEN, {'label': 'Costs'|trans, 'attr': {'data-localised-fields-target': 'english'}}) }}
-                        {{ form_row(form.currentRevision.description.valueEN, {'label': 'Description'|trans, 'attr': {'data-localised-fields-target': 'english'}}) }}
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                {{ form_row(form.currentRevision.languageDutch, {
+                                    'label': '<span class="flag-icon flag-icon-nl"></span> ' ~ ('Dutch'|trans),
+                                    'label_html': true,
+                                    'attr': {
+                                        'data-localised-fields-target': 'dutchToggle',
+                                        'data-action': 'change->localised-fields#apply',
+                                    },
+                                }) }}
+                                <hr>
+                                {{ form_row(form.currentRevision.name.valueNL, {'label': 'Name'|trans, 'attr': {'data-localised-fields-target': 'dutch'}}) }}
+                                {{ form_row(form.currentRevision.location.valueNL, {'label': 'Location'|trans, 'attr': {'data-localised-fields-target': 'dutch'}}) }}
+                                {{ form_row(form.currentRevision.costs.valueNL, {'label': 'Costs'|trans, 'attr': {'data-localised-fields-target': 'dutch'}}) }}
+                                {{ form_row(form.currentRevision.description.valueNL, {'label': 'Description'|trans, 'attr': {'data-localised-fields-target': 'dutch'}}) }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ form_row(form.currentRevision.languageEnglish, {
+                                    'label': '<span class="flag-icon flag-icon-en"></span> ' ~ ('English'|trans),
+                                    'label_html': true,
+                                    'attr': {
+                                        'data-localised-fields-target': 'englishToggle',
+                                        'data-action': 'change->localised-fields#apply',
+                                    },
+                                }) }}
+                                <hr>
+                                {{ form_row(form.currentRevision.name.valueEN, {'label': 'Name'|trans, 'attr': {'data-localised-fields-target': 'english'}}) }}
+                                {{ form_row(form.currentRevision.location.valueEN, {'label': 'Location'|trans, 'attr': {'data-localised-fields-target': 'english'}}) }}
+                                {{ form_row(form.currentRevision.costs.valueEN, {'label': 'Costs'|trans, 'attr': {'data-localised-fields-target': 'english'}}) }}
+                                {{ form_row(form.currentRevision.description.valueEN, {'label': 'Description'|trans, 'attr': {'data-localised-fields-target': 'english'}}) }}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -148,15 +160,19 @@
 
     {# Step 3 -- Sign-up lists #}
     <div data-form-stepper-target="step">
-        <div class="panel">
-            <div class="panel-heading">
-                <h3>{{ 'Sign-up lists'|trans }}</h3>
-                <p class="text-muted small mb-0">
-                    {{ 'Optional. A sign-up list with subscribers can no longer be changed structurally.'|trans }}
-                </p>
-            </div>
-            <div class="panel-body">
-                {{ form_widget(form.currentRevision.signupLists) }}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h3>{{ 'Sign-up lists'|trans }}</h3>
+                        <p class="text-muted small mb-0">
+                            {{ 'Optional. A sign-up list with subscribers can no longer be changed structurally.'|trans }}
+                        </p>
+                    </div>
+                    <div class="panel-body">
+                        {{ form_widget(form.currentRevision.signupLists) }}
+                    </div>
+                </div>
             </div>
         </div>
     </div>

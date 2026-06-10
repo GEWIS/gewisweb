@@ -63,11 +63,7 @@
                         <div class="modal-body">
                             {{ form_errors(form) }}
 
-                            {% for child in form %}
-                                {% if child.vars.name starts with 'field_' %}
-                                    {{ form_row(child) }}
-                                {% endif %}
-                            {% endfor %}
+                            {% include 'partials/activity/signup-fields.html.twig' with { form: form } only %}
 
                             {% if form.agree is defined %}
                                 {{ form_row(form.agree) }}

@@ -7,6 +7,7 @@ namespace App\Twig\Extensions;
 use Jfcherng\Diff\DiffHelper;
 use Override;
 use Twig\Extension\AbstractExtension;
+use Twig\Markup;
 use Twig\TwigFunction;
 
 use function htmlspecialchars;
@@ -49,9 +50,12 @@ class DiffExtension extends AbstractExtension
     }
 
     /**
-     * Render the difference between two (possibly null) strings as HTML. Returns an empty string only when both sides
+     * Render the difference between two (possibly null) strings as HTML. Returns empty markup only when both sides
      * are empty, so an unchanged optional field renders as nothing; an unchanged *non-empty* field renders its value
      * (jfcherng's renderers emit nothing for identical input, which would otherwise leave the field blank).
+     *
+     * Returns {@see Markup} rather than a string so the HTML stays unescaped even when a template captures the result
+     * with `{% set %}` first (`is_safe` only covers direct interpolation).
      *
      * @param string $renderer one of the jfcherng HTML renderers, e.g. 'Combined' or 'Inline'
      */
@@ -59,7 +63,7 @@ class DiffExtension extends AbstractExtension
         ?string $old,
         ?string $new,
         string $renderer = 'Combined',
-    ): string {
+    ): Markup {
         $old ??= '';
         $new ??= '';
 
@@ -67,19 +71,28 @@ class DiffExtension extends AbstractExtension
             '' === $old
             && '' === $new
         ) {
-            return '';
+            return new Markup(
+                '',
+                'UTF-8',
+            );
         }
 
         if ($old === $new) {
-            return nl2br(htmlspecialchars($old, ENT_QUOTES));
+            return new Markup(
+                nl2br(htmlspecialchars($old, ENT_QUOTES)),
+                'UTF-8',
+            );
         }
 
-        return DiffHelper::calculate(
-            $old,
-            $new,
-            $renderer,
-            self::DIFFER_OPTIONS,
-            self::RENDERER_OPTIONS,
+        return new Markup(
+            DiffHelper::calculate(
+                $old,
+                $new,
+                $renderer,
+                self::DIFFER_OPTIONS,
+                self::RENDERER_OPTIONS,
+            ),
+            'UTF-8',
         );
     }
 }

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\MessageHandler\Activity;
 
-use App\Entity\Activity\Enums\ExternalSignupVerificationPurpose;
 use App\Entity\Application\Enums\Languages;
 use App\Message\Activity\ExternalSignupTokenEmail;
 use App\Repository\Activity\ExternalSignupRepository;
@@ -39,37 +38,25 @@ class ExternalSignupTokenEmailHandler
 
         $activityName = $signup->getSignupList()->getActivity()->getName()->getText(Languages::English) ?? '';
         $signupListName = $signup->getSignupList()->getName()->getText(Languages::English) ?? '';
-        $isVerify = ExternalSignupVerificationPurpose::Verify === $message->getPurpose();
+        $purpose = $message->getPurpose();
 
         $url = $this->urlGenerator->generate(
-            $isVerify
-                ? 'activity/external_signup_verify'
-                : 'activity/external_signup_manage',
+            $purpose->routeName(),
             ['token' => $message->getToken()],
             UrlGeneratorInterface::ABSOLUTE_URL,
         );
 
-        $subject = $isVerify
-            ? sprintf(
-                'Confirm your sign-up for %s (%s)',
-                $activityName,
-                $signupListName,
-            )
-            : sprintf(
-                'Manage your sign-up for %s (%s)',
-                $activityName,
-                $signupListName,
-            );
+        $subject = sprintf(
+            $purpose->subjectFormat(),
+            $activityName,
+            $signupListName,
+        );
 
         $this->mailer->send(
             new TemplatedEmail()
                 ->to($signup->getEmail())
                 ->subject($subject)
-                ->htmlTemplate(
-                    $isVerify
-                        ? 'emails/activity/external-signup-verification.html.twig'
-                        : 'emails/activity/external-signup-manage.html.twig',
-                )
+                ->htmlTemplate($purpose->emailTemplate())
                 ->context([
                     'name' => $signup->getFullName(),
                     'activityName' => $activityName,

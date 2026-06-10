@@ -82,15 +82,9 @@ abstract class AbstractRevisionComment
      */
     public function getAuthorDisplayName(): string
     {
-        if (null !== $this->author) {
-            return $this->author->getMember()->getFullName();
-        }
-
-        if (null !== $this->authorCompanyUser) {
-            return $this->authorCompanyUser->getCompany()->getName();
-        }
-
-        return '';
+        return $this->author?->getDisplayName()
+            ?? $this->authorCompanyUser?->getDisplayName()
+            ?? '';
     }
 
     public function getBody(): string

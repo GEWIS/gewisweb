@@ -53,10 +53,9 @@ export default class extends Controller {
     }
 
     setHidden(name: string, hidden: boolean): void {
-        const capitalised = name.charAt(0).toUpperCase() + name.slice(1);
-        const self = this as unknown as Record<string, boolean | HTMLElement | undefined>;
-        if (self[`has${capitalised}Target`]) {
-            (self[`${name}Target`] as HTMLElement).hidden = hidden;
+        const target = this.targets.find(name);
+        if (target instanceof HTMLElement) {
+            target.hidden = hidden;
         }
     }
 }

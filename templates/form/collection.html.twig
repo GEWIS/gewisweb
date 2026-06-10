@@ -1,35 +1,42 @@
-{# Renders a Symfony CollectionType with add/remove wired to the `form-collection` Stimulus controller. Nesting is
-   supported because each collection level uses a distinct prototype placeholder (__list__, __field__, __option__).
-   Pass a `remove_label` variable (e.g. `form_row(form.options, {'remove_label': 'Remove option'|trans})`) to name
-   what a remove button removes; it falls back to a generic "Remove". #}
+{# Renders a Symfony CollectionType with add/remove wired to the `form-collection` Stimulus controller. The entry
+   macro renders the complete entry (wrapper and remove button) for both the server-rendered children and the
+   prototype, so JS-added entries can never drift from existing ones. Nesting is supported because each collection
+   level uses a distinct prototype placeholder (__list__, __field__, __option__).
+   Pass `add_label` / `remove_label` variables (e.g. `form_row(form.options, {'add_label': 'Add option'|trans,
+   'remove_label': 'Remove option'|trans})`) to name what the buttons add/remove; they fall back to a generic
+   "Add" / "Remove". #}
+{% macro collection_entry(child, allow_delete, remove_label) %}
+    <div data-form-collection-target="entry" class="border rounded p-3 mb-2">
+        {{ form_row(child) }}
+        {% if allow_delete %}
+            <button type="button" class="btn btn-sm btn-outline-gewis-primary mt-2"
+                    data-action="form-collection#remove">
+                <i class="fas fa-trash"></i> {{ remove_label }}
+            </button>
+        {% endif %}
+    </div>
+{% endmacro %}
+
 {% block collection_widget %}
+    {% import _self as helper %}
     {% set has_prototype = allow_add and prototype is defined and prototype is not null %}
     {% set placeholder = has_prototype ? (prototype.vars.name|split('[')|last|trim(']')) : '__name__' %}
+    {% set add_label = add_label|default('Add'|trans) %}
     {% set remove_label = remove_label|default('Remove'|trans) %}
     <div {{ block('widget_container_attributes') }}
          data-controller="form-collection"
-         data-form-collection-allow-delete-value="{{ allow_delete ? 'true' : 'false' }}"
-         data-form-collection-remove-label-value="{{ remove_label }}"
          {% if has_prototype %}
-             data-form-collection-prototype-value="{{ form_row(prototype)|e('html_attr') }}"
+             data-form-collection-prototype-value="{{ helper.collection_entry(prototype, allow_delete, remove_label)|e('html_attr') }}"
              data-form-collection-prototype-name-value="{{ placeholder }}"
          {% endif %}>
         <div data-form-collection-target="entries">
             {% for child in form %}
-                <div data-form-collection-target="entry" class="border rounded p-3 mb-2">
-                    {{ form_row(child) }}
-                    {% if allow_delete %}
-                        <button type="button" class="btn btn-sm btn-outline-gewis-primary mt-2"
-                                data-action="form-collection#remove">
-                            <i class="fas fa-trash"></i> {{ remove_label }}
-                        </button>
-                    {% endif %}
-                </div>
+                {{ helper.collection_entry(child, allow_delete, remove_label) }}
             {% endfor %}
         </div>
         {% if allow_add %}
             <button type="button" class="btn btn-sm btn-outline-secondary mt-2" data-action="form-collection#add">
-                {{ 'Add'|trans }}
+                {{ add_label }}
             </button>
         {% endif %}
     </div>

@@ -26,13 +26,15 @@ export default class extends Controller {
     declare readonly hasConfirmTarget: boolean;
     declare readonly confirmTarget: HTMLElement;
 
-    private _action: string | null = null;
-    private _args: Record<string, unknown> = {};
-    private _componentPromise: Promise<Component | null> | null = null;
+    // The live action armed by the trigger that opened the modal, held in one field so an armed action always comes
+    // with the component lookup to run it on; null while nothing is armed.
+    private _pending: {
+        action: string;
+        args: Record<string, unknown>;
+        component: Promise<Component | null>;
+    } | null = null;
 
     connect(): void {
-        this._onShow = this._onShow.bind(this);
-        this._onConfirm = this._onConfirm.bind(this);
         this.element.addEventListener('show.bs.modal', this._onShow);
         if (this.hasConfirmTarget) {
             this.confirmTarget.addEventListener('click', this._onConfirm);
@@ -46,16 +48,11 @@ export default class extends Controller {
         }
     }
 
-    _onShow(event: Event): void {
-        const trigger = (event as Event & { relatedTarget?: HTMLElement }).relatedTarget;
+    private readonly _onShow = (event: Event & { relatedTarget?: HTMLElement }): void => {
+        const trigger = event.relatedTarget;
         if (!trigger) {
             return;
         }
-
-        this._action = trigger.dataset.confirmLiveAction ?? null;
-        this._args = trigger.dataset.confirmLiveArgs
-            ? JSON.parse(trigger.dataset.confirmLiveArgs)
-            : {};
 
         // getComponent() does a STRICT lookup keyed by the component's ROOT element (the [data-controller~="live"]
         // node), not a closest() from a descendant — so passing the trigger button (a descendant) never matches and
@@ -64,9 +61,14 @@ export default class extends Controller {
         // detach the trigger, and a detached node's closest() returns null — whereas the root element and the resolved
         // component instance both survive re-renders. `.catch(() => null)` is attached eagerly so a cancelled modal
         // never logs an unhandled rejection.
+        const action = trigger.dataset.confirmLiveAction ?? null;
         const root = trigger.closest<HTMLElement>('[data-controller~="live"]');
-        this._componentPromise = null !== this._action && null !== root
-            ? getComponent(root).catch(() => null)
+        this._pending = null !== action && null !== root
+            ? {
+                action,
+                args: trigger.dataset.confirmLiveArgs ? JSON.parse(trigger.dataset.confirmLiveArgs) : {},
+                component: getComponent(root).catch(() => null),
+            }
             : null;
 
         if (this.hasTitleTarget && trigger.dataset.confirmTitle !== undefined) {
@@ -80,17 +82,18 @@ export default class extends Controller {
         if (this.hasConfirmTarget && trigger.dataset.confirmLabel !== undefined) {
             this.confirmTarget.textContent = trigger.dataset.confirmLabel;
         }
-    }
+    };
 
-    async _onConfirm(): Promise<void> {
+    private readonly _onConfirm = async (): Promise<void> => {
         // The confirm button also carries data-bs-dismiss, so Bootstrap closes the modal; here we just run the action.
-        if (null === this._componentPromise) {
+        if (null === this._pending) {
             return;
         }
 
-        const component = await this._componentPromise;
-        if (null !== component && null !== this._action) {
-            component.action(this._action, this._args);
+        const { action, args, component } = this._pending;
+        const resolved = await component;
+        if (null !== resolved) {
+            resolved.action(action, args);
         }
-    }
+    };
 }

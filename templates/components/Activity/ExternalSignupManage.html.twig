@@ -21,11 +21,7 @@
             {# Disabled by SignupType in manage mode: the e-mail is the verified identity and changing it would bypass
                verification (to use another address, unsubscribe and sign up again). #}
             {{ form_row(form.email) }}
-            {% for child in form %}
-                {% if child.vars.name starts with 'field_' %}
-                    {{ form_row(child) }}
-                {% endif %}
-            {% endfor %}
+            {% include 'partials/activity/signup-fields.html.twig' with { form: form } only %}
 
             {% if this.signup.signupList.fields|filter(f => f.isSensitive)|length > 0 %}
                 <p class="text-muted small mb-3"><em>

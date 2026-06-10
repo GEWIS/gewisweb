@@ -1,7 +1,6 @@
 import { startStimulusApp } from '@symfony/stimulus-bundle';
 
 // Application-wide, domain-agnostic controllers.
-import CollapsibleCollectionController from './controllers/application/collapsible_collection_controller.ts';
 import ConfirmModalController from './controllers/application/confirm_modal_controller.ts';
 import DescriptionToggleController from './controllers/application/description_toggle_controller.ts';
 import EditLockController from './controllers/application/edit_lock_controller.ts';
@@ -24,7 +23,6 @@ const app = startStimulusApp();
 // Registered with flat identifiers so the templates keep using `data-controller="form-stepper"` etc. despite the
 // subdirectories -- the path-based autoload would otherwise namespace them (e.g. `application--form-stepper`). The
 // framework-scaffolded csrf_protection controller stays at the controllers/ root and autoloads as `csrf-protection`.
-app.register('collapsible-collection', CollapsibleCollectionController);
 app.register('confirm-modal', ConfirmModalController);
 app.register('description-toggle', DescriptionToggleController);
 app.register('edit-lock', EditLockController);

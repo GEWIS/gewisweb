@@ -120,6 +120,9 @@ final class SignupOverview
     /** @var SignupAdminListView[]|null memoised for the duration of one render */
     private ?array $listViews = null;
 
+    /** @var array<int, int[]> pending external-signup ids keyed by list id, memoised for one request */
+    private array $pendingExternalIds = [];
+
     public function __construct(
         private readonly Security $security,
         private readonly TranslatorInterface $translator,
@@ -151,7 +154,7 @@ final class SignupOverview
                 $this->filter,
                 $selected,
                 $hiddenFields,
-                $this->verificationRepository->findPendingExternalSignupIdsForList($signupList),
+                $this->pendingExternalIds($signupList),
             );
         }
 
@@ -776,6 +779,24 @@ final class SignupOverview
     }
 
     /**
+     * The ids of this list's externals still awaiting e-mail verification, memoised per list id so the underlying query
+     * runs at most once per list for the lifetime of this (per-request) component instance — the toggles and draws that
+     * call {@see confirmedSignups()} in a loop otherwise re-run it for every list.
+     *
+     * @return int[]
+     */
+    private function pendingExternalIds(SignupList $signupList): array
+    {
+        $listId = $signupList->getId();
+        if (null === $listId) {
+            return $this->verificationRepository->findPendingExternalSignupIdsForList($signupList);
+        }
+
+        return $this->pendingExternalIds[$listId]
+            ??= $this->verificationRepository->findPendingExternalSignupIdsForList($signupList);
+    }
+
+    /**
      * A list's sign-ups excluding externals still awaiting e-mail verification: an unconfirmed external is not a real
      * participant, so it must never be drawn, e-mailed, toggled or counted.
      *
@@ -783,7 +804,7 @@ final class SignupOverview
      */
     private function confirmedSignups(SignupList $signupList): array
     {
-        $pending = $this->verificationRepository->findPendingExternalSignupIdsForList($signupList);
+        $pending = $this->pendingExternalIds($signupList);
 
         $signups = [];
         foreach ($signupList->getSignUps() as $signup) {

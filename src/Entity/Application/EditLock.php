@@ -140,14 +140,8 @@ class EditLock
      */
     public function getHolderDisplayName(): string
     {
-        if (null !== $this->lockedBy) {
-            return $this->lockedBy->getMember()->getFullName();
-        }
-
-        if (null !== $this->lockedByCompanyUser) {
-            return $this->lockedByCompanyUser->getCompany()->getName();
-        }
-
-        return '';
+        return $this->lockedBy?->getDisplayName()
+            ?? $this->lockedByCompanyUser?->getDisplayName()
+            ?? '';
     }
 }

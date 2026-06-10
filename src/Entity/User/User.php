@@ -263,6 +263,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
         $this->member = $member;
     }
 
+    /**
+     * A human-readable name for this account, for display alongside a {@see CompanyUser}.
+     */
+    public function getDisplayName(): string
+    {
+        return $this->getMember()->getFullName();
+    }
+
     public function getPasswordChangedOn(): ?DateTime
     {
         return $this->passwordChangedOn;

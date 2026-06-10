@@ -239,15 +239,8 @@ abstract class AbstractRevision implements RevisionInterface
      */
     public function getLastEditorDisplayName(): ?string
     {
-        if (null !== $this->lastEditedBy) {
-            return $this->lastEditedBy->getMember()->getFullName();
-        }
-
-        if (null !== $this->lastEditedByCompanyUser) {
-            return $this->lastEditedByCompanyUser->getCompany()->getName();
-        }
-
-        return null;
+        return $this->lastEditedBy?->getDisplayName()
+            ?? $this->lastEditedByCompanyUser?->getDisplayName();
     }
 
     /**

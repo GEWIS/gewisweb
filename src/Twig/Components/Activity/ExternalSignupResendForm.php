@@ -9,6 +9,7 @@ use App\Form\Activity\ResendVerificationType;
 use App\Message\Activity\ExternalSignupResendVerificationEmail;
 use App\Repository\Activity\SignupListRepository;
 use App\Service\Application\AltchaSolutionGuard;
+use App\Twig\Components\Concerns\FlashesTrait;
 use Override;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -16,7 +17,6 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\FlashBagAwareSessionInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
@@ -49,6 +49,7 @@ final class ExternalSignupResendForm
 {
     use ComponentWithFormTrait;
     use DefaultActionTrait;
+    use FlashesTrait;
 
     #[LiveProp]
     public SignupListEntity $signupList;
@@ -161,20 +162,5 @@ final class ExternalSignupResendForm
         ) {
             throw new AccessDeniedException();
         }
-    }
-
-    private function flash(
-        string $type,
-        string $message,
-    ): void {
-        $session = $this->requestStack->getSession();
-        if (!($session instanceof FlashBagAwareSessionInterface)) {
-            return;
-        }
-
-        $session->getFlashBag()->add(
-            $type,
-            $message,
-        );
     }
 }

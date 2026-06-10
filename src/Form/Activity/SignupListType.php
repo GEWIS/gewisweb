@@ -8,6 +8,7 @@ use App\Entity\Activity\Enums\AllocationMethod;
 use App\Entity\Activity\Enums\DrawCutoffRule;
 use App\Entity\Activity\SignupList;
 use App\Form\Application\LocalisedTextType;
+use App\Form\DisablesFieldsTrait;
 use DateTime;
 use Override;
 use Symfony\Component\Form\AbstractType;
@@ -41,6 +42,8 @@ use function trim;
  */
 class SignupListType extends AbstractType
 {
+    use DisablesFieldsTrait;
+
     /**
      * Fields disabled once a list has sign-ups.
      */
@@ -595,28 +598,6 @@ class SignupListType extends AbstractType
         $this->disableField(
             $event->getForm(),
             'closeDate',
-        );
-    }
-
-    /**
-     * Re-add a field to the form as `disabled`, preserving its type and options, so it renders read-only and is
-     * ignored on submit. Symfony has no in-place "disable"; re-adding the field with the option flipped is the
-     * supported way, and every freeze listener above relies on it.
-     *
-     * @param FormInterface<SignupList> $form
-     */
-    private function disableField(
-        FormInterface $form,
-        string $name,
-    ): void {
-        $config = $form->get($name)->getConfig();
-        $options = $config->getOptions();
-        $options['disabled'] = true;
-
-        $form->add(
-            $name,
-            $config->getType()->getInnerType()::class,
-            $options,
         );
     }
 }

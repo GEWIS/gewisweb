@@ -15,7 +15,7 @@
 
 // Sign-up list editor (activity create/edit form): number the collapsible list and question panels so collapsed ones
 // stay distinguishable. A CSS counter reflows automatically as entries are added or removed (see
-// collapsible_collection_controller.ts); the prototype lives in a data attribute and is not counted.
+// form_collection_controller.ts); the prototype lives in a data attribute and is not counted.
 .signup-list-collection {
     counter-reset: signup-list;
 
