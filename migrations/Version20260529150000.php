@@ -8,14 +8,22 @@ use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 
 /**
- * Introduces the generic revision/approval workflow and adopt it across activities and the careers portal:
- * - Splits `Activity`, `Company`, and `Vacancy` into stable entities + immutable revision chains (with comment threads)
- * - Renames the career `Job` concept to `Vacancy`
- * - Migrates the `SignupField` type to a string-backed enum
- * - Drops the superseded flat `Approvable*` model (including `ApprovableText`)
+ * Revision/approval workflow for activities and the careers portal — consolidated feature migration.
  *
- * Existing rows are migrated into a single revision-1 carrying their content; the legacy statuses map onto the new
- * `RevisionStatus`, and in-flight (never-approved) update clones are discarded.
+ * This is the squash of the ten incremental migrations authored while building the revision-workflow feature. The
+ * original statements are reproduced verbatim (every up() in chronological order, every down() in reverse) so the
+ * production data carry-forward is preserved exactly — this is NOT a fresh schema diff. The folded steps are:
+ *   1. Split Activity/Company/Vacancy into stable aggregates + immutable revision chains; rename Job -> Vacancy;
+ *      migrate SignupField.type to a string-backed enum; carry legacy rows into revision 1; drop the Approvable* model.
+ *   2. Move sign-up lists from the activity onto the activity revision (stable per-list lineageId).
+ *   3. Move the organising organ/company and labels onto the activity revision, and labels onto the vacancy revision.
+ *   4. Re-point revision-comment authors from Member to User (and allow company-user authors).
+ *   5. Add the EditLock table plus optimistic-lock version + last-editor columns on the revision tables.
+ *   6. Add the ActivityRevisionEdit audit trail.
+ *   7. Add the numeric capacity of a (limited-capacity) sign-up list.
+ *   8. Add the draw lock/audit (drawnAt/drawnBy) to a sign-up list.
+ *   9. Add allocationMethod and its per-method settings to a sign-up list.
+ *  10. Add external sign-up email-verification tokens and a policy-agreement timestamp on sign-ups.
  *
  * phpcs:disable Generic.Files.LineLength.TooLong
  * phpcs:disable SlevomatCodingStandard.Functions.RequireMultiLineCall.RequiredMultiLineCall
@@ -24,11 +32,12 @@ final class Version20260529150000 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return 'Revision/approval workflow for activities + careers (split aggregates, Job->Vacancy rename, dual-actor authorship). GH-2067.';
+        return 'Revision/approval workflow for activities + careers, sign-up versioning, edit locking, and external sign-up verification (squashed feature migration). GH-2067.';
     }
 
     public function up(Schema $schema): void
     {
+        // ── Version20260529150000: Revision/approval workflow for activities + careers (split aggregates, Job->Vacancy rename, dual-actor authorship). GH-2067.
         // Activities: split into a stable aggregate + an immutable revision chain
         $this->addSql('CREATE TABLE ActivityRevision (id INT AUTO_INCREMENT NOT NULL, status VARCHAR(255) NOT NULL, revisionNumber INT NOT NULL, reviewedAt DATETIME DEFAULT NULL, createdAt DATETIME NOT NULL, updatedAt DATETIME NOT NULL, beginTime DATETIME NOT NULL, endTime DATETIME NOT NULL, category VARCHAR(255) NOT NULL, requireGEFLITST TINYINT NOT NULL, requireZettle TINYINT NOT NULL, author_id INT DEFAULT NULL, authorCompanyUser_id INT DEFAULT NULL, reviewer_id INT DEFAULT NULL, activity_id INT NOT NULL, previousRevision_id INT DEFAULT NULL, name_id INT NOT NULL, location_id INT NOT NULL, costs_id INT NOT NULL, description_id INT NOT NULL, INDEX IDX_F7309B7AF675F31B (author_id), INDEX IDX_F7309B7AFD16CEE4 (authorCompanyUser_id), INDEX IDX_F7309B7A70574616 (reviewer_id), INDEX IDX_F7309B7A81C06096 (activity_id), INDEX IDX_F7309B7A8F2D4199 (previousRevision_id), UNIQUE INDEX UNIQ_F7309B7A71179CD6 (name_id), UNIQUE INDEX UNIQ_F7309B7A64D218E (location_id), UNIQUE INDEX UNIQ_F7309B7A27D66E0D (costs_id), UNIQUE INDEX UNIQ_F7309B7AD9F966B (description_id), PRIMARY KEY (id)) DEFAULT CHARACTER SET utf8mb4');
         $this->addSql('CREATE TABLE ActivityRevisionComment (body LONGTEXT NOT NULL, id INT AUTO_INCREMENT NOT NULL, createdAt DATETIME NOT NULL, updatedAt DATETIME NOT NULL, author_id INT NOT NULL, revision_id INT NOT NULL, INDEX IDX_DEE0948DF675F31B (author_id), INDEX IDX_DEE0948D1DFA7C8F (revision_id), PRIMARY KEY (id)) DEFAULT CHARACTER SET utf8mb4');
@@ -237,12 +246,286 @@ final class Version20260529150000 extends AbstractMigration
 
         // Drop the superseded ApprovableText table
         $this->addSql('DROP TABLE ApprovableText');
+
+        // ── Version20260530112824: Move sign-up lists from the activity onto the activity revision.
+        // Add the new revision FK and the lineage id as nullable, backfill from the existing rows (a list moves to its
+        // activity's live revision, else its current revision; the lineage id is a fresh UUID stored as 16 raw bytes),
+        // then finalise to NOT NULL and swap the foreign key. Every activity has at least a current revision.
+        $this->addSql('ALTER TABLE SignupList ADD activity_revision_id INT DEFAULT NULL, ADD lineageId BINARY(16) DEFAULT NULL');
+        $this->addSql(<<<'SQL'
+            UPDATE SignupList sl
+            JOIN Activity a ON sl.activity_id = a.id
+            SET sl.activity_revision_id = COALESCE(a.liveRevision_id, a.currentRevision_id),
+                sl.lineageId = UNHEX(REPLACE(UUID(), '-', ''))
+            SQL);
+        $this->addSql('ALTER TABLE SignupList DROP FOREIGN KEY `FK_274D085F81C06096`');
+        $this->addSql('DROP INDEX IDX_274D085F81C06096 ON SignupList');
+        $this->addSql('ALTER TABLE SignupList DROP activity_id');
+        $this->addSql('ALTER TABLE SignupList CHANGE activity_revision_id activity_revision_id INT NOT NULL');
+        $this->addSql('ALTER TABLE SignupList CHANGE lineageId lineageId BINARY(16) NOT NULL');
+        $this->addSql('ALTER TABLE SignupList ADD CONSTRAINT FK_274D085F13741683 FOREIGN KEY (activity_revision_id) REFERENCES ActivityRevision (id)');
+        $this->addSql('CREATE INDEX IDX_274D085F13741683 ON SignupList (activity_revision_id)');
+        // A revision never holds two lists of the same lineage.
+        $this->addSql('CREATE UNIQUE INDEX signup_list_revision_lineage_uniq ON SignupList (activity_revision_id, lineageId)');
+
+        // ── Version20260530192012: Move organ/company/labels onto the activity revision and labels onto the vacancy revision.
+        // Add label assignment revision tables and add organ and company to a revision.
+        $this->addSql('CREATE TABLE ActivityRevisionLabelAssignment (activityrevision_id INT NOT NULL, activitylabel_id INT NOT NULL, INDEX IDX_AD4B45A22B53B2FF (activityrevision_id), INDEX IDX_AD4B45A247A3B8A4 (activitylabel_id), PRIMARY KEY (activityrevision_id, activitylabel_id)) DEFAULT CHARACTER SET utf8mb4');
+        $this->addSql('ALTER TABLE ActivityRevisionLabelAssignment ADD CONSTRAINT FK_AD4B45A22B53B2FF FOREIGN KEY (activityrevision_id) REFERENCES ActivityRevision (id) ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE ActivityRevisionLabelAssignment ADD CONSTRAINT FK_AD4B45A247A3B8A4 FOREIGN KEY (activitylabel_id) REFERENCES ActivityLabel (id) ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE ActivityRevision ADD organ_id INT DEFAULT NULL, ADD company_id INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE ActivityRevision ADD CONSTRAINT FK_F7309B7AE4445171 FOREIGN KEY (organ_id) REFERENCES Organ (id)');
+        $this->addSql('ALTER TABLE ActivityRevision ADD CONSTRAINT FK_F7309B7A979B1AD6 FOREIGN KEY (company_id) REFERENCES Company (id)');
+        $this->addSql('CREATE INDEX IDX_F7309B7AE4445171 ON ActivityRevision (organ_id)');
+        $this->addSql('CREATE INDEX IDX_F7309B7A979B1AD6 ON ActivityRevision (company_id)');
+
+        // Backfill every revision with its activity's organ/company and label assignments (labels were never versioned,
+        // so copying onto every revision keeps a revision and its predecessor in sync).
+        $this->addSql(<<<'SQL'
+            UPDATE ActivityRevision r
+            JOIN Activity a ON r.activity_id = a.id
+            SET r.organ_id = a.organ_id,
+                r.company_id = a.company_id
+        SQL);
+        $this->addSql(<<<'SQL'
+            INSERT INTO ActivityRevisionLabelAssignment (activityrevision_id, activitylabel_id)
+            SELECT r.id, la.activitylabel_id
+            FROM ActivityRevision r
+            JOIN ActivityLabelAssignment la ON la.activity_id = r.activity_id
+        SQL);
+
+        // Drop the original labels on the activity.
+        $this->addSql('ALTER TABLE ActivityLabelAssignment DROP FOREIGN KEY `FK_131965B847A3B8A4`');
+        $this->addSql('ALTER TABLE ActivityLabelAssignment DROP FOREIGN KEY `FK_131965B881C06096`');
+        $this->addSql('DROP TABLE ActivityLabelAssignment');
+        $this->addSql('ALTER TABLE Activity DROP FOREIGN KEY `FK_55026B0C979B1AD6`');
+        $this->addSql('ALTER TABLE Activity DROP FOREIGN KEY `FK_55026B0CE4445171`');
+        $this->addSql('DROP INDEX IDX_55026B0CE4445171 ON Activity');
+        $this->addSql('DROP INDEX IDX_55026B0C979B1AD6 ON Activity');
+        $this->addSql('ALTER TABLE Activity DROP organ_id, DROP company_id');
+
+        // Vacancy labels: the same move but onto VacancyRevision.
+        $this->addSql('CREATE TABLE VacancyRevisionLabelAssignment (vacancyrevision_id INT NOT NULL, vacancylabel_id INT NOT NULL, INDEX IDX_E72E458B84E1C68C (vacancyrevision_id), INDEX IDX_E72E458BD0807282 (vacancylabel_id), PRIMARY KEY (vacancyrevision_id, vacancylabel_id)) DEFAULT CHARACTER SET utf8mb4');
+        $this->addSql('ALTER TABLE VacancyRevisionLabelAssignment ADD CONSTRAINT FK_E72E458B84E1C68C FOREIGN KEY (vacancyrevision_id) REFERENCES VacancyRevision (id) ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE VacancyRevisionLabelAssignment ADD CONSTRAINT FK_E72E458BD0807282 FOREIGN KEY (vacancylabel_id) REFERENCES VacancyLabel (id) ON DELETE CASCADE');
+        $this->addSql(<<<'SQL'
+            INSERT INTO VacancyRevisionLabelAssignment (vacancyrevision_id, vacancylabel_id)
+            SELECT r.id, la.vacancylabel_id
+            FROM VacancyRevision r
+            JOIN VacancyLabelAssignment la ON la.vacancy_id = r.vacancy_id
+        SQL);
+        $this->addSql('ALTER TABLE VacancyLabelAssignment DROP FOREIGN KEY `FK_238B465E433B78C4`');
+        $this->addSql('ALTER TABLE VacancyLabelAssignment DROP FOREIGN KEY `FK_238B465ED0807282`');
+        $this->addSql('DROP TABLE VacancyLabelAssignment');
+
+        // ── Version20260530194212: Make revision comment authors users (or company users) instead of members.
+        // Re-point author_id (Member -> User), make it nullable, and add the company-user author column to each
+        // concrete revision-comment table (the fields live on the AbstractRevisionComment mapped superclass).
+        $this->addSql('ALTER TABLE ActivityRevisionComment DROP FOREIGN KEY `FK_DEE0948DF675F31B`');
+        $this->addSql('ALTER TABLE ActivityRevisionComment ADD authorCompanyUser_id INT DEFAULT NULL, CHANGE author_id author_id INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE ActivityRevisionComment ADD CONSTRAINT FK_DEE0948DF675F31B FOREIGN KEY (author_id) REFERENCES User (lidnr)');
+        $this->addSql('ALTER TABLE ActivityRevisionComment ADD CONSTRAINT FK_DEE0948DFD16CEE4 FOREIGN KEY (authorCompanyUser_id) REFERENCES CompanyUser (id)');
+        $this->addSql('CREATE INDEX IDX_DEE0948DFD16CEE4 ON ActivityRevisionComment (authorCompanyUser_id)');
+        $this->addSql('ALTER TABLE CompanyRevisionComment DROP FOREIGN KEY `FK_E65AF115F675F31B`');
+        $this->addSql('ALTER TABLE CompanyRevisionComment ADD authorCompanyUser_id INT DEFAULT NULL, CHANGE author_id author_id INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE CompanyRevisionComment ADD CONSTRAINT FK_E65AF115F675F31B FOREIGN KEY (author_id) REFERENCES User (lidnr)');
+        $this->addSql('ALTER TABLE CompanyRevisionComment ADD CONSTRAINT FK_E65AF115FD16CEE4 FOREIGN KEY (authorCompanyUser_id) REFERENCES CompanyUser (id)');
+        $this->addSql('CREATE INDEX IDX_E65AF115FD16CEE4 ON CompanyRevisionComment (authorCompanyUser_id)');
+        $this->addSql('ALTER TABLE VacancyRevisionComment DROP FOREIGN KEY `FK_EE72B76BF675F31B`');
+        $this->addSql('ALTER TABLE VacancyRevisionComment ADD authorCompanyUser_id INT DEFAULT NULL, CHANGE author_id author_id INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE VacancyRevisionComment ADD CONSTRAINT FK_EE72B76BF675F31B FOREIGN KEY (author_id) REFERENCES User (lidnr)');
+        $this->addSql('ALTER TABLE VacancyRevisionComment ADD CONSTRAINT FK_EE72B76BFD16CEE4 FOREIGN KEY (authorCompanyUser_id) REFERENCES CompanyUser (id)');
+        $this->addSql('CREATE INDEX IDX_EE72B76BFD16CEE4 ON VacancyRevisionComment (authorCompanyUser_id)');
+
+        // ── Version20260531184301: Add the EditLock table and version + last-editor columns to the revision tables.
+        $this->addSql('CREATE TABLE EditLock (resourceId VARCHAR(32) NOT NULL, resourceKey INT NOT NULL, acquiredAt DATETIME NOT NULL, lastPingAt DATETIME NOT NULL, id INT AUTO_INCREMENT NOT NULL, lockedBy_id INT DEFAULT NULL, lockedByCompanyUser_id INT DEFAULT NULL, INDEX IDX_5EF688A71E253D71 (lockedBy_id), INDEX IDX_5EF688A7B7C41E8 (lockedByCompanyUser_id), UNIQUE INDEX edit_lock_resource_uniq (resourceId, resourceKey), PRIMARY KEY (id)) DEFAULT CHARACTER SET utf8mb4');
+        $this->addSql('ALTER TABLE EditLock ADD CONSTRAINT FK_5EF688A71E253D71 FOREIGN KEY (lockedBy_id) REFERENCES User (lidnr)');
+        $this->addSql('ALTER TABLE EditLock ADD CONSTRAINT FK_5EF688A7B7C41E8 FOREIGN KEY (lockedByCompanyUser_id) REFERENCES CompanyUser (id)');
+        $this->addSql('ALTER TABLE ActivityRevision ADD version INT DEFAULT 1 NOT NULL, ADD lastEditedBy_id INT DEFAULT NULL, ADD lastEditedByCompanyUser_id INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE ActivityRevision ADD CONSTRAINT FK_F7309B7AA19E445F FOREIGN KEY (lastEditedBy_id) REFERENCES User (lidnr)');
+        $this->addSql('ALTER TABLE ActivityRevision ADD CONSTRAINT FK_F7309B7A102DD120 FOREIGN KEY (lastEditedByCompanyUser_id) REFERENCES CompanyUser (id)');
+        $this->addSql('CREATE INDEX IDX_F7309B7AA19E445F ON ActivityRevision (lastEditedBy_id)');
+        $this->addSql('CREATE INDEX IDX_F7309B7A102DD120 ON ActivityRevision (lastEditedByCompanyUser_id)');
+        $this->addSql('ALTER TABLE CompanyRevision ADD version INT DEFAULT 1 NOT NULL, ADD lastEditedBy_id INT DEFAULT NULL, ADD lastEditedByCompanyUser_id INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE CompanyRevision ADD CONSTRAINT FK_48CAB2AEA19E445F FOREIGN KEY (lastEditedBy_id) REFERENCES User (lidnr)');
+        $this->addSql('ALTER TABLE CompanyRevision ADD CONSTRAINT FK_48CAB2AE102DD120 FOREIGN KEY (lastEditedByCompanyUser_id) REFERENCES CompanyUser (id)');
+        $this->addSql('CREATE INDEX IDX_48CAB2AEA19E445F ON CompanyRevision (lastEditedBy_id)');
+        $this->addSql('CREATE INDEX IDX_48CAB2AE102DD120 ON CompanyRevision (lastEditedByCompanyUser_id)');
+        $this->addSql('ALTER TABLE VacancyRevision ADD version INT DEFAULT 1 NOT NULL, ADD lastEditedBy_id INT DEFAULT NULL, ADD lastEditedByCompanyUser_id INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE VacancyRevision ADD CONSTRAINT FK_FFE914BFA19E445F FOREIGN KEY (lastEditedBy_id) REFERENCES User (lidnr)');
+        $this->addSql('ALTER TABLE VacancyRevision ADD CONSTRAINT FK_FFE914BF102DD120 FOREIGN KEY (lastEditedByCompanyUser_id) REFERENCES CompanyUser (id)');
+        $this->addSql('CREATE INDEX IDX_FFE914BFA19E445F ON VacancyRevision (lastEditedBy_id)');
+        $this->addSql('CREATE INDEX IDX_FFE914BF102DD120 ON VacancyRevision (lastEditedByCompanyUser_id)');
+
+        // ── Version20260602175007: Add the activity revision edit audit trail.
+        $this->addSql('CREATE TABLE ActivityRevisionEdit (editedAt DATETIME NOT NULL, changedFields JSON NOT NULL, id INT AUTO_INCREMENT NOT NULL, revision_id INT NOT NULL, editor_id INT NOT NULL, INDEX IDX_285C37811DFA7C8F (revision_id), INDEX IDX_285C37816995AC4C (editor_id), PRIMARY KEY (id)) DEFAULT CHARACTER SET utf8mb4');
+        $this->addSql('ALTER TABLE ActivityRevisionEdit ADD CONSTRAINT FK_285C37811DFA7C8F FOREIGN KEY (revision_id) REFERENCES ActivityRevision (id)');
+        $this->addSql('ALTER TABLE ActivityRevisionEdit ADD CONSTRAINT FK_285C37816995AC4C FOREIGN KEY (editor_id) REFERENCES User (lidnr)');
+
+        // ── Version20260606170538: Add the numeric capacity of a (limited-capacity) sign-up list.
+        // The maximum number of admitted sign-ups for a limited-capacity list; null when unlimited.
+        $this->addSql('ALTER TABLE SignupList ADD capacity INT DEFAULT NULL');
+
+        // ── Version20260606184222: Record when a sign-up list draw was performed and by which board member (the draw lock + audit).
+        // drawnAt (non-null = the draw is locked) and drawnBy (the board member who performed it).
+        $this->addSql('ALTER TABLE SignupList ADD drawnAt DATETIME DEFAULT NULL, ADD drawnBy_id INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE SignupList ADD CONSTRAINT FK_274D085F4FA7FF98 FOREIGN KEY (drawnBy_id) REFERENCES Member (lidnr)');
+        $this->addSql('CREATE INDEX IDX_274D085F4FA7FF98 ON SignupList (drawnBy_id)');
+
+        // ── Version20260606184826: Add allocationMethod and its per-method settings to SignupList.
+        // Add the columns nullable, backfill existing rows with the defaults, then enforce NOT NULL where required, so
+        // the change is safe on a table that already holds sign-up lists.
+        $this->addSql('ALTER TABLE SignupList ADD allocationMethod VARCHAR(255) DEFAULT NULL, ADD drawCutoffRule VARCHAR(255) DEFAULT NULL, ADD drawCutoffAt DATETIME DEFAULT NULL, ADD drawAfterDurationHours INT DEFAULT NULL, ADD externalPolicyUrl VARCHAR(255) DEFAULT NULL, ADD externalForceOrdering TINYINT DEFAULT NULL, ADD externalPaymentByExternal TINYINT DEFAULT NULL, ADD customMethodDescription LONGTEXT DEFAULT NULL');
+        $this->addSql('UPDATE SignupList SET allocationMethod = \'first-come-first-served\', externalForceOrdering = 0, externalPaymentByExternal = 0');
+        $this->addSql('ALTER TABLE SignupList CHANGE allocationMethod allocationMethod VARCHAR(255) NOT NULL, CHANGE externalForceOrdering externalForceOrdering TINYINT NOT NULL, CHANGE externalPaymentByExternal externalPaymentByExternal TINYINT NOT NULL');
+
+        // ── Version20260607180918: Add external sign-up email verification tokens and a policy-agreement timestamp on sign-ups.
+        // this up() migration is auto-generated, please modify it to your needs
+        $this->addSql('CREATE TABLE ExternalSignupVerification (purpose VARCHAR(255) NOT NULL, selector VARCHAR(255) NOT NULL, hashedToken VARCHAR(255) NOT NULL, expiresAt DATETIME NOT NULL, id INT AUTO_INCREMENT NOT NULL, external_signup_id INT NOT NULL, INDEX IDX_D55257277B3A307A (external_signup_id), INDEX IDX_external_signup_verification_selector (selector), PRIMARY KEY (id)) DEFAULT CHARACTER SET utf8mb4');
+        $this->addSql('ALTER TABLE ExternalSignupVerification ADD CONSTRAINT FK_D55257277B3A307A FOREIGN KEY (external_signup_id) REFERENCES Signup (id) ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE Signup ADD agreedToPolicyAt DATETIME DEFAULT NULL');
     }
 
     public function down(Schema $schema): void
     {
+        // ── Version20260607180918: Add external sign-up email verification tokens and a policy-agreement timestamp on sign-ups. (reverse)
+        // this down() migration is auto-generated, please modify it to your needs
+        $this->addSql('ALTER TABLE ExternalSignupVerification DROP FOREIGN KEY FK_D55257277B3A307A');
+        $this->addSql('DROP TABLE ExternalSignupVerification');
+        $this->addSql('ALTER TABLE Signup DROP agreedToPolicyAt');
+
+        // ── Version20260606184826: Add allocationMethod and its per-method settings to SignupList. (reverse)
+        $this->addSql('ALTER TABLE SignupList DROP allocationMethod, DROP drawCutoffRule, DROP drawCutoffAt, DROP drawAfterDurationHours, DROP externalPolicyUrl, DROP externalForceOrdering, DROP externalPaymentByExternal, DROP customMethodDescription');
+
+        // ── Version20260606184222: Record when a sign-up list draw was performed and by which board member (the draw lock + audit). (reverse)
+        $this->addSql('ALTER TABLE SignupList DROP FOREIGN KEY FK_274D085F4FA7FF98');
+        $this->addSql('DROP INDEX IDX_274D085F4FA7FF98 ON SignupList');
+        $this->addSql('ALTER TABLE SignupList DROP drawnAt, DROP drawnBy_id');
+
+        // ── Version20260606170538: Add the numeric capacity of a (limited-capacity) sign-up list. (reverse)
+        $this->addSql('ALTER TABLE SignupList DROP capacity');
+
+        // ── Version20260602175007: Add the activity revision edit audit trail. (reverse)
+        $this->addSql('ALTER TABLE ActivityRevisionEdit DROP FOREIGN KEY FK_285C37811DFA7C8F');
+        $this->addSql('ALTER TABLE ActivityRevisionEdit DROP FOREIGN KEY FK_285C37816995AC4C');
+        $this->addSql('DROP TABLE ActivityRevisionEdit');
+
+        // ── Version20260531184301: Add the EditLock table and version + last-editor columns to the revision tables. (reverse)
+        $this->addSql('ALTER TABLE EditLock DROP FOREIGN KEY FK_5EF688A71E253D71');
+        $this->addSql('ALTER TABLE EditLock DROP FOREIGN KEY FK_5EF688A7B7C41E8');
+        $this->addSql('DROP TABLE EditLock');
+        $this->addSql('ALTER TABLE ActivityRevision DROP FOREIGN KEY FK_F7309B7AA19E445F');
+        $this->addSql('ALTER TABLE ActivityRevision DROP FOREIGN KEY FK_F7309B7A102DD120');
+        $this->addSql('DROP INDEX IDX_F7309B7AA19E445F ON ActivityRevision');
+        $this->addSql('DROP INDEX IDX_F7309B7A102DD120 ON ActivityRevision');
+        $this->addSql('ALTER TABLE ActivityRevision DROP version, DROP lastEditedBy_id, DROP lastEditedByCompanyUser_id');
+        $this->addSql('ALTER TABLE CompanyRevision DROP FOREIGN KEY FK_48CAB2AEA19E445F');
+        $this->addSql('ALTER TABLE CompanyRevision DROP FOREIGN KEY FK_48CAB2AE102DD120');
+        $this->addSql('DROP INDEX IDX_48CAB2AEA19E445F ON CompanyRevision');
+        $this->addSql('DROP INDEX IDX_48CAB2AE102DD120 ON CompanyRevision');
+        $this->addSql('ALTER TABLE CompanyRevision DROP version, DROP lastEditedBy_id, DROP lastEditedByCompanyUser_id');
+        $this->addSql('ALTER TABLE VacancyRevision DROP FOREIGN KEY FK_FFE914BFA19E445F');
+        $this->addSql('ALTER TABLE VacancyRevision DROP FOREIGN KEY FK_FFE914BF102DD120');
+        $this->addSql('DROP INDEX IDX_FFE914BFA19E445F ON VacancyRevision');
+        $this->addSql('DROP INDEX IDX_FFE914BF102DD120 ON VacancyRevision');
+        $this->addSql('ALTER TABLE VacancyRevision DROP version, DROP lastEditedBy_id, DROP lastEditedByCompanyUser_id');
+
+        // ── Version20260530194212: Make revision comment authors users (or company users) instead of members. (reverse)
+        // Restore the company-user-less, member-anchored author on each comment table.
+        $this->addSql('ALTER TABLE ActivityRevisionComment DROP FOREIGN KEY FK_DEE0948DF675F31B');
+        $this->addSql('ALTER TABLE ActivityRevisionComment DROP FOREIGN KEY FK_DEE0948DFD16CEE4');
+        $this->addSql('DROP INDEX IDX_DEE0948DFD16CEE4 ON ActivityRevisionComment');
+        $this->addSql('ALTER TABLE ActivityRevisionComment DROP authorCompanyUser_id, CHANGE author_id author_id INT NOT NULL');
+        $this->addSql('ALTER TABLE ActivityRevisionComment ADD CONSTRAINT `FK_DEE0948DF675F31B` FOREIGN KEY (author_id) REFERENCES Member (lidnr)');
+        $this->addSql('ALTER TABLE CompanyRevisionComment DROP FOREIGN KEY FK_E65AF115F675F31B');
+        $this->addSql('ALTER TABLE CompanyRevisionComment DROP FOREIGN KEY FK_E65AF115FD16CEE4');
+        $this->addSql('DROP INDEX IDX_E65AF115FD16CEE4 ON CompanyRevisionComment');
+        $this->addSql('ALTER TABLE CompanyRevisionComment DROP authorCompanyUser_id, CHANGE author_id author_id INT NOT NULL');
+        $this->addSql('ALTER TABLE CompanyRevisionComment ADD CONSTRAINT `FK_E65AF115F675F31B` FOREIGN KEY (author_id) REFERENCES Member (lidnr)');
+        $this->addSql('ALTER TABLE VacancyRevisionComment DROP FOREIGN KEY FK_EE72B76BF675F31B');
+        $this->addSql('ALTER TABLE VacancyRevisionComment DROP FOREIGN KEY FK_EE72B76BFD16CEE4');
+        $this->addSql('DROP INDEX IDX_EE72B76BFD16CEE4 ON VacancyRevisionComment');
+        $this->addSql('ALTER TABLE VacancyRevisionComment DROP authorCompanyUser_id, CHANGE author_id author_id INT NOT NULL');
+        $this->addSql('ALTER TABLE VacancyRevisionComment ADD CONSTRAINT `FK_EE72B76BF675F31B` FOREIGN KEY (author_id) REFERENCES Member (lidnr)');
+
+        // ── Version20260530192012: Move organ/company/labels onto the activity revision and labels onto the vacancy revision. (reverse)
+        // Vacancy labels: restore the table, backfill from the display revision, drop the new table.
+        $this->addSql('CREATE TABLE VacancyLabelAssignment (vacancy_id INT NOT NULL, vacancylabel_id INT NOT NULL, INDEX IDX_238B465E433B78C4 (vacancy_id), INDEX IDX_238B465ED0807282 (vacancylabel_id), PRIMARY KEY (vacancy_id, vacancylabel_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_uca1400_ai_ci` ENGINE = InnoDB COMMENT = \'\'');
+        $this->addSql('ALTER TABLE VacancyLabelAssignment ADD CONSTRAINT `FK_238B465E433B78C4` FOREIGN KEY (vacancy_id) REFERENCES Vacancy (id) ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE VacancyLabelAssignment ADD CONSTRAINT `FK_238B465ED0807282` FOREIGN KEY (vacancylabel_id) REFERENCES VacancyLabel (id) ON DELETE CASCADE');
+        $this->addSql(<<<'SQL'
+            INSERT INTO VacancyLabelAssignment (vacancy_id, vacancylabel_id)
+            SELECT v.id, ra.vacancylabel_id
+            FROM Vacancy v
+            JOIN VacancyRevisionLabelAssignment ra
+                ON ra.vacancyrevision_id = COALESCE(v.liveRevision_id, v.currentRevision_id)
+        SQL);
+        $this->addSql('ALTER TABLE VacancyRevisionLabelAssignment DROP FOREIGN KEY FK_E72E458B84E1C68C');
+        $this->addSql('ALTER TABLE VacancyRevisionLabelAssignment DROP FOREIGN KEY FK_E72E458BD0807282');
+        $this->addSql('DROP TABLE VacancyRevisionLabelAssignment');
+
+        // Do the same, but for activities.
+        $this->addSql('CREATE TABLE ActivityLabelAssignment (activity_id INT NOT NULL, activitylabel_id INT NOT NULL, INDEX IDX_131965B847A3B8A4 (activitylabel_id), INDEX IDX_131965B881C06096 (activity_id), PRIMARY KEY (activity_id, activitylabel_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_uca1400_ai_ci` ENGINE = InnoDB COMMENT = \'\'');
+        $this->addSql('ALTER TABLE ActivityLabelAssignment ADD CONSTRAINT `FK_131965B847A3B8A4` FOREIGN KEY (activitylabel_id) REFERENCES ActivityLabel (id) ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE ActivityLabelAssignment ADD CONSTRAINT `FK_131965B881C06096` FOREIGN KEY (activity_id) REFERENCES Activity (id) ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE Activity ADD organ_id INT DEFAULT NULL, ADD company_id INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE Activity ADD CONSTRAINT `FK_55026B0C979B1AD6` FOREIGN KEY (company_id) REFERENCES Company (id)');
+        $this->addSql('ALTER TABLE Activity ADD CONSTRAINT `FK_55026B0CE4445171` FOREIGN KEY (organ_id) REFERENCES Organ (id)');
+        $this->addSql('CREATE INDEX IDX_55026B0CE4445171 ON Activity (organ_id)');
+        $this->addSql('CREATE INDEX IDX_55026B0C979B1AD6 ON Activity (company_id)');
+
+        // Backfill the activity from its display revision (the live one, else the working head).
+        $this->addSql(<<<'SQL'
+            UPDATE Activity a
+            JOIN ActivityRevision r ON r.id = COALESCE(a.liveRevision_id, a.currentRevision_id)
+            SET a.organ_id = r.organ_id,
+                a.company_id = r.company_id
+        SQL);
+        $this->addSql(<<<'SQL'
+            INSERT INTO ActivityLabelAssignment (activity_id, activitylabel_id)
+            SELECT a.id, ra.activitylabel_id
+            FROM Activity a
+            JOIN ActivityRevisionLabelAssignment ra
+                ON ra.activityrevision_id = COALESCE(a.liveRevision_id, a.currentRevision_id)
+        SQL);
+
+        // Drop the revision-scoped columns/table.
+        $this->addSql('ALTER TABLE ActivityRevisionLabelAssignment DROP FOREIGN KEY FK_AD4B45A22B53B2FF');
+        $this->addSql('ALTER TABLE ActivityRevisionLabelAssignment DROP FOREIGN KEY FK_AD4B45A247A3B8A4');
+        $this->addSql('DROP TABLE ActivityRevisionLabelAssignment');
+        $this->addSql('ALTER TABLE ActivityRevision DROP FOREIGN KEY FK_F7309B7AE4445171');
+        $this->addSql('ALTER TABLE ActivityRevision DROP FOREIGN KEY FK_F7309B7A979B1AD6');
+        $this->addSql('DROP INDEX IDX_F7309B7AE4445171 ON ActivityRevision');
+        $this->addSql('DROP INDEX IDX_F7309B7A979B1AD6 ON ActivityRevision');
+        $this->addSql('ALTER TABLE ActivityRevision DROP organ_id, DROP company_id');
+
+        // ── Version20260530112824: Move sign-up lists from the activity onto the activity revision. (reverse)
+        // Reattach each list to the activity its owning revision belongs to, then restore the original column/FK.
+        // Best-effort (as with the prior revision-split migration's down()): an activity with several revisions holds
+        // a clone of each list per revision, so all clones reattach to the same activity_id and the rolled-back legacy
+        // schema ends up with duplicate lists per logical list. Deleting the extras here would orphan their child rows.
+        $this->addSql('ALTER TABLE SignupList DROP FOREIGN KEY FK_274D085F13741683');
+        $this->addSql('DROP INDEX IDX_274D085F13741683 ON SignupList');
+        $this->addSql('DROP INDEX signup_list_revision_lineage_uniq ON SignupList');
+        $this->addSql('ALTER TABLE SignupList ADD activity_id INT DEFAULT NULL');
+        $this->addSql(<<<'SQL'
+            UPDATE SignupList sl
+            JOIN ActivityRevision r ON sl.activity_revision_id = r.id
+            SET sl.activity_id = r.activity_id
+            SQL);
+        $this->addSql('ALTER TABLE SignupList DROP lineageId, DROP activity_revision_id');
+        $this->addSql('ALTER TABLE SignupList CHANGE activity_id activity_id INT NOT NULL');
+        $this->addSql('ALTER TABLE SignupList ADD CONSTRAINT `FK_274D085F81C06096` FOREIGN KEY (activity_id) REFERENCES Activity (id)');
+        $this->addSql('CREATE INDEX IDX_274D085F81C06096 ON SignupList (activity_id)');
+
+        // ── Version20260529150000: Revision/approval workflow for activities + careers (split aggregates, Job->Vacancy rename, dual-actor authorship). GH-2067. (reverse)
         // Recreate the ApprovableText table
         $this->addSql('CREATE TABLE ApprovableText (id INT AUTO_INCREMENT NOT NULL, message VARCHAR(255) CHARACTER SET utf8mb4 NOT NULL COLLATE `utf8mb4_uca1400_ai_ci`, PRIMARY KEY (id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_uca1400_ai_ci` ENGINE = InnoDB COMMENT = \'\' ');
+
+        // Recreate the ActivityUpdateProposal table (dropped in up() when activities moved to the revision model)
+        $this->addSql('CREATE TABLE ActivityUpdateProposal (id INT AUTO_INCREMENT NOT NULL, old_id INT NOT NULL, new_id INT NOT NULL, INDEX IDX_9E136D5139E6FA16 (old_id), INDEX IDX_9E136D51BD06B3B3 (new_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_uca1400_ai_ci` ENGINE = InnoDB');
+        $this->addSql('ALTER TABLE ActivityUpdateProposal ADD CONSTRAINT FK_9E136D5139E6FA16 FOREIGN KEY (old_id) REFERENCES Activity (id)');
+        $this->addSql('ALTER TABLE ActivityUpdateProposal ADD CONSTRAINT FK_9E136D51BD06B3B3 FOREIGN KEY (new_id) REFERENCES Activity (id)');
 
         // Career: collapse Vacancy + Company revisions back onto the aggregates
         $this->addSql('CREATE TABLE CompanyUpdate (id INT AUTO_INCREMENT NOT NULL, original_id INT NOT NULL, proposal_id INT NOT NULL, INDEX IDX_E13E3542108B7592 (original_id), UNIQUE INDEX UNIQ_E13E3542F4792058 (proposal_id), PRIMARY KEY (id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_uca1400_ai_ci` ENGINE = InnoDB COMMENT = \'\' ');
