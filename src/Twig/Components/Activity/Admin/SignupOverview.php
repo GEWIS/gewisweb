@@ -755,6 +755,9 @@ final class SignupOverview
             ),
         );
 
+        // Clear the composer so a reopened one starts blank.
+        $this->emailSubject = '';
+        $this->emailBody = '';
         $this->composingListId = null;
     }
 

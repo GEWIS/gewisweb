@@ -134,7 +134,7 @@
                                 {{ form_row(form.currentRevision.name.valueNL, {'label': 'Name'|trans, 'attr': {'data-localised-fields-target': 'dutch'}}) }}
                                 {{ form_row(form.currentRevision.location.valueNL, {'label': 'Location'|trans, 'attr': {'data-localised-fields-target': 'dutch'}}) }}
                                 {{ form_row(form.currentRevision.costs.valueNL, {'label': 'Costs'|trans, 'attr': {'data-localised-fields-target': 'dutch'}}) }}
-                                {{ form_row(form.currentRevision.description.valueNL, {'label': 'Description'|trans, 'attr': {'data-localised-fields-target': 'dutch'}}) }}
+                                {{ form_row(form.currentRevision.description.valueNL, {'label': 'Description'|trans, 'attr': {'data-localised-fields-target': 'dutch', 'data-controller': 'markdown-editor', 'data-markdown-editor-language-value': app.request.locale}}) }}
                             </div>
                             <div class="col-md-6">
                                 {{ form_row(form.currentRevision.languageEnglish, {
@@ -149,7 +149,7 @@
                                 {{ form_row(form.currentRevision.name.valueEN, {'label': 'Name'|trans, 'attr': {'data-localised-fields-target': 'english'}}) }}
                                 {{ form_row(form.currentRevision.location.valueEN, {'label': 'Location'|trans, 'attr': {'data-localised-fields-target': 'english'}}) }}
                                 {{ form_row(form.currentRevision.costs.valueEN, {'label': 'Costs'|trans, 'attr': {'data-localised-fields-target': 'english'}}) }}
-                                {{ form_row(form.currentRevision.description.valueEN, {'label': 'Description'|trans, 'attr': {'data-localised-fields-target': 'english'}}) }}
+                                {{ form_row(form.currentRevision.description.valueEN, {'label': 'Description'|trans, 'attr': {'data-localised-fields-target': 'english', 'data-controller': 'markdown-editor', 'data-markdown-editor-language-value': app.request.locale}}) }}
                             </div>
                         </div>
                     </div>

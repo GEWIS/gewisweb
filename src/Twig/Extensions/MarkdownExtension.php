@@ -8,7 +8,11 @@ use App\CommonMark\NoImage\NoImageExtension;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\Autolink\AutolinkExtension;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+use League\CommonMark\Extension\DefaultAttributes\DefaultAttributesExtension;
 use League\CommonMark\Extension\ExternalLink\ExternalLinkExtension;
+use League\CommonMark\Extension\Strikethrough\StrikethroughExtension;
+use League\CommonMark\Extension\Table\Table;
+use League\CommonMark\Extension\Table\TableExtension;
 use League\CommonMark\MarkdownConverter;
 use Override;
 use Twig\Extension\AbstractExtension;
@@ -100,10 +104,21 @@ final class MarkdownExtension extends AbstractExtension
                 'noopener' => 'external',
                 'noreferrer' => 'external',
             ],
+            // Bootstrap-styled tables (as before): every rendered <table> gets these classes.
+            'default_attributes' => [
+                Table::class => [
+                    'class' => 'table table-bordered',
+                ],
+            ],
         ]);
         $environment->addExtension(new CommonMarkCoreExtension());
         $environment->addExtension(new AutolinkExtension());
         $environment->addExtension(new ExternalLinkExtension());
+        // GFM tables and strikethrough: rendered to match the editor's toolbar (the on-site description uses them;
+        // the restricted-tag variants simply strip what they do not list).
+        $environment->addExtension(new StrikethroughExtension());
+        $environment->addExtension(new TableExtension());
+        $environment->addExtension(new DefaultAttributesExtension());
         $environment->addExtension(new NoImageExtension());
 
         return $this->converter = new MarkdownConverter($environment);

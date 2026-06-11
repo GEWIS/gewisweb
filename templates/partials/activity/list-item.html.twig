@@ -30,7 +30,7 @@
          data-description-toggle-more-value="{{ 'Show more'|trans }}"
          data-description-toggle-less-value="{{ 'Show less'|trans }}">
         <div class="activity-description-content" data-description-toggle-target="content">
-            {{ activity.getDescription|localise_text|markdown(['p', 'del', 'em', 'strong', 'a']) }}
+            {{ activity.getDescription|localise_text|markdown(['p', 'br', 'strong', 'em', 'del', 'a', 'ul', 'ol', 'li']) }}
         </div>
         <button type="button" class="btn btn-link btn-sm p-0 d-none"
                 data-description-toggle-target="button"

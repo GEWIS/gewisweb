@@ -2,6 +2,11 @@
 
 {% block page_title %}{{ 'Create Activity'|trans|page_title }}{{ 'Activities'|trans|page_title }}{{ parent() }}{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/ckeditor5/ckeditor5.css') }}">
+{% endblock %}
+
 {% block admin_breadcrumbs %}
     <li class="breadcrumb-item active" aria-current="page">
         <a href="{{ path('admin/activities/index') }}">

@@ -298,10 +298,15 @@
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                <div class="form-floating">
+                                {# data-live-ignore: the markdown-editor controller injects its own DOM here; keep the
+                                   component's re-render/morph from destroying or duplicating it. #}
+                                <div class="form-floating" data-live-ignore>
                                     {# Floating-label textareas need an explicit height (rows is ignored once floating). #}
                                     <textarea class="form-control" id="email-body-{{ list.listId }}" required
                                               placeholder="{{ 'Message'|trans }}" style="height: 160px;"
+                                              data-controller="markdown-editor"
+                                              data-markdown-editor-toolbar-value="minimal"
+                                              data-markdown-editor-language-value="{{ app.request.locale }}"
                                               data-model="norender|emailBody">{{ emailBody }}</textarea>
                                     <label for="email-body-{{ list.listId }}">{{ 'Message'|trans }} <span class="text-danger" aria-hidden="true">*</span></label>
                                 </div>

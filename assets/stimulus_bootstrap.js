@@ -9,6 +9,7 @@ import FormStepperController from './controllers/application/form_stepper_contro
 import InfiniteScrollController from './controllers/application/infinite_scroll_controller.ts';
 import LabelChipsController from './controllers/application/label_chips_controller.ts';
 import LocalisedFieldsController from './controllers/application/localised_fields_controller.ts';
+import MarkdownEditorController from './controllers/application/markdown_editor_controller.ts';
 import ModalCloseController from './controllers/application/modal_close_controller.ts';
 import ModalFormTargetController from './controllers/application/modal_form_target_controller.ts';
 import PrintController from './controllers/application/print_controller.ts';
@@ -31,6 +32,7 @@ app.register('form-stepper', FormStepperController);
 app.register('infinite-scroll', InfiniteScrollController);
 app.register('label-chips', LabelChipsController);
 app.register('localised-fields', LocalisedFieldsController);
+app.register('markdown-editor', MarkdownEditorController);
 app.register('modal-close', ModalCloseController);
 app.register('modal-form-target', ModalFormTargetController);
 app.register('print', PrintController);

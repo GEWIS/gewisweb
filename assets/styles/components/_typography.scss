@@ -1,0 +1,17 @@
+blockquote {
+    --#{$prefix}blockquote-bg: #{$panel-bg};
+    --#{$prefix}blockquote-border-color: #{$panel-border-color};
+
+    background: var(--#{$prefix}blockquote-bg);
+    border-left: 0.5rem solid var(--#{$prefix}blockquote-border-color);
+    margin: 0.75rem 0;
+    padding: 0.5rem;
+    quotes: initial;
+}
+
+@include color-mode(gewis-night) {
+    blockquote {
+        --#{$prefix}blockquote-bg: var(--#{$prefix}secondary-bg);
+        --#{$prefix}blockquote-border-color: var(--#{$prefix}border-color);
+    }
+}
