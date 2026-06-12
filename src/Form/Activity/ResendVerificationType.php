@@ -35,13 +35,13 @@ class ResendVerificationType extends AbstractType
                 'email',
                 EmailType::class,
                 [
-                    'label' => t('E-mail address'),
+                    'label' => t('Email address'),
                     'constraints' => [
-                        new NotBlank(message: 'Enter an e-mail address.'),
-                        new Email(message: 'Enter a valid e-mail address.'),
+                        new NotBlank(message: 'Enter an email address.'),
+                        new Email(message: 'Enter a valid email address.'),
                         new Length(
                             max: 255,
-                            maxMessage: 'The e-mail address may not be longer than {{ limit }} characters.',
+                            maxMessage: 'The email address may not be longer than {{ limit }} characters.',
                         ),
                     ],
                 ],

@@ -535,7 +535,7 @@ class AdminController extends AbstractController
                 return $this->flashAndBackToSignups(
                     $activity,
                     AlertTypes::Warning->value,
-                    $this->translator->trans('Someone with this e-mail address is already signed up for this list.'),
+                    $this->translator->trans('Someone with this email address is already signed up for this list.'),
                 );
             }
 

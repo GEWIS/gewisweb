@@ -58,7 +58,7 @@ class ExternalSignupController extends AbstractController
 
         $this->addFlash(
             'success',
-            $this->translator->trans('Your sign-up is confirmed! We have e-mailed you a link to manage it.'),
+            $this->translator->trans('Your sign-up is confirmed! We have emailed you a link to manage it.'),
         );
 
         return $this->redirectToRoute(

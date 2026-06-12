@@ -33,17 +33,17 @@
         <source>Enter a valid URL (starting with http:// or https://).</source>
         <target>Enter a valid URL (starting with http:// or https://).</target>
       </trans-unit>
-      <trans-unit id=".b8V4j1" resname="Enter a valid e-mail address.">
-        <source>Enter a valid e-mail address.</source>
-        <target>Enter a valid e-mail address.</target>
+      <trans-unit id="pT0eJRh" resname="Enter a valid email address.">
+        <source>Enter a valid email address.</source>
+        <target></target>
       </trans-unit>
       <trans-unit id="8a1ZW3W" resname="Enter a value between {{ min }} and {{ max }}.">
         <source>Enter a value between {{ min }} and {{ max }}.</source>
         <target>Enter a value between {{ min }} and {{ max }}.</target>
       </trans-unit>
-      <trans-unit id="xta3Az_" resname="Enter an e-mail address.">
-        <source>Enter an e-mail address.</source>
-        <target>Enter an e-mail address.</target>
+      <trans-unit id="IoicRFz" resname="Enter an email address.">
+        <source>Enter an email address.</source>
+        <target></target>
       </trans-unit>
       <trans-unit id="vUFOGmp" resname="Enter an end date and time.">
         <source>Enter an end date and time.</source>
@@ -89,9 +89,9 @@
         <source>The activity must start in the future.</source>
         <target state="translated">The activity must start in the future.</target>
       </trans-unit>
-      <trans-unit id="TmZUGRA" resname="The e-mail address may not be longer than {{ limit }} characters.">
-        <source>The e-mail address may not be longer than {{ limit }} characters.</source>
-        <target>The e-mail address may not be longer than {{ limit }} characters.</target>
+      <trans-unit id="GrfPh7K" resname="The email address may not be longer than {{ limit }} characters.">
+        <source>The email address may not be longer than {{ limit }} characters.</source>
+        <target></target>
       </trans-unit>
       <trans-unit id="IMKkCvz" resname="The end time must be after the start time.">
         <source>The end time must be after the start time.</source>

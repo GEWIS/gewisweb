@@ -178,7 +178,7 @@ final class ExternalSignupForm
 
         $this->flash(
             'success',
-            $this->translator->trans('Almost there! Check your e-mail to confirm your sign-up.'),
+            $this->translator->trans('Almost there! Check your email to confirm your sign-up.'),
         );
 
         return new RedirectResponse(

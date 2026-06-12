@@ -233,9 +233,9 @@
         <source>Allocation method</source>
         <target>Toewijzingsmethode</target>
       </trans-unit>
-      <trans-unit id="taPikxw" resname="Almost there! Check your e-mail to confirm your sign-up.">
-        <source>Almost there! Check your e-mail to confirm your sign-up.</source>
-        <target>Bijna klaar! Controleer je e-mail om je inschrijving te bevestigen.</target>
+      <trans-unit id="q6XvAor" resname="Almost there! Check your email to confirm your sign-up.">
+        <source>Almost there! Check your email to confirm your sign-up.</source>
+        <target state="translated">Je bent er bijna! Kijk even in je e-mail om je aanmelding te bevestigen.</target>
       </trans-unit>
       <trans-unit id="3eX.3WJ" resname="Analytics are currently">
         <source>Analytics are currently</source>
@@ -673,10 +673,6 @@
         <source>Dutch</source>
         <target>Nederlands</target>
       </trans-unit>
-      <trans-unit id="USdJZXt" resname="E-mail address">
-        <source>E-mail address</source>
-        <target>E-mailadres</target>
-      </trans-unit>
       <trans-unit id="M.l1CPU" resname="Edit">
         <source>Edit</source>
         <target state="translated">Bewerken</target>
@@ -1017,9 +1013,9 @@
         <source>I saved them</source>
         <target state="translated">Ik heb ze bewaard</target>
       </trans-unit>
-      <trans-unit id="hCpHRRl" resname="If a pending sign-up exists for this e-mail address, we have sent a new confirmation link.">
-        <source>If a pending sign-up exists for this e-mail address, we have sent a new confirmation link.</source>
-        <target>Als er voor dit e-mailadres een nog niet bevestigde inschrijving bestaat, hebben we een nieuwe bevestigingslink verstuurd.</target>
+      <trans-unit id="jFs7gBY" resname="If a pending sign-up exists for this email address, we have sent a new confirmation link.">
+        <source>If a pending sign-up exists for this email address, we have sent a new confirmation link.</source>
+        <target state="translated">Als er een aanmelding in behandeling is voor dit e-mailadres, hebben we een nieuwe bevestigingslink gestuurd.</target>
       </trans-unit>
       <trans-unit id="9ZARzCI" resname="If there is an account associated with your email address, an email has just been sent containing a link that will allow you to reset your password. If you do not receive an email, please check your spam folder or try again later.">
         <source>If there is an account associated with your email address, an email has just been sent containing a link that will allow you to reset your password. If you do not receive an email, please check your spam folder or try again later.</source>
@@ -1997,9 +1993,9 @@
         <source>Someone is currently editing this activity.</source>
         <target state="translated">Iemand bewerkt deze activiteit op dit moment.</target>
       </trans-unit>
-      <trans-unit id="NBNMRBH" resname="Someone with this e-mail address is already signed up for this list.">
-        <source>Someone with this e-mail address is already signed up for this list.</source>
-        <target>Iemand met dit e-mailadres is al ingeschreven voor deze inschrijflijst.</target>
+      <trans-unit id="20ktwc_" resname="Someone with this email address is already signed up for this list.">
+        <source>Someone with this email address is already signed up for this list.</source>
+        <target state="translated">Er is al iemand met dit e-mailadres aangemeld voor deze lijst.</target>
       </trans-unit>
       <trans-unit id="U_RKQ4r" resname="Sports">
         <source>Sports</source>
@@ -2113,7 +2109,7 @@
         <source>That recipient group is not available for this sign-up list.</source>
         <target>Die ontvangersgroep is niet beschikbaar voor deze inschrijflijst.</target>
       </trans-unit>
-      <trans-unit id="hEahyeO" resname="The GEWIS website is open-source! Check out the repository on &lt;a href=&quot;https://github.com/GEWIS/gewisweb&quot; target=&quot;_blank&quot;&gt;&lt;span class=&quot;fab fa-github&quot;&gt;&lt;/span&gt;&amp;nbsp;GitHub&lt;/a&gt;. Or visit our &lt;a href=&quot;https://github.com/GEWIS&quot; target=&quot;_blank&quot;&gt;organisation&lt;/a&gt; for more of our awesome open-source projects.">
+      <trans-unit id="hEahyeO" resname="The GEWIS website is open-source! Check out the repository on &lt;a href=&quot;https://github.com/GEWIS/gewisweb&quot; target=&quot;_blank&quot;>&lt;span class=&quot;fab fa-github&quot;>&lt;/span>&amp;nbsp;GitHub&lt;/a>. Or visit our &lt;a href=&quot;https://github.com/GEWIS&quot; target=&quot;_blank&quot;>organisation&lt;/a> for more of our awesome open-source projects.">
         <source>The GEWIS website is open-source! Check out the repository on &lt;a href="https://github.com/GEWIS/gewisweb" target="_blank"&gt;&lt;span class="fab fa-github"&gt;&lt;/span&gt;&amp;nbsp;GitHub&lt;/a&gt;. Or visit our &lt;a href="https://github.com/GEWIS" target="_blank"&gt;organisation&lt;/a&gt; for more of our awesome open-source projects.</source>
         <target state="translated"><![CDATA[De GEWIS-website is open source! Bekijk de repository op <a href="https://github.com/GEWIS/gewisweb" target="_blank"><span class="fab fa-github"></span>&nbsp;GitHub</a>. Of bezoek onze <a href="https://github.com/GEWIS" target="_blank">organisatie</a> voor meer van onze geweldige open-sourceprojecten.]]></target>
       </trans-unit>
@@ -2397,7 +2393,7 @@
         <source>We are the same</source>
         <target state="translated">Wij zijn hetzelfde</target>
       </trans-unit>
-      <trans-unit id="jkUs8v1" resname="We found a pointer to &lt;code&gt;NULL&lt;/code&gt; instead of this page">
+      <trans-unit id="jkUs8v1" resname="We found a pointer to &lt;code>NULL&lt;/code> instead of this page">
         <source>We found a pointer to &lt;code&gt;NULL&lt;/code&gt; instead of this page</source>
         <target state="translated"><![CDATA[We hebben een verwijzing naar <code>NULL</code> gevonden in plaats van deze pagina]]></target>
       </trans-unit>
@@ -2529,9 +2525,9 @@
         <source>Your sign-up has been updated.</source>
         <target>Je inschrijving is bijgewerkt.</target>
       </trans-unit>
-      <trans-unit id="1sjQXa1" resname="Your sign-up is confirmed! We have e-mailed you a link to manage it.">
-        <source>Your sign-up is confirmed! We have e-mailed you a link to manage it.</source>
-        <target>Je inschrijving is bevestigd! We hebben je een link gemaild om deze te beheren.</target>
+      <trans-unit id="jz2Zqw5" resname="Your sign-up is confirmed! We have emailed you a link to manage it.">
+        <source>Your sign-up is confirmed! We have emailed you a link to manage it.</source>
+        <target state="translated">Je aanmelding is bevestigd! We hebben je een e-mail gestuurd met een link om je account te beheren.</target>
       </trans-unit>
       <trans-unit id="fb2caF1" resname="Your sign-up will be visible to all visitors of the website once you confirm it via the email we send you.">
         <source>Your sign-up will be visible to all visitors of the website once you confirm it via the email we send you.</source>

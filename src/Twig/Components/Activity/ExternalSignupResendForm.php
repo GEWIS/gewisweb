@@ -139,7 +139,7 @@ final class ExternalSignupResendForm
         $this->flash(
             'info',
             $this->translator->trans(
-                'If a pending sign-up exists for this e-mail address, we have sent a new confirmation link.',
+                'If a pending sign-up exists for this email address, we have sent a new confirmation link.',
             ),
         );
 
