@@ -304,6 +304,20 @@
         <aside class="col-md-3">
             <div class="panel p-3">
                 <h2 class="h5">{{ 'Actions'|trans }}</h2>
+                {% if activityPassed %}
+                    <div class="alert alert-warning small">
+                        {% if debutMissed %}
+                            {{ 'The start date of this activity has passed, so it can no longer be published. Move it to a future date before it can be submitted again.'|trans }}
+                        {% else %}
+                            {{ 'This activity has already taken place, so this revision can no longer be submitted or approved.'|trans }}
+                            {% if canDiscard %}
+                                {{ 'Discard this draft to return to the live version.'|trans }}
+                            {% else %}
+                                {{ 'Reject or close it to clear the queue.'|trans }}
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                {% endif %}
                 {% if migrationBlocked %}
                     <div class="alert alert-warning small">
                         {{ 'A sign-up list with existing sign-ups was changed in this revision, so the live sign-ups cannot be carried over and it can no longer be submitted or approved.'|trans }}

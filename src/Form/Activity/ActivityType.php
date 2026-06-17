@@ -93,7 +93,7 @@ class ActivityType extends AbstractType
             ));
         }
 
-        // Rule 2: end after start -- skipped while the schedule is locked.
+        // Rule 2: end after start -- skipped while the start is locked.
         if (
             !$beginForm->isDisabled()
             && !$endForm->isDisabled()
@@ -104,6 +104,25 @@ class ActivityType extends AbstractType
             $endForm->addError(new FormError(
                 $this->translator->trans(
                     'The end time must be after the start time.',
+                    [],
+                    'validators',
+                ),
+            ));
+        }
+
+        // Rule 2b: once the activity has started its start is locked but the end stays editable (e.g. to extend a
+        // running activity). The locked start is in the past, so "after the start" no longer constrains anything;
+        // require the end to be in the future instead, so it can never be moved into the past (which would make the
+        // whole activity immutable).
+        if (
+            $beginForm->isDisabled()
+            && !$endForm->isDisabled()
+            && $endTime instanceof DateTime
+            && $endTime <= $now
+        ) {
+            $endForm->addError(new FormError(
+                $this->translator->trans(
+                    'The end time must be in the future.',
                     [],
                     'validators',
                 ),

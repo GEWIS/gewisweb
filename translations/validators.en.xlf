@@ -35,7 +35,7 @@
       </trans-unit>
       <trans-unit id="pT0eJRh" resname="Enter a valid email address.">
         <source>Enter a valid email address.</source>
-        <target></target>
+        <target state="translated">Enter a valid email address.</target>
       </trans-unit>
       <trans-unit id="8a1ZW3W" resname="Enter a value between {{ min }} and {{ max }}.">
         <source>Enter a value between {{ min }} and {{ max }}.</source>
@@ -43,7 +43,7 @@
       </trans-unit>
       <trans-unit id="IoicRFz" resname="Enter an email address.">
         <source>Enter an email address.</source>
-        <target></target>
+        <target state="translated">Enter an email address.</target>
       </trans-unit>
       <trans-unit id="vUFOGmp" resname="Enter an end date and time.">
         <source>Enter an end date and time.</source>
@@ -91,11 +91,15 @@
       </trans-unit>
       <trans-unit id="GrfPh7K" resname="The email address may not be longer than {{ limit }} characters.">
         <source>The email address may not be longer than {{ limit }} characters.</source>
-        <target></target>
+        <target state="translated">The email address may not be longer than {{ limit }} characters.</target>
       </trans-unit>
       <trans-unit id="IMKkCvz" resname="The end time must be after the start time.">
         <source>The end time must be after the start time.</source>
         <target state="translated">The end time must be after the start time.</target>
+      </trans-unit>
+      <trans-unit id="YxuChhn" resname="The end time must be in the future.">
+        <source>The end time must be in the future.</source>
+        <target state="translated">The end time must be in the future.</target>
       </trans-unit>
       <trans-unit id="Oed6bKp" resname="The full name may not be longer than {{ limit }} characters.">
         <source>The full name may not be longer than {{ limit }} characters.</source>

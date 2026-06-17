@@ -30,6 +30,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Url;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
+use function array_keys;
 use function Symfony\Component\Translation\t;
 use function trim;
 
@@ -255,6 +256,10 @@ class SignupListType extends AbstractType
 
         $builder->addEventListener(
             FormEvents::POST_SET_DATA,
+            $this->freezeWhenActivityStarted(...),
+        );
+        $builder->addEventListener(
+            FormEvents::POST_SET_DATA,
             $this->freezeWhenSubscribed(...),
         );
         $builder->addEventListener(
@@ -388,7 +393,58 @@ class SignupListType extends AbstractType
         FormInterface $form,
         array $options,
     ): void {
-        $view->vars['frozen'] = $this->hasLiveSignUps($form->getData());
+        $list = $form->getData();
+        $view->vars['frozen'] = $this->hasLiveSignUps($list)
+            || $this->activityStarted($list);
+    }
+
+    /**
+     * Re-add every field as `disabled` once the activity has started, so a started activity's sign-up lists can no
+     * longer be changed in any way (the `fields` collection too, which cascades to its nested questions/options). A
+     * brand-new list, or one whose activity is still upcoming, stays editable.
+     */
+    private function freezeWhenActivityStarted(FormEvent $event): void
+    {
+        $list = $event->getData();
+        if (
+            !$list instanceof SignupList
+            || !$this->activityStarted($list)
+        ) {
+            return;
+        }
+
+        $form = $event->getForm();
+        foreach (array_keys($form->all()) as $name) {
+            $this->disableField(
+                $form,
+                $name,
+            );
+        }
+    }
+
+    /**
+     * Whether the live activity this list belongs to has already started. "Started" is read from the *live* revision
+     * (the real schedule): a brand-new list whose activity has never been published has no live revision and so is
+     * never considered started, keeping it editable so a stale draft can be re-dated. Mirrors
+     * {@see \App\Form\Activity\ActivityRevisionType} locking the start once the live activity has begun.
+     */
+    private function activityStarted(?SignupList $list): bool
+    {
+        if (
+            !$list instanceof SignupList
+            || !$list->hasRevision()
+        ) {
+            return false;
+        }
+
+        $live = $list->getRevision()->getActivity()->getLiveRevision();
+        if (null === $live) {
+            return false;
+        }
+
+        $begin = $live->getBeginTime();
+
+        return null !== $begin && $begin <= new DateTime();
     }
 
     /**

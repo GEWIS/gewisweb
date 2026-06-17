@@ -18,6 +18,7 @@ use App\Security\Application\RevisionVoter;
 use App\Service\Activity\DraftDiscarder;
 use App\Service\Activity\SignupListMigrator;
 use App\Service\Application\EditLockService;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\ExpressionLanguage\Expression;
@@ -353,6 +354,19 @@ class AdminApprovalController extends AbstractController
                 $revision,
             );
 
+        // When the activity can no longer be published, the workflow withholds submit/approve
+        // (PastActivityGuardListener); explain why on the screen. Two cases: an established activity whose live
+        // schedule has *ended*, and a brand-new activity (no live revision) whose own *start* has already passed
+        // -- the latter is recoverable by re-dating the draft, so it gets a different banner.
+        $liveEnded = null !== $live
+            && $live !== $revision
+            && null !== $live->getEndTime()
+            && $live->getEndTime() < new DateTime();
+        $debutMissed = (null === $live || $live === $revision)
+            && null !== $revision->getBeginTime()
+            && $revision->getBeginTime() < new DateTime();
+        $activityPassed = $liveEnded || $debutMissed;
+
         // A draft re-edit of an already-live activity can be discarded back to that live version (the recovery for a
         // blocked submit, but offered for any such draft). A brand-new activity's draft has no live version to revert
         // to, so it is not discardable here.
@@ -369,6 +383,8 @@ class AdminApprovalController extends AbstractController
                 'comments' => $this->commentRepository->findThreadForActivity($revision->getActivity()),
                 'decisionForm' => $form->createView(),
                 'migrationBlocked' => $migrationBlocked,
+                'activityPassed' => $activityPassed,
+                'debutMissed' => $debutMissed,
                 'canDiscard' => $canDiscard,
                 'signupListDiff' => $this->buildSignupListDiff(
                     $revision,

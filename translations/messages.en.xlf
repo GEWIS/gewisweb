@@ -625,6 +625,10 @@
         <source>Discard this draft to return to the live version, then revise it again without changing that list.</source>
         <target state="translated">Discard this draft to return to the live version, then revise it again without changing that list.</target>
       </trans-unit>
+      <trans-unit id="ySojbtL" resname="Discard this draft to return to the live version.">
+        <source>Discard this draft to return to the live version.</source>
+        <target state="translated">Discard this draft to return to the live version.</target>
+      </trans-unit>
       <trans-unit id="NPw9WPH" resname="Discussion">
         <source>Discussion</source>
         <target state="translated">Discussion</target>
@@ -1693,6 +1697,10 @@
         <source>Reject it or request changes so it can be revised again from the live version.</source>
         <target state="translated">Reject it or request changes so it can be revised again from the live version.</target>
       </trans-unit>
+      <trans-unit id="Oy0hiFc" resname="Reject or close it to clear the queue.">
+        <source>Reject or close it to clear the queue.</source>
+        <target state="translated">Reject or close it to clear the queue.</target>
+      </trans-unit>
       <trans-unit id="vzVnZwB" resname="Rejected">
         <source>Rejected</source>
         <target state="translated">Rejected</target>
@@ -2109,7 +2117,7 @@
         <source>That recipient group is not available for this sign-up list.</source>
         <target>That recipient group is not available for this sign-up list.</target>
       </trans-unit>
-      <trans-unit id="hEahyeO" resname="The GEWIS website is open-source! Check out the repository on &lt;a href=&quot;https://github.com/GEWIS/gewisweb&quot; target=&quot;_blank&quot;>&lt;span class=&quot;fab fa-github&quot;>&lt;/span>&amp;nbsp;GitHub&lt;/a>. Or visit our &lt;a href=&quot;https://github.com/GEWIS&quot; target=&quot;_blank&quot;>organisation&lt;/a> for more of our awesome open-source projects.">
+      <trans-unit id="hEahyeO" resname="The GEWIS website is open-source! Check out the repository on &lt;a href=&quot;https://github.com/GEWIS/gewisweb&quot; target=&quot;_blank&quot;&gt;&lt;span class=&quot;fab fa-github&quot;&gt;&lt;/span&gt;&amp;nbsp;GitHub&lt;/a&gt;. Or visit our &lt;a href=&quot;https://github.com/GEWIS&quot; target=&quot;_blank&quot;&gt;organisation&lt;/a&gt; for more of our awesome open-source projects.">
         <source>The GEWIS website is open-source! Check out the repository on &lt;a href="https://github.com/GEWIS/gewisweb" target="_blank"&gt;&lt;span class="fab fa-github"&gt;&lt;/span&gt;&amp;nbsp;GitHub&lt;/a&gt;. Or visit our &lt;a href="https://github.com/GEWIS" target="_blank"&gt;organisation&lt;/a&gt; for more of our awesome open-source projects.</source>
         <target state="translated"><![CDATA[The GEWIS website is open-source! Check out the repository on <a href="https://github.com/GEWIS/gewisweb" target="_blank"><span class="fab fa-github"></span>&nbsp;GitHub</a>. Or visit our <a href="https://github.com/GEWIS" target="_blank">organisation</a> for more of our awesome open-source projects.]]></target>
       </trans-unit>
@@ -2141,6 +2149,10 @@
         <source>The selected recipients will receive this email immediately. This cannot be undone.</source>
         <target>The selected recipients will receive this email immediately. This cannot be undone.</target>
       </trans-unit>
+      <trans-unit id="hTU2rmn" resname="The start date of this activity has passed, so it can no longer be published. Move it to a future date before it can be submitted again.">
+        <source>The start date of this activity has passed, so it can no longer be published. Move it to a future date before it can be submitted again.</source>
+        <target state="translated">The start date of this activity has passed, so it can no longer be published. Move it to a future date before it can be submitted again.</target>
+      </trans-unit>
       <trans-unit id="tl9akBK" resname="Their TOTP secret and backup codes will be discarded and every active session for the user will be terminated. Use this when a device has been lost or compromised.">
         <source>Their TOTP secret and backup codes will be discarded and every active session for the user will be terminated. Use this when a device has been lost or compromised.</source>
         <target state="translated">Their TOTP secret and backup codes will be discarded and every active session for the user will be terminated. Use this when a device has been lost or compromised.</target>
@@ -2160,6 +2172,10 @@
       <trans-unit id="z2CkJ9H" resname="This activity has already taken place and can no longer be revised.">
         <source>This activity has already taken place and can no longer be revised.</source>
         <target state="translated">This activity has already taken place and can no longer be revised.</target>
+      </trans-unit>
+      <trans-unit id="orEA8_f" resname="This activity has already taken place, so this revision can no longer be submitted or approved.">
+        <source>This activity has already taken place, so this revision can no longer be submitted or approved.</source>
+        <target state="translated">This activity has already taken place, so this revision can no longer be submitted or approved.</target>
       </trans-unit>
       <trans-unit id="WjvSua3" resname="This activity has no sign-up lists.">
         <source>This activity has no sign-up lists.</source>
@@ -2393,7 +2409,7 @@
         <source>We are the same</source>
         <target state="translated">We are the same</target>
       </trans-unit>
-      <trans-unit id="jkUs8v1" resname="We found a pointer to &lt;code>NULL&lt;/code> instead of this page">
+      <trans-unit id="jkUs8v1" resname="We found a pointer to &lt;code&gt;NULL&lt;/code&gt; instead of this page">
         <source>We found a pointer to &lt;code&gt;NULL&lt;/code&gt; instead of this page</source>
         <target state="translated"><![CDATA[We found a pointer to <code>NULL</code> instead of this page]]></target>
       </trans-unit>

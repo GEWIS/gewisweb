@@ -54,13 +54,12 @@ class ActivityRevisionType extends AbstractType
     use DisablesFieldsTrait;
 
     /**
-     * Schedule fields that become read-only once the activity has started; changing them afterwards is a
-     * (highly exceptional) database-level edit.
+     * Schedule fields that become read-only once the activity has started: only the start. The end stays editable
+     * while the activity is running (so a running activity can be extended); it is never separately locked because the
+     * whole activity becomes immutable once it has ended (see the controller's "already took place" block). Changing
+     * the start afterwards is a (highly exceptional) database-level edit.
      */
-    private const array LOCK_AFTER_START = [
-        'beginTime',
-        'endTime',
-    ];
+    private const array LOCK_AFTER_START = ['beginTime'];
 
     public function __construct(
         private readonly Security $security,
@@ -424,8 +423,11 @@ class ActivityRevisionType extends AbstractType
     }
 
     /**
-     * Re-add the schedule fields as `disabled` once the activity has started, so they render read-only and are
-     * ignored on submit. A brand-new draft (no begin time yet) stays fully editable.
+     * Re-add the start field as `disabled` once the activity has started, so it renders read-only and is ignored on
+     * submit (the end stays editable -- see {@see self::LOCK_AFTER_START}). "Started" is read from the *live* revision
+     * (the real schedule), never the editable draft, so a brand-new draft that has never been published (no live
+     * revision) keeps its start editable -- a draft whose date slipped into the past while it sat in the review queue
+     * can be moved forward and resubmitted instead of becoming un-submittable.
      */
     private function disableScheduleWhenStarted(FormEvent $event): void
     {
@@ -434,7 +436,16 @@ class ActivityRevisionType extends AbstractType
             return;
         }
 
-        $beginTime = $revision->getBeginTime();
+        // Only a genuinely live, under-way activity has its start locked; a never-published draft stays editable.
+        $live = $revision->getActivity()->getLiveRevision();
+        if (
+            null === $live
+            || $live === $revision
+        ) {
+            return;
+        }
+
+        $beginTime = $live->getBeginTime();
         if (
             null === $beginTime
             || $beginTime > new DateTime()

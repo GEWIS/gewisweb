@@ -10,7 +10,6 @@ use App\Entity\Activity\ActivityRevision;
 use App\Entity\Activity\Enums\ActivityCategories;
 use App\Entity\Activity\SignupList;
 use App\Entity\Application\Enums\AlertTypes;
-use App\Entity\Application\Enums\RevisionStatus;
 use App\Entity\User\Enums\UserRoles;
 use App\Entity\User\User;
 use App\Form\Activity\ActivityType;
@@ -140,10 +139,14 @@ class AdminController extends AbstractController
 
         $status = $current->getStatus();
 
-        // An approved activity that has already taken place is immutable: no further revisions.
+        // An activity that has gone live and already taken place is immutable: no further revisions, whether the
+        // current revision is the live one or an in-flight draft of it. "Took place" is a property of the real
+        // (live) schedule, so it is read from the live revision; a brand-new activity that was never approved (no
+        // live revision) is still editable even if its draft date has slipped into the past.
+        $live = $activity->getLiveRevision();
         if (
-            RevisionStatus::Approved === $status
-            && $this->hasPassed($current)
+            null !== $live
+            && $this->hasPassed($live)
         ) {
             $this->addFlash(
                 AlertTypes::Warning->value,
@@ -385,6 +388,21 @@ class AdminController extends AbstractController
         $current = $activity->getCurrentRevision();
         if (null === $current) {
             throw $this->createNotFoundException();
+        }
+
+        // A live activity that has already taken place is immutable; reopening a rejected/closed revision into a new
+        // draft must not become a back door around that.
+        $live = $activity->getLiveRevision();
+        if (
+            null !== $live
+            && $this->hasPassed($live)
+        ) {
+            $this->addFlash(
+                AlertTypes::Warning->value,
+                $this->translator->trans('This activity has already taken place and can no longer be revised.'),
+            );
+
+            return $this->redirectToRoute('admin/activities/index');
         }
 
         // The cloner links the new draft and points the activity's current revision at it; the reopening member
