@@ -44,5 +44,8 @@
             <parameter name="clock-mock-namespaces" value="App" />
             <parameter name="dns-mock-namespaces" value="App" />
         </bootstrap>
+        <!-- Wraps every test in a transaction that is rolled back afterwards, so integration tests share one
+             schema + fixture load yet stay isolated. -->
+        <bootstrap class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension" />
     </extensions>
 </phpunit>

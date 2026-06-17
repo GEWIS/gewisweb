@@ -21,6 +21,22 @@ jobs:
         permissions:
             contents: read
 
+        services:
+            mariadb:
+                image: mariadb:11.8
+                env:
+                    MARIADB_ROOT_PASSWORD: root
+                    MARIADB_DATABASE: gewis
+                    MARIADB_USER: gewis
+                    MARIADB_PASSWORD: gewis
+                ports:
+                    - 3306:3306
+                options: >-
+                    --health-cmd="healthcheck.sh --connect --innodb_initialized"
+                    --health-interval=10s
+                    --health-timeout=5s
+                    --health-retries=10
+
         steps:
             -   name: Checkout
                 uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -45,6 +61,24 @@ jobs:
                 uses: c-py/action-dotenv-to-setenv@925b5d99a3f1e4bd7b4e9928be4e2491e29891d9 # v5
                 with:
                     env-file: .env.test
+
+            -   name: Create the isolated test database
+                env:
+                    MYSQL_PWD: root
+                # The schema is built by SchemaTool in the test harness, so this only creates the empty `_test`
+                # database (the `when@test` doctrine config targets it) and grants the application user.
+                run: |
+                    mysql --host=127.0.0.1 --port=3306 --user=root \
+                      --execute="CREATE DATABASE IF NOT EXISTS \`gewis_test\` CHARACTER SET utf8mb4 COLLATE utf8mb4_uca1400_ai_ci; GRANT ALL PRIVILEGES ON \`gewis_test\`.* TO 'gewis'@'%'; FLUSH PRIVILEGES;"
+
+            -   name: Prepare the test database (schema + fixtures)
+                env:
+                    APP_ENV: test
+                # The schema is built from the mapping metadata (no migrations); dama/doctrine-test-bundle then rolls
+                # back each test, so this seed is loaded once for the whole run.
+                run: |
+                    bin/console doctrine:schema:create
+                    bin/console doctrine:fixtures:load --no-interaction
 
             -   name: Run PHPUnit
                 run: bin/phpunit

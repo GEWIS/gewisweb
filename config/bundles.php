@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Ambta\DoctrineEncryptBundle\AmbtaDoctrineEncryptBundle;
 use ApiPlatform\Symfony\Bundle\ApiPlatformBundle;
+use DAMA\DoctrineTestBundle\DAMADoctrineTestBundle;
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle;
 use Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle;
@@ -50,6 +51,7 @@ return [
         'dev' => true,
         'test' => true,
     ],
+    DAMADoctrineTestBundle::class => ['test' => true],
     MercureBundle::class => ['all' => true],
     NelmioSecurityBundle::class => ['all' => true],
     StimulusBundle::class => ['all' => true],

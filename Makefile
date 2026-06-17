@@ -16,7 +16,7 @@ SYMFONY  = $(PHP) bin/console
 
 # Misc
 .DEFAULT_GOAL   = help
-.PHONY          : help seed translations lint lint-fix lint-twig psalm psalm-all phpstan test start startprod down logs bash sf cc
+.PHONY          : help seed translations lint lint-fix lint-twig psalm psalm-all phpstan test test-prepare start startprod down logs bash sf cc
 LAST_WEB_COMMIT := $(shell git rev-parse --short HEAD 2>/dev/null || echo abcabcabc)
 HOST_UID        := $(shell id -u)
 HOST_GID        := $(shell id -g)
@@ -68,6 +68,11 @@ phpstan: ## Static analysis using PHPStan
 test: ## Start tests with phpunit, pass the parameter "c=" to add options to phpunit, example: make test c="--group e2e --stop-on-failure"
 	@$(eval c ?=)
 	@$(DOCKER_COMP) exec -e APP_ENV=test web bin/phpunit $(c)
+
+test-prepare: ## Prepare the isolated test database: (re)build its schema and load the fixtures. Run once, and after schema/fixture changes (the integration tests roll back their own writes, so the seed persists between runs).
+	@$(SYMFONY) doctrine:schema:drop --force --full-database --env=test
+	@$(SYMFONY) doctrine:schema:create --env=test
+	@$(SYMFONY) doctrine:fixtures:load --no-interaction --env=test
 
 ## —— Docker ———————————————————————————————————————————————————————————————————
 builddev: buildwebdev buildmatomo ## Builds the development Docker images

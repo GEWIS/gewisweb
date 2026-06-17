@@ -60,7 +60,7 @@ migrations/         Doctrine migration files at repo root
 templates/          Twig templates, mirrors src/Controller layout; components/<Namespace>/ holds Live component templates, partials/application/ holds stateless includes
 translations/       .xlf files for en/nl
 assets/             TypeScript Stimulus controllers, Sass, vendored assets
-tests/              bootstrap.php + object-manager.php only — no tests yet
+tests/              unit tests + Integration/ (DB tests, see Static analysis & tests); bootstrap.php + object-manager.php
 gewisweb-laminas/   git submodule: pre-migration Laminas codebase, read-only reference
 ```
 
@@ -160,7 +160,8 @@ Run these inside the `web` container (the `make` targets handle that for you). *
 | `make psalm` / `make psalm-all` | Psalm with and without `psalm-baseline.xml`. `make psalm` must pass. |
 | `make lint-twig` | `lint:twig` over `templates/` — validates Twig syntax. Run whenever you add or edit a template. |
 | `make igor` | Validates the codebase for FrankenPHP worker-mode safety. **Run this for any non-trivial change.** |
-| `make test` | PHPUnit inside the `web` container under `APP_ENV=test`. Note: `tests/` is currently almost empty — passing tests is a low bar today. |
+| `make test` | PHPUnit inside the `web` container under `APP_ENV=test`. Pure-unit tests (`PHPUnit\Framework\TestCase`, no DB) and DB integration tests (`App\Tests\Integration\DatabaseTestCase`). Must pass. |
+| `make test-prepare` | (Re)builds the schema and loads the fixtures into the isolated `gewis_test` database. Run once before the integration tests, and again after any schema/fixture change. |
 | `make translations` | Extracts translatable strings into `translations/{messages,validators}.{en,nl}.xlf`. Run this whenever you add or edit a user-facing string in PHP, Twig, or a form type — never hand-roll `bin/console translation:extract`, the Makefile target sets the project's expected flags (`--sort=asc --no-fill --force --clean`). `--clean` removes entries no longer referenced in source — safe for the `validators` domain because Symfony falls back to the vendor `validators.{en,nl}.xlf` for any key not in the project file. **Extraction alone is not enough — see below.** |
 
 **After `make translations`:** because of `--no-fill`, new entries land with an empty `<target/>` in *both* the `en` and `nl` files. Find them with
@@ -170,6 +171,8 @@ grep -rn -e '<target/>' -e '<target></target>' translations/
 ```
 
 then fill every one: `en` targets get the source text verbatim; `nl` targets get your best Dutch translation. Always list the Dutch translations you wrote in your final report so a human can review (and correct) them — never leave empty targets behind silently.
+
+**Tests.** Integration tests run against a real **MariaDB** matching production — SQLite is deliberately not used, as it cannot reproduce the custom DQL functions (`RAND`/`YEAR`), `EditLockService`'s named locks, the UUID/`uca1400` columns, etc. — isolated onto a `gewis_test` database (the `when@test` doctrine config appends the `_test` suffix). The schema (via `SchemaTool`, **no migrations**) and the full `DataFixtures` set are loaded once by `make test-prepare`; `dama/doctrine-test-bundle` then wraps each test in a transaction and rolls it back, so tests share the seed yet never leak writes. `DatabaseTestCase` just boots the kernel and grabs the EM — **query the seeded fixtures, don't hand-build entity graphs**. Pure domain logic (mappers, voters, guard listeners, enums) stays a DB-less `TestCase`. Locally, the `gewis_test` database is created by the `init_gewis_test_db` script in `compose.override.yaml` (fresh MariaDB volume only); CI runs a MariaDB service and the same prepare steps.
 
 When a new error hits a baseline, fix it rather than extending the baseline. Baselines are for legacy debt, not new code.
 
