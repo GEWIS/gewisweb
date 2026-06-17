@@ -15,6 +15,7 @@ use App\Form\Application\ReviewDecisionType;
 use App\Repository\Activity\ActivityRevisionCommentRepository;
 use App\Repository\Activity\ActivityRevisionRepository;
 use App\Security\Application\RevisionVoter;
+use App\Security\User\SudoVoter;
 use App\Service\Activity\DraftDiscarder;
 use App\Service\Activity\SignupListMigrator;
 use App\Service\Application\EditLockService;
@@ -101,6 +102,19 @@ class AdminApprovalController extends AbstractController
             $revision,
         );
 
+        // Actually reviewing is sensitive, so a reviewer (board, or C4 for company/vacancy) must be in sudo mode to
+        // open the screen. This is a GET, so the SudoAccessDeniedListener preserves ?next and returns the reviewer
+        // here after re-auth. Pure authors (APPROVE denied) are never prompted -- they only view/submit/comment on
+        // their own draft, none of which sudo gates.
+        if (
+            $this->isGranted(
+                RevisionVoter::APPROVE,
+                $revision,
+            )
+        ) {
+            $this->denyAccessUnlessGranted(SudoVoter::ATTRIBUTE);
+        }
+
         return $this->renderReview(
             $revision,
             $this->createDecisionForm($revision),
@@ -162,6 +176,13 @@ class AdminApprovalController extends AbstractController
                 'admin/activities/approvals/review',
                 ['revision' => $revision->getId()],
             );
+        }
+
+        // Defence in depth: a reviewer transition (anything but the author's `submit`) requires sudo before it is
+        // applied. review() already prompted within the last 10 minutes, so this normally sees an active grant; it
+        // only fires when the grant lapsed, sending the reviewer to confirm sudo and retry.
+        if ('submit' !== $transition) {
+            $this->denyAccessUnlessGranted(SudoVoter::ATTRIBUTE);
         }
 
         // The message field is only present for transitions that carry one (a decision, or a resubmission response).

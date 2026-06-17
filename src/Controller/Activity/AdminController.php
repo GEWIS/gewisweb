@@ -34,6 +34,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\Security\Http\Attribute\IsCsrfTokenValid;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 use function assert;
@@ -435,6 +436,7 @@ class AdminController extends AbstractController
         requirements: ['activity' => '\d+'],
         methods: ['GET'],
     )]
+    #[IsGranted('SUDO')]
     public function signups(Activity $activity): Response
     {
         // Organisers (creator, revision author, organ member) and the board may view sign-up details.
@@ -487,6 +489,7 @@ class AdminController extends AbstractController
             'POST',
         ],
     )]
+    #[IsGranted('SUDO')]
     public function addExternalSignup(
         Activity $activity,
         SignupList $signupList,

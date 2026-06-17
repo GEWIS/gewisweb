@@ -61,6 +61,7 @@ use function trim;
     template: 'components/Activity/Admin/SignupOverview.html.twig',
 )]
 #[IsGranted(new Expression("is_granted('ROLE_ACTIVE_MEMBER') or is_granted('ROLE_BOARD')"))]
+#[IsGranted('SUDO')]
 final class SignupOverview
 {
     use DefaultActionTrait;
