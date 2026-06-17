@@ -22,7 +22,8 @@ use Symfony\Component\Uid\Uuid;
  * The migrator re-points live sign-ups onto an approved revision's lineage-matched list clone purely by ordinal, which
  * is only safe while the layouts are provably identical. These tests pin that: a faithful clone migrates, and any
  * divergence a race or request tampering could introduce past the structural freeze (a reordered or renamed
- * field/option) hard-fails rather than silently corrupting an answer.
+ * field/option, a changed type or bound, an added/removed field, option or whole list) hard-fails rather than silently
+ * corrupting an answer. Lists carrying no sign-ups have nothing to lose, so they are exempt from the structural check.
  */
 final class SignupListMigratorTest extends TestCase
 {
@@ -89,6 +90,93 @@ final class SignupListMigratorTest extends TestCase
         self::assertSame(
             'Red',
             $migratedOption->getValue()->getValueEN(),
+        );
+    }
+
+    public function testMigratesNonChoiceAnswersByRepointingTheFieldOnly(): void
+    {
+        $lineageId = Uuid::v4();
+
+        $live = $this->listWith(
+            $lineageId,
+            $this->field(
+                SignupFieldTypes::Text,
+                'Name',
+            ),
+            $this->field(
+                SignupFieldTypes::Number,
+                'Guests',
+                0,
+                5,
+            ),
+            $this->field(
+                SignupFieldTypes::YesNo,
+                'Dietary',
+            ),
+        );
+        $outgoing = $this->revisionWith($live);
+        [
+            $signup, $fieldValues
+        ] = $this->answerScalars(
+            $live,
+            [
+                'Alice',
+                '3',
+                'yes',
+            ],
+        );
+
+        $clone = $this->listWith(
+            $lineageId,
+            $this->field(
+                SignupFieldTypes::Text,
+                'Name',
+            ),
+            $this->field(
+                SignupFieldTypes::Number,
+                'Guests',
+                0,
+                5,
+            ),
+            $this->field(
+                SignupFieldTypes::YesNo,
+                'Dietary',
+            ),
+        );
+        $incoming = $this->revisionWith($clone);
+
+        self::assertTrue($this->migrator->isMigratable(
+            $outgoing,
+            $incoming,
+        ));
+
+        $this->migrator->migrate(
+            $outgoing,
+            $incoming,
+        );
+
+        // Text/Number/Yes-No answers carry a raw value and no option, so migration only re-points the field to the
+        // clone's same-ordinal field and leaves the value (and the null option) untouched.
+        self::assertSame(
+            $clone,
+            $signup->getSignupList(),
+        );
+        $clonedFields = $clone->getFields()->getValues();
+        foreach ($fieldValues as $ordinal => $fieldValue) {
+            self::assertSame(
+                $clonedFields[$ordinal],
+                $fieldValue->getField(),
+            );
+            self::assertNull($fieldValue->getOption());
+        }
+
+        self::assertSame(
+            'Alice',
+            $fieldValues[0]->getValue(),
+        );
+        self::assertSame(
+            '3',
+            $fieldValues[1]->getValue(),
         );
     }
 
@@ -162,10 +250,289 @@ final class SignupListMigratorTest extends TestCase
         ));
     }
 
+    public function testRefusesToMigrateWhenAListWithSignupsWasRemoved(): void
+    {
+        $live = $this->choiceFieldList(
+            Uuid::v4(),
+            'Colour',
+            [
+                'Red',
+                'Blue',
+            ],
+        );
+        $outgoing = $this->revisionWith($live);
+        $this->answerFirstOption($live);
+
+        // The incoming revision carries a list on a *different* lineage, which for migration purposes is no match at
+        // all: the live sign-ups would have nowhere to go, so the migrator refuses rather than orphan them.
+        $incoming = $this->revisionWith($this->choiceFieldList(
+            Uuid::v4(),
+            'Colour',
+            [
+                'Red',
+                'Blue',
+            ],
+        ));
+
+        self::assertFalse($this->migrator->isMigratable(
+            $outgoing,
+            $incoming,
+        ));
+
+        $this->expectException(RuntimeException::class);
+        $this->migrator->migrate(
+            $outgoing,
+            $incoming,
+        );
+    }
+
+    public function testRefusesToMigrateWhenTheFieldCountDiffers(): void
+    {
+        $lineageId = Uuid::v4();
+
+        $live = $this->listWith(
+            $lineageId,
+            $this->field(
+                SignupFieldTypes::Text,
+                'Name',
+            ),
+        );
+        $outgoing = $this->revisionWith($live);
+        $this->answerScalars(
+            $live,
+            ['Alice'],
+        );
+
+        // A frozen list never gains a field; an extra one can only come from a race or tampering, and the ordinal
+        // mapping would have no counterpart for it, so the layouts are not provably identical.
+        $incoming = $this->revisionWith($this->listWith(
+            $lineageId,
+            $this->field(
+                SignupFieldTypes::Text,
+                'Name',
+            ),
+            $this->field(
+                SignupFieldTypes::Text,
+                'Nickname',
+            ),
+        ));
+
+        self::assertFalse($this->migrator->isMigratable(
+            $outgoing,
+            $incoming,
+        ));
+    }
+
+    public function testRefusesToMigrateWhenAFieldTypeChanged(): void
+    {
+        $lineageId = Uuid::v4();
+
+        $live = $this->listWith(
+            $lineageId,
+            $this->field(
+                SignupFieldTypes::Text,
+                'Age',
+            ),
+        );
+        $outgoing = $this->revisionWith($live);
+        $this->answerScalars(
+            $live,
+            ['21'],
+        );
+
+        // Same name and (absent) bounds, but a Text answer is not a Number answer; re-pointing it would silently
+        // reinterpret the stored value's type, so the layouts do not match.
+        $incoming = $this->revisionWith($this->listWith(
+            $lineageId,
+            $this->field(
+                SignupFieldTypes::Number,
+                'Age',
+            ),
+        ));
+
+        self::assertFalse($this->migrator->isMigratable(
+            $outgoing,
+            $incoming,
+        ));
+    }
+
+    public function testRefusesToMigrateWhenANumberFieldsBoundsChanged(): void
+    {
+        $lineageId = Uuid::v4();
+
+        $live = $this->listWith(
+            $lineageId,
+            $this->field(
+                SignupFieldTypes::Number,
+                'Guests',
+                0,
+                2,
+            ),
+        );
+        $outgoing = $this->revisionWith($live);
+        $this->answerScalars(
+            $live,
+            ['2'],
+        );
+
+        // The stored "2" was valid under max 2; widening the clone's bound is a structural change a frozen list should
+        // never present, so the migrator refuses rather than re-home an answer under different rules.
+        $incoming = $this->revisionWith($this->listWith(
+            $lineageId,
+            $this->field(
+                SignupFieldTypes::Number,
+                'Guests',
+                0,
+                5,
+            ),
+        ));
+
+        self::assertFalse($this->migrator->isMigratable(
+            $outgoing,
+            $incoming,
+        ));
+    }
+
+    public function testRefusesToMigrateWhenAnOptionWasAdded(): void
+    {
+        $lineageId = Uuid::v4();
+
+        $live = $this->choiceFieldList(
+            $lineageId,
+            'Colour',
+            [
+                'Red',
+                'Blue',
+            ],
+        );
+        $outgoing = $this->revisionWith($live);
+        $this->answerFirstOption($live);
+
+        // The added option shifts no existing ordinal, but the option counts differ, which is enough to prove the
+        // layouts are not the verbatim clone the ordinal mapping relies on.
+        $incoming = $this->revisionWith($this->choiceFieldList(
+            $lineageId,
+            'Colour',
+            [
+                'Red',
+                'Blue',
+                'Green',
+            ],
+        ));
+
+        self::assertFalse($this->migrator->isMigratable(
+            $outgoing,
+            $incoming,
+        ));
+    }
+
+    public function testBlocksTheWholeApprovalWhenOnlyOneOfSeveralListsDiverged(): void
+    {
+        $faithfulLineage = Uuid::v4();
+        $divergedLineage = Uuid::v4();
+
+        $liveFaithful = $this->choiceFieldList(
+            $faithfulLineage,
+            'Colour',
+            [
+                'Red',
+                'Blue',
+            ],
+        );
+        $liveDiverged = $this->choiceFieldList(
+            $divergedLineage,
+            'Size',
+            [
+                'S',
+                'M',
+            ],
+        );
+        $outgoing = $this->revisionWithLists(
+            $liveFaithful,
+            $liveDiverged,
+        );
+        [
+            $faithfulSignup,
+        ] = $this->answerFirstOption($liveFaithful);
+        $this->answerFirstOption($liveDiverged);
+
+        // One list clones faithfully, the other was renamed. Migration is all-or-nothing: it must refuse before
+        // touching anything, leaving even the faithful list's sign-up on the outgoing revision rather than half-done.
+        $incoming = $this->revisionWithLists(
+            $this->choiceFieldList(
+                $faithfulLineage,
+                'Colour',
+                [
+                    'Red',
+                    'Blue',
+                ],
+            ),
+            $this->choiceFieldList(
+                $divergedLineage,
+                'Dimensions',
+                [
+                    'S',
+                    'M',
+                ],
+            ),
+        );
+
+        self::assertFalse($this->migrator->isMigratable(
+            $outgoing,
+            $incoming,
+        ));
+
+        try {
+            $this->migrator->migrate(
+                $outgoing,
+                $incoming,
+            );
+            self::fail('Expected migrate() to refuse a partially-diverged revision.');
+        } catch (RuntimeException) {
+        }
+
+        self::assertSame(
+            $liveFaithful,
+            $faithfulSignup->getSignupList(),
+        );
+    }
+
+    public function testIgnoresListsWithoutSignupsWhenJudgingMigratability(): void
+    {
+        // A list carrying no sign-ups has nothing to carry over, so its fate is irrelevant: even dropping it outright
+        // (the incoming revision has no matching lineage) leaves the migration trivially safe and a no-op.
+        $outgoing = $this->revisionWith($this->choiceFieldList(
+            Uuid::v4(),
+            'Colour',
+            [
+                'Red',
+                'Blue',
+            ],
+        ));
+        $incoming = new ActivityRevision();
+
+        self::assertTrue($this->migrator->isMigratable(
+            $outgoing,
+            $incoming,
+        ));
+
+        $this->migrator->migrate(
+            $outgoing,
+            $incoming,
+        );
+    }
+
     private function revisionWith(SignupList $list): ActivityRevision
     {
+        return $this->revisionWithLists($list);
+    }
+
+    private function revisionWithLists(SignupList ...$lists): ActivityRevision
+    {
         $revision = new ActivityRevision();
-        $revision->addSignupList($list);
+        foreach ($lists as $list) {
+            $revision->addSignupList($list);
+        }
 
         return $revision;
     }
@@ -180,12 +547,45 @@ final class SignupListMigratorTest extends TestCase
         string $fieldName,
         array $optionLabels,
     ): SignupList {
+        return $this->listWith(
+            $lineageId,
+            $this->field(
+                SignupFieldTypes::Choice,
+                $fieldName,
+                optionLabels: $optionLabels,
+            ),
+        );
+    }
+
+    private function listWith(
+        Uuid $lineageId,
+        SignupField ...$fields,
+    ): SignupList {
         $list = new SignupList();
         $list->setLineageId($lineageId);
 
+        foreach ($fields as $field) {
+            $list->addField($field);
+        }
+
+        return $list;
+    }
+
+    /**
+     * @param string[] $optionLabels
+     */
+    private function field(
+        SignupFieldTypes $type,
+        string $name,
+        ?int $minimumValue = null,
+        ?int $maximumValue = null,
+        array $optionLabels = [],
+    ): SignupField {
         $field = new SignupField();
-        $field->setName($this->text($fieldName));
-        $field->setType(SignupFieldTypes::Choice);
+        $field->setName($this->text($name));
+        $field->setType($type);
+        $field->setMinimumValue($minimumValue);
+        $field->setMaximumValue($maximumValue);
 
         foreach ($optionLabels as $label) {
             $option = new SignupOption();
@@ -193,9 +593,7 @@ final class SignupListMigratorTest extends TestCase
             $field->addOption($option);
         }
 
-        $list->addField($field);
-
-        return $list;
+        return $field;
     }
 
     /**
@@ -221,6 +619,38 @@ final class SignupListMigratorTest extends TestCase
         return [
             $signup,
             $fieldValue,
+        ];
+    }
+
+    /**
+     * Add one external sign-up to the list that answered each of its fields, by ordinal, with the given raw value (no
+     * option) -- the shape a Text/Number/Yes-No answer takes.
+     *
+     * @param array<int, string> $valuesByOrdinal
+     *
+     * @return array{0: ExternalSignup, 1: list<SignupFieldValue>}
+     */
+    private function answerScalars(
+        SignupList $list,
+        array $valuesByOrdinal,
+    ): array {
+        $signup = new ExternalSignup();
+        $signup->setSignupList($list);
+        $list->getSignUps()->add($signup);
+
+        $fieldValues = [];
+        foreach ($list->getFields()->getValues() as $ordinal => $field) {
+            $fieldValue = new SignupFieldValue();
+            $fieldValue->setField($field);
+            $fieldValue->setSignup($signup);
+            $fieldValue->setValue($valuesByOrdinal[$ordinal] ?? null);
+            $signup->getFieldValues()->add($fieldValue);
+            $fieldValues[] = $fieldValue;
+        }
+
+        return [
+            $signup,
+            $fieldValues,
         ];
     }
 
