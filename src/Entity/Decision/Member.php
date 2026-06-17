@@ -41,7 +41,6 @@ use function array_reduce;
  *     birth: string,
  *     generation: int,
  *     type: string,
- *     paid: int,
  *     changedOn: string,
  *     membershipEndsOn: ?string,
  *     expiration: string,
@@ -157,12 +156,6 @@ class Member
      */
     #[Column(type: Types::DATE_MUTABLE)]
     private DateTime $expiration;
-
-    /**
-     * How much the member has paid for membership. 0 by default.
-     */
-    #[Column(type: Types::INTEGER)]
-    private int $paid = 0;
 
     /**
      * If the member receives a 'supremum'.
@@ -503,22 +496,6 @@ class Member
     }
 
     /**
-     * Get how much has been paid.
-     */
-    public function getPaid(): int
-    {
-        return $this->paid;
-    }
-
-    /**
-     * Set how much has been paid.
-     */
-    public function setPaid(int $paid): void
-    {
-        $this->paid = $paid;
-    }
-
-    /**
      * Get if the member wants a supremum.
      */
     public function getSupremum(): ?string
@@ -832,7 +809,6 @@ class Member
             'birth' => $this->getBirth()->format(DateTimeInterface::ATOM),
             'generation' => $this->getGeneration(),
             'type' => $this->getType()->value,
-            'paid' => $this->getPaid(),
             'changedOn' => $this->getChangedOn()->format(DateTimeInterface::ATOM),
             'membershipEndsOn' => $this->getMembershipEndsOn()?->format(DateTimeInterface::ATOM),
             'expiration' => $this->getExpiration()->format(DateTimeInterface::ATOM),
