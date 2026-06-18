@@ -202,6 +202,11 @@ class DecisionFixture extends Fixture implements DependentFixtureInterface
         $manager->persist($organ);
         $manager->flush();
 
+        $this->addReference(
+            'organ-getest',
+            $organ,
+        );
+
         // Installations
         foreach ($iSubdecisions as $installation) {
             if (!($installation instanceof Installation)) {
@@ -236,6 +241,106 @@ class DecisionFixture extends Fixture implements DependentFixtureInterface
         }
 
         $manager->flush();
+
+        $this->loadSecondOrgan($manager);
+    }
+
+    /**
+     * A small second committee (chair, secretary, one member), so organ-scoped access can be told apart between
+     * organs. Built like GETÉST but with distinct members from GETÉST.
+     */
+    private function loadSecondOrgan(ObjectManager $manager): void
+    {
+        $decision = new Decision();
+        $decision->setMeeting($this->getReference('meeting-BV-0', Meeting::class));
+        $decision->setPoint(2);
+        $decision->setNumber(1);
+        $decision->setContentEN('');
+        $decision->setContentNL('');
+
+        $manager->persist($decision);
+
+        $foundation = new Foundation();
+        $foundation->setAbbr('KEUR');
+        $foundation->setName('Keuringscommissie');
+        $foundation->setOrganType(OrganTypes::Committee);
+        $foundation->setDecision($decision);
+        $foundation->setSequence(1);
+        $foundation->setContentEN('');
+        $foundation->setContentNL(sprintf(
+            '%s %s met afkorting %s wordt opgericht.',
+            ucfirst($foundation->getOrganType()->value),
+            $foundation->getName(),
+            $foundation->getAbbr(),
+        ));
+
+        $manager->persist($foundation);
+
+        $functions = [
+            8025 => InstallationFunctions::Chair,
+            8026 => InstallationFunctions::Secretary,
+            8027 => InstallationFunctions::Member,
+        ];
+
+        $installations = [];
+        $sequence = 1;
+        foreach ($functions as $lidnr => $function) {
+            $sequence++;
+            $installation = new Installation();
+            $installation->setFunction($function);
+            $installation->setMember($this->getReference('member-' . $lidnr, Member::class));
+            $installation->setSequence($sequence);
+            $installation->setFoundation($foundation);
+            $installation->setDecision($decision);
+            $installation->setContentEN('');
+            $installation->setContentNL(sprintf(
+                '%s wordt geïnstalleerd als %s van %s',
+                $installation->getMember()->getFullName(),
+                $installation->getFunction()->value,
+                $foundation->getAbbr(),
+            ));
+
+            $manager->persist($installation);
+            $installations[] = $installation;
+        }
+
+        $content = [];
+        foreach ($decision->getSubdecisions() as $subdecision) {
+            $content[] = $subdecision->getContentNL();
+        }
+
+        $decision->setContentNL(implode('. ', $content));
+        $manager->persist($decision);
+
+        $manager->flush();
+
+        $organ = new Organ();
+        $organ->setName($foundation->getName());
+        $organ->setAbbr($foundation->getAbbr());
+        $organ->setFoundation($foundation);
+        $organ->setType($foundation->getOrganType());
+        $organ->setFoundationDate($foundation->getDecision()->getMeeting()->getDate());
+
+        $manager->persist($organ);
+        $manager->flush();
+
+        foreach ($installations as $installation) {
+            $organMember = new OrganMember();
+            $organMember->setOrgan($organ);
+            $organMember->setMember($installation->getMember());
+            $organMember->setInstallation($installation);
+            $organMember->setFunction($installation->getFunction());
+            $organMember->setInstallDate($installation->getFoundation()->getDecision()->getMeeting()->getDate());
+
+            $manager->persist($organMember);
+        }
+
+        $manager->flush();
+
+        $this->addReference(
+            'organ-keur',
+            $organ,
+        );
     }
 
     private function createInstallation(

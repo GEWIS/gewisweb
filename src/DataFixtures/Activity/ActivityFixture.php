@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Activity;
 
+use App\DataFixtures\Decision\DecisionFixture;
 use App\DataFixtures\Decision\MemberFixture;
 use App\DataFixtures\User\UserFixture;
 use App\Entity\Activity\Activity;
@@ -24,6 +25,7 @@ use App\Entity\Activity\SignupOption;
 use App\Entity\Activity\UserSignup;
 use App\Entity\Application\Enums\RevisionStatus;
 use App\Entity\Decision\Member;
+use App\Entity\Decision\Organ;
 use App\Entity\User\User;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -842,6 +844,17 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
             Member::class,
         );
 
+        // The workflow examples are organised by an organ, so organ-scoped visibility/edit rights have something to
+        // resolve against. GETÉST and KEUR have disjoint members, so the two can be told apart.
+        $getest = $this->getReference(
+            'organ-getest',
+            Organ::class,
+        );
+        $keur = $this->getReference(
+            'organ-keur',
+            Organ::class,
+        );
+
         // In review: sits in the board's review queue (no live revision, so not publicly visible).
         $hackathonCreator = $this->getReference(
             'member-8013',
@@ -876,6 +889,7 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
             1,
             null,
         );
+        $hackathonRevision->setOrgan($getest);
         $hackathon->addRevision($hackathonRevision);
         $hackathon->setCurrentRevision($hackathonRevision);
         $manager->persist($hackathon);
@@ -917,6 +931,7 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
         );
         $beerRevision1->setReviewer($boardA);
         $beerRevision1->setReviewedAt(new DateTime('-2 days'));
+        $beerRevision1->setOrgan($getest);
         $beer->addRevision($beerRevision1);
         $manager->persist($beer);
         $manager->persist($beerRevision1);
@@ -959,6 +974,7 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
             2,
             $beerRevision1,
         );
+        $beerRevision2->setOrgan($getest);
         $beer->addRevision($beerRevision2);
         $beer->setCurrentRevision($beerRevision2);
         $manager->persist($beerRevision2);
@@ -999,6 +1015,8 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
         );
         $casinoRevision->setReviewer($boardB);
         $casinoRevision->setReviewedAt(new DateTime('-5 days'));
+        // KEUR (disjoint from GETÉST) so organ scoping can be told apart between the two organs.
+        $casinoRevision->setOrgan($keur);
         $casino->addRevision($casinoRevision);
         $casino->setCurrentRevision($casinoRevision);
         $manager->persist($casino);
@@ -1158,6 +1176,8 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
             MemberFixture::class,
             ActivityLabelFixture::class,
             UserFixture::class,
+            // The workflow examples are assigned an organising organ, so the organs must be seeded first.
+            DecisionFixture::class,
         ];
     }
 }
