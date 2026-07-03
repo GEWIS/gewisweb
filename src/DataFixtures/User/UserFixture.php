@@ -29,9 +29,11 @@ class UserFixture extends Fixture implements DependentFixtureInterface
             $user = new User();
             $user->setLidnr($lidnr);
             $user->setMember($this->getReference('member-' . $lidnr, Member::class));
+            // == gewiswebgewis. The cost (argon2id m=10, t=3) matches the configured hasher in dev and test
+            // (config/packages/security.yaml), so logging in as a seeded user triggers no rehash-on-login UPDATE.
             $user->setPassword(
-                '$argon2id$v=19$m=16,t=1,p=1$Z1hyaHhMLlUxdG5MeWxIcg$TzJS0e00UUpxwXV00wUhTb5G1ds73aevtDaTL6/KFbs',
-            ); // == gewiswebgewis
+                '$argon2id$v=19$m=10,t=3,p=1$8fI5jXSYT4a/nmlANyW5iw$1eFNdB11zahtXd/ooeCWprWuCvAGDx+OrUsH2lBZNVM',
+            );
             $user->setPasswordChangedOn(new DateTime());
 
             $manager->persist($user);
