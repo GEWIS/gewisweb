@@ -16,6 +16,7 @@ use App\Entity\Decision\Member;
 use App\Message\Activity\ExternalSignupTokenEmail;
 use App\Repository\Activity\ExternalSignupRepository;
 use App\Repository\Activity\ExternalSignupVerificationRepository;
+use App\Repository\Activity\SignupRepository;
 use DateInterval;
 use DateTime;
 use DateTimeImmutable;
@@ -51,6 +52,7 @@ final readonly class SignupManager
         private MessageBusInterface $messageBus,
         private ExternalSignupVerificationRepository $verificationRepository,
         private ExternalSignupRepository $externalSignupRepository,
+        private SignupRepository $signupRepository,
     ) {
     }
 
@@ -67,9 +69,7 @@ final readonly class SignupManager
         $signup = new UserSignup();
         $signup->setSignupList($signupList);
         $signup->setUser($member);
-        $signup->setAgreedToPolicyAt(new DateTime());
-        // An unlimited list admits on sign-up; a limited list starts everyone on the waiting list until the draw.
-        $signup->setDrawn(!$signupList->getLimitedCapacity());
+        $signup->setDrawn($this->initialDrawnState($signupList));
 
         $this->entityManager->persist($signup);
         $this->mapFieldValues(
@@ -83,7 +83,7 @@ final readonly class SignupManager
 
     /**
      * Sign an external (non-member) person up. The sign-up is created unverified (a Verify token is issued in the same
-     * transaction so it is hidden from lists/counts/admission) and a confirmation e-mail is queued.
+     * transaction so it is hidden from lists/counts/admission) and a confirmation email is queued.
      *
      * @param array<int, mixed> $fieldData submitted answers keyed by {@see \App\Entity\Activity\SignupField} id
      */
@@ -97,8 +97,6 @@ final readonly class SignupManager
             $signupList,
             $fullName,
             $email,
-            $fieldData,
-            new DateTime(),
         );
 
         $this->entityManager->persist($signup);
@@ -123,7 +121,7 @@ final readonly class SignupManager
     }
 
     /**
-     * Add an external participant on behalf of an organiser/board. No captcha and no e-mail verification: the sign-up
+     * Add an external subscriber on behalf of an organiser/board. No captcha and no email verification: the sign-up
      * is created already-confirmed (no token row), so it is immediately live.
      *
      * @param array<int, mixed> $fieldData submitted answers keyed by {@see \App\Entity\Activity\SignupField} id
@@ -134,14 +132,17 @@ final readonly class SignupManager
         string $email,
         array $fieldData,
     ): ExternalSignup {
-        // No agreement timestamp: the participant did not themselves accept the policies.
         $signup = $this->buildExternalSignup(
             $signupList,
             $fullName,
             $email,
-            $fieldData,
-            null,
         );
+        // Flag the manual entry: the subscriber never saw the form, so they did not themselves accept the policies.
+        $signup->setAddedManually(true);
+        // Immediately confirmed (no Verify token), so it becomes a subscriber right now and gets the same admission
+        // decision as a member sign-up.
+        $signup->setVerifiedAt(new DateTime());
+        $signup->setDrawn($this->initialDrawnState($signupList));
 
         $this->entityManager->persist($signup);
         $this->mapFieldValues(
@@ -171,9 +172,9 @@ final readonly class SignupManager
     }
 
     /**
-     * Edit an external sign-up's name and answers from the e-mailed self-service manage page. The e-mail is *not*
-     * editable here: it is the address the sign-up was verified against, and changing it would bypass that verification
-     * — to use a different address the participant unsubscribes and signs up again.
+     * Edit an external sign-up's name and answers from the emailed self-service manage page. The email is *not*
+     * editable here: it is the address the sign-up was verified against, and changing it would bypass that
+     * verification. To use a different address the subscriber unsubscribes and signs up again.
      *
      * @param array<int, mixed> $fieldData submitted answers keyed by {@see \App\Entity\Activity\SignupField} id
      */
@@ -205,14 +206,29 @@ final readonly class SignupManager
     }
 
     /**
-     * Confirm an external sign-up: drop its Verify token (so it becomes live) and issue + e-mail the long-lived manage
-     * token for self-service editing/unsubscribing.
+     * Confirm an external sign-up: drop its Verify token (so it becomes live), record the confirmation moment (a late
+     * draw uses it as the external's effective sign-up time, {@see DrawManager}) and issue + email the long-lived
+     * manage token for self-service editing/unsubscribing.
      */
     public function confirmExternalSignup(ExternalSignupVerification $verification): void
     {
         $signup = $verification->getExternalSignup();
 
         $this->entityManager->remove($verification);
+        $signup->setVerifiedAt(new DateTime());
+
+        // Confirmation is the moment an external becomes a real subscriber, so the admission decision that member
+        // sign-ups get at creation happens here: on a locked (drawn) limited list a remaining place admits them
+        // first-come-first-served. This sign-up itself is not admitted, so it never inflates its own count.
+        $signupList = $signup->getSignupList();
+        if (
+            $signupList->getLimitedCapacity()
+            && $signupList->isDrawLocked()
+            && !$signup->isDrawn()
+        ) {
+            $signup->setDrawn($this->initialDrawnState($signupList));
+        }
+
         $token = $this->issueToken(
             $signup,
             ExternalSignupVerificationPurpose::Manage,
@@ -228,9 +244,9 @@ final readonly class SignupManager
     }
 
     /**
-     * Re-issue and e-mail a fresh double-opt-in (Verify) token for a still-unverified external sign-up, for when the
-     * original e-mail was lost. Mirrors the password-reset request: the sign-up existence lookup happens *here* so it
-     * can run inside a message handler, off the request thread — the calling controller dispatches unconditionally, so
+     * Re-issue and email a fresh double-opt-in (Verify) token for a still-unverified external sign-up, for when the
+     * original email was lost. Mirrors the password-reset request: the sign-up existence lookup happens *here* so it
+     * can run inside a message handler, off the request thread: the calling controller dispatches unconditionally, so
      * response timing never reveals whether the address is signed up. Stays silent when there is no sign-up, or it is
      * already confirmed (no Verify token). The verifier plaintext is never stored, so the old token is dropped and a
      * fresh one issued; this also resets the expiry, giving the sign-up a fresh prune window.
@@ -266,25 +282,46 @@ final readonly class SignupManager
         );
     }
 
-    /**
-     * @param array<int, mixed> $fieldData submitted answers keyed by {@see \App\Entity\Activity\SignupField} id
-     */
     private function buildExternalSignup(
         SignupList $signupList,
         string $fullName,
         string $email,
-        array $fieldData,
-        ?DateTime $agreedAt,
     ): ExternalSignup {
         $signup = new ExternalSignup();
         $signup->setSignupList($signupList);
         $signup->setFullName($fullName);
         $signup->setEmail($email);
-        $signup->setAgreedToPolicyAt($agreedAt);
-        // An unlimited list admits on sign-up; a limited list starts everyone on the waiting list until the draw.
+        // An unlimited list admits on sign-up; on a limited list an external starts on the waiting list even when the
+        // draw is locked: it is unverified at this point, and a never-confirmed sign-up must not hold a place. The
+        // admission decision happens at confirmation ({@see self::confirmExternalSignup()}) or, for an
+        // organiser-added external, in {@see self::addExternalSignupByOrganiser()}.
         $signup->setDrawn(!$signupList->getLimitedCapacity());
 
         return $signup;
+    }
+
+    /**
+     * The admission state for a brand-new *confirmed* sign-up. An unlimited list admits immediately. A limited list
+     * before its draw starts everyone on the waiting list. Once the draw is locked, the list runs
+     * first-come-first-served on the remaining places: admit while the confirmed admitted count is under capacity,
+     * waitlist otherwise. Two concurrent sign-ups can both see the last free place and overbook by one; that is
+     * accepted (the admin overview flags admitted > capacity and the board can adjust), consistent with the manual
+     * admit toggle, which allows deliberate overbooking.
+     */
+    private function initialDrawnState(SignupList $signupList): bool
+    {
+        if (!$signupList->getLimitedCapacity()) {
+            return true;
+        }
+
+        if (!$signupList->isDrawLocked()) {
+            return false;
+        }
+
+        $capacity = $signupList->getCapacity();
+
+        return null !== $capacity
+            && $this->signupRepository->countConfirmedAdmitted($signupList) < $capacity;
     }
 
     /**
@@ -341,7 +378,7 @@ final readonly class SignupManager
 
     /**
      * Generate a `selector.verifier` token, persist its hash as a verification row of the given purpose, and return the
-     * plaintext token for the e-mail. Caller flushes.
+     * plaintext token for the email. Caller flushes.
      */
     private function issueToken(
         ExternalSignup $signup,

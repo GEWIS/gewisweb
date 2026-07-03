@@ -150,15 +150,16 @@
                     </div>
 
                 {% if list.limitedCapacity %}
-                    {# Admission is driven by the allocation method: first-come and conditional-draw run a board draw
-                       that auto-locks (once sign-up closes, up to a day after the activity ends); external-party and
-                       custom are admitted by hand. After a draw (or for a manual method) board and organisers adjust
-                       individuals over the same window. #}
+                    {# Admission is driven by the allocation method: first-come and conditional-draw are drawn
+                       automatically at the list's own draw moment (close, or the configured cutoff), with a board
+                       fallback button that enables once that moment (or close) has passed (up to a day after the
+                       activity ends); external-party and custom are admitted by hand. After a draw (or for a manual
+                       method) board and organisers adjust individuals over the same window. #}
                     {% set isFcfs = list.allocationMethod.value == 'first-come-first-served' %}
                     {% set drawAction = isFcfs ? 'drawFirstCome' : 'drawLottery' %}
                     {% set drawIcon = isFcfs ? 'fa-list-ol' : 'fa-dice' %}
                     {% set drawLabel = isFcfs ? 'First-come-first-served'|trans : 'Random draw'|trans %}
-                    {% set drawReady = list.isClosed and admissionOpen and list.capacity is not null %}
+                    {% set drawReady = (list.isClosed or list.autoDrawDue) and admissionOpen and list.capacity is not null %}
                     {% set drawConfirm = 'Run the draw now? This admits people up to capacity and it cannot be undone.'|trans %}
                     <div class="panel-body border-bottom">
                         <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
@@ -198,17 +199,32 @@
                             {% if isManual %}
                                 {{ admissionOpen ? 'Admit people by hand with the toggles below.'|trans : 'Admission is closed.'|trans }}
                             {% elseif list.drawLocked %}
-                                {{ 'Drawn by %name% on %date%.'|trans({
-                                    '%name%': list.drawnByName ?? '?',
-                                    '%date%': list.drawnAt ? list.drawnAt|format_datetime(pattern: 'd MMM yyyy HH:mm', locale: app.request.locale) : '',
-                                }) }}
+                                {% if list.drawnByName is null %}
+                                    {{ 'Drawn automatically on %date%.'|trans({
+                                        '%date%': list.drawnAt ? list.drawnAt|format_datetime(pattern: 'd MMM yyyy HH:mm', locale: app.request.locale) : '',
+                                    }) }}
+                                {% else %}
+                                    {{ 'Drawn by %name% on %date%.'|trans({
+                                        '%name%': list.drawnByName,
+                                        '%date%': list.drawnAt ? list.drawnAt|format_datetime(pattern: 'd MMM yyyy HH:mm', locale: app.request.locale) : '',
+                                    }) }}
+                                {% endif %}
                                 {{ admissionOpen ? 'You can still admit from the waiting list or remove a no-show until shortly after the activity.'|trans : 'Admission is closed.'|trans }}
+                            {% elseif not admissionOpen %}
+                                {{ 'Admission is closed.'|trans }}
+                            {% elseif list.autoDrawDue %}
+                                {{ 'The draw will be performed automatically within a few minutes.'|trans }}
+                                {% if isBoard %}
+                                    {{ 'You can also run it now.'|trans }}
+                                {% endif %}
+                            {% elseif list.autoDrawAt is not null %}
+                                {{ 'The draw will be performed automatically on %date%.'|trans({
+                                    '%date%': list.autoDrawAt|format_datetime(pattern: 'EEE d MMM. yyyy HH:mm', locale: app.request.locale),
+                                }) }}
                             {% elseif not isBoard %}
                                 {{ 'Waiting for the board to perform the draw.'|trans }}
                             {% elseif not list.isClosed %}
                                 {{ 'The draw can be run once sign-up has closed.'|trans }}
-                            {% elseif not admissionOpen %}
-                                {{ 'Admission is closed.'|trans }}
                             {% else %}
                                 {{ 'Running the draw admits people up to capacity and locks it; you can adjust individuals afterwards.'|trans }}
                             {% endif %}
@@ -244,7 +260,7 @@
                                here refreshes this component. #}
                             <a class="btn btn-sm btn-outline-success"
                                href="{{ path('admin/activities/add_external_signup', {'activity': this.activity.getId, 'signupList': list.listId}) }}">
-                                <i class="fas fa-user-plus"></i> {{ 'Add external participant'|trans }}
+                                <i class="fas fa-user-plus"></i> {{ 'Add external subscriber'|trans }}
                             </a>
                         {% endif %}
                         {% if list.fieldColumns is not empty %}

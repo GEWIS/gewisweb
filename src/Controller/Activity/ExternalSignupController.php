@@ -13,10 +13,10 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * Public, login-less self-service for external (non-member) sign-ups, reached through a signed e-mail token (the
+ * Public, login-less self-service for external (non-member) sign-ups, reached through a signed email token (the
  * sign-up itself is created by {@see ActivityController::externalSignup}):
  *  - {@see self::verify()} confirms a freshly-created sign-up (double opt-in) and issues the manage link;
- *  - {@see self::manage()} renders the self-service page — the edit and unsubscribe are live actions on the
+ *  - {@see self::manage()} renders the self-service page; the edit and unsubscribe are live actions on the
  *    {@see \App\Twig\Components\Activity\ExternalSignupManage} component, which re-validates the token every request.
  *
  * The token (`selector.verifier`) is looked up by selector and hash-compared, so a leaked selector alone is useless;

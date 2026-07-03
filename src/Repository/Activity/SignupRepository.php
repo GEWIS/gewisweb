@@ -4,9 +4,14 @@ declare(strict_types=1);
 
 namespace App\Repository\Activity;
 
+use App\Entity\Activity\ExternalSignup;
 use App\Entity\Activity\Signup;
+use App\Entity\Activity\SignupList;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\Persistence\ManagerRegistry;
+
+use function intval;
 
 /**
  * @extends ServiceEntityRepository<Signup>
@@ -18,6 +23,35 @@ class SignupRepository extends ServiceEntityRepository
         parent::__construct(
             $registry,
             Signup::class,
+        );
+    }
+
+    /**
+     * The number of admitted (drawn) sign-ups on a list that count as confirmed subscribers: externals not yet
+     * email-confirmed (null `verifiedAt`) are excluded, mirroring the draw's subscriber semantics
+     * ({@see \App\Service\Activity\DrawManager}). This count continues the draw's capacity counter, so both must
+     * read the same confirmation signal.
+     */
+    public function countConfirmedAdmitted(SignupList $signupList): int
+    {
+        return intval(
+            $this->createQueryBuilder('s')
+                ->select('COUNT(s.id)')
+                ->where('s.signupList = :list')
+                ->andWhere('s.drawn = true')
+                ->andWhere(
+                    'NOT EXISTS ('
+                    . 'SELECT 1 FROM ' . ExternalSignup::class . ' es'
+                    . ' WHERE es.id = s.id AND es.verifiedAt IS NULL'
+                    . ')',
+                )
+                ->setParameter(
+                    'list',
+                    $signupList->getId(),
+                    Types::INTEGER,
+                )
+                ->getQuery()
+                ->getSingleScalarResult(),
         );
     }
 

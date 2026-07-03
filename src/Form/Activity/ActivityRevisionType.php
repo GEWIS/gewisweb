@@ -355,9 +355,9 @@ class ActivityRevisionType extends AbstractType
      * ({@see \App\Entity\Activity\Activity::getResourceOrgan()}, read straight from the working revision) is only ever
      * one the editor may organise for. The organ field already limits its choices to {@see selectableOrgans()} (plus
      * the organ the revision already had, kept by {@see keepBoundOrgan()}) and the EntityType validates a submission
-     * against that list -- but because the chosen organ becomes an edit-rights anchor the moment it is saved, re-assert
-     * it here instead of trusting the field configuration: reject a submitted organ that is neither selectable nor the
-     * one already bound.
+     * against that list. However, because the chosen organ becomes an edit-rights anchor the moment it is saved,
+     * re-assert it here instead of trusting the field configuration: reject a submitted organ that is neither
+     * selectable nor the one already bound.
      *
      * @param Organ[]  $selectableOrgans the organs offered to this user, resolved once in buildForm()
      * @param int|null $boundOrganId     the organ the revision carried before this submit, allowed to survive
@@ -424,9 +424,9 @@ class ActivityRevisionType extends AbstractType
 
     /**
      * Re-add the start field as `disabled` once the activity has started, so it renders read-only and is ignored on
-     * submit (the end stays editable -- see {@see self::LOCK_AFTER_START}). "Started" is read from the *live* revision
+     * submit (the end stays editable; see {@see self::LOCK_AFTER_START}). "Started" is read from the *live* revision
      * (the real schedule), never the editable draft, so a brand-new draft that has never been published (no live
-     * revision) keeps its start editable -- a draft whose date slipped into the past while it sat in the review queue
+     * revision) keeps its start editable: a draft whose date slipped into the past while it sat in the review queue
      * can be moved forward and resubmitted instead of becoming un-submittable.
      */
     private function disableScheduleWhenStarted(FormEvent $event): void

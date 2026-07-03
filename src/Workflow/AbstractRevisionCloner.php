@@ -10,8 +10,8 @@ use Override;
 
 /**
  * Shared skeleton for the per-domain {@see RevisionClonerInterface} implementations. The lifecycle of spawning draft
- * N+1 is identical across activities, vacancies and companies -- carry the authorship forward, increment the revision
- * number, link the new revision into the chain and attach it to its aggregate -- and only the concrete revision type
+ * N+1 is identical across activities, vacancies and companies (carry the authorship forward, increment the revision
+ * number, link the new revision into the chain and attach it to its aggregate), and only the concrete revision type
  * and the content snapshot differ. Keeping that lifecycle here means a change to it (a new shared field, a different
  * default) is made once rather than in each cloner.
  *

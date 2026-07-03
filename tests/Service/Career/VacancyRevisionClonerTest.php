@@ -17,8 +17,8 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Spawning the next vacancy draft must produce an independent copy: the localised texts (name, location, website,
- * description, attachment) become fresh rows -- the OneToOne relations are orphan-removing, so a shared row would be
- * deleted with the source -- while the category and labels are shared reference entities carried over by reference and
+ * description, attachment) become fresh rows (the OneToOne relations are orphan-removing, so a shared row would be
+ * deleted with the source), while the category and labels are shared reference entities carried over by reference and
  * the contact details are scalars copied by value. These tests pin that contract so a regression cannot blank an
  * editor's draft, drop its labels, or delete live content.
  */

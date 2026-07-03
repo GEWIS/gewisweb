@@ -19,11 +19,11 @@ use function Symfony\Component\Translation\t;
 /**
  * The review decision for a revision: one submit button per enabled workflow transition (passed as the
  * `enabled_transitions` option), plus a contextual message field. The message is the reviewer's feedback when a
- * decision is on offer (mandatory to reject or request changes), or — when `resubmission` is set and `submit` is on
- * offer — the organiser's mandatory response explaining how the requested changes were addressed. Actions that need
- * no message (a fresh submit, start review, close) get no field at all, so the screen never shows a stray,
- * mislabelled box. Mandatory-ness is enforced through the buttons' validation groups, so no controller-side checking
- * is needed. Generic across every revisable domain (activities, companies, vacancies).
+ * decision is available (mandatory to reject or request changes). When `resubmission` is set and `submit` is
+ * available, the message is instead the organiser's mandatory response explaining how the requested changes were
+ * addressed. Actions that need no message (a fresh submit, start review, close) get no field at all, so the screen
+ * never shows a stray, mislabelled box. Mandatory-ness is enforced through the buttons' validation groups, so no
+ * controller-side checking is needed. Generic across every revisable domain (activities, companies, vacancies).
  *
  * @extends AbstractType<array<string, mixed>>
  */

@@ -46,7 +46,7 @@ final readonly class PastActivityGuardListener
             return;
         }
 
-        // An established activity (it already has a live revision) is judged by its live schedule's *end* -- the end
+        // An established activity (it already has a live revision) is judged by its live schedule's *end*: the end
         // stays editable while it runs, so its content is frozen only once it has ended. A brand-new activity
         // awaiting its first publication is judged by its own *start*: one that has already started can never debut,
         // since its sign-up lists close before it begins, so it could never be joined.

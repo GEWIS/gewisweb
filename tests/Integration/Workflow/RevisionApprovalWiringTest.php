@@ -15,7 +15,7 @@ use Symfony\Component\Workflow\Registry;
 /**
  * Proves the `revision` workflow is actually wired: that applying the `approve` transition flows through the guard
  * (board authorisation) and fires the entered/transition listeners the unit tests cover in isolation. A wrong event
- * name in workflow.yaml or a listener attribute would pass every unit test but fail here -- the live revision would not
+ * name in workflow.yaml or a listener attribute would pass every unit test but fail here: the live revision would not
  * be promoted and the review would not be stamped. Runs end to end against the real workflow + database.
  */
 final class RevisionApprovalWiringTest extends DatabaseTestCase

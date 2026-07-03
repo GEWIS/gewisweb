@@ -472,9 +472,9 @@ class AdminController extends AbstractController
     }
 
     /**
-     * Manually add an external (non-member) participant to a sign-up list, for an organiser or the board. Reuses the
-     * public sign-up form (organiser mode: name + e-mail + the list's fields, but no captcha and no agreement
-     * checkbox) and creates the sign-up already-verified (no double opt-in e-mail). Allowed only while the list is
+     * Manually add an external (non-member) subscriber to a sign-up list, for an organiser or the board. Reuses the
+     * public sign-up form (organiser mode: name + email + the list's fields, but no captcha and no agreement
+     * checkbox) and creates the sign-up already-verified (no double opt-in email). Allowed only while the list is
      * open, mirroring the public sign-up window.
      */
     #[Route(
@@ -514,7 +514,7 @@ class AdminController extends AbstractController
             return $this->flashAndBackToSignups(
                 $activity,
                 AlertTypes::Warning->value,
-                $this->translator->trans('This sign-up list is not open, so you cannot add a participant.'),
+                $this->translator->trans('This sign-up list is not open, so you cannot add a subscriber.'),
             );
         }
 
@@ -524,7 +524,7 @@ class AdminController extends AbstractController
                 $activity,
                 AlertTypes::Warning->value,
                 $this->translator->trans(
-                    'This sign-up list is for GEWIS members only, so you cannot add an external participant.',
+                    'This sign-up list is for GEWIS members only, so you cannot add an external subscriber.',
                 ),
             );
         }
@@ -573,7 +573,7 @@ class AdminController extends AbstractController
             return $this->flashAndBackToSignups(
                 $activity,
                 AlertTypes::Success->value,
-                $this->translator->trans('The external participant has been added.'),
+                $this->translator->trans('The external subscriber has been added.'),
             );
         }
 

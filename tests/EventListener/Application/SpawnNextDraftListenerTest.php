@@ -14,7 +14,7 @@ use Symfony\Component\Workflow\Event\EnteredEvent;
 use Symfony\Component\Workflow\Marking;
 
 /**
- * When the board requests changes, a fresh draft (N+1) must be spawned through the cloner registry and persisted -- but
+ * When the board requests changes, a fresh draft (N+1) must be spawned through the cloner registry and persisted, but
  * NOT flushed, since the controller commits the new draft together with the status change in one transaction. These
  * tests pin both halves of that contract.
  */

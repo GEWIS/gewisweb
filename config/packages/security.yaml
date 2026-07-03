@@ -107,9 +107,9 @@ when@test:
     security:
         password_hashers:
             # Secure hashing wastes time in tests, so use the lowest work factor sodium's argon2id allows. Pin argon2id
-            # explicitly -- `auto` resolves to bcrypt, which mismatches the seeded (argon2id) fixture hash and forces a
-            # rehash on every login -- at the same cost as dev and the fixture, so a seeded user's hash is already
-            # "current" and logging in triggers no needless rehash UPDATE.
+            # explicitly, at the same cost as dev and the fixture, so a seeded user's hash is already "current" and
+            # logging in triggers no needless rehash UPDATE; `auto` would resolve to bcrypt, which mismatches the
+            # seeded (argon2id) fixture hash and forces a rehash on every login.
             Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface:
                 algorithm: argon2id
                 memory_cost: 10

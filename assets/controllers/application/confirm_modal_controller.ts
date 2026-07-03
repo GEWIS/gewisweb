@@ -55,10 +55,10 @@ export default class extends Controller {
         }
 
         // getComponent() does a STRICT lookup keyed by the component's ROOT element (the [data-controller~="live"]
-        // node), not a closest() from a descendant — so passing the trigger button (a descendant) never matches and
+        // node), not a closest() from a descendant, so passing the trigger button (a descendant) never matches and
         // rejects with "Component not found". Resolve the root from the trigger here, at show-time while the trigger is
         // still attached: a re-render between opening and confirming (e.g. a data-model field blurring on click) can
-        // detach the trigger, and a detached node's closest() returns null — whereas the root element and the resolved
+        // detach the trigger, and a detached node's closest() returns null, whereas the root element and the resolved
         // component instance both survive re-renders. `.catch(() => null)` is attached eagerly so a cancelled modal
         // never logs an unhandled rejection.
         const action = trigger.dataset.confirmLiveAction ?? null;

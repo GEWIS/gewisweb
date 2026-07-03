@@ -1,7 +1,7 @@
 <div{{ attributes }}>
-    {# Just the form — it lives inside a Bootstrap modal whose chrome (header, open/close, backdrop) is rendered around
+    {# Just the form: it lives inside a Bootstrap modal whose chrome (header, open/close, backdrop) is rendered around
        this component in the activity partial. An invalid submit re-renders this form in place (modal stays open); a
-       successful submit redirects, so the reload closes the modal and shows the "check your e-mail" flash. #}
+       successful submit redirects, so the reload closes the modal and shows the "check your email" flash. #}
     {{ form_start(form, {
         attr: form.vars.attr|merge({
             'data-action': 'live#action:prevent',

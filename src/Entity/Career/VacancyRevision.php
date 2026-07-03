@@ -22,8 +22,8 @@ use Override;
 
 /**
  * An immutable snapshot of a {@see Vacancy}'s revisable content for one point in its revision chain. The stable
- * {@see Vacancy} owns the slug, publication flag and package; everything that may be revised and reviewed -- the
- * localised texts, the contact details, the category and the labels -- lives here, so label changes go through the
+ * {@see Vacancy} owns the slug, publication flag and package; everything that may be revised and reviewed (the
+ * localised texts, the contact details, the category and the labels) lives here, so label changes go through the
  * review workflow like the rest of the content.
  */
 #[Entity(repositoryClass: VacancyRevisionRepository::class)]

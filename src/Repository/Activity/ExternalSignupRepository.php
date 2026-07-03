@@ -24,7 +24,7 @@ class ExternalSignupRepository extends ServiceEntityRepository
     }
 
     /**
-     * An existing external sign-up on a list for the given e-mail (case-insensitive), if any. Prevents a second row for
+     * An existing external sign-up on a list for the given email (case-insensitive), if any. Prevents a second row for
      * the same address: a repeat submission re-sends verification instead.
      */
     public function findOneByListAndEmail(

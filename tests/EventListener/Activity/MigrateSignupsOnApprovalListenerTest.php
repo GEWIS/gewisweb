@@ -26,7 +26,8 @@ use Symfony\Component\Workflow\Marking;
  * Approving an activity revision must migrate the live sign-ups onto the newly-approved revision's lineage-matched
  * lists BEFORE promoting it to live, so the public page keeps showing them and no sign-up is lost. With nothing
  * approved yet there is nothing to migrate, so it simply promotes. Non-activity revisions are promoted elsewhere and
- * must be ignored here. The real migrator is used -- this listener is the seam that wires migration to promotion.
+ * must be ignored here. The real migrator is used: this listener is the integration point that connects migration
+ * to promotion.
  */
 final class MigrateSignupsOnApprovalListenerTest extends TestCase
 {

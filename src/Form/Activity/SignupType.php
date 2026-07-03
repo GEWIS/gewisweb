@@ -31,7 +31,7 @@ use function Symfony\Component\Translation\t;
 
 /**
  * The public sign-up form for a single {@see SignupList}: the list's custom fields built dynamically by type, plus, for
- * non-members, a name + e-mail and (for anonymous externals) an Altcha captcha, and a required policy-agreement
+ * non-members, a name + email and (for anonymous externals) an Altcha captcha, and a required policy-agreement
  * checkbox for self sign-ups. Not bound to an entity ({@see Signup} has two subtypes and externals have no object yet),
  * so it produces a plain array keyed by {@see self::fieldKey()} that {@see \App\Service\Activity\SignupManager} maps.
  *
@@ -48,7 +48,7 @@ class SignupType extends AbstractType
     /** An organiser adding an external by hand: name/email, but no captcha and no agreement checkbox. */
     public const string MODE_ORGANISER = 'organiser';
 
-    /** An external editing their own sign-up via the e-mailed manage link: name + answers, no editable e-mail. */
+    /** An external editing their own sign-up via the emailed manage link: name + answers, no editable email. */
     public const string MODE_MANAGE = 'manage';
 
     private const string ACTIVITY_POLICY_URL = 'https://gewis.nl/data/regulations/activity-policy.pdf';
@@ -132,9 +132,9 @@ class SignupType extends AbstractType
                 ],
             );
 
-            // The e-mail is the verified identity of an external sign-up, so on the manage page it is shown but
-            // disabled — a disabled field is also ignored on submit, so it can never be changed there (which would
-            // bypass the verification the sign-up was confirmed with). To use a different address the participant
+            // The email is the verified identity of an external sign-up, so on the manage page it is shown but
+            // disabled: a disabled field is also ignored on submit, so it can never be changed there (which would
+            // bypass the verification the sign-up was confirmed with). To use a different address the subscriber
             // unsubscribes and signs up again.
             $builder->add(
                 'email',

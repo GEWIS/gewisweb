@@ -32,8 +32,8 @@ use Symfony\UX\LiveComponent\DefaultActionTrait;
 use function strval;
 
 /**
- * Recovery path for a lost/undelivered external-sign-up confirmation e-mail: a small live form (e-mail + Altcha) that
- * re-sends the verification link. A live component for the same reasons as {@see ExternalSignupForm} — inline
+ * Recovery path for a lost/undelivered external-sign-up confirmation email: a small live form (email + Altcha) that
+ * re-sends the verification link. A live component for the same reasons as {@see ExternalSignupForm}: inline
  * validation (incl. the captcha) without a full-page reload, and the Altcha widget can live here behind
  * `data-live-ignore`.
  *
@@ -128,7 +128,7 @@ final class ExternalSignupResendForm
         }
 
         // Dispatch unconditionally; the handler does the sign-up existence lookup off the request thread, so response
-        // timing never reveals whether this e-mail is signed up (mirrors the password-reset request).
+        // timing never reveals whether this email is signed up (mirrors the password-reset request).
         $this->messageBus->dispatch(
             new ExternalSignupResendVerificationEmail(
                 (int) $this->signupList->getId(),
@@ -152,7 +152,7 @@ final class ExternalSignupResendForm
     }
 
     /**
-     * Re-assert this is the activity's publicly live list that accepts externals (not gated on being open — see above).
+     * Re-assert this is the activity's publicly live list that accepts externals (not gated on being open; see above).
      */
     private function assertList(): void
     {

@@ -6,9 +6,9 @@ namespace App\Message\Activity;
 
 /**
  * A message an organiser broadcasts to everyone signed up for an activity (NOT the confirmation a member receives when
- * they themselves sign up -- this is the organiser's own notify-my-attendees mechanism). The recipients are snapshotted
+ * they themselves sign up; this is the organiser's own notify-my-attendees mechanism). The recipients are snapshotted
  * to {email, name} pairs at dispatch time, so the queued message sends deterministically even if a sign-up is later
- * changed or removed. It is dispatched as ONE message (a single, atomic enqueue from the request -- never a
+ * changed or removed. It is dispatched as ONE message (a single, atomic enqueue from the request, never a
  * partially-enqueued fan-out) and handled by {@see \App\MessageHandler\Activity\OrganiserAnnouncementEmailHandler},
  * which sends one personalised email per recipient and is resilient to an individual send failing. Routed to the bulk
  * transport.

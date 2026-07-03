@@ -9,7 +9,6 @@ use App\Entity\Application\Enums\Languages;
 use App\Entity\Application\Traits\IdentifiableTrait;
 use App\Entity\Application\Traits\TimestampableTrait;
 use App\Repository\Activity\SignupRepository;
-use DateTime;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -37,7 +36,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  *     signupList_id: int,
  *     fieldValues: ImportedSignupFieldValueGdprArrayType[],
  *     present: bool,
- *     agreedToPolicyAt: ?string,
  * }
  */
 #[Entity(repositoryClass: SignupRepository::class)]
@@ -94,23 +92,13 @@ abstract class Signup
     private bool $present = false;
 
     /**
-     * Whether this sign-up has been admitted (drawn). Defaults to false -- the safe default: on a limited-capacity
+     * Whether this sign-up has been admitted (drawn). Defaults to false, the safe default: on a limited-capacity
      * list a sign-up starts on the waiting list until a draw admits it, so a creation path that forgets to set this
      * can never silently bypass capacity. An unlimited list has no draw, so its creation path admits explicitly
      * (drawn = !limitedCapacity); see ActivityFixture and the public subscribe flow.
      */
     #[Column(type: Types::BOOLEAN)]
     private bool $drawn = false;
-
-    /**
-     * When the person agreed to the activity and alcohol policies by submitting the sign-up form; null for sign-ups
-     * created before this was recorded or added by an organiser on someone's behalf.
-     */
-    #[Column(
-        type: Types::DATETIME_MUTABLE,
-        nullable: true,
-    )]
-    private ?DateTime $agreedToPolicyAt = null;
 
     public function __construct()
     {
@@ -198,19 +186,6 @@ abstract class Signup
     }
 
     /**
-     * When the person agreed to the activity and alcohol policies, or null if not recorded.
-     */
-    public function getAgreedToPolicyAt(): ?DateTime
-    {
-        return $this->agreedToPolicyAt;
-    }
-
-    public function setAgreedToPolicyAt(?DateTime $agreedToPolicyAt): void
-    {
-        $this->agreedToPolicyAt = $agreedToPolicyAt;
-    }
-
-    /**
      * Get the full name of the user whom signed up for the SignupList.
      */
     abstract public function getFullName(): string;
@@ -238,7 +213,6 @@ abstract class Signup
             'activity_id' => $this->getSignupList()->getActivity()->getId(),
             'signupList_id' => $this->getSignupList()->getId(),
             'present' => $this->isPresent(),
-            'agreedToPolicyAt' => $this->getAgreedToPolicyAt()?->format(DateTimeInterface::ATOM),
             'fieldValues' => $fieldValues,
         ];
     }

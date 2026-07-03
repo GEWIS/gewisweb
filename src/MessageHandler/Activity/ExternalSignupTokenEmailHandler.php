@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use function sprintf;
 
 /**
- * Sends an external participant the link for a sign-up token. Runs in a worker; the e-mail is always English (the
+ * Sends an external subscriber the link for a sign-up token. Runs in a worker; the email is always English (the
  * sender's/request locale says nothing about what the recipient reads), so the activity name prefers its English text.
  * The sign-up is re-loaded by id and silently skipped if it has since been withdrawn.
  */

@@ -34,14 +34,14 @@ use function assert;
 
 /**
  * The member-facing body of one sign-up list: the Sign up / Edit / Unsubscribe controls, the sign-up form (in a
- * Bootstrap modal) and the subscriber table — all live, so signing up, editing answers and withdrawing update the
- * panel inline with no page reload. Members only ({@see IsGranted}); guests get the server-rendered partial with the
- * plain Altcha external form, which cannot live in a live component.
+ * Bootstrap modal) and the subscriber table. All of these are live, so signing up, editing answers and withdrawing
+ * update the panel inline with no page reload. Members only ({@see IsGranted}); guests get the server-rendered
+ * partial with the plain Altcha external form, which cannot live in a live component.
  *
  * A successful {@see self::submit()} dispatches a `signup:success` browser event (scoped by list id) that the
  * `modal-close` controller uses to close the modal, then the panel re-renders to the signed-up state. {@see
  * self::withdraw()} is confirmed via the shared confirm-modal. The window/ownership rules are re-asserted in every
- * action — a live request bypasses any page-level gate.
+ * action: a live request bypasses any page-level gate.
  */
 #[AsLiveComponent(
     name: 'Activity:SignupList',

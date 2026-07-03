@@ -104,7 +104,7 @@ class AdminApprovalController extends AbstractController
 
         // Actually reviewing is sensitive, so a reviewer (board, or C4 for company/vacancy) must be in sudo mode to
         // open the screen. This is a GET, so the SudoAccessDeniedListener preserves ?next and returns the reviewer
-        // here after re-auth. Pure authors (APPROVE denied) are never prompted -- they only view/submit/comment on
+        // here after re-auth. Pure authors (APPROVE denied) are never prompted: they only view/submit/comment on
         // their own draft, none of which sudo gates.
         if (
             $this->isGranted(
@@ -377,8 +377,8 @@ class AdminApprovalController extends AbstractController
 
         // When the activity can no longer be published, the workflow withholds submit/approve
         // (PastActivityGuardListener); explain why on the screen. Two cases: an established activity whose live
-        // schedule has *ended*, and a brand-new activity (no live revision) whose own *start* has already passed
-        // -- the latter is recoverable by re-dating the draft, so it gets a different banner.
+        // schedule has *ended*, and a brand-new activity (no live revision) whose own *start* has already passed.
+        // The latter is recoverable by re-dating the draft, so it gets a different banner.
         $liveEnded = null !== $live
             && $live !== $revision
             && null !== $live->getEndTime()

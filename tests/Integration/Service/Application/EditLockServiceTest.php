@@ -17,7 +17,7 @@ use function sprintf;
 
 /**
  * The exclusive edit lock guards concurrent editing of a revisable aggregate, and its acquisition serialises on a
- * MariaDB named lock (`GET_LOCK`/`RELEASE_LOCK`) that SQLite cannot provide -- so it is pinned against the real
+ * MariaDB named lock (`GET_LOCK`/`RELEASE_LOCK`) that SQLite cannot provide, so it is pinned against the real
  * database. Covers the full lifecycle: first acquisition, same-holder refresh, the block when another holds an alive
  * lock, the reviewer force take-over, the silent take-over of a stale (un-pinged) lock, the heartbeat, release, the
  * blocking-lock query and the unflushed purge. An activity stands in for the aggregate; the service is agnostic to the

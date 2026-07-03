@@ -17,7 +17,7 @@ enum ExternalSignupVerificationPurpose: string
     case Verify = 'verify';
 
     /**
-     * A long-lived capability token emailed once the sign-up is confirmed, letting the external participant edit or
+     * A long-lived capability token emailed once the sign-up is confirmed, letting the external subscriber edit or
      * unsubscribe themselves (they have no account). Reusable until the sign-up is withdrawn.
      */
     case Manage = 'manage';
@@ -34,7 +34,7 @@ enum ExternalSignupVerificationPurpose: string
     }
 
     /**
-     * The Twig template for the token e-mail.
+     * The Twig template for the token email.
      */
     public function emailTemplate(): string
     {
@@ -45,7 +45,7 @@ enum ExternalSignupVerificationPurpose: string
     }
 
     /**
-     * The sprintf format for the (always-English) e-mail subject; `%1$s` is the activity name, `%2$s` the list name.
+     * The sprintf format for the (always-English) email subject; `%1$s` is the activity name, `%2$s` the list name.
      */
     public function subjectFormat(): string
     {

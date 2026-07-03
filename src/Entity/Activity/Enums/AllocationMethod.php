@@ -11,8 +11,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 /**
  * How the limited places on a {@see \App\Entity\Activity\SignupList} are allocated among its subscribers.
  *
- * - {@see self::FirstComeFirstServed}: admit in sign-up order up to capacity.
- * - {@see self::ConditionalDraw}: a board-run lottery, timed by a {@see DrawCutoffRule}.
+ * - {@see self::FirstComeFirstServed}: admit in sign-up order up to capacity (drawn automatically at close).
+ * - {@see self::ConditionalDraw}: a lottery run automatically at the moment its {@see DrawCutoffRule} describes
+ *   (with a manual board fallback).
  * - {@see self::ExternalParty}: an outside organisation decides; admission is recorded manually.
  * - {@see self::Custom}: a free-form method described by the organiser; admission is recorded manually.
  */

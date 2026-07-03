@@ -18,7 +18,7 @@ use function implode;
  * An activity that has already happened must not be (re)published: a finished event can no longer be changed, and a
  * brand-new one whose start has passed could never be joined (its sign-up lists close before it begins). This guard
  * closes the loop for a revision still in flight when its deadline passes. The two cases are judged by different
- * deadlines -- an established activity by its live schedule's *end*, a brand-new one by its own *start* -- and each
+ * deadlines (an established activity by its live schedule's *end*, a brand-new one by its own *start*), and each
  * raises its own message, which these tests pin. Far-past/far-future dates keep the assertions independent of the
  * real clock.
  */

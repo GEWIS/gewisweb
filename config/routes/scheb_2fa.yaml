@@ -1,5 +1,5 @@
 # MFA challenge form (rendered by scheb's built-in form controller) and its check endpoint.
-# One pair per firewall — the company firewall pattern ^/(en|nl)/company/... requires
+# One pair per firewall: the company firewall pattern ^/(en|nl)/company/... requires
 # the company variants to be locale-prefixed so they're matched by that firewall.
 
 user_mfa_challenge:

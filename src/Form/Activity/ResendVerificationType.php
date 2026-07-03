@@ -17,7 +17,7 @@ use Tito10047\AltchaBundle\Type\AltchaType;
 use function Symfony\Component\Translation\t;
 
 /**
- * The "resend confirmation e-mail" form for an external sign-up: an e-mail address plus an Altcha captcha. The action
+ * The "resend confirmation email" form for an external sign-up: an email address plus an Altcha captcha. The action
  * only ever re-mails an address that already has a pending sign-up and is rate-limited, but the captcha keeps it from
  * being scripted to spam that inbox. Array-backed (no `data_class`), like {@see SignupType}.
  *

@@ -38,7 +38,7 @@ class PasswordResetRequestFormType extends AbstractType
             ],
         );
 
-        // Self-hosted proof-of-work captcha to deter automated abuse of the reset endpoint (e-mail enumeration and
+        // Self-hosted proof-of-work captcha to deter automated abuse of the reset endpoint (email enumeration and
         // flooding mailboxes with reset links).
         $builder->add(
             'security',

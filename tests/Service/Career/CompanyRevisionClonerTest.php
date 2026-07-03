@@ -15,8 +15,8 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Spawning the next company-profile draft must produce an independent copy: the localised texts (slogan, description,
- * website) become fresh rows -- the OneToOne relations are orphan-removing, so a shared row would be deleted with the
- * source -- while the logo and contact details are plain scalars copied by value. These tests pin that contract so a
+ * website) become fresh rows (the OneToOne relations are orphan-removing, so a shared row would be deleted with the
+ * source), while the logo and contact details are plain scalars copied by value. These tests pin that contract so a
  * regression cannot blank an editor's draft or delete live content.
  */
 final class CompanyRevisionClonerTest extends TestCase

@@ -27,6 +27,8 @@ use Doctrine\ORM\Mapping\UniqueConstraint;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
 
+use function sprintf;
+
 /**
  * SignupList model.
  *
@@ -183,7 +185,8 @@ class SignupList
     private ?DateTime $drawnAt = null;
 
     /**
-     * The board member who performed (and locked) the draw, if any.
+     * The board member who performed (and locked) the draw; null while not drawn, and also for a draw performed
+     * automatically at its deadline (so null with a non-null {@see self::$drawnAt} means an automated draw).
      */
     #[ManyToOne(targetEntity: MemberModel::class)]
     #[JoinColumn(
@@ -517,6 +520,51 @@ class SignupList
     public function isDrawLocked(): bool
     {
         return null !== $this->drawnAt;
+    }
+
+    /**
+     * The moment the automated draw is due for this list, or `null` when it is never drawn automatically.
+     *
+     * Lists with unlimited capacity, manual allocation methods, or a conditional draw without a cutoff rule (only for
+     * legacy sign-up lists) have no draw moment. First-come-first-served draws at close; a conditional draw at
+     * the moment its {@see DrawCutoffRule} describes.
+     */
+    public function getAutoDrawAt(): ?DateTime
+    {
+        if (!$this->limitedCapacity) {
+            return null;
+        }
+
+        if (AllocationMethod::FirstComeFirstServed === $this->allocationMethod) {
+            return $this->closeDate;
+        }
+
+        if (AllocationMethod::ConditionalDraw !== $this->allocationMethod) {
+            return null;
+        }
+
+        return match ($this->drawCutoffRule) {
+            DrawCutoffRule::OnClose => $this->closeDate,
+            DrawCutoffRule::IfFullBefore => $this->drawCutoffAt,
+            DrawCutoffRule::AfterDurationOpen => null === $this->drawAfterDurationHours
+                ? null
+                : (clone $this->openDate)->modify(sprintf(
+                    '+%d hours',
+                    $this->drawAfterDurationHours,
+                )),
+            null => null,
+        };
+    }
+
+    /**
+     * Whether the automated draw moment has passed (regardless of whether the draw has actually run yet).
+     */
+    public function isAutoDrawDue(): bool
+    {
+        $dueAt = $this->getAutoDrawAt();
+
+        return null !== $dueAt
+            && new DateTime('now') >= $dueAt;
     }
 
     public function getDrawnBy(): ?MemberModel

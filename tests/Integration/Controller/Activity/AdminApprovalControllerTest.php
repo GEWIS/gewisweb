@@ -23,7 +23,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * The review controller is thin glue over already-tested pieces (the workflow, {@see DraftDiscarder},
- * {@see EditLockService}, {@see \App\Form\Application\ReviewDecisionType}); these pin its own discard action -- the
+ * {@see EditLockService}, {@see \App\Form\Application\ReviewDecisionType}); these pin its own discard action, the
  * recovery path for a draft whose submit the workflow withholds.
  *
  * The actions are invoked directly with the current user set on the token storage, rather than over HTTP: the app's

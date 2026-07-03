@@ -19,7 +19,7 @@ use function sprintf;
  * The revision model means every query has to pick the right revision to anchor on, and getting it wrong leaks drafts.
  * These pin the anchors against the seed: the public overview surfaces only activities with a live (approved)
  * revision, the admin "pending" list anchors on the WORKING revision's status, and the admin "approved" list returns
- * only approved working revisions. Visibility scoping is covered too -- by the member's own work, and by the working
+ * only approved working revisions. Visibility scoping is covered too: by the member's own work, and by the working
  * revision's organ (the seed assigns the workflow examples to GETÉST and the disjoint KEUR, so organ scope can be
  * shown to be specific).
  *
@@ -116,7 +116,7 @@ final class ActivityRepositoryAnchoringTest extends DatabaseTestCase
         $getest = $this->organId('GETÉST');
 
         // Member 8005 is in GETÉST but creates/authors nothing non-approved, so every pending activity they see is
-        // there purely via the organ scope -- exactly GETÉST's non-approved work.
+        // there purely via the organ scope: exactly GETÉST's non-approved work.
         $pending = $this->repository()->findPendingForAdmin(
             $this->member(8005),
             [$getest],

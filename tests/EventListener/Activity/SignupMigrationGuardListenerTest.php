@@ -27,7 +27,7 @@ use function implode;
  * Turns {@see \App\EventListener\Activity\MigrateSignupsOnApprovalListener}'s last-resort hard-fail into a clean,
  * up-front block: approving (or submitting) a revision that dropped or restructured a sign-up list still carrying live
  * sign-ups must be withheld, because those sign-ups could not be carried across. The allow-paths (no live revision, the
- * revision is itself the live one, or the structure is still migratable) must stay open. The real migrator is used --
+ * revision is itself the live one, or the structure is still migratable) must stay open. The real migrator is used:
  * its migratability decision is exactly what this guard defers to.
  */
 final class SignupMigrationGuardListenerTest extends TestCase

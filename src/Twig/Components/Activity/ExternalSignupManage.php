@@ -27,10 +27,10 @@ use Symfony\UX\LiveComponent\DefaultActionTrait;
 use function strval;
 
 /**
- * Self-service edit/unsubscribe for an external (non-member) sign-up, reached through the e-mailed Manage link. There
+ * Self-service edit/unsubscribe for an external (non-member) sign-up, reached through the emailed Manage link. There
  * is no login, so the token rides as a read-only, signed {@see LiveProp} and is RE-VALIDATED on every render and action
  * (via {@see self::signup()}); a once-validated token is never trusted. Editing the name and answers is an inline live
- * action ({@see self::save()}); the e-mail is locked ({@see SignupType::MODE_MANAGE}) because it is the verified
+ * action ({@see self::save()}); the email is locked ({@see SignupType::MODE_MANAGE}) because it is the verified
  * identity. Unsubscribing ({@see self::unsubscribe()}) withdraws and redirects to the activity, confirmed via the
  * shared confirm-modal.
  */
@@ -71,7 +71,7 @@ final class ExternalSignupManage
 
     /**
      * Re-resolve and re-validate the Manage token on every request, 404-ing on any failure. Memoised within the request
-     * only — a fresh component instance is created per request, so this never serves a stale sign-up across requests.
+     * only: a fresh component instance is created per request, so this never serves a stale sign-up across requests.
      */
     public function signup(): ExternalSignup
     {
@@ -91,7 +91,7 @@ final class ExternalSignupManage
     }
 
     /**
-     * Whether the participant may still edit/unsubscribe: the list is the activity's live list and is open.
+     * Whether the subscriber may still edit/unsubscribe: the list is the activity's live list and is open.
      */
     public function isEditable(): bool
     {
@@ -156,7 +156,7 @@ final class ExternalSignupManage
     /**
      * Withdraw and redirect to the activity. A live action that redirects (rather than re-rendering an inline
      * "unsubscribed" state) because the withdrawal also deletes the Manage token, so the page can no longer be
-     * re-resolved — and the natural next view is the activity itself.
+     * re-resolved, and the natural next view is the activity itself.
      */
     #[LiveAction]
     public function unsubscribe(): RedirectResponse

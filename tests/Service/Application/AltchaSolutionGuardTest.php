@@ -15,7 +15,7 @@ use function json_encode;
 use const JSON_THROW_ON_ERROR;
 
 /**
- * The local Altcha validator only checks the signature, expiry and proof-of-work -- it does not stop a solved payload
+ * The local Altcha validator only checks the signature, expiry and proof-of-work; it does not stop a solved payload
  * being submitted twice within its validity window. This guard closes that replay hole by remembering a consumed
  * challenge signature, so the first submission is accepted and any replay (same signature) is rejected. A payload it
  * cannot parse down to a challenge signature is treated as not-a-solution (false), never accidentally accepted.

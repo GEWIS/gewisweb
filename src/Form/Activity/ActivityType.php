@@ -21,7 +21,7 @@ use function strval;
 use function trim;
 
 /**
- * Create/edit form for an activity. All revisable content -- including the organising organ/company and the labels --
+ * Create/edit form for an activity. All revisable content, including the organising organ/company and the labels,
  * lives on the embedded {@see ActivityRevisionType} bound to the activity's working revision; this root form only
  * wires that in and runs the cross-cutting scheduling/language validation that needs the whole revision at once.
  *
@@ -60,7 +60,7 @@ class ActivityType extends AbstractType
 
     /**
      * Server-side business rules for the schedule, the sign-up windows and the per-language required fields. This runs
-     * on the root form -- the only place with access to both the revision (schedule, language toggles, localised
+     * on the root form, the only place with access to both the revision (schedule, language toggles, localised
      * texts) and every sign-up list. Comparisons are guarded so an empty field is reported once by its NotBlank, never
      * twice here.
      */
@@ -78,7 +78,7 @@ class ActivityType extends AbstractType
         $endTime = $endForm->getData();
         $now = new DateTime();
 
-        // Rule 1: start in the future -- skipped when the start is locked (the activity has already started).
+        // Rule 1: start in the future. Skipped when the start is locked (the activity has already started).
         if (
             !$beginForm->isDisabled()
             && $beginTime instanceof DateTime
@@ -93,7 +93,7 @@ class ActivityType extends AbstractType
             ));
         }
 
-        // Rule 2: end after start -- skipped while the start is locked.
+        // Rule 2: end after start. Skipped while the start is locked.
         if (
             !$beginForm->isDisabled()
             && !$endForm->isDisabled()
@@ -131,7 +131,7 @@ class ActivityType extends AbstractType
 
         // Rule 5: at least one language must be enabled. The per-language requirements below (and on every sign-up
         // list) are all skipped for a disabled language, so with both off nothing is required and an activity with no
-        // content at all would save -- contradicting the form's own promise. The toggles are always submitted, so
+        // content at all would save, contradicting the form's own promise. The toggles are always submitted, so
         // this reads reliably here.
         if (
             !$dutchOn
@@ -161,7 +161,7 @@ class ActivityType extends AbstractType
             $openDate = $openForm->getData();
             $closeDate = $closeForm->getData();
 
-            // Rule 3a: a new sign-up list must open in the future -- skipped once the list has opened (the opening
+            // Rule 3a: a new sign-up list must open in the future. Skipped once the list has opened (the opening
             // date is then locked, so an already-past value is never newly rejected).
             if (
                 !$openForm->isDisabled()

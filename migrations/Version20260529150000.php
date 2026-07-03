@@ -8,11 +8,11 @@ use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 
 /**
- * Revision/approval workflow for activities and the careers portal — consolidated feature migration.
+ * Revision/approval workflow for activities and the careers portal (consolidated feature migration).
  *
  * This is the squash of the ten incremental migrations authored while building the revision-workflow feature. The
  * original statements are reproduced verbatim (every up() in chronological order, every down() in reverse) so the
- * production data carry-forward is preserved exactly — this is NOT a fresh schema diff. The folded steps are:
+ * production data carry-forward is preserved exactly; this is NOT a fresh schema diff. The folded steps are:
  *   1. Split Activity/Company/Vacancy into stable aggregates + immutable revision chains; rename Job -> Vacancy;
  *      migrate SignupField.type to a string-backed enum; carry legacy rows into revision 1; drop the Approvable* model.
  *   2. Move sign-up lists from the activity onto the activity revision (stable per-list lineageId).
@@ -23,7 +23,8 @@ use Doctrine\Migrations\AbstractMigration;
  *   7. Add the numeric capacity of a (limited-capacity) sign-up list.
  *   8. Add the draw lock/audit (drawnAt/drawnBy) to a sign-up list.
  *   9. Add allocationMethod and its per-method settings to a sign-up list.
- *  10. Add external sign-up email-verification tokens and a policy-agreement timestamp on sign-ups.
+ *  10. Add external sign-up email-verification tokens and a policy-agreement and email-confirmation timestamp on
+ *      sign-ups.
  *
  * phpcs:disable Generic.Files.LineLength.TooLong
  * phpcs:disable SlevomatCodingStandard.Functions.RequireMultiLineCall.RequiredMultiLineCall
@@ -379,20 +380,29 @@ final class Version20260529150000 extends AbstractMigration
         $this->addSql('UPDATE SignupList SET allocationMethod = \'first-come-first-served\', externalForceOrdering = 0, externalPaymentByExternal = 0');
         $this->addSql('ALTER TABLE SignupList CHANGE allocationMethod allocationMethod VARCHAR(255) NOT NULL, CHANGE externalForceOrdering externalForceOrdering TINYINT NOT NULL, CHANGE externalPaymentByExternal externalPaymentByExternal TINYINT NOT NULL');
 
-        // ── Version20260607180918: Add external sign-up email verification tokens and a policy-agreement timestamp on sign-ups.
+        // ── Version20260607180918: Add external sign-up email verification tokens and a manually-added flag on external sign-ups.
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE TABLE ExternalSignupVerification (purpose VARCHAR(255) NOT NULL, selector VARCHAR(255) NOT NULL, hashedToken VARCHAR(255) NOT NULL, expiresAt DATETIME NOT NULL, id INT AUTO_INCREMENT NOT NULL, external_signup_id INT NOT NULL, INDEX IDX_D55257277B3A307A (external_signup_id), INDEX IDX_external_signup_verification_selector (selector), PRIMARY KEY (id)) DEFAULT CHARACTER SET utf8mb4');
         $this->addSql('ALTER TABLE ExternalSignupVerification ADD CONSTRAINT FK_D55257277B3A307A FOREIGN KEY (external_signup_id) REFERENCES Signup (id) ON DELETE CASCADE');
-        $this->addSql('ALTER TABLE Signup ADD agreedToPolicyAt DATETIME DEFAULT NULL');
+        // The old schema did not record whether an external signed up themselves or was entered by an organiser, so
+        // flag every pre-existing external as manual: the conservative reading, as it asserts no policy agreement
+        // that was never recorded.
+        $this->addSql('ALTER TABLE Signup ADD addedManually TINYINT DEFAULT NULL');
+        $this->addSql("UPDATE Signup SET addedManually = 1 WHERE type = 'external'");
+        // Every pre-existing external predates the double-opt-in machinery (the token table created above is still
+        // empty at this point), so each one is already a confirmed subscriber; its confirmation is dated to its
+        // creation.
+        $this->addSql('ALTER TABLE Signup ADD verifiedAt DATETIME DEFAULT NULL');
+        $this->addSql("UPDATE Signup SET verifiedAt = createdAt WHERE type = 'external'");
     }
 
     public function down(Schema $schema): void
     {
-        // ── Version20260607180918: Add external sign-up email verification tokens and a policy-agreement timestamp on sign-ups. (reverse)
+        // ── Version20260607180918: Add external sign-up email verification tokens and a manually-added flag on external sign-ups. (reverse)
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE ExternalSignupVerification DROP FOREIGN KEY FK_D55257277B3A307A');
         $this->addSql('DROP TABLE ExternalSignupVerification');
-        $this->addSql('ALTER TABLE Signup DROP agreedToPolicyAt');
+        $this->addSql('ALTER TABLE Signup DROP addedManually, DROP verifiedAt');
 
         // ── Version20260606184826: Add allocationMethod and its per-method settings to SignupList. (reverse)
         $this->addSql('ALTER TABLE SignupList DROP allocationMethod, DROP drawCutoffRule, DROP drawCutoffAt, DROP drawAfterDurationHours, DROP externalPolicyUrl, DROP externalForceOrdering, DROP externalPaymentByExternal, DROP customMethodDescription');

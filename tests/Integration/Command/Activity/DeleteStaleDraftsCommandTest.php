@@ -20,7 +20,7 @@ use Symfony\Component\Console\Tester\CommandTester;
  * removed entirely, and a dry run reports without touching anything. Staleness is forced by ageing the draft's
  * (auto-stamped) `updatedAt` past the 30-day cutoff with a DQL update.
  *
- * Not covered here: the defensive skip when a never-approved activity already carries sign-ups -- that state never
+ * Not covered here: the defensive skip when a never-approved activity already carries sign-ups. That state never
  * arises from the normal flow (sign-ups only exist on an approved revision) and is left to the unit-level guards.
  */
 final class DeleteStaleDraftsCommandTest extends DatabaseTestCase

@@ -38,8 +38,8 @@ final class SignupAdminWindow
     }
 
     /**
-     * Admission (the draw and later manual admit/un-admit) may be changed until a day after the activity ends -- the
-     * same upper bound as attendance -- so a draw forgotten before the activity can still be run at the door. Otherwise
+     * Admission (the draw and later manual admit/un-admit) may be changed until a day after the activity ends, the
+     * same upper bound as attendance, so a draw forgotten before the activity can still be run at the door. Otherwise
      * a never-drawn limited list would strand: no admission and, since presence needs admission, no attendance either.
      */
     public static function canChangeAdmission(DateTime $endTime): bool

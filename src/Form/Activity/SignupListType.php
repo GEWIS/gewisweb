@@ -382,7 +382,7 @@ class SignupListType extends AbstractType
     }
 
     /**
-     * Expose whether the list is structurally frozen (it -- or its live lineage counterpart -- has sign-ups) so the
+     * Expose whether the list is structurally frozen (it, or its live lineage counterpart, has sign-ups) so the
      * collection theme can hide the "remove" button: a list with sign-ups must never be deleted.
      *
      * @param array<string, mixed> $options
@@ -471,7 +471,7 @@ class SignupListType extends AbstractType
     }
 
     /**
-     * Whether this list -- or, when it is a draft clone, the live revision's list it descends from -- has sign-ups. A
+     * Whether this list, or (when it is a draft clone) the live revision's list it descends from, has sign-ups. A
      * draft clone's own sign-ups are always empty (sign-ups live on the live revision until approval migrates them),
      * so the structural freeze must look through the lineage to the live counterpart. The collection prototype has no
      * bound list (`null`), in which case nothing is frozen.
@@ -486,8 +486,8 @@ class SignupListType extends AbstractType
 
     /**
      * The shared lineage walk behind {@see self::hasLiveSignUps()} and {@see self::isLiveDrawn()}: whether a predicate
-     * holds for this list, or -- when it is a draft clone whose own state is still empty because sign-ups/draws live on
-     * the live revision until approval -- for the live revision's list it descends from (matched by
+     * holds for this list, or (when it is a draft clone whose own state is still empty because sign-ups/draws live
+     * on the live revision until approval) for the live revision's list it descends from (matched by
      * {@see SignupList::getLineageId()}). The collection prototype has no bound list (`null`), for which this is false.
      *
      * @param callable(SignupList): bool $predicate
@@ -549,7 +549,7 @@ class SignupListType extends AbstractType
     }
 
     /**
-     * Whether this list -- or its live lineage counterpart -- has had its draw performed (and locked). Like
+     * Whether this list, or its live lineage counterpart, has had its draw performed (and locked). Like
      * {@see self::hasLiveSignUps()} a draft clone carries the lock forward, so the same lineage walk is used.
      */
     private function isLiveDrawn(?SignupList $list): bool
@@ -562,7 +562,7 @@ class SignupListType extends AbstractType
 
     /**
      * Null out the per-method settings that do not apply to the bound list's final state, so an unlimited list (or one
-     * whose method changed) cannot persist -- and later resurface / be cloned with -- stale allocation config. Skipped
+     * whose method changed) cannot persist stale allocation config that could later reappear or be cloned. Skipped
      * for an already-drawn list, whose allocation fields are frozen (not submitted) and must keep their values.
      */
     private function clearInapplicableAllocation(FormEvent $event): void

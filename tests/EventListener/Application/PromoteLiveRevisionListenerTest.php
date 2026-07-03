@@ -17,7 +17,7 @@ use Symfony\Component\Workflow\Event\EnteredEvent;
 use Symfony\Component\Workflow\Marking;
 
 /**
- * On approval a revision becomes the publicly live version of its aggregate -- except for activities, which are
+ * On approval a revision becomes the publicly live version of its aggregate, except for activities, which are
  * promoted by {@see \App\EventListener\Activity\MigrateSignupsOnApprovalListener} (it must first move the live sign-ups
  * across). This listener therefore promotes companies and vacancies directly and must skip activity revisions, or an
  * activity would be promoted without its sign-ups migrated.

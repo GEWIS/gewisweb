@@ -18,7 +18,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 /**
  * The sign-up admin component is the first live component that writes to the database and dispatches mail, so it
  * re-asserts access on every action rather than trusting the page that embedded it. These exercise it as the framework
- * does -- the real component instance with its real services -- after authenticating the current user on the token
+ * does (the real component instance with its real services) after authenticating the current user on the token
  * storage, which is what its {@see SignupOverview::assertAccess()} reads.
  *
  * Driving it over the live-component HTTP endpoint is not viable here: the app's session guard force-logs-out any
@@ -81,7 +81,7 @@ final class SignupOverviewTest extends DatabaseTestCase
             1,
             $sent,
         );
-        // All four subscribers carry an e-mail, so the default "everyone" scope reaches all of them.
+        // All four subscribers carry an email, so the default "everyone" scope reaches all of them.
         self::assertCount(
             4,
             $sent[0]->getRecipients(),

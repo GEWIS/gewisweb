@@ -17,7 +17,7 @@ use const JSON_THROW_ON_ERROR;
 
 /**
  * Single-use guard for solved Altcha proof-of-work captchas. The local (non-Sentinel) Altcha validator only checks the
- * HMAC signature, the expiry and the proof-of-work -- it does NOT stop a solved payload being submitted more than once
+ * HMAC signature, the expiry and the proof-of-work; it does NOT stop a solved payload being submitted more than once
  * within its signature-validity window. This consumes a verified solution by remembering its challenge signature until
  * that window passes, so replaying the same solved proof-of-work is rejected.
  */

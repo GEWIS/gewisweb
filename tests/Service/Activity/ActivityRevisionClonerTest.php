@@ -27,7 +27,7 @@ use PHPUnit\Framework\TestCase;
  * Spawning draft N+1 must produce an *independent* copy of the source revision's content: the localised texts have to
  * become fresh rows (the relations are orphan-removing, so a shared row would be deleted with the source), the
  * schedule must be cloned by value, the reference entities (organ, company, labels) must be carried over by reference,
- * and the sign-up lists must be deep-cloned -- keeping their lineage id so approval can migrate the live sign-ups onto
+ * and the sign-up lists must be deep-cloned, keeping their lineage id so approval can migrate the live sign-ups onto
  * them, but never carrying the sign-ups themselves (those stay on the live revision until approval). These tests pin
  * that contract; a regression here silently blanks an editor's draft or, worse, lets a draft delete live content.
  */

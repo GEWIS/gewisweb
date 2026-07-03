@@ -15,7 +15,7 @@ use App\Tests\Integration\DatabaseTestCase;
 /**
  * Discarding a draft re-edit must put the aggregate back exactly as it was: the activity points at its approved (live)
  * revision again and the abandoned draft is gone together with its review thread. The comments matter because they
- * reference the revision with a NON-cascading foreign key, so a plain `remove($revision)` would fail on them -- the
+ * reference the revision with a NON-cascading foreign key, so a plain `remove($revision)` would fail on them; the
  * service removes them first. Set up against a real re-edit produced by {@see ActivityRevisionCloner}, the same way the
  * application spawns the draft.
  */

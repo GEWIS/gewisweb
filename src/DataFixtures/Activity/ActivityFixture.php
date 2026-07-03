@@ -42,7 +42,7 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
     {
         // Ordered chronologically by begin time so the rows are inserted (and auto-incremented) in that order.
         $activities = [
-            // Past, two association years ago (AY 2023-2024) — appears under that heading in the archive and
+            // Past, two association years ago (AY 2023-2024): appears under that heading in the archive and
             // exercises the same-day, past-year date format.
             [
                 'creator' => 8020,
@@ -69,7 +69,7 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
                     'nl' => 'Een rondleiding langs de moderne kunstcollectie.',
                 ],
             ],
-            // Past, multi-day, in a previous calendar year (fixed dates) — exercises the multi-day + year date format.
+            // Past, multi-day, in a previous calendar year (fixed dates): exercises the multi-day + year date format.
             [
                 'creator' => 8024,
                 'status' => RevisionStatus::Approved,
@@ -214,7 +214,7 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
                         'drawnBy' => 8025,
                         'presenceTaken' => true,
                         // A closed, past, limited-capacity list exercising the full flow: 3 admitted (capacity 3) of
-                        // whom 2 attended and 1 was a no-show, plus 2 on the waiting list (one a non-member external) —
+                        // whom 2 attended and 1 was a no-show, plus 2 on the waiting list (one a non-member external),
                         // an obvious backfill opportunity. Also covers extra fields and mixed membership types.
                         'fields' => [
                             [
@@ -248,7 +248,7 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
                         ],
                         'subscribers' => [
                             [
-                                'member' => 8005, // ordinary — admitted, attended
+                                'member' => 8005, // ordinary: admitted, attended
                                 'drawn' => true,
                                 'present' => true,
                                 'answers' => [
@@ -257,13 +257,13 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
                                 ],
                             ],
                             [
-                                'member' => 8006, // ordinary — admitted, attended
+                                'member' => 8006, // ordinary: admitted, attended
                                 'drawn' => true,
                                 'present' => true,
                                 'answers' => ['T-shirt size' => 'L'],
                             ],
                             [
-                                'member' => 8015, // external member — admitted, no-show
+                                'member' => 8015, // external member: admitted, no-show
                                 'drawn' => true,
                                 'present' => false,
                                 'answers' => [
@@ -272,7 +272,7 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
                                 ],
                             ],
                             [
-                                'member' => 8155, // graduate — waiting list
+                                'member' => 8155, // graduate: waiting list
                                 'drawn' => false,
                                 'present' => false,
                                 'answers' => ['T-shirt size' => 'M'],
@@ -280,7 +280,7 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
                         ],
                         'externals' => [
                             [
-                                'fullName' => 'Alex Visitor', // non-member — waiting list
+                                'fullName' => 'Alex Visitor', // non-member: waiting list
                                 'email' => 'alex.visitor@example.org',
                                 'drawn' => false,
                                 'present' => false,
@@ -293,7 +293,7 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
                     ],
                 ],
             ],
-            // Ongoing right now (began earlier, ends later) — exercises the "ongoing for %duration%" note. A drop-in
+            // Ongoing right now (began earlier, ends later): exercises the "ongoing for %duration%" note. A drop-in
             // borrel has no sign-up: a sign-up list can never still be open once the activity has started.
             [
                 'creator' => 8012,
@@ -320,7 +320,7 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
                     'nl' => 'Kom langs in de verenigingskamer voor een drankje — we zijn nu open.',
                 ],
             ],
-            // Upcoming, with a sign-up that closes within a day — exercises the imminent-deadline colour (text-danger)
+            // Upcoming, with a sign-up that closes within a day: exercises the imminent-deadline colour (text-danger)
             // on an activity that has not started yet, so its sign-up can legitimately still be open.
             [
                 'creator' => 8013,
@@ -619,7 +619,7 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
                     ],
                 ],
             ],
-            // Upcoming, multi-day (spans several days) — exercises the multi-day date format for future activities.
+            // Upcoming, multi-day (spans several days): exercises the multi-day date format for future activities.
             [
                 'creator' => 8027,
                 'status' => RevisionStatus::Approved,
@@ -668,8 +668,10 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
                     ],
                 ],
             ],
-            // Upcoming, approved, board-organised, with a CLOSED limited sign-up list — so the board draw is testable
+            // Upcoming, approved, board-organised, with a CLOSED limited sign-up list, so the draw is testable
             // end-to-end (sign-up over, activity still in the future, more sign-ups than places, not yet drawn).
+            // NOTE: this list is due for the automated draw the moment it is seeded, so in dev a running scheduler
+            // draws it within a minute; re-seed to demo the pre-draw state or the manual board fallback.
             [
                 'creator' => 8025,
                 'status' => RevisionStatus::Approved,
@@ -810,6 +812,9 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
                     $signup->setSignupList($signupList);
                     $signup->setFullName($external['fullName']);
                     $signup->setEmail($external['email']);
+                    // No token rows are seeded, so seeded externals are confirmed subscribers, mirroring the
+                    // organiser-add path; without the stamp they would count as unverified everywhere.
+                    $signup->setVerifiedAt(new DateTime());
                     $signup->setDrawn($external['drawn']);
                     $signup->setPresent($external['present']);
                     $manager->persist($signup);

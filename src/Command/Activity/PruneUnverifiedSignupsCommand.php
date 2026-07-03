@@ -25,7 +25,7 @@ use function sprintf;
  */
 #[AsCommand(
     name: 'app:activity:prune-unverified-signups',
-    description: 'Delete external sign-ups whose e-mail verification window has expired.',
+    description: 'Delete external sign-ups whose email verification window has expired.',
 )]
 #[AsCronTask(
     expression: '30 3 * * *',

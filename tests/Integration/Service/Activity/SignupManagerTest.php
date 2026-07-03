@@ -26,7 +26,7 @@ use function strval;
 /**
  * Exercises the single home for the sign-up rules against a real database: how submitted answers are mapped onto value
  * rows, how a member sign-up is immediately live while an external one is born unverified behind a double-opt-in token,
- * and the verify -> confirm -> manage token lifecycle (including the resend and withdraw paths). The token e-mails
+ * and the verify -> confirm -> manage token lifecycle (including the resend and withdraw paths). The token emails
  * route to the in-memory transport under `when@test`, so dispatch is asserted on the queue rather than actually sent.
  */
 final class SignupManagerTest extends DatabaseTestCase
@@ -51,14 +51,13 @@ final class SignupManagerTest extends DatabaseTestCase
             $member->getLidnr(),
             $signup->getUser()->getLidnr(),
         );
-        self::assertNotNull($signup->getAgreedToPolicyAt());
         // The list is limited, so the member starts on the waiting list until the organiser draws.
         self::assertFalse($signup->isDrawn());
         $this->assertAnswersStored(
             $signup,
             $answers,
         );
-        // A member sign-up is trusted and immediately live: no verification token, no e-mail.
+        // A member sign-up is trusted and immediately live: no verification token, no email.
         self::assertSame(
             [],
             $this->sentTokenEmails(),
@@ -100,7 +99,8 @@ final class SignupManagerTest extends DatabaseTestCase
             'sam.external@example.org',
             $signup->getEmail(),
         );
-        self::assertNotNull($signup->getAgreedToPolicyAt());
+        // A self sign-up, not an organiser entry.
+        self::assertFalse($signup->isAddedManually());
         $this->assertAnswersStored(
             $signup,
             $answers,
@@ -118,7 +118,7 @@ final class SignupManagerTest extends DatabaseTestCase
             '+1 day',
         );
 
-        // Exactly one Verify e-mail is queued, and its plaintext token resolves to the stored row's selector.
+        // Exactly one Verify email is queued, and its plaintext token resolves to the stored row's selector.
         self::assertSame(
             [ExternalSignupVerificationPurpose::Verify],
             $this->sentPurposes(),
@@ -144,9 +144,9 @@ final class SignupManagerTest extends DatabaseTestCase
             ),
         );
 
-        // The organiser vouches for the participant: no policy agreement is recorded on their behalf ...
-        self::assertNull($signup->getAgreedToPolicyAt());
-        // ... and there is no double opt-in, so no token and no confirmation e-mail.
+        // The organiser vouches for the subscriber, and the sign-up is flagged as such ...
+        self::assertTrue($signup->isAddedManually());
+        // ... and there is no double opt-in, so no token and no confirmation email.
         self::assertFalse($this->verifications()->hasPendingVerification($signup));
         self::assertSame(
             [],
@@ -180,7 +180,7 @@ final class SignupManagerTest extends DatabaseTestCase
             $manage->getExpiresAt(),
             '+1 year',
         );
-        // The manage link is e-mailed, after the earlier verify e-mail.
+        // The manage link is emailed, after the earlier verify email.
         self::assertContains(
             ExternalSignupVerificationPurpose::Manage,
             $this->sentPurposes(),
@@ -272,7 +272,7 @@ final class SignupManagerTest extends DatabaseTestCase
         // link cannot be re-sent) ...
         self::assertNull($this->verifications()->findBySelector($originalSelector));
         self::assertTrue($this->verifications()->hasPendingVerification($signup));
-        // ... and a second verify e-mail is queued.
+        // ... and a second verify email is queued.
         self::assertSame(
             [
                 ExternalSignupVerificationPurpose::Verify,
@@ -467,7 +467,7 @@ final class SignupManagerTest extends DatabaseTestCase
     }
 
     /**
-     * The purposes of the token e-mails queued so far, in order, so a test can assert exactly which confirmation mails
+     * The purposes of the token emails queued so far, in order, so a test can assert exactly which confirmation mails
      * were dispatched.
      *
      * @return ExternalSignupVerificationPurpose[]

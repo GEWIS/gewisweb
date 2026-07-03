@@ -168,7 +168,7 @@ class ActivityRepository extends ServiceEntityRepository
                 );
             } else {
                 // Scope organ visibility by the WORKING (current) revision's organ, matching the voter
-                // (RevisionVoter): an organ's members see -- and may edit -- the drafts assigned to their organ.
+                // (RevisionVoter): an organ's members see (and may edit) the drafts assigned to their organ.
                 $qb->andWhere(
                     '(IDENTITY(a.creator) = :creatorLidnr'
                     . ' OR IDENTITY(cr.author) = :creatorLidnr'

@@ -14,7 +14,7 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use function sprintf;
 
 /**
- * {@see RevisionVoter} grants edit/view rights to the members of the organ organising a revision -- resolved from the
+ * {@see RevisionVoter} grants edit/view rights to the members of the organ organising a revision, resolved from the
  * member's live organ installations against the WORKING revision's organ. The unit test pins the decision matrix with
  * stubs; this proves the real wiring against the seed: a member of the organising organ may see and (while it is a
  * Draft) edit the revision, a member of a different organ may not, and only a Draft is editable.

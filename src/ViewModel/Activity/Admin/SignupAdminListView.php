@@ -49,6 +49,8 @@ final readonly class SignupAdminListView
         public bool $drawLocked,
         public ?DateTime $drawnAt,
         public ?string $drawnByName,
+        public ?DateTime $autoDrawAt,
+        public bool $autoDrawDue,
         public bool $isOpen,
         public bool $isClosed,
         public int $subscriberCount,
@@ -65,8 +67,8 @@ final readonly class SignupAdminListView
      * @param string $filter                   case-insensitive name/email substring; empty matches everyone
      * @param int[]  $selectedIds              signup ids the organiser ticked; drives each list's selected count
      * @param int[]  $hiddenFieldIds           ids of the sign-up fields whose column the organiser hid
-     * @param int[]  $pendingExternalSignupIds external sign-ups still awaiting e-mail verification; excluded entirely
-     *                                         (an unconfirmed sign-up is not yet a real participant)
+     * @param int[]  $pendingExternalSignupIds external sign-ups still awaiting email verification; excluded entirely
+     *                                         (an unconfirmed sign-up is not yet a real subscriber)
      */
     public static function fromSignupList(
         SignupList $signupList,
@@ -110,7 +112,7 @@ final readonly class SignupAdminListView
         $admittedCount = 0;
         $selectedCount = 0;
         foreach ($signupList->getSignUps() as $signup) {
-            // Hide externals that have not confirmed their e-mail: not real participants, must not be counted or drawn.
+            // Hide externals that have not confirmed their email: not real subscribers, must not be counted or drawn.
             if (
                 $signup instanceof ExternalSignup
                 && in_array(
@@ -214,6 +216,8 @@ final readonly class SignupAdminListView
             drawLocked: $signupList->isDrawLocked(),
             drawnAt: $signupList->getDrawnAt(),
             drawnByName: $signupList->getDrawnBy()?->getFullName(),
+            autoDrawAt: $signupList->getAutoDrawAt(),
+            autoDrawDue: $signupList->isAutoDrawDue(),
             isOpen: $signupList->isOpen(),
             isClosed: $signupList->isClosed(),
             subscriberCount: $subscriberCount,

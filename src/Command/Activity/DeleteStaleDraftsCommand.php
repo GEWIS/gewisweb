@@ -169,8 +169,8 @@ final class DeleteStaleDraftsCommand extends Command
     {
         // Atomic per activity: the FK-nulling and the row removals are two separate flushes (the nulls must reach the
         // database first so the deletes are unambiguous), so wrap both in a single transaction. Otherwise a crash
-        // between the flushes would commit the half-deleted state -- an activity pointing at no revision while its
-        // revisions still exist, which getDisplayRevision() then chokes on -- until the next run repairs it.
+        // between the flushes would commit the half-deleted state (an activity pointing at no revision while its
+        // revisions still exist, which getDisplayRevision() then fails on) until the next run repairs it.
         $this->entityManager->wrapInTransaction(function () use ($activity): void {
             // The edit lock (if any) has no foreign key to the activity, so drop it explicitly before it goes.
             $this->editLockService->purge($activity);

@@ -10,7 +10,7 @@ use App\Service\Activity\SignupManager;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 /**
- * Re-issues and re-sends an external sign-up's confirmation e-mail. The sign-up existence lookup lives in
+ * Re-issues and re-sends an external sign-up's confirmation email. The sign-up existence lookup lives in
  * {@see SignupManager::resendVerification()} and runs here, in the worker, so the dispatching request stays
  * constant-time regardless of whether the address is signed up (no timing-based enumeration). Silently does nothing if
  * the list is gone, the address is not signed up, or the sign-up is already confirmed.

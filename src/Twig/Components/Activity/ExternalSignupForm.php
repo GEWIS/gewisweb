@@ -42,7 +42,7 @@ use function strval;
  * `data-loading`) and the solved proof-of-work survives re-renders untouched.
  *
  * Window/GEWIS-only/members rules are re-asserted on submit (a live request bypasses any page-level gate). A successful
- * submit redirects to the activity (the verification e-mail is the real next step), so the modal closes on reload;
+ * submit redirects to the activity (the verification email is the real next step), so the modal closes on reload;
  * rate-limited or invalid submits re-render inline.
  */
 #[AsLiveComponent(

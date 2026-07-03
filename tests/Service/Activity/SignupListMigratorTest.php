@@ -624,7 +624,7 @@ final class SignupListMigratorTest extends TestCase
 
     /**
      * Add one external sign-up to the list that answered each of its fields, by ordinal, with the given raw value (no
-     * option) -- the shape a Text/Number/Yes-No answer takes.
+     * option); this is the shape a Text/Number/Yes-No answer takes.
      *
      * @param array<int, string> $valuesByOrdinal
      *

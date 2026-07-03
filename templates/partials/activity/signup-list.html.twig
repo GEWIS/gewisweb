@@ -40,6 +40,13 @@
                     '%close%': list.closeDate|format_datetime(pattern: 'EEE d MMM. yyyy HH:mm', locale: app.request.locale),
                 }) }}
             </small>
+            {% if list.drawAt is not null %}
+                <small class="text-muted d-block">
+                    {{ 'Places are allocated by a draw on %date%.'|trans({
+                        '%date%': list.drawAt|format_datetime(pattern: 'EEE d MMM. yyyy HH:mm', locale: app.request.locale),
+                    }) }}
+                </small>
+            {% endif %}
         </span>
         <i class="fas fa-chevron-down signup-list-chevron"></i>
     </button>
@@ -93,9 +100,10 @@
                             </div>
                         </div>
 
-                        {# Recovery path for a lost/undelivered confirmation email: a plain rate-limited form (no captcha
-                           — it creates no data, only remails an address that already has a pending sign-up) that always
-                           reports the same neutral result, so it never reveals whether an address is signed up. #}
+                        {# Recovery path for a lost/undelivered confirmation email: a plain rate-limited form (no
+                           captcha: it creates no data, only remails an address that already has a pending sign-up)
+                           that always reports the same neutral result, so it never reveals whether an address is
+                           signed up. #}
                         <div class="modal fade" id="{{ resendModalId }}" tabindex="-1" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">

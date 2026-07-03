@@ -133,17 +133,17 @@
         <source>Add a sign-up list</source>
         <target state="translated">Inschrijflijst toevoegen</target>
       </trans-unit>
-      <trans-unit id="f6Zehi0" resname="Add external participant">
-        <source>Add external participant</source>
-        <target>Externe deelnemer toevoegen</target>
+      <trans-unit id="Cvck82d" resname="Add external subscriber">
+        <source>Add external subscriber</source>
+        <target>Externe inschrijver toevoegen</target>
       </trans-unit>
       <trans-unit id="zdY09QS" resname="Add option">
         <source>Add option</source>
         <target>Optie toevoegen</target>
       </trans-unit>
-      <trans-unit id="lNDxGt1" resname="Add participant">
-        <source>Add participant</source>
-        <target>Deelnemer toevoegen</target>
+      <trans-unit id="RgoBpqP" resname="Add subscriber">
+        <source>Add subscriber</source>
+        <target>Inschrijver toevoegen</target>
       </trans-unit>
       <trans-unit id="85z9UtL" resname="Add to calendar">
         <source>Add to calendar</source>
@@ -668,6 +668,10 @@
       <trans-unit id="nTdXrkQ" resname="Draw when sign-up closes">
         <source>Draw when sign-up closes</source>
         <target>Loten wanneer de inschrijving sluit</target>
+      </trans-unit>
+      <trans-unit id="ss9Sk_8" resname="Drawn automatically on %date%.">
+        <source>Drawn automatically on %date%.</source>
+        <target>Automatisch geloot op %date%.</target>
       </trans-unit>
       <trans-unit id="2zbCYPE" resname="Drawn by %name% on %date%.">
         <source>Drawn by %name% on %date%.</source>
@@ -1605,6 +1609,10 @@
         <source>Pick a long, unique password - at least 16 characters and not found in any known data breach.</source>
         <target state="translated">Kies een lang, uniek wachtwoord - minimaal 16 tekens lang en niet voorkomend in bekende datalekken.</target>
       </trans-unit>
+      <trans-unit id="wo9xY6x" resname="Places are allocated by a draw on %date%.">
+        <source>Places are allocated by a draw on %date%.</source>
+        <target>Plekken worden verdeeld via een loting op %date%.</target>
+      </trans-unit>
       <trans-unit id="HEW6n8h" resname="Please complete the verification again and resubmit.">
         <source>Please complete the verification again and resubmit.</source>
         <target>Voltooi de verificatie opnieuw en verstuur nogmaals.</target>
@@ -2133,17 +2141,21 @@
         <source>The draw can be run once sign-up has closed.</source>
         <target>De loting kan worden uitgevoerd zodra de inschrijving is gesloten.</target>
       </trans-unit>
-      <trans-unit id="mBj7E_w" resname="The external participant has been added.">
-        <source>The external participant has been added.</source>
-        <target>De externe deelnemer is toegevoegd.</target>
+      <trans-unit id="FrK7hHw" resname="The draw will be performed automatically on %date%.">
+        <source>The draw will be performed automatically on %date%.</source>
+        <target>De loting wordt automatisch uitgevoerd op %date%.</target>
+      </trans-unit>
+      <trans-unit id="W6wPisp" resname="The draw will be performed automatically within a few minutes.">
+        <source>The draw will be performed automatically within a few minutes.</source>
+        <target>De loting wordt binnen enkele minuten automatisch uitgevoerd.</target>
       </trans-unit>
       <trans-unit id="juj8ffI" resname="The external party dictates the order of admissions">
         <source>The external party dictates the order of admissions</source>
         <target>De externe partij bepaalt de volgorde van toelating</target>
       </trans-unit>
-      <trans-unit id="QoOti88" resname="The participant is added immediately, without email verification.">
-        <source>The participant is added immediately, without email verification.</source>
-        <target state="translated">De deelnemer wordt direct toegevoegd, zonder e-mailverificatie.</target>
+      <trans-unit id="d94JzXR" resname="The external subscriber has been added.">
+        <source>The external subscriber has been added.</source>
+        <target>De externe inschrijver is toegevoegd.</target>
       </trans-unit>
       <trans-unit id="TUHVFZ1" resname="The selected recipients will receive this email immediately. This cannot be undone.">
         <source>The selected recipients will receive this email immediately. This cannot be undone.</source>
@@ -2152,6 +2164,10 @@
       <trans-unit id="hTU2rmn" resname="The start date of this activity has passed, so it can no longer be published. Move it to a future date before it can be submitted again.">
         <source>The start date of this activity has passed, so it can no longer be published. Move it to a future date before it can be submitted again.</source>
         <target state="translated">De startdatum van deze activiteit is verstreken, dus deze kan niet meer worden gepubliceerd. Verplaats deze naar een datum in de toekomst voordat deze opnieuw kan worden ingediend.</target>
+      </trans-unit>
+      <trans-unit id=".gFbTa4" resname="The subscriber is added immediately, without email verification.">
+        <source>The subscriber is added immediately, without email verification.</source>
+        <target>De inschrijver wordt direct toegevoegd, zonder e-mailverificatie.</target>
       </trans-unit>
       <trans-unit id="tl9akBK" resname="Their TOTP secret and backup codes will be discarded and every active session for the user will be terminated. Use this when a device has been lost or compromised.">
         <source>Their TOTP secret and backup codes will be discarded and every active session for the user will be terminated. Use this when a device has been lost or compromised.</source>
@@ -2261,13 +2277,13 @@
         <source>This sign-up list is closed, so your sign-up can no longer be changed.</source>
         <target>Deze inschrijflijst is gesloten, dus je inschrijving kan niet meer worden gewijzigd.</target>
       </trans-unit>
-      <trans-unit id="1Jl7zkR" resname="This sign-up list is for GEWIS members only, so you cannot add an external participant.">
-        <source>This sign-up list is for GEWIS members only, so you cannot add an external participant.</source>
-        <target>Deze inschrijflijst is alleen voor GEWIS-leden, dus je kunt geen externe deelnemer toevoegen.</target>
+      <trans-unit id=".5IblDI" resname="This sign-up list is for GEWIS members only, so you cannot add an external subscriber.">
+        <source>This sign-up list is for GEWIS members only, so you cannot add an external subscriber.</source>
+        <target>Deze inschrijflijst is alleen voor GEWIS-leden, dus je kunt geen externe inschrijver toevoegen.</target>
       </trans-unit>
-      <trans-unit id="yKrMuEv" resname="This sign-up list is not open, so you cannot add a participant.">
-        <source>This sign-up list is not open, so you cannot add a participant.</source>
-        <target>Deze inschrijflijst is niet open, dus je kunt geen deelnemer toevoegen.</target>
+      <trans-unit id="Npry_kZ" resname="This sign-up list is not open, so you cannot add a subscriber.">
+        <source>This sign-up list is not open, so you cannot add a subscriber.</source>
+        <target>Deze inschrijflijst is niet open, dus je kunt geen inschrijver toevoegen.</target>
       </trans-unit>
       <trans-unit id="5DLr8E1" resname="Toggle company menu">
         <source>Toggle company menu</source>
@@ -2476,6 +2492,10 @@
       <trans-unit id="0oN.eFV" resname="You assumed it was here. It was not. Q.E.D.">
         <source>You assumed it was here. It was not. Q.E.D.</source>
         <target state="translated">Je ging ervan uit dat het hier was. Dat was niet zo. Q.E.D.</target>
+      </trans-unit>
+      <trans-unit id="oAAm9Pa" resname="You can also run it now.">
+        <source>You can also run it now.</source>
+        <target>Je kunt de loting ook nu uitvoeren.</target>
       </trans-unit>
       <trans-unit id="UMcprZ." resname="You can no longer view the sign-ups of this activity.">
         <source>You can no longer view the sign-ups of this activity.</source>

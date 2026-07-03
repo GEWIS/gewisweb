@@ -26,7 +26,7 @@ interface CkEditorModule {
  *
  * The bundle is loaded with a dynamic `import()` on first use, keeping ~1.9 MB off pages without an editor.
  *
- * `data-markdown-editor-toolbar-value="minimal"` selects the restricted toolbar (the sign-up e-mail); the default is
+ * `data-markdown-editor-toolbar-value="minimal"` selects the restricted toolbar (the sign-up email); the default is
  * the full toolbar (activity descriptions).
  *
  * Coordinates with the `localised-fields` controller without coupling to it: when that disables the textarea (an
@@ -132,7 +132,7 @@ export default class extends Controller {
         }
     }
 
-    // 'minimal' (sign-up e-mail): only the inline formatting the restricted e-mail Markdown renders. 'full' (activity
+    // 'minimal' (sign-up email): only the inline formatting the restricted email Markdown renders. 'full' (activity
     // descriptions): the complete set. The Markdown plugin makes getData()/initial data GFM Markdown in both cases.
     // 'GPL' license key: valid for this GPL-3.0 project (CKEditor 5 >= v44 requires a key).
     private config(c: CkEditorModule): Record<string, unknown> {

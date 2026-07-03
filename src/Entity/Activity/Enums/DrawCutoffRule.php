@@ -9,11 +9,13 @@ use Symfony\Contracts\Translation\TranslatableInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * When a {@see AllocationMethod::ConditionalDraw} should be performed. Captured as configuration on the sign-up list;
- * the draw is still run by the board (automated execution at the cutoff is future work).
+ * When a {@see AllocationMethod::ConditionalDraw} is performed automatically
+ * ({@see \App\Command\Activity\RunDueDrawsCommand}); the board can still run it by hand once the moment has passed.
  *
- * - {@see self::IfFullBefore}: draw if the list is full before a given moment.
- * - {@see self::AfterDurationOpen}: draw once it has been open for a number of hours.
+ * - {@see self::IfFullBefore}: draw at a given moment, regardless of fullness. When the list is oversubscribed by then
+ *   it is a real lottery; when it is not, everyone so far is admitted and the locked list hands out its remaining
+ *   places first-come-first-served.
+ * - {@see self::AfterDurationOpen}: draw once it has been open for a number of hours (possibly before it closes).
  * - {@see self::OnClose}: draw when the sign-up list closes.
  */
 enum DrawCutoffRule: string implements TranslatableInterface

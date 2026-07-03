@@ -12,7 +12,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  * Which subscribers of a sign-up list a bulk email is addressed to. Mirrors the
  * Subscribee -> Admittee -> Attendee progression: {@see self::All} is every subscriber, {@see self::Admitted} and
  * {@see self::Waitlisted} the drawn / not-drawn halves of a limited-capacity list, and {@see self::Present} the
- * attendees. {@see self::Selected} cuts across all of these -- the rows the organiser ticked by hand.
+ * attendees. {@see self::Selected} cuts across all of these: the rows the organiser ticked by hand.
  */
 enum RecipientScope: string implements TranslatableInterface
 {

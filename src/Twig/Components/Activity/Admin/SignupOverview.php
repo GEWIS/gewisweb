@@ -19,12 +19,10 @@ use App\Entity\User\User;
 use App\Message\Activity\OrganiserAnnouncementEmail;
 use App\Repository\Activity\ExternalSignupVerificationRepository;
 use App\Security\Application\RevisionVoter;
+use App\Service\Activity\DrawManager;
 use App\Service\Activity\SignupAdminWindow;
 use App\ViewModel\Activity\Admin\SignupAdminListView;
-use DateTime;
-use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\EntityManagerInterface;
-use Random\Randomizer;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -71,8 +69,8 @@ final class SignupOverview
 
     /**
      * The ticked signup ids, held as one flat set. Signup ids are globally unique, so this maps back to lists
-     * unambiguously and every operation on it -- the per-list "Selected" count, the email recipients, selectAll() and
-     * clearSelection() -- is scoped to a single sign-up list; there is no cross-list selection. Checkbox hydration
+     * unambiguously and every operation on it (the per-list "Selected" count, the email recipients, selectAll() and
+     * clearSelection()) is scoped to a single sign-up list; there is no cross-list selection. Checkbox hydration
      * delivers the ids as strings while selectAll() pushes ints, so the type is mixed; read them normalised via
      * {@see self::selectedIds()}.
      *
@@ -83,7 +81,7 @@ final class SignupOverview
 
     /**
      * Ids of the sign-up fields whose column the organiser has hidden, as one flat set. Field ids are globally
-     * unique, so -- like {@see self::$selected} -- this is effectively per-list (a hidden id only matches the one
+     * unique, so, like {@see self::$selected}, this is effectively per-list (a hidden id only matches the one
      * list it belongs to). Toggled via {@see self::toggleFieldColumn()}; read normalised via
      * {@see self::hiddenFieldIds()}.
      *
@@ -132,6 +130,7 @@ final class SignupOverview
         private readonly MessageBusInterface $messageBus,
         private readonly string $internalAffairsEmail,
         private readonly ExternalSignupVerificationRepository $verificationRepository,
+        private readonly DrawManager $drawManager,
     ) {
     }
 
@@ -166,10 +165,10 @@ final class SignupOverview
     }
 
     /**
-     * Eagerly load the sign-ups and the associations each row reads -- the member behind a user sign-up (its type and
-     * generation are columns that ride along) and every answer's field and option -- for this activity's live lists in
-     * a fixed number of queries. Without this, building the table lazy-loads the member and the field values per row:
-     * an N+1 that grows with the number of sign-ups.
+     * Eagerly load the sign-ups and the associations each row reads for this activity's live lists in a fixed number
+     * of queries: the member behind a user sign-up (its type and generation columns are fetched at the same time) and
+     * every answer's field and option. Without this, building the table lazy-loads the member and the field values
+     * per row: an N+1 that grows with the number of sign-ups.
      */
     private function primeSignups(): void
     {
@@ -235,8 +234,8 @@ final class SignupOverview
 
     /**
      * Whether admission (the draw and manual admit/un-admit) may still be changed. Open until a day after the activity
-     * ends -- the same upper bound as attendance -- so a draw forgotten before the activity can still be run at the
-     * door (otherwise a never-drawn limited list would strand: no admission and, since presence needs admission, no
+     * ends (the same upper bound as attendance), so a draw forgotten before the activity can still be run at the door
+     * (otherwise a never-drawn limited list would end up with no admission and, since presence needs admission, no
      * attendance either).
      */
     public function admissionOpen(): bool
@@ -306,7 +305,7 @@ final class SignupOverview
     /**
      * Manually admit/un-admit one sign-up (board or organiser) to backfill after the draw: promote someone from the
      * waiting list or drop a confirmed no-show. Only after the draw has been performed (and locked) and only until the
-     * activity starts. Un-admitting also clears attendance -- you cannot have attended without being admitted.
+     * activity starts. Un-admitting also clears attendance: you cannot have attended without being admitted.
      * Overbooking past capacity is allowed (the template warns).
      */
     #[LiveAction]
@@ -354,7 +353,6 @@ final class SignupOverview
         $this->runDraw(
             $listId,
             AllocationMethod::FirstComeFirstServed,
-            false,
         );
     }
 
@@ -368,20 +366,18 @@ final class SignupOverview
         $this->runDraw(
             $listId,
             AllocationMethod::ConditionalDraw,
-            true,
         );
     }
 
     /**
-     * Shared draw runner (board only): look up the owned list, check the draw may run for the given method, optionally
-     * shuffle to randomise the ordering, then admit up to capacity and lock it. Confirmed client-side by a Bootstrap
-     * modal (see the `confirm-modal` Stimulus controller); re-checked here because a live action is independent of the
-     * page that rendered it.
+     * Shared draw runner (board only): look up the owned list and hand it to the {@see DrawManager}, which checks the
+     * draw may run for the given method, admits up to capacity (shuffled for a lottery) and locks it. Confirmed
+     * client-side by a Bootstrap modal (see the `confirm-modal` Stimulus controller); re-checked server-side because
+     * a live action is independent of the page that rendered it.
      */
     private function runDraw(
         int $listId,
         AllocationMethod $method,
-        bool $shuffle,
     ): void {
         $this->assertAccess();
         $this->assertBoard();
@@ -391,55 +387,11 @@ final class SignupOverview
             return;
         }
 
-        // Serialise concurrent draws of the same list (a double-click, or two tabs): a pessimistic write lock makes the
-        // second draw block until the first commits; refresh() then re-reads the now-locked row so the canDraw()
-        // recheck sees the freshly set drawnAt and bails -- a lottery is never re-run and its result never changes.
-        $this->entityManager->wrapInTransaction(function () use ($list, $method, $shuffle): void {
-            $this->entityManager->lock(
-                $list,
-                LockMode::PESSIMISTIC_WRITE,
-            );
-            $this->entityManager->refresh($list);
-
-            if (
-                !$this->canDraw(
-                    $list,
-                    $method,
-                )
-            ) {
-                return;
-            }
-
-            // Only confirmed sign-ups take part in the draw: an external guest who has not verified their email is not
-            // yet a real participant and must neither be admitted nor take up a capacity slot.
-            $signups = $this->confirmedSignups($list);
-            if ($shuffle) {
-                $signups = new Randomizer()->shuffleArray($signups);
-            }
-
-            $this->applyDraw(
-                $list,
-                $signups,
-            );
-        });
-    }
-
-    /**
-     * Whether the given draw may be run on a list now: it is limited with a real capacity, uses that draw method, has
-     * not been drawn yet, the sign-up list has closed, and we are within the admission window. The capacity guard is
-     * essential: without it a capacity-less limited list would admit zero and lock irreversibly.
-     */
-    private function canDraw(
-        SignupList $list,
-        AllocationMethod $method,
-    ): bool {
-        return $list->getLimitedCapacity()
-            && null !== $list->getCapacity()
-            && $list->getCapacity() >= 1
-            && $list->getAllocationMethod() === $method
-            && !$list->isDrawLocked()
-            && $list->isClosed()
-            && $this->admissionOpen();
+        $this->drawManager->drawManually(
+            $list,
+            $method,
+            $this->currentMember(),
+        );
     }
 
     /**
@@ -477,35 +429,6 @@ final class SignupOverview
             static fn (int|string $id): int => (int) $id,
             $ids,
         );
-    }
-
-    /**
-     * Admit the first capacity of the (pre-ordered) sign-ups, waitlist the rest (clearing their attendance), then
-     * lock the draw with an audit stamp. The draw is a one-shot board event and cannot be re-run; later adjustments
-     * are manual ({@see self::toggleAdmission()}).
-     *
-     * @param Signup[] $orderedSignups
-     */
-    private function applyDraw(
-        SignupList $list,
-        array $orderedSignups,
-    ): void {
-        $capacity = $list->getCapacity() ?? 0;
-        $position = 0;
-        foreach ($orderedSignups as $signup) {
-            $admitted = $position < $capacity;
-            $signup->setDrawn($admitted);
-            if (!$admitted) {
-                $signup->setPresent(false);
-            }
-
-            ++$position;
-        }
-
-        $list->setDrawnAt(new DateTime());
-        $list->setDrawnBy($this->currentMember());
-
-        $this->entityManager->flush();
     }
 
     #[LiveAction]
@@ -582,7 +505,7 @@ final class SignupOverview
     }
 
     /**
-     * Show/hide a sign-up field's column. Pure display state -- a field id only matches the one list it belongs to,
+     * Show/hide a sign-up field's column. Pure display state: a field id only matches the one list it belongs to,
      * so the hidden set is effectively per-list. A field absent from the set is shown (the default).
      */
     #[LiveAction]
@@ -681,7 +604,7 @@ final class SignupOverview
 
         $scope = RecipientScope::tryFrom($this->scope) ?? RecipientScope::All;
 
-        // Admitted/Waitlisted only distinguish recipients once admission is settled -- a locked draw, or a manual
+        // Admitted/Waitlisted only distinguish recipients once admission is settled: a locked draw, or a manual
         // allocation method where admission is set by hand. On any other list every sign-up is not-yet-drawn, so the
         // two scopes would silently resolve to "everyone"/"no one". The composer only offers them in the same
         // circumstances, but $scope is a writable prop, so re-check it here.
@@ -835,9 +758,9 @@ final class SignupOverview
     }
 
     /**
-     * The ids of this list's externals still awaiting e-mail verification, memoised per list id so the underlying query
-     * runs at most once per list for the lifetime of this (per-request) component instance — the toggles and draws that
-     * call {@see confirmedSignups()} in a loop otherwise re-run it for every list.
+     * The ids of this list's externals still awaiting email verification, memoised per list id so the underlying query
+     * runs at most once per list for the lifetime of this (per-request) component instance; the toggles and draws
+     * that call {@see confirmedSignups()} in a loop would otherwise re-run it for every list.
      *
      * @return int[]
      */
@@ -853,8 +776,8 @@ final class SignupOverview
     }
 
     /**
-     * A list's sign-ups excluding externals still awaiting e-mail verification: an unconfirmed external is not a real
-     * participant, so it must never be drawn, e-mailed, toggled or counted.
+     * A list's sign-ups excluding externals still awaiting email verification: an unconfirmed external is not a real
+     * subscriber, so it must never be drawn, emailed, toggled or counted.
      *
      * @return Signup[]
      */

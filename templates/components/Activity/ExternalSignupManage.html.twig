@@ -18,7 +18,7 @@
         }) }}
             {{ form_errors(form) }}
             {{ form_row(form.fullName) }}
-            {# Disabled by SignupType in manage mode: the e-mail is the verified identity and changing it would bypass
+            {# Disabled by SignupType in manage mode: the email is the verified identity and changing it would bypass
                verification (to use another address, unsubscribe and sign up again). #}
             {{ form_row(form.email) }}
             {% include 'partials/activity/signup-fields.html.twig' with { form: form } only %}

@@ -134,7 +134,7 @@ final readonly class SignupListMigrator
 
         // The clone copies the live list's fields and options verbatim and in order, and the form freezes the whole
         // `fields` collection once a list has sign-ups, so a legitimate approval always presents an identical layout.
-        // Compare identity (type, labels, value range, option labels) AND order -- not just counts -- so that a
+        // Compare identity (type, labels, value range, option labels) AND order, not just counts, so that a
         // reorder or rename which only a race or request tampering could introduce makes the ordinal mapping in
         // migrateList() refuse, rather than silently re-point a sign-up's answer at the wrong field or option.
         foreach ($oldFields as $i => $oldField) {

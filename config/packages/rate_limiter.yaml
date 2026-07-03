@@ -18,7 +18,7 @@ framework:
             limit: 5
             interval: '15 minutes'
         # Anti-abuse for anonymous external activity sign-ups (members are authenticated and skip these). Consumed per
-        # IP and per submitted e-mail together, like the password-reset limiters.
+        # IP and per submitted email together, like the password-reset limiters.
         external_signup_ip:
             policy: 'fixed_window'
             limit: 10
@@ -27,7 +27,7 @@ framework:
             policy: 'fixed_window'
             limit: 3
             interval: '1 hour'
-        # Throttles re-sending the external sign-up verification e-mail (resend link), per IP and per e-mail.
+        # Throttles re-sending the external sign-up verification email (resend link), per IP and per email.
         signup_verify_resend_ip:
             policy: 'fixed_window'
             limit: 10

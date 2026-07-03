@@ -17,7 +17,7 @@ use function hash_equals;
  * Resolves an emailed `selector.verifier` external-sign-up token to a live verification of the expected purpose, or
  * null on any failure (unknown selector, wrong purpose, expired, or a verifier that does not hash-match). Shared by the
  * verify controller and the self-service manage live component so the security-sensitive lookup is identical and is
- * re-run on every request — a once-validated token is never trusted.
+ * re-run on every request; a once-validated token is never trusted.
  */
 final readonly class ExternalSignupTokenResolver
 {

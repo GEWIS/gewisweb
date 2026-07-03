@@ -10,7 +10,7 @@ framework:
         #
         # Creating a *new* revision (a brand-new draft, the draft spawned after `request_changes`, the draft cloned
         # when editing an approved entity, or reopening a rejected one) is entity instantiation at the `draft` initial
-        # place -- it is deliberately NOT a transition, so every submitted revision stays an immutable record.
+        # place; it is deliberately NOT a transition, so every submitted revision stays an immutable record.
         revision:
             type: state_machine
             marking_store:
