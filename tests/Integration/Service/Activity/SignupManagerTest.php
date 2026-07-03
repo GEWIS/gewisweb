@@ -17,6 +17,7 @@ use App\Repository\Activity\ExternalSignupVerificationRepository;
 use App\Service\Activity\SignupManager;
 use App\Tests\Integration\DatabaseTestCase;
 use DateTimeImmutable;
+use Doctrine\DBAL\Types\Types;
 use Symfony\Component\Messenger\Transport\InMemory\InMemoryTransport;
 
 use function count;
@@ -75,6 +76,91 @@ final class SignupManagerTest extends DatabaseTestCase
         self::assertTrue($signup->isDrawn());
     }
 
+    public function testCreateUserSignupAfterALockedDrawIsAdmittedWhileCapacityRemains(): void
+    {
+        // Once the draw is locked, a limited list hands out its remaining places first-come-first-served: with nobody
+        // admitted yet, a new member sign-up is admitted immediately instead of joining the waiting list.
+        $list = $this->lockedLimitedList();
+
+        $signup = $this->signupManager()->createUserSignup(
+            $list,
+            $this->aMember(),
+            [],
+        );
+
+        self::assertTrue($signup->isDrawn());
+    }
+
+    public function testCreateUserSignupAfterALockedDrawIsWaitlistedWhenTheListIsFull(): void
+    {
+        $list = $this->lockedLimitedList();
+        $this->admitExistingUpToCapacity($list);
+
+        $signup = $this->signupManager()->createUserSignup(
+            $list,
+            $this->aMember(),
+            [],
+        );
+
+        self::assertFalse($signup->isDrawn());
+    }
+
+    public function testOrganiserAddedExternalAfterALockedDrawIsAdmittedWhileCapacityRemains(): void
+    {
+        $list = $this->lockedLimitedList();
+
+        $signup = $this->signupManager()->addExternalSignupByOrganiser(
+            $list,
+            'Late Guest',
+            'late.guest@example.org',
+            [],
+        );
+
+        self::assertTrue($signup->isDrawn());
+    }
+
+    public function testASelfServiceExternalIsOnlyAdmittedAtConfirmation(): void
+    {
+        $list = $this->lockedLimitedList();
+
+        // Born unverified: even with places free the sign-up stays waitlisted -- a never-confirmed ghost must not hold
+        // a place ...
+        $signup = $this->signupManager()->createExternalSignup(
+            $list,
+            'Prompt Guest',
+            'prompt.guest@example.org',
+            [],
+        );
+        self::assertFalse($signup->isDrawn());
+
+        // ... and confirming is the moment the first-come-first-served decision happens.
+        $this->signupManager()->confirmExternalSignup($this->tokenFor(
+            $signup,
+            ExternalSignupVerificationPurpose::Verify,
+        ));
+
+        self::assertTrue($signup->isDrawn());
+    }
+
+    public function testASelfServiceExternalStaysWaitlistedAtConfirmationWhenTheListIsFull(): void
+    {
+        $list = $this->lockedLimitedList();
+        $signup = $this->signupManager()->createExternalSignup(
+            $list,
+            'Tardy Guest',
+            'tardy.guest@example.org',
+            [],
+        );
+
+        $this->admitExistingUpToCapacity($list);
+        $this->signupManager()->confirmExternalSignup($this->tokenFor(
+            $signup,
+            ExternalSignupVerificationPurpose::Verify,
+        ));
+
+        self::assertFalse($signup->isDrawn());
+    }
+
     public function testCreateExternalSignupIsUnverifiedAndQueuesAVerifyEmail(): void
     {
         $list = $this->listWithFields();
@@ -106,7 +192,9 @@ final class SignupManagerTest extends DatabaseTestCase
             $answers,
         );
 
-        // Born unverified: a live Verify token exists (so the sign-up is hidden from lists, counts and admission) ...
+        // Born unverified: no participation moment yet and a live Verify token exists (so the sign-up is hidden from
+        // lists, counts and admission) ...
+        self::assertNull($signup->getVerifiedAt());
         self::assertTrue($this->verifications()->hasPendingVerification($signup));
         $verification = $this->tokenFor(
             $signup,
@@ -146,7 +234,9 @@ final class SignupManagerTest extends DatabaseTestCase
 
         // The organiser vouches for the subscriber, and the sign-up is flagged as such ...
         self::assertTrue($signup->isAddedManually());
-        // ... and there is no double opt-in, so no token and no confirmation email.
+        // ... and there is no double opt-in, so no token and no confirmation e-mail; the sign-up is a participant
+        // from the moment it was added.
+        self::assertNotNull($signup->getVerifiedAt());
         self::assertFalse($this->verifications()->hasPendingVerification($signup));
         self::assertSame(
             [],
@@ -169,8 +259,9 @@ final class SignupManagerTest extends DatabaseTestCase
             ExternalSignupVerificationPurpose::Verify,
         ));
 
-        // The double-opt-in token is gone (the sign-up is now live) ...
+        // The double-opt-in token is gone and the confirmation moment recorded (the sign-up is now live) ...
         self::assertFalse($this->verifications()->hasPendingVerification($signup));
+        self::assertNotNull($signup->getVerifiedAt());
         // ... replaced by a long-lived manage token for self-service editing.
         $manage = $this->tokenFor(
             $signup,
@@ -348,6 +439,106 @@ final class SignupManagerTest extends DatabaseTestCase
         );
 
         return $list;
+    }
+
+    /**
+     * A seeded limited-capacity list (with more sign-ups than places, all still waitlisted) whose draw is locked
+     * directly in the database as of now, so the post-draw first-come-first-served rules can be exercised. The update
+     * bypasses the unit of work; the loaded entity is refreshed so the sign-up paths see the lock.
+     */
+    private function lockedLimitedList(): SignupList
+    {
+        $list = $this->entityManager->createQueryBuilder()
+            ->select('sl')
+            ->from(
+                SignupList::class,
+                'sl',
+            )
+            ->where('sl.limitedCapacity = true')
+            ->andWhere('sl.drawnAt IS NULL')
+            ->andWhere('sl.capacity IS NOT NULL')
+            ->orderBy(
+                'sl.id',
+                'ASC',
+            )
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+        self::assertInstanceOf(
+            SignupList::class,
+            $list,
+            'The seed is expected to contain an undrawn limited-capacity sign-up list.',
+        );
+
+        $this->entityManager->createQueryBuilder()
+            ->update(
+                SignupList::class,
+                'sl',
+            )
+            ->set(
+                'sl.drawnAt',
+                ':now',
+            )
+            ->where('sl.id = :id')
+            ->setParameter(
+                'now',
+                new DateTimeImmutable('now'),
+                Types::DATETIME_IMMUTABLE,
+            )
+            ->setParameter(
+                'id',
+                (int) $list->getId(),
+                Types::INTEGER,
+            )
+            ->getQuery()
+            ->execute();
+        $this->entityManager->refresh($list);
+
+        return $list;
+    }
+
+    /**
+     * Mark the list's earliest sign-ups as admitted, directly in the database, until its capacity is reached -- so a
+     * subsequent sign-up faces a full list. The admitted-count checks query the database, so no refresh is needed.
+     */
+    private function admitExistingUpToCapacity(SignupList $list): void
+    {
+        $ids = $this->entityManager->createQueryBuilder()
+            ->select('s.id')
+            ->from(
+                Signup::class,
+                's',
+            )
+            ->where('s.signupList = :list')
+            ->orderBy(
+                's.id',
+                'ASC',
+            )
+            ->setMaxResults((int) $list->getCapacity())
+            ->setParameter(
+                'list',
+                (int) $list->getId(),
+                Types::INTEGER,
+            )
+            ->getQuery()
+            ->getSingleColumnResult();
+
+        $this->entityManager->createQueryBuilder()
+            ->update(
+                Signup::class,
+                's',
+            )
+            ->set(
+                's.drawn',
+                'true',
+            )
+            ->where('s.id IN (:ids)')
+            ->setParameter(
+                'ids',
+                $ids,
+            )
+            ->getQuery()
+            ->execute();
     }
 
     private function unlimitedList(): SignupList
