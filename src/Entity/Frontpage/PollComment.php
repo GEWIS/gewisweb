@@ -165,12 +165,4 @@ class PollComment
             'content' => $this->getContent(),
         ];
     }
-
-    /**
-     * Get the resource ID.
-     */
-    public function getResourceId(): string
-    {
-        return 'poll_comment';
-    }
 }

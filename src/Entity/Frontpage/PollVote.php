@@ -107,12 +107,4 @@ class PollVote
             'option' => $this->getPollOption()->getText()->toGdprArray(),
         ];
     }
-
-    /**
-     * Get the resource ID.
-     */
-    public function getResourceId(): string
-    {
-        return 'poll_response';
-    }
 }

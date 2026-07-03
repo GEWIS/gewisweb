@@ -216,12 +216,4 @@ class Page
             'requiredRole' => $this->getRequiredRole()->value,
         ];
     }
-
-    /**
-     * Get the resource ID.
-     */
-    public function getResourceId(): string
-    {
-        return 'page';
-    }
 }

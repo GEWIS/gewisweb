@@ -219,14 +219,6 @@ class Poll
     }
 
     /**
-     * Get the resource ID.
-     */
-    public function getResourceId(): string
-    {
-        return 'poll';
-    }
-
-    /**
      * Check to see if the poll is approved. <br>
      * If no-one approved this poll, this poll is not approved.
      *

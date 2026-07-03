@@ -9,7 +9,6 @@ use App\Entity\Activity\Enums\DrawCutoffRule;
 use App\Entity\Application\LocalisedText as LocalisedTextModel;
 use App\Entity\Application\Traits\IdentifiableTrait;
 use App\Entity\Decision\Member as MemberModel;
-use App\Entity\Decision\Organ as OrganModel;
 use App\Repository\Activity\SignupListRepository;
 use DateTime;
 use DateTimeInterface;
@@ -801,30 +800,5 @@ class SignupList
             'promoted' => $this->isPromoted(),
             'fields' => $fieldsArrays,
         ];
-    }
-
-    /**
-     * Returns the string identifier of the Resource.
-     */
-    public function getResourceId(): string
-    {
-        return 'signupList';
-    }
-
-    /**
-     * Get the organ of this resource. Mirrors the activity's edit-rights organ (anchored to the live revision), not
-     * this list's own revision's organ, so a draft cannot grant itself edit rights by changing the organiser.
-     */
-    public function getResourceOrgan(): ?OrganModel
-    {
-        return $this->getActivity()->getResourceOrgan();
-    }
-
-    /**
-     * Get the creator of this resource.
-     */
-    public function getResourceCreator(): MemberModel
-    {
-        return $this->getActivity()->getCreator();
     }
 }

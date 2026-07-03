@@ -118,12 +118,4 @@ class ProfilePhoto
             'photo' => $this->getPhoto()->toGdprArray(),
         ];
     }
-
-    /**
-     * Get the resource Id.
-     */
-    public function getResourceId(): string
-    {
-        return 'profilePhoto';
-    }
 }

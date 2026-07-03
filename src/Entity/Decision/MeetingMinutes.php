@@ -79,12 +79,4 @@ class MeetingMinutes
     {
         $this->path = $path;
     }
-
-    /**
-     * Get the resource ID.
-     */
-    public function getResourceId(): string
-    {
-        return 'meeting_minutes';
-    }
 }
