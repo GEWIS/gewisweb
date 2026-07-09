@@ -10,6 +10,7 @@ use App\Entity\Activity\ActivityRevision;
 use App\Entity\Activity\Enums\ActivityCategories;
 use App\Entity\Activity\SignupList;
 use App\Entity\Application\Enums\AlertTypes;
+use App\Entity\Application\Enums\RevisionStatus;
 use App\Entity\User\Enums\UserRoles;
 use App\Entity\User\User;
 use App\Form\Activity\ActivityType;
@@ -17,11 +18,12 @@ use App\Form\Activity\SignupType;
 use App\Repository\Activity\ActivityRevisionCommentRepository;
 use App\Repository\Activity\ExternalSignupRepository;
 use App\Security\Application\RevisionVoter;
-use App\Service\Activity\SignupAdminWindow;
 use App\Service\Activity\SignupManager;
 use App\Service\Application\EditLockService;
+use App\Util\Activity\PastActivityRule;
+use App\Util\Activity\SignupAdminWindow;
 use App\Workflow\RevisionClonerRegistry;
-use DateTime;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\OptimisticLockException;
@@ -147,7 +149,7 @@ class AdminController extends AbstractController
         $live = $activity->getLiveRevision();
         if (
             null !== $live
-            && $this->hasPassed($live)
+            && PastActivityRule::ended($live)
         ) {
             $this->addFlash(
                 AlertTypes::Warning->value,
@@ -165,6 +167,27 @@ class AdminController extends AbstractController
             $this->addFlash(
                 AlertTypes::Warning->value,
                 $this->translator->trans('This activity is being reviewed and cannot be edited right now.'),
+            );
+
+            return $this->redirectToRoute('admin/activities/index');
+        }
+
+        // A revision the board closed is final: it cannot be revived into a new draft.
+        if (RevisionStatus::Closed === $status) {
+            $this->addFlash(
+                AlertTypes::Warning->value,
+                $this->translator->trans('This activity was closed by the board and can no longer be revised.'),
+            );
+
+            return $this->redirectToRoute('admin/activities/index');
+        }
+
+        // A cancelled activity is a finished tombstone: it stays visible but is not revised. (An unpublished activity,
+        // by contrast, is only temporarily hidden and stays fully editable so it can be fixed up before re-publishing.)
+        if ($activity->isCancelled()) {
+            $this->addFlash(
+                AlertTypes::Warning->value,
+                $this->translator->trans('This activity has been cancelled. Un-cancel it first to revise it.'),
             );
 
             return $this->redirectToRoute('admin/activities/index');
@@ -396,11 +419,31 @@ class AdminController extends AbstractController
         $live = $activity->getLiveRevision();
         if (
             null !== $live
-            && $this->hasPassed($live)
+            && PastActivityRule::ended($live)
         ) {
             $this->addFlash(
                 AlertTypes::Warning->value,
                 $this->translator->trans('This activity has already taken place and can no longer be revised.'),
+            );
+
+            return $this->redirectToRoute('admin/activities/index');
+        }
+
+        // A revision the board closed is final: it cannot be revived into a new draft.
+        if (RevisionStatus::Closed === $current->getStatus()) {
+            $this->addFlash(
+                AlertTypes::Warning->value,
+                $this->translator->trans('This activity was closed by the board and can no longer be revised.'),
+            );
+
+            return $this->redirectToRoute('admin/activities/index');
+        }
+
+        // A cancelled activity is a finished tombstone and is not revised; the board must un-cancel it first.
+        if ($activity->isCancelled()) {
+            $this->addFlash(
+                AlertTypes::Warning->value,
+                $this->translator->trans('This activity has been cancelled. Un-cancel it first to revise it.'),
             );
 
             return $this->redirectToRoute('admin/activities/index');
@@ -422,6 +465,164 @@ class AdminController extends AbstractController
             'admin/activities/edit',
             ['activity' => $activity->getId()],
         );
+    }
+
+    /**
+     * Cancel an approved activity (board only). It stays publicly visible with a notice and a [CANCELLED] title marker,
+     * but all sign-up interaction is frozen. Reversible via {@see self::uncancel()}.
+     */
+    #[Route(
+        path: '/{activity}/cancel',
+        name: 'cancel',
+        requirements: ['activity' => '\d+'],
+        methods: ['POST'],
+    )]
+    #[IsGranted(UserRoles::Board->value)]
+    #[IsCsrfTokenValid(
+        id: new Expression('"activity_cancel-" ~ args["activity"].getId()'),
+        tokenKey: '_csrf_token',
+    )]
+    public function cancel(
+        #[CurrentUser]
+        User $user,
+        Activity $activity,
+    ): Response {
+        if (
+            null === $activity->getLiveRevision()
+            || $activity->isCancelled()
+        ) {
+            $this->addFlash(
+                AlertTypes::Warning->value,
+                $this->translator->trans('This activity cannot be cancelled.'),
+            );
+
+            return $this->redirectToRoute('admin/activities/index');
+        }
+
+        $activity->cancel($user->getMember());
+        $this->entityManager->flush();
+
+        $this->addFlash(
+            AlertTypes::Success->value,
+            $this->translator->trans('The activity has been cancelled.'),
+        );
+
+        return $this->redirectToRoute('admin/activities/index');
+    }
+
+    /**
+     * Un-cancel a previously cancelled activity (board only), restoring normal sign-up interaction.
+     */
+    #[Route(
+        path: '/{activity}/uncancel',
+        name: 'uncancel',
+        requirements: ['activity' => '\d+'],
+        methods: ['POST'],
+    )]
+    #[IsGranted(UserRoles::Board->value)]
+    #[IsCsrfTokenValid(
+        id: new Expression('"activity_uncancel-" ~ args["activity"].getId()'),
+        tokenKey: '_csrf_token',
+    )]
+    public function uncancel(Activity $activity): Response
+    {
+        if (!$activity->isCancelled()) {
+            $this->addFlash(
+                AlertTypes::Warning->value,
+                $this->translator->trans('This activity is not cancelled.'),
+            );
+
+            return $this->redirectToRoute('admin/activities/index');
+        }
+
+        $activity->uncancel();
+        $this->entityManager->flush();
+
+        $this->addFlash(
+            AlertTypes::Success->value,
+            $this->translator->trans('The activity is no longer cancelled.'),
+        );
+
+        return $this->redirectToRoute('admin/activities/index');
+    }
+
+    /**
+     * Unpublish an approved activity (board only). It is removed from public view entirely (listings, calendar, and a
+     * 404 on its direct URL) and all sign-up interaction is frozen. Reversible via {@see self::republish()}.
+     */
+    #[Route(
+        path: '/{activity}/unpublish',
+        name: 'unpublish',
+        requirements: ['activity' => '\d+'],
+        methods: ['POST'],
+    )]
+    #[IsGranted(UserRoles::Board->value)]
+    #[IsCsrfTokenValid(
+        id: new Expression('"activity_unpublish-" ~ args["activity"].getId()'),
+        tokenKey: '_csrf_token',
+    )]
+    public function unpublish(
+        #[CurrentUser]
+        User $user,
+        Activity $activity,
+    ): Response {
+        if (
+            null === $activity->getLiveRevision()
+            || $activity->isUnpublished()
+        ) {
+            $this->addFlash(
+                AlertTypes::Warning->value,
+                $this->translator->trans('This activity cannot be unpublished.'),
+            );
+
+            return $this->redirectToRoute('admin/activities/index');
+        }
+
+        $activity->unpublish($user->getMember());
+        $this->entityManager->flush();
+
+        $this->addFlash(
+            AlertTypes::Success->value,
+            $this->translator->trans('The activity has been unpublished and is no longer publicly visible.'),
+        );
+
+        return $this->redirectToRoute('admin/activities/index');
+    }
+
+    /**
+     * Re-publish a previously unpublished activity (board only), restoring public visibility and sign-up interaction.
+     */
+    #[Route(
+        path: '/{activity}/republish',
+        name: 'republish',
+        requirements: ['activity' => '\d+'],
+        methods: ['POST'],
+    )]
+    #[IsGranted(UserRoles::Board->value)]
+    #[IsCsrfTokenValid(
+        id: new Expression('"activity_republish-" ~ args["activity"].getId()'),
+        tokenKey: '_csrf_token',
+    )]
+    public function republish(Activity $activity): Response
+    {
+        if (!$activity->isUnpublished()) {
+            $this->addFlash(
+                AlertTypes::Warning->value,
+                $this->translator->trans('This activity is not unpublished.'),
+            );
+
+            return $this->redirectToRoute('admin/activities/index');
+        }
+
+        $activity->republish();
+        $this->entityManager->flush();
+
+        $this->addFlash(
+            AlertTypes::Success->value,
+            $this->translator->trans('The activity has been re-published.'),
+        );
+
+        return $this->redirectToRoute('admin/activities/index');
     }
 
     /**
@@ -510,6 +711,15 @@ class AdminController extends AbstractController
             throw $this->createNotFoundException();
         }
 
+        // A cancelled or unpublished activity has all sign-up interaction frozen.
+        if ($activity->isFrozen()) {
+            return $this->flashAndBackToSignups(
+                $activity,
+                AlertTypes::Warning->value,
+                $this->translator->trans('Sign-ups are frozen for this activity, so you cannot add a subscriber.'),
+            );
+        }
+
         if (!$signupList->isOpen()) {
             return $this->flashAndBackToSignups(
                 $activity,
@@ -560,15 +770,24 @@ class AdminController extends AbstractController
                 );
             }
 
-            $signupManager->addExternalSignupByOrganiser(
-                $signupList,
-                strval($data['fullName'] ?? ''),
-                $email,
-                SignupType::extractFieldData(
+            try {
+                $signupManager->addExternalSignupByOrganiser(
                     $signupList,
-                    $data,
-                ),
-            );
+                    strval($data['fullName'] ?? ''),
+                    $email,
+                    SignupType::extractFieldData(
+                        $signupList,
+                        $data,
+                    ),
+                );
+            } catch (UniqueConstraintViolationException) {
+                // The pre-check above missed a concurrent sign-up for this address: the unique index caught it.
+                return $this->flashAndBackToSignups(
+                    $activity,
+                    AlertTypes::Warning->value,
+                    $this->translator->trans('Someone with this email address is already signed up for this list.'),
+                );
+            }
 
             return $this->flashAndBackToSignups(
                 $activity,
@@ -648,15 +867,5 @@ class AdminController extends AbstractController
 
         // The schedule is intentionally left empty (not pre-filled with "now"); the form requires it via NotBlank.
         return $revision;
-    }
-
-    /**
-     * Whether the activity described by this revision has already ended.
-     */
-    private function hasPassed(ActivityRevision $revision): bool
-    {
-        $endTime = $revision->getEndTime();
-
-        return null !== $endTime && $endTime < new DateTime();
     }
 }

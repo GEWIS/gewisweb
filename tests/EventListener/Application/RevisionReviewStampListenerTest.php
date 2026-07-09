@@ -12,6 +12,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Workflow\Event\TransitionEvent;
 use Symfony\Component\Workflow\Marking;
+use Symfony\Component\Workflow\Transition;
 
 /**
  * Every board decision (approve / reject / request changes) must record who reviewed the revision and when, for
@@ -24,10 +25,10 @@ final class RevisionReviewStampListenerTest extends TestCase
     {
         foreach (
             [
-                'onApprove',
-                'onReject',
-                'onRequestChanges',
-            ] as $method
+                'approve',
+                'reject',
+                'request_changes',
+            ] as $transition
         ) {
             $member = self::createStub(Member::class);
             $user = self::createStub(User::class);
@@ -37,14 +38,41 @@ final class RevisionReviewStampListenerTest extends TestCase
 
             $revision = new ActivityRevision();
             $listener = new RevisionReviewStampListener($security);
-            $listener->$method($this->transitionEvent($revision));
+            $listener->onTransition($this->transitionEvent($revision, $transition));
 
             self::assertSame(
                 $member,
                 $revision->getReviewer(),
-                $method . ' must record the deciding member as the reviewer',
+                $transition . ' must record the deciding member as the reviewer',
             );
             self::assertNotNull($revision->getReviewedAt());
+        }
+    }
+
+    public function testIgnoresNonReviewTransitions(): void
+    {
+        foreach (
+            [
+                'submit',
+                'start_review',
+                'close',
+            ] as $transition
+        ) {
+            $member = self::createStub(Member::class);
+            $user = self::createStub(User::class);
+            $user->method('getMember')->willReturn($member);
+            $security = self::createStub(Security::class);
+            $security->method('getUser')->willReturn($user);
+
+            $revision = new ActivityRevision();
+            $listener = new RevisionReviewStampListener($security);
+            $listener->onTransition($this->transitionEvent($revision, $transition));
+
+            self::assertNull(
+                $revision->getReviewer(),
+                $transition . ' is not a board decision and must not stamp a reviewer',
+            );
+            self::assertNull($revision->getReviewedAt());
         }
     }
 
@@ -55,17 +83,24 @@ final class RevisionReviewStampListenerTest extends TestCase
 
         $revision = new ActivityRevision();
         $listener = new RevisionReviewStampListener($security);
-        $listener->onApprove($this->transitionEvent($revision));
+        $listener->onTransition($this->transitionEvent($revision, 'approve'));
 
         self::assertNull($revision->getReviewer());
         self::assertNotNull($revision->getReviewedAt());
     }
 
-    private function transitionEvent(object $subject): TransitionEvent
-    {
+    private function transitionEvent(
+        object $subject,
+        string $transition,
+    ): TransitionEvent {
         return new TransitionEvent(
             $subject,
             new Marking([]),
+            new Transition(
+                $transition,
+                'in-review',
+                'approved',
+            ),
         );
     }
 }

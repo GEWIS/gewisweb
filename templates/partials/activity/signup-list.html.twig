@@ -14,7 +14,10 @@
                 {% endif %}
             </span>
             <span class="d-flex flex-wrap align-items-center gap-1 mb-1">
-                {% if list.isOpen %}
+                {% if list.cancelled %}
+                    {# A cancelled activity freezes its sign-ups, so surface that rather than an Open/Closed window. #}
+                    <span class="badge badge-danger">{{ 'Cancelled'|trans }}</span>
+                {% elseif list.isOpen %}
                     <span class="badge badge-success">{{ 'Open'|trans }}</span>
                 {% elseif list.isClosed %}
                     <span class="badge badge-danger">{{ 'Closed'|trans }}</span>
@@ -34,18 +37,21 @@
                     <span class="badge badge-tag">{{ 'GEWIS members only'|trans }}</span>
                 {% endif %}
             </span>
-            <small class="text-muted d-block">
-                {{ 'Open from %open% until %close%.'|trans({
-                    '%open%': list.openDate|format_datetime(pattern: 'EEE d MMM. yyyy HH:mm', locale: app.request.locale),
-                    '%close%': list.closeDate|format_datetime(pattern: 'EEE d MMM. yyyy HH:mm', locale: app.request.locale),
-                }) }}
-            </small>
-            {% if list.drawAt is not null %}
+            {# The configured window and upcoming-draw notice are meaningless once the activity is cancelled. #}
+            {% if not list.cancelled %}
                 <small class="text-muted d-block">
-                    {{ 'Places are allocated by a draw on %date%.'|trans({
-                        '%date%': list.drawAt|format_datetime(pattern: 'EEE d MMM. yyyy HH:mm', locale: app.request.locale),
+                    {{ 'Open from %open% until %close%.'|trans({
+                        '%open%': list.openDate|format_datetime(pattern: 'EEE d MMM. yyyy HH:mm', locale: app.request.locale),
+                        '%close%': list.closeDate|format_datetime(pattern: 'EEE d MMM. yyyy HH:mm', locale: app.request.locale),
                     }) }}
                 </small>
+                {% if list.drawAt is not null %}
+                    <small class="text-muted d-block">
+                        {{ 'Places are allocated by a draw on %date%.'|trans({
+                            '%date%': list.drawAt|format_datetime(pattern: 'EEE d MMM. yyyy HH:mm', locale: app.request.locale),
+                        }) }}
+                    </small>
+                {% endif %}
             {% endif %}
         </span>
         <i class="fas fa-chevron-down signup-list-chevron"></i>
@@ -62,7 +68,12 @@
             {% else %}
                 {# Guests: the external sign-up uses a plain Bootstrap modal + form (its Altcha captcha cannot live in a
                    live component); an invalid submit re-renders the page and re-opens this modal with the errors. #}
-                {% if list.isOpen %}
+                {% if list.cancelled %}
+                    <p class="text-danger mb-3">
+                        <i class="fas fa-ban"></i>
+                        {{ 'Sign-ups are closed because this activity has been cancelled.'|trans }}
+                    </p>
+                {% elseif list.isOpen %}
                     {% if list.onlyGEWIS %}
                         <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
                             <a class="btn btn-sm btn-gewis-primary" href="{{ path('user_login') }}">{{ 'Log in to sign up'|trans }}</a>

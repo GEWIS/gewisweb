@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\EventListener\Activity;
 
 use App\Entity\Activity\ActivityRevision;
-use DateTime;
+use App\Util\Activity\PastActivityRule;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\Workflow\Event\GuardEvent;
 
@@ -51,27 +51,33 @@ final readonly class PastActivityGuardListener
         // awaiting its first publication is judged by its own *start*: one that has already started can never debut,
         // since its sign-up lists close before it begins, so it could never be joined.
         $live = $revision->getActivity()->getLiveRevision();
+
         if (
-            null !== $live
-            && $live !== $revision
+            PastActivityRule::liveEnded(
+                $live,
+                $revision,
+            )
         ) {
-            $deadline = $live->getEndTime();
-            $message = 'This activity has already taken place; its content can no longer be changed.';
-        } else {
-            $deadline = $revision->getBeginTime();
-            $message = 'This activity has already started, so it can no longer be published.';
+            $event->setBlocked(
+                true,
+                'This activity has already taken place; its content can no longer be changed.',
+            );
+
+            return;
         }
 
         if (
-            null === $deadline
-            || $deadline >= new DateTime()
+            !PastActivityRule::debutMissed(
+                $live,
+                $revision,
+            )
         ) {
             return;
         }
 
         $event->setBlocked(
             true,
-            $message,
+            'This activity has already started, so it can no longer be published.',
         );
     }
 }

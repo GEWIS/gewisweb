@@ -106,6 +106,16 @@ final class Version20260529150000 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_55026B0C2796CA52 ON Activity (currentRevision_id)');
         $this->addSql('CREATE INDEX IDX_55026B0CA892657C ON Activity (liveRevision_id)');
 
+        // The board can cancel an approved activity: it stays publicly visible (with a notice and a [CANCELLED] title
+        // marker) but all sign-up interaction is frozen. It can also unpublish one: it is then removed from public view
+        // entirely (listings, calendar, and a 404 on the direct URL) and, like cancel, all sign-up interaction is
+        // frozen. Both are reversible by the board. cancelledBy/unpublishedBy reference the board member who acted.
+        $this->addSql('ALTER TABLE Activity ADD cancelledAt DATETIME DEFAULT NULL, ADD cancelledBy_id INT DEFAULT NULL, ADD unpublishedAt DATETIME DEFAULT NULL, ADD unpublishedBy_id INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE Activity ADD CONSTRAINT FK_55026B0C170541A2 FOREIGN KEY (cancelledBy_id) REFERENCES Member (lidnr)');
+        $this->addSql('ALTER TABLE Activity ADD CONSTRAINT FK_55026B0C35E74FC1 FOREIGN KEY (unpublishedBy_id) REFERENCES Member (lidnr)');
+        $this->addSql('CREATE INDEX IDX_55026B0C170541A2 ON Activity (cancelledBy_id)');
+        $this->addSql('CREATE INDEX IDX_55026B0C35E74FC1 ON Activity (unpublishedBy_id)');
+
         // SignupField.type: integer -> string-backed enum
         $this->addSql('ALTER TABLE SignupField CHANGE type type VARCHAR(255) NOT NULL');
         $this->addSql("UPDATE SignupField SET type = CASE type WHEN '1' THEN 'yes-no' WHEN '2' THEN 'number' WHEN '3' THEN 'choice' ELSE 'text' END");
@@ -394,6 +404,12 @@ final class Version20260529150000 extends AbstractMigration
         // creation.
         $this->addSql('ALTER TABLE Signup ADD verifiedAt DATETIME DEFAULT NULL');
         $this->addSql("UPDATE Signup SET verifiedAt = createdAt WHERE type = 'external'");
+
+        // Guard against duplicate sign-ups at the database level: one member per list (user_lidnr) and one external
+        // email per list (email). Each constraint applies only to its subclass; the other's column is NULL for these
+        // rows, and MySQL treats NULLs as distinct in a unique index, so the two subclasses never collide.
+        $this->addSql('CREATE UNIQUE INDEX signup_list_user_uniq ON Signup (signuplist_id, user_lidnr)');
+        $this->addSql('CREATE UNIQUE INDEX signup_list_email_uniq ON Signup (signuplist_id, email)');
     }
 
     public function down(Schema $schema): void

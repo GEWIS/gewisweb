@@ -357,6 +357,21 @@ class SignupList
     }
 
     /**
+     * Whether any of this list's fields holds sensitive data (so its column is hidden from other subscribers on the
+     * public view, and the guest form warns before collecting it).
+     */
+    public function hasSensitiveField(): bool
+    {
+        foreach ($this->fields as $field) {
+            if ($field->isSensitive()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * @return Collection<array-key, SignupField>
      */
     public function getFields(): Collection

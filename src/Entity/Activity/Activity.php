@@ -17,6 +17,7 @@ use DateTime;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
@@ -56,6 +57,8 @@ use function assert;
  *     category: string,
  *     requireGEFLITST: bool,
  *     requireZettle: bool,
+ *     cancelled: bool,
+ *     unpublished: bool,
  *     labels: ImportedActivityLabelArrayType[],
  *     signupLists: ImportedSignupListArrayType[],
  * }
@@ -75,6 +78,8 @@ use function assert;
  *     category: string,
  *     requireGEFLITST: bool,
  *     requireZettle: bool,
+ *     cancelled: bool,
+ *     unpublished: bool,
  *     labels: ImportedActivityLabelGdprArrayType[],
  *     signupLists: ImportedSignupListGdprArrayType[],
  * }
@@ -120,6 +125,48 @@ class Activity implements RevisableInterface
     #[ManyToOne(targetEntity: ActivityRevision::class)]
     #[JoinColumn(nullable: true)]
     private ?ActivityRevision $liveRevision = null;
+
+    /**
+     * When the board cancelled this activity, or null when it is not cancelled. A cancelled activity stays publicly
+     * visible (with a notice and a {@code [CANCELLED]} title marker) but all sign-up interaction is frozen; the board
+     * can un-cancel it.
+     */
+    #[Column(
+        type: 'datetime',
+        nullable: true,
+    )]
+    private ?DateTime $cancelledAt = null;
+
+    /**
+     * The board member who cancelled this activity, or null when it is not cancelled.
+     */
+    #[ManyToOne(targetEntity: MemberModel::class)]
+    #[JoinColumn(
+        referencedColumnName: 'lidnr',
+        nullable: true,
+    )]
+    private ?MemberModel $cancelledBy = null;
+
+    /**
+     * When the board unpublished this activity, or null when it is published. An unpublished activity is removed from
+     * public view entirely (listings, calendar, and a 404 on the direct URL) and, like a cancelled one, has all sign-up
+     * interaction frozen; the board can re-publish it.
+     */
+    #[Column(
+        type: 'datetime',
+        nullable: true,
+    )]
+    private ?DateTime $unpublishedAt = null;
+
+    /**
+     * The board member who unpublished this activity, or null when it is published.
+     */
+    #[ManyToOne(targetEntity: MemberModel::class)]
+    #[JoinColumn(
+        referencedColumnName: 'lidnr',
+        nullable: true,
+    )]
+    private ?MemberModel $unpublishedBy = null;
 
     public function __construct()
     {
@@ -279,6 +326,69 @@ class Activity implements RevisableInterface
         $this->creator = $creator;
     }
 
+    public function getCancelledAt(): ?DateTime
+    {
+        return $this->cancelledAt;
+    }
+
+    public function getCancelledBy(): ?MemberModel
+    {
+        return $this->cancelledBy;
+    }
+
+    public function isCancelled(): bool
+    {
+        return null !== $this->cancelledAt;
+    }
+
+    public function cancel(MemberModel $member): void
+    {
+        $this->cancelledAt = new DateTime('now');
+        $this->cancelledBy = $member;
+    }
+
+    public function uncancel(): void
+    {
+        $this->cancelledAt = null;
+        $this->cancelledBy = null;
+    }
+
+    public function getUnpublishedAt(): ?DateTime
+    {
+        return $this->unpublishedAt;
+    }
+
+    public function getUnpublishedBy(): ?MemberModel
+    {
+        return $this->unpublishedBy;
+    }
+
+    public function isUnpublished(): bool
+    {
+        return null !== $this->unpublishedAt;
+    }
+
+    public function unpublish(MemberModel $member): void
+    {
+        $this->unpublishedAt = new DateTime('now');
+        $this->unpublishedBy = $member;
+    }
+
+    public function republish(): void
+    {
+        $this->unpublishedAt = null;
+        $this->unpublishedBy = null;
+    }
+
+    /**
+     * Whether all sign-up interaction (signing up, editing, withdrawing, draws, verification) is frozen. True whenever
+     * the activity is cancelled or unpublished; both are board actions that take the activity out of active use.
+     */
+    public function isFrozen(): bool
+    {
+        return $this->isCancelled() || $this->isUnpublished();
+    }
+
     /**
      * Display proxy (see {@see self::getLabels()}).
      */
@@ -428,6 +538,8 @@ class Activity implements RevisableInterface
             'category' => $this->getCategory()->value,
             'requireGEFLITST' => $this->getRequireGEFLITST(),
             'requireZettle' => $this->getRequireZettle(),
+            'cancelled' => $this->isCancelled(),
+            'unpublished' => $this->isUnpublished(),
             'labels' => $labelsArrays,
             'signupLists' => $signupListsArrays,
         ];
@@ -463,6 +575,8 @@ class Activity implements RevisableInterface
             'category' => $this->getCategory()->value,
             'requireGEFLITST' => $this->getRequireGEFLITST(),
             'requireZettle' => $this->getRequireZettle(),
+            'cancelled' => $this->isCancelled(),
+            'unpublished' => $this->isUnpublished(),
             'labels' => $labelsArrays,
             'signupLists' => $signupListsArrays,
         ];

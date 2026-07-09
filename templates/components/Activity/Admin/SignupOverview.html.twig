@@ -159,7 +159,7 @@
                     {% set drawAction = isFcfs ? 'drawFirstCome' : 'drawLottery' %}
                     {% set drawIcon = isFcfs ? 'fa-list-ol' : 'fa-dice' %}
                     {% set drawLabel = isFcfs ? 'First-come-first-served'|trans : 'Random draw'|trans %}
-                    {% set drawReady = (list.isClosed or list.autoDrawDue) and admissionOpen and list.capacity is not null %}
+                    {% set drawReady = (list.isClosed or list.autoDrawDue) and admissionOpen and list.capacity is not null and not list.frozen %}
                     {% set drawConfirm = 'Run the draw now? This admits people up to capacity and it cannot be undone.'|trans %}
                     <div class="panel-body border-bottom">
                         <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
@@ -196,7 +196,9 @@
                             {% endif %}
                         </div>
                         <small class="text-muted d-block mt-2">
-                            {% if isManual %}
+                            {% if list.frozen %}
+                                {{ 'This activity is cancelled or unpublished, so sign-up actions are frozen.'|trans }}
+                            {% elseif isManual %}
                                 {{ admissionOpen ? 'Admit people by hand with the toggles below.'|trans : 'Admission is closed.'|trans }}
                             {% elseif list.drawLocked %}
                                 {% if list.drawnByName is null %}
@@ -255,9 +257,9 @@
                                 data-live-list-id-param="{{ list.listId }}">
                             <i class="fas fa-envelope"></i> {{ 'Email sign-ups'|trans }}
                         </button>
-                        {% if list.isOpen %}
+                        {% if list.isOpen and not list.frozen %}
                             {# Manual external add is a normal page (it carries the dynamic sign-up form); a redirect back
-                               here refreshes this component. #}
+                               here refreshes this component. Hidden while frozen: the controller refuses it anyway. #}
                             <a class="btn btn-sm btn-outline-success"
                                href="{{ path('admin/activities/add_external_signup', {'activity': this.activity.getId, 'signupList': list.listId}) }}">
                                 <i class="fas fa-user-plus"></i> {{ 'Add external subscriber'|trans }}

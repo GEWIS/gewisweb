@@ -1,6 +1,6 @@
 {% extends 'layout-admin.html.twig' %}
 
-{% block page_title %}{{ 'Add external subscriber'|trans|page_title }}{{ activity.getName|localise_text|page_title }}{{ parent() }}{% endblock %}
+{% block page_title %}{{ 'Add external subscriber'|trans|page_title }}{{ activity_title(activity)|page_title }}{{ parent() }}{% endblock %}
 
 {% block admin_breadcrumbs %}
     <li class="breadcrumb-item">

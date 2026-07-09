@@ -15,11 +15,17 @@ use Symfony\Component\Workflow\Event\EnteredEvent;
  * the newly-approved revision's matching lists (matched by lineage id) before that revision is promoted, so the public
  * page keeps showing them and no sign-up is ever lost.
  *
- * Runs in-memory only; the controller flushes after `$workflow->apply()`. This is the sole promoter for activity
- * revisions and therefore {@see PromoteLiveRevisionListener} ignores them. The migrator hard-fails on an incompatible
- * revision; because {@see SignupMigrationGuardListener} withholds the `approve` transition up front.
+ * Runs at a higher priority than {@see PromoteLiveRevisionListener}: the migration must read the still-current live
+ * revision (`getLiveRevision()`) before that generic listener repoints it to the newly-approved one. Promotion itself
+ * is left to {@see PromoteLiveRevisionListener} (shared by every domain), so this listener only migrates.
+ *
+ * Runs in-memory only; the controller flushes after `$workflow->apply()`. The migrator hard-fails on an incompatible
+ * revision, but {@see SignupMigrationGuardListener} withholds the `approve` transition up front.
  */
-#[AsEventListener(event: 'workflow.revision.entered.approved')]
+#[AsEventListener(
+    event: 'workflow.revision.entered.approved',
+    priority: 10,
+)]
 final readonly class MigrateSignupsOnApprovalListener
 {
     public function __construct(private SignupListMigrator $migrator)
@@ -37,15 +43,15 @@ final readonly class MigrateSignupsOnApprovalListener
         $outgoing = $activity->getLiveRevision();
 
         if (
-            null !== $outgoing
-            && $outgoing !== $revision
+            null === $outgoing
+            || $outgoing === $revision
         ) {
-            $this->migrator->migrate(
-                $outgoing,
-                $revision,
-            );
+            return;
         }
 
-        $activity->markRevisionLive($revision);
+        $this->migrator->migrate(
+            $outgoing,
+            $revision,
+        );
     }
 }

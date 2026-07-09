@@ -33,11 +33,18 @@ class CompanyRevisionCommentRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('c')
             ->addSelect(
                 'au',
+                'acu',
                 'r',
             )
-            ->join(
+            // A comment's author is a member's account OR a company user (mutually exclusive, both nullable), so both
+            // must be LEFT-joined: an inner join on c.author alone silently drops every CompanyUser-authored comment.
+            ->leftJoin(
                 'c.author',
                 'au',
+            )
+            ->leftJoin(
+                'c.authorCompanyUser',
+                'acu',
             )
             ->join(
                 'c.revision',

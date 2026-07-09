@@ -200,6 +200,8 @@ class ActivityRepository extends ServiceEntityRepository
                 'lr',
             )
             ->where('lr.endTime < :now')
+            // Unpublished activities are hidden from the public archive, so they must not contribute a year either.
+            ->andWhere('a.unpublishedAt IS NULL')
             ->setParameter(
                 'now',
                 new DateTime(),
@@ -243,6 +245,8 @@ class ActivityRepository extends ServiceEntityRepository
             ->where('IDENTITY(su.user) = :subscriber')
             ->andWhere('r.endTime < :now')
             ->andWhere('IDENTITY(a.liveRevision) = r.id')
+            // Unpublished activities are hidden from the public/"my" archive, so they must not contribute a year.
+            ->andWhere('a.unpublishedAt IS NULL')
             ->setParameter(
                 'subscriber',
                 $member->getLidnr(),
@@ -338,6 +342,9 @@ class ActivityRepository extends ServiceEntityRepository
                 'lr.description',
                 'descr',
             )
+            // An unpublished activity is taken out of public view entirely, listings included. (A cancelled one still
+            // shows, with a notice, so it is deliberately not filtered here.)
+            ->andWhere('a.unpublishedAt IS NULL')
             ->setParameter(
                 'now',
                 new DateTime(),
@@ -536,6 +543,8 @@ class ActivityRepository extends ServiceEntityRepository
                 'lr',
             )
             ->where('lr.organ IS NOT NULL')
+            // Unpublished activities are hidden from the overview, so they must not seed its organ filter either.
+            ->andWhere('a.unpublishedAt IS NULL')
             ->getQuery()
             ->getScalarResult();
 

@@ -22,6 +22,7 @@ use Doctrine\ORM\Mapping\InheritanceType;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\UniqueConstraint;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -48,6 +49,24 @@ use Symfony\Contracts\Translation\TranslatorInterface;
     value: [
         'user' => UserSignup::class,
         'external' => ExternalSignup::class,
+    ],
+)]
+// No member may hold two sign-ups on the same list, and no external email may appear twice on the same list. Each
+// constraint applies only to its own subclass: the other's discriminating column is NULL for these rows, and MySQL
+// treats NULLs as distinct in a unique index, so a user row (NULL email) and an external row (NULL user_lidnr) never
+// collide with each other.
+#[UniqueConstraint(
+    name: 'signup_list_user_uniq',
+    columns: [
+        'signuplist_id',
+        'user_lidnr',
+    ],
+)]
+#[UniqueConstraint(
+    name: 'signup_list_email_uniq',
+    columns: [
+        'signuplist_id',
+        'email',
     ],
 )]
 #[HasLifecycleCallbacks]

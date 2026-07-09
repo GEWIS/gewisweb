@@ -13,6 +13,7 @@ use App\Repository\Activity\SignupListRepository;
 use App\Service\Activity\SignupManager;
 use App\Service\Application\AltchaSolutionGuard;
 use App\Twig\Components\Concerns\FlashesTrait;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Override;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -109,13 +110,7 @@ final class ExternalSignupForm
 
     public function hasSensitiveField(): bool
     {
-        foreach ($this->signupList->getFields() as $field) {
-            if ($field->isSensitive()) {
-                return true;
-            }
-        }
-
-        return false;
+        return $this->signupList->hasSensitiveField();
     }
 
     #[LiveAction]
@@ -165,15 +160,31 @@ final class ExternalSignupForm
                 ),
             );
         } else {
-            $this->signupManager->createExternalSignup(
-                $this->signupList,
-                strval($data['fullName'] ?? ''),
-                $email,
-                SignupType::extractFieldData(
+            try {
+                $this->signupManager->createExternalSignup(
                     $this->signupList,
-                    $data,
-                ),
-            );
+                    strval($data['fullName'] ?? ''),
+                    $email,
+                    SignupType::extractFieldData(
+                        $this->signupList,
+                        $data,
+                    ),
+                );
+            } catch (UniqueConstraintViolationException) {
+                // The pre-check above missed a concurrent sign-up for the same address: the unique index caught it.
+                // Show the same neutral flash as the "already signed up" branch, so the outcome never reveals the race.
+                $this->flash(
+                    'success',
+                    $this->translator->trans('Almost there! Check your email to confirm your sign-up.'),
+                );
+
+                return new RedirectResponse(
+                    $this->urlGenerator->generate(
+                        'activity/view',
+                        ['activity' => $this->signupList->getActivity()->getId()],
+                    ),
+                );
+            }
         }
 
         $this->flash(
@@ -198,6 +209,7 @@ final class ExternalSignupForm
             $this->security->isGranted(UserRoles::User->value)
             || $this->signupList->getOnlyGEWIS()
             || !$this->signupList->isOpen()
+            || $this->signupList->getActivity()->isFrozen()
             || $this->signupList->getActivity()->getLiveRevision() !== $this->signupList->getRevision()
         ) {
             throw new AccessDeniedException();

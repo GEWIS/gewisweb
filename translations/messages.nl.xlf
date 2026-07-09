@@ -361,6 +361,14 @@
         <source>Cancel and sign out</source>
         <target state="translated">Annuleren en uitloggen</target>
       </trans-unit>
+      <trans-unit id="PzOZxCm" resname="Cancel this activity? It stays visible with a [CANCELLED] notice, but all sign-ups, edits and withdrawals are frozen.">
+        <source>Cancel this activity? It stays visible with a [CANCELLED] notice, but all sign-ups, edits and withdrawals are frozen.</source>
+        <target state="translated">Deze activiteit annuleren? Ze blijft zichtbaar met een [GEANNULEERD]-melding, maar alle inschrijvingen, wijzigingen en uitschrijvingen worden bevroren.</target>
+      </trans-unit>
+      <trans-unit id="uULlIlE" resname="Cancelled">
+        <source>Cancelled</source>
+        <target state="translated">Geannuleerd</target>
+      </trans-unit>
       <trans-unit id="7xfj503" resname="Capacity">
         <source>Capacity</source>
         <target>Capaciteit</target>
@@ -420,6 +428,10 @@
       <trans-unit id="4XOnmWM" resname="Clear selection">
         <source>Clear selection</source>
         <target>Selectie wissen</target>
+      </trans-unit>
+      <trans-unit id="VWyhEVz" resname="Click the button below to confirm your sign-up for this activity.">
+        <source>Click the button below to confirm your sign-up for this activity.</source>
+        <target state="translated">Klik op de knop hieronder om je inschrijving voor deze activiteit te bevestigen.</target>
       </trans-unit>
       <trans-unit id="qNghuqo" resname="Close">
         <source>Close</source>
@@ -513,6 +525,10 @@
         <source>Confirm</source>
         <target state="translated">Bevestigen</target>
       </trans-unit>
+      <trans-unit id="YnyqHbm" resname="Confirm my sign-up">
+        <source>Confirm my sign-up</source>
+        <target state="translated">Mijn inschrijving bevestigen</target>
+      </trans-unit>
       <trans-unit id="AQfghoF" resname="Confirm sign-up">
         <source>Confirm sign-up</source>
         <target>Inschrijving bevestigen</target>
@@ -520,6 +536,10 @@
       <trans-unit id="aF4KZmI" resname="Confirm your identity">
         <source>Confirm your identity</source>
         <target state="translated">Bevestig je identiteit</target>
+      </trans-unit>
+      <trans-unit id="cb4I4C3" resname="Confirm your sign-up">
+        <source>Confirm your sign-up</source>
+        <target state="translated">Bevestig je inschrijving</target>
       </trans-unit>
       <trans-unit id="4iRtdnb" resname="Contact">
         <source>Contact</source>
@@ -1669,6 +1689,14 @@
         <source>Random draw</source>
         <target>Loting</target>
       </trans-unit>
+      <trans-unit id="RRsMujP" resname="Re-publish">
+        <source>Re-publish</source>
+        <target state="translated">Opnieuw publiceren</target>
+      </trans-unit>
+      <trans-unit id="RK5Sdf3" resname="Re-publish this activity? It becomes publicly visible again and sign-ups reopen where the deadlines still allow.">
+        <source>Re-publish this activity? It becomes publicly visible again and sign-ups reopen where the deadlines still allow.</source>
+        <target state="translated">Deze activiteit opnieuw publiceren? Ze wordt weer openbaar zichtbaar en inschrijvingen gaan weer open waar de deadlines dat nog toelaten.</target>
+      </trans-unit>
       <trans-unit id="9Iuz1j8" resname="Reality collapsed. Please go back before the singularity spreads.">
         <source>Reality collapsed. Please go back before the singularity spreads.</source>
         <target state="translated">De werkelijkheid stortte in. Ga alsjeblieft terug voordat de singulariteit zich verspreidt.</target>
@@ -1989,6 +2017,18 @@
         <source>Sign-ups</source>
         <target>Inschrijvingen</target>
       </trans-unit>
+      <trans-unit id="7fH21vY" resname="Sign-ups are closed and no further changes can be made.">
+        <source>Sign-ups are closed and no further changes can be made.</source>
+        <target state="translated">Inschrijvingen zijn gesloten en er kunnen geen wijzigingen meer worden gemaakt.</target>
+      </trans-unit>
+      <trans-unit id="eV6LGQR" resname="Sign-ups are closed because this activity has been cancelled.">
+        <source>Sign-ups are closed because this activity has been cancelled.</source>
+        <target state="translated">Inschrijvingen zijn gesloten omdat deze activiteit is geannuleerd.</target>
+      </trans-unit>
+      <trans-unit id="ia8cBnF" resname="Sign-ups are frozen for this activity, so you cannot add a subscriber.">
+        <source>Sign-ups are frozen for this activity, so you cannot add a subscriber.</source>
+        <target state="translated">Inschrijvingen voor deze activiteit zijn bevroren, dus je kunt geen deelnemer toevoegen.</target>
+      </trans-unit>
       <trans-unit id="VCNBYQu" resname="Sign-ups: %count%">
         <source>Sign-ups: %count%</source>
         <target state="translated">Inschrijvingen: %count%</target>
@@ -2129,6 +2169,22 @@
         <source>The GEWIS website is open-source! Check out the repository on &lt;a href="https://github.com/GEWIS/gewisweb" target="_blank"&gt;&lt;span class="fab fa-github"&gt;&lt;/span&gt;&amp;nbsp;GitHub&lt;/a&gt;. Or visit our &lt;a href="https://github.com/GEWIS" target="_blank"&gt;organisation&lt;/a&gt; for more of our awesome open-source projects.</source>
         <target state="translated"><![CDATA[De GEWIS-website is open source! Bekijk de repository op <a href="https://github.com/GEWIS/gewisweb" target="_blank"><span class="fab fa-github"></span>&nbsp;GitHub</a>. Of bezoek onze <a href="https://github.com/GEWIS" target="_blank">organisatie</a> voor meer van onze geweldige open-sourceprojecten.]]></target>
       </trans-unit>
+      <trans-unit id="8h3GnHu" resname="The activity has been cancelled.">
+        <source>The activity has been cancelled.</source>
+        <target state="translated">De activiteit is geannuleerd.</target>
+      </trans-unit>
+      <trans-unit id="QoLmbOl" resname="The activity has been re-published.">
+        <source>The activity has been re-published.</source>
+        <target state="translated">De activiteit is opnieuw gepubliceerd.</target>
+      </trans-unit>
+      <trans-unit id="Gr.1qlA" resname="The activity has been unpublished and is no longer publicly visible.">
+        <source>The activity has been unpublished and is no longer publicly visible.</source>
+        <target state="translated">De activiteit is gedepubliceerd en is niet langer openbaar zichtbaar.</target>
+      </trans-unit>
+      <trans-unit id="Hfh.hVC" resname="The activity is no longer cancelled.">
+        <source>The activity is no longer cancelled.</source>
+        <target state="translated">De activiteit is niet langer geannuleerd.</target>
+      </trans-unit>
       <trans-unit id="Poo2BZL" resname="The activity revision was updated.">
         <source>The activity revision was updated.</source>
         <target state="translated">De activiteitsrevisie is bijgewerkt.</target>
@@ -2140,6 +2196,10 @@
       <trans-unit id="WTE8eK4" resname="The draw can be run once sign-up has closed.">
         <source>The draw can be run once sign-up has closed.</source>
         <target>De loting kan worden uitgevoerd zodra de inschrijving is gesloten.</target>
+      </trans-unit>
+      <trans-unit id="bdi6_Rs" resname="The draw could not be run — the list may have changed or was already drawn.">
+        <source>The draw could not be run — the list may have changed or was already drawn.</source>
+        <target state="translated">De loting kon niet worden uitgevoerd — de lijst is mogelijk gewijzigd of was al geloot.</target>
       </trans-unit>
       <trans-unit id="FrK7hHw" resname="The draw will be performed automatically on %date%.">
         <source>The draw will be performed automatically on %date%.</source>
@@ -2185,6 +2245,14 @@
         <source>There is nothing to review right now.</source>
         <target state="translated">Er is op dit moment niets om te beoordelen.</target>
       </trans-unit>
+      <trans-unit id="ecpVw4m" resname="This activity cannot be cancelled.">
+        <source>This activity cannot be cancelled.</source>
+        <target state="translated">Deze activiteit kan niet worden geannuleerd.</target>
+      </trans-unit>
+      <trans-unit id="ipMzacn" resname="This activity cannot be unpublished.">
+        <source>This activity cannot be unpublished.</source>
+        <target state="translated">Deze activiteit kan niet worden gedepubliceerd.</target>
+      </trans-unit>
       <trans-unit id="z2CkJ9H" resname="This activity has already taken place and can no longer be revised.">
         <source>This activity has already taken place and can no longer be revised.</source>
         <target state="translated">Deze activiteit heeft al plaatsgevonden en kan niet meer worden herzien.</target>
@@ -2192,6 +2260,18 @@
       <trans-unit id="orEA8_f" resname="This activity has already taken place, so this revision can no longer be submitted or approved.">
         <source>This activity has already taken place, so this revision can no longer be submitted or approved.</source>
         <target state="translated">Deze activiteit heeft al plaatsgevonden, dus deze revisie kan niet meer worden ingediend of goedgekeurd.</target>
+      </trans-unit>
+      <trans-unit id="UamA2Ee" resname="This activity has been cancelled.">
+        <source>This activity has been cancelled.</source>
+        <target state="translated">Deze activiteit is geannuleerd.</target>
+      </trans-unit>
+      <trans-unit id="UOIyNmb" resname="This activity has been cancelled. Un-cancel it first to revise it.">
+        <source>This activity has been cancelled. Un-cancel it first to revise it.</source>
+        <target state="translated">Deze activiteit is geannuleerd. Maak de annulering eerst ongedaan om ze te herzien.</target>
+      </trans-unit>
+      <trans-unit id="jeCxkpm" resname="This activity has been cancelled. Your sign-up is frozen and cannot be changed.">
+        <source>This activity has been cancelled. Your sign-up is frozen and cannot be changed.</source>
+        <target state="translated">Deze activiteit is geannuleerd. Je inschrijving is bevroren en kan niet worden gewijzigd.</target>
       </trans-unit>
       <trans-unit id="WjvSua3" resname="This activity has no sign-up lists.">
         <source>This activity has no sign-up lists.</source>
@@ -2205,6 +2285,22 @@
         <source>This activity is being reviewed and cannot be edited right now.</source>
         <target state="translated">Deze activiteit wordt beoordeeld en kan op dit moment niet worden bewerkt.</target>
       </trans-unit>
+      <trans-unit id="zueKs53" resname="This activity is cancelled or unpublished, so sign-up actions are frozen.">
+        <source>This activity is cancelled or unpublished, so sign-up actions are frozen.</source>
+        <target state="translated">Deze activiteit is geannuleerd of gedepubliceerd, dus inschrijfacties zijn bevroren.</target>
+      </trans-unit>
+      <trans-unit id="kKUrWYZ" resname="This activity is no longer open for sign-ups, so it cannot be confirmed.">
+        <source>This activity is no longer open for sign-ups, so it cannot be confirmed.</source>
+        <target state="translated">Deze activiteit is niet langer open voor inschrijvingen, dus ze kan niet worden bevestigd.</target>
+      </trans-unit>
+      <trans-unit id="0WAJ.M4" resname="This activity is not cancelled.">
+        <source>This activity is not cancelled.</source>
+        <target state="translated">Deze activiteit is niet geannuleerd.</target>
+      </trans-unit>
+      <trans-unit id="wIpVFqA" resname="This activity is not unpublished.">
+        <source>This activity is not unpublished.</source>
+        <target state="translated">Deze activiteit is niet gedepubliceerd.</target>
+      </trans-unit>
       <trans-unit id="y05jdnV" resname="This activity needs a GEFLITST member to take photos">
         <source>This activity needs a GEFLITST member to take photos</source>
         <target state="translated">Deze activiteit heeft een GEFLITST-lid nodig om foto’s te maken</target>
@@ -2212,6 +2308,10 @@
       <trans-unit id="rn2XCS2" resname="This activity needs a Zettle for payments">
         <source>This activity needs a Zettle for payments</source>
         <target state="translated">Deze activiteit heeft een Zettle nodig voor betalingen</target>
+      </trans-unit>
+      <trans-unit id="kdHX1H2" resname="This activity was closed by the board and can no longer be revised.">
+        <source>This activity was closed by the board and can no longer be revised.</source>
+        <target state="translated">Deze activiteit is door het bestuur gesloten en kan niet meer worden herzien.</target>
       </trans-unit>
       <trans-unit id="fFg9TZ7" resname="This activity was taken over by a reviewer, so your changes were not saved.">
         <source>This activity was taken over by a reviewer, so your changes were not saved.</source>
@@ -2321,6 +2421,14 @@
         <source>Type</source>
         <target state="translated">Type</target>
       </trans-unit>
+      <trans-unit id="kUwxFg0" resname="Un-cancel">
+        <source>Un-cancel</source>
+        <target state="translated">Annulering ongedaan maken</target>
+      </trans-unit>
+      <trans-unit id="sNgqbmx" resname="Un-cancel this activity? Sign-ups will reopen where the deadlines still allow.">
+        <source>Un-cancel this activity? Sign-ups will reopen where the deadlines still allow.</source>
+        <target state="translated">Annulering van deze activiteit ongedaan maken? Inschrijvingen gaan weer open waar de deadlines dat nog toelaten.</target>
+      </trans-unit>
       <trans-unit id="UryytzR" resname="Uncategorised">
         <source>Uncategorised</source>
         <target>Niet gecategoriseerd</target>
@@ -2328,6 +2436,18 @@
       <trans-unit id="7ZQ9oWO" resname="Unknown device">
         <source>Unknown device</source>
         <target state="translated">Onbekend apparaat</target>
+      </trans-unit>
+      <trans-unit id="tTYXtrf" resname="Unpublish">
+        <source>Unpublish</source>
+        <target state="translated">Depubliceren</target>
+      </trans-unit>
+      <trans-unit id="nhAr8IN" resname="Unpublish this activity? It is removed from public view entirely and all sign-up interaction is frozen.">
+        <source>Unpublish this activity? It is removed from public view entirely and all sign-up interaction is frozen.</source>
+        <target state="translated">Deze activiteit depubliceren? Ze wordt volledig uit de openbare weergave verwijderd en alle inschrijfinteractie wordt bevroren.</target>
+      </trans-unit>
+      <trans-unit id="VtpqJrs" resname="Unpublished">
+        <source>Unpublished</source>
+        <target state="translated">Gedepubliceerd</target>
       </trans-unit>
       <trans-unit id="TeuL_GQ" resname="Unsubscribe">
         <source>Unsubscribe</source>
@@ -2576,6 +2696,10 @@
       <trans-unit id="ScQ2_ao" resname="Zettle">
         <source>Zettle</source>
         <target state="translated">Zettle</target>
+      </trans-unit>
+      <trans-unit id="6ylHUuS" resname="[CANCELLED]">
+        <source>[CANCELLED]</source>
+        <target state="translated">[GEANNULEERD]</target>
       </trans-unit>
       <trans-unit id="mC5UFtS" resname="and">
         <source>and</source>

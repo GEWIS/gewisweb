@@ -97,8 +97,10 @@ final readonly class ActivityRevisionCloner extends AbstractRevisionCloner
         $list->setDisplaySubscribedNumber($source->getDisplaySubscribedNumber());
         $list->setLimitedCapacity($source->getLimitedCapacity());
         $list->setCapacity($source->getCapacity());
-        // The draw lock + its audit carry across revisions, like presence does, so an approved re-edit keeps a list
-        // that was already drawn locked.
+        // Snapshot the draw lock + its audit (and presence, below) at clone time so a fresh draft opens showing the
+        // live state. This is only a starting point: the live list stays authoritative until approval, and
+        // {@see SignupListMigrator::migrate()} re-syncs these onto the clone then in case a draw or presence sweep
+        // happened while the draft was open.
         $list->setDrawnAt($source->getDrawnAt());
         $list->setDrawnBy($source->getDrawnBy());
         // Allocation method + its per-method settings are list config, carried forward like the other settings.

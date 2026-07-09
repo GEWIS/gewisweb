@@ -12,7 +12,9 @@ use App\Entity\Activity\SignupField;
 use App\Entity\Activity\SignupFieldValue;
 use App\Entity\Activity\SignupList;
 use App\Entity\Activity\SignupOption;
+use App\Entity\Decision\Member;
 use App\Service\Activity\SignupListMigrator;
+use DateTime;
 use Override;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
@@ -495,6 +497,101 @@ final class SignupListMigratorTest extends TestCase
             $liveFaithful,
             $faithfulSignup->getSignupList(),
         );
+    }
+
+    public function testCarriesDrawAndPresenceStateFromTheLiveListOntoTheClone(): void
+    {
+        $lineageId = Uuid::v4();
+
+        // The live list was drawn (and had presence taken) after the draft was cloned, so the clone's snapshot is
+        // stale; migration must re-sync the live state onto the clone.
+        $live = $this->choiceFieldList(
+            $lineageId,
+            'Colour',
+            [
+                'Red',
+                'Blue',
+            ],
+        );
+        $drawnAt = new DateTime('2026-01-02 03:04:05');
+        $drawnBy = self::createStub(Member::class);
+        $live->setDrawnAt($drawnAt);
+        $live->setDrawnBy($drawnBy);
+        $live->setPresenceTaken(true);
+        $outgoing = $this->revisionWith($live);
+        $this->answerFirstOption($live);
+
+        $clone = $this->choiceFieldList(
+            $lineageId,
+            'Colour',
+            [
+                'Red',
+                'Blue',
+            ],
+        );
+        // The clone starts from a pre-draw snapshot.
+        $clone->setDrawnAt(null);
+        $clone->setDrawnBy(null);
+        $clone->setPresenceTaken(false);
+        $incoming = $this->revisionWith($clone);
+
+        $this->migrator->migrate(
+            $outgoing,
+            $incoming,
+        );
+
+        self::assertSame(
+            $drawnAt,
+            $clone->getDrawnAt(),
+        );
+        self::assertSame(
+            $drawnBy,
+            $clone->getDrawnBy(),
+        );
+        self::assertTrue($clone->isPresenceTaken());
+    }
+
+    public function testCarriesDrawAndPresenceStateEvenForListsWithoutSignups(): void
+    {
+        $lineageId = Uuid::v4();
+
+        // A drawn but empty list (a limited-capacity list nobody signed up for) is skipped by the sign-up move, but its
+        // draw state is still authoritative on the live list and must reach the clone.
+        $live = $this->choiceFieldList(
+            $lineageId,
+            'Colour',
+            [
+                'Red',
+                'Blue',
+            ],
+        );
+        $drawnAt = new DateTime('2026-02-03 04:05:06');
+        $live->setDrawnAt($drawnAt);
+        $live->setPresenceTaken(true);
+        $outgoing = $this->revisionWith($live);
+
+        $clone = $this->choiceFieldList(
+            $lineageId,
+            'Colour',
+            [
+                'Red',
+                'Blue',
+            ],
+        );
+        $clone->setDrawnAt(null);
+        $clone->setPresenceTaken(false);
+        $incoming = $this->revisionWith($clone);
+
+        $this->migrator->migrate(
+            $outgoing,
+            $incoming,
+        );
+
+        self::assertSame(
+            $drawnAt,
+            $clone->getDrawnAt(),
+        );
+        self::assertTrue($clone->isPresenceTaken());
     }
 
     public function testIgnoresListsWithoutSignupsWhenJudgingMigratability(): void

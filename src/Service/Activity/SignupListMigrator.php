@@ -62,13 +62,25 @@ final readonly class SignupListMigrator
         }
 
         foreach ($outgoing->getSignupLists() as $oldList) {
+            $newList = $byLineage[$oldList->getLineageId()->toRfc4122()] ?? null;
+            if (!$newList instanceof SignupList) {
+                continue;
+            }
+
+            // Carry the live list's draw/presence state onto the incoming clone, independent of whether it has any
+            // sign-ups: the clone snapshots these at clone time, but the live list stays authoritative until approval
+            // (a draw or a presence sweep may have happened in between), so re-sync them here for every lineage match.
+            $newList->setDrawnAt($oldList->getDrawnAt());
+            $newList->setDrawnBy($oldList->getDrawnBy());
+            $newList->setPresenceTaken($oldList->isPresenceTaken());
+
             if ($oldList->getSignUps()->isEmpty()) {
                 continue;
             }
 
             $this->migrateList(
                 $oldList,
-                $byLineage[$oldList->getLineageId()->toRfc4122()],
+                $newList,
             );
         }
     }

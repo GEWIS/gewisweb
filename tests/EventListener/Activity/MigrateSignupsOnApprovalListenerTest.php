@@ -24,10 +24,11 @@ use Symfony\Component\Workflow\Marking;
 
 /**
  * Approving an activity revision must migrate the live sign-ups onto the newly-approved revision's lineage-matched
- * lists BEFORE promoting it to live, so the public page keeps showing them and no sign-up is lost. With nothing
- * approved yet there is nothing to migrate, so it simply promotes. Non-activity revisions are promoted elsewhere and
- * must be ignored here. The real migrator is used: this listener is the integration point that connects migration
- * to promotion.
+ * lists, so the public page keeps showing them and no sign-up is lost. This listener does the migration only; the
+ * promotion to live is the generic {@see \App\EventListener\Application\PromoteLiveRevisionListener}'s job, at a lower
+ * priority so it repoints the live revision only after this listener has read the still-current one. With nothing
+ * approved yet there is nothing to migrate, so it is a no-op. Non-activity revisions are ignored here. The real
+ * migrator is used: this listener is the integration point that drives the migration.
  */
 final class MigrateSignupsOnApprovalListenerTest extends TestCase
 {
@@ -39,7 +40,7 @@ final class MigrateSignupsOnApprovalListenerTest extends TestCase
         $this->listener = new MigrateSignupsOnApprovalListener(new SignupListMigrator());
     }
 
-    public function testPromotesTheApprovedRevisionWhenNothingIsLiveYet(): void
+    public function testDoesNothingWhenNothingIsLiveYet(): void
     {
         $activity = new Activity();
         $approved = $this->revisionOn(
@@ -50,13 +51,11 @@ final class MigrateSignupsOnApprovalListenerTest extends TestCase
 
         $this->listener->__invoke($this->enteredEvent($approved));
 
-        self::assertSame(
-            $approved,
-            $activity->getLiveRevision(),
-        );
+        // There is nothing to migrate; promotion is the generic listener's job, so this one leaves the activity unlive.
+        self::assertNull($activity->getLiveRevision());
     }
 
-    public function testMigratesTheLiveSignupsOntoTheApprovedRevisionThenPromotesIt(): void
+    public function testMigratesTheLiveSignupsOntoTheApprovedRevision(): void
     {
         $activity = new Activity();
         $lineageId = Uuid::v4();
@@ -76,14 +75,15 @@ final class MigrateSignupsOnApprovalListenerTest extends TestCase
 
         $this->listener->__invoke($this->enteredEvent($approved));
 
-        // The approved revision is now live, and the sign-up has been re-pointed onto its lineage-matched list clone.
-        self::assertSame(
-            $approved,
-            $activity->getLiveRevision(),
-        );
+        // The sign-up has been re-pointed onto the approved revision's lineage-matched list clone. Promotion is left to
+        // the generic listener, so the live revision is still the outgoing one at this point.
         self::assertSame(
             $approved->getSignupLists()->getValues()[0],
             $liveSignup->getSignupList(),
+        );
+        self::assertSame(
+            $live,
+            $activity->getLiveRevision(),
         );
     }
 

@@ -1,6 +1,6 @@
 {% extends 'layout.html.twig' %}
 
-{% block page_title %}{{ activity.getName|localise_text|page_title }}{{ parent() }}{% endblock %}
+{% block page_title %}{{ activity_title(activity)|page_title }}{{ parent() }}{% endblock %}
 
 {% block structured_data %}
     {% set organizerName = activity.getOrgan is not null
@@ -10,10 +10,10 @@
         {{ {
             '@context': 'https://schema.org',
             '@type': 'Event',
-            'name': activity.getName|localise_text,
+            'name': activity_title(activity),
             'startDate': activity.getBeginTime|date('c'),
             'endDate': activity.getEndTime|date('c'),
-            'eventStatus': 'https://schema.org/EventScheduled',
+            'eventStatus': activity.isCancelled ? 'https://schema.org/EventCancelled' : 'https://schema.org/EventScheduled',
             'eventAttendanceMode': 'https://schema.org/OfflineEventAttendanceMode',
             'location': {
                 '@type': 'Place',
@@ -30,9 +30,15 @@
 {% endblock %}
 
 {% block contents %}
+    {% if activity.isCancelled %}
+        <div class="alert alert-danger" role="alert">
+            <strong>{{ 'This activity has been cancelled.'|trans }}</strong>
+            {{ 'Sign-ups are closed and no further changes can be made.'|trans }}
+        </div>
+    {% endif %}
     <div class="row">
         <main class="col-md-8">
-            <h1 class="mb-2">{{ activity.getName|localise_text }}</h1>
+            <h1 class="mb-2">{{ activity_title(activity) }}</h1>
             <div class="d-flex flex-wrap gap-1 mb-3">
                 {% if activity.getCategory.value not in ['other', 'uncategorised'] %}
                     <span class="badge badge-info">{{ activity.getCategory|trans }}</span>

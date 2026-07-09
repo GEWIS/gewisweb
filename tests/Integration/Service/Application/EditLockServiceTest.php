@@ -188,8 +188,42 @@ final class EditLockServiceTest extends DatabaseTestCase
             $other,
         ));
 
-        // Once the lock has gone stale even the holder's heartbeat fails, so the front-end locks the form down.
+        // A lock that has gone stale but is still held by the caller (e.g. the tab slept past the TTL) is re-acquired
+        // by the heartbeat under the same mutex, so it succeeds and the lock is live again.
         $this->makeStale($lock);
+        self::assertTrue($this->service()->ping(
+            $resource,
+            $holder,
+        ));
+        self::assertTrue($this->service()->isAlive($lock));
+    }
+
+    public function testStaleLockPingFailsWhenAnotherUserHasTakenOver(): void
+    {
+        $resource = $this->aResource();
+        [
+            $holder, $other
+        ] = $this->users();
+        $lock = $this->service()->acquire(
+            $resource,
+            $holder,
+        );
+        self::assertInstanceOf(
+            EditLock::class,
+            $lock,
+        );
+
+        // The lock goes stale and someone else legitimately takes it over.
+        $this->makeStale($lock);
+        self::assertInstanceOf(
+            EditLock::class,
+            $this->service()->acquire(
+                $resource,
+                $other,
+            ),
+        );
+
+        // The original holder's heartbeat now fails: the re-acquire in ping() finds the lock is no longer theirs.
         self::assertFalse($this->service()->ping(
             $resource,
             $holder,

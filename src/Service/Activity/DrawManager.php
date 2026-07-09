@@ -9,6 +9,7 @@ use App\Entity\Activity\ExternalSignup;
 use App\Entity\Activity\Signup;
 use App\Entity\Activity\SignupList;
 use App\Entity\Decision\Member;
+use App\Util\Activity\SignupAdminWindow;
 use DateTime;
 use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\EntityManagerInterface;
@@ -143,6 +144,7 @@ final readonly class DrawManager
             && $list->getCapacity() >= 1
             && $list->getAllocationMethod() === $method
             && !$list->isDrawLocked()
+            && !$list->getActivity()->isFrozen()
             && SignupAdminWindow::canChangeAdmission($list->getActivity()->getEndTime());
 
         if (!$allowed) {

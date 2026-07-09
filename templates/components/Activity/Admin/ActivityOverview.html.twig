@@ -1,3 +1,34 @@
+{% macro confirm_form_modal(key, action, token, label, message, buttonClass) %}
+    {% set modalId = 'activity-' ~ key ~ '-modal' %}
+    <button type="button" class="btn btn-sm {{ buttonClass }}"
+            data-bs-toggle="modal" data-bs-target="#{{ modalId }}">
+        {{ label }}
+    </button>
+    <div class="modal fade text-start" id="{{ modalId }}" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ label }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="{{ 'Close'|trans }}"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="mb-0">{{ message }}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                        {{ 'Cancel'|trans }}
+                    </button>
+                    <form method="post" action="{{ action }}">
+                        <input type="hidden" name="_csrf_token" value="{{ token }}">
+                        <button type="submit" class="btn {{ buttonClass }}">{{ label }}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
 <div{{ attributes }}>
     {% set statusBadge = {
         'draft': 'badge-secondary',
@@ -73,7 +104,8 @@
                                                class="btn btn-sm btn-success">
                                                 {{ 'Submit for review'|trans }}
                                             </a>
-                                        {% elseif row.status.value in ['rejected', 'closed'] %}
+                                        {% elseif row.status.value == 'rejected' %}
+                                            {# A closed revision is final (the board ended it), so it offers no reopen. #}
                                             <form method="post" class="d-inline"
                                                   action="{{ path('admin/activities/reopen', {'activity': row.id}) }}">
                                                 <input type="hidden" name="_csrf_token"
@@ -125,6 +157,12 @@
                                     <tr>
                                         {% include 'partials/activity/admin/overview-row-cells.html.twig' with { row: row } only %}
                                         <td class="text-end">
+                                            {% if row.cancelled %}
+                                                <span class="badge badge-danger me-1">{{ 'Cancelled'|trans }}</span>
+                                            {% endif %}
+                                            {% if row.unpublished %}
+                                                <span class="badge badge-secondary me-1">{{ 'Unpublished'|trans }}</span>
+                                            {% endif %}
                                             <a href="{{ path('activity/view', {'activity': row.id}) }}"
                                                class="btn btn-sm btn-outline-secondary" target="_blank" rel="noopener">
                                                 {{ 'View'|trans }}
@@ -133,11 +171,56 @@
                                                class="btn btn-sm btn-outline-secondary">
                                                 {{ 'Sign-ups'|trans }}
                                             </a>
-                                            {% if not row.passed %}
+                                            {# A cancelled activity is not revised (un-cancel first); an unpublished one
+                                               stays revisable so it can be fixed up before re-publishing. #}
+                                            {% if not row.passed and not row.cancelled %}
                                                 <a href="{{ path('admin/activities/edit', {'activity': row.id}) }}"
                                                    class="btn btn-sm btn-outline-gewis-primary">
                                                     {{ 'Revise'|trans }}
                                                 </a>
+                                            {% endif %}
+                                            {% if this.isBoard %}
+                                                {# Board-only lifecycle controls. Each opens a plain Bootstrap modal with
+                                                   the POST form + a Cancel button in the footer (the shared confirm-modal
+                                                   drives live actions only, so these use their own modal). #}
+                                                {% if row.cancelled %}
+                                                    {{ _self.confirm_form_modal(
+                                                        'uncancel-' ~ row.id,
+                                                        path('admin/activities/uncancel', {'activity': row.id}),
+                                                        csrf_token('activity_uncancel-' ~ row.id),
+                                                        'Un-cancel'|trans,
+                                                        'Un-cancel this activity? Sign-ups will reopen where the deadlines still allow.'|trans,
+                                                        'btn-outline-success'
+                                                    ) }}
+                                                {% else %}
+                                                    {{ _self.confirm_form_modal(
+                                                        'cancel-' ~ row.id,
+                                                        path('admin/activities/cancel', {'activity': row.id}),
+                                                        csrf_token('activity_cancel-' ~ row.id),
+                                                        'Cancel'|trans,
+                                                        'Cancel this activity? It stays visible with a [CANCELLED] notice, but all sign-ups, edits and withdrawals are frozen.'|trans,
+                                                        'btn-outline-danger'
+                                                    ) }}
+                                                {% endif %}
+                                                {% if row.unpublished %}
+                                                    {{ _self.confirm_form_modal(
+                                                        'republish-' ~ row.id,
+                                                        path('admin/activities/republish', {'activity': row.id}),
+                                                        csrf_token('activity_republish-' ~ row.id),
+                                                        'Re-publish'|trans,
+                                                        'Re-publish this activity? It becomes publicly visible again and sign-ups reopen where the deadlines still allow.'|trans,
+                                                        'btn-outline-success'
+                                                    ) }}
+                                                {% else %}
+                                                    {{ _self.confirm_form_modal(
+                                                        'unpublish-' ~ row.id,
+                                                        path('admin/activities/unpublish', {'activity': row.id}),
+                                                        csrf_token('activity_unpublish-' ~ row.id),
+                                                        'Unpublish'|trans,
+                                                        'Unpublish this activity? It is removed from public view entirely and all sign-up interaction is frozen.'|trans,
+                                                        'btn-outline-warning'
+                                                    ) }}
+                                                {% endif %}
                                             {% endif %}
                                         </td>
                                     </tr>

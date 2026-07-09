@@ -10,16 +10,21 @@ use App\Entity\Decision\Member;
 use App\Entity\User\Enums\UserRoles;
 use App\Entity\User\User;
 use App\Form\Activity\SignupType;
-use App\Repository\Activity\ExternalSignupVerificationRepository;
 use App\Repository\Activity\SignupListRepository;
 use App\Repository\Activity\UserSignupRepository;
 use App\Service\Activity\SignupManager;
+use App\Twig\Components\Concerns\FlashesTrait;
 use App\ViewModel\Activity\SignupListView;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Override;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -53,6 +58,7 @@ final class SignupList
     use ComponentToolsTrait;
     use ComponentWithFormTrait;
     use DefaultActionTrait;
+    use FlashesTrait;
 
     #[LiveProp]
     public SignupListEntity $signupList;
@@ -60,14 +66,19 @@ final class SignupList
     /** Component-local, transient: a success message shown on the render right after an action. */
     public ?string $feedback = null;
 
+    /** Per-request memoisation of {@see self::memberSignup()}; the flag distinguishes "no sign-up" from "not fetched". */
+    private ?UserSignup $memberSignupCache = null;
+    private bool $memberSignupFetched = false;
+
     public function __construct(
         private readonly Security $security,
         private readonly FormFactoryInterface $formFactory,
         private readonly SignupManager $signupManager,
         private readonly SignupListRepository $signupListRepository,
         private readonly UserSignupRepository $userSignupRepository,
-        private readonly ExternalSignupVerificationRepository $verificationRepository,
         private readonly TranslatorInterface $translator,
+        private readonly UrlGeneratorInterface $urlGenerator,
+        private readonly RequestStack $requestStack,
     ) {
     }
 
@@ -117,7 +128,6 @@ final class SignupList
             true,
             $this->currentMember()->getLidnr(),
             $this->translator,
-            $this->verificationRepository->findPendingExternalSignupIdsForList($this->signupList),
         );
     }
 
@@ -128,17 +138,11 @@ final class SignupList
 
     public function hasSensitiveField(): bool
     {
-        foreach ($this->signupList->getFields() as $field) {
-            if ($field->isSensitive()) {
-                return true;
-            }
-        }
-
-        return false;
+        return $this->signupList->hasSensitiveField();
     }
 
     #[LiveAction]
-    public function submit(): void
+    public function submit(): ?Response
     {
         if (!$this->isOpenForSignup()) {
             throw new AccessDeniedException();
@@ -159,11 +163,29 @@ final class SignupList
             );
             $this->feedback = $this->translator->trans('Your sign-up has been updated.');
         } else {
-            $this->signupManager->createUserSignup(
-                $this->signupList,
-                $this->currentMember(),
-                $fieldData,
-            );
+            try {
+                $this->signupManager->createUserSignup(
+                    $this->signupList,
+                    $this->currentMember(),
+                    $fieldData,
+                );
+            } catch (UniqueConstraintViolationException) {
+                // The memberSignup() pre-check missed a concurrent sign-up (a second tab); the unique index caught it.
+                // The entity manager is closed now, so re-rendering this (query-backed) component would fail: flash and
+                // redirect to the activity, which reloads the panel in its already-signed-up state on a fresh manager.
+                $this->flash(
+                    'success',
+                    $this->translator->trans('You are signed up.'),
+                );
+
+                return new RedirectResponse(
+                    $this->urlGenerator->generate(
+                        'activity/view',
+                        ['activity' => $this->signupList->getActivity()->getId()],
+                    ),
+                );
+            }
+
             $this->feedback = $this->translator->trans('You are signed up.');
         }
 
@@ -172,6 +194,8 @@ final class SignupList
             'signup:success',
             ['listId' => $this->signupList->getId()],
         );
+
+        return null;
     }
 
     #[LiveAction]
@@ -190,17 +214,28 @@ final class SignupList
     }
 
     /**
-     * Whether this is the activity's live list and its sign-up window is open right now.
+     * Whether this is the activity's live list and its sign-up window is open right now. Gates both
+     * {@see self::submit()} and {@see self::withdraw()}: when the board cancelled or unpublished the activity every
+     * sign-up interaction is frozen, so leaving it false blocks signing up, editing and withdrawing alike.
      */
     private function isOpenForSignup(): bool
     {
         return $this->signupList->getActivity()->getLiveRevision() === $this->signupList->getRevision()
+            && !$this->signupList->getActivity()->isFrozen()
             && $this->signupList->isOpen();
     }
 
     private function memberSignup(): ?UserSignup
     {
-        return $this->userSignupRepository->findOneByListAndMember(
+        // Memoised for the lifetime of this (per-request) component instance: instantiateForm(), isEditing() and
+        // submit() each ask for it, and a fresh instance is created per request, so this never serves a stale sign-up.
+        if ($this->memberSignupFetched) {
+            return $this->memberSignupCache;
+        }
+
+        $this->memberSignupFetched = true;
+
+        return $this->memberSignupCache = $this->userSignupRepository->findOneByListAndMember(
             $this->signupList,
             $this->currentMember(),
         );

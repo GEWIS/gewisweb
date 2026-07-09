@@ -7,11 +7,7 @@ namespace App\Service\Activity;
 use App\Entity\Activity\Enums\ExternalSignupVerificationPurpose;
 use App\Entity\Activity\ExternalSignupVerification;
 use App\Repository\Activity\ExternalSignupVerificationRepository;
-
-use function count;
-use function explode;
-use function hash;
-use function hash_equals;
+use App\Util\Application\SplitToken;
 
 /**
  * Resolves an emailed `selector.verifier` external-sign-up token to a live verification of the expected purpose, or
@@ -30,19 +26,12 @@ final readonly class ExternalSignupTokenResolver
         string $token,
         ExternalSignupVerificationPurpose $purpose,
     ): ?ExternalSignupVerification {
-        $parts = explode(
-            '.',
-            $token,
-            2,
-        );
-        if (2 !== count($parts)) {
+        $split = SplitToken::split($token);
+        if (null === $split) {
             return null;
         }
 
-        [
-            $selector, $verifier
-        ] = $parts;
-        $verification = $this->verificationRepository->findBySelector($selector);
+        $verification = $this->verificationRepository->findBySelector($split['selector']);
         if (
             null === $verification
             || $verification->getPurpose() !== $purpose
@@ -52,12 +41,10 @@ final readonly class ExternalSignupTokenResolver
         }
 
         if (
-            !hash_equals(
+            !SplitToken::matches(
                 $verification->getHashedToken(),
-                hash(
-                    ExternalSignupVerification::HASH_ALGO,
-                    $verifier,
-                ),
+                $split['verifier'],
+                ExternalSignupVerification::HASH_ALGO,
             )
         ) {
             return null;

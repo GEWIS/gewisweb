@@ -158,6 +158,7 @@ final class ExternalSignupResendForm
     {
         if (
             $this->signupList->getOnlyGEWIS()
+            || $this->signupList->getActivity()->isFrozen()
             || $this->signupList->getActivity()->getLiveRevision() !== $this->signupList->getRevision()
         ) {
             throw new AccessDeniedException();

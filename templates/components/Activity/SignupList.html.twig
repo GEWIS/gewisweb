@@ -6,7 +6,16 @@
         <div class="alert alert-success">{{ this.feedback }}</div>
     {% endif %}
 
-    {% if view.isOpen %}
+    {% if view.cancelled %}
+        <p class="text-danger mb-3">
+            <i class="fas fa-ban"></i>
+            {% if view.viewerHasSignup %}
+                {{ 'This activity has been cancelled. Your sign-up is frozen and cannot be changed.'|trans }}
+            {% else %}
+                {{ 'Sign-ups are closed because this activity has been cancelled.'|trans }}
+            {% endif %}
+        </p>
+    {% elseif view.isOpen %}
         {% set signupModalId = 'signup-modal-' ~ listId %}
         <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
             {% if view.viewerHasSignup %}

@@ -4,11 +4,16 @@ declare(strict_types=1);
 
 namespace App\Tests\Integration\EventListener\Activity;
 
+use App\Entity\Activity\ActivityLabel;
+use App\Entity\Activity\ActivityLocalisedText;
 use App\Entity\Activity\ActivityRevision;
 use App\Entity\Activity\ActivityRevisionEdit;
+use App\Entity\Activity\SignupList;
 use App\Entity\Application\Enums\RevisionStatus;
 use App\Entity\User\User;
 use App\Tests\Integration\DatabaseTestCase;
+use DateTime;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * The audit trail is emergent from a real Doctrine flush (it reads the UnitOfWork change sets in an onFlush listener),
@@ -54,6 +59,66 @@ final class RevisionAuditListenerTest extends DatabaseTestCase
         );
         self::assertNotContains(
             'lastEditedBy',
+            $latest->getChangedFields(),
+        );
+    }
+
+    public function testAuditsASignupListChangeOnADraftAsTheSignupListsMarker(): void
+    {
+        $revision = $this->aDraftRevision();
+        $editor = $this->anEditor();
+        $list = $this->persistedListOn($revision);
+        $before = $this->auditCount($revision);
+
+        // A capacity-only tweak to a draft's list is a content edit of the revision, surfaced via the synthetic marker.
+        $list->setLimitedCapacity(true);
+        $list->setCapacity(42);
+        $revision->setLastEditedBy($editor);
+        $this->entityManager->flush();
+
+        self::assertSame(
+            $before + 1,
+            $this->auditCount($revision),
+        );
+        $latest = $this->latestEdit($revision);
+        self::assertInstanceOf(
+            ActivityRevisionEdit::class,
+            $latest,
+        );
+        self::assertSame(
+            ['signupLists'],
+            $latest->getChangedFields(),
+        );
+    }
+
+    public function testAuditsALabelChangeOnADraftAsTheLabelsMarker(): void
+    {
+        $revision = $this->aDraftRevision();
+        $editor = $this->anEditor();
+        $label = $this->entityManager->getRepository(ActivityLabel::class)->findOneBy([]);
+        self::assertInstanceOf(
+            ActivityLabel::class,
+            $label,
+            'The seed is expected to contain at least one activity label.',
+        );
+        $before = $this->auditCount($revision);
+
+        // Adding a label to a draft is a reviewable content change, surfaced via the synthetic `labels` marker.
+        $revision->addLabels([$label]);
+        $revision->setLastEditedBy($editor);
+        $this->entityManager->flush();
+
+        self::assertSame(
+            $before + 1,
+            $this->auditCount($revision),
+        );
+        $latest = $this->latestEdit($revision);
+        self::assertInstanceOf(
+            ActivityRevisionEdit::class,
+            $latest,
+        );
+        self::assertSame(
+            ['labels'],
             $latest->getChangedFields(),
         );
     }
@@ -118,6 +183,25 @@ final class RevisionAuditListenerTest extends DatabaseTestCase
         );
 
         return $revision;
+    }
+
+    private function persistedListOn(ActivityRevision $revision): SignupList
+    {
+        $list = new SignupList();
+        $list->setLineageId(Uuid::v4());
+        $list->setName(new ActivityLocalisedText(
+            'Lijst',
+            'List',
+        ));
+        $list->setOpenDate(new DateTime('2026-01-01 00:00:00'));
+        $list->setCloseDate(new DateTime('2026-12-31 00:00:00'));
+        $revision->addSignupList($list);
+        $this->entityManager->persist($list);
+        // System flush (no editor set): creates the list without appending an audit row, so the subsequent change under
+        // test is the only thing audited.
+        $this->entityManager->flush();
+
+        return $list;
     }
 
     private function anEditor(): User

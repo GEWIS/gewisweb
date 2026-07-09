@@ -719,6 +719,95 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
                     ],
                 ],
             ],
+            // Upcoming, approved, but CANCELLED by the board: it stays publicly visible with a [CANCELLED] marker and a
+            // notice, and all sign-up interaction is frozen (existing sign-ups are kept, but nobody can join/leave).
+            [
+                'creator' => 8025,
+                'status' => RevisionStatus::Approved,
+                'cancelled' => true,
+                'beginTime' => '+3 weeks 20:00',
+                'endTime' => '+3 weeks 23:59',
+                'category' => ActivityCategories::SocialDrink,
+                'requireGEFLITST' => false,
+                'requireZettle' => false,
+                'name' => [
+                    'en' => 'Cancelled Gala',
+                    'nl' => 'Geannuleerd Gala',
+                ],
+                'location' => [
+                    'en' => 'Grand Hall',
+                    'nl' => 'Grote Zaal',
+                ],
+                'costs' => [
+                    'en' => '10 euro',
+                    'nl' => '10 euro',
+                ],
+                'description' => [
+                    'en' => 'This gala has unfortunately been cancelled.',
+                    'nl' => 'Dit gala is helaas geannuleerd.',
+                ],
+                'signupLists' => [
+                    [
+                        'name' => [
+                            'en' => 'Attendance',
+                            'nl' => 'Aanwezigheid',
+                        ],
+                        'openDate' => '-2 days 12:00',
+                        'closeDate' => '+1 week 18:00',
+                        'onlyGEWIS' => true,
+                        'displaySubscribedNumber' => true,
+                        'limitedCapacity' => false,
+                        'subscribers' => [
+                            8005,
+                            8006,
+                        ],
+                    ],
+                ],
+            ],
+            // Upcoming, approved, but UNPUBLISHED by the board: it is removed from public view entirely (listings,
+            // calendar, and a 404 on its direct URL) and all sign-up interaction is frozen, but it can be re-published.
+            [
+                'creator' => 8025,
+                'status' => RevisionStatus::Approved,
+                'unpublished' => true,
+                'beginTime' => '+4 weeks 19:00',
+                'endTime' => '+4 weeks 22:00',
+                'category' => ActivityCategories::Other,
+                'requireGEFLITST' => false,
+                'requireZettle' => false,
+                'name' => [
+                    'en' => 'Unpublished Workshop',
+                    'nl' => 'Gedepubliceerde Workshop',
+                ],
+                'location' => [
+                    'en' => 'Lecture Room',
+                    'nl' => 'Collegezaal',
+                ],
+                'costs' => [
+                    'en' => 'Free',
+                    'nl' => 'Gratis',
+                ],
+                'description' => [
+                    'en' => 'This workshop is being reworked and is temporarily not public.',
+                    'nl' => 'Deze workshop wordt herzien en is tijdelijk niet openbaar.',
+                ],
+                'signupLists' => [
+                    [
+                        'name' => [
+                            'en' => 'Attendance',
+                            'nl' => 'Aanwezigheid',
+                        ],
+                        'openDate' => '-1 day 12:00',
+                        'closeDate' => '+2 weeks 18:00',
+                        'onlyGEWIS' => true,
+                        'displaySubscribedNumber' => true,
+                        'limitedCapacity' => false,
+                        'subscribers' => [
+                            8007,
+                        ],
+                    ],
+                ],
+            ],
         ];
 
         foreach ($activities as $data) {
@@ -750,6 +839,16 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
 
             if (RevisionStatus::Approved === $data['status']) {
                 $activity->setLiveRevision($revision);
+            }
+
+            // Board lifecycle actions on an approved activity: cancel (stays public with a notice) or unpublish
+            // (removed from public view). Both freeze sign-up interaction; the creator stands in as the board member.
+            if ($data['cancelled'] ?? false) {
+                $activity->cancel($creator);
+            }
+
+            if ($data['unpublished'] ?? false) {
+                $activity->unpublish($creator);
             }
 
             $manager->persist($activity);

@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace App\Controller\Activity;
 
 use App\Entity\Activity\Enums\ExternalSignupVerificationPurpose;
+use App\Entity\Application\Enums\AlertTypes;
 use App\Service\Activity\ExternalSignupTokenResolver;
 use App\Service\Activity\SignupManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsCsrfTokenValid;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -37,6 +39,12 @@ class ExternalSignupController extends AbstractController
     ) {
     }
 
+    /**
+     * Show the double opt-in confirmation page for a freshly-created external sign-up. This is a pure read: it only
+     * resolves the token (consumption lives in {@see SignupManager::confirmExternalSignup}), so email clients and link
+     * scanners that fetch the URL do not accidentally confirm the sign-up. The actual confirmation is a POST from the
+     * form on this page ({@see self::confirm()}).
+     */
     #[Route(
         path: '/verify/{token}',
         name: 'verify',
@@ -53,7 +61,62 @@ class ExternalSignupController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        $activityId = $verification->getExternalSignup()->getSignupList()->getActivity()->getId();
+        $signupList = $verification->getExternalSignup()->getSignupList();
+
+        return $this->render(
+            'activity/external-signup-verify.html.twig',
+            [
+                'token' => $token,
+                'activity' => $signupList->getActivity(),
+                'signupList' => $signupList,
+            ],
+        );
+    }
+
+    /**
+     * Confirm the external sign-up (double opt-in): consumes the verification token and issues the manage link. Reached
+     * only by submitting the form on the {@see self::verify()} page, so a link scanner's GET never confirms.
+     */
+    #[Route(
+        path: '/verify/{token}',
+        name: 'confirm',
+        requirements: ['token' => self::TOKEN_REQUIREMENT],
+        methods: ['POST'],
+    )]
+    #[IsCsrfTokenValid(
+        id: 'external_signup_verify',
+        tokenKey: '_csrf_token',
+    )]
+    public function confirm(string $token): Response
+    {
+        $verification = $this->tokenResolver->resolve(
+            $token,
+            ExternalSignupVerificationPurpose::Verify,
+        );
+        if (null === $verification) {
+            throw $this->createNotFoundException();
+        }
+
+        $activity = $verification->getExternalSignup()->getSignupList()->getActivity();
+
+        // A cancelled or unpublished activity has all sign-up interaction frozen: do not confirm, and send the visitor
+        // somewhere sensible (an unpublished activity's own page 404s, so fall back to the overview there).
+        if ($activity->isFrozen()) {
+            $this->addFlash(
+                AlertTypes::Warning->value,
+                $this->translator->trans('This activity is no longer open for sign-ups, so it cannot be confirmed.'),
+            );
+
+            if ($activity->isUnpublished()) {
+                return $this->redirectToRoute('activity/index');
+            }
+
+            return $this->redirectToRoute(
+                'activity/view',
+                ['activity' => $activity->getId()],
+            );
+        }
+
         $this->signupManager->confirmExternalSignup($verification);
 
         $this->addFlash(
@@ -63,7 +126,7 @@ class ExternalSignupController extends AbstractController
 
         return $this->redirectToRoute(
             'activity/view',
-            ['activity' => $activityId],
+            ['activity' => $activity->getId()],
         );
     }
 

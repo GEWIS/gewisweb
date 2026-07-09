@@ -12,6 +12,7 @@ use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\Workflow\Event\TransitionEvent;
 
 use function assert;
+use function in_array;
 
 /**
  * Records who reviewed a revision and when, on every board decision (`approve` / `reject` / `request_changes`). The
@@ -24,26 +25,31 @@ final readonly class RevisionReviewStampListener
     ) {
     }
 
-    #[AsEventListener(event: 'workflow.revision.transition.approve')]
-    public function onApprove(TransitionEvent $event): void
-    {
-        $this->stamp($event);
-    }
+    /**
+     * The generic transition event fires for every `revision` transition, so keep an allowlist: only the board
+     * decisions (`approve` / `reject` / `request_changes`) stamp a reviewer; `submit`, `start_review`, `close` do not.
+     */
+    private const array REVIEW_TRANSITIONS = [
+        'approve',
+        'reject',
+        'request_changes',
+    ];
 
-    #[AsEventListener(event: 'workflow.revision.transition.reject')]
-    public function onReject(TransitionEvent $event): void
+    #[AsEventListener(event: 'workflow.revision.transition')]
+    public function onTransition(TransitionEvent $event): void
     {
-        $this->stamp($event);
-    }
+        $transition = $event->getTransition();
+        if (
+            null === $transition
+            || !in_array(
+                $transition->getName(),
+                self::REVIEW_TRANSITIONS,
+                true,
+            )
+        ) {
+            return;
+        }
 
-    #[AsEventListener(event: 'workflow.revision.transition.request_changes')]
-    public function onRequestChanges(TransitionEvent $event): void
-    {
-        $this->stamp($event);
-    }
-
-    private function stamp(TransitionEvent $event): void
-    {
         $revision = $event->getSubject();
         assert($revision instanceof RevisionInterface);
 

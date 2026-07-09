@@ -11,6 +11,7 @@ use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Mime\Address;
+use Symfony\Component\Mime\Exception\RfcComplianceException;
 
 #[AsMessageHandler]
 class OrganiserAnnouncementEmailHandler
@@ -29,25 +30,28 @@ class OrganiserAnnouncementEmailHandler
         // name). A single recipient failing (a bad address, a transient transport error) is logged and skipped, not
         // thrown: throwing would make Messenger retry the whole message and re-send to everyone already mailed.
         foreach ($message->getRecipients() as $recipient) {
-            $email = new TemplatedEmail()
-                ->to(new Address(
-                    $recipient['email'],
-                    $recipient['name'],
-                ))
-                ->subject($message->getSubject())
-                ->htmlTemplate('emails/activity/organiser-announcement.html.twig')
-                ->replyTo($replyTo)
-                ->context([
-                    'subject' => $message->getSubject(),
-                    'body' => $message->getBody(),
-                    'activityName' => $message->getActivityName(),
-                    'name' => $recipient['name'],
-                    'organiserEmail' => $replyTo,
-                ]);
-
             try {
+                // Build inside the try too: a malformed stored address makes `new Address()` throw an
+                // RfcComplianceException, which outside the try would abort the whole batch and (on Messenger retry)
+                // re-send to everyone already mailed. Skip just this recipient instead.
+                $email = new TemplatedEmail()
+                    ->to(new Address(
+                        $recipient['email'],
+                        $recipient['name'],
+                    ))
+                    ->subject($message->getSubject())
+                    ->htmlTemplate('emails/activity/organiser-announcement.html.twig')
+                    ->replyTo($replyTo)
+                    ->context([
+                        'subject' => $message->getSubject(),
+                        'body' => $message->getBody(),
+                        'activityName' => $message->getActivityName(),
+                        'name' => $recipient['name'],
+                        'organiserEmail' => $replyTo,
+                    ]);
+
                 $this->mailer->send($email);
-            } catch (TransportExceptionInterface $exception) {
+            } catch (TransportExceptionInterface | RfcComplianceException $exception) {
                 $this->logger->error(
                     'Failed to send an activity sign-up bulk email to a recipient.',
                     ['exception' => $exception],

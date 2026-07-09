@@ -19,7 +19,7 @@ use App\Security\User\SudoVoter;
 use App\Service\Activity\DraftDiscarder;
 use App\Service\Activity\SignupListMigrator;
 use App\Service\Application\EditLockService;
-use DateTime;
+use App\Util\Activity\PastActivityRule;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\ExpressionLanguage\Expression;
@@ -53,18 +53,6 @@ use function trim;
 )]
 class AdminApprovalController extends AbstractController
 {
-    /**
-     * Every transition the review screen can offer; the workflow filters these per revision and per user.
-     */
-    private const array TRANSITIONS = [
-        'submit',
-        'start_review',
-        'approve',
-        'reject',
-        'request_changes',
-        'close',
-    ];
-
     public function __construct(
         private readonly ActivityRevisionRepository $revisionRepository,
         private readonly ActivityRevisionCommentRepository $commentRepository,
@@ -324,18 +312,11 @@ class AdminApprovalController extends AbstractController
      */
     private function createDecisionForm(ActivityRevision $revision): FormInterface
     {
+        // Ask the workflow directly which transitions are enabled for this revision and user (it already applies the
+        // guards), rather than filtering a hand-maintained list: a newly added transition then shows up automatically.
         $enabled = [];
-        foreach (self::TRANSITIONS as $transition) {
-            if (
-                !$this->revisionStateMachine->can(
-                    $revision,
-                    $transition,
-                )
-            ) {
-                continue;
-            }
-
-            $enabled[] = $transition;
+        foreach ($this->revisionStateMachine->getEnabledTransitions($revision) as $transition) {
+            $enabled[] = $transition->getName();
         }
 
         return $this->createForm(
@@ -379,13 +360,14 @@ class AdminApprovalController extends AbstractController
         // (PastActivityGuardListener); explain why on the screen. Two cases: an established activity whose live
         // schedule has *ended*, and a brand-new activity (no live revision) whose own *start* has already passed.
         // The latter is recoverable by re-dating the draft, so it gets a different banner.
-        $liveEnded = null !== $live
-            && $live !== $revision
-            && null !== $live->getEndTime()
-            && $live->getEndTime() < new DateTime();
-        $debutMissed = (null === $live || $live === $revision)
-            && null !== $revision->getBeginTime()
-            && $revision->getBeginTime() < new DateTime();
+        $liveEnded = PastActivityRule::liveEnded(
+            $live,
+            $revision,
+        );
+        $debutMissed = PastActivityRule::debutMissed(
+            $live,
+            $revision,
+        );
         $activityPassed = $liveEnded || $debutMissed;
 
         // A draft re-edit of an already-live activity can be discarded back to that live version (the recovery for a

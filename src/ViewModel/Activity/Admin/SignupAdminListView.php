@@ -53,6 +53,8 @@ final readonly class SignupAdminListView
         public bool $autoDrawDue,
         public bool $isOpen,
         public bool $isClosed,
+        // The activity is cancelled or unpublished: all sign-up interaction (draws included) is frozen.
+        public bool $frozen,
         public int $subscriberCount,
         public int $presentCount,
         public int $admittedCount,
@@ -64,11 +66,9 @@ final readonly class SignupAdminListView
     }
 
     /**
-     * @param string $filter                   case-insensitive name/email substring; empty matches everyone
-     * @param int[]  $selectedIds              signup ids the organiser ticked; drives each list's selected count
-     * @param int[]  $hiddenFieldIds           ids of the sign-up fields whose column the organiser hid
-     * @param int[]  $pendingExternalSignupIds external sign-ups still awaiting email verification; excluded entirely
-     *                                         (an unconfirmed sign-up is not yet a real subscriber)
+     * @param string $filter         case-insensitive name/email substring; empty matches everyone
+     * @param int[]  $selectedIds    signup ids the organiser ticked; drives each list's selected count
+     * @param int[]  $hiddenFieldIds ids of the sign-up fields whose column the organiser hid
      */
     public static function fromSignupList(
         SignupList $signupList,
@@ -76,7 +76,6 @@ final readonly class SignupAdminListView
         string $filter = '',
         array $selectedIds = [],
         array $hiddenFieldIds = [],
-        array $pendingExternalSignupIds = [],
     ): self {
         $language = Languages::current();
 
@@ -112,14 +111,11 @@ final readonly class SignupAdminListView
         $admittedCount = 0;
         $selectedCount = 0;
         foreach ($signupList->getSignUps() as $signup) {
-            // Hide externals that have not confirmed their email: not real subscribers, must not be counted or drawn.
+            // Hide externals that have not confirmed their email: not real subscribers, must not be counted or drawn. A
+            // confirmed sign-up is exactly one with a set verification moment (manual entries have it set immediately).
             if (
                 $signup instanceof ExternalSignup
-                && in_array(
-                    $signup->getId(),
-                    $pendingExternalSignupIds,
-                    true,
-                )
+                && null === $signup->getVerifiedAt()
             ) {
                 continue;
             }
@@ -220,6 +216,7 @@ final readonly class SignupAdminListView
             autoDrawDue: $signupList->isAutoDrawDue(),
             isOpen: $signupList->isOpen(),
             isClosed: $signupList->isClosed(),
+            frozen: $signupList->getActivity()->isFrozen(),
             subscriberCount: $subscriberCount,
             presentCount: $presentCount,
             admittedCount: $admittedCount,

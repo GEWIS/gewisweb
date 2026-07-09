@@ -17,6 +17,7 @@ use App\Repository\Activity\ExternalSignupVerificationRepository;
 use App\Service\Activity\SignupManager;
 use App\Tests\Integration\DatabaseTestCase;
 use DateTimeImmutable;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\DBAL\Types\Types;
 use Symfony\Component\Messenger\Transport\InMemory\InMemoryTransport;
 
@@ -383,6 +384,34 @@ final class SignupManagerTest extends DatabaseTestCase
         self::assertSame(
             [],
             $this->sentTokenEmails(),
+        );
+    }
+
+    public function testDuplicateExternalEmailOnAListIsRejectedByTheDatabase(): void
+    {
+        $list = $this->listWithFields();
+        $answers = $this->answersFor(
+            $list,
+            'Vegetarian',
+            1,
+        );
+        $email = 'duplicate-guard@example.org';
+
+        $this->signupManager()->createExternalSignup(
+            $list,
+            'First',
+            $email,
+            $answers,
+        );
+
+        // The (signuplist_id, email) unique index is the last line of defence against a duplicate external sign-up on
+        // the same list, independent of the application-level pre-checks in the sign-up components.
+        $this->expectException(UniqueConstraintViolationException::class);
+        $this->signupManager()->createExternalSignup(
+            $list,
+            'Second',
+            $email,
+            $answers,
         );
     }
 

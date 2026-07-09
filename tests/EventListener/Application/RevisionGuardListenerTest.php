@@ -40,7 +40,7 @@ final class RevisionGuardListenerTest extends TestCase
             'submitted',
         );
         $listener = new RevisionGuardListener($security);
-        $listener->onSubmit($event);
+        $listener->onGuard($event);
 
         self::assertFalse($event->isBlocked());
     }
@@ -48,14 +48,14 @@ final class RevisionGuardListenerTest extends TestCase
     public function testEveryBoardTransitionIsAuthorisedThroughTheApproveAttribute(): void
     {
         $boardTransitions = [
-            'onStartReview',
-            'onRequestChanges',
-            'onReject',
-            'onApprove',
-            'onClose',
+            'start_review',
+            'request_changes',
+            'reject',
+            'approve',
+            'close',
         ];
 
-        foreach ($boardTransitions as $method) {
+        foreach ($boardTransitions as $transition) {
             $subject = new stdClass();
             $security = self::createMock(Security::class);
             $security->expects(self::once())
@@ -66,13 +66,16 @@ final class RevisionGuardListenerTest extends TestCase
                 )
                 ->willReturn(false);
 
-            $event = $this->guardEvent($subject);
+            $event = $this->guardEvent(
+                $subject,
+                $transition,
+            );
             $listener = new RevisionGuardListener($security);
-            $listener->$method($event);
+            $listener->onGuard($event);
 
             self::assertTrue(
                 $event->isBlocked(),
-                $method . ' must be authorised through the APPROVE attribute',
+                $transition . ' must be authorised through the APPROVE attribute',
             );
         }
     }
@@ -84,7 +87,7 @@ final class RevisionGuardListenerTest extends TestCase
 
         $event = $this->guardEvent(new stdClass());
         $listener = new RevisionGuardListener($security);
-        $listener->onApprove($event);
+        $listener->onGuard($event);
 
         self::assertTrue($event->isBlocked());
         self::assertContains(

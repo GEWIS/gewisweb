@@ -58,6 +58,7 @@ final class ExternalSignupManage
         private readonly FormFactoryInterface $formFactory,
         private readonly TranslatorInterface $translator,
         private readonly UrlGeneratorInterface $urlGenerator,
+        // Consumed by FlashesTrait::flash() (the unsubscribe success flash).
         private readonly RequestStack $requestStack,
     ) {
     }
@@ -91,13 +92,15 @@ final class ExternalSignupManage
     }
 
     /**
-     * Whether the subscriber may still edit/unsubscribe: the list is the activity's live list and is open.
+     * Whether the subscriber may still edit/unsubscribe: the list is the activity's live list, is open, and the
+     * activity has not been frozen (cancelled or unpublished) by the board.
      */
     public function isEditable(): bool
     {
         $signupList = $this->signup()->getSignupList();
 
         return $signupList->isOpen()
+            && !$signupList->getActivity()->isFrozen()
             && $signupList->getActivity()->getLiveRevision() === $signupList->getRevision();
     }
 

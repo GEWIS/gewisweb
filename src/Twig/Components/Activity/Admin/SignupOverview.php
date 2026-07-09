@@ -17,10 +17,9 @@ use App\Entity\Decision\Member;
 use App\Entity\User\Enums\UserRoles;
 use App\Entity\User\User;
 use App\Message\Activity\OrganiserAnnouncementEmail;
-use App\Repository\Activity\ExternalSignupVerificationRepository;
 use App\Security\Application\RevisionVoter;
 use App\Service\Activity\DrawManager;
-use App\Service\Activity\SignupAdminWindow;
+use App\Util\Activity\SignupAdminWindow;
 use App\ViewModel\Activity\Admin\SignupAdminListView;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -120,16 +119,12 @@ final class SignupOverview
     /** @var SignupAdminListView[]|null memoised for the duration of one render */
     private ?array $listViews = null;
 
-    /** @var array<int, int[]> pending external-signup ids keyed by list id, memoised for one request */
-    private array $pendingExternalIds = [];
-
     public function __construct(
         private readonly Security $security,
         private readonly TranslatorInterface $translator,
         private readonly EntityManagerInterface $entityManager,
         private readonly MessageBusInterface $messageBus,
         private readonly string $internalAffairsEmail,
-        private readonly ExternalSignupVerificationRepository $verificationRepository,
         private readonly DrawManager $drawManager,
     ) {
     }
@@ -157,7 +152,6 @@ final class SignupOverview
                 $this->filter,
                 $selected,
                 $hiddenFields,
-                $this->pendingExternalIds($signupList),
             );
         }
 
@@ -387,10 +381,19 @@ final class SignupOverview
             return;
         }
 
-        $this->drawManager->drawManually(
+        $performed = $this->drawManager->drawManually(
             $list,
             $method,
             $this->currentMember(),
+        );
+
+        if ($performed) {
+            return;
+        }
+
+        $this->setFeedback(
+            AlertTypes::Warning,
+            $this->translator->trans('The draw could not be run — the list may have changed or was already drawn.'),
         );
     }
 
@@ -655,8 +658,11 @@ final class SignupOverview
 
         // Always render the activity name in English: the email's boilerplate is English regardless of the composing
         // organiser's locale (see OrganiserAnnouncementEmail), falling back to Dutch only when there is no English
-        // name.
+        // name. A cancelled activity carries the (English) [CANCELLED] marker so recipients see it at a glance.
         $activityName = $this->activity->getName()->getText(Languages::English) ?? '';
+        if ($this->activity->isCancelled()) {
+            $activityName = '[CANCELLED] ' . $activityName;
+        }
 
         // One message carrying every recipient: a single, atomic enqueue (never a half-enqueued per-recipient fan-out).
         // The handler sends one email per recipient and tolerates an individual failure, so there is no duplicate
@@ -758,42 +764,19 @@ final class SignupOverview
     }
 
     /**
-     * The ids of this list's externals still awaiting email verification, memoised per list id so the underlying query
-     * runs at most once per list for the lifetime of this (per-request) component instance; the toggles and draws
-     * that call {@see confirmedSignups()} in a loop would otherwise re-run it for every list.
-     *
-     * @return int[]
-     */
-    private function pendingExternalIds(SignupList $signupList): array
-    {
-        $listId = $signupList->getId();
-        if (null === $listId) {
-            return $this->verificationRepository->findPendingExternalSignupIdsForList($signupList);
-        }
-
-        return $this->pendingExternalIds[$listId]
-            ??= $this->verificationRepository->findPendingExternalSignupIdsForList($signupList);
-    }
-
-    /**
      * A list's sign-ups excluding externals still awaiting email verification: an unconfirmed external is not a real
-     * subscriber, so it must never be drawn, emailed, toggled or counted.
+     * subscriber, so it must never be drawn, emailed, toggled or counted. Confirmation is exactly a set verification
+     * moment (manually-added externals have it set immediately), so no extra query is needed.
      *
      * @return Signup[]
      */
     private function confirmedSignups(SignupList $signupList): array
     {
-        $pending = $this->pendingExternalIds($signupList);
-
         $signups = [];
         foreach ($signupList->getSignUps() as $signup) {
             if (
                 $signup instanceof ExternalSignup
-                && in_array(
-                    $signup->getId(),
-                    $pending,
-                    true,
-                )
+                && null === $signup->getVerifiedAt()
             ) {
                 continue;
             }

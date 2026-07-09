@@ -1,6 +1,6 @@
 {% extends 'layout-admin.html.twig' %}
 
-{% block page_title %}{{ 'Sign-ups'|trans|page_title }}{{ activity.getName|localise_text|page_title }}{{ parent() }}{% endblock %}
+{% block page_title %}{{ 'Sign-ups'|trans|page_title }}{{ activity_title(activity)|page_title }}{{ parent() }}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -14,7 +14,7 @@
         </a>
     </li>
     <li class="breadcrumb-item active" aria-current="page">
-        {{ activity.getName|localise_text }}
+        {{ activity_title(activity) }}
     </li>
     <li class="breadcrumb-item active" aria-current="page">
         {{ 'Sign-ups'|trans }}
@@ -27,7 +27,7 @@
             <div>
                 <h1 class="h3 mb-1">{{ 'Sign-ups'|trans }}</h1>
                 <p class="text-muted mb-0">
-                    {{ activity.getName|localise_text }}
+                    {{ activity_title(activity) }}
                     &middot;
                     {{ activity.getBeginTime|format_datetime(pattern: 'EEE d MMM. yyyy HH:mm', locale: app.request.locale) }}
                 </p>

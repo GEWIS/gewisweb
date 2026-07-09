@@ -23,64 +23,19 @@ final readonly class RevisionGuardListener
     ) {
     }
 
-    #[AsEventListener(event: 'workflow.revision.guard.submit')]
-    public function onSubmit(GuardEvent $event): void
+    /**
+     * One guard for every `revision` transition (the generic guard event fires for all): `submit` is author-side
+     * ({@see RevisionVoter::SUBMIT}); every other transition (`start_review`, `request_changes`, `reject`, `approve`,
+     * `close`, and any future board-side transition) requires {@see RevisionVoter::APPROVE}. Guarding generically means
+     * a newly added transition is fail-safe (locked to the board) by default rather than silently unguarded.
+     */
+    #[AsEventListener(event: 'workflow.revision.guard')]
+    public function onGuard(GuardEvent $event): void
     {
-        $this->guard(
-            $event,
-            RevisionVoter::SUBMIT,
-        );
-    }
+        $attribute = 'submit' === $event->getTransition()->getName()
+            ? RevisionVoter::SUBMIT
+            : RevisionVoter::APPROVE;
 
-    #[AsEventListener(event: 'workflow.revision.guard.start_review')]
-    public function onStartReview(GuardEvent $event): void
-    {
-        $this->guard(
-            $event,
-            RevisionVoter::APPROVE,
-        );
-    }
-
-    #[AsEventListener(event: 'workflow.revision.guard.request_changes')]
-    public function onRequestChanges(GuardEvent $event): void
-    {
-        $this->guard(
-            $event,
-            RevisionVoter::APPROVE,
-        );
-    }
-
-    #[AsEventListener(event: 'workflow.revision.guard.reject')]
-    public function onReject(GuardEvent $event): void
-    {
-        $this->guard(
-            $event,
-            RevisionVoter::APPROVE,
-        );
-    }
-
-    #[AsEventListener(event: 'workflow.revision.guard.approve')]
-    public function onApprove(GuardEvent $event): void
-    {
-        $this->guard(
-            $event,
-            RevisionVoter::APPROVE,
-        );
-    }
-
-    #[AsEventListener(event: 'workflow.revision.guard.close')]
-    public function onClose(GuardEvent $event): void
-    {
-        $this->guard(
-            $event,
-            RevisionVoter::APPROVE,
-        );
-    }
-
-    private function guard(
-        GuardEvent $event,
-        string $attribute,
-    ): void {
         if (
             $this->security->isGranted(
                 $attribute,

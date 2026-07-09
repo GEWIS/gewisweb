@@ -17,10 +17,10 @@ use Symfony\Component\Workflow\Event\EnteredEvent;
 use Symfony\Component\Workflow\Marking;
 
 /**
- * On approval a revision becomes the publicly live version of its aggregate, except for activities, which are
- * promoted by {@see \App\EventListener\Activity\MigrateSignupsOnApprovalListener} (it must first move the live sign-ups
- * across). This listener therefore promotes companies and vacancies directly and must skip activity revisions, or an
- * activity would be promoted without its sign-ups migrated.
+ * On approval a revision becomes the publicly live version of its aggregate. This is the single promoter for every
+ * domain (companies, vacancies and activities alike); activities additionally have their sign-ups migrated first by
+ * {@see \App\EventListener\Activity\MigrateSignupsOnApprovalListener}, which runs at a higher priority so it reads the
+ * still-current live revision before this listener repoints it.
  */
 final class PromoteLiveRevisionListenerTest extends TestCase
 {
@@ -60,7 +60,7 @@ final class PromoteLiveRevisionListenerTest extends TestCase
         );
     }
 
-    public function testSkipsActivityRevisionsWhichArePromotedAfterSignupMigration(): void
+    public function testPromotesAnApprovedActivityRevision(): void
     {
         $activity = new Activity();
         $revision = new ActivityRevision();
@@ -68,9 +68,10 @@ final class PromoteLiveRevisionListenerTest extends TestCase
 
         $this->listener->__invoke($this->enteredEvent($revision));
 
-        self::assertNull(
+        self::assertSame(
+            $revision,
             $activity->getLiveRevision(),
-            'an activity must not be promoted by this listener, only after its sign-ups are migrated',
+            'this listener promotes every domain, activities included (sign-up migration runs first, separately)',
         );
     }
 

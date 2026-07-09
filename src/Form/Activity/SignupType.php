@@ -280,9 +280,15 @@ class SignupType extends AbstractType
 
                 break;
             case SignupFieldTypes::Choice:
-                $choices = [];
+                // Key the choices by option id (the submitted value), not by label: two options may share a label, and
+                // a label-keyed map would silently collapse them into one selectable choice. The label is rendered
+                // separately via choice_label.
+                $optionIds = [];
+                $labelsById = [];
                 foreach ($field->getOptions() as $option) {
-                    $choices[$option->getValue()->getText($language) ?? ''] = $option->getId();
+                    $optionId = $option->getId();
+                    $optionIds[] = $optionId;
+                    $labelsById[$optionId] = $option->getValue()->getText($language) ?? '';
                 }
 
                 $builder->add(
@@ -290,7 +296,8 @@ class SignupType extends AbstractType
                     ChoiceType::class,
                     [
                         ...$shared,
-                        'choices' => $choices,
+                        'choices' => $optionIds,
+                        'choice_label' => static fn (int $id): string => $labelsById[$id] ?? '',
                         'choice_translation_domain' => false,
                         'placeholder' => $this->translator->trans('Choose an option'),
                         'constraints' => [new NotNull(message: 'This field is required.')],

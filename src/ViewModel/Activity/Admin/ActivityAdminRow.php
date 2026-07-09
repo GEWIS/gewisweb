@@ -33,6 +33,10 @@ final readonly class ActivityAdminRow
         public bool $changesRequested,
         // The activity has already taken place; an approved, passed activity is immutable and can no longer be revised.
         public bool $passed,
+        // The board has cancelled this activity: it stays public with a notice but all sign-up interaction is frozen.
+        public bool $cancelled,
+        // The board has unpublished this activity: it is removed from public view and sign-up interaction is frozen.
+        public bool $unpublished,
     ) {
     }
 
@@ -69,6 +73,8 @@ final readonly class ActivityAdminRow
             changesRequested: RevisionStatus::Draft === $revision->getStatus()
                 && RevisionStatus::ChangesRequested === $revision->getPreviousRevision()?->getStatus(),
             passed: null !== $endTime && $endTime < new DateTime(),
+            cancelled: $activity->isCancelled(),
+            unpublished: $activity->isUnpublished(),
         );
     }
 }

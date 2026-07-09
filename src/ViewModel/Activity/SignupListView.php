@@ -13,7 +13,6 @@ use DateTime;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 use function count;
-use function in_array;
 
 /**
  * Read-model of a {@see SignupList} for the activity view page. Pre-computes the localised name, the sign-up window,
@@ -43,6 +42,7 @@ final readonly class SignupListView
         public bool $promoted,
         public bool $isOpen,
         public bool $isClosed,
+        public bool $cancelled,
         public int $subscriberCount,
         public bool $canViewDetails,
         public bool $viewerHasSignup,
@@ -52,41 +52,27 @@ final readonly class SignupListView
     ) {
     }
 
-    /**
-     * @param int[] $pendingExternalSignupIds external sign-ups still awaiting email verification; excluded from the
-     *                                        public rows and count until confirmed
-     */
     public static function fromSignupList(
         SignupList $signupList,
         bool $canViewDetails,
         ?int $viewerLidnr,
         TranslatorInterface $translator,
-        array $pendingExternalSignupIds = [],
     ): self {
         $language = Languages::current();
 
         $fields = $signupList->getFields()->toArray();
         $fieldNames = [];
-        $hasSensitiveField = false;
         foreach ($fields as $field) {
             $fieldNames[] = $field->getName()->getText($language) ?? '';
-            if (!$field->isSensitive()) {
-                continue;
-            }
-
-            $hasSensitiveField = true;
         }
 
-        // Hide externals that have not confirmed their email yet from both the count and the rows.
+        // Hide externals that have not confirmed their email yet from both the count and the rows. A confirmed sign-up
+        // is exactly one whose verification moment is set (manually-added externals have it set immediately).
         $visibleSignups = [];
         foreach ($signupList->getSignUps() as $signup) {
             if (
                 $signup instanceof ExternalSignup
-                && in_array(
-                    $signup->getId(),
-                    $pendingExternalSignupIds,
-                    true,
-                )
+                && null === $signup->getVerifiedAt()
             ) {
                 continue;
             }
@@ -156,10 +142,11 @@ final readonly class SignupListView
             promoted: $signupList->isPromoted(),
             isOpen: $signupList->isOpen(),
             isClosed: $signupList->isClosed(),
+            cancelled: $signupList->getActivity()->isCancelled(),
             subscriberCount: count($visibleSignups),
             canViewDetails: $canViewDetails,
             viewerHasSignup: $viewerHasSignup,
-            hasSensitiveField: $hasSensitiveField,
+            hasSensitiveField: $signupList->hasSensitiveField(),
             fieldNames: $fieldNames,
             rows: $rows,
         );

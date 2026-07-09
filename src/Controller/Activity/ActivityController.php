@@ -9,9 +9,7 @@ use App\Entity\Application\Enums\Languages;
 use App\Entity\User\Enums\UserRoles;
 use App\Entity\User\User;
 use App\Repository\Activity\ActivityRepository;
-use App\Repository\Activity\ExternalSignupVerificationRepository;
 use App\ViewModel\Activity\SignupListView;
-use Locale;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -29,7 +27,6 @@ class ActivityController extends AbstractController
 {
     public function __construct(
         private readonly ActivityRepository $activityRepository,
-        private readonly ExternalSignupVerificationRepository $verificationRepository,
         private readonly TranslatorInterface $translator,
     ) {
     }
@@ -102,6 +99,9 @@ class ActivityController extends AbstractController
         if (
             null === $entity
             || null === $entity->getLiveRevision()
+            // An unpublished activity is taken out of public view entirely: its direct URL 404s like a never-approved
+            // one. (A cancelled activity, by contrast, stays visible with a notice.)
+            || $entity->isUnpublished()
         ) {
             throw $this->createNotFoundException();
         }
@@ -128,16 +128,19 @@ class ActivityController extends AbstractController
                 $canViewDetails,
                 $viewerLidnr,
                 $this->translator,
-                $this->verificationRepository->findPendingExternalSignupIdsForList($signupList),
             );
         }
 
-        $language = 'nl' === Locale::getDefault()
-            ? Languages::Dutch
-            : Languages::English;
+        $language = Languages::current();
+
+        // A cancelled activity carries a [CANCELLED] marker everywhere its title is shown, the calendar entry included.
+        $title = $entity->getName()->getText($language) ?? '';
+        if ($entity->isCancelled()) {
+            $title = $this->translator->trans('[CANCELLED]') . ' ' . $title;
+        }
 
         $calendarEvent = new CalendarEvent(
-            title: $entity->getName()->getText($language) ?? '',
+            title: $title,
             start: $entity->getBeginTime(),
             end: $entity->getEndTime(),
             location: $entity->getLocation()->getText($language),

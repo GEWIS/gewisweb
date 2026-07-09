@@ -361,6 +361,14 @@
         <source>Cancel and sign out</source>
         <target state="translated">Cancel and sign out</target>
       </trans-unit>
+      <trans-unit id="PzOZxCm" resname="Cancel this activity? It stays visible with a [CANCELLED] notice, but all sign-ups, edits and withdrawals are frozen.">
+        <source>Cancel this activity? It stays visible with a [CANCELLED] notice, but all sign-ups, edits and withdrawals are frozen.</source>
+        <target>Cancel this activity? It stays visible with a [CANCELLED] notice, but all sign-ups, edits and withdrawals are frozen.</target>
+      </trans-unit>
+      <trans-unit id="uULlIlE" resname="Cancelled">
+        <source>Cancelled</source>
+        <target>Cancelled</target>
+      </trans-unit>
       <trans-unit id="7xfj503" resname="Capacity">
         <source>Capacity</source>
         <target>Capacity</target>
@@ -420,6 +428,10 @@
       <trans-unit id="4XOnmWM" resname="Clear selection">
         <source>Clear selection</source>
         <target>Clear selection</target>
+      </trans-unit>
+      <trans-unit id="VWyhEVz" resname="Click the button below to confirm your sign-up for this activity.">
+        <source>Click the button below to confirm your sign-up for this activity.</source>
+        <target>Click the button below to confirm your sign-up for this activity.</target>
       </trans-unit>
       <trans-unit id="qNghuqo" resname="Close">
         <source>Close</source>
@@ -513,6 +525,10 @@
         <source>Confirm</source>
         <target state="translated">Confirm</target>
       </trans-unit>
+      <trans-unit id="YnyqHbm" resname="Confirm my sign-up">
+        <source>Confirm my sign-up</source>
+        <target>Confirm my sign-up</target>
+      </trans-unit>
       <trans-unit id="AQfghoF" resname="Confirm sign-up">
         <source>Confirm sign-up</source>
         <target>Confirm sign-up</target>
@@ -520,6 +536,10 @@
       <trans-unit id="aF4KZmI" resname="Confirm your identity">
         <source>Confirm your identity</source>
         <target state="translated">Confirm your identity</target>
+      </trans-unit>
+      <trans-unit id="cb4I4C3" resname="Confirm your sign-up">
+        <source>Confirm your sign-up</source>
+        <target>Confirm your sign-up</target>
       </trans-unit>
       <trans-unit id="4iRtdnb" resname="Contact">
         <source>Contact</source>
@@ -1669,6 +1689,14 @@
         <source>Random draw</source>
         <target>Random draw</target>
       </trans-unit>
+      <trans-unit id="RRsMujP" resname="Re-publish">
+        <source>Re-publish</source>
+        <target>Re-publish</target>
+      </trans-unit>
+      <trans-unit id="RK5Sdf3" resname="Re-publish this activity? It becomes publicly visible again and sign-ups reopen where the deadlines still allow.">
+        <source>Re-publish this activity? It becomes publicly visible again and sign-ups reopen where the deadlines still allow.</source>
+        <target>Re-publish this activity? It becomes publicly visible again and sign-ups reopen where the deadlines still allow.</target>
+      </trans-unit>
       <trans-unit id="9Iuz1j8" resname="Reality collapsed. Please go back before the singularity spreads.">
         <source>Reality collapsed. Please go back before the singularity spreads.</source>
         <target state="translated">Reality collapsed. Please go back before the singularity spreads.</target>
@@ -1989,6 +2017,18 @@
         <source>Sign-ups</source>
         <target>Sign-ups</target>
       </trans-unit>
+      <trans-unit id="7fH21vY" resname="Sign-ups are closed and no further changes can be made.">
+        <source>Sign-ups are closed and no further changes can be made.</source>
+        <target>Sign-ups are closed and no further changes can be made.</target>
+      </trans-unit>
+      <trans-unit id="eV6LGQR" resname="Sign-ups are closed because this activity has been cancelled.">
+        <source>Sign-ups are closed because this activity has been cancelled.</source>
+        <target>Sign-ups are closed because this activity has been cancelled.</target>
+      </trans-unit>
+      <trans-unit id="ia8cBnF" resname="Sign-ups are frozen for this activity, so you cannot add a subscriber.">
+        <source>Sign-ups are frozen for this activity, so you cannot add a subscriber.</source>
+        <target>Sign-ups are frozen for this activity, so you cannot add a subscriber.</target>
+      </trans-unit>
       <trans-unit id="VCNBYQu" resname="Sign-ups: %count%">
         <source>Sign-ups: %count%</source>
         <target state="translated">Sign-ups: %count%</target>
@@ -2129,6 +2169,22 @@
         <source>The GEWIS website is open-source! Check out the repository on &lt;a href="https://github.com/GEWIS/gewisweb" target="_blank"&gt;&lt;span class="fab fa-github"&gt;&lt;/span&gt;&amp;nbsp;GitHub&lt;/a&gt;. Or visit our &lt;a href="https://github.com/GEWIS" target="_blank"&gt;organisation&lt;/a&gt; for more of our awesome open-source projects.</source>
         <target state="translated"><![CDATA[The GEWIS website is open-source! Check out the repository on <a href="https://github.com/GEWIS/gewisweb" target="_blank"><span class="fab fa-github"></span>&nbsp;GitHub</a>. Or visit our <a href="https://github.com/GEWIS" target="_blank">organisation</a> for more of our awesome open-source projects.]]></target>
       </trans-unit>
+      <trans-unit id="8h3GnHu" resname="The activity has been cancelled.">
+        <source>The activity has been cancelled.</source>
+        <target>The activity has been cancelled.</target>
+      </trans-unit>
+      <trans-unit id="QoLmbOl" resname="The activity has been re-published.">
+        <source>The activity has been re-published.</source>
+        <target>The activity has been re-published.</target>
+      </trans-unit>
+      <trans-unit id="Gr.1qlA" resname="The activity has been unpublished and is no longer publicly visible.">
+        <source>The activity has been unpublished and is no longer publicly visible.</source>
+        <target>The activity has been unpublished and is no longer publicly visible.</target>
+      </trans-unit>
+      <trans-unit id="Hfh.hVC" resname="The activity is no longer cancelled.">
+        <source>The activity is no longer cancelled.</source>
+        <target>The activity is no longer cancelled.</target>
+      </trans-unit>
       <trans-unit id="Poo2BZL" resname="The activity revision was updated.">
         <source>The activity revision was updated.</source>
         <target state="translated">The activity revision was updated.</target>
@@ -2140,6 +2196,10 @@
       <trans-unit id="WTE8eK4" resname="The draw can be run once sign-up has closed.">
         <source>The draw can be run once sign-up has closed.</source>
         <target>The draw can be run once sign-up has closed.</target>
+      </trans-unit>
+      <trans-unit id="bdi6_Rs" resname="The draw could not be run — the list may have changed or was already drawn.">
+        <source>The draw could not be run — the list may have changed or was already drawn.</source>
+        <target>The draw could not be run — the list may have changed or was already drawn.</target>
       </trans-unit>
       <trans-unit id="FrK7hHw" resname="The draw will be performed automatically on %date%.">
         <source>The draw will be performed automatically on %date%.</source>
@@ -2185,6 +2245,14 @@
         <source>There is nothing to review right now.</source>
         <target state="translated">There is nothing to review right now.</target>
       </trans-unit>
+      <trans-unit id="ecpVw4m" resname="This activity cannot be cancelled.">
+        <source>This activity cannot be cancelled.</source>
+        <target>This activity cannot be cancelled.</target>
+      </trans-unit>
+      <trans-unit id="ipMzacn" resname="This activity cannot be unpublished.">
+        <source>This activity cannot be unpublished.</source>
+        <target>This activity cannot be unpublished.</target>
+      </trans-unit>
       <trans-unit id="z2CkJ9H" resname="This activity has already taken place and can no longer be revised.">
         <source>This activity has already taken place and can no longer be revised.</source>
         <target state="translated">This activity has already taken place and can no longer be revised.</target>
@@ -2192,6 +2260,18 @@
       <trans-unit id="orEA8_f" resname="This activity has already taken place, so this revision can no longer be submitted or approved.">
         <source>This activity has already taken place, so this revision can no longer be submitted or approved.</source>
         <target state="translated">This activity has already taken place, so this revision can no longer be submitted or approved.</target>
+      </trans-unit>
+      <trans-unit id="UamA2Ee" resname="This activity has been cancelled.">
+        <source>This activity has been cancelled.</source>
+        <target>This activity has been cancelled.</target>
+      </trans-unit>
+      <trans-unit id="UOIyNmb" resname="This activity has been cancelled. Un-cancel it first to revise it.">
+        <source>This activity has been cancelled. Un-cancel it first to revise it.</source>
+        <target>This activity has been cancelled. Un-cancel it first to revise it.</target>
+      </trans-unit>
+      <trans-unit id="jeCxkpm" resname="This activity has been cancelled. Your sign-up is frozen and cannot be changed.">
+        <source>This activity has been cancelled. Your sign-up is frozen and cannot be changed.</source>
+        <target>This activity has been cancelled. Your sign-up is frozen and cannot be changed.</target>
       </trans-unit>
       <trans-unit id="WjvSua3" resname="This activity has no sign-up lists.">
         <source>This activity has no sign-up lists.</source>
@@ -2205,6 +2285,22 @@
         <source>This activity is being reviewed and cannot be edited right now.</source>
         <target state="translated">This activity is being reviewed and cannot be edited right now.</target>
       </trans-unit>
+      <trans-unit id="zueKs53" resname="This activity is cancelled or unpublished, so sign-up actions are frozen.">
+        <source>This activity is cancelled or unpublished, so sign-up actions are frozen.</source>
+        <target>This activity is cancelled or unpublished, so sign-up actions are frozen.</target>
+      </trans-unit>
+      <trans-unit id="kKUrWYZ" resname="This activity is no longer open for sign-ups, so it cannot be confirmed.">
+        <source>This activity is no longer open for sign-ups, so it cannot be confirmed.</source>
+        <target>This activity is no longer open for sign-ups, so it cannot be confirmed.</target>
+      </trans-unit>
+      <trans-unit id="0WAJ.M4" resname="This activity is not cancelled.">
+        <source>This activity is not cancelled.</source>
+        <target>This activity is not cancelled.</target>
+      </trans-unit>
+      <trans-unit id="wIpVFqA" resname="This activity is not unpublished.">
+        <source>This activity is not unpublished.</source>
+        <target>This activity is not unpublished.</target>
+      </trans-unit>
       <trans-unit id="y05jdnV" resname="This activity needs a GEFLITST member to take photos">
         <source>This activity needs a GEFLITST member to take photos</source>
         <target state="translated">This activity needs a GEFLITST member to take photos</target>
@@ -2212,6 +2308,10 @@
       <trans-unit id="rn2XCS2" resname="This activity needs a Zettle for payments">
         <source>This activity needs a Zettle for payments</source>
         <target state="translated">This activity needs a Zettle for payments</target>
+      </trans-unit>
+      <trans-unit id="kdHX1H2" resname="This activity was closed by the board and can no longer be revised.">
+        <source>This activity was closed by the board and can no longer be revised.</source>
+        <target>This activity was closed by the board and can no longer be revised.</target>
       </trans-unit>
       <trans-unit id="fFg9TZ7" resname="This activity was taken over by a reviewer, so your changes were not saved.">
         <source>This activity was taken over by a reviewer, so your changes were not saved.</source>
@@ -2321,6 +2421,14 @@
         <source>Type</source>
         <target state="translated">Type</target>
       </trans-unit>
+      <trans-unit id="kUwxFg0" resname="Un-cancel">
+        <source>Un-cancel</source>
+        <target>Un-cancel</target>
+      </trans-unit>
+      <trans-unit id="sNgqbmx" resname="Un-cancel this activity? Sign-ups will reopen where the deadlines still allow.">
+        <source>Un-cancel this activity? Sign-ups will reopen where the deadlines still allow.</source>
+        <target>Un-cancel this activity? Sign-ups will reopen where the deadlines still allow.</target>
+      </trans-unit>
       <trans-unit id="UryytzR" resname="Uncategorised">
         <source>Uncategorised</source>
         <target>Uncategorised</target>
@@ -2328,6 +2436,18 @@
       <trans-unit id="7ZQ9oWO" resname="Unknown device">
         <source>Unknown device</source>
         <target state="translated">Unknown device</target>
+      </trans-unit>
+      <trans-unit id="tTYXtrf" resname="Unpublish">
+        <source>Unpublish</source>
+        <target>Unpublish</target>
+      </trans-unit>
+      <trans-unit id="nhAr8IN" resname="Unpublish this activity? It is removed from public view entirely and all sign-up interaction is frozen.">
+        <source>Unpublish this activity? It is removed from public view entirely and all sign-up interaction is frozen.</source>
+        <target>Unpublish this activity? It is removed from public view entirely and all sign-up interaction is frozen.</target>
+      </trans-unit>
+      <trans-unit id="VtpqJrs" resname="Unpublished">
+        <source>Unpublished</source>
+        <target>Unpublished</target>
       </trans-unit>
       <trans-unit id="TeuL_GQ" resname="Unsubscribe">
         <source>Unsubscribe</source>
@@ -2576,6 +2696,10 @@
       <trans-unit id="ScQ2_ao" resname="Zettle">
         <source>Zettle</source>
         <target state="translated">Zettle</target>
+      </trans-unit>
+      <trans-unit id="6ylHUuS" resname="[CANCELLED]">
+        <source>[CANCELLED]</source>
+        <target>[CANCELLED]</target>
       </trans-unit>
       <trans-unit id="mC5UFtS" resname="and">
         <source>and</source>

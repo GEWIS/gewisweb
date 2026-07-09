@@ -7,14 +7,11 @@ namespace App\Repository\Activity;
 use App\Entity\Activity\Enums\ExternalSignupVerificationPurpose;
 use App\Entity\Activity\ExternalSignup;
 use App\Entity\Activity\ExternalSignupVerification;
-use App\Entity\Activity\SignupList;
 use DateTimeImmutable;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
-
-use function array_map;
 
 /**
  * @extends ServiceEntityRepository<ExternalSignupVerification>
@@ -47,40 +44,6 @@ class ExternalSignupVerificationRepository extends ServiceEntityRepository
             'externalSignup' => $externalSignup,
             'purpose' => ExternalSignupVerificationPurpose::Verify,
         ]);
-    }
-
-    /**
-     * The ids of external sign-ups on a list that are still unverified (have a live Verify token), so callers can hide
-     * them from public lists, counts and admission.
-     *
-     * @return int[]
-     */
-    public function findPendingExternalSignupIdsForList(SignupList $signupList): array
-    {
-        $rows = $this->createQueryBuilder('v')
-            ->select('IDENTITY(v.externalSignup) AS sid')
-            ->innerJoin(
-                'v.externalSignup',
-                'es',
-            )
-            ->where('v.purpose = :purpose')
-            ->andWhere('es.signupList = :list')
-            ->setParameter(
-                'purpose',
-                ExternalSignupVerificationPurpose::Verify,
-            )
-            ->setParameter(
-                'list',
-                $signupList->getId(),
-                Types::INTEGER,
-            )
-            ->getQuery()
-            ->getScalarResult();
-
-        return array_map(
-            static fn (array $row): int => (int) $row['sid'],
-            $rows,
-        );
     }
 
     /**

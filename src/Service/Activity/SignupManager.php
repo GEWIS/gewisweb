@@ -17,15 +17,13 @@ use App\Message\Activity\ExternalSignupTokenEmail;
 use App\Repository\Activity\ExternalSignupRepository;
 use App\Repository\Activity\ExternalSignupVerificationRepository;
 use App\Repository\Activity\SignupRepository;
+use App\Util\Application\SplitToken;
 use DateInterval;
 use DateTime;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-use function bin2hex;
-use function hash;
-use function random_bytes;
 use function strval;
 
 /**
@@ -385,23 +383,22 @@ final readonly class SignupManager
         ExternalSignupVerificationPurpose $purpose,
         string $ttl,
     ): string {
-        $selector = bin2hex(random_bytes(self::SELECTOR_BYTES));
-        $verifier = bin2hex(random_bytes(self::VERIFIER_BYTES));
-        $hashedToken = hash(
+        $split = SplitToken::generate(
+            self::SELECTOR_BYTES,
+            self::VERIFIER_BYTES,
             ExternalSignupVerification::HASH_ALGO,
-            $verifier,
         );
 
         $verification = new ExternalSignupVerification(
             $signup,
             $purpose,
-            $selector,
-            $hashedToken,
+            $split['selector'],
+            $split['hashedToken'],
             new DateTimeImmutable('now')->add(new DateInterval($ttl)),
         );
         $this->entityManager->persist($verification);
 
-        return $selector . '.' . $verifier;
+        return $split['token'];
     }
 
     private function dispatchTokenEmail(
