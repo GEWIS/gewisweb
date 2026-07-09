@@ -1,4 +1,4 @@
-FROM matomo:5.10-apache AS gewisweb_matomo
+FROM matomo:5.11-apache AS gewisweb_matomo
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
         tzdata \
