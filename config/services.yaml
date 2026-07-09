@@ -14,6 +14,9 @@ parameters:
     # container must be restarted after changing the value), `when@test:` (hardcoded false so CI need not set up
     # TOTP), and `when@prod:` (hardcoded true, immutable, regardless of any environment variable).
     app.mfa.enforcement_enabled: true
+    # Fallback contact for board/committee correspondence with no more specific sender/reply-to (e.g. a bulk email to
+    # an activity's sign-ups when the organising organ has no public email).
+    app.email.internal_affairs: 'cib@gewis.nl'
 
 services:
     # default configuration for services in *this* file
@@ -25,6 +28,7 @@ services:
             $defaultLocale: '%kernel.default_locale%' # string
             $supportedLocales: '%kernel.enabled_locales%' # array
             $mfaEnforcementEnabled: '%app.mfa.enforcement_enabled%' # bool
+            $internalAffairsEmail: '%app.email.internal_affairs%' # string
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name

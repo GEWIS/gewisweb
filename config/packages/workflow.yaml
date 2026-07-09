@@ -1,0 +1,49 @@
+framework:
+    workflows:
+        # Generic revision lifecycle, shared by every revisable domain (activities, companies, vacancies, ...).
+        # `supports` lists the abstract base App\Entity\Application\AbstractRevision; the workflow registry matches
+        # subjects with `instanceof`, so every concrete *Revision (ActivityRevision, CompanyRevision, ...) is covered
+        # automatically without enumerating them here.
+        #
+        # Places are the string values of App\Entity\Application\Enums\RevisionStatus; the marking is stored on the
+        # revision entity's `status` enum column through App\Workflow\RevisionStatusMarkingStore.
+        #
+        # Creating a *new* revision (a brand-new draft, the draft spawned after `request_changes`, the draft cloned
+        # when editing an approved entity, or reopening a rejected one) is entity instantiation at the `draft` initial
+        # place; it is deliberately NOT a transition, so every submitted revision stays an immutable record.
+        revision:
+            type: state_machine
+            marking_store:
+                service: App\Workflow\RevisionStatusMarkingStore
+            supports:
+                - App\Entity\Application\AbstractRevision
+            initial_marking: draft
+            places:
+                - draft
+                - submitted
+                - in-review
+                - changes-requested
+                - rejected
+                - closed
+                - approved
+            transitions:
+                submit:
+                    from: draft
+                    to: submitted
+                # A submission must first be claimed for review; approve/reject/request_changes only become
+                # reachable once the revision is `in-review`, never straight from `submitted`.
+                start_review:
+                    from: submitted
+                    to: in-review
+                request_changes:
+                    from: in-review
+                    to: changes-requested
+                reject:
+                    from: in-review
+                    to: rejected
+                approve:
+                    from: in-review
+                    to: approved
+                close:
+                    from: rejected
+                    to: closed

@@ -601,12 +601,4 @@ class Photo
             'path' => $this->getPath(),
         ];
     }
-
-    /**
-     * Get the resource ID.
-     */
-    public function getResourceId(): string
-    {
-        return 'photo';
-    }
 }

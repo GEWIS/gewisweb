@@ -89,6 +89,9 @@ services:
             - source: init_matomo_db
               target: /docker-entrypoint-initdb.d/matomo.sh
               mode: 0644
+            - source: init_gewis_test_db
+              target: /docker-entrypoint-initdb.d/gewis-test.sh
+              mode: 0644
         networks:
             - gewisweb_network
         healthcheck:
@@ -138,6 +141,15 @@ configs:
                 CREATE DATABASE `${MATOMO_DATABASE_DBNAME:-matomo}`;
                 CREATE USER '${MATOMO_DATABASE_USERNAME:-matomo}'@'%' IDENTIFIED BY '${MATOMO_DATABASE_PASSWORD:-matomo}';
                 GRANT ALL PRIVILEGES ON `${MATOMO_DATABASE_DBNAME:-matomo}`.* TO '${MATOMO_DATABASE_USERNAME:-matomo}'@'%';
+            EOF
+    # Isolated database for the PHPUnit integration tests (the `when@test` doctrine config appends the `_test` suffix).
+    # The schema itself is built by SchemaTool in App\Tests\Integration\DatabaseTestCase, so no migrations run here.
+    init_gewis_test_db:
+        content: |
+            mysql_note "Creating the isolated PHPUnit test database"
+            docker_process_sql <<'EOF'
+                CREATE DATABASE IF NOT EXISTS `${DOCKER_DB_DATABASE:-gewis}_test` CHARACTER SET utf8mb4 COLLATE utf8mb4_uca1400_ai_ci;
+                GRANT ALL PRIVILEGES ON `${DOCKER_DB_DATABASE:-gewis}_test`.* TO '${DOCKER_DB_USERNAME:-gewis}'@'%';
             EOF
 
 volumes:

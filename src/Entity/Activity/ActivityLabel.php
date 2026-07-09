@@ -34,16 +34,16 @@ class ActivityLabel
     use IdentifiableTrait;
 
     /**
-     * The Activities this Label belongs to.
+     * The activity revisions this Label is assigned to (labels live on the revision so their changes are reviewable).
      *
-     * @var Collection<array-key, Activity>
+     * @var Collection<array-key, ActivityRevision>
      */
     #[ManyToMany(
-        targetEntity: Activity::class,
+        targetEntity: ActivityRevision::class,
         mappedBy: 'labels',
         cascade: ['persist'],
     )]
-    private Collection $activities;
+    private Collection $revisions;
 
     /**
      * Name for the Label.
@@ -65,25 +65,25 @@ class ActivityLabel
 
     public function __construct()
     {
-        $this->activities = new ArrayCollection();
+        $this->revisions = new ArrayCollection();
     }
 
-    public function addActivity(Activity $activity): void
+    public function addRevision(ActivityRevision $revision): void
     {
-        if ($this->activities->contains($activity)) {
+        if ($this->revisions->contains($revision)) {
             return;
         }
 
-        $this->activities->add($activity);
+        $this->revisions->add($revision);
     }
 
-    public function removeActivity(Activity $activity): void
+    public function removeRevision(ActivityRevision $revision): void
     {
-        if (!$this->activities->contains($activity)) {
+        if (!$this->revisions->contains($revision)) {
             return;
         }
 
-        $this->activities->removeElement($activity);
+        $this->revisions->removeElement($revision);
     }
 
     public function getName(): ActivityLocalisedText
@@ -97,11 +97,11 @@ class ActivityLabel
     }
 
     /**
-     * @return Activity[]
+     * @return ActivityRevision[]
      */
-    public function getActivities(): array
+    public function getRevisions(): array
     {
-        return $this->activities->toArray();
+        return $this->revisions->toArray();
     }
 
     /**

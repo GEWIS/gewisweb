@@ -1,0 +1,76 @@
+{% extends 'layout-admin.html.twig' %}
+
+{% block page_title %}{{ 'Edit Activity'|trans|page_title }}{{ 'Activities'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/ckeditor5/ckeditor5.css') }}">
+{% endblock %}
+
+{% block admin_breadcrumbs %}
+    <li class="breadcrumb-item active" aria-current="page">
+        <a href="{{ path('admin/activities/index') }}">
+            {{ 'Activities'|trans }}
+        </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">
+        {{ 'Edit'|trans }}
+    </li>
+{% endblock %}
+
+{% block contents %}
+    {% set hasFeedback = comments is defined and comments is not empty %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="h3 mb-1">{{ 'Edit activity'|trans }}</h1>
+            <p class="text-muted">
+                {{ 'Revision %number%: %status%'|trans({
+                    '%number%': activity.currentRevision.revisionNumber,
+                    '%status%': activity.currentRevision.status|trans,
+                }) }}
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="{{ hasFeedback ? 'col-md-9' : 'col-md-12' }}">
+            <div data-controller="edit-lock"
+                 data-edit-lock-ping-url-value="{{ path('admin/activities/edit_ping', {'activity': activity.id}) }}"
+                 data-edit-lock-release-url-value="{{ path('admin/activities/edit_release', {'activity': activity.id}) }}"
+                 data-edit-lock-csrf-token-value="{{ csrf_token('activity_edit_lock-' ~ activity.id) }}"
+                 data-edit-lock-lost-message-value="{{ 'You no longer hold the edit lock; it was taken over or expired. Reload the page to continue editing.'|trans }}">
+                {% include 'partials/activity/admin/form.html.twig' with {
+                    'form': form,
+                    'submitLabel': 'Save draft'|trans,
+                } only %}
+            </div>
+        </div>
+        {% if hasFeedback %}
+            {# A sidebar so the reviewer's feedback stays visible no matter which step the editor is on. #}
+            <div class="col-md-3">
+                <div class="panel position-sticky mt-0">
+                    <div class="panel-heading">
+                        <h3>{{ 'Review feedback'|trans }}</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="list-group list-group-flush">
+                            {% for comment in comments %}
+                                <li class="list-group-item px-0">
+                                    <div class="d-flex justify-content-between">
+                                        <strong>{{ comment.authorDisplayName }}</strong>
+                                        <span class="text-muted small">
+                                            {{ 'rev. #%n%'|trans({'%n%': comment.revision.revisionNumber}) }}
+                                        </span>
+                                    </div>
+                                    <div class="text-muted small">
+                                        {{ comment.getCreatedAt|format_datetime(pattern: 'd MMM yyyy HH:mm', locale: app.request.locale) }}
+                                    </div>
+                                    <div class="mt-1">{{ comment.body|nl2br }}</div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

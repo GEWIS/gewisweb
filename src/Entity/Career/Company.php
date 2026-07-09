@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace App\Entity\Career;
 
-use App\Entity\Application\Traits\ApprovableTrait;
+use App\Entity\Application\RevisableInterface;
+use App\Entity\Application\RevisionInterface;
 use App\Entity\Application\Traits\IdentifiableTrait;
 use App\Entity\Application\Traits\TimestampableTrait;
-use App\Entity\Application\Traits\UpdateProposableTrait;
 use App\Entity\Career\Enums\CompanyPackageTypes;
-use App\Entity\Career\JobCategory as JobCategoryModel;
-use App\Entity\Career\Proposals\CompanyUpdate as CompanyUpdateProposal;
+use App\Entity\Career\VacancyCategory as VacancyCategoryModel;
+use App\Entity\Decision\Member as MemberModel;
+use App\Entity\Decision\Organ as OrganModel;
 use App\Repository\Career\CompanyRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -19,27 +20,31 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
-use Doctrine\ORM\Mapping\OneToOne;
-use Exception;
+use Doctrine\ORM\Mapping\OrderBy;
+use Override;
+use RuntimeException;
 
 use function array_filter;
 use function array_map;
 use function array_sum;
-use function boolval;
 use function count;
 
 /**
- * Company model.
+ * Company aggregate root.
+ *
+ * The stable identity, the name, slug, representative details, packages and publication flag live here and survive
+ * across edits. The revisable, reviewable content (localised texts, logo and contact details) lives on the chain of
+ * {@see CompanyRevision}s. The publicly live version is {@see self::getLiveRevision()} (the latest approved revision);
+ * the working head is {@see self::getCurrentRevision()}.
  */
 #[Entity(repositoryClass: CompanyRepository::class)]
 #[HasLifecycleCallbacks]
-class Company
+class Company implements RevisableInterface
 {
-    use ApprovableTrait;
     use IdentifiableTrait;
     use TimestampableTrait;
-    use UpdateProposableTrait;
 
     /**
      * The company's display name.
@@ -66,109 +71,37 @@ class Company
     private string $representativeEmail;
 
     /**
-     * The company's contact's name.
-     */
-    #[Column(
-        type: Types::STRING,
-        nullable: true,
-    )]
-    private ?string $contactName;
-
-    /**
-     * The company's contact address.
-     */
-    #[Column(
-        type: Types::STRING,
-        nullable: true,
-    )]
-    private ?string $contactAddress;
-
-    /**
-     * The company's contact email address.
-     */
-    #[Column(
-        type: Types::STRING,
-        nullable: true,
-    )]
-    private ?string $contactEmail;
-
-    /**
-     * The company's contact phone.
-     */
-    #[Column(
-        type: Types::STRING,
-        nullable: true,
-    )]
-    private ?string $contactPhone;
-
-    /**
-     * Company slogan.
-     */
-    #[OneToOne(
-        targetEntity: CareerLocalisedText::class,
-        cascade: [
-            'persist',
-            'remove',
-        ],
-        orphanRemoval: true,
-    )]
-    #[JoinColumn(
-        name: 'slogan_id',
-        referencedColumnName: 'id',
-        nullable: false,
-    )]
-    private CareerLocalisedText $slogan;
-
-    /**
-     * Company logo.
-     */
-    #[Column(
-        type: Types::STRING,
-        nullable: true,
-    )]
-    private ?string $logo = null;
-
-    /**
-     * Company description.
-     */
-    #[OneToOne(
-        targetEntity: CareerLocalisedText::class,
-        cascade: [
-            'persist',
-            'remove',
-        ],
-        orphanRemoval: true,
-    )]
-    #[JoinColumn(
-        name: 'description_id',
-        referencedColumnName: 'id',
-        nullable: false,
-    )]
-    private CareerLocalisedText $description;
-
-    /**
-     * Company website.
-     */
-    #[OneToOne(
-        targetEntity: CareerLocalisedText::class,
-        cascade: [
-            'persist',
-            'remove',
-        ],
-        orphanRemoval: true,
-    )]
-    #[JoinColumn(
-        name: 'website_id',
-        referencedColumnName: 'id',
-        nullable: false,
-    )]
-    private CareerLocalisedText $website;
-
-    /**
      * Whether the company is published or not.
      */
     #[Column(type: Types::BOOLEAN)]
     private bool $published;
+
+    /**
+     * The full chain of revisions, newest first.
+     *
+     * @var Collection<array-key, CompanyRevision>
+     */
+    #[OneToMany(
+        targetEntity: CompanyRevision::class,
+        mappedBy: 'company',
+        cascade: ['persist'],
+    )]
+    #[OrderBy(['revisionNumber' => 'DESC'])]
+    private Collection $revisions;
+
+    /**
+     * The working head of the chain (the most recent revision, regardless of state).
+     */
+    #[ManyToOne(targetEntity: CompanyRevision::class)]
+    #[JoinColumn(nullable: true)]
+    private ?CompanyRevision $currentRevision = null;
+
+    /**
+     * The publicly live revision (the latest approved one), or null when nothing has been approved yet.
+     */
+    #[ManyToOne(targetEntity: CompanyRevision::class)]
+    #[JoinColumn(nullable: true)]
+    private ?CompanyRevision $liveRevision = null;
 
     /**
      * The company's packages.
@@ -185,22 +118,76 @@ class Company
     )]
     private Collection $packages;
 
-    /**
-     * Proposed updates to this company.
-     *
-     * @var Collection<array-key, CompanyUpdateProposal>
-     */
-    #[OneToMany(
-        targetEntity: CompanyUpdateProposal::class,
-        mappedBy: 'original',
-        fetch: 'EXTRA_LAZY',
-    )]
-    private Collection $updateProposals;
-
     public function __construct()
     {
+        $this->revisions = new ArrayCollection();
         $this->packages = new ArrayCollection();
-        $this->updateProposals = new ArrayCollection();
+    }
+
+    /**
+     * @return Collection<array-key, CompanyRevision>
+     */
+    #[Override]
+    public function getRevisions(): Collection
+    {
+        return $this->revisions;
+    }
+
+    public function addRevision(CompanyRevision $revision): void
+    {
+        if ($this->revisions->contains($revision)) {
+            return;
+        }
+
+        $this->revisions->add($revision);
+        $revision->setCompany($this);
+    }
+
+    #[Override]
+    public function getCurrentRevision(): ?CompanyRevision
+    {
+        return $this->currentRevision;
+    }
+
+    public function setCurrentRevision(?CompanyRevision $currentRevision): void
+    {
+        $this->currentRevision = $currentRevision;
+    }
+
+    #[Override]
+    public function getLiveRevision(): ?CompanyRevision
+    {
+        return $this->liveRevision;
+    }
+
+    public function setLiveRevision(?CompanyRevision $liveRevision): void
+    {
+        $this->liveRevision = $liveRevision;
+    }
+
+    #[Override]
+    public function markRevisionLive(RevisionInterface $revision): void
+    {
+        if (!$revision instanceof CompanyRevision) {
+            throw new RuntimeException('A company can only be made live by one of its own revisions.');
+        }
+
+        $this->setLiveRevision($revision);
+    }
+
+    /**
+     * The revision whose content is shown for this company: the live (approved) one when present, otherwise the
+     * working head. Only ever null for a company with no revisions at all, which never occurs once persisted.
+     */
+    private function getDisplayRevision(): CompanyRevision
+    {
+        $revision = $this->liveRevision ?? $this->currentRevision;
+
+        if (null === $revision) {
+            throw new RuntimeException('Company has no revision to display.');
+        }
+
+        return $revision;
     }
 
     /**
@@ -272,131 +259,67 @@ class Company
     }
 
     /**
-     * Get the company's contact's name.
+     * Display proxy. Get the company's contact's name.
      */
     public function getContactName(): ?string
     {
-        return $this->contactName;
+        return $this->getDisplayRevision()->getContactName();
     }
 
     /**
-     * Set the company's contact's name.
-     */
-    public function setContactName(?string $name): void
-    {
-        $this->contactName = $name;
-    }
-
-    /**
-     * Get the company's address.
+     * Display proxy. Get the company's address.
      */
     public function getContactAddress(): ?string
     {
-        return $this->contactAddress;
+        return $this->getDisplayRevision()->getContactAddress();
     }
 
     /**
-     * Set the company's address.
-     */
-    public function setContactAddress(?string $contactAddress): void
-    {
-        $this->contactAddress = $contactAddress;
-    }
-
-    /**
-     * Get the company's email.
+     * Display proxy. Get the company's email.
      */
     public function getContactEmail(): ?string
     {
-        return $this->contactEmail;
+        return $this->getDisplayRevision()->getContactEmail();
     }
 
     /**
-     * Set the company's email.
-     */
-    public function setContactEmail(?string $contactEmail): void
-    {
-        $this->contactEmail = $contactEmail;
-    }
-
-    /**
-     * Get the company's phone.
+     * Display proxy. Get the company's phone.
      */
     public function getContactPhone(): ?string
     {
-        return $this->contactPhone;
+        return $this->getDisplayRevision()->getContactPhone();
     }
 
     /**
-     * Set the company's phone.
-     */
-    public function setContactPhone(?string $contactPhone): void
-    {
-        $this->contactPhone = $contactPhone;
-    }
-
-    /**
-     * Get the company's slogan.
+     * Display proxy. Get the company's slogan.
      */
     public function getSlogan(): CareerLocalisedText
     {
-        return $this->slogan;
+        return $this->getDisplayRevision()->getSlogan();
     }
 
     /**
-     * Set the company's slogan.
-     */
-    public function setSlogan(CareerLocalisedText $slogan): void
-    {
-        $this->slogan = $slogan;
-    }
-
-    /**
-     * Get the company's logo.
+     * Display proxy. Get the company's logo.
      */
     public function getLogo(): ?string
     {
-        return $this->logo;
+        return $this->getDisplayRevision()->getLogo();
     }
 
     /**
-     * Set the company's logo.
-     */
-    public function setLogo(?string $logo): void
-    {
-        $this->logo = $logo;
-    }
-
-    /**
-     * Get the company's description.
+     * Display proxy. Get the company's description.
      */
     public function getDescription(): CareerLocalisedText
     {
-        return $this->description;
+        return $this->getDisplayRevision()->getDescription();
     }
 
     /**
-     * Set the company's description.
-     */
-    public function setDescription(CareerLocalisedText $description): void
-    {
-        $this->description = $description;
-    }
-
-    /**
-     * Get the company's website.
+     * Display proxy. Get the company's website.
      */
     public function getWebsite(): CareerLocalisedText
     {
-        return $this->website;
-    }
-
-    /**
-     * Set the company's description.
-     */
-    public function setWebsite(CareerLocalisedText $website): void
-    {
-        $this->website = $website;
+        return $this->getDisplayRevision()->getWebsite();
     }
 
     /**
@@ -404,8 +327,8 @@ class Company
      */
     public function isHidden(): bool
     {
-        // If the company is not approved, it should never be shown.
-        if (!$this->isApproved()) {
+        // If the company has no live (approved) revision, it should never be shown.
+        if (null === $this->getLiveRevision()) {
             return true;
         }
 
@@ -461,14 +384,6 @@ class Company
     }
 
     /**
-     * @return Collection<array-key, CompanyUpdateProposal>
-     */
-    public function getUpdateProposals(): Collection
-    {
-        return $this->updateProposals;
-    }
-
-    /**
      * Returns the number of jobs that are contained in all packages of this
      * company.
      */
@@ -476,7 +391,7 @@ class Company
     {
         $jobCount = static function (CompanyPackage $package): int {
             if ($package instanceof CompanyJobPackage) {
-                return $package->getJobsWithoutProposals()->count();
+                return $package->getVacancies()->count();
             }
 
             return 0;
@@ -489,7 +404,7 @@ class Company
      * Returns the number of jobs that are contained in all active packages of this
      * company.
      */
-    public function getNumberOfActiveJobs(?JobCategoryModel $category = null): int
+    public function getNumberOfActiveJobs(?VacancyCategoryModel $category = null): int
     {
         $jobCount = static function (CompanyPackage $package) use ($category): int {
             if ($package instanceof CompanyJobPackage) {
@@ -548,54 +463,39 @@ class Company
     }
 
     /**
-     * Updates this object with values in the form of getArrayCopy(). This does not include the logo.
-     *
-     * @psalm-param array{
-     *     name: string,
-     *     slugName: string,
-     *     representativeName: string,
-     *     representativeEmail: string,
-     *     contactName: ?string,
-     *     contactEmail: ?string,
-     *     contactAddress: ?string,
-     *     contactPhone: ?string,
-     *     published: bool,
-     *     slogan: ?string,
-     *     sloganEn: ?string,
-     *     website: ?string,
-     *     websiteEn: ?string,
-     *     description: ?string,
-     *     descriptionEn: ?string,
-     * } $data
-     *
-     * @throws Exception
+     * Returns the string identifier of the Resource.
      */
-    public function exchangeArray(array $data): void
+    #[Override]
+    public function getResourceId(): string
     {
-        $this->setName($data['name']);
-        $this->setSlugName($data['slugName']);
+        return 'company';
+    }
 
-        $this->setRepresentativeName($data['representativeName']);
-        $this->setRepresentativeEmail($data['representativeEmail']);
+    /**
+     * Companies are not owned by an organ.
+     */
+    #[Override]
+    public function getResourceOrgan(): ?OrganModel
+    {
+        return null;
+    }
 
-        $this->setContactName($data['contactName']);
-        $this->setContactAddress($data['contactAddress']);
-        $this->setContactEmail($data['contactEmail']);
-        $this->setContactPhone($data['contactPhone']);
-        $this->setPublished(boolval($data['published']));
+    /**
+     * Companies are not created by a member.
+     */
+    #[Override]
+    public function getResourceCreator(): ?MemberModel
+    {
+        return null;
+    }
 
-        $this->getSlogan()->updateValues(
-            $data['sloganEn'],
-            $data['slogan'],
-        );
-        $this->getWebsite()->updateValues(
-            $data['websiteEn'],
-            $data['website'],
-        );
-        $this->getDescription()->updateValues(
-            $data['descriptionEn'],
-            $data['description'],
-        );
+    /**
+     * A company owns itself, so its company users can edit it.
+     */
+    #[Override]
+    public function getResourceCompany(): ?Company
+    {
+        return $this;
     }
 
     /**
@@ -646,10 +546,5 @@ class Company
         $arraycopy['descriptionEn'] = $this->getDescription()->getValueEN();
 
         return $arraycopy;
-    }
-
-    public function getResourceId(): string
-    {
-        return 'company';
     }
 }

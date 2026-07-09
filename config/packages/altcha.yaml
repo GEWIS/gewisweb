@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=../../vendor/symfony/dependency-injection/Loader/schema/services.schema.json
+altcha:
+    # Self-hosted proof-of-work captcha. The server issues and verifies the challenge (no third party); the widget JS is
+    # served from the asset mapper via the bundle's Stimulus controller. hmacSignature signs the challenge so a solved
+    # payload cannot be forged or replayed beyond `expires`.
+    hmacSignature: '%env(APP_SECRET)%'
+    # Proof-of-work difficulty (bundle defaults: counter range 5000-10000) is invisible to a human but costly to script
+    # at scale; left at the default since rate limiting and email verification are the stronger anti-abuse layers.
+    expires: '+15 minutes'
+    # Wire the widget via its Stimulus controller: on a solved challenge it writes the payload into the form input AND
+    # fires a `change` event, which is what the live-component form binding needs to pick the value up (the widget lives
+    # inside a live component, behind `data-live-ignore`).
+    use_stimulus: true

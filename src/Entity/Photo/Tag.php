@@ -104,12 +104,4 @@ class Tag
             'photo' => $this->getPhoto()->toGdprArray(),
         ];
     }
-
-    /**
-     * Get the resource ID.
-     */
-    public function getResourceId(): string
-    {
-        return 'tag';
-    }
 }

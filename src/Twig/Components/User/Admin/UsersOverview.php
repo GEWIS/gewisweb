@@ -10,7 +10,7 @@ use App\Entity\User\Enums\UserRoles;
 use App\Entity\User\User;
 use App\Repository\Decision\MemberRepository;
 use App\Repository\User\UserRepository;
-use App\View\User\Admin\MemberRow;
+use App\ViewModel\User\Admin\MemberRow;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;

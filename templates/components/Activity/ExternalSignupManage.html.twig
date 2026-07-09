@@ -1,0 +1,45 @@
+<div{{ attributes }}>
+    {% if this.feedback %}
+        <div class="alert alert-success">{{ this.feedback }}</div>
+    {% endif %}
+
+    {% if not this.isEditable %}
+        <div class="alert alert-info mb-0">
+            {{ 'This sign-up list is closed, so your sign-up can no longer be changed.'|trans }}
+        </div>
+    {% else %}
+        {# Editing is a live action: submitting re-renders this component in place (inline validation, no reload).
+           Unsubscribing is a separate live action confirmed via the shared #confirm-modal, which redirects. #}
+        {{ form_start(form, {
+            attr: form.vars.attr|merge({
+                'data-action': 'live#action:prevent',
+                'data-live-action-param': 'save',
+            }),
+        }) }}
+            {{ form_errors(form) }}
+            {{ form_row(form.fullName) }}
+            {# Disabled by SignupType in manage mode: the email is the verified identity and changing it would bypass
+               verification (to use another address, unsubscribe and sign up again). #}
+            {{ form_row(form.email) }}
+            {% include 'partials/activity/signup-fields.html.twig' with { form: form } only %}
+
+            {% if this.signup.signupList.fields|filter(f => f.isSensitive)|length > 0 %}
+                <p class="text-muted small mb-3"><em>
+                    {{ '¹ Fields marked with this symbol are only shared with the board and the organiser of the activity.'|trans }}
+                </em></p>
+            {% endif %}
+
+            <div class="d-flex justify-content-between align-items-center">
+                <button type="button" class="btn btn-outline-gewis-primary"
+                        data-bs-toggle="modal" data-bs-target="#confirm-modal"
+                        data-confirm-title="{{ 'Unsubscribe?'|trans }}"
+                        data-confirm-message="{{ 'Are you sure you want to unsubscribe from this sign-up list?'|trans }}"
+                        data-confirm-label="{{ 'Unsubscribe'|trans }}"
+                        data-confirm-live-action="unsubscribe">
+                    <i class="fas fa-user-minus"></i> {{ 'Unsubscribe'|trans }}
+                </button>
+                <button type="submit" class="btn btn-gewis-primary">{{ 'Save changes'|trans }}</button>
+            </div>
+        {{ form_end(form) }}
+    {% endif %}
+</div>

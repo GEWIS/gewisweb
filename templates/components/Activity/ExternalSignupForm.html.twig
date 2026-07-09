@@ -1,0 +1,41 @@
+<div{{ attributes }}>
+    {# Just the form: it lives inside a Bootstrap modal whose chrome (header, open/close, backdrop) is rendered around
+       this component in the activity partial. An invalid submit re-renders this form in place (modal stays open); a
+       successful submit redirects, so the reload closes the modal and shows the "check your email" flash. #}
+    {{ form_start(form, {
+        attr: form.vars.attr|merge({
+            'data-action': 'live#action:prevent',
+            'data-live-action-param': 'submit',
+        }),
+    }) }}
+        <div class="modal-body">
+            {% if this.feedback %}
+                <div class="alert alert-warning">{{ this.feedback }}</div>
+            {% endif %}
+            {{ form_errors(form) }}
+            <p class="text-muted small mb-3">
+                {{ 'Do you have a GEWIS account?'|trans }}
+                <a href="{{ path('user_login') }}">{{ 'Log in to sign up.'|trans }}</a>
+            </p>
+            {{ form_row(form.fullName) }}
+            {{ form_row(form.email) }}
+            {% include 'partials/activity/signup-fields.html.twig' with { form: form } only %}
+            {{ form_row(form.security) }}
+            {{ form_row(form.agree) }}
+            {% if this.hasSensitiveField %}
+                <p class="text-muted small mt-3 mb-0"><em>
+                    {{ '¹ Fields marked with this symbol are only shared with the board and the organiser of the activity.'|trans }}
+                </em></p>
+            {% endif %}
+            <p class="text-muted small mt-3 mb-0"><em>
+                {{ 'Your sign-up will be visible to all visitors of the website once you confirm it via the email we send you.'|trans }}
+            </em></p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'Cancel'|trans }}</button>
+            <button type="submit" class="btn btn-gewis-primary">
+                <i class="fas fa-user-plus"></i> {{ 'Sign up'|trans }}
+            </button>
+        </div>
+    {{ form_end(form) }}
+</div>

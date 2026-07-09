@@ -373,12 +373,4 @@ class Album
     {
         return $this->children->count();
     }
-
-    /**
-     * Get the resource ID.
-     */
-    public function getResourceId(): string
-    {
-        return 'album';
-    }
 }

@@ -1,0 +1,38 @@
+# This is a GEWIS mailings template
+# External activity sign-up: email confirmation (double opt-in)
+---
+# All mailings require some settings. These can be set here. Don't forget to set the title ("Algemene mededeling; tekst zelf invoeren")
+version: 1.1
+settings:
+    title: "Confirm your sign-up"
+    email: "gewisweb@gewis.nl"
+    lang: en-UK
+    follow: false
+
+# A mailing consists of a series of messageblocks, each with their own type
+# The available types are "header", "topblock", "activities", "activityfooter", "extramessage" and "tinyfooter"
+messageblocks:
+
+    # Each mailing must have a header to make the template shine! It contains the title and the date.
+    - type: "header"
+      title: "{{ACTIVITY_NAME}}"
+      date: 2024-01-01 # Note that this date needs to be updated
+
+    # This is the first block which is shown on top of the message. Recommended for most messages
+    - type: topblock
+      title: "Confirm your sign-up"
+      contentHTML: "</p>
+        <p>Dear {{FULL_NAME}},</p>
+
+        <p>To complete your sign-up for <em>{{ACTIVITY_NAME}}</em> ({{SIGNUPLIST_NAME}}), please verify your email address by clicking the link below within 24 hours:</p>
+
+        <p><a href='{{CONFIRM_URL}}'>{{CONFIRM_URL}}</a></p>
+
+        <p>If you do not click the link within 24 hours, your details will not be saved. If you did not sign up for this activity, you can safely ignore this email.</p>
+
+        With kind regards,<br/>
+        The ApplicatieBeheerCommissie"
+
+    - type: tinyfooter
+      contentHTML: >
+          You receive this email because you signed up for {{ACTIVITY_NAME}}.

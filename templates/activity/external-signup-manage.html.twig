@@ -1,0 +1,23 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}{{ 'Manage your sign-up'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block contents %}
+    <div class="row justify-content-center">
+        <div class="col col-sm-10 col-lg-6 col-xl-4">
+            <h1 class="h3 mb-1">{{ 'Manage your sign-up'|trans }}</h1>
+            <p class="text-muted">
+                <a href="{{ path('activity/view', {'activity': activity.getId}) }}">{{ activity_title(activity) }}</a>
+            </p>
+
+            <div class="panel">
+                <div class="panel-body">
+                    <twig:Activity:ExternalSignupManage :token="token" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Shared confirm-modal driving the component's unsubscribe live action; rendered once, OUTSIDE the live component. #}
+    {% include 'partials/application/confirm-modal.html.twig' %}
+{% endblock %}

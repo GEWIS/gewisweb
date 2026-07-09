@@ -1,3 +1,61 @@
 .ck-powered-by {
     display: none !important;
 }
+
+// Theme CKEditor 5's Lark UI to match the site by mapping its `--ck-*` variables onto Bootstrap's `--bs-*` tokens.
+// Because those tokens already switch between the `gewis-day` and `gewis-night` themes, this gives dark mode for free
+// -- no separate dark-theme block. Scoped to `.ck` (not `:root`) so the mapping wins over the bundle's own `:root`
+// defaults by proximity, regardless of stylesheet load order, and never leaks outside the editor.
+.ck {
+    // Base surfaces, text and accents
+    --ck-color-base-background: var(--bs-body-bg);
+    --ck-color-base-foreground: var(--bs-secondary-bg);
+    --ck-color-base-border: var(--bs-border-color);
+    --ck-color-base-text: var(--bs-body-color);
+    --ck-color-text: var(--bs-body-color);
+    // The editable area's text is driven by its own variable (not --ck-color-text), so it stayed black in dark mode.
+    --ck-content-font-color: var(--bs-body-color);
+    --ck-color-base-active: var(--bs-primary);
+    --ck-color-base-active-focus: var(--bs-primary);
+    --ck-color-base-action: var(--bs-success);
+    --ck-color-base-error: var(--bs-danger);
+    --ck-color-focus-border: var(--bs-primary);
+
+    // Toolbar
+    --ck-color-toolbar-background: var(--bs-secondary-bg);
+    --ck-color-toolbar-border: var(--bs-border-color);
+
+    // Buttons
+    --ck-color-button-default-hover-background: var(--bs-tertiary-bg);
+    --ck-color-button-default-active-background: var(--bs-tertiary-bg);
+    --ck-color-button-on-background: var(--bs-tertiary-bg);
+    --ck-color-button-on-hover-background: var(--bs-tertiary-bg);
+    --ck-color-button-on-active-background: var(--bs-tertiary-bg);
+    --ck-color-button-on-color: var(--bs-emphasis-color);
+
+    // Dropdown panels, balloons and list items
+    --ck-color-panel-background: var(--bs-body-bg);
+    --ck-color-panel-border: var(--bs-border-color);
+    --ck-color-dropdown-panel-background: var(--bs-body-bg);
+    --ck-color-dropdown-panel-border: var(--bs-border-color);
+    --ck-color-list-button-hover-background: var(--bs-tertiary-bg);
+    --ck-color-list-button-on-background: var(--bs-tertiary-bg);
+    --ck-color-list-button-on-background-focus: var(--bs-tertiary-bg);
+    --ck-color-list-button-on-text: var(--bs-emphasis-color);
+
+    // Inputs (link form, find & replace, table properties)
+    --ck-color-input-background: var(--bs-body-bg);
+    --ck-color-input-border: var(--bs-border-color);
+    --ck-color-input-text: var(--bs-body-color);
+    --ck-color-input-disabled-background: var(--bs-secondary-bg);
+    --ck-color-input-disabled-border: var(--bs-border-color);
+    --ck-color-input-disabled-text: var(--bs-secondary-color);
+    --ck-color-input-error-border: var(--bs-danger);
+
+    // Content accents
+    --ck-color-link-default: var(--bs-link-color);
+    --ck-color-engine-placeholder-text: var(--bs-secondary-color);
+
+    // Match Bootstrap's corner radius
+    --ck-border-radius: var(--bs-border-radius);
+}

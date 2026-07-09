@@ -5,13 +5,69 @@
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
+      <trans-unit id="mUY7qf3" resname="At least one language must be used.">
+        <source>At least one language must be used.</source>
+        <target>At least one language must be used.</target>
+      </trans-unit>
+      <trans-unit id="SDwIA.h" resname="Describe how you addressed the requested changes before resubmitting.">
+        <source>Describe how you addressed the requested changes before resubmitting.</source>
+        <target state="translated">Describe how you addressed the requested changes before resubmitting.</target>
+      </trans-unit>
       <trans-unit id="t.WZn.q" resname="Enter a 6-digit authenticator code or a 16-character lowercase-hex backup code.">
         <source>Enter a 6-digit authenticator code or a 16-character lowercase-hex backup code.</source>
-        <target></target>
+        <target state="translated">Enter a 6-digit authenticator code or a 16-character lowercase-hex backup code.</target>
+      </trans-unit>
+      <trans-unit id="iXcFJXc" resname="Enter a closing date and time.">
+        <source>Enter a closing date and time.</source>
+        <target state="translated">Enter a closing date and time.</target>
+      </trans-unit>
+      <trans-unit id="iGXOSQU" resname="Enter a full name.">
+        <source>Enter a full name.</source>
+        <target>Enter a full name.</target>
+      </trans-unit>
+      <trans-unit id="HSarwc." resname="Enter a start date and time.">
+        <source>Enter a start date and time.</source>
+        <target state="translated">Enter a start date and time.</target>
+      </trans-unit>
+      <trans-unit id="HTVqG9b" resname="Enter a valid URL (starting with http:// or https://).">
+        <source>Enter a valid URL (starting with http:// or https://).</source>
+        <target>Enter a valid URL (starting with http:// or https://).</target>
+      </trans-unit>
+      <trans-unit id="pT0eJRh" resname="Enter a valid email address.">
+        <source>Enter a valid email address.</source>
+        <target state="translated">Enter a valid email address.</target>
+      </trans-unit>
+      <trans-unit id="8a1ZW3W" resname="Enter a value between {{ min }} and {{ max }}.">
+        <source>Enter a value between {{ min }} and {{ max }}.</source>
+        <target>Enter a value between {{ min }} and {{ max }}.</target>
+      </trans-unit>
+      <trans-unit id="IoicRFz" resname="Enter an email address.">
+        <source>Enter an email address.</source>
+        <target state="translated">Enter an email address.</target>
+      </trans-unit>
+      <trans-unit id="vUFOGmp" resname="Enter an end date and time.">
+        <source>Enter an end date and time.</source>
+        <target state="translated">Enter an end date and time.</target>
+      </trans-unit>
+      <trans-unit id=".qSOaLw" resname="Enter an opening date and time.">
+        <source>Enter an opening date and time.</source>
+        <target state="translated">Enter an opening date and time.</target>
       </trans-unit>
       <trans-unit id="B9r0Hn5" resname="Error">
         <source>Error</source>
         <target>Error</target>
+      </trans-unit>
+      <trans-unit id="5POukAY" resname="Feedback is required when requesting changes or rejecting.">
+        <source>Feedback is required when requesting changes or rejecting.</source>
+        <target state="translated">Feedback is required when requesting changes or rejecting.</target>
+      </trans-unit>
+      <trans-unit id="7PRHlDo" resname="Fill in the Dutch text.">
+        <source>Fill in the Dutch text.</source>
+        <target state="translated">Fill in the Dutch text.</target>
+      </trans-unit>
+      <trans-unit id="vXqmZv8" resname="Fill in the English text.">
+        <source>Fill in the English text.</source>
+        <target state="translated">Fill in the English text.</target>
       </trans-unit>
       <trans-unit id="0wZ1438" resname="Please enter a password.">
         <source>Please enter a password.</source>
@@ -28,6 +84,50 @@
       <trans-unit id="EkDZsyf" resname="Please enter your verification code.">
         <source>Please enter your verification code.</source>
         <target state="translated">Please enter your verification code.</target>
+      </trans-unit>
+      <trans-unit id="pVi97xU" resname="The activity must start in the future.">
+        <source>The activity must start in the future.</source>
+        <target state="translated">The activity must start in the future.</target>
+      </trans-unit>
+      <trans-unit id="GrfPh7K" resname="The email address may not be longer than {{ limit }} characters.">
+        <source>The email address may not be longer than {{ limit }} characters.</source>
+        <target state="translated">The email address may not be longer than {{ limit }} characters.</target>
+      </trans-unit>
+      <trans-unit id="IMKkCvz" resname="The end time must be after the start time.">
+        <source>The end time must be after the start time.</source>
+        <target state="translated">The end time must be after the start time.</target>
+      </trans-unit>
+      <trans-unit id="YxuChhn" resname="The end time must be in the future.">
+        <source>The end time must be in the future.</source>
+        <target state="translated">The end time must be in the future.</target>
+      </trans-unit>
+      <trans-unit id="Oed6bKp" resname="The full name may not be longer than {{ limit }} characters.">
+        <source>The full name may not be longer than {{ limit }} characters.</source>
+        <target>The full name may not be longer than {{ limit }} characters.</target>
+      </trans-unit>
+      <trans-unit id="k8QayhA" resname="The sign-up list must close before the activity starts.">
+        <source>The sign-up list must close before the activity starts.</source>
+        <target state="translated">The sign-up list must close before the activity starts.</target>
+      </trans-unit>
+      <trans-unit id="r_fk.nF" resname="The sign-up list must open before it closes.">
+        <source>The sign-up list must open before it closes.</source>
+        <target state="translated">The sign-up list must open before it closes.</target>
+      </trans-unit>
+      <trans-unit id="bCKzvG1" resname="The sign-up list must open in the future.">
+        <source>The sign-up list must open in the future.</source>
+        <target state="translated">The sign-up list must open in the future.</target>
+      </trans-unit>
+      <trans-unit id="z.p0Rex" resname="This field is required.">
+        <source>This field is required.</source>
+        <target>This field is required.</target>
+      </trans-unit>
+      <trans-unit id="7IsK8li" resname="You may only assign an organising organ that you are installed in.">
+        <source>You may only assign an organising organ that you are installed in.</source>
+        <target>You may only assign an organising organ that you are installed in.</target>
+      </trans-unit>
+      <trans-unit id=".XKorDo" resname="You must agree to the activity and alcohol policies to sign up.">
+        <source>You must agree to the activity and alcohol policies to sign up.</source>
+        <target>You must agree to the activity and alcohol policies to sign up.</target>
       </trans-unit>
       <trans-unit id="r7EPETa" resname="Your password should be at least {{ limit }} characters.">
         <source>Your password should be at least {{ limit }} characters.</source>

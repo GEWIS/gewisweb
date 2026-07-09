@@ -114,12 +114,4 @@ class NewsItem
     {
         $this->dutchContent = $dutchContent;
     }
-
-    /**
-     * Get the resource ID.
-     */
-    public function getResourceId(): string
-    {
-        return 'news_item';
-    }
 }

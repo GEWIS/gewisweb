@@ -28,6 +28,9 @@ nelmio_security:
             frame-ancestors: ['self']
             form-action: ['self']
             base-uri: ['self']
+            # The Altcha captcha (external sign-up form) runs its proof-of-work in a `blob:` Web Worker; without this it
+            # is blocked by `default-src 'none'` (workers do not fall back to script-src). Applies to every environment.
+            worker-src: ['self', 'blob:']
 
     referrer_policy:
         enabled: true

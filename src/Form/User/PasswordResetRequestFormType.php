@@ -12,6 +12,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Tito10047\AltchaBundle\Type\AltchaType;
 
 use function Symfony\Component\Translation\t;
 
@@ -35,6 +36,13 @@ class PasswordResetRequestFormType extends AbstractType
                     new Email(),
                 ],
             ],
+        );
+
+        // Self-hosted proof-of-work captcha to deter automated abuse of the reset endpoint (email enumeration and
+        // flooding mailboxes with reset links).
+        $builder->add(
+            'security',
+            AltchaType::class,
         );
 
         // Add membership number only when required.

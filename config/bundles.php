@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Ambta\DoctrineEncryptBundle\AmbtaDoctrineEncryptBundle;
 use ApiPlatform\Symfony\Bundle\ApiPlatformBundle;
+use DAMA\DoctrineTestBundle\DAMADoctrineTestBundle;
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle;
 use Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle;
@@ -26,6 +27,7 @@ use Symfony\UX\LiveComponent\LiveComponentBundle;
 use Symfony\UX\StimulusBundle\StimulusBundle;
 use Symfony\UX\TwigComponent\TwigComponentBundle;
 use Symfonycasts\SassBundle\SymfonycastsSassBundle;
+use Tito10047\AltchaBundle\AltchaBundle;
 use Twig\Extra\TwigExtraBundle\TwigExtraBundle;
 
 return [
@@ -49,6 +51,7 @@ return [
         'dev' => true,
         'test' => true,
     ],
+    DAMADoctrineTestBundle::class => ['test' => true],
     MercureBundle::class => ['all' => true],
     NelmioSecurityBundle::class => ['all' => true],
     StimulusBundle::class => ['all' => true],
@@ -63,4 +66,5 @@ return [
     EndroidQrCodeBundle::class => ['all' => true],
     AmbtaDoctrineEncryptBundle::class => ['all' => true],
     UXCalendarLinkBundle::class => ['all' => true],
+    AltchaBundle::class => ['all' => true],
 ];

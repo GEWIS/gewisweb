@@ -75,12 +75,4 @@ class WeeklyPhoto
     {
         $this->hidden = $hidden;
     }
-
-    /**
-     * Get the resource ID.
-     */
-    public function getResourceId(): string
-    {
-        return 'weeklyphoto';
-    }
 }

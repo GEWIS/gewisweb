@@ -1,0 +1,28 @@
+<div{{ attributes }}>
+    {# Just the form: the Bootstrap modal chrome is rendered around this component in the activity partial. An invalid
+       submit (incl. captcha) re-renders inline; a successful submit redirects with the neutral flash. #}
+    {{ form_start(form, {
+        attr: form.vars.attr|merge({
+            'data-action': 'live#action:prevent',
+            'data-live-action-param': 'submit',
+        }),
+    }) }}
+        <div class="modal-body">
+            {% if this.feedback %}
+                <div class="alert alert-warning">{{ this.feedback }}</div>
+            {% endif %}
+            {{ form_errors(form) }}
+            <p class="text-muted small mb-3">
+                {{ 'Enter the email address you signed up with and we will send you a new confirmation link.'|trans }}
+            </p>
+            {{ form_row(form.email) }}
+            {{ form_row(form.security) }}
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'Cancel'|trans }}</button>
+            <button type="submit" class="btn btn-gewis-primary">
+                {{ 'Resend confirmation email'|trans }}
+            </button>
+        </div>
+    {{ form_end(form) }}
+</div>

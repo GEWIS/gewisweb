@@ -1,0 +1,48 @@
+{% extends 'layout-admin.html.twig' %}
+
+{% block page_title %}{{ 'Sign-ups'|trans|page_title }}{{ activity_title(activity)|page_title }}{{ parent() }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/ckeditor5/ckeditor5.css') }}">
+{% endblock %}
+
+{% block admin_breadcrumbs %}
+    <li class="breadcrumb-item">
+        <a href="{{ path('admin/activities/index') }}">
+            {{ 'Activities'|trans }}
+        </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">
+        {{ activity_title(activity) }}
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">
+        {{ 'Sign-ups'|trans }}
+    </li>
+{% endblock %}
+
+{% block contents %}
+    <div class="row">
+        <div class="col-md-12 d-flex justify-content-between align-items-center gap-2">
+            <div>
+                <h1 class="h3 mb-1">{{ 'Sign-ups'|trans }}</h1>
+                <p class="text-muted mb-0">
+                    {{ activity_title(activity) }}
+                    &middot;
+                    {{ activity.getBeginTime|format_datetime(pattern: 'EEE d MMM. yyyy HH:mm', locale: app.request.locale) }}
+                </p>
+            </div>
+            <a href="{{ path('admin/activities/index') }}" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left"></i> {{ 'Back to overview'|trans }}
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <twig:Activity:Admin:SignupOverview :activity="activity" />
+        </div>
+    </div>
+
+    {# Shared confirmation modal for the draw, kept outside the live component so its re-render can't orphan it. #}
+    {% include 'partials/application/confirm-modal.html.twig' %}
+{% endblock %}

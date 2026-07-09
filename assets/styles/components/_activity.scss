@@ -1,9 +1,9 @@
-// The whole activity list item is clickable (see activity_item_controller.js).
+// The whole activity list item is clickable (see activity_item_controller.ts).
 .activity-list-item {
     cursor: pointer;
 }
 
-// Sign-up list accordion on the activity view page: rotate the chevron when its section is expanded.
+// Sign-up list accordion (public activity view + admin sign-ups overview): rotate the chevron when expanded.
 .signup-list-chevron {
     transition: transform 0.2s ease;
     flex-shrink: 0;
@@ -11,6 +11,27 @@
 
 .signup-list-heading:not(.collapsed) .signup-list-chevron {
     transform: rotate(180deg);
+}
+
+// Sign-up list editor (activity create/edit form): number the collapsible list and question panels so collapsed ones
+// stay distinguishable. A CSS counter reflows automatically as entries are added or removed (see
+// form_collection_controller.ts); the prototype lives in a data attribute and is not counted.
+.signup-list-collection {
+    counter-reset: signup-list;
+
+    .signup-list-number::before {
+        counter-increment: signup-list;
+        content: counter(signup-list);
+    }
+}
+
+.signup-field-collection {
+    counter-reset: signup-field;
+
+    .signup-field-number::before {
+        counter-increment: signup-field;
+        content: counter(signup-field);
+    }
 }
 
 // Clamp the (rendered Markdown) activity description on overview pages until the user expands it.

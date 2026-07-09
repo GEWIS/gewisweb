@@ -23,6 +23,8 @@ use Scheb\TwoFactorBundle\Model\Totp\TwoFactorInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+use function sprintf;
+
 #[Entity(repositoryClass: CompanyUserRepository::class)]
 class CompanyUser implements UserInterface, PasswordAuthenticatedUserInterface, TwoFactorInterface
 {
@@ -132,6 +134,19 @@ class CompanyUser implements UserInterface, PasswordAuthenticatedUserInterface, 
     public function getCompany(): CompanyModel
     {
         return $this->company;
+    }
+
+    /**
+     * A human-readable name for this account, for display alongside a {@see User}: the company name with the
+     * representative who acts for it in parentheses.
+     */
+    public function getDisplayName(): string
+    {
+        return sprintf(
+            '%s (%s)',
+            $this->getCompany()->getName(),
+            $this->getCompany()->getRepresentativeName(),
+        );
     }
 
     public function getPasswordChangedOn(): ?DateTime

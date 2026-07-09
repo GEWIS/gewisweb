@@ -120,14 +120,6 @@ class ActivityCalendarOption
     }
 
     /**
-     * Returns the string identifier of the Resource.
-     */
-    public function getResourceId(): int|string
-    {
-        return $this->getId();
-    }
-
-    /**
      * Returns in order of presense:
      * 1. The abbreviation of the related organ
      * 2. The alternative for an organ, other organising parties

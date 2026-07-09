@@ -1,0 +1,12 @@
+{% extends 'emails/_base.html.twig' %}
+
+{% block emailTitle %}Message from the organiser regarding {{ activityName }}{% endblock %}
+{% block preheader %}Message&nbsp;from&nbsp;the&nbsp;organiser&nbsp;regarding&nbsp;{{ activityName }}{% endblock %}
+{% block heading %}{{ activityName }}{% endblock %}
+{% block subheading %}{{ subject }}{% endblock %}
+{% block body %}
+    Dear {{ name }},<br/><br/>
+    {{ body|markdown(['p', 'br', 'strong', 'em', 'del', 'a', 'ul', 'ol', 'li']) }}
+{% endblock %}
+{% block footerNote %}You receive this email because you signed up for {{ activityName }}.<br/>You can reply directly to this email to reach the organiser.{% endblock %}
+{% block footerContactEmail %}{{ organiserEmail }}{% endblock %}

@@ -3,3 +3,11 @@ framework:
     cache:
         app: cache.adapter.redis
         default_redis_provider: '%env(VALKEY_DSN)%'
+
+when@test:
+    # CI has no Valkey/Redis. Doctrine's second-level cache wires `member_region` to the `cache.app` pool, so an
+    # eager Redis connection is attempted the moment the ORM boots (e.g. `doctrine:schema:create`). Back the app cache
+    # with a local adapter under test so nothing reaches for Valkey.
+    framework:
+        cache:
+            app: cache.adapter.filesystem

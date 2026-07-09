@@ -93,7 +93,8 @@ class PersistentSignatureRememberMeHandler extends AbstractRememberMeHandler
                 'name' => $cookieName,
                 'lifetime' => $tokenLifetime,
                 'secure' => null,
-                'samesite' => Cookie::SAMESITE_LAX, // Required to be `lax`, otherwise user is always logged out on cross-origin requests.
+                // Required to be `lax`, otherwise user is always logged out on cross-origin requests.
+                'samesite' => Cookie::SAMESITE_LAX,
             ],
             $logger,
         );

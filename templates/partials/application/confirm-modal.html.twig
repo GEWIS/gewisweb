@@ -1,0 +1,23 @@
+{# A shared confirmation modal for live-component actions, driven by the `confirm-modal` Stimulus controller. Render it
+   once per page, OUTSIDE any live component, so a component's re-render after the confirmed action never touches it.
+   A trigger button opens it with `data-bs-toggle="modal" data-bs-target="#confirm-modal"` and supplies the title,
+   message, confirm label and the live action to run via `data-confirm-*` attributes (see the controller). #}
+<div class="modal fade" id="confirm-modal" data-controller="confirm-modal" tabindex="-1"
+     aria-labelledby="confirm-modal-label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirm-modal-label" data-confirm-modal-target="title"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ 'Close'|trans }}"></button>
+            </div>
+            <div class="modal-body">
+                <p class="mb-0" data-confirm-modal-target="message"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'Cancel'|trans }}</button>
+                <button type="button" class="btn btn-gewis-primary" data-bs-dismiss="modal"
+                        data-confirm-modal-target="confirm">{{ 'Confirm'|trans }}</button>
+            </div>
+        </div>
+    </div>
+</div>

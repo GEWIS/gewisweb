@@ -58,16 +58,25 @@
                 </div>
                 {% if this.labels is not empty %}
                     <div class="col-12">
+                        {# Same removable-chip control as the activity form. It only hides and toggles the checkboxes, so
+                           the data-model="labelFilters" binding keeps driving the LiveProp; it sits inside the
+                           data-live-ignore panel above, so a re-render never clobbers the injected chips. The field
+                           label stays outside the controller element so it is not displaced by the injected chips. #}
                         <label class="form-label">{{ 'Labels'|trans }}</label>
-                        <div class="d-flex flex-wrap gap-3">
-                            {% for label in this.labels %}
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="activity-overview-label-{{ label.id }}"
-                                           data-model="labelFilters" value="{{ label.id }}"
-                                           {% if label.id in this.labelFilters %}checked{% endif %}>
-                                    <label class="form-check-label" for="activity-overview-label-{{ label.id }}">{{ label.getName|localise_text }}</label>
-                                </div>
-                            {% endfor %}
+                        <div data-controller="label-chips"
+                             data-label-chips-placeholder-value="{{ 'Search labels…'|trans }}"
+                             data-label-chips-remove-label-value="{{ 'Remove'|trans }}"
+                             data-label-chips-no-results-value="{{ 'No matching labels'|trans }}">
+                            <div class="d-flex flex-wrap gap-3">
+                                {% for label in this.labels %}
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="activity-overview-label-{{ label.id }}"
+                                               data-model="labelFilters" value="{{ label.id }}"
+                                               {% if label.id in this.labelFilters %}checked{% endif %}>
+                                        <label class="form-check-label" for="activity-overview-label-{{ label.id }}">{{ label.getName|localise_text }}</label>
+                                    </div>
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
                 {% endif %}

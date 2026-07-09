@@ -29,11 +29,16 @@ services:
 
     # PHP session storage in Valkey. The session ID is stored on each Session row, letting us destroy a specific
     # device's session by deleting its Valkey key.
+    #
+    # Connect lazily: the socket only opens on the first session read/write. Doctrine's `PdoSessionHandlerSchemaListener`
+    # instantiates the handler purely to type-check it during `doctrine:schema:create`, so an eager connection would
+    # reach for Valkey the moment the ORM boots (and CI has none).
     Redis:
         class: \Redis
         factory: ['Symfony\Component\Cache\Adapter\RedisAdapter', 'createConnection']
         arguments:
             - '%env(VALKEY_DSN)%'
+            - { lazy: true }
 
     Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler:
         arguments:

@@ -21,6 +21,7 @@
         "dragonmantank/cron-expression": "^3.6",
         "endroid/qr-code-bundle": "^7.0.1",
         "fortawesome/font-awesome": "^7.2.0",
+        "jfcherng/php-diff": "^7.0",
         "league/commonmark": "^2.8",
         "matomo/device-detector": "^6.5.1",
         "nelmio/cors-bundle": "^2.6.1",
@@ -67,12 +68,15 @@
         "symfony/string": "8.0.*",
         "symfony/translation": "8.0.*",
         "symfony/twig-bundle": "8.0.*",
-        "symfony/ux-calendar-link": "3.x-dev",
-        "symfony/ux-live-component": "^3.0.0",
+        "symfony/uid": "8.0.*",
+        "symfony/ux-calendar-link": "3.1.0",
+        "symfony/ux-live-component": "3.1.0",
         "symfony/validator": "8.0.*",
         "symfony/web-link": "8.0.*",
+        "symfony/workflow": "8.0.*",
         "symfony/yaml": "8.0.*",
         "symfonycasts/sass-bundle": "^0.10.0",
+        "tito10047/altcha-bundle": "^3.1",
         "twbs/bootstrap": "^5.3.8",
         "twig/extra-bundle": "^3.24.0",
         "twig/intl-extra": "^3.26.0",
@@ -90,7 +94,7 @@
         "bump-after-update": true,
         "preferred-install": {
             "doctrine/orm": "source",
-            "jfcherng/php-diff": "source",
+            "symfony/ux-live-component": "source",
             "*": "dist"
         },
         "sort-packages": true
@@ -151,6 +155,9 @@
         "patches": {
             "doctrine/orm": {
                 "Fix issues with SubDecisions.": "https://raw.githubusercontent.com/GEWIS/orm/3.6.x/1-to-1-multiple-join-columns.patch"
+            },
+            "symfony/ux-live-component": {
+                "Fix data-loadig not ignored data-live-ignore": "https://raw.githubusercontent.com/GEWIS/symfony-ux-live-component/refs/heads/3.x/data-loading-not-ignored.patch"
             }
         },
         "symfony": {
@@ -160,6 +167,7 @@
         }
     },
     "require-dev": {
+        "dama/doctrine-test-bundle": "^8.6",
         "doctrine/doctrine-fixtures-bundle": "^4.3.1",
         "fakerphp/faker": "^1.24.1",
         "gewis/gewisphp-coding-standards": "2.0.1",

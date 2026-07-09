@@ -60,12 +60,4 @@ class ApiUser
     {
         $this->token = $token;
     }
-
-    /**
-     * Get the API user's resource ID.
-     */
-    public function getResourceId(): string
-    {
-        return 'api';
-    }
 }

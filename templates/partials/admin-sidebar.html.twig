@@ -18,11 +18,18 @@
                         {{ 'Overview'|trans }}
                     </a>
                 </li>
-                <li>
-                    <a class="dropdown-item" href="{{ path('admin/activities/labels/index') }}">
-                        {{ 'Labels'|trans }}
-                    </a>
-                </li>
+                {% if is_granted('ROLE_BOARD') %}
+                    <li>
+                        <a class="dropdown-item" href="{{ path('admin/activities/approvals/index') }}">
+                            {{ 'Approvals'|trans }}
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{{ path('admin/activities/labels/index') }}">
+                            {{ 'Labels'|trans }}
+                        </a>
+                    </li>
+                {% endif %}
                 <li>
                     <a class="dropdown-item" href="{{ path('admin/activities/calendar/index') }}">
                         {{ 'Option Calendar'|trans }}
@@ -57,12 +64,12 @@
                     </a>
                 </li>
                 <li>
-                    <a class="dropdown-item" href="{{ path('admin/career/jobs/categories/index') }}">
+                    <a class="dropdown-item" href="{{ path('admin/career/vacancies/categories/index') }}">
                         {{ 'Categories'|trans }}
                     </a>
                 </li>
                 <li>
-                    <a class="dropdown-item" href="{{ path('admin/career/jobs/labels/index') }}">
+                    <a class="dropdown-item" href="{{ path('admin/career/vacancies/labels/index') }}">
                         {{ 'Labels'|trans }}
                     </a>
                 </li>

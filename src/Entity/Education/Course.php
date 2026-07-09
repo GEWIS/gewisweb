@@ -209,12 +209,4 @@ class Course
             'name' => $this->getName(),
         ];
     }
-
-    /**
-     * Get the resource ID.
-     */
-    public function getResourceId(): string
-    {
-        return 'course';
-    }
 }

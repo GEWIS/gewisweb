@@ -35,4 +35,17 @@ return [
         'version' => '5.4.4',
         'type' => 'css',
     ],
+    'altcha/dist/main/altcha.i18n.js' => [
+        'version' => '3.0.11',
+    ],
+    // Self-contained CKEditor 5 browser bundle, vendored under assets/js/ (the npm package's entry re-exports the
+    // @ckeditor/* source tree, which the importmap resolver cannot ESM-ify). Loaded lazily by markdown-editor.
+    'ckeditor5' => [
+        'path' => './assets/js/ckeditor5/ckeditor5.js',
+    ],
+    // CKEditor 5 ships with English built in; the Dutch UI is a separate translations module, loaded lazily by
+    // markdown-editor when the page locale is `nl`.
+    'ckeditor5/translations/nl.js' => [
+        'path' => './assets/js/ckeditor5/translations/nl.js',
+    ],
 ];

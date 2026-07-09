@@ -100,14 +100,6 @@ class ActivityOptionProposal
         $this->creationTime = $creationTime;
     }
 
-    /**
-     * Get the organ of this resource.
-     */
-    public function getResourceOrgan(): ?OrganModel
-    {
-        return $this->getOrgan();
-    }
-
     public function getOrgan(): ?OrganModel
     {
         return $this->organ;
@@ -116,14 +108,6 @@ class ActivityOptionProposal
     public function setOrgan(?OrganModel $organ): void
     {
         $this->organ = $organ;
-    }
-
-    /**
-     * Returns the string identifier of the Resource.
-     */
-    public function getResourceId(): string
-    {
-        return (string) $this->getId();
     }
 
     /**

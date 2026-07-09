@@ -1,0 +1,13 @@
+{% extends 'emails/_base.html.twig' %}
+
+{% block emailTitle %}Confirm your sign-up{% endblock %}
+{% block preheader %}Confirm&nbsp;your&nbsp;sign-up{% endblock %}
+{% block heading %}{{ activityName }}{% endblock %}
+{% block subheading %}Confirm your sign-up{% endblock %}
+{% block body %}
+    <p>Dear {{ name }},</p>
+    <p>To complete your sign-up for <em>{{ activityName }}</em> ({{ signupListName }}), please verify your email address by clicking the link below within 24 hours:</p>
+    <p><a href="{{ url }}" style="color: #C40000; text-decoration: none;" target="_blank" rel="noopener nofollow">{{ url }}</a></p>
+    <p>If you do not click the link within 24 hours, your details will not be saved. If you did not sign up for this activity, you can safely ignore this email.</p>
+    With kind regards,<br> The ApplicatieBeheerCommissie
+{% endblock %}

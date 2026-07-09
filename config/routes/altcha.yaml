@@ -1,0 +1,6 @@
+# The Altcha challenge endpoint (GET /altcha/challenge) used by the captcha widget on the public external sign-up form.
+# Imported here (not via the locale-prefixed src/Controller/ loader in routes.yaml) so it stays unprefixed and is matched
+# before the catch-all wildcard route. No access_control rule gates it: the `main` firewall is lazy and only /admin and
+# /company require a role, so the endpoint is public as the widget needs.
+altcha:
+    resource: '@AltchaBundle/config/routes.yml'

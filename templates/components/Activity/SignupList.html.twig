@@ -1,0 +1,148 @@
+<div{{ attributes }}>
+    {% set listId = this.signupList.getId %}
+    {% set view = this.listView %}
+
+    {% if this.feedback %}
+        <div class="alert alert-success">{{ this.feedback }}</div>
+    {% endif %}
+
+    {% if view.cancelled %}
+        <p class="text-danger mb-3">
+            <i class="fas fa-ban"></i>
+            {% if view.viewerHasSignup %}
+                {{ 'This activity has been cancelled. Your sign-up is frozen and cannot be changed.'|trans }}
+            {% else %}
+                {{ 'Sign-ups are closed because this activity has been cancelled.'|trans }}
+            {% endif %}
+        </p>
+    {% elseif view.isOpen %}
+        {% set signupModalId = 'signup-modal-' ~ listId %}
+        <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
+            {% if view.viewerHasSignup %}
+                <span class="text-success">
+                    <i class="fas fa-circle-check"></i> {{ 'You are signed up.'|trans }}
+                </span>
+                {% if view.fieldNames is not empty %}
+                    <button type="button" class="btn btn-sm btn-outline-gewis-primary"
+                            data-bs-toggle="modal" data-bs-target="#{{ signupModalId }}">
+                        <i class="fas fa-pen"></i> {{ 'Edit sign-up'|trans }}
+                    </button>
+                {% endif %}
+                <button type="button" class="btn btn-sm btn-outline-danger"
+                        data-bs-toggle="modal" data-bs-target="#confirm-modal"
+                        data-confirm-title="{{ 'Unsubscribe?'|trans }}"
+                        data-confirm-message="{{ 'Are you sure you want to unsubscribe from this sign-up list?'|trans }}"
+                        data-confirm-label="{{ 'Unsubscribe'|trans }}"
+                        data-confirm-live-action="withdraw">
+                    <i class="fas fa-user-minus"></i> {{ 'Unsubscribe'|trans }}
+                </button>
+            {% else %}
+                <button type="button" class="btn btn-sm btn-gewis-primary"
+                        data-bs-toggle="modal" data-bs-target="#{{ signupModalId }}">
+                    <i class="fas fa-user-plus"></i> {{ 'Sign up'|trans }}
+                </button>
+            {% endif %}
+        </div>
+
+        {# The modal lives inside the component; on a successful submit the panel re-renders and the `modal-close`
+           controller hides this modal on the scoped `signup:success` event (the id keeps idiomorph from replacing it,
+           so the controller stays connected across the re-render). #}
+        <div class="modal fade" id="{{ signupModalId }}" tabindex="-1" aria-hidden="true"
+             data-controller="modal-close" data-modal-close-list-id-value="{{ listId }}"
+             data-action="signup:success@window->modal-close#hide">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            {% if view.viewerHasSignup %}
+                                {{ 'Edit your sign-up'|trans }}
+                            {% else %}
+                                {{ "Sign up for '%name%'"|trans({'%name%': view.name}) }}
+                            {% endif %}
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="{{ 'Close'|trans }}"></button>
+                    </div>
+                    {{ form_start(form, {
+                        attr: form.vars.attr|merge({
+                            'data-action': 'live#action:prevent',
+                            'data-live-action-param': 'submit',
+                        }),
+                    }) }}
+                        <div class="modal-body">
+                            {{ form_errors(form) }}
+
+                            {% include 'partials/activity/signup-fields.html.twig' with { form: form } only %}
+
+                            {% if form.agree is defined %}
+                                {{ form_row(form.agree) }}
+                            {% endif %}
+
+                            {% if this.hasSensitiveField %}
+                                <p class="text-muted small mt-3 mb-0"><em>
+                                    {{ '¹ Fields marked with this symbol are only shared with the board and the organiser of the activity.'|trans }}
+                                </em></p>
+                            {% endif %}
+
+                            <p class="text-muted small mt-3 mb-0"><em>
+                                {{ 'Your sign-up will be visible to other members and graduates.'|trans }}
+                            </em></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'Cancel'|trans }}</button>
+                            <button type="submit" class="btn btn-gewis-primary">
+                                {% if this.isEditing %}
+                                    {{ 'Save changes'|trans }}
+                                {% else %}
+                                    {{ 'Confirm sign-up'|trans }}
+                                {% endif %}
+                            </button>
+                        </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    {% elseif view.viewerHasSignup %}
+        <p class="text-success mb-3">
+            <i class="fas fa-circle-check"></i> {{ 'You are signed up.'|trans }}
+        </p>
+    {% endif %}
+
+    {# Members always see the subscriber list (own row included, others' sensitive fields hidden). #}
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>{{ 'Name'|trans }}</th>
+                    {% for fieldName in view.fieldNames %}
+                        <th>{{ fieldName }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in view.rows %}
+                    <tr>
+                        <td>{{ row.position }}</td>
+                        <td>{{ row.fullName }}</td>
+                        {% for cell in row.cells %}
+                            <td>
+                                {% if cell.hidden %}
+                                    <span class="text-muted fst-italic">{{ 'Hidden'|trans }}</span>
+                                {% else %}
+                                    {{ cell.value }}
+                                {% endif %}
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="{{ 2 + view.fieldNames|length }}" class="text-center text-muted py-3">
+                            {{ 'No subscriptions yet.'|trans }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

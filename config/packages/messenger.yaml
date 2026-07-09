@@ -39,6 +39,13 @@ framework:
             # Route your messages to the transports
             # 'App\Message\YourMessage': async
             'App\Message\User\PasswordResetRequestEmail': high_priority
+            # Async so the sign-up existence check runs off the request thread (no timing-based enumeration), mirroring
+            # the password-reset request above. The initial token email must be async for the same reason: a
+            # synchronous SMTP send on a fresh sign-up would make a new address respond slower than an already-signed-up
+            # one (which only re-queues a resend), leaking existence through response time.
+            'App\Message\Activity\ExternalSignupTokenEmail': high_priority
+            'App\Message\Activity\ExternalSignupResendVerificationEmail': high_priority
+            'App\Message\Activity\OrganiserAnnouncementEmail': bulk
 
 when@test:
     framework:

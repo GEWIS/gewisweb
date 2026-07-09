@@ -8,27 +8,23 @@ use App\Entity\Activity\Activity;
 use App\Entity\Activity\Enums\ActivityCategories;
 use App\Entity\Activity\SignupList;
 use App\Entity\Activity\UserSignup;
+use App\Entity\Application\Enums\RevisionStatus;
 use App\Entity\Decision\AssociationYear;
 use App\Entity\Decision\Member;
 use App\Entity\Decision\Organ;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Types\Types;
-use Doctrine\ORM\Query\Expr\Comparison;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 use function addcslashes;
-use function array_key_exists;
 use function array_keys;
 use function array_map;
-use function array_merge;
-use function count;
 use function mb_strtolower;
 use function rsort;
 use function trim;
-use function usort;
 
 /**
  * @extends ServiceEntityRepository<Activity>
@@ -44,352 +40,153 @@ class ActivityRepository extends ServiceEntityRepository
     }
 
     /**
-     * Get upcoming activities sorted by date.
+     * Activities for the admin overview whose working revision is NOT yet approved (drafts, submitted, in-review,
+     * rejected, closed), most recently touched first. Scoped to the member unless $all (the board "show everything").
      *
-     * @param int|null   $count optional number of activities to retrieve
-     * @param Organ|null $organ option organ by whom the activities are organized
+     * @param int[] $organIds
      *
      * @return Activity[]
      */
-    public function getUpcomingActivities(
-        ?int $count = null,
-        ?Organ $organ = null,
-        ?string $category = null,
+    public function findPendingForAdmin(
+        Member $member,
+        array $organIds,
+        bool $all,
     ): array {
-        $qb = $this->createQueryBuilder('a');
-        $qb->where('a.endTime > :now')
-            ->andWhere('a.status = :status')
-            ->orderBy(
-                'a.beginTime',
-                'ASC',
-            );
-
-        if (null !== $count) {
-            $qb->setMaxResults($count);
-        }
-
-        if (null !== $organ) {
-            $qb->andWhere('a.organ = :organ')
-                ->setParameter(
-                    'organ',
-                    $organ,
-                    Organ::class,
-                );
-        }
-
-        // For now 'career' is the only category, however this may change in the future
-        if ('career' === $category) {
-            $qb->andWhere('a.category = :category')
-                ->setParameter(
-                    'category',
-                    ActivityCategories::Career->value,
-                );
-        }
-
-        $qb->setParameter(
-            'now',
-            new DateTime(),
-            Types::DATETIME_MUTABLE,
-        );
-        $qb->setParameter(
-            'status',
-            Activity::STATUS_APPROVED,
-        );
-
-        return $qb->getQuery()->getResult();
-    }
-
-    /**
-     * Get upcoming activities sorted by date for member.
-     *
-     * @param Member $member Option member that should relate to activity
-     *
-     * @return Activity[]
-     */
-    public function getUpcomingActivitiesForMember(Member $member): array
-    {
-        // Get subscriptions (not including non-approved)
-        $result = $this->getUpcomingActivitiesSubscribedBy($member);
-
-        // Get created by member (including non-approved)
-        $result = array_merge(
-            $result,
-            $this->getUpcomingActivitiesCreatedBy($member),
-        );
-
-        // Get associated with organs (including non-approved)
-        foreach ($member->getCurrentOrganInstallations() as $organMember) {
-            $result = array_merge(
-                $result,
-                $this->getUpcomingActivitiesByOrgan($organMember->getOrgan()),
-            );
-        }
-
-        // Do sorting based on start time
-        usort(
-            $result,
-            static function ($a, $b) {
-                $beginA = $a->getBeginTime();
-                $beginB = $b->getBeginTime();
-
-                return $beginA < $beginB
-                    ? -1
-                    : 1;
-            },
-        );
-
-        $size = count($result);
-
-        for ($i = 0; $i < $size; ++$i) {
-            for ($j = $i + 1; $j < $size; ++$j) {
-                if (
-                    !array_key_exists(
-                        $i,
-                        $result,
-                    )
-                    || !array_key_exists(
-                        $j,
-                        $result,
-                    )
-                    || $result[$i]->getId() !== $result[$j]->getId()
-                ) {
-                    continue;
-                }
-
-                unset($result[$j]);
-            }
-        }
-
-        return $result;
-    }
-
-    /**
-     * Get upcoming activities sorted by date that a member is subscribed to.
-     *
-     * @param Member $member Option member that should relate to activity
-     *
-     * @return Activity[]
-     */
-    public function getUpcomingActivitiesSubscribedBy(Member $member): array
-    {
-        $qb = $this->createQueryBuilder('a');
-        $qb->from(
-            SignupList::class,
-            'b',
-        )
-            ->from(
-                UserSignup::class,
-                'c',
-            )
-            ->where('a.endTime > :now')
-            ->setParameter(
-                'now',
-                new DateTime(),
-                Types::DATETIME_MUTABLE,
-            )
-            ->andWhere('a.status = :status')
-            ->setParameter(
-                'status',
-                Activity::STATUS_APPROVED,
-            )
-            ->andWhere('a = b.activity')
-            ->andWhere('b = c.signupList')
-            ->andWhere('c.member = :member')
-            ->setParameter(
-                'member',
-                $member,
-                Member::class,
-            );
-
-        return $qb->getQuery()->getResult();
-    }
-
-    /**
-     * Get upcoming activities sorted by date that a member created.
-     *
-     * @param Member $member Option member that should relate to activity
-     *
-     * @return Activity[]
-     */
-    public function getUpcomingActivitiesCreatedBy(Member $member): array
-    {
-        $qb = $this->createQueryBuilder('a');
-        $qb->where('a.endTime > :now')
-            ->setParameter(
-                'now',
-                new DateTime(),
-                Types::DATETIME_MUTABLE,
-            )
-            ->andWhere('a.creator = :member')
-            ->setParameter(
-                'member',
-                $member,
-                Member::class,
-            );
-
-        return $qb->getQuery()->getResult();
-    }
-
-    /**
-     * Get upcoming activities sorted by date that an organ created.
-     *
-     * @param Organ $organ Option organ that should relate to activity
-     *
-     * @return Activity[]
-     */
-    public function getUpcomingActivitiesByOrgan(Organ $organ): array
-    {
-        $qb = $this->createQueryBuilder('a');
-        $qb->where('a.endTime > :now')
-            ->setParameter(
-                'now',
-                new DateTime(),
-                Types::DATETIME_MUTABLE,
-            )
-            ->andWhere('a.organ = :organ')
-            ->setParameter(
-                'organ',
-                $organ,
-                Organ::class,
-            );
-
-        return $qb->getQuery()->getResult();
-    }
-
-    /**
-     * Gets upcoming activities of the given organs or member, sorted by date.
-     *
-     * @param ?Organ[] $organs
-     * @param int|null $status An optional filter for activity status
-     *
-     * @return Activity[]
-     */
-    public function getAllUpcomingActivities(
-        ?array $organs = null,
-        ?Member $member = null,
-        ?int $status = null,
-    ): array {
-        $qb = $this->activityByOrganizerQuery(
-            $this->getEntityManager()->createQueryBuilder()->expr()->gt(
-                'a.endTime',
-                ':now',
-            ),
-            $organs,
+        $qb = $this->adminOverviewQuery(
             $member,
-            $status,
+            $organIds,
+            $all,
         );
+        $qb->andWhere('cr.status <> :approved')
+            ->setParameter(
+                'approved',
+                RevisionStatus::Approved->value,
+            )
+            ->orderBy(
+                'cr.updatedAt',
+                'DESC',
+            );
 
         return $qb->getQuery()->getResult();
     }
 
     /**
-     * @param ?Organ[] $organs
-     */
-    protected function activityByOrganizerQuery(
-        ?Comparison $filter = null,
-        ?array $organs = null,
-        ?Member $member = null,
-        ?int $status = null,
-    ): QueryBuilder {
-        $qb = $this->createQueryBuilder('a');
-
-        if (null !== $status) {
-            $qb->where('a.status = :status')
-                ->setParameter(
-                    'status',
-                    $status,
-                );
-        } else {
-            $qb->where('a.status <> :status')
-                ->setParameter(
-                    'status',
-                    Activity::STATUS_UPDATE,
-                );
-        }
-
-        if (null !== $filter) {
-            $qb->andWhere($filter)
-                ->setParameter(
-                    'now',
-                    new DateTime(),
-                    Types::DATETIME_MUTABLE,
-                );
-        }
-
-        $qb->join(
-            'a.creator',
-            'u',
-        );
-
-        if (
-            null !== $organs
-            && null !== $member
-        ) {
-            $qb->andWhere(
-                $qb->expr()->orX(
-                    $qb->expr()->in(
-                        'a.organ',
-                        ':organs',
-                    ),
-                    'u.lidnr = :member',
-                ),
-            )
-                ->setParameter(
-                    'organs',
-                    $organs,
-                )
-                ->setParameter(
-                    'member',
-                    $member,
-                    Member::class,
-                );
-        }
-
-        $qb->orderBy(
-            'a.beginTime',
-            'DESC',
-        );
-
-        return $qb;
-    }
-
-    /**
-     * Gets a paginator of old activities of the given organs, sorted by date.
-     * Supplying 'null' to all arguments gets all activities.
+     * Approved activities for the admin overview, newest start first, paginated. Scoped to the member unless $all.
      *
-     * @param ?Organ[] $organs
-     * @param int|null $status An optional filter for activity status
+     * @param int[] $organIds
      *
      * @return Paginator<Activity>
      */
-    public function getOldActivityPaginatorAdapterByOrganizer(
-        ?array $organs = null,
-        ?Member $member = null,
-        ?int $status = null,
-        int $page = 1,
-        int $limit = 15,
+    public function findApprovedForAdmin(
+        Member $member,
+        array $organIds,
+        bool $all,
+        int $page,
+        int $pageSize,
     ): Paginator {
-        $qb = $this->activityByOrganizerQuery(
-            $this->getEntityManager()->createQueryBuilder()->expr()->lt(
-                'a.endTime',
-                ':now',
-            ),
-            $organs,
+        $qb = $this->adminOverviewQuery(
             $member,
-            $status,
+            $organIds,
+            $all,
         );
+        $qb->andWhere('cr.status = :approved')
+            ->setParameter(
+                'approved',
+                RevisionStatus::Approved->value,
+            )
+            ->orderBy(
+                'cr.beginTime',
+                'DESC',
+            );
 
-        $paginator = new Paginator($qb);
+        $paginator = new Paginator(
+            $qb,
+            false,
+        );
         $paginator->getQuery()
-            ->setFirstResult($limit * ($page - 1))
-            ->setMaxResults($limit);
+            ->setFirstResult(($page - 1) * $pageSize)
+            ->setMaxResults($pageSize);
 
         return $paginator;
     }
 
     /**
-     * The association years (first calendar year) that have at least one approved, past activity, newest first, for
-     * the activity archive year switcher.
+     * Base query for the admin overview: fetch-join the working revision (and its name text, organ, company and
+     * author) so the row columns hydrate in one query, and scope to the member's own + their organs' activities (by the
+     * working revision's organ) unless `$all`.
+     *
+     * @param int[] $organIds
+     */
+    private function adminOverviewQuery(
+        Member $member,
+        array $organIds,
+        bool $all,
+    ): QueryBuilder {
+        $qb = $this->createQueryBuilder('a')
+            ->addSelect(
+                'cr',
+                'n',
+                'org',
+                'comp',
+                'au',
+                'prev',
+            )
+            ->join(
+                'a.currentRevision',
+                'cr',
+            )
+            ->join(
+                'cr.name',
+                'n',
+            )
+            ->leftJoin(
+                'cr.organ',
+                'org',
+            )
+            ->leftJoin(
+                'cr.company',
+                'comp',
+            )
+            ->leftJoin(
+                'cr.author',
+                'au',
+            )
+            ->leftJoin(
+                'cr.previousRevision',
+                'prev',
+            );
+
+        if (!$all) {
+            $qb->setParameter(
+                'creatorLidnr',
+                $member->getLidnr(),
+            );
+
+            if ([] === $organIds) {
+                $qb->andWhere(
+                    '(IDENTITY(a.creator) = :creatorLidnr OR IDENTITY(cr.author) = :creatorLidnr)',
+                );
+            } else {
+                // Scope organ visibility by the WORKING (current) revision's organ, matching the voter
+                // (RevisionVoter): an organ's members see (and may edit) the drafts assigned to their organ.
+                $qb->andWhere(
+                    '(IDENTITY(a.creator) = :creatorLidnr'
+                    . ' OR IDENTITY(cr.author) = :creatorLidnr'
+                    . ' OR IDENTITY(cr.organ) IN (:organIds))',
+                )
+                    ->setParameter(
+                        'organIds',
+                        $organIds,
+                    );
+            }
+        }
+
+        return $qb;
+    }
+
+    /**
+     * The association years (first calendar year) that have at least one live (approved), past activity, newest first,
+     * for the activity archive year switcher.
      *
      * @return int[]
      */
@@ -397,13 +194,14 @@ class ActivityRepository extends ServiceEntityRepository
     {
         /** @var list<array{beginTime: DateTime}> $rows */
         $rows = $this->createQueryBuilder('a')
-            ->select('a.beginTime')
-            ->where('a.status = :status')
-            ->andWhere('a.endTime < :now')
-            ->setParameter(
-                'status',
-                Activity::STATUS_APPROVED,
+            ->select('lr.beginTime')
+            ->join(
+                'a.liveRevision',
+                'lr',
             )
+            ->where('lr.endTime < :now')
+            // Unpublished activities are hidden from the public archive, so they must not contribute a year either.
+            ->andWhere('a.unpublishedAt IS NULL')
             ->setParameter(
                 'now',
                 new DateTime(),
@@ -416,16 +214,18 @@ class ActivityRepository extends ServiceEntityRepository
     }
 
     /**
-     * The association years (first calendar year) in which the given member has at least one sign-up for an approved,
-     * past activity, newest first, for the "My past activities" year switcher.
+     * The association years (first calendar year) in which the given member has at least one sign-up for a live
+     * (approved), past activity, newest first, for the "My past activities" year switcher.
      *
      * @return int[]
      */
     public function getSubscribedAssociationYears(Member $member): array
     {
+        // A sign-up's list belongs to the live revision (sign-ups are migrated onto it on approval), so that
+        // revision's schedule is the activity's live schedule.
         /** @var list<array{beginTime: DateTime}> $rows */
         $rows = $this->getEntityManager()->createQueryBuilder()
-            ->select('a.beginTime')
+            ->select('r.beginTime')
             ->from(
                 UserSignup::class,
                 'su',
@@ -435,20 +235,22 @@ class ActivityRepository extends ServiceEntityRepository
                 'sl',
             )
             ->join(
-                'sl.activity',
+                'sl.revision',
+                'r',
+            )
+            ->join(
+                'r.activity',
                 'a',
             )
             ->where('IDENTITY(su.user) = :subscriber')
-            ->andWhere('a.status = :status')
-            ->andWhere('a.endTime < :now')
+            ->andWhere('r.endTime < :now')
+            ->andWhere('IDENTITY(a.liveRevision) = r.id')
+            // Unpublished activities are hidden from the public/"my" archive, so they must not contribute a year.
+            ->andWhere('a.unpublishedAt IS NULL')
             ->setParameter(
                 'subscriber',
                 $member->getLidnr(),
                 Types::INTEGER,
-            )
-            ->setParameter(
-                'status',
-                Activity::STATUS_APPROVED,
             )
             ->setParameter(
                 'now',
@@ -482,66 +284,10 @@ class ActivityRepository extends ServiceEntityRepository
     }
 
     /**
-     * Returns the oldest activity that has taken place.
-     */
-    public function getOldestActivity(): ?Activity
-    {
-        $qb = $this->createQueryBuilder('a');
-        $qb->where('a.status = :status')
-            ->setParameter(
-                'status',
-                Activity::STATUS_APPROVED,
-            )
-            ->orderBy(
-                'a.beginTime',
-                'ASC',
-            )
-            ->setMaxResults(1);
-
-        $res = $qb->getQuery()->getResult();
-
-        return [] === $res
-            ? null
-            : $res[0];
-    }
-
-    /**
-     * @return Activity[]
-     */
-    public function getArchivedActivitiesInRange(
-        DateTime $start,
-        DateTime $end,
-    ): array {
-        $qb = $this->createQueryBuilder('a');
-        $qb->where('a.beginTime >= :start')
-            ->setParameter(
-                'start',
-                $start,
-                Types::DATETIME_MUTABLE,
-            )
-            ->andWhere('a.endTime <= :end')
-            ->setParameter(
-                'end',
-                $end,
-                Types::DATETIME_MUTABLE,
-            )
-            ->andWhere('a.status = :status')
-            ->setParameter(
-                'status',
-                Activity::STATUS_APPROVED,
-            )
-            ->orderBy(
-                'a.beginTime',
-                'DESC',
-            );
-
-        return $qb->getQuery()->getResult();
-    }
-
-    /**
      * Flexible query backing the activity overview pages (upcoming/archive, public/subscribed) with searching and
-     * filtering. Only approved activities are ever returned. Correlated EXISTS sub-queries keep the result at one row
-     * per activity, so the Paginator counts correctly without a collection fetch-join.
+     * filtering. Only activities with a live (approved) revision are ever returned, and all content predicates read
+     * from that live revision. Correlated EXISTS sub-queries keep the result at one row per activity, so the
+     * Paginator counts correctly without a collection fetch-join.
      *
      * @param bool        $past         false: upcoming (endTime > now, ASC); true: past (endTime < now, DESC)
      * @param Member|null $subscribedBy when set, only activities this member has a (user) signup for
@@ -566,36 +312,39 @@ class ActivityRepository extends ServiceEntityRepository
         int $offset,
     ): Paginator {
         $qb = $this->createQueryBuilder('a');
-        // Fetch-join the to-one localised texts so they are hydrated in this single query instead of one lazy
-        // `SELECT ... FROM ActivityLocalisedText WHERE id = ?` per field per activity (N+1). These are to-one, so they
-        // do not multiply rows and the paginator's LIMIT keeps working.
+        // Inner-join the live revision (so only approved activities surface) and fetch-join its to-one localised texts
+        // so they are hydrated in this single query instead of one lazy SELECT per field per activity (N+1). These are
+        // to-one, so they do not multiply rows and the paginator's LIMIT keeps working.
         $qb->addSelect(
+            'lr',
             'n',
             'loc',
             'cost',
             'descr',
         )
             ->join(
-                'a.name',
+                'a.liveRevision',
+                'lr',
+            )
+            ->join(
+                'lr.name',
                 'n',
             )
             ->join(
-                'a.location',
+                'lr.location',
                 'loc',
             )
             ->join(
-                'a.costs',
+                'lr.costs',
                 'cost',
             )
             ->join(
-                'a.description',
+                'lr.description',
                 'descr',
             )
-            ->where('a.status = :status')
-            ->setParameter(
-                'status',
-                Activity::STATUS_APPROVED,
-            )
+            // An unpublished activity is taken out of public view entirely, listings included. (A cancelled one still
+            // shows, with a notice, so it is deliberately not filtered here.)
+            ->andWhere('a.unpublishedAt IS NULL')
             ->setParameter(
                 'now',
                 new DateTime(),
@@ -603,15 +352,15 @@ class ActivityRepository extends ServiceEntityRepository
             );
 
         if ($past) {
-            $qb->andWhere('a.endTime < :now')
+            $qb->andWhere('lr.endTime < :now')
                 ->orderBy(
-                    'a.beginTime',
+                    'lr.beginTime',
                     'DESC',
                 );
         } else {
-            $qb->andWhere('a.endTime > :now')
+            $qb->andWhere('lr.endTime > :now')
                 ->orderBy(
-                    'a.beginTime',
+                    'lr.beginTime',
                     'ASC',
                 );
         }
@@ -634,7 +383,7 @@ class ActivityRepository extends ServiceEntityRepository
         }
 
         if (null !== $category) {
-            $qb->andWhere('a.category = :category')
+            $qb->andWhere('lr.category = :category')
                 ->setParameter(
                     'category',
                     $category->value,
@@ -642,7 +391,7 @@ class ActivityRepository extends ServiceEntityRepository
         }
 
         if (null !== $organId) {
-            $qb->andWhere('IDENTITY(a.organ) = :organId')
+            $qb->andWhere('IDENTITY(lr.organ) = :organId')
                 ->setParameter(
                     'organId',
                     $organId,
@@ -652,6 +401,7 @@ class ActivityRepository extends ServiceEntityRepository
         $entityManager = $this->getEntityManager();
 
         if ([] !== $labelIds) {
+            // Labels live on the revision now; the public overview filters by the live (approved) revision's labels.
             $labelSubquery = $entityManager->createQueryBuilder()
                 ->select('1')
                 ->from(
@@ -659,7 +409,11 @@ class ActivityRepository extends ServiceEntityRepository
                     'a_lbl',
                 )
                 ->join(
-                    'a_lbl.labels',
+                    'a_lbl.liveRevision',
+                    'lr_lbl',
+                )
+                ->join(
+                    'lr_lbl.labels',
                     'lbl',
                 )
                 ->where('a_lbl = a')
@@ -679,7 +433,7 @@ class ActivityRepository extends ServiceEntityRepository
                     SignupList::class,
                     'sl_open',
                 )
-                ->where('sl_open.activity = a')
+                ->where('IDENTITY(sl_open.revision) = IDENTITY(a.liveRevision)')
                 ->andWhere('sl_open.openDate <= :now')
                 ->andWhere('sl_open.closeDate > :now');
 
@@ -697,7 +451,7 @@ class ActivityRepository extends ServiceEntityRepository
                     'su.signupList',
                     'sl_sub',
                 )
-                ->where('sl_sub.activity = a')
+                ->where('IDENTITY(sl_sub.revision) = IDENTITY(a.liveRevision)')
                 ->andWhere('IDENTITY(su.user) = :subscriber');
 
             $qb->andWhere($qb->expr()->exists($subscriberSubquery->getDQL()))
@@ -709,7 +463,7 @@ class ActivityRepository extends ServiceEntityRepository
         }
 
         if (null !== $from) {
-            $qb->andWhere('a.beginTime >= :from')
+            $qb->andWhere('lr.beginTime >= :from')
                 ->setParameter(
                     'from',
                     $from,
@@ -718,7 +472,7 @@ class ActivityRepository extends ServiceEntityRepository
         }
 
         if (null !== $until) {
-            $qb->andWhere('a.beginTime <= :until')
+            $qb->andWhere('lr.beginTime <= :until')
                 ->setParameter(
                     'until',
                     $until,
@@ -738,9 +492,10 @@ class ActivityRepository extends ServiceEntityRepository
     }
 
     /**
-     * Eager-loads the sign-up lists for the given activities in a single query, hydrating each activity's (otherwise
-     * lazy) `signupLists` collection. This avoids the N+1 that the overview's per-activity accessors
-     * ({@see Activity::getRelevantSignupList()}, {@see Activity::countPendingSignupLists()}) would otherwise trigger.
+     * Eager-loads the live revision's sign-up lists for the given activities in a single query, hydrating each
+     * activity's (otherwise lazy) live-revision `signupLists` collection. This avoids the N+1 that the overview's
+     * per-activity accessors ({@see Activity::getRelevantSignupList()}, {@see Activity::countPendingSignupLists()},
+     * which read {@see Activity::getLiveSignupLists()}) would otherwise trigger.
      *
      * @param Activity[] $activities
      */
@@ -753,10 +508,15 @@ class ActivityRepository extends ServiceEntityRepository
         $this->createQueryBuilder('a')
             ->select(
                 'a',
+                'lr',
                 'sl',
             )
             ->leftJoin(
-                'a.signupLists',
+                'a.liveRevision',
+                'lr',
+            )
+            ->leftJoin(
+                'lr.signupLists',
                 'sl',
             )
             ->where('a IN (:activities)')
@@ -769,20 +529,22 @@ class ActivityRepository extends ServiceEntityRepository
     }
 
     /**
-     * Returns the distinct organs that organise at least one approved activity, for the overview's organ filter.
+     * Returns the distinct organs that organise at least one live (approved) activity, for the overview's organ
+     * filter.
      *
      * @return Organ[]
      */
     public function findOrganisingOrgans(): array
     {
         $rows = $this->createQueryBuilder('a')
-            ->select('DISTINCT IDENTITY(a.organ) AS organId')
-            ->where('a.status = :status')
-            ->setParameter(
-                'status',
-                Activity::STATUS_APPROVED,
+            ->select('DISTINCT IDENTITY(lr.organ) AS organId')
+            ->join(
+                'a.liveRevision',
+                'lr',
             )
-            ->andWhere('a.organ IS NOT NULL')
+            ->where('lr.organ IS NOT NULL')
+            // Unpublished activities are hidden from the overview, so they must not seed its organ filter either.
+            ->andWhere('a.unpublishedAt IS NULL')
             ->getQuery()
             ->getScalarResult();
 
@@ -799,41 +561,5 @@ class ActivityRepository extends ServiceEntityRepository
             ['id' => $organIds],
             ['abbr' => 'ASC'],
         );
-    }
-
-    /**
-     * Get all activities that were created by a member.
-     *
-     * @return Activity[]
-     */
-    public function findAllActivitiesCreatedByMember(Member $member): array
-    {
-        $qb = $this->createQueryBuilder('a');
-        $qb->where('a.creator = :member')
-            ->setParameter(
-                'member',
-                $member,
-                Member::class,
-            );
-
-        return $qb->getQuery()->getResult();
-    }
-
-    /**
-     * Get all activities that were approved or rejected by a member.
-     *
-     * @return Activity[]
-     */
-    public function findAllActivitiesApprovedByMember(Member $member): array
-    {
-        $qb = $this->createQueryBuilder('a');
-        $qb->where('a.approver = :member')
-            ->setParameter(
-                'member',
-                $member,
-                Member::class,
-            );
-
-        return $qb->getQuery()->getResult();
     }
 }

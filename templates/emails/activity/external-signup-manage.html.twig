@@ -1,0 +1,13 @@
+{% extends 'emails/_base.html.twig' %}
+
+{% block emailTitle %}Manage your sign-up{% endblock %}
+{% block preheader %}Manage&nbsp;your&nbsp;sign-up{% endblock %}
+{% block heading %}{{ activityName }}{% endblock %}
+{% block subheading %}Manage your sign-up{% endblock %}
+{% block body %}
+    <p>Dear {{ name }},</p>
+    <p>Your details have been successfully added to the sign-up list for <em>{{ activityName }}</em> ({{ signupListName }}). As long as the list remains open, you can review your details or remove your name using the link below:</p>
+    <p><a href="{{ url }}" style="color: #C40000; text-decoration: none;" target="_blank" rel="noopener nofollow">{{ url }}</a></p>
+    <p>Please keep this email safe, as this link is the only way to access and manage your sign-up.</p>
+    With kind regards,<br> The ApplicatieBeheerCommissie
+{% endblock %}

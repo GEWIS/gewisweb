@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Entity\Activity;
 
 use App\Entity\Activity\Enums\ActivityCategories;
-use App\Entity\Application\LocalisedText as LocalisedTextModel;
+use App\Entity\Application\LocalisedText;
+use App\Entity\Application\RevisableInterface;
+use App\Entity\Application\RevisionInterface;
 use App\Entity\Application\Traits\IdentifiableTrait;
 use App\Entity\Career\Company as CompanyModel;
 use App\Entity\Decision\Member as MemberModel;
@@ -15,19 +17,26 @@ use DateTime;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\JoinTable;
-use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
-use Doctrine\ORM\Mapping\OneToOne;
 use Doctrine\ORM\Mapping\OrderBy;
+use Override;
+use RuntimeException;
+
+use function assert;
 
 /**
- * Activity model.
+ * Activity aggregate root.
+ *
+ * Only the stable identity and the (immutable) creator live here and survive across edits. The revisable, reviewable
+ * content (the organising organ and company, the labels, the localised texts, the schedule, the category, the facility
+ * flags, and the sign-up lists) lives on the chain of {@see ActivityRevision}s, so every change to them goes through
+ * review; on approval, existing sign-ups are migrated onto the newly-live revision's lists so they survive across
+ * edits. The publicly live version is {@see self::getLiveRevision()} (the latest approved revision); the working head
+ * is {@see self::getCurrentRevision()}.
  *
  * @psalm-import-type ActivityLabelArrayType from ActivityLabel as ImportedActivityLabelArrayType
  * @psalm-import-type SignupListArrayType from SignupList as ImportedSignupListArrayType
@@ -35,8 +44,8 @@ use Doctrine\ORM\Mapping\OrderBy;
  *     id: int,
  *     name: ?string,
  *     nameEn: ?string,
- *     beginTime: datetime,
- *     endTime: datetime,
+ *     beginTime: DateTime,
+ *     endTime: DateTime,
  *     location: ?string,
  *     locationEn: ?string,
  *     costs: ?string,
@@ -48,10 +57,12 @@ use Doctrine\ORM\Mapping\OrderBy;
  *     category: string,
  *     requireGEFLITST: bool,
  *     requireZettle: bool,
+ *     cancelled: bool,
+ *     unpublished: bool,
  *     labels: ImportedActivityLabelArrayType[],
  *     signupLists: ImportedSignupListArrayType[],
  * }
- * @psalm-import-type LocalisedTextGdprArrayType from LocalisedTextModel as ImportedLocalisedTextGdprArrayType
+ * @psalm-import-type LocalisedTextGdprArrayType from LocalisedText as ImportedLocalisedTextGdprArrayType
  * @psalm-import-type ActivityLabelGdprArrayType from ActivityLabel as ImportedActivityLabelGdprArrayType
  * @psalm-import-type SignupListGdprArrayType from SignupList as ImportedSignupListGdprArrayType
  * @psalm-type ActivityGdprArrayType = array{
@@ -67,95 +78,16 @@ use Doctrine\ORM\Mapping\OrderBy;
  *     category: string,
  *     requireGEFLITST: bool,
  *     requireZettle: bool,
+ *     cancelled: bool,
+ *     unpublished: bool,
  *     labels: ImportedActivityLabelGdprArrayType[],
  *     signupLists: ImportedSignupListGdprArrayType[],
  * }
  */
 #[Entity(repositoryClass: ActivityRepository::class)]
-class Activity
+class Activity implements RevisableInterface
 {
     use IdentifiableTrait;
-
-    /**
-     * Status codes for the activity.
-     */
-    public const int STATUS_TO_APPROVE = 1; // Activity needs to be approved
-    public const int STATUS_APPROVED = 2;  // The activity is approved
-    public const int STATUS_DISAPPROVED = 3; // The board disapproved the activity
-    public const int STATUS_UPDATE = 4; // This activity is an update for some activity
-
-    /**
-     * Name for the activity.
-     */
-    #[OneToOne(
-        targetEntity: ActivityLocalisedText::class,
-        cascade: [
-            'persist',
-            'remove',
-        ],
-        orphanRemoval: true,
-    )]
-    #[JoinColumn(
-        name: 'name_id',
-        referencedColumnName: 'id',
-        nullable: false,
-    )]
-    private ActivityLocalisedText $name;
-
-    /**
-     * The date and time the activity starts.
-     */
-    #[Column(type: Types::DATETIME_MUTABLE)]
-    private DateTime $beginTime;
-
-    /**
-     * The date and time the activity ends.
-     */
-    #[Column(type: Types::DATETIME_MUTABLE)]
-    private DateTime $endTime;
-
-    /**
-     * The location the activity is held at.
-     */
-    #[OneToOne(
-        targetEntity: ActivityLocalisedText::class,
-        cascade: [
-            'persist',
-            'remove',
-        ],
-        orphanRemoval: true,
-    )]
-    #[JoinColumn(
-        name: 'location_id',
-        referencedColumnName: 'id',
-        nullable: false,
-    )]
-    private ActivityLocalisedText $location;
-
-    /**
-     * How much does it cost.
-     */
-    #[OneToOne(
-        targetEntity: ActivityLocalisedText::class,
-        cascade: [
-            'persist',
-            'remove',
-        ],
-        orphanRemoval: true,
-    )]
-    #[JoinColumn(
-        name: 'costs_id',
-        referencedColumnName: 'id',
-        nullable: false,
-    )]
-    private ActivityLocalisedText $costs;
-
-    /**
-     * Who (dis)approved this activity?
-     */
-    #[ManyToOne(targetEntity: MemberModel::class)]
-    #[JoinColumn(referencedColumnName: 'lidnr')]
-    private ?MemberModel $approver = null;
 
     /**
      * Who created this activity.
@@ -168,242 +100,161 @@ class Activity
     private MemberModel $creator;
 
     /**
-     * What is the approval status      .
-     */
-    #[Column(type: Types::INTEGER)]
-    private int $status;
-
-    /**
-     * The update proposal associated with this activity.
+     * The full chain of revisions, newest first.
      *
-     * @var Collection<array-key, ActivityUpdateProposal>
+     * @var Collection<array-key, ActivityRevision>
      */
     #[OneToMany(
-        targetEntity: ActivityUpdateProposal::class,
-        mappedBy: 'old',
-    )]
-    private Collection $updateProposal;
-
-    /**
-     * Activity description.
-     */
-    #[OneToOne(
-        targetEntity: ActivityLocalisedText::class,
-        cascade: [
-            'persist',
-            'remove',
-        ],
-        orphanRemoval: true,
-    )]
-    #[JoinColumn(
-        name: 'description_id',
-        referencedColumnName: 'id',
-        nullable: false,
-    )]
-    private ActivityLocalisedText $description;
-
-    /**
-     * All additional Labels belonging to this activity.
-     *
-     * @var Collection<array-key, ActivityLabel>
-     */
-    #[ManyToMany(
-        targetEntity: ActivityLabel::class,
-        inversedBy: 'activities',
+        targetEntity: ActivityRevision::class,
+        mappedBy: 'activity',
         cascade: ['persist'],
     )]
-    #[JoinTable(name: 'ActivityLabelAssignment')]
-    private Collection $labels;
+    #[OrderBy(['revisionNumber' => 'DESC'])]
+    private Collection $revisions;
 
     /**
-     * All additional SignupLists belonging to this activity.
-     *
-     * @var Collection<array-key, SignupList>
+     * The working head of the chain (the most recent revision, regardless of state).
      */
-    #[OneToMany(
-        targetEntity: SignupList::class,
-        mappedBy: 'activity',
-        cascade: ['remove'],
-        orphanRemoval: true,
-    )]
-    #[OrderBy([
-        'promoted' => 'DESC',
-        'id' => 'ASC',
-    ])]
-    private Collection $signupLists;
+    #[ManyToOne(targetEntity: ActivityRevision::class)]
+    #[JoinColumn(nullable: true)]
+    private ?ActivityRevision $currentRevision = null;
 
     /**
-     * Which organ organises this activity.
+     * The publicly live revision (the latest approved one), or null when nothing has been approved yet.
      */
-    #[ManyToOne(targetEntity: OrganModel::class)]
-    #[JoinColumn(
-        referencedColumnName: 'id',
-        nullable: true,
-    )]
-    private ?OrganModel $organ = null;
+    #[ManyToOne(targetEntity: ActivityRevision::class)]
+    #[JoinColumn(nullable: true)]
+    private ?ActivityRevision $liveRevision = null;
 
     /**
-     * Which company organises this activity.
-     */
-    #[ManyToOne(targetEntity: CompanyModel::class)]
-    #[JoinColumn(
-        referencedColumnName: 'id',
-        nullable: true,
-    )]
-    private ?CompanyModel $company = null;
-
-    /**
-     * The (single, mandatory) category of this activity.
+     * When the board cancelled this activity, or null when it is not cancelled. A cancelled activity stays publicly
+     * visible (with a notice and a {@code [CANCELLED]} title marker) but all sign-up interaction is frozen; the board
+     * can un-cancel it.
      */
     #[Column(
-        type: Types::STRING,
-        enumType: ActivityCategories::class,
+        type: 'datetime',
+        nullable: true,
     )]
-    private ActivityCategories $category;
+    private ?DateTime $cancelledAt = null;
 
     /**
-     * Whether this activity needs a GEFLITST photographer.
+     * The board member who cancelled this activity, or null when it is not cancelled.
      */
-    #[Column(type: Types::BOOLEAN)]
-    private bool $requireGEFLITST = false;
+    #[ManyToOne(targetEntity: MemberModel::class)]
+    #[JoinColumn(
+        referencedColumnName: 'lidnr',
+        nullable: true,
+    )]
+    private ?MemberModel $cancelledBy = null;
 
     /**
-     * Whether this activity needs a Zettle.
+     * When the board unpublished this activity, or null when it is published. An unpublished activity is removed from
+     * public view entirely (listings, calendar, and a 404 on the direct URL) and, like a cancelled one, has all sign-up
+     * interaction frozen; the board can re-publish it.
      */
-    #[Column(type: Types::BOOLEAN)]
-    private bool $requireZettle = false;
+    #[Column(
+        type: 'datetime',
+        nullable: true,
+    )]
+    private ?DateTime $unpublishedAt = null;
+
+    /**
+     * The board member who unpublished this activity, or null when it is published.
+     */
+    #[ManyToOne(targetEntity: MemberModel::class)]
+    #[JoinColumn(
+        referencedColumnName: 'lidnr',
+        nullable: true,
+    )]
+    private ?MemberModel $unpublishedBy = null;
 
     public function __construct()
     {
-        $this->updateProposal = new ArrayCollection();
-        $this->labels = new ArrayCollection();
-        $this->signupLists = new ArrayCollection();
-    }
-
-    public function getApprover(): ?MemberModel
-    {
-        return $this->approver;
-    }
-
-    public function setApprover(?MemberModel $approver): void
-    {
-        $this->approver = $approver;
-    }
-
-    public function getStatus(): int
-    {
-        return $this->status;
-    }
-
-    public function setStatus(int $status): void
-    {
-        $this->status = $status;
+        $this->revisions = new ArrayCollection();
     }
 
     /**
-     * @return Collection<array-key, ActivityUpdateProposal>
+     * @return Collection<array-key, ActivityRevision>
      */
-    public function getUpdateProposal(): Collection
+    #[Override]
+    public function getRevisions(): Collection
     {
-        return $this->updateProposal;
+        return $this->revisions;
     }
 
-    /**
-     * @param ActivityLabel[] $labels
-     */
-    public function addLabels(array $labels): void
+    public function addRevision(ActivityRevision $revision): void
     {
-        foreach ($labels as $label) {
-            $this->addLabel($label);
-        }
-    }
-
-    public function addLabel(ActivityLabel $label): void
-    {
-        if ($this->labels->contains($label)) {
+        if ($this->revisions->contains($revision)) {
             return;
         }
 
-        $this->labels->add($label);
-        $label->addActivity($this);
+        $this->revisions->add($revision);
+        $revision->setActivity($this);
+    }
+
+    #[Override]
+    public function getCurrentRevision(): ?ActivityRevision
+    {
+        return $this->currentRevision;
+    }
+
+    public function setCurrentRevision(?ActivityRevision $currentRevision): void
+    {
+        $this->currentRevision = $currentRevision;
+    }
+
+    #[Override]
+    public function getLiveRevision(): ?ActivityRevision
+    {
+        return $this->liveRevision;
+    }
+
+    public function setLiveRevision(?ActivityRevision $liveRevision): void
+    {
+        $this->liveRevision = $liveRevision;
+    }
+
+    #[Override]
+    public function markRevisionLive(RevisionInterface $revision): void
+    {
+        if (!$revision instanceof ActivityRevision) {
+            throw new RuntimeException('An activity can only be made live by one of its own revisions.');
+        }
+
+        $this->setLiveRevision($revision);
     }
 
     /**
-     * @param ActivityLabel[] $labels
+     * The revision whose content is shown for this activity: the live (approved) one when present, otherwise the
+     * working head. Only ever null for an activity with no revisions at all, which never occurs once persisted.
      */
-    public function removeLabels(array $labels): void
+    public function getDisplayRevision(): ActivityRevision
     {
-        foreach ($labels as $label) {
-            $this->removeLabel($label);
-        }
-    }
+        $revision = $this->liveRevision ?? $this->currentRevision;
 
-    public function removeLabel(ActivityLabel $label): void
-    {
-        if (!$this->labels->contains($label)) {
-            return;
+        if (null === $revision) {
+            throw new RuntimeException('Activity has no revision to display.');
         }
 
-        $this->labels->removeElement($label);
-        $label->removeActivity($this);
+        return $revision;
     }
 
     /**
-     * Adds SignupLists to this activity.
+     * The sign-up lists of the publicly live revision (empty when nothing has been approved yet).
      *
-     * @param SignupList[] $signupLists
-     */
-    public function addSignupLists(array $signupLists): void
-    {
-        foreach ($signupLists as $signupList) {
-            $this->addSignupList($signupList);
-        }
-    }
-
-    public function addSignupList(SignupList $signupList): void
-    {
-        if ($this->signupLists->contains($signupList)) {
-            return;
-        }
-
-        $this->signupLists->add($signupList);
-        $signupList->setActivity($this);
-    }
-
-    /**
-     * Removes SignupLists from this activity.
-     *
-     * @param SignupList[] $signupLists
-     */
-    public function removeSignupLists(array $signupLists): void
-    {
-        foreach ($signupLists as $signupList) {
-            $this->removeSignupList($signupList);
-        }
-    }
-
-    public function removeSignupList(SignupList $signupList): void
-    {
-        if (!$this->signupLists->contains($signupList)) {
-            return;
-        }
-
-        $this->signupLists->removeElement($signupList);
-    }
-
-    /**
-     * Returns a Collection of SignupLists associated with this activity.
+     * Used for the public view, overviews, and GDPR export; the working revision's lists are edited through the form.
      *
      * @return Collection<array-key, SignupList>
      */
-    public function getSignupLists(): Collection
+    public function getLiveSignupLists(): Collection
     {
-        return $this->signupLists;
+        return $this->liveRevision?->getSignupLists() ?? new ArrayCollection();
     }
 
     /**
-     * The next sign-up list whose deadline is relevant to surface on overviews (see GH-2082): among the lists that have
-     * not yet closed, the currently-open one closing soonest, otherwise the one opening soonest. Null when all closed.
+     * The next sign-up list whose deadline is relevant to surface on overviews (see GH-2082): among the live revision's
+     * lists that have not yet closed, the currently-open one closing soonest, otherwise the one opening soonest. Null
+     * when all closed or nothing is live.
      */
     public function getRelevantSignupList(): ?SignupList
     {
@@ -411,7 +262,7 @@ class Activity
         $open = null;
         $upcoming = null;
 
-        foreach ($this->signupLists as $signupList) {
+        foreach ($this->getLiveSignupLists() as $signupList) {
             if ($signupList->getCloseDate() <= $now) {
                 continue;
             }
@@ -435,14 +286,15 @@ class Activity
     }
 
     /**
-     * The number of sign-up lists that have not yet closed, i.e. that still have a relevant deadline.
+     * The number of the live revision's sign-up lists that have not yet closed, i.e. that still have a relevant
+     * deadline.
      */
     public function countPendingSignupLists(): int
     {
         $now = new DateTime('now');
         $count = 0;
 
-        foreach ($this->signupLists as $signupList) {
+        foreach ($this->getLiveSignupLists() as $signupList) {
             if ($signupList->getCloseDate() <= $now) {
                 continue;
             }
@@ -453,122 +305,15 @@ class Activity
         return $count;
     }
 
-    public function getName(): ActivityLocalisedText
-    {
-        return $this->name;
-    }
-
-    public function setName(ActivityLocalisedText $name): void
-    {
-        $this->name = $name;
-    }
-
-    public function getBeginTime(): DateTime
-    {
-        return $this->beginTime;
-    }
-
-    public function setBeginTime(DateTime $beginTime): void
-    {
-        $this->beginTime = $beginTime;
-    }
-
-    public function getEndTime(): DateTime
-    {
-        return $this->endTime;
-    }
-
-    public function setEndTime(DateTime $endTime): void
-    {
-        $this->endTime = $endTime;
-    }
-
-    public function getLocation(): ActivityLocalisedText
-    {
-        return $this->location;
-    }
-
-    public function setLocation(ActivityLocalisedText $location): void
-    {
-        $this->location = $location;
-    }
-
-    public function getCosts(): ActivityLocalisedText
-    {
-        return $this->costs;
-    }
-
-    public function setCosts(ActivityLocalisedText $costs): void
-    {
-        $this->costs = $costs;
-    }
-
-    public function getDescription(): ActivityLocalisedText
-    {
-        return $this->description;
-    }
-
-    public function setDescription(ActivityLocalisedText $description): void
-    {
-        $this->description = $description;
-    }
-
-    public function getOrgan(): ?OrganModel
-    {
-        return $this->organ;
-    }
-
-    public function setOrgan(?OrganModel $organ): void
-    {
-        $this->organ = $organ;
-    }
-
-    public function getCompany(): ?CompanyModel
-    {
-        return $this->company;
-    }
-
-    public function setCompany(?CompanyModel $company): void
-    {
-        $this->company = $company;
-    }
-
-    public function getCategory(): ActivityCategories
-    {
-        return $this->category;
-    }
-
-    public function setCategory(ActivityCategories $category): void
-    {
-        $this->category = $category;
-    }
-
-    public function getRequireGEFLITST(): bool
-    {
-        return $this->requireGEFLITST;
-    }
-
-    public function setRequireGEFLITST(bool $requireGEFLITST): void
-    {
-        $this->requireGEFLITST = $requireGEFLITST;
-    }
-
-    public function getRequireZettle(): bool
-    {
-        return $this->requireZettle;
-    }
-
-    public function setRequireZettle(bool $requireZettle): void
-    {
-        $this->requireZettle = $requireZettle;
-    }
-
     /**
+     * Display proxy: the labels of the display revision (organ/company/labels now live on the revision so their
+     * changes are reviewed; the public view shows the approved set).
+     *
      * @return Collection<array-key, ActivityLabel>
      */
     public function getLabels(): Collection
     {
-        return $this->labels;
+        return $this->getDisplayRevision()->getLabels();
     }
 
     public function getCreator(): MemberModel
@@ -581,6 +326,184 @@ class Activity
         $this->creator = $creator;
     }
 
+    public function getCancelledAt(): ?DateTime
+    {
+        return $this->cancelledAt;
+    }
+
+    public function getCancelledBy(): ?MemberModel
+    {
+        return $this->cancelledBy;
+    }
+
+    public function isCancelled(): bool
+    {
+        return null !== $this->cancelledAt;
+    }
+
+    public function cancel(MemberModel $member): void
+    {
+        $this->cancelledAt = new DateTime('now');
+        $this->cancelledBy = $member;
+    }
+
+    public function uncancel(): void
+    {
+        $this->cancelledAt = null;
+        $this->cancelledBy = null;
+    }
+
+    public function getUnpublishedAt(): ?DateTime
+    {
+        return $this->unpublishedAt;
+    }
+
+    public function getUnpublishedBy(): ?MemberModel
+    {
+        return $this->unpublishedBy;
+    }
+
+    public function isUnpublished(): bool
+    {
+        return null !== $this->unpublishedAt;
+    }
+
+    public function unpublish(MemberModel $member): void
+    {
+        $this->unpublishedAt = new DateTime('now');
+        $this->unpublishedBy = $member;
+    }
+
+    public function republish(): void
+    {
+        $this->unpublishedAt = null;
+        $this->unpublishedBy = null;
+    }
+
+    /**
+     * Whether all sign-up interaction (signing up, editing, withdrawing, draws, verification) is frozen. True whenever
+     * the activity is cancelled or unpublished; both are board actions that take the activity out of active use.
+     */
+    public function isFrozen(): bool
+    {
+        return $this->isCancelled() || $this->isUnpublished();
+    }
+
+    /**
+     * Display proxy (see {@see self::getLabels()}).
+     */
+    public function getOrgan(): ?OrganModel
+    {
+        return $this->getDisplayRevision()->getOrgan();
+    }
+
+    /**
+     * Display proxy (see {@see self::getLabels()}).
+     */
+    public function getCompany(): ?CompanyModel
+    {
+        return $this->getDisplayRevision()->getCompany();
+    }
+
+    /**
+     * Display proxy. Read paths (templates, views, GDPR export) keep reading content straight off the activity; it
+     * delegates to the display revision (the live one when present, otherwise the working head).
+     */
+    public function getName(): ActivityLocalisedText
+    {
+        return $this->getDisplayRevision()->getName();
+    }
+
+    public function getLocation(): ActivityLocalisedText
+    {
+        return $this->getDisplayRevision()->getLocation();
+    }
+
+    public function getCosts(): ActivityLocalisedText
+    {
+        return $this->getDisplayRevision()->getCosts();
+    }
+
+    public function getDescription(): ActivityLocalisedText
+    {
+        return $this->getDisplayRevision()->getDescription();
+    }
+
+    public function getBeginTime(): DateTime
+    {
+        // A displayed revision is always persisted, and the form's NotBlank constraint guarantees a schedule, so this
+        // is never null in practice; the revision getter is only nullable to let a brand-new draft render empty fields.
+        $beginTime = $this->getDisplayRevision()->getBeginTime();
+        assert(null !== $beginTime);
+
+        return $beginTime;
+    }
+
+    public function getEndTime(): DateTime
+    {
+        $endTime = $this->getDisplayRevision()->getEndTime();
+        assert(null !== $endTime);
+
+        return $endTime;
+    }
+
+    public function getCategory(): ActivityCategories
+    {
+        return $this->getDisplayRevision()->getCategory();
+    }
+
+    public function getRequireGEFLITST(): bool
+    {
+        return $this->getDisplayRevision()->getRequireGEFLITST();
+    }
+
+    public function getRequireZettle(): bool
+    {
+        return $this->getDisplayRevision()->getRequireZettle();
+    }
+
+    /**
+     * Returns the string identifier of the Resource.
+     */
+    #[Override]
+    public function getResourceId(): string
+    {
+        return 'activity';
+    }
+
+    /**
+     * The organ for edit-rights purposes: the one on the *working* (current) revision, so an organ's members can
+     * collaborate on an as-yet-unapproved draft and a mid-draft re-assignment takes effect immediately.
+     *
+     * This is safe because the edit form only offers organs the user belongs to (and changing the organ already
+     * requires edit access), so nobody can pull an activity into an organ they are not in. The public/approved view
+     * still shows the live organ ({@see self::getOrgan()}), and the board reviews the change on approval.
+     */
+    #[Override]
+    public function getResourceOrgan(): ?OrganModel
+    {
+        return $this->getCurrentRevision()?->getOrgan();
+    }
+
+    /**
+     * Activities are owned by their creator/organ, not by a company: the organising company (now a reviewable field on
+     * the revision) is display/metadata only and never grants company-scoped edit rights, so this stays null.
+     */
+    #[Override]
+    public function getResourceCompany(): ?CompanyModel
+    {
+        return null;
+    }
+
+    /**
+     * Get the creator of this resource.
+     */
+    #[Override]
+    public function getResourceCreator(): MemberModel
+    {
+        return $this->getCreator();
+    }
+
     /**
      * Returns an associative array representation of this object.
      *
@@ -589,7 +512,7 @@ class Activity
     public function toArray(): array
     {
         $signupListsArrays = [];
-        foreach ($this->getSignupLists() as $signupList) {
+        foreach ($this->getDisplayRevision()->getSignupLists() as $signupList) {
             $signupListsArrays[] = $signupList->toArray();
         }
 
@@ -615,6 +538,8 @@ class Activity
             'category' => $this->getCategory()->value,
             'requireGEFLITST' => $this->getRequireGEFLITST(),
             'requireZettle' => $this->getRequireZettle(),
+            'cancelled' => $this->isCancelled(),
+            'unpublished' => $this->isUnpublished(),
             'labels' => $labelsArrays,
             'signupLists' => $signupListsArrays,
         ];
@@ -627,7 +552,7 @@ class Activity
     {
         /** @var ImportedSignupListGdprArrayType[] $signupListsArrays */
         $signupListsArrays = [];
-        foreach ($this->getSignupLists() as $signupList) {
+        foreach ($this->getDisplayRevision()->getSignupLists() as $signupList) {
             $signupListsArrays[] = $signupList->toGdprArray();
         }
 
@@ -650,32 +575,10 @@ class Activity
             'category' => $this->getCategory()->value,
             'requireGEFLITST' => $this->getRequireGEFLITST(),
             'requireZettle' => $this->getRequireZettle(),
+            'cancelled' => $this->isCancelled(),
+            'unpublished' => $this->isUnpublished(),
             'labels' => $labelsArrays,
             'signupLists' => $signupListsArrays,
         ];
-    }
-
-    /**
-     * Returns the string identifier of the Resource.
-     */
-    public function getResourceId(): string
-    {
-        return 'activity';
-    }
-
-    /**
-     * Get the organ of this resource.
-     */
-    public function getResourceOrgan(): ?OrganModel
-    {
-        return $this->getOrgan();
-    }
-
-    /**
-     * Get the creator of this resource.
-     */
-    public function getResourceCreator(): MemberModel
-    {
-        return $this->getCreator();
     }
 }

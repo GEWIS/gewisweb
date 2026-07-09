@@ -200,7 +200,7 @@
                                     <hr class="dropdown-divider">
                                 </li>
                             {% endif %}
-                            {% for category in job_categories() %}
+                            {% for category in vacancy_categories() %}
                                 <li>
                                     <a href="{{ path('') }}" class="dropdown-item">
                                         {{ category.getName|localise_text }}

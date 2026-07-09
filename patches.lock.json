@@ -1,5 +1,5 @@
 {
-    "_hash": "4225f72354d68f8562ccad6069deacc9ebb2f649c03c1cce9228d3cf4cc4b86c",
+    "_hash": "ad8049107e70f8ef46b77dc0bc597b66cb519e83b2aa9577c03e629e7674c736",
     "patches": {
         "doctrine/orm": [
             {
@@ -7,6 +7,18 @@
                 "description": "Fix issues with SubDecisions.",
                 "url": "https://raw.githubusercontent.com/GEWIS/orm/3.6.x/1-to-1-multiple-join-columns.patch",
                 "sha256": "fa1b4afdec339c252abaf55293d6aa186cb8255983e70f5a37ab2c1a155ab861",
+                "depth": 1,
+                "extra": {
+                    "provenance": "root"
+                }
+            }
+        ],
+        "symfony/ux-live-component": [
+            {
+                "package": "symfony/ux-live-component",
+                "description": "Fix data-loadig not ignored data-live-ignore",
+                "url": "https://raw.githubusercontent.com/GEWIS/symfony-ux-live-component/refs/heads/3.x/data-loading-not-ignored.patch",
+                "sha256": "b20cc2a98a9f17e781238e31745fad8366ce12ee8edde01dda317677bc2bec7c",
                 "depth": 1,
                 "extra": {
                     "provenance": "root"

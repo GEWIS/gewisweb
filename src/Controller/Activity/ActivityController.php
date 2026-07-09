@@ -9,8 +9,7 @@ use App\Entity\Application\Enums\Languages;
 use App\Entity\User\Enums\UserRoles;
 use App\Entity\User\User;
 use App\Repository\Activity\ActivityRepository;
-use App\View\Activity\SignupListView;
-use Locale;
+use App\ViewModel\Activity\SignupListView;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -99,11 +98,23 @@ class ActivityController extends AbstractController
         $entity = $this->activityRepository->find($activity);
         if (
             null === $entity
-            || Activity::STATUS_APPROVED !== $entity->getStatus()
+            || null === $entity->getLiveRevision()
+            // An unpublished activity is taken out of public view entirely: its direct URL 404s like a never-approved
+            // one. (A cancelled activity, by contrast, stays visible with a notice.)
+            || $entity->isUnpublished()
         ) {
             throw $this->createNotFoundException();
         }
 
+        return $this->renderActivityView($entity);
+    }
+
+    /**
+     * Render the public activity page. The per-list sign-up UI is a live component (member) or a server-rendered guest
+     * panel, so this only needs the read-model views and the calendar event.
+     */
+    private function renderActivityView(Activity $entity): Response
+    {
         $canViewDetails = $this->isGranted(UserRoles::User->value);
         $user = $this->getUser();
         $viewerLidnr = $user instanceof User
@@ -111,7 +122,7 @@ class ActivityController extends AbstractController
             : null;
 
         $signupListViews = [];
-        foreach ($entity->getSignupLists() as $signupList) {
+        foreach ($entity->getLiveSignupLists() as $signupList) {
             $signupListViews[] = SignupListView::fromSignupList(
                 $signupList,
                 $canViewDetails,
@@ -120,12 +131,16 @@ class ActivityController extends AbstractController
             );
         }
 
-        $language = 'nl' === Locale::getDefault()
-            ? Languages::Dutch
-            : Languages::English;
+        $language = Languages::current();
+
+        // A cancelled activity carries a [CANCELLED] marker everywhere its title is shown, the calendar entry included.
+        $title = $entity->getName()->getText($language) ?? '';
+        if ($entity->isCancelled()) {
+            $title = $this->translator->trans('[CANCELLED]') . ' ' . $title;
+        }
 
         $calendarEvent = new CalendarEvent(
-            title: $entity->getName()->getText($language) ?? '',
+            title: $title,
             start: $entity->getBeginTime(),
             end: $entity->getEndTime(),
             location: $entity->getLocation()->getText($language),

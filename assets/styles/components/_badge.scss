@@ -48,3 +48,24 @@ label.badge {
     cursor: pointer;
     user-select: none;
 }
+
+// Dismissible: layout modifier that makes room for an inner `.btn-close`. The actual removal behaviour is left to the
+// consumer (the `label-chips` controller unchecks the backing checkbox), rather than just hiding the DOM node.
+//
+// Usage:
+//   <span class="badge badge-tag badge-dismissible">
+//     Filter
+//     <button type="button" class="btn-close" aria-label="Remove"></button>
+//   </span>
+.badge-dismissible {
+    padding-inline-end: 1.75rem;
+    position: relative;
+
+    .btn-close {
+        position: absolute;
+        inset-block-start: 0;
+        inset-inline-end: 0;
+        padding: 0.5em 0.625em;
+        font-size: 0.5em;
+    }
+}

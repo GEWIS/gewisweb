@@ -120,10 +120,10 @@ class ActivityOptionCreationPeriod
      *
      * @return array{
      *     id: int,
-     *     beginPlanningTime: datetime,
-     *     endPlanningTime: datetime,
-     *     beginOptionTime: datetime,
-     *     endOptionTime: datetime,
+     *     beginPlanningTime: DateTime,
+     *     endPlanningTime: DateTime,
+     *     beginOptionTime: DateTime,
+     *     endOptionTime: DateTime,
      *     maxActivities: ImportedMaxActivitiesArrayType[],
      * }
      */

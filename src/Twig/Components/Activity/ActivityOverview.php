@@ -27,7 +27,10 @@ use function array_filter;
 use function array_map;
 use function array_values;
 use function count;
+use function explode;
+use function is_array;
 use function iterator_to_array;
+use function strval;
 use function trim;
 
 /**
@@ -119,6 +122,33 @@ final class ActivityOverview
         private readonly Security $security,
         private readonly RequestStack $requestStack,
     ) {
+    }
+
+    /**
+     * Pre-select the label filter from the query string on a full page load. ux-live-component v3 hydrates scalar
+     * url-mapped props server-side but leaves an array prop ({@see $labelFilters}) empty, and the filter panel is
+     * `data-live-ignore`, so the client-side sync never re-checks the boxes. Reading the ids here makes a shared or
+     * reloaded `?labels=` URL pre-select them. Runs only on the initial render, not on live re-renders.
+     */
+    public function mount(): void
+    {
+        $request = $this->requestStack->getCurrentRequest();
+        if (
+            null === $request
+            || !$request->query->has('labels')
+        ) {
+            return;
+        }
+
+        $raw = $request->query->all()['labels'];
+        $values = is_array($raw)
+            ? $raw
+            : explode(
+                ',',
+                strval($raw),
+            );
+
+        $this->labelFilters = self::positiveIntIds($values);
     }
 
     #[LiveAction]
@@ -243,11 +273,25 @@ final class ActivityOverview
      */
     private function selectedLabelIds(): array
     {
+        return self::positiveIntIds($this->labelFilters);
+    }
+
+    /**
+     * Normalise a raw list of label-id values into a clean, re-indexed list of positive ints (dropping blanks, zero and
+     * negatives). Shared by mount() (query-string parsing) and selectedLabelIds() (paginator filtering) so the two can
+     * never drift.
+     *
+     * @param array<mixed> $values
+     *
+     * @return int[]
+     */
+    private static function positiveIntIds(array $values): array
+    {
         return array_values(
             array_filter(
                 array_map(
                     'intval',
-                    $this->labelFilters,
+                    $values,
                 ),
                 static fn (int $id): bool => $id > 0,
             ),

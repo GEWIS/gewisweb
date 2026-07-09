@@ -265,21 +265,6 @@ parameters:
 			path: src/MessageHandler/User/PasswordResetRequestEmailHandler.php
 
 		-
-			message: '#^QueryBuilder\: \[Semantical Error\] line 0, col 205 near ''member \= \:me''\: Error\: Class App\\Entity\\Activity\\UserSignup has no field or association named member$#'
-			identifier: doctrine.dql
-			count: 1
-			path: src/Repository/Activity/ActivityRepository.php
-
-		-
-			message: '''
-				#^QueryBuilder\: \[Syntax Error\] line 0, col 145\: Error\: Expected StateFieldPathExpression \| string \| InputParameter \| FunctionsReturningStrings \| AggregateExpression, got '"'
-				DQL\: SELECT s FROM App\\Entity\\Activity\\Signup s INNER JOIN s\.signupList l INNER JOIN l\.activity a WHERE a\.endTime \<\= DATE_SUB\(CURRENT_TIMESTAMP\(\), 5, "YEAR"\)$#
-			'''
-			identifier: doctrine.dql
-			count: 1
-			path: src/Repository/Activity/SignupRepository.php
-
-		-
 			message: '#^QueryBuilder\: \[Semantical Error\] line 0, col 87 near ''member \= \:me''\: Error\: Class App\\Entity\\Decision\\SubDecision has no field or association named member$#'
 			identifier: doctrine.dql
 			count: 1

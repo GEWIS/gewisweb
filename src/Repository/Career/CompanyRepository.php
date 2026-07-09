@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace App\Repository\Career;
 
-use App\Entity\Application\Enums\ApprovableStatus;
 use App\Entity\Career\Company;
-use App\Entity\Career\Proposals\CompanyUpdate;
-use App\Entity\Decision\Member;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -26,7 +23,8 @@ class CompanyRepository extends ServiceEntityRepository
     }
 
     /**
-     * Find all public companies, these are companies that are published and have at least one non-expired package.
+     * Find all public companies, these are companies that have a live (approved) revision, are published and have at
+     * least one non-expired package.
      *
      * @return Company[]
      */
@@ -39,7 +37,6 @@ class CompanyRepository extends ServiceEntityRepository
         );
 
         $select = $rsmBuilder->generateSelectClause(['c' => 't1']);
-        $approved = ApprovableStatus::Approved->value;
 
         $sql = <<<QUERY
             SELECT {$select} FROM `Company` AS `t1`
@@ -58,7 +55,7 @@ class CompanyRepository extends ServiceEntityRepository
                 GROUP BY `company_id`
             ) `CompanyPackages` ON `CompanyPackages`.`company_id` = `t1`.`id`
             WHERE `t1`.`published` = 1
-            AND `t1`.`approved` = "{$approved}"
+            AND `t1`.`liveRevision_id` IS NOT NULL
             AND `CompanyPackages`.`totalPackages` > `CompanyPackages`.`expiredHiddenOrNotStartedPackages`
             ORDER BY `t1`.`name` ASC
             QUERY;
@@ -85,60 +82,5 @@ class CompanyRepository extends ServiceEntityRepository
     public function findCompanyByRepresentativeEmail(string $email): ?Company
     {
         return $this->findOneBy(['representativeEmail' => $email]);
-    }
-
-    /**
-     * @return Company[]
-     */
-    public function findUpdateProposals(): array
-    {
-        $qb = $this->createQueryBuilder('c');
-        $qb->where('(c.approved = :approved AND c.isUpdate = :isUpdate)');
-
-        $qbu = $this->getEntityManager()->createQueryBuilder();
-        $qbu->select('IDENTITY(u.original)')->distinct()
-            ->from(
-                CompanyUpdate::class,
-                'u',
-            )
-            ->orderBy(
-                'u.id',
-                'DESC',
-            );
-
-        $qb->orWhere($qb->expr()->in('c.id', $qbu->getDQL()))
-            ->orderBy(
-                'c.id',
-                'DESC',
-            );
-
-        $qb->setParameter(
-            'approved',
-            ApprovableStatus::Unapproved,
-        )
-            ->setParameter(
-                'isUpdate',
-                false,
-            );
-
-        return $qb->getQuery()->getResult();
-    }
-
-    /**
-     * Get all companies that were approved or rejected by a specific member.
-     *
-     * @return Company[]
-     */
-    public function findAllCompaniesApprovedByMember(Member $member): array
-    {
-        $qb = $this->createQueryBuilder('c');
-        $qb->where('c.approver = :member')
-            ->setParameter(
-                'member',
-                $member,
-                Member::class,
-            );
-
-        return $qb->getQuery()->getResult();
     }
 }

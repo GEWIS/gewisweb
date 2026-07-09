@@ -180,9 +180,4 @@ abstract class CourseDocument
             'path' => $this->getFilename(),
         ];
     }
-
-    public function getResourceId(): string
-    {
-        return 'course_document';
-    }
 }

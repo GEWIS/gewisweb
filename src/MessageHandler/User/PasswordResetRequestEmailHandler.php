@@ -12,6 +12,7 @@ use App\Message\User\PasswordResetRequestEmail;
 use App\Repository\Decision\MemberRepository;
 use App\Repository\User\CompanyUserRepository;
 use App\Repository\User\PasswordResetRepository;
+use App\Util\Application\SplitToken;
 use DateInterval;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
@@ -21,9 +22,6 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 use function assert;
-use function bin2hex;
-use function hash;
-use function random_bytes;
 
 #[AsMessageHandler]
 class PasswordResetRequestEmailHandler
@@ -98,11 +96,10 @@ class PasswordResetRequestEmailHandler
             return;
         }
 
-        $selector = bin2hex(random_bytes(self::SELECTOR_BYTES));
-        $verifier = bin2hex(random_bytes(self::VERIFIER_BYTES));
-        $hashedToken = hash(
+        $split = SplitToken::generate(
+            self::SELECTOR_BYTES,
+            self::VERIFIER_BYTES,
             PasswordReset::HASH_ALGO,
-            $verifier,
         );
 
         $expiresAt = new DateTimeImmutable('now')
@@ -110,8 +107,8 @@ class PasswordResetRequestEmailHandler
 
         $passwordReset = new PasswordReset(
             $expiresAt,
-            $selector,
-            $hashedToken,
+            $split['selector'],
+            $split['hashedToken'],
             $member,
             $companyUser,
         );
@@ -119,7 +116,7 @@ class PasswordResetRequestEmailHandler
         $this->entityManager->persist($passwordReset);
         $this->entityManager->flush();
 
-        $token = $selector . '.' . $verifier;
+        $token = $split['token'];
         $routeName = $member instanceof Member
             ? 'user_password_reset_claim'
             : 'company_user_password_reset_claim';

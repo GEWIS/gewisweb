@@ -1,0 +1,197 @@
+{# novalidate: required fields can sit on a hidden step, where native HTML5 validation would refuse to submit and log
+   "invalid form control is not focusable" with no visible reason. Server-side validation is authoritative and the
+   form-stepper jumps to the first errored step instead. #}
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+{{ form_errors(form) }}
+
+{# localised-fields toggles the NL/EN inputs (step 2); form-stepper pages the steps below. Both span the whole form on
+   purpose: every step stays in the DOM (hidden, never disabled) so the single POST still carries everything. #}
+<div data-controller="localised-fields form-stepper">
+    <ol class="form-stepper" role="tablist">
+        <li class="form-stepper__step" role="presentation">
+            <button type="button" class="form-stepper__btn" role="tab"
+                    data-form-stepper-target="tab"
+                    data-action="form-stepper#goto" data-form-stepper-index-param="0">
+                <span class="form-stepper__num">1</span>
+                <span class="form-stepper__label">{{ 'General information'|trans }}</span>
+            </button>
+        </li>
+        <li class="form-stepper__step" role="presentation">
+            <button type="button" class="form-stepper__btn" role="tab"
+                    data-form-stepper-target="tab"
+                    data-action="form-stepper#goto" data-form-stepper-index-param="1">
+                <span class="form-stepper__num">2</span>
+                <span class="form-stepper__label">{{ 'Details'|trans }}</span>
+            </button>
+        </li>
+        <li class="form-stepper__step" role="presentation">
+            <button type="button" class="form-stepper__btn" role="tab"
+                    data-form-stepper-target="tab"
+                    data-action="form-stepper#goto" data-form-stepper-index-param="2">
+                <span class="form-stepper__num">3</span>
+                <span class="form-stepper__label">{{ 'Sign-up lists'|trans }}</span>
+            </button>
+        </li>
+    </ol>
+
+    {# Step 1: General information (the what/when/who + facilities) #}
+    <div data-form-stepper-target="step">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h3>{{ 'Organisers'|trans }}</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-6">{{ form_row(form.currentRevision.organ) }}</div>
+                            <div class="col-md-6">{{ form_row(form.currentRevision.company) }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h3>{{ 'Date and time'|trans }}</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-6">{{ form_row(form.currentRevision.beginTime) }}</div>
+                            <div class="col-md-6">{{ form_row(form.currentRevision.endTime) }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h3>{{ 'Category and labels'|trans }}</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-4">{{ form_row(form.currentRevision.category) }}</div>
+                            <div class="col-md-8">
+                                {# Renders the labels as removable chips with a typeahead; the EntityType checkboxes stay as the
+                                   bound source of truth (label-chips just hides and drives them). The field label stays outside
+                                   the controller element so it is not displaced by the injected chips/typeahead. #}
+                                {{ form_label(form.currentRevision.labels) }}
+                                <div data-controller="label-chips"
+                                     data-label-chips-placeholder-value="{{ 'Search labels…'|trans }}"
+                                     data-label-chips-remove-label-value="{{ 'Remove'|trans }}"
+                                     data-label-chips-no-results-value="{{ 'No matching labels'|trans }}">
+                                    {{ form_widget(form.currentRevision.labels) }}
+                                    {{ form_errors(form.currentRevision.labels) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h3>{{ 'Facilities'|trans }}</h3>
+                    </div>
+                    <div class="panel-body">
+                        {{ form_row(form.currentRevision.requireGEFLITST) }}
+                        {{ form_row(form.currentRevision.requireZettle) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Step 2: Details (the bilingual texts a potential subscriber reads) #}
+    <div data-form-stepper-target="step">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h3>{{ 'Information'|trans }}</h3>
+                        <p class="text-muted small mb-0">
+                            {{ 'Enable Dutch and/or English and fill in the fields below. At least one language must be used.'|trans }}
+                        </p>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                {{ form_row(form.currentRevision.languageDutch, {
+                                    'label': '<span class="flag-icon flag-icon-nl"></span> ' ~ ('Dutch'|trans),
+                                    'label_html': true,
+                                    'attr': {
+                                        'data-localised-fields-target': 'dutchToggle',
+                                        'data-action': 'change->localised-fields#apply',
+                                    },
+                                }) }}
+                                <hr>
+                                {{ form_row(form.currentRevision.name.valueNL, {'label': 'Name'|trans, 'attr': {'data-localised-fields-target': 'dutch'}}) }}
+                                {{ form_row(form.currentRevision.location.valueNL, {'label': 'Location'|trans, 'attr': {'data-localised-fields-target': 'dutch'}}) }}
+                                {{ form_row(form.currentRevision.costs.valueNL, {'label': 'Costs'|trans, 'attr': {'data-localised-fields-target': 'dutch'}}) }}
+                                {{ form_row(form.currentRevision.description.valueNL, {'label': 'Description'|trans, 'attr': {'data-localised-fields-target': 'dutch', 'data-controller': 'markdown-editor', 'data-markdown-editor-language-value': app.request.locale}}) }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ form_row(form.currentRevision.languageEnglish, {
+                                    'label': '<span class="flag-icon flag-icon-en"></span> ' ~ ('English'|trans),
+                                    'label_html': true,
+                                    'attr': {
+                                        'data-localised-fields-target': 'englishToggle',
+                                        'data-action': 'change->localised-fields#apply',
+                                    },
+                                }) }}
+                                <hr>
+                                {{ form_row(form.currentRevision.name.valueEN, {'label': 'Name'|trans, 'attr': {'data-localised-fields-target': 'english'}}) }}
+                                {{ form_row(form.currentRevision.location.valueEN, {'label': 'Location'|trans, 'attr': {'data-localised-fields-target': 'english'}}) }}
+                                {{ form_row(form.currentRevision.costs.valueEN, {'label': 'Costs'|trans, 'attr': {'data-localised-fields-target': 'english'}}) }}
+                                {{ form_row(form.currentRevision.description.valueEN, {'label': 'Description'|trans, 'attr': {'data-localised-fields-target': 'english', 'data-controller': 'markdown-editor', 'data-markdown-editor-language-value': app.request.locale}}) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Step 3: Sign-up lists #}
+    <div data-form-stepper-target="step">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h3>{{ 'Sign-up lists'|trans }}</h3>
+                        <p class="text-muted small mb-0">
+                            {{ 'Optional. A sign-up list with subscribers can no longer be changed structurally.'|trans }}
+                        </p>
+                    </div>
+                    <div class="panel-body">
+                        {{ form_widget(form.currentRevision.signupLists) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# The footer lives inside the form-stepper element so its targets/actions bind (Stimulus only scans the
+       controller's own subtree). It stays inside the <form>, so the single POST is unchanged. #}
+    <div class="mt-3 d-flex justify-content-end gap-2">
+        <a href="{{ path('admin/activities/index') }}" class="btn btn-link">{{ 'Cancel'|trans }}</a>
+        <button type="button" class="btn btn-outline-secondary"
+                data-form-stepper-target="back" data-action="form-stepper#previous">
+            {{ 'Back'|trans }}
+        </button>
+        <button type="button" class="btn btn-gewis-primary"
+                data-form-stepper-target="next" data-action="form-stepper#next">
+            {{ 'Next'|trans }}
+        </button>
+        <button type="submit" class="btn btn-gewis-primary" data-form-stepper-target="submit">
+            {{ submitLabel|default('Save draft'|trans) }}
+        </button>
+    </div>
+</div>
+{{ form_end(form) }}

@@ -20,7 +20,9 @@ use App\Security\User\BackupCodeManager;
 use App\Security\User\HandlerRegistry;
 use App\Security\User\MfaPolicy;
 use App\Security\User\SudoMode;
+use App\Service\Application\AltchaSolutionGuard;
 use App\Service\User\SessionManager;
+use App\Util\Application\SplitToken;
 use DateInterval;
 use DateTime;
 use DateTimeImmutable;
@@ -50,10 +52,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 use function assert;
 use function bin2hex;
-use function count;
-use function explode;
-use function hash;
-use function hash_equals;
 use function is_int;
 use function is_string;
 use function random_bytes;
@@ -113,6 +111,7 @@ abstract class AbstractSecurityController extends AbstractController
         #[Autowire(service: 'limiter.password_reset_credentials')]
         RateLimiterFactory $passwordResetCredentialsLimiter,
         MessageBusInterface $bus,
+        AltchaSolutionGuard $altchaSolutionGuard,
     ): Response {
         $form = $this->createForm(
             PasswordResetRequestFormType::class,
@@ -131,6 +130,17 @@ abstract class AbstractSecurityController extends AbstractController
                     'type' => $this->userType,
                 ],
             );
+        }
+
+        // Single-use: the local Altcha validator accepts a solved proof-of-work repeatedly within its signature
+        // window, so reject a replay even though the captcha just validated.
+        if (!$altchaSolutionGuard->consume(strval($form->get('security')->getData()))) {
+            $this->addFlash(
+                AlertTypes::Danger->value,
+                $this->translator->trans('Please complete the verification again and resubmit.'),
+            );
+
+            return $this->redirectToRoute($this->routePrefix . 'forgot_password');
         }
 
         // Consume both limiters at the same time. To ensure that if an IP gets limited, the credentials also gets
@@ -185,25 +195,19 @@ abstract class AbstractSecurityController extends AbstractController
         PasswordResetRepository $passwordResetRepository,
         EntityManagerInterface $em,
     ): Response {
-        $parts = explode(
-            '.',
-            $token,
-            2,
-        );
-        assert(2 === count($parts));
-        $passwordReset = $passwordResetRepository->findBySelector($parts[0]); // selector
+        $split = SplitToken::split($token);
+        assert(null !== $split);
+        $passwordReset = $passwordResetRepository->findBySelector($split['selector']);
 
         // Any validation failure must result in a 404 (never leak which check failed - though timing can be an issue).
         if (
             null === $passwordReset
             || $this->userType !== $passwordReset->getUserType()
             || $passwordReset->isExpired()
-            || !hash_equals(
+            || !SplitToken::matches(
                 $passwordReset->getHashedToken(),
-                hash(
-                    PasswordReset::HASH_ALGO,
-                    $parts[1], // verifier
-                ),
+                $split['verifier'],
+                PasswordReset::HASH_ALGO,
             )
         ) {
             throw new NotFoundHttpException();

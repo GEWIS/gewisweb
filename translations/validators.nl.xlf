@@ -5,13 +5,69 @@
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
+      <trans-unit id="mUY7qf3" resname="At least one language must be used.">
+        <source>At least one language must be used.</source>
+        <target>Er moet ten minste één taal worden gebruikt.</target>
+      </trans-unit>
+      <trans-unit id="SDwIA.h" resname="Describe how you addressed the requested changes before resubmitting.">
+        <source>Describe how you addressed the requested changes before resubmitting.</source>
+        <target state="translated">Beschrijf hoe je de gevraagde wijzigingen hebt verwerkt voordat je opnieuw indient.</target>
+      </trans-unit>
       <trans-unit id="t.WZn.q" resname="Enter a 6-digit authenticator code or a 16-character lowercase-hex backup code.">
         <source>Enter a 6-digit authenticator code or a 16-character lowercase-hex backup code.</source>
-        <target></target>
+        <target state="translated">Voer een 6-cijferige authenticatorcode in, of een back-upcode van 16 tekens in kleine letters en hexadecimaal.</target>
+      </trans-unit>
+      <trans-unit id="iXcFJXc" resname="Enter a closing date and time.">
+        <source>Enter a closing date and time.</source>
+        <target state="translated">Voer een sluitingsdatum en -tijd in.</target>
+      </trans-unit>
+      <trans-unit id="iGXOSQU" resname="Enter a full name.">
+        <source>Enter a full name.</source>
+        <target>Voer een volledige naam in.</target>
+      </trans-unit>
+      <trans-unit id="HSarwc." resname="Enter a start date and time.">
+        <source>Enter a start date and time.</source>
+        <target state="translated">Voer een startdatum en -tijd in.</target>
+      </trans-unit>
+      <trans-unit id="HTVqG9b" resname="Enter a valid URL (starting with http:// or https://).">
+        <source>Enter a valid URL (starting with http:// or https://).</source>
+        <target>Voer een geldige URL in (beginnend met http:// of https://).</target>
+      </trans-unit>
+      <trans-unit id="pT0eJRh" resname="Enter a valid email address.">
+        <source>Enter a valid email address.</source>
+        <target state="translated">Voer een geldig e-mailadres in.</target>
+      </trans-unit>
+      <trans-unit id="8a1ZW3W" resname="Enter a value between {{ min }} and {{ max }}.">
+        <source>Enter a value between {{ min }} and {{ max }}.</source>
+        <target>Voer een waarde tussen {{ min }} en {{ max }} in.</target>
+      </trans-unit>
+      <trans-unit id="IoicRFz" resname="Enter an email address.">
+        <source>Enter an email address.</source>
+        <target state="translated">Voer een e-mailadres in.</target>
+      </trans-unit>
+      <trans-unit id="vUFOGmp" resname="Enter an end date and time.">
+        <source>Enter an end date and time.</source>
+        <target state="translated">Voer een einddatum en -tijd in.</target>
+      </trans-unit>
+      <trans-unit id=".qSOaLw" resname="Enter an opening date and time.">
+        <source>Enter an opening date and time.</source>
+        <target state="translated">Voer een openingsdatum en -tijd in.</target>
       </trans-unit>
       <trans-unit id="B9r0Hn5" resname="Error">
         <source>Error</source>
         <target>Fout</target>
+      </trans-unit>
+      <trans-unit id="5POukAY" resname="Feedback is required when requesting changes or rejecting.">
+        <source>Feedback is required when requesting changes or rejecting.</source>
+        <target state="translated">Feedback is verplicht bij het vragen om wijzigingen of bij afwijzing.</target>
+      </trans-unit>
+      <trans-unit id="7PRHlDo" resname="Fill in the Dutch text.">
+        <source>Fill in the Dutch text.</source>
+        <target state="translated">Vul de Nederlandse tekst in.</target>
+      </trans-unit>
+      <trans-unit id="vXqmZv8" resname="Fill in the English text.">
+        <source>Fill in the English text.</source>
+        <target state="translated">Vul de Engelse tekst in.</target>
       </trans-unit>
       <trans-unit id="0wZ1438" resname="Please enter a password.">
         <source>Please enter a password.</source>
@@ -28,6 +84,50 @@
       <trans-unit id="EkDZsyf" resname="Please enter your verification code.">
         <source>Please enter your verification code.</source>
         <target state="translated">Voer je verificatiecode in.</target>
+      </trans-unit>
+      <trans-unit id="pVi97xU" resname="The activity must start in the future.">
+        <source>The activity must start in the future.</source>
+        <target state="translated">De activiteit moet in de toekomst beginnen.</target>
+      </trans-unit>
+      <trans-unit id="GrfPh7K" resname="The email address may not be longer than {{ limit }} characters.">
+        <source>The email address may not be longer than {{ limit }} characters.</source>
+        <target state="translated">Het e-mailadres mag niet langer zijn dan {{ limit }} tekens.</target>
+      </trans-unit>
+      <trans-unit id="IMKkCvz" resname="The end time must be after the start time.">
+        <source>The end time must be after the start time.</source>
+        <target state="translated">De eindtijd moet na de starttijd liggen.</target>
+      </trans-unit>
+      <trans-unit id="YxuChhn" resname="The end time must be in the future.">
+        <source>The end time must be in the future.</source>
+        <target state="translated">De eindtijd moet in de toekomst liggen.</target>
+      </trans-unit>
+      <trans-unit id="Oed6bKp" resname="The full name may not be longer than {{ limit }} characters.">
+        <source>The full name may not be longer than {{ limit }} characters.</source>
+        <target>De volledige naam mag niet langer zijn dan {{ limit }} tekens.</target>
+      </trans-unit>
+      <trans-unit id="k8QayhA" resname="The sign-up list must close before the activity starts.">
+        <source>The sign-up list must close before the activity starts.</source>
+        <target state="translated">Een inschrijflijst moet sluiten voordat de activiteit begint.</target>
+      </trans-unit>
+      <trans-unit id="r_fk.nF" resname="The sign-up list must open before it closes.">
+        <source>The sign-up list must open before it closes.</source>
+        <target state="translated">Een inschrijflijst moet openen voordat deze sluit.</target>
+      </trans-unit>
+      <trans-unit id="bCKzvG1" resname="The sign-up list must open in the future.">
+        <source>The sign-up list must open in the future.</source>
+        <target state="translated">De inschrijflijst moet in de toekomst openen.</target>
+      </trans-unit>
+      <trans-unit id="z.p0Rex" resname="This field is required.">
+        <source>This field is required.</source>
+        <target>Dit veld is verplicht.</target>
+      </trans-unit>
+      <trans-unit id="7IsK8li" resname="You may only assign an organising organ that you are installed in.">
+        <source>You may only assign an organising organ that you are installed in.</source>
+        <target>Je mag alleen een organiserend orgaan toewijzen waarin je geïnstalleerd bent.</target>
+      </trans-unit>
+      <trans-unit id=".XKorDo" resname="You must agree to the activity and alcohol policies to sign up.">
+        <source>You must agree to the activity and alcohol policies to sign up.</source>
+        <target>Je moet akkoord gaan met het activiteiten- en alcoholbeleid om je in te schrijven.</target>
       </trans-unit>
       <trans-unit id="r7EPETa" resname="Your password should be at least {{ limit }} characters.">
         <source>Your password should be at least {{ limit }} characters.</source>

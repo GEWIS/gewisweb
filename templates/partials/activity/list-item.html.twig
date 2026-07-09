@@ -5,9 +5,12 @@
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-start gap-1 mb-2">
         <div>
             <h3 class="h5 mb-2">
-                <a href="{{ path('activity/view', {'activity': activity.getId}) }}">{{ activity.getName|localise_text }}</a>
+                <a href="{{ path('activity/view', {'activity': activity.getId}) }}">{{ activity_title(activity) }}</a>
             </h3>
             <div class="d-flex flex-wrap gap-1">
+                {% if activity.isCancelled %}
+                    <span class="badge badge-danger">{{ 'Cancelled'|trans }}</span>
+                {% endif %}
                 {% if activity.getCategory.value not in ['other', 'uncategorised'] %}
                     <span class="badge badge-info">{{ activity.getCategory|trans }}</span>
                 {% endif %}
@@ -30,7 +33,7 @@
          data-description-toggle-more-value="{{ 'Show more'|trans }}"
          data-description-toggle-less-value="{{ 'Show less'|trans }}">
         <div class="activity-description-content" data-description-toggle-target="content">
-            {{ activity.getDescription|localise_text|markdown(['p', 'del', 'em', 'strong', 'a']) }}
+            {{ activity.getDescription|localise_text|markdown(['p', 'br', 'strong', 'em', 'del', 'a', 'ul', 'ol', 'li']) }}
         </div>
         <button type="button" class="btn btn-link btn-sm p-0 d-none"
                 data-description-toggle-target="button"
@@ -45,7 +48,9 @@
         <span class="me-3"><i class="fas fa-location-dot"></i> {{ activity.getLocation|localise_text }}</span>
         <span class="me-3"><i class="fas fa-tag"></i> {{ activity.getCosts|localise_text }}</span>
         {% set signupList = activity.getRelevantSignupList %}
-        {% if null !== signupList %}
+        {# A cancelled activity has its sign-ups frozen, so a "sign-up closes/opens" deadline would be misleading; the
+           [CANCELLED] title and badge already convey the state. #}
+        {% if not activity.isCancelled and null !== signupList %}
             {% if signupList.isOpen %}
                 {% set secondsLeft = signupList.getCloseDate.timestamp - now.timestamp %}
                 {% set urgency = secondsLeft < 86400 ? 'text-danger' : (secondsLeft < 604800 ? 'text-warning' : '') %}

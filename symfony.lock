@@ -13,6 +13,15 @@
             "src/ApiResource/.gitignore"
         ]
     },
+    "dama/doctrine-test-bundle": {
+        "version": "8.6",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "8.3",
+            "ref": "dfc51177476fb39d014ed89944cde53dc3326d23"
+        }
+    },
     "doctrine/deprecations": {
         "version": "1.1",
         "recipe": {
@@ -472,6 +481,18 @@
             "config/routes/web_profiler.yaml"
         ]
     },
+    "symfony/workflow": {
+        "version": "8.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "3.3",
+            "ref": "3b2f8ca32a07fcb00f899649053943fa3d8bbfb6"
+        },
+        "files": [
+            "config/packages/workflow.yaml"
+        ]
+    },
     "symfonycasts/sass-bundle": {
         "version": "0.8",
         "recipe": {
@@ -484,6 +505,15 @@
             "config/packages/symfonycasts_sass.yaml",
             "assets/styles/app.scss"
         ]
+    },
+    "tito10047/altcha-bundle": {
+        "version": "3.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "2.0",
+            "ref": "64d5bc8d22b01ee6917ed754613fa5befc1ac486"
+        }
     },
     "twig/extra-bundle": {
         "version": "v3.22.2"

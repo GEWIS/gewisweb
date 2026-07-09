@@ -47,7 +47,10 @@ class SignupOption
      */
     #[OneToOne(
         targetEntity: ActivityLocalisedText::class,
-        cascade: ['persist'],
+        cascade: [
+            'persist',
+            'remove',
+        ],
         orphanRemoval: true,
     )]
     #[JoinColumn(
@@ -56,6 +59,12 @@ class SignupOption
         nullable: false,
     )]
     private ActivityLocalisedText $value;
+
+    public function __construct()
+    {
+        // Form-ready default; Doctrine bypasses the constructor when hydrating existing rows.
+        $this->value = new ActivityLocalisedText();
+    }
 
     public function getField(): SignupField
     {
