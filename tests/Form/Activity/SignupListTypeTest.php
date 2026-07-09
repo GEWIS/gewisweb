@@ -16,7 +16,6 @@ use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
 use Symfony\Component\Form\FormExtensionInterface;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Symfony\Component\Validator\Validation;
 
@@ -43,7 +42,7 @@ final class SignupListTypeTest extends TypeTestCase
     }
 
     /**
-     * @return list<FormTypeInterface<mixed>>
+     * @return list<SignupListType|LocalisedTextType|SignupFieldType|SignupOptionType>
      */
     #[Override]
     protected function getTypes(): array
