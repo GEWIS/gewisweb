@@ -35,9 +35,10 @@ use function Symfony\Component\Translation\t;
 use function trim;
 
 /**
- * A sign-up list ({@see SignupList}) with its custom fields. Once the list has sign-ups its structure is frozen:
- * everything except the safe metadata (name, closing date, visibility of the counter, promotion) is disabled, so an
- * already-committed list can never be structurally changed and existing sign-ups stay valid.
+ * A sign-up list ({@see SignupList}) with its custom fields. Once the list has sign-ups its structure and allocation
+ * method are frozen: everything except the safe metadata (name, closing date, capacity, visibility of the counter,
+ * promotion) is disabled, so an already-committed list can never be structurally changed, the way places are allocated
+ * cannot be rewritten under the people who already signed up, and existing sign-ups stay valid.
  *
  * @extends AbstractType<SignupList>
  */
@@ -56,12 +57,14 @@ class SignupListType extends AbstractType
     ];
 
     /**
-     * The allocation method and its per-method settings; disabled once the list's draw has been performed (the draw
-     * allocated places under exactly these settings, so changing them afterwards would leave the lock stale).
+     * The allocation method and its per-method settings, frozen once the list has sign-ups: changing how places are
+     * allocated after people have committed would rewrite the deal they signed up under. `capacity` is deliberately
+     * excluded — it is not per-method and may still need adjusting (e.g. adding seats) while the list is open; it is
+     * frozen separately once the draw has been performed (see {@see self::freezeWhenDrawn()}, which locks the draw's
+     * exact settings so the carried draw lock cannot go stale).
      */
-    private const array ALLOCATION_FIELDS = [
+    private const array METHOD_FIELDS = [
         'allocationMethod',
-        'capacity',
         'drawCutoffRule',
         'drawCutoffAt',
         'drawAfterDurationHours',
@@ -152,7 +155,8 @@ class SignupListType extends AbstractType
                 ],
             )
             // Allocation method + its per-method settings; only meaningful when limited, and validated conditionally
-            // by the form-level Callback. Not frozen, like capacity.
+            // by the form-level Callback. Frozen once the list has sign-ups (see METHOD_FIELDS): the capacity may still
+            // be adjusted, but how places are allocated cannot change once people have committed.
             ->add(
                 'allocationMethod',
                 EnumType::class,
@@ -448,8 +452,9 @@ class SignupListType extends AbstractType
     }
 
     /**
-     * Re-add the structural fields as `disabled` for a list that already has sign-ups, so they render read-only and
-     * are ignored on submit.
+     * Re-add the structural fields and the allocation method (with its per-method settings) as `disabled` for a list
+     * that already has sign-ups, so they render read-only and are ignored on submit. `capacity` stays editable so seats
+     * can still be adjusted; {@see self::freezeWhenDrawn()} locks it too once the draw has run.
      */
     private function freezeWhenSubscribed(FormEvent $event): void
     {
@@ -462,7 +467,7 @@ class SignupListType extends AbstractType
         }
 
         $form = $event->getForm();
-        foreach (self::FROZEN_FIELDS as $name) {
+        foreach ([...self::FROZEN_FIELDS, ...self::METHOD_FIELDS] as $name) {
             $this->disableField(
                 $form,
                 $name,
@@ -540,7 +545,7 @@ class SignupListType extends AbstractType
         }
 
         $form = $event->getForm();
-        foreach (self::ALLOCATION_FIELDS as $name) {
+        foreach ([...self::METHOD_FIELDS, 'capacity'] as $name) {
             $this->disableField(
                 $form,
                 $name,
