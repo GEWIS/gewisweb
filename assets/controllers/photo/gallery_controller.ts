@@ -70,7 +70,6 @@ export default class extends Controller<HTMLElement> {
     declare readonly labelsValue: Record<string, string>;
     declare readonly gridTarget: HTMLElement;
     declare readonly emptyTarget: HTMLElement;
-    declare readonly hasEmptyTarget: boolean;
 
     // Matches the 0.5rem gap in the stylesheet.
     private readonly gap = 8;

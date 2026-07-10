@@ -168,14 +168,6 @@ final readonly class FileStorage
     }
 
     /**
-     * The size, in bytes, of the file at the given stored path.
-     */
-    public function fileSize(string $path): int
-    {
-        return $this->defaultStorage->fileSize($path);
-    }
-
-    /**
      * Write raw contents to an exact stored path (not content-addressed). Used by the variant pipeline and cover
      * generator, which own their target paths.
      */

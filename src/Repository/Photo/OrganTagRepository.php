@@ -39,12 +39,25 @@ class OrganTagRepository extends ServiceEntityRepository
     }
 
     /**
-     * All organ tags on a photo.
+     * The organ tags on a photo with their organ fetched in the same query, so the viewer overlay can read each tagged
+     * organ's name without a per-tag lazy load.
      *
      * @return OrganTag[]
      */
-    public function getTagsByPhoto(int $photoId): array
+    public function findByPhotoWithOrgan(int $photoId): array
     {
-        return $this->findBy(['photo' => $photoId]);
+        return $this->createQueryBuilder('t')
+            ->addSelect('o')
+            ->join(
+                't.organ',
+                'o',
+            )
+            ->where('t.photo = :photo')
+            ->setParameter(
+                'photo',
+                $photoId,
+            )
+            ->getQuery()
+            ->getResult();
     }
 }

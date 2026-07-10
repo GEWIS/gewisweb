@@ -12,9 +12,7 @@ use Doctrine\Persistence\ManagerRegistry;
 
 use function addcslashes;
 use function array_filter;
-use function array_merge;
 use function array_values;
-use function in_array;
 
 /**
  * @extends ServiceEntityRepository<Album>
@@ -217,31 +215,47 @@ class AlbumRepository extends ServiceEntityRepository
             return $albums;
         }
 
-        $excludedIds = $this->subtreeIds($exclude);
+        // Every album is loaded, so exclude the album and its descendants by walking each candidate's parent chain
+        // (getId() on a parent proxy needs no query) against this id map, rather than iterating the lazy children
+        // collections (which would fire one SELECT per subtree node).
+        $byId = [];
+        foreach ($albums as $album) {
+            $byId[(int) $album->getId()] = $album;
+        }
+
+        $excludeId = (int) $exclude->getId();
 
         return array_values(array_filter(
             $albums,
-            static fn (Album $album): bool => !in_array(
-                $album->getId(),
-                $excludedIds,
-                true,
+            fn (Album $album): bool => !$this->descendsFromOrIs(
+                $album,
+                $excludeId,
+                $byId,
             ),
         ));
     }
 
     /**
-     * @return list<int>
+     * Whether $album is $ancestorId or has it somewhere up its parent chain.
+     *
+     * @param array<int, Album> $byId
      */
-    private function subtreeIds(Album $album): array
-    {
-        $ids = [(int) $album->getId()];
-        foreach ($album->getChildren() as $child) {
-            $ids = array_merge(
-                $ids,
-                $this->subtreeIds($child),
-            );
+    private function descendsFromOrIs(
+        Album $album,
+        int $ancestorId,
+        array $byId,
+    ): bool {
+        for ($current = $album; null !== $current;) {
+            if ((int) $current->getId() === $ancestorId) {
+                return true;
+            }
+
+            $parent = $current->getParent();
+            $current = null === $parent
+                ? null
+                : ($byId[(int) $parent->getId()] ?? null);
         }
 
-        return $ids;
+        return false;
     }
 }

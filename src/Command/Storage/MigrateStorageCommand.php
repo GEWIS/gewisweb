@@ -386,28 +386,22 @@ final class MigrateStorageCommand extends Command
             $source = $this->legacyRoot() . '/' . $row['legacy'];
             $destination = $this->newRoot() . '/' . $row['new'];
 
-            if ($dryRun) {
-                if (!is_file($source)) {
-                    $missing++;
-                } elseif (file_exists($destination)) {
-                    $skipped++;
-                } else {
-                    $linked++;
-                }
-            } else {
-                $status = $this->linkFile(
+            // Same classification either way; a dry run only reports it, a real run performs the link for LINK_LINKED.
+            $status = $dryRun
+                ? $this->classifyLink(
+                    $source,
+                    $destination,
+                )
+                : $this->linkFile(
                     $source,
                     $destination,
                 );
 
-                if (self::LINK_LINKED === $status) {
-                    $linked++;
-                } elseif (self::LINK_SKIPPED === $status) {
-                    $skipped++;
-                } else {
-                    $missing++;
-                }
-            }
+            match ($status) {
+                self::LINK_LINKED => $linked++,
+                self::LINK_SKIPPED => $skipped++,
+                default => $missing++,
+            };
 
             if (count($sample) < self::SAMPLE_SIZE) {
                 $sample[] = [
@@ -891,9 +885,11 @@ final class MigrateStorageCommand extends Command
     }
 
     /**
-     * Hardlink one file, creating the destination directory as needed. Returns which of the three outcomes occurred.
+     * Classify what linking $source to $destination would do, without performing it: the source is missing, the
+     * destination already exists (skip), or a hardlink would be created. The dry run reports this; {@see linkFile()}
+     * performs the link for the {@see LINK_LINKED} case.
      */
-    private function linkFile(
+    private function classifyLink(
         string $source,
         string $destination,
     ): string {
@@ -903,6 +899,24 @@ final class MigrateStorageCommand extends Command
 
         if (file_exists($destination)) {
             return self::LINK_SKIPPED;
+        }
+
+        return self::LINK_LINKED;
+    }
+
+    /**
+     * Hardlink one file, creating the destination directory as needed. Returns which of the three outcomes occurred.
+     */
+    private function linkFile(
+        string $source,
+        string $destination,
+    ): string {
+        $status = $this->classifyLink(
+            $source,
+            $destination,
+        );
+        if (self::LINK_LINKED !== $status) {
+            return $status;
         }
 
         $directory = dirname($destination);

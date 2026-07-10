@@ -18,8 +18,7 @@ use function array_values;
 
 /**
  * Gathers the members-only home-page blocks: the current photo of the week (with the public path the anonymous
- * frontpage serves it from) and today's birthdays with the most-tagged member's photo. The repository methods behind it
- * had no call-sites before; this is their first consumer.
+ * frontpage serves it from) and today's birthdays with the most-tagged member's photo.
  */
 final readonly class HomePageService
 {

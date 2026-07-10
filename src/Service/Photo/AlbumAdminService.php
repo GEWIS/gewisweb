@@ -31,22 +31,36 @@ final readonly class AlbumAdminService
     }
 
     /**
-     * Move a photo to another album. Both albums' photo sets change, so both covers are queued for regeneration.
+     * Move photos to another album in one go: reassign them, flush once, then regenerate the cover of each album whose
+     * photo set actually changed (the destination and every distinct source), each cover at most once.
+     *
+     * @param Photo[] $photos
      */
-    public function movePhoto(
-        Photo $photo,
+    public function movePhotos(
+        array $photos,
         Album $destination,
     ): void {
-        $source = $photo->getAlbum();
-        if ($source->getId() === $destination->getId()) {
+        $affectedAlbumIds = [];
+        foreach ($photos as $photo) {
+            $source = $photo->getAlbum();
+            if ($source->getId() === $destination->getId()) {
+                continue;
+            }
+
+            $affectedAlbumIds[(int) $source->getId()] = true;
+            $photo->setAlbum($destination);
+        }
+
+        if ([] === $affectedAlbumIds) {
             return;
         }
 
-        $photo->setAlbum($destination);
         $this->entityManager->flush();
 
-        $this->messageBus->dispatch(new GenerateAlbumCoverMessage((int) $source->getId()));
-        $this->messageBus->dispatch(new GenerateAlbumCoverMessage((int) $destination->getId()));
+        $affectedAlbumIds[(int) $destination->getId()] = true;
+        foreach (array_keys($affectedAlbumIds) as $albumId) {
+            $this->messageBus->dispatch(new GenerateAlbumCoverMessage($albumId));
+        }
     }
 
     /**

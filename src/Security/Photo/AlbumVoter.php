@@ -16,8 +16,6 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Vote;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
-use function in_array;
-
 /**
  * Authorizes viewing a photo {@see Album}.
  *
@@ -34,10 +32,6 @@ final class AlbumVoter extends Voter
 {
     public const string VIEW = 'ALBUM_VIEW';
 
-    private const array ATTRIBUTES = [
-        self::VIEW,
-    ];
-
     public function __construct(
         private readonly Security $security,
         private readonly MemberTagRepository $memberTagRepository,
@@ -49,11 +43,7 @@ final class AlbumVoter extends Voter
         string $attribute,
         mixed $subject,
     ): bool {
-        return in_array(
-            $attribute,
-            self::ATTRIBUTES,
-            true,
-        )
+        return self::VIEW === $attribute
             && $subject instanceof Album;
     }
 

@@ -299,12 +299,10 @@ class AdminController extends AbstractController
             );
         }
 
-        foreach ($photos as $photo) {
-            $this->albumAdminService->movePhoto(
-                $photo,
-                $destination,
-            );
-        }
+        $this->albumAdminService->movePhotos(
+            $photos,
+            $destination,
+        );
 
         $this->addFlash(
             AlertTypes::Success->value,

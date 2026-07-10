@@ -64,16 +64,6 @@ use function unlink;
  */
 class PhotoFixture extends Fixture implements DependentFixtureInterface
 {
-    public const string REFERENCE_ALBUM_GALA = 'photo-album-gala';
-    public const string REFERENCE_ALBUM_GALA_DINNER = 'photo-album-gala-dinner';
-    public const string REFERENCE_ALBUM_GALA_AFTERPARTY = 'photo-album-gala-afterparty';
-    public const string REFERENCE_ALBUM_TRIP = 'photo-album-trip';
-    public const string REFERENCE_ALBUM_SECRET = 'photo-album-secret';
-    public const string REFERENCE_PHOTO_DINNER = 'photo-dinner-1';
-    public const string REFERENCE_PHOTO_AFTERPARTY = 'photo-afterparty-1';
-    public const string REFERENCE_PHOTO_TRIP = 'photo-trip-1';
-    public const string REFERENCE_PHOTO_SECRET = 'photo-secret-1';
-
     /** A graduate tagged in the Dinner sub-album, so must be able to view the parent Gala album (#1658). */
     public const int GRADUATE_TAGGED_IN_SUBTREE = 8155;
 
@@ -174,10 +164,6 @@ class PhotoFixture extends Fixture implements DependentFixtureInterface
             '-6 months',
         );
         $manager->persist($gala);
-        $this->addReference(
-            self::REFERENCE_ALBUM_GALA,
-            $gala,
-        );
 
         $dinner = $this->makeAlbum(
             'Gala 2024 – Dinner',
@@ -186,10 +172,6 @@ class PhotoFixture extends Fixture implements DependentFixtureInterface
             '-6 months',
         );
         $manager->persist($dinner);
-        $this->addReference(
-            self::REFERENCE_ALBUM_GALA_DINNER,
-            $dinner,
-        );
 
         $afterparty = $this->makeAlbum(
             'Gala 2024 – Afterparty',
@@ -198,10 +180,6 @@ class PhotoFixture extends Fixture implements DependentFixtureInterface
             '-6 months 4 hours',
         );
         $manager->persist($afterparty);
-        $this->addReference(
-            self::REFERENCE_ALBUM_GALA_AFTERPARTY,
-            $afterparty,
-        );
 
         $trip = $this->makeAlbum(
             'Trip 2024',
@@ -210,10 +188,6 @@ class PhotoFixture extends Fixture implements DependentFixtureInterface
             '-3 months',
         );
         $manager->persist($trip);
-        $this->addReference(
-            self::REFERENCE_ALBUM_TRIP,
-            $trip,
-        );
 
         $secret = $this->makeAlbum(
             'Draft Album',
@@ -222,10 +196,6 @@ class PhotoFixture extends Fixture implements DependentFixtureInterface
             '-1 week',
         );
         $manager->persist($secret);
-        $this->addReference(
-            self::REFERENCE_ALBUM_SECRET,
-            $secret,
-        );
 
         // Flush the albums first so their ids exist: photo originals are stored scoped per album.
         $manager->flush();
@@ -236,10 +206,6 @@ class PhotoFixture extends Fixture implements DependentFixtureInterface
             '-6 months 20:15',
         );
         $manager->persist($dinnerPhoto);
-        $this->addReference(
-            self::REFERENCE_PHOTO_DINNER,
-            $dinnerPhoto,
-        );
         // A graduate pinned to a point in the image, plus a whole-photo tag and an organ tag.
         $manager->persist($this->memberTag($dinnerPhoto, self::GRADUATE_TAGGED_IN_SUBTREE, 0.52, 0.41));
         $manager->persist($this->memberTag($dinnerPhoto, 8030, null, null));
@@ -258,10 +224,6 @@ class PhotoFixture extends Fixture implements DependentFixtureInterface
             '-6 months 23:50',
         );
         $manager->persist($afterPhoto);
-        $this->addReference(
-            self::REFERENCE_PHOTO_AFTERPARTY,
-            $afterPhoto,
-        );
         $manager->persist($this->memberTag($afterPhoto, self::GRADUATE_TAGGED_IN_OTHER_SUBALBUM, null, null));
 
         // --- Trip album (public weekly photo lives here) ---
@@ -270,10 +232,6 @@ class PhotoFixture extends Fixture implements DependentFixtureInterface
             '-3 months 14:00',
         );
         $manager->persist($tripPhoto);
-        $this->addReference(
-            self::REFERENCE_PHOTO_TRIP,
-            $tripPhoto,
-        );
         $manager->persist($this->memberTag($tripPhoto, 8030, 0.3, 0.6));
         $manager->persist($this->organTag($tripPhoto, 'organ-keur'));
         $manager->persist(new Vote($tripPhoto, $this->member(8025)));
@@ -293,10 +251,6 @@ class PhotoFixture extends Fixture implements DependentFixtureInterface
             '-1 week 12:00',
         );
         $manager->persist($secretPhoto);
-        $this->addReference(
-            self::REFERENCE_PHOTO_SECRET,
-            $secretPhoto,
-        );
         $manager->persist($this->memberTag($secretPhoto, 8030, null, null));
 
         // The visible weekly photo (from the trip) and an older hidden one (from the dinner), so the anonymous

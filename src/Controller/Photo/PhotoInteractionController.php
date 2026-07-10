@@ -6,12 +6,12 @@ namespace App\Controller\Photo;
 
 use App\Entity\Decision\Member;
 use App\Entity\Decision\Organ;
-use App\Entity\Photo\MemberTag;
-use App\Entity\Photo\OrganTag;
 use App\Entity\Photo\Photo;
 use App\Entity\User\Enums\UserRoles;
 use App\Entity\User\User;
 use App\Repository\Decision\OrganRepository;
+use App\Repository\Photo\MemberTagRepository;
+use App\Repository\Photo\OrganTagRepository;
 use App\Repository\Photo\PhotoRepository;
 use App\Repository\Photo\TagRepository;
 use App\Repository\Photo\VoteRepository;
@@ -50,6 +50,8 @@ class PhotoInteractionController extends AbstractController
     public function __construct(
         private readonly PhotoRepository $photoRepository,
         private readonly TagRepository $tagRepository,
+        private readonly MemberTagRepository $memberTagRepository,
+        private readonly OrganTagRepository $organTagRepository,
         private readonly VoteRepository $voteRepository,
         private readonly OrganRepository $organRepository,
         private readonly TagService $tagService,
@@ -73,37 +75,39 @@ class PhotoInteractionController extends AbstractController
         $photoEntity = $this->viewablePhoto($photo);
         $member = $this->member();
 
+        // The member and organ tags are loaded with their subject fetch-joined (one query each), so reading a name
+        // below never triggers a per-tag lazy load; the viewer re-fetches this on every photo it opens.
         $memberTags = [];
-        $organTags = [];
         $taggedSelf = false;
-        foreach ($this->tagRepository->findByPhoto($photo) as $tag) {
-            if ($tag instanceof MemberTag) {
-                $taggedSelf = $taggedSelf || $tag->getMember()->getLidnr() === $member->getLidnr();
-                $memberTags[] = [
-                    'id' => $tag->getId(),
-                    'lidnr' => $tag->getMember()->getLidnr(),
-                    'fullName' => $tag->getMember()->getFullName(),
-                    'x' => $tag->getPositionX(),
-                    'y' => $tag->getPositionY(),
-                    'canRemove' => $this->isGranted(
-                        TagVoter::REMOVE,
-                        $tag,
-                    ),
-                ];
-            } elseif ($tag instanceof OrganTag) {
-                $organTags[] = [
-                    'id' => $tag->getId(),
-                    'organId' => $tag->getOrgan()->getId(),
-                    'name' => $tag->getOrgan()->getName(),
-                    'abbr' => $tag->getOrgan()->getAbbr(),
-                    'x' => $tag->getPositionX(),
-                    'y' => $tag->getPositionY(),
-                    'canRemove' => $this->isGranted(
-                        TagVoter::REMOVE,
-                        $tag,
-                    ),
-                ];
-            }
+        foreach ($this->memberTagRepository->findByPhotoWithMember($photo) as $tag) {
+            $taggedSelf = $taggedSelf || $tag->getMember()->getLidnr() === $member->getLidnr();
+            $memberTags[] = [
+                'id' => $tag->getId(),
+                'lidnr' => $tag->getMember()->getLidnr(),
+                'fullName' => $tag->getMember()->getFullName(),
+                'x' => $tag->getPositionX(),
+                'y' => $tag->getPositionY(),
+                'canRemove' => $this->isGranted(
+                    TagVoter::REMOVE,
+                    $tag,
+                ),
+            ];
+        }
+
+        $organTags = [];
+        foreach ($this->organTagRepository->findByPhotoWithOrgan($photo) as $tag) {
+            $organTags[] = [
+                'id' => $tag->getId(),
+                'organId' => $tag->getOrgan()->getId(),
+                'name' => $tag->getOrgan()->getName(),
+                'abbr' => $tag->getOrgan()->getAbbr(),
+                'x' => $tag->getPositionX(),
+                'y' => $tag->getPositionY(),
+                'canRemove' => $this->isGranted(
+                    TagVoter::REMOVE,
+                    $tag,
+                ),
+            ];
         }
 
         return new JsonResponse([

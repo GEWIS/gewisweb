@@ -367,8 +367,8 @@ class Photo
     }
 
     /**
-     * The height/width aspect ratio, computed once from the original at upload time (by the metadata service) and
-     * stored. It is never recomputed from the filesystem.
+     * The height/width aspect ratio, computed once from the original's dimensions when the photo is uploaded (see
+     * {@see \App\Service\Photo\PhotoUploadService}) and stored. It is never recomputed from the filesystem.
      */
     public function getAspectRatio(): ?float
     {

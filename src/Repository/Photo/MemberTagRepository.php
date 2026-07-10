@@ -87,54 +87,26 @@ class MemberTagRepository extends ServiceEntityRepository
     }
 
     /**
-     * Get all the member tags for a photo, limited to lidnr and full name.
+     * The member tags on a photo with their member fetched in the same query, so the viewer overlay can read each
+     * tagged member's name without a per-tag lazy load.
      *
-     * @return array<array-key, array{
-     *     id: int,
-     *     lidnr: int,
-     *     fullName: string,
-     * }>
+     * @return MemberTag[]
      */
-    public function getTagsByPhoto(int $photoId): array
+    public function findByPhotoWithMember(int $photoId): array
     {
-        $rsm = new ResultSetMapping();
-        $rsm->addScalarResult(
-            'id',
-            'id',
-            'integer',
-        )
-            ->addScalarResult(
-                'lidnr',
-                'lidnr',
-                'integer',
+        return $this->createQueryBuilder('t')
+            ->addSelect('m')
+            ->join(
+                't.member',
+                'm',
             )
-            ->addScalarResult(
-                'fullName',
-                'fullName',
-            );
-
-        // phpcs:disable Generic.Files.LineLength.TooLong -- no need to split this query more
-        $sql = <<<'QUERY'
-            SELECT
-                `t`.`id`,
-                `m`.`lidnr`,
-                CONCAT_WS(' ', `m`.`firstName`, IF(LENGTH(`m`.`middleName`), `m`.`middleName`, NULL), `m`.`lastName`) as `fullName`
-            FROM `Member` `m`
-            LEFT JOIN `Tag` `t` ON `m`.`lidnr` = `t`.`member_id`
-            WHERE `t`.`photo_id` = :photo_id
-            QUERY;
-        // phpcs:enable Generic.Files.LineLength.TooLong
-
-        $query = $this->getEntityManager()->createNativeQuery(
-            $sql,
-            $rsm,
-        );
-        $query->setParameter(
-            ':photo_id',
-            $photoId,
-        );
-
-        return $query->getArrayResult();
+            ->where('t.photo = :photo')
+            ->setParameter(
+                'photo',
+                $photoId,
+            )
+            ->getQuery()
+            ->getResult();
     }
 
     /**

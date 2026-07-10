@@ -35,21 +35,30 @@ final class AlbumAdminServiceTest extends DatabaseTestCase
 {
     private int $colour = 0x20;
 
-    public function testMovePhotoReassignsTheAlbumAndQueuesBothCovers(): void
+    public function testMovePhotosReassignsTheAlbumAndQueuesEachCoverOnce(): void
     {
         $trip = $this->album('Trip 2024');
         $gala = $this->album('Gala 2024');
-        $photo = $this->storedPhoto($trip);
+        $photoA = $this->storedPhoto($trip);
+        $photoB = $this->storedPhoto($trip);
 
-        $this->service()->movePhoto(
-            $photo,
+        $this->service()->movePhotos(
+            [
+                $photoA,
+                $photoB,
+            ],
             $gala,
         );
 
         self::assertSame(
             $gala->getId(),
-            $photo->getAlbum()->getId(),
+            $photoA->getAlbum()->getId(),
         );
+        self::assertSame(
+            $gala->getId(),
+            $photoB->getAlbum()->getId(),
+        );
+        // One cover per distinct affected album (the single source and the destination), not per photo.
         self::assertSame(
             2,
             $this->sentCount(GenerateAlbumCoverMessage::class),
@@ -61,8 +70,8 @@ final class AlbumAdminServiceTest extends DatabaseTestCase
         $trip = $this->album('Trip 2024');
         $photo = $this->storedPhoto($trip);
 
-        $this->service()->movePhoto(
-            $photo,
+        $this->service()->movePhotos(
+            [$photo],
             $trip,
         );
 
