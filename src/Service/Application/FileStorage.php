@@ -16,7 +16,6 @@ use function hash_file;
 use function is_file;
 use function is_readable;
 use function sprintf;
-use function substr;
 
 /**
  * The service through which the application reads and writes stored files. It wraps a flysystem
@@ -253,14 +252,6 @@ final readonly class FileStorage
     ): string {
         $directory = $namespace->directory($scope);
 
-        if ($namespace->isSharded()) {
-            $directory .= '/' . substr(
-                $hash,
-                0,
-                2,
-            );
-        }
-
         return sprintf(
             '%s/%s.%s',
             $directory,
@@ -278,7 +269,9 @@ final readonly class FileStorage
             'image/jpeg' => 'jpg',
             'image/png' => 'png',
             'image/webp' => 'webp',
-            'image/gif' => 'gif',
+            'image/avif' => 'avif',
+            'image/heic' => 'heic',
+            'image/heif' => 'heif',
             'application/pdf' => 'pdf',
             default => 'bin',
         };

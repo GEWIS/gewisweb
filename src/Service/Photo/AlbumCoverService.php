@@ -92,10 +92,10 @@ final readonly class AlbumCoverService
 
         $bytes = $canvas->encode(new WebpEncoder(quality: self::QUALITY, strip: true))->toString();
 
-        // Content-address the mosaic so an unchanged album keeps the same cover path (and de-duplicates).
+        // Content-address the mosaic within the album's own scope, so an unchanged album keeps the same cover path.
         $path = sprintf(
             '%s/%s.webp',
-            StorageNamespace::PhotoCover->directory(),
+            StorageNamespace::PhotoCover->directory((string) $album->getId()),
             hash(
                 'sha256',
                 $bytes,

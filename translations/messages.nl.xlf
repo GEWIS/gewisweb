@@ -285,6 +285,14 @@
         <source>Archive</source>
         <target>Archief</target>
       </trans-unit>
+      <trans-unit id="VTuuaXb" resname="Are you sure you want to delete the selected photos? This cannot be undone.">
+        <source>Are you sure you want to delete the selected photos? This cannot be undone.</source>
+        <target state="translated">Weet je zeker dat je de geselecteerde foto's wilt verwijderen? Dit kan niet ongedaan worden gemaakt.</target>
+      </trans-unit>
+      <trans-unit id="rJm7w3u" resname="Are you sure you want to delete this album?">
+        <source>Are you sure you want to delete this album?</source>
+        <target state="translated">Weet je zeker dat je dit album wilt verwijderen?</target>
+      </trans-unit>
       <trans-unit id="L_pe5Qa" resname="Are you sure you want to terminate the session on this device?">
         <source>Are you sure you want to terminate the session on this device?</source>
         <target state="translated">Weet je zeker dat je de sessie op dit apparaat wilt beëindigen?</target>
@@ -577,6 +585,10 @@
         <source>Create activity</source>
         <target state="translated">Activiteit aanmaken</target>
       </trans-unit>
+      <trans-unit id="BtbBb.9" resname="Create album">
+        <source>Create album</source>
+        <target state="translated">Album aanmaken</target>
+      </trans-unit>
       <trans-unit id="EMb_Fre" resname="Cultural">
         <source>Cultural</source>
         <target>Cultureel</target>
@@ -596,6 +608,18 @@
       <trans-unit id="IMJISl1" resname="Date and time">
         <source>Date and time</source>
         <target state="translated">Datum en tijd</target>
+      </trans-unit>
+      <trans-unit id="nooMqa8" resname="Delete album">
+        <source>Delete album</source>
+        <target state="translated">Album verwijderen</target>
+      </trans-unit>
+      <trans-unit id="QyI5MyM" resname="Delete photos">
+        <source>Delete photos</source>
+        <target state="translated">Foto's verwijderen</target>
+      </trans-unit>
+      <trans-unit id="7PFOWds" resname="Delete selected">
+        <source>Delete selected</source>
+        <target state="translated">Selectie verwijderen</target>
       </trans-unit>
       <trans-unit id="l9KZflr" resname="Deleted">
         <source>Deleted</source>
@@ -677,6 +701,10 @@
         <source>Draft discarded; the activity was reverted to its live version.</source>
         <target state="translated">Concept weggegooid; de activiteit is teruggezet naar de live versie.</target>
       </trans-unit>
+      <trans-unit id="SR5PIBx" resname="Drag photos here or click to select">
+        <source>Drag photos here or click to select</source>
+        <target state="translated">Sleep foto's hierheen of klik om te selecteren</target>
+      </trans-unit>
       <trans-unit id="xKyF7Wn" resname="Draw after being open for (hours)">
         <source>Draw after being open for (hours)</source>
         <target>Loten na geopend te zijn geweest (uren)</target>
@@ -720,6 +748,10 @@
       <trans-unit id="HVDBcL4" resname="Edit activity">
         <source>Edit activity</source>
         <target state="translated">Activiteit bewerken</target>
+      </trans-unit>
+      <trans-unit id="Zv8oaEw" resname="Edit album">
+        <source>Edit album</source>
+        <target state="translated">Album bewerken</target>
       </trans-unit>
       <trans-unit id="MOCb9jo" resname="Edit sign-up">
         <source>Edit sign-up</source>
@@ -784,6 +816,10 @@
       <trans-unit id="kI3gFIV" resname="End">
         <source>End</source>
         <target>Einde</target>
+      </trans-unit>
+      <trans-unit id="liO9jgY" resname="End date and time">
+        <source>End date and time</source>
+        <target state="translated">Einddatum en -tijd</target>
       </trans-unit>
       <trans-unit id="_ujLe_1" resname="Ends">
         <source>Ends</source>
@@ -1169,6 +1205,14 @@
         <source>It was declared, but never initialised.</source>
         <target state="translated">Het werd gedeclareerd, maar nooit geïnitialiseerd.</target>
       </trans-unit>
+      <trans-unit id="ayQt.7Z" resname="Its sub-albums and photos are deleted as well. This cannot be undone.">
+        <source>Its sub-albums and photos are deleted as well. This cannot be undone.</source>
+        <target state="translated">De subalbums en foto's worden ook verwijderd. Dit kan niet ongedaan worden gemaakt.</target>
+      </trans-unit>
+      <trans-unit id="l_i9.Yv" resname="JPEG, PNG, WebP, AVIF or HEIC, up to 32 MB each.">
+        <source>JPEG, PNG, WebP, AVIF or HEIC, up to 32 MB each.</source>
+        <target>JPEG, PNG, WebP, AVIF of HEIC, maximaal 32 MB per stuk.</target>
+      </trans-unit>
       <trans-unit id="_62c3tU" resname="Job">
         <source>Job</source>
         <target>Vacature</target>
@@ -1289,6 +1333,10 @@
         <source>Mail address</source>
         <target state="translated">Postadres</target>
       </trans-unit>
+      <trans-unit id="WP2lXKC" resname="Manage">
+        <source>Manage</source>
+        <target state="translated">Beheren</target>
+      </trans-unit>
       <trans-unit id="xDpozAE" resname="Manage your sign-up">
         <source>Manage your sign-up</source>
         <target>Beheer je inschrijving</target>
@@ -1340,6 +1388,14 @@
       <trans-unit id="JObdnqB" resname="Minimum value (number type)">
         <source>Minimum value (number type)</source>
         <target state="translated">Minimumwaarde (getaltype)</target>
+      </trans-unit>
+      <trans-unit id="3l7_Oot" resname="Move">
+        <source>Move</source>
+        <target state="translated">Verplaatsen</target>
+      </trans-unit>
+      <trans-unit id="0CacV54" resname="Move selected to…">
+        <source>Move selected to…</source>
+        <target state="translated">Selectie verplaatsen naar…</target>
       </trans-unit>
       <trans-unit id="2khgmbM" resname="Multi-factor authentication">
         <source>Multi-factor authentication</source>
@@ -1488,6 +1544,10 @@
       <trans-unit id="0upPDPu" resname="No organising organ">
         <source>No organising organ</source>
         <target state="translated">Geen organiserend orgaan</target>
+      </trans-unit>
+      <trans-unit id="1NkjPIG" resname="No parent album (a root album)">
+        <source>No parent album (a root album)</source>
+        <target state="translated">Geen bovenliggend album (een hoofdalbum)</target>
       </trans-unit>
       <trans-unit id="F8tps6v" resname="No pending activities.">
         <source>No pending activities.</source>
@@ -1641,6 +1701,10 @@
         <source>Pagination</source>
         <target state="translated">Paginering</target>
       </trans-unit>
+      <trans-unit id="rZuMo2n" resname="Parent album">
+        <source>Parent album</source>
+        <target state="translated">Bovenliggend album</target>
+      </trans-unit>
       <trans-unit id="eI1dGQ5" resname="Party">
         <source>Party</source>
         <target>Feest</target>
@@ -1660,6 +1724,10 @@
       <trans-unit id=".ku3jMu" resname="Pending">
         <source>Pending</source>
         <target state="translated">Openstaand</target>
+      </trans-unit>
+      <trans-unit id="lfzp2uK" resname="Photo albums">
+        <source>Photo albums</source>
+        <target state="translated">Fotoalbums</target>
       </trans-unit>
       <trans-unit id="BRLrb5h" resname="Photos">
         <source>Photos</source>
@@ -1720,6 +1788,10 @@
       <trans-unit id="R2eeY_o" resname="Promoted">
         <source>Promoted</source>
         <target>Uitgelicht</target>
+      </trans-unit>
+      <trans-unit id="hqFA34r" resname="Published">
+        <source>Published</source>
+        <target state="translated">Gepubliceerd</target>
       </trans-unit>
       <trans-unit id="YRI5E0j" resname="QR code">
         <source>QR code</source>
@@ -1905,6 +1977,10 @@
         <source>Running the draw admits people up to capacity and locks it; you can adjust individuals afterwards.</source>
         <target>De loting laat mensen toe tot de capaciteit en vergrendelt deze; daarna kun je individuen aanpassen.</target>
       </trans-unit>
+      <trans-unit id="z9OKodR" resname="Save">
+        <source>Save</source>
+        <target state="translated">Opslaan</target>
+      </trans-unit>
       <trans-unit id="516349u" resname="Save changes">
         <source>Save changes</source>
         <target>Wijzigingen opslaan</target>
@@ -1972,6 +2048,10 @@
       <trans-unit id="Hu8.1pz" resname="Select all">
         <source>Select all</source>
         <target>Alles selecteren</target>
+      </trans-unit>
+      <trans-unit id="qgAT_FC" resname="Select photos and a destination album to move them.">
+        <source>Select photos and a destination album to move them.</source>
+        <target state="translated">Selecteer foto's en een doelalbum om ze te verplaatsen.</target>
       </trans-unit>
       <trans-unit id="v.UOjhX" resname="Selected">
         <source>Selected</source>
@@ -2125,6 +2205,10 @@
         <source>Start</source>
         <target>Start</target>
       </trans-unit>
+      <trans-unit id="zhXKTua" resname="Start date and time">
+        <source>Start date and time</source>
+        <target state="translated">Startdatum en -tijd</target>
+      </trans-unit>
       <trans-unit id="1sKxPkF" resname="Start review">
         <source>Start review</source>
         <target state="translated">Beoordeling starten</target>
@@ -2148,6 +2232,10 @@
       <trans-unit id="O4UIX7e" resname="Study Association GEWIS">
         <source>Study Association GEWIS</source>
         <target>Studievereniging GEWIS</target>
+      </trans-unit>
+      <trans-unit id="QWpfKJT" resname="Sub-albums">
+        <source>Sub-albums</source>
+        <target state="translated">Subalbums</target>
       </trans-unit>
       <trans-unit id="y01Hddz" resname="Subject">
         <source>Subject</source>
@@ -2265,6 +2353,18 @@
         <source>The activity revision was updated.</source>
         <target state="translated">De activiteitsrevisie is bijgewerkt.</target>
       </trans-unit>
+      <trans-unit id="_EYd71g" resname="The album has been created.">
+        <source>The album has been created.</source>
+        <target state="translated">Het album is aangemaakt.</target>
+      </trans-unit>
+      <trans-unit id="EPICcI4" resname="The album has been deleted.">
+        <source>The album has been deleted.</source>
+        <target state="translated">Het album is verwijderd.</target>
+      </trans-unit>
+      <trans-unit id="3GUv_V_" resname="The album has been updated.">
+        <source>The album has been updated.</source>
+        <target state="translated">Het album is bijgewerkt.</target>
+      </trans-unit>
       <trans-unit id="q5YrQGY" resname="The changes in this draft will be lost and the activity will return to its live version.">
         <source>The changes in this draft will be lost and the activity will return to its live version.</source>
         <target state="translated">De wijzigingen in dit concept gaan verloren en de activiteit keert terug naar de live versie.</target>
@@ -2293,6 +2393,14 @@
         <source>The external subscriber has been added.</source>
         <target>De externe inschrijver is toegevoegd.</target>
       </trans-unit>
+      <trans-unit id="FDhAqdq" resname="The photos have been deleted.">
+        <source>The photos have been deleted.</source>
+        <target state="translated">De foto's zijn verwijderd.</target>
+      </trans-unit>
+      <trans-unit id="Ga4egVA" resname="The photos have been moved.">
+        <source>The photos have been moved.</source>
+        <target state="translated">De foto's zijn verplaatst.</target>
+      </trans-unit>
       <trans-unit id="TUHVFZ1" resname="The selected recipients will receive this email immediately. This cannot be undone.">
         <source>The selected recipients will receive this email immediately. This cannot be undone.</source>
         <target>De geselecteerde ontvangers ontvangen deze e-mail direct. Dit kan niet ongedaan worden gemaakt.</target>
@@ -2320,6 +2428,10 @@
       <trans-unit id="SR63yZr" resname="There are no albums to show.">
         <source>There are no albums to show.</source>
         <target>Er zijn geen albums om weer te geven.</target>
+      </trans-unit>
+      <trans-unit id="Rosng1Y" resname="There are no albums yet.">
+        <source>There are no albums yet.</source>
+        <target state="translated">Er zijn nog geen albums.</target>
       </trans-unit>
       <trans-unit id="MdizzQd" resname="There are no recipients in the selected group.">
         <source>There are no recipients in the selected group.</source>
@@ -2408,6 +2520,10 @@
       <trans-unit id="fFg9TZ7" resname="This activity was taken over by a reviewer, so your changes were not saved.">
         <source>This activity was taken over by a reviewer, so your changes were not saved.</source>
         <target state="translated">Deze activiteit is overgenomen door een beoordelaar, dus je wijzigingen zijn niet opgeslagen.</target>
+      </trans-unit>
+      <trans-unit id="x29rrZO" resname="This album does not contain any photos yet. Upload some above.">
+        <source>This album does not contain any photos yet. Upload some above.</source>
+        <target state="translated">Dit album bevat nog geen foto's. Upload er hierboven enkele.</target>
       </trans-unit>
       <trans-unit id="RiHJQBU" resname="This album does not contain any photos.">
         <source>This album does not contain any photos.</source>
@@ -2537,6 +2653,10 @@
         <source>Uncategorised</source>
         <target>Niet gecategoriseerd</target>
       </trans-unit>
+      <trans-unit id="SsE5mLL" resname="Undated">
+        <source>Undated</source>
+        <target state="translated">Zonder datum</target>
+      </trans-unit>
       <trans-unit id="7ZQ9oWO" resname="Unknown device">
         <source>Unknown device</source>
         <target state="translated">Onbekend apparaat</target>
@@ -2553,6 +2673,10 @@
         <source>Unpublished</source>
         <target state="translated">Gedepubliceerd</target>
       </trans-unit>
+      <trans-unit id="dgKn3dQ" resname="Unpublished albums are only visible to the board.">
+        <source>Unpublished albums are only visible to the board.</source>
+        <target state="translated">Niet-gepubliceerde albums zijn alleen zichtbaar voor het bestuur.</target>
+      </trans-unit>
       <trans-unit id="TeuL_GQ" resname="Unsubscribe">
         <source>Unsubscribe</source>
         <target>Uitschrijven</target>
@@ -2568,6 +2692,10 @@
       <trans-unit id="ZOvPU2x" resname="Upload exams">
         <source>Upload exams</source>
         <target state="translated">Upload tentamens</target>
+      </trans-unit>
+      <trans-unit id="TM1QKf." resname="Upload photos">
+        <source>Upload photos</source>
+        <target state="translated">Foto's uploaden</target>
       </trans-unit>
       <trans-unit id="WcwG01E" resname="Useful Information">
         <source>Useful Information</source>

@@ -12,17 +12,18 @@ use function sprintf;
 /**
  * The domains that {@see \App\Service\Application\FileStorage} stores files for. Each case maps a domain onto its
  * directory prefix under the storage root (`data/`), the whitelist of MIME types and the maximum file size accepted
- * for it, and whether it is private (needs an authenticated, signed request to serve) or sharded (originals are spread
- * over 256 two-character subdirectories so no single directory grows unbounded).
+ * for it, and whether it is private (needs an authenticated, signed request to serve). Photo and company namespaces are
+ * scoped per owning entity (album or company), which also keeps their directories bounded and means the same bytes in
+ * two albums never share one stored file.
  *
  * The backing values are stable machine keys, never part of a URL; the URL always carries the full stored path.
  */
 enum StorageNamespace: string
 {
-    /** Album photo originals: the only private namespace, sharded by the first two characters of the hash. */
+    /** Album photo originals: the only private namespace, scoped per album. */
     case PhotoOriginal = 'photo-original';
 
-    /** Generated 2x2 album cover mosaics (public). */
+    /** Generated 2x2 album cover mosaics, scoped per album (public). */
     case PhotoCover = 'photo-cover';
 
     /** Company logos and banner-package images, scoped per company (public). */
@@ -41,18 +42,19 @@ enum StorageNamespace: string
 
     /**
      * The directory prefix (no leading or trailing slash) this namespace stores into, relative to the storage root.
-     * Scoped namespaces (per-company) require a non-empty $scope; the others reject one.
+     * Scoped namespaces (photos per album, company assets per company) require a non-empty $scope; the others reject
+     * one.
      */
     public function directory(?string $scope = null): string
     {
         return match ($this) {
-            self::PhotoOriginal => $this->rejectScope(
-                $scope,
-                'photos/albums',
+            self::PhotoOriginal => sprintf(
+                'photos/albums/%s',
+                $this->requireScope($scope),
             ),
-            self::PhotoCover => $this->rejectScope(
-                $scope,
-                'photos/covers',
+            self::PhotoCover => sprintf(
+                'photos/covers/%s',
+                $this->requireScope($scope),
             ),
             self::OrganImage => $this->rejectScope(
                 $scope,
@@ -74,12 +76,14 @@ enum StorageNamespace: string
     }
 
     /**
-     * Whether originals in this namespace are spread over two-character hash-prefix subdirectories. Only the album
-     * originals warrant it; every other namespace holds comparatively few files.
+     * Whether {@see directory()} needs a scope: photos are scoped per album, company assets per company.
      */
-    public function isSharded(): bool
+    public function requiresScope(): bool
     {
-        return self::PhotoOriginal === $this;
+        return match ($this) {
+            self::PhotoOriginal, self::PhotoCover, self::CompanyImage, self::CompanyAttachment => true,
+            default => false,
+        };
     }
 
     /**
@@ -106,7 +110,9 @@ enum StorageNamespace: string
                 'image/jpeg',
                 'image/png',
                 'image/webp',
-                'image/gif',
+                'image/avif',
+                'image/heic',
+                'image/heif',
             ],
         };
     }
@@ -116,7 +122,7 @@ enum StorageNamespace: string
      */
     public function maxFileSizeBytes(): int
     {
-        return 64 * self::MEGABYTE;
+        return 32 * self::MEGABYTE;
     }
 
     /**

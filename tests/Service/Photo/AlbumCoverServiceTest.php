@@ -14,6 +14,7 @@ use App\Service\Photo\AlbumCoverService;
 use League\Flysystem\Filesystem;
 use League\Flysystem\InMemory\InMemoryFilesystemAdapter;
 use PHPUnit\Framework\TestCase;
+use ReflectionProperty;
 
 use function dirname;
 use function getimagesizefromstring;
@@ -45,7 +46,7 @@ final class AlbumCoverServiceTest extends TestCase
                 ),   // 800x600 landscape
             ],
         );
-        $album = new Album();
+        $album = $this->albumWithId(7);
 
         $coverPath = $service->generateForAlbum($album);
 
@@ -54,7 +55,8 @@ final class AlbumCoverServiceTest extends TestCase
             $coverPath,
             $album->getCoverPath(),
         );
-        self::assertTrue(str_starts_with($coverPath, 'photos/covers/'));
+        // The cover is scoped under the album it belongs to.
+        self::assertTrue(str_starts_with($coverPath, 'photos/covers/7/'));
         self::assertTrue(str_ends_with($coverPath, '.webp'));
 
         $info = getimagesizefromstring($storage->read($coverPath));
@@ -94,13 +96,32 @@ final class AlbumCoverServiceTest extends TestCase
             ),
         ];
 
-        $first = $this->service($storage, $photos)->generateForAlbum(new Album());
-        $second = $this->service($storage, $photos)->generateForAlbum(new Album());
+        // The same album (same id) with the same photos must resolve to the same scoped cover path.
+        $album = $this->albumWithId(5);
+        $first = $this->service($storage, $photos)->generateForAlbum($album);
+        $second = $this->service($storage, $photos)->generateForAlbum($album);
 
         self::assertSame(
             $first,
             $second,
         );
+    }
+
+    /**
+     * An album with a database id set, so its cover can be stored under the album-scoped namespace without persisting.
+     */
+    private function albumWithId(int $id): Album
+    {
+        $album = new Album();
+        new ReflectionProperty(
+            Album::class,
+            'id',
+        )->setValue(
+            $album,
+            $id,
+        );
+
+        return $album;
     }
 
     /**
@@ -130,6 +151,7 @@ final class AlbumCoverServiceTest extends TestCase
                 __DIR__,
                 3,
             ) . '/tests/Resources/images/' . $fixture,
+            '1',
         )->path;
 
         $photo = new Photo();

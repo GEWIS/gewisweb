@@ -10,6 +10,7 @@ use App\Repository\Photo\AlbumRepository;
 use App\Security\Photo\AlbumVoter;
 use Symfony\Bundle\SecurityBundle\Security;
 
+use function krsort;
 use function stripos;
 
 /**
@@ -97,6 +98,30 @@ final readonly class AlbumService
 
             $grouped[$start->format('Y-m')][] = $album;
         }
+
+        return $grouped;
+    }
+
+    /**
+     * Every root album grouped by association year (keyed by the year's first number, most recent year first) for the
+     * board admin overview. Unlike the public overview this is not split by month and always includes unpublished
+     * albums; albums without a start date are gathered under the 0 key, which sorts last.
+     *
+     * @return array<int, Album[]>
+     */
+    public function getRootAlbumsByYear(): array
+    {
+        $grouped = [];
+        foreach ($this->albumRepository->findRootAlbums() as $album) {
+            $start = $album->getStartDateTime();
+            $year = null === $start
+                ? 0
+                : AssociationYear::fromDate($start)->getYear();
+
+            $grouped[$year][] = $album;
+        }
+
+        krsort($grouped);
 
         return $grouped;
     }

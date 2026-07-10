@@ -3,6 +3,21 @@ Photo
 
 */
 
+// Drag-and-drop upload target on the album manage view. The dashed outline and the hover/drag highlight are the only
+// affordance that the whole panel accepts files; the upload controller toggles `is-dragging` while a drag is over it.
+.photo-dropzone {
+    border-style: dashed !important;
+    border-color: var(--#{$prefix}border-color);
+    cursor: pointer;
+    transition: border-color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+
+    &:hover,
+    &.is-dragging {
+        border-color: $brand-primary;
+        background-color: var(--#{$prefix}secondary-bg);
+    }
+}
+
 // Album photo grid. The gallery controller lays this out as a windowed masonry: the container is sized to hold the whole
 // album, and each tile is absolutely positioned (width, height and translate set by the controller from the photo's
 // aspect ratio), so portrait and landscape photos keep their shape and nothing reshuffles as tiles mount and unmount.

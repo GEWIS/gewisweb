@@ -11,6 +11,10 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\Persistence\ManagerRegistry;
 
 use function addcslashes;
+use function array_filter;
+use function array_merge;
+use function array_values;
+use function in_array;
 
 /**
  * @extends ServiceEntityRepository<Album>
@@ -156,5 +160,68 @@ class AlbumRepository extends ServiceEntityRepository
         return [] === $res
             ? null
             : $res[0];
+    }
+
+    /**
+     * All root (top-level) albums, most recent first, for the board admin overview. Undated albums sort last (MariaDB
+     * orders NULL dates after any value on a descending sort), and both published and unpublished albums are returned.
+     *
+     * @return Album[]
+     */
+    public function findRootAlbums(): array
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.parent IS NULL')
+            ->orderBy(
+                'a.startDateTime',
+                'DESC',
+            )
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * The albums that may be chosen as a parent for the given album (all of them when creating). The album itself and
+     * its descendants are excluded, so an album can never be made its own ancestor.
+     *
+     * @return Album[]
+     */
+    public function findAssignableParents(?Album $exclude): array
+    {
+        $albums = $this->findBy(
+            [],
+            ['name' => 'ASC'],
+        );
+
+        if (null === $exclude) {
+            return $albums;
+        }
+
+        $excludedIds = $this->subtreeIds($exclude);
+
+        return array_values(array_filter(
+            $albums,
+            static fn (Album $album): bool => !in_array(
+                $album->getId(),
+                $excludedIds,
+                true,
+            ),
+        ));
+    }
+
+    /**
+     * @return list<int>
+     */
+    private function subtreeIds(Album $album): array
+    {
+        $ids = [(int) $album->getId()];
+        foreach ($album->getChildren() as $child) {
+            $ids = array_merge(
+                $ids,
+                $this->subtreeIds($child),
+            );
+        }
+
+        return $ids;
     }
 }

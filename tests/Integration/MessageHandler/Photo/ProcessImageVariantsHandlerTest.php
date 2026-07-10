@@ -75,6 +75,7 @@ final class ProcessImageVariantsHandlerTest extends KernelTestCase
                 __DIR__,
                 4,
             ) . '/tests/Resources/images/gala-dinner-1.jpg',
+            '1',
         )->path;
     }
 }

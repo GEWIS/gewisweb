@@ -275,6 +275,7 @@ final class PhotoControllerTest extends DatabaseTestCase
         $stored = self::getContainer()->get(FileStorage::class)->store(
             StorageNamespace::PhotoOriginal,
             $temporaryFile,
+            (string) $album->getId(),
         );
         unlink($temporaryFile);
 

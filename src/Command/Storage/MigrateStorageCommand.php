@@ -29,6 +29,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 use function assert;
+use function basename;
 use function count;
 use function date;
 use function dirname;
@@ -293,19 +294,15 @@ final class MigrateStorageCommand extends Command
             );
         }
 
-        // Non-scoped namespaces (photo originals, covers, organ images): the stored value is already the sha1 shard
-        // plus filename relative to `public/data/`. Keep it verbatim, only re-rooting it under the new namespace
-        // directory. If it already sits there, the row was migrated before, so skip it.
-        if (
-            str_starts_with(
-                $legacyPath,
-                $targetDirectory . '/',
-            )
-        ) {
-            return null;
-        }
+        // The legacy value is `{2ch}/{name}.{ext}` relative to `public/data/`. The sha-named file is already unique
+        // and the new layout is not sharded (photos are bounded per album), so re-root just the filename under the new
+        // directory and drop the legacy bucket. A value that already equals its re-rooted form was migrated before, so
+        // skip it (idempotent).
+        $new = $targetDirectory . '/' . basename($legacyPath);
 
-        return $targetDirectory . '/' . $legacyPath;
+        return $legacyPath === $new
+            ? null
+            : $new;
     }
 
     /**
@@ -342,7 +339,8 @@ final class MigrateStorageCommand extends Command
             return null;
         }
 
-        return $targetDirectory . '/' . $tail;
+        // Flatten: the sha-named file is unique, so the legacy bucket is dropped like every other namespace.
+        return $targetDirectory . '/' . basename($tail);
     }
 
     /**
@@ -656,7 +654,7 @@ final class MigrateStorageCommand extends Command
 
                 $scope = $this->resolveScope($entity);
                 if (
-                    StorageNamespace::CompanyImage === $namespace
+                    $namespace->requiresScope()
                     && null === $scope
                 ) {
                     continue;
@@ -820,11 +818,16 @@ final class MigrateStorageCommand extends Command
     }
 
     /**
-     * The per-company scope (the company id, as a string) for a scoped entity, or null for the non-scoped ones.
+     * The scope (as a string id) for a scoped entity: the album for a photo or album cover, the company for a company
+     * asset, or null for the non-scoped namespaces.
      */
     private function resolveScope(object $entity): ?string
     {
-        if ($entity instanceof CompanyRevision) {
+        if ($entity instanceof Photo) {
+            $id = $entity->getAlbum()->getId();
+        } elseif ($entity instanceof Album) {
+            $id = $entity->getId();
+        } elseif ($entity instanceof CompanyRevision) {
             $id = $entity->getCompany()->getId();
         } elseif ($entity instanceof CompanyBannerPackage) {
             $id = $entity->getCompany()->getId();

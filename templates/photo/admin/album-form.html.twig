@@ -1,0 +1,49 @@
+{% extends 'layout-admin.html.twig' %}
+
+{% set is_edit = album is not null %}
+
+{% block page_title %}
+    {{ (is_edit ? 'Edit album'|trans : 'Create album'|trans)|page_title }}{{ 'Photos'|trans|page_title }}{{ parent() }}
+{% endblock %}
+
+{% block admin_breadcrumbs %}
+    <li class="breadcrumb-item active" aria-current="page">
+        <a href="{{ path('admin/photos/index') }}">
+            {{ 'Photos'|trans }}
+        </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">
+        {{ is_edit ? 'Edit album'|trans : 'Create album'|trans }}
+    </li>
+{% endblock %}
+
+{% block contents %}
+    <div class="row justify-content-center">
+        <div class="col col-lg-8 col-xl-6">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3>{{ is_edit ? 'Edit album'|trans : 'Create album'|trans }}</h3>
+                </div>
+                <div class="panel-body">
+                    {{ form_start(form) }}
+                        {{ form_row(form.name) }}
+                        {{ form_row(form.parent) }}
+                        <div class="row">
+                            <div class="col-md-6">{{ form_row(form.startDateTime) }}</div>
+                            <div class="col-md-6">{{ form_row(form.endDateTime) }}</div>
+                        </div>
+                        {{ form_row(form.published) }}
+                        <div class="d-flex justify-content-end gap-2">
+                            <a href="{{ path('admin/photos/index') }}" class="btn btn-link">
+                                {{ 'Cancel'|trans }}
+                            </a>
+                            <button type="submit" class="btn btn-gewis-primary">
+                                {{ 'Save'|trans }}
+                            </button>
+                        </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

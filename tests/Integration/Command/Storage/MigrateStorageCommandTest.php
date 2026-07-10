@@ -63,32 +63,36 @@ final class MigrateStorageCommandTest extends DatabaseTestCase
     {
         $command = $this->command();
 
-        // Non-scoped namespaces keep the sha1 shard + filename and are re-rooted under their namespace directory.
+        // The new layout is not sharded, so the legacy `{2ch}/` bucket is dropped and only the sha-named file is
+        // re-rooted. Photos and covers are scoped per album.
         self::assertSame(
-            'photos/albums/92/cfceb39d57d914ed8b14d0e37643de0797ae56.jpg',
+            'photos/albums/7/cfceb39d57d914ed8b14d0e37643de0797ae56.jpg',
             $command->mapLegacyPath(
                 StorageNamespace::PhotoOriginal,
                 '92/cfceb39d57d914ed8b14d0e37643de0797ae56.jpg',
+                '7',
             ),
         );
         self::assertSame(
-            'photos/covers/1a/2b3c4d.png',
+            'photos/covers/7/2b3c4d.png',
             $command->mapLegacyPath(
                 StorageNamespace::PhotoCover,
                 '1a/2b3c4d.png',
+                '7',
             ),
         );
         self::assertSame(
-            'organs/images/1a/2b3c4d.jpg',
+            'organs/images/2b3c4d.jpg',
             $command->mapLegacyPath(
                 StorageNamespace::OrganImage,
                 '1a/2b3c4d.jpg',
             ),
         );
 
-        // The scoped company namespace drops the legacy `company/{id}/` prefix and re-roots under `career/{id}/images`.
+        // The scoped company namespace drops the legacy `company/{id}/` prefix (and the shard) and re-roots the file
+        // under `career/{id}/images`.
         self::assertSame(
-            'career/42/images/1a/2b3c4d.png',
+            'career/42/images/2b3c4d.png',
             $command->mapLegacyPath(
                 StorageNamespace::CompanyImage,
                 'company/42/1a/2b3c4d.png',
@@ -100,7 +104,8 @@ final class MigrateStorageCommandTest extends DatabaseTestCase
         self::assertNull(
             $command->mapLegacyPath(
                 StorageNamespace::PhotoOriginal,
-                'photos/albums/92/cfceb39d57d914ed8b14d0e37643de0797ae56.jpg',
+                'photos/albums/7/cfceb39d57d914ed8b14d0e37643de0797ae56.jpg',
+                '7',
             ),
         );
         self::assertNull(
@@ -157,7 +162,7 @@ final class MigrateStorageCommandTest extends DatabaseTestCase
         $this->runCommand(['--files' => true, '--dry-run' => true]);
 
         self::assertFileDoesNotExist(
-            $this->projectDir . '/data/career/' . $companyId . '/images/ab/cafebabecafebabe.png',
+            $this->projectDir . '/data/career/' . $companyId . '/images/cafebabecafebabe.png',
         );
     }
 
@@ -176,7 +181,7 @@ final class MigrateStorageCommandTest extends DatabaseTestCase
             $source,
             'image-bytes',
         );
-        $destination = $this->projectDir . '/data/career/' . $companyId . '/images/cd/0badc0de0badc0de.png';
+        $destination = $this->projectDir . '/data/career/' . $companyId . '/images/0badc0de0badc0de.png';
 
         $this->runCommand(['--files' => true]);
         self::assertFileExists($destination);
@@ -206,7 +211,7 @@ final class MigrateStorageCommandTest extends DatabaseTestCase
         self::assertNotNull($revisionId);
 
         $legacy = 'company/' . $companyId . '/ef/deadbeefdeadbeef.png';
-        $expected = 'career/' . $companyId . '/images/ef/deadbeefdeadbeef.png';
+        $expected = 'career/' . $companyId . '/images/deadbeefdeadbeef.png';
         $revision->setLogo($legacy);
         $this->entityManager->flush();
 

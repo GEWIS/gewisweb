@@ -180,6 +180,7 @@ final class ImageControllerTest extends DatabaseTestCase
                 __DIR__,
                 4,
             ) . '/tests/Resources/images/gala-dinner-1.jpg',
+            '1',
         )->path;
     }
 

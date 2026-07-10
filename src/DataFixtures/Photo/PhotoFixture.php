@@ -227,6 +227,9 @@ class PhotoFixture extends Fixture implements DependentFixtureInterface
             $secret,
         );
 
+        // Flush the albums first so their ids exist: photo originals are stored scoped per album.
+        $manager->flush();
+
         // --- Dinner sub-album ---
         $dinnerPhoto = $this->makePhoto(
             $dinner,
@@ -403,6 +406,7 @@ class PhotoFixture extends Fixture implements DependentFixtureInterface
                 ),
             );
             $manager->persist($album);
+            $manager->flush();
 
             for ($i = 0; $i < $count; ++$i) {
                 $manager->persist($this->makePhoto(
@@ -424,6 +428,7 @@ class PhotoFixture extends Fixture implements DependentFixtureInterface
             '-70 days',
         );
         $manager->persist($festival);
+        $manager->flush();
 
         foreach (['Main Stage', 'Camping', 'After Movie'] as $day => $stage) {
             $subAlbum = $this->makeAlbum(
@@ -436,6 +441,7 @@ class PhotoFixture extends Fixture implements DependentFixtureInterface
                 ),
             );
             $manager->persist($subAlbum);
+            $manager->flush();
 
             for ($i = 0; $i < 20; ++$i) {
                 $manager->persist($this->makePhoto(
@@ -488,6 +494,7 @@ class PhotoFixture extends Fixture implements DependentFixtureInterface
             $stored = $this->fileStorage->store(
                 StorageNamespace::PhotoOriginal,
                 $temporaryFile,
+                (string) $album->getId(),
             );
         } finally {
             unlink($temporaryFile);

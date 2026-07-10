@@ -20,7 +20,6 @@ use function fopen;
 use function ftruncate;
 use function hash;
 use function str_starts_with;
-use function substr;
 use function sys_get_temp_dir;
 use function tempnam;
 use function unlink;
@@ -49,7 +48,7 @@ final class FileStorageTest extends TestCase
         $this->tempFiles = [];
     }
 
-    public function testStoreDerivesShardedContentAddressedPath(): void
+    public function testStoreDerivesScopedContentAddressedPath(): void
     {
         $storage = $this->storage();
         $source = $this->pngFixture();
@@ -57,6 +56,7 @@ final class FileStorageTest extends TestCase
         $stored = $storage->store(
             StorageNamespace::PhotoOriginal,
             $source,
+            '1',
         );
 
         $expectedHash = hash(
@@ -73,11 +73,7 @@ final class FileStorageTest extends TestCase
         );
         self::assertFalse($stored->deduplicated);
         self::assertSame(
-            'photos/albums/' . substr(
-                $expectedHash,
-                0,
-                2,
-            ) . '/' . $expectedHash . '.png',
+            'photos/albums/1/' . $expectedHash . '.png',
             $stored->path,
         );
         self::assertTrue($storage->exists($stored->path));
@@ -90,10 +86,12 @@ final class FileStorageTest extends TestCase
         $first = $storage->store(
             StorageNamespace::PhotoOriginal,
             $this->pngFixture(),
+            '1',
         );
         $second = $storage->store(
             StorageNamespace::PhotoOriginal,
             $this->pngFixture(),
+            '1',
         );
 
         self::assertFalse($first->deduplicated);
@@ -115,7 +113,7 @@ final class FileStorageTest extends TestCase
         );
 
         self::assertTrue(str_starts_with($stored->path, 'career/42/images/'));
-        // Non-sharded namespaces do not insert the two-character prefix directory.
+        // Company assets are scoped per company id.
         self::assertSame(
             'career/42/images/' . $stored->hash . '.png',
             $stored->path,
@@ -135,6 +133,7 @@ final class FileStorageTest extends TestCase
         $storage->store(
             StorageNamespace::PhotoOriginal,
             $textFile,
+            '1',
         );
     }
 
@@ -146,6 +145,7 @@ final class FileStorageTest extends TestCase
         $storage->store(
             StorageNamespace::PhotoOriginal,
             $this->tempFile(),
+            '1',
         );
     }
 
@@ -169,6 +169,7 @@ final class FileStorageTest extends TestCase
         $storage->store(
             StorageNamespace::PhotoOriginal,
             $big,
+            '1',
         );
     }
 
@@ -178,6 +179,7 @@ final class FileStorageTest extends TestCase
         $stored = $storage->store(
             StorageNamespace::PhotoOriginal,
             $this->pngFixture(),
+            '1',
         );
 
         self::assertTrue($storage->remove($stored->path));
@@ -201,6 +203,7 @@ final class FileStorageTest extends TestCase
         $stored = $storage->store(
             StorageNamespace::PhotoOriginal,
             $this->pngFixture(),
+            '1',
         );
 
         self::assertFalse($storage->remove($stored->path));

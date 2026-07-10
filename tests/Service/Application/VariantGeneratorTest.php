@@ -38,6 +38,7 @@ final class VariantGeneratorTest extends TestCase
         $source = $storage->store(
             StorageNamespace::PhotoOriginal,
             $this->fixture(self::LANDSCAPE_FIXTURE),
+            '1',
         )->path;
 
         self::assertTrue($generator->generateVariant($source, ImageVariant::W320, 85));
@@ -70,6 +71,7 @@ final class VariantGeneratorTest extends TestCase
         $source = $storage->store(
             StorageNamespace::PhotoOriginal,
             $this->fixture(self::LANDSCAPE_FIXTURE),
+            '1',
         )->path;
 
         self::assertFalse($generator->generateVariant($source, ImageVariant::W960, 85));
@@ -85,6 +87,7 @@ final class VariantGeneratorTest extends TestCase
         $source = $storage->store(
             StorageNamespace::PhotoOriginal,
             $this->fixture(self::SQUARE_FIXTURE),
+            '1',
         )->path;
 
         self::assertTrue($generator->generateVariant($source, ImageVariant::Cover, 85));
@@ -116,6 +119,7 @@ final class VariantGeneratorTest extends TestCase
         $source = $storage->store(
             StorageNamespace::PhotoOriginal,
             $this->fixture(self::LANDSCAPE_FIXTURE),
+            '1',
         )->path;
 
         $generator->generate(

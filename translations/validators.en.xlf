@@ -41,6 +41,10 @@
         <source>Enter a value between {{ min }} and {{ max }}.</source>
         <target>Enter a value between {{ min }} and {{ max }}.</target>
       </trans-unit>
+      <trans-unit id="x.FTgH0" resname="Enter an album name.">
+        <source>Enter an album name.</source>
+        <target state="translated">Enter an album name.</target>
+      </trans-unit>
       <trans-unit id="IoicRFz" resname="Enter an email address.">
         <source>Enter an email address.</source>
         <target state="translated">Enter an email address.</target>

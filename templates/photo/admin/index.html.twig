@@ -14,9 +14,61 @@
 {% endblock %}
 
 {% block contents %}
-    <div class="row">
-        <div class="col-md-12">
-            {# TODO #}
-        </div>
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+        <h1 class="h3 mb-0">{{ 'Photo albums'|trans }}</h1>
+        <a href="{{ path('admin/photos/albums_create') }}" class="btn btn-gewis-primary">
+            <i class="fas fa-plus"></i> {{ 'Create album'|trans }}
+        </a>
     </div>
+
+    {% if albumsByYear is empty %}
+        <p class="text-muted">{{ 'There are no albums yet.'|trans }}</p>
+    {% else %}
+        {% for year, albums in albumsByYear %}
+            <h2 class="h5 text-muted border-bottom pb-2 mb-3">
+                {% if year > 0 %}{{ year }} &ndash; {{ year + 1 }}{% else %}{{ 'Undated'|trans }}{% endif %}
+            </h2>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xxl-6 g-3 mb-4">
+                {% for album in albums %}
+                    {% include 'partials/photo/admin/album-card.html.twig' with { 'album': album } only %}
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+        {# A per-album confirmation modal wrapping the POST form, so a delete is never a bare browser dialog. #}
+        {% for albums in albumsByYear %}
+            {% for album in albums %}
+                <div class="modal fade" id="delete-album-{{ album.id }}" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">{{ 'Delete album'|trans }}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="{{ 'Close'|trans }}"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>{{ 'Are you sure you want to delete this album?'|trans }}</p>
+                                <p class="fw-semibold mb-0">{{ album.name }}</p>
+                                {% if album.albumCount > 0 or album.getPhotoCount(false) > 0 %}
+                                    <p class="text-danger small mt-2 mb-0">
+                                        <i class="fa-solid fa-triangle-exclamation me-1"></i>
+                                        {{ 'Its sub-albums and photos are deleted as well. This cannot be undone.'|trans }}
+                                    </p>
+                                {% endif %}
+                            </div>
+                            <form method="post" action="{{ path('admin/photos/albums_delete', {album: album.id}) }}">
+                                <input type="hidden" name="_csrf_token"
+                                       value="{{ csrf_token('photo_album_delete-' ~ album.id) }}">
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-link"
+                                            data-bs-dismiss="modal">{{ 'Cancel'|trans }}</button>
+                                    <button type="submit" class="btn btn-danger">{{ 'Delete album'|trans }}</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
 {% endblock %}
