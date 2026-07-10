@@ -41,7 +41,14 @@ class PhotoRepository extends ServiceEntityRepository
         int $start = 0,
         ?int $maxResults = null,
     ): array {
-        $qb = $this->createQueryBuilder('p');
+        // weeklyPhoto is an inverse one-to-one, which Doctrine would otherwise load with a separate query per photo;
+        // fetch-joining it keeps browsing an album to a single query.
+        $qb = $this->createQueryBuilder('p')
+            ->leftJoin(
+                'p.weeklyPhoto',
+                'weeklyPhoto',
+            )
+            ->addSelect('weeklyPhoto');
 
         if ($album instanceof MemberAlbum) {
             // Member tags moved onto the MemberTag subtype, so join it explicitly rather than the base `p.tags`.

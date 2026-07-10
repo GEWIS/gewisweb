@@ -7,6 +7,7 @@ namespace App\Service\Photo;
 use App\Entity\Application\Enums\ImageVariant;
 use App\Entity\Photo\Album;
 use App\Entity\Photo\Photo;
+use App\Repository\Photo\PhotoRepository;
 use App\Service\Application\ImageUrlBuilder;
 use App\ViewModel\Photo\ManifestEntry;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -24,6 +25,7 @@ final readonly class PhotoService
     public function __construct(
         private ImageUrlBuilder $imageUrlBuilder,
         private UrlGeneratorInterface $urlGenerator,
+        private PhotoRepository $photoRepository,
     ) {
     }
 
@@ -38,7 +40,9 @@ final readonly class PhotoService
         $albumId = (int) $album->getId();
 
         $entries = [];
-        foreach ($album->getPhotos() as $photo) {
+        // Fetch through the repository (rather than the lazy collection) so the photos and their weekly-photo relation
+        // load in a single query, and in the same order as the thumbnail grid.
+        foreach ($this->photoRepository->getAlbumPhotos($album) as $photo) {
             $entries[] = $this->manifestEntry(
                 $albumId,
                 $photo,

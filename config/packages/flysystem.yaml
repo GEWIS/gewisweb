@@ -6,12 +6,11 @@
 flysystem:
     storages:
         default.storage:
-            adapter: 'local'
-            options:
+            local:
                 directory: '%kernel.project_dir%/data'
 
 when@test:
     flysystem:
         storages:
             default.storage:
-                adapter: 'memory'
+                memory: ~
