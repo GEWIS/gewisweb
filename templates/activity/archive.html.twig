@@ -6,11 +6,15 @@
     <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
         <h1 class="mb-0">{{ 'Activity Archive'|trans }}</h1>
 
-        {% include 'partials/activity/year-switcher.html.twig' with {
-            route: 'activity/archive',
-            year: year,
-            years: years,
-        } only %}
+        <div class="d-flex flex-wrap align-items-center gap-2">
+            {% include 'partials/activity/filter-toggle.html.twig' %}
+
+            {% include 'partials/activity/year-switcher.html.twig' with {
+                route: 'activity/archive',
+                year: year,
+                years: years,
+            } only %}
+        </div>
     </div>
 
     {{ component('Activity:ActivityOverview', {

@@ -1,13 +1,8 @@
 <div {{ attributes }}>
-    <div class="panel mb-3" data-live-ignore>
-        <button type="button"
-                class="panel-heading d-flex justify-content-between align-items-center w-100 border-0 bg-transparent text-start collapsed"
-                data-bs-toggle="collapse" data-bs-target="#activity-filters"
-                aria-expanded="false" aria-controls="activity-filters">
-            <span class="h6 mb-0">{{ 'Filters'|trans }}</span>
-            <i class="fas fa-sliders"></i>
-        </button>
-        <div class="collapse" id="activity-filters">
+    {# The toggle for this panel lives in the page header (partials/activity/filter-toggle.html.twig) so it sits inline
+       with the page title. data-live-ignore keeps the injected label chips intact across re-renders. #}
+    <div class="collapse mb-3" id="activity-filters" data-live-ignore>
+        <div class="panel my-0">
             <div class="panel-body">
                 <div class="row g-3 align-items-end">
                 <div class="col-md-4">
@@ -86,19 +81,33 @@
     </div>
 
     {% if this.past %}
-        {% for year, activities in this.activitiesByAssociationYear %}
-            <h2 class="h4 {{ loop.first ? 'mt-2' : 'mt-5' }} mb-3 pb-2 border-bottom">{{ year }}</h2>
-            <div class="mb-2">
+        {# Still grouped/filtered by association year (year switcher + activitiesByAssociationYear); we only drop the
+           per-year heading because the month dividers already carry the year. Looping per year group lets the month
+           tracker reset per group so tracking never bleeds across the association-year boundary. #}
+        <div class="mb-2">
+            {% for activities in this.activitiesByAssociationYear %}
+                {% set currentMonth = null %}
                 {% for activity in activities %}
+                    {% set month = activity.getBeginTime|format_datetime(pattern: 'MMMM yyyy', locale: app.request.locale) %}
+                    {% if month != currentMonth %}
+                        <div class="activity-month-divider">{{ month }}</div>
+                        {% set currentMonth = month %}
+                    {% endif %}
                     {% include 'partials/activity/list-item.html.twig' with {'activity': activity} only %}
                 {% endfor %}
-            </div>
-        {% else %}
-            <p class="text-muted text-center py-4">{{ 'No activities match the current filters.'|trans }}</p>
-        {% endfor %}
+            {% else %}
+                <p class="text-muted text-center py-4">{{ 'No activities match the current filters.'|trans }}</p>
+            {% endfor %}
+        </div>
     {% else %}
         <div class="mb-2">
+            {% set currentMonth = null %}
             {% for activity in this.activities %}
+                {% set month = activity.getBeginTime|format_datetime(pattern: 'MMMM yyyy', locale: app.request.locale) %}
+                {% if month != currentMonth %}
+                    <div class="activity-month-divider">{{ month }}</div>
+                    {% set currentMonth = month %}
+                {% endif %}
                 {% include 'partials/activity/list-item.html.twig' with {'activity': activity} only %}
             {% else %}
                 <p class="text-muted text-center py-4">{{ 'No activities match the current filters.'|trans }}</p>

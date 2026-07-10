@@ -1,80 +1,106 @@
 {% set now = date() %}
-<div class="activity-list-item mb-4" data-controller="activity-item"
+{% set dateBadge = activity_date_badge(activity.getBeginTime, activity.getEndTime) %}
+{# The activity's own time + relative-status, captured once and rendered in two responsive slots below (inline under the
+   title on mobile, right-hand column on desktop) so it stays distinct from the sign-up deadline in the footer. #}
+{% set dateMeta %}
+    <span class="text-muted small">{{ activity_date_range(activity.getBeginTime, activity.getEndTime) }}</span>
+    {% if now.timestamp >= activity.getBeginTime.timestamp and now.timestamp <= activity.getEndTime.timestamp %}
+        <span class="badge badge-success">{{ 'ongoing for %duration%'|trans({'%duration%': human_time_diff(now, activity.getEndTime)}) }}</span>
+    {% elseif now.timestamp < activity.getBeginTime.timestamp %}
+        <span class="badge badge-tag">{{ 'in %duration%'|trans({'%duration%': human_time_diff(now, activity.getBeginTime)}) }}</span>
+    {% endif %}
+{% endset %}
+<div class="panel panel-surface activity-list-item mb-3" data-controller="activity-item"
      data-activity-item-url-value="{{ path('activity/view', {'activity': activity.getId}) }}"
      data-action="click->activity-item#open">
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-start gap-1 mb-2">
-        <div>
-            <h3 class="h5 mb-2">
-                <a href="{{ path('activity/view', {'activity': activity.getId}) }}">{{ activity_title(activity) }}</a>
-            </h3>
-            <div class="d-flex flex-wrap gap-1">
-                {% if activity.isCancelled %}
-                    <span class="badge badge-danger">{{ 'Cancelled'|trans }}</span>
-                {% endif %}
-                {% if activity.getCategory.value not in ['other', 'uncategorised'] %}
-                    <span class="badge badge-info">{{ activity.getCategory|trans }}</span>
-                {% endif %}
-                {% for label in activity.getLabels %}
-                    <span class="badge badge-tag">{{ label.getName|localise_text }}</span>
-                {% endfor %}
+    <div class="panel-body d-flex gap-3">
+
+        {# Left: stacked date badge. aria-hidden because activity_date_range() below already announces the full,
+           unambiguous date/time to assistive technology. #}
+        <div class="activity-date-badge{{ dateBadge.range ? ' activity-date-badge-range' : '' }}" aria-hidden="true">
+            <span class="activity-date-badge-month">{{ dateBadge.month }}</span>
+            <span class="activity-date-badge-day">{{ dateBadge.day }}</span>
+            <span class="activity-date-badge-weekday">{{ dateBadge.weekday }}</span>
+        </div>
+
+        {# Content column splits into a main column (title/description/meta) and a right-hand date+status column, so the
+           description hugs the title on desktop regardless of how tall the date column is. On mobile the two stack, so
+           the date column drops below the content with the date text and relative-time badge inline. #}
+        <div class="flex-grow-1 overflow-hidden d-flex flex-column flex-md-row justify-content-between gap-3">
+            <div class="flex-grow-1 overflow-hidden">
+                <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+                    <h3 class="h5 mb-0">
+                        {% if activity.isCancelled %}
+                            {# Keep the [CANCELLED] marker readable: only the name is struck through, not the marker. #}
+                            <span class="text-danger">{{ '[CANCELLED]'|trans }}</span>
+                            <a class="text-muted text-decoration-line-through"
+                               href="{{ path('activity/view', {'activity': activity.getId}) }}">{{ activity.getName|localise_text }}</a>
+                        {% else %}
+                            <a class="text-body"
+                               href="{{ path('activity/view', {'activity': activity.getId}) }}">{{ activity_title(activity) }}</a>
+                        {% endif %}
+                    </h3>
+                    {% if activity.getCategory.value not in ['other', 'uncategorised'] %}
+                        <span class="badge badge-gewis-primary">{{ activity.getCategory|trans }}</span>
+                    {% endif %}
+                    {% for label in activity.getLabels %}
+                        <span class="badge badge-tag">{{ label.getName|localise_text }}</span>
+                    {% endfor %}
+                </div>
+
+                {# Mobile only: the activity time + status sits between the title and the body so it is not mistaken for
+                   the sign-up deadline in the footer. On desktop it lives in the right-hand column instead. #}
+                <div class="d-flex d-md-none flex-wrap align-items-center gap-2 mb-3">{{ dateMeta }}</div>
+
+                <div class="activity-description mb-3" data-controller="description-toggle"
+                     data-description-toggle-more-value="{{ 'Show more'|trans }}"
+                     data-description-toggle-less-value="{{ 'Show less'|trans }}">
+                    <div class="activity-description-content" data-description-toggle-target="content">
+                        {{ activity.getDescription|localise_text|markdown(['p', 'br', 'strong', 'em', 'del', 'a', 'ul', 'ol', 'li']) }}
+                    </div>
+                    <button type="button" class="btn btn-link btn-sm p-0 d-none"
+                            data-description-toggle-target="button"
+                            data-action="description-toggle#toggle">
+                        {{ 'Show more'|trans }}
+                    </button>
+                </div>
+
+                <div class="d-flex flex-wrap align-items-center gap-2 text-muted">
+                    <span class="small"><i class="fas fa-location-dot"></i> {{ activity.getLocation|localise_text }}</span>
+                    <span class="small"><i class="fas fa-tag"></i> {{ activity.getCosts|localise_text }}</span>
+                    {% set signupList = activity.getRelevantSignupList %}
+                    {# A cancelled activity has its sign-ups frozen, so a "sign-up closes/opens" deadline would be
+                       misleading; the struck-through [CANCELLED] title already conveys the state. #}
+                    {% if not activity.isCancelled and null !== signupList %}
+                        {% if signupList.isOpen %}
+                            {% set secondsLeft = signupList.getCloseDate.timestamp - now.timestamp %}
+                            {% set tone = secondsLeft < 86400 ? 'badge-danger' : (secondsLeft < 604800 ? 'badge-warning' : 'badge-tag') %}
+                            <span class="badge badge-squared text-wrap {{ tone }}">
+                                <i class="fas fa-ticket"></i>
+                                {{ 'Sign-up closes:'|trans }}
+                                {{ signupList.getCloseDate|format_datetime(pattern: 'EEE d MMM. HH:mm', locale: app.request.locale) }} ({{ 'in %duration%'|trans({'%duration%': human_time_diff(now, signupList.getCloseDate)}) }})
+                                {% if activity.countPendingSignupLists > 1 %}
+                                    ({{ 'more deadlines'|trans }})
+                                {% endif %}
+                            </span>
+                        {% else %}
+                            <span class="badge badge-squared text-wrap badge-tag">
+                                <i class="fas fa-ticket"></i>
+                                {{ 'Sign-up opens:'|trans }}
+                                {{ signupList.getOpenDate|format_datetime(pattern: 'EEE d MMM. HH:mm', locale: app.request.locale) }} ({{ 'in %duration%'|trans({'%duration%': human_time_diff(now, signupList.getOpenDate)}) }})
+                                {% if activity.countPendingSignupLists > 1 %}
+                                    ({{ 'more deadlines'|trans }})
+                                {% endif %}
+                            </span>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+
+            {# Desktop only: same meta in the right-hand column, hidden on mobile where it renders under the title. #}
+            <div class="d-none d-md-flex flex-column align-items-end text-end flex-shrink-0 gap-2">
+                {{ dateMeta }}
             </div>
         </div>
-        <span class="text-muted small text-md-end">
-            {{ activity_date_range(activity.getBeginTime, activity.getEndTime) }}
-            {% if now.timestamp >= activity.getBeginTime.timestamp and now.timestamp <= activity.getEndTime.timestamp %}
-                <br><span class="text-success">{{ 'ongoing for %duration%'|trans({'%duration%': human_time_diff(now, activity.getEndTime)}) }}</span>
-            {% elseif now.timestamp < activity.getBeginTime.timestamp %}
-                <br><span>{{ 'in %duration%'|trans({'%duration%': human_time_diff(now, activity.getBeginTime)}) }}</span>
-            {% endif %}
-        </span>
-    </div>
-
-    <div class="activity-description mb-2" data-controller="description-toggle"
-         data-description-toggle-more-value="{{ 'Show more'|trans }}"
-         data-description-toggle-less-value="{{ 'Show less'|trans }}">
-        <div class="activity-description-content" data-description-toggle-target="content">
-            {{ activity.getDescription|localise_text|markdown(['p', 'br', 'strong', 'em', 'del', 'a', 'ul', 'ol', 'li']) }}
-        </div>
-        <button type="button" class="btn btn-link btn-sm p-0 d-none"
-                data-description-toggle-target="button"
-                data-action="description-toggle#toggle">
-            {{ 'Show more'|trans }}
-        </button>
-    </div>
-
-    <hr class="my-1">
-
-    <div class="text-muted small">
-        <span class="me-3"><i class="fas fa-location-dot"></i> {{ activity.getLocation|localise_text }}</span>
-        <span class="me-3"><i class="fas fa-tag"></i> {{ activity.getCosts|localise_text }}</span>
-        {% set signupList = activity.getRelevantSignupList %}
-        {# A cancelled activity has its sign-ups frozen, so a "sign-up closes/opens" deadline would be misleading; the
-           [CANCELLED] title and badge already convey the state. #}
-        {% if not activity.isCancelled and null !== signupList %}
-            {% if signupList.isOpen %}
-                {% set secondsLeft = signupList.getCloseDate.timestamp - now.timestamp %}
-                {% set urgency = secondsLeft < 86400 ? 'text-danger' : (secondsLeft < 604800 ? 'text-warning' : '') %}
-                <span>
-                    <i class="fas fa-ticket"></i>
-                    {{ 'Sign-up closes:'|trans }}
-                    <span class="{{ urgency }}">
-                        {{ signupList.getCloseDate|format_datetime(pattern: 'EEE d MMM. HH:mm', locale: app.request.locale) }} ({{ 'in %duration%'|trans({'%duration%': human_time_diff(now, signupList.getCloseDate)}) }})
-                    </span>
-                    {% if activity.countPendingSignupLists > 1 %}
-                        <span class="text-muted">({{ 'more deadlines'|trans }})</span>
-                    {% endif %}
-                </span>
-            {% else %}
-                <span>
-                    <i class="fas fa-ticket"></i>
-                    {{ 'Sign-up opens:'|trans }}
-                    {{ signupList.getOpenDate|format_datetime(pattern: 'EEE d MMM. HH:mm', locale: app.request.locale) }}
-                    ({{ 'in %duration%'|trans({'%duration%': human_time_diff(now, signupList.getOpenDate)}) }})
-                    {% if activity.countPendingSignupLists > 1 %}
-                        <span>({{ 'more deadlines'|trans }})</span>
-                    {% endif %}
-                </span>
-            {% endif %}
-        {% endif %}
     </div>
 </div>

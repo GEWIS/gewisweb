@@ -1,0 +1,8 @@
+{# Compact toggle for the collapsible #activity-filters panel that the Activity:ActivityOverview component renders just
+   below. It lives in the page header so it sits inline with the page title; the panel itself stays inside (and is
+   live-ignored by) the component. #}
+<button type="button" class="btn btn-outline-secondary"
+        data-bs-toggle="collapse" data-bs-target="#activity-filters"
+        aria-expanded="false" aria-controls="activity-filters">
+    <i class="fas fa-sliders"></i> {{ 'Filters'|trans }}
+</button>

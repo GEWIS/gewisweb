@@ -7,6 +7,8 @@
         <h1 class="mb-0">{{ 'My past activities'|trans }}</h1>
 
         <div class="btn-toolbar gap-2" role="toolbar">
+            {% include 'partials/activity/filter-toggle.html.twig' %}
+
             <a class="btn btn-outline-secondary" href="{{ path('activity/my') }}">
                 <i class="fas fa-chevron-left"></i> {{ 'My upcoming activities'|trans }}
             </a>

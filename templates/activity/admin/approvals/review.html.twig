@@ -184,9 +184,9 @@
                     <div class="mb-2">
                         <h6 class="text-muted small mb-1">{{ 'Category'|trans }}</h6>
                         <div>
-                            <span class="badge badge-info">{{ revision.category|trans }}</span>
+                            <span class="badge badge-gewis-primary">{{ revision.category|trans }}</span>
                             {% if previous is not null and previous.category != revision.category %}
-                                <span class="text-muted small">({{ 'was'|trans }} <span class="badge badge-info">{{ previous.category|trans }}</span>)</span>
+                                <span class="text-muted small">({{ 'was'|trans }} <span class="badge badge-gewis-primary">{{ previous.category|trans }}</span>)</span>
                             {% endif %}
                         </div>
                     </div>
