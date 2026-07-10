@@ -16,9 +16,14 @@
 {% block contents %}
     <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
         <h1 class="h3 mb-0">{{ 'Photo albums'|trans }}</h1>
-        <a href="{{ path('admin/photos/albums_create') }}" class="btn btn-gewis-primary">
-            <i class="fas fa-plus"></i> {{ 'Create album'|trans }}
-        </a>
+        <div class="d-flex gap-2">
+            <a href="{{ path('admin/photos/weekly') }}" class="btn btn-outline-secondary">
+                <i class="fa-solid fa-star"></i> {{ 'Photo of the Week'|trans }}
+            </a>
+            <a href="{{ path('admin/photos/albums_create') }}" class="btn btn-gewis-primary">
+                <i class="fas fa-plus"></i> {{ 'Create album'|trans }}
+            </a>
+        </div>
     </div>
 
     {% if albumsByYear is empty %}

@@ -34,6 +34,10 @@ final readonly class ImagePathResolver
             ) => StorageNamespace::PhotoCover,
             str_starts_with(
                 $path,
+                'photos/weekly/',
+            ) => StorageNamespace::PhotoWeekly,
+            str_starts_with(
+                $path,
                 'organs/images/',
             ) => StorageNamespace::OrganImage,
             str_starts_with(
@@ -68,7 +72,7 @@ final readonly class ImagePathResolver
         ImageVariant $variant,
     ): ?ImageProfile {
         return match ($this->namespaceForPath($path)) {
-            StorageNamespace::PhotoOriginal => ImageProfile::AlbumPhoto,
+            StorageNamespace::PhotoOriginal, StorageNamespace::PhotoWeekly => ImageProfile::AlbumPhoto,
             StorageNamespace::PhotoCover => ImageProfile::AlbumCover,
             StorageNamespace::OrganImage => ImageProfile::OrganImage,
             StorageNamespace::PageImage => ImageProfile::PageImage,

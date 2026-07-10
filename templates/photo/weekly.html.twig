@@ -1,6 +1,25 @@
 {% extends 'layout.html.twig' %}
 
-{% block page_title %}{{ 'Photos of the Week'|page_title }}{{ parent() }}{% endblock %}
+{% block page_title %}{{ 'Photo of the Week'|trans|page_title }}{{ parent() }}{% endblock %}
 
 {% block contents %}
+    <h1 class="mb-4">{{ 'Photo of the Week'|trans }}</h1>
+
+    {% if weeklyPhoto is null %}
+        <p class="text-muted">{{ 'No photo of the week has been chosen yet.'|trans }}</p>
+    {% else %}
+        {% set potw = weeklyPhoto.photo %}
+        <div class="row justify-content-center">
+            <div class="col col-lg-8">
+                <a class="d-block text-decoration-none"
+                   href="{{ path('photo/album', { type: 'album', album: potw.album.id }) }}#pid={{ potw.id }}">
+                    <img class="img-fluid w-100 rounded" alt=""
+                         src="{{ image_url(potw.path, 'w1280') }}"
+                         srcset="{{ image_srcset(potw.path, ['w640', 'w960', 'w1280', 'w1920']) }}"
+                         sizes="(min-width: 992px) 66vw, 100vw">
+                    <p class="text-muted mt-2 mb-0">{{ potw.album.name }}</p>
+                </a>
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}

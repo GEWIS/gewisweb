@@ -29,6 +29,10 @@
         <source>%name% is currently editing this activity (last active %time%).</source>
         <target state="translated">%name% bewerkt deze activiteit op dit moment (laatst actief %time%).</target>
       </trans-unit>
+      <trans-unit id="G7xodsD" resname="%name% turns %age% today!">
+        <source>%name% turns %age% today!</source>
+        <target state="translated">%name% wordt vandaag %age%!</target>
+      </trans-unit>
       <trans-unit id="THI278F" resname="A new draft was created. Edit it and submit again.">
         <source>A new draft was created. Edit it and submit again.</source>
         <target state="translated">Er is een nieuw concept aangemaakt. Bewerk het en dien het opnieuw in.</target>
@@ -249,6 +253,10 @@
         <source>Announcement</source>
         <target>Aankondiging</target>
       </trans-unit>
+      <trans-unit id="TawktAK" resname="Anonymous visitors will no longer see this photo on the front page. Logged-in members still see it.">
+        <source>Anonymous visitors will no longer see this photo on the front page. Logged-in members still see it.</source>
+        <target state="translated">Anonieme bezoekers zien deze foto niet meer op de voorpagina. Ingelogde leden blijven hem zien.</target>
+      </trans-unit>
       <trans-unit id="YZX3vFh" resname="Answers">
         <source>Answers</source>
         <target>Antwoorden</target>
@@ -348,6 +356,10 @@
       <trans-unit id="aUj7.8J" resname="Backup codes regenerated. The previous codes are no longer valid.">
         <source>Backup codes regenerated. The previous codes are no longer valid.</source>
         <target state="translated">De back-upcodes zijn opnieuw gegenereerd. De vorige back-upcodes zijn niet langer geldig.</target>
+      </trans-unit>
+      <trans-unit id="IHtM8Z7" resname="Birthdays">
+        <source>Birthdays</source>
+        <target state="translated">Verjaardagen</target>
       </trans-unit>
       <trans-unit id="2X9WJ_P" resname="Board">
         <source>Board</source>
@@ -596,6 +608,10 @@
       <trans-unit id="ukaFrcB" resname="Current password">
         <source>Current password</source>
         <target state="translated">Huidig wachtwoord</target>
+      </trans-unit>
+      <trans-unit id="C.UM991" resname="Current photo of the week">
+        <source>Current photo of the week</source>
+        <target state="translated">Huidige foto van de week</target>
       </trans-unit>
       <trans-unit id="ql421nq" resname="Custom">
         <source>Custom</source>
@@ -1060,6 +1076,22 @@
       <trans-unit id="bMJFh5R" resname="Hidden">
         <source>Hidden</source>
         <target state="translated">Verborgen</target>
+      </trans-unit>
+      <trans-unit id="g9Yxjnw" resname="Hidden from anonymous visitors">
+        <source>Hidden from anonymous visitors</source>
+        <target state="translated">Verborgen voor anonieme bezoekers</target>
+      </trans-unit>
+      <trans-unit id="U9GQ_br" resname="Hide">
+        <source>Hide</source>
+        <target state="translated">Verbergen</target>
+      </trans-unit>
+      <trans-unit id=".CR.cKC" resname="Hide from anonymous visitors">
+        <source>Hide from anonymous visitors</source>
+        <target state="translated">Verbergen voor anonieme bezoekers</target>
+      </trans-unit>
+      <trans-unit id="yN3l2eh" resname="Hide photo of the week">
+        <source>Hide photo of the week</source>
+        <target state="translated">Foto van de week verbergen</target>
       </trans-unit>
       <trans-unit id="ExFLJqx" resname="Home">
         <source>Home</source>
@@ -1553,6 +1585,14 @@
         <source>No pending activities.</source>
         <target state="translated">Geen openstaande activiteiten.</target>
       </trans-unit>
+      <trans-unit id="RL8zCKw" resname="No photo of the week has been chosen yet.">
+        <source>No photo of the week has been chosen yet.</source>
+        <target state="translated">Er is nog geen foto van de week gekozen.</target>
+      </trans-unit>
+      <trans-unit id="n4ammGE" resname="No photo of the week has been chosen yet. It is picked automatically every Monday from the past week's votes.">
+        <source>No photo of the week has been chosen yet. It is picked automatically every Monday from the past week's votes.</source>
+        <target state="translated">Er is nog geen foto van de week gekozen. Deze wordt elke maandag automatisch gekozen op basis van de stemmen van de afgelopen week.</target>
+      </trans-unit>
       <trans-unit id="oY5RMDD" resname="No sign-ups found.">
         <source>No sign-ups found.</source>
         <target>Geen inschrijvingen gevonden.</target>
@@ -1728,6 +1768,10 @@
       <trans-unit id="lfzp2uK" resname="Photo albums">
         <source>Photo albums</source>
         <target state="translated">Fotoalbums</target>
+      </trans-unit>
+      <trans-unit id="1H5YLWL" resname="Photo of the Week">
+        <source>Photo of the Week</source>
+        <target state="translated">Foto van de week</target>
       </trans-unit>
       <trans-unit id="BRLrb5h" resname="Photos">
         <source>Photos</source>
@@ -2393,6 +2437,14 @@
         <source>The external subscriber has been added.</source>
         <target>De externe inschrijver is toegevoegd.</target>
       </trans-unit>
+      <trans-unit id="sbbDOd." resname="The photo of the week can only be hidden on Monday morning, before noon.">
+        <source>The photo of the week can only be hidden on Monday morning, before noon.</source>
+        <target state="translated">De foto van de week kan alleen op maandagochtend, voor het middaguur, worden verborgen.</target>
+      </trans-unit>
+      <trans-unit id="KlqdLqC" resname="The photo of the week has been hidden.">
+        <source>The photo of the week has been hidden.</source>
+        <target state="translated">De foto van de week is verborgen.</target>
+      </trans-unit>
       <trans-unit id="FDhAqdq" resname="The photos have been deleted.">
         <source>The photos have been deleted.</source>
         <target state="translated">De foto's zijn verwijderd.</target>
@@ -2800,6 +2852,10 @@
       <trans-unit id="jkUs8v1" resname="We found a pointer to &lt;code&gt;NULL&lt;/code&gt; instead of this page">
         <source>We found a pointer to &lt;code&gt;NULL&lt;/code&gt; instead of this page</source>
         <target state="translated"><![CDATA[We hebben een verwijzing naar <code>NULL</code> gevonden in plaats van deze pagina]]></target>
+      </trans-unit>
+      <trans-unit id="GjKR5wC" resname="Week of">
+        <source>Week of</source>
+        <target state="translated">Week van</target>
       </trans-unit>
       <trans-unit id="jUNxBhp" resname="Weekend">
         <source>Weekend</source>

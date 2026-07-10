@@ -26,6 +26,9 @@ enum StorageNamespace: string
     /** Generated 2x2 album cover mosaics, scoped per album (public). */
     case PhotoCover = 'photo-cover';
 
+    /** The current photo of the week, copied out of its album so the anonymous frontpage can serve it (public). */
+    case PhotoWeekly = 'photo-weekly';
+
     /** Company logos and banner-package images, scoped per company (public). */
     case CompanyImage = 'company-image';
 
@@ -55,6 +58,10 @@ enum StorageNamespace: string
             self::PhotoCover => sprintf(
                 'photos/covers/%s',
                 $this->requireScope($scope),
+            ),
+            self::PhotoWeekly => $this->rejectScope(
+                $scope,
+                'photos/weekly',
             ),
             self::OrganImage => $this->rejectScope(
                 $scope,

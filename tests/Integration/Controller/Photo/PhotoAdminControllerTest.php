@@ -57,6 +57,19 @@ final class PhotoAdminControllerTest extends DatabaseTestCase
         );
     }
 
+    public function testWeeklyAdminPageRenders(): void
+    {
+        $this->authenticateBoard();
+        $this->pushRequest();
+
+        $response = $this->controller()->weekly();
+
+        self::assertSame(
+            Response::HTTP_OK,
+            $response->getStatusCode(),
+        );
+    }
+
     public function testUploadStoresPhotosAndReturnsASummary(): void
     {
         $this->authenticateBoard();

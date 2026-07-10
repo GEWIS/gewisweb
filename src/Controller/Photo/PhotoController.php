@@ -8,6 +8,7 @@ use App\Entity\Photo\Album;
 use App\Entity\Photo\Enums\AlbumType;
 use App\Entity\User\Enums\UserRoles;
 use App\Repository\Photo\PhotoRepository;
+use App\Repository\Photo\WeeklyPhotoRepository;
 use App\Security\Photo\PhotoVoter;
 use App\Service\Application\FileDownloadHelper;
 use App\Service\Photo\AlbumService;
@@ -41,6 +42,7 @@ class PhotoController extends AbstractController
         private readonly AlbumService $albumService,
         private readonly PhotoService $photoService,
         private readonly PhotoRepository $photoRepository,
+        private readonly WeeklyPhotoRepository $weeklyPhotoRepository,
         private readonly FileDownloadHelper $fileDownloadHelper,
         private readonly SluggerInterface $slugger,
     ) {
@@ -80,7 +82,10 @@ class PhotoController extends AbstractController
     )]
     public function weekly(): Response
     {
-        return $this->render('photo/weekly.html.twig');
+        return $this->render(
+            'photo/weekly.html.twig',
+            ['weeklyPhoto' => $this->weeklyPhotoRepository->getCurrentPhotoOfTheWeek()],
+        );
     }
 
     /**

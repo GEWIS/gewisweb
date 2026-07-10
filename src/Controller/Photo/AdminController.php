@@ -11,9 +11,12 @@ use App\Entity\User\Enums\UserRoles;
 use App\Form\Photo\AlbumType;
 use App\Repository\Photo\AlbumRepository;
 use App\Repository\Photo\PhotoRepository;
+use App\Repository\Photo\WeeklyPhotoRepository;
 use App\Service\Photo\AlbumAdminService;
 use App\Service\Photo\AlbumService;
 use App\Service\Photo\PhotoUploadService;
+use App\Service\Photo\WeeklyPhotoService;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\ExpressionLanguage\Expression;
@@ -48,6 +51,8 @@ class AdminController extends AbstractController
         private readonly AlbumService $albumService,
         private readonly AlbumAdminService $albumAdminService,
         private readonly PhotoUploadService $photoUploadService,
+        private readonly WeeklyPhotoRepository $weeklyPhotoRepository,
+        private readonly WeeklyPhotoService $weeklyPhotoService,
     ) {
     }
 
@@ -61,6 +66,63 @@ class AdminController extends AbstractController
             'photo/admin/index.html.twig',
             ['albumsByYear' => $this->albumService->getRootAlbumsByYear()],
         );
+    }
+
+    #[Route(
+        path: '/weekly',
+        name: 'weekly',
+        methods: ['GET'],
+    )]
+    public function weekly(): Response
+    {
+        return $this->render(
+            'photo/admin/weekly.html.twig',
+            [
+                'weeklyPhoto' => $this->weeklyPhotoRepository->getCurrentPhotoOfTheWeek(),
+                'canHide' => $this->withinHideWindow(),
+            ],
+        );
+    }
+
+    #[Route(
+        path: '/weekly/hide',
+        name: 'weekly_hide',
+        methods: ['POST'],
+    )]
+    #[IsCsrfTokenValid(
+        id: 'photo_weekly_hide',
+        tokenKey: '_csrf_token',
+    )]
+    public function hideWeekly(): Response
+    {
+        $weeklyPhoto = $this->weeklyPhotoRepository->getCurrentPhotoOfTheWeek();
+
+        if (
+            null !== $weeklyPhoto
+            && !$weeklyPhoto->isHidden()
+            && $this->withinHideWindow()
+        ) {
+            $this->weeklyPhotoService->hide($weeklyPhoto);
+
+            $this->addFlash(
+                AlertTypes::Success->value,
+                $this->translator->trans('The photo of the week has been hidden.'),
+            );
+        }
+
+        return $this->redirectToRoute('admin/photos/weekly');
+    }
+
+    /**
+     * The board may hide the current photo of the week only on Monday before noon, so a photo that is being widely
+     * shared that day can still be pulled but a settled week is left alone.
+     */
+    private function withinHideWindow(): bool
+    {
+        $now = new DateTime();
+
+        return 1 === (int) $now->format('N')
+            && 12 > (int) $now->format('G');
     }
 
     #[Route(
