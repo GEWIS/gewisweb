@@ -24,6 +24,10 @@ $background-gray-dark: #131315;
 $title-size-small: 1.125rem;
 
 // Overrides
+// Badges: fully pill-shaped and a slightly lighter weight, site-wide.
+$badge-border-radius: $border-radius-pill;
+$badge-font-weight: 600;
+
 $body-bg-dark: #0E0E11;
 $body-color: $gewis-gray-dark;
 $body-color-dark: $gewis-gray-light;
@@ -39,6 +43,10 @@ $border-color-translucent: rgba($gray-500, .175);
 $display-font-family: "Raleway", sans-serif;
 
 $headings-margin-bottom: 0;
+// Headings are heavier and higher-contrast than body text: full black in light mode, white in gewis-night.
+$headings-font-weight: 600;
+$headings-color: $black;
+$headings-color-dark: $white;
 
 $link-color: $gewis-red;
 $link-decoration: none;

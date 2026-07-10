@@ -41,7 +41,7 @@
             <h1 class="mb-2">{{ activity_title(activity) }}</h1>
             <div class="d-flex flex-wrap gap-1 mb-3">
                 {% if activity.getCategory.value not in ['other', 'uncategorised'] %}
-                    <span class="badge badge-info">{{ activity.getCategory|trans }}</span>
+                    <span class="badge badge-gewis-primary">{{ activity.getCategory|trans }}</span>
                 {% endif %}
                 {% for label in activity.getLabels %}
                     <span class="badge badge-tag">{{ label.getName|localise_text }}</span>
@@ -126,7 +126,6 @@
 
         {% if activeLists is not empty %}
             <h2 class="h4 mt-4">{{ 'Sign-up lists'|trans }}</h2>
-            {# Auto-open the first list that is still open for sign-up; leave the rest collapsed. #}
             {% set openedFirst = false %}
             {% for list in activeLists %}
                 {% set autoOpen = not openedFirst and list.isOpen %}
@@ -151,8 +150,6 @@
         {% endif %}
 
         {% if is_granted('ROLE_USER') %}
-            {# Shared confirm-modal driving each list component's unsubscribe live action; rendered once per page,
-               OUTSIDE the live components. #}
             {% include 'partials/application/confirm-modal.html.twig' %}
         {% endif %}
     {% endif %}

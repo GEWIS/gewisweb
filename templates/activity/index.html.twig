@@ -3,7 +3,11 @@
 {% block page_title %}{{ 'Activities'|trans|page_title }}{{ parent() }}{% endblock %}
 
 {% block contents %}
-    <h1>{{ 'Activities'|trans }}</h1>
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+        <h1 class="mb-0">{{ 'Activities'|trans }}</h1>
+
+        {% include 'partials/activity/filter-toggle.html.twig' %}
+    </div>
 
     {{ component('Activity:ActivityOverview') }}
 {% endblock %}

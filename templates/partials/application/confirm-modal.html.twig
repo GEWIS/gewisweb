@@ -1,7 +1,4 @@
-{# A shared confirmation modal for live-component actions, driven by the `confirm-modal` Stimulus controller. Render it
-   once per page, OUTSIDE any live component, so a component's re-render after the confirmed action never touches it.
-   A trigger button opens it with `data-bs-toggle="modal" data-bs-target="#confirm-modal"` and supplies the title,
-   message, confirm label and the live action to run via `data-confirm-*` attributes (see the controller). #}
+{# Render once per page, outside any live component, so a component re-render after the confirmed action can't orphan it. #}
 <div class="modal fade" id="confirm-modal" data-controller="confirm-modal" tabindex="-1"
      aria-labelledby="confirm-modal-label" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">

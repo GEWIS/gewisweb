@@ -34,6 +34,96 @@ class ActivityDateRangeExtension extends AbstractExtension
                 'activity_date_range',
                 $this->activityDateRange(...),
             ),
+            new TwigFunction(
+                'activity_date_badge',
+                $this->activityDateBadge(...),
+            ),
+        ];
+    }
+
+    /**
+     * Locale-aware split date parts for the left-hand stacked badge on the activity overview. Uppercasing is left to
+     * CSS (text-transform) to stay locale-correct for weekday/month abbreviations. The year is deliberately omitted to
+     * keep the badge compact; activity_date_range() beside the title already shows the year when it differs from today.
+     *
+     * @return array{weekday: string, day: string, month: string, range: bool}
+     */
+    public function activityDateBadge(
+        DateTimeInterface $begin,
+        DateTimeInterface $end,
+    ): array {
+        $locale = Locale::getDefault();
+        $sameDay = $begin->format('Y-m-d') === $end->format('Y-m-d');
+        $sameMonth = $begin->format('Y-m') === $end->format('Y-m');
+
+        if ($sameDay) {
+            return [
+                'weekday' => $this->format(
+                    $begin,
+                    'EEE',
+                    $locale,
+                ),
+                'day' => $this->format(
+                    $begin,
+                    'd',
+                    $locale,
+                ),
+                'month' => $this->format(
+                    $begin,
+                    'MMM',
+                    $locale,
+                ),
+                'range' => false,
+            ];
+        }
+
+        return [
+            'weekday' => sprintf(
+                '%s - %s',
+                $this->format(
+                    $begin,
+                    'EEE',
+                    $locale,
+                ),
+                $this->format(
+                    $end,
+                    'EEE',
+                    $locale,
+                ),
+            ),
+            'day' => sprintf(
+                '%s - %s',
+                $this->format(
+                    $begin,
+                    'dd',
+                    $locale,
+                ),
+                $this->format(
+                    $end,
+                    'dd',
+                    $locale,
+                ),
+            ),
+            'month' => $sameMonth
+                ? $this->format(
+                    $begin,
+                    'MMM',
+                    $locale,
+                )
+                : sprintf(
+                    '%s - %s',
+                    $this->format(
+                        $begin,
+                        'MMM',
+                        $locale,
+                    ),
+                    $this->format(
+                        $end,
+                        'MMM',
+                        $locale,
+                    ),
+                ),
+            'range' => true,
         ];
     }
 

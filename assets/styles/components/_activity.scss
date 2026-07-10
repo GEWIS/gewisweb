@@ -53,3 +53,91 @@
         margin-bottom: 0;
     }
 }
+
+// Activity overview list items reuse the shared .panel, but with a calmer, flatter surface than the default panel: the
+// body background plus a border, so a long dense list reads as separated rows rather than a stack of filled cards. The
+// selector is `.panel.panel-surface` (specificity 0,2,0) on purpose: _activity.scss is imported before _panel.scss, so
+// a single-class modifier would lose the source-order tie to `.panel { --bs-panel-bg }`.
+.panel.panel-surface {
+    --#{$prefix}panel-bg: var(--#{$prefix}body-bg);
+
+    transition: background-color $transition-duration ease;
+
+    // The whole panel is clickable (see activity_item_controller.ts); a subtle background lift signals that on hover.
+    &:hover {
+        --#{$prefix}panel-bg: var(--#{$prefix}tertiary-bg);
+    }
+}
+
+@include color-mode(gewis-night) {
+    .panel.panel-surface {
+        --#{$prefix}panel-bg: var(--#{$prefix}body-bg);
+
+        &:hover {
+            --#{$prefix}panel-bg: var(--#{$prefix}secondary-bg);
+        }
+    }
+}
+
+// Stacked date on the left of each activity list item: red uppercase month on top, bold body-coloured day, small
+// weekday underneath. No background box — it sits directly on the panel surface and is top-aligned with the title.
+.activity-date-badge {
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    align-items: center;
+    width: 3.5rem;
+    line-height: 1.2;
+    text-align: center;
+
+    .activity-date-badge-month {
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        white-space: nowrap;
+        color: $gewis-red;
+    }
+
+    .activity-date-badge-day {
+        font-size: 1.25rem;
+        font-weight: 700;
+        white-space: nowrap;
+        color: var(--#{$prefix}body-color);
+    }
+
+    .activity-date-badge-weekday {
+        font-size: 0.75rem;
+        white-space: nowrap;
+        color: var(--#{$prefix}secondary-color);
+    }
+
+    // Multi-day / cross-month ranges carry more text ("31–02", "Jul–Aug"), so shrink the day figure to fit.
+    &.activity-date-badge-range .activity-date-badge-day {
+        font-size: 0.95rem;
+        letter-spacing: -0.02em;
+    }
+}
+
+// Uppercase month divider ("JULY 2026") with a trailing rule, used in both the upcoming and archive overviews.
+.activity-month-divider {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 1.5rem 0 0.75rem;
+    color: var(--#{$prefix}secondary-color);
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+
+    &:first-child {
+        margin-top: 0;
+    }
+
+    &::after {
+        content: "";
+        flex: 1 1 auto;
+        border-top: var(--#{$prefix}border-width) solid var(--#{$prefix}border-color);
+    }
+}

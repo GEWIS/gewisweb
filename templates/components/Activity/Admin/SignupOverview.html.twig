@@ -9,8 +9,6 @@
     {% set admissionOpen = this.admissionOpen %}
 
     {% if attendanceListId is not null %}
-        {# Attendance mode: a focused, mobile-first view for marking presence on a phone: a big search box and
-           full-width tappable rows (the whole row toggles present), instead of the cramped table toggle. #}
         {% set list = listViews|filter(l => l.listId == attendanceListId)|first %}
         {% if list %}
             <div class="panel mb-3">
@@ -32,7 +30,6 @@
                            placeholder="{{ 'Search for a name or email'|trans }}"
                            data-model="debounce(200)|filter" value="{{ filter }}">
                     <div class="list-group">
-                        {# On a limited-capacity list you take attendance only of the admittees (drawn). #}
                         {% set attendanceRows = list.limitedCapacity ? list.rows|filter(r => r.drawn) : list.rows %}
                         {% for row in attendanceRows %}
                             <button type="button"
@@ -77,15 +74,10 @@
         </div>
 
         {% for list in listViews %}
-            {# External-party/custom lists are admitted by hand (no draw, no lock). #}
             {% set isManual = list.allocationMethod.isManual %}
             {% set collapseId = 'signup-list-' ~ list.listId %}
             <div class="panel mb-3">
-                {# Client-side Bootstrap collapse, matching the public activity view
-                   (templates/partials/activity/signup-list.html.twig): the rotating chevron and the smooth toggle are
-                   pure Bootstrap with no live round-trip. An open list survives the live re-renders triggered by the
-                   actions below because the component's ExternalMutationTracker re-applies the client-added
-                   `show`/`collapsed` classes across each DOM morph. #}
+                {# Client-side Bootstrap collapse; the open state survives live re-renders because ExternalMutationTracker re-applies the show/collapsed classes across the DOM morph. #}
                 <button type="button"
                         class="panel-heading signup-list-heading d-flex justify-content-between align-items-start gap-2 w-100 border-0 bg-transparent text-start collapsed"
                         data-bs-toggle="collapse" data-bs-target="#{{ collapseId }}"
@@ -150,11 +142,6 @@
                     </div>
 
                 {% if list.limitedCapacity %}
-                    {# Admission is driven by the allocation method: first-come and conditional-draw are drawn
-                       automatically at the list's own draw moment (close, or the configured cutoff), with a board
-                       fallback button that enables once that moment (or close) has passed (up to a day after the
-                       activity ends); external-party and custom are admitted by hand. After a draw (or for a manual
-                       method) board and organisers adjust individuals over the same window. #}
                     {% set isFcfs = list.allocationMethod.value == 'first-come-first-served' %}
                     {% set drawAction = isFcfs ? 'drawFirstCome' : 'drawLottery' %}
                     {% set drawIcon = isFcfs ? 'fa-list-ol' : 'fa-dice' %}
@@ -258,18 +245,13 @@
                             <i class="fas fa-envelope"></i> {{ 'Email sign-ups'|trans }}
                         </button>
                         {% if list.isOpen and not list.frozen %}
-                            {# Manual external add is a normal page (it carries the dynamic sign-up form); a redirect back
-                               here refreshes this component. Hidden while frozen: the controller refuses it anyway. #}
                             <a class="btn btn-sm btn-outline-success"
                                href="{{ path('admin/activities/add_external_signup', {'activity': this.activity.getId, 'signupList': list.listId}) }}">
                                 <i class="fas fa-user-plus"></i> {{ 'Add external subscriber'|trans }}
                             </a>
                         {% endif %}
                         {% if list.fieldColumns is not empty %}
-                            {# Per-list column chooser: hide custom-field columns that clutter a wide table. Toggling
-                               re-renders the component; the dropdown stays open thanks to data-bs-auto-close="outside"
-                               plus the live component's ExternalMutationTracker preserving Bootstrap's `show` across
-                               the DOM morph. #}
+                            {# data-bs-auto-close="outside" plus ExternalMutationTracker keep this dropdown open across the re-render a toggle triggers. #}
                             <div class="dropdown ms-auto">
                                 <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle"
                                         data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
@@ -316,10 +298,9 @@
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                {# data-live-ignore: the markdown-editor controller injects its own DOM here; keep the
-                                   component's re-render/morph from destroying or duplicating it. #}
+                                {# data-live-ignore: the markdown-editor injects its own DOM here; keep the re-render from destroying it. #}
                                 <div class="form-floating" data-live-ignore>
-                                    {# Floating-label textareas need an explicit height (rows is ignored once floating). #}
+                                    {# Floating-label textareas need an explicit height (rows is ignored). #}
                                     <textarea class="form-control" id="email-body-{{ list.listId }}" required
                                               placeholder="{{ 'Message'|trans }}" style="height: 160px;"
                                               data-controller="markdown-editor"
@@ -402,7 +383,6 @@
                                         {% if list.limitedCapacity %}
                                             <td class="text-center">
                                                 <div class="form-check form-switch d-inline-block mb-0">
-                                                    {# Manual admit/un-admit once the draw is locked (or for a manual method), until shortly after the activity. #}
                                                     <input class="form-check-input" type="checkbox"
                                                            {{ row.drawn ? 'checked' }} {{ ((list.drawLocked or isManual) and admissionOpen) ? '' : 'disabled' }}
                                                            aria-label="{{ 'Admitted'|trans }}"
@@ -414,7 +394,6 @@
                                         {% endif %}
                                         <td class="text-center">
                                             <div class="form-check form-switch d-inline-block mb-0">
-                                                {# Present requires admission on a limited list; disabled until drawn. #}
                                                 <input class="form-check-input" type="checkbox"
                                                        {{ row.present ? 'checked' }} {{ (canMark and (not list.limitedCapacity or row.drawn)) ? '' : 'disabled' }}
                                                        aria-label="{{ 'Present'|trans }}"

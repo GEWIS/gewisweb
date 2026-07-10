@@ -1,27 +1,49 @@
-// Badges are like alerts, they use the same CSS custom properties (`--bs-{state}-bg-subtle`,
-// `--bs-{state}-text-emphasis`, `--bs-{state}-border-subtle`).
+// Filled, subtle badge variants (one per theme colour). They use the same CSS custom properties as alerts
+// (`--bs-{state}-bg-subtle`, `--bs-{state}-text-emphasis`). No border: the (default) pill shape carries the visual
+// weight, and a border on a subtle fill just muddies it.
 @each $state, $value in $theme-colors {
     .badge-#{$state} {
         --#{$prefix}badge-color: var(--#{$prefix}#{$state}-text-emphasis);
         background-color: var(--#{$prefix}#{$state}-bg-subtle);
-        border: var(--#{$prefix}border-width) var(--#{$prefix}border-style)
-                var(--#{$prefix}#{$state}-border-subtle);
     }
 }
 
-// Neutral badge variant. Built from the surface colours instead of the state colours, so it is subtle in both
-// `gewis-day` and `gewis-night`.
-.badge-tag {
-    --#{$prefix}badge-color: var(--#{$prefix}body-color);
-    background-color: var(--#{$prefix}secondary-bg);
-    border: var(--#{$prefix}border-width) var(--#{$prefix}border-style)
-            var(--#{$prefix}border-color);
+// GEWIS-red brand badge, keyed to the brand colour (which is not one of Bootstrap's theme colours). Same subtle,
+// borderless treatment as `.badge-{state}`; named `-primary` to match the brand's primary/secondary naming.
+.badge-gewis-primary {
+    --#{$prefix}badge-color: #{shade-color($gewis-red, 20%)};
+
+    background-color: #{tint-color($gewis-red, 80%)};
 }
 
-// Outlined: transparent fill, coloured border + text from the paired `.badge-{state}` variant. Use as
-// `class="badge badge-secondary badge-outlined"`.
+@include color-mode(gewis-night) {
+    .badge-gewis-primary {
+        --#{$prefix}badge-color: #{tint-color($gewis-red, 40%)};
+
+        background-color: rgba($gewis-red, 0.2);
+    }
+}
+
+// Neutral "tag" variant: transparent fill with a visible border and muted text. Reads as a quiet, secondary chip — use
+// it for labels and similar tags. Subtle in both `gewis-day` and `gewis-night` because it is built from surface tokens.
+.badge-tag {
+    --#{$prefix}badge-color: var(--#{$prefix}secondary-color);
+
+    background-color: transparent;
+    border: var(--#{$prefix}border-width) var(--#{$prefix}border-style) var(--#{$prefix}border-color);
+}
+
+// Outlined: transparent fill with a border and text taken from `currentColor`. Pair with a `.badge-{state}` to colour
+// it, e.g. `class="badge badge-secondary badge-outlined"`.
 .badge-outlined {
     background-color: transparent;
+    border: var(--#{$prefix}border-width) var(--#{$prefix}border-style) currentcolor;
+}
+
+// Less-rounded corners: overrides the app-wide pill radius with the standard border-radius for a calmer, boxier badge
+// (e.g. the sign-up deadline).
+.badge-squared {
+    --#{$prefix}badge-border-radius: var(--#{$prefix}border-radius);
 }
 
 // Selectable: hidden input + label.badge pattern, mirroring Bootstrap's `btn-check`.

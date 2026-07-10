@@ -1,13 +1,7 @@
 <div {{ attributes }}>
-    <div class="panel mb-3" data-live-ignore>
-        <button type="button"
-                class="panel-heading d-flex justify-content-between align-items-center w-100 border-0 bg-transparent text-start collapsed"
-                data-bs-toggle="collapse" data-bs-target="#activity-filters"
-                aria-expanded="false" aria-controls="activity-filters">
-            <span class="h6 mb-0">{{ 'Filters'|trans }}</span>
-            <i class="fas fa-sliders"></i>
-        </button>
-        <div class="collapse" id="activity-filters">
+    {# data-live-ignore: keeps the injected label chips intact across re-renders. #}
+    <div class="collapse mb-3" id="activity-filters" data-live-ignore>
+        <div class="panel my-0">
             <div class="panel-body">
                 <div class="row g-3 align-items-end">
                 <div class="col-md-4">
@@ -58,10 +52,6 @@
                 </div>
                 {% if this.labels is not empty %}
                     <div class="col-12">
-                        {# Same removable-chip control as the activity form. It only hides and toggles the checkboxes, so
-                           the data-model="labelFilters" binding keeps driving the LiveProp; it sits inside the
-                           data-live-ignore panel above, so a re-render never clobbers the injected chips. The field
-                           label stays outside the controller element so it is not displaced by the injected chips. #}
                         <label class="form-label">{{ 'Labels'|trans }}</label>
                         <div data-controller="label-chips"
                              data-label-chips-placeholder-value="{{ 'Search labels…'|trans }}"
@@ -86,19 +76,30 @@
     </div>
 
     {% if this.past %}
-        {% for year, activities in this.activitiesByAssociationYear %}
-            <h2 class="h4 {{ loop.first ? 'mt-2' : 'mt-5' }} mb-3 pb-2 border-bottom">{{ year }}</h2>
-            <div class="mb-2">
+        <div class="mb-2">
+            {% for activities in this.activitiesByAssociationYear %}
+                {% set currentMonth = null %}
                 {% for activity in activities %}
+                    {% set month = activity.getBeginTime|format_datetime(pattern: 'MMMM yyyy', locale: app.request.locale) %}
+                    {% if month != currentMonth %}
+                        <div class="activity-month-divider">{{ month }}</div>
+                        {% set currentMonth = month %}
+                    {% endif %}
                     {% include 'partials/activity/list-item.html.twig' with {'activity': activity} only %}
                 {% endfor %}
-            </div>
-        {% else %}
-            <p class="text-muted text-center py-4">{{ 'No activities match the current filters.'|trans }}</p>
-        {% endfor %}
+            {% else %}
+                <p class="text-muted text-center py-4">{{ 'No activities match the current filters.'|trans }}</p>
+            {% endfor %}
+        </div>
     {% else %}
         <div class="mb-2">
+            {% set currentMonth = null %}
             {% for activity in this.activities %}
+                {% set month = activity.getBeginTime|format_datetime(pattern: 'MMMM yyyy', locale: app.request.locale) %}
+                {% if month != currentMonth %}
+                    <div class="activity-month-divider">{{ month }}</div>
+                    {% set currentMonth = month %}
+                {% endif %}
                 {% include 'partials/activity/list-item.html.twig' with {'activity': activity} only %}
             {% else %}
                 <p class="text-muted text-center py-4">{{ 'No activities match the current filters.'|trans }}</p>

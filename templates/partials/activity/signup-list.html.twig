@@ -1,6 +1,3 @@
-{# Accordion panel for one sign-up list. Params: `list` (SignupListView), `collapseId` (string), `open` (bool). The
-   member body is the Activity:SignupList live component; the guest external sign-up is the Activity:ExternalSignupForm
-   live component (both inside Bootstrap modals whose chrome is server-rendered here). #}
 <div class="panel mb-3">
     <button type="button"
             class="panel-heading signup-list-heading d-flex justify-content-between align-items-start gap-2 w-100 border-0 bg-transparent text-start {% if not open %}collapsed{% endif %}"
@@ -15,7 +12,6 @@
             </span>
             <span class="d-flex flex-wrap align-items-center gap-1 mb-1">
                 {% if list.cancelled %}
-                    {# A cancelled activity freezes its sign-ups, so surface that rather than an Open/Closed window. #}
                     <span class="badge badge-danger">{{ 'Cancelled'|trans }}</span>
                 {% elseif list.isOpen %}
                     <span class="badge badge-success">{{ 'Open'|trans }}</span>
@@ -37,7 +33,6 @@
                     <span class="badge badge-tag">{{ 'GEWIS members only'|trans }}</span>
                 {% endif %}
             </span>
-            {# The configured window and upcoming-draw notice are meaningless once the activity is cancelled. #}
             {% if not list.cancelled %}
                 <small class="text-muted d-block">
                     {{ 'Open from %open% until %close%.'|trans({
@@ -57,17 +52,11 @@
         <i class="fas fa-chevron-down signup-list-chevron"></i>
     </button>
     <div class="collapse {% if open %}show{% endif %}" id="{{ collapseId }}">
-        {# `pt-0`: the heading already supplies bottom padding, and the `.collapse` wrapper defeats the panel's
-           `.panel-heading + .panel-body { padding-top: 0 }` rule, so without this the body's top padding doubles it. #}
+        {# pt-0: the .collapse wrapper defeats the panel's `.panel-heading + .panel-body` zero-top-padding rule, so the body's top padding would otherwise double. #}
         <div class="panel-body pt-0">
             {% if is_granted('ROLE_USER') %}
-                {# The member-facing body (buttons, sign-up modal and subscriber table) is a live component, so signing
-                   up, editing and unsubscribing all update inline. Unsubscribe is driven by the page-level
-                   #confirm-modal (included once in the activity view). #}
                 <twig:Activity:SignupList :signupList="list.listId" />
             {% else %}
-                {# Guests: the external sign-up uses a plain Bootstrap modal + form (its Altcha captcha cannot live in a
-                   live component); an invalid submit re-renders the page and re-opens this modal with the errors. #}
                 {% if list.cancelled %}
                     <p class="text-danger mb-3">
                         <i class="fas fa-ban"></i>
@@ -111,10 +100,7 @@
                             </div>
                         </div>
 
-                        {# Recovery path for a lost/undelivered confirmation email: a plain rate-limited form (no
-                           captcha: it creates no data, only remails an address that already has a pending sign-up)
-                           that always reports the same neutral result, so it never reveals whether an address is
-                           signed up. #}
+                        {# No captcha: this creates no data (only remails a pending sign-up) and always reports the same neutral result, so it never reveals whether an address is signed up. #}
                         <div class="modal fade" id="{{ resendModalId }}" tabindex="-1" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
