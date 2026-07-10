@@ -1,8 +1,5 @@
 {% extends 'layout-admin.html.twig' %}
 
-{# A localised text (a sign-up list's name) shown the same way as the Details panel: two flag-headed columns
-   (Dutch | English), each with the inline diff of that language's value. A null `old` shows just the new value (a new
-   or removed list, which has nothing to compare against); `struck` strikes both values through (a removed list). #}
 {% macro localised_flag_diff(old, new, renderer, struck) %}
     <div class="row mb-2">
         <div class="col-md-6">
@@ -16,8 +13,6 @@
     </div>
 {% endmacro %}
 
-{# One labelled field of a localised text block: a small label with the inline diff of a single language's value
-   below it. Renders nothing when the field is empty on both sides, so an unused language collapses to one note. #}
 {% macro field_diff(label, old, new, renderer) %}
     {% set rendered = diff(old, new, renderer|default('Combined')) %}
     {% if rendered|trim is not empty %}
@@ -28,9 +23,6 @@
     {% endif %}
 {% endmacro %}
 
-{# A single boolean list setting. With a `previous` counterpart a newly-enabled flag is green, a newly-disabled one
-   is shown struck-through in red, and an unchanged-but-on flag stays neutral; without one (a new/removed list) an
-   enabled flag is just shown neutral. An unchanged-off flag renders nothing. #}
 {% macro flag(label, old, new) %}
     {% if old is not null and new and not old %}
         <span class="badge badge-success">{{ label }}</span>
@@ -41,9 +33,6 @@
     {% endif %}
 {% endmacro %}
 
-{# The window, settings and custom fields of one sign-up list. With a lineage-matched `previous` counterpart every
-   part is shown as a diff (current value, with the old one struck/annotated when it changed, mirroring the main
-   body above); without one (a new or removed list) it just shows the list's own values. #}
 {% macro signup_list_body(list, previous) %}
     {% import _self as diffmacro %}
     <div class="small mb-1">
@@ -67,8 +56,6 @@
         <div class="mb-1">{{ flags }}</div>
     {% endif %}
 
-    {# Custom fields, matched to the previous list's fields by position (mirroring the change detection in the
-       controller); trailing previous-only fields were removed. #}
     {% set previousFields = previous is not null ? previous.fields.values : [] %}
     {% if list.fields|length > 0 or previousFields|length > 0 %}
         <ul class="list-unstyled small mb-0">
@@ -329,13 +316,10 @@
                     </div>
                 {% endif %}
                 {{ form_start(decisionForm, {'action': path('admin/activities/approvals/decide', {'revision': revision.getId})}) }}
-                    {# The message field is only present for a decision (reviewer feedback) or a resubmission
-                       (the organiser's required response); a fresh submit / start review / close gets no field. #}
+                    {# The message field is only present for a decision (feedback) or a resubmission (required response); a fresh submit / start review / close has none. #}
                     {% if decisionForm.message is defined %}
                         {{ form_row(decisionForm.message) }}
                     {% endif %}
-                    {# The progressing action is prominent (full-width, solid); the negative actions are smaller
-                       outline buttons inline below it. Each tier self-sizes to whatever the workflow enabled. #}
                     <div class="d-grid gap-2">
                         {% if decisionForm.submit is defined %}
                             {{ form_widget(decisionForm.submit, {'attr': {'class': 'btn btn-success'}}) }}

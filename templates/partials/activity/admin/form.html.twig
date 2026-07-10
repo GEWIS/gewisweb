@@ -1,11 +1,8 @@
-{# novalidate: required fields can sit on a hidden step, where native HTML5 validation would refuse to submit and log
-   "invalid form control is not focusable" with no visible reason. Server-side validation is authoritative and the
-   form-stepper jumps to the first errored step instead. #}
+{# novalidate: required fields can sit on a hidden step, where native validation blocks the submit invisibly. Server-side validation is authoritative and the stepper jumps to the first errored step. #}
 {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 {{ form_errors(form) }}
 
-{# localised-fields toggles the NL/EN inputs (step 2); form-stepper pages the steps below. Both span the whole form on
-   purpose: every step stays in the DOM (hidden, never disabled) so the single POST still carries everything. #}
+{# Every step stays in the DOM (hidden, never disabled) so the single POST carries all fields. #}
 <div data-controller="localised-fields form-stepper">
     <ol class="form-stepper" role="tablist">
         <li class="form-stepper__step" role="presentation">
@@ -34,7 +31,6 @@
         </li>
     </ol>
 
-    {# Step 1: General information (the what/when/who + facilities) #}
     <div data-form-stepper-target="step">
         <div class="row">
             <div class="col-md-6">
@@ -75,9 +71,6 @@
                         <div class="row">
                             <div class="col-md-4">{{ form_row(form.currentRevision.category) }}</div>
                             <div class="col-md-8">
-                                {# Renders the labels as removable chips with a typeahead; the EntityType checkboxes stay as the
-                                   bound source of truth (label-chips just hides and drives them). The field label stays outside
-                                   the controller element so it is not displaced by the injected chips/typeahead. #}
                                 {{ form_label(form.currentRevision.labels) }}
                                 <div data-controller="label-chips"
                                      data-label-chips-placeholder-value="{{ 'Search labels…'|trans }}"
@@ -108,7 +101,6 @@
         </div>
     </div>
 
-    {# Step 2: Details (the bilingual texts a potential subscriber reads) #}
     <div data-form-stepper-target="step">
         <div class="row">
             <div class="col-md-12">
@@ -158,7 +150,6 @@
         </div>
     </div>
 
-    {# Step 3: Sign-up lists #}
     <div data-form-stepper-target="step">
         <div class="row">
             <div class="col-md-12">
@@ -177,8 +168,6 @@
         </div>
     </div>
 
-    {# The footer lives inside the form-stepper element so its targets/actions bind (Stimulus only scans the
-       controller's own subtree). It stays inside the <form>, so the single POST is unchanged. #}
     <div class="mt-3 d-flex justify-content-end gap-2">
         <a href="{{ path('admin/activities/index') }}" class="btn btn-link">{{ 'Cancel'|trans }}</a>
         <button type="button" class="btn btn-outline-secondary"

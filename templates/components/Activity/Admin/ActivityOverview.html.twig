@@ -105,7 +105,6 @@
                                                 {{ 'Submit for review'|trans }}
                                             </a>
                                         {% elseif row.status.value == 'rejected' %}
-                                            {# A closed revision is final (the board ended it), so it offers no reopen. #}
                                             <form method="post" class="d-inline"
                                                   action="{{ path('admin/activities/reopen', {'activity': row.id}) }}">
                                                 <input type="hidden" name="_csrf_token"
@@ -125,8 +124,7 @@
         </div>
     </div>
 
-    {# Potentially thousands of rows: collapsed by default and paginated. Collapse is driven by the `expanded` live
-       prop (not Bootstrap's client-side collapse) so it survives the Ajax re-render that pagination triggers. #}
+    {# Collapse is driven by the `expanded` live prop, not Bootstrap, so it survives the Ajax re-render pagination triggers. #}
     <div class="panel">
         <button type="button"
                 class="panel-heading signup-list-heading d-flex justify-content-between align-items-center w-100 border-0 bg-transparent text-start{{ expanded ? '' : ' collapsed' }}"
@@ -171,18 +169,14 @@
                                                class="btn btn-sm btn-outline-secondary">
                                                 {{ 'Sign-ups'|trans }}
                                             </a>
-                                            {# A cancelled activity is not revised (un-cancel first); an unpublished one
-                                               stays revisable so it can be fixed up before re-publishing. #}
                                             {% if not row.passed and not row.cancelled %}
                                                 <a href="{{ path('admin/activities/edit', {'activity': row.id}) }}"
                                                    class="btn btn-sm btn-outline-gewis-primary">
                                                     {{ 'Revise'|trans }}
                                                 </a>
                                             {% endif %}
+                                            {# Board lifecycle controls use their own Bootstrap modal; the shared confirm-modal drives live actions only. #}
                                             {% if this.isBoard %}
-                                                {# Board-only lifecycle controls. Each opens a plain Bootstrap modal with
-                                                   the POST form + a Cancel button in the footer (the shared confirm-modal
-                                                   drives live actions only, so these use their own modal). #}
                                                 {% if row.cancelled %}
                                                     {{ _self.confirm_form_modal(
                                                         'uncancel-' ~ row.id,

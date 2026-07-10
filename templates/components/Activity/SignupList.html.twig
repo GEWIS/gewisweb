@@ -44,9 +44,7 @@
             {% endif %}
         </div>
 
-        {# The modal lives inside the component; on a successful submit the panel re-renders and the `modal-close`
-           controller hides this modal on the scoped `signup:success` event (the id keeps idiomorph from replacing it,
-           so the controller stays connected across the re-render). #}
+        {# The id keeps idiomorph from replacing the modal, so modal-close stays connected and can hide it on the scoped signup:success event after a re-render. #}
         <div class="modal fade" id="{{ signupModalId }}" tabindex="-1" aria-hidden="true"
              data-controller="modal-close" data-modal-close-list-id-value="{{ listId }}"
              data-action="signup:success@window->modal-close#hide">
@@ -108,7 +106,6 @@
         </p>
     {% endif %}
 
-    {# Members always see the subscriber list (own row included, others' sensitive fields hidden). #}
     <div class="table-responsive">
         <table class="table table-hover align-middle mb-0">
             <thead>

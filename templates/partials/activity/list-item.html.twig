@@ -1,7 +1,5 @@
 {% set now = date() %}
 {% set dateBadge = activity_date_badge(activity.getBeginTime, activity.getEndTime) %}
-{# The activity's own time + relative-status, captured once and rendered in two responsive slots below (inline under the
-   title on mobile, right-hand column on desktop) so it stays distinct from the sign-up deadline in the footer. #}
 {% set dateMeta %}
     <span class="text-muted small">{{ activity_date_range(activity.getBeginTime, activity.getEndTime) }}</span>
     {% if now.timestamp >= activity.getBeginTime.timestamp and now.timestamp <= activity.getEndTime.timestamp %}
@@ -15,23 +13,18 @@
      data-action="click->activity-item#open">
     <div class="panel-body d-flex gap-3">
 
-        {# Left: stacked date badge. aria-hidden because activity_date_range() below already announces the full,
-           unambiguous date/time to assistive technology. #}
+        {# aria-hidden: activity_date_range() below already announces the full date to assistive tech. #}
         <div class="activity-date-badge{{ dateBadge.range ? ' activity-date-badge-range' : '' }}" aria-hidden="true">
             <span class="activity-date-badge-month">{{ dateBadge.month }}</span>
             <span class="activity-date-badge-day">{{ dateBadge.day }}</span>
             <span class="activity-date-badge-weekday">{{ dateBadge.weekday }}</span>
         </div>
 
-        {# Content column splits into a main column (title/description/meta) and a right-hand date+status column, so the
-           description hugs the title on desktop regardless of how tall the date column is. On mobile the two stack, so
-           the date column drops below the content with the date text and relative-time badge inline. #}
         <div class="flex-grow-1 overflow-hidden d-flex flex-column flex-md-row justify-content-between gap-3">
             <div class="flex-grow-1 overflow-hidden">
                 <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
                     <h3 class="h5 mb-0">
                         {% if activity.isCancelled %}
-                            {# Keep the [CANCELLED] marker readable: only the name is struck through, not the marker. #}
                             <span class="text-danger">{{ '[CANCELLED]'|trans }}</span>
                             <a class="text-muted text-decoration-line-through"
                                href="{{ path('activity/view', {'activity': activity.getId}) }}">{{ activity.getName|localise_text }}</a>
@@ -48,8 +41,6 @@
                     {% endfor %}
                 </div>
 
-                {# Mobile only: the activity time + status sits between the title and the body so it is not mistaken for
-                   the sign-up deadline in the footer. On desktop it lives in the right-hand column instead. #}
                 <div class="d-flex d-md-none flex-wrap align-items-center gap-2 mb-3">{{ dateMeta }}</div>
 
                 <div class="activity-description mb-3" data-controller="description-toggle"
@@ -69,8 +60,6 @@
                     <span class="small"><i class="fas fa-location-dot"></i> {{ activity.getLocation|localise_text }}</span>
                     <span class="small"><i class="fas fa-tag"></i> {{ activity.getCosts|localise_text }}</span>
                     {% set signupList = activity.getRelevantSignupList %}
-                    {# A cancelled activity has its sign-ups frozen, so a "sign-up closes/opens" deadline would be
-                       misleading; the struck-through [CANCELLED] title already conveys the state. #}
                     {% if not activity.isCancelled and null !== signupList %}
                         {% if signupList.isOpen %}
                             {% set secondsLeft = signupList.getCloseDate.timestamp - now.timestamp %}
@@ -97,7 +86,6 @@
                 </div>
             </div>
 
-            {# Desktop only: same meta in the right-hand column, hidden on mobile where it renders under the title. #}
             <div class="d-none d-md-flex flex-column align-items-end text-end flex-shrink-0 gap-2">
                 {{ dateMeta }}
             </div>
