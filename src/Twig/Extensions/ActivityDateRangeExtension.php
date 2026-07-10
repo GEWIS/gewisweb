@@ -19,7 +19,7 @@ use function ucfirst;
  * Formats an activity's begin/end as a single locale-aware range string, mirroring the previous GEWIS overview:
  *  - single day:   "Thursday 28 May. 12:40 - 13:20"
  *  - multiple days: "Sun. 17 May. (00:00) - Sun. 21 Jun. (23:59)"
- * A side that falls in a different calendar year than today also shows its year (e.g. "… 14 Dec. 2026 …").
+ * A side that falls in a different calendar year than today also shows its year (e.g. "... 14 Dec. 2026 ...").
  */
 class ActivityDateRangeExtension extends AbstractExtension
 {

@@ -76,7 +76,7 @@
                     {% endif %}
                     {% if field.isSensitive %}<span class="badge badge-warning">{{ 'Sensitive'|trans }}</span>{% endif %}
                     {% if 'number' == field.type.value and (field.minimumValue is not null or field.maximumValue is not null) %}
-                        <span class="text-muted">[{{ field.minimumValue ?? '…' }}, {{ field.maximumValue ?? '…' }}]</span>
+                        <span class="text-muted">[{{ field.minimumValue ?? '...' }}, {{ field.maximumValue ?? '...' }}]</span>
                     {% endif %}
                     {% if field.options|length > 0 %}
                         <div>{{ field.options|map(option => option.value|localise_text)|join(', ') }}</div>

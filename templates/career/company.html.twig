@@ -1,0 +1,121 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}{{ company.getName|page_title }}{{ parent() }}{% endblock %}
+
+{% block breadcrumbs %}
+    <li class="breadcrumb-item active" aria-current="page">
+        <a href="{{ path('career/index') }}">{{ 'Companies'|trans }}</a>
+    </li>
+    <li class="breadcrumb-item active">{{ company.getName }}</li>
+{% endblock %}
+
+{% block contents %}
+    {% set website = company.getWebsite|localise_text %}
+    <div class="row g-4">
+        <div class="col-lg-4 col-xl-3">
+            <div class="card company-card mb-4">
+                <div class="card-img-top d-flex align-items-center justify-content-center bg-body-secondary py-5">
+                    <span class="display-5 text-muted">{{ company.getName|slice(0, 1)|upper }}</span>
+                </div>
+                {% if
+                    company.getContactName is not null
+                    or company.getContactAddress is not null
+                    or company.getContactPhone is not null
+                    or company.getContactEmail is not null
+                    or website is not empty
+                %}
+                    <div class="card-body">
+                        <h6 class="text-uppercase text-body-secondary">{{ 'Contact'|trans }}</h6>
+                        {% if company.getContactName is not null %}
+                            <p class="mb-1 fw-semibold">{{ company.getContactName }}</p>
+                        {% endif %}
+                        {% if company.getContactAddress is not null %}
+                            <p class="mb-1 text-body-secondary small">{{ company.getContactAddress|nl2br }}</p>
+                        {% endif %}
+                        {% if company.getContactPhone is not null %}
+                            <p class="mb-1">
+                                <a href="tel:{{ company.getContactPhone }}">{{ company.getContactPhone }}</a>
+                            </p>
+                        {% endif %}
+                        {% if company.getContactEmail is not null %}
+                            <p class="mb-1">
+                                <a href="mailto:{{ company.getContactEmail }}">{{ company.getContactEmail }}</a>
+                            </p>
+                        {% endif %}
+                        {% if website is not empty %}
+                            <p class="mb-0">
+                                <a href="{{ website }}" target="_blank" rel="noopener noreferrer" class="fw-semibold">
+                                    {{ 'Visit website'|trans }}
+                                </a>
+                            </p>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+
+            {% if company.getNumberOfActiveJobs() > 0 %}
+                <div class="panel mb-4">
+                    <div class="panel-heading">
+                        <h3>{{ 'Open positions'|trans }}</h3>
+                    </div>
+                    <div class="list-group list-group-flush">
+                        {% for category in vacancy_categories() %}
+                            {% set vacancies = company.getActiveVacancies(category) %}
+                            {% if vacancies is not empty %}
+                                {% set vacancy = vacancies|first %}
+                                <div class="list-group-item">
+                                    <h6 class="mb-1">{{ category.pluralLabel|trans }}</h6>
+                                    <p class="mb-0">
+                                        <a href="{{ path('career/vacancy', {
+                                            companySlug: company.getSlugName,
+                                            category: vacancy.getCategory.value,
+                                            vacancySlug: vacancy.getSlugName,
+                                        }) }}">
+                                            {{ vacancy.getName|localise_text }}
+                                        </a>
+                                    </p>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if activities is not empty %}
+                <div class="panel mb-4">
+                    <div class="panel-heading">
+                        <h3>{{ 'Activities'|trans }}</h3>
+                    </div>
+                    <div class="list-group list-group-flush">
+                        {% for activity in activities %}
+                            <div class="list-group-item">
+                                <h6 class="mb-1">
+                                    <a href="{{ path('activity/view', {activity: activity.getId}) }}">
+                                        {{ activity.getName|localise_text }}
+                                    </a>
+                                </h6>
+                                <p class="text-muted small mb-0">
+                                    {{ activity.getBeginTime|format_datetime(
+                                        pattern: 'EEE d MMM yyyy, HH:mm',
+                                        locale: app.request.locale,
+                                    ) }}
+                                </p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="col-lg-8 col-xl-9">
+            <h3 class="mb-1">{{ company.getName }}</h3>
+            {% set slogan = company.getSlogan|localise_text %}
+            {% if slogan is not empty %}
+                <p class="text-body-secondary fs-5 mb-4">{{ slogan }}</p>
+            {% endif %}
+            <div class="markdown">
+                {{ company.getDescription|localise_text|markdown }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

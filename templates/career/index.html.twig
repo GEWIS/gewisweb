@@ -1,6 +1,69 @@
 {% extends 'layout.html.twig' %}
 
-{% block page_title %}{{ 'Career'|trans|page_title }}{{ parent() }}{% endblock %}
+{% block page_title %}{{ 'Companies'|trans|page_title }}{{ parent() }}{% endblock %}
 
 {% block contents %}
+    <h1 class="mb-4">{{ 'Companies'|trans }}</h1>
+
+    {% set featuredPackage = featured_company() %}
+    {% if featuredPackage is not null %}
+        {% set featuredCompany = featuredPackage.getCompany %}
+        <div class="panel mb-4">
+            <div class="panel-heading">
+                <h4 class="mb-0">
+                    <span class="fas fa-star text-warning me-1"></span>
+                    <a href="{{ path('career/company', {slug: featuredCompany.getSlugName}) }}">
+                        {{ featuredCompany.getName }}
+                    </a>
+                    <small class="text-muted">{{ 'in the spotlight'|trans }}</small>
+                </h4>
+            </div>
+            <div class="panel-body markdown">
+                {{ featuredPackage.getArticle|localise_text|markdown }}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if companies is empty %}
+        <p class="text-muted">{{ 'There are currently no companies to display.'|trans }}</p>
+    {% endif %}
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
+        {% for company in companies %}
+            <div class="col">
+                <div class="card company-card h-100">
+                    <a href="{{ path('career/company', {slug: company.getSlugName}) }}"
+                       class="card-img-top d-flex align-items-center justify-content-center bg-body-secondary py-5 text-decoration-none">
+                        <span class="display-6 text-muted">{{ company.getName|slice(0, 1)|upper }}</span>
+                    </a>
+                    <div class="card-body">
+                        <h5 class="card-title mb-1">
+                            <a href="{{ path('career/company', {slug: company.getSlugName}) }}">
+                                {{ company.getName }}
+                            </a>
+                        </h5>
+                        {% set slogan = company.getSlogan|localise_text %}
+                        {% if slogan is not empty %}
+                            <h6 class="card-subtitle text-muted fw-normal mb-0">{{ slogan }}</h6>
+                        {% endif %}
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        {% for category in vacancy_categories() %}
+                            {% set amount = company.getNumberOfActiveJobs(category) %}
+                            {% if amount > 0 %}
+                                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                                   href="{{ path('career/vacancies', {category: category.value, company: company.getSlugName}) }}">
+                                    {{ (amount == 1 ? category.label : category.pluralLabel)|trans }}
+                                    <span class="badge badge-tag">{{ amount }}</span>
+                                </a>
+                            {% endif %}
+                        {% endfor %}
+                        {% if company.getNumberOfActiveJobs() == 0 %}
+                            <li class="list-group-item text-muted small">{{ 'No open vacancies'|trans }}</li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}

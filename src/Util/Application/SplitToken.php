@@ -31,7 +31,7 @@ final class SplitToken
         int $verifierBytes,
         string $hashAlgo,
     ): array {
-        // max(1, …) keeps random_bytes' length strictly positive (and satisfies its int<1, max> contract).
+        // max(1, ...) keeps random_bytes' length strictly positive (and satisfies its int<1, max> contract).
         $selector = bin2hex(random_bytes(max(1, $selectorBytes)));
         $verifier = bin2hex(random_bytes(max(1, $verifierBytes)));
 

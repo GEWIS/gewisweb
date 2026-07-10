@@ -1,0 +1,70 @@
+<div {{ attributes }}>
+    {# data-live-ignore: keeps the injected label chips intact across re-renders. #}
+    <div class="collapse mb-3" id="vacancy-filters" data-live-ignore>
+        <div class="panel my-0">
+            <div class="panel-body">
+                <div class="row g-3 align-items-end">
+                    <div class="col-md-4">
+                        <label class="form-label" for="vacancy-overview-search">{{ 'Search'|trans }}</label>
+                        <input type="search" class="form-control" id="vacancy-overview-search"
+                               placeholder="{{ 'Search by vacancy name'|trans }}"
+                               data-model="debounce(300)|search"
+                               value="{{ this.search }}">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label" for="vacancy-overview-category">{{ 'Category'|trans }}</label>
+                        <select class="form-select" id="vacancy-overview-category" data-model="category">
+                            <option value="">{{ 'Any'|trans }}</option>
+                            {% for category in this.categories %}
+                                <option value="{{ category.value }}" {% if this.category == category.value %}selected{% endif %}>
+                                    {{ category.pluralLabel|trans }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label" for="vacancy-overview-company">{{ 'Company'|trans }}</label>
+                        <select class="form-select" id="vacancy-overview-company" data-model="companyFilter">
+                            <option value="">{{ 'Any company'|trans }}</option>
+                            {% for company in this.companies %}
+                                <option value="{{ company.getSlugName }}" {% if this.companyFilter == company.getSlugName %}selected{% endif %}>
+                                    {{ company.getName }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    {% if this.labels is not empty %}
+                        <div class="col-12">
+                            <label class="form-label">{{ 'Labels'|trans }}</label>
+                            <div data-controller="label-chips"
+                                 data-label-chips-placeholder-value="{{ 'Search labels...'|trans }}"
+                                 data-label-chips-remove-label-value="{{ 'Remove'|trans }}"
+                                 data-label-chips-no-results-value="{{ 'No matching labels'|trans }}">
+                                <div class="d-flex flex-wrap gap-3">
+                                    {% for label in this.labels %}
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="vacancy-overview-label-{{ label.id }}"
+                                                   data-model="labelFilters" value="{{ label.id }}"
+                                                   {% if label.id in this.labelFilters %}checked{% endif %}>
+                                            <label class="form-check-label" for="vacancy-overview-label-{{ label.id }}">{{ label.getName|localise_text }}</label>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if this.vacancies is empty %}
+        <p class="text-muted text-center py-4">{{ 'No vacancies match the current filters.'|trans }}</p>
+    {% else %}
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
+            {% for vacancy in this.vacancies %}
+                {% include 'partials/career/vacancy-card.html.twig' with {'vacancy': vacancy} only %}
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>

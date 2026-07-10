@@ -1,0 +1,42 @@
+// Company overview / vacancy cards.
+//
+// A flush list-group inside a card draws its dividers with `--bs-list-group-border-color` (a solid colour), which
+// reads darker and heavier than the card's own translucent border. Align the two so the dividers sit flush with the
+// card edge instead of standing out.
+.company-card {
+    .list-group {
+        --#{$prefix}list-group-border-color: var(--#{$prefix}card-border-color);
+    }
+}
+
+// Monogram logo placeholder (until real logo serving exists): a centred initial on a muted square. `-sm` is the small
+// inline mark used on a vacancy card next to the title; the detail pages use a full-width banner variant inline.
+.career-logo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: var(--#{$prefix}secondary-color);
+    background-color: var(--#{$prefix}secondary-bg);
+}
+
+.career-logo-sm {
+    flex: none;
+    width: 2.75rem;
+    height: 2.75rem;
+    font-size: 1.1rem;
+    border-radius: var(--#{$prefix}border-radius);
+}
+
+// Clamp the (rendered Markdown) description teaser on a vacancy card, mirroring `.activity-description-content`.
+.vacancy-card-excerpt {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+
+    > :last-child {
+        margin-bottom: 0;
+    }
+}

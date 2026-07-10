@@ -6,8 +6,8 @@ namespace App\Tests\Service\Career;
 
 use App\Entity\Application\Enums\RevisionStatus;
 use App\Entity\Career\CareerLocalisedText;
+use App\Entity\Career\Enums\VacancyCategories;
 use App\Entity\Career\Vacancy;
-use App\Entity\Career\VacancyCategory;
 use App\Entity\Career\VacancyLabel;
 use App\Entity\Career\VacancyRevision;
 use App\Entity\Decision\Member;
@@ -71,7 +71,7 @@ final class VacancyRevisionClonerTest extends TestCase
 
     public function testDeepCopiesTextsButCarriesCategoryAndLabelsByReference(): void
     {
-        $category = self::createStub(VacancyCategory::class);
+        $category = VacancyCategories::Internships;
         $label = self::createStub(VacancyLabel::class);
         $source = $this->approvedSource(
             category: $category,
@@ -105,7 +105,7 @@ final class VacancyRevisionClonerTest extends TestCase
             $draft->getAttachment(),
         );
 
-        // Category and labels are shared reference entities, so the draft points at the very same instances.
+        // The category (an enum case) and labels are carried over, so the draft points at the very same instances.
         self::assertSame(
             $category,
             $draft->getCategory(),
@@ -148,7 +148,7 @@ final class VacancyRevisionClonerTest extends TestCase
 
     private function approvedSource(
         ?Member $author = null,
-        ?VacancyCategory $category = null,
+        ?VacancyCategories $category = null,
         ?VacancyLabel $label = null,
     ): VacancyRevision {
         $vacancy = new Vacancy();
@@ -183,7 +183,7 @@ final class VacancyRevisionClonerTest extends TestCase
         $source->setContactName('Jane Doe');
         $source->setContactPhone('+31 600000000');
         $source->setContactEmail('jane@example.com');
-        $source->setCategory($category ?? self::createStub(VacancyCategory::class));
+        $source->setCategory($category ?? VacancyCategories::Jobs);
         $source->addLabel($label ?? self::createStub(VacancyLabel::class));
 
         return $source;

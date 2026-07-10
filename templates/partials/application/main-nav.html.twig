@@ -188,22 +188,37 @@
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
-                            {% if null !== featured_company() %}
-                                <li>
-                                    <a href="{{ path('') }}" class="dropdown-item">
-                                        <span class="fas fa-star"></span>
-                                        {{ 'Featured'|trans }}:
-                                        {{ featuredCompanyPackage.getCompany.getName }}
-                                    </a>
-                                </li>
+                            <li>
+                                <a href="{{ path('career/index') }}" class="dropdown-item">
+                                    {{ 'Companies'|trans }}
+                                </a>
+                            </li>
+                            {% set featuredPackage = featured_company() %}
+                            {% if null !== featuredPackage %}
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
+                                <li>
+                                    <h6 class="dropdown-header"><span class="fas fa-star"></span> {{ 'Featured'|trans }}</h6>
+                                </li>
+                                <li>
+                                    <a href="{{ path('career/company', {slug: featuredPackage.getCompany.getSlugName}) }}"
+                                       class="dropdown-item">
+                                        {{ featuredPackage.getCompany.getName }}
+                                    </a>
+                                </li>
                             {% endif %}
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <h6 class="dropdown-header">{{ 'Vacancies'|trans }}</h6>
+                            </li>
                             {% for category in vacancy_categories() %}
                                 <li>
-                                    <a href="{{ path('') }}" class="dropdown-item">
-                                        {{ category.getName|localise_text }}
+                                    <a href="{{ path('career/vacancies', {category: category.value}) }}"
+                                       class="dropdown-item">
+                                        {{ category.pluralLabel|trans }}
                                     </a>
                                 </li>
                             {% endfor %}
