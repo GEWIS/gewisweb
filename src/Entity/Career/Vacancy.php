@@ -8,6 +8,7 @@ use App\Entity\Application\RevisableInterface;
 use App\Entity\Application\RevisionInterface;
 use App\Entity\Application\Traits\IdentifiableTrait;
 use App\Entity\Application\Traits\TimestampableTrait;
+use App\Entity\Career\Enums\VacancyCategories;
 use App\Entity\Decision\Member as MemberModel;
 use App\Entity\Decision\Organ as OrganModel;
 use App\Repository\Career\VacancyRepository;
@@ -312,7 +313,7 @@ class Vacancy implements RevisableInterface
     /**
      * Get the vacancy's category.
      */
-    public function getCategory(): VacancyCategory
+    public function getCategory(): VacancyCategories
     {
         return $this->getDisplayRevision()->getCategory();
     }
@@ -356,7 +357,7 @@ class Vacancy implements RevisableInterface
     /**
      * @return array{
      *     slugName: string,
-     *     category: VacancyCategory,
+     *     category: string,
      *     contactName: ?string,
      *     contactEmail: ?string,
      *     contactPhone: ?string,
@@ -383,7 +384,7 @@ class Vacancy implements RevisableInterface
 
         return [
             'slugName' => $this->getSlugName(),
-            'category' => $this->getCategory(),
+            'category' => $this->getCategory()->value,
             'contactName' => $this->getContactName(),
             'contactEmail' => $this->getContactEmail(),
             'contactPhone' => $this->getContactPhone(),

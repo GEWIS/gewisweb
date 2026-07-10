@@ -6,6 +6,7 @@ namespace App\Entity\Career;
 
 use App\Entity\Application\AbstractRevision;
 use App\Entity\Application\RevisableInterface;
+use App\Entity\Career\Enums\VacancyCategories;
 use App\Repository\Career\VacancyRevisionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -140,13 +141,11 @@ class VacancyRevision extends AbstractRevision
     )]
     private ?string $contactEmail = null;
 
-    #[ManyToOne(targetEntity: VacancyCategory::class)]
-    #[JoinColumn(
-        name: 'category_id',
-        referencedColumnName: 'id',
-        nullable: false,
+    #[Column(
+        type: Types::STRING,
+        enumType: VacancyCategories::class,
     )]
-    private VacancyCategory $category;
+    private VacancyCategories $category;
 
     /**
      * The labels of this revision of the vacancy. Each revision owns its own assignments (carried forward when a draft
@@ -322,12 +321,12 @@ class VacancyRevision extends AbstractRevision
         $this->contactEmail = $contactEmail;
     }
 
-    public function getCategory(): VacancyCategory
+    public function getCategory(): VacancyCategories
     {
         return $this->category;
     }
 
-    public function setCategory(VacancyCategory $category): void
+    public function setCategory(VacancyCategories $category): void
     {
         $this->category = $category;
     }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Activity;
 
+use App\DataFixtures\Career\CompanyFixture;
 use App\DataFixtures\Decision\DecisionFixture;
 use App\DataFixtures\Decision\MemberFixture;
 use App\DataFixtures\User\UserFixture;
@@ -24,6 +25,7 @@ use App\Entity\Activity\SignupList;
 use App\Entity\Activity\SignupOption;
 use App\Entity\Activity\UserSignup;
 use App\Entity\Application\Enums\RevisionStatus;
+use App\Entity\Career\Company;
 use App\Entity\Decision\Member;
 use App\Entity\Decision\Organ;
 use App\Entity\User\User;
@@ -326,6 +328,7 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
                 'creator' => 8013,
                 'status' => RevisionStatus::Approved,
                 'beginTime' => '+2 days 20:00',
+                'company' => 'nexunt',
                 'endTime' => '+2 days 23:00',
                 'category' => ActivityCategories::Recreational,
                 'requireGEFLITST' => false,
@@ -365,6 +368,7 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
                 'creator' => 8025,
                 'status' => RevisionStatus::Approved,
                 'beginTime' => '+2 weeks 19:00',
+                'company' => 'nexunt',
                 'endTime' => '+2 weeks 23:00',
                 'category' => ActivityCategories::SocialDrink,
                 'requireGEFLITST' => false,
@@ -435,6 +439,7 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
                 'creator' => 8010,
                 'status' => RevisionStatus::Approved,
                 'beginTime' => '+1 month 17:00',
+                'company' => 'nexunt',
                 'endTime' => '+1 month 22:00',
                 'category' => ActivityCategories::Party,
                 'requireGEFLITST' => true,
@@ -485,6 +490,7 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
                 'creator' => 8026,
                 'status' => RevisionStatus::Approved,
                 'beginTime' => '+5 weeks 18:00',
+                'company' => 'nexunt',
                 'endTime' => '+5 weeks 23:59',
                 'category' => ActivityCategories::Conference,
                 'requireGEFLITST' => true,
@@ -834,6 +840,16 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
                 $revision->addLabel($this->getReference($labelReference, ActivityLabel::class));
             }
 
+            // The organising company (a reviewable, display-only field) surfaces on that company's career detail page.
+            if (isset($data['company'])) {
+                $revision->setCompany(
+                    $this->getReference(
+                        'career-company-' . $data['company'],
+                        Company::class,
+                    ),
+                );
+            }
+
             $activity->addRevision($revision);
             $activity->setCurrentRevision($revision);
 
@@ -1143,7 +1159,7 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
      *     endTime: string,
      *     category: ActivityCategories,
      *     ...<string, mixed>,
-     * } $content the activity content; the main loop passes a wider row (with creator, labels, sign-up lists, …)
+     * } $content the activity content; the main loop passes a wider row (with creator, labels, sign-up lists, ...)
      */
     private function buildRevision(
         array $content,
@@ -1282,6 +1298,8 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
             UserFixture::class,
             // The workflow examples are assigned an organising organ, so the organs must be seeded first.
             DecisionFixture::class,
+            // Some seeded activities name an organising company, so the companies must be seeded first.
+            CompanyFixture::class,
         ];
     }
 }

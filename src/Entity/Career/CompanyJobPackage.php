@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Entity\Career;
 
 use App\Entity\Career\Enums\CompanyPackageTypes;
-use App\Entity\Career\VacancyCategory as VacancyCategoryModel;
+use App\Entity\Career\Enums\VacancyCategories;
 use App\Repository\Career\CompanyJobPackageRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -61,7 +61,7 @@ class CompanyJobPackage extends CompanyPackage
      *
      * @return int of vacancies in the package
      */
-    public function getNumberOfActiveJobs(?VacancyCategoryModel $category = null): int
+    public function getNumberOfActiveJobs(?VacancyCategories $category = null): int
     {
         return count($this->getJobsInCategory($category));
     }
@@ -71,7 +71,7 @@ class CompanyJobPackage extends CompanyPackage
      *
      * @return Vacancy[]
      */
-    public function getJobsInCategory(?VacancyCategoryModel $category = null): array
+    public function getJobsInCategory(?VacancyCategories $category = null): array
     {
         $filter = static function (Vacancy $vacancy) use ($category): bool {
             if (null === $category) {

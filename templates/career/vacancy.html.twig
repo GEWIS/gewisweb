@@ -1,0 +1,84 @@
+{% extends 'layout.html.twig' %}
+
+{% set company = vacancy.getCompany %}
+
+{% block page_title %}{{ vacancy.getName|localise_text|page_title }}{{ parent() }}{% endblock %}
+
+{% block breadcrumbs %}
+    <li class="breadcrumb-item active" aria-current="page">
+        <a href="{{ path('career/index') }}">{{ 'Companies'|trans }}</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="{{ path('career/company', {slug: company.getSlugName}) }}">{{ company.getName }}</a>
+    </li>
+    <li class="breadcrumb-item active">{{ vacancy.getName|localise_text }}</li>
+{% endblock %}
+
+{% block contents %}
+    {% set vacancyWebsite = vacancy.getWebsite|localise_text %}
+    {% set vacancyAttachment = vacancy.getAttachment|localise_text %}
+    {% set companySlogan = company.getSlogan|localise_text %}
+    <div class="row g-4">
+        <div class="col-lg-4 col-xl-3">
+            <div class="card company-card mb-4">
+                <div class="card-img-top d-flex align-items-center justify-content-center bg-body-secondary py-5">
+                    <span class="display-5 text-muted">{{ company.getName|slice(0, 1)|upper }}</span>
+                </div>
+                <div class="card-body">
+                    <p class="mb-1">
+                        <a href="{{ path('career/company', {slug: company.getSlugName}) }}"
+                           class="fw-semibold">{{ company.getName }}</a>
+                    </p>
+                    {% set location = vacancy.getLocation|localise_text %}
+                    {% if location is not empty %}
+                        <p class="text-body-secondary small mb-2">{{ location }}</p>
+                    {% endif %}
+                    <div class="d-flex flex-wrap gap-1 mb-3">
+                        <span class="badge {{ vacancy.getCategory.badgeClass }}">
+                            {{ vacancy.getCategory.label|trans }}
+                        </span>
+                        {% for label in vacancy.getLabels %}
+                            <span class="badge badge-tag">{{ label.getName|localise_text }}</span>
+                        {% endfor %}
+                    </div>
+                    {% if vacancyWebsite is not empty %}
+                        <a href="{{ vacancyWebsite }}" target="_blank" rel="noopener noreferrer"
+                           class="btn btn-gewis-primary w-100">
+                            {{ 'Visit website'|trans }}
+                        </a>
+                    {% endif %}
+                    {% if vacancyAttachment is not empty %}
+                        <a href="{{ vacancyAttachment }}" target="_blank" rel="noopener noreferrer"
+                           class="btn btn-outline-secondary w-100 {{ vacancyWebsite is not empty ? 'mt-2' : '' }}">
+                            {{ 'View attachment'|trans }}
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+
+            {% if companySlogan is not empty %}
+                <div class="panel mb-4">
+                    <div class="panel-heading">
+                        <h3>{{ 'About %company%'|trans({'%company%': company.getName}) }}</h3>
+                    </div>
+                    <div class="panel-body">
+                        <p class="text-body-secondary">{{ companySlogan }}</p>
+                        <a href="{{ path('career/company', {slug: company.getSlugName}) }}" class="fw-semibold">
+                            {{ 'View company page'|trans }}
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="col-lg-8 col-xl-9">
+            <h3 class="mb-1">{{ vacancy.getName|localise_text }}</h3>
+            <p class="text-body-secondary fs-5 mb-4">
+                {{ 'at %company%'|trans({'%company%': company.getName}) }}
+            </p>
+            <div class="markdown">
+                {{ vacancy.getDescription|localise_text|markdown }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

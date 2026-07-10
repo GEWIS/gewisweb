@@ -9,7 +9,7 @@ use App\Entity\Application\RevisionInterface;
 use App\Entity\Application\Traits\IdentifiableTrait;
 use App\Entity\Application\Traits\TimestampableTrait;
 use App\Entity\Career\Enums\CompanyPackageTypes;
-use App\Entity\Career\VacancyCategory as VacancyCategoryModel;
+use App\Entity\Career\Enums\VacancyCategories;
 use App\Entity\Decision\Member as MemberModel;
 use App\Entity\Decision\Organ as OrganModel;
 use App\Repository\Career\CompanyRepository;
@@ -404,7 +404,7 @@ class Company implements RevisableInterface
      * Returns the number of jobs that are contained in all active packages of this
      * company.
      */
-    public function getNumberOfActiveJobs(?VacancyCategoryModel $category = null): int
+    public function getNumberOfActiveJobs(?VacancyCategories $category = null): int
     {
         $jobCount = static function (CompanyPackage $package) use ($category): int {
             if ($package instanceof CompanyJobPackage) {
@@ -415,6 +415,29 @@ class Company implements RevisableInterface
         };
 
         return array_sum(array_map($jobCount, $this->getPackages()->toArray()));
+    }
+
+    /**
+     * Returns the active vacancies of this company, optionally limited to a single category, gathered across all of the
+     * company's job packages.
+     *
+     * @return Vacancy[]
+     */
+    public function getActiveVacancies(?VacancyCategories $category = null): array
+    {
+        $vacancies = [];
+
+        foreach ($this->getPackages() as $package) {
+            if (!$package instanceof CompanyJobPackage) {
+                continue;
+            }
+
+            foreach ($package->getJobsInCategory($category) as $vacancy) {
+                $vacancies[] = $vacancy;
+            }
+        }
+
+        return $vacancies;
     }
 
     /**

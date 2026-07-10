@@ -9,6 +9,7 @@ use App\Entity\Activity\Enums\ActivityCategories;
 use App\Entity\Activity\SignupList;
 use App\Entity\Activity\UserSignup;
 use App\Entity\Application\Enums\RevisionStatus;
+use App\Entity\Career\Company;
 use App\Entity\Decision\AssociationYear;
 use App\Entity\Decision\Member;
 use App\Entity\Decision\Organ;
@@ -489,6 +490,50 @@ class ActivityRepository extends ServiceEntityRepository
             ->setMaxResults($limit);
 
         return $paginator;
+    }
+
+    /**
+     * Find a company's upcoming, publicly visible activities — the ones whose live (approved) revision names this
+     * company as its organiser — soonest first. Used by the company detail page's activities panel.
+     *
+     * @return Activity[]
+     */
+    public function findUpcomingByCompany(
+        Company $company,
+        int $limit,
+    ): array {
+        return $this->createQueryBuilder('a')
+            ->addSelect(
+                'lr',
+                'n',
+            )
+            ->join(
+                'a.liveRevision',
+                'lr',
+            )
+            ->join(
+                'lr.name',
+                'n',
+            )
+            ->andWhere('a.unpublishedAt IS NULL')
+            ->andWhere('IDENTITY(lr.company) = :companyId')
+            ->andWhere('lr.endTime > :now')
+            ->setParameter(
+                'companyId',
+                $company->getId(),
+            )
+            ->setParameter(
+                'now',
+                new DateTime(),
+                Types::DATETIME_MUTABLE,
+            )
+            ->orderBy(
+                'lr.beginTime',
+                'ASC',
+            )
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
     }
 
     /**

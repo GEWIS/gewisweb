@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace App\Twig\Extensions;
 
 use App\Entity\Career\CompanyFeaturedPackage;
-use App\Entity\Career\VacancyCategory;
+use App\Entity\Career\Enums\VacancyCategories;
 use App\Repository\Career\CompanyFeaturedPackageRepository;
-use App\Repository\Career\VacancyCategoryRepository;
 use Override;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -16,7 +15,6 @@ class CareerExtension extends AbstractExtension
 {
     public function __construct(
         private readonly CompanyFeaturedPackageRepository $companyFeaturedPackageRepository,
-        private readonly VacancyCategoryRepository $vacancyCategoryRepository,
     ) {
     }
 
@@ -44,10 +42,10 @@ class CareerExtension extends AbstractExtension
     }
 
     /**
-     * @return VacancyCategory[]
+     * @return VacancyCategories[]
      */
     public function getVacancyCategories(): array
     {
-        return $this->vacancyCategoryRepository->findVisibleCategories();
+        return VacancyCategories::cases();
     }
 }

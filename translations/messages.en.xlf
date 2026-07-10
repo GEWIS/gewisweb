@@ -53,6 +53,10 @@
         <source>API Users</source>
         <target state="translated">API Users</target>
       </trans-unit>
+      <trans-unit id="N8J6fEh" resname="About %company%">
+        <source>About %company%</source>
+        <target>About %company%</target>
+      </trans-unit>
       <trans-unit id="5DOuCi7" resname="Access Denied">
         <source>Access Denied</source>
         <target state="translated">Access Denied</target>
@@ -253,6 +257,10 @@
         <source>Any</source>
         <target state="translated">Any</target>
       </trans-unit>
+      <trans-unit id="areW2ld" resname="Any company">
+        <source>Any company</source>
+        <target>Any company</target>
+      </trans-unit>
       <trans-unit id="pb6Dt_Y" resname="Approvals">
         <source>Approvals</source>
         <target state="translated">Approvals</target>
@@ -380,10 +388,6 @@
       <trans-unit id="U.zrbEp" resname="Career Development and External Affairs Officer">
         <source>Career Development and External Affairs Officer</source>
         <target state="translated">Career Development and External Affairs Officer</target>
-      </trans-unit>
-      <trans-unit id="wmlL5M4" resname="Categories">
-        <source>Categories</source>
-        <target state="translated">Categories</target>
       </trans-unit>
       <trans-unit id="tceoGZr" resname="Category">
         <source>Category</source>
@@ -1125,6 +1129,14 @@
         <source>Internal Server Error</source>
         <target state="translated">Internal Server Error</target>
       </trans-unit>
+      <trans-unit id="nzWyuIo" resname="Internship">
+        <source>Internship</source>
+        <target>Internship</target>
+      </trans-unit>
+      <trans-unit id="K.hnA.3" resname="Internships">
+        <source>Internships</source>
+        <target>Internships</target>
+      </trans-unit>
       <trans-unit id="HEXPss6" resname="Is 18+?">
         <source>Is 18+?</source>
         <target state="translated">Is 18+?</target>
@@ -1148,6 +1160,14 @@
       <trans-unit id="ZMKVhSD" resname="It was declared, but never initialised.">
         <source>It was declared, but never initialised.</source>
         <target state="translated">It was declared, but never initialised.</target>
+      </trans-unit>
+      <trans-unit id="_62c3tU" resname="Job">
+        <source>Job</source>
+        <target>Job</target>
+      </trans-unit>
+      <trans-unit id="FPIW94w" resname="Jobs">
+        <source>Jobs</source>
+        <target>Jobs</target>
       </trans-unit>
       <trans-unit id="n9QDfSe" resname="LEGACY Education Officer">
         <source>LEGACY Education Officer</source>
@@ -1445,6 +1465,10 @@
         <source>No members match the current filters.</source>
         <target state="translated">No members match the current filters.</target>
       </trans-unit>
+      <trans-unit id="2ycHnEH" resname="No open vacancies">
+        <source>No open vacancies</source>
+        <target>No open vacancies</target>
+      </trans-unit>
       <trans-unit id="MXNPMwh" resname="No organising company">
         <source>No organising company</source>
         <target state="translated">No organising company</target>
@@ -1468,6 +1492,10 @@
       <trans-unit id="6I5cJhu" resname="No subscriptions yet.">
         <source>No subscriptions yet.</source>
         <target>No subscriptions yet.</target>
+      </trans-unit>
+      <trans-unit id="yyGS_wy" resname="No vacancies match the current filters.">
+        <source>No vacancies match the current filters.</source>
+        <target>No vacancies match the current filters.</target>
       </trans-unit>
       <trans-unit id="nUNPJ8C" resname="Non-member">
         <source>Non-member</source>
@@ -1520,6 +1548,10 @@
       <trans-unit id="NYE98.0" resname="Open from %open% until %close%.">
         <source>Open from %open% until %close%.</source>
         <target>Open from %open% until %close%.</target>
+      </trans-unit>
+      <trans-unit id="sGdI_d5" resname="Open positions">
+        <source>Open positions</source>
+        <target>Open positions</target>
       </trans-unit>
       <trans-unit id="3aBUkVa" resname="Opens">
         <source>Opens</source>
@@ -1893,13 +1925,17 @@
         <source>Search by name or membership number</source>
         <target state="translated">Search by name or membership number</target>
       </trans-unit>
+      <trans-unit id="TjeQh69" resname="Search by vacancy name">
+        <source>Search by vacancy name</source>
+        <target>Search by vacancy name</target>
+      </trans-unit>
       <trans-unit id="xnFK3hj" resname="Search for a name or email">
         <source>Search for a name or email</source>
         <target>Search for a name or email</target>
       </trans-unit>
-      <trans-unit id="txb5rYx" resname="Search labels…">
-        <source>Search labels…</source>
-        <target state="translated">Search labels…</target>
+      <trans-unit id="txb5rYx" resname="Search labels...">
+        <source>Search labels...</source>
+        <target state="translated">Search labels...</target>
       </trans-unit>
       <trans-unit id="ABM3Mr2" resname="Secretary">
         <source>Secretary</source>
@@ -2077,6 +2113,14 @@
         <source>Student address</source>
         <target state="translated">Student address</target>
       </trans-unit>
+      <trans-unit id="sVFTyaT" resname="Student job">
+        <source>Student job</source>
+        <target>Student job</target>
+      </trans-unit>
+      <trans-unit id="1VuoWkr" resname="Student jobs">
+        <source>Student jobs</source>
+        <target>Student jobs</target>
+      </trans-unit>
       <trans-unit id="O4UIX7e" resname="Study Association GEWIS">
         <source>Study Association GEWIS</source>
         <target state="translated">Study Association GEWIS</target>
@@ -2237,6 +2281,10 @@
         <source>Theme</source>
         <target state="translated">Theme</target>
       </trans-unit>
+      <trans-unit id="i3MpBFw" resname="There are currently no companies to display.">
+        <source>There are currently no companies to display.</source>
+        <target>There are currently no companies to display.</target>
+      </trans-unit>
       <trans-unit id="MdizzQd" resname="There are no recipients in the selected group.">
         <source>There are no recipients in the selected group.</source>
         <target>There are no recipients in the selected group.</target>
@@ -2244,6 +2292,14 @@
       <trans-unit id="ENSM6jA" resname="There is nothing to review right now.">
         <source>There is nothing to review right now.</source>
         <target state="translated">There is nothing to review right now.</target>
+      </trans-unit>
+      <trans-unit id="MvzWOfp" resname="Thesis project">
+        <source>Thesis project</source>
+        <target>Thesis project</target>
+      </trans-unit>
+      <trans-unit id="7RR5mUW" resname="Thesis projects">
+        <source>Thesis projects</source>
+        <target>Thesis projects</target>
       </trans-unit>
       <trans-unit id="ecpVw4m" resname="This activity cannot be cancelled.">
         <source>This activity cannot be cancelled.</source>
@@ -2409,6 +2465,14 @@
         <source>Too many sign-up attempts. Please try again later.</source>
         <target>Too many sign-up attempts. Please try again later.</target>
       </trans-unit>
+      <trans-unit id="m67in_8" resname="Traineeship">
+        <source>Traineeship</source>
+        <target>Traineeship</target>
+      </trans-unit>
+      <trans-unit id="vryUIet" resname="Traineeships">
+        <source>Traineeships</source>
+        <target>Traineeships</target>
+      </trans-unit>
       <trans-unit id="jmK_5tr" resname="Treasurer">
         <source>Treasurer</source>
         <target state="translated">Treasurer</target>
@@ -2509,6 +2573,14 @@
         <source>View</source>
         <target state="translated">View</target>
       </trans-unit>
+      <trans-unit id="1mEp9z3" resname="View attachment">
+        <source>View attachment</source>
+        <target>View attachment</target>
+      </trans-unit>
+      <trans-unit id="0skOKH8" resname="View company page">
+        <source>View company page</source>
+        <target>View company page</target>
+      </trans-unit>
       <trans-unit id="kPrgwUx" resname="Virtual Meeting">
         <source>Virtual Meeting</source>
         <target state="translated">Virtual Meeting</target>
@@ -2516,6 +2588,10 @@
       <trans-unit id="8Uh2Sg4" resname="Visible to the organisers and the board. Use it to ask a question or leave a note.">
         <source>Visible to the organisers and the board. Use it to ask a question or leave a note.</source>
         <target state="translated">Visible to the organisers and the board. Use it to ask a question or leave a note.</target>
+      </trans-unit>
+      <trans-unit id="fXTip_t" resname="Visit website">
+        <source>Visit website</source>
+        <target>Visit website</target>
       </trans-unit>
       <trans-unit id="50BTJRy" resname="Voting Committee">
         <source>Voting Committee</source>
@@ -2705,6 +2781,10 @@
         <source>and</source>
         <target>and</target>
       </trans-unit>
+      <trans-unit id="dJhCfk." resname="at %company%">
+        <source>at %company%</source>
+        <target>at %company%</target>
+      </trans-unit>
       <trans-unit id="iYiRxKz" resname="disabled">
         <source>disabled</source>
         <target state="translated">disabled</target>
@@ -2724,6 +2804,10 @@
       <trans-unit id="Q384Ly2" resname="in %duration%">
         <source>in %duration%</source>
         <target>in %duration%</target>
+      </trans-unit>
+      <trans-unit id="ARE7JA2" resname="in the spotlight">
+        <source>in the spotlight</source>
+        <target>in the spotlight</target>
       </trans-unit>
       <trans-unit id="6.eCze3" resname="jane.doe@example.com">
         <source>jane.doe@example.com</source>
