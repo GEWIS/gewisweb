@@ -14,8 +14,14 @@
     <div class="row g-4">
         <div class="col-lg-4 col-xl-3">
             <div class="card company-card mb-4">
-                <div class="card-img-top d-flex align-items-center justify-content-center bg-body-secondary py-5">
-                    <span class="display-5 text-muted">{{ company.getName|slice(0, 1)|upper }}</span>
+                <div class="card-img-top d-flex align-items-center justify-content-center bg-body-secondary overflow-hidden"
+                     style="height: 10rem;">
+                    {% if company.getLogo %}
+                        <img class="w-100 h-100" style="object-fit: contain;"
+                             src="{{ image_url(company.getLogo, 'w640') }}" alt="{{ company.getName }}">
+                    {% else %}
+                        <span class="display-5 text-muted">{{ company.getName|slice(0, 1)|upper }}</span>
+                    {% endif %}
                 </div>
                 {% if
                     company.getContactName is not null

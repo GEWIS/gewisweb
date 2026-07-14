@@ -33,8 +33,14 @@
             <div class="col">
                 <div class="card company-card h-100">
                     <a href="{{ path('career/company', {slug: company.getSlugName}) }}"
-                       class="card-img-top d-flex align-items-center justify-content-center bg-body-secondary py-5 text-decoration-none">
-                        <span class="display-6 text-muted">{{ company.getName|slice(0, 1)|upper }}</span>
+                       class="card-img-top d-flex align-items-center justify-content-center bg-body-secondary text-decoration-none overflow-hidden"
+                       style="height: 8rem;">
+                        {% if company.getLogo %}
+                            <img class="w-100 h-100" style="object-fit: contain;" loading="lazy"
+                                 src="{{ image_url(company.getLogo, 'w640') }}" alt="{{ company.getName }}">
+                        {% else %}
+                            <span class="display-6 text-muted">{{ company.getName|slice(0, 1)|upper }}</span>
+                        {% endif %}
                     </a>
                     <div class="card-body">
                         <h5 class="card-title mb-1">

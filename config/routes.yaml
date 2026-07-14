@@ -36,6 +36,15 @@ user_token:
     requirements:
         app: '[a-z][0-9a-z\_\-]{2,31}'
 
+# Legacy `/data/{path}` URLs (old bookmarks, caches, markdown embeds). Defined here, like image_serve, so it is not
+# locale-prefixed and its slash-bearing {path} is matched before page_route/catch_all could grab it. Inert while
+# public/data/ still exists (Caddy serves those files statically); the safety net once it is removed.
+legacy_data:
+    path: /data/{path}
+    controller: App\Controller\Application\LegacyDataController::resolve
+    requirements:
+        path: '.+'
+
 # Catch everything that is not matched to allow stateful 404 errors.
 # Without this, due to the required language prefix, sessions are lost for 404 errors.
 catch_all:

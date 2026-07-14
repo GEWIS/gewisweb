@@ -132,6 +132,27 @@ class PhotoRepository extends ServiceEntityRepository
     }
 
     /**
+     * The photo whose stored path ends with the given filename, used to resolve a legacy `/data/{2ch}/{file}` URL onto
+     * the migrated photo (whose path re-roots that same filename under its album). Filenames are content-hashed, so a
+     * match is unambiguous.
+     */
+    public function findOneByPathBasename(string $basename): ?Photo
+    {
+        return $this->createQueryBuilder('photo')
+            ->where('photo.path LIKE :suffix')
+            ->setParameter(
+                'suffix',
+                '%/' . addcslashes(
+                    $basename,
+                    '%_',
+                ),
+            )
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    /**
      * Get all photos that have the member as its author.
      *
      * @return Photo[]

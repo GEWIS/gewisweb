@@ -163,6 +163,26 @@ class AlbumRepository extends ServiceEntityRepository
     }
 
     /**
+     * The album whose generated cover path ends with the given filename, used to resolve a legacy `/data/{2ch}/{file}`
+     * URL onto the migrated cover (whose path re-roots that same filename under the album).
+     */
+    public function findOneByCoverBasename(string $basename): ?Album
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.coverPath LIKE :suffix')
+            ->setParameter(
+                'suffix',
+                '%/' . addcslashes(
+                    $basename,
+                    '%_',
+                ),
+            )
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    /**
      * All root (top-level) albums, most recent first, for the board admin overview. Undated albums sort last (MariaDB
      * orders NULL dates after any value on a descending sort), and both published and unpublished albums are returned.
      *

@@ -10,7 +10,12 @@
     <div class="card company-card h-100">
         <div class="card-body d-flex flex-column gap-2">
             <div class="d-flex align-items-center gap-2">
-                <span class="career-logo career-logo-sm">{{ company.getName|slice(0, 1)|upper }}</span>
+                {% if company.getLogo %}
+                    <img class="career-logo-sm" style="object-fit: cover;" loading="lazy"
+                         src="{{ image_url(company.getLogo, 'w320') }}" alt="{{ company.getName }}">
+                {% else %}
+                    <span class="career-logo career-logo-sm">{{ company.getName|slice(0, 1)|upper }}</span>
+                {% endif %}
                 <div>
                     <h6 class="card-title mb-0">
                         <a href="{{ vacancyUrl }}" class="stretched-link">{{ vacancy.getName|localise_text }}</a>
