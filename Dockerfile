@@ -21,11 +21,13 @@ RUN <<-EOF
         ca-certificates \
         file \
         git \
-        libicu-dev
+        libicu-dev \
+        libvips42t64
     install-php-extensions \
         @composer \
         amqp \
         apcu \
+        ffi \
         gd \
         intl \
         pcntl \
@@ -210,6 +212,15 @@ RUN <<-EOF
     mkdir -p /data/caddy /config/caddy
     chown -R www-data:www-data /data /config
     find / -perm /6000 -type f -exec chmod a-s {} + 2>/dev/null || true
+EOF
+
+# php-vips loads libvips through FFI `dlopen` at runtime, so `libtree` (which only follows link-time deps) does not
+# collect it into /tmp/libs. Install the runtime library explicitly in this fresh Debian stage. The `ffi` extension .so
+# and its enabling ini are already carried over by the COPY --from lines above.
+RUN <<-EOF
+    apt-get update
+    apt-get install -y --no-install-recommends libvips42t64
+    rm -rf /var/lib/apt/lists/*
 EOF
 
 COPY --link --exclude=var --from=gewisweb_web_prod_builder /app /app

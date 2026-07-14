@@ -21,6 +21,8 @@
         "dragonmantank/cron-expression": "^3.6",
         "endroid/qr-code-bundle": "^7.0.1",
         "fortawesome/font-awesome": "^7.3.0",
+        "intervention/image": "^4.1",
+        "intervention/image-driver-vips": "^4.0",
         "jfcherng/php-diff": "^7.0.1",
         "league/commonmark": "^2.8.2",
         "league/flysystem-bundle": "^3.7",

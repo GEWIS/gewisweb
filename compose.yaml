@@ -80,6 +80,10 @@ services:
     messenger-bulk:
         <<: *worker
         command: [ "php", "bin/console", "messenger:consume", "bulk", "-vv", "--time-limit=600", "--limit=32", "--memory-limit=256M" ]
+    messenger-images:
+        <<: *worker
+        # Image encoding is heavier and more memory-hungry, so recycle the worker sooner and give it more headroom.
+        command: [ "php", "bin/console", "messenger:consume", "images", "-vv", "--time-limit=600", "--limit=16", "--memory-limit=512M" ]
     scheduler-default:
         <<: *worker
         command: [ "php", "bin/console", "messenger:consume", "scheduler_default", "-vv", "--time-limit=600", "--limit=32", "--memory-limit=256M" ]

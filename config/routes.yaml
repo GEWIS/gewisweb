@@ -7,6 +7,15 @@ localised_routes:
     requirements:
         _locale: 'en|nl'
 
+# Image serving is defined here (not as a controller attribute) so it is NOT locale-prefixed (image URLs are assets,
+# not pages), and so its slash-bearing {path} is matched before the localised page_route below could grab it.
+image_serve:
+    path: /img/{variant}/{path}
+    controller: App\Controller\Application\ImageController::serve
+    requirements:
+        variant: '[a-z0-9]+'
+        path: '.+'
+
 # The page route must be defined here. If it is an attribute in the PageController it requires a priority: -1 to ensure
 # that it does not "steal" the route from any other attribute-defined route.
 # And without the priority everything will land in the catch_all route below.

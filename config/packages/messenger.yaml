@@ -29,6 +29,16 @@ framework:
                         type: direct
                     queues:
                         bulk_queue: ~
+            # Dedicated transport for the image pipeline (variant pre-generation + album cover mosaics) so heavy,
+            # slow encoding never blocks the priority/bulk email queues and can be scaled independently.
+            images:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    exchange:
+                        name: images
+                        type: direct
+                    queues:
+                        images_queue: ~
 
         default_bus: messenger.bus.default
 
@@ -46,6 +56,8 @@ framework:
             'App\Message\Activity\ExternalSignupTokenEmail': high_priority
             'App\Message\Activity\ExternalSignupResendVerificationEmail': high_priority
             'App\Message\Activity\OrganiserAnnouncementEmail': bulk
+            'App\Message\Photo\ProcessImageVariantsMessage': images
+            'App\Message\Photo\GenerateAlbumCoverMessage': images
 
 when@test:
     framework:
@@ -56,4 +68,6 @@ when@test:
                 normal_priority:
                     dsn: 'in-memory://'
                 bulk:
+                    dsn: 'in-memory://'
+                images:
                     dsn: 'in-memory://'
