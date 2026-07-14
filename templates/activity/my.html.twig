@@ -7,7 +7,7 @@
         <h1 class="mb-0">{{ 'My upcoming activities'|trans }}</h1>
 
         <div class="d-flex flex-wrap gap-2">
-            {% include 'partials/activity/filter-toggle.html.twig' %}
+            {% include 'partials/filter-toggle.html.twig' with { target: 'activity-filters' } only %}
 
             <a class="btn btn-outline-secondary" href="{{ path('activity/archive/my') }}">
                 {{ 'My past activities'|trans }} <i class="fas fa-chevron-right"></i>

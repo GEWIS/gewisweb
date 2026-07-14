@@ -1,6 +1,47 @@
 {% extends 'layout.html.twig' %}
 
-{% block page_title %}{{ 'Photos'|page_title }}{{ parent() }}{% endblock %}
+{% block page_title %}{{ album.name|page_title }}{{ parent() }}{% endblock %}
+
+{# Photos fill the full width of the window, like the old site. #}
+{% block container_class %}container-fluid{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {# Only album pages carry the viewer, so its stylesheet is linked here rather than loaded on every page. #}
+    <link rel="stylesheet" href="{{ asset('vendor/photoswipe/dist/photoswipe.min.css') }}">
+{% endblock %}
 
 {% block contents %}
+    <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4">
+        <h1 class="mb-0">{{ album.name }}</h1>
+        {% if album.parent %}
+            <a class="btn btn-outline-secondary btn-sm"
+               href="{{ path('photo/album', { type: 'album', album: album.parent.id }) }}">
+                <i class="fa-solid fa-arrow-left me-1"></i>{{ 'Back to parent album'|trans }}
+            </a>
+        {% endif %}
+    </div>
+
+    {% if children is not empty %}
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xxl-6 g-3 mb-4">
+            {% for child in children %}
+                {% include 'partials/photo/album-card.html.twig' with { 'album': child } only %}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {#
+        The gallery loads the whole album from the manifest and lays it out as a windowed masonry: every photo has a
+        position immediately (so a #pid deep link scrolls straight to it), but only the tiles near the viewport are
+        mounted. Clicking a tile opens the PhotoSwipe viewer.
+    #}
+    <div data-controller="gallery"
+         data-gallery-manifest-url-value="{{ path('photo/manifest', { album: album.id }) }}">
+        <p data-gallery-target="empty" class="text-muted text-center py-4" hidden>
+            {{ 'This album does not contain any photos.'|trans }}
+        </p>
+        <div class="photo-masonry"
+             data-gallery-target="grid"
+             data-view-label="{{ 'View photo'|trans }}"></div>
+    </div>
 {% endblock %}

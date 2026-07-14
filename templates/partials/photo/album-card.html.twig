@@ -1,0 +1,34 @@
+<div class="col">
+    <a href="{{ path('photo/album', { type: 'album', album: album.id }) }}" class="text-decoration-none">
+        <div class="panel h-100 my-0">
+            <div class="ratio ratio-16x9 bg-body-secondary rounded-top overflow-hidden">
+                {% if album.coverPath %}
+                    <img class="w-100 h-100"
+                         style="object-fit: cover;"
+                         loading="lazy"
+                         src="{{ image_url(album.coverPath, 'cover') }}"
+                         alt="">
+                {% else %}
+                    {# No generated cover yet; show a neutral placeholder rather than a broken image. #}
+                    <div class="d-flex align-items-center justify-content-center text-muted h-100">
+                        <i class="fa-solid fa-images fa-2x"></i>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="panel-body">
+                <h3 class="h6 mb-1 text-body">{{ album.name }}</h3>
+                <p class="small text-muted mb-0">
+                    {% set subAlbums = album.albumCount %}
+                    {% if subAlbums > 0 %}
+                        <i class="fa-solid fa-folder-open me-1"></i>{{ subAlbums }}
+                        {{ subAlbums == 1 ? 'sub-album'|trans : 'sub-albums'|trans }}
+                    {% else %}
+                        {% set photos = album.getPhotoCount(false) %}
+                        <i class="fa-solid fa-image me-1"></i>{{ photos }}
+                        {{ photos == 1 ? 'photo'|trans : 'photos'|trans }}
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+    </a>
+</div>

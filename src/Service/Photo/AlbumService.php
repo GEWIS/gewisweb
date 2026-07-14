@@ -1,0 +1,148 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Service\Photo;
+
+use App\Entity\Decision\AssociationYear;
+use App\Entity\Photo\Album;
+use App\Repository\Photo\AlbumRepository;
+use App\Security\Photo\AlbumVoter;
+use Symfony\Bundle\SecurityBundle\Security;
+
+use function stripos;
+
+/**
+ * Read access to photo albums for the public browsing pages. Every album that leaves this service has passed the
+ * {@see AlbumVoter}, so callers do not repeat the published/graduate checks.
+ */
+final readonly class AlbumService
+{
+    public function __construct(
+        private AlbumRepository $albumRepository,
+        private Security $security,
+    ) {
+    }
+
+    /**
+     * The association years (as their first year, e.g. 2024 for '2024-2025') that hold viewable root albums, most
+     * recent first. Used to populate the year filter on the overview; the range runs from the newest to the oldest
+     * dated album.
+     *
+     * @return list<int>
+     */
+    public function getViewableRootAlbumYears(): array
+    {
+        // Public browsing is published-only for everyone (drafts live in the admin), so the year range is too.
+        $newest = $this->albumRepository->getNewestAlbum()?->getStartDateTime();
+        $oldest = $this->albumRepository->getOldestAlbum()?->getStartDateTime();
+
+        if (
+            null === $newest
+            || null === $oldest
+        ) {
+            return [];
+        }
+
+        $years = [];
+        $oldestYear = AssociationYear::fromDate($oldest)->getYear();
+        for ($year = AssociationYear::fromDate($newest)->getYear(); $year >= $oldestYear; --$year) {
+            $years[] = $year;
+        }
+
+        return $years;
+    }
+
+    /**
+     * The viewable root albums of one association year, grouped by month (keyed 'Y-m', most recent month first) so the
+     * overview can print a month divider before each group. An optional search narrows the albums to those whose name
+     * contains it. Only published albums are surfaced (drafts live in the admin, even for the board); graduates only
+     * see the albums the voter allows them (#1658).
+     *
+     * @return array<string, Album[]>
+     */
+    public function getViewableRootAlbumsByMonth(
+        int $year,
+        ?string $search = null,
+    ): array {
+        $associationYear = AssociationYear::fromYear($year);
+        $albums = $this->albumRepository->getAlbumsInDateRange(
+            $associationYear->getStartDate(),
+            $associationYear->getEndDate(),
+        );
+
+        $grouped = [];
+        foreach ($albums as $album) {
+            $start = $album->getStartDateTime();
+            if (
+                null === $start
+                || !$this->security->isGranted(
+                    AlbumVoter::VIEW,
+                    $album,
+                )
+            ) {
+                continue;
+            }
+
+            if (
+                null !== $search
+                && '' !== $search
+                && false === stripos(
+                    $album->getName(),
+                    $search,
+                )
+            ) {
+                continue;
+            }
+
+            $grouped[$start->format('Y-m')][] = $album;
+        }
+
+        return $grouped;
+    }
+
+    /**
+     * The album with this id if it exists and the current user may view it, otherwise null (the controller turns that
+     * into a 404, so a hidden album's existence is not leaked).
+     */
+    public function findViewableAlbum(int $id): ?Album
+    {
+        $album = $this->albumRepository->find($id);
+        if (
+            null === $album
+            || !$this->security->isGranted(
+                AlbumVoter::VIEW,
+                $album,
+            )
+        ) {
+            return null;
+        }
+
+        return $album;
+    }
+
+    /**
+     * The sub-albums of an album that the current user may view. Each is checked individually because a graduate may be
+     * allowed into some sub-albums but not their siblings (#1658).
+     *
+     * @return Album[]
+     */
+    public function getViewableChildren(Album $album): array
+    {
+        $children = [];
+        foreach ($album->getChildren() as $child) {
+            if (
+                !$this->security->isGranted(
+                    AlbumVoter::VIEW,
+                    $child,
+                )
+            ) {
+                continue;
+            }
+
+            $children[] = $child;
+        }
+
+        return $children;
+    }
+}

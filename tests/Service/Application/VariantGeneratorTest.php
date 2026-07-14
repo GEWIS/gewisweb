@@ -165,7 +165,7 @@ final class VariantGeneratorTest extends TestCase
         return dirname(
             __DIR__,
             3,
-        ) . '/src/DataFixtures/Photo/resources/' . $name;
+        ) . '/tests/Resources/images/' . $name;
     }
 
     /**

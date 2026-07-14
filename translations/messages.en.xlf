@@ -321,6 +321,10 @@
         <source>Back to overview</source>
         <target state="translated">Back to overview</target>
       </trans-unit>
+      <trans-unit id="P_FwWaW" resname="Back to parent album">
+        <source>Back to parent album</source>
+        <target>Back to parent album</target>
+      </trans-unit>
       <trans-unit id="9PmFUn6" resname="Backup codes">
         <source>Backup codes</source>
         <target state="translated">Backup codes</target>
@@ -1917,6 +1921,10 @@
         <source>Search by activity name</source>
         <target>Search by activity name</target>
       </trans-unit>
+      <trans-unit id="G9HUIyU" resname="Search by album name">
+        <source>Search by album name</source>
+        <target>Search by album name</target>
+      </trans-unit>
       <trans-unit id="YWrWXBq" resname="Search by company, representative name, or email">
         <source>Search by company, representative name, or email</source>
         <target state="translated">Search by company, representative name, or email</target>
@@ -1933,7 +1941,7 @@
         <source>Search for a name or email</source>
         <target>Search for a name or email</target>
       </trans-unit>
-      <trans-unit id="txb5rYx" resname="Search labels...">
+      <trans-unit id="vhyTMxl" resname="Search labels...">
         <source>Search labels...</source>
         <target state="translated">Search labels...</target>
       </trans-unit>
@@ -2285,6 +2293,10 @@
         <source>There are currently no companies to display.</source>
         <target>There are currently no companies to display.</target>
       </trans-unit>
+      <trans-unit id="SR63yZr" resname="There are no albums to show.">
+        <source>There are no albums to show.</source>
+        <target>There are no albums to show.</target>
+      </trans-unit>
       <trans-unit id="MdizzQd" resname="There are no recipients in the selected group.">
         <source>There are no recipients in the selected group.</source>
         <target>There are no recipients in the selected group.</target>
@@ -2372,6 +2384,10 @@
       <trans-unit id="fFg9TZ7" resname="This activity was taken over by a reviewer, so your changes were not saved.">
         <source>This activity was taken over by a reviewer, so your changes were not saved.</source>
         <target state="translated">This activity was taken over by a reviewer, so your changes were not saved.</target>
+      </trans-unit>
+      <trans-unit id="RiHJQBU" resname="This album does not contain any photos.">
+        <source>This album does not contain any photos.</source>
+        <target>This album does not contain any photos.</target>
       </trans-unit>
       <trans-unit id="83TctTv" resname="This device">
         <source>This device</source>
@@ -2580,6 +2596,10 @@
       <trans-unit id="0skOKH8" resname="View company page">
         <source>View company page</source>
         <target>View company page</target>
+      </trans-unit>
+      <trans-unit id="WJ3Xs8r" resname="View photo">
+        <source>View photo</source>
+        <target>View photo</target>
       </trans-unit>
       <trans-unit id="kPrgwUx" resname="Virtual Meeting">
         <source>Virtual Meeting</source>
@@ -2833,9 +2853,25 @@
         <source>ongoing for %duration%</source>
         <target>ongoing for %duration%</target>
       </trans-unit>
+      <trans-unit id="R0YULdF" resname="photo">
+        <source>photo</source>
+        <target>photo</target>
+      </trans-unit>
+      <trans-unit id="dnFFHDJ" resname="photos">
+        <source>photos</source>
+        <target>photos</target>
+      </trans-unit>
       <trans-unit id="iP7D8YD" resname="rev. #%n%">
         <source>rev. #%n%</source>
         <target state="translated">rev. #%n%</target>
+      </trans-unit>
+      <trans-unit id="a8oRoVc" resname="sub-album">
+        <source>sub-album</source>
+        <target>sub-album</target>
+      </trans-unit>
+      <trans-unit id="GzaHa85" resname="sub-albums">
+        <source>sub-albums</source>
+        <target>sub-albums</target>
       </trans-unit>
       <trans-unit id="CqfqdkM" resname="the organising party">
         <source>the organising party</source>

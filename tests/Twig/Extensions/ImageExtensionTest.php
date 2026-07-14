@@ -7,6 +7,7 @@ namespace App\Tests\Twig\Extensions;
 use App\Entity\Application\Enums\ImageVariant;
 use App\Service\Application\ImagePathResolver;
 use App\Service\Application\ImageSigner;
+use App\Service\Application\ImageUrlBuilder;
 use App\Twig\Extensions\ImageExtension;
 use PHPUnit\Framework\TestCase;
 
@@ -63,8 +64,10 @@ final class ImageExtensionTest extends TestCase
     private function extension(): ImageExtension
     {
         return new ImageExtension(
-            new ImageSigner('test-key'),
-            new ImagePathResolver(),
+            new ImageUrlBuilder(
+                new ImageSigner('test-key'),
+                new ImagePathResolver(),
+            ),
         );
     }
 }

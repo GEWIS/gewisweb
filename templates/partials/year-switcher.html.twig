@@ -1,3 +1,5 @@
+{# `all_years` (default true) shows the "All years" entry; pass false where a specific year must always be selected. #}
+{% set all_years = all_years ?? true %}
 {% if years is not empty %}
     {% set query = app.request.query.all %}
     {% set newer_years = year is not null ? years|filter(y => y > year) : [] %}
@@ -16,12 +18,14 @@
                 {{ year is not null ? (year ~ ' - ' ~ (year + 1)) : 'All years'|trans }}
             </button>
             <ul class="dropdown-menu">
-                <li>
-                    <a class="dropdown-item {{ year is null ? 'active' }}" href="{{ path(route, query) }}">
-                        {{ 'All years'|trans }}
-                    </a>
-                </li>
-                <li><hr class="dropdown-divider"></li>
+                {% if all_years %}
+                    <li>
+                        <a class="dropdown-item {{ year is null ? 'active' }}" href="{{ path(route, query) }}">
+                            {{ 'All years'|trans }}
+                        </a>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                {% endif %}
                 {% for y in years %}
                     <li>
                         <a class="dropdown-item {{ year == y ? 'active' }}"

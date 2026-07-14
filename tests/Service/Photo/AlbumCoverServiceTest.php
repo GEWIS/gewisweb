@@ -129,7 +129,7 @@ final class AlbumCoverServiceTest extends TestCase
             dirname(
                 __DIR__,
                 3,
-            ) . '/src/DataFixtures/Photo/resources/' . $fixture,
+            ) . '/tests/Resources/images/' . $fixture,
         )->path;
 
         $photo = new Photo();

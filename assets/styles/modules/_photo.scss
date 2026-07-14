@@ -3,6 +3,41 @@ Photo
 
 */
 
+// Album photo grid. The gallery controller lays this out as a windowed masonry: the container is sized to hold the whole
+// album, and each tile is absolutely positioned (width, height and translate set by the controller from the photo's
+// aspect ratio), so portrait and landscape photos keep their shape and nothing reshuffles as tiles mount and unmount.
+.photo-masonry {
+    position: relative;
+}
+
+.photo-masonry__item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    overflow: hidden;
+    border-radius: var(--#{$prefix}border-radius);
+    background-color: var(--#{$prefix}secondary-bg);
+
+    img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+// The custom viewer toolbar buttons render a FontAwesome <i> where PhotoSwipe styles an <svg>; center and size it so
+// the share and download icons line up with the built-in zoom and close buttons.
+.pswp__button i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-size: 18px;
+    color: var(--pswp-icon-color, #fff);
+}
+
 .grid-sizer {
     float: left;
 }
