@@ -1,0 +1,17 @@
+# The single application storage, rooted at `data/` in the project directory (deliberately NOT under `public/`, so
+# nothing here is web-reachable directly). Private files are served through the signed `ImageController` with
+# X-Sendfile, public ones through short-lived redirects. New uploads are content-addressed (see
+# `App\Service\Application\FileStorage`); the AwsS3 adapter can be swapped in later without touching the service. Under
+# test the adapter is swapped for an in-memory one so the suite never touches the real filesystem.
+flysystem:
+    storages:
+        default.storage:
+            adapter: 'local'
+            options:
+                directory: '%kernel.project_dir%/data'
+
+when@test:
+    flysystem:
+        storages:
+            default.storage:
+                adapter: 'memory'

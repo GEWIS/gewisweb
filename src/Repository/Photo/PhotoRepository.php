@@ -7,6 +7,7 @@ namespace App\Repository\Photo;
 use App\Entity\Decision\Member;
 use App\Entity\Photo\Album;
 use App\Entity\Photo\MemberAlbum;
+use App\Entity\Photo\MemberTag;
 use App\Entity\Photo\Photo;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -43,11 +44,13 @@ class PhotoRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('p');
 
         if ($album instanceof MemberAlbum) {
+            // Member tags moved onto the MemberTag subtype, so join it explicitly rather than the base `p.tags`.
             $qb->innerJoin(
-                'p.tags',
+                MemberTag::class,
                 't',
+                'WITH',
+                't.photo = p AND t.member = :member',
             )
-                ->where('t.member = :member')
                 ->setParameter(
                     'member',
                     $album->getMember(),

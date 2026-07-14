@@ -269,3 +269,15 @@ parameters:
 			identifier: doctrine.dql
 			count: 1
 			path: src/Repository/Decision/SubDecisionRepository.php
+
+		-
+			message: '#^Property App\\Entity\\Photo\\MemberTag\:\:\$member type mapping mismatch\: database can contain App\\Entity\\Decision\\Member\|null but property expects App\\Entity\\Decision\\Member\.$#'
+			identifier: doctrine.associationType
+			count: 1
+			path: src/Entity/Photo/MemberTag.php
+
+		-
+			message: '#^Property App\\Entity\\Photo\\OrganTag\:\:\$organ type mapping mismatch\: database can contain App\\Entity\\Decision\\Organ\|null but property expects App\\Entity\\Decision\\Organ\.$#'
+			identifier: doctrine.associationType
+			count: 1
+			path: src/Entity/Photo/OrganTag.php

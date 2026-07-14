@@ -7,7 +7,7 @@ namespace App\Entity\Decision;
 use App\Entity\Decision\Enums\InstallationFunctions;
 use App\Entity\Decision\Enums\MembershipTypes;
 use App\Entity\Decision\SubDecision\Installation;
-use App\Entity\Photo\Tag as TagModel;
+use App\Entity\Photo\MemberTag as MemberTagModel;
 use App\Entity\User\User as UserModel;
 use App\Repository\Decision\MemberRepository;
 use DateTime;
@@ -24,8 +24,6 @@ use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OneToOne;
 
 use function array_reduce;
-
-//use App\Entity\Photo\Tag as TagModel;
 
 /**
  * Member model.
@@ -266,12 +264,12 @@ class Member
     private bool $deleted = false;
 
     /**
-     * Member tags.
+     * Member tags (photos this member appears in).
      *
-     * @var Collection<array-key, TagModel>
+     * @var Collection<array-key, MemberTagModel>
      */
     #[OneToMany(
-        targetEntity: TagModel::class,
+        targetEntity: MemberTagModel::class,
         mappedBy: 'member',
         fetch: 'EXTRA_LAZY',
     )]
@@ -757,9 +755,9 @@ class Member
     }
 
     /**
-     * Get the tags.
+     * Get the tags (photos this member appears in).
      *
-     * @return Collection<array-key, TagModel>
+     * @return Collection<array-key, MemberTagModel>
      */
     public function getTags(): Collection
     {
