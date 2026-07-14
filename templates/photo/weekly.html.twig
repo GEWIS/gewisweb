@@ -5,21 +5,38 @@
 {% block contents %}
     <h1 class="mb-4">{{ 'Photo of the Week'|trans }}</h1>
 
-    {% if weeklyPhoto is null %}
+    {% if photosByYear is empty %}
         <p class="text-muted">{{ 'No photo of the week has been chosen yet.'|trans }}</p>
     {% else %}
-        {% set potw = weeklyPhoto.photo %}
-        <div class="row justify-content-center">
-            <div class="col col-lg-8">
-                <a class="d-block text-decoration-none"
-                   href="{{ path('photo/album', { type: 'album', album: potw.album.id }) }}#pid={{ potw.id }}">
-                    <img class="img-fluid w-100 rounded" alt=""
-                         src="{{ image_url(potw.path, 'w1280') }}"
-                         srcset="{{ image_srcset(potw.path, ['w640', 'w960', 'w1280', 'w1920']) }}"
-                         sizes="(min-width: 992px) 66vw, 100vw">
-                    <p class="text-muted mt-2 mb-0">{{ potw.album.name }}</p>
-                </a>
-            </div>
+        {# One virtual weekly album per association year; open it to browse that year's photos of the week. #}
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
+            {% for year, weeklies in photosByYear %}
+                {% set cover = weeklies|first.photo %}
+                <div class="col">
+                    <a href="{{ path('photo/album', { type: 'weekly', album: year }) }}" class="text-decoration-none">
+                        <div class="panel h-100 my-0">
+                            <div class="ratio ratio-16x9 bg-body-secondary rounded-top overflow-hidden position-relative">
+                                <img class="w-100 h-100" style="object-fit: cover;" loading="lazy"
+                                     src="{{ image_url(cover.path, 'w640') }}" alt="">
+                                {% if current is not null and current.id == weeklies|first.id %}
+                                    <span class="badge badge-gewis position-absolute top-0 start-0 m-2">
+                                        {{ 'Current'|trans }}
+                                    </span>
+                                {% endif %}
+                            </div>
+                            <div class="panel-body">
+                                <h3 class="h6 mb-1 text-body">
+                                    {{ 'Photos of the Week'|trans }} {{ year }} &ndash; {{ year + 1 }}
+                                </h3>
+                                <p class="small text-muted mb-0">
+                                    <i class="fa-solid fa-image me-1"></i>{{ weeklies|length }}
+                                    {{ weeklies|length == 1 ? 'photo'|trans : 'photos'|trans }}
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
         </div>
     {% endif %}
 {% endblock %}

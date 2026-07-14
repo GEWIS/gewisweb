@@ -1,0 +1,24 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}{{ 'Photos of the Week'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{# Photos fill the full width of the window, like a regular album. #}
+{% block container_class %}container-fluid{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('vendor/photoswipe/dist/photoswipe.min.css') }}">
+{% endblock %}
+
+{% block contents %}
+    <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4">
+        <h1 class="mb-0">{{ 'Photos of the Week'|trans }} {{ year }} &ndash; {{ year + 1 }}</h1>
+        <a class="btn btn-outline-secondary btn-sm" href="{{ path('photo/weekly') }}">
+            <i class="fa-solid fa-arrow-left me-1"></i>{{ 'Back to all years'|trans }}
+        </a>
+    </div>
+
+    {% include 'partials/photo/gallery.html.twig' with {
+        manifest_url: path('photo/weekly_manifest', { year: year }),
+    } only %}
+{% endblock %}

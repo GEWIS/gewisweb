@@ -24,6 +24,7 @@ interface Details {
     voted: boolean;
     recentVote: boolean;
     taggedSelf: boolean;
+    photoOfTheWeek: string | null;
 }
 
 interface Organ {
@@ -42,7 +43,21 @@ export interface ViewerConfig {
     memberSearchUrl: string;
     organsUrl: string;
     memberUrlTemplate: string;
+    iconSpriteUrl: string;
     labels: Record<string, string>;
+}
+
+/**
+ * The markup for a custom toolbar button's icon: a Font Awesome sprite reference wrapped in PhotoSwipe's own `.pswp__icn`
+ * SVG (via `isCustomSVG`), so PhotoSwipe positions and centres it exactly like its built-in zoom and close buttons.
+ */
+export function spriteIcon(spriteUrl: string, name: string): { isCustomSVG: true; inner: string } {
+    // PhotoSwipe wraps this in a 32x32 viewBox. Font Awesome glyphs fill their own viewBox edge to edge, so inset the
+    // <use> to a 20-unit box centred in the 32 (padding 6), matching the visual size of the built-in zoom/close icons.
+    return {
+        isCustomSVG: true,
+        inner: `<use href="${spriteUrl}#${name}" x="6" y="6" width="20" height="20"></use>`,
+    };
 }
 
 /**
@@ -60,6 +75,7 @@ export class ViewerInteractions {
     // Details keyed by photo id, so a photo already visited (or prefetched as a neighbour) renders instantly on swipe.
     private readonly detailsCache = new Map<number, Details>();
 
+    private potwBadge: HTMLElement | null = null;
     private title: HTMLElement | null = null;
     private list: HTMLElement | null = null;
     private form: HTMLElement | null = null;
@@ -125,9 +141,14 @@ export class ViewerInteractions {
             order: 13,
             isButton: true,
             tagName: 'button',
-            html: '<i class="fa-solid fa-thumbs-up"></i><span class="pswp__vote-dot"></span>',
+            html: spriteIcon(this.config.iconSpriteUrl, 'thumbs-up'),
             onInit: (element: HTMLElement): void => {
                 this.voteButton = element;
+                // The "you have not voted recently" nudge dot sits on top of the icon (the sprite icon replaces the
+                // button's inner HTML, so the dot is appended rather than part of the markup).
+                const dot = document.createElement('span');
+                dot.className = 'pswp__vote-dot';
+                element.appendChild(dot);
                 element.addEventListener('click', (): void => void this.vote());
             },
         });
@@ -137,7 +158,7 @@ export class ViewerInteractions {
             order: 14,
             isButton: true,
             tagName: 'button',
-            html: '<i class="fa-solid fa-image-portrait"></i>',
+            html: spriteIcon(this.config.iconSpriteUrl, 'image-portrait'),
             onInit: (element: HTMLElement): void => {
                 this.profileButton = element;
                 element.addEventListener('click', (): void => void this.setProfilePhoto());
@@ -148,6 +169,24 @@ export class ViewerInteractions {
     private buildPanel(root: HTMLElement): void {
         root.classList.add('pswp__photo-tags');
 
+        // A badge shown when this photo is (or was) the photo of the week.
+        this.potwBadge = document.createElement('span');
+        this.potwBadge.className = 'pswp__photo-potw';
+        this.potwBadge.hidden = true;
+        Object.assign(this.potwBadge.style, {
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.35rem',
+            alignSelf: 'flex-start',
+            padding: '0.15rem 0.6rem',
+            color: '#000',
+            background: '#ffc107',
+            borderRadius: '1rem',
+            fontSize: '0.8rem',
+            fontWeight: '600',
+        });
+        this.potwBadge.innerHTML = '<i class="fa-solid fa-star"></i><span></span>';
+
         this.title = document.createElement('span');
         this.title.className = 'pswp__photo-tags-title';
 
@@ -156,7 +195,7 @@ export class ViewerInteractions {
 
         this.form = this.buildAddForm();
 
-        root.append(this.title, this.list, this.form);
+        root.append(this.potwBadge, this.title, this.list, this.form);
     }
 
     private buildAddForm(): HTMLElement {
@@ -296,6 +335,14 @@ export class ViewerInteractions {
     private renderPanel(details: Details): void {
         if (null === this.title || null === this.list || null === this.form) {
             return;
+        }
+
+        if (null !== this.potwBadge) {
+            this.potwBadge.hidden = null === details.photoOfTheWeek;
+            const text = this.potwBadge.querySelector('span');
+            if (null !== text) {
+                text.textContent = this.label('photoOfTheWeek');
+            }
         }
 
         this.title.textContent = (0 === details.memberTags.length && 0 === details.organTags.length)

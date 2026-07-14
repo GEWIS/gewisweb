@@ -20,10 +20,10 @@ use function sprintf;
  */
 enum StorageNamespace: string
 {
-    /** Album photo originals: the only private namespace, scoped per album. */
+    /** Album photo originals, scoped per album (members-only). */
     case PhotoOriginal = 'photo-original';
 
-    /** Generated 2x2 album cover mosaics, scoped per album (public). */
+    /** Generated album cover mosaics, scoped per album (members-only, like the album photos they are built from). */
     case PhotoCover = 'photo-cover';
 
     /** The current photo of the week, copied out of its album so the anonymous frontpage can serve it (public). */
@@ -94,13 +94,14 @@ enum StorageNamespace: string
     }
 
     /**
-     * Whether serving a file from this namespace requires an authenticated, signature-validated request. Only album
-     * originals (and, by extension, their generated variants) are member-only; covers, career, organ and page assets
-     * are public and immutably cacheable.
+     * Whether serving a file from this namespace requires an authenticated, signature-validated request. Album photos
+     * and their generated covers are member-only (a cover is a mosaic of members-only photos); the weekly photo copy,
+     * career, organ and page assets are public and immutably cacheable.
      */
     public function isPrivate(): bool
     {
-        return self::PhotoOriginal === $this;
+        return self::PhotoOriginal === $this
+            || self::PhotoCover === $this;
     }
 
     /**

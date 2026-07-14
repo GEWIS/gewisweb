@@ -118,14 +118,11 @@ Photo
 // The point-tag placement uses a full-viewport capture overlay (`.pswp__photo-place-overlay`) above the PhotoSwipe
 // viewer; its styles are set inline by the viewer controller so it works before this stylesheet loads.
 
-// The custom viewer toolbar buttons render a FontAwesome <i> where PhotoSwipe styles an <svg>; center and size it so
-// the share and download icons line up with the built-in zoom and close buttons.
-.pswp__button i {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    font-size: 18px;
+// Our custom toolbar buttons draw a Font Awesome sprite icon through PhotoSwipe's own .pswp__icn (via isCustomSVG), so
+// they are positioned and centred exactly like the built-in buttons. The sprite's paths use fill="currentColor", which
+// would otherwise resolve to PhotoSwipe's dark secondary colour, so give the icon colour to the <use> (the built-in
+// buttons' only <use> is their shadow, which is fill:none, so this leaves them untouched).
+.pswp__icn use {
     color: var(--pswp-icon-color, #fff);
 }
 
@@ -239,7 +236,7 @@ Photo
     position: relative;
 }
 
-.pswp__vote-button--voted i {
+.pswp__vote-button--voted .pswp__icn use {
     color: $brand-primary;
 }
 

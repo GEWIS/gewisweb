@@ -10,6 +10,7 @@ use App\Entity\Photo\WeeklyPhoto;
 use App\Repository\Decision\MemberRepository;
 use App\Repository\Photo\MemberTagRepository;
 use App\Repository\Photo\WeeklyPhotoRepository;
+use App\Service\Application\FileStorage;
 use App\Service\Photo\WeeklyPhotoService;
 use DateTime;
 
@@ -17,8 +18,8 @@ use function array_map;
 use function array_values;
 
 /**
- * Gathers the members-only home-page blocks: the current photo of the week (with the public path the anonymous
- * frontpage serves it from) and today's birthdays with the most-tagged member's photo.
+ * Gathers the home-page blocks: the current photo of the week (with the public path the anonymous frontpage serves it
+ * from, when that copy exists) and today's birthdays with the most-tagged member's photo.
  */
 final readonly class HomePageService
 {
@@ -27,6 +28,7 @@ final readonly class HomePageService
         private MemberRepository $memberRepository,
         private MemberTagRepository $memberTagRepository,
         private WeeklyPhotoService $weeklyPhotoService,
+        private FileStorage $fileStorage,
     ) {
     }
 
@@ -58,9 +60,22 @@ final readonly class HomePageService
             'weeklyPhoto' => $weeklyPhoto,
             'weeklyPublicPath' => null === $weeklyPhoto
                 ? null
-                : $this->weeklyPhotoService->publicPathFor($weeklyPhoto->getPhoto()),
+                : $this->publicPathIfAvailable($weeklyPhoto),
             'birthdayPhoto' => $birthdayTag?->getPhoto(),
             'birthdays' => $birthdays,
         ];
+    }
+
+    /**
+     * The public copy's path for the anonymous frontpage, but only when that copy actually exists (it is written by the
+     * weekly command); otherwise null, so a logged-out visitor is never shown a broken image.
+     */
+    private function publicPathIfAvailable(WeeklyPhoto $weeklyPhoto): ?string
+    {
+        $path = $this->weeklyPhotoService->publicPathFor($weeklyPhoto->getPhoto());
+
+        return $this->fileStorage->exists($path)
+            ? $path
+            : null;
     }
 }

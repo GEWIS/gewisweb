@@ -337,6 +337,10 @@
         <source>Back</source>
         <target state="translated">Terug</target>
       </trans-unit>
+      <trans-unit id="L6FPEgU" resname="Back to all years">
+        <source>Back to all years</source>
+        <target state="translated">Terug naar alle jaren</target>
+      </trans-unit>
       <trans-unit id="Cyjuxdd" resname="Back to overview">
         <source>Back to overview</source>
         <target state="translated">Terug naar overzicht</target>
@@ -612,6 +616,10 @@
       <trans-unit id="EMb_Fre" resname="Cultural">
         <source>Cultural</source>
         <target>Cultureel</target>
+      </trans-unit>
+      <trans-unit id="jYqICEs" resname="Current">
+        <source>Current</source>
+        <target state="translated">Huidige</target>
       </trans-unit>
       <trans-unit id="ukaFrcB" resname="Current password">
         <source>Current password</source>
@@ -1056,6 +1064,10 @@
       <trans-unit id="3cwxgDa" resname="Given name">
         <source>Given name</source>
         <target state="translated">Voornaam</target>
+      </trans-unit>
+      <trans-unit id="Y9O9JwI" resname="Go to the original album">
+        <source>Go to the original album</source>
+        <target state="translated">Ga naar het originele album</target>
       </trans-unit>
       <trans-unit id="USDCC8h" resname="Google Calendar">
         <source>Google Calendar</source>

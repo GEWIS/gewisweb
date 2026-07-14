@@ -15,6 +15,7 @@ use App\Security\Photo\PhotoVoter;
 use App\Service\Application\FileDownloadHelper;
 use App\Service\Photo\AlbumService;
 use App\Service\Photo\PhotoService;
+use App\Service\Photo\WeeklyPhotoService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -45,6 +46,7 @@ class PhotoController extends AbstractController
         private readonly PhotoService $photoService,
         private readonly PhotoRepository $photoRepository,
         private readonly WeeklyPhotoRepository $weeklyPhotoRepository,
+        private readonly WeeklyPhotoService $weeklyPhotoService,
         private readonly MemberRepository $memberRepository,
         private readonly FileDownloadHelper $fileDownloadHelper,
         private readonly SluggerInterface $slugger,
@@ -87,7 +89,10 @@ class PhotoController extends AbstractController
     {
         return $this->render(
             'photo/weekly.html.twig',
-            ['weeklyPhoto' => $this->weeklyPhotoRepository->getCurrentPhotoOfTheWeek()],
+            [
+                'current' => $this->weeklyPhotoRepository->getCurrentPhotoOfTheWeek(),
+                'photosByYear' => $this->weeklyPhotoService->getPhotosByYear(),
+            ],
         );
     }
 
@@ -104,6 +109,21 @@ class PhotoController extends AbstractController
     {
         return new JsonResponse(
             $this->photoService->getAlbumManifest($this->viewableAlbum($album)),
+        );
+    }
+
+    /**
+     * The viewer manifest for one association year's virtual weekly album (its photos of the week).
+     */
+    #[Route(
+        path: '/weekly/{year}/manifest',
+        name: 'weekly_manifest',
+        requirements: ['year' => '\d+'],
+    )]
+    public function weeklyManifest(int $year): JsonResponse
+    {
+        return new JsonResponse(
+            $this->photoService->getWeeklyManifest($this->weeklyPhotoService->getPhotosInYear($year)),
         );
     }
 
@@ -169,7 +189,12 @@ class PhotoController extends AbstractController
             return $this->memberAlbum($album);
         }
 
-        // The weekly and body virtual albums are a later addition; only real albums are browsable for now.
+        // A weekly "album" is the virtual set of one association year's photos of the week ({album} is the year).
+        if (AlbumType::Weekly === $type) {
+            return $this->weeklyAlbum($album);
+        }
+
+        // The body virtual albums are a later addition; only real albums are browsable for now.
         if (AlbumType::Regular !== $type) {
             throw new NotFoundHttpException();
         }
@@ -200,6 +225,23 @@ class PhotoController extends AbstractController
                 'member' => $member,
                 'photos' => $this->photoRepository->getAlbumPhotos(new MemberAlbum($lidnr, $member)),
             ],
+        );
+    }
+
+    /**
+     * The photos of the week of one association year, each linking into its real album. A year with no photos of the
+     * week does not exist, so it 404s.
+     */
+    private function weeklyAlbum(int $year): Response
+    {
+        if ([] === $this->weeklyPhotoService->getPhotosInYear($year)) {
+            throw new NotFoundHttpException();
+        }
+
+        // The gallery itself fetches the year's photos through the weekly manifest (route above).
+        return $this->render(
+            'photo/weekly-album.html.twig',
+            ['year' => $year],
         );
     }
 

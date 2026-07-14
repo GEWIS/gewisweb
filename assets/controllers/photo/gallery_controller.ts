@@ -1,6 +1,6 @@
 import { Controller } from '@hotwired/stimulus';
 
-import { ViewerInteractions } from './viewer_interactions.ts';
+import { spriteIcon, ViewerInteractions } from './viewer_interactions.ts';
 
 interface ManifestEntry {
     id: number;
@@ -10,6 +10,7 @@ interface ManifestEntry {
     largeUrl: string;
     xlargeUrl: string;
     downloadUrl: string;
+    albumUrl: string | null;
 }
 
 interface SlideData {
@@ -18,6 +19,7 @@ interface SlideData {
     srcset: string;
     width: number;
     height: number;
+    albumUrl: string | null;
     msrc: string;
     downloadUrl: string;
 }
@@ -53,6 +55,7 @@ export default class extends Controller<HTMLElement> {
         memberSearchUrl: String,
         organsUrl: String,
         memberUrl: String,
+        iconSpriteUrl: String,
         labels: Object,
     };
 
@@ -67,6 +70,7 @@ export default class extends Controller<HTMLElement> {
     declare readonly memberSearchUrlValue: string;
     declare readonly organsUrlValue: string;
     declare readonly memberUrlValue: string;
+    declare readonly iconSpriteUrlValue: string;
     declare readonly labelsValue: Record<string, string>;
     declare readonly gridTarget: HTMLElement;
     declare readonly emptyTarget: HTMLElement;
@@ -79,6 +83,9 @@ export default class extends Controller<HTMLElement> {
     private lightbox: any = null;
     private aborted = false;
     private renderScheduled = false;
+    // Whether opening the viewer pushed a history entry (an in-page open). A deep link arriving with #pid already in
+    // the URL pushes nothing, so closing must strip the hash rather than navigate back off the album page.
+    private pushedHistory = false;
 
     private readonly onScroll = (): void => this.scheduleRender();
     private readonly onResize = (): void => this.relayout();
@@ -157,6 +164,7 @@ export default class extends Controller<HTMLElement> {
             height: entry.h,
             msrc: entry.thumbUrl,
             downloadUrl: entry.downloadUrl,
+            albumUrl: entry.albumUrl,
         }));
     }
 
@@ -181,6 +189,7 @@ export default class extends Controller<HTMLElement> {
             memberSearchUrl: this.memberSearchUrlValue,
             organsUrl: this.organsUrlValue,
             memberUrlTemplate: this.memberUrlValue,
+            iconSpriteUrl: this.iconSpriteUrlValue,
             labels: this.labelsValue,
         });
         this.lightbox.on('close', (): void => this.onViewerClosed());
@@ -339,6 +348,7 @@ export default class extends Controller<HTMLElement> {
         // Push a history entry so the mobile back button closes the viewer instead of leaving the page (#2065).
         if (window.location.hash !== `#pid=${pid}`) {
             window.history.pushState({ pid }, '', `#pid=${pid}`);
+            this.pushedHistory = true;
         }
 
         this.lightbox.loadAndOpen(index);
@@ -375,10 +385,27 @@ export default class extends Controller<HTMLElement> {
     }
 
     private onViewerClosed(): void {
-        // Closed by its own UI (not by a back navigation, which already removed the hash): drop the #pid from the URL.
-        if (window.location.hash.startsWith('#pid=')) {
-            window.history.back();
+        // Closed by a back navigation already removed the hash; nothing to do.
+        if (!window.location.hash.startsWith('#pid=')) {
+            this.pushedHistory = false;
+
+            return;
         }
+
+        if (this.pushedHistory) {
+            // We pushed this entry on an in-page open, so pop it to land back on the clean album URL.
+            window.history.back();
+        } else {
+            // Opened from a deep link that was already in the URL (e.g. a #pid link from another page): strip the hash
+            // in place so closing stays on the album instead of navigating back to where the link was clicked.
+            window.history.replaceState(
+                null,
+                '',
+                window.location.pathname + window.location.search,
+            );
+        }
+
+        this.pushedHistory = false;
     }
 
     private registerToolbarButtons(): void {
@@ -388,7 +415,7 @@ export default class extends Controller<HTMLElement> {
                 order: 12,
                 isButton: true,
                 tagName: 'button',
-                html: '<i class="fa-solid fa-share-nodes"></i>',
+                html: spriteIcon(this.iconSpriteUrlValue, 'share-nodes'),
                 onClick: (_event: MouseEvent, element: HTMLElement): void => {
                     const slide = this.slides[this.lightbox.pswp.currIndex];
                     const link = `${window.location.origin}${window.location.pathname}#pid=${slide.pid}`;
@@ -402,12 +429,32 @@ export default class extends Controller<HTMLElement> {
                 order: 11,
                 isButton: true,
                 tagName: 'a',
-                html: '<i class="fa-solid fa-download"></i>',
+                html: spriteIcon(this.iconSpriteUrlValue, 'download'),
                 onInit: (element: HTMLAnchorElement): void => {
                     element.setAttribute('download', '');
                     element.setAttribute('rel', 'noopener');
                     this.lightbox.pswp.on('change', (): void => {
                         element.href = this.slides[this.lightbox.pswp.currIndex].downloadUrl;
+                    });
+                },
+            });
+
+            // Only virtual albums (the weekly album) set an albumUrl; there the button links to the photo's real album,
+            // otherwise it stays hidden (order > the preloader divider so it sits with the right-hand buttons).
+            this.lightbox.pswp.ui.registerElement({
+                name: 'album-button',
+                order: 9,
+                isButton: true,
+                tagName: 'a',
+                html: spriteIcon(this.iconSpriteUrlValue, 'images'),
+                onInit: (element: HTMLAnchorElement): void => {
+                    element.title = this.labelsValue.goToAlbum ?? '';
+                    this.lightbox.pswp.on('change', (): void => {
+                        const albumUrl = this.slides[this.lightbox.pswp.currIndex]?.albumUrl ?? null;
+                        element.hidden = null === albumUrl;
+                        if (null !== albumUrl) {
+                            element.href = albumUrl;
+                        }
                     });
                 },
             });
@@ -418,15 +465,17 @@ export default class extends Controller<HTMLElement> {
      * Briefly swap the share button's icon to a checkmark so the user sees the link was copied to their clipboard.
      */
     private flashCopied(element: HTMLElement): void {
-        const icon = element.querySelector('i');
-        if (null === icon) {
+        const use = element.querySelector('use');
+        if (null === use) {
             return;
         }
 
-        const previous = icon.className;
-        icon.className = 'fa-solid fa-check';
+        const previous = use.getAttribute('href');
+        use.setAttribute('href', `${this.iconSpriteUrlValue}#check`);
         window.setTimeout((): void => {
-            icon.className = previous;
+            if (null !== previous) {
+                use.setAttribute('href', previous);
+            }
         }, 1500);
     }
 }

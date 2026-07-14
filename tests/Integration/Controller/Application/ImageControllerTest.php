@@ -30,11 +30,12 @@ final class ImageControllerTest extends DatabaseTestCase
 {
     public function testPublicNamespaceIsServedWithoutSignatureOrSession(): void
     {
-        $path = $this->storeSource(StorageNamespace::PhotoCover);
+        // Company images are public (covers are now members-only, so no longer a valid "public" example here).
+        $path = $this->storeSource(StorageNamespace::CompanyImage);
 
         $response = $this->controller()->serve(
             new Request(),
-            'cover',
+            'w320',
             $path,
         );
 

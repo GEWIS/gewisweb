@@ -217,6 +217,8 @@ final class PhotoInteractionControllerTest extends DatabaseTestCase
         self::assertTrue($details['canTag']);
         self::assertTrue($details['canVote']);
         self::assertTrue($details['taggedSelf']);
+        // The dinner photo is the (hidden) photo of the week in the seed, so the viewer can badge it.
+        self::assertNotNull($details['photoOfTheWeek']);
     }
 
     private function controller(): PhotoInteractionController

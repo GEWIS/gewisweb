@@ -37,15 +37,37 @@ final readonly class PhotoService
      */
     public function getAlbumManifest(Album $album): array
     {
-        $albumId = (int) $album->getId();
-
         $entries = [];
         // Fetch through the repository (rather than the lazy collection) so the photos and their weekly-photo relation
         // load in a single query, and in the same order as the thumbnail grid.
         foreach ($this->photoRepository->getAlbumPhotos($album) as $photo) {
+            $entries[] = $this->manifestEntry($photo);
+        }
+
+        return $entries;
+    }
+
+    /**
+     * The viewer manifest for a virtual weekly album: one entry per photo of the week, each carrying a deep link to its
+     * real album so the viewer can offer a "go to the original album" button. Access is checked by the caller.
+     *
+     * @param Photo[] $photos
+     *
+     * @return list<ManifestEntry>
+     */
+    public function getWeeklyManifest(array $photos): array
+    {
+        $entries = [];
+        foreach ($photos as $photo) {
             $entries[] = $this->manifestEntry(
-                $albumId,
                 $photo,
+                $this->urlGenerator->generate(
+                    'photo/album',
+                    [
+                        'type' => 'album',
+                        'album' => (int) $photo->getAlbum()->getId(),
+                    ],
+                ) . '#pid=' . (int) $photo->getId(),
             );
         }
 
@@ -53,8 +75,8 @@ final readonly class PhotoService
     }
 
     private function manifestEntry(
-        int $albumId,
         Photo $photo,
+        ?string $albumUrl = null,
     ): ManifestEntry {
         $path = $photo->getPath();
         // aspectRatio is height/width; a missing one falls back to square so the viewer still gets usable dimensions.
@@ -76,13 +98,16 @@ final readonly class PhotoService
                 $path,
                 ImageVariant::W2560,
             ),
+            // The download always serves from the photo's own album (for a weekly album that differs from the album
+            // being viewed).
             downloadUrl: $this->urlGenerator->generate(
                 'photo/download',
                 [
-                    'album' => $albumId,
+                    'album' => (int) $photo->getAlbum()->getId(),
                     'photo' => (int) $photo->getId(),
                 ],
             ),
+            albumUrl: $albumUrl,
         );
     }
 }

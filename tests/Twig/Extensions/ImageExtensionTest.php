@@ -22,13 +22,14 @@ final class ImageExtensionTest extends TestCase
 {
     public function testPublicImageUrlIsUnsigned(): void
     {
+        // The weekly photo copy is public (covers are now members-only, hence signed).
         $url = $this->extension()->imageUrl(
-            'photos/covers/abc.webp',
-            ImageVariant::Cover,
+            'photos/weekly/abc.webp',
+            ImageVariant::W320,
         );
 
         self::assertSame(
-            '/img/cover/photos/covers/abc.webp',
+            '/img/w320/photos/weekly/abc.webp',
             $url,
         );
     }
@@ -48,7 +49,7 @@ final class ImageExtensionTest extends TestCase
     public function testSrcsetCarriesWidthDescriptors(): void
     {
         $srcset = $this->extension()->imageSrcset(
-            'photos/covers/abc.webp',
+            'photos/weekly/abc.webp',
             [
                 ImageVariant::W320,
                 ImageVariant::W640,
@@ -56,7 +57,7 @@ final class ImageExtensionTest extends TestCase
         );
 
         self::assertSame(
-            '/img/w320/photos/covers/abc.webp 320w, /img/w640/photos/covers/abc.webp 640w',
+            '/img/w320/photos/weekly/abc.webp 320w, /img/w640/photos/weekly/abc.webp 640w',
             $srcset,
         );
     }

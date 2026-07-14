@@ -185,6 +185,61 @@ final class WeeklyPhotoServiceTest extends TestCase
         );
     }
 
+    public function testExpiresThePreviousPublicCopyEvenWhenNoPhotoIsChosen(): void
+    {
+        $storage = $this->storage();
+        $previousPhoto = $this->storedPhoto(
+            $storage,
+            9,
+            '-1 week',
+        );
+        $previous = new WeeklyPhoto();
+        $previous->setPhoto($previousPhoto);
+        $previous->setWeek(new DateTime('-1 week'));
+
+        $service = $this->service(
+            $storage,
+            [],
+            [],
+            [],
+            $previous,
+        );
+        $previousPublicPath = $service->publicPathFor($previousPhoto);
+        $storage->write(
+            $previousPublicPath,
+            'stale-public-copy',
+        );
+
+        // No votes this week, so no new photo is chosen, but last week's public copy must still be dropped.
+        self::assertNull($service->generatePhotoOfTheWeek());
+        self::assertFalse($storage->exists($previousPublicPath));
+    }
+
+    public function testSetPhotoOfTheWeekForcesTheChosenPhotoAndPublishesIt(): void
+    {
+        $storage = $this->storage();
+        $photo = $this->storedPhoto(
+            $storage,
+            1,
+            '-1 day',
+        );
+        // An admin override skips the vote-based pick even though this photo has no votes at all.
+        $service = $this->service(
+            $storage,
+            [],
+            [],
+            [],
+        );
+
+        $weeklyPhoto = $service->setPhotoOfTheWeek($photo);
+
+        self::assertSame(
+            $photo,
+            $weeklyPhoto->getPhoto(),
+        );
+        self::assertTrue($storage->exists($service->publicPathFor($photo)));
+    }
+
     public function testHideRemovesThePublicCopy(): void
     {
         $storage = $this->storage();
@@ -231,6 +286,7 @@ final class WeeklyPhotoServiceTest extends TestCase
         array $votes,
         array $photosById,
         array $repeats,
+        ?WeeklyPhoto $current = null,
     ): WeeklyPhotoService {
         $voteRepository = self::createStub(VoteRepository::class);
         $voteRepository->method('getVotesInRange')->willReturn($votes);
@@ -241,7 +297,7 @@ final class WeeklyPhotoServiceTest extends TestCase
         );
 
         $weeklyPhotoRepository = self::createStub(WeeklyPhotoRepository::class);
-        $weeklyPhotoRepository->method('getCurrentPhotoOfTheWeek')->willReturn(null);
+        $weeklyPhotoRepository->method('getCurrentPhotoOfTheWeek')->willReturn($current);
         $weeklyPhotoRepository->method('hasBeenPhotoOfTheWeek')->willReturnCallback(
             static fn (Photo $photo): bool => in_array(
                 $photo->getId(),

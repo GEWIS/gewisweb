@@ -21,6 +21,9 @@ final readonly class ManifestEntry
         public string $largeUrl,
         public string $xlargeUrl,
         public string $downloadUrl,
+        // The deep link to the photo's real album, set only for virtual albums (e.g. the weekly album) so the viewer
+        // can offer a "go to the original album" button; null when already viewing that album.
+        public ?string $albumUrl = null,
     ) {
     }
 }

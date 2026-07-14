@@ -52,10 +52,12 @@ final class ImagePathResolverTest extends TestCase
         self::assertNull(new ImagePathResolver()->namespaceForPath('something/else/x.jpg'));
     }
 
-    public function testOnlyTheAlbumOriginalsNamespaceIsPrivate(): void
+    public function testAlbumPhotosAndCoversArePrivate(): void
     {
+        // A cover is a mosaic of members-only photos, so it is private too; the weekly copy and career assets are not.
         self::assertTrue(StorageNamespace::PhotoOriginal->isPrivate());
-        self::assertFalse(StorageNamespace::PhotoCover->isPrivate());
+        self::assertTrue(StorageNamespace::PhotoCover->isPrivate());
+        self::assertFalse(StorageNamespace::PhotoWeekly->isPrivate());
         self::assertFalse(StorageNamespace::CompanyImage->isPrivate());
     }
 

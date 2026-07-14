@@ -6,12 +6,14 @@ namespace App\Tests\Integration\Controller\Photo;
 
 use App\Controller\Photo\PhotoController;
 use App\Entity\Application\Enums\StorageNamespace;
+use App\Entity\Decision\AssociationYear;
 use App\Entity\Photo\Album;
 use App\Entity\Photo\Enums\AlbumType;
 use App\Entity\Photo\Photo;
 use App\Entity\User\Enums\UserRoles;
 use App\Entity\User\User;
 use App\Repository\Photo\AlbumRepository;
+use App\Repository\Photo\WeeklyPhotoRepository;
 use App\Service\Application\FileStorage;
 use App\Tests\Integration\DatabaseTestCase;
 use DateTime;
@@ -98,10 +100,10 @@ final class PhotoControllerTest extends DatabaseTestCase
             UserRoles::Member,
         );
 
-        // The weekly and body virtual albums are not browsable yet (member albums are — see below).
+        // The body virtual albums are not browsable yet (member and weekly albums are — see below).
         $this->expectException(NotFoundHttpException::class);
         $this->controller()->album(
-            AlbumType::Weekly,
+            AlbumType::Body,
             $this->albumId('Trip 2024'),
         );
     }
@@ -137,6 +139,101 @@ final class PhotoControllerTest extends DatabaseTestCase
         $this->controller()->album(
             AlbumType::Member,
             99999999,
+        );
+    }
+
+    public function testWeeklyPageRendersTheVirtualAlbumsPerYear(): void
+    {
+        $this->authenticate(
+            8030,
+            UserRoles::Member,
+        );
+        $this->pushRequest();
+
+        $response = $this->controller()->weekly();
+
+        self::assertSame(
+            Response::HTTP_OK,
+            $response->getStatusCode(),
+        );
+        // The seed has photos of the week, so at least one per-year weekly album card links to its weekly view.
+        self::assertStringContainsString(
+            'photos/weekly/',
+            (string) $response->getContent(),
+        );
+    }
+
+    public function testWeeklyAlbumViewRendersTheYearsPhotos(): void
+    {
+        $this->authenticate(
+            8030,
+            UserRoles::Member,
+        );
+        $this->pushRequest();
+        $weekly = self::getContainer()->get(WeeklyPhotoRepository::class)->getCurrentPhotoOfTheWeek();
+        self::assertNotNull($weekly);
+        $year = AssociationYear::fromDate($weekly->getWeek())->getYear();
+
+        $response = $this->controller()->album(
+            AlbumType::Weekly,
+            $year,
+        );
+
+        self::assertSame(
+            Response::HTTP_OK,
+            $response->getStatusCode(),
+        );
+        // The weekly album renders the full gallery, fed by the weekly manifest.
+        $content = (string) $response->getContent();
+        self::assertStringContainsString(
+            'data-controller="gallery"',
+            $content,
+        );
+        self::assertStringContainsString(
+            'weekly/' . $year . '/manifest',
+            $content,
+        );
+    }
+
+    public function testWeeklyManifestCarriesTheRealAlbumDeepLink(): void
+    {
+        $this->authenticate(
+            8030,
+            UserRoles::Member,
+        );
+        $weekly = self::getContainer()->get(WeeklyPhotoRepository::class)->getCurrentPhotoOfTheWeek();
+        self::assertNotNull($weekly);
+        $year = AssociationYear::fromDate($weekly->getWeek())->getYear();
+
+        $entries = json_decode(
+            (string) $this->controller()->weeklyManifest($year)->getContent(),
+            true,
+            512,
+            JSON_THROW_ON_ERROR,
+        );
+        self::assertIsArray($entries);
+        self::assertNotEmpty($entries);
+        $first = $entries[0];
+        self::assertIsArray($first);
+        // A weekly-album entry deep-links to the photo's real album so the viewer can offer "go to the original album".
+        self::assertIsString($first['albumUrl']);
+        self::assertStringContainsString(
+            '#pid=',
+            $first['albumUrl'],
+        );
+    }
+
+    public function testWeeklyAlbumViewIsNotFoundForAYearWithoutPhotos(): void
+    {
+        $this->authenticate(
+            8030,
+            UserRoles::Member,
+        );
+
+        $this->expectException(NotFoundHttpException::class);
+        $this->controller()->album(
+            AlbumType::Weekly,
+            1900,
         );
     }
 

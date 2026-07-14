@@ -17,6 +17,7 @@ use App\Entity\Photo\ProfilePhoto;
 use App\Entity\Photo\Vote;
 use App\Entity\Photo\WeeklyPhoto;
 use App\Service\Application\FileStorage;
+use App\Service\Photo\WeeklyPhotoService;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -149,6 +150,7 @@ class PhotoFixture extends Fixture implements DependentFixtureInterface
 
     public function __construct(
         private readonly FileStorage $fileStorage,
+        private readonly WeeklyPhotoService $weeklyPhotoService,
         #[Autowire('%kernel.environment%')]
         private readonly string $environment,
     ) {
@@ -271,6 +273,13 @@ class PhotoFixture extends Fixture implements DependentFixtureInterface
         }
 
         $manager->flush();
+
+        // Publish the visible photo of the week's public copy (needs the flushed photo id), so the anonymous frontpage
+        // has a working example to serve; in production the weekly command writes this copy.
+        $this->fileStorage->writeStream(
+            $this->weeklyPhotoService->publicPathFor($tripPhoto),
+            $this->fileStorage->readStream($tripPhoto->getPath()),
+        );
     }
 
     /**

@@ -109,7 +109,7 @@
                 The photo of the week. Members fetch the signed members-only original; anonymous visitors are served the
                 public copy the weekly command publishes, and only while it is not hidden.
             #}
-            {% if weeklyPhoto is not null and (is_granted('ROLE_USER') or not weeklyPhoto.hidden) %}
+            {% if weeklyPhoto is not null and (is_granted('ROLE_USER') or (not weeklyPhoto.hidden and weeklyPublicPath is not null)) %}
                 {% set potw = weeklyPhoto.photo %}
                 {% set potw_url = path('photo/album', { type: 'album', album: potw.album.id }) ~ '#pid=' ~ potw.id %}
                 {% set potw_path = is_granted('ROLE_USER') ? potw.path : weeklyPublicPath %}

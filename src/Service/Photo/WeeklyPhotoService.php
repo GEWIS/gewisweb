@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Photo;
 
 use App\Entity\Application\Enums\ImageProfile;
+use App\Entity\Decision\AssociationYear;
 use App\Entity\Photo\Photo;
 use App\Entity\Photo\WeeklyPhoto;
 use App\Message\Photo\ProcessImageVariantsMessage;
@@ -17,6 +18,8 @@ use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 
+use function array_map;
+use function krsort;
 use function max;
 use function pathinfo;
 use function sprintf;
@@ -43,13 +46,17 @@ final readonly class WeeklyPhotoService
     }
 
     /**
-     * Choose and store the photo of the week from the past week's votes, publishing its public copy and dropping the
-     * previous week's. Returns null when no photo was voted on this week (not a failure).
+     * Choose and store the photo of the week from a week's votes (default: the week that just passed), publishing its
+     * public copy. Returns null when no photo was voted on that week (not a failure). The previous public copy is
+     * expired either way, so a logged-out visitor never sees a stale photo of the week: a week with no votes simply has
+     * no public photo of the week.
      */
-    public function generatePhotoOfTheWeek(): ?WeeklyPhoto
+    public function generatePhotoOfTheWeek(?DateTime $weekStart = null): ?WeeklyPhoto
     {
-        $begin = new DateTime()->sub(new DateInterval('P1W'));
-        $end = new DateTime();
+        $begin = $weekStart ?? new DateTime()->sub(new DateInterval('P1W'));
+        $end = (clone $begin)->add(new DateInterval('P1W'));
+
+        $this->expireCurrentPublicCopy();
 
         $photo = $this->determinePhotoOfTheWeek(
             $begin,
@@ -59,14 +66,76 @@ final readonly class WeeklyPhotoService
             return null;
         }
 
-        // Only the current photo of the week stays public, so drop the previous week's copy before publishing this one.
-        $previous = $this->weeklyPhotoRepository->getCurrentPhotoOfTheWeek();
-        if (null !== $previous) {
-            $this->fileStorage->remove($this->publicPathFor($previous->getPhoto()));
+        return $this->store(
+            $photo,
+            $begin,
+        );
+    }
+
+    /**
+     * Force a specific photo as the photo of the week for a given week (default: the week that just passed), skipping
+     * the vote-based selection. For an admin who wants to (re)choose the photo by hand. The previous public copy is
+     * expired as with the automatic pick.
+     */
+    public function setPhotoOfTheWeek(
+        Photo $photo,
+        ?DateTime $weekStart = null,
+    ): WeeklyPhoto {
+        $this->expireCurrentPublicCopy();
+
+        return $this->store(
+            $photo,
+            $weekStart ?? new DateTime()->sub(new DateInterval('P1W')),
+        );
+    }
+
+    /**
+     * Every photo of the week grouped by association year (keyed by the year's first number, most recent year first),
+     * for the weekly archive page. Each year is a virtual "weekly album".
+     *
+     * @return array<int, WeeklyPhoto[]>
+     */
+    public function getPhotosByYear(): array
+    {
+        $grouped = [];
+        foreach ($this->weeklyPhotoRepository->findAllByWeekDesc() as $weeklyPhoto) {
+            $grouped[AssociationYear::fromDate($weeklyPhoto->getWeek())->getYear()][] = $weeklyPhoto;
         }
 
+        krsort($grouped);
+
+        return $grouped;
+    }
+
+    /**
+     * The photos of the week of one association year (most recent first), for that year's virtual weekly album.
+     *
+     * @return Photo[]
+     */
+    public function getPhotosInYear(int $year): array
+    {
+        return array_map(
+            static fn (WeeklyPhoto $weeklyPhoto): Photo => $weeklyPhoto->getPhoto(),
+            $this->getPhotosByYear()[$year] ?? [],
+        );
+    }
+
+    private function expireCurrentPublicCopy(): void
+    {
+        $current = $this->weeklyPhotoRepository->getCurrentPhotoOfTheWeek();
+        if (null === $current) {
+            return;
+        }
+
+        $this->fileStorage->remove($this->publicPathFor($current->getPhoto()));
+    }
+
+    private function store(
+        Photo $photo,
+        DateTime $week,
+    ): WeeklyPhoto {
         $weeklyPhoto = new WeeklyPhoto();
-        $weeklyPhoto->setWeek($begin);
+        $weeklyPhoto->setWeek($week);
         $weeklyPhoto->setPhoto($photo);
         $this->entityManager->persist($weeklyPhoto);
         $this->entityManager->flush();
