@@ -16,13 +16,18 @@
     {% if albumsByMonth is empty %}
         <p class="text-muted text-center py-4">{{ 'There are no albums to show.'|trans }}</p>
     {% else %}
+        {% set cardCounts = this.cardCounts %}
         {% for albums in albumsByMonth %}
             <div class="month-divider">
                 {{ albums|first.startDateTime|format_datetime(pattern: 'MMMM yyyy', locale: app.request.locale) }}
             </div>
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3 mb-4">
                 {% for album in albums %}
-                    {% include 'partials/photo/album-card.html.twig' with { 'album': album } only %}
+                    {% include 'partials/photo/album-card.html.twig' with {
+                        'album': album,
+                        'subAlbumCount': cardCounts.subAlbums[album.id] ?? 0,
+                        'photoCount': cardCounts.photos[album.id] ?? 0,
+                    } only %}
                 {% endfor %}
             </div>
         {% endfor %}

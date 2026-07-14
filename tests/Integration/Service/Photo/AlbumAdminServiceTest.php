@@ -65,6 +65,18 @@ final class AlbumAdminServiceTest extends DatabaseTestCase
         );
     }
 
+    public function testRegenerateCoverQueuesTheCover(): void
+    {
+        $trip = $this->album('Trip 2024');
+
+        $this->service()->regenerateCover($trip);
+
+        self::assertSame(
+            1,
+            $this->sentCount(GenerateAlbumCoverMessage::class),
+        );
+    }
+
     public function testMovingToTheSameAlbumIsANoOp(): void
     {
         $trip = $this->album('Trip 2024');

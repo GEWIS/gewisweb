@@ -132,6 +132,42 @@ class PhotoRepository extends ServiceEntityRepository
     }
 
     /**
+     * The number of direct photos each of the given albums has, keyed by album id, in a single query — so a grid of
+     * album cards does not issue one `COUNT(*) ... WHERE album_id = ?` per card. Albums with no photos are absent.
+     *
+     * @param Album[] $albums
+     *
+     * @return array<int, int>
+     */
+    public function getDirectPhotoCounts(array $albums): array
+    {
+        if ([] === $albums) {
+            return [];
+        }
+
+        $counts = [];
+        foreach (
+            $this->createQueryBuilder('p')
+                ->select(
+                    'IDENTITY(p.album) AS albumId',
+                    'COUNT(p.id) AS total',
+                )
+                ->where('p.album IN (:albums)')
+                ->setParameter(
+                    'albums',
+                    $albums,
+                )
+                ->groupBy('p.album')
+                ->getQuery()
+                ->getScalarResult() as $row
+        ) {
+            $counts[(int) $row['albumId']] = (int) $row['total'];
+        }
+
+        return $counts;
+    }
+
+    /**
      * The photo whose stored path ends with the given filename, used to resolve a legacy `/data/{2ch}/{file}` URL onto
      * the migrated photo (whose path re-roots that same filename under its album). Filenames are content-hashed, so a
      * match is unambiguous.

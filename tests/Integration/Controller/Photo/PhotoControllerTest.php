@@ -91,7 +91,42 @@ final class PhotoControllerTest extends DatabaseTestCase
         );
     }
 
-    public function testAlbumPageIsNotFoundForAVirtualAlbumType(): void
+    public function testAlbumPageIsNotFoundForAnUnbuiltVirtualAlbumType(): void
+    {
+        $this->authenticate(
+            8030,
+            UserRoles::Member,
+        );
+
+        // The weekly and body virtual albums are not browsable yet (member albums are — see below).
+        $this->expectException(NotFoundHttpException::class);
+        $this->controller()->album(
+            AlbumType::Weekly,
+            $this->albumId('Trip 2024'),
+        );
+    }
+
+    public function testMemberAlbumRendersTheTaggedPhotos(): void
+    {
+        $this->authenticate(
+            8030,
+            UserRoles::Member,
+        );
+        $this->pushRequest();
+
+        // Member 8030 is tagged in several seeded photos, so their member album is non-empty.
+        $response = $this->controller()->album(
+            AlbumType::Member,
+            8030,
+        );
+
+        self::assertSame(
+            Response::HTTP_OK,
+            $response->getStatusCode(),
+        );
+    }
+
+    public function testMemberAlbumIsNotFoundForAnUnknownMember(): void
     {
         $this->authenticate(
             8030,
@@ -101,7 +136,7 @@ final class PhotoControllerTest extends DatabaseTestCase
         $this->expectException(NotFoundHttpException::class);
         $this->controller()->album(
             AlbumType::Member,
-            $this->albumId('Trip 2024'),
+            99999999,
         );
     }
 

@@ -25,6 +25,10 @@
         <source>%count% week|%count% weeks</source>
         <target>%count% week|%count% weken</target>
       </trans-unit>
+      <trans-unit id="8AYYl7V" resname="%name% has not been tagged in any photos yet.">
+        <source>%name% has not been tagged in any photos yet.</source>
+        <target state="translated">%name% is nog in geen enkele foto getagd.</target>
+      </trans-unit>
       <trans-unit id="d7ApGYU" resname="%name% is currently editing this activity (last active %time%).">
         <source>%name% is currently editing this activity (last active %time%).</source>
         <target state="translated">%name% bewerkt deze activiteit op dit moment (laatst actief %time%).</target>
@@ -456,6 +460,10 @@
       <trans-unit id="4XOnmWM" resname="Clear selection">
         <source>Clear selection</source>
         <target>Selectie wissen</target>
+      </trans-unit>
+      <trans-unit id="XeH6qHr" resname="Click or tap the photo where the person is">
+        <source>Click or tap the photo where the person is</source>
+        <target state="translated">Klik of tik op de foto waar de persoon staat</target>
       </trans-unit>
       <trans-unit id="VWyhEVz" resname="Click the button below to confirm your sign-up for this activity.">
         <source>Click the button below to confirm your sign-up for this activity.</source>
@@ -1509,6 +1517,10 @@
         <source>New password</source>
         <target state="translated">Nieuw wachtwoord</target>
       </trans-unit>
+      <trans-unit id="zq8_o0a" resname="New tag">
+        <source>New tag</source>
+        <target state="translated">Nieuwe tag</target>
+      </trans-unit>
       <trans-unit id="VXC5Ldf" resname="Newer">
         <source>Newer</source>
         <target state="translated">Nieuwer</target>
@@ -1785,6 +1797,10 @@
         <source>Pick a long, unique password - at least 16 characters and not found in any known data breach.</source>
         <target state="translated">Kies een lang, uniek wachtwoord - minimaal 16 tekens lang en niet voorkomend in bekende datalekken.</target>
       </trans-unit>
+      <trans-unit id="u7c4pso" resname="Place on photo">
+        <source>Place on photo</source>
+        <target state="translated">Plaats op foto</target>
+      </trans-unit>
       <trans-unit id="wo9xY6x" resname="Places are allocated by a draw on %date%.">
         <source>Places are allocated by a draw on %date%.</source>
         <target>Plekken worden verdeeld via een loting op %date%.</target>
@@ -1880,6 +1896,10 @@
       <trans-unit id="auK54_S" resname="Regenerate backup codes? Any codes you previously saved will stop working.">
         <source>Regenerate backup codes? Any codes you previously saved will stop working.</source>
         <target state="translated">Back-upcodes opnieuw genereren? Alle back-upcodes die je eerder hebt opgeslagen, werken dan niet meer.</target>
+      </trans-unit>
+      <trans-unit id="PD3uDz_" resname="Regenerate cover">
+        <source>Regenerate cover</source>
+        <target state="translated">Omslag opnieuw genereren</target>
       </trans-unit>
       <trans-unit id="mMYpEzb" resname="Regulations">
         <source>Regulations</source>
@@ -2396,6 +2416,10 @@
       <trans-unit id="Poo2BZL" resname="The activity revision was updated.">
         <source>The activity revision was updated.</source>
         <target state="translated">De activiteitsrevisie is bijgewerkt.</target>
+      </trans-unit>
+      <trans-unit id="dIJchis" resname="The album cover is being regenerated.">
+        <source>The album cover is being regenerated.</source>
+        <target state="translated">De albumomslag wordt opnieuw gegenereerd.</target>
       </trans-unit>
       <trans-unit id="_EYd71g" resname="The album has been created.">
         <source>The album has been created.</source>
@@ -2948,6 +2972,10 @@
       <trans-unit id="lAXDq5A" resname="You have been unsubscribed.">
         <source>You have been unsubscribed.</source>
         <target>Je bent uitgeschreven.</target>
+      </trans-unit>
+      <trans-unit id="3KHHscz" resname="You have not been tagged in any photos yet.">
+        <source>You have not been tagged in any photos yet.</source>
+        <target state="translated">Je bent nog in geen enkele foto getagd.</target>
       </trans-unit>
       <trans-unit id="8yGcQq5" resname="You have sent too many requests in a short period of time. Please wait a few minutes before trying again.">
         <source>You have sent too many requests in a short period of time. Please wait a few minutes before trying again.</source>

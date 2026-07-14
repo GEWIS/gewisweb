@@ -18,12 +18,13 @@
             <div class="panel-body">
                 <h3 class="h6 mb-1 text-body">{{ album.name }}</h3>
                 <p class="small text-muted mb-0">
-                    {% set subAlbums = album.albumCount %}
+                    {# subAlbumCount/photoCount are batched by the overview; fall back to the lazy counts elsewhere. #}
+                    {% set subAlbums = subAlbumCount ?? album.albumCount %}
                     {% if subAlbums > 0 %}
                         <i class="fa-solid fa-folder-open me-1"></i>{{ subAlbums }}
                         {{ subAlbums == 1 ? 'sub-album'|trans : 'sub-albums'|trans }}
                     {% else %}
-                        {% set photos = album.getPhotoCount(false) %}
+                        {% set photos = photoCount ?? album.getPhotoCount(false) %}
                         <i class="fa-solid fa-image me-1"></i>{{ photos }}
                         {{ photos == 1 ? 'photo'|trans : 'photos'|trans }}
                     {% endif %}

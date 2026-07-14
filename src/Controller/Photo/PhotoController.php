@@ -6,7 +6,9 @@ namespace App\Controller\Photo;
 
 use App\Entity\Photo\Album;
 use App\Entity\Photo\Enums\AlbumType;
+use App\Entity\Photo\MemberAlbum;
 use App\Entity\User\Enums\UserRoles;
+use App\Repository\Decision\MemberRepository;
 use App\Repository\Photo\PhotoRepository;
 use App\Repository\Photo\WeeklyPhotoRepository;
 use App\Security\Photo\PhotoVoter;
@@ -43,6 +45,7 @@ class PhotoController extends AbstractController
         private readonly PhotoService $photoService,
         private readonly PhotoRepository $photoRepository,
         private readonly WeeklyPhotoRepository $weeklyPhotoRepository,
+        private readonly MemberRepository $memberRepository,
         private readonly FileDownloadHelper $fileDownloadHelper,
         private readonly SluggerInterface $slugger,
     ) {
@@ -161,7 +164,12 @@ class PhotoController extends AbstractController
         AlbumType $type,
         int $album,
     ): Response {
-        // The member, weekly and body virtual albums are a later addition; only real albums are browsable for now.
+        // A member's "album" is the virtual set of photos they are tagged in (the {album} route value is their lidnr).
+        if (AlbumType::Member === $type) {
+            return $this->memberAlbum($album);
+        }
+
+        // The weekly and body virtual albums are a later addition; only real albums are browsable for now.
         if (AlbumType::Regular !== $type) {
             throw new NotFoundHttpException();
         }
@@ -173,6 +181,24 @@ class PhotoController extends AbstractController
             [
                 'album' => $albumEntity,
                 'children' => $this->albumService->getViewableChildren($albumEntity),
+            ],
+        );
+    }
+
+    /**
+     * The photos a member is tagged in, each linking into its real album's viewer. A member is tagged in a bounded set,
+     * so this renders server-side rather than through the windowed manifest the album gallery uses.
+     */
+    private function memberAlbum(int $lidnr): Response
+    {
+        $member = $this->memberRepository->find($lidnr)
+            ?? throw new NotFoundHttpException();
+
+        return $this->render(
+            'photo/member.html.twig',
+            [
+                'member' => $member,
+                'photos' => $this->photoRepository->getAlbumPhotos(new MemberAlbum($lidnr, $member)),
             ],
         );
     }

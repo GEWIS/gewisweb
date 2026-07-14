@@ -31,6 +31,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 use function array_filter;
 use function array_map;
+use function array_merge;
+use function array_values;
 use function intval;
 
 #[IsGranted(
@@ -62,9 +64,17 @@ class AdminController extends AbstractController
     )]
     public function index(): Response
     {
+        $albumsByYear = $this->albumService->getRootAlbumsByYear();
+        $albums = [] === $albumsByYear
+            ? []
+            : array_merge(...array_values($albumsByYear));
+
         return $this->render(
             'photo/admin/index.html.twig',
-            ['albumsByYear' => $this->albumService->getRootAlbumsByYear()],
+            [
+                'albumsByYear' => $albumsByYear,
+                'cardCounts' => $this->albumService->getCardCounts($albums),
+            ],
         );
     }
 
@@ -246,6 +256,31 @@ class AdminController extends AbstractController
                     ['name' => 'ASC'],
                 ),
             ],
+        );
+    }
+
+    #[Route(
+        path: '/albums/{album}/cover',
+        name: 'album_cover',
+        requirements: ['album' => '\d+'],
+        methods: ['POST'],
+    )]
+    #[IsCsrfTokenValid(
+        id: new Expression('"photo_album_cover-" ~ args["album"].getId()'),
+        tokenKey: '_csrf_token',
+    )]
+    public function regenerateCover(Album $album): Response
+    {
+        $this->albumAdminService->regenerateCover($album);
+
+        $this->addFlash(
+            AlertTypes::Success->value,
+            $this->translator->trans('The album cover is being regenerated.'),
+        );
+
+        return $this->redirectToRoute(
+            'admin/photos/album',
+            ['album' => $album->getId()],
         );
     }
 

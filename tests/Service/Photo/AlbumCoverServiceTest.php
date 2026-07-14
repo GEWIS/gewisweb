@@ -107,6 +107,48 @@ final class AlbumCoverServiceTest extends TestCase
         );
     }
 
+    public function testComposesAPortraitColumnMosaicFromPortraitSources(): void
+    {
+        $storage = new FileStorage(new Filesystem(new InMemoryFilesystemAdapter()));
+        // Three portrait sources make the album portrait-majority, so the column layout is used; the master stays the
+        // same 1280x720 landscape frame (only the tiling within it differs).
+        $service = $this->service(
+            $storage,
+            [
+                $this->storedPhoto(
+                    $storage,
+                    'gala-dinner-2.jpg',
+                ),
+                $this->storedPhoto(
+                    $storage,
+                    'gala-dinner-2.jpg',
+                ),
+                $this->storedPhoto(
+                    $storage,
+                    'gala-dinner-2.jpg',
+                ),
+            ],
+        );
+
+        $coverPath = $service->generateForAlbum($this->albumWithId(9));
+
+        self::assertNotNull($coverPath);
+        $info = getimagesizefromstring($storage->read($coverPath));
+        self::assertIsArray($info);
+        self::assertSame(
+            1280,
+            $info[0],
+        );
+        self::assertSame(
+            720,
+            $info[1],
+        );
+        self::assertSame(
+            IMAGETYPE_WEBP,
+            $info[2],
+        );
+    }
+
     /**
      * An album with a database id set, so its cover can be stored under the album-scoped namespace without persisting.
      */

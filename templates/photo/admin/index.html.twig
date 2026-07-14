@@ -35,7 +35,11 @@
             </h2>
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xxl-6 g-3 mb-4">
                 {% for album in albums %}
-                    {% include 'partials/photo/admin/album-card.html.twig' with { 'album': album } only %}
+                    {% include 'partials/photo/admin/album-card.html.twig' with {
+                        'album': album,
+                        'subAlbumCount': cardCounts.subAlbums[album.id] ?? 0,
+                        'photoCount': cardCounts.photos[album.id] ?? 0,
+                    } only %}
                 {% endfor %}
             </div>
         {% endfor %}

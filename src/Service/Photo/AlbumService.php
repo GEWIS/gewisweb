@@ -7,6 +7,7 @@ namespace App\Service\Photo;
 use App\Entity\Decision\AssociationYear;
 use App\Entity\Photo\Album;
 use App\Repository\Photo\AlbumRepository;
+use App\Repository\Photo\PhotoRepository;
 use App\Security\Photo\AlbumVoter;
 use Symfony\Bundle\SecurityBundle\Security;
 
@@ -21,8 +22,25 @@ final readonly class AlbumService
 {
     public function __construct(
         private AlbumRepository $albumRepository,
+        private PhotoRepository $photoRepository,
         private Security $security,
     ) {
+    }
+
+    /**
+     * The sub-album and direct-photo counts an overview's album cards need, each gathered in one query, so a grid does
+     * not issue a `COUNT` per card. Both maps are keyed by album id; a missing key means zero.
+     *
+     * @param Album[] $albums
+     *
+     * @return array{subAlbums: array<int, int>, photos: array<int, int>}
+     */
+    public function getCardCounts(array $albums): array
+    {
+        return [
+            'subAlbums' => $this->albumRepository->getSubAlbumCounts($albums),
+            'photos' => $this->photoRepository->getDirectPhotoCounts($albums),
+        ];
     }
 
     /**

@@ -31,6 +31,14 @@ final readonly class AlbumAdminService
     }
 
     /**
+     * Queue a regeneration of the album's cover mosaic, e.g. after the board has changed which photos it should show.
+     */
+    public function regenerateCover(Album $album): void
+    {
+        $this->messageBus->dispatch(new GenerateAlbumCoverMessage((int) $album->getId()));
+    }
+
+    /**
      * Move photos to another album in one go: reassign them, flush once, then regenerate the cover of each album whose
      * photo set actually changed (the destination and every distinct source), each cover at most once.
      *

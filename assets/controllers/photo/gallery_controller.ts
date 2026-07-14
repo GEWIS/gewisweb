@@ -385,7 +385,7 @@ export default class extends Controller<HTMLElement> {
         this.lightbox.on('uiRegister', (): void => {
             this.lightbox.pswp.ui.registerElement({
                 name: 'share-button',
-                order: 9,
+                order: 12,
                 isButton: true,
                 tagName: 'button',
                 html: '<i class="fa-solid fa-share-nodes"></i>',
@@ -399,7 +399,7 @@ export default class extends Controller<HTMLElement> {
 
             this.lightbox.pswp.ui.registerElement({
                 name: 'download-button',
-                order: 8,
+                order: 11,
                 isButton: true,
                 tagName: 'a',
                 html: '<i class="fa-solid fa-download"></i>',

@@ -161,6 +161,42 @@ class AlbumRepository extends ServiceEntityRepository
     }
 
     /**
+     * The number of direct sub-albums each of the given albums has, keyed by album id, in a single query — so a grid of
+     * album cards does not issue one `COUNT(*) ... WHERE parent_id = ?` per card. Albums with no sub-albums are absent.
+     *
+     * @param Album[] $albums
+     *
+     * @return array<int, int>
+     */
+    public function getSubAlbumCounts(array $albums): array
+    {
+        if ([] === $albums) {
+            return [];
+        }
+
+        $counts = [];
+        foreach (
+            $this->createQueryBuilder('a')
+                ->select(
+                    'IDENTITY(a.parent) AS parentId',
+                    'COUNT(a.id) AS total',
+                )
+                ->where('a.parent IN (:parents)')
+                ->setParameter(
+                    'parents',
+                    $albums,
+                )
+                ->groupBy('a.parent')
+                ->getQuery()
+                ->getScalarResult() as $row
+        ) {
+            $counts[(int) $row['parentId']] = (int) $row['total'];
+        }
+
+        return $counts;
+    }
+
+    /**
      * The album whose generated cover path ends with the given filename, used to resolve a legacy `/data/{2ch}/{file}`
      * URL onto the migrated cover (whose path re-roots that same filename under the album).
      */

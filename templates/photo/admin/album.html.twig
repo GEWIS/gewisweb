@@ -32,6 +32,12 @@
             {% endif %}
         </div>
         <div class="d-flex gap-2">
+            <form method="post" action="{{ path('admin/photos/album_cover', { album: album.id }) }}">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('photo_album_cover-' ~ album.id) }}">
+                <button type="submit" class="btn btn-outline-secondary">
+                    <i class="fa-solid fa-arrows-rotate"></i> {{ 'Regenerate cover'|trans }}
+                </button>
+            </form>
             <a href="{{ path('admin/photos/albums_edit', { album: album.id }) }}" class="btn btn-outline-secondary">
                 <i class="fa-solid fa-pencil"></i> {{ 'Edit album'|trans }}
             </a>
@@ -109,11 +115,14 @@
                     <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 row-cols-xxl-8 g-2">
                         {% for photo in photos %}
                             <div class="col">
-                                <label class="d-block position-relative ratio ratio-1x1 bg-body-secondary rounded overflow-hidden">
-                                    <img class="w-100 h-100" style="object-fit: cover;" loading="lazy"
-                                         src="{{ image_url(photo.path, 'w320') }}" alt="">
+                                {# Custom selectable tile: the checkbox is visually hidden, selection shows as a tint +
+                                   check overlay instead of a control obscuring the photo. #}
+                                <label class="photo-select rounded overflow-hidden bg-body-secondary">
                                     <input type="checkbox" name="photos[]" value="{{ photo.id }}"
-                                           class="form-check-input position-absolute top-0 start-0 m-2">
+                                           class="photo-select__input">
+                                    <img class="photo-select__img" loading="lazy"
+                                         src="{{ image_url(photo.path, 'w320') }}" alt="">
+                                    <span class="photo-select__check"><i class="fa-solid fa-circle-check"></i></span>
                                 </label>
                             </div>
                         {% endfor %}

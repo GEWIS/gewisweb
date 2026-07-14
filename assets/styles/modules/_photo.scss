@@ -3,6 +3,69 @@ Photo
 
 */
 
+// Selectable photo tile on the album manage view. The checkbox is visually hidden (but focusable); selection reads as a
+// brand tint plus a corner check over the photo, so the control never obscures the image (mirrors the old site).
+.photo-select {
+    display: block;
+    position: relative;
+    aspect-ratio: 1;
+    cursor: pointer;
+
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: rgba($brand-primary, 0.3);
+        opacity: 0;
+        transition: opacity 0.12s ease-in-out;
+        pointer-events: none;
+    }
+
+    &:has(.photo-select__input:checked)::after {
+        opacity: 1;
+    }
+
+    &:has(.photo-select__input:focus-visible) {
+        outline: 2px solid $brand-primary;
+        outline-offset: 2px;
+    }
+}
+
+.photo-select__input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+}
+
+.photo-select__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.photo-select__check {
+    position: absolute;
+    top: 0.4rem;
+    right: 0.4rem;
+    color: #fff;
+    font-size: 1.4rem;
+    line-height: 1;
+    opacity: 0;
+    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.6));
+    transition: opacity 0.12s ease-in-out;
+}
+
+.photo-select:hover .photo-select__check {
+    opacity: 0.55;
+}
+
+.photo-select:has(.photo-select__input:checked) .photo-select__check {
+    opacity: 1;
+}
+
 // Drag-and-drop upload target on the album manage view. The dashed outline and the hover/drag highlight are the only
 // affordance that the whole panel accepts files; the upload controller toggles `is-dragging` while a drag is over it.
 .photo-dropzone {
@@ -41,6 +104,19 @@ Photo
         object-fit: cover;
     }
 }
+
+// Point tags overlaid on the image (`.pswp__photo-markers` / `.pswp__photo-marker`) are positioned and styled inline by
+// the viewer controller: each marker is placed in pixels from the on-screen image rect and repositioned on zoom/pan, so
+// the layout cannot live in a stylesheet.
+
+// PhotoSwipe styles its toolbar buttons `display:block`, which overrides the [hidden] attribute; make hiding work so a
+// button the viewer may not use (vote when they cannot vote, profile when not tagged) is actually removed.
+.pswp__button[hidden] {
+    display: none !important;
+}
+
+// The point-tag placement uses a full-viewport capture overlay (`.pswp__photo-place-overlay`) above the PhotoSwipe
+// viewer; its styles are set inline by the viewer controller so it works before this stylesheet loads.
 
 // The custom viewer toolbar buttons render a FontAwesome <i> where PhotoSwipe styles an <svg>; center and size it so
 // the share and download icons line up with the built-in zoom and close buttons.
