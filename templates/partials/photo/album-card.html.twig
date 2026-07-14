@@ -16,6 +16,10 @@
                 {% endif %}
             </div>
             <div class="panel-body">
+                {% if album.createdAt >= date('-1 week') %}
+                    {# Recently added albums stand out on the overview, a week-long highlight as on the old site. #}
+                    <span class="badge badge-gewis mb-1">{{ 'New'|trans }}</span>
+                {% endif %}
                 <h3 class="h6 mb-1 text-body">{{ album.name }}</h3>
                 <p class="small text-muted mb-0">
                     {# subAlbumCount/photoCount are batched by the overview; fall back to the lazy counts elsewhere. #}

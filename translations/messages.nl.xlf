@@ -1517,6 +1517,10 @@
         <source>Navigation</source>
         <target state="translated">Navigatie</target>
       </trans-unit>
+      <trans-unit id="fcdWVrX" resname="New">
+        <source>New</source>
+        <target state="translated">Nieuw</target>
+      </trans-unit>
       <trans-unit id="pSP333t" resname="New field">
         <source>New field</source>
         <target state="translated">Nieuw veld</target>

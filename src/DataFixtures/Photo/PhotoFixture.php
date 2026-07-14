@@ -21,6 +21,7 @@ use App\Service\Photo\WeeklyPhotoService;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 use GdImage;
 use Override;
@@ -28,6 +29,7 @@ use RuntimeException;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 use function abs;
+use function assert;
 use function count;
 use function crc32;
 use function imagecolorallocate;
@@ -274,6 +276,13 @@ class PhotoFixture extends Fixture implements DependentFixtureInterface
 
         $manager->flush();
 
+        // An album is added around the time of its event, so back-date createdAt to the album date. The "new album"
+        // badge only marks additions from the last week, which would otherwise flag every freshly seeded album.
+        assert($manager instanceof EntityManagerInterface);
+        $manager->createQuery(
+            'UPDATE ' . Album::class . ' a SET a.createdAt = a.startDateTime',
+        )->execute();
+
         // Publish the visible photo of the week's public copy (needs the flushed photo id), so the anonymous frontpage
         // has a working example to serve; in production the weekly command writes this copy.
         $this->fileStorage->writeStream(
@@ -292,8 +301,9 @@ class PhotoFixture extends Fixture implements DependentFixtureInterface
         // association years, so both the year filter and the month dividers have something to separate.
         $albums = [
             [
+                // Recent enough to still carry the "new album" badge on the overview.
                 'Introduction Camp',
-                12,
+                3,
                 200,
             ],
             [
