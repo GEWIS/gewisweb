@@ -16,6 +16,17 @@ interface OrganTag {
     canRemove: boolean;
 }
 
+interface Exif {
+    artist: string | null;
+    camera: string | null;
+    dateTime: string;
+    flash: boolean | null;
+    focalLength: number | null;
+    shutterSpeed: string | null;
+    aperture: string | null;
+    iso: number | null;
+}
+
 interface Details {
     memberTags: MemberTag[];
     organTags: OrganTag[];
@@ -25,6 +36,7 @@ interface Details {
     recentVote: boolean;
     taggedSelf: boolean;
     photoOfTheWeek: string | null;
+    exif: Exif;
 }
 
 interface Organ {
@@ -85,6 +97,7 @@ export class ViewerInteractions {
 
     private voteButton: HTMLElement | null = null;
     private profileButton: HTMLElement | null = null;
+    private metadataPanel: HTMLElement | null = null;
 
     // The overlay that carries the point markers. It fills the PhotoSwipe root; each marker is positioned in pixels
     // from the on-screen image rect (the zoom container itself is zero-sized), and repositioned on zoom/pan/resize.
@@ -132,6 +145,26 @@ export class ViewerInteractions {
             name: 'photo-tags',
             appendTo: 'root',
             onInit: (element: HTMLElement): void => this.buildPanel(element),
+        });
+
+        // The camera-metadata panel and the toolbar button that toggles it (order 10 sits between the album and
+        // download buttons the gallery registers).
+        ui.registerElement({
+            name: 'metadata-ui',
+            appendTo: 'root',
+            onInit: (element: HTMLElement): void => this.buildMetadataPanel(element),
+        });
+
+        ui.registerElement({
+            name: 'info-button',
+            order: 10,
+            isButton: true,
+            tagName: 'button',
+            title: this.label('information'),
+            html: spriteIcon(this.config.iconSpriteUrl, 'circle-info'),
+            onInit: (element: HTMLElement): void => {
+                element.addEventListener('click', (): void => this.toggleMetadata());
+            },
         });
 
         // The toolbar's preloader (order 7) carries margin-right:auto, so only orders greater than it sit on the right;
@@ -196,6 +229,51 @@ export class ViewerInteractions {
         this.form = this.buildAddForm();
 
         root.append(this.potwBadge, this.title, this.list, this.form);
+    }
+
+    private buildMetadataPanel(root: HTMLElement): void {
+        root.classList.add('pswp__photo-metadata');
+        root.hidden = true;
+        this.metadataPanel = root;
+    }
+
+    private toggleMetadata(): void {
+        if (null !== this.metadataPanel) {
+            this.metadataPanel.hidden = !this.metadataPanel.hidden;
+        }
+    }
+
+    private renderMetadata(exif: Exif): void {
+        if (null === this.metadataPanel) {
+            return;
+        }
+
+        const unknown = this.label('unknown');
+        const flash = null === exif.flash ? unknown : this.label(exif.flash ? 'yes' : 'no');
+        const rows: [string, string][] = [
+            ['artist', exif.artist ?? unknown],
+            ['camera', exif.camera ?? unknown],
+            ['dateTime', exif.dateTime],
+            ['flash', flash],
+            ['focalLength', null === exif.focalLength ? unknown : `${exif.focalLength} mm`],
+            ['shutterSpeed', exif.shutterSpeed ?? unknown],
+            ['aperture', exif.aperture ?? unknown],
+            ['iso', null === exif.iso ? unknown : String(exif.iso)],
+        ];
+
+        const table = document.createElement('table');
+        table.className = 'pswp__photo-metadata-table';
+        for (const [key, value] of rows) {
+            const row = document.createElement('tr');
+            const label = document.createElement('th');
+            label.textContent = this.label(key);
+            const cell = document.createElement('td');
+            cell.textContent = value;
+            row.append(label, cell);
+            table.appendChild(row);
+        }
+
+        this.metadataPanel.replaceChildren(table);
     }
 
     private buildAddForm(): HTMLElement {
@@ -271,6 +349,7 @@ export class ViewerInteractions {
         this.renderButtons(this.details);
         this.renderPanel(this.details);
         this.renderMarkers(this.details);
+        this.renderMetadata(this.details.exif);
 
         // Warm the neighbours so the next swipe in either direction shows its tags without a round-trip.
         void this.prefetchNeighbours();

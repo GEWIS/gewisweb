@@ -277,6 +277,10 @@
         <source>Any company</source>
         <target>Alle bedrijven</target>
       </trans-unit>
+      <trans-unit id="7UQ9ySb" resname="Aperture">
+        <source>Aperture</source>
+        <target>Diafragma</target>
+      </trans-unit>
       <trans-unit id="pb6Dt_Y" resname="Approvals">
         <source>Approvals</source>
         <target state="translated">Goedkeuringen</target>
@@ -316,6 +320,10 @@
       <trans-unit id="bvVDE9v" resname="Are you sure you want to unsubscribe from this sign-up list?">
         <source>Are you sure you want to unsubscribe from this sign-up list?</source>
         <target>Weet je zeker dat je je wilt uitschrijven van deze inschrijflijst?</target>
+      </trans-unit>
+      <trans-unit id="rXDM9BS" resname="Artist">
+        <source>Artist</source>
+        <target>Artiest</target>
       </trans-unit>
       <trans-unit id="FzJGBxU" resname="Association">
         <source>Association</source>
@@ -396,6 +404,10 @@
       <trans-unit id="C0vtgUR" resname="Calendar">
         <source>Calendar</source>
         <target state="translated">Kalender</target>
+      </trans-unit>
+      <trans-unit id="PwolnyQ" resname="Camera">
+        <source>Camera</source>
+        <target>Camera</target>
       </trans-unit>
       <trans-unit id="EhytB4v" resname="Cancel">
         <source>Cancel</source>
@@ -644,6 +656,10 @@
       <trans-unit id="IMJISl1" resname="Date and time">
         <source>Date and time</source>
         <target state="translated">Datum en tijd</target>
+      </trans-unit>
+      <trans-unit id="6zDmoQV" resname="Date/time">
+        <source>Date/time</source>
+        <target>Datum/tijd</target>
       </trans-unit>
       <trans-unit id="nooMqa8" resname="Delete album">
         <source>Delete album</source>
@@ -969,6 +985,14 @@
         <source>First-come-first-served</source>
         <target>Wie het eerst komt, het eerst maalt</target>
       </trans-unit>
+      <trans-unit id="c0uwrTM" resname="Flash">
+        <source>Flash</source>
+        <target>Flits</target>
+      </trans-unit>
+      <trans-unit id="l28rM7z" resname="Focal length">
+        <source>Focal length</source>
+        <target>Brandpuntsafstand</target>
+      </trans-unit>
       <trans-unit id="O84mkAK" resname="Foosball Coordinator">
         <source>Foosball Coordinator</source>
         <target state="translated">Tafelvoetbalcoordinator</target>
@@ -1140,6 +1164,10 @@
       <trans-unit id="ryOBxJh" resname="I saved them">
         <source>I saved them</source>
         <target state="translated">Ik heb ze bewaard</target>
+      </trans-unit>
+      <trans-unit id="z_EeVDq" resname="ISO">
+        <source>ISO</source>
+        <target>ISO</target>
       </trans-unit>
       <trans-unit id="jFs7gBY" resname="If a pending sign-up exists for this email address, we have sent a new confirmation link.">
         <source>If a pending sign-up exists for this email address, we have sent a new confirmation link.</source>
@@ -2193,6 +2221,10 @@
         <source>Show the number of sign-ups to logged-out visitors</source>
         <target state="translated">Toon het aantal inschrijvingen aan uitgelogde bezoekers</target>
       </trans-unit>
+      <trans-unit id="8v4YDBU" resname="Shutter speed">
+        <source>Shutter speed</source>
+        <target>Sluitertijd</target>
+      </trans-unit>
       <trans-unit id="pNIxNSX" resname="Sign in">
         <source>Sign in</source>
         <target state="translated">Inloggen</target>
@@ -2744,6 +2776,10 @@
       <trans-unit id="SsE5mLL" resname="Undated">
         <source>Undated</source>
         <target>Zonder datum</target>
+      </trans-unit>
+      <trans-unit id="KEhkI6s" resname="Unknown">
+        <source>Unknown</source>
+        <target>Onbekend</target>
       </trans-unit>
       <trans-unit id="7ZQ9oWO" resname="Unknown device">
         <source>Unknown device</source>

@@ -130,6 +130,17 @@ class PhotoInteractionController extends AbstractController
             'taggedSelf' => $taggedSelf,
             // The week this photo was photo of the week, if ever, so the viewer can badge it.
             'photoOfTheWeek' => $photoEntity->getWeeklyPhoto()?->getWeek()->format('Y-m-d'),
+            // The camera metadata for the viewer's info panel.
+            'exif' => [
+                'artist' => $photoEntity->getArtist(),
+                'camera' => $photoEntity->getCamera(),
+                'dateTime' => $photoEntity->getDateTime()->format('Y-m-d H:i:s'),
+                'flash' => $photoEntity->getFlash(),
+                'focalLength' => $photoEntity->getFocalLength(),
+                'shutterSpeed' => $photoEntity->getShutterSpeed(),
+                'aperture' => $photoEntity->getAperture(),
+                'iso' => $photoEntity->getIso(),
+            ],
         ]);
     }
 
