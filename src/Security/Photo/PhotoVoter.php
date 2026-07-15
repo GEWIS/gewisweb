@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Security\Photo;
 
 use App\Entity\Photo\Photo;
+use App\Entity\User\Enums\UserRoles;
 use Override;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -14,8 +15,10 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use function in_array;
 
 /**
- * Authorizes viewing and downloading a {@see Photo}. Both reduce to whether the photo's album is viewable, so the rule
- * (including the #1658 graduate-subtree logic) is defined once in {@see AlbumVoter}, and this voter delegates to it.
+ * Authorizes viewing, downloading, tagging and voting on a {@see Photo}. Viewing and downloading reduce to whether the
+ * photo's album is viewable, so that rule (including the #1658 graduate-subtree logic) is defined once in
+ * {@see AlbumVoter} and delegated to. Tagging and voting additionally require ROLE_MEMBER, which excludes graduates:
+ * a graduate may only remove their own member tag (see {@see TagVoter}) and may not tag or vote at all.
  *
  * @extends Voter<string, Photo>
  */
@@ -23,10 +26,14 @@ final class PhotoVoter extends Voter
 {
     public const string VIEW = 'PHOTO_VIEW';
     public const string DOWNLOAD = 'PHOTO_DOWNLOAD';
+    public const string TAG = 'PHOTO_TAG';
+    public const string VOTE = 'PHOTO_VOTE';
 
     private const array ATTRIBUTES = [
         self::VIEW,
         self::DOWNLOAD,
+        self::TAG,
+        self::VOTE,
     ];
 
     public function __construct(
@@ -54,11 +61,16 @@ final class PhotoVoter extends Voter
         TokenInterface $token,
         ?Vote $vote = null,
     ): bool {
+        $viewable = $this->security->isGranted(
+            AlbumVoter::VIEW,
+            $subject->getAlbum(),
+        );
+
         return match ($attribute) {
-            self::VIEW, self::DOWNLOAD => $this->security->isGranted(
-                AlbumVoter::VIEW,
-                $subject->getAlbum(),
-            ),
+            self::VIEW, self::DOWNLOAD => $viewable,
+            // Tagging and voting are for members only (graduates are excluded from ROLE_MEMBER) and only on a photo
+            // they may view.
+            self::TAG, self::VOTE => $viewable && $this->security->isGranted(UserRoles::Member->value),
             default => false,
         };
     }

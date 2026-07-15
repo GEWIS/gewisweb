@@ -1,5 +1,7 @@
 import { Controller } from '@hotwired/stimulus';
 
+import { ViewerInteractions } from './viewer_interactions.ts';
+
 interface ManifestEntry {
     id: number;
     w: number;
@@ -43,11 +45,29 @@ interface Slot {
 export default class extends Controller<HTMLElement> {
     static values = {
         manifestUrl: String,
+        detailsUrl: String,
+        tagUrl: String,
+        tagRemoveUrl: String,
+        voteUrl: String,
+        profileUrl: String,
+        memberSearchUrl: String,
+        organsUrl: String,
+        memberUrl: String,
+        labels: Object,
     };
 
     static targets = ['grid', 'empty'];
 
     declare readonly manifestUrlValue: string;
+    declare readonly detailsUrlValue: string;
+    declare readonly tagUrlValue: string;
+    declare readonly tagRemoveUrlValue: string;
+    declare readonly voteUrlValue: string;
+    declare readonly profileUrlValue: string;
+    declare readonly memberSearchUrlValue: string;
+    declare readonly organsUrlValue: string;
+    declare readonly memberUrlValue: string;
+    declare readonly labelsValue: Record<string, string>;
     declare readonly gridTarget: HTMLElement;
     declare readonly emptyTarget: HTMLElement;
     declare readonly hasEmptyTarget: boolean;
@@ -152,6 +172,18 @@ export default class extends Controller<HTMLElement> {
             pswpModule: () => import('photoswipe'),
         });
         this.registerToolbarButtons();
+        // The tag/vote/profile layer attaches its own lightbox listeners; it must exist before init().
+        new ViewerInteractions(this.lightbox, {
+            detailsUrlTemplate: this.detailsUrlValue,
+            tagUrlTemplate: this.tagUrlValue,
+            tagRemoveUrlTemplate: this.tagRemoveUrlValue,
+            voteUrlTemplate: this.voteUrlValue,
+            profileUrlTemplate: this.profileUrlValue,
+            memberSearchUrl: this.memberSearchUrlValue,
+            organsUrl: this.organsUrlValue,
+            memberUrlTemplate: this.memberUrlValue,
+            labels: this.labelsValue,
+        });
         this.lightbox.on('close', (): void => this.onViewerClosed());
         this.lightbox.init();
     }

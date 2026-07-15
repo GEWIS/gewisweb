@@ -1073,6 +1073,10 @@
         <source>In review</source>
         <target state="translated">In review</target>
       </trans-unit>
+      <trans-unit id="IkjXe_y" resname="In this photo">
+        <source>In this photo</source>
+        <target>In this photo</target>
+      </trans-unit>
       <trans-unit id="ybqiXt5" resname="Inactive">
         <source>Inactive</source>
         <target state="translated">Inactive</target>
@@ -1469,6 +1473,10 @@
         <source>No members match the current filters.</source>
         <target state="translated">No members match the current filters.</target>
       </trans-unit>
+      <trans-unit id="SDtIcMH" resname="No one is tagged in this photo yet">
+        <source>No one is tagged in this photo yet</source>
+        <target>No one is tagged in this photo yet</target>
+      </trans-unit>
       <trans-unit id="2ycHnEH" resname="No open vacancies">
         <source>No open vacancies</source>
         <target>No open vacancies</target>
@@ -1793,6 +1801,10 @@
         <source>Remove sign-up list</source>
         <target state="translated">Remove sign-up list</target>
       </trans-unit>
+      <trans-unit id="GwibQdh" resname="Remove tag">
+        <source>Remove tag</source>
+        <target>Remove tag</target>
+      </trans-unit>
       <trans-unit id="Sg9.yIf" resname="Removed field">
         <source>Removed field</source>
         <target state="translated">Removed field</target>
@@ -1993,6 +2005,10 @@
         <source>Sessions for %name%</source>
         <target state="translated">Sessions for %name%</target>
       </trans-unit>
+      <trans-unit id="mRFBZ2C" resname="Set as profile photo">
+        <source>Set as profile photo</source>
+        <target>Set as profile photo</target>
+      </trans-unit>
       <trans-unit id="iY2CUG5" resname="Set new password">
         <source>Set new password</source>
         <target state="translated">Set new password</target>
@@ -2172,6 +2188,14 @@
       <trans-unit id="kbrjiPV" resname="TU/e Guest - Anyone who can access the website from within the TU/e">
         <source>TU/e Guest - Anyone who can access the website from within the TU/e</source>
         <target state="translated">TU/e Guest - Anyone who can access the website from within the TU/e</target>
+      </trans-unit>
+      <trans-unit id="nnbBydf" resname="Tag a member">
+        <source>Tag a member</source>
+        <target>Tag a member</target>
+      </trans-unit>
+      <trans-unit id="otUYLRj" resname="Tag an organ">
+        <source>Tag an organ</source>
+        <target>Tag an organ</target>
       </trans-unit>
       <trans-unit id="6xiB9Va" resname="Take attendance">
         <source>Take attendance</source>
@@ -2613,6 +2637,10 @@
         <source>Visit website</source>
         <target>Visit website</target>
       </trans-unit>
+      <trans-unit id="6AGp2Yf" resname="Vote for photo of the week">
+        <source>Vote for photo of the week</source>
+        <target>Vote for photo of the week</target>
+      </trans-unit>
       <trans-unit id="50BTJRy" resname="Voting Committee">
         <source>Voting Committee</source>
         <target state="translated">Voting Committee</target>
@@ -2740,6 +2768,10 @@
       <trans-unit id="8yGcQq5" resname="You have sent too many requests in a short period of time. Please wait a few minutes before trying again.">
         <source>You have sent too many requests in a short period of time. Please wait a few minutes before trying again.</source>
         <target state="translated">You have sent too many requests in a short period of time. Please wait a few minutes before trying again.</target>
+      </trans-unit>
+      <trans-unit id=".f_sqUa" resname="You have voted">
+        <source>You have voted</source>
+        <target>You have voted</target>
       </trans-unit>
       <trans-unit id="gpKNG0O" resname="You no longer hold the edit lock; it was taken over or expired. Reload the page to continue editing.">
         <source>You no longer hold the edit lock; it was taken over or expired. Reload the page to continue editing.</source>

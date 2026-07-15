@@ -1,12 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: '#^Property App\\Controller\\Decision\\MemberController\:\:\$memberRepository is never read, only written\.$#'
-			identifier: property.onlyWritten
-			count: 1
-			path: src/Controller/Decision/MemberController.php
-
-		-
 			message: '#^Property App\\Entity\\Activity\\MaxActivities\:\:\$period type mapping mismatch\: database can contain App\\Entity\\Activity\\ActivityOptionCreationPeriod\|null but property expects App\\Entity\\Activity\\ActivityOptionCreationPeriod\.$#'
 			identifier: doctrine.associationType
 			count: 1
