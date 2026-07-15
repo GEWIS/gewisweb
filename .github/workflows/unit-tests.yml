@@ -80,5 +80,39 @@ jobs:
                     bin/console doctrine:schema:create
                     bin/console doctrine:fixtures:load --no-interaction
 
+            -   name: Cache the built front-end assets
+                id: assets-cache
+                uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+                with:
+                    path: |
+                        var/sass
+                        var/typescript
+                        assets/vendor
+                        assets/fonts/fontawesome
+                        assets/sprites/fontawesome
+                        assets/js/bootstrap.bundle.min.js
+                    key: assets-${{ hashFiles('assets/**', '.swcrc', 'importmap.php', 'composer.lock') }}
+
+            -   name: Build the front-end assets
+                if: steps.assets-cache.outputs.cache-hit != 'true'
+                env:
+                    APP_ENV: test
+                    SWC_VERSION: v1.15.43
+                # The controller and frontpage tests render full pages, so base.html.twig and app.scss resolve the
+                # Font Awesome fonts/sprites and Bootstrap bundle (copied out of vendor/ by assets:update), the
+                # importmap's vendored JS such as the live-component CSS (importmap:install), and the sass/TypeScript
+                # compiled to var/sass and var/typescript. None of that is committed and composer ran with
+                # --no-scripts, so it is all built here. swc writes the controllers to var/typescript/controllers,
+                # while the compiler reads them from var/typescript/assets/controllers, so they are copied across.
+                run: |
+                    composer run-script assets:update
+                    bin/console importmap:install
+                    sudo curl -sSL -o /usr/local/bin/swc "https://github.com/swc-project/swc/releases/download/${SWC_VERSION}/swc-linux-x64-gnu"
+                    sudo chmod +x /usr/local/bin/swc
+                    bin/console sass:build
+                    bin/console typescript:build
+                    mkdir -p var/typescript/assets/controllers
+                    cp -r var/typescript/controllers/. var/typescript/assets/controllers/
+
             -   name: Run PHPUnit
                 run: bin/phpunit
