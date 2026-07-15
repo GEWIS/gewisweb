@@ -3,90 +3,58 @@ Photo
 
 */
 
-// Selection layer composed onto a `.photo-masonry__item` on the album manage view. The checkbox is visually hidden (but
-// focusable); selection reads as a brand tint plus a corner check, so the control never obscures the image.
-.photo-select {
-    cursor: pointer;
-
-    &::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: rgba($brand-primary, 0.3);
-        opacity: 0;
-        transition: opacity 0.12s ease-in-out;
-        pointer-events: none;
-    }
-
-    &:has(.photo-select__input:checked)::after {
-        opacity: 1;
-    }
-
-    &:has(.photo-select__input:focus-visible) {
-        outline: 2px solid $brand-primary;
-        outline-offset: 2px;
-    }
-}
-
-.photo-select__input {
+// Selection mode for the gallery (member and album manage views). The Select toggle adds `is-selecting` to the grid,
+// revealing a corner check on each tile; a selected tile also gets a brand tint. In browse mode none of this shows, so
+// the grid reads as a plain viewer.
+.photo-masonry__check,
+.photo-masonry__hidden {
     position: absolute;
-    width: 1px;
-    height: 1px;
-    opacity: 0;
-}
-
-.photo-select__img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.photo-select__check {
-    position: absolute;
-    top: 0.4rem;
-    right: 0.4rem;
     color: #fff;
-    font-size: 1.4rem;
-    line-height: 1;
-    opacity: 0;
-    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.6));
-    transition: opacity 0.12s ease-in-out;
-}
-
-.photo-select:hover .photo-select__check {
-    opacity: 0.55;
-}
-
-.photo-select:has(.photo-select__input:checked) .photo-select__check {
-    opacity: 1;
-}
-
-// A photo the member has hidden from their own page: greyed with an eye-slash badge in both browse and select mode, so
-// they can tell which photos others do not see.
-.photo-select--hidden .photo-select__img {
-    opacity: 0.4;
-}
-
-.photo-select__hidden {
-    position: absolute;
-    top: 0.4rem;
-    left: 0.4rem;
-    color: #fff;
-    font-size: 1.1rem;
     line-height: 1;
     filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.6));
     pointer-events: none;
 }
 
-// On the member page the tiles are links until "Select" turns selection on, so the selection affordance is suppressed
-// while browsing.
-.photo-manage:not(.is-selecting) {
-    .photo-select::after,
-    .photo-select__check {
-        display: none;
+.photo-masonry__check {
+    top: 0.4rem;
+    right: 0.4rem;
+    font-size: 1.4rem;
+    opacity: 0;
+    transition: opacity 0.12s ease-in-out;
+}
+
+.photo-masonry.is-selecting {
+    .photo-masonry__item {
+        cursor: pointer;
     }
+
+    .photo-masonry__item:hover .photo-masonry__check {
+        opacity: 0.55;
+    }
+
+    .photo-masonry__item.is-selected .photo-masonry__check {
+        opacity: 1;
+    }
+
+    .photo-masonry__item.is-selected::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: rgba($brand-primary, 0.3);
+        pointer-events: none;
+    }
+}
+
+// A photo the member has hidden from their own page: greyed with an eye-slash badge in both browse and select mode, so
+// they can tell which photos others do not see.
+.photo-masonry__item.is-hidden img {
+    opacity: 0.4;
+}
+
+.photo-masonry__hidden {
+    top: 0.4rem;
+    left: 0.4rem;
+    font-size: 1.1rem;
 }
 
 // Async album picker for moving photos: the results drop directly below the search input and scroll when there are many.

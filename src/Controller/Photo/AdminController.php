@@ -14,6 +14,7 @@ use App\Repository\Photo\PhotoRepository;
 use App\Repository\Photo\WeeklyPhotoRepository;
 use App\Service\Photo\AlbumAdminService;
 use App\Service\Photo\AlbumService;
+use App\Service\Photo\PhotoService;
 use App\Service\Photo\PhotoUploadService;
 use App\Service\Photo\WeeklyPhotoService;
 use DateTime;
@@ -55,6 +56,7 @@ class AdminController extends AbstractController
         private readonly PhotoRepository $photoRepository,
         private readonly AlbumService $albumService,
         private readonly AlbumAdminService $albumAdminService,
+        private readonly PhotoService $photoService,
         private readonly PhotoUploadService $photoUploadService,
         private readonly WeeklyPhotoRepository $weeklyPhotoRepository,
         private readonly WeeklyPhotoService $weeklyPhotoService,
@@ -272,11 +274,23 @@ class AdminController extends AbstractController
     {
         return $this->render(
             'photo/admin/album.html.twig',
-            [
-                'album' => $album,
-                'photos' => $this->photoRepository->getAlbumPhotos($album),
-            ],
+            ['album' => $album],
         );
+    }
+
+    /**
+     * The viewer manifest for the album manage view. Same shape as the public one but reachable for drafts too, since
+     * the manage view is board-only.
+     */
+    #[Route(
+        path: '/albums/{album}/manifest',
+        name: 'album_manifest',
+        requirements: ['album' => '\d+'],
+        methods: ['GET'],
+    )]
+    public function albumManifest(Album $album): JsonResponse
+    {
+        return new JsonResponse($this->photoService->getAlbumManifest($album));
     }
 
     /**

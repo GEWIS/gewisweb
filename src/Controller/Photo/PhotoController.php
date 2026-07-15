@@ -140,6 +140,33 @@ class PhotoController extends AbstractController
     }
 
     /**
+     * The viewer manifest for a member's virtual album, filtered to what the current viewer may see and flagging the
+     * member's own hidden photos. Loaded by the gallery on that member's photo page.
+     */
+    #[Route(
+        path: '/member/{member}/manifest',
+        name: 'member_manifest',
+        requirements: ['member' => '\d+'],
+    )]
+    public function memberManifest(int $member): JsonResponse
+    {
+        $memberEntity = $this->memberRepository->find($member)
+            ?? throw new NotFoundHttpException();
+        $tagged = $this->photoRepository->getAlbumPhotos(new MemberAlbum($member, $memberEntity));
+        $filtered = $this->photoPrivacyService->filterTaggedPhotos(
+            $memberEntity,
+            $tagged,
+        );
+
+        return new JsonResponse(
+            $this->photoService->getMemberManifest(
+                $filtered['visible'],
+                $filtered['hidden'],
+            ),
+        );
+    }
+
+    /**
      * Download a photo's original file, named after the legacy `{album}-{year}-{id}.{ext}` scheme.
      */
     #[Route(
@@ -308,27 +335,17 @@ class PhotoController extends AbstractController
     }
 
     /**
-     * The photos a member is tagged in, each linking into its real album's viewer. A member is tagged in a bounded set,
-     * so this renders server-side rather than through the windowed manifest the album gallery uses.
+     * The photos a member is tagged in, shown through the same viewer as a real album (opened from this virtual album,
+     * with a button to jump to each photo's real album). The gallery fetches its photos through the member manifest.
      */
     private function memberAlbum(int $lidnr): Response
     {
         $member = $this->memberRepository->find($lidnr)
             ?? throw new NotFoundHttpException();
 
-        $tagged = $this->photoRepository->getAlbumPhotos(new MemberAlbum($lidnr, $member));
-        $filtered = $this->photoPrivacyService->filterTaggedPhotos(
-            $member,
-            $tagged,
-        );
-
         return $this->render(
             'photo/member.html.twig',
-            [
-                'member' => $member,
-                'photos' => $filtered['visible'],
-                'hidden' => $filtered['hidden'],
-            ],
+            ['member' => $member],
         );
     }
 

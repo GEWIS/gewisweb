@@ -11,6 +11,7 @@ interface ManifestEntry {
     xlargeUrl: string;
     downloadUrl: string;
     albumUrl: string | null;
+    hidden: boolean;
 }
 
 interface SlideData {
@@ -47,6 +48,7 @@ interface Slot {
 export default class extends Controller<HTMLElement> {
     static values = {
         manifestUrl: String,
+        selectable: Boolean,
         detailsUrl: String,
         tagUrl: String,
         tagRemoveUrl: String,
@@ -59,9 +61,10 @@ export default class extends Controller<HTMLElement> {
         labels: Object,
     };
 
-    static targets = ['grid', 'empty'];
+    static targets = ['grid', 'empty', 'selectToggle', 'bulkBar', 'count', 'selectionForm'];
 
     declare readonly manifestUrlValue: string;
+    declare readonly selectableValue: boolean;
     declare readonly detailsUrlValue: string;
     declare readonly tagUrlValue: string;
     declare readonly tagRemoveUrlValue: string;
@@ -74,6 +77,14 @@ export default class extends Controller<HTMLElement> {
     declare readonly labelsValue: Record<string, string>;
     declare readonly gridTarget: HTMLElement;
     declare readonly emptyTarget: HTMLElement;
+    declare readonly hasSelectToggleTarget: boolean;
+    declare readonly selectToggleTarget: HTMLElement;
+    declare readonly hasBulkBarTarget: boolean;
+    declare readonly bulkBarTarget: HTMLElement;
+    declare readonly hasCountTarget: boolean;
+    declare readonly countTarget: HTMLElement;
+    declare readonly hasSelectionFormTarget: boolean;
+    declare readonly selectionFormTarget: HTMLElement;
 
     // Matches the 0.5rem gap in the stylesheet.
     private readonly gap = 8;
@@ -86,6 +97,10 @@ export default class extends Controller<HTMLElement> {
     // Whether opening the viewer pushed a history entry (an in-page open). A deep link arriving with #pid already in
     // the URL pushes nothing, so closing must strip the hash rather than navigate back off the album page.
     private pushedHistory = false;
+    // Selection mode (only when `selectable`): a click selects rather than opens, and the ids are kept in the form the
+    // page's bulk actions submit.
+    private selecting = false;
+    private readonly selected = new Set<number>();
 
     private readonly onScroll = (): void => this.scheduleRender();
     private readonly onResize = (): void => this.relayout();
@@ -301,9 +316,41 @@ export default class extends Controller<HTMLElement> {
         image.src = slot.entry.thumbUrl;
 
         link.append(image);
+        if (this.selectableValue) {
+            this.decorateSelectable(link, slot.entry);
+        }
+
         slot.element = link;
         this.position(slot);
         this.gridTarget.append(link);
+    }
+
+    private decorateSelectable(
+        link: HTMLElement,
+        entry: ManifestEntry,
+    ): void {
+        if (entry.hidden) {
+            link.classList.add('is-hidden');
+            link.append(this.overlay('photo-masonry__hidden', 'eye-slash'));
+        }
+
+        link.append(this.overlay('photo-masonry__check', 'circle-check'));
+        if (this.selected.has(entry.id)) {
+            link.classList.add('is-selected');
+        }
+    }
+
+    private overlay(
+        className: string,
+        icon: string,
+    ): HTMLElement {
+        const span = document.createElement('span');
+        span.className = className;
+        const marker = document.createElement('i');
+        marker.className = `fa-solid fa-${icon}`;
+        span.append(marker);
+
+        return span;
     }
 
     private unmount(slot: Slot): void {
@@ -331,13 +378,86 @@ export default class extends Controller<HTMLElement> {
             return;
         }
 
-        const index = this.indexByPid.get(Number(tile.dataset.id));
-        if (undefined === index) {
+        event.preventDefault();
+        const pid = Number(tile.dataset.id);
+
+        if (this.selectableValue && this.selecting) {
+            this.toggleSelection(pid, tile);
+
             return;
         }
 
-        event.preventDefault();
-        this.openAt(index);
+        const index = this.indexByPid.get(pid);
+        if (undefined !== index) {
+            this.openAt(index);
+        }
+    }
+
+    toggleSelect(): void {
+        this.selecting = !this.selecting;
+        this.gridTarget.classList.toggle('is-selecting', this.selecting);
+
+        if (this.hasBulkBarTarget) {
+            this.bulkBarTarget.hidden = !this.selecting;
+        }
+
+        if (this.hasSelectToggleTarget) {
+            this.selectToggleTarget.setAttribute('aria-pressed', String(this.selecting));
+        }
+
+        if (!this.selecting) {
+            this.selected.clear();
+            for (const slot of this.slots) {
+                slot.element?.classList.remove('is-selected');
+            }
+
+            this.syncSelectionForm();
+        }
+
+        this.updateCount();
+    }
+
+    private toggleSelection(
+        pid: number,
+        tile: HTMLElement,
+    ): void {
+        if (this.selected.has(pid)) {
+            this.selected.delete(pid);
+            tile.classList.remove('is-selected');
+        } else {
+            this.selected.add(pid);
+            tile.classList.add('is-selected');
+        }
+
+        this.syncSelectionForm();
+        this.updateCount();
+    }
+
+    // Keep the page's bulk-action form carrying exactly the selected ids, so its native submit posts them.
+    private syncSelectionForm(): void {
+        if (!this.hasSelectionFormTarget) {
+            return;
+        }
+
+        for (const input of this.selectionFormTarget.querySelectorAll('input[data-selected-photo]')) {
+            input.remove();
+        }
+
+        for (const pid of this.selected) {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'photos[]';
+            input.value = String(pid);
+            input.dataset.selectedPhoto = '';
+            this.selectionFormTarget.append(input);
+        }
+    }
+
+    private updateCount(): void {
+        if (this.hasCountTarget) {
+            const label = this.countTarget.dataset.label ?? '';
+            this.countTarget.textContent = this.selected.size > 0 ? `${this.selected.size} ${label}` : '';
+        }
     }
 
     private openAt(index: number): void {

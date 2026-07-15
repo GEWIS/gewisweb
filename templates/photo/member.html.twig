@@ -13,67 +13,39 @@
     } %}
 {% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('vendor/photoswipe/dist/photoswipe.min.css') }}">
+{% endblock %}
+
 {% block contents %}
     <h1 class="h3 mb-4">{{ 'Photos'|trans }}</h1>
 
-    {% if photos is empty %}
-        <p class="text-muted">
-            {% if isSelf %}
-                {{ 'You have not been tagged in any photos yet.'|trans }}
-            {% else %}
-                {{ '%name% has not been tagged in any photos yet.'|trans({ '%name%': member.getFullName }) }}
-            {% endif %}
-        </p>
-    {% elseif isSelf %}
-        <div data-controller="photo-manage">
-            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
-                <p class="text-muted small mb-0">
-                    {{ 'Hidden photos are greyed out and only you see them here. Choose what others see under Settings.'|trans }}
-                </p>
-                <div class="d-flex gap-2">
-                    <div data-photo-manage-target="toolbar" class="d-flex gap-2" hidden>
-                        <button type="submit" form="member-photo-form" class="btn btn-sm btn-outline-secondary"
-                                formaction="{{ path('photo/hidden_hide') }}">
-                            <i class="fa-solid fa-eye-slash"></i> {{ 'Hide selected'|trans }}
-                        </button>
-                        <button type="submit" form="member-photo-form" class="btn btn-sm btn-outline-secondary"
-                                formaction="{{ path('photo/hidden_unhide') }}">
-                            <i class="fa-solid fa-eye"></i> {{ 'Unhide selected'|trans }}
-                        </button>
-                    </div>
-                    <button type="button" class="btn btn-sm btn-outline-secondary" aria-pressed="false"
-                            data-action="photo-manage#toggle" data-photo-manage-target="button">
-                        <i class="fa-solid fa-check-double"></i> {{ 'Select'|trans }}
+    {% if isSelf %}
+        {% embed 'partials/photo/gallery.html.twig' with {
+            manifest_url: path('photo/member_manifest', { member: member.lidnr }),
+            selectable: true,
+            empty_message: 'You have not been tagged in any photos yet.'|trans,
+        } %}
+            {% block gallery_hint %}{{ 'Hidden photos are greyed out and only you see them here. Choose what others see under Settings.'|trans }}{% endblock %}
+            {% block gallery_actions %}
+                <form method="post" id="member-photo-form" data-gallery-target="selectionForm" class="d-flex gap-2 mb-0">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('photo_hidden') }}">
+                    <button type="submit" class="btn btn-sm btn-outline-secondary"
+                            formaction="{{ path('photo/hidden_hide') }}">
+                        <i class="fa-solid fa-eye-slash"></i> {{ 'Hide selected'|trans }}
                     </button>
-                </div>
-            </div>
-
-            <form method="post" id="member-photo-form">
-                <input type="hidden" name="_csrf_token" value="{{ csrf_token('photo_hidden') }}">
-                <div class="photo-masonry" data-controller="photo-grid">
-                    {% for photo in photos %}
-                        <label class="photo-masonry__item photo-select{{ hidden[photo.id] is defined ? ' photo-select--hidden' }}"
-                               data-aspect="{{ photo.aspectRatio ?? 1 }}"
-                               data-href="{{ path('photo/album', { type: 'album', album: photo.album.id }) }}#pid={{ photo.id }}">
-                            <input type="checkbox" name="photos[]" value="{{ photo.id }}" class="photo-select__input">
-                            <img class="photo-select__img" loading="lazy" src="{{ image_url(photo.path, 'w320') }}" alt="">
-                            <span class="photo-select__check"><i class="fa-solid fa-circle-check"></i></span>
-                            {% if hidden[photo.id] is defined %}
-                                <span class="photo-select__hidden"><i class="fa-solid fa-eye-slash"></i></span>
-                            {% endif %}
-                        </label>
-                    {% endfor %}
-                </div>
-            </form>
-        </div>
+                    <button type="submit" class="btn btn-sm btn-outline-secondary"
+                            formaction="{{ path('photo/hidden_unhide') }}">
+                        <i class="fa-solid fa-eye"></i> {{ 'Unhide selected'|trans }}
+                    </button>
+                </form>
+            {% endblock %}
+        {% endembed %}
     {% else %}
-        <div class="photo-masonry" data-controller="photo-grid">
-            {% for photo in photos %}
-                <a class="photo-masonry__item" data-aspect="{{ photo.aspectRatio ?? 1 }}"
-                   href="{{ path('photo/album', { type: 'album', album: photo.album.id }) }}#pid={{ photo.id }}">
-                    <img loading="lazy" src="{{ image_url(photo.path, 'w320') }}" alt="">
-                </a>
-            {% endfor %}
-        </div>
+        {% include 'partials/photo/gallery.html.twig' with {
+            manifest_url: path('photo/member_manifest', { member: member.lidnr }),
+            empty_message: '%name% has not been tagged in any photos yet.'|trans({ '%name%': member.getFullName }),
+        } only %}
     {% endif %}
 {% endblock %}

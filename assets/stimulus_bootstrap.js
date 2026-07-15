@@ -25,8 +25,6 @@ import SignupListController from './controllers/activity/signup_list_controller.
 // Photo-specific controllers.
 import AlbumSearchController from './controllers/photo/album_search_controller.ts';
 import GalleryController from './controllers/photo/gallery_controller.ts';
-import GridController from './controllers/photo/grid_controller.ts';
-import ManageController from './controllers/photo/manage_controller.ts';
 import UploadController from './controllers/photo/upload_controller.ts';
 
 const app = startStimulusApp();
@@ -56,6 +54,4 @@ app.register('signup-list', SignupListController);
 
 app.register('album-search', AlbumSearchController);
 app.register('gallery', GalleryController);
-app.register('photo-grid', GridController);
-app.register('photo-manage', ManageController);
 app.register('photo-upload', UploadController);

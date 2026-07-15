@@ -3289,6 +3289,10 @@
         <source>rev. #%n%</source>
         <target state="translated">rev. #%n%</target>
       </trans-unit>
+      <trans-unit id="NdlEWZ3" resname="selected">
+        <source>selected</source>
+        <target>geselecteerd</target>
+      </trans-unit>
       <trans-unit id="a8oRoVc" resname="sub-album">
         <source>sub-album</source>
         <target>subalbum</target>

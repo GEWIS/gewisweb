@@ -3,9 +3,14 @@
     `manifest_url` is that manifest. Every photo has a position immediately (so a #pid deep link scrolls straight to it),
     but only the tiles near the viewport are mounted; clicking a tile opens the viewer.
 
-    The tag, vote and profile endpoints take numeric ids, so their routes cannot be generated with a text placeholder:
-    each URL is generated with a sentinel id which is then swapped for the placeholder the viewer fills in per photo.
+    Set `selectable` to add a Select toggle that switches the grid into selection mode (checkboxes over the tiles); the
+    page provides its bulk actions through the `gallery_actions` block, submitting a form marked as the `selectionForm`
+    target, which the controller keeps filled with the selected photo ids. `empty_message` overrides the "no photos"
+    text. The tag/vote/profile endpoints take numeric ids, so each URL is generated with a sentinel id then swapped for
+    the placeholder the viewer fills in per photo.
 #}
+{% set selectable = selectable|default(false) %}
+{% set empty_message = empty_message|default('This album does not contain any photos.'|trans) %}
 {% set tag_labels = {
     inThisPhoto: 'In this photo'|trans,
     noTags: 'No one is tagged in this photo yet'|trans,
@@ -36,6 +41,7 @@
 } %}
 <div data-controller="gallery"
      data-gallery-manifest-url-value="{{ manifest_url }}"
+     data-gallery-selectable-value="{{ selectable ? 'true' : 'false' }}"
      data-gallery-details-url-value="{{ path('photo/details', { photo: 2100000000 })|replace({'2100000000': '__PHOTO__'}) }}"
      data-gallery-tag-url-value="{{ path('photo/tag', { photo: 2100000000 })|replace({'2100000000': '__PHOTO__'}) }}"
      data-gallery-tag-remove-url-value="{{ path('photo/tag_remove', { tag: 2100000000 })|replace({'2100000000': '__TAG__'}) }}"
@@ -46,8 +52,24 @@
      data-gallery-member-url-value="{{ path('members/view', { member: 99999 })|replace({'99999': '__LIDNR__'}) }}"
      data-gallery-icon-sprite-url-value="{{ asset('sprites/fontawesome/solid.svg') }}"
      data-gallery-labels-value="{{ tag_labels|json_encode }}">
+    {% if selectable %}
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+            <p class="text-muted small mb-0">{% block gallery_hint %}{% endblock %}</p>
+            <div class="d-flex flex-wrap gap-2 align-items-center">
+                <div class="d-flex flex-wrap gap-2 align-items-center" data-gallery-target="bulkBar" hidden>
+                    <span class="small text-muted" data-gallery-target="count"
+                          data-label="{{ 'selected'|trans }}"></span>
+                    {% block gallery_actions %}{% endblock %}
+                </div>
+                <button type="button" class="btn btn-sm btn-outline-secondary" aria-pressed="false"
+                        data-gallery-target="selectToggle" data-action="gallery#toggleSelect">
+                    <i class="fa-solid fa-check-double"></i> {{ 'Select'|trans }}
+                </button>
+            </div>
+        </div>
+    {% endif %}
     <p data-gallery-target="empty" class="text-muted text-center py-4" hidden>
-        {{ 'This album does not contain any photos.'|trans }}
+        {{ empty_message }}
     </p>
     <div class="photo-masonry"
          data-gallery-target="grid"
