@@ -20,7 +20,6 @@ use Doctrine\ORM\Mapping\OneToOne;
 /**
  * Photo.
  *
- * @psalm-import-type AlbumArrayType from Album as ImportedAlbumArrayType
  * @psalm-type PhotoArrayType = array{
  *     id: int,
  *     dateTime: DateTime,
@@ -32,7 +31,7 @@ use Doctrine\ORM\Mapping\OneToOne;
  *     shutterSpeed: ?string,
  *     aperture: ?string,
  *     iso: ?int,
- *     album: ImportedAlbumArrayType,
+ *     album: array<string, mixed>,
  *     path: string,
  *     longitude: ?float,
  *     latitude: ?float,
