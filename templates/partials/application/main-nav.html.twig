@@ -483,6 +483,35 @@
                                 {{ 'Auto'|trans }}
                             </button>
                         </li>
+                        {% if null !== app.user and enum('App\\Entity\\User\\Enums\\UserTypes').User == app.user.getUserType %}
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <h6 class="dropdown-header">{{ 'Cosmetics'|trans }}</h6>
+                            </li>
+                            <li>
+                                {# Outer wrapper keeps the standard dropdown-item padding so the switch lines up with
+                                   the Language/Theme items; the inner flex row (with the form-check float/indent reset)
+                                   vertically centres the switch against its label. #}
+                                <div class="dropdown-item-text"
+                                     data-controller="cosmetics-toggle"
+                                     data-cosmetics-toggle-url-value="{{ path('user_settings_cosmetics') }}"
+                                     data-cosmetics-toggle-csrf-value="{{ csrf_token('cosmetics') }}"
+                                >
+                                    <div class="form-check form-switch d-flex align-items-center m-0 ps-0">
+                                        <input class="form-check-input m-0 me-2" type="checkbox" role="switch"
+                                               id="cosmetics-switch" data-cosmetics-toggle-target="input"
+                                               data-action="cosmetics-toggle#toggle"
+                                               {{ app.user.hasDisabledCosmetics ? '' : 'checked' }}
+                                        >
+                                        <label class="form-check-label" for="cosmetics-switch">
+                                            {{ 'Festive effects'|trans }}
+                                        </label>
+                                    </div>
+                                </div>
+                            </li>
+                        {% endif %}
                     </ul>
                 </li>
             </ul>

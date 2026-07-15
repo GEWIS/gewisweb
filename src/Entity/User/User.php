@@ -39,8 +39,10 @@ use function in_array;
  * User model.
  *
  * @psalm-import-type UserRoleGdprArrayType from UserRole as ImportedUserRoleGdprArrayType
+ * @psalm-import-type UserSettingsGdprArrayType from UserSettings as ImportedUserSettingsGdprArrayType
  * @psalm-type UserGdprArrayType = array{
  *     roles: ImportedUserRoleGdprArrayType[],
+ *     settings: ImportedUserSettingsGdprArrayType|null,
  *     passwordChangedOn: ?string,
  * }
  */
@@ -115,6 +117,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     )]
     #[Encrypted]
     private ?string $totpSecret = null;
+
+    /**
+     * This member's settings and privacy preferences. NOTE: as the inverse side of a one-to-one, Doctrine always loads
+     * this eagerly (a proxy cannot represent "no row yet"), so the `User`-hydrating queries fetch-join it to avoid an
+     * N+1. Null means "all defaults"; the null-safe `has*()` accessors below encode that.
+     */
+    #[OneToOne(
+        targetEntity: UserSettings::class,
+        mappedBy: 'user',
+        cascade: [
+            'persist',
+            'remove',
+        ],
+    )]
+    private ?UserSettings $settings = null;
 
     public function __construct()
     {
@@ -331,5 +348,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
             30,
             6,
         );
+    }
+
+    public function getSettings(): ?UserSettings
+    {
+        return $this->settings;
+    }
+
+    /**
+     * Whether this member has turned off the festive cosmetics. Defaults to false when no settings row exists yet.
+     */
+    public function hasDisabledCosmetics(): bool
+    {
+        return $this->settings?->getDisableCosmetics() ?? false;
+    }
+
+    /**
+     * Whether this member has hidden their year of birth. Defaults to false when no settings row exists yet.
+     */
+    public function hasHiddenYearOfBirth(): bool
+    {
+        return $this->settings?->getHideYearOfBirth() ?? false;
     }
 }

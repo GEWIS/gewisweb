@@ -119,11 +119,15 @@ class MemberRepository extends ServiceEntityRepository
                 'integer',
             );
 
+        // This feeds the photo-tag autocomplete only ({@see \App\Controller\Decision\MemberController::search()}), so
+        // members who opted out of being tagged are excluded here. LEFT JOIN + COALESCE because most members
+        // have no UserSettings row; `lidnr` is qualified because both tables carry it.
         $sql = <<<QUERY
-            SELECT `lidnr`,
+            SELECT `Member`.`lidnr` as `lidnr`,
                 CONCAT_WS(' ', `firstName`, IF(LENGTH(`middleName`), `middleName`, NULL), `lastName`) as `fullName`,
                 `generation`
             FROM `Member`
+            LEFT JOIN `UserSettings` ON `UserSettings`.`lidnr` = `Member`.`lidnr`
             WHERE
                 (
                 CONCAT(LOWER(`firstName`), ' ', LOWER(`lastName`)) LIKE :name
@@ -132,6 +136,7 @@ class MemberRepository extends ServiceEntityRepository
                 AND deleted = 0
                 AND expiration >= NOW()
                 AND hidden = 0
+                AND COALESCE(`UserSettings`.`photoTaggingOptOut`, 0) = 0
             ORDER BY $orderColumn $orderDirection LIMIT :limit
             QUERY;
 
@@ -173,8 +178,12 @@ class MemberRepository extends ServiceEntityRepository
 
         $select = $builder->generateSelectClause(['m' => 't1']);
 
+        // LEFT JOIN + COALESCE so members without a UserSettings row are kept; members who hid their birthday from the
+        // home page are dropped entirely (distinct from hiding only their year of birth, which keeps them on
+        // the panel but withholds the age - that is handled at render time via PrivacyService).
         $sql = <<<QUERY
             SELECT $select FROM Member AS t1
+            LEFT JOIN UserSettings AS us ON us.lidnr = t1.lidnr
             WHERE DATEDIFF(
                 DATE_SUB(t1.birth, INTERVAL YEAR(t1.birth) YEAR),
                 DATE_SUB(CURDATE(), INTERVAL YEAR(CURDATE()) YEAR)
@@ -182,6 +191,7 @@ class MemberRepository extends ServiceEntityRepository
             AND t1.deleted = 0
             AND t1.expiration > CURDATE()
             AND t1.hidden = 0
+            AND COALESCE(us.hideBirthdayOnFrontpage, 0) = 0
             ORDER BY DATE_SUB(t1.birth, INTERVAL YEAR(t1.birth) YEAR) ASC
             QUERY;
 
@@ -467,13 +477,20 @@ class MemberRepository extends ServiceEntityRepository
     public function findAllWithUserDetails(): array
     {
         $qb = $this->createQueryBuilder('m');
+        // `u.settings` is fetch-joined because `User::$settings` is an eager inverse one-to-one; without it, hydrating
+        // each user here would fire one extra query per user.
         $qb->leftJoin(
             User::class,
             'u',
             'WITH',
             'm.lidnr = u.lidnr',
         )
-            ->addSelect('u');
+            ->addSelect('u')
+            ->leftJoin(
+                'u.settings',
+                's',
+            )
+            ->addSelect('s');
 
         return $qb->getQuery()->getResult();
     }

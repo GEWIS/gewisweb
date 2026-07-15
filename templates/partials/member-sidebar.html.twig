@@ -17,4 +17,9 @@
             {{ 'Security'|trans }}
         </a>
     </li>
+    <li class="nav-item {{ activeRoute == 'settings' ? 'active' : '' }}">
+        <a class="nav-link p-3" href="{{ path('user_settings_index') }}">
+            {{ 'Settings'|trans }}
+        </a>
+    </li>
 {% endif %}

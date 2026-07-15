@@ -38,13 +38,20 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function loadUserByIdentifier(string $identifier): ?User
     {
         $qb = $this->createQueryBuilder('u');
+        // `s` (settings) is fetch-joined because `User::$settings` is the inverse side of a one-to-one and would
+        // otherwise be loaded eagerly in a separate query on every authenticated request.
         $qb->addSelect(
             'm',
             'r',
+            's',
         )
             ->leftJoin(
                 'u.roles',
                 'r',
+            )
+            ->leftJoin(
+                'u.settings',
+                's',
             )
             ->join(
                 'u.member',
@@ -95,8 +102,9 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
 
     /**
-     * Bulk-load users by lidnr, fetch-joining their roles in the same query. Used by the admin users overview to avoid
-     * the N+1 that the EAGER `User::$roles` mapping would otherwise produce when hydrating one user at a time.
+     * Bulk-load users by lidnr, fetch-joining their roles and settings in the same query. Used by the admin users
+     * overview to avoid the N+1 that the EAGER `User::$roles` mapping and the eager inverse `User::$settings`
+     * one-to-one would otherwise produce when hydrating one user at a time.
      *
      * @param list<int> $lidnrs
      *
@@ -115,6 +123,11 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
                 'r',
             )
             ->addSelect('r')
+            ->leftJoin(
+                'u.settings',
+                's',
+            )
+            ->addSelect('s')
             ->where('u.lidnr IN (:lidnrs)')
             ->setParameter(
                 'lidnrs',

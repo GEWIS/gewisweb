@@ -225,6 +225,10 @@
         <source>Alcohol Policy</source>
         <target>Alcohol Policy</target>
       </trans-unit>
+      <trans-unit id="XvSLL98" resname="All photo tags of you have been removed.">
+        <source>All photo tags of you have been removed.</source>
+        <target>All photo tags of you have been removed.</target>
+      </trans-unit>
       <trans-unit id="EkTt9Lc" resname="All rights reserved.">
         <source>All rights reserved.</source>
         <target state="translated">All rights reserved.</target>
@@ -605,6 +609,10 @@
         <source>Continue</source>
         <target state="translated">Continue</target>
       </trans-unit>
+      <trans-unit id="bCyP.6D" resname="Cosmetics">
+        <source>Cosmetics</source>
+        <target>Cosmetics</target>
+      </trans-unit>
       <trans-unit id="LTGw.px" resname="Costs">
         <source>Costs</source>
         <target>Costs</target>
@@ -717,6 +725,10 @@
         <source>Disable MFA?</source>
         <target state="translated">Disable MFA?</target>
       </trans-unit>
+      <trans-unit id="iQndSf1" resname="Disable festive effects">
+        <source>Disable festive effects</source>
+        <target>Disable festive effects</target>
+      </trans-unit>
       <trans-unit id="tK64T0a" resname="Disabled">
         <source>Disabled</source>
         <target state="translated">Disabled</target>
@@ -740,6 +752,14 @@
       <trans-unit id="NPw9WPH" resname="Discussion">
         <source>Discussion</source>
         <target state="translated">Discussion</target>
+      </trans-unit>
+      <trans-unit id="HAMt_Vg" resname="Display">
+        <source>Display</source>
+        <target>Display</target>
+      </trans-unit>
+      <trans-unit id="AxKD_S1" resname="Do not allow others to tag me in photos">
+        <source>Do not allow others to tag me in photos</source>
+        <target>Do not allow others to tag me in photos</target>
       </trans-unit>
       <trans-unit id="9uS1kR." resname="Do you have a GEWIS account?">
         <source>Do you have a GEWIS account?</source>
@@ -965,6 +985,10 @@
         <source>Feedback</source>
         <target state="translated">Feedback</target>
       </trans-unit>
+      <trans-unit id="WPv1i_b" resname="Festive effects">
+        <source>Festive effects</source>
+        <target>Festive effects</target>
+      </trans-unit>
       <trans-unit id="WhpqrmK" resname="Filter by name or email">
         <source>Filter by name or email</source>
         <target>Filter by name or email</target>
@@ -1141,6 +1165,14 @@
         <source>Hide from anonymous visitors</source>
         <target state="translated">Hide from anonymous visitors</target>
       </trans-unit>
+      <trans-unit id="ANcsWnw" resname="Hide my birthday from the home page">
+        <source>Hide my birthday from the home page</source>
+        <target>Hide my birthday from the home page</target>
+      </trans-unit>
+      <trans-unit id="Akz0rv5" resname="Hide my year of birth and age from other members">
+        <source>Hide my year of birth and age from other members</source>
+        <target>Hide my year of birth and age from other members</target>
+      </trans-unit>
       <trans-unit id="yN3l2eh" resname="Hide photo of the week">
         <source>Hide photo of the week</source>
         <target state="translated">Hide photo of the week</target>
@@ -1188,6 +1220,10 @@
       <trans-unit id="IBCUP7U" resname="If you entered a backup code, try the next unused one from your saved list. Each backup code works only once.">
         <source>If you entered a backup code, try the next unused one from your saved list. Each backup code works only once.</source>
         <target state="translated">If you entered a backup code, try the next unused one from your saved list. Each backup code works only once.</target>
+      </trans-unit>
+      <trans-unit id="yiW3Gjh" resname="If you hide yours, you also stop seeing others' age. The board can always see it.">
+        <source>If you hide yours, you also stop seeing others' age. The board can always see it.</source>
+        <target>If you hide yours, you also stop seeing others' age. The board can always see it.</target>
       </trans-unit>
       <trans-unit id="AZfPAZa" resname="Improve security by signing out of other devices.">
         <source>Improve security by signing out of other devices.</source>
@@ -1292,6 +1328,10 @@
       <trans-unit id="ZMKVhSD" resname="It was declared, but never initialised.">
         <source>It was declared, but never initialised.</source>
         <target state="translated">It was declared, but never initialised.</target>
+      </trans-unit>
+      <trans-unit id="UNY_kxG" resname="It's %name%'s birthday!">
+        <source>It's %name%'s birthday!</source>
+        <target>It's %name%'s birthday!</target>
       </trans-unit>
       <trans-unit id="ayQt.7Z" resname="Its sub-albums and photos are deleted as well. This cannot be undone.">
         <source>Its sub-albums and photos are deleted as well. This cannot be undone.</source>
@@ -1733,6 +1773,10 @@
         <source>Opperhoofd</source>
         <target state="translated">Opperhoofd</target>
       </trans-unit>
+      <trans-unit id="CRXjzBv" resname="Opting out above stops new tags. To also remove tags of you that already exist, use the button below.">
+        <source>Opting out above stops new tags. To also remove tags of you that already exist, use the button below.</source>
+        <target>Opting out above stops new tags. To also remove tags of you that already exist, use the button below.</target>
+      </trans-unit>
       <trans-unit id="aNSQ9R8" resname="Option">
         <source>Option</source>
         <target state="translated">Option</target>
@@ -1781,6 +1825,10 @@
         <source>Other</source>
         <target state="translated">Other</target>
       </trans-unit>
+      <trans-unit id="CyTuQqd" resname="Others can no longer tag you. Existing tags stay until you remove them below.">
+        <source>Others can no longer tag you. Existing tags stay until you remove them below.</source>
+        <target>Others can no longer tag you. Existing tags stay until you remove them below.</target>
+      </trans-unit>
       <trans-unit id="HmgPmMV" resname="Overview">
         <source>Overview</source>
         <target state="translated">Overview</target>
@@ -1828,6 +1876,10 @@
       <trans-unit id="1H5YLWL" resname="Photo of the Week">
         <source>Photo of the Week</source>
         <target state="translated">Photo of the Week</target>
+      </trans-unit>
+      <trans-unit id="pn3MT8P" resname="Photo tags">
+        <source>Photo tags</source>
+        <target>Photo tags</target>
       </trans-unit>
       <trans-unit id="BRLrb5h" resname="Photos">
         <source>Photos</source>
@@ -1880,6 +1932,10 @@
       <trans-unit id="WiX.dOS" resname="Print">
         <source>Print</source>
         <target state="translated">Print</target>
+      </trans-unit>
+      <trans-unit id="baOJdYt" resname="Privacy">
+        <source>Privacy</source>
+        <target>Privacy</target>
       </trans-unit>
       <trans-unit id="ILwjhLf" resname="Privacy Policy">
         <source>Privacy Policy</source>
@@ -1968,6 +2024,14 @@
       <trans-unit id="fEeElvJ" resname="Remove">
         <source>Remove</source>
         <target state="translated">Remove</target>
+      </trans-unit>
+      <trans-unit id="tL7owQq" resname="Remove all tags">
+        <source>Remove all tags</source>
+        <target>Remove all tags</target>
+      </trans-unit>
+      <trans-unit id="qGjTtZb" resname="Remove all tags of me">
+        <source>Remove all tags of me</source>
+        <target>Remove all tags of me</target>
       </trans-unit>
       <trans-unit id="IR6O8kN" resname="Remove option">
         <source>Remove option</source>
@@ -2104,6 +2168,10 @@
       <trans-unit id="5iw3OqK" resname="Save draft">
         <source>Save draft</source>
         <target state="translated">Save draft</target>
+      </trans-unit>
+      <trans-unit id="RX0Ug9X" resname="Save settings">
+        <source>Save settings</source>
+        <target>Save settings</target>
       </trans-unit>
       <trans-unit id="Nj16X3T" resname="Save the date">
         <source>Save the date</source>
@@ -2713,6 +2781,10 @@
         <source>This page was garbage collected</source>
         <target state="translated">This page was garbage collected</target>
       </trans-unit>
+      <trans-unit id="3k9kouE" resname="This removes every photo tag of you across all albums, and clears your profile photo. This cannot be undone.">
+        <source>This removes every photo tag of you across all albums, and clears your profile photo. This cannot be undone.</source>
+        <target>This removes every photo tag of you across all albums, and clears your profile photo. This cannot be undone.</target>
+      </trans-unit>
       <trans-unit id="YXcXf9u" resname="This revision was changed elsewhere; reload the page and try again.">
         <source>This revision was changed elsewhere; reload the page and try again.</source>
         <target state="translated">This revision was changed elsewhere; reload the page and try again.</target>
@@ -2768,6 +2840,10 @@
       <trans-unit id="S1QN5UZ" resname="Try again once they are finished.">
         <source>Try again once they are finished.</source>
         <target state="translated">Try again once they are finished.</target>
+      </trans-unit>
+      <trans-unit id="m9I6BGv" resname="Turn off the balloons, snow, and fireworks across the website.">
+        <source>Turn off the balloons, snow, and fireworks across the website.</source>
+        <target>Turn off the balloons, snow, and fireworks across the website.</target>
       </trans-unit>
       <trans-unit id="DL_wAnF" resname="Type">
         <source>Type</source>
@@ -3053,6 +3129,10 @@
         <source>You tried to access memory outside the bounds of reality.</source>
         <target state="translated">You tried to access memory outside the bounds of reality.</target>
       </trans-unit>
+      <trans-unit id="6TktHEF" resname="You will no longer appear in the birthday panel on the home page.">
+        <source>You will no longer appear in the birthday panel on the home page.</source>
+        <target>You will no longer appear in the birthday panel on the home page.</target>
+      </trans-unit>
       <trans-unit id="jtm1hRo" resname="Your Company">
         <source>Your Company</source>
         <target state="translated">Your Company</target>
@@ -3076,6 +3156,10 @@
       <trans-unit id="_VRI4dU" resname="Your session was ended for security reasons. Please sign in again.">
         <source>Your session was ended for security reasons. Please sign in again.</source>
         <target state="translated">Your session was ended for security reasons. Please sign in again.</target>
+      </trans-unit>
+      <trans-unit id="tTAef_L" resname="Your settings have been saved.">
+        <source>Your settings have been saved.</source>
+        <target>Your settings have been saved.</target>
       </trans-unit>
       <trans-unit id="C8K9Nl3" resname="Your sign-up has been updated.">
         <source>Your sign-up has been updated.</source>

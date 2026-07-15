@@ -55,10 +55,20 @@
                                 <div class="panel-body">
                                     <ul class="mb-0">
                                         {% for birthday in birthdays %}
-                                            <li>{{ '%name% turns %age% today!'|trans({
-                                                '%name%': birthday.member.fullName,
-                                                '%age%': birthday.age,
-                                            }) }}</li>
+                                            {# The age is null when the viewer may not see this member's year of birth;
+                                               the member still appears, only ageless. #}
+                                            <li>
+                                                {%- if birthday.age is not null -%}
+                                                    {{ '%name% turns %age% today!'|trans({
+                                                        '%name%': birthday.member.fullName,
+                                                        '%age%': birthday.age,
+                                                    }) }}
+                                                {%- else -%}
+                                                    {{ "It's %name%'s birthday!"|trans({
+                                                        '%name%': birthday.member.fullName,
+                                                    }) }}
+                                                {%- endif -%}
+                                            </li>
                                         {% endfor %}
                                     </ul>
                                 </div>
