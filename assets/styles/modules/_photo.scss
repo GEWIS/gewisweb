@@ -63,6 +63,32 @@ Photo
     opacity: 1;
 }
 
+// A photo the member has hidden from their own page: greyed with an eye-slash badge in both browse and select mode, so
+// they can tell which photos others do not see.
+.photo-select--hidden .photo-select__img {
+    opacity: 0.4;
+}
+
+.photo-select__hidden {
+    position: absolute;
+    top: 0.4rem;
+    left: 0.4rem;
+    color: #fff;
+    font-size: 1.1rem;
+    line-height: 1;
+    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.6));
+    pointer-events: none;
+}
+
+// On the member page the tiles are links until "Select" turns selection on, so the selection affordance is suppressed
+// while browsing.
+.photo-manage:not(.is-selecting) {
+    .photo-select::after,
+    .photo-select__check {
+        display: none;
+    }
+}
+
 // Drag-and-drop upload target on the album manage view. The dashed outline and the hover/drag highlight are the only
 // affordance that the whole panel accepts files; the upload controller toggles `is-dragging` while a drag is over it.
 .photo-dropzone {

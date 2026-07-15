@@ -210,6 +210,22 @@ class Photo
     private Collection $profilePhotos;
 
     /**
+     * The rows hiding this photo from a member's photo page.
+     *
+     * @var Collection<array-key, HiddenPhoto>
+     */
+    #[OneToMany(
+        targetEntity: HiddenPhoto::class,
+        mappedBy: 'photo',
+        cascade: [
+            'persist',
+            'remove',
+        ],
+        fetch: 'EXTRA_LAZY',
+    )]
+    private Collection $hiddenBy;
+
+    /**
      * The corresponding WeeklyPhoto entity if this photo has been a weekly photo.
      */
     #[OneToOne(
@@ -236,6 +252,7 @@ class Photo
         $this->tags = new ArrayCollection();
         $this->votes = new ArrayCollection();
         $this->profilePhotos = new ArrayCollection();
+        $this->hiddenBy = new ArrayCollection();
     }
 
     /**

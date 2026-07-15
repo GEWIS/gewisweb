@@ -1157,9 +1157,17 @@
         <source>Hidden from anonymous visitors</source>
         <target state="translated">Verborgen voor anonieme bezoekers</target>
       </trans-unit>
+      <trans-unit id="_IgS7tP" resname="Hidden photos are greyed out and only you see them here. Choose what others see under Settings.">
+        <source>Hidden photos are greyed out and only you see them here. Choose what others see under Settings.</source>
+        <target>Verborgen foto's zijn grijs gemaakt en alleen jij ziet ze hier. Kies bij Instellingen wat anderen zien.</target>
+      </trans-unit>
       <trans-unit id="U9GQ_br" resname="Hide">
         <source>Hide</source>
         <target state="translated">Verbergen</target>
+      </trans-unit>
+      <trans-unit id="6ojmI9r" resname="Hide all photos I am tagged in">
+        <source>Hide all photos I am tagged in</source>
+        <target>Verberg alle foto's waarin ik ben getagd</target>
       </trans-unit>
       <trans-unit id=".CR.cKC" resname="Hide from anonymous visitors">
         <source>Hide from anonymous visitors</source>
@@ -1173,9 +1181,17 @@
         <source>Hide my year of birth and age from other members</source>
         <target>Mijn geboortejaar en leeftijd verbergen voor andere leden</target>
       </trans-unit>
+      <trans-unit id="QRLX5ZC" resname="Hide only the photos I select">
+        <source>Hide only the photos I select</source>
+        <target>Verberg alleen de foto's die ik selecteer</target>
+      </trans-unit>
       <trans-unit id="yN3l2eh" resname="Hide photo of the week">
         <source>Hide photo of the week</source>
         <target state="translated">Foto van de week verbergen</target>
+      </trans-unit>
+      <trans-unit id="ddzwXBN" resname="Hide selected">
+        <source>Hide selected</source>
+        <target>Geselecteerde verbergen</target>
       </trans-unit>
       <trans-unit id="ExFLJqx" resname="Home">
         <source>Home</source>
@@ -1829,6 +1845,10 @@
         <source>Others can no longer tag you. Existing tags stay until you remove them below.</source>
         <target>Anderen kunnen je niet meer taggen. Bestaande tags blijven staan totdat je ze hieronder verwijdert.</target>
       </trans-unit>
+      <trans-unit id=".5bLoYJ" resname="Others only; hidden photos still show in their own album.">
+        <source>Others only; hidden photos still show in their own album.</source>
+        <target>Alleen voor anderen; verborgen foto's blijven zichtbaar in hun eigen album.</target>
+      </trans-unit>
       <trans-unit id="HmgPmMV" resname="Overview">
         <source>Overview</source>
         <target state="translated">Overzicht</target>
@@ -1884,6 +1904,10 @@
       <trans-unit id="BRLrb5h" resname="Photos">
         <source>Photos</source>
         <target>Foto's</target>
+      </trans-unit>
+      <trans-unit id="1ex5LkB" resname="Photos I am tagged in on my photo page">
+        <source>Photos I am tagged in on my photo page</source>
+        <target>Foto's waarin ik ben getagd op mijn fotopagina</target>
       </trans-unit>
       <trans-unit id="dLpxDj_" resname="Photos of the Week">
         <source>Photos of the Week</source>
@@ -2229,6 +2253,10 @@
         <source>Segmentation fault while accessing this page</source>
         <target state="translated">Segmentatiefout bij het openen van deze pagina</target>
       </trans-unit>
+      <trans-unit id="l_d5jYJ" resname="Select">
+        <source>Select</source>
+        <target>Selecteren</target>
+      </trans-unit>
       <trans-unit id="Hu8.1pz" resname="Select all">
         <source>Select all</source>
         <target>Alles selecteren</target>
@@ -2284,6 +2312,10 @@
       <trans-unit id="ePTa8qb" resname="Show all activities">
         <source>Show all activities</source>
         <target state="translated">Alle activiteiten tonen</target>
+      </trans-unit>
+      <trans-unit id="Sq4uGQO" resname="Show all photos I am tagged in">
+        <source>Show all photos I am tagged in</source>
+        <target>Toon alle foto's waarin ik ben getagd</target>
       </trans-unit>
       <trans-unit id="WDBuc7a" resname="Show less">
         <source>Show less</source>
@@ -2864,6 +2896,10 @@
       <trans-unit id="SsE5mLL" resname="Undated">
         <source>Undated</source>
         <target>Zonder datum</target>
+      </trans-unit>
+      <trans-unit id="b868abA" resname="Unhide selected">
+        <source>Unhide selected</source>
+        <target>Geselecteerde tonen</target>
       </trans-unit>
       <trans-unit id="KEhkI6s" resname="Unknown">
         <source>Unknown</source>

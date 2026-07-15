@@ -8,7 +8,9 @@ use App\Entity\Photo\Album;
 use App\Entity\Photo\Enums\AlbumType;
 use App\Entity\Photo\MemberAlbum;
 use App\Entity\Photo\OrganAlbum;
+use App\Entity\Photo\Photo;
 use App\Entity\User\Enums\UserRoles;
+use App\Entity\User\User;
 use App\Repository\Decision\MemberRepository;
 use App\Repository\Decision\OrganRepository;
 use App\Repository\Photo\PhotoRepository;
@@ -16,18 +18,24 @@ use App\Repository\Photo\WeeklyPhotoRepository;
 use App\Security\Photo\PhotoVoter;
 use App\Service\Application\FileDownloadHelper;
 use App\Service\Photo\AlbumService;
+use App\Service\Photo\PhotoPrivacyService;
 use App\Service\Photo\PhotoService;
 use App\Service\Photo\WeeklyPhotoService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\CurrentUser;
+use Symfony\Component\Security\Http\Attribute\IsCsrfTokenValid;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
+use function array_map;
 use function in_array;
+use function intval;
 use function pathinfo;
 use function sprintf;
 
@@ -53,6 +61,7 @@ class PhotoController extends AbstractController
         private readonly OrganRepository $organRepository,
         private readonly FileDownloadHelper $fileDownloadHelper,
         private readonly SluggerInterface $slugger,
+        private readonly PhotoPrivacyService $photoPrivacyService,
     ) {
     }
 
@@ -177,6 +186,94 @@ class PhotoController extends AbstractController
     }
 
     #[Route(
+        path: '/hidden/hide',
+        name: 'hidden_hide',
+        methods: ['POST'],
+    )]
+    #[IsCsrfTokenValid(
+        id: 'photo_hidden',
+        tokenKey: '_csrf_token',
+    )]
+    public function hidePhotos(
+        Request $request,
+        #[CurrentUser]
+        User $user,
+    ): Response {
+        return $this->applyHidden(
+            $request,
+            $user,
+            false,
+        );
+    }
+
+    #[Route(
+        path: '/hidden/unhide',
+        name: 'hidden_unhide',
+        methods: ['POST'],
+    )]
+    #[IsCsrfTokenValid(
+        id: 'photo_hidden',
+        tokenKey: '_csrf_token',
+    )]
+    public function unhidePhotos(
+        Request $request,
+        #[CurrentUser]
+        User $user,
+    ): Response {
+        return $this->applyHidden(
+            $request,
+            $user,
+            true,
+        );
+    }
+
+    private function applyHidden(
+        Request $request,
+        User $user,
+        bool $unhide,
+    ): Response {
+        $member = $user->getMember();
+        $photos = $this->selectedPhotos($request);
+
+        if ([] !== $photos) {
+            if ($unhide) {
+                $this->photoPrivacyService->unhide(
+                    $member,
+                    $photos,
+                );
+            } else {
+                $this->photoPrivacyService->hide(
+                    $member,
+                    $photos,
+                );
+            }
+        }
+
+        return $this->redirectToRoute(
+            'photo/album',
+            [
+                'type' => AlbumType::Member->value,
+                'album' => $member->getLidnr(),
+            ],
+        );
+    }
+
+    /**
+     * @return Photo[]
+     */
+    private function selectedPhotos(Request $request): array
+    {
+        $ids = array_map(
+            intval(...),
+            $request->request->all('photos'),
+        );
+
+        return [] === $ids
+            ? []
+            : $this->photoRepository->findBy(['id' => $ids]);
+    }
+
+    #[Route(
         path: '/{type}/{album}',
         name: 'album',
         requirements: [
@@ -219,11 +316,18 @@ class PhotoController extends AbstractController
         $member = $this->memberRepository->find($lidnr)
             ?? throw new NotFoundHttpException();
 
+        $tagged = $this->photoRepository->getAlbumPhotos(new MemberAlbum($lidnr, $member));
+        $filtered = $this->photoPrivacyService->filterTaggedPhotos(
+            $member,
+            $tagged,
+        );
+
         return $this->render(
             'photo/member.html.twig',
             [
                 'member' => $member,
-                'photos' => $this->photoRepository->getAlbumPhotos(new MemberAlbum($lidnr, $member)),
+                'photos' => $filtered['visible'],
+                'hidden' => $filtered['hidden'],
             ],
         );
     }
