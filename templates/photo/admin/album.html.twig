@@ -115,19 +115,16 @@
             {% else %}
                 <form method="post" id="photo-admin-form">
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token('photo_admin_bulk') }}">
-                    <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 row-cols-xxl-8 g-2">
+                    <div class="photo-masonry" data-controller="photo-grid">
                         {% for photo in photos %}
-                            <div class="col">
-                                {# Custom selectable tile: the checkbox is visually hidden, selection shows as a tint +
-                                   check overlay instead of a control obscuring the photo. #}
-                                <label class="photo-select rounded overflow-hidden bg-body-secondary">
-                                    <input type="checkbox" name="photos[]" value="{{ photo.id }}"
-                                           class="photo-select__input">
-                                    <img class="photo-select__img" loading="lazy"
-                                         src="{{ image_url(photo.path, 'w320') }}" alt="">
-                                    <span class="photo-select__check"><i class="fa-solid fa-circle-check"></i></span>
-                                </label>
-                            </div>
+                            <label class="photo-masonry__item photo-select"
+                                   data-aspect="{{ photo.aspectRatio ?? 1 }}">
+                                <input type="checkbox" name="photos[]" value="{{ photo.id }}"
+                                       class="photo-select__input">
+                                <img class="photo-select__img" loading="lazy"
+                                     src="{{ image_url(photo.path, 'w320') }}" alt="">
+                                <span class="photo-select__check"><i class="fa-solid fa-circle-check"></i></span>
+                            </label>
                         {% endfor %}
                     </div>
                 </form>

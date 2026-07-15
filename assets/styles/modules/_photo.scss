@@ -3,12 +3,9 @@ Photo
 
 */
 
-// Selectable photo tile on the album manage view. The checkbox is visually hidden (but focusable); selection reads as a
-// brand tint plus a corner check over the photo, so the control never obscures the image (mirrors the old site).
+// Selection layer composed onto a `.photo-masonry__item` on the album manage view. The checkbox is visually hidden (but
+// focusable); selection reads as a brand tint plus a corner check, so the control never obscures the image.
 .photo-select {
-    display: block;
-    position: relative;
-    aspect-ratio: 1;
     cursor: pointer;
 
     &::after {
@@ -81,9 +78,8 @@ Photo
     }
 }
 
-// Album photo grid. The gallery controller lays this out as a windowed masonry: the container is sized to hold the whole
-// album, and each tile is absolutely positioned (width, height and translate set by the controller from the photo's
-// aspect ratio), so portrait and landscape photos keep their shape and nothing reshuffles as tiles mount and unmount.
+// Album photo grid, shared by the public gallery (windowed) and the album manage view. The container is sized and each
+// tile absolutely positioned by the controller from the photo's aspect ratio, so portrait and landscape keep their shape.
 .photo-masonry {
     position: relative;
 }
