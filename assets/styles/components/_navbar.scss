@@ -79,6 +79,81 @@
     }
 }
 
+// Nested navbar dropdowns, driven by the nav-dropdown controller.
+// Bootstrap positions a `.dropdown-menu` only when Popper adds `[data-bs-popper]`. The controller opens menus with
+// `.show` and no Popper, so the positioning is set here: floating on desktop, inline in the offcanvas.
+.navbar-gewis {
+    // The submenu toggle fills the row, so push its caret to the right.
+    .dropdown-submenu > .dropdown-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    @include media-breakpoint-up(lg) {
+        // Top-level menu, directly below its nav item.
+        .dropdown-nav > .dropdown-menu {
+            top: 100%;
+            left: 0;
+            margin-top: 0;
+        }
+
+        // Submenu, opening to the right of its row. The navbar removes the top border and top rounding from every
+        // menu, but a submenu needs them back on its outer corners. Its left edge stays square and borderless so it
+        // sits flush against the parent menu.
+        .dropdown-submenu > .dropdown-menu {
+            top: 0;
+            left: 100%;
+            margin: 0;
+            border-top-width: var(--#{$prefix}dropdown-border-width);
+            border-left-width: 0;
+
+            @include border-top-start-radius(0);
+            @include border-bottom-start-radius(0);
+            @include border-top-end-radius(var(--#{$prefix}dropdown-border-radius));
+        }
+
+        @media (prefers-reduced-motion: no-preference) {
+            .dropdown-nav > .dropdown-menu.show,
+            .dropdown-submenu > .dropdown-menu.show {
+                animation: nav-dropdown-in $transition-duration-fast ease-out;
+            }
+        }
+    }
+}
+
+// Below `lg` the navigation is inside the offcanvas, so its menus expand inline instead of floating. Limited to the
+// offcanvas container so the right-hand user and settings menus keep floating.
+@include media-breakpoint-down(lg) {
+    #navbar-gewis-collapse {
+        .dropdown-menu {
+            position: static;
+            box-shadow: none;
+        }
+
+        // Indent submenus and point their caret down, since they now expand inline.
+        .dropdown-submenu > .dropdown-menu {
+            margin-left: 1rem;
+        }
+
+        .dropdown-submenu > .dropdown-toggle::after {
+            transform: rotate(90deg);
+        }
+    }
+}
+
+@keyframes nav-dropdown-in {
+    from {
+        opacity: 0;
+        transform: translateY(-0.25rem);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .navbar-gewis-admin {
     --#{$prefix}sidebar-bg: #{darken($navbar-bg, 5%)};
 
