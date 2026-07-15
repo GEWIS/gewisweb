@@ -155,7 +155,7 @@ export default class extends Controller<HTMLElement> {
 
     private buildSlides(manifest: ManifestEntry[]): void {
         // width/height are the large variant's reference size; the srcset lets PhotoSwipe pull the extra-large variant
-        // when zoomed (#2057), and msrc shows the thumbnail as a blur-up placeholder (#1496).
+        // when zoomed, and msrc shows the thumbnail as a blur-up placeholder.
         this.slides = manifest.map((entry) => ({
             pid: entry.id,
             src: entry.largeUrl,
@@ -176,6 +176,7 @@ export default class extends Controller<HTMLElement> {
 
         this.lightbox = new PhotoSwipeLightbox({
             dataSource: this.slides,
+            maxZoomLevel: 6,
             pswpModule: () => import('photoswipe'),
         });
         this.registerToolbarButtons();
@@ -345,7 +346,7 @@ export default class extends Controller<HTMLElement> {
         }
 
         const pid = this.slides[index].pid;
-        // Push a history entry so the mobile back button closes the viewer instead of leaving the page (#2065).
+        // Push a history entry so the mobile back button closes the viewer instead of leaving the page.
         if (window.location.hash !== `#pid=${pid}`) {
             window.history.pushState({ pid }, '', `#pid=${pid}`);
             this.pushedHistory = true;
