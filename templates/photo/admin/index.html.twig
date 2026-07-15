@@ -16,37 +16,36 @@
 {% block contents %}
     <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
         <h1 class="h3 mb-0">{{ 'Photo albums'|trans }}</h1>
-        <div class="d-flex gap-2">
-            <a href="{{ path('admin/photos/weekly') }}" class="btn btn-outline-secondary">
-                <i class="fa-solid fa-star"></i> {{ 'Photo of the Week'|trans }}
-            </a>
+        <div class="d-flex flex-wrap align-items-center gap-2">
+            {% if years is not empty %}
+                {% include 'partials/year-switcher.html.twig' with {
+                    route: 'admin/photos/index',
+                    year: year,
+                    years: years,
+                    all_years: false,
+                } only %}
+            {% endif %}
             <a href="{{ path('admin/photos/albums_create') }}" class="btn btn-gewis-primary">
                 <i class="fas fa-plus"></i> {{ 'Create album'|trans }}
             </a>
         </div>
     </div>
 
-    {% if albumsByYear is empty %}
+    {% if albums is empty %}
         <p class="text-muted">{{ 'There are no albums yet.'|trans }}</p>
     {% else %}
-        {% for year, albums in albumsByYear %}
-            <h2 class="h5 text-muted border-bottom pb-2 mb-3">
-                {% if year > 0 %}{{ year }} &ndash; {{ year + 1 }}{% else %}{{ 'Undated'|trans }}{% endif %}
-            </h2>
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xxl-6 g-3 mb-4">
-                {% for album in albums %}
-                    {% include 'partials/photo/admin/album-card.html.twig' with {
-                        'album': album,
-                        'subAlbumCount': cardCounts.subAlbums[album.id] ?? 0,
-                        'photoCount': cardCounts.photos[album.id] ?? 0,
-                    } only %}
-                {% endfor %}
-            </div>
-        {% endfor %}
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xxl-6 g-3 mb-4">
+            {% for album in albums %}
+                {% include 'partials/photo/admin/album-card.html.twig' with {
+                    'album': album,
+                    'subAlbumCount': cardCounts.subAlbums[album.id] ?? 0,
+                    'photoCount': cardCounts.photos[album.id] ?? 0,
+                } only %}
+            {% endfor %}
+        </div>
 
         {# A per-album confirmation modal wrapping the POST form, so a delete is never a bare browser dialog. #}
-        {% for albums in albumsByYear %}
-            {% for album in albums %}
+        {% for album in albums %}
                 <div class="modal fade" id="delete-album-{{ album.id }}" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -77,7 +76,6 @@
                         </div>
                     </div>
                 </div>
-            {% endfor %}
         {% endfor %}
     {% endif %}
 {% endblock %}

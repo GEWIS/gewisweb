@@ -24,15 +24,16 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsCsrfTokenValid;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 use function array_filter;
+use function array_keys;
 use function array_map;
-use function array_merge;
-use function array_values;
+use function in_array;
 use function intval;
 
 #[IsGranted(
@@ -62,17 +63,30 @@ class AdminController extends AbstractController
         path: '',
         name: 'index',
     )]
-    public function index(): Response
-    {
+    public function index(
+        #[MapQueryParameter]
+        ?int $year = null,
+    ): Response {
+        // Prod has many albums, so the overview shows one association year at a time, defaulting to the most recent.
         $albumsByYear = $this->albumService->getRootAlbumsByYear();
-        $albums = [] === $albumsByYear
+        $years = array_keys($albumsByYear);
+        $selectedYear = null !== $year && in_array(
+            $year,
+            $years,
+            true,
+        )
+            ? $year
+            : ($years[0] ?? null);
+        $albums = null === $selectedYear
             ? []
-            : array_merge(...array_values($albumsByYear));
+            : ($albumsByYear[$selectedYear] ?? []);
 
         return $this->render(
             'photo/admin/index.html.twig',
             [
-                'albumsByYear' => $albumsByYear,
+                'year' => $selectedYear,
+                'years' => $years,
+                'albums' => $albums,
                 'cardCounts' => $this->albumService->getCardCounts($albums),
             ],
         );
@@ -143,9 +157,17 @@ class AdminController extends AbstractController
             'POST',
         ],
     )]
-    public function createAlbum(Request $request): Response
-    {
+    public function createAlbum(
+        Request $request,
+        #[MapQueryParameter]
+        ?int $parent = null,
+    ): Response {
         $album = new Album();
+        // A sub-album is created from its parent's manage view (?parent=); otherwise it is a root album.
+        if (null !== $parent) {
+            $album->setParent($this->albumRepository->find($parent));
+        }
+
         $form = $this->createForm(AlbumType::class, $album)->handleRequest($request);
 
         if (
@@ -188,7 +210,7 @@ class AdminController extends AbstractController
         Album $album,
         Request $request,
     ): Response {
-        $form = $this->createForm(AlbumType::class, $album, ['album' => $album])->handleRequest($request);
+        $form = $this->createForm(AlbumType::class, $album)->handleRequest($request);
 
         if (
             !$form->isSubmitted()

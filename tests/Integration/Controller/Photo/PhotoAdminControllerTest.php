@@ -6,6 +6,7 @@ namespace App\Tests\Integration\Controller\Photo;
 
 use App\Controller\Photo\AdminController;
 use App\Entity\Application\Enums\StorageNamespace;
+use App\Entity\Decision\AssociationYear;
 use App\Entity\Photo\Album;
 use App\Entity\Photo\Photo;
 use App\Entity\User\Enums\UserRoles;
@@ -34,18 +35,26 @@ use function unlink;
 use const JSON_THROW_ON_ERROR;
 
 /**
- * The photo admin controller, invoked directly (the codebase has no WebTestCase). It covers the year-grouped overview,
+ * The photo admin controller, invoked directly (the codebase has no WebTestCase). It covers the year-filtered overview,
  * the JSON upload endpoint, and the bulk move and delete of a photo selection. The class-level board guard and the CSRF
  * attributes are enforced by the framework at the HTTP layer, so a direct call exercises the action body itself.
  */
 final class PhotoAdminControllerTest extends DatabaseTestCase
 {
-    public function testIndexRendersTheYearGroupedOverview(): void
+    public function testIndexRendersTheOverviewFilteredByYear(): void
     {
         $this->authenticateBoard();
         $this->pushRequest();
 
-        $response = $this->controller()->index();
+        $trip = self::getContainer()->get(AlbumRepository::class)->findOneBy(['name' => 'Trip 2024']);
+        self::assertInstanceOf(
+            Album::class,
+            $trip,
+        );
+        $start = $trip->getStartDateTime();
+        self::assertNotNull($start);
+
+        $response = $this->controller()->index(AssociationYear::fromDate($start)->getYear());
 
         self::assertSame(
             Response::HTTP_OK,

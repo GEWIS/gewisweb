@@ -15,7 +15,8 @@
         <div class="btn-group">
             <button type="button" class="btn btn-outline-secondary dropdown-toggle"
                     data-bs-toggle="dropdown" aria-expanded="false">
-                {{ year is not null ? (year ~ ' - ' ~ (year + 1)) : 'All years'|trans }}
+                {# Year 0 is the "undated" bucket (albums without a start date), so it is labelled instead of "0 - 1". #}
+                {{ year is null ? 'All years'|trans : (year > 0 ? (year ~ ' - ' ~ (year + 1)) : 'Undated'|trans) }}
             </button>
             <ul class="dropdown-menu">
                 {% if all_years %}
@@ -30,7 +31,7 @@
                     <li>
                         <a class="dropdown-item {{ year == y ? 'active' }}"
                            href="{{ path(route, query|merge({ year: y })) }}">
-                            {{ y }} - {{ y + 1 }}
+                            {{ y > 0 ? (y ~ ' - ' ~ (y + 1)) : 'Undated'|trans }}
                         </a>
                     </li>
                 {% endfor %}

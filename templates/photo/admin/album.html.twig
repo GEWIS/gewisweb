@@ -41,6 +41,9 @@
             <a href="{{ path('admin/photos/albums_edit', { album: album.id }) }}" class="btn btn-outline-secondary">
                 <i class="fa-solid fa-pencil"></i> {{ 'Edit album'|trans }}
             </a>
+            <a href="{{ path('admin/photos/albums_create', { parent: album.id }) }}" class="btn btn-outline-secondary">
+                <i class="fa-solid fa-folder-plus"></i> {{ 'Add sub-album'|trans }}
+            </a>
             {% if album.published %}
                 {# Only a published album has a public page; a draft is previewed here in the manage view. #}
                 <a href="{{ path('photo/album', { type: 'album', album: album.id }) }}"

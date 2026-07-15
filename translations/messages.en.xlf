@@ -153,6 +153,10 @@
         <source>Add option</source>
         <target>Add option</target>
       </trans-unit>
+      <trans-unit id="huHdrWJ" resname="Add sub-album">
+        <source>Add sub-album</source>
+        <target>Add sub-album</target>
+      </trans-unit>
       <trans-unit id="RgoBpqP" resname="Add subscriber">
         <source>Add subscriber</source>
         <target>Add subscriber</target>
@@ -1605,10 +1609,6 @@
         <source>No organising organ</source>
         <target state="translated">No organising organ</target>
       </trans-unit>
-      <trans-unit id="1NkjPIG" resname="No parent album (a root album)">
-        <source>No parent album (a root album)</source>
-        <target state="translated">No parent album (a root album)</target>
-      </trans-unit>
       <trans-unit id="F8tps6v" resname="No pending activities.">
         <source>No pending activities.</source>
         <target state="translated">No pending activities.</target>
@@ -1768,10 +1768,6 @@
       <trans-unit id="1IhUdFE" resname="Pagination">
         <source>Pagination</source>
         <target state="translated">Pagination</target>
-      </trans-unit>
-      <trans-unit id="rZuMo2n" resname="Parent album">
-        <source>Parent album</source>
-        <target state="translated">Parent album</target>
       </trans-unit>
       <trans-unit id="eI1dGQ5" resname="Party">
         <source>Party</source>
@@ -2747,7 +2743,7 @@
       </trans-unit>
       <trans-unit id="SsE5mLL" resname="Undated">
         <source>Undated</source>
-        <target state="translated">Undated</target>
+        <target>Undated</target>
       </trans-unit>
       <trans-unit id="7ZQ9oWO" resname="Unknown device">
         <source>Unknown device</source>
