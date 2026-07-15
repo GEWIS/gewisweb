@@ -102,8 +102,7 @@ jobs:
                 # Font Awesome fonts/sprites and Bootstrap bundle (copied out of vendor/ by assets:update), the
                 # importmap's vendored JS such as the live-component CSS (importmap:install), and the sass/TypeScript
                 # compiled to var/sass and var/typescript. None of that is committed and composer ran with
-                # --no-scripts, so it is all built here. swc writes the controllers to var/typescript/controllers,
-                # while the compiler reads them from var/typescript/assets/controllers, so they are copied across.
+                # --no-scripts, so it is all built here.
                 run: |
                     composer run-script assets:update
                     bin/console importmap:install
@@ -111,8 +110,6 @@ jobs:
                     sudo chmod +x /usr/local/bin/swc
                     bin/console sass:build
                     bin/console typescript:build
-                    mkdir -p var/typescript/assets/controllers
-                    cp -r var/typescript/controllers/. var/typescript/assets/controllers/
 
             -   name: Run PHPUnit
                 run: bin/phpunit
