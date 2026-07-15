@@ -13,6 +13,8 @@ use App\Entity\Photo\Photo;
 use App\Entity\User\Enums\UserRoles;
 use App\Entity\User\User;
 use App\Repository\Photo\AlbumRepository;
+use App\Repository\Photo\OrganTagRepository;
+use App\Repository\Photo\PhotoRepository;
 use App\Repository\Photo\WeeklyPhotoRepository;
 use App\Service\Application\FileStorage;
 use App\Tests\Integration\DatabaseTestCase;
@@ -93,18 +95,41 @@ final class PhotoControllerTest extends DatabaseTestCase
         );
     }
 
-    public function testAlbumPageIsNotFoundForAnUnbuiltVirtualAlbumType(): void
+    public function testBodyAlbumRendersAnOrgansTaggedPhotos(): void
+    {
+        $this->authenticate(
+            8030,
+            UserRoles::Member,
+        );
+        $this->pushRequest();
+
+        $response = $this->controller()->album(
+            AlbumType::Body,
+            $this->taggedOrganId(),
+        );
+
+        self::assertSame(
+            Response::HTTP_OK,
+            $response->getStatusCode(),
+        );
+        // The organ is tagged in the Trip album, so its body album deep-links to at least one real photo.
+        self::assertStringContainsString(
+            '#pid=',
+            (string) $response->getContent(),
+        );
+    }
+
+    public function testBodyAlbumIsNotFoundForAnUnknownOrgan(): void
     {
         $this->authenticate(
             8030,
             UserRoles::Member,
         );
 
-        // The body virtual albums are not browsable yet (member and weekly albums are — see below).
         $this->expectException(NotFoundHttpException::class);
         $this->controller()->album(
             AlbumType::Body,
-            $this->albumId('Trip 2024'),
+            99999999,
         );
     }
 
@@ -362,6 +387,29 @@ final class PhotoControllerTest extends DatabaseTestCase
         );
 
         return (int) $album->getId();
+    }
+
+    /**
+     * The id of an organ the seed tags in the Trip album, so its body album is non-empty.
+     */
+    private function taggedOrganId(): int
+    {
+        $album = self::getContainer()->get(AlbumRepository::class)->findOneBy(['name' => 'Trip 2024']);
+        self::assertInstanceOf(
+            Album::class,
+            $album,
+            'The seed is expected to contain the Trip album.',
+        );
+
+        $organTagRepository = self::getContainer()->get(OrganTagRepository::class);
+        foreach (self::getContainer()->get(PhotoRepository::class)->getAlbumPhotos($album) as $photo) {
+            $tags = $organTagRepository->findByPhotoWithOrgan((int) $photo->getId());
+            if ([] !== $tags) {
+                return (int) $tags[0]->getOrgan()->getId();
+            }
+        }
+
+        self::fail('The seed is expected to tag an organ in the Trip album.');
     }
 
     private function draftAlbumId(): int

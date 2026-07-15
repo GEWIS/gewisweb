@@ -8,6 +8,8 @@ use App\Entity\Decision\Member;
 use App\Entity\Photo\Album;
 use App\Entity\Photo\MemberAlbum;
 use App\Entity\Photo\MemberTag;
+use App\Entity\Photo\OrganAlbum;
+use App\Entity\Photo\OrganTag;
 use App\Entity\Photo\Photo;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -64,6 +66,23 @@ class PhotoRepository extends ServiceEntityRepository
                 );
             // We want to display the photos in a member's album in reversed
             // chronological order
+            $qb->setFirstResult($start)
+                ->orderBy(
+                    'p.dateTime',
+                    'DESC',
+                );
+        } elseif ($album instanceof OrganAlbum) {
+            // Organ tags are their own subtype as well; join it so a body album is the photos that organ is tagged in.
+            $qb->innerJoin(
+                OrganTag::class,
+                't',
+                'WITH',
+                't.photo = p AND t.organ = :organ',
+            )
+                ->setParameter(
+                    'organ',
+                    $album->getOrgan(),
+                );
             $qb->setFirstResult($start)
                 ->orderBy(
                     'p.dateTime',

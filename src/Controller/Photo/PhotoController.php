@@ -7,8 +7,10 @@ namespace App\Controller\Photo;
 use App\Entity\Photo\Album;
 use App\Entity\Photo\Enums\AlbumType;
 use App\Entity\Photo\MemberAlbum;
+use App\Entity\Photo\OrganAlbum;
 use App\Entity\User\Enums\UserRoles;
 use App\Repository\Decision\MemberRepository;
+use App\Repository\Decision\OrganRepository;
 use App\Repository\Photo\PhotoRepository;
 use App\Repository\Photo\WeeklyPhotoRepository;
 use App\Security\Photo\PhotoVoter;
@@ -48,6 +50,7 @@ class PhotoController extends AbstractController
         private readonly WeeklyPhotoRepository $weeklyPhotoRepository,
         private readonly WeeklyPhotoService $weeklyPhotoService,
         private readonly MemberRepository $memberRepository,
+        private readonly OrganRepository $organRepository,
         private readonly FileDownloadHelper $fileDownloadHelper,
         private readonly SluggerInterface $slugger,
     ) {
@@ -184,21 +187,18 @@ class PhotoController extends AbstractController
         AlbumType $type,
         int $album,
     ): Response {
-        // A member's "album" is the virtual set of photos they are tagged in (the {album} route value is their lidnr).
-        if (AlbumType::Member === $type) {
-            return $this->memberAlbum($album);
-        }
+        // A regular album is stored; the others are virtual sets keyed by the {album} route value: a member's tagged
+        // photos (their lidnr), a year's photos of the week (the year), or an organ's tagged photos (the organ id).
+        return match ($type) {
+            AlbumType::Regular => $this->regularAlbum($album),
+            AlbumType::Member => $this->memberAlbum($album),
+            AlbumType::Weekly => $this->weeklyAlbum($album),
+            AlbumType::Body => $this->bodyAlbum($album),
+        };
+    }
 
-        // A weekly "album" is the virtual set of one association year's photos of the week ({album} is the year).
-        if (AlbumType::Weekly === $type) {
-            return $this->weeklyAlbum($album);
-        }
-
-        // The body virtual albums are a later addition; only real albums are browsable for now.
-        if (AlbumType::Regular !== $type) {
-            throw new NotFoundHttpException();
-        }
-
+    private function regularAlbum(int $album): Response
+    {
         $albumEntity = $this->viewableAlbum($album);
 
         return $this->render(
@@ -224,6 +224,24 @@ class PhotoController extends AbstractController
             [
                 'member' => $member,
                 'photos' => $this->photoRepository->getAlbumPhotos(new MemberAlbum($lidnr, $member)),
+            ],
+        );
+    }
+
+    /**
+     * The photos an organ is tagged in, each linking into its real album. Like a member album this is a bounded set, so
+     * it renders server-side; an unknown organ 404s, one without tagged photos renders empty.
+     */
+    private function bodyAlbum(int $organId): Response
+    {
+        $organ = $this->organRepository->findOrgan($organId)
+            ?? throw new NotFoundHttpException();
+
+        return $this->render(
+            'photo/body.html.twig',
+            [
+                'organ' => $organ,
+                'photos' => $this->photoRepository->getAlbumPhotos(new OrganAlbum($organId, $organ)),
             ],
         );
     }
