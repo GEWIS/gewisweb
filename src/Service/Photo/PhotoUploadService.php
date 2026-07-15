@@ -12,12 +12,14 @@ use App\Message\Photo\GenerateAlbumCoverMessage;
 use App\Message\Photo\ProcessImageVariantsMessage;
 use App\Repository\Photo\PhotoRepository;
 use App\Service\Application\FileStorage;
+use App\Service\Application\ImageManagerProvider;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Throwable;
 
+use function file_get_contents;
 use function getimagesize;
 
 /**
@@ -26,8 +28,8 @@ use function getimagesize;
  * the same bytes, and — only once its Photo is committed — queued for variant generation. After the batch the album
  * cover is queued for regeneration once.
  *
- * Aspect ratio comes from the image header via getimagesize; the remaining metadata (capture time, camera, GPS, ...)
- * is read from the original's EXIF, falling back to the upload time when the image carries none.
+ * Aspect ratio comes from the image header; the remaining metadata (capture time, camera, GPS, ...) is read from the
+ * original's EXIF, falling back to the upload time when the image carries none.
  */
 final readonly class PhotoUploadService
 {
@@ -37,6 +39,7 @@ final readonly class PhotoUploadService
         private EntityManagerInterface $entityManager,
         private MessageBusInterface $messageBus,
         private PhotoMetadataReader $metadataReader,
+        private ImageManagerProvider $imageManagerProvider,
     ) {
     }
 
@@ -84,9 +87,9 @@ final readonly class PhotoUploadService
         $stored = null;
 
         try {
-            // A real image? getimagesize reads only the header and doubles as the width/height source.
-            $dimensions = getimagesize($file->getPathname());
-            if (false === $dimensions) {
+            // A real image? Also the width/height source. Rejects anything neither reader can decode.
+            $aspectRatio = $this->readAspectRatio($file->getPathname());
+            if (null === $aspectRatio) {
                 return 'failed';
             }
 
@@ -111,8 +114,7 @@ final readonly class PhotoUploadService
             $photo->setAlbum($album);
             $photo->setPath($stored->path);
             $photo->setDateTime(new DateTime());
-            // Aspect ratio is height / width, matching the pre-migration convention.
-            $photo->setAspectRatio($dimensions[1] / $dimensions[0]);
+            $photo->setAspectRatio($aspectRatio);
             $this->metadataReader->read($file->getPathname())->applyTo($photo);
 
             $this->entityManager->persist($photo);
@@ -131,6 +133,34 @@ final readonly class PhotoUploadService
             }
 
             return 'failed';
+        }
+    }
+
+    /**
+     * The photo's aspect ratio (height / width). getimagesize is the cheap header read and doubles as the "is a real
+     * image" check, but it cannot decode every accepted format (notably HEIC), so fall back to the image backend
+     * (libvips), which can. Returns null when neither can read the file, i.e. it is not a usable image.
+     */
+    private function readAspectRatio(string $path): ?float
+    {
+        $dimensions = getimagesize($path);
+        if (
+            false !== $dimensions
+            && $dimensions[0] > 0
+        ) {
+            return $dimensions[1] / $dimensions[0];
+        }
+
+        try {
+            $image = $this->imageManagerProvider->create()
+                ->decodeBinary((string) file_get_contents($path))
+                ->orient();
+
+            return $image->width() > 0
+                ? $image->height() / $image->width()
+                : null;
+        } catch (Throwable) {
+            return null;
         }
     }
 }
