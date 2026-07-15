@@ -1,0 +1,5 @@
+// Hide the festive cosmetics when the member has turned them off. The server also stops emitting the effect
+// scripts on the next render; this rule handles the instant client-side toggle within the current page.
+html[data-cosmetics='off'] #gewis-festivities {
+    display: none !important;
+}

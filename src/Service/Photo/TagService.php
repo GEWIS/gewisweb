@@ -12,6 +12,7 @@ use App\Repository\Decision\MemberRepository;
 use App\Repository\Decision\OrganRepository;
 use App\Repository\Photo\MemberTagRepository;
 use App\Repository\Photo\OrganTagRepository;
+use App\Repository\User\UserSettingsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
@@ -26,13 +27,15 @@ final readonly class TagService
         private OrganRepository $organRepository,
         private MemberTagRepository $memberTagRepository,
         private OrganTagRepository $organTagRepository,
+        private UserSettingsRepository $userSettingsRepository,
         private EntityManagerInterface $entityManager,
     ) {
     }
 
     /**
-     * Tag a member on a photo, optionally at a point. Returns null when the member does not exist or is already tagged
-     * on the photo, so tagging stays idempotent. Invalid coordinates make {@see Tag::setPosition()} throw.
+     * Tag a member on a photo, optionally at a point. Returns null when the member does not exist, has opted out of
+     * being tagged, or is already tagged on the photo, so tagging stays idempotent. Invalid coordinates make
+     * {@see Tag::setPosition()} throw.
      */
     public function addMemberTag(
         Photo $photo,
@@ -47,6 +50,7 @@ final readonly class TagService
                 (int) $photo->getId(),
                 $lidnr,
             )
+            || ($this->userSettingsRepository->find($lidnr)?->getPhotoTaggingOptOut() ?? false)
         ) {
             return null;
         }

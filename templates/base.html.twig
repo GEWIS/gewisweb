@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ app.request.locale }}" class="h-100">
+<html lang="{{ app.request.locale }}" class="h-100"{{ cosmetics_disabled() ? ' data-cosmetics="off"' : '' }}>
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -68,32 +68,36 @@
             <script src="{{ asset('js/bootstrap.bundle.min.js') }}" nonce="{{ csp_nonce('script') }}"></script>
         {% endblock %}
         {% block gewis_festivities %}
+            {# The container always renders so the cosmetics-toggle CSS ([data-cosmetics="off"]) has a stable node to
+               hide; the effects themselves are only emitted when the member has not disabled them. #}
             <div id="gewis-festivities" style="position: fixed; width: 100vw; height: 100vh; pointer-events: none;">
-                {% set today_md = 'now'|date('m-d') %}
-                {% set today_yd = 'now'|date('j n') %}
-                {% set userBirthdayMd = null !== app.user and enum('App\\Entity\\User\\Enums\\UserTypes').User === app.user.getUserType
-                    ? app.user.getMember.getBirth|date('m-d')
-                    : null
-                %}
-                {% if ('28 6' === today_yd) or (null !== userBirthdayMd and userBirthdayMd === today_md) %}
-                    <script src="{{ asset('js/cosmetic/balloons.js') }}" nonce="{{ csp_nonce('script') }}"></script>
-                {% endif %}
-
-                {% if null !== app.user %}
-                    {% set nowU = 'now'|date('U') %}
-                    {% set startU = 'December 24 00:00:00'|date('U') %}
-                    {% set endU = 'December 31 23:59:59'|date('U') %}
-                    {% if nowU >= startU and nowU <= endU %}
-                        <script src="{{ asset('js/cosmetic/snowstorm.js') }}" nonce="{{ csp_nonce('script') }}"></script>
+                {% if not cosmetics_disabled() %}
+                    {% set today_md = 'now'|date('m-d') %}
+                    {% set today_yd = 'now'|date('j n') %}
+                    {% set userBirthdayMd = null !== app.user and enum('App\\Entity\\User\\Enums\\UserTypes').User === app.user.getUserType
+                        ? app.user.getMember.getBirth|date('m-d')
+                        : null
+                    %}
+                    {% if ('28 6' === today_yd) or (null !== userBirthdayMd and userBirthdayMd === today_md) %}
+                        <script src="{{ asset('js/cosmetic/balloons.js') }}" nonce="{{ csp_nonce('script') }}"></script>
                     {% endif %}
 
-                    {% if '01-01' === today_md %}
-                        <div class="firework"></div>
-                        <div class="firework"></div>
-                        <div class="firework"></div>
-                        <div class="firework"></div>
-                        <div class="firework"></div>
-                        <div class="firework"></div>
+                    {% if null !== app.user %}
+                        {% set nowU = 'now'|date('U') %}
+                        {% set startU = 'December 24 00:00:00'|date('U') %}
+                        {% set endU = 'December 31 23:59:59'|date('U') %}
+                        {% if nowU >= startU and nowU <= endU %}
+                            <script src="{{ asset('js/cosmetic/snowstorm.js') }}" nonce="{{ csp_nonce('script') }}"></script>
+                        {% endif %}
+
+                        {% if '01-01' === today_md %}
+                            <div class="firework"></div>
+                            <div class="firework"></div>
+                            <div class="firework"></div>
+                            <div class="firework"></div>
+                            <div class="firework"></div>
+                            <div class="firework"></div>
+                        {% endif %}
                     {% endif %}
                 {% endif %}
             </div>

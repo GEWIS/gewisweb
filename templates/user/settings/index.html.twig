@@ -1,0 +1,104 @@
+{% extends 'layout-sidebar.html.twig' %}
+
+{% block page_title %}{{ 'Settings'|trans }}{% endblock %}
+
+{% block sidebar_label %}{{ app.user.member.getFullName }}{% endblock %}
+{% block sidebar %}
+    {% include 'partials/member-sidebar.html.twig' with {
+        'member': app.user.member,
+        'isSelf': true,
+        'activeRoute': 'settings',
+    } %}
+{% endblock %}
+
+{% block contents %}
+    {{ form_start(form, {
+        'action': path('user_settings_index'),
+        'method': 'POST',
+    }) }}
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3>{{ 'Privacy'|trans }}</h3>
+                </div>
+                <div class="panel-body">
+                    {{ form_row(form.photoTaggingOptOut) }}
+                    {{ form_row(form.hideYearOfBirth) }}
+                    {{ form_row(form.hideBirthdayOnFrontpage) }}
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3>{{ 'Display'|trans }}</h3>
+                </div>
+                <div class="panel-body">
+                    {{ form_row(form.disableCosmetics) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-gewis-primary">
+        <i class="fas fa-save"></i> {{ 'Save settings'|trans }}
+    </button>
+    {{ form_end(form) }}
+
+    {# Removing existing tags is a separate, irreversible POST action, so it lives in its own panel with a
+       confirmation modal (its form cannot be nested inside the settings form above). #}
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="panel mt-3">
+                <div class="panel-heading">
+                    <h3>{{ 'Photo tags'|trans }}</h3>
+                </div>
+                <div class="panel-body">
+                    <p class="text-muted mb-2">
+                        {{ 'Opting out above stops new tags. To also remove tags of you that already exist, use the button below.'|trans }}
+                    </p>
+                    {% if sudoActive %}
+                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                                data-bs-target="#purge-tags-modal">
+                            <i class="fas fa-trash"></i> {{ 'Remove all tags of me'|trans }}
+                        </button>
+                    {% else %}
+                        {# Removing tags needs sudo; re-authenticate first and return here to confirm. #}
+                        <a class="btn btn-outline-danger"
+                           href="{{ path('user_sudo_confirm', {'next': path('user_settings_index')}) }}">
+                            <i class="fas fa-trash"></i> {{ 'Remove all tags of me'|trans }}
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="purge-tags-modal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ 'Remove all tags of me'|trans }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="{{ 'Close'|trans }}"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="mb-0">
+                        {{ 'This removes every photo tag of you across all albums, and clears your profile photo. This cannot be undone.'|trans }}
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        {{ 'Cancel'|trans }}
+                    </button>
+                    <form method="POST" action="{{ path('user_settings_purge_tags') }}">
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('purge_tags') }}">
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fas fa-trash"></i> {{ 'Remove all tags'|trans }}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

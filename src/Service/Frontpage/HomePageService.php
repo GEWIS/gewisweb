@@ -12,6 +12,7 @@ use App\Repository\Photo\MemberTagRepository;
 use App\Repository\Photo\WeeklyPhotoRepository;
 use App\Service\Application\FileStorage;
 use App\Service\Photo\WeeklyPhotoService;
+use App\Service\User\PrivacyService;
 use DateTime;
 
 use function array_map;
@@ -29,6 +30,7 @@ final readonly class HomePageService
         private MemberTagRepository $memberTagRepository,
         private WeeklyPhotoService $weeklyPhotoService,
         private FileStorage $fileStorage,
+        private PrivacyService $privacyService,
     ) {
     }
 
@@ -37,7 +39,7 @@ final readonly class HomePageService
      *     weeklyPhoto: WeeklyPhoto|null,
      *     weeklyPublicPath: string|null,
      *     birthdayPhoto: Photo|null,
-     *     birthdays: list<array{member: Member, age: int}>,
+     *     birthdays: list<array{member: Member, age: int|null}>,
      * }
      */
     public function getHomePageData(): array
@@ -45,10 +47,15 @@ final readonly class HomePageService
         $weeklyPhoto = $this->weeklyPhotoRepository->getCurrentPhotoOfTheWeek();
 
         $birthdayMembers = $this->memberRepository->findBirthdayMembers(0);
+        // The age is withheld (null) when the current viewer may not see this member's year of birth; the member still
+        // appears on the panel, only ageless.
+        $ageVisibility = $this->privacyService->yearOfBirthVisibilityFor($birthdayMembers);
         $birthdays = array_values(array_map(
             static fn (Member $member): array => [
                 'member' => $member,
-                'age' => new DateTime()->diff($member->getBirth())->y,
+                'age' => $ageVisibility[$member->getLidnr()] ?? false
+                    ? new DateTime()->diff($member->getBirth())->y
+                    : null,
             ],
             $birthdayMembers,
         ));
