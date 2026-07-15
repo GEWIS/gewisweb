@@ -1,5 +1,7 @@
 {% extends 'layout-sidebar.html.twig' %}
 
+{% import 'partials/photo/gallery.html.twig' as gallery %}
+
 {% block page_title %}{{ 'Photos'|trans|page_title }}{{ member.getFullName|page_title }}{{ parent() }}{% endblock %}
 
 {% set isSelf = is_granted(member.getSelfRole) %}
@@ -19,33 +21,43 @@
 {% endblock %}
 
 {% block contents %}
-    <h1 class="h3 mb-4">{{ 'Photos'|trans }}</h1>
+    <div {{ gallery.attributes(path('photo/member_manifest', { member: member.lidnr }), isSelf) }}>
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+            <h1 class="h3 mb-0">{{ 'Photos'|trans }}</h1>
+            {% if isSelf %}
+                <div class="d-flex flex-wrap gap-2 align-items-center">
+                    <div class="d-flex flex-wrap gap-2 align-items-center d-none" data-gallery-target="bulkBar">
+                        <span class="small text-muted" data-gallery-target="count"
+                              data-label="{{ 'selected'|trans }}"></span>
+                        <form method="post" id="member-photo-form" data-gallery-target="selectionForm"
+                              class="d-flex gap-2 mb-0">
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('photo_hidden') }}">
+                            <button type="submit" class="btn btn-sm btn-outline-secondary"
+                                    formaction="{{ path('photo/hidden_hide') }}">
+                                <i class="fa-solid fa-eye-slash"></i> {{ 'Hide selected'|trans }}
+                            </button>
+                            <button type="submit" class="btn btn-sm btn-outline-secondary"
+                                    formaction="{{ path('photo/hidden_unhide') }}">
+                                <i class="fa-solid fa-eye"></i> {{ 'Unhide selected'|trans }}
+                            </button>
+                        </form>
+                    </div>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" aria-pressed="false"
+                            data-gallery-target="selectToggle" data-action="gallery#toggleSelect">
+                        <i class="fa-solid fa-check-double"></i> {{ 'Select'|trans }}
+                    </button>
+                </div>
+            {% endif %}
+        </div>
 
-    {% if isSelf %}
-        {% embed 'partials/photo/gallery.html.twig' with {
-            manifest_url: path('photo/member_manifest', { member: member.lidnr }),
-            selectable: true,
-            empty_message: 'You have not been tagged in any photos yet.'|trans,
-        } %}
-            {% block gallery_hint %}{{ 'Hidden photos are greyed out and only you see them here. Choose what others see under Settings.'|trans }}{% endblock %}
-            {% block gallery_actions %}
-                <form method="post" id="member-photo-form" data-gallery-target="selectionForm" class="d-flex gap-2 mb-0">
-                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('photo_hidden') }}">
-                    <button type="submit" class="btn btn-sm btn-outline-secondary"
-                            formaction="{{ path('photo/hidden_hide') }}">
-                        <i class="fa-solid fa-eye-slash"></i> {{ 'Hide selected'|trans }}
-                    </button>
-                    <button type="submit" class="btn btn-sm btn-outline-secondary"
-                            formaction="{{ path('photo/hidden_unhide') }}">
-                        <i class="fa-solid fa-eye"></i> {{ 'Unhide selected'|trans }}
-                    </button>
-                </form>
-            {% endblock %}
-        {% endembed %}
-    {% else %}
-        {% include 'partials/photo/gallery.html.twig' with {
-            manifest_url: path('photo/member_manifest', { member: member.lidnr }),
-            empty_message: '%name% has not been tagged in any photos yet.'|trans({ '%name%': member.getFullName }),
-        } only %}
-    {% endif %}
+        {% if isSelf %}
+            <p class="text-muted small mb-3">
+                {{ 'Hidden photos are greyed out and only you see them here. Choose what others see under Settings.'|trans }}
+            </p>
+        {% endif %}
+
+        {{ gallery.grid(isSelf
+            ? 'You have not been tagged in any photos yet.'|trans
+            : '%name% has not been tagged in any photos yet.'|trans({ '%name%': member.getFullName })) }}
+    </div>
 {% endblock %}

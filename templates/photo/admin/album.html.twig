@@ -1,5 +1,7 @@
 {% extends 'layout-admin.html.twig' %}
 
+{% import 'partials/photo/gallery.html.twig' as gallery %}
+
 {% block page_title %}{{ album.name|page_title }}{{ 'Photos'|trans|page_title }}{{ parent() }}{% endblock %}
 
 {% block admin_breadcrumbs %}
@@ -90,17 +92,13 @@
         </div>
     </div>
 
-    <div class="panel">
-        <div class="panel-heading">
+    <div class="panel" {{ gallery.attributes(path('admin/photos/album_manifest', { album: album.id }), true) }}>
+        <div class="panel-heading d-flex flex-wrap justify-content-between align-items-center gap-2">
             <h3 class="mb-0">{{ 'Photos'|trans }} <span class="text-muted">({{ album.getPhotoCount(false) }})</span></h3>
-        </div>
-        <div class="panel-body">
-            {% embed 'partials/photo/gallery.html.twig' with {
-                manifest_url: path('admin/photos/album_manifest', { album: album.id }),
-                selectable: true,
-                empty_message: 'This album does not contain any photos yet. Upload some above.'|trans,
-            } %}
-                {% block gallery_actions %}
+            <div class="d-flex flex-wrap gap-2 align-items-center">
+                <div class="d-flex flex-wrap gap-2 align-items-center d-none" data-gallery-target="bulkBar">
+                    <span class="small text-muted" data-gallery-target="count"
+                          data-label="{{ 'selected'|trans }}"></span>
                     <form method="post" id="photo-admin-form" data-gallery-target="selectionForm"
                           class="d-flex flex-wrap gap-2 align-items-center mb-0">
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token('photo_admin_bulk') }}">
@@ -123,8 +121,15 @@
                             <i class="fa-solid fa-trash"></i> {{ 'Delete selected'|trans }}
                         </button>
                     </form>
-                {% endblock %}
-            {% endembed %}
+                </div>
+                <button type="button" class="btn btn-sm btn-outline-secondary" aria-pressed="false"
+                        data-gallery-target="selectToggle" data-action="gallery#toggleSelect">
+                    <i class="fa-solid fa-check-double"></i> {{ 'Select'|trans }}
+                </button>
+            </div>
+        </div>
+        <div class="panel-body">
+            {{ gallery.grid('This album does not contain any photos yet. Upload some above.'|trans) }}
         </div>
     </div>
 

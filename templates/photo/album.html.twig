@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="{{ asset('vendor/photoswipe/dist/photoswipe.min.css') }}">
 {% endblock %}
 
+{% import 'partials/photo/gallery.html.twig' as gallery %}
+
 {% block contents %}
     <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4">
         <h1 class="mb-0">{{ album.name }}</h1>
@@ -30,7 +32,7 @@
         </div>
     {% endif %}
 
-    {% include 'partials/photo/gallery.html.twig' with {
-        manifest_url: path('photo/manifest', { album: album.id }),
-    } only %}
+    <div {{ gallery.attributes(path('photo/manifest', { album: album.id }), false) }}>
+        {{ gallery.grid() }}
+    </div>
 {% endblock %}

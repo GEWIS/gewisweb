@@ -18,7 +18,8 @@
         </a>
     </div>
 
-    {% include 'partials/photo/gallery.html.twig' with {
-        manifest_url: path('photo/weekly_manifest', { year: year }),
-    } only %}
+    {% import 'partials/photo/gallery.html.twig' as gallery %}
+    <div {{ gallery.attributes(path('photo/weekly_manifest', { year: year }), false) }}>
+        {{ gallery.grid() }}
+    </div>
 {% endblock %}

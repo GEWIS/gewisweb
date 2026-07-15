@@ -397,11 +397,14 @@ export default class extends Controller<HTMLElement> {
         this.selecting = !this.selecting;
         this.gridTarget.classList.toggle('is-selecting', this.selecting);
 
+        // `d-none` (display:none !important), not the `hidden` attribute, because the bar carries `d-flex` which would
+        // otherwise win and keep the actions visible.
         if (this.hasBulkBarTarget) {
-            this.bulkBarTarget.hidden = !this.selecting;
+            this.bulkBarTarget.classList.toggle('d-none', !this.selecting);
         }
 
         if (this.hasSelectToggleTarget) {
+            this.selectToggleTarget.classList.toggle('active', this.selecting);
             this.selectToggleTarget.setAttribute('aria-pressed', String(this.selecting));
         }
 
