@@ -42,7 +42,6 @@ class SettingsFormType extends AbstractType
                     'class' => PhotoVisibility::class,
                     'label' => t('Photos I am tagged in on my photo page'),
                     'help' => t('Others only; hidden photos still show in their own album.'),
-                    'expanded' => true,
                 ],
             )
             ->add(
