@@ -89,6 +89,13 @@ Photo
     }
 }
 
+// Async album picker for moving photos: the results drop directly below the search input and scroll when there are many.
+.album-search .dropdown-menu {
+    top: 100%;
+    max-height: 16rem;
+    overflow-y: auto;
+}
+
 // Drag-and-drop upload target on the album manage view. The dashed outline and the hover/drag highlight are the only
 // affordance that the whole panel accepts files; the upload controller toggles `is-dragging` while a drag is over it.
 .photo-dropzone {

@@ -23,6 +23,7 @@ import SignupFieldController from './controllers/activity/signup_field_controlle
 import SignupListController from './controllers/activity/signup_list_controller.ts';
 
 // Photo-specific controllers.
+import AlbumSearchController from './controllers/photo/album_search_controller.ts';
 import GalleryController from './controllers/photo/gallery_controller.ts';
 import GridController from './controllers/photo/grid_controller.ts';
 import ManageController from './controllers/photo/manage_controller.ts';
@@ -53,6 +54,7 @@ app.register('activity-item', ActivityItemController);
 app.register('signup-field', SignupFieldController);
 app.register('signup-list', SignupListController);
 
+app.register('album-search', AlbumSearchController);
 app.register('gallery', GalleryController);
 app.register('photo-grid', GridController);
 app.register('photo-manage', ManageController);

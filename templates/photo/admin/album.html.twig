@@ -90,12 +90,17 @@
             <h3 class="mb-0">{{ 'Photos'|trans }} <span class="text-muted">({{ photos|length }})</span></h3>
             {% if photos is not empty %}
                 <div class="d-flex flex-wrap align-items-center gap-2">
-                    <select name="destination" form="photo-admin-form" class="form-select form-select-sm w-auto">
-                        <option value="">{{ 'Move selected to…'|trans }}</option>
-                        {% for target in albums|filter(target => target.id != album.id) %}
-                            <option value="{{ target.id }}">{{ target.name }}</option>
-                        {% endfor %}
-                    </select>
+                    <div class="album-search position-relative" data-controller="album-search"
+                         data-album-search-url-value="{{ path('admin/photos/albums_search') }}"
+                         data-album-search-exclude-value="{{ album.id }}">
+                        <input type="text" class="form-control form-control-sm" autocomplete="off"
+                               placeholder="{{ 'Move selected to…'|trans }}"
+                               data-album-search-target="input"
+                               data-action="input->album-search#search keydown->album-search#keydown blur->album-search#close">
+                        <input type="hidden" name="destination" form="photo-admin-form"
+                               data-album-search-target="destination">
+                        <div class="dropdown-menu w-100" data-album-search-target="menu"></div>
+                    </div>
                     <button type="submit" form="photo-admin-form" class="btn btn-sm btn-outline-secondary"
                             formaction="{{ path('admin/photos/photos_move', { album: album.id }) }}">
                         <i class="fa-solid fa-arrow-right-arrow-left"></i> {{ 'Move'|trans }}

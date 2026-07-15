@@ -109,6 +109,41 @@ class AlbumRepository extends ServiceEntityRepository
     }
 
     /**
+     * Albums matching a name fragment, for the admin move-photos picker. Unlike {@see self::search} (the public
+     * gallery) this is not restricted to published, dated, root albums: a photo can be moved into any album, drafts
+     * and sub-albums included. The parent is fetch-joined for a disambiguating label, and the result is capped so the
+     * typeahead stays light.
+     *
+     * @return Album[]
+     */
+    public function searchForMove(
+        string $query,
+        int $limit = 25,
+    ): array {
+        return $this->createQueryBuilder('a')
+            ->leftJoin(
+                'a.parent',
+                'parent',
+            )
+            ->addSelect('parent')
+            ->where('a.name LIKE :query')
+            ->setParameter(
+                'query',
+                '%' . addcslashes(
+                    $query,
+                    '%_',
+                ) . '%',
+            )
+            ->orderBy(
+                'a.name',
+                'ASC',
+            )
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
      * Returns the root album containing the most recent photos.
      */
     public function getNewestAlbum(bool $onlyPublished = true): ?Album
