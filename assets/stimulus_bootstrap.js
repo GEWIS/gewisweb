@@ -14,6 +14,7 @@ import ModalCloseController from './controllers/application/modal_close_controll
 import ModalFormTargetController from './controllers/application/modal_form_target_controller.ts';
 import NavDropdownController from './controllers/application/nav_dropdown_controller.ts';
 import PrintController from './controllers/application/print_controller.ts';
+import SortableController from './controllers/application/sortable_controller.ts';
 
 // Activity-specific controllers.
 import ActivityItemController from './controllers/activity/activity_item_controller.ts';
@@ -42,6 +43,7 @@ app.register('modal-close', ModalCloseController);
 app.register('modal-form-target', ModalFormTargetController);
 app.register('nav-dropdown', NavDropdownController);
 app.register('print', PrintController);
+app.register('sortable', SortableController);
 
 app.register('activity-item', ActivityItemController);
 app.register('signup-field', SignupFieldController);

@@ -275,7 +275,10 @@ class SignupList
         ],
         orphanRemoval: true,
     )]
-    #[OrderBy(['id' => 'ASC'])]
+    #[OrderBy([
+        'position' => 'ASC',
+        'id' => 'ASC',
+    ])]
     private Collection $fields;
 
     /**

@@ -251,6 +251,18 @@ final class ActivityRevisionClonerTest extends TestCase
             $sourceOption->getValue(),
             $draftOption->getValue(),
         );
+
+        // The reorder position and the default marker are carried forward too, else a reordered list or a chosen
+        // default would silently revert to id order / no default on the next draft.
+        self::assertSame(
+            2,
+            $draftField->getPosition(),
+        );
+        self::assertSame(
+            3,
+            $draftOption->getPosition(),
+        );
+        self::assertTrue($draftOption->isDefault());
     }
 
     private function assertCopiedNotShared(
@@ -335,12 +347,15 @@ final class ActivityRevisionClonerTest extends TestCase
             'Kleur',
         ));
         $field->setType(SignupFieldTypes::Choice);
+        $field->setPosition(2);
 
         $option = new SignupOption();
         $option->setValue($this->text(
             'Red',
             'Rood',
         ));
+        $option->setPosition(3);
+        $option->setIsDefault(true);
         $field->addOption($option);
         $list->addField($field);
 

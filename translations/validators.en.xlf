@@ -73,6 +73,10 @@
         <source>Fill in the English text.</source>
         <target state="translated">Fill in the English text.</target>
       </trans-unit>
+      <trans-unit id="Dtm28Py" resname="Only one option can be preselected as the default.">
+        <source>Only one option can be preselected as the default.</source>
+        <target state="translated">Only one option can be preselected as the default.</target>
+      </trans-unit>
       <trans-unit id="0wZ1438" resname="Please enter a password.">
         <source>Please enter a password.</source>
         <target state="translated">Please enter a password.</target>

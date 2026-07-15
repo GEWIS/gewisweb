@@ -240,6 +240,7 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
                                     [
                                         'en' => 'M',
                                         'nl' => 'M',
+                                        'default' => true,
                                     ],
                                     [
                                         'en' => 'L',
@@ -878,16 +879,19 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
                 // Sign-up fields (and their options for Choice fields), keyed by English name so a subscriber's
                 // answers can reference them. Fields/options cascade-persist through the list.
                 $fields = [];
-                foreach ($signupListData['fields'] ?? [] as $fieldData) {
+                foreach ($signupListData['fields'] ?? [] as $fieldIndex => $fieldData) {
                     $field = new SignupField();
                     $field->setName(new ActivityLocalisedText($fieldData['name']['en'], $fieldData['name']['nl']));
                     $field->setType($fieldData['type']);
+                    $field->setPosition($fieldIndex);
                     $signupList->addField($field);
 
                     $options = [];
-                    foreach ($fieldData['options'] ?? [] as $optionData) {
+                    foreach ($fieldData['options'] ?? [] as $optionIndex => $optionData) {
                         $option = new SignupOption();
                         $option->setValue(new ActivityLocalisedText($optionData['en'], $optionData['nl']));
+                        $option->setPosition($optionIndex);
+                        $option->setIsDefault($optionData['default'] ?? false);
                         $field->addOption($option);
                         $options[$optionData['en']] = $option;
                     }

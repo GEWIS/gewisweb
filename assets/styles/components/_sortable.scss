@@ -1,0 +1,14 @@
+// Drag handle and dragging state for the reusable `sortable` Stimulus controller, which reorders the entries of a
+// (form) collection by dragging. The dragged entry is dimmed while it is moved.
+.sortable-handle {
+    cursor: grab;
+    color: var(--#{$prefix}secondary-color);
+
+    &:active {
+        cursor: grabbing;
+    }
+}
+
+[data-form-collection-target="entry"].dragging {
+    opacity: 0.5;
+}

@@ -118,6 +118,17 @@ class SignupField
     private ?int $maximumValue = null;
 
     /**
+     * The position of this field among the sign-up list's fields; the organiser reorders them in the editor and this
+     * fixes the display order (lower first) everywhere the fields are listed. The id is the tiebreaker (see the
+     * ``SignupList::$fields'' ordering) so pre-existing fields keep their relative order.
+     */
+    #[Column(
+        type: Types::INTEGER,
+        options: ['default' => 0],
+    )]
+    private int $position = 0;
+
+    /**
      * The allowed options for the SignupField of the ``option'' type.
      *
      * @var Collection<array-key, SignupOption>
@@ -131,7 +142,10 @@ class SignupField
         ],
         orphanRemoval: true,
     )]
-    #[OrderBy(['id' => 'ASC'])]
+    #[OrderBy([
+        'position' => 'ASC',
+        'id' => 'ASC',
+    ])]
     private Collection $options;
 
     public function __construct()
@@ -222,6 +236,16 @@ class SignupField
     public function setMaximumValue(?int $maximumValue): void
     {
         $this->maximumValue = $maximumValue;
+    }
+
+    public function getPosition(): int
+    {
+        return $this->position;
+    }
+
+    public function setPosition(int $position): void
+    {
+        $this->position = $position;
     }
 
     /**

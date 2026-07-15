@@ -661,6 +661,10 @@
         <source>Date/time</source>
         <target>Datum/tijd</target>
       </trans-unit>
+      <trans-unit id="NR4FjXR" resname="Default">
+        <source>Default</source>
+        <target state="translated">Standaard</target>
+      </trans-unit>
       <trans-unit id="nooMqa8" resname="Delete album">
         <source>Delete album</source>
         <target state="translated">Album verwijderen</target>
@@ -1992,6 +1996,14 @@
       <trans-unit id="avQ46Ou" resname="Reopen">
         <source>Reopen</source>
         <target state="translated">Heropenen</target>
+      </trans-unit>
+      <trans-unit id="YGNXLoq" resname="Reorder option">
+        <source>Reorder option</source>
+        <target state="translated">Optie verplaatsen</target>
+      </trans-unit>
+      <trans-unit id=".ibmqP1" resname="Reorder question">
+        <source>Reorder question</source>
+        <target state="translated">Vraag verplaatsen</target>
       </trans-unit>
       <trans-unit id="0GpRD.b" resname="Repeat password">
         <source>Repeat password</source>

@@ -661,6 +661,10 @@
         <source>Date/time</source>
         <target>Date/time</target>
       </trans-unit>
+      <trans-unit id="NR4FjXR" resname="Default">
+        <source>Default</source>
+        <target state="translated">Default</target>
+      </trans-unit>
       <trans-unit id="nooMqa8" resname="Delete album">
         <source>Delete album</source>
         <target state="translated">Delete album</target>
@@ -1992,6 +1996,14 @@
       <trans-unit id="avQ46Ou" resname="Reopen">
         <source>Reopen</source>
         <target state="translated">Reopen</target>
+      </trans-unit>
+      <trans-unit id="YGNXLoq" resname="Reorder option">
+        <source>Reorder option</source>
+        <target state="translated">Reorder option</target>
+      </trans-unit>
+      <trans-unit id=".ibmqP1" resname="Reorder question">
+        <source>Reorder question</source>
+        <target state="translated">Reorder question</target>
       </trans-unit>
       <trans-unit id="0GpRD.b" resname="Repeat password">
         <source>Repeat password</source>

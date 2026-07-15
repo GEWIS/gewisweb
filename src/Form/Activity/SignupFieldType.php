@@ -9,13 +9,16 @@ use App\Entity\Activity\SignupField;
 use App\Form\Application\LocalisedTextType;
 use Override;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use function strval;
 use function Symfony\Component\Translation\t;
 
 /**
@@ -81,8 +84,24 @@ class SignupFieldType extends AbstractType
                     'by_reference' => false,
                     'prototype' => true,
                     'prototype_name' => '__option__',
+                    'block_prefix' => 'signup_option_collection',
                 ],
             );
+
+        // The organiser reorders the questions by dragging (see the sortable Stimulus controller); the new order is
+        // written into this hidden input per entry and mapped onto the position column. HiddenType keeps the value as
+        // a string, so transform it to/from the entity's int property.
+        $builder->add(
+            'position',
+            HiddenType::class,
+            [
+                'attr' => ['data-sortable-target' => 'position'],
+            ],
+        );
+        $builder->get('position')->addModelTransformer(new CallbackTransformer(
+            static fn (?int $value): string => strval($value ?? 0),
+            static fn (?string $value): int => (int) $value,
+        ));
     }
 
     #[Override]

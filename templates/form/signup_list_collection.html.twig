@@ -103,13 +103,25 @@
 {# --- Custom field (question) ---------------------------------------------------------------------------------- #}
 {% macro signup_field_panel(child, collapse_id, remove_label) %}
     <div class="panel mb-3" data-form-collection-target="entry">
-        <button type="button"
-                class="panel-heading signup-list-heading d-flex justify-content-between align-items-center gap-2 w-100 border-0 bg-transparent text-start"
-                data-bs-toggle="collapse" data-bs-target="#{{ collapse_id }}"
-                aria-expanded="true" aria-controls="{{ collapse_id }}">
-            <span class="h6 mb-0">{{ 'Question'|trans }} <span class="signup-field-number"></span></span>
-            <i class="fas fa-chevron-down signup-list-chevron"></i>
-        </button>
+        {# The drag handle is a sibling of (never nested in) the collapse button: a nested interactive element would
+           fight `data-bs-toggle` and swallow text selection. Only the handle is draggable, and it is offered only when
+           the fields collection is editable (a frozen list ignores its submissions, so reordering could not persist). #}
+        <div class="panel-heading d-flex align-items-center gap-2">
+            {% if not child.vars.disabled %}
+                <span class="sortable-handle" draggable="true"
+                      data-action="dragstart->sortable#dragStart dragend->sortable#dragEnd"
+                      role="button" aria-label="{{ 'Reorder question'|trans }}">
+                    <i class="fas fa-arrows-up-down"></i>
+                </span>
+            {% endif %}
+            <button type="button"
+                    class="signup-list-heading d-flex justify-content-between align-items-center gap-2 w-100 border-0 bg-transparent text-start p-0"
+                    data-bs-toggle="collapse" data-bs-target="#{{ collapse_id }}"
+                    aria-expanded="true" aria-controls="{{ collapse_id }}">
+                <span class="h6 mb-0">{{ 'Question'|trans }} <span class="signup-field-number"></span></span>
+                <i class="fas fa-chevron-down signup-list-chevron"></i>
+            </button>
+        </div>
         <div class="collapse show" id="{{ collapse_id }}">
             {# signup-field shows the min/max bounds only for a "number" field and the options only for a "choice"
                field, seeding/clearing the options as the type changes. #}
@@ -149,13 +161,16 @@
     {% set has_prototype = allow_add and prototype is defined and prototype is not null %}
     {% set placeholder = has_prototype ? (prototype.vars.name|split('[')|last|trim(']')) : '__field__' %}
     {% set remove_label = 'Remove question'|trans %}
+    {# `sortable` (added only when the collection is editable) turns the drag handles into a reorder: it moves the
+       question panels and writes their new order into each panel's hidden position input. #}
     <div id="{{ id }}" class="signup-field-collection"
-         data-controller="form-collection"
+         data-controller="form-collection{% if not disabled %} sortable{% endif %}"
          data-form-collection-prototype-name-value="{{ placeholder }}"
          {% if has_prototype %}
              data-form-collection-prototype-value="{{ helper.signup_field_panel(prototype, prototype.vars.id ~ '-collapse', remove_label)|e('html_attr') }}"
          {% endif %}>
-        <div data-form-collection-target="entries">
+        <div data-form-collection-target="entries" data-sortable-target="entries"
+             data-action="dragover->sortable#dragOver drop->sortable#drop">
             {% for child in form %}
                 {{ helper.signup_field_panel(child, child.vars.id ~ '-collapse', remove_label) }}
             {% endfor %}
@@ -164,6 +179,60 @@
         {% if allow_add and not disabled %}
             <button type="button" class="btn btn-sm btn-outline-secondary" data-action="form-collection#add">
                 <i class="fas fa-plus"></i> {{ 'Add a question'|trans }}
+            </button>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{# --- Choice option -------------------------------------------------------------------------------------------- #}
+{# The options of a "choice" question. Like the questions themselves these are draggable to reorder (the `sortable`
+   controller writes the new order into each option's hidden position input) and each carries an "is default" checkbox;
+   the signup-field controller keeps at most one default checked per question. This mirrors the generic `collection`
+   form theme but adds the handle, the default checkbox and the position input. #}
+{% macro signup_option_entry(child, remove_label) %}
+    <div class="d-flex align-items-start gap-2 border rounded p-3 mb-2" data-form-collection-target="entry">
+        {% if not child.vars.disabled %}
+            <span class="sortable-handle mt-2" draggable="true"
+                  data-action="dragstart->sortable#dragStart dragend->sortable#dragEnd"
+                  role="button" aria-label="{{ 'Reorder option'|trans }}">
+                <i class="fas fa-arrows-up-down"></i>
+            </span>
+        {% endif %}
+        <div class="flex-grow-1">
+            {{ form_row(child.value) }}
+            {{ form_row(child.isDefault) }}
+            {{ form_rest(child) }}
+            {% if not child.vars.disabled %}
+                <button type="button" class="btn btn-sm btn-outline-gewis-primary mt-2"
+                        data-action="form-collection#remove">
+                    <i class="fas fa-trash"></i> {{ remove_label }}
+                </button>
+            {% endif %}
+        </div>
+    </div>
+{% endmacro %}
+
+{% block signup_option_collection_widget %}
+    {% import _self as helper %}
+    {% set has_prototype = allow_add and prototype is defined and prototype is not null %}
+    {% set placeholder = has_prototype ? (prototype.vars.name|split('[')|last|trim(']')) : '__option__' %}
+    {% set add_label = add_label|default('Add option'|trans) %}
+    {% set remove_label = remove_label|default('Remove option'|trans) %}
+    <div id="{{ id }}" class="signup-option-collection"
+         data-controller="form-collection{% if not disabled %} sortable{% endif %}"
+         data-form-collection-prototype-name-value="{{ placeholder }}"
+         {% if has_prototype %}
+             data-form-collection-prototype-value="{{ helper.signup_option_entry(prototype, remove_label)|e('html_attr') }}"
+         {% endif %}>
+        <div data-form-collection-target="entries" data-sortable-target="entries"
+             data-action="dragover->sortable#dragOver drop->sortable#drop">
+            {% for child in form %}
+                {{ helper.signup_option_entry(child, remove_label) }}
+            {% endfor %}
+        </div>
+        {% if allow_add and not disabled %}
+            <button type="button" class="btn btn-sm btn-outline-secondary mt-2" data-action="form-collection#add">
+                <i class="fas fa-plus"></i> {{ add_label }}
             </button>
         {% endif %}
     </div>

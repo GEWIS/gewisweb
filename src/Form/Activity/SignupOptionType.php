@@ -8,9 +8,13 @@ use App\Entity\Activity\SignupOption;
 use App\Form\Application\LocalisedTextType;
 use Override;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use function strval;
 use function Symfony\Component\Translation\t;
 
 /**
@@ -25,11 +29,40 @@ class SignupOptionType extends AbstractType
         FormBuilderInterface $builder,
         array $options,
     ): void {
+        $builder
+            ->add(
+                'value',
+                LocalisedTextType::class,
+                ['label' => t('Option')],
+            )
+            ->add(
+                'isDefault',
+                CheckboxType::class,
+                [
+                    'label' => t('Default'),
+                    'required' => false,
+                    // Rendered as a checkbox but made mutually exclusive per field by the signup-field controller
+                    // (checking one clears the others), so at most one option is the default.
+                    'attr' => [
+                        'data-signup-field-target' => 'defaultOption',
+                        'data-action' => 'change->signup-field#defaultChanged',
+                    ],
+                ],
+            );
+
+        // Options are reorderable too (see the sortable Stimulus controller); carry the dragged order in a hidden
+        // input, transformed to/from the entity's int position like the field's own position.
         $builder->add(
-            'value',
-            LocalisedTextType::class,
-            ['label' => t('Option')],
+            'position',
+            HiddenType::class,
+            [
+                'attr' => ['data-sortable-target' => 'position'],
+            ],
         );
+        $builder->get('position')->addModelTransformer(new CallbackTransformer(
+            static fn (?int $value): string => strval($value ?? 0),
+            static fn (?string $value): int => (int) $value,
+        ));
     }
 
     #[Override]

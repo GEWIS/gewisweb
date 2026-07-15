@@ -91,6 +91,135 @@ final class SignupTypeTest extends TypeTestCase
         );
     }
 
+    public function testDefaultOptionIsPreselectedForANewSignupAndDropsThePlaceholder(): void
+    {
+        $list = new SignupList();
+        $list->addField($this->choiceField(
+            100,
+            [
+                201 => false,
+                202 => true,
+                203 => false,
+            ],
+        ));
+
+        // A brand-new sign-up: no prefill data, so the field-level default takes effect.
+        $form = $this->factory->create(
+            SignupType::class,
+            null,
+            [
+                'signupList' => $list,
+                'mode' => SignupType::MODE_MEMBER,
+            ],
+        );
+
+        $choice = $form->get(SignupType::fieldKey(100));
+
+        // The flagged option is preselected...
+        self::assertSame(
+            202,
+            $choice->getData(),
+        );
+        // ...and the empty placeholder is dropped (ChoiceType normalises `false` to null), so a real option is always
+        // selected.
+        self::assertNull($choice->getConfig()->getOption('placeholder'));
+    }
+
+    public function testAnExistingAnswerOverridesTheDefaultOption(): void
+    {
+        $list = new SignupList();
+        $list->addField($this->choiceField(
+            100,
+            [
+                201 => false,
+                202 => true,
+                203 => false,
+            ],
+        ));
+
+        // Editing an existing sign-up whose saved answer is a non-default option; the prefill data must win.
+        $form = $this->factory->create(
+            SignupType::class,
+            [SignupType::fieldKey(100) => 203],
+            [
+                'signupList' => $list,
+                'mode' => SignupType::MODE_MEMBER,
+            ],
+        );
+
+        self::assertSame(
+            203,
+            $form->get(SignupType::fieldKey(100))->getData(),
+        );
+    }
+
+    public function testWithoutADefaultTheChoiceKeepsItsPlaceholderAndNoPreselection(): void
+    {
+        $list = new SignupList();
+        $list->addField($this->choiceField(
+            100,
+            [
+                201 => false,
+                202 => false,
+            ],
+        ));
+
+        $form = $this->factory->create(
+            SignupType::class,
+            null,
+            [
+                'signupList' => $list,
+                'mode' => SignupType::MODE_MEMBER,
+            ],
+        );
+
+        $choice = $form->get(SignupType::fieldKey(100));
+
+        self::assertNull($choice->getData());
+        // The stub translator echoes the message key, so the placeholder is present (not dropped).
+        self::assertSame(
+            'Choose an option',
+            $choice->getConfig()->getOption('placeholder'),
+        );
+    }
+
+    /**
+     * A choice field with the given options, each flagged (or not) as the default.
+     *
+     * @param array<int, bool> $options option id => whether it is the default
+     */
+    private function choiceField(
+        int $fieldId,
+        array $options,
+    ): SignupField {
+        $field = new SignupField();
+        $this->setId(
+            $field,
+            $fieldId,
+        );
+        $field->setName(new ActivityLocalisedText(
+            'Kleur',
+            'Colour',
+        ));
+        $field->setType(SignupFieldTypes::Choice);
+
+        foreach ($options as $optionId => $isDefault) {
+            $option = new SignupOption();
+            $this->setId(
+                $option,
+                $optionId,
+            );
+            $option->setValue(new ActivityLocalisedText(
+                'Waarde ' . $optionId,
+                'Value ' . $optionId,
+            ));
+            $option->setIsDefault($isDefault);
+            $field->addOption($option);
+        }
+
+        return $field;
+    }
+
     private function choiceFieldWithDuplicateLabels(): SignupField
     {
         $field = new SignupField();

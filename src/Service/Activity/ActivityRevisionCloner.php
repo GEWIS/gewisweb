@@ -133,6 +133,8 @@ final readonly class ActivityRevisionCloner extends AbstractRevisionCloner
         $field->setIsSensitive($source->isSensitive());
         $field->setMinimumValue($source->getMinimumValue());
         $field->setMaximumValue($source->getMaximumValue());
+        // Carry the display order forward, otherwise a reordered list would revert to id order on the next draft.
+        $field->setPosition($source->getPosition());
 
         foreach ($source->getOptions() as $option) {
             $field->addOption($this->copySignupOption($option));
@@ -145,6 +147,9 @@ final readonly class ActivityRevisionCloner extends AbstractRevisionCloner
     {
         $option = new SignupOption();
         $option->setValue($source->getValue()->copy());
+        // Carry the display order and the default marker forward, like the field's own position.
+        $option->setPosition($source->getPosition());
+        $option->setIsDefault($source->isDefault());
 
         return $option;
     }
