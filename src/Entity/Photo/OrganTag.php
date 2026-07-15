@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 
 /**
- * A tag linking a photo to an organ it belongs to or features (GH-1991). Unlike {@see MemberTag} this carries no
+ * A tag linking a photo to an organ it belongs to or features. Unlike {@see MemberTag} this carries no
  * personal data, so it is excluded from GDPR member exports; in the viewer it links through to the organ's page.
  */
 #[Entity(repositoryClass: OrganTagRepository::class)]

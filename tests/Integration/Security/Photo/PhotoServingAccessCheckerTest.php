@@ -16,7 +16,7 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 /**
  * The serving gate for the private photos namespace. A full member is granted based on the (already
  * validated) signature without any per-photo query, while a graduate's request runs the per-photo voter so a leaked
- * URL can never bypass their #1658 membership cutoff.
+ * URL can never bypass their membership cutoff.
  */
 final class PhotoServingAccessCheckerTest extends DatabaseTestCase
 {

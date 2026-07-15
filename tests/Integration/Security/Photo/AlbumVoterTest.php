@@ -16,10 +16,11 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
- * The #1658 regression matrix. The seed's Gala album has a Dinner and an Afterparty sub-album; one graduate is tagged
- * in each. Because the fixture randomises a graduate's membership-end date, each test pins it explicitly: a date in the
- * past makes the (recent) albums fall after the membership ended, activating the tagged-in-subtree rule; a future
- * date makes them fall before it. Ordinary members, the board, API and anonymous requests round out the matrix.
+ * The graduate-subtree regression matrix. The seed's Gala album has a Dinner and an Afterparty sub-album; one
+ * graduate is tagged in each. Because the fixture randomises a graduate's membership-end date, each test pins it
+ * explicitly: a date in the past makes the (recent) albums fall after the membership ended, activating the
+ * tagged-in-subtree rule; a future date makes them fall before it. Ordinary members, the board, API and anonymous
+ * requests round out the matrix.
  */
 final class AlbumVoterTest extends DatabaseTestCase
 {
@@ -28,7 +29,7 @@ final class AlbumVoterTest extends DatabaseTestCase
 
     public function testGraduateTaggedInASubAlbumMayViewTheParentAlbum(): void
     {
-        // The #1658 case: tagged in Dinner (a sub-album), the graduate may view the parent Gala album.
+        // The graduate-subtree case: tagged in Dinner (a sub-album), the graduate may view the parent Gala album.
         $this->pinMembershipEnd(
             PhotoFixture::GRADUATE_TAGGED_IN_SUBTREE,
             self::BEFORE_ALBUMS,

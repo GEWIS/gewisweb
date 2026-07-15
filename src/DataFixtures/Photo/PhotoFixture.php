@@ -45,7 +45,7 @@ use function tempnam;
 use function unlink;
 
 /**
- * Seeds a photo tree so the authorization matrix (published/unpublished, sub-albums, member and organ tags, the #1658
+ * Seeds a photo tree so the authorization matrix (published/unpublished, sub-albums, member and organ tags, the
  * graduate-in-subtree rule), voting, the weekly photo and profile photos can all be exercised by integration tests and
  * browsed in dev.
  *
@@ -60,14 +60,14 @@ use function unlink;
  * filter, month dividers, masonry grid and viewer paging can be browsed with realistic data.
  *
  * Images are generated on the fly rather than committed to the repository, so an album can hold two hundred photos
- * without shipping any binaries. The three graduate lidnrs below drive the #1658 regression suite:
+ * without shipping any binaries. The three graduate lidnrs below drive the graduate-subtree regression suite:
  * {@see GRADUATE_TAGGED_IN_SUBTREE} is tagged in a sub-album and must therefore be able to view the parent Gala album;
  * {@see GRADUATE_TAGGED_IN_OTHER_SUBALBUM} is tagged in the sibling sub-album (so may view Gala, but not the Dinner
  * sub-album on its own); and {@see GRADUATE_TAGGED_NOWHERE} is tagged nowhere and may view nothing.
  */
 class PhotoFixture extends Fixture implements DependentFixtureInterface
 {
-    /** A graduate tagged in the Dinner sub-album, so must be able to view the parent Gala album (#1658). */
+    /** A graduate tagged in the Dinner sub-album, so must be able to view the parent Gala album. */
     public const int GRADUATE_TAGGED_IN_SUBTREE = 8155;
 
     /** A graduate tagged in the sibling Afterparty sub-album (inside the Gala tree, but not in Dinner's). */

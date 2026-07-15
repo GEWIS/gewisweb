@@ -30,8 +30,8 @@ class MemberTagRepository extends ServiceEntityRepository
 
     /**
      * Whether the member is tagged in any photo anywhere in the album's subtree (the album itself or any descendant).
-     * This is the recursive form the #1658 fix requires: a graduate tagged in a sub-album may view the parent album,
-     * not only the album that directly holds the photo they are in.
+     * This is the recursive form the graduate-subtree fix requires: a graduate tagged in a sub-album may view the
+     * parent album, not only the album that directly holds the photo they are in.
      */
     public function isTaggedInAlbumTree(
         int $albumId,

@@ -21,8 +21,9 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
  *
  * Unpublished albums are never shown through public browsing, not even to the board (a draft mixed in with live albums
  * is confusing); they are managed and previewed only in the photo admin. Published albums are viewable by the board and
- * by API users (the TV screens) and by ordinary/active members. Graduates are gated by rule #1658: a graduate may view
- * an album that was made before their membership ended, or any album whose subtree they are tagged in. The recursive
+ * by API users (the TV screens) and by ordinary/active members. Graduates are gated by the graduate-subtree rule:
+ * a graduate may view an album that was made before their membership ended, or any album whose subtree they are
+ * tagged in. The recursive
  * subtree check is the fix for the old bug where a graduate tagged in a sub-album could not view the parent. Anonymous
  * and company users cannot browse albums at all.
  *
@@ -100,8 +101,8 @@ final class AlbumVoter extends Voter
     }
 
     /**
-     * The #1658 rule: a graduate may view an album dated before their membership ended, or any album whose subtree they
-     * are tagged in.
+     * The graduate-subtree rule: a graduate may view an album dated before their membership ended, or any album whose
+     * subtree they are tagged in.
      */
     private function graduateMayView(
         Album $album,

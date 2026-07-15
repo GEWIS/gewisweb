@@ -19,7 +19,7 @@ use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
  *
  * Full members (and API users / the TV screens) get the fast path: the day-signature the controller already validated
  * proves the URL came from a context where fine-grained authorization ran, so no query is needed. Graduates do not get
- * the fast path: a leaked URL must never bypass their #1658 membership cutoff, so their request runs the {@see
+ * the fast path: a leaked URL must never bypass their membership cutoff, so their request runs the {@see
  * PhotoVoter} on the photo (originals) or the {@see AlbumVoter} on the album (covers), resolved from the stored path.
  * Everyone else (anonymous, company) is denied.
  */
@@ -56,7 +56,7 @@ final readonly class PhotoServingAccessChecker implements ServingAccessCheckerIn
             return true;
         }
 
-        // Graduates: enforce the #1658 cutoff even on a leaked URL, against the photo or the cover's album.
+        // Graduates: enforce the membership cutoff even on a leaked URL, against the photo or the cover's album.
         if ($this->security->isGranted(UserRoles::Graduate->value)) {
             return StorageNamespace::PhotoCover === $namespace
                 ? $this->graduateMayViewCover($path)

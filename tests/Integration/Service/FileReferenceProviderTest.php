@@ -15,7 +15,7 @@ use App\Service\Decision\OrganImageReferenceProvider;
 use App\Tests\Integration\DatabaseTestCase;
 
 /**
- * The reference providers back {@see FileStorage::remove()}'s GH-583 guarantee: a content-addressed file is only
+ * The reference providers back {@see FileStorage::remove()}'s guarantee: a content-addressed file is only
  * unlinked once no domain still points at it. Each provider reports on its own table, and all of them are auto-tagged
  * so the storage service consults them, which the final test proves end to end against the seeded MariaDB.
  */

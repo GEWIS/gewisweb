@@ -9,7 +9,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * Repository for {@see OrganTag}s, the organ-linking tag subtype (GH-1991).
+ * Repository for {@see OrganTag}s, the organ-linking tag subtype.
  *
  * @extends ServiceEntityRepository<OrganTag>
  */

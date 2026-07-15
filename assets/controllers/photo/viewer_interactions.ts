@@ -380,7 +380,7 @@ export class ViewerInteractions {
         const chip = document.createElement('span');
         chip.className = 'pswp__photo-tag pswp__photo-tag--organ';
         chip.title = tag.name;
-        // A group icon marks this as an organ tag. There is no public organ page yet (#1991), so it is plain text.
+        // A group icon marks this as an organ tag; unlike a member tag it is rendered as plain text, not a link.
         chip.append(this.icon('fa-users'), document.createTextNode(tag.abbr));
 
         if (tag.canRemove) {

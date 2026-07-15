@@ -9,7 +9,7 @@ use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 /**
  * Reports whether a domain still references a given stored file. Because stored files are content-addressed,
  * two entities (even across domains) can legitimately share one physical file, so {@see FileStorage::remove()} must
- * never delete the bytes while another row still references them (GH-583). Each domain that persists stored paths
+ * never delete the bytes while another row still references them. Each domain that persists stored paths
  * (photos, album covers, company logos, organ images) implements this and reports on its own tables; the storage
  * service consults every implementation before unlinking.
  *

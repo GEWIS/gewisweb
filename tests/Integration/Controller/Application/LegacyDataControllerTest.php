@@ -22,7 +22,7 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 /**
  * The legacy `/data/{path}` redirect controller. Company paths map deterministically; flat paths are disambiguated by
  * filename against the seeded MariaDB. Photo originals never 301 to an image URL: an authorised member is redirected to
- * the viewer and everyone else is denied (#1361). Invoked directly, since the codebase has no WebTestCase.
+ * the viewer and everyone else is denied. Invoked directly, since the codebase has no WebTestCase.
  */
 final class LegacyDataControllerTest extends DatabaseTestCase
 {

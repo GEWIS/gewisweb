@@ -76,7 +76,7 @@ final readonly class AlbumService
      * The viewable root albums of one association year, grouped by month (keyed 'Y-m', most recent month first) so the
      * overview can print a month divider before each group. An optional search narrows the albums to those whose name
      * contains it. Only published albums are surfaced (drafts live in the admin, even for the board); graduates only
-     * see the albums the voter allows them (#1658).
+     * see the albums the voter allows them.
      *
      * @return array<string, Album[]>
      */
@@ -166,7 +166,7 @@ final readonly class AlbumService
 
     /**
      * The sub-albums of an album that the current user may view. Each is checked individually because a graduate may be
-     * allowed into some sub-albums but not their siblings (#1658).
+     * allowed into some sub-albums but not their siblings.
      *
      * @return Album[]
      */

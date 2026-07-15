@@ -26,8 +26,7 @@ use function sprintf;
  * {@see StorageNamespace} plus that hash, and skips the write when identical content already exists (de-duplication).
  * Legacy files migrated from the Laminas layout keep their existing (sha1) names; the service never infers the hash
  * algorithm from a path, so both coexist. Deletion is reference-checked: a content-addressed file may be shared by
- * several entities, so {@see remove()} unlinks only when no {@see FileReferenceProviderInterface} still claims it
- * (GH-583).
+ * several entities, so {@see remove()} unlinks only when no {@see FileReferenceProviderInterface} still claims it.
  *
  * The service is stateless and worker-safe: it holds no request- or user-scoped state.
  */
@@ -211,7 +210,7 @@ final readonly class FileStorage
     }
 
     /**
-     * Delete the file at the given stored path, but only if no domain still references it (GH-583). Returns whether the
+     * Delete the file at the given stored path, but only if no domain still references it. Returns whether the
      * file was actually removed (or was already absent); `false` means another entity still points at the shared bytes.
      *
      * Call this only after removing your own referencing entity and flushing, so the providers see committed state.

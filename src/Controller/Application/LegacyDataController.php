@@ -31,7 +31,7 @@ use function str_ends_with;
  * The migration re-rooted each legacy file under its new namespace directory but kept the filename, so a legacy path is
  * resolved by its filename: `company/{id}/…` is self-identifying and maps deterministically, while a flat
  * `{2ch}/{file}` path is disambiguated against the database. Photo originals are members-only, so they never 301 to an
- * image URL (which would leak the bytes); instead they redirect an authorised member to the viewer (#1361) and deny
+ * image URL (which would leak the bytes); instead they redirect an authorised member to the viewer and deny
  * everyone else.
  */
 final class LegacyDataController extends AbstractController

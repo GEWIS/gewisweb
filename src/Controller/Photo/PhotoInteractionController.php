@@ -125,7 +125,7 @@ class PhotoInteractionController extends AbstractController
                 $photo,
                 $member->getLidnr(),
             ),
-            // The pulsing-dot nudge shows only when the member has not voted recently (#2066).
+            // The pulsing-dot nudge shows only when the member has not voted recently.
             'recentVote' => $this->voteRepository->hasRecentVote($member->getLidnr()),
             'taggedSelf' => $taggedSelf,
             // The week this photo was photo of the week, if ever, so the viewer can badge it.
