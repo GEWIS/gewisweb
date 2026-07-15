@@ -11,6 +11,7 @@ use App\Entity\Photo\MemberTag;
 use App\Entity\Photo\OrganAlbum;
 use App\Entity\Photo\OrganTag;
 use App\Entity\Photo\Photo;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -184,6 +185,36 @@ class PhotoRepository extends ServiceEntityRepository
         }
 
         return $counts;
+    }
+
+    /**
+     * The earliest and latest capture time among an album's direct photos, or [null, null] when it has none, so an
+     * album's own date range can be kept in step with its photos.
+     *
+     * @return array{0: ?DateTime, 1: ?DateTime}
+     */
+    public function getDateRange(Album $album): array
+    {
+        $row = (array) $this->createQueryBuilder('p')
+            ->select(
+                'MIN(p.dateTime) AS start',
+                'MAX(p.dateTime) AS end',
+            )
+            ->where('p.album = :album')
+            ->setParameter(
+                'album',
+                $album->getId(),
+            )
+            ->getQuery()
+            ->getSingleResult();
+
+        $start = $row['start'] ?? null;
+        $end = $row['end'] ?? null;
+
+        return [
+            null === $start ? null : new DateTime((string) $start),
+            null === $end ? null : new DateTime((string) $end),
+        ];
     }
 
     /**

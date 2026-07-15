@@ -26,8 +26,8 @@ use function getimagesize;
  * the same bytes, and — only once its Photo is committed — queued for variant generation. After the batch the album
  * cover is queued for regeneration once.
  *
- * EXIF is deferred (the running image has no ext-exif), so aspect ratio comes from the image header via getimagesize
- * and the timestamp is the upload time; the EXIF columns stay null until a metadata service backfills them.
+ * Aspect ratio comes from the image header via getimagesize; the remaining metadata (capture time, camera, GPS, ...)
+ * is read from the original's EXIF, falling back to the upload time when the image carries none.
  */
 final readonly class PhotoUploadService
 {
@@ -36,6 +36,7 @@ final readonly class PhotoUploadService
         private PhotoRepository $photoRepository,
         private EntityManagerInterface $entityManager,
         private MessageBusInterface $messageBus,
+        private PhotoMetadataReader $metadataReader,
     ) {
     }
 
@@ -112,6 +113,7 @@ final readonly class PhotoUploadService
             $photo->setDateTime(new DateTime());
             // Aspect ratio is height / width, matching the pre-migration convention.
             $photo->setAspectRatio($dimensions[1] / $dimensions[0]);
+            $this->metadataReader->read($file->getPathname())->applyTo($photo);
 
             $this->entityManager->persist($photo);
             $this->entityManager->flush();

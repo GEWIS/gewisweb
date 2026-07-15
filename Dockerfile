@@ -27,6 +27,7 @@ RUN <<-EOF
         @composer \
         amqp \
         apcu \
+        exif \
         ffi \
         gd \
         intl \

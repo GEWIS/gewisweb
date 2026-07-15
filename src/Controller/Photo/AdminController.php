@@ -321,7 +321,16 @@ class AdminController extends AbstractController
             static fn (mixed $file): bool => $file instanceof UploadedFile,
         );
 
-        return new JsonResponse($this->photoUploadService->upload($album, $files));
+        $result = $this->photoUploadService->upload(
+            $album,
+            $files,
+        );
+
+        if ($result['created'] > 0) {
+            $this->albumAdminService->updateDateRange($album);
+        }
+
+        return new JsonResponse($result);
     }
 
     #[Route(

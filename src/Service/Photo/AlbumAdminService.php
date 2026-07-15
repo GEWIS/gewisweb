@@ -7,6 +7,7 @@ namespace App\Service\Photo;
 use App\Entity\Photo\Album;
 use App\Entity\Photo\Photo;
 use App\Message\Photo\GenerateAlbumCoverMessage;
+use App\Repository\Photo\PhotoRepository;
 use App\Service\Application\FileStorage;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -27,6 +28,7 @@ final readonly class AlbumAdminService
         private FileStorage $fileStorage,
         private EntityManagerInterface $entityManager,
         private MessageBusInterface $messageBus,
+        private PhotoRepository $photoRepository,
     ) {
     }
 
@@ -39,6 +41,16 @@ final readonly class AlbumAdminService
     }
 
     /**
+     * Set the album's date range to span its photos' capture times, e.g. after photos have been uploaded, moved or
+     * deleted. An album with no photos loses its range.
+     */
+    public function updateDateRange(Album $album): void
+    {
+        $this->applyDateRange($album);
+        $this->entityManager->flush();
+    }
+
+    /**
      * Move photos to another album in one go: reassign them, flush once, then regenerate the cover of each album whose
      * photo set actually changed (the destination and every distinct source), each cover at most once.
      *
@@ -48,25 +60,31 @@ final readonly class AlbumAdminService
         array $photos,
         Album $destination,
     ): void {
-        $affectedAlbumIds = [];
+        $affectedAlbums = [];
         foreach ($photos as $photo) {
             $source = $photo->getAlbum();
             if ($source->getId() === $destination->getId()) {
                 continue;
             }
 
-            $affectedAlbumIds[(int) $source->getId()] = true;
+            $affectedAlbums[(int) $source->getId()] = $source;
             $photo->setAlbum($destination);
         }
 
-        if ([] === $affectedAlbumIds) {
+        if ([] === $affectedAlbums) {
             return;
         }
 
         $this->entityManager->flush();
 
-        $affectedAlbumIds[(int) $destination->getId()] = true;
-        foreach (array_keys($affectedAlbumIds) as $albumId) {
+        $affectedAlbums[(int) $destination->getId()] = $destination;
+        foreach ($affectedAlbums as $album) {
+            $this->applyDateRange($album);
+        }
+
+        $this->entityManager->flush();
+
+        foreach (array_keys($affectedAlbums) as $albumId) {
             $this->messageBus->dispatch(new GenerateAlbumCoverMessage($albumId));
         }
     }
@@ -79,10 +97,10 @@ final readonly class AlbumAdminService
     public function deletePhotos(array $photos): void
     {
         $paths = [];
-        $albumIds = [];
+        $albums = [];
         foreach ($photos as $photo) {
             $paths[] = $photo->getPath();
-            $albumIds[(int) $photo->getAlbum()->getId()] = true;
+            $albums[(int) $photo->getAlbum()->getId()] = $photo->getAlbum();
             $this->entityManager->remove($photo);
         }
 
@@ -92,7 +110,13 @@ final readonly class AlbumAdminService
             $this->fileStorage->remove($path);
         }
 
-        foreach (array_keys($albumIds) as $albumId) {
+        foreach ($albums as $album) {
+            $this->applyDateRange($album);
+        }
+
+        $this->entityManager->flush();
+
+        foreach (array_keys($albums) as $albumId) {
             $this->messageBus->dispatch(new GenerateAlbumCoverMessage($albumId));
         }
     }
@@ -123,6 +147,13 @@ final readonly class AlbumAdminService
         foreach (array_unique($coverPaths) as $coverPath) {
             $this->fileStorage->remove($coverPath);
         }
+    }
+
+    private function applyDateRange(Album $album): void
+    {
+        $range = $this->photoRepository->getDateRange($album);
+        $album->setStartDateTime($range[0]);
+        $album->setEndDateTime($range[1]);
     }
 
     /**
