@@ -225,13 +225,34 @@ class ActivityType extends AbstractType
                     continue;
                 }
 
+                // A choice field may preselect at most one option as its default. The editor enforces this client-side
+                // (the checkboxes are mutually exclusive), so this only guards a tampered submission.
+                $defaultCount = 0;
                 foreach ($fieldForm->get('options') as $optionForm) {
                     $this->requireLocalised(
                         $optionForm->get('value'),
                         $dutchOn,
                         $englishOn,
                     );
+
+                    if (true !== $optionForm->get('isDefault')->getData()) {
+                        continue;
+                    }
+
+                    ++$defaultCount;
                 }
+
+                if ($defaultCount <= 1) {
+                    continue;
+                }
+
+                $fieldForm->addError(new FormError(
+                    $this->translator->trans(
+                        'Only one option can be preselected as the default.',
+                        [],
+                        'validators',
+                    ),
+                ));
             }
         }
     }

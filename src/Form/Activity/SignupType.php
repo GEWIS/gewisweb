@@ -17,6 +17,8 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\IsTrue;
@@ -291,6 +293,8 @@ class SignupType extends AbstractType
                     $labelsById[$optionId] = $option->getValue()->getText($language) ?? '';
                 }
 
+                $defaultOptionId = self::defaultOptionId($field);
+
                 $builder->add(
                     $name,
                     ChoiceType::class,
@@ -299,13 +303,46 @@ class SignupType extends AbstractType
                         'choices' => $optionIds,
                         'choice_label' => static fn (int $id): string => $labelsById[$id] ?? '',
                         'choice_translation_domain' => false,
-                        'placeholder' => $this->translator->trans('Choose an option'),
+                        // With a default option, drop the empty placeholder so a real option is always selected.
+                        'placeholder' => null !== $defaultOptionId
+                            ? false
+                            : $this->translator->trans('Choose an option'),
                         'constraints' => [new NotNull(message: 'This field is required.')],
                     ],
                 );
 
+                // Preselect the default for a NEW sign-up only. PRE_SET_DATA fires with the value mapped from the
+                // form's data, so an existing answer (non-null) is kept and only an unanswered field falls back to the
+                // default. Setting the ChoiceType's ``data'' option instead would override the saved answer on edit.
+                if (null !== $defaultOptionId) {
+                    $builder->get($name)->addEventListener(
+                        FormEvents::PRE_SET_DATA,
+                        static function (FormEvent $event) use ($defaultOptionId): void {
+                            if (null !== $event->getData()) {
+                                return;
+                            }
+
+                            $event->setData($defaultOptionId);
+                        },
+                    );
+                }
+
                 break;
         }
+    }
+
+    /**
+     * The id of the option marked as the default for a choice field, or null if none is.
+     */
+    private static function defaultOptionId(SignupField $field): ?int
+    {
+        foreach ($field->getOptions() as $option) {
+            if ($option->isDefault()) {
+                return $option->getId();
+            }
+        }
+
+        return null;
     }
 
     #[Override]

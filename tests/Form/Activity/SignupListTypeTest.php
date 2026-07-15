@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Form\Activity;
 
 use App\Entity\Activity\ActivityLocalisedText;
+use App\Entity\Activity\Enums\SignupFieldTypes;
 use App\Entity\Activity\ExternalSignup;
 use App\Entity\Activity\SignupList;
 use App\Form\Activity\SignupFieldType;
@@ -123,6 +124,74 @@ final class SignupListTypeTest extends TypeTestCase
             ),
             'A list without sign-ups must keep its allocation method editable.',
         );
+    }
+
+    public function testSubmittedFieldAndOptionOrderAndDefaultAreMappedOntoTheEntities(): void
+    {
+        $list = $this->list();
+        $form = $this->factory->create(
+            SignupListType::class,
+            $list,
+        );
+
+        // Submit only the fields collection (clearMissing = false keeps the list's other values); the hidden position
+        // inputs carry the dragged order as strings and the default marker is a checkbox on one option.
+        $form->submit(
+            [
+                'fields' => [
+                    [
+                        'name' => [
+                            'valueNL' => 'Vraag',
+                            'valueEN' => 'Question',
+                        ],
+                        'type' => SignupFieldTypes::Choice->value,
+                        'position' => '2',
+                        'options' => [
+                            [
+                                'value' => [
+                                    'valueNL' => 'A',
+                                    'valueEN' => 'A',
+                                ],
+                                'position' => '5',
+                                'isDefault' => '1',
+                            ],
+                            [
+                                'value' => [
+                                    'valueNL' => 'B',
+                                    'valueEN' => 'B',
+                                ],
+                                'position' => '3',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            false,
+        );
+
+        $fields = $list->getFields()->getValues();
+        self::assertCount(
+            1,
+            $fields,
+        );
+        // The string position round-trips to the entity's int property (the HiddenType model transformer).
+        self::assertSame(
+            2,
+            $fields[0]->getPosition(),
+        );
+
+        $options = $fields[0]->getOptions()->getValues();
+        self::assertSame(
+            5,
+            $options[0]->getPosition(),
+        );
+        self::assertTrue($options[0]->isDefault());
+        self::assertSame(
+            3,
+            $options[1]->getPosition(),
+        );
+        // An unchecked "default" checkbox is simply absent from the submission and maps to false.
+        self::assertFalse($options[1]->isDefault());
     }
 
     private function listWithSignUp(): SignupList
