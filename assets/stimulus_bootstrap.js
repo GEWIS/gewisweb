@@ -12,6 +12,7 @@ import LocalisedFieldsController from './controllers/application/localised_field
 import MarkdownEditorController from './controllers/application/markdown_editor_controller.ts';
 import ModalCloseController from './controllers/application/modal_close_controller.ts';
 import ModalFormTargetController from './controllers/application/modal_form_target_controller.ts';
+import NavDropdownController from './controllers/application/nav_dropdown_controller.ts';
 import PrintController from './controllers/application/print_controller.ts';
 
 // Activity-specific controllers.
@@ -39,6 +40,7 @@ app.register('localised-fields', LocalisedFieldsController);
 app.register('markdown-editor', MarkdownEditorController);
 app.register('modal-close', ModalCloseController);
 app.register('modal-form-target', ModalFormTargetController);
+app.register('nav-dropdown', NavDropdownController);
 app.register('print', PrintController);
 
 app.register('activity-item', ActivityItemController);

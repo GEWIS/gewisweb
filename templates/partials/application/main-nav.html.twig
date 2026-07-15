@@ -4,7 +4,7 @@
             <div class="gi gewis-base"></div>
         </a>
         <div class="offcanvas-lg offcanvas-end flex-grow-1" id="navbar-gewis-collapse" tabindex="-1"
-             data-bs-scroll="true" aria-labelledby="gws-offcanvas-label"
+             data-bs-scroll="true" aria-labelledby="gws-offcanvas-label" data-controller="nav-dropdown"
         >
             <div class="offcanvas-header px-4 pb-0">
                 <h5 class="offcanvas-title text-white" id="gws-offcanvas-label">GEWIS</h5>
@@ -16,9 +16,9 @@
                 <ul class="navbar-nav flex-row flex-wrap">
                     <hr class="d-lg-none text-white-50">
                     {% set frontpageActive = is_module_active(['frontpage', 'page']) %}
-                    <li class="nav-item col-12 col-lg-auto dropdown dropdown-hover {{ frontpageActive ? 'active default open' : '' }}">
-                        <a href="" role="button" aria-expanded="{{ frontpageActive ? 'true' : 'false' }}"
-                           class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true"
+                    <li class="nav-item col-12 col-lg-auto dropdown dropdown-nav {{ frontpageActive ? 'active' : '' }}">
+                        <a href="" role="button" aria-expanded="false"
+                           class="nav-link dropdown-toggle" aria-haspopup="true"
                         >
                             {{ 'Association'|trans }}
                         </a>
@@ -53,7 +53,7 @@
                                 </a>
                             </li>
                             <li class="dropdown dropdown-submenu dropend">
-                                <button class="dropdown-item dropdown-toggle" data-bs-toggle="dropdown"
+                                <button class="dropdown-item dropdown-toggle"
                                         aria-haspopup="true" aria-expanded="false">
                                     {{ 'GMM Bodies'|trans }}
                                 </button>
@@ -116,7 +116,7 @@
                                 </a>
                             </li>
                             <li class="dropdown dropdown-submenu dropend">
-                                <button class="dropdown-item dropdown-toggle" data-bs-toggle="dropdown"
+                                <button class="dropdown-item dropdown-toggle"
                                         aria-haspopup="true" aria-expanded="false">
                                     {{ 'Useful Information'|trans }}
                                 </button>
@@ -180,9 +180,9 @@
                         </ul>
                     </li>
                     {% set careerActive = is_module_active(['career']) %}
-                    <li class="nav-item col-12 col-lg-auto dropdown dropdown-hover {{ careerActive ? 'active default open' : '' }}">
-                        <button aria-haspopup="true" data-bs-toggle="dropdown" class="nav-link dropdown-toggle"
-                                aria-expanded="{{ careerActive ? 'true' : 'false' }}"
+                    <li class="nav-item col-12 col-lg-auto dropdown dropdown-nav {{ careerActive ? 'active' : '' }}">
+                        <button aria-haspopup="true" class="nav-link dropdown-toggle"
+                                aria-expanded="false"
                         >
                             {{ 'Career'|trans }}
                             <span class="caret"></span>
@@ -230,9 +230,9 @@
                         </a>
                     </li>
                     {% set activityActive = is_module_active(['activity']) %}
-                    <li class="nav-item col-12 col-lg-auto  dropdown dropdown-hover {{ activityActive ? 'active default open' : '' }}">
-                        <button aria-haspopup="true" data-bs-toggle="dropdown" class="nav-link dropdown-toggle"
-                                aria-expanded="{{ activityActive ? 'true' : 'false' }}"
+                    <li class="nav-item col-12 col-lg-auto dropdown dropdown-nav {{ activityActive ? 'active' : '' }}">
+                        <button aria-haspopup="true" class="nav-link dropdown-toggle"
+                                aria-expanded="false"
                         >
                             {{ 'Activities'|trans }}
                         </button>
@@ -274,9 +274,9 @@
                             {% endif %}
                         </ul>
                     </li>
-                    <li class="nav-item col-12 col-lg-auto dropdown dropdown-hover {{ is_module_active(['photo']) ? 'active' : '' }}">
+                    <li class="nav-item col-12 col-lg-auto dropdown dropdown-nav {{ is_module_active(['photo']) ? 'active' : '' }}">
                         {% if is_granted('ROLE_USER') %}
-                            <button aria-haspopup="true" aria-expanded="false" data-bs-toggle="dropdown"
+                            <button aria-haspopup="true" aria-expanded="false"
                                     class="nav-link dropdown-toggle"
                             >
                                 {{ 'Photos'|trans }}
