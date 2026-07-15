@@ -7,6 +7,9 @@ namespace App\Repository\Photo;
 use App\Entity\Decision\Member;
 use App\Entity\Photo\Album;
 use App\Entity\Photo\MemberAlbum;
+use App\Entity\Photo\MemberTag;
+use App\Entity\Photo\OrganAlbum;
+use App\Entity\Photo\OrganTag;
 use App\Entity\Photo\Photo;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -40,20 +43,46 @@ class PhotoRepository extends ServiceEntityRepository
         int $start = 0,
         ?int $maxResults = null,
     ): array {
-        $qb = $this->createQueryBuilder('p');
+        // weeklyPhoto is an inverse one-to-one, which Doctrine would otherwise load with a separate query per photo;
+        // fetch-joining it keeps browsing an album to a single query.
+        $qb = $this->createQueryBuilder('p')
+            ->leftJoin(
+                'p.weeklyPhoto',
+                'weeklyPhoto',
+            )
+            ->addSelect('weeklyPhoto');
 
         if ($album instanceof MemberAlbum) {
+            // Member tags moved onto the MemberTag subtype, so join it explicitly rather than the base `p.tags`.
             $qb->innerJoin(
-                'p.tags',
+                MemberTag::class,
                 't',
+                'WITH',
+                't.photo = p AND t.member = :member',
             )
-                ->where('t.member = :member')
                 ->setParameter(
                     'member',
                     $album->getMember(),
                 );
             // We want to display the photos in a member's album in reversed
             // chronological order
+            $qb->setFirstResult($start)
+                ->orderBy(
+                    'p.dateTime',
+                    'DESC',
+                );
+        } elseif ($album instanceof OrganAlbum) {
+            // Organ tags are their own subtype as well; join it so a body album is the photos that organ is tagged in.
+            $qb->innerJoin(
+                OrganTag::class,
+                't',
+                'WITH',
+                't.photo = p AND t.organ = :organ',
+            )
+                ->setParameter(
+                    'organ',
+                    $album->getOrgan(),
+                );
             $qb->setFirstResult($start)
                 ->orderBy(
                     'p.dateTime',
@@ -119,6 +148,63 @@ class PhotoRepository extends ServiceEntityRepository
                 'album' => $album,
             ],
         );
+    }
+
+    /**
+     * The number of direct photos each of the given albums has, keyed by album id, in a single query — so a grid of
+     * album cards does not issue one `COUNT(*) ... WHERE album_id = ?` per card. Albums with no photos are absent.
+     *
+     * @param Album[] $albums
+     *
+     * @return array<int, int>
+     */
+    public function getDirectPhotoCounts(array $albums): array
+    {
+        if ([] === $albums) {
+            return [];
+        }
+
+        $counts = [];
+        foreach (
+            $this->createQueryBuilder('p')
+                ->select(
+                    'IDENTITY(p.album) AS albumId',
+                    'COUNT(p.id) AS total',
+                )
+                ->where('p.album IN (:albums)')
+                ->setParameter(
+                    'albums',
+                    $albums,
+                )
+                ->groupBy('p.album')
+                ->getQuery()
+                ->getScalarResult() as $row
+        ) {
+            $counts[(int) $row['albumId']] = (int) $row['total'];
+        }
+
+        return $counts;
+    }
+
+    /**
+     * The photo whose stored path ends with the given filename, used to resolve a legacy `/data/{2ch}/{file}` URL onto
+     * the migrated photo (whose path re-roots that same filename under its album). Filenames are content-hashed, so a
+     * match is unambiguous.
+     */
+    public function findOneByPathBasename(string $basename): ?Photo
+    {
+        return $this->createQueryBuilder('photo')
+            ->where('photo.path LIKE :suffix')
+            ->setParameter(
+                'suffix',
+                '%/' . addcslashes(
+                    $basename,
+                    '%_',
+                ),
+            )
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
     /**

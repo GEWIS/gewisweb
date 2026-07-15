@@ -5,32 +5,58 @@ declare(strict_types=1);
 namespace App\Entity\Photo;
 
 use App\Entity\Application\Traits\IdentifiableTrait;
-use App\Entity\Decision\Member as MemberModel;
+use App\Repository\Photo\TagRepository;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\DiscriminatorColumn;
+use Doctrine\ORM\Mapping\DiscriminatorMap;
 use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\InheritanceType;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping\UniqueConstraint;
+use InvalidArgumentException;
+
+use function sprintf;
 
 /**
- * Tag.
+ * A tag placed on a photo. Single-table inheritance splits it into a {@see MemberTag} (a member appearing in the photo)
+ * and an {@see OrganTag} (an organ the photo belongs to or features). A tag optionally carries a normalized
+ * point-in-image position (`positionX`/`positionY` in the range [0, 1]); a whole-photo tag leaves both null.
  *
- * @psalm-import-type PhotoGdprArrayType from Photo as ImportedPhotoGdprArrayType
- * @psalm-type TagGdprArrayType = array{
- *     id: int,
- *     photo: ImportedPhotoGdprArrayType,
- * }
+ * Both `member_id` and `organ_id` live on the single `Tag` table (one is always NULL for a given row). MariaDB treats
+ * NULLs as distinct in a unique index, so `UNIQUE(photo_id, member_id)` and `UNIQUE(photo_id, organ_id)` coexist:
+ * a member row (NULL organ_id) and an organ row (NULL member_id) never collide.
  */
-#[Entity]
+#[Entity(repositoryClass: TagRepository::class)]
+#[InheritanceType(value: 'SINGLE_TABLE')]
+#[DiscriminatorColumn(
+    name: 'dtype',
+    type: Types::STRING,
+)]
+#[DiscriminatorMap(
+    value: [
+        'member' => MemberTag::class,
+        'organ' => OrganTag::class,
+    ],
+)]
 #[Table(name: 'Tag')]
 #[UniqueConstraint(
-    name: 'tag_idx',
+    name: 'tag_member_uniq',
     columns: [
         'photo_id',
         'member_id',
     ],
 )]
-class Tag
+#[UniqueConstraint(
+    name: 'tag_organ_uniq',
+    columns: [
+        'photo_id',
+        'organ_id',
+    ],
+)]
+abstract class Tag
 {
     use IdentifiableTrait;
 
@@ -45,25 +71,29 @@ class Tag
     )]
     private Photo $photo;
 
-    #[ManyToOne(
-        targetEntity: MemberModel::class,
-        inversedBy: 'tags',
+    /**
+     * Normalized horizontal position of the tag marker within the photo (0 = left edge, 1 = right edge), or null for a
+     * whole-photo tag.
+     */
+    #[Column(
+        type: Types::FLOAT,
+        nullable: true,
     )]
-    #[JoinColumn(
-        name: 'member_id',
-        referencedColumnName: 'lidnr',
-        nullable: false,
+    private ?float $positionX = null;
+
+    /**
+     * Normalized vertical position of the tag marker within the photo (0 = top edge, 1 = bottom edge), or null for a
+     * whole-photo tag.
+     */
+    #[Column(
+        type: Types::FLOAT,
+        nullable: true,
     )]
-    private MemberModel $member;
+    private ?float $positionY = null;
 
     public function getPhoto(): Photo
     {
         return $this->photo;
-    }
-
-    public function getMember(): MemberModel
-    {
-        return $this->member;
     }
 
     public function setPhoto(Photo $photo): void
@@ -71,37 +101,57 @@ class Tag
         $this->photo = $photo;
     }
 
-    public function setMember(MemberModel $member): void
+    public function getPositionX(): ?float
     {
-        $this->member = $member;
+        return $this->positionX;
+    }
+
+    public function getPositionY(): ?float
+    {
+        return $this->positionY;
     }
 
     /**
-     * Returns the Tag as an associative array.
-     *
-     * @return array{
-     *     id: int,
-     *     photo_id: int,
-     *     member_id: int,
-     * }
+     * Whether this tag is pinned to a specific point in the image (rather than tagging the whole photo).
      */
-    public function toArray(): array
+    public function hasPosition(): bool
     {
-        return [
-            'id' => $this->getId(),
-            'photo_id' => $this->getPhoto()->getId(),
-            'member_id' => $this->getMember()->getLidnr(),
-        ];
+        return null !== $this->positionX
+            && null !== $this->positionY;
     }
 
     /**
-     * @return TagGdprArrayType
+     * Set (or clear, by passing null for both) the point-in-image position. Both coordinates must be given together and
+     * lie within the normalized [0, 1] range.
      */
-    public function toGdprArray(): array
-    {
-        return [
-            'id' => $this->getId(),
-            'photo' => $this->getPhoto()->toGdprArray(),
-        ];
+    public function setPosition(
+        ?float $x,
+        ?float $y,
+    ): void {
+        if (
+            (null === $x) !== (null === $y)
+        ) {
+            throw new InvalidArgumentException('A tag position needs both coordinates or neither.');
+        }
+
+        if (
+            null !== $x
+            && null !== $y
+            && (
+                $x < 0.0
+                || $x > 1.0
+                || $y < 0.0
+                || $y > 1.0
+            )
+        ) {
+            throw new InvalidArgumentException(sprintf(
+                'Tag position (%f, %f) is outside the normalized [0, 1] range.',
+                $x,
+                $y,
+            ));
+        }
+
+        $this->positionX = $x;
+        $this->positionY = $y;
     }
 }

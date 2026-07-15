@@ -1,0 +1,52 @@
+{# Admin variant of the album card: the cover links to the manage view and the body carries edit/delete controls. #}
+<div class="col">
+    <div class="panel h-100 my-0">
+        <a href="{{ path('admin/photos/album', { album: album.id }) }}" class="text-decoration-none">
+            <div class="ratio ratio-16x9 bg-body-secondary rounded-top overflow-hidden">
+                {% if album.coverPath %}
+                    <img class="w-100 h-100"
+                         style="object-fit: cover;"
+                         loading="lazy"
+                         src="{{ image_url(album.coverPath, 'cover') }}"
+                         alt="">
+                {% else %}
+                    <div class="d-flex align-items-center justify-content-center text-muted h-100">
+                        <i class="fa-solid fa-images fa-2x"></i>
+                    </div>
+                {% endif %}
+            </div>
+        </a>
+        <div class="panel-body d-flex flex-column">
+            {% if not album.published %}
+                <span class="badge badge-secondary align-self-start mb-1">{{ 'Draft'|trans }}</span>
+            {% endif %}
+            <h3 class="h6 mb-1 text-body text-truncate" title="{{ album.name }}">{{ album.name }}</h3>
+            <p class="small text-muted mb-2">
+                {# subAlbumCount/photoCount are batched by the overview; fall back to the lazy counts elsewhere. #}
+                {% set subAlbums = subAlbumCount ?? album.albumCount %}
+                {% if subAlbums > 0 %}
+                    <i class="fa-solid fa-folder-open me-1"></i>{{ subAlbums }}
+                    {{ subAlbums == 1 ? 'sub-album'|trans : 'sub-albums'|trans }}
+                {% else %}
+                    {% set photos = photoCount ?? album.getPhotoCount(false) %}
+                    <i class="fa-solid fa-image me-1"></i>{{ photos }}
+                    {{ photos == 1 ? 'photo'|trans : 'photos'|trans }}
+                {% endif %}
+            </p>
+            <div class="btn-group btn-group-sm mt-auto" role="group">
+                <a href="{{ path('admin/photos/album', { album: album.id }) }}"
+                   class="btn btn-outline-gewis-primary">
+                    <i class="fa-solid fa-images"></i> {{ 'Manage'|trans }}
+                </a>
+                <a href="{{ path('admin/photos/albums_edit', { album: album.id }) }}"
+                   class="btn btn-outline-secondary">
+                    <i class="fa-solid fa-pencil"></i> {{ 'Edit'|trans }}
+                </a>
+                <button type="button" class="btn btn-outline-secondary text-danger"
+                        data-bs-toggle="modal" data-bs-target="#delete-album-{{ album.id }}">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

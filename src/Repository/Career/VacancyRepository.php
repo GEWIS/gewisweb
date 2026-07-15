@@ -279,6 +279,13 @@ class VacancyRepository extends ServiceEntityRepository
                 'c',
             )
             ->addSelect('c')
+            // The company's own live revision holds the logo the card renders; join it so getLogo does not lazy-load
+            // one revision per distinct company on the overview.
+            ->leftJoin(
+                'c.liveRevision',
+                'clr',
+            )
+            ->addSelect('clr')
             ->join(
                 'j.liveRevision',
                 'lr',

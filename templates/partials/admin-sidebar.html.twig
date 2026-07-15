@@ -109,10 +109,23 @@
             </ul>
         </li>
         {% set photoActive = is_module_active(['photo']) %}
-        <li class="nav-item {{ photoActive ? 'active' : '' }}">
-            <a class="nav-link p-3" href="{{ path('admin/photos/index') }}">
+        <li class="nav-item dropdown {{ photoActive ? 'active default open' : '' }}">
+            <a class="nav-link p-3 dropdown-toggle"
+               href="#" data-bs-toggle="dropdown" aria-expanded="{{ photoActive ? 'true' : 'false' }}">
                 {{ 'Photos'|trans }}
             </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <a class="dropdown-item" href="{{ path('admin/photos/index') }}">
+                        {{ 'Overview'|trans }}
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="{{ path('admin/photos/weekly') }}">
+                        {{ 'Photo of the Week'|trans }}
+                    </a>
+                </li>
+            </ul>
         </li>
     {% endif %}
     {% if is_granted('ROLE_ADMIN') %}

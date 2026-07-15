@@ -7,9 +7,9 @@
         <h1 class="mb-0">{{ 'Activity Archive'|trans }}</h1>
 
         <div class="d-flex flex-wrap align-items-center gap-2">
-            {% include 'partials/activity/filter-toggle.html.twig' %}
+            {% include 'partials/filter-toggle.html.twig' with { target: 'activity-filters' } only %}
 
-            {% include 'partials/activity/year-switcher.html.twig' with {
+            {% include 'partials/year-switcher.html.twig' with {
                 route: 'activity/archive',
                 year: year,
                 years: years,

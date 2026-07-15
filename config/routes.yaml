@@ -7,6 +7,15 @@ localised_routes:
     requirements:
         _locale: 'en|nl'
 
+# Image serving is defined here (not as a controller attribute) so it is NOT locale-prefixed (image URLs are assets,
+# not pages), and so its slash-bearing {path} is matched before the localised page_route below could grab it.
+image_serve:
+    path: /img/{variant}/{path}
+    controller: App\Controller\Application\ImageController::serve
+    requirements:
+        variant: '[a-z0-9]+'
+        path: '.+'
+
 # The page route must be defined here. If it is an attribute in the PageController it requires a priority: -1 to ensure
 # that it does not "steal" the route from any other attribute-defined route.
 # And without the priority everything will land in the catch_all route below.
@@ -26,6 +35,15 @@ user_token:
     controller: App\Controller\User\UserController::token
     requirements:
         app: '[a-z][0-9a-z\_\-]{2,31}'
+
+# Legacy `/data/{path}` URLs (old bookmarks, caches, markdown embeds). Defined here, like image_serve, so it is not
+# locale-prefixed and its slash-bearing {path} is matched before page_route/catch_all could grab it. Inert while
+# public/data/ still exists (Caddy serves those files statically); the safety net once it is removed.
+legacy_data:
+    path: /data/{path}
+    controller: App\Controller\Application\LegacyDataController::resolve
+    requirements:
+        path: '.+'
 
 # Catch everything that is not matched to allow stateful 404 errors.
 # Without this, due to the required language prefix, sessions are lost for 404 errors.

@@ -78,6 +78,7 @@ services:
     messenger-high-priority: *app_build
     messenger-normal-priority: *app_build
     messenger-bulk: *app_build
+    messenger-images: *app_build
     scheduler-default: *app_build
     scheduler-gdpr: *app_build
     mailer:

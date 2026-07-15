@@ -49,6 +49,7 @@ services:
         volumes: *worker_dev_volumes
     messenger-normal-priority: *worker_dev
     messenger-bulk: *worker_dev
+    messenger-images: *worker_dev
     scheduler-default: *worker_dev
     scheduler-gdpr: *worker_dev
     rabbitmq:

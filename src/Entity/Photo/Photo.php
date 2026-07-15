@@ -12,15 +12,10 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OneToOne;
-use Doctrine\ORM\Mapping\PrePersist;
-use RuntimeException;
-
-use function getimagesize;
 
 /**
  * Photo.
@@ -49,7 +44,6 @@ use function getimagesize;
  * }
  */
 #[Entity]
-#[HasLifecycleCallbacks]
 class Photo
 {
     use IdentifiableTrait;
@@ -372,28 +366,13 @@ class Photo
         return $this->weeklyPhoto;
     }
 
+    /**
+     * The height/width aspect ratio, computed once from the original's dimensions when the photo is uploaded (see
+     * {@see \App\Service\Photo\PhotoUploadService}) and stored. It is never recomputed from the filesystem.
+     */
     public function getAspectRatio(): ?float
     {
-        if (null === $this->aspectRatio) {
-            $this->calculateAspectRatio();
-        }
-
         return $this->aspectRatio;
-    }
-
-    #[PrePersist]
-    public function calculateAspectRatio(): void
-    {
-        $imageSize = getimagesize('public/data/' . $this->getPath());
-        if (false === $imageSize) {
-            throw new RuntimeException('Failed to read image data');
-        }
-
-        [
-            $width, $height
-        ] = $imageSize;
-
-        $this->aspectRatio = $height / $width;
     }
 
     /**

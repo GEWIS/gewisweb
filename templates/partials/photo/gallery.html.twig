@@ -1,0 +1,55 @@
+{#
+    The windowed-masonry gallery plus the PhotoSwipe viewer, both driven by the album's viewer manifest (fetched once).
+    `manifest_url` is that manifest. Every photo has a position immediately (so a #pid deep link scrolls straight to it),
+    but only the tiles near the viewport are mounted; clicking a tile opens the viewer.
+
+    The tag, vote and profile endpoints take numeric ids, so their routes cannot be generated with a text placeholder:
+    each URL is generated with a sentinel id which is then swapped for the placeholder the viewer fills in per photo.
+#}
+{% set tag_labels = {
+    inThisPhoto: 'In this photo'|trans,
+    noTags: 'No one is tagged in this photo yet'|trans,
+    tagMember: 'Tag a member'|trans,
+    tagOrgan: 'Tag an organ'|trans,
+    removeTag: 'Remove tag'|trans,
+    placeOnPhoto: 'Place on photo'|trans,
+    placeHint: 'Click or tap the photo where the person is'|trans,
+    cancel: 'Cancel'|trans,
+    newTag: 'New tag'|trans,
+    vote: 'Vote for photo of the week'|trans,
+    voted: 'You have voted'|trans,
+    setProfilePhoto: 'Set as profile photo'|trans,
+    photoOfTheWeek: 'Photo of the Week'|trans,
+    goToAlbum: 'Go to the original album'|trans,
+    information: 'Information'|trans,
+    unknown: 'Unknown'|trans,
+    yes: 'Yes'|trans,
+    no: 'No'|trans,
+    artist: 'Artist'|trans,
+    camera: 'Camera'|trans,
+    dateTime: 'Date/time'|trans,
+    flash: 'Flash'|trans,
+    focalLength: 'Focal length'|trans,
+    shutterSpeed: 'Shutter speed'|trans,
+    aperture: 'Aperture'|trans,
+    iso: 'ISO'|trans,
+} %}
+<div data-controller="gallery"
+     data-gallery-manifest-url-value="{{ manifest_url }}"
+     data-gallery-details-url-value="{{ path('photo/details', { photo: 2100000000 })|replace({'2100000000': '__PHOTO__'}) }}"
+     data-gallery-tag-url-value="{{ path('photo/tag', { photo: 2100000000 })|replace({'2100000000': '__PHOTO__'}) }}"
+     data-gallery-tag-remove-url-value="{{ path('photo/tag_remove', { tag: 2100000000 })|replace({'2100000000': '__TAG__'}) }}"
+     data-gallery-vote-url-value="{{ path('photo/vote', { photo: 2100000000 })|replace({'2100000000': '__PHOTO__'}) }}"
+     data-gallery-profile-url-value="{{ path('photo/profile_photo_set', { photo: 2100000000 })|replace({'2100000000': '__PHOTO__'}) }}"
+     data-gallery-member-search-url-value="{{ path('members/search') }}"
+     data-gallery-organs-url-value="{{ path('photo/organs') }}"
+     data-gallery-member-url-value="{{ path('members/view', { member: 99999 })|replace({'99999': '__LIDNR__'}) }}"
+     data-gallery-icon-sprite-url-value="{{ asset('sprites/fontawesome/solid.svg') }}"
+     data-gallery-labels-value="{{ tag_labels|json_encode }}">
+    <p data-gallery-target="empty" class="text-muted text-center py-4" hidden>
+        {{ 'This album does not contain any photos.'|trans }}
+    </p>
+    <div class="photo-masonry"
+         data-gallery-target="grid"
+         data-view-label="{{ 'View photo'|trans }}"></div>
+</div>

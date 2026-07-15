@@ -10,6 +10,7 @@ use Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle;
 use Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle;
 use Endroid\QrCodeBundle\EndroidQrCodeBundle;
 use IgorPhp\IgorBundle\IgorPhpBundle;
+use League\FlysystemBundle\FlysystemBundle;
 use Nelmio\CorsBundle\NelmioCorsBundle;
 use Nelmio\SecurityBundle\NelmioSecurityBundle;
 use Scheb\TwoFactorBundle\SchebTwoFactorBundle;
@@ -67,4 +68,5 @@ return [
     AmbtaDoctrineEncryptBundle::class => ['all' => true],
     UXCalendarLinkBundle::class => ['all' => true],
     AltchaBundle::class => ['all' => true],
+    FlysystemBundle::class => ['all' => true],
 ];

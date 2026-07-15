@@ -19,6 +19,10 @@ import ActivityItemController from './controllers/activity/activity_item_control
 import SignupFieldController from './controllers/activity/signup_field_controller.ts';
 import SignupListController from './controllers/activity/signup_list_controller.ts';
 
+// Photo-specific controllers.
+import GalleryController from './controllers/photo/gallery_controller.ts';
+import UploadController from './controllers/photo/upload_controller.ts';
+
 const app = startStimulusApp();
 
 // Registered with flat identifiers so the templates keep using `data-controller="form-stepper"` etc. despite the
@@ -40,3 +44,6 @@ app.register('print', PrintController);
 app.register('activity-item', ActivityItemController);
 app.register('signup-field', SignupFieldController);
 app.register('signup-list', SignupListController);
+
+app.register('gallery', GalleryController);
+app.register('photo-upload', UploadController);

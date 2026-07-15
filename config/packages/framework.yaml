@@ -4,7 +4,12 @@ framework:
     secret: '%env(APP_SECRET)%'
     trusted_headers: ['X-Forwarded-For', 'X-Forwarded-Proto']
 
-    # Note that the session will be started ONLY if you read or write from it.
+    # Let BinaryFileResponse offload private/large file serving to Caddy: when Caddy injects the X-Sendfile-Type request
+    # header, Symfony emits the matching X-Accel-Redirect instead of streaming the bytes through PHP. Without the header
+    # (dev without the intercept, tests) it degrades to a normal streamed file.
+    trust_x_sendfile_type_header: true
+
+    # The session is started ONLY when it is read from or written to.
     session:
         enabled: true
         cookie_samesite: strict

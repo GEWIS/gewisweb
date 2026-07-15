@@ -1,0 +1,26 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}{{ 'Photos'|trans|page_title }}{{ organ.getName|page_title }}{{ parent() }}{% endblock %}
+
+{% block contents %}
+    <h1 class="h3 mb-4">{{ organ.getName }}</h1>
+
+    {% if photos is empty %}
+        <p class="text-muted">
+            {{ '%name% has not been tagged in any photos yet.'|trans({ '%name%': organ.getName }) }}
+        </p>
+    {% else %}
+        <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-3">
+            {% for photo in photos %}
+                <div class="col">
+                    {# Each photo lives in a real album, so open it there at the deep-linked position. #}
+                    <a class="d-block ratio ratio-1x1 bg-body-secondary rounded overflow-hidden"
+                       href="{{ path('photo/album', { type: 'album', album: photo.album.id }) }}#pid={{ photo.id }}">
+                        <img class="w-100 h-100" style="object-fit: cover;" loading="lazy"
+                             src="{{ image_url(photo.path, 'w320') }}" alt="">
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}

@@ -36,6 +36,24 @@
 
 	{$CADDY_SERVER_EXTRA_DIRECTIVES}
 
+	# X-Sendfile: private/large files served by PHP (BinaryFileResponse) are offloaded to Caddy. Symfony emits
+	# `X-Accel-Redirect: /_protected/<rel>` for a file whose real path is `/app/data/<rel>` (per X-Accel-Mapping);
+	# `intercept` catches that response and serves the file from `/app/data`, stripping the internal prefix and header.
+	# `/app/data` is outside `root /app/public`, so these files are never directly reachable.
+	request_header X-Sendfile-Type x-accel-redirect
+	request_header X-Accel-Mapping /app/data=/_protected
+	intercept {
+		@accel header X-Accel-Redirect *
+		handle_response @accel {
+			root /app/data
+			rewrite * {resp.header.X-Accel-Redirect}
+			uri strip_prefix /_protected
+			method * GET
+			header -X-Accel-Redirect
+			file_server
+		}
+	}
+
 	header ?Permissions-Policy "accelerometer=('https://www.youtube-nocookie.com' 'https://player.vimeo.com'), ambient-light-sensor=(), autoplay=(), battery=(), camera=(), cross-origin-isolated=(), display-capture=(), document-domain=(), encrypted-media=('https://www.youtube-nocookie.com' 'https://player.vimeo.com'), execution-while-not-rendered=(), execution-while-out-of-viewport=(), fullscreen=(self 'https://www.youtube-nocookie.com' 'https://player.vimeo.com'), geolocation=(), gyroscope=('https://www.youtube-nocookie.com' 'https://player.vimeo.com'), keyboard-map=(), magnetometer=(), microphone=(), midi=(), navigation-override=(), payment=(), picture-in-picture=('https://www.youtube-nocookie.com' 'https://player.vimeo.com'), publickey-credentials-get=(), screen-wake-lock=(), sync-xhr=(), usb=(), web-share=(), xr-spatial-tracking=(), clipboard-write=(self), interest-cohort=()"
 
 	@phpRoute {

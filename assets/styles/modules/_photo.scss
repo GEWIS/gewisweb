@@ -3,86 +3,289 @@ Photo
 
 */
 
-.grid-sizer {
-    float: left;
-}
-
-.gutter-sizer {
-    width: 0.5%;
-}
-
-.grid-sizer,
-.pswp-gallery__item {
-    margin-bottom: 0.5%;
-    width: 49%;
-
-    @include media-breakpoint-up(sm) {
-        width: 33%;
-    }
-
-    @include media-breakpoint-up(md) {
-        width: 24.5%;
-    }
-
-    @include media-breakpoint-up(lg) {
-        width: 16.2%;
-    }
-}
-
-.pswp-gallery__item.potw-thumb {
-    width: 98.498%;
-
-    @include media-breakpoint-up(sm) {
-        width: 66.499%;
-    }
-
-    @include media-breakpoint-up(md) {
-        width: 49.499%;
-    }
-
-    @include media-breakpoint-up(lg) {
-        width: 32.899%;
-    }
-}
-
-.pswp-gallery__item {
-    background-color: #d40026;
-    background-image: url('/img/missing_cover.svg');
-    background-size: cover;
-    background-position: center;
-    float: left;
-}
-
-.pswp-gallery__item img {
+// Selectable photo tile on the album manage view. The checkbox is visually hidden (but focusable); selection reads as a
+// brand tint plus a corner check over the photo, so the control never obscures the image (mirrors the old site).
+.photo-select {
     display: block;
-    max-width: 100%;
+    position: relative;
+    aspect-ratio: 1;
+    cursor: pointer;
+
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: rgba($brand-primary, 0.3);
+        opacity: 0;
+        transition: opacity 0.12s ease-in-out;
+        pointer-events: none;
+    }
+
+    &:has(.photo-select__input:checked)::after {
+        opacity: 1;
+    }
+
+    &:has(.photo-select__input:focus-visible) {
+        outline: 2px solid $brand-primary;
+        outline-offset: 2px;
+    }
 }
 
-.tagSearch {
-    border: 0;
-    outline: none;
-    box-shadow: none;
-    background: transparent;
-    border-bottom: 1px solid black;
-    color: #fff;
-    border-color: #FFF;
-    font-size: 16px;
-}
-
-.tagSearch:focus {
-    outline:none;
-}
-
-.pulsing-dot {
-    background: $brand-primary;
-    border-radius: 50%;
-    height: 12px;
-    width: 12px;
+.photo-select__input {
     position: absolute;
-    right: 6px;
-    bottom: 6px;
-    box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
-    transform: scale(1);
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+}
+
+.photo-select__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.photo-select__check {
+    position: absolute;
+    top: 0.4rem;
+    right: 0.4rem;
+    color: #fff;
+    font-size: 1.4rem;
+    line-height: 1;
+    opacity: 0;
+    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.6));
+    transition: opacity 0.12s ease-in-out;
+}
+
+.photo-select:hover .photo-select__check {
+    opacity: 0.55;
+}
+
+.photo-select:has(.photo-select__input:checked) .photo-select__check {
+    opacity: 1;
+}
+
+// Drag-and-drop upload target on the album manage view. The dashed outline and the hover/drag highlight are the only
+// affordance that the whole panel accepts files; the upload controller toggles `is-dragging` while a drag is over it.
+.photo-dropzone {
+    border-style: dashed !important;
+    border-color: var(--#{$prefix}border-color);
+    cursor: pointer;
+    transition: border-color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+
+    &:hover,
+    &.is-dragging {
+        border-color: $brand-primary;
+        background-color: var(--#{$prefix}secondary-bg);
+    }
+}
+
+// Album photo grid. The gallery controller lays this out as a windowed masonry: the container is sized to hold the whole
+// album, and each tile is absolutely positioned (width, height and translate set by the controller from the photo's
+// aspect ratio), so portrait and landscape photos keep their shape and nothing reshuffles as tiles mount and unmount.
+.photo-masonry {
+    position: relative;
+}
+
+.photo-masonry__item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    overflow: hidden;
+    border-radius: var(--#{$prefix}border-radius);
+    background-color: var(--#{$prefix}secondary-bg);
+
+    img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+// Point tags overlaid on the image (`.pswp__photo-markers` / `.pswp__photo-marker`) are positioned and styled inline by
+// the viewer controller: each marker is placed in pixels from the on-screen image rect and repositioned on zoom/pan, so
+// the layout cannot live in a stylesheet.
+
+// PhotoSwipe styles its toolbar buttons `display:block`, which overrides the [hidden] attribute; make hiding work so a
+// button the viewer may not use (vote when they cannot vote, profile when not tagged) is actually removed.
+.pswp__button[hidden] {
+    display: none !important;
+}
+
+// The point-tag placement uses a full-viewport capture overlay (`.pswp__photo-place-overlay`) above the PhotoSwipe
+// viewer; its styles are set inline by the viewer controller so it works before this stylesheet loads.
+
+// Our custom toolbar buttons draw a Font Awesome sprite icon through PhotoSwipe's own .pswp__icn (via isCustomSVG), so
+// they are positioned and centred exactly like the built-in buttons. The sprite's paths use fill="currentColor", which
+// would otherwise resolve to PhotoSwipe's dark secondary colour, so give the icon colour to the <use> (the built-in
+// buttons' only <use> is their shadow, which is fill:none, so this leaves them untouched).
+.pswp__icn use {
+    color: var(--pswp-icon-color, #fff);
+}
+
+// The camera-metadata panel, toggled by the info button. It floats at the top right, below the toolbar.
+.pswp__photo-metadata {
+    position: absolute;
+    top: 60px;
+    right: 12px;
+    z-index: 10;
+    width: min(320px, 85vw);
+    max-height: calc(100% - 120px);
+    overflow-y: auto;
+    padding: 0.75rem 1rem;
+    color: #fff;
+    font-size: 0.875rem;
+    background: rgba(0, 0, 0, 0.55);
+    border-radius: 0.5rem;
+}
+
+.pswp__photo-metadata-table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th {
+        padding: 0.1rem 1rem 0.1rem 0;
+        font-weight: 600;
+        white-space: nowrap;
+        vertical-align: top;
+    }
+
+    td {
+        padding: 0.1rem 0;
+        text-align: right;
+    }
+}
+
+// The tag, vote and profile overlay the viewer renders inside the PhotoSwipe lightbox. It floats at the bottom right,
+// clear of the top toolbar and of the cookie notice (which sits at the bottom left of the window).
+.pswp__photo-tags {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    z-index: 10;
+    width: min(300px, 85vw);
+    max-height: calc(100% - 120px);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 0.75rem 1rem;
+    color: #fff;
+    font-size: 0.875rem;
+    background: rgba(0, 0, 0, 0.55);
+    border-radius: var(--#{$prefix}border-radius);
+}
+
+.pswp__photo-tags-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.pswp__photo-tags-title {
+    opacity: 0.75;
+}
+
+.pswp__photo-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.15rem 0.6rem;
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.15);
+
+    a {
+        color: #fff;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+.pswp__photo-tag-icon {
+    opacity: 0.65;
+    font-size: 0.8em;
+}
+
+// Organ tags get a distinct tint on top of the group icon, so members and organs read apart at a glance.
+.pswp__photo-tag--organ {
+    background: rgba($brand-primary, 0.35);
+}
+
+.pswp__photo-tag-remove {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #fff;
+    line-height: 1;
+    cursor: pointer;
+    opacity: 0.7;
+
+    &:hover {
+        opacity: 1;
+    }
+}
+
+.pswp__photo-tag-add {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.pswp__photo-tag-results {
+    display: flex;
+    flex-direction: column;
+    max-height: 12rem;
+    overflow-y: auto;
+    color: var(--#{$prefix}body-color);
+    background: var(--#{$prefix}body-bg);
+    border-radius: var(--#{$prefix}border-radius);
+
+    &:empty {
+        display: none;
+    }
+}
+
+.pswp__photo-tag-result {
+    padding: 0.35rem 0.75rem;
+    border: 0;
+    background: transparent;
+    text-align: left;
+    cursor: pointer;
+
+    &:hover {
+        background: var(--#{$prefix}secondary-bg);
+    }
+}
+
+// The vote button turns red once voted, and a member who has not voted recently gets a pulsing dot as a nudge.
+.pswp__button--vote-button {
+    position: relative;
+}
+
+.pswp__vote-button--voted .pswp__icn use {
+    color: $brand-primary;
+}
+
+.pswp__vote-dot {
+    display: none;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: $brand-primary;
+}
+
+.pswp__vote-button--nudge .pswp__vote-dot {
+    display: block;
     animation: pulse 2s infinite;
 }
 
@@ -94,54 +297,11 @@ Photo
 
     70% {
         transform: scale(1);
-        box-shadow: 0 0 0 10px rgba($brand-primary, 0);
+        box-shadow: 0 0 0 8px rgba($brand-primary, 0);
     }
 
     100% {
         transform: scale(0.95);
         box-shadow: 0 0 0 0 rgba($brand-primary, 0);
-    }
-}
-
-.thumbnail .caption p {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    margin: 0;
-}
-
-.btn-hidden {
-    display: none;
-}
-
-.selectable-photo.selected {
-    &:after {
-        content: '✔';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 3rem;
-        color: #FFFFFF;
-        background-color: transparentize($brand-primary, 0.2);
-        border-radius: 50%;
-        width: 4rem;
-        height: 4rem;
-        line-height: 4rem;
-        text-align: center;
-        cursor: pointer;
-    }
-
-    &:before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: $brand-primary;
-        opacity: 0.4;
-        cursor: pointer;
     }
 }

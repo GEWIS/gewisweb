@@ -11,7 +11,7 @@
             </div>
         </nav>
     {% endif %}
-    <div class="container flex-grow-1 pt-2">
+    <div class="{% block container_class %}container{% endblock %} flex-grow-1 pt-2">
         {% block contents %}{% endblock %}
     </div>
     {% include 'partials/application/footer.html.twig' %}

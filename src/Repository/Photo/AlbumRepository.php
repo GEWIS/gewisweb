@@ -157,4 +157,78 @@ class AlbumRepository extends ServiceEntityRepository
             ? null
             : $res[0];
     }
+
+    /**
+     * The number of direct sub-albums each of the given albums has, keyed by album id, in a single query — so a grid of
+     * album cards does not issue one `COUNT(*) ... WHERE parent_id = ?` per card. Albums with no sub-albums are absent.
+     *
+     * @param Album[] $albums
+     *
+     * @return array<int, int>
+     */
+    public function getSubAlbumCounts(array $albums): array
+    {
+        if ([] === $albums) {
+            return [];
+        }
+
+        $counts = [];
+        foreach (
+            $this->createQueryBuilder('a')
+                ->select(
+                    'IDENTITY(a.parent) AS parentId',
+                    'COUNT(a.id) AS total',
+                )
+                ->where('a.parent IN (:parents)')
+                ->setParameter(
+                    'parents',
+                    $albums,
+                )
+                ->groupBy('a.parent')
+                ->getQuery()
+                ->getScalarResult() as $row
+        ) {
+            $counts[(int) $row['parentId']] = (int) $row['total'];
+        }
+
+        return $counts;
+    }
+
+    /**
+     * The album whose generated cover path ends with the given filename, used to resolve a legacy `/data/{2ch}/{file}`
+     * URL onto the migrated cover (whose path re-roots that same filename under the album).
+     */
+    public function findOneByCoverBasename(string $basename): ?Album
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.coverPath LIKE :suffix')
+            ->setParameter(
+                'suffix',
+                '%/' . addcslashes(
+                    $basename,
+                    '%_',
+                ),
+            )
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    /**
+     * All root (top-level) albums, most recent first, for the board admin overview. Undated albums sort last (MariaDB
+     * orders NULL dates after any value on a descending sort), and both published and unpublished albums are returned.
+     *
+     * @return Album[]
+     */
+    public function findRootAlbums(): array
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.parent IS NULL')
+            ->orderBy(
+                'a.startDateTime',
+                'DESC',
+            )
+            ->getQuery()
+            ->getResult();
+    }
 }

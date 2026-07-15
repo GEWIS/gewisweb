@@ -82,7 +82,7 @@
                 {% for activity in activities %}
                     {% set month = activity.getBeginTime|format_datetime(pattern: 'MMMM yyyy', locale: app.request.locale) %}
                     {% if month != currentMonth %}
-                        <div class="activity-month-divider">{{ month }}</div>
+                        <div class="month-divider">{{ month }}</div>
                         {% set currentMonth = month %}
                     {% endif %}
                     {% include 'partials/activity/list-item.html.twig' with {'activity': activity} only %}
@@ -97,7 +97,7 @@
             {% for activity in this.activities %}
                 {% set month = activity.getBeginTime|format_datetime(pattern: 'MMMM yyyy', locale: app.request.locale) %}
                 {% if month != currentMonth %}
-                    <div class="activity-month-divider">{{ month }}</div>
+                    <div class="month-divider">{{ month }}</div>
                     {% set currentMonth = month %}
                 {% endif %}
                 {% include 'partials/activity/list-item.html.twig' with {'activity': activity} only %}

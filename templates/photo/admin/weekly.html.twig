@@ -1,0 +1,87 @@
+{% extends 'layout-admin.html.twig' %}
+
+{% block page_title %}{{ 'Photo of the Week'|trans|page_title }}{{ 'Photos'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block admin_breadcrumbs %}
+    <li class="breadcrumb-item active" aria-current="page">
+        <a href="{{ path('admin/photos/index') }}">
+            {{ 'Photos'|trans }}
+        </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">
+        {{ 'Photo of the Week'|trans }}
+    </li>
+{% endblock %}
+
+{% block contents %}
+    <h1 class="h3 mb-4">{{ 'Photo of the Week'|trans }}</h1>
+
+    <div class="row justify-content-center">
+        <div class="col col-lg-8 col-xl-6">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3>{{ 'Current photo of the week'|trans }}</h3>
+                </div>
+                {% if weeklyPhoto is null %}
+                    <div class="panel-body">
+                        <p class="text-muted mb-0">
+                            {{ 'No photo of the week has been chosen yet. It is picked automatically every Monday from the past week\'s votes.'|trans }}
+                        </p>
+                    </div>
+                {% else %}
+                    <div class="panel-thumb">
+                        <a href="{{ path('photo/album', { type: 'album', album: weeklyPhoto.photo.album.id }) }}#pid={{ weeklyPhoto.photo.id }}">
+                            <img class="img-fluid w-100" alt=""
+                                 src="{{ image_url(weeklyPhoto.photo.path, 'w960') }}">
+                        </a>
+                    </div>
+                    <div class="panel-body">
+                        <p class="mb-2">
+                            {{ 'Week of'|trans }} {{ weeklyPhoto.week|date('Y-m-d') }} &middot;
+                            {{ weeklyPhoto.photo.album.name }}
+                        </p>
+                        {% if weeklyPhoto.hidden %}
+                            <span class="badge badge-secondary">{{ 'Hidden from anonymous visitors'|trans }}</span>
+                        {% elseif canHide %}
+                            <button type="button" class="btn btn-outline-secondary text-danger"
+                                    data-bs-toggle="modal" data-bs-target="#hide-weekly">
+                                <i class="fa-solid fa-eye-slash"></i> {{ 'Hide from anonymous visitors'|trans }}
+                            </button>
+                        {% else %}
+                            <p class="text-muted small mb-0">
+                                <i class="fa-solid fa-circle-info me-1"></i>
+                                {{ 'The photo of the week can only be hidden on Monday morning, before noon.'|trans }}
+                            </p>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    {% if weeklyPhoto is not null and not weeklyPhoto.hidden and canHide %}
+        <div class="modal fade" id="hide-weekly" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">{{ 'Hide photo of the week'|trans }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="{{ 'Close'|trans }}"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="mb-0">
+                            {{ 'Anonymous visitors will no longer see this photo on the front page. Logged-in members still see it.'|trans }}
+                        </p>
+                    </div>
+                    <form method="post" action="{{ path('admin/photos/weekly_hide') }}">
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('photo_weekly_hide') }}">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-link" data-bs-dismiss="modal">{{ 'Cancel'|trans }}</button>
+                            <button type="submit" class="btn btn-danger">{{ 'Hide'|trans }}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

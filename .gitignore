@@ -25,6 +25,11 @@
 
 /.idea/
 
+###> app/storage ###
+# Stored uploads and the regenerable image-variant cache (the flysystem storage root); see config/packages/flysystem.yaml.
+/data/
+###< app/storage ###
+
 ###> phpstan/phpstan ###
 phpstan.neon
 ###< phpstan/phpstan ###

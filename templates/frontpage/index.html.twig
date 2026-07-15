@@ -32,6 +32,41 @@
             <section class="mb-2">
                 <h2>{{ 'News'|trans }}</h2>
             </section>
+            {# Birthday data is member-only, so the block is gated on an authenticated session. #}
+            {% if birthdays is not empty and is_granted('ROLE_USER') %}
+                <section class="my-2">
+                    <div class="panel overflow-hidden">
+                        <div class="row g-0">
+                            {% if birthdayPhoto is not null %}
+                                {% set birthday_url = path('photo/album', { type: 'album', album: birthdayPhoto.album.id }) ~ '#pid=' ~ birthdayPhoto.id %}
+                                <div class="col-md-6">
+                                    <a href="{{ birthday_url }}">
+                                        <img class="img-fluid w-100" alt=""
+                                             src="{{ image_url(birthdayPhoto.path, 'w320') }}"
+                                             srcset="{{ image_srcset(birthdayPhoto.path, ['w320', 'w640']) }}"
+                                             sizes="(min-width: 768px) 33vw, 100vw">
+                                    </a>
+                                </div>
+                            {% endif %}
+                            <div class="col-md-{{ birthdayPhoto is null ? '12' : '6' }}">
+                                <div class="panel-heading">
+                                    <h3>{{ 'Birthdays'|trans }}</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <ul class="mb-0">
+                                        {% for birthday in birthdays %}
+                                            <li>{{ '%name% turns %age% today!'|trans({
+                                                '%name%': birthday.member.fullName,
+                                                '%age%': birthday.age,
+                                            }) }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            {% endif %}
         </main>
         <aside class="col-sm-5 col-md-4 ps-md-5">
             <div class="panel">
@@ -69,6 +104,29 @@
                     </a>
                 </div>
             </div>
+
+            {#
+                The photo of the week. Members fetch the signed members-only original; anonymous visitors are served the
+                public copy the weekly command publishes, and only while it is not hidden.
+            #}
+            {% if weeklyPhoto is not null and (is_granted('ROLE_USER') or (not weeklyPhoto.hidden and weeklyPublicPath is not null)) %}
+                {% set potw = weeklyPhoto.photo %}
+                {% set potw_url = path('photo/album', { type: 'album', album: potw.album.id }) ~ '#pid=' ~ potw.id %}
+                {% set potw_path = is_granted('ROLE_USER') ? potw.path : weeklyPublicPath %}
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h3><a href="{{ potw_url }}">{{ 'Photo of the Week'|trans }}</a></h3>
+                    </div>
+                    <div class="panel-thumb">
+                        <a href="{{ potw_url }}">
+                            <img class="img-fluid" alt=""
+                                 src="{{ image_url(potw_path, 'w320') }}"
+                                 srcset="{{ image_srcset(potw_path, ['w320', 'w640']) }}"
+                                 sizes="(min-width: 768px) 33vw, 100vw">
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
         </aside>
     </div>
 {% endblock %}

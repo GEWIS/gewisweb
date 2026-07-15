@@ -1,0 +1,27 @@
+/*
+Month divider
+
+A small heading with a trailing rule, used to separate month groups in the activity and photo overviews.
+*/
+
+.month-divider {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 1.5rem 0 0.75rem;
+    color: var(--#{$prefix}secondary-color);
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+
+    &:first-child {
+        margin-top: 0;
+    }
+
+    &::after {
+        content: "";
+        flex: 1 1 auto;
+        border-top: var(--#{$prefix}border-width) solid var(--#{$prefix}border-color);
+    }
+}
