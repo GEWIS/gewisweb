@@ -16,9 +16,10 @@ use function in_array;
 
 /**
  * Authorizes viewing, downloading, tagging and voting on a {@see Photo}. Viewing and downloading reduce to whether the
- * photo's album is viewable, so that rule (including the #1658 graduate-subtree logic) is defined once in
- * {@see AlbumVoter} and delegated to. Tagging and voting additionally require ROLE_MEMBER, which excludes graduates:
- * a graduate may only remove their own member tag (see {@see TagVoter}) and may not tag or vote at all.
+ * photo's album is viewable, so that rule (including the graduate-subtree logic) is defined once in {@see AlbumVoter}
+ * and delegated to. Tagging and voting additionally require ROLE_MEMBER, which excludes graduates: a graduate may only
+ * remove their own member tag (see {@see TagVoter}) and may not tag or vote at all. Voting is refused for a photo that
+ * has already been photo of the week, so a past winner cannot be voted for again.
  *
  * @extends Voter<string, Photo>
  */
@@ -70,7 +71,11 @@ final class PhotoVoter extends Voter
             self::VIEW, self::DOWNLOAD => $viewable,
             // Tagging and voting are for members only (graduates are excluded from ROLE_MEMBER) and only on a photo
             // they may view.
-            self::TAG, self::VOTE => $viewable && $this->security->isGranted(UserRoles::Member->value),
+            self::TAG => $viewable && $this->security->isGranted(UserRoles::Member->value),
+            // Voting adds one rule: a photo that has already been photo of the week may not be voted for again.
+            self::VOTE => $viewable
+                && $this->security->isGranted(UserRoles::Member->value)
+                && null === $subject->getWeeklyPhoto(),
             default => false,
         };
     }

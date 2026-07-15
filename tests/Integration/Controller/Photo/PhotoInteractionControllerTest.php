@@ -172,11 +172,24 @@ final class PhotoInteractionControllerTest extends DatabaseTestCase
             self::MEMBER,
             UserRoles::Member,
         );
-        $photoId = (int) $this->graduateTag()->getPhoto()->getId();
+        $photoId = $this->votablePhotoId();
 
         self::assertTrue($this->decode($this->controller()->vote($photoId))['success']);
         // Voting again must not fail or create a second vote.
         self::assertTrue($this->decode($this->controller()->vote($photoId))['success']);
+    }
+
+    public function testAMemberCannotVoteForAFormerPhotoOfTheWeek(): void
+    {
+        $this->authenticate(
+            self::MEMBER,
+            UserRoles::Member,
+        );
+        // The dinner photo has already been photo of the week in the seed, so it may not be voted for again.
+        $photoId = (int) $this->graduateTag()->getPhoto()->getId();
+
+        $this->expectException(AccessDeniedException::class);
+        $this->controller()->vote($photoId);
     }
 
     public function testAGraduateCannotVote(): void
@@ -215,7 +228,8 @@ final class PhotoInteractionControllerTest extends DatabaseTestCase
             $details['organTags'],
         );
         self::assertTrue($details['canTag']);
-        self::assertTrue($details['canVote']);
+        // The dinner photo has already been photo of the week, so it can no longer be voted for.
+        self::assertFalse($details['canVote']);
         self::assertTrue($details['taggedSelf']);
         // The dinner photo is the (hidden) photo of the week in the seed, so the viewer can badge it.
         self::assertNotNull($details['photoOfTheWeek']);
@@ -234,6 +248,23 @@ final class PhotoInteractionControllerTest extends DatabaseTestCase
         self::assertNotEmpty($photos);
 
         return $photos[0];
+    }
+
+    /**
+     * A Trip photo that has never been photo of the week, so a member may still vote for it (one of the two Trip photos
+     * is a past photo of the week, the other is not).
+     */
+    private function votablePhotoId(): int
+    {
+        $album = self::getContainer()->get(AlbumRepository::class)->findOneBy(['name' => 'Trip 2024']);
+        self::assertNotNull($album);
+        foreach (self::getContainer()->get(PhotoRepository::class)->getAlbumPhotos($album) as $photo) {
+            if (null === $photo->getWeeklyPhoto()) {
+                return (int) $photo->getId();
+            }
+        }
+
+        self::fail('The seed is expected to contain a Trip photo that is not a photo of the week.');
     }
 
     /**
