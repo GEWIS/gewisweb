@@ -9,10 +9,12 @@ use App\Entity\Photo\Enums\AlbumType;
 use App\Entity\Photo\MemberAlbum;
 use App\Entity\Photo\OrganAlbum;
 use App\Entity\Photo\Photo;
+use App\Entity\Photo\WeeklyPhoto;
 use App\Entity\User\Enums\UserRoles;
 use App\Entity\User\User;
 use App\Repository\Decision\MemberRepository;
 use App\Repository\Decision\OrganRepository;
+use App\Repository\Photo\MemberTagRepository;
 use App\Repository\Photo\PhotoRepository;
 use App\Repository\Photo\WeeklyPhotoRepository;
 use App\Security\Photo\PhotoVoter;
@@ -21,6 +23,7 @@ use App\Service\Photo\AlbumService;
 use App\Service\Photo\PhotoPrivacyService;
 use App\Service\Photo\PhotoService;
 use App\Service\Photo\WeeklyPhotoService;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,6 +39,8 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 use function array_map;
 use function in_array;
 use function intval;
+use function max;
+use function min;
 use function pathinfo;
 use function sprintf;
 
@@ -58,6 +63,7 @@ class PhotoController extends AbstractController
         private readonly WeeklyPhotoRepository $weeklyPhotoRepository,
         private readonly WeeklyPhotoService $weeklyPhotoService,
         private readonly MemberRepository $memberRepository,
+        private readonly MemberTagRepository $memberTagRepository,
         private readonly OrganRepository $organRepository,
         private readonly FileDownloadHelper $fileDownloadHelper,
         private readonly SluggerInterface $slugger,
@@ -290,14 +296,12 @@ class PhotoController extends AbstractController
      */
     private function selectedPhotos(Request $request): array
     {
-        $ids = array_map(
-            intval(...),
-            $request->request->all('photos'),
+        return $this->photoRepository->findByIds(
+            array_map(
+                intval(...),
+                $request->request->all('photos'),
+            ),
         );
-
-        return [] === $ids
-            ? []
-            : $this->photoRepository->findBy(['id' => $ids]);
     }
 
     #[Route(
@@ -345,7 +349,12 @@ class PhotoController extends AbstractController
 
         return $this->render(
             'photo/member.html.twig',
-            ['member' => $member],
+            [
+                'member' => $member,
+                // Lets the page tell "never tagged" apart from "tagged, but all hidden from this viewer" in its empty
+                // state, without leaking which or how many photos exist.
+                'memberHasTags' => $this->memberTagRepository->hasTags($lidnr),
+            ],
         );
     }
 
@@ -373,14 +382,24 @@ class PhotoController extends AbstractController
      */
     private function weeklyAlbum(int $year): Response
     {
-        if ([] === $this->weeklyPhotoService->getPhotosInYear($year)) {
+        $weeklyPhotos = $this->weeklyPhotoService->getPhotosByYear()[$year] ?? [];
+        if ([] === $weeklyPhotos) {
             throw new NotFoundHttpException();
         }
+
+        $weeks = array_map(
+            static fn (WeeklyPhoto $weeklyPhoto): DateTime => $weeklyPhoto->getWeek(),
+            $weeklyPhotos,
+        );
 
         // The gallery itself fetches the year's photos through the weekly manifest (route above).
         return $this->render(
             'photo/weekly-album.html.twig',
-            ['year' => $year],
+            [
+                'year' => $year,
+                'startDate' => min($weeks),
+                'endDate' => max($weeks),
+            ],
         );
     }
 

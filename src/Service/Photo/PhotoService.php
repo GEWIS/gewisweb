@@ -12,6 +12,7 @@ use App\Service\Application\ImageUrlBuilder;
 use App\ViewModel\Photo\ManifestEntry;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
+use function intval;
 use function round;
 
 /**
@@ -87,7 +88,7 @@ final readonly class PhotoService
             $entries[] = $this->manifestEntry(
                 $photo,
                 $this->albumDeepLink($photo),
-                isset($hidden[(int) $photo->getId()]),
+                isset($hidden[intval($photo->getId())]),
             );
         }
 
@@ -100,9 +101,9 @@ final readonly class PhotoService
             'photo/album',
             [
                 'type' => 'album',
-                'album' => (int) $photo->getAlbum()->getId(),
+                'album' => intval($photo->getAlbum()->getId()),
             ],
-        ) . '#pid=' . (int) $photo->getId();
+        ) . '#pid=' . intval($photo->getId());
     }
 
     private function manifestEntry(

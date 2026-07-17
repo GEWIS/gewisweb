@@ -79,7 +79,7 @@
             <div class="panel mb-3">
                 {# Client-side Bootstrap collapse; the open state survives live re-renders because ExternalMutationTracker re-applies the show/collapsed classes across the DOM morph. #}
                 <button type="button"
-                        class="panel-heading signup-list-heading d-flex justify-content-between align-items-start gap-2 w-100 border-0 bg-transparent text-start collapsed"
+                        class="panel-heading panel-collapse-toggle d-flex justify-content-between align-items-start gap-2 w-100 border-0 bg-transparent text-start collapsed"
                         data-bs-toggle="collapse" data-bs-target="#{{ collapseId }}"
                         aria-expanded="false" aria-controls="{{ collapseId }}">
                     <span>
@@ -124,7 +124,7 @@
                             {% endif %}
                         </span>
                     </span>
-                    <i class="fas fa-chevron-down signup-list-chevron"></i>
+                    <i class="fas fa-chevron-down panel-collapse-chevron"></i>
                 </button>
                 <div class="collapse" id="{{ collapseId }}">
                     <div class="panel-body border-bottom">

@@ -20,6 +20,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\SecurityBundle\Security;
 
 use function array_map;
+use function intval;
 
 /**
  * The member themselves always sees every photo they are tagged in, with the hidden ones flagged; other viewers only
@@ -54,12 +55,12 @@ final class PhotoPrivacyServiceTest extends TestCase
         );
     }
 
-    public function testOthersSeeEveryPhotoWhenHidingNone(): void
+    public function testOthersSeeEveryPhotoWhenNothingIsHidden(): void
     {
         $result = $this->service(
             viewerLidnr: 99,
-            level: PhotoVisibility::HideNone,
-            hidden: [2 => true],
+            level: PhotoVisibility::HideSelected,
+            hidden: [],
         )->filterTaggedPhotos(
             $this->member(42),
             [
@@ -200,7 +201,7 @@ final class PhotoPrivacyServiceTest extends TestCase
     private function ids(array $photos): array
     {
         return array_map(
-            static fn (Photo $photo): int => (int) $photo->getId(),
+            static fn (Photo $photo): int => intval($photo->getId()),
             $photos,
         );
     }

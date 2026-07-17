@@ -20,8 +20,9 @@ final class Version20260715230000 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-        // How much of a member's tagged-photo collection is hidden from others; a missing settings row means "none".
-        $this->addSql("ALTER TABLE UserSettings ADD photoVisibility VARCHAR(255) DEFAULT 'none' NOT NULL");
+        // How much of a member's tagged-photo collection is hidden from others; a missing settings row means only the
+        // photos the member picked are hidden (nothing, until they pick some).
+        $this->addSql("ALTER TABLE UserSettings ADD photoVisibility VARCHAR(255) DEFAULT 'selected' NOT NULL");
 
         // The photos a member hid, keyed by the (member, photo) pair rather than the tag, so re-tagging cannot unhide.
         $this->addSql('CREATE TABLE HiddenPhoto (id INT AUTO_INCREMENT NOT NULL, member_id INT NOT NULL, photo_id INT NOT NULL, INDEX IDX_HiddenPhoto_Photo (photo_id), UNIQUE INDEX hidden_photo_uniq (member_id, photo_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');

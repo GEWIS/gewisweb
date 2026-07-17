@@ -10,6 +10,8 @@ use App\Entity\Photo\Photo;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+use function intval;
+
 /**
  * @extends ServiceEntityRepository<HiddenPhoto>
  */
@@ -42,7 +44,7 @@ class HiddenPhotoRepository extends ServiceEntityRepository
                 ->getQuery()
                 ->getScalarResult() as $row
         ) {
-            $ids[(int) $row['photoId']] = true;
+            $ids[intval($row['photoId'])] = true;
         }
 
         return $ids;
@@ -58,5 +60,36 @@ class HiddenPhotoRepository extends ServiceEntityRepository
                 'photo' => $photo,
             ],
         );
+    }
+
+    /**
+     * The member's hidden-photo rows among the given photo ids, in one query instead of a
+     * {@see self::findByMemberAndPhoto} per photo.
+     *
+     * @param int[] $photoIds
+     *
+     * @return HiddenPhoto[]
+     */
+    public function findByMemberAndPhotos(
+        Member $member,
+        array $photoIds,
+    ): array {
+        if ([] === $photoIds) {
+            return [];
+        }
+
+        return $this->createQueryBuilder('h')
+            ->where('h.member = :member')
+            ->andWhere('h.photo IN (:photos)')
+            ->setParameter(
+                'member',
+                $member->getLidnr(),
+            )
+            ->setParameter(
+                'photos',
+                $photoIds,
+            )
+            ->getQuery()
+            ->getResult();
     }
 }

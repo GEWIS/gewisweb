@@ -23,14 +23,4 @@ class TagRepository extends ServiceEntityRepository
             Tag::class,
         );
     }
-
-    /**
-     * All tags (member and organ) on a photo.
-     *
-     * @return Tag[]
-     */
-    public function findByPhoto(int $photoId): array
-    {
-        return $this->findBy(['photo' => $photoId]);
-    }
 }

@@ -8,6 +8,26 @@
     {% if photosByYear is empty %}
         <p class="text-muted">{{ 'No photo of the week has been chosen yet.'|trans }}</p>
     {% else %}
+        {% if current is not null %}
+            <div class="row justify-content-center mb-4">
+                <div class="col col-lg-8 col-xl-6">
+                    <a href="{{ path('photo/album', { type: 'album', album: current.photo.album.id }) }}#pid={{ current.photo.id }}"
+                       class="text-decoration-none">
+                        <div class="panel my-0">
+                            <div class="panel-thumb">
+                                <img class="img-fluid w-100" alt=""
+                                     src="{{ image_url(current.photo.path, 'w960') }}">
+                            </div>
+                            <div class="panel-body">
+                                <h5 class="mb-1 text-body">{{ 'Current photo of the week'|trans }}</h5>
+                                <p class="small text-muted mb-0">{{ current.photo.album.name }}</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        {% endif %}
+
         {# One virtual weekly album per association year; open it to browse that year's photos of the week. #}
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
             {% for year, weeklies in photosByYear %}
@@ -15,19 +35,14 @@
                 <div class="col">
                     <a href="{{ path('photo/album', { type: 'weekly', album: year }) }}" class="text-decoration-none">
                         <div class="panel h-100 my-0">
-                            <div class="ratio ratio-16x9 bg-body-secondary rounded-top overflow-hidden position-relative">
+                            <div class="ratio ratio-16x9 bg-body-secondary rounded-top overflow-hidden">
                                 <img class="w-100 h-100" style="object-fit: cover;" loading="lazy"
                                      src="{{ image_url(cover.path, 'w640') }}" alt="">
-                                {% if current is not null and current.id == weeklies|first.id %}
-                                    <span class="badge badge-gewis position-absolute top-0 start-0 m-2">
-                                        {{ 'Current'|trans }}
-                                    </span>
-                                {% endif %}
                             </div>
                             <div class="panel-body">
-                                <h3 class="h6 mb-1 text-body">
-                                    {{ 'Photos of the Week'|trans }} {{ year }} &ndash; {{ year + 1 }}
-                                </h3>
+                                <h6 class="mb-1 text-body">
+                                    {{ year }}/{{ year + 1 }}
+                                </h6>
                                 <p class="small text-muted mb-0">
                                     <i class="fa-solid fa-image me-1"></i>{{ weeklies|length }}
                                     {{ weeklies|length == 1 ? 'photo'|trans : 'photos'|trans }}

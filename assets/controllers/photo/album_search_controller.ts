@@ -65,9 +65,11 @@ export default class extends Controller<HTMLElement> {
         } else if ('ArrowUp' === event.key) {
             event.preventDefault();
             this.move(-1);
-        } else if ('Enter' === event.key && -1 !== this.activeIndex) {
+        } else if ('Enter' === event.key) {
+            // Enter inside the open list picks a result rather than submitting the move with an empty destination;
+            // fall back to the first (often only) match when nothing is highlighted yet.
             event.preventDefault();
-            this.choose(this.activeIndex);
+            this.choose(-1 === this.activeIndex ? 0 : this.activeIndex);
         }
     }
 

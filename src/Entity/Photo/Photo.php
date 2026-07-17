@@ -20,26 +20,22 @@ use Doctrine\ORM\Mapping\OneToOne;
 /**
  * Photo.
  *
- * @psalm-type PhotoArrayType = array{
- *     id: int,
- *     dateTime: DateTime,
- *     artist: ?string,
- *     camera: ?string,
- *     flash: ?bool,
- *     focalLength: ?float,
- *     exposureTime: ?float,
- *     shutterSpeed: ?string,
- *     aperture: ?string,
- *     iso: ?int,
- *     album: array<string, mixed>,
- *     path: string,
- *     longitude: ?float,
- *     latitude: ?float,
- * }
  * @psalm-type PhotoGdprArrayType = array{
  *     id: int,
  *     dateTime: string,
  *     path: string,
+ * }
+ * @psalm-type PhotoExifArrayType = array{
+ *     artist: ?string,
+ *     camera: ?string,
+ *     dateTime: string,
+ *     flash: ?bool,
+ *     focalLength: ?float,
+ *     shutterSpeed: ?string,
+ *     aperture: ?string,
+ *     iso: ?int,
+ *     latitude: ?float,
+ *     longitude: ?float,
  * }
  */
 #[Entity]
@@ -367,16 +363,6 @@ class Photo
         return $this->tags;
     }
 
-    public function getTagCount(): int
-    {
-        return $this->tags->count();
-    }
-
-    public function getVoteCount(): int
-    {
-        return $this->votes->count();
-    }
-
     public function getWeeklyPhoto(): ?WeeklyPhoto
     {
         return $this->weeklyPhoto;
@@ -504,52 +490,12 @@ class Photo
     }
 
     /**
-     * Add a vote for this photo.
-     */
-    public function addVote(Vote $vote): void
-    {
-        $vote->setPhoto($this);
-        $this->votes[] = $vote;
-    }
-
-    /**
      * Add a tag to a photo.
      */
     public function addTag(Tag $tag): void
     {
         $tag->setPhoto($this);
         $this->tags[] = $tag;
-    }
-
-    /**
-     * @param ProfilePhoto[] $profilePhotos
-     */
-    public function addProfilePhotos(array $profilePhotos): void
-    {
-        foreach ($profilePhotos as $profilePhoto) {
-            $this->addProfilePhoto($profilePhoto);
-        }
-    }
-
-    public function addProfilePhoto(ProfilePhoto $profilePhoto): void
-    {
-        $profilePhoto->setPhoto($this);
-        $this->profilePhotos->add($profilePhoto);
-    }
-
-    /**
-     * @param ProfilePhoto[] $profilePhotos
-     */
-    public function removeProfilePhotos(array $profilePhotos): void
-    {
-        foreach ($profilePhotos as $profilePhoto) {
-            $this->removeProfilePhoto($profilePhoto);
-        }
-    }
-
-    public function removeProfilePhoto(ProfilePhoto $profilePhoto): void
-    {
-        $this->profilePhotos->removeElement($profilePhoto);
     }
 
     /**
@@ -561,31 +507,6 @@ class Photo
     }
 
     /**
-     * Returns an associative array representation of this object.
-     *
-     * @return PhotoArrayType
-     */
-    public function toArray(): array
-    {
-        return [
-            'id' => $this->getId(),
-            'dateTime' => $this->getDateTime(),
-            'artist' => $this->getArtist(),
-            'camera' => $this->getCamera(),
-            'flash' => $this->getFlash(),
-            'focalLength' => $this->getFocalLength(),
-            'exposureTime' => $this->getExposureTime(),
-            'shutterSpeed' => $this->getShutterSpeed(),
-            'aperture' => $this->getAperture(),
-            'iso' => $this->getIso(),
-            'album' => $this->getAlbum()->toArray(),
-            'path' => $this->getPath(),
-            'longitude' => $this->getLongitude(),
-            'latitude' => $this->getLatitude(),
-        ];
-    }
-
-    /**
      * @return PhotoGdprArrayType
      */
     public function toGdprArray(): array
@@ -594,6 +515,27 @@ class Photo
             'id' => $this->getId(),
             'dateTime' => $this->getDateTime()->format(DateTimeInterface::ATOM),
             'path' => $this->getPath(),
+        ];
+    }
+
+    /**
+     * The camera metadata for the viewer's info panel, keyed to match the frontend Exif shape.
+     *
+     * @return PhotoExifArrayType
+     */
+    public function toExifArray(): array
+    {
+        return [
+            'artist' => $this->getArtist(),
+            'camera' => $this->getCamera(),
+            'dateTime' => $this->getDateTime()->format('Y-m-d H:i:s'),
+            'flash' => $this->getFlash(),
+            'focalLength' => $this->getFocalLength(),
+            'shutterSpeed' => $this->getShutterSpeed(),
+            'aperture' => $this->getAperture(),
+            'iso' => $this->getIso(),
+            'latitude' => $this->getLatitude(),
+            'longitude' => $this->getLongitude(),
         ];
     }
 }

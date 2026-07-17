@@ -5,11 +5,12 @@
 {% block page_title %}{{ album.name|page_title }}{{ 'Photos'|trans|page_title }}{{ parent() }}{% endblock %}
 
 {% block admin_breadcrumbs %}
-    <li class="breadcrumb-item active" aria-current="page">
+    <li class="breadcrumb-item">
         <a href="{{ path('admin/photos/index') }}">
             {{ 'Photos'|trans }}
         </a>
     </li>
+    {{ gallery.albumTrail(album.parent, true) }}
     <li class="breadcrumb-item active" aria-current="page">
         {{ album.name }}
     </li>
@@ -21,15 +22,12 @@
 {% endblock %}
 
 {% block contents %}
-    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-2">
         <div>
-            <h1 class="h3 mb-0">
+            <h3 class="mb-0">
                 {{ album.name }}
-                {% if not album.published %}
-                    {# A draft is only visible here in the admin, so mark it clearly while managing it. #}
-                    <span class="badge badge-secondary align-middle ms-2">{{ 'Draft'|trans }}</span>
-                {% endif %}
-            </h1>
+            </h3>
+            {% include 'partials/photo/album-dates.html.twig' with { 'album': album } only %}
             {% if album.parent %}
                 <span class="text-muted small">
                     <i class="fa-solid fa-folder-tree me-1"></i>
@@ -39,12 +37,6 @@
             {% endif %}
         </div>
         <div class="d-flex gap-2">
-            <form method="post" action="{{ path('admin/photos/album_cover', { album: album.id }) }}">
-                <input type="hidden" name="_csrf_token" value="{{ csrf_token('photo_album_cover-' ~ album.id) }}">
-                <button type="submit" class="btn btn-outline-secondary">
-                    <i class="fa-solid fa-arrows-rotate"></i> {{ 'Regenerate cover'|trans }}
-                </button>
-            </form>
             <a href="{{ path('admin/photos/albums_edit', { album: album.id }) }}" class="btn btn-outline-secondary">
                 <i class="fa-solid fa-pencil"></i> {{ 'Edit album'|trans }}
             </a>
@@ -63,7 +55,7 @@
 
     {# Sub-albums, so the tree can be navigated from the manage view as well. #}
     {% if album.children is not empty %}
-        <h2 class="h5 text-muted mb-3">{{ 'Sub-albums'|trans }}</h2>
+        <h5 class="text-muted mb-3">{{ 'Sub-albums'|trans }}</h5>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xxl-6 g-3 mb-4">
             {% for child in album.children %}
                 {% include 'partials/photo/admin/album-card.html.twig' with { 'album': child } only %}
@@ -71,24 +63,81 @@
         </div>
     {% endif %}
 
-    <div class="panel"
-         data-controller="photo-upload"
-         data-photo-upload-upload-url-value="{{ path('admin/photos/album_upload', { album: album.id }) }}">
-        <div class="panel-heading">
-            <h3>{{ 'Upload photos'|trans }}</h3>
-        </div>
-        <div class="panel-body">
-            <div class="photo-dropzone text-center p-5 border border-2 rounded"
-                 role="button" tabindex="0"
-                 data-photo-upload-target="dropzone">
-                <i class="fa-solid fa-cloud-arrow-up fa-2x text-muted mb-2"></i>
-                <p class="mb-0">{{ 'Drag photos here or click to select'|trans }}</p>
-                <p class="text-muted small mb-0">{{ 'JPEG, PNG, WebP, AVIF or HEIC, up to 32 MB each.'|trans }}</p>
+    {% set coverTopic = 'photo/album/' ~ album.id ~ '/cover' %}
+    <div class="row g-3 mb-4 align-items-start">
+        <div class="col-12 col-lg-8">
+            <div class="panel h-100 my-0"
+                 data-controller="photo-upload"
+                 data-photo-upload-upload-url-value="{{ path('admin/photos/album_upload', { album: album.id }) }}">
+                <button type="button"
+                        class="panel-heading panel-collapse-toggle collapsed d-flex justify-content-between align-items-center gap-2 w-100 border-0 bg-transparent text-start"
+                        data-bs-toggle="collapse" data-bs-target="#upload-photos"
+                        aria-expanded="false" aria-controls="upload-photos">
+                    <h3 class="mb-0">{{ 'Upload photos'|trans }}</h3>
+                    <i class="fa-solid fa-chevron-down panel-collapse-chevron"></i>
+                </button>
+                {# pt-0: the .collapse wrapper breaks the `.panel-heading + .panel-body` zero-top-padding rule. #}
+                <div class="collapse" id="upload-photos">
+                    <div class="panel-body pt-0">
+                        <div class="photo-dropzone text-center p-5 border border-2 rounded"
+                             role="button" tabindex="0"
+                             data-photo-upload-target="dropzone">
+                            <i class="fa-solid fa-cloud-arrow-up fa-2x text-muted mb-2"></i>
+                            <p class="mb-0">{{ 'Drag photos here or click to select'|trans }}</p>
+                            <p class="text-muted small mb-0">{{ 'JPEG, PNG, WebP, AVIF or HEIC, up to 32 MB each.'|trans }}</p>
+                        </div>
+                        <input type="file" hidden multiple
+                               accept="image/jpeg,image/png,image/webp,image/avif,image/heic,image/heif"
+                               data-photo-upload-target="input">
+                        <ul class="list-unstyled mt-3 mb-0" data-photo-upload-target="list"></ul>
+                    </div>
+                </div>
             </div>
-            <input type="file" hidden multiple
-                   accept="image/jpeg,image/png,image/webp,image/avif,image/heic,image/heif"
-                   data-photo-upload-target="input">
-            <ul class="list-unstyled mt-3 mb-0" data-photo-upload-target="list"></ul>
+        </div>
+        <div class="col-12 col-lg-4">
+            <div class="panel h-100 my-0"
+                 data-controller="photo-cover"
+                 data-photo-cover-hub-url-value="{{ mercure(coverTopic, { subscribe: [coverTopic] }) }}">
+                <button type="button"
+                        class="panel-heading panel-collapse-toggle collapsed d-flex justify-content-between align-items-center gap-2 w-100 border-0 bg-transparent text-start"
+                        data-bs-toggle="collapse" data-bs-target="#album-cover"
+                        aria-expanded="false" aria-controls="album-cover">
+                    <h3 class="mb-0">{{ 'Album cover'|trans }}</h3>
+                    <i class="fa-solid fa-chevron-down panel-collapse-chevron"></i>
+                </button>
+                <div class="collapse" id="album-cover">
+                    <div class="panel-body pt-0">
+                        <div class="ratio ratio-16x9 bg-body-secondary rounded overflow-hidden mb-3">
+                            <img alt="" style="object-fit: cover;"
+                                 class="w-100 h-100{{ album.coverPath ? '' : ' d-none' }}"
+                                 data-photo-cover-target="image"
+                                 {% if album.coverPath %}src="{{ image_url(album.coverPath, 'cover') }}"{% endif %}>
+                            {% if not album.coverPath %}
+                                <div class="d-flex align-items-center justify-content-center text-muted h-100"
+                                     data-photo-cover-target="placeholder">
+                                    <i class="fa-solid fa-images fa-2x"></i>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <p class="text-muted small">
+                            {{ 'The cover is a mosaic of the album\'s photos. Regenerate it after adding or removing photos; it updates here automatically once ready.'|trans }}
+                        </p>
+                        <form method="post" class="mb-0"
+                              action="{{ path('admin/photos/album_cover', { album: album.id }) }}"
+                              data-action="photo-cover#regenerate">
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('photo_album_cover-' ~ album.id) }}">
+                            <button type="submit" class="btn btn-outline-secondary" data-photo-cover-target="button">
+                                <i class="fa-solid fa-arrows-rotate" data-photo-cover-target="icon"></i>
+                                {{ 'Regenerate cover'|trans }}
+                            </button>
+                        </form>
+                        <p class="text-danger small mb-0 mt-2 d-none" data-photo-cover-target="error">
+                            <i class="fa-solid fa-triangle-exclamation me-1"></i>
+                            {{ 'There are no photos to build a cover from.'|trans }}
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

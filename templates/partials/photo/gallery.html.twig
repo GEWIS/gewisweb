@@ -13,8 +13,14 @@
     {%- set labels = {
         inThisPhoto: 'In this photo'|trans,
         noTags: 'No one is tagged in this photo yet'|trans,
-        tagMember: 'Tag a member'|trans,
-        tagOrgan: 'Tag an organ'|trans,
+        loadingTags: 'Loading tags…'|trans,
+        tagsError: 'Could not load tags'|trans,
+        member: 'Member'|trans,
+        body: 'Body'|trans,
+        tag: 'Tag'|trans,
+        searchMembers: 'Search members'|trans,
+        searchBodies: 'Search bodies'|trans,
+        placedOnPhoto: 'Placed on the photo'|trans,
         removeTag: 'Remove tag'|trans,
         placeOnPhoto: 'Place on photo'|trans,
         placeHint: 'Click or tap the photo where the person is'|trans,
@@ -24,7 +30,12 @@
         voted: 'You have voted'|trans,
         setProfilePhoto: 'Set as profile photo'|trans,
         photoOfTheWeek: 'Photo of the Week'|trans,
+        week: 'Week'|trans,
         goToAlbum: 'Go to the original album'|trans,
+        zoom: 'Zoom'|trans,
+        close: 'Close'|trans,
+        previous: 'Previous'|trans,
+        next: 'Next'|trans,
         information: 'Information'|trans,
         unknown: 'Unknown'|trans,
         yes: 'Yes'|trans,
@@ -37,6 +48,7 @@
         shutterSpeed: 'Shutter speed'|trans,
         aperture: 'Aperture'|trans,
         iso: 'ISO'|trans,
+        coordinates: 'Coordinates'|trans,
     } -%}
     data-controller="gallery"
     data-gallery-manifest-url-value="{{ manifest_url }}"
@@ -54,10 +66,30 @@
 {% endmacro %}
 
 {% macro grid(empty_message) %}
+    {# The grid and viewer are built entirely from the manifest by the gallery controller, so without JavaScript the
+       page would otherwise be blank. #}
+    <noscript>
+        <p class="text-muted text-center py-4">{{ 'Enable JavaScript to view these photos.'|trans }}</p>
+    </noscript>
     <p data-gallery-target="empty" class="text-muted text-center py-4" hidden>
         {{ empty_message ?? 'This album does not contain any photos.'|trans }}
     </p>
     <div class="photo-masonry"
          data-gallery-target="grid"
          data-view-label="{{ 'View photo'|trans }}"></div>
+{% endmacro %}
+
+{# Breadcrumb items for an album's ancestor chain (root first), each a link. Pass `album.parent` so the current album
+   is left for the page to render as the active crumb. Public trails skip unpublished ancestors (they 404 anyway). #}
+{% macro albumTrail(album, admin) %}
+    {% if album is not null %}
+        {{ _self.albumTrail(album.parent, admin) }}
+        {% if admin or album.published %}
+            <li class="breadcrumb-item">
+                <a href="{{ admin
+                    ? path('admin/photos/album', { album: album.id })
+                    : path('photo/album', { type: 'album', album: album.id }) }}">{{ album.name }}</a>
+            </li>
+        {% endif %}
+    {% endif %}
 {% endmacro %}

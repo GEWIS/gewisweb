@@ -1,0 +1,3 @@
+{% if album.startDateTime is not null and album.endDateTime is not null %}
+    <p class="small text-muted mb-1">{{ date_range(album.startDateTime, album.endDateTime, time = false, year = 'never') }}</p>
+{% endif %}

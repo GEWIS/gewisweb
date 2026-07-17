@@ -23,7 +23,7 @@
         <div class="flex-grow-1 overflow-hidden d-flex flex-column flex-md-row justify-content-between gap-3">
             <div class="flex-grow-1 overflow-hidden">
                 <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
-                    <h3 class="h5 mb-0">
+                    <h5 class="mb-0">
                         {% if activity.isCancelled %}
                             <span class="text-danger">{{ '[CANCELLED]'|trans }}</span>
                             <a class="text-muted text-decoration-line-through"
@@ -32,7 +32,7 @@
                             <a class="text-body"
                                href="{{ path('activity/view', {'activity': activity.getId}) }}">{{ activity_title(activity) }}</a>
                         {% endif %}
-                    </h3>
+                    </h5>
                     {% if activity.getCategory.value not in ['other', 'uncategorised'] %}
                         <span class="badge badge-gewis-primary">{{ activity.getCategory|trans }}</span>
                     {% endif %}

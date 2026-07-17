@@ -112,6 +112,16 @@
     }
 }
 
+// Collapse toggle on a `.panel-heading`: rotate the chevron when open. Bootstrap sets `.collapsed` while hidden.
+.panel-collapse-chevron {
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+}
+
+.panel-collapse-toggle:not(.collapsed) .panel-collapse-chevron {
+    transform: rotate(180deg);
+}
+
 @include color-mode(gewis-night) {
     .panel {
         --#{$prefix}panel-bg: #{$panel-bg-dark};

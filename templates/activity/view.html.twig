@@ -58,14 +58,14 @@
                 </div>
                 <div class="list-group list-group-flush">
                     <div class="list-group-item">
-                        <h3 class="h6 mb-1">{{ 'Start'|trans }}</h3>
+                        <h6 class="mb-1">{{ 'Start'|trans }}</h6>
                         <p class="text-muted small mb-0">
                             {% set start = activity.getBeginTime|format_datetime(pattern: 'EEEE d MMMM yyyy HH:mm', locale: app.request.locale) %}
                             {{ start|first|upper ~ start|slice(1) }}
                         </p>
                     </div>
                     <div class="list-group-item">
-                        <h3 class="h6 mb-1">{{ 'End'|trans }}</h3>
+                        <h6 class="mb-1">{{ 'End'|trans }}</h6>
                         <p class="text-muted small mb-0">
                             {% set end = activity.getEndTime|format_datetime(pattern: 'EEEE d MMMM yyyy HH:mm', locale: app.request.locale) %}
                             {{ end|first|upper ~ end|slice(1) }}
@@ -74,20 +74,20 @@
                     {% set location = activity.getLocation|localise_text %}
                     {% if location is not empty %}
                         <div class="list-group-item">
-                            <h3 class="h6 mb-1">{{ 'Location'|trans }}</h3>
+                            <h6 class="mb-1">{{ 'Location'|trans }}</h6>
                             <p class="text-muted small mb-0">{{ location }}</p>
                         </div>
                     {% endif %}
                     {% set costs = activity.getCosts|localise_text %}
                     {% if costs is not empty %}
                         <div class="list-group-item">
-                            <h3 class="h6 mb-1">{{ 'Costs'|trans }}</h3>
+                            <h6 class="mb-1">{{ 'Costs'|trans }}</h6>
                             <p class="text-muted small mb-0">{{ costs }}</p>
                         </div>
                     {% endif %}
                     {% if activity.getOrgan is not null or activity.getCompany is not null %}
                         <div class="list-group-item">
-                            <h3 class="h6 mb-1">{{ 'Organised by'|trans }}</h3>
+                            <h6 class="mb-1">{{ 'Organised by'|trans }}</h6>
                             <p class="text-muted small mb-0">
                                 {{ activity.getOrgan is not null ? activity.getOrgan.getName : activity.getCompany.getName }}
                             </p>
@@ -125,7 +125,7 @@
         {% set closedLists = signupListViews|filter(list => list.isClosed) %}
 
         {% if activeLists is not empty %}
-            <h2 class="h4 mt-4">{{ 'Sign-up lists'|trans }}</h2>
+            <h4 class="mt-4">{{ 'Sign-up lists'|trans }}</h4>
             {% set openedFirst = false %}
             {% for list in activeLists %}
                 {% set autoOpen = not openedFirst and list.isOpen %}
@@ -139,7 +139,7 @@
         {% endif %}
 
         {% if closedLists is not empty %}
-            <h2 class="h4 mt-4 text-muted">{{ 'Closed sign-up lists'|trans }}</h2>
+            <h4 class="mt-4 text-muted">{{ 'Closed sign-up lists'|trans }}</h4>
             {% for list in closedLists %}
                 {% include 'partials/activity/signup-list.html.twig' with {
                     'list': list,

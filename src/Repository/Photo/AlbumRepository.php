@@ -64,51 +64,6 @@ class AlbumRepository extends ServiceEntityRepository
     }
 
     /**
-     * Retrieves all root albums which do not have a startDateTime specified.
-     * This is in most cases analogous to returning all empty albums.
-     *
-     * @return Album[]
-     */
-    public function getAlbumsWithoutDate(): array
-    {
-        $qb = $this->createQueryBuilder('a');
-        $qb->where('a.startDateTime IS NULL');
-
-        return $qb->getQuery()->getResult();
-    }
-
-    /**
-     * Gets all root albums based on their name.
-     *
-     * Only returns published albums and grouping has to happen downstream at the consumers.
-     *
-     * @return Album[]
-     */
-    public function search(string $query): array
-    {
-        $qb = $this->createQueryBuilder('a');
-        $qb->where('a.parent IS NULL')
-            ->andWhere('a.published = TRUE')
-            ->andWhere('a.startDateTime IS NOT NULL')
-            ->andWhere('a.endDateTime IS NOT NULL')
-            ->andWhere('a.name LIKE :query')
-            ->orderBy(
-                'a.startDateTime',
-                'DESC',
-            );
-
-        $qb->setParameter(
-            'query',
-            '%' . addcslashes(
-                $query,
-                '%_',
-            ) . '%',
-        );
-
-        return $qb->getQuery()->getResult();
-    }
-
-    /**
      * Albums matching a name fragment, for the admin move-photos picker. Unlike {@see self::search} (the public
      * gallery) this is not restricted to published, dated, root albums: a photo can be moved into any album, drafts
      * and sub-albums included. The parent is fetch-joined for a disambiguating label, and the result is capped so the
@@ -144,85 +99,60 @@ class AlbumRepository extends ServiceEntityRepository
     }
 
     /**
-     * Returns the root album containing the most recent photos.
+     * The start date of every published, dated root album, in one query, so the overview can derive the association
+     * years that actually hold albums (a year with none never reaches the year switcher).
+     *
+     * @return list<array{startDateTime: DateTime}>
      */
-    public function getNewestAlbum(bool $onlyPublished = true): ?Album
+    public function getPublishedRootAlbumStartDates(): array
     {
-        $qb = $this->createQueryBuilder('a');
-        $qb->where('a.parent IS NULL')
+        /** @var list<array{startDateTime: DateTime}> $rows */
+        $rows = $this->createQueryBuilder('a')
+            ->select('a.startDateTime')
+            ->where('a.parent IS NULL')
             ->andWhere('a.startDateTime IS NOT NULL')
-            ->setMaxResults(1)
-            ->orderBy(
-                'a.startDateTime',
-                'DESC',
-            );
+            ->andWhere('a.published = TRUE')
+            ->getQuery()
+            ->getResult();
 
-        if ($onlyPublished) {
-            $qb->andWhere('a.published = TRUE');
-        }
-
-        $res = $qb->getQuery()->getResult();
-
-        return [] === $res
-            ? null
-            : $res[0];
-    }
-
-    /**
-     * Returns the root album containing the oldest photos.
-     */
-    public function getOldestAlbum(bool $onlyPublished = true): ?Album
-    {
-        $qb = $this->createQueryBuilder('a');
-        $qb->where('a.parent IS NULL')
-            ->andWhere('a.startDateTime IS NOT NULL')
-            ->setMaxResults(1)
-            ->orderBy(
-                'a.startDateTime',
-                'ASC',
-            );
-
-        if ($onlyPublished) {
-            $qb->andWhere('a.published = TRUE');
-        }
-
-        $res = $qb->getQuery()->getResult();
-
-        return [] === $res
-            ? null
-            : $res[0];
+        return $rows;
     }
 
     /**
      * The number of direct sub-albums each of the given albums has, keyed by album id, in a single query — so a grid of
      * album cards does not issue one `COUNT(*) ... WHERE parent_id = ?` per card. Albums with no sub-albums are absent.
+     * Public overviews pass `$publishedOnly` so a draft sub-album is not counted against a published parent.
      *
      * @param Album[] $albums
      *
      * @return array<int, int>
      */
-    public function getSubAlbumCounts(array $albums): array
-    {
+    public function getSubAlbumCounts(
+        array $albums,
+        bool $publishedOnly = false,
+    ): array {
         if ([] === $albums) {
             return [];
         }
 
+        $qb = $this->createQueryBuilder('a')
+            ->select(
+                'IDENTITY(a.parent) AS parentId',
+                'COUNT(a.id) AS total',
+            )
+            ->where('a.parent IN (:parents)')
+            ->setParameter(
+                'parents',
+                $albums,
+            )
+            ->groupBy('a.parent');
+
+        if ($publishedOnly) {
+            $qb->andWhere('a.published = TRUE');
+        }
+
         $counts = [];
-        foreach (
-            $this->createQueryBuilder('a')
-                ->select(
-                    'IDENTITY(a.parent) AS parentId',
-                    'COUNT(a.id) AS total',
-                )
-                ->where('a.parent IN (:parents)')
-                ->setParameter(
-                    'parents',
-                    $albums,
-                )
-                ->groupBy('a.parent')
-                ->getQuery()
-                ->getScalarResult() as $row
-        ) {
+        foreach ($qb->getQuery()->getScalarResult() as $row) {
             $counts[(int) $row['parentId']] = (int) $row['total'];
         }
 

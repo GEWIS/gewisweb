@@ -24,7 +24,7 @@ final class UserSettingsTest extends TestCase
             [
                 'disableCosmetics' => false,
                 'photoTaggingOptOut' => true,
-                'photoVisibility' => 'none',
+                'photoVisibility' => 'selected',
                 'hideYearOfBirth' => true,
                 'hideBirthdayOnFrontpage' => false,
             ],

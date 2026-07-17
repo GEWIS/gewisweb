@@ -373,11 +373,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     }
 
     /**
-     * How much of this member's tagged-photo collection is hidden. Defaults to hiding nothing when no settings row
-     * exists yet.
+     * How much of this member's tagged-photo collection is hidden. Defaults to hiding only the photos they select
+     * (nothing, until they pick some) when no settings row exists yet.
      */
     public function getPhotoVisibility(): PhotoVisibility
     {
-        return $this->settings?->getPhotoVisibility() ?? PhotoVisibility::HideNone;
+        return $this->settings?->getPhotoVisibility() ?? PhotoVisibility::HideSelected;
     }
 }

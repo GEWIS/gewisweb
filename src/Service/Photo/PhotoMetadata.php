@@ -10,9 +10,13 @@ use DateTime;
 use function array_key_exists;
 use function count;
 use function explode;
+use function floatval;
+use function in_array;
+use function intval;
 use function is_array;
 use function is_numeric;
 use function is_string;
+use function mb_strtolower;
 use function round;
 use function rtrim;
 use function sprintf;
@@ -20,8 +24,9 @@ use function str_starts_with;
 use function trim;
 
 /**
- * Camera metadata read from a photo's EXIF, mapped onto the columns of {@see Photo}. Every field is optional: a photo
- * without EXIF (or in a format that carries none) yields an all-null instance.
+ * Camera metadata read from a photo's EXIF, mapped onto the columns of {@see Photo}. Every column field is optional: a
+ * photo without EXIF (or in a format that carries none) yields all-null columns. The orientation-derived {@see
+ * $swapsAxes} flag is the exception the uploader consults to size the photo, and defaults to no swap.
  */
 final readonly class PhotoMetadata
 {
@@ -37,6 +42,7 @@ final readonly class PhotoMetadata
         public ?int $iso,
         public ?float $latitude,
         public ?float $longitude,
+        public bool $swapsAxes,
     ) {
     }
 
@@ -54,6 +60,7 @@ final readonly class PhotoMetadata
             null,
             null,
             null,
+            false,
         );
     }
 
@@ -74,8 +81,8 @@ final readonly class PhotoMetadata
             flash: array_key_exists(
                 'Flash',
                 $exif,
-            ) ? 1 === ((int) $exif['Flash'] & 1) : null,
-            focalLength: self::rational($exif['FocalLength'] ?? null),
+            ) ? 1 === (intval($exif['Flash']) & 1) : null,
+            focalLength: self::positiveFloat(self::rational($exif['FocalLength'] ?? null)),
             exposureTime: $exposureTime,
             shutterSpeed: self::shutterSpeed($exposureTime),
             aperture: self::aperture(self::rational($exif['FNumber'] ?? null)),
@@ -90,6 +97,7 @@ final readonly class PhotoMetadata
                 $exif['GPSLongitudeRef'] ?? null,
                 'W',
             ),
+            swapsAxes: self::orientationSwapsAxes($exif['Orientation'] ?? null),
         );
     }
 
@@ -110,6 +118,25 @@ final readonly class PhotoMetadata
         $photo->setIso($this->iso);
         $photo->setLatitude($this->latitude);
         $photo->setLongitude($this->longitude);
+    }
+
+    /**
+     * Whether the EXIF orientation is a quarter turn (90° or 270°), which swaps the image's displayed width and height
+     * relative to its stored pixels. Values 5–8 are the transposed/rotated quarter-turn cases; anything else (no tag,
+     * or an unreadable value) leaves the axes as stored.
+     */
+    private static function orientationSwapsAxes(mixed $orientation): bool
+    {
+        return in_array(
+            intval($orientation),
+            [
+                5,
+                6,
+                7,
+                8,
+            ],
+            true,
+        );
     }
 
     private static function string(mixed $value): ?string
@@ -136,18 +163,44 @@ final readonly class PhotoMetadata
             return $make;
         }
 
-        // The model often already includes the make (e.g. "Canon EOS 60D"); only prefix it when it does not.
+        if (null === $make) {
+            return $model;
+        }
+
+        // The model usually already carries the brand (e.g. "Canon EOS 60D"), and the make sometimes spells it out
+        // more fully than the model ("NIKON CORPORATION" for a "NIKON D3500" model). Treat the make's first word as
+        // the brand and only prefix the make when the model starts with neither the whole make nor that brand.
+        $brand = explode(
+            ' ',
+            $make,
+        )[0];
         if (
-            null === $make
-            || str_starts_with(
+            self::startsWith(
                 $model,
                 $make,
+            )
+            || self::startsWith(
+                $model,
+                $brand,
             )
         ) {
             return $model;
         }
 
         return $make . ' ' . $model;
+    }
+
+    /**
+     * Case-insensitive {@see str_starts_with}: camera makers are inconsistent about the casing of make versus model.
+     */
+    private static function startsWith(
+        string $haystack,
+        string $needle,
+    ): bool {
+        return str_starts_with(
+            mb_strtolower($haystack),
+            mb_strtolower($needle),
+        );
     }
 
     private static function dateTime(mixed $value): ?DateTime
@@ -158,15 +211,28 @@ final readonly class PhotoMetadata
         }
 
         // createFromFormat rolls invalid components over rather than failing (the "0000:00:00 00:00:00" no-date
-        // sentinel would become a real date), so require the parse to round-trip.
+        // sentinel would become a real date), so reject any parse that reported a warning or error. Unlike a strict
+        // string round-trip this still accepts valid but unpadded components (e.g. "2019:08:12 8:45:30").
         $dateTime = DateTime::createFromFormat(
             'Y:m:d H:i:s',
             $value,
         );
+        $errors = DateTime::getLastErrors();
 
-        return false !== $dateTime && $dateTime->format('Y:m:d H:i:s') === $value
-            ? $dateTime
-            : null;
+        if (
+            false === $dateTime
+            || (
+                false !== $errors
+                && (
+                    $errors['warning_count'] > 0
+                    || $errors['error_count'] > 0
+                )
+            )
+        ) {
+            return null;
+        }
+
+        return $dateTime;
     }
 
     private static function iso(mixed $value): ?int
@@ -176,7 +242,7 @@ final readonly class PhotoMetadata
         }
 
         return is_numeric($value)
-            ? (int) $value
+            ? intval($value)
             : null;
     }
 
@@ -186,7 +252,7 @@ final readonly class PhotoMetadata
     private static function rational(mixed $value): ?float
     {
         if (is_numeric($value)) {
-            return (float) $value;
+            return floatval($value);
         }
 
         if (!is_string($value)) {
@@ -202,12 +268,12 @@ final readonly class PhotoMetadata
             2 !== count($parts)
             || !is_numeric($parts[0])
             || !is_numeric($parts[1])
-            || 0.0 === (float) $parts[1]
+            || 0.0 === floatval($parts[1])
         ) {
             return null;
         }
 
-        return (float) $parts[0] / (float) $parts[1];
+        return floatval($parts[0]) / floatval($parts[1]);
     }
 
     private static function shutterSpeed(?float $exposureTime): ?string
@@ -222,7 +288,7 @@ final readonly class PhotoMetadata
         return $exposureTime < 1.0
             ? sprintf(
                 '1/%d s',
-                (int) round(1.0 / $exposureTime),
+                intval(round(1.0 / $exposureTime)),
             )
             : sprintf(
                 '%s s',
@@ -232,12 +298,34 @@ final readonly class PhotoMetadata
 
     private static function aperture(?float $fNumber): ?string
     {
-        return null === $fNumber
-            ? null
-            : sprintf(
-                'f/%s',
-                self::number($fNumber),
-            );
+        // Guard against garbage like an "0/1" f-number, which some phones write for "unknown"; matches shutterSpeed().
+        if (
+            null === $fNumber
+            || $fNumber <= 0.0
+        ) {
+            return null;
+        }
+
+        return sprintf(
+            'f/%s',
+            self::number($fNumber),
+        );
+    }
+
+    /**
+     * A rational kept only when strictly positive: a "0/1" focal length is a placeholder some cameras write for
+     * "unknown", not a real 0 mm lens.
+     */
+    private static function positiveFloat(?float $value): ?float
+    {
+        if (
+            null === $value
+            || $value <= 0.0
+        ) {
+            return null;
+        }
+
+        return $value;
     }
 
     /**

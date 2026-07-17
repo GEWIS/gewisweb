@@ -24,6 +24,7 @@ import SignupListController from './controllers/activity/signup_list_controller.
 
 // Photo-specific controllers.
 import AlbumSearchController from './controllers/photo/album_search_controller.ts';
+import CoverController from './controllers/photo/cover_controller.ts';
 import GalleryController from './controllers/photo/gallery_controller.ts';
 import UploadController from './controllers/photo/upload_controller.ts';
 
@@ -53,5 +54,6 @@ app.register('signup-field', SignupFieldController);
 app.register('signup-list', SignupListController);
 
 app.register('album-search', AlbumSearchController);
+app.register('photo-cover', CoverController);
 app.register('gallery', GalleryController);
 app.register('photo-upload', UploadController);

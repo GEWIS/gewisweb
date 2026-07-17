@@ -17,7 +17,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 
 use function array_filter;
+use function array_map;
 use function array_values;
+use function intval;
 
 /**
  * The visibility of a member's tagged photos on their own photo page. Others see only what the member's
@@ -50,31 +52,49 @@ final readonly class PhotoPrivacyService
         Member $member,
         array $photos,
     ): array {
-        $hidden = $this->hiddenPhotoRepository->getHiddenPhotoIds($member);
-
         if ($this->isSelf($member)) {
             return [
                 'visible' => $photos,
-                'hidden' => $hidden,
+                'hidden' => $this->hiddenPhotoRepository->getHiddenPhotoIds($member),
             ];
         }
 
         $level = $this->settingsRepository->find($member->getLidnr())?->getPhotoVisibility()
-            ?? PhotoVisibility::HideNone;
+            ?? PhotoVisibility::HideSelected;
 
+        // Others never learn which photos are hidden, so the hidden ids are dropped from the result. HideSelected with
+        // an empty hidden list shows everything; HideAll skips the lookup entirely.
         $visible = match ($level) {
-            PhotoVisibility::HideNone => $photos,
             PhotoVisibility::HideAll => [],
-            PhotoVisibility::HideSelected => array_values(array_filter(
+            PhotoVisibility::HideSelected => $this->withoutHidden(
+                $member,
                 $photos,
-                static fn (Photo $photo): bool => !isset($hidden[(int) $photo->getId()]),
-            )),
+            ),
         };
 
         return [
             'visible' => $visible,
             'hidden' => [],
         ];
+    }
+
+    /**
+     * The given photos minus the ones the member has hidden.
+     *
+     * @param Photo[] $photos
+     *
+     * @return Photo[]
+     */
+    private function withoutHidden(
+        Member $member,
+        array $photos,
+    ): array {
+        $hidden = $this->hiddenPhotoRepository->getHiddenPhotoIds($member);
+
+        return array_values(array_filter(
+            $photos,
+            static fn (Photo $photo): bool => !isset($hidden[intval($photo->getId())]),
+        ));
     }
 
     /**
@@ -88,16 +108,21 @@ final readonly class PhotoPrivacyService
         Member $member,
         array $photos,
     ): void {
+        $photoIds = array_map(
+            static fn (Photo $photo): int => intval($photo->getId()),
+            $photos,
+        );
+        $tagged = $this->memberTagRepository->findTaggedPhotoIds(
+            $member->getLidnr(),
+            $photoIds,
+        );
+        $alreadyHidden = $this->hiddenPhotoRepository->getHiddenPhotoIds($member);
+
         foreach ($photos as $photo) {
+            $id = intval($photo->getId());
             if (
-                null === $this->memberTagRepository->findTag(
-                    (int) $photo->getId(),
-                    $member->getLidnr(),
-                )
-                || null !== $this->hiddenPhotoRepository->findByMemberAndPhoto(
-                    $member,
-                    $photo,
-                )
+                !isset($tagged[$id])
+                || isset($alreadyHidden[$id])
             ) {
                 continue;
             }
@@ -119,15 +144,16 @@ final readonly class PhotoPrivacyService
         Member $member,
         array $photos,
     ): void {
-        foreach ($photos as $photo) {
-            $hiddenPhoto = $this->hiddenPhotoRepository->findByMemberAndPhoto(
+        $photoIds = array_map(
+            static fn (Photo $photo): int => intval($photo->getId()),
+            $photos,
+        );
+        foreach (
+            $this->hiddenPhotoRepository->findByMemberAndPhotos(
                 $member,
-                $photo,
-            );
-            if (null === $hiddenPhoto) {
-                continue;
-            }
-
+                $photoIds,
+            ) as $hiddenPhoto
+        ) {
             $this->entityManager->remove($hiddenPhoto);
         }
 

@@ -73,9 +73,9 @@ class UserSettings
     #[Column(
         type: Types::STRING,
         enumType: PhotoVisibility::class,
-        options: ['default' => PhotoVisibility::HideNone->value],
+        options: ['default' => PhotoVisibility::HideSelected->value],
     )]
-    private PhotoVisibility $photoVisibility = PhotoVisibility::HideNone;
+    private PhotoVisibility $photoVisibility = PhotoVisibility::HideSelected;
 
     /**
      * Whether this member's year of birth (and thus age) is hidden from other members. Reciprocal: a member who hides

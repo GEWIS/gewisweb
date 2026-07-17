@@ -73,6 +73,9 @@ final class AlbumOverview
             ];
         }
 
-        return $this->albumService->getCardCounts(array_merge(...array_values($grouped)));
+        return $this->albumService->getCardCounts(
+            array_merge(...array_values($grouped)),
+            true,
+        );
     }
 }

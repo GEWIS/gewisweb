@@ -11,7 +11,9 @@ use App\Repository\Photo\PhotoRepository;
 use App\Security\Photo\AlbumVoter;
 use Symfony\Bundle\SecurityBundle\Security;
 
+use function array_keys;
 use function krsort;
+use function rsort;
 use function stripos;
 
 /**
@@ -29,45 +31,43 @@ final readonly class AlbumService
 
     /**
      * The sub-album and direct-photo counts an overview's album cards need, each gathered in one query, so a grid does
-     * not issue a `COUNT` per card. Both maps are keyed by album id; a missing key means zero.
+     * not issue a `COUNT` per card. Both maps are keyed by album id; a missing key means zero. Public overviews pass
+     * `$publishedOnly` so draft sub-albums are not counted (the admin overview counts them).
      *
      * @param Album[] $albums
      *
      * @return array{subAlbums: array<int, int>, photos: array<int, int>}
      */
-    public function getCardCounts(array $albums): array
-    {
+    public function getCardCounts(
+        array $albums,
+        bool $publishedOnly = false,
+    ): array {
         return [
-            'subAlbums' => $this->albumRepository->getSubAlbumCounts($albums),
+            'subAlbums' => $this->albumRepository->getSubAlbumCounts(
+                $albums,
+                $publishedOnly,
+            ),
             'photos' => $this->photoRepository->getDirectPhotoCounts($albums),
         ];
     }
 
     /**
-     * The association years (as their first year, e.g. 2024 for '2024-2025') that hold viewable root albums, most
-     * recent first. Used to populate the year filter on the overview; the range runs from the newest to the oldest
-     * dated album.
+     * The association years (as their first year, e.g. 2024 for '2024-2025') that hold at least one viewable root
+     * album, most recent first. Used to populate the year filter on the overview. Only years that actually have an
+     * album appear, so the switcher never offers an empty year.
      *
      * @return list<int>
      */
     public function getViewableRootAlbumYears(): array
     {
-        // Public browsing is published-only for everyone (drafts live in the admin), so the year range is too.
-        $newest = $this->albumRepository->getNewestAlbum()?->getStartDateTime();
-        $oldest = $this->albumRepository->getOldestAlbum()?->getStartDateTime();
-
-        if (
-            null === $newest
-            || null === $oldest
-        ) {
-            return [];
-        }
-
+        // Public browsing is published-only for everyone (drafts live in the admin), so the year list is too.
         $years = [];
-        $oldestYear = AssociationYear::fromDate($oldest)->getYear();
-        for ($year = AssociationYear::fromDate($newest)->getYear(); $year >= $oldestYear; --$year) {
-            $years[] = $year;
+        foreach ($this->albumRepository->getPublishedRootAlbumStartDates() as $row) {
+            $years[AssociationYear::fromDate($row['startDateTime'])->getYear()] = true;
         }
+
+        $years = array_keys($years);
+        rsort($years);
 
         return $years;
     }

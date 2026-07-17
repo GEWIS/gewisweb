@@ -185,6 +185,15 @@ class PhotoFixture extends Fixture implements DependentFixtureInterface
         );
         $manager->persist($afterparty);
 
+        // A draft sub-album under a published parent, so counts can assert drafts are public-invisible.
+        $galaDraft = $this->makeAlbum(
+            'Gala 2024 – Draft',
+            false,
+            $gala,
+            '-6 months 8 hours',
+        );
+        $manager->persist($galaDraft);
+
         $trip = $this->makeAlbum(
             'Trip 2024',
             true,

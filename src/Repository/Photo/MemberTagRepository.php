@@ -12,6 +12,7 @@ use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\Persistence\ManagerRegistry;
 
 use function boolval;
+use function intval;
 
 /**
  * Repository for {@see MemberTag}s, the member-identifying tag subtype (the GDPR-relevant one).
@@ -74,6 +75,54 @@ class MemberTagRepository extends ServiceEntityRepository
                 'member' => $lidnr,
             ],
         );
+    }
+
+    /**
+     * Which of the given photo ids the member is tagged in, as a set for O(1) lookup — one query for a whole
+     * selection instead of a {@see self::findTag} per photo.
+     *
+     * @param int[] $photoIds
+     *
+     * @return array<int, true>
+     */
+    public function findTaggedPhotoIds(
+        int $lidnr,
+        array $photoIds,
+    ): array {
+        if ([] === $photoIds) {
+            return [];
+        }
+
+        $tagged = [];
+        foreach (
+            $this->createQueryBuilder('t')
+                ->select('IDENTITY(t.photo) AS photoId')
+                ->where('t.member = :member')
+                ->andWhere('t.photo IN (:photos)')
+                ->setParameter(
+                    'member',
+                    $lidnr,
+                )
+                ->setParameter(
+                    'photos',
+                    $photoIds,
+                )
+                ->getQuery()
+                ->getScalarResult() as $row
+        ) {
+            $tagged[intval($row['photoId'])] = true;
+        }
+
+        return $tagged;
+    }
+
+    /**
+     * Whether the member is tagged in at least one photo. Lets their photo page tell "never tagged" apart from
+     * "tagged, but every photo hidden from this viewer" in its empty state.
+     */
+    public function hasTags(int $lidnr): bool
+    {
+        return null !== $this->findOneBy(['member' => $lidnr]);
     }
 
     /**

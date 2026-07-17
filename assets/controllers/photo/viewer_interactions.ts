@@ -9,6 +9,7 @@ interface MemberTag {
 
 interface OrganTag {
     id: number;
+    organId: number;
     name: string;
     abbr: string;
     x: number | null;
@@ -25,6 +26,8 @@ interface Exif {
     shutterSpeed: string | null;
     aperture: string | null;
     iso: number | null;
+    latitude: number | null;
+    longitude: number | null;
 }
 
 interface Details {
@@ -45,7 +48,16 @@ interface Organ {
     name: string;
 }
 
-export interface ViewerConfig {
+// A member or body picked from the tag search, before it is committed as a tag.
+interface Candidate {
+    type: 'member' | 'organ';
+    id: number;
+    name: string;
+    // Bodies display their abbreviation; the full name rides along as a hover title.
+    title?: string;
+}
+
+interface ViewerConfig {
     // Each *Template has a placeholder (__PHOTO__, __TAG__ or __LIDNR__) replaced with the id.
     detailsUrlTemplate: string;
     tagUrlTemplate: string;
@@ -82,18 +94,42 @@ export function spriteIcon(spriteUrl: string, name: string): { isCustomSVG: true
  * field alive across photos, so a member can be tagged in one photo after another without re-focusing it.
  */
 export class ViewerInteractions {
+    // Font Awesome icon for each EXIF row's label, shown before it in the metadata panel.
+    private static readonly exifIcons: Record<string, string> = {
+        artist: 'fa-user',
+        camera: 'fa-camera',
+        dateTime: 'fa-calendar-day',
+        flash: 'fa-bolt',
+        focalLength: 'fa-ruler-horizontal',
+        shutterSpeed: 'fa-stopwatch',
+        aperture: 'fa-circle-notch',
+        iso: 'fa-film',
+        coordinates: 'fa-location-dot',
+    };
+
+    // Above this many tags the list collapses behind a count by default, so it does not cover the photo.
+    private static readonly tagCollapseThreshold = 6;
+
     private details: Details | null = null;
     private organs: Organ[] | null = null;
     // Details keyed by photo id, so a photo already visited (or prefetched as a neighbour) renders instantly on swipe.
     private readonly detailsCache = new Map<number, Details>();
 
     private potwBadge: HTMLElement | null = null;
-    private title: HTMLElement | null = null;
+    private title: HTMLButtonElement | null = null;
     private list: HTMLElement | null = null;
     private form: HTMLElement | null = null;
-    private results: HTMLElement | null = null;
+    private memberTab: HTMLElement | null = null;
+    private bodyTab: HTMLElement | null = null;
     private searchInput: HTMLInputElement | null = null;
-    private placeButton: HTMLButtonElement | null = null;
+    private suggestions: HTMLElement | null = null;
+    private pendingRow: HTMLElement | null = null;
+    // Whether the search targets members or bodies (committees, fraternities, ...), and the candidate picked from the
+    // suggestions but not yet committed (awaiting a Tag or Place action).
+    private activeType: 'member' | 'organ' = 'member';
+    private pending: Candidate | null = null;
+    // Whether the collapsible tag list is expanded; a photo with many tags starts collapsed so the chips do not cover it.
+    private tagsExpanded = false;
 
     private voteButton: HTMLElement | null = null;
     private profileButton: HTMLElement | null = null;
@@ -113,7 +149,28 @@ export class ViewerInteractions {
         private readonly config: ViewerConfig,
     ) {
         this.lightbox.on('uiRegister', (): void => this.registerElements());
-        this.lightbox.on('change', (): void => void this.refresh());
+        this.lightbox.on('change', (): void => {
+            // A new photo starts with the tag list collapsed again; renderPanel re-decides based on the tag count.
+            this.tagsExpanded = false;
+            void this.refresh();
+        });
+        // While the member is typing in the tag search, keep PhotoSwipe from swallowing the keys it acts on: 'z' toggles
+        // zoom, and the arrow keys change slide. Both are needed for the text field instead (arrows only once it has a
+        // value, so an empty field still navigates).
+        this.lightbox.on('keydown', (event: any): void => {
+            const search = this.searchInput;
+            if (null === search || document.activeElement !== search) {
+                return;
+            }
+
+            const key = event.originalEvent.key;
+            if (
+                'z' === key
+                || ('' !== search.value && ('ArrowLeft' === key || 'ArrowRight' === key))
+            ) {
+                event.preventDefault();
+            }
+        });
         this.lightbox.on('close', (): void => {
             // Closing the viewer mid-placement must not leave the capture overlay on the page, and the markers layer
             // and its resize listener are dropped so the next open starts clean.
@@ -147,8 +204,7 @@ export class ViewerInteractions {
             onInit: (element: HTMLElement): void => this.buildPanel(element),
         });
 
-        // The camera-metadata panel and the toolbar button that toggles it (order 10 sits between the album and
-        // download buttons the gallery registers).
+        // order 11 sits between the built-in zoom and the share button.
         ui.registerElement({
             name: 'metadata-ui',
             appendTo: 'root',
@@ -156,8 +212,21 @@ export class ViewerInteractions {
         });
 
         ui.registerElement({
+            name: 'photo-of-the-week',
+            appendTo: 'root',
+            // The photo-of-the-week badge sits on its own in the bottom-right corner (outside the bottom-centre tag
+            // panel), shown when a photo is or was the photo of the week.
+            onInit: (element: HTMLElement): void => {
+                element.classList.add('pswp__photo-potw');
+                element.hidden = true;
+                element.innerHTML = '<i class="fa-solid fa-star"></i><span class="pswp__photo-potw-text"></span>';
+                this.potwBadge = element;
+            },
+        });
+
+        ui.registerElement({
             name: 'info-button',
-            order: 10,
+            order: 11,
             isButton: true,
             tagName: 'button',
             title: this.label('information'),
@@ -167,11 +236,11 @@ export class ViewerInteractions {
             },
         });
 
-        // The toolbar's preloader (order 7) carries margin-right:auto, so only orders greater than it sit on the right;
-        // these keep the vote and profile buttons in the download/share/zoom/close cluster there.
+        // Orders above the preloader (7) sit right of its margin-right:auto; 8 leads that cluster (ahead of
+        // album/zoom/info). vote registers before profile, so it sorts first on the shared order.
         ui.registerElement({
             name: 'vote-button',
-            order: 13,
+            order: 8,
             isButton: true,
             tagName: 'button',
             html: spriteIcon(this.config.iconSpriteUrl, 'thumbs-up'),
@@ -188,12 +257,15 @@ export class ViewerInteractions {
 
         ui.registerElement({
             name: 'profile-photo-button',
-            order: 14,
+            order: 8,
             isButton: true,
             tagName: 'button',
             html: spriteIcon(this.config.iconSpriteUrl, 'image-portrait'),
             onInit: (element: HTMLElement): void => {
                 this.profileButton = element;
+                // Hidden until the details confirm the viewer is tagged, so it does not flash on open before the
+                // first render.
+                element.hidden = true;
                 element.addEventListener('click', (): void => void this.setProfilePhoto());
             },
         });
@@ -201,26 +273,11 @@ export class ViewerInteractions {
 
     private buildPanel(root: HTMLElement): void {
         root.classList.add('pswp__photo-tags');
+        // Keep the wheel to the panel's own scrollable lists; otherwise it bubbles to PhotoSwipe and zooms the photo.
+        root.addEventListener('wheel', (event: WheelEvent): void => event.stopPropagation());
 
-        // A badge shown when this photo is (or was) the photo of the week.
-        this.potwBadge = document.createElement('span');
-        this.potwBadge.className = 'pswp__photo-potw';
-        this.potwBadge.hidden = true;
-        Object.assign(this.potwBadge.style, {
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '0.35rem',
-            alignSelf: 'flex-start',
-            padding: '0.15rem 0.6rem',
-            color: '#000',
-            background: '#ffc107',
-            borderRadius: '1rem',
-            fontSize: '0.8rem',
-            fontWeight: '600',
-        });
-        this.potwBadge.innerHTML = '<i class="fa-solid fa-star"></i><span></span>';
-
-        this.title = document.createElement('span');
+        this.title = document.createElement('button');
+        this.title.type = 'button';
         this.title.className = 'pswp__photo-tags-title';
 
         this.list = document.createElement('div');
@@ -228,12 +285,14 @@ export class ViewerInteractions {
 
         this.form = this.buildAddForm();
 
-        root.append(this.potwBadge, this.title, this.list, this.form);
+        root.append(this.title, this.list, this.form);
     }
 
     private buildMetadataPanel(root: HTMLElement): void {
         root.classList.add('pswp__photo-metadata');
         root.hidden = true;
+        // As with the tag panel, a wheel over the metadata list must scroll it, not zoom the photo underneath.
+        root.addEventListener('wheel', (event: WheelEvent): void => event.stopPropagation());
         this.metadataPanel = root;
     }
 
@@ -250,6 +309,10 @@ export class ViewerInteractions {
 
         const unknown = this.label('unknown');
         const flash = null === exif.flash ? unknown : this.label(exif.flash ? 'yes' : 'no');
+        const coordinates =
+            null === exif.latitude || null === exif.longitude
+                ? unknown
+                : `${exif.latitude}, ${exif.longitude}`;
         const rows: [string, string][] = [
             ['artist', exif.artist ?? unknown],
             ['camera', exif.camera ?? unknown],
@@ -259,6 +322,7 @@ export class ViewerInteractions {
             ['shutterSpeed', exif.shutterSpeed ?? unknown],
             ['aperture', exif.aperture ?? unknown],
             ['iso', null === exif.iso ? unknown : String(exif.iso)],
+            ['coordinates', coordinates],
         ];
 
         const table = document.createElement('table');
@@ -266,7 +330,11 @@ export class ViewerInteractions {
         for (const [key, value] of rows) {
             const row = document.createElement('tr');
             const label = document.createElement('th');
-            label.textContent = this.label(key);
+            const icon = document.createElement('i');
+            icon.className = `fa-solid ${ViewerInteractions.exifIcons[key] ?? 'fa-circle-info'} pswp__photo-metadata-icon`;
+            const labelText = document.createElement('span');
+            labelText.textContent = this.label(key);
+            label.append(icon, labelText);
             const cell = document.createElement('td');
             cell.textContent = value;
             row.append(label, cell);
@@ -280,54 +348,77 @@ export class ViewerInteractions {
         const form = document.createElement('div');
         form.className = 'pswp__photo-tag-add';
 
+        // The member/body toggle and the search field share one row.
+        const controls = document.createElement('div');
+        controls.className = 'pswp__photo-tag-controls';
+
+        const toggle = document.createElement('div');
+        toggle.className = 'pswp__photo-tag-toggle';
+        this.memberTab = this.typeTab('member', this.label('member'));
+        this.bodyTab = this.typeTab('organ', this.label('body'));
+        toggle.append(this.memberTab, this.bodyTab);
+
+        const searchWrap = document.createElement('div');
+        searchWrap.className = 'pswp__photo-tag-searchwrap';
+        const searchIcon = document.createElement('i');
+        searchIcon.className = 'fa-solid fa-magnifying-glass pswp__photo-tag-search-icon';
         this.searchInput = document.createElement('input');
         this.searchInput.type = 'search';
         this.searchInput.className = 'form-control form-control-sm pswp__photo-tag-search';
-        this.searchInput.placeholder = this.label('tagMember');
+        this.searchInput.placeholder = this.label('searchMembers');
+        this.searchInput.addEventListener('input', (): void => void this.search());
+        this.suggestions = document.createElement('div');
+        this.suggestions.className = 'pswp__photo-tag-suggestions';
+        searchWrap.append(searchIcon, this.searchInput, this.suggestions);
 
-        this.results = document.createElement('div');
-        this.results.className = 'pswp__photo-tag-results';
+        controls.append(toggle, searchWrap);
 
-        this.searchInput.addEventListener('input', (): void => void this.searchMembers());
+        // The picked member/body, awaiting a Tag or Place action. Filled by renderPending, hidden until then.
+        this.pendingRow = document.createElement('div');
+        this.pendingRow.className = 'pswp__photo-tag-pending';
+        this.pendingRow.hidden = true;
 
-        this.placeButton = document.createElement('button');
-        this.placeButton.type = 'button';
-        this.placeButton.className = 'btn btn-sm btn-outline-light pswp__photo-tag-place';
-        this.placeButton.textContent = this.label('placeOnPhoto');
-        this.placeButton.addEventListener('click', (): void => this.togglePlacing());
-
-        form.append(this.searchInput, this.results, this.organSelect(), this.placeButton);
+        form.append(controls, this.pendingRow);
 
         return form;
     }
 
-    private organSelect(): HTMLElement {
-        const select = document.createElement('select');
-        select.className = 'form-select form-select-sm pswp__photo-tag-organ';
+    private typeTab(
+        type: 'member' | 'organ',
+        label: string,
+    ): HTMLElement {
+        const tab = document.createElement('button');
+        tab.type = 'button';
+        tab.className = 'pswp__photo-tag-toggle-btn';
+        tab.textContent = label;
+        tab.classList.toggle('active', this.activeType === type);
+        tab.addEventListener('click', (): void => this.selectType(type));
 
-        const placeholder = document.createElement('option');
-        placeholder.value = '';
-        placeholder.textContent = this.label('tagOrgan');
-        select.append(placeholder);
+        return tab;
+    }
 
-        void this.loadOrgans().then((organs) => {
-            for (const organ of organs) {
-                const option = document.createElement('option');
-                option.value = String(organ.id);
-                option.textContent = organ.abbr;
-                option.title = organ.name;
-                select.append(option);
-            }
-        });
+    // Switch the search between members and bodies, resetting the query, the suggestions and any pending pick.
+    private selectType(type: 'member' | 'organ'): void {
+        this.activeType = type;
+        this.memberTab?.classList.toggle('active', 'member' === type);
+        this.bodyTab?.classList.toggle('active', 'organ' === type);
 
-        select.addEventListener('change', (): void => {
-            if ('' !== select.value) {
-                void this.addTag('organ', Number(select.value));
-                select.value = '';
-            }
-        });
+        if (null !== this.searchInput) {
+            this.searchInput.value = '';
+            this.searchInput.placeholder = this.label('member' === type ? 'searchMembers' : 'searchBodies');
+            this.searchInput.focus();
+        }
 
-        return select;
+        this.suggestions?.replaceChildren();
+        this.clearPending();
+        // Bodies are filtered client-side, so make sure they are loaded before the first search.
+        if ('organ' === type) {
+            void this.loadOrgans();
+        }
+    }
+
+    private typeIcon(type: 'member' | 'organ'): HTMLElement {
+        return this.icon('member' === type ? 'fa-user' : 'fa-users');
     }
 
     private async refresh(): Promise<void> {
@@ -336,13 +427,33 @@ export class ViewerInteractions {
             return;
         }
 
-        // A new photo starts with no pending placement and placing off.
+        // A new photo starts with no pending pick, no pending placement, placing off, and an empty search.
         this.stopPlacing();
         this.pendingPosition = null;
+        this.pending = null;
+        this.renderPending();
+        if (null !== this.searchInput) {
+            this.searchInput.value = '';
+        }
+
+        this.suggestions?.replaceChildren();
+
+        // Fetching from the server (not a cached or prefetched slide) shows a brief "loading" message instead of the
+        // previous photo's tags or an empty state; stale markers are cleared until the new ones render.
+        if (!this.detailsCache.has(pid)) {
+            this.renderTagsLoading();
+            this.markersLayer?.replaceChildren();
+        }
 
         this.details = await this.loadDetails(pid);
         // The slide may have changed again while the request was in flight.
-        if (pid !== this.currentPid() || null === this.details) {
+        if (pid !== this.currentPid()) {
+            return;
+        }
+
+        if (null === this.details) {
+            this.renderTagsError();
+
             return;
         }
 
@@ -417,16 +528,18 @@ export class ViewerInteractions {
         }
 
         if (null !== this.potwBadge) {
-            this.potwBadge.hidden = null === details.photoOfTheWeek;
-            const text = this.potwBadge.querySelector('span');
-            if (null !== text) {
-                text.textContent = this.label('photoOfTheWeek');
+            const week = details.photoOfTheWeek;
+            this.potwBadge.hidden = null === week;
+            const text = this.potwBadge.querySelector('.pswp__photo-potw-text');
+            if (null !== week && null !== text) {
+                const [year, month, day] = week.split('-').map(Number);
+                const iso = this.isoWeek(new Date(year, month - 1, day));
+                text.replaceChildren(
+                    this.textSpan(this.label('photoOfTheWeek'), 'pswp__photo-potw-title'),
+                    this.textSpan(`${this.label('week')} ${iso.week} · ${iso.year}`, 'pswp__photo-potw-week'),
+                );
             }
         }
-
-        this.title.textContent = (0 === details.memberTags.length && 0 === details.organTags.length)
-            ? this.label('noTags')
-            : this.label('inThisPhoto');
 
         const chips = [
             ...details.memberTags.map((tag) => this.memberChip(tag)),
@@ -434,8 +547,94 @@ export class ViewerInteractions {
         ];
         this.list.replaceChildren(...chips);
 
+        this.renderTagsHeader(details.memberTags.length + details.organTags.length);
+
         // Hide the add form when the viewer may not tag; keep it in the DOM so the search field survives slide changes.
         this.form.hidden = !details.canTag;
+    }
+
+    // Show a single header message (loading / error) with the tag list and badge cleared, so a slide change never
+    // flashes the previous photo's tags or an empty "no tags" state.
+    private renderTagsMessage(message: string): void {
+        if (null === this.title || null === this.list) {
+            return;
+        }
+
+        this.title.replaceChildren(document.createTextNode(message));
+        this.title.classList.remove('pswp__photo-tags-title--toggle');
+        this.title.disabled = true;
+        this.title.onclick = null;
+        this.list.hidden = true;
+        this.list.replaceChildren();
+
+        if (null !== this.potwBadge) {
+            this.potwBadge.hidden = true;
+        }
+    }
+
+    private renderTagsLoading(): void {
+        this.renderTagsMessage(this.label('loadingTags'));
+    }
+
+    private renderTagsError(): void {
+        this.renderTagsMessage(this.label('tagsError'));
+        // The details did not load, so hide the tagging controls too.
+        if (null !== this.form) {
+            this.form.hidden = true;
+        }
+    }
+
+    // The header labels the tag list and, once a photo carries more than a handful of tags, doubles as a collapse
+    // toggle (count + chevron) with the list hidden by default, so a heavily-tagged photo is not covered by its chips.
+    // Placed tags still show as dots on the photo regardless.
+    private renderTagsHeader(count: number): void {
+        if (null === this.title || null === this.list) {
+            return;
+        }
+
+        if (0 === count) {
+            this.title.replaceChildren(document.createTextNode(this.label('noTags')));
+            this.title.classList.remove('pswp__photo-tags-title--toggle');
+            this.title.disabled = true;
+            this.title.onclick = null;
+            this.list.hidden = true;
+
+            return;
+        }
+
+        const collapsible = count > ViewerInteractions.tagCollapseThreshold;
+        const expanded = !collapsible || this.tagsExpanded;
+
+        const label = document.createElement('span');
+        label.textContent = `${this.label('inThisPhoto')} (${count})`;
+        const children: Node[] = [label];
+
+        if (collapsible) {
+            const chevron = document.createElement('i');
+            chevron.className = `fa-solid ${expanded ? 'fa-chevron-up' : 'fa-chevron-down'} pswp__photo-tags-chevron`;
+            children.push(chevron);
+        }
+
+        this.title.replaceChildren(...children);
+        this.title.classList.toggle('pswp__photo-tags-title--toggle', collapsible);
+        this.title.disabled = !collapsible;
+        this.title.setAttribute('aria-expanded', String(expanded));
+        this.title.onclick = collapsible
+            ? (): void => {
+                this.tagsExpanded = !this.tagsExpanded;
+                this.renderTagsHeader(count);
+            }
+            : null;
+
+        this.list.hidden = !expanded;
+    }
+
+    private taggedOrganIds(): Set<number> {
+        return new Set((this.details?.organTags ?? []).map((tag) => tag.organId));
+    }
+
+    private taggedLidnrs(): Set<number> {
+        return new Set((this.details?.memberTags ?? []).map((tag) => tag.lidnr));
     }
 
     private memberChip(tag: MemberTag): HTMLElement {
@@ -445,12 +644,11 @@ export class ViewerInteractions {
         const link = document.createElement('a');
         link.href = this.fill(this.config.memberUrlTemplate, '__LIDNR__', tag.lidnr);
         link.textContent = tag.fullName;
-        // A person icon marks this as a member tag, distinct from the organ icon below.
+        link.className = 'pswp__photo-tag-name';
+        // A person icon marks this as a member tag, distinct from the group icon below.
         chip.append(this.icon('fa-user'), link);
 
-        if (tag.canRemove) {
-            chip.append(this.removeButton(tag.id));
-        }
+        this.decorateChip(chip, tag);
 
         return chip;
     }
@@ -459,14 +657,29 @@ export class ViewerInteractions {
         const chip = document.createElement('span');
         chip.className = 'pswp__photo-tag pswp__photo-tag--organ';
         chip.title = tag.name;
-        // A group icon marks this as an organ tag; unlike a member tag it is rendered as plain text, not a link.
-        chip.append(this.icon('fa-users'), document.createTextNode(tag.abbr));
+        // A group icon marks this as a body tag; unlike a member tag it is plain text, not a link.
+        chip.append(this.icon('fa-users'), this.textSpan(tag.abbr, 'pswp__photo-tag-name'));
+
+        this.decorateChip(chip, tag);
+
+        return chip;
+    }
+
+    // The shared trailing bits of a tag chip: a dot when the tag is pinned to a point, then a remove control.
+    private decorateChip(
+        chip: HTMLElement,
+        tag: MemberTag | OrganTag,
+    ): void {
+        if (null !== tag.x && null !== tag.y) {
+            const placed = document.createElement('span');
+            placed.className = 'pswp__photo-tag-placed';
+            placed.title = this.label('placedOnPhoto');
+            chip.append(placed);
+        }
 
         if (tag.canRemove) {
             chip.append(this.removeButton(tag.id));
         }
-
-        return chip;
     }
 
     private icon(name: string): HTMLElement {
@@ -474,6 +687,17 @@ export class ViewerInteractions {
         icon.className = `fa-solid ${name} pswp__photo-tag-icon`;
 
         return icon;
+    }
+
+    private textSpan(
+        text: string,
+        className: string,
+    ): HTMLElement {
+        const span = document.createElement('span');
+        span.className = className;
+        span.textContent = text;
+
+        return span;
     }
 
     private removeButton(tagId: number): HTMLElement {
@@ -487,44 +711,176 @@ export class ViewerInteractions {
         return button;
     }
 
-    private async searchMembers(): Promise<void> {
-        if (null === this.searchInput || null === this.results) {
+    // Search the active pool (members via the server, bodies from the loaded list) and show the matches. Typing clears
+    // any pending pick so the two never disagree.
+    private async search(): Promise<void> {
+        if (null === this.searchInput || null === this.suggestions) {
             return;
         }
 
+        this.clearPending();
+        const type = this.activeType;
         const query = this.searchInput.value.trim();
-        this.results.replaceChildren();
+        this.suggestions.replaceChildren();
         if (query.length < 2) {
             return;
         }
 
-        const members = await this.fetchJson<{ lidnr: number; fullName: string }[]>(
-            `${this.config.memberSearchUrl}?q=${encodeURIComponent(query)}`,
-        );
-        // A newer keystroke may already have cleared or changed the box.
-        if (null === members || null === this.results || query !== this.searchInput?.value.trim()) {
+        let candidates: Candidate[];
+        if ('member' === type) {
+            candidates = await this.searchMembers(query);
+        } else {
+            await this.loadOrgans();
+            candidates = this.searchBodies(query);
+        }
+
+        // A newer keystroke or a type switch may have moved on while a member search was in flight.
+        if (
+            null === this.suggestions
+            || type !== this.activeType
+            || query !== this.searchInput?.value.trim()
+        ) {
             return;
         }
 
-        for (const member of members) {
-            const option = document.createElement('button');
-            option.type = 'button';
-            option.className = 'pswp__photo-tag-result';
-            option.textContent = member.fullName;
-            option.addEventListener('click', (): void => {
-                void this.addTag('member', member.lidnr);
-                this.clearSearch();
-            });
-            this.results.append(option);
-        }
+        this.renderSuggestions(candidates);
     }
 
-    private clearSearch(): void {
+    private async searchMembers(query: string): Promise<Candidate[]> {
+        const members = await this.fetchJson<{ lidnr: number; fullName: string }[]>(
+            `${this.config.memberSearchUrl}?q=${encodeURIComponent(query)}`,
+        ) ?? [];
+        const tagged = this.taggedLidnrs();
+
+        return members
+            .filter((member) => !tagged.has(member.lidnr))
+            .map((member) => ({
+                type: 'member',
+                id: member.lidnr,
+                name: member.fullName,
+            }));
+    }
+
+    private searchBodies(query: string): Candidate[] {
+        const needle = query.toLowerCase();
+        const tagged = this.taggedOrganIds();
+
+        return (this.organs ?? [])
+            .filter((organ) =>
+                !tagged.has(organ.id)
+                && (organ.name.toLowerCase().includes(needle) || organ.abbr.toLowerCase().includes(needle)))
+            .slice(0, 6)
+            .map((organ) => ({
+                type: 'organ',
+                id: organ.id,
+                name: organ.abbr,
+                title: organ.name,
+            }));
+    }
+
+    private renderSuggestions(candidates: Candidate[]): void {
+        if (null === this.suggestions) {
+            return;
+        }
+
+        this.suggestions.replaceChildren(...candidates.map((candidate) => {
+            const row = document.createElement('button');
+            row.type = 'button';
+            row.className = 'pswp__photo-tag-suggestion';
+            row.title = candidate.title ?? '';
+            row.append(
+                this.typeIcon(candidate.type),
+                this.textSpan(candidate.name, 'pswp__photo-tag-suggestion-name'),
+            );
+            row.addEventListener('click', (): void => this.setPending(candidate));
+
+            return row;
+        }));
+    }
+
+    private setPending(candidate: Candidate): void {
+        this.pending = candidate;
+        this.suggestions?.replaceChildren();
         if (null !== this.searchInput) {
             this.searchInput.value = '';
-            this.searchInput.focus();
         }
-        this.results?.replaceChildren();
+
+        this.renderPending();
+    }
+
+    private clearPending(): void {
+        if (null === this.pending) {
+            return;
+        }
+
+        this.pending = null;
+        this.renderPending();
+    }
+
+    // Build (or hide) the pending-pick row: the chosen member/body with a Tag and a Place on photo action.
+    private renderPending(): void {
+        if (null === this.pendingRow) {
+            return;
+        }
+
+        if (null === this.pending) {
+            this.pendingRow.replaceChildren();
+            this.pendingRow.hidden = true;
+
+            return;
+        }
+
+        const clear = document.createElement('button');
+        clear.type = 'button';
+        clear.className = 'pswp__photo-tag-pending-clear';
+        clear.setAttribute('aria-label', this.label('cancel'));
+        clear.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+        clear.addEventListener('click', (): void => this.clearPending());
+
+        const tag = document.createElement('button');
+        tag.type = 'button';
+        tag.className = 'pswp__photo-tag-action pswp__photo-tag-action--tag';
+        tag.textContent = this.label('tag');
+        tag.addEventListener('click', (): void => void this.tagPending());
+
+        const place = document.createElement('button');
+        place.type = 'button';
+        place.className = 'pswp__photo-tag-action pswp__photo-tag-action--place';
+        place.innerHTML = '<i class="fa-solid fa-crosshairs"></i>';
+        place.append(document.createTextNode(this.label('placeOnPhoto')));
+        place.addEventListener('click', (): void => this.placePending());
+
+        this.pendingRow.title = this.pending.title ?? '';
+        this.pendingRow.replaceChildren(
+            this.typeIcon(this.pending.type),
+            this.textSpan(this.pending.name, 'pswp__photo-tag-pending-name'),
+            clear,
+            tag,
+            place,
+        );
+        this.pendingRow.hidden = false;
+    }
+
+    // Tag the pending pick on the whole photo (no point).
+    private async tagPending(): Promise<void> {
+        if (null === this.pending) {
+            return;
+        }
+
+        const { type, id } = this.pending;
+        this.pending = null;
+        this.pendingPosition = null;
+        this.renderPending();
+        await this.addTag(type, id);
+    }
+
+    // Start placing the pending pick on a point of the photo; onPlaceClick commits it there.
+    private placePending(): void {
+        if (null === this.pending) {
+            return;
+        }
+
+        this.startPlacing();
     }
 
     private async loadOrgans(): Promise<Organ[]> {
@@ -739,16 +1095,9 @@ export class ViewerInteractions {
         return marker;
     }
 
-    private togglePlacing(): void {
-        if (this.placing) {
-            this.stopPlacing();
-
-            return;
-        }
-
+    private startPlacing(): void {
         this.placing = true;
         this.pendingPosition = null;
-        this.placeButton?.classList.add('active');
 
         // A full-viewport overlay OUTSIDE PhotoSwipe's DOM captures the placement click, so PhotoSwipe never sees it as
         // a tap/drag (which would zoom, pan, toggle its UI or close). The critical styles are set inline so it works
@@ -822,7 +1171,6 @@ export class ViewerInteractions {
 
     private stopPlacing(): void {
         this.placing = false;
-        this.placeButton?.classList.remove('active');
         this.placingOverlay?.remove();
         document.removeEventListener('keydown', this.onPlacingKeydown);
     }
@@ -838,26 +1186,43 @@ export class ViewerInteractions {
         event.preventDefault();
         event.stopPropagation();
 
-        // Normalise the click against the on-screen image rect, which reflects the current zoom and pan.
         const rect = this.imageRect();
-        if (null !== rect) {
-            this.pendingPosition = {
-                x: this.clamp((event.clientX - rect.left) / rect.width),
-                y: this.clamp((event.clientY - rect.top) / rect.height),
-            };
+        if (null === rect || null === this.pending) {
+            this.stopPlacing();
+
+            return;
         }
 
+        // Normalise the click against the on-screen image rect, which reflects the current zoom and pan.
+        this.pendingPosition = {
+            x: this.clamp((event.clientX - rect.left) / rect.width),
+            y: this.clamp((event.clientY - rect.top) / rect.height),
+        };
         this.stopPlacing();
 
-        if (null !== this.details && null !== this.pendingPosition) {
-            this.renderMarkers(this.details);
-        }
-
-        this.searchInput?.focus();
+        // addTag reads pendingPosition, so this pins the pending pick to the placed point.
+        const { type, id } = this.pending;
+        this.pending = null;
+        this.renderPending();
+        void this.addTag(type, id);
     }
 
     private clamp(value: number): number {
         return Math.min(1, Math.max(0, value));
+    }
+
+    // The ISO-8601 week number and week-year of a date, for the Photo of the Week badge (as the old viewer showed).
+    private isoWeek(date: Date): { week: number; year: number } {
+        const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+        // Shift to the Thursday of this ISO week, which fixes both the week number and the week-year.
+        d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+        const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+        const week = Math.ceil(((d.getTime() - yearStart.getTime()) / 86_400_000 + 1) / 7);
+
+        return {
+            week,
+            year: d.getUTCFullYear(),
+        };
     }
 
     private async removeTag(tagId: number): Promise<void> {

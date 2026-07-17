@@ -52,6 +52,15 @@ final class PhotoMetadataTest extends TestCase
         );
     }
 
+    public function testCameraDropsSpelledOutMakeBrand(): void
+    {
+        // Nikon writes Make "NIKON CORPORATION" but Model "NIKON D3500"; the shared brand word must not be doubled.
+        self::assertSame(
+            'NIKON D3500',
+            PhotoMetadata::fromExif(['Make' => 'NIKON CORPORATION', 'Model' => 'NIKON D3500'])->camera,
+        );
+    }
+
     public function testDateTimePrefersDateTimeOriginal(): void
     {
         $metadata = PhotoMetadata::fromExif([
@@ -73,6 +82,23 @@ final class PhotoMetadataTest extends TestCase
     {
         self::assertNull(PhotoMetadata::fromExif(['DateTimeOriginal' => '0000:00:00 00:00:00'])->dateTime);
         self::assertNull(PhotoMetadata::fromExif(['DateTimeOriginal' => 'not a date'])->dateTime);
+        // A component that rolls over (30 February) is a bad value, not a real date.
+        self::assertNull(PhotoMetadata::fromExif(['DateTimeOriginal' => '2019:02:30 10:00:00'])->dateTime);
+    }
+
+    public function testDateTimeAcceptsUnpaddedComponents(): void
+    {
+        // Some cameras emit an unpadded hour ("8" not "08"); that is a valid capture time, not garbage.
+        $metadata = PhotoMetadata::fromExif(['DateTimeOriginal' => '2019:08:12 8:45:30']);
+
+        self::assertInstanceOf(
+            DateTime::class,
+            $metadata->dateTime,
+        );
+        self::assertSame(
+            '2019-08-12 08:45:30',
+            $metadata->dateTime->format('Y-m-d H:i:s'),
+        );
     }
 
     public function testIsoAcceptsIntStringAndArray(): void
@@ -130,6 +156,15 @@ final class PhotoMetadataTest extends TestCase
             'f/8',
             PhotoMetadata::fromExif(['FNumber' => '80/10'])->aperture,
         );
+    }
+
+    public function testZeroApertureAndFocalLengthAreNull(): void
+    {
+        // Some phones write "0" for an unknown f-number or focal length; that must not surface as "f/0" or "0 mm".
+        $metadata = PhotoMetadata::fromExif(['FNumber' => '0/1', 'FocalLength' => '0/1']);
+
+        self::assertNull($metadata->aperture);
+        self::assertNull($metadata->focalLength);
     }
 
     public function testFlashBit(): void

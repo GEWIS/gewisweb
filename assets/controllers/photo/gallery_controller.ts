@@ -189,9 +189,31 @@ export default class extends Controller<HTMLElement> {
             return;
         }
 
+        // FontAwesome sprite icons for PhotoSwipe's built-in buttons, overridden through its own SVG options (no custom
+        // UI elements). Both arrows use the left chevron because PhotoSwipe mirrors the next arrow horizontally. The
+        // zoom icon carries a plus and a minus <use>; the stylesheet shows the right one for the current zoom state.
+        // The <use> inset (6px padding, 20/32 glyph) matches spriteIcon(), so the close and zoom icons come out the same
+        // size as the other toolbar buttons.
+        const sprite = this.iconSpriteUrlValue;
+        const leftArrowSVG = `<svg aria-hidden="true" class="pswp__icn" viewBox="0 0 50 30" width="50" height="30"><use href="${sprite}#chevron-left"></use></svg>`;
+        const closeSVG = `<svg aria-hidden="true" class="pswp__icn" viewBox="0 0 32 32" width="32" height="32"><use href="${sprite}#xmark" x="6" y="6" width="20" height="20"></use></svg>`;
+        const zoomSVG = `<svg aria-hidden="true" class="pswp__icn" viewBox="0 0 32 32" width="32" height="32"><use class="pswp__icn-zoom-plus" href="${sprite}#magnifying-glass-plus" x="6" y="6" width="20" height="20"></use><use class="pswp__icn-zoom-minus" href="${sprite}#magnifying-glass-minus" x="6" y="6" width="20" height="20"></use></svg>`;
+
         this.lightbox = new PhotoSwipeLightbox({
             dataSource: this.slides,
-            maxZoomLevel: 6,
+            // secondaryZoomLevel is the gentle double-tap / zoom-button target; pinch and the mouse wheel keep zooming
+            // past it, up to maxZoomLevel, for close inspection.
+            secondaryZoomLevel: 1.5,
+            maxZoomLevel: 10,
+            wheelToZoom: true,
+            arrowPrevSVG: leftArrowSVG,
+            arrowNextSVG: leftArrowSVG,
+            closeSVG,
+            zoomSVG,
+            arrowPrevTitle: this.labelsValue.previous ?? '',
+            arrowNextTitle: this.labelsValue.next ?? '',
+            closeTitle: this.labelsValue.close ?? '',
+            zoomTitle: this.labelsValue.zoom ?? '',
             pswpModule: () => import('photoswipe'),
         });
         this.registerToolbarButtons();
@@ -550,7 +572,7 @@ export default class extends Controller<HTMLElement> {
 
             this.lightbox.pswp.ui.registerElement({
                 name: 'download-button',
-                order: 11,
+                order: 13,
                 isButton: true,
                 tagName: 'a',
                 html: spriteIcon(this.iconSpriteUrlValue, 'download'),
@@ -573,6 +595,8 @@ export default class extends Controller<HTMLElement> {
                 html: spriteIcon(this.iconSpriteUrlValue, 'images'),
                 onInit: (element: HTMLAnchorElement): void => {
                     element.title = this.labelsValue.goToAlbum ?? '';
+                    // Hidden until a slide with an albumUrl is shown, so it does not flash on open.
+                    element.hidden = true;
                     this.lightbox.pswp.on('change', (): void => {
                         const albumUrl = this.slides[this.lightbox.pswp.currIndex]?.albumUrl ?? null;
                         element.hidden = null === albumUrl;
@@ -582,6 +606,7 @@ export default class extends Controller<HTMLElement> {
                     });
                 },
             });
+
         });
     }
 

@@ -3,7 +3,7 @@
 {% block page_title %}{{ 'Photos'|trans|page_title }}{{ organ.getName|page_title }}{{ parent() }}{% endblock %}
 
 {% block contents %}
-    <h1 class="h3 mb-4">{{ organ.getName }}</h1>
+    <h3 class="mb-4">{{ organ.getName }}</h3>
 
     {% if photos is empty %}
         <p class="text-muted">

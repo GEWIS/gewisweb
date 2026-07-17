@@ -3,16 +3,6 @@
     cursor: pointer;
 }
 
-// Sign-up list accordion (public activity view + admin sign-ups overview): rotate the chevron when expanded.
-.signup-list-chevron {
-    transition: transform 0.2s ease;
-    flex-shrink: 0;
-}
-
-.signup-list-heading:not(.collapsed) .signup-list-chevron {
-    transform: rotate(180deg);
-}
-
 // Sign-up list editor (activity create/edit form): number the collapsible list and question panels so collapsed ones
 // stay distinguishable. A CSS counter reflows automatically as entries are added or removed (see
 // form_collection_controller.ts); the prototype lives in a data attribute and is not counted.

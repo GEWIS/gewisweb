@@ -48,24 +48,6 @@ class MemberTag extends Tag
     }
 
     /**
-     * Returns the tag as an associative array.
-     *
-     * @return array{
-     *     id: int,
-     *     photo_id: int,
-     *     member_id: int,
-     * }
-     */
-    public function toArray(): array
-    {
-        return [
-            'id' => $this->getId(),
-            'photo_id' => $this->getPhoto()->getId(),
-            'member_id' => $this->getMember()->getLidnr(),
-        ];
-    }
-
-    /**
      * @return MemberTagGdprArrayType
      */
     public function toGdprArray(): array

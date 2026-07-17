@@ -2,6 +2,16 @@
 
 {% block page_title %}{{ album.name|page_title }}{{ parent() }}{% endblock %}
 
+{% import 'partials/photo/gallery.html.twig' as gallery %}
+
+{% block breadcrumbs %}
+    <li class="breadcrumb-item">
+        <a href="{{ path('photo/index') }}">{{ 'Photos'|trans }}</a>
+    </li>
+    {{ gallery.albumTrail(album.parent, false) }}
+    <li class="breadcrumb-item active" aria-current="page">{{ album.name }}</li>
+{% endblock %}
+
 {# Photos fill the full width of the window, like the old site. #}
 {% block container_class %}container-fluid{% endblock %}
 
@@ -11,11 +21,12 @@
     <link rel="stylesheet" href="{{ asset('vendor/photoswipe/dist/photoswipe.min.css') }}">
 {% endblock %}
 
-{% import 'partials/photo/gallery.html.twig' as gallery %}
-
 {% block contents %}
     <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4">
-        <h1 class="mb-0">{{ album.name }}</h1>
+        <div>
+            <h1 class="mb-0">{{ album.name }}</h1>
+            {% include 'partials/photo/album-dates.html.twig' with { 'album': album } only %}
+        </div>
         {% if album.parent %}
             <a class="btn btn-outline-secondary btn-sm"
                href="{{ path('photo/album', { type: 'album', album: album.parent.id }) }}">

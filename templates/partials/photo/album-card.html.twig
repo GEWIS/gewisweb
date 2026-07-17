@@ -16,14 +16,16 @@
                 {% endif %}
             </div>
             <div class="panel-body">
-                {% if album.createdAt >= date('-1 week') %}
-                    {# Recently added albums stand out on the overview, a week-long highlight as on the old site. #}
-                    <span class="badge badge-gewis mb-1">{{ 'New'|trans }}</span>
-                {% endif %}
-                <h3 class="h6 mb-1 text-body">{{ album.name }}</h3>
+                <h6 class="mb-1 text-body">
+                    {% if album.createdAt >= date('-1 week') %}
+                        <span class="badge badge-gewis-primary align-middle me-1">{{ 'New'|trans }}</span>
+                    {% endif %}
+                    {{ album.name }}
+                </h6>
+                {% include 'partials/photo/album-dates.html.twig' with { 'album': album } only %}
                 <p class="small text-muted mb-0">
                     {# subAlbumCount/photoCount are batched by the overview; fall back to the lazy counts elsewhere. #}
-                    {% set subAlbums = subAlbumCount ?? album.albumCount %}
+                    {% set subAlbums = subAlbumCount ?? album.publishedAlbumCount %}
                     {% if subAlbums > 0 %}
                         <i class="fa-solid fa-folder-open me-1"></i>{{ subAlbums }}
                         {{ subAlbums == 1 ? 'sub-album'|trans : 'sub-albums'|trans }}

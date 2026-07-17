@@ -22,7 +22,7 @@
     {% set hasFeedback = comments is defined and comments is not empty %}
     <div class="row">
         <div class="col-md-12">
-            <h1 class="h3 mb-1">{{ 'Edit activity'|trans }}</h1>
+            <h3 class="mb-1">{{ 'Edit activity'|trans }}</h3>
             <p class="text-muted">
                 {{ 'Revision %number%: %status%'|trans({
                     '%number%': activity.currentRevision.revisionNumber,
