@@ -17,6 +17,10 @@
         <source>Enter a 6-digit authenticator code or a 16-character lowercase-hex backup code.</source>
         <target state="translated">Voer een 6-cijferige authenticatorcode in, of een back-upcode van 16 tekens in kleine letters en hexadecimaal.</target>
       </trans-unit>
+      <trans-unit id="TLLxnao" resname="Enter a callback URL.">
+        <source>Enter a callback URL.</source>
+        <target>Voer een callback-URL in.</target>
+      </trans-unit>
       <trans-unit id="iXcFJXc" resname="Enter a closing date and time.">
         <source>Enter a closing date and time.</source>
         <target state="translated">Voer een sluitingsdatum en -tijd in.</target>
@@ -24,6 +28,10 @@
       <trans-unit id="iGXOSQU" resname="Enter a full name.">
         <source>Enter a full name.</source>
         <target>Voer een volledige naam in.</target>
+      </trans-unit>
+      <trans-unit id="nlkxwd3" resname="Enter a secret.">
+        <source>Enter a secret.</source>
+        <target>Voer een geheim in.</target>
       </trans-unit>
       <trans-unit id="HSarwc." resname="Enter a start date and time.">
         <source>Enter a start date and time.</source>
@@ -44,6 +52,14 @@
       <trans-unit id="x.FTgH0" resname="Enter an album name.">
         <source>Enter an album name.</source>
         <target state="translated">Voer een albumnaam in.</target>
+      </trans-unit>
+      <trans-unit id="aSu4P43" resname="Enter an application URL.">
+        <source>Enter an application URL.</source>
+        <target>Voer een applicatie-URL in.</target>
+      </trans-unit>
+      <trans-unit id="HcWa7gN" resname="Enter an application identifier.">
+        <source>Enter an application identifier.</source>
+        <target>Voer een applicatie-identificatie in.</target>
       </trans-unit>
       <trans-unit id="IoicRFz" resname="Enter an email address.">
         <source>Enter an email address.</source>

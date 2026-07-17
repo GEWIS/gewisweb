@@ -1,0 +1,45 @@
+{% extends 'layout-admin.html.twig' %}
+
+{% set is_edit = externalApp is not null %}
+
+{% block page_title %}
+    {{ (is_edit ? 'Edit external application'|trans : 'Create external application'|trans)|page_title }}{{ 'Users'|trans|page_title }}{{ parent() }}
+{% endblock %}
+
+{% block admin_breadcrumbs %}
+    <li class="breadcrumb-item active" aria-current="page">
+        <a href="{{ path('admin/users/apps/index') }}">{{ 'External applications'|trans }}</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">
+        {{ is_edit ? 'Edit external application'|trans : 'Create external application'|trans }}
+    </li>
+{% endblock %}
+
+{% block contents %}
+    <div class="row justify-content-center">
+        <div class="col col-lg-8 col-xl-7">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3>{{ is_edit ? 'Edit external application'|trans : 'Create external application'|trans }}</h3>
+                </div>
+                <div class="panel-body">
+                    {{ form_start(form) }}
+                        {{ form_row(form.appId) }}
+                        {{ form_row(form.secret) }}
+                        {{ form_row(form.callback) }}
+                        {{ form_row(form.url) }}
+                        {{ form_row(form.claims) }}
+                        <div class="row">
+                            <div class="col-md-6">{{ form_row(form.enabled) }}</div>
+                            <div class="col-md-6">{{ form_row(form.expiresAt) }}</div>
+                        </div>
+                        <div class="d-flex justify-content-end gap-2">
+                            <a href="{{ path('admin/users/apps/index') }}" class="btn btn-link">{{ 'Cancel'|trans }}</a>
+                            <button type="submit" class="btn btn-gewis-primary">{{ 'Save'|trans }}</button>
+                        </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

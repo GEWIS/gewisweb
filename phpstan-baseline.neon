@@ -211,26 +211,8 @@ parameters:
 			path: src/Entity/Decision/SubDecision/Reappointment.php
 
 		-
-			message: '#^Property App\\Entity\\User\\ExternalApp\:\:\$callback is never written, only read\.$#'
-			identifier: property.onlyRead
-			count: 1
-			path: src/Entity/User/ExternalApp.php
-
-		-
-			message: '#^Property App\\Entity\\User\\ExternalApp\:\:\$claims is never written, only read\.$#'
-			identifier: property.onlyRead
-			count: 1
-			path: src/Entity/User/ExternalApp.php
-
-		-
 			message: '#^Property App\\Entity\\User\\ExternalApp\:\:\$claims type mapping mismatch\: database can contain list\<App\\Entity\\User\\Enums\\JWTClaims\>\|null but property expects array\<App\\Entity\\User\\Enums\\JWTClaims\>\.$#'
 			identifier: doctrine.columnType
-			count: 1
-			path: src/Entity/User/ExternalApp.php
-
-		-
-			message: '#^Property App\\Entity\\User\\ExternalApp\:\:\$url is never written, only read\.$#'
-			identifier: property.onlyRead
 			count: 1
 			path: src/Entity/User/ExternalApp.php
 

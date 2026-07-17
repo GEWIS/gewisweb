@@ -229,6 +229,10 @@
         <source>Advisory Boards</source>
         <target state="translated">Raden van Advies</target>
       </trans-unit>
+      <trans-unit id="mfDppNa" resname="After this the application can no longer authenticate. Leave empty for no expiry.">
+        <source>After this the application can no longer authenticate. Leave empty for no expiry.</source>
+        <target>Hierna kan de applicatie niet meer authenticeren. Laat leeg voor geen vervaldatum.</target>
+      </trans-unit>
       <trans-unit id="iHRAo8z" resname="Agenda">
         <source>Agenda</source>
         <target state="translated">Agenda</target>
@@ -301,6 +305,22 @@
         <source>Aperture</source>
         <target>Diafragma</target>
       </trans-unit>
+      <trans-unit id="oheqIR5" resname="Application">
+        <source>Application</source>
+        <target>Applicatie</target>
+      </trans-unit>
+      <trans-unit id="QysMtze" resname="Application URL">
+        <source>Application URL</source>
+        <target>Applicatie-URL</target>
+      </trans-unit>
+      <trans-unit id="rrc5k20" resname="Application identifier">
+        <source>Application identifier</source>
+        <target>Applicatie-identificatie</target>
+      </trans-unit>
+      <trans-unit id="fBtqGa1" resname="Applications you have signed in to with your GEWIS account.">
+        <source>Applications you have signed in to with your GEWIS account.</source>
+        <target>Applicaties waarbij je hebt ingelogd met je GEWIS-account.</target>
+      </trans-unit>
       <trans-unit id="pb6Dt_Y" resname="Approvals">
         <source>Approvals</source>
         <target state="translated">Goedkeuringen</target>
@@ -356,6 +376,14 @@
       <trans-unit id="MDtBsRS" resname="Attendees (present)">
         <source>Attendees (present)</source>
         <target>Aanwezigen</target>
+      </trans-unit>
+      <trans-unit id="ZmGYad4" resname="Authorise %app% to use your account?">
+        <source>Authorise %app% to use your account?</source>
+        <target>%app% autoriseren om je account te gebruiken?</target>
+      </trans-unit>
+      <trans-unit id="486DuWi" resname="Authorise application">
+        <source>Authorise application</source>
+        <target>Applicatie autoriseren</target>
       </trans-unit>
       <trans-unit id="cfsy_RA" resname="Auto">
         <source>Auto</source>
@@ -433,6 +461,14 @@
         <source>Calendar</source>
         <target state="translated">Kalender</target>
       </trans-unit>
+      <trans-unit id="_18O2Tg" resname="Callback">
+        <source>Callback</source>
+        <target>Callback</target>
+      </trans-unit>
+      <trans-unit id="2ADrnGo" resname="Callback URL">
+        <source>Callback URL</source>
+        <target>Callback-URL</target>
+      </trans-unit>
       <trans-unit id="PwolnyQ" resname="Camera">
         <source>Camera</source>
         <target>Camera</target>
@@ -508,6 +544,10 @@
       <trans-unit id="ARMHX0P" resname="City and postal code">
         <source>City and postal code</source>
         <target>Woonplaats en postcode</target>
+      </trans-unit>
+      <trans-unit id="4WGve3T" resname="Claims">
+        <source>Claims</source>
+        <target>Claims</target>
       </trans-unit>
       <trans-unit id="4XOnmWM" resname="Clear selection">
         <source>Clear selection</source>
@@ -677,6 +717,10 @@
         <source>Create album</source>
         <target state="translated">Album aanmaken</target>
       </trans-unit>
+      <trans-unit id="_GnaonF" resname="Create external application">
+        <source>Create external application</source>
+        <target>Externe applicatie aanmaken</target>
+      </trans-unit>
       <trans-unit id="EMb_Fre" resname="Cultural">
         <source>Cultural</source>
         <target>Cultureel</target>
@@ -773,6 +817,10 @@
         <source>Disabled</source>
         <target state="translated">Uitgeschakeld</target>
       </trans-unit>
+      <trans-unit id="3bu5EGR" resname="Disabled applications can no longer authenticate.">
+        <source>Disabled applications can no longer authenticate.</source>
+        <target>Uitgeschakelde applicaties kunnen niet meer authenticeren.</target>
+      </trans-unit>
       <trans-unit id="zZrUE80" resname="Discard draft">
         <source>Discard draft</source>
         <target state="translated">Concept weggooien</target>
@@ -868,6 +916,10 @@
       <trans-unit id="Zv8oaEw" resname="Edit album">
         <source>Edit album</source>
         <target state="translated">Album bewerken</target>
+      </trans-unit>
+      <trans-unit id="n5gXq7T" resname="Edit external application">
+        <source>Edit external application</source>
+        <target>Externe applicatie bewerken</target>
       </trans-unit>
       <trans-unit id="MOCb9jo" resname="Edit sign-up">
         <source>Edit sign-up</source>
@@ -989,6 +1041,10 @@
         <source>Expires %date%</source>
         <target state="translated">Verloopt %date%</target>
       </trans-unit>
+      <trans-unit id="GWbfo.4" resname="Expires at">
+        <source>Expires at</source>
+        <target>Vervalt op</target>
+      </trans-unit>
       <trans-unit id="9Ia4Z0d" resname="Explain how you addressed the feedback before resubmitting.">
         <source>Explain how you addressed the feedback before resubmitting.</source>
         <target state="translated">Leg uit hoe je de feedback hebt verwerkt voordat je opnieuw indient.</target>
@@ -1000,6 +1056,14 @@
       <trans-unit id="IYFdRYH" resname="External Affairs Officer">
         <source>External Affairs Officer</source>
         <target state="translated">Commissaris Externe Betrekkingen</target>
+      </trans-unit>
+      <trans-unit id="gDm9E02" resname="External Apps">
+        <source>External Apps</source>
+        <target>Externe apps</target>
+      </trans-unit>
+      <trans-unit id="SkqnrJk" resname="External applications">
+        <source>External applications</source>
+        <target>Externe applicaties</target>
       </trans-unit>
       <trans-unit id="y4Gv04q" resname="External party">
         <source>External party</source>
@@ -1056,6 +1120,10 @@
       <trans-unit id="h6eEHVD" resname="First name">
         <source>First name</source>
         <target>Voornaam</target>
+      </trans-unit>
+      <trans-unit id=".WbQ8Qn" resname="First used">
+        <source>First used</source>
+        <target>Voor het eerst gebruikt</target>
       </trans-unit>
       <trans-unit id="TRCTgud" resname="First-come-first-served">
         <source>First-come-first-served</source>
@@ -1297,6 +1365,10 @@
         <source>If you hide yours, you also stop seeing others' age. The board can always see it.</source>
         <target>Als je die van jou verbergt, zie je ook de leeftijd van anderen niet meer. Het bestuur kan het altijd zien.</target>
       </trans-unit>
+      <trans-unit id="fpxrHOE" resname="If your browser does not redirect you, %link% manually.">
+        <source>If your browser does not redirect you, %link% manually.</source>
+        <target>Als je browser je niet doorstuurt, %link% dan handmatig.</target>
+      </trans-unit>
       <trans-unit id="0q4Brp5" resname="If your information is no longer up to date, contact %secretary% to change it. The same contact also handles data removal requests.">
         <source>If your information is no longer up to date, contact %secretary% to change it. The same contact also handles data removal requests.</source>
         <target>Als je gegevens niet meer kloppen, neem dan contact op met %secretary% om ze te wijzigen. Datzelfde contact behandelt ook verzoeken tot verwijdering van gegevens.</target>
@@ -1397,6 +1469,10 @@
         <source>It had no references left.</source>
         <target state="translated">Er waren geen referenties meer.</target>
       </trans-unit>
+      <trans-unit id="NSRd0hH" resname="It has been more than 90 days since you last used %app%. As a reminder, it has access to:">
+        <source>It has been more than 90 days since you last used %app%. As a reminder, it has access to:</source>
+        <target>Het is meer dan 90 dagen geleden dat je %app% voor het laatst hebt gebruikt. Ter herinnering, de applicatie heeft toegang tot:</target>
+      </trans-unit>
       <trans-unit id="e04dGNe" resname="It is getting closer... but it will never quite get there.">
         <source>It is getting closer... but it will never quite get there.</source>
         <target state="translated">Het komt steeds dichterbij... maar het zal er nooit helemaal komen.</target>
@@ -1452,6 +1528,10 @@
       <trans-unit id="7kVSOuO" resname="Last seen %date%">
         <source>Last seen %date%</source>
         <target state="translated">Laatst gezien op %date%</target>
+      </trans-unit>
+      <trans-unit id="9Y0tKi0" resname="Last used">
+        <source>Last used</source>
+        <target>Voor het laatst gebruikt</target>
       </trans-unit>
       <trans-unit id="7GDr10z" resname="Light">
         <source>Light</source>
@@ -1764,6 +1844,10 @@
       <trans-unit id="k9navuj" resname="No custom fields.">
         <source>No custom fields.</source>
         <target state="translated">Geen aangepaste velden.</target>
+      </trans-unit>
+      <trans-unit id="mKUQ6K5" resname="No external applications are registered.">
+        <source>No external applications are registered.</source>
+        <target>Er zijn geen externe applicaties geregistreerd.</target>
       </trans-unit>
       <trans-unit id="JEo_6ok" resname="No keycode">
         <source>No keycode</source>
@@ -2133,6 +2217,10 @@
         <source>Recreational</source>
         <target>Recreatief</target>
       </trans-unit>
+      <trans-unit id="iDz0Mhl" resname="Redirecting">
+        <source>Redirecting</source>
+        <target>Doorsturen</target>
+      </trans-unit>
       <trans-unit id="wtanMIv" resname="Regenerate backup codes">
         <source>Regenerate backup codes</source>
         <target state="translated">Back-upcodes opnieuw genereren</target>
@@ -2373,6 +2461,10 @@
         <source>Search members</source>
         <target>Zoek leden</target>
       </trans-unit>
+      <trans-unit id="yLOgULN" resname="Secret">
+        <source>Secret</source>
+        <target>Geheim</target>
+      </trans-unit>
       <trans-unit id="ABM3Mr2" resname="Secretary">
         <source>Secretary</source>
         <target>Secretaris</target>
@@ -2528,6 +2620,10 @@
       <trans-unit id="aKsBUgl" resname="Signed up at">
         <source>Signed up at</source>
         <target>Aangemeld op</target>
+      </trans-unit>
+      <trans-unit id="_bH5pVw" resname="Signs the token. Share it only with the application, and rotate it yearly.">
+        <source>Signs the token. Share it only with the application, and rotate it yearly.</source>
+        <target>Ondertekent het token. Deel het alleen met de applicatie en vernieuw het jaarlijks.</target>
       </trans-unit>
       <trans-unit id="e9EhDeS" resname="Social drink">
         <source>Social drink</source>
@@ -2717,6 +2813,10 @@
         <source>The album has been updated.</source>
         <target state="translated">Het album is bijgewerkt.</target>
       </trans-unit>
+      <trans-unit id="v7H7LDj" resname="The application will receive the following information:">
+        <source>The application will receive the following information:</source>
+        <target>De applicatie ontvangt de volgende informatie:</target>
+      </trans-unit>
       <trans-unit id="q5YrQGY" resname="The changes in this draft will be lost and the activity will return to its live version.">
         <source>The changes in this draft will be lost and the activity will return to its live version.</source>
         <target state="translated">De wijzigingen in dit concept gaan verloren en de activiteit keert terug naar de live versie.</target>
@@ -2741,6 +2841,14 @@
         <source>The draw will be performed automatically within a few minutes.</source>
         <target>De loting wordt binnen enkele minuten automatisch uitgevoerd.</target>
       </trans-unit>
+      <trans-unit id="mTMkPrt" resname="The external application has been created.">
+        <source>The external application has been created.</source>
+        <target>De externe applicatie is aangemaakt.</target>
+      </trans-unit>
+      <trans-unit id="VjGu0lN" resname="The external application has been updated.">
+        <source>The external application has been updated.</source>
+        <target>De externe applicatie is bijgewerkt.</target>
+      </trans-unit>
       <trans-unit id="juj8ffI" resname="The external party dictates the order of admissions">
         <source>The external party dictates the order of admissions</source>
         <target>De externe partij bepaalt de volgorde van toelating</target>
@@ -2748,6 +2856,10 @@
       <trans-unit id="d94JzXR" resname="The external subscriber has been added.">
         <source>The external subscriber has been added.</source>
         <target>De externe inschrijver is toegevoegd.</target>
+      </trans-unit>
+      <trans-unit id="zMSM59q" resname="The information the token carries about the member.">
+        <source>The information the token carries about the member.</source>
+        <target>De informatie die het token over het lid bevat.</target>
       </trans-unit>
       <trans-unit id="sbbDOd." resname="The photo of the week can only be hidden on Monday morning, before noon.">
         <source>The photo of the week can only be hidden on Monday morning, before noon.</source>
@@ -3077,6 +3189,10 @@
         <source>Until</source>
         <target>Tot</target>
       </trans-unit>
+      <trans-unit id="DoLVTva" resname="Until %date%">
+        <source>Until %date%</source>
+        <target>Tot %date%</target>
+      </trans-unit>
       <trans-unit id="ZOvPU2x" resname="Upload exams">
         <source>Upload exams</source>
         <target state="translated">Upload tentamens</target>
@@ -3084,6 +3200,10 @@
       <trans-unit id="TM1QKf." resname="Upload photos">
         <source>Upload photos</source>
         <target state="translated">Foto's uploaden</target>
+      </trans-unit>
+      <trans-unit id="ltDXomd" resname="Used in the authentication URL (/user/token/{identifier}).">
+        <source>Used in the authentication URL (/user/token/{identifier}).</source>
+        <target>Gebruikt in de authenticatie-URL (/user/token/{identifier}).</target>
       </trans-unit>
       <trans-unit id="WcwG01E" resname="Useful Information">
         <source>Useful Information</source>
@@ -3213,6 +3333,14 @@
         <source>When to draw</source>
         <target>Wanneer loten</target>
       </trans-unit>
+      <trans-unit id="TbjdPnE" resname="Where the member is sent when they decline.">
+        <source>Where the member is sent when they decline.</source>
+        <target>Waar het lid naartoe gaat als het weigert.</target>
+      </trans-unit>
+      <trans-unit id="8wEUir7" resname="Where the member is sent with the token after authenticating.">
+        <source>Where the member is sent with the token after authenticating.</source>
+        <target>Waar het lid met het token naartoe gaat na het authenticeren.</target>
+      </trans-unit>
       <trans-unit id="klYLh_k" resname="Which is basically the same thing.">
         <source>Which is basically the same thing.</source>
         <target state="translated">Wat in feite hetzelfde is.</target>
@@ -3232,6 +3360,10 @@
       <trans-unit id="vIs6CbG" resname="You are about to reset multi-factor authentication for:">
         <source>You are about to reset multi-factor authentication for:</source>
         <target state="translated">Je staat op het punt om tweestapsverificatie te resetten voor:</target>
+      </trans-unit>
+      <trans-unit id="785sFTF" resname="You are being redirected to %app%.">
+        <source>You are being redirected to %app%.</source>
+        <target>Je wordt doorgestuurd naar %app%.</target>
       </trans-unit>
       <trans-unit id="ALw8bPa" resname="You are currently impersonating %name% (%lidnr%)!">
         <source>You are currently impersonating %name% (%lidnr%)!</source>
@@ -3372,6 +3504,10 @@
       <trans-unit id="dJhCfk." resname="at %company%">
         <source>at %company%</source>
         <target>bij %company%</target>
+      </trans-unit>
+      <trans-unit id="zGwW8mQ" resname="continue">
+        <source>continue</source>
+        <target>ga verder</target>
       </trans-unit>
       <trans-unit id="iYiRxKz" resname="disabled">
         <source>disabled</source>
