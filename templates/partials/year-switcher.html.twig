@@ -10,7 +10,7 @@
     <div class="btn-group">
         <a class="btn btn-outline-secondary {{ newer_url is null ? 'disabled' }}"
            href="{{ newer_url ?? '#' }}" aria-label="{{ 'Newer'|trans }}">
-            <i class="fas fa-chevron-left"></i>
+            <span class="fas fa-chevron-left"></span>
         </a>
         <div class="btn-group">
             <button type="button" class="btn btn-outline-secondary dropdown-toggle"
@@ -39,7 +39,7 @@
         </div>
         <a class="btn btn-outline-secondary {{ older_url is null ? 'disabled' }}"
            href="{{ older_url ?? '#' }}" aria-label="{{ 'Older'|trans }}">
-            <i class="fas fa-chevron-right"></i>
+            <span class="fas fa-chevron-right"></span>
         </a>
     </div>
 {% endif %}

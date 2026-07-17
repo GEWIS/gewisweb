@@ -30,7 +30,7 @@
         {% if album.parent %}
             <a class="btn btn-outline-secondary btn-sm"
                href="{{ path('photo/album', { type: 'album', album: album.parent.id }) }}">
-                <i class="fa-solid fa-arrow-left me-1"></i>{{ 'Back to parent album'|trans }}
+                <span class="fa-solid fa-arrow-left me-1"></span>{{ 'Back to parent album'|trans }}
             </a>
         {% endif %}
     </div>

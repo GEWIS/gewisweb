@@ -160,6 +160,6 @@
     {% set commit = app.request.server.get('GIT_COMMIT') %}
     <a class="nav-link p-3" target="_blank"
        href="https://github.com/gewis/gewisweb/commit/{{ commit }}">
-        <small><i class="fab fa-github"></i> {{ commit|slice(0, 7) }}</small>
+        <small><span class="fab fa-github"></span> {{ commit|slice(0, 7) }}</small>
     </a>
 </li>

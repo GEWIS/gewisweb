@@ -34,17 +34,17 @@
                             <input type="hidden" name="_csrf_token" value="{{ csrf_token('photo_hidden') }}">
                             <button type="submit" class="btn btn-sm btn-outline-secondary"
                                     formaction="{{ path('photo/hidden_hide') }}">
-                                <i class="fa-solid fa-eye-slash"></i> {{ 'Hide selected'|trans }}
+                                <span class="fa-solid fa-eye-slash"></span> {{ 'Hide selected'|trans }}
                             </button>
                             <button type="submit" class="btn btn-sm btn-outline-secondary"
                                     formaction="{{ path('photo/hidden_unhide') }}">
-                                <i class="fa-solid fa-eye"></i> {{ 'Unhide selected'|trans }}
+                                <span class="fa-solid fa-eye"></span> {{ 'Unhide selected'|trans }}
                             </button>
                         </form>
                     </div>
                     <button type="button" class="btn btn-sm btn-outline-secondary" aria-pressed="false"
                             data-gallery-target="selectToggle" data-action="gallery#toggleSelect">
-                        <i class="fa-solid fa-check-double"></i> {{ 'Select'|trans }}
+                        <span class="fa-solid fa-check-double"></span> {{ 'Select'|trans }}
                     </button>
                 </div>
             {% endif %}

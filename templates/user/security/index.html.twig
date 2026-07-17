@@ -35,7 +35,7 @@
                 {{ form_row(form.plainPassword.first) }}
                 {{ form_row(form.plainPassword.second) }}
                 <button type="submit" class="btn btn-gewis-primary">
-                    <i class="fas fa-key"></i> {{ 'Change password'|trans }}
+                    <span class="fas fa-key"></span> {{ 'Change password'|trans }}
                 </button>
                 {{ form_end(form) }}
             </div>
@@ -57,7 +57,7 @@
                 </p>
                 {% if mfaEnabled %}
                     <div class="alert alert-success mb-2" role="alert">
-                        <i class="fas fa-shield-halved"></i>
+                        <span class="fas fa-shield-halved"></span>
                         <span>{{ 'TOTP-based MFA is active on your account.'|trans }}</span>
                     </div>
                     <p class="text-muted small">
@@ -66,34 +66,34 @@
                     <div class="d-flex flex-wrap gap-2 mt-3">
                         <button type="button" class="btn btn-outline-warning"
                                 data-bs-toggle="modal" data-bs-target="#modal-mfa-regenerate-backup-codes">
-                            <i class="fas fa-rotate"></i> {{ 'Regenerate backup codes'|trans }}
+                            <span class="fas fa-rotate"></span> {{ 'Regenerate backup codes'|trans }}
                         </button>
                         {% if mfaRequired|default(false) %}
                             <button type="button" class="btn btn-outline-secondary ms-auto" disabled
                                     title="{{ 'Required for your role'|trans }}">
-                                <i class="fas fa-lock"></i> {{ 'Disable MFA'|trans }}
+                                <span class="fas fa-lock"></span> {{ 'Disable MFA'|trans }}
                             </button>
                         {% else %}
                             <button type="button" class="btn btn-outline-gewis-primary ms-auto"
                                     data-bs-toggle="modal" data-bs-target="#modal-mfa-disable">
-                                <i class="fas fa-ban"></i> {{ 'Disable MFA'|trans }}
+                                <span class="fas fa-ban"></span> {{ 'Disable MFA'|trans }}
                             </button>
                         {% endif %}
                     </div>
                 {% else %}
                     {% if mfaRequired|default(false) %}
                         <div class="alert alert-danger mb-2" role="alert">
-                            <i class="fas fa-triangle-exclamation"></i>
+                            <span class="fas fa-triangle-exclamation"></span>
                             <span>{{ 'Multi-factor authentication is required for your role. Privileged actions are unavailable until you enable it.'|trans }}</span>
                         </div>
                     {% else %}
                         <div class="alert alert-warning mb-2" role="alert">
-                            <i class="fas fa-triangle-exclamation"></i>
+                            <span class="fas fa-triangle-exclamation"></span>
                             <span>{{ 'You currently sign in with only a password. Adding MFA significantly reduces the risk of account takeover.'|trans }}</span>
                         </div>
                     {% endif %}
                     <a href="{{ path(routePrefix ~ 'mfa_enable') }}" class="btn btn-gewis-primary">
-                        <i class="fas fa-shield-halved"></i> {{ 'Enable TOTP-based MFA'|trans }}
+                        <span class="fas fa-shield-halved"></span> {{ 'Enable TOTP-based MFA'|trans }}
                     </a>
                 {% endif %}
             </div>
@@ -146,10 +146,10 @@
                                     </div>
                                     <div class="small text-muted mt-1 d-flex flex-wrap gap-3">
                                         {% if session.ipAddress %}
-                                            <span><i class="fas fa-location-dot"></i> <code>{{ session.ipAddress }}</code></span>
+                                            <span><span class="fas fa-location-dot"></span> <code>{{ session.ipAddress }}</code></span>
                                         {% endif %}
-                                        <span><i class="fas fa-clock-rotate-left"></i> {{ 'Last seen %date%'|trans({'%date%': session.lastUsedAt|date('M j, Y H:i')}) }}</span>
-                                        <span><i class="fas fa-calendar-day"></i> {{ 'Signed in %date%'|trans({'%date%': session.createdAt|date('M j, Y H:i')}) }}</span>
+                                        <span><span class="fas fa-clock-rotate-left"></span> {{ 'Last seen %date%'|trans({'%date%': session.lastUsedAt|date('M j, Y H:i')}) }}</span>
+                                        <span><span class="fas fa-calendar-day"></span> {{ 'Signed in %date%'|trans({'%date%': session.createdAt|date('M j, Y H:i')}) }}</span>
                                     </div>
                                     {% if session.userAgent %}
                                         <div class="collapse mt-2" id="ua-{{ session.series }}">
@@ -166,7 +166,7 @@
                                                 data-action="{{ path(routePrefix ~ 'session_terminate', {'series': session.series}) }}"
                                                 data-csrf-token="{{ csrf_token('session_guard_terminate-' ~ session.series) }}"
                                                 data-name="{{ displayName }}">
-                                            <i class="fas fa-trash"></i> {{ 'Terminate'|trans }}
+                                            <span class="fas fa-trash"></span> {{ 'Terminate'|trans }}
                                         </button>
                                     {% endif %}
                                     {% if session.userAgent %}
@@ -174,7 +174,7 @@
                                                 class="btn btn-sm btn-outline-secondary"
                                                 data-bs-toggle="collapse"
                                                 data-bs-target="#ua-{{ session.series }}">
-                                            <i class="fas fa-circle-info"></i> {{ 'Details'|trans }}
+                                            <span class="fas fa-circle-info"></span> {{ 'Details'|trans }}
                                         </button>
                                     {% endif %}
                                 </div>
@@ -218,7 +218,7 @@
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token('mfa_regenerate_backup_codes') }}">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'Cancel'|trans }}</button>
                     <button type="submit" class="btn btn-outline-warning">
-                        <i class="fas fa-rotate"></i> {{ 'Regenerate backup codes'|trans }}
+                        <span class="fas fa-rotate"></span> {{ 'Regenerate backup codes'|trans }}
                     </button>
                 </div>
             </form>
@@ -242,7 +242,7 @@
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token('mfa_disable') }}">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'Cancel'|trans }}</button>
                     <button type="submit" class="btn btn-outline-gewis-primary">
-                        <i class="fas fa-ban"></i> {{ 'Disable MFA'|trans }}
+                        <span class="fas fa-ban"></span> {{ 'Disable MFA'|trans }}
                     </button>
                 </div>
             </form>

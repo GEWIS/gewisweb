@@ -22,7 +22,7 @@
                     </span>
                     <button type="button" class="btn btn-gewis-primary btn-lg"
                             data-action="live#action" data-live-action-param="exitAttendance">
-                        <i class="fas fa-check"></i> {{ 'Done'|trans }}
+                        <span class="fas fa-check"></span> {{ 'Done'|trans }}
                     </button>
                 </div>
                 <div class="panel-body">
@@ -44,9 +44,9 @@
                                 </span>
                                 <span class="fs-2 ms-2">
                                     {% if row.present %}
-                                        <i class="fas fa-circle-check text-success"></i>
+                                        <span class="fas fa-circle-check text-success"></span>
                                     {% else %}
-                                        <i class="far fa-circle text-muted"></i>
+                                        <span class="far fa-circle text-muted"></span>
                                     {% endif %}
                                 </span>
                             </button>
@@ -66,7 +66,7 @@
                        data-model="debounce(300)|filter" value="{{ filter }}">
                 {% if not canMark %}
                     <small class="text-muted d-block mt-2">
-                        <i class="fas fa-info-circle"></i>
+                        <span class="fas fa-info-circle"></span>
                         {{ 'Attendance can only be marked from 30 minutes before the activity until a day after it ends.'|trans }}
                     </small>
                 {% endif %}
@@ -86,7 +86,7 @@
                         <span class="d-flex flex-wrap align-items-center gap-1 mb-1">
                             <span class="h5 mb-0">{{ list.name }}</span>
                             {% if list.promoted %}
-                                <i class="fas fa-star text-warning" title="{{ 'Promoted'|trans }}"></i>
+                                <span class="fas fa-star text-warning" title="{{ 'Promoted'|trans }}"></span>
                             {% endif %}
                         </span>
                         <span class="d-flex flex-wrap align-items-center gap-1 ">
@@ -124,7 +124,7 @@
                             {% endif %}
                         </span>
                     </span>
-                    <i class="fas fa-chevron-down panel-collapse-chevron"></i>
+                    <span class="fas fa-chevron-down panel-collapse-chevron"></span>
                 </button>
                 <div class="collapse" id="{{ collapseId }}">
                     <div class="panel-body border-bottom">
@@ -162,12 +162,12 @@
                                     <button type="button" class="btn btn-sm btn-outline-gewis-primary"
                                             data-action="live#action" data-live-action-param="openComposer"
                                             data-live-list-id-param="{{ list.listId }}" data-live-scope-param="admitted">
-                                        <i class="fas fa-envelope"></i> {{ 'Email admittees'|trans }}
+                                        <span class="fas fa-envelope"></span> {{ 'Email admittees'|trans }}
                                     </button>
                                     <button type="button" class="btn btn-sm btn-outline-secondary"
                                             data-action="live#action" data-live-action-param="openComposer"
                                             data-live-list-id-param="{{ list.listId }}" data-live-scope-param="waitlisted">
-                                        <i class="fas fa-envelope"></i> {{ 'Email the waiting list'|trans }}
+                                        <span class="fas fa-envelope"></span> {{ 'Email the waiting list'|trans }}
                                     </button>
                                 </span>
                             {% elseif isBoard %}
@@ -178,7 +178,7 @@
                                         data-confirm-label="{{ 'Run the draw'|trans }}"
                                         data-confirm-live-action="{{ drawAction }}"
                                         data-confirm-live-args='{"listId": {{ list.listId }}}'>
-                                    <i class="fas {{ drawIcon }}"></i> {{ drawLabel }}
+                                    <span class="fas {{ drawIcon }}"></span> {{ drawLabel }}
                                 </button>
                             {% endif %}
                         </div>
@@ -226,7 +226,7 @@
                             <button type="button" class="btn btn-sm btn-success"
                                     data-action="live#action" data-live-action-param="enterAttendance"
                                     data-live-list-id-param="{{ list.listId }}">
-                                <i class="fas fa-clipboard-check"></i> {{ 'Take attendance'|trans }}
+                                <span class="fas fa-clipboard-check"></span> {{ 'Take attendance'|trans }}
                             </button>
                         {% endif %}
                         <button type="button" class="btn btn-sm btn-outline-secondary"
@@ -242,12 +242,12 @@
                         <button type="button" class="btn btn-sm btn-gewis-primary"
                                 data-action="live#action" data-live-action-param="openComposer"
                                 data-live-list-id-param="{{ list.listId }}">
-                            <i class="fas fa-envelope"></i> {{ 'Email sign-ups'|trans }}
+                            <span class="fas fa-envelope"></span> {{ 'Email sign-ups'|trans }}
                         </button>
                         {% if list.isOpen and not list.frozen %}
                             <a class="btn btn-sm btn-outline-success"
                                href="{{ path('admin/activities/add_external_signup', {'activity': this.activity.getId, 'signupList': list.listId}) }}">
-                                <i class="fas fa-user-plus"></i> {{ 'Add external subscriber'|trans }}
+                                <span class="fas fa-user-plus"></span> {{ 'Add external subscriber'|trans }}
                             </a>
                         {% endif %}
                         {% if list.fieldColumns is not empty %}
@@ -255,7 +255,7 @@
                             <div class="dropdown ms-auto">
                                 <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle"
                                         data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
-                                    <i class="fas fa-table-columns"></i> {{ 'Columns'|trans }}
+                                    <span class="fas fa-table-columns"></span> {{ 'Columns'|trans }}
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end p-2">
                                     {% for field in list.fieldColumns %}
@@ -322,7 +322,7 @@
                                         data-confirm-label="{{ 'Send'|trans }}"
                                         data-confirm-live-action="sendEmail"
                                         data-confirm-live-args='{"listId": {{ list.listId }}}'>
-                                    <i class="fas fa-paper-plane"></i> {{ 'Send'|trans }}
+                                    <span class="fas fa-paper-plane"></span> {{ 'Send'|trans }}
                                 </button>
                             </div>
                         </div>

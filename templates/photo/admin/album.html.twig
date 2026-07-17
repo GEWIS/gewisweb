@@ -30,7 +30,7 @@
             {% include 'partials/photo/album-dates.html.twig' with { 'album': album } only %}
             {% if album.parent %}
                 <span class="text-muted small">
-                    <i class="fa-solid fa-folder-tree me-1"></i>
+                    <span class="fa-solid fa-folder-tree me-1"></span>
                     <a href="{{ path('admin/photos/album', { album: album.parent.id }) }}"
                        class="text-decoration-none">{{ album.parent.name }}</a>
                 </span>
@@ -38,16 +38,16 @@
         </div>
         <div class="d-flex gap-2">
             <a href="{{ path('admin/photos/albums_edit', { album: album.id }) }}" class="btn btn-outline-secondary">
-                <i class="fa-solid fa-pencil"></i> {{ 'Edit album'|trans }}
+                <span class="fa-solid fa-pencil"></span> {{ 'Edit album'|trans }}
             </a>
             <a href="{{ path('admin/photos/albums_create', { parent: album.id }) }}" class="btn btn-outline-secondary">
-                <i class="fa-solid fa-folder-plus"></i> {{ 'Add sub-album'|trans }}
+                <span class="fa-solid fa-folder-plus"></span> {{ 'Add sub-album'|trans }}
             </a>
             {% if album.published %}
                 {# Only a published album has a public page; a draft is previewed here in the manage view. #}
                 <a href="{{ path('photo/album', { type: 'album', album: album.id }) }}"
                    class="btn btn-outline-secondary" target="_blank" rel="noopener">
-                    <i class="fa-solid fa-up-right-from-square"></i> {{ 'View'|trans }}
+                    <span class="fa-solid fa-up-right-from-square"></span> {{ 'View'|trans }}
                 </a>
             {% endif %}
         </div>
@@ -74,7 +74,7 @@
                         data-bs-toggle="collapse" data-bs-target="#upload-photos"
                         aria-expanded="false" aria-controls="upload-photos">
                     <h3 class="mb-0">{{ 'Upload photos'|trans }}</h3>
-                    <i class="fa-solid fa-chevron-down panel-collapse-chevron"></i>
+                    <span class="fa-solid fa-chevron-down panel-collapse-chevron"></span>
                 </button>
                 {# pt-0: the .collapse wrapper breaks the `.panel-heading + .panel-body` zero-top-padding rule. #}
                 <div class="collapse" id="upload-photos">
@@ -82,7 +82,7 @@
                         <div class="photo-dropzone text-center p-5 border border-2 rounded"
                              role="button" tabindex="0"
                              data-photo-upload-target="dropzone">
-                            <i class="fa-solid fa-cloud-arrow-up fa-2x text-muted mb-2"></i>
+                            <span class="fa-solid fa-cloud-arrow-up fa-2x text-muted mb-2"></span>
                             <p class="mb-0">{{ 'Drag photos here or click to select'|trans }}</p>
                             <p class="text-muted small mb-0">{{ 'JPEG, PNG, WebP, AVIF or HEIC, up to 32 MB each.'|trans }}</p>
                         </div>
@@ -103,7 +103,7 @@
                         data-bs-toggle="collapse" data-bs-target="#album-cover"
                         aria-expanded="false" aria-controls="album-cover">
                     <h3 class="mb-0">{{ 'Album cover'|trans }}</h3>
-                    <i class="fa-solid fa-chevron-down panel-collapse-chevron"></i>
+                    <span class="fa-solid fa-chevron-down panel-collapse-chevron"></span>
                 </button>
                 <div class="collapse" id="album-cover">
                     <div class="panel-body pt-0">
@@ -115,7 +115,7 @@
                             {% if not album.coverPath %}
                                 <div class="d-flex align-items-center justify-content-center text-muted h-100"
                                      data-photo-cover-target="placeholder">
-                                    <i class="fa-solid fa-images fa-2x"></i>
+                                    <span class="fa-solid fa-images fa-2x"></span>
                                 </div>
                             {% endif %}
                         </div>
@@ -127,12 +127,12 @@
                               data-action="photo-cover#regenerate">
                             <input type="hidden" name="_csrf_token" value="{{ csrf_token('photo_album_cover-' ~ album.id) }}">
                             <button type="submit" class="btn btn-outline-secondary" data-photo-cover-target="button">
-                                <i class="fa-solid fa-arrows-rotate" data-photo-cover-target="icon"></i>
+                                <span class="fa-solid fa-arrows-rotate" data-photo-cover-target="icon"></span>
                                 {{ 'Regenerate cover'|trans }}
                             </button>
                         </form>
                         <p class="text-danger small mb-0 mt-2 d-none" data-photo-cover-target="error">
-                            <i class="fa-solid fa-triangle-exclamation me-1"></i>
+                            <span class="fa-solid fa-triangle-exclamation me-1"></span>
                             {{ 'There are no photos to build a cover from.'|trans }}
                         </p>
                     </div>
@@ -163,17 +163,17 @@
                         </div>
                         <button type="submit" class="btn btn-sm btn-outline-secondary"
                                 formaction="{{ path('admin/photos/photos_move', { album: album.id }) }}">
-                            <i class="fa-solid fa-arrow-right-arrow-left"></i> {{ 'Move'|trans }}
+                            <span class="fa-solid fa-arrow-right-arrow-left"></span> {{ 'Move'|trans }}
                         </button>
                         <button type="button" class="btn btn-sm btn-outline-secondary text-danger"
                                 data-bs-toggle="modal" data-bs-target="#delete-photos">
-                            <i class="fa-solid fa-trash"></i> {{ 'Delete selected'|trans }}
+                            <span class="fa-solid fa-trash"></span> {{ 'Delete selected'|trans }}
                         </button>
                     </form>
                 </div>
                 <button type="button" class="btn btn-sm btn-outline-secondary" aria-pressed="false"
                         data-gallery-target="selectToggle" data-action="gallery#toggleSelect">
-                    <i class="fa-solid fa-check-double"></i> {{ 'Select'|trans }}
+                    <span class="fa-solid fa-check-double"></span> {{ 'Select'|trans }}
                 </button>
             </div>
         </div>

@@ -21,7 +21,7 @@
                     <p class="text-muted mb-0">{{ signupList.getName|localise_text }}</p>
                 </div>
                 <a href="{{ path('admin/activities/signups', {'activity': activity.getId}) }}" class="btn btn-outline-secondary">
-                    <i class="fas fa-arrow-left"></i> {{ 'Back'|trans }}
+                    <span class="fas fa-arrow-left"></span> {{ 'Back'|trans }}
                 </a>
             </div>
 
@@ -44,7 +44,7 @@
                         </p>
 
                         <button type="submit" class="btn btn-gewis-primary">
-                            <i class="fas fa-user-plus"></i> {{ 'Add subscriber'|trans }}
+                            <span class="fas fa-user-plus"></span> {{ 'Add subscriber'|trans }}
                         </button>
                     {{ form_end(form) }}
                 </div>

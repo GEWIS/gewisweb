@@ -8,7 +8,7 @@
 
     {% if view.cancelled %}
         <p class="text-danger mb-3">
-            <i class="fas fa-ban"></i>
+            <span class="fas fa-ban"></span>
             {% if view.viewerHasSignup %}
                 {{ 'This activity has been cancelled. Your sign-up is frozen and cannot be changed.'|trans }}
             {% else %}
@@ -20,12 +20,12 @@
         <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
             {% if view.viewerHasSignup %}
                 <span class="text-success">
-                    <i class="fas fa-circle-check"></i> {{ 'You are signed up.'|trans }}
+                    <span class="fas fa-circle-check"></span> {{ 'You are signed up.'|trans }}
                 </span>
                 {% if view.fieldNames is not empty %}
                     <button type="button" class="btn btn-sm btn-outline-gewis-primary"
                             data-bs-toggle="modal" data-bs-target="#{{ signupModalId }}">
-                        <i class="fas fa-pen"></i> {{ 'Edit sign-up'|trans }}
+                        <span class="fas fa-pen"></span> {{ 'Edit sign-up'|trans }}
                     </button>
                 {% endif %}
                 <button type="button" class="btn btn-sm btn-outline-danger"
@@ -34,12 +34,12 @@
                         data-confirm-message="{{ 'Are you sure you want to unsubscribe from this sign-up list?'|trans }}"
                         data-confirm-label="{{ 'Unsubscribe'|trans }}"
                         data-confirm-live-action="withdraw">
-                    <i class="fas fa-user-minus"></i> {{ 'Unsubscribe'|trans }}
+                    <span class="fas fa-user-minus"></span> {{ 'Unsubscribe'|trans }}
                 </button>
             {% else %}
                 <button type="button" class="btn btn-sm btn-gewis-primary"
                         data-bs-toggle="modal" data-bs-target="#{{ signupModalId }}">
-                    <i class="fas fa-user-plus"></i> {{ 'Sign up'|trans }}
+                    <span class="fas fa-user-plus"></span> {{ 'Sign up'|trans }}
                 </button>
             {% endif %}
         </div>
@@ -102,7 +102,7 @@
         </div>
     {% elseif view.viewerHasSignup %}
         <p class="text-success mb-3">
-            <i class="fas fa-circle-check"></i> {{ 'You are signed up.'|trans }}
+            <span class="fas fa-circle-check"></span> {{ 'You are signed up.'|trans }}
         </p>
     {% endif %}
 

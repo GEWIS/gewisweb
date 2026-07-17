@@ -11,7 +11,7 @@
                 {% else %}
                     {# No generated cover yet; show a neutral placeholder rather than a broken image. #}
                     <div class="d-flex align-items-center justify-content-center text-muted h-100">
-                        <i class="fa-solid fa-images fa-2x"></i>
+                        <span class="fa-solid fa-images fa-2x"></span>
                     </div>
                 {% endif %}
             </div>
@@ -27,11 +27,11 @@
                     {# subAlbumCount/photoCount are batched by the overview; fall back to the lazy counts elsewhere. #}
                     {% set subAlbums = subAlbumCount ?? album.publishedAlbumCount %}
                     {% if subAlbums > 0 %}
-                        <i class="fa-solid fa-folder-open me-1"></i>{{ subAlbums }}
+                        <span class="fa-solid fa-folder-open me-1"></span>{{ subAlbums }}
                         {{ subAlbums == 1 ? 'sub-album'|trans : 'sub-albums'|trans }}
                     {% else %}
                         {% set photos = photoCount ?? album.getPhotoCount(false) %}
-                        <i class="fa-solid fa-image me-1"></i>{{ photos }}
+                        <span class="fa-solid fa-image me-1"></span>{{ photos }}
                         {{ photos == 1 ? 'photo'|trans : 'photos'|trans }}
                     {% endif %}
                 </p>

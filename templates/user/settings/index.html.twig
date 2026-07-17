@@ -42,7 +42,7 @@
         </div>
     </div>
     <button type="submit" class="btn btn-gewis-primary">
-        <i class="fas fa-save"></i> {{ 'Save settings'|trans }}
+        <span class="fas fa-save"></span> {{ 'Save settings'|trans }}
     </button>
     {{ form_end(form) }}
 
@@ -61,13 +61,13 @@
                     {% if sudoActive %}
                         <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
                                 data-bs-target="#purge-tags-modal">
-                            <i class="fas fa-trash"></i> {{ 'Remove all tags of me'|trans }}
+                            <span class="fas fa-trash"></span> {{ 'Remove all tags of me'|trans }}
                         </button>
                     {% else %}
                         {# Removing tags needs sudo; re-authenticate first and return here to confirm. #}
                         <a class="btn btn-outline-danger"
                            href="{{ path('user_sudo_confirm', {'next': path('user_settings_index')}) }}">
-                            <i class="fas fa-trash"></i> {{ 'Remove all tags of me'|trans }}
+                            <span class="fas fa-trash"></span> {{ 'Remove all tags of me'|trans }}
                         </a>
                     {% endif %}
                 </div>
@@ -95,7 +95,7 @@
                     <form method="POST" action="{{ path('user_settings_purge_tags') }}">
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token('purge_tags') }}">
                         <button type="submit" class="btn btn-danger">
-                            <i class="fas fa-trash"></i> {{ 'Remove all tags'|trans }}
+                            <span class="fas fa-trash"></span> {{ 'Remove all tags'|trans }}
                         </button>
                     </form>
                 </div>
