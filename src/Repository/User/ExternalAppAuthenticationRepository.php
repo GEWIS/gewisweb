@@ -5,49 +5,49 @@ declare(strict_types=1);
 namespace App\Repository\User;
 
 use App\Entity\Decision\Member;
-use App\Entity\User\ApiApp;
-use App\Entity\User\ApiAppAuthentication;
+use App\Entity\User\ExternalApp;
+use App\Entity\User\ExternalAppAuthentication;
 use App\Entity\User\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<ApiAppAuthentication>
- * @phpstan-type ApiAppsArrayType = list<array{
- *      0: ApiApp|null,
+ * @extends ServiceEntityRepository<ExternalAppAuthentication>
+ * @phpstan-type ExternalAppsArrayType = list<array{
+ *      0: ExternalApp|null,
  *      firstAuthentication: string,
  *      lastAuthentication: string,
  *  }>
- * @psalm-type ApiAppsArrayType = list<array{
- *      0: ApiApp|null,
+ * @psalm-type ExternalAppsArrayType = list<array{
+ *      0: ExternalApp|null,
  *      firstAuthentication: string,
  *      lastAuthentication: string,
  *  }>
  */
-class ApiAppAuthenticationRepository extends ServiceEntityRepository
+class ExternalAppAuthenticationRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct(
             $registry,
-            ApiAppAuthentication::class,
+            ExternalAppAuthentication::class,
         );
     }
 
     /**
-     * @return ApiAppsArrayType
+     * @return ExternalAppsArrayType
      *
      * @psalm-suppress LessSpecificReturnStatement, MoreSpecificReturnType Doctrine getResult() is mixed to Psalm.
      */
-    public function getFirstAndLastAuthenticationPerApiApp(Member $member): array
+    public function getFirstAndLastAuthenticationPerExternalApp(Member $member): array
     {
         $qb = $this->createQueryBuilder('a');
         $qb->select(['app', 'MIN(a.time) AS firstAuthentication', 'MAX(a.time) AS lastAuthentication'])
             ->leftJoin(
-                ApiApp::class,
+                ExternalApp::class,
                 'app',
                 'WITH',
-                'a.apiApp = app.id',
+                'a.externalApp = app.id',
             )
             ->where('a.user = :user_id')
             ->groupBy('app.appId')
@@ -61,10 +61,10 @@ class ApiAppAuthenticationRepository extends ServiceEntityRepository
 
     public function getLastAuthentication(
         User $user,
-        ApiApp $app,
-    ): ?ApiAppAuthentication {
+        ExternalApp $app,
+    ): ?ExternalAppAuthentication {
         $qb = $this->createQueryBuilder('a');
-        $qb->where('a.apiApp = :app_id')
+        $qb->where('a.externalApp = :app_id')
             ->andWhere('a.user = :user_id')
             ->orderBy(
                 'a.time',
@@ -84,14 +84,14 @@ class ApiAppAuthenticationRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return ApiAppAuthentication[]
+     * @return ExternalAppAuthentication[]
      */
-    public function getMemberAuthenticationsPerApiApp(Member $member): array
+    public function getMemberAuthenticationsPerExternalApp(Member $member): array
     {
         $qb = $this->createQueryBuilder('a');
         $qb->select('a')
             ->where('a.user = :user_id')
-            ->groupBy('a.apiApp')
+            ->groupBy('a.externalApp')
             ->orderBy(
                 'a.time',
                 'DESC',

@@ -11,10 +11,10 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 
 /**
- * ApiApp model.
+ * ExternalApp model.
  */
 #[Entity]
-class ApiApp
+class ExternalApp
 {
     use IdentifiableTrait;
 

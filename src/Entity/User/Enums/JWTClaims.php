@@ -8,7 +8,7 @@ use App\Entity\Decision\Member as MemberModel;
 use Symfony\Component\Translation\TranslatableMessage;
 
 /**
- * Enum for keeping track of the claims that can be present in the JWT for ApiApps.
+ * Enum for keeping track of the claims that can be present in the JWT for ExternalApps.
  */
 enum JWTClaims: string
 {
