@@ -142,6 +142,22 @@
     }
 }
 
+@include media-breakpoint-down(lg) {
+    #navbar-sidebar-offcanvas {
+        .dropdown-menu {
+            position: static !important;
+            inset: auto !important;
+            transform: none !important;
+            border-left-width: var(--#{$prefix}dropdown-border-width);
+            box-shadow: none;
+        }
+
+        .dropend > .dropdown-toggle::after {
+            transform: rotate(90deg);
+        }
+    }
+}
+
 @keyframes nav-dropdown-in {
     from {
         opacity: 0;
@@ -155,14 +171,49 @@
 }
 
 .navbar-gewis-admin {
-    --#{$prefix}sidebar-bg: #{darken($navbar-bg, 5%)};
+    --#{$prefix}sidebar-bg: #{$sidebar-bg};
+    --#{$prefix}navbar-active-color: #{$sidebar-color};
+    --#{$prefix}navbar-bg-active: #{$sidebar-active-bg};
+    --#{$prefix}navbar-bg-hover: #{$sidebar-hover-bg};
+    --#{$prefix}navbar-toggler-icon-bg: #{escape-svg($sidebar-toggler-icon-bg)};
 
     background-color: var(--#{$prefix}sidebar-bg);
-    box-shadow: inset 0 1px 5px -3px rgba(0, 0, 0, 0.3), -1px 0 5px -3px rgba(0, 0, 0, 0.3);
+    border-right: 1px solid #{$sidebar-border-color};
+    box-shadow: none;
     width: 3rem;
 
     @include media-breakpoint-up(lg) {
         width: 11.5rem;
+    }
+
+    .nav-link {
+        --#{$prefix}nav-link-color: #{$sidebar-color};
+        --#{$prefix}nav-link-hover-bg: #{$sidebar-hover-bg};
+        --#{$prefix}nav-link-hover-color: #{$sidebar-color};
+    }
+
+    .navbar-nav > .active > a,
+    .navbar-nav > .active > button {
+        color: #{$sidebar-active-color};
+        box-shadow: inset -3px 0 0 #{$sidebar-active-color};
+
+        &:hover,
+        &:focus {
+            background-color: var(--#{$prefix}navbar-bg-active);
+        }
+    }
+
+    .offcanvas-lg {
+        --#{$prefix}offcanvas-bg: #{$sidebar-bg};
+    }
+
+    .dropend > .dropdown-menu {
+        border-top-width: var(--#{$prefix}dropdown-border-width);
+        border-left-width: 0;
+
+        @include border-top-start-radius(0);
+        @include border-bottom-start-radius(0);
+        @include border-top-end-radius(var(--#{$prefix}dropdown-border-radius));
     }
 }
 
@@ -211,6 +262,25 @@
     }
 
     .navbar-gewis-admin {
-        --#{$prefix}sidebar-bg: #{lighten($navbar-bg-dark, 5%)};
+        --#{$prefix}sidebar-bg: #{$sidebar-bg-dark};
+        --#{$prefix}navbar-bg-active: #{$sidebar-active-bg-dark};
+
+        border-right-color: #{$sidebar-border-color-dark};
+
+        .nav-link {
+            --#{$prefix}nav-link-hover-bg: #{$sidebar-hover-bg-dark};
+        }
+
+        .navbar-nav > .active > a,
+        .navbar-nav > .active > button {
+            &:hover,
+            &:focus {
+                background-color: var(--#{$prefix}navbar-bg-active);
+            }
+        }
+
+        .offcanvas-lg {
+            --#{$prefix}offcanvas-bg: #{$sidebar-bg-dark};
+        }
     }
 }

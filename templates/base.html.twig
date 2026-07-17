@@ -57,7 +57,7 @@
         <script src="{{ matomo_domain }}/matomo.js" nonce="{{ csp_nonce('script') }}" async defer></script>
         {% block structured_data %}{% endblock %}
     </head>
-    <body class="d-flex flex-column h-100">
+    <body class="d-flex flex-column min-vh-100">
         {% include 'partials/application/main-nav.html.twig' %}
         {% block body %}{% endblock %}
         {% include 'partials/application/toasts.html.twig' %}

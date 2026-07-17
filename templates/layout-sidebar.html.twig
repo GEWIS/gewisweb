@@ -14,7 +14,7 @@
                 <div class="offcanvas-lg offcanvas-start h-100" id="navbar-sidebar-offcanvas"
                      tabindex="-1" aria-labelledby="navbar-sidebar-offcanvas-label">
                     <div class="offcanvas-header d-lg-none">
-                        <h5 class="offcanvas-title text-white" id="navbar-sidebar-offcanvas-label">
+                        <h5 class="offcanvas-title" id="navbar-sidebar-offcanvas-label">
                             {% block sidebar_label %}{{ 'Navigation'|trans }}{% endblock %}
                         </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
@@ -22,7 +22,7 @@
                     </div>
                     <div class="offcanvas-body p-4 pt-0 p-lg-0 h-100">
                         <ul class="navbar-nav h-100 w-100">
-                            <hr class="d-lg-none text-white-50">
+                            <hr class="d-lg-none">
                             {% block sidebar %}{% endblock %}
                         </ul>
                     </div>
