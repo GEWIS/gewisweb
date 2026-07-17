@@ -8,6 +8,7 @@ use App\Entity\Decision\Member;
 use App\Entity\User\Enums\UserRoles;
 use App\Entity\User\User;
 use App\Repository\Decision\MemberRepository;
+use App\Service\Decision\MemberInfoService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,8 +32,10 @@ use function trim;
 )]
 class MemberController extends AbstractController
 {
-    public function __construct(private readonly MemberRepository $memberRepository)
-    {
+    public function __construct(
+        private readonly MemberRepository $memberRepository,
+        private readonly MemberInfoService $memberInfoService,
+    ) {
     }
 
     #[Route(
@@ -109,7 +112,10 @@ class MemberController extends AbstractController
 
         return $this->render(
             'decision/member.html.twig',
-            ['member' => $member],
+            [
+                'member' => $member,
+                'committees' => $this->memberInfoService->getOrganMemberships($member),
+            ],
         );
     }
 }

@@ -279,8 +279,7 @@ class MemberRepository extends ServiceEntityRepository
 
         $qb->setParameter(
             'member',
-            $member,
-            Member::class,
+            $member->getLidnr(),
         )
             ->setParameter(
                 'now',
@@ -319,8 +318,7 @@ class MemberRepository extends ServiceEntityRepository
 
         $qb->setParameter(
             'member',
-            $member,
-            Member::class,
+            $member->getLidnr(),
         )
             ->setParameter(
                 'now',

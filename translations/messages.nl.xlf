@@ -29,6 +29,10 @@
         <source>%name% has hidden their tagged photos.</source>
         <target state="translated">%name% heeft de getagde foto's verborgen.</target>
       </trans-unit>
+      <trans-unit id="zI3NFUX" resname="%name% has never been part of a committee or fraternity.">
+        <source>%name% has never been part of a committee or fraternity.</source>
+        <target>%name% is nooit lid geweest van een commissie of dispuut.</target>
+      </trans-unit>
       <trans-unit id="8AYYl7V" resname="%name% has not been tagged in any photos yet.">
         <source>%name% has not been tagged in any photos yet.</source>
         <target state="translated">%name% is nog in geen enkele foto getagd.</target>
@@ -168,6 +172,10 @@
       <trans-unit id="85z9UtL" resname="Add to calendar">
         <source>Add to calendar</source>
         <target>Toevoegen aan agenda</target>
+      </trans-unit>
+      <trans-unit id="jPtXcgB" resname="Address">
+        <source>Address</source>
+        <target>Adres</target>
       </trans-unit>
       <trans-unit id="kIqhHtP" resname="Admin">
         <source>Admin</source>
@@ -389,6 +397,10 @@
         <source>Backup codes regenerated. The previous codes are no longer valid.</source>
         <target state="translated">De back-upcodes zijn opnieuw gegenereerd. De vorige back-upcodes zijn niet langer geldig.</target>
       </trans-unit>
+      <trans-unit id="OWxEWkk" resname="Birth date">
+        <source>Birth date</source>
+        <target>Geboortedatum</target>
+      </trans-unit>
       <trans-unit id="IHtM8Z7" resname="Birthdays">
         <source>Birthdays</source>
         <target state="translated">Verjaardagen</target>
@@ -492,6 +504,10 @@
       <trans-unit id="vZloDGs" resname="Choose when the draw happens">
         <source>Choose when the draw happens</source>
         <target>Kies wanneer de loting plaatsvindt</target>
+      </trans-unit>
+      <trans-unit id="ARMHX0P" resname="City and postal code">
+        <source>City and postal code</source>
+        <target>Woonplaats en postcode</target>
       </trans-unit>
       <trans-unit id="4XOnmWM" resname="Clear selection">
         <source>Clear selection</source>
@@ -637,6 +653,10 @@
         <source>Could not load tags</source>
         <target>Kon tags niet laden</target>
       </trans-unit>
+      <trans-unit id="imSItxK" resname="Country">
+        <source>Country</source>
+        <target>Land</target>
+      </trans-unit>
       <trans-unit id="lmE8cjL" resname="Courses">
         <source>Courses</source>
         <target state="translated">Vakken</target>
@@ -668,6 +688,10 @@
       <trans-unit id="C.UM991" resname="Current photo of the week">
         <source>Current photo of the week</source>
         <target state="translated">Huidige foto van de week</target>
+      </trans-unit>
+      <trans-unit id="2e2kzco" resname="Currently a member of">
+        <source>Currently a member of</source>
+        <target>Momenteel lid van</target>
       </trans-unit>
       <trans-unit id="ql421nq" resname="Custom">
         <source>Custom</source>
@@ -1029,6 +1053,10 @@
         <source>Financial Audit Committees</source>
         <target state="translated">Kas Controle Commissies</target>
       </trans-unit>
+      <trans-unit id="h6eEHVD" resname="First name">
+        <source>First name</source>
+        <target>Voornaam</target>
+      </trans-unit>
       <trans-unit id="TRCTgud" resname="First-come-first-served">
         <source>First-come-first-served</source>
         <target>Wie het eerst komt, het eerst maalt</target>
@@ -1141,6 +1169,10 @@
         <source>Given name</source>
         <target state="translated">Voornaam</target>
       </trans-unit>
+      <trans-unit id="AUgafTZ" resname="Go to security">
+        <source>Go to security</source>
+        <target>Ga naar beveiliging</target>
+      </trans-unit>
       <trans-unit id="Y9O9JwI" resname="Go to the original album">
         <source>Go to the original album</source>
         <target state="translated">Ga naar het originele album</target>
@@ -1156,6 +1188,10 @@
       <trans-unit id="DGuX8O." resname="Graduate - Authenticated graduate">
         <source>Graduate - Authenticated graduate</source>
         <target state="translated">Afgestudeerde - Geauthenticeerde afgestudeerde</target>
+      </trans-unit>
+      <trans-unit id="e6dvkUP" resname="Graduate until %date%">
+        <source>Graduate until %date%</source>
+        <target>Afgestudeerde tot %date%</target>
       </trans-unit>
       <trans-unit id="p.fuLaB" resname="Guest">
         <source>Guest</source>
@@ -1261,6 +1297,10 @@
         <source>If you hide yours, you also stop seeing others' age. The board can always see it.</source>
         <target>Als je die van jou verbergt, zie je ook de leeftijd van anderen niet meer. Het bestuur kan het altijd zien.</target>
       </trans-unit>
+      <trans-unit id="0q4Brp5" resname="If your information is no longer up to date, contact %secretary% to change it. The same contact also handles data removal requests.">
+        <source>If your information is no longer up to date, contact %secretary% to change it. The same contact also handles data removal requests.</source>
+        <target>Als je gegevens niet meer kloppen, neem dan contact op met %secretary% om ze te wijzigen. Datzelfde contact behandelt ook verzoeken tot verwijdering van gegevens.</target>
+      </trans-unit>
       <trans-unit id="AZfPAZa" resname="Improve security by signing out of other devices.">
         <source>Improve security by signing out of other devices.</source>
         <target state="translated">Verhoog de veiligheid door je op andere apparaten af te melden.</target>
@@ -1300,6 +1340,10 @@
       <trans-unit id="rJermFn" resname="Information Officer">
         <source>Information Officer</source>
         <target state="translated">Commissaris Kennisbeheer</target>
+      </trans-unit>
+      <trans-unit id="zSMYCyF" resname="Initials">
+        <source>Initials</source>
+        <target>Voorletters</target>
       </trans-unit>
       <trans-unit id="xtzVT5c" resname="Inkoper">
         <source>Inkoper</source>
@@ -1385,6 +1429,10 @@
         <source>Jobs</source>
         <target>Vacatures</target>
       </trans-unit>
+      <trans-unit id="a5V7ouo" resname="Keycode active">
+        <source>Keycode active</source>
+        <target>Sleutelcode actief</target>
+      </trans-unit>
       <trans-unit id="n9QDfSe" resname="LEGACY Education Officer">
         <source>LEGACY Education Officer</source>
         <target state="translated">Onderwijscommissaris</target>
@@ -1396,6 +1444,10 @@
       <trans-unit id="5q6OTdQ" resname="Language">
         <source>Language</source>
         <target state="translated">Taal</target>
+      </trans-unit>
+      <trans-unit id="ucunuSv" resname="Last name">
+        <source>Last name</source>
+        <target>Achternaam</target>
       </trans-unit>
       <trans-unit id="7kVSOuO" resname="Last seen %date%">
         <source>Last seen %date%</source>
@@ -1505,6 +1557,10 @@
         <source>Manage</source>
         <target state="translated">Beheren</target>
       </trans-unit>
+      <trans-unit id="wjgXjio" resname="Manage your logins and see which external applications have accessed your account.">
+        <source>Manage your logins and see which external applications have accessed your account.</source>
+        <target>Beheer je aanmeldingen en bekijk welke externe applicaties toegang tot je account hebben gehad.</target>
+      </trans-unit>
       <trans-unit id="xDpozAE" resname="Manage your sign-up">
         <source>Manage your sign-up</source>
         <target>Beheer je inschrijving</target>
@@ -1529,6 +1585,10 @@
         <source>Member number</source>
         <target state="translated">Lidmaatschapsnummer</target>
       </trans-unit>
+      <trans-unit id="u5PmGQt" resname="Member until %date%">
+        <source>Member until %date%</source>
+        <target>Lid tot %date%</target>
+      </trans-unit>
       <trans-unit id="28HXF2a" resname="Members">
         <source>Members</source>
         <target state="translated">Leden</target>
@@ -1545,6 +1605,10 @@
         <source>Membership type</source>
         <target state="translated">Type lidmaatschap</target>
       </trans-unit>
+      <trans-unit id="WxtkmlB" resname="Memberships of committees and fraternities">
+        <source>Memberships of committees and fraternities</source>
+        <target>Lidmaatschappen van commissies en disputen</target>
+      </trans-unit>
       <trans-unit id="vtsk56f" resname="Message">
         <source>Message</source>
         <target>Bericht</target>
@@ -1556,6 +1620,14 @@
       <trans-unit id="JObdnqB" resname="Minimum value (number type)">
         <source>Minimum value (number type)</source>
         <target state="translated">Minimumwaarde (getaltype)</target>
+      </trans-unit>
+      <trans-unit id="wHBscUb" resname="More of my photos">
+        <source>More of my photos</source>
+        <target>Meer van mijn foto's</target>
+      </trans-unit>
+      <trans-unit id="A9jW1M9" resname="More of their photos">
+        <source>More of their photos</source>
+        <target>Meer van hun foto's</target>
       </trans-unit>
       <trans-unit id="3l7_Oot" resname="Move">
         <source>Move</source>
@@ -1692,6 +1764,10 @@
       <trans-unit id="k9navuj" resname="No custom fields.">
         <source>No custom fields.</source>
         <target state="translated">Geen aangepaste velden.</target>
+      </trans-unit>
+      <trans-unit id="JEo_6ok" resname="No keycode">
+        <source>No keycode</source>
+        <target>Geen sleutelcode</target>
       </trans-unit>
       <trans-unit id="vs1Yzf_" resname="No labels.">
         <source>No labels.</source>
@@ -1913,6 +1989,14 @@
         <source>Pending</source>
         <target state="translated">Openstaand</target>
       </trans-unit>
+      <trans-unit id="rV2ozxI" resname="Personal information">
+        <source>Personal information</source>
+        <target>Persoonlijke informatie</target>
+      </trans-unit>
+      <trans-unit id="RfIZlV3" resname="Phone number">
+        <source>Phone number</source>
+        <target>Telefoonnummer</target>
+      </trans-unit>
       <trans-unit id="lfzp2uK" resname="Photo albums">
         <source>Photo albums</source>
         <target state="translated">Fotoalbums</target>
@@ -1988,6 +2072,10 @@
       <trans-unit id="ouNrIYq" resname="Previous">
         <source>Previous</source>
         <target state="translated">Vorige</target>
+      </trans-unit>
+      <trans-unit id="1X7oKCl" resname="Previously a member of">
+        <source>Previously a member of</source>
+        <target>Eerder lid van</target>
       </trans-unit>
       <trans-unit id="WiX.dOS" resname="Print">
         <source>Print</source>
@@ -2476,6 +2564,10 @@
       <trans-unit id="6xCSWiZ" resname="Status">
         <source>Status</source>
         <target state="translated">Status</target>
+      </trans-unit>
+      <trans-unit id="fZ1Z.Qu" resname="Street and number">
+        <source>Street and number</source>
+        <target>Straat en huisnummer</target>
       </trans-unit>
       <trans-unit id="lgfw7Wf" resname="Student address">
         <source>Student address</source>
@@ -3085,14 +3177,6 @@
         <source>Was:</source>
         <target state="translated">Was:</target>
       </trans-unit>
-      <trans-unit id="kL92atL" resname="We are NOT the same">
-        <source>We are NOT the same</source>
-        <target state="translated">Wij zijn NIET hetzelfde</target>
-      </trans-unit>
-      <trans-unit id="L7nMq4K" resname="We are the same">
-        <source>We are the same</source>
-        <target state="translated">Wij zijn hetzelfde</target>
-      </trans-unit>
       <trans-unit id="jkUs8v1" resname="We found a pointer to &lt;code&gt;NULL&lt;/code&gt; instead of this page">
         <source>We found a pointer to &lt;code&gt;NULL&lt;/code&gt; instead of this page</source>
         <target state="translated"><![CDATA[We hebben een verwijzing naar <code>NULL</code> gevonden in plaats van deze pagina]]></target>
@@ -3196,6 +3280,10 @@
       <trans-unit id="lAXDq5A" resname="You have been unsubscribed.">
         <source>You have been unsubscribed.</source>
         <target>Je bent uitgeschreven.</target>
+      </trans-unit>
+      <trans-unit id="F07ab4W" resname="You have not been a member of a committee or fraternity.">
+        <source>You have not been a member of a committee or fraternity.</source>
+        <target>Je bent nooit lid geweest van een commissie of dispuut.</target>
       </trans-unit>
       <trans-unit id="3KHHscz" resname="You have not been tagged in any photos yet.">
         <source>You have not been tagged in any photos yet.</source>
@@ -3360,6 +3448,10 @@
       <trans-unit id="CqfqdkM" resname="the organising party">
         <source>the organising party</source>
         <target>de organiserende partij</target>
+      </trans-unit>
+      <trans-unit id="q7soSeR" resname="the secretary of GEWIS">
+        <source>the secretary of GEWIS</source>
+        <target>de secretaris van GEWIS</target>
       </trans-unit>
       <trans-unit id="W3MzJgn" resname="unavailable">
         <source>unavailable</source>

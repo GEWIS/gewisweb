@@ -29,6 +29,10 @@
         <source>%name% has hidden their tagged photos.</source>
         <target state="translated">%name% has hidden their tagged photos.</target>
       </trans-unit>
+      <trans-unit id="zI3NFUX" resname="%name% has never been part of a committee or fraternity.">
+        <source>%name% has never been part of a committee or fraternity.</source>
+        <target>%name% has never been part of a committee or fraternity.</target>
+      </trans-unit>
       <trans-unit id="8AYYl7V" resname="%name% has not been tagged in any photos yet.">
         <source>%name% has not been tagged in any photos yet.</source>
         <target state="translated">%name% has not been tagged in any photos yet.</target>
@@ -168,6 +172,10 @@
       <trans-unit id="85z9UtL" resname="Add to calendar">
         <source>Add to calendar</source>
         <target>Add to calendar</target>
+      </trans-unit>
+      <trans-unit id="jPtXcgB" resname="Address">
+        <source>Address</source>
+        <target>Address</target>
       </trans-unit>
       <trans-unit id="kIqhHtP" resname="Admin">
         <source>Admin</source>
@@ -389,6 +397,10 @@
         <source>Backup codes regenerated. The previous codes are no longer valid.</source>
         <target state="translated">Backup codes regenerated. The previous codes are no longer valid.</target>
       </trans-unit>
+      <trans-unit id="OWxEWkk" resname="Birth date">
+        <source>Birth date</source>
+        <target>Birth date</target>
+      </trans-unit>
       <trans-unit id="IHtM8Z7" resname="Birthdays">
         <source>Birthdays</source>
         <target state="translated">Birthdays</target>
@@ -492,6 +504,10 @@
       <trans-unit id="vZloDGs" resname="Choose when the draw happens">
         <source>Choose when the draw happens</source>
         <target>Choose when the draw happens</target>
+      </trans-unit>
+      <trans-unit id="ARMHX0P" resname="City and postal code">
+        <source>City and postal code</source>
+        <target>City and postal code</target>
       </trans-unit>
       <trans-unit id="4XOnmWM" resname="Clear selection">
         <source>Clear selection</source>
@@ -637,6 +653,10 @@
         <source>Could not load tags</source>
         <target>Could not load tags</target>
       </trans-unit>
+      <trans-unit id="imSItxK" resname="Country">
+        <source>Country</source>
+        <target>Country</target>
+      </trans-unit>
       <trans-unit id="lmE8cjL" resname="Courses">
         <source>Courses</source>
         <target state="translated">Courses</target>
@@ -668,6 +688,10 @@
       <trans-unit id="C.UM991" resname="Current photo of the week">
         <source>Current photo of the week</source>
         <target state="translated">Current photo of the week</target>
+      </trans-unit>
+      <trans-unit id="2e2kzco" resname="Currently a member of">
+        <source>Currently a member of</source>
+        <target>Currently a member of</target>
       </trans-unit>
       <trans-unit id="ql421nq" resname="Custom">
         <source>Custom</source>
@@ -1029,6 +1053,10 @@
         <source>Financial Audit Committees</source>
         <target state="translated">Financial Audit Committees</target>
       </trans-unit>
+      <trans-unit id="h6eEHVD" resname="First name">
+        <source>First name</source>
+        <target>First name</target>
+      </trans-unit>
       <trans-unit id="TRCTgud" resname="First-come-first-served">
         <source>First-come-first-served</source>
         <target>First-come-first-served</target>
@@ -1141,6 +1169,10 @@
         <source>Given name</source>
         <target state="translated">Given name</target>
       </trans-unit>
+      <trans-unit id="AUgafTZ" resname="Go to security">
+        <source>Go to security</source>
+        <target>Go to security</target>
+      </trans-unit>
       <trans-unit id="Y9O9JwI" resname="Go to the original album">
         <source>Go to the original album</source>
         <target state="translated">Go to the original album</target>
@@ -1156,6 +1188,10 @@
       <trans-unit id="DGuX8O." resname="Graduate - Authenticated graduate">
         <source>Graduate - Authenticated graduate</source>
         <target state="translated">Graduate - Authenticated graduate</target>
+      </trans-unit>
+      <trans-unit id="e6dvkUP" resname="Graduate until %date%">
+        <source>Graduate until %date%</source>
+        <target>Graduate until %date%</target>
       </trans-unit>
       <trans-unit id="p.fuLaB" resname="Guest">
         <source>Guest</source>
@@ -1261,6 +1297,10 @@
         <source>If you hide yours, you also stop seeing others' age. The board can always see it.</source>
         <target>If you hide yours, you also stop seeing others' age. The board can always see it.</target>
       </trans-unit>
+      <trans-unit id="0q4Brp5" resname="If your information is no longer up to date, contact %secretary% to change it. The same contact also handles data removal requests.">
+        <source>If your information is no longer up to date, contact %secretary% to change it. The same contact also handles data removal requests.</source>
+        <target>If your information is no longer up to date, contact %secretary% to change it. The same contact also handles data removal requests.</target>
+      </trans-unit>
       <trans-unit id="AZfPAZa" resname="Improve security by signing out of other devices.">
         <source>Improve security by signing out of other devices.</source>
         <target state="translated">Improve security by signing out of other devices.</target>
@@ -1300,6 +1340,10 @@
       <trans-unit id="rJermFn" resname="Information Officer">
         <source>Information Officer</source>
         <target state="translated">Information Officer</target>
+      </trans-unit>
+      <trans-unit id="zSMYCyF" resname="Initials">
+        <source>Initials</source>
+        <target>Initials</target>
       </trans-unit>
       <trans-unit id="xtzVT5c" resname="Inkoper">
         <source>Inkoper</source>
@@ -1385,6 +1429,10 @@
         <source>Jobs</source>
         <target>Jobs</target>
       </trans-unit>
+      <trans-unit id="a5V7ouo" resname="Keycode active">
+        <source>Keycode active</source>
+        <target>Keycode active</target>
+      </trans-unit>
       <trans-unit id="n9QDfSe" resname="LEGACY Education Officer">
         <source>LEGACY Education Officer</source>
         <target state="translated">Education Officer</target>
@@ -1396,6 +1444,10 @@
       <trans-unit id="5q6OTdQ" resname="Language">
         <source>Language</source>
         <target state="translated">Language</target>
+      </trans-unit>
+      <trans-unit id="ucunuSv" resname="Last name">
+        <source>Last name</source>
+        <target>Last name</target>
       </trans-unit>
       <trans-unit id="7kVSOuO" resname="Last seen %date%">
         <source>Last seen %date%</source>
@@ -1505,6 +1557,10 @@
         <source>Manage</source>
         <target state="translated">Manage</target>
       </trans-unit>
+      <trans-unit id="wjgXjio" resname="Manage your logins and see which external applications have accessed your account.">
+        <source>Manage your logins and see which external applications have accessed your account.</source>
+        <target>Manage your logins and see which external applications have accessed your account.</target>
+      </trans-unit>
       <trans-unit id="xDpozAE" resname="Manage your sign-up">
         <source>Manage your sign-up</source>
         <target>Manage your sign-up</target>
@@ -1529,6 +1585,10 @@
         <source>Member number</source>
         <target state="translated">Member number</target>
       </trans-unit>
+      <trans-unit id="u5PmGQt" resname="Member until %date%">
+        <source>Member until %date%</source>
+        <target>Member until %date%</target>
+      </trans-unit>
       <trans-unit id="28HXF2a" resname="Members">
         <source>Members</source>
         <target state="translated">Members</target>
@@ -1545,6 +1605,10 @@
         <source>Membership type</source>
         <target state="translated">Membership type</target>
       </trans-unit>
+      <trans-unit id="WxtkmlB" resname="Memberships of committees and fraternities">
+        <source>Memberships of committees and fraternities</source>
+        <target>Memberships of committees and fraternities</target>
+      </trans-unit>
       <trans-unit id="vtsk56f" resname="Message">
         <source>Message</source>
         <target>Message</target>
@@ -1556,6 +1620,14 @@
       <trans-unit id="JObdnqB" resname="Minimum value (number type)">
         <source>Minimum value (number type)</source>
         <target state="translated">Minimum value (number type)</target>
+      </trans-unit>
+      <trans-unit id="wHBscUb" resname="More of my photos">
+        <source>More of my photos</source>
+        <target>More of my photos</target>
+      </trans-unit>
+      <trans-unit id="A9jW1M9" resname="More of their photos">
+        <source>More of their photos</source>
+        <target>More of their photos</target>
       </trans-unit>
       <trans-unit id="3l7_Oot" resname="Move">
         <source>Move</source>
@@ -1692,6 +1764,10 @@
       <trans-unit id="k9navuj" resname="No custom fields.">
         <source>No custom fields.</source>
         <target state="translated">No custom fields.</target>
+      </trans-unit>
+      <trans-unit id="JEo_6ok" resname="No keycode">
+        <source>No keycode</source>
+        <target>No keycode</target>
       </trans-unit>
       <trans-unit id="vs1Yzf_" resname="No labels.">
         <source>No labels.</source>
@@ -1913,6 +1989,14 @@
         <source>Pending</source>
         <target state="translated">Pending</target>
       </trans-unit>
+      <trans-unit id="rV2ozxI" resname="Personal information">
+        <source>Personal information</source>
+        <target>Personal information</target>
+      </trans-unit>
+      <trans-unit id="RfIZlV3" resname="Phone number">
+        <source>Phone number</source>
+        <target>Phone number</target>
+      </trans-unit>
       <trans-unit id="lfzp2uK" resname="Photo albums">
         <source>Photo albums</source>
         <target state="translated">Photo albums</target>
@@ -1988,6 +2072,10 @@
       <trans-unit id="ouNrIYq" resname="Previous">
         <source>Previous</source>
         <target state="translated">Previous</target>
+      </trans-unit>
+      <trans-unit id="1X7oKCl" resname="Previously a member of">
+        <source>Previously a member of</source>
+        <target>Previously a member of</target>
       </trans-unit>
       <trans-unit id="WiX.dOS" resname="Print">
         <source>Print</source>
@@ -2476,6 +2564,10 @@
       <trans-unit id="6xCSWiZ" resname="Status">
         <source>Status</source>
         <target state="translated">Status</target>
+      </trans-unit>
+      <trans-unit id="fZ1Z.Qu" resname="Street and number">
+        <source>Street and number</source>
+        <target>Street and number</target>
       </trans-unit>
       <trans-unit id="lgfw7Wf" resname="Student address">
         <source>Student address</source>
@@ -3085,14 +3177,6 @@
         <source>Was:</source>
         <target state="translated">Was:</target>
       </trans-unit>
-      <trans-unit id="kL92atL" resname="We are NOT the same">
-        <source>We are NOT the same</source>
-        <target state="translated">We are NOT the same</target>
-      </trans-unit>
-      <trans-unit id="L7nMq4K" resname="We are the same">
-        <source>We are the same</source>
-        <target state="translated">We are the same</target>
-      </trans-unit>
       <trans-unit id="jkUs8v1" resname="We found a pointer to &lt;code&gt;NULL&lt;/code&gt; instead of this page">
         <source>We found a pointer to &lt;code&gt;NULL&lt;/code&gt; instead of this page</source>
         <target state="translated"><![CDATA[We found a pointer to <code>NULL</code> instead of this page]]></target>
@@ -3196,6 +3280,10 @@
       <trans-unit id="lAXDq5A" resname="You have been unsubscribed.">
         <source>You have been unsubscribed.</source>
         <target>You have been unsubscribed.</target>
+      </trans-unit>
+      <trans-unit id="F07ab4W" resname="You have not been a member of a committee or fraternity.">
+        <source>You have not been a member of a committee or fraternity.</source>
+        <target>You have not been a member of a committee or fraternity.</target>
       </trans-unit>
       <trans-unit id="3KHHscz" resname="You have not been tagged in any photos yet.">
         <source>You have not been tagged in any photos yet.</source>
@@ -3360,6 +3448,10 @@
       <trans-unit id="CqfqdkM" resname="the organising party">
         <source>the organising party</source>
         <target>the organising party</target>
+      </trans-unit>
+      <trans-unit id="q7soSeR" resname="the secretary of GEWIS">
+        <source>the secretary of GEWIS</source>
+        <target>the secretary of GEWIS</target>
       </trans-unit>
       <trans-unit id="W3MzJgn" resname="unavailable">
         <source>unavailable</source>

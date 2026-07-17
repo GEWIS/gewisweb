@@ -25,4 +25,24 @@ enum MembershipTypes: string
             self::Honorary => new TranslatableMessage('Honorary'),
         };
     }
+
+    /**
+     * Whether this type is a member within the meaning of the law, with the associated rights (voting and the like).
+     * Ordinary, external, and honorary members are; a graduate only holds graduate status. That distinction is why the
+     * association tracks both a membership end date and an expiration.
+     */
+    public function isStatutoryMember(): bool
+    {
+        return self::Graduate !== $this;
+    }
+
+    public function badgeClass(): string
+    {
+        return match ($this) {
+            self::Ordinary => 'badge-gewis-primary',
+            self::External => 'badge-success',
+            self::Graduate => 'badge-info',
+            self::Honorary => 'badge-warning',
+        };
+    }
 }
