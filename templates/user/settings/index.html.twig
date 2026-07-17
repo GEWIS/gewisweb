@@ -1,23 +1,23 @@
 {% extends 'layout-sidebar.html.twig' %}
 
-{% block page_title %}{{ 'Settings'|trans }}{% endblock %}
+{% block page_title %}{{ 'Privacy'|trans }}{% endblock %}
 
 {% block sidebar_label %}{{ app.user.member.getFullName }}{% endblock %}
 {% block sidebar %}
     {% include 'partials/member-sidebar.html.twig' with {
         'member': app.user.member,
         'isSelf': true,
-        'activeRoute': 'settings',
+        'activeRoute': 'privacy',
     } %}
 {% endblock %}
 
 {% block contents %}
-    {{ form_start(form, {
-        'action': path('user_settings_index'),
-        'method': 'POST',
-    }) }}
     <div class="row">
         <div class="col-lg-6">
+            {{ form_start(form, {
+                'action': path('user_settings_index'),
+                'method': 'POST',
+            }) }}
             <div class="panel">
                 <div class="panel-heading">
                     <h3>{{ 'Privacy'|trans }}</h3>
@@ -27,27 +27,63 @@
                     {{ form_row(form.photoVisibility) }}
                     {{ form_row(form.hideYearOfBirth) }}
                     {{ form_row(form.hideBirthdayOnFrontpage) }}
+                    <button type="submit" class="btn btn-gewis-primary mt-2">
+                        <span class="fas fa-save"></span> {{ 'Save settings'|trans }}
+                    </button>
                 </div>
             </div>
+            {{ form_end(form) }}
         </div>
         <div class="col-lg-6">
             <div class="panel">
                 <div class="panel-heading">
-                    <h3>{{ 'Display'|trans }}</h3>
+                    <h3>{{ 'Data export'|trans }}</h3>
                 </div>
                 <div class="panel-body">
-                    {{ form_row(form.disableCosmetics) }}
+                    <p class="text-muted mb-2">
+                        {{ 'Request a copy of the data the GEWIS website holds about you. We will email you a link to download it once it is ready; it stays available for 3 days.'|trans }}
+                    </p>
+                    <p class="text-muted small mb-2">
+                        {{ 'This export covers the GEWIS website only. For any other personal data GEWIS holds, contact the privacy officers.'|trans }}
+                    </p>
+                    {% if hasDataExport %}
+                        {% if sudoActive %}
+                            <a class="btn btn-outline-gewis-primary" href="{{ path('user_settings_data_export_download') }}">
+                                <span class="fas fa-download"></span> {{ 'Download my latest export'|trans }}
+                            </a>
+                        {% else %}
+                            {# Downloading the export needs sudo; re-authenticate first and return straight to the download. #}
+                            <a class="btn btn-outline-gewis-primary"
+                               href="{{ path('user_sudo_confirm', {'next': path('user_settings_data_export_download')}) }}">
+                                <span class="fas fa-download"></span> {{ 'Download my latest export'|trans }}
+                            </a>
+                        {% endif %}
+                    {% elseif dataExportPending %}
+                        <p class="mb-0">
+                            <span class="fas fa-hourglass-half"></span>
+                            {{ 'Your data export is being prepared. You will receive an email when it is ready.'|trans }}
+                        </p>
+                    {% elseif sudoActive %}
+                        <form method="POST" action="{{ path('user_settings_data_export_request') }}">
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('data_export') }}">
+                            <button type="submit" class="btn btn-outline-gewis-primary">
+                                <span class="fas fa-file-export"></span> {{ 'Request my data export'|trans }}
+                            </button>
+                        </form>
+                    {% else %}
+                        {# Requesting the export needs sudo; re-authenticate first and return here. #}
+                        <a class="btn btn-outline-gewis-primary"
+                           href="{{ path('user_sudo_confirm', {'next': path('user_settings_index')}) }}">
+                            <span class="fas fa-file-export"></span> {{ 'Request my data export'|trans }}
+                        </a>
+                    {% endif %}
                 </div>
             </div>
         </div>
     </div>
-    <button type="submit" class="btn btn-gewis-primary">
-        <span class="fas fa-save"></span> {{ 'Save settings'|trans }}
-    </button>
-    {{ form_end(form) }}
 
     {# Removing existing tags is a separate, irreversible POST action, so it lives in its own panel with a
-       confirmation modal (its form cannot be nested inside the settings form above). #}
+       confirmation modal. #}
     <div class="row">
         <div class="col-lg-6">
             <div class="panel mt-3">

@@ -1,0 +1,35 @@
+{% extends 'layout-sidebar.html.twig' %}
+
+{% block page_title %}{{ 'General'|trans }}{% endblock %}
+
+{% block sidebar_label %}{{ app.user.member.getFullName }}{% endblock %}
+{% block sidebar %}
+    {% include 'partials/member-sidebar.html.twig' with {
+        'member': app.user.member,
+        'isSelf': true,
+        'activeRoute': 'general',
+    } %}
+{% endblock %}
+
+{% block contents %}
+    <div class="row">
+        <div class="col-lg-6">
+            {{ form_start(form, {
+                'action': path('user_settings_general'),
+                'method': 'POST',
+            }) }}
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3>{{ 'General'|trans }}</h3>
+                </div>
+                <div class="panel-body">
+                    {{ form_row(form.disableCosmetics) }}
+                    <button type="submit" class="btn btn-gewis-primary mt-2">
+                        <span class="fas fa-save"></span> {{ 'Save settings'|trans }}
+                    </button>
+                </div>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

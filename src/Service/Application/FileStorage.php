@@ -167,6 +167,39 @@ final readonly class FileStorage
     }
 
     /**
+     * The last-modified time of a stored file, as a Unix timestamp.
+     */
+    public function lastModified(string $path): int
+    {
+        return $this->defaultStorage->lastModified($path);
+    }
+
+    /**
+     * The stored paths of the files directly inside a directory. Returns an empty list when the directory does not
+     * exist yet.
+     *
+     * @return list<string>
+     */
+    public function listFiles(string $directory): array
+    {
+        $paths = [];
+        foreach (
+            $this->defaultStorage->listContents(
+                $directory,
+                false,
+            ) as $item
+        ) {
+            if (!$item->isFile()) {
+                continue;
+            }
+
+            $paths[] = $item->path();
+        }
+
+        return $paths;
+    }
+
+    /**
      * Write raw contents to an exact stored path (not content-addressed). Used by the variant pipeline and cover
      * generator, which own their target paths.
      */

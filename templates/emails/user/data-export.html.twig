@@ -1,0 +1,14 @@
+{% extends 'emails/_base.html.twig' %}
+
+{% block emailTitle %}Your data export{% endblock %}
+{% block preheader %}Your&nbsp;data&nbsp;export&nbsp;is&nbsp;ready{% endblock %}
+{% block heading %}Your data export is ready{% endblock %}
+{% block subheading %}Download the data GEWIS holds about you{% endblock %}
+{% block body %}
+    <p>Dear {{ fullName }},</p>
+    <p>You requested an export of the data the GEWIS website holds about you. You can download it using the following link, which stays available for 3 days:<br><a href="{{ downloadUrl }}" style="color: #C40000; text-decoration: none;" target="_blank" rel="noopener nofollow">{{ downloadUrl }}</a></p>
+    <p>You need to be signed in to your GEWIS account to download the file. After 3 days the export is removed and you can request a fresh one. If you did not request this export, you can safely ignore this email.</p>
+    <p>This export covers the GEWIS website only. If you need any other personal data GEWIS holds, please contact the privacy officers.</p>
+    With kind regards,<br> The ApplicatieBeheerCommissie
+{% endblock %}
+{% block footerNoteSection %}{% endblock %}

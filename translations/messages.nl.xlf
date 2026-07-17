@@ -749,6 +749,10 @@
         <source>Dark</source>
         <target>Donker</target>
       </trans-unit>
+      <trans-unit id="oICd88D" resname="Data export">
+        <source>Data export</source>
+        <target>Gegevensexport</target>
+      </trans-unit>
       <trans-unit id="IMJISl1" resname="Date and time">
         <source>Date and time</source>
         <target state="translated">Datum en tijd</target>
@@ -845,10 +849,6 @@
         <source>Discussion</source>
         <target state="translated">Discussie</target>
       </trans-unit>
-      <trans-unit id="HAMt_Vg" resname="Display">
-        <source>Display</source>
-        <target>Weergave</target>
-      </trans-unit>
       <trans-unit id="AxKD_S1" resname="Do not allow others to tag me in photos">
         <source>Do not allow others to tag me in photos</source>
         <target>Anderen mogen mij niet taggen in foto's</target>
@@ -860,6 +860,10 @@
       <trans-unit id="fZqz0Um" resname="Done">
         <source>Done</source>
         <target>Klaar</target>
+      </trans-unit>
+      <trans-unit id="CkUUOdc" resname="Download my latest export">
+        <source>Download my latest export</source>
+        <target>Download mijn laatste export</target>
       </trans-unit>
       <trans-unit id="dwUtS3b" resname="Draft">
         <source>Draft</source>
@@ -1228,6 +1232,10 @@
       <trans-unit id="bNBn1b6" resname="GMM Taskforces">
         <source>GMM Taskforces</source>
         <target state="translated">ALV-Werkgroepen</target>
+      </trans-unit>
+      <trans-unit id="gEcArhl" resname="General">
+        <source>General</source>
+        <target>Algemeen</target>
       </trans-unit>
       <trans-unit id="xj3o.Ir" resname="General Members Meeting">
         <source>General Members Meeting</source>
@@ -2353,9 +2361,17 @@
         <source>Representative</source>
         <target state="translated">Vertegenwoordiger</target>
       </trans-unit>
+      <trans-unit id="JEm9qMr" resname="Request a copy of the data the GEWIS website holds about you. We will email you a link to download it once it is ready; it stays available for 3 days.">
+        <source>Request a copy of the data the GEWIS website holds about you. We will email you a link to download it once it is ready; it stays available for 3 days.</source>
+        <target>Vraag een kopie op van de gegevens die de GEWIS-website over je bewaart. We e-mailen je een downloadlink zodra deze klaarstaat; deze blijft 3 dagen beschikbaar.</target>
+      </trans-unit>
       <trans-unit id="wDzDkqN" resname="Request changes">
         <source>Request changes</source>
         <target state="translated">Wijzigingen vragen</target>
+      </trans-unit>
+      <trans-unit id="vhBc_Zx" resname="Request my data export">
+        <source>Request my data export</source>
+        <target>Vraag mijn gegevensexport aan</target>
       </trans-unit>
       <trans-unit id="glQyOSe" resname="Required for your role">
         <source>Required for your role</source>
@@ -3065,6 +3081,10 @@
         <source>This draft cannot be discarded.</source>
         <target state="translated">Dit concept kan niet worden weggegooid.</target>
       </trans-unit>
+      <trans-unit id="2sJ6LMc" resname="This export covers the GEWIS website only. For any other personal data GEWIS holds, contact the privacy officers.">
+        <source>This export covers the GEWIS website only. For any other personal data GEWIS holds, contact the privacy officers.</source>
+        <target>Deze export bevat alleen gegevens van de GEWIS-website. Neem voor andere persoonsgegevens die GEWIS bewaart contact op met de privacyverantwoordelijken.</target>
+      </trans-unit>
       <trans-unit id="Kw6uR1y" resname="This is the first revision; nothing to compare against.">
         <source>This is the first revision; nothing to compare against.</source>
         <target state="translated">Dit is de eerste revisie; er is niets om mee te vergelijken.</target>
@@ -3349,6 +3369,10 @@
         <source>Was:</source>
         <target state="translated">Was:</target>
       </trans-unit>
+      <trans-unit id="SnmiFq3" resname="We are preparing your data export. You will receive an email with a download link when it is ready.">
+        <source>We are preparing your data export. You will receive an email with a download link when it is ready.</source>
+        <target>We stellen je gegevensexport samen. Je ontvangt een e-mail met een downloadlink zodra deze klaarstaat.</target>
+      </trans-unit>
       <trans-unit id="jkUs8v1" resname="We found a pointer to &lt;code&gt;NULL&lt;/code&gt; instead of this page">
         <source>We found a pointer to &lt;code&gt;NULL&lt;/code&gt; instead of this page</source>
         <target state="translated"><![CDATA[We hebben een verwijzing naar <code>NULL</code> gevonden in plaats van deze pagina]]></target>
@@ -3408,6 +3432,10 @@
       <trans-unit id="Tnj6hOA" resname="Yes/No">
         <source>Yes/No</source>
         <target state="translated">Ja/Nee</target>
+      </trans-unit>
+      <trans-unit id="DSq.6wF" resname="You already have a recent data export. You can download it below.">
+        <source>You already have a recent data export. You can download it below.</source>
+        <target>Je hebt al een recente gegevensexport. Je kunt deze hieronder downloaden.</target>
       </trans-unit>
       <trans-unit id="vIs6CbG" resname="You are about to reset multi-factor authentication for:">
         <source>You are about to reset multi-factor authentication for:</source>
@@ -3500,6 +3528,14 @@
       <trans-unit id="jtm1hRo" resname="Your Company">
         <source>Your Company</source>
         <target state="translated">Jouw bedrijf</target>
+      </trans-unit>
+      <trans-unit id="Lst7dJY" resname="Your data export is already being prepared.">
+        <source>Your data export is already being prepared.</source>
+        <target>Je gegevensexport wordt al voorbereid.</target>
+      </trans-unit>
+      <trans-unit id="Ei97GuG" resname="Your data export is being prepared. You will receive an email when it is ready.">
+        <source>Your data export is being prepared. You will receive an email when it is ready.</source>
+        <target>Je gegevensexport wordt voorbereid. Je ontvangt een e-mail zodra deze klaar is.</target>
       </trans-unit>
       <trans-unit id="qWru1FD" resname="Your edit session expired; reopen the activity and try again.">
         <source>Your edit session expired; reopen the activity and try again.</source>

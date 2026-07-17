@@ -37,8 +37,7 @@ class PollCommentRepository extends ServiceEntityRepository
             )
             ->setParameter(
                 'member',
-                $member,
-                Member::class,
+                $member->getLidnr(),
             );
 
         return $qb->getQuery()->getResult();

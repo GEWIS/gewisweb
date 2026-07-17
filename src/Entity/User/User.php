@@ -14,6 +14,7 @@ use App\Entity\User\Traits\BackupCodeAwareTrait;
 use App\Repository\User\UserRepository;
 use App\Security\User\MfaEnforcementSwitch;
 use DateTime;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -379,5 +380,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     public function getPhotoVisibility(): PhotoVisibility
     {
         return $this->settings?->getPhotoVisibility() ?? PhotoVisibility::HideSelected;
+    }
+
+    /**
+     * @return UserGdprArrayType
+     */
+    public function toGdprArray(): array
+    {
+        return [
+            'roles' => array_map(
+                static fn (UserRole $role): array => $role->toGdprArray(),
+                $this->roles->getValues(),
+            ),
+            'settings' => $this->getSettings()?->toGdprArray(),
+            'passwordChangedOn' => $this->getPasswordChangedOn()?->format(DateTimeInterface::ATOM),
+        ];
     }
 }
