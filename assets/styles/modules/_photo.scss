@@ -3,67 +3,65 @@ Photo
 
 */
 
-// Selectable photo tile on the album manage view. The checkbox is visually hidden (but focusable); selection reads as a
-// brand tint plus a corner check over the photo, so the control never obscures the image (mirrors the old site).
-.photo-select {
-    display: block;
-    position: relative;
-    aspect-ratio: 1;
-    cursor: pointer;
+// Selection mode for the gallery (member and album manage views). The Select toggle adds `is-selecting` to the grid,
+// revealing a corner check on each tile; a selected tile also gets a brand tint. In browse mode none of this shows, so
+// the grid reads as a plain viewer.
+.photo-masonry__check,
+.photo-masonry__hidden {
+    position: absolute;
+    color: #fff;
+    line-height: 1;
+    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.6));
+    pointer-events: none;
+}
 
-    &::after {
+.photo-masonry__check {
+    top: 0.4rem;
+    right: 0.4rem;
+    font-size: 1.4rem;
+    opacity: 0;
+    transition: opacity 0.12s ease-in-out;
+}
+
+.photo-masonry.is-selecting {
+    .photo-masonry__item {
+        cursor: pointer;
+    }
+
+    .photo-masonry__item:hover .photo-masonry__check {
+        opacity: 0.55;
+    }
+
+    .photo-masonry__item.is-selected .photo-masonry__check {
+        opacity: 1;
+    }
+
+    .photo-masonry__item.is-selected::after {
         content: '';
         position: absolute;
         inset: 0;
         background: rgba($brand-primary, 0.3);
-        opacity: 0;
-        transition: opacity 0.12s ease-in-out;
         pointer-events: none;
     }
-
-    &:has(.photo-select__input:checked)::after {
-        opacity: 1;
-    }
-
-    &:has(.photo-select__input:focus-visible) {
-        outline: 2px solid $brand-primary;
-        outline-offset: 2px;
-    }
 }
 
-.photo-select__input {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    opacity: 0;
+// A photo the member has hidden from their own page: greyed with an eye-slash badge in both browse and select mode, so
+// they can tell which photos others do not see.
+.photo-masonry__item.is-hidden img {
+    opacity: 0.4;
 }
 
-.photo-select__img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.photo-select__check {
-    position: absolute;
+.photo-masonry__hidden {
     top: 0.4rem;
-    right: 0.4rem;
-    color: #fff;
-    font-size: 1.4rem;
-    line-height: 1;
-    opacity: 0;
-    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.6));
-    transition: opacity 0.12s ease-in-out;
+    left: 0.4rem;
+    font-size: 1.1rem;
 }
 
-.photo-select:hover .photo-select__check {
-    opacity: 0.55;
-}
-
-.photo-select:has(.photo-select__input:checked) .photo-select__check {
-    opacity: 1;
+// Async album picker for moving photos: the results drop directly below the search input and scroll when there are many.
+.album-search .dropdown-menu {
+    top: 100%;
+    max-height: 16rem;
+    overflow-y: auto;
 }
 
 // Drag-and-drop upload target on the album manage view. The dashed outline and the hover/drag highlight are the only
@@ -81,9 +79,8 @@ Photo
     }
 }
 
-// Album photo grid. The gallery controller lays this out as a windowed masonry: the container is sized to hold the whole
-// album, and each tile is absolutely positioned (width, height and translate set by the controller from the photo's
-// aspect ratio), so portrait and landscape photos keep their shape and nothing reshuffles as tiles mount and unmount.
+// Album photo grid, shared by the public gallery (windowed) and the album manage view. The container is sized and each
+// tile absolutely positioned by the controller from the photo's aspect ratio, so portrait and landscape keep their shape.
 .photo-masonry {
     position: relative;
 }
@@ -115,6 +112,29 @@ Photo
     display: none !important;
 }
 
+// The prev/next arrows draw an FA chevron (set in gallery_controller). Keep them faint, brightening on hover/focus.
+// Scoped `.pswp.pswp--ui-visible` (three classes) so it outweighs PhotoSwipe's `.pswp--ui-visible .pswp__hide-on-close`,
+// whose stylesheet is linked after this one.
+.pswp.pswp--ui-visible .pswp__button--arrow {
+    opacity: 0.25;
+}
+
+.pswp.pswp--ui-visible .pswp__button--arrow:hover,
+.pswp.pswp--ui-visible .pswp__button--arrow:focus {
+    opacity: 0.75;
+    outline: none;
+}
+
+// The zoom button carries both a plus and a minus icon (zoomSVG in gallery_controller); show whichever matches the
+// current zoom state. PhotoSwipe toggles .pswp--zoomed-in on the root itself.
+.pswp--zoom-allowed:not(.pswp--zoomed-in) .pswp__icn-zoom-minus {
+    display: none;
+}
+
+.pswp--zoomed-in .pswp__icn-zoom-plus {
+    display: none;
+}
+
 // The point-tag placement uses a full-viewport capture overlay (`.pswp__photo-place-overlay`) above the PhotoSwipe
 // viewer; its styles are set inline by the viewer controller so it works before this stylesheet loads.
 
@@ -140,6 +160,7 @@ Photo
     font-size: 0.875rem;
     background: rgba(0, 0, 0, 0.55);
     border-radius: 0.5rem;
+    transition: opacity 0.15s ease-in-out;
 }
 
 .pswp__photo-metadata-table {
@@ -159,76 +180,186 @@ Photo
     }
 }
 
-// The tag, vote and profile overlay the viewer renders inside the PhotoSwipe lightbox. It floats at the bottom right,
-// clear of the top toolbar and of the cookie notice (which sits at the bottom left of the window).
-.pswp__photo-tags {
+.pswp__photo-metadata-icon {
+    width: 1.1em;
+    margin-right: 0.45rem;
+    text-align: center;
+    font-size: 0.85em;
+    opacity: 0.7;
+}
+
+// While the photo is zoomed in, fade the tag / photo-of-the-week and metadata panels out so they never cover the detail
+// being examined; the panels come back the moment the photo is zoomed out again. PhotoSwipe toggles .pswp--zoomed-in
+// itself. `!important` is needed because these panels sit at the viewer root, so PhotoSwipe tags them with
+// `pswp__hide-on-close` and forces `opacity: 1` on them (at equal specificity, from a later-loaded stylesheet) whenever
+// the UI is visible; the old viewer beat the same rule with `.pswp__tags-ui--hidden { opacity: 0 !important }`.
+.pswp--zoomed-in {
+    .pswp__photo-tags,
+    .pswp__photo-metadata,
+    .pswp__photo-potw {
+        opacity: 0 !important;
+        pointer-events: none;
+    }
+}
+
+// The photo-of-the-week badge, on its own in the bottom-right corner (the tag panel moved to bottom-centre).
+.pswp__photo-potw {
     position: absolute;
-    bottom: 12px;
+    bottom: 16px;
     right: 12px;
     z-index: 10;
-    width: min(300px, 85vw);
-    max-height: calc(100% - 120px);
-    overflow-y: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.2rem 0.7rem;
+    color: #000;
+    background: #ffc107;
+    border-radius: 1rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: opacity 0.15s ease-in-out;
+
+    &[hidden] {
+        display: none;
+    }
+}
+
+.pswp__photo-potw-text {
     display: flex;
     flex-direction: column;
-    gap: 0.6rem;
-    padding: 0.75rem 1rem;
+    line-height: 1.15;
+}
+
+.pswp__photo-potw-title {
+    font-weight: 700;
+}
+
+.pswp__photo-potw-week {
+    font-size: 0.8em;
+    opacity: 0.85;
+}
+
+// The tag / vote / profile overlay the viewer renders inside the PhotoSwipe lightbox. It floats bottom-centre, clear of
+// the top toolbar and the side navigation arrows. Overflow stays visible so the search suggestions can open upward past
+// the panel edge; the chip list scrolls on its own when a photo has many tags.
+.pswp__photo-tags {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    width: min(440px, calc(100vw - 24px));
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    padding: 0.75rem 0.85rem;
     color: #fff;
-    font-size: 0.875rem;
+    font-size: 0.8125rem;
     background: rgba(0, 0, 0, 0.55);
-    border-radius: var(--#{$prefix}border-radius);
+    border-radius: 0.5rem;
+    transition: opacity 0.15s ease-in-out;
+}
+
+// The header labels the tag list; when a photo has many tags it doubles as a collapse toggle (count + chevron) so the
+// chips do not cover the photo. It is a <button>, reset here to read as plain text.
+.pswp__photo-tags-title {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.5);
+    font-family: inherit;
+    font-size: 0.75rem;
+    text-align: left;
+
+    &:disabled {
+        opacity: 1;
+        cursor: default;
+    }
+}
+
+.pswp__photo-tags-title--toggle {
+    color: rgba(255, 255, 255, 0.75);
+    cursor: pointer;
+
+    &:hover,
+    &:focus {
+        color: #fff;
+    }
+}
+
+.pswp__photo-tags-chevron {
+    font-size: 0.7em;
+    opacity: 0.7;
 }
 
 .pswp__photo-tags-list {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.4rem;
+    max-height: 7rem;
+    overflow-y: auto;
+
+    // The base display:flex would otherwise beat the [hidden] attribute the header toggles.
+    &[hidden] {
+        display: none;
+    }
 }
 
-.pswp__photo-tags-title {
-    opacity: 0.75;
-}
-
+// A tagged member (linked) or body (plain text), led by a person / group icon; the dot shows when the tag is pinned to
+// a point on the photo.
 .pswp__photo-tag {
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
-    padding: 0.15rem 0.6rem;
-    border-radius: 1rem;
-    background: rgba(255, 255, 255, 0.15);
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.09);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
 
-    a {
-        color: #fff;
-        text-decoration: none;
+.pswp__photo-tag-name {
+    color: #fff;
+    font-weight: 500;
+    text-decoration: none;
+}
 
-        &:hover {
-            text-decoration: underline;
-        }
-    }
+a.pswp__photo-tag-name:hover {
+    text-decoration: underline;
 }
 
 .pswp__photo-tag-icon {
-    opacity: 0.65;
-    font-size: 0.8em;
+    opacity: 0.6;
+    font-size: 0.85em;
 }
 
-// Organ tags get a distinct tint on top of the group icon, so members and organs read apart at a glance.
+// Bodies get a brand tint on top of the group icon, so members and bodies read apart at a glance.
 .pswp__photo-tag--organ {
     background: rgba($brand-primary, 0.35);
+    border-color: rgba($brand-primary, 0.4);
+}
+
+.pswp__photo-tag-placed {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: $brand-primary;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5);
 }
 
 .pswp__photo-tag-remove {
     padding: 0;
     border: 0;
     background: transparent;
-    color: #fff;
+    color: rgba(255, 255, 255, 0.6);
     line-height: 1;
     cursor: pointer;
-    opacity: 0.7;
 
     &:hover {
-        opacity: 1;
+        color: #fff;
     }
 }
 
@@ -238,29 +369,177 @@ Photo
     gap: 0.5rem;
 }
 
-.pswp__photo-tag-results {
+// The member/body toggle sits beside the search field on one row.
+.pswp__photo-tag-controls {
     display: flex;
-    flex-direction: column;
-    max-height: 12rem;
-    overflow-y: auto;
-    color: var(--#{$prefix}body-color);
-    background: var(--#{$prefix}body-bg);
-    border-radius: var(--#{$prefix}border-radius);
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.pswp__photo-tag-toggle {
+    display: flex;
+    flex: none;
+    gap: 3px;
+    padding: 3px;
+    background: rgba(255, 255, 255, 0.07);
+    border-radius: 0.5rem;
+}
+
+.pswp__photo-tag-toggle-btn {
+    padding: 0.35rem 0.7rem;
+    border: 0;
+    border-radius: 0.4rem;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 0.78rem;
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background 0.15s ease-in-out, color 0.15s ease-in-out;
+
+    &.active {
+        background: $brand-primary;
+        color: #fff;
+    }
+}
+
+.pswp__photo-tag-searchwrap {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+}
+
+.pswp__photo-tag-search-icon {
+    position: absolute;
+    left: 0.6rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.4);
+    pointer-events: none;
+}
+
+.pswp__photo-tag-search {
+    width: 100%;
+    padding: 0.4rem 0.6rem 0.4rem 1.7rem;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 0.5rem;
+    color: #fff;
+    font-size: 0.8rem;
+
+    &::placeholder {
+        color: rgba(255, 255, 255, 0.4);
+    }
+
+    &:focus {
+        outline: none;
+        // Re-assert over Bootstrap's .form-control:focus, which would otherwise turn the field white with dark text.
+        background: rgba(255, 255, 255, 0.06);
+        color: #fff;
+        border-color: rgba($brand-primary, 0.6);
+        box-shadow: none;
+    }
+}
+
+// The suggestion list opens upward, since the panel sits at the bottom of the viewer.
+.pswp__photo-tag-suggestions {
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    z-index: 2;
+    overflow: hidden;
+    background: #1b1b20;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.6rem;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
 
     &:empty {
         display: none;
     }
 }
 
-.pswp__photo-tag-result {
-    padding: 0.35rem 0.75rem;
+.pswp__photo-tag-suggestion {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    width: 100%;
+    padding: 0.45rem 0.6rem;
     border: 0;
     background: transparent;
+    color: #fff;
+    font-size: 0.8rem;
     text-align: left;
     cursor: pointer;
 
     &:hover {
-        background: var(--#{$prefix}secondary-bg);
+        background: rgba(255, 255, 255, 0.08);
+    }
+}
+
+.pswp__photo-tag-suggestion-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+// The picked member/body, with its Tag (whole photo) and Place on photo (a point) actions.
+.pswp__photo-tag-pending {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.pswp__photo-tag-pending-name {
+    flex: 1;
+    min-width: 4rem;
+    font-weight: 500;
+}
+
+.pswp__photo-tag-pending-clear {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.55);
+    line-height: 1;
+    cursor: pointer;
+
+    &:hover {
+        color: #fff;
+    }
+}
+
+.pswp__photo-tag-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.35rem 0.65rem;
+    border-radius: 0.5rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.pswp__photo-tag-action--tag {
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: transparent;
+    color: #fff;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.1);
+    }
+}
+
+.pswp__photo-tag-action--place {
+    border: 0;
+    background: $brand-primary;
+    color: #fff;
+    font-weight: 700;
+
+    &:hover {
+        filter: brightness(1.1);
     }
 }
 

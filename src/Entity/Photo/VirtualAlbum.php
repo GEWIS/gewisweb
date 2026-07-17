@@ -4,19 +4,14 @@ declare(strict_types=1);
 
 namespace App\Entity\Photo;
 
-use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Exception;
 use Override;
 
-use function array_merge;
-
 /**
  * VirtualAlbum.
  * Album that will never be stored in the database as such.
- *
- * @psalm-import-type PhotoArrayType from Photo as ImportedPhotoArrayType
  */
 class VirtualAlbum extends Album
 {
@@ -70,28 +65,6 @@ class VirtualAlbum extends Album
     }
 
     /**
-     * Add a photo to an album.
-     */
-    #[Override]
-    public function addPhoto(Photo $photo): void
-    {
-        $this->photos[] = $photo;
-    }
-
-    /**
-     * @param Photo[] $photos
-     */
-    public function addPhotos(array $photos): void
-    {
-        $this->photos = new ArrayCollection(
-            array_merge(
-                $this->photos->toArray(),
-                $photos,
-            ),
-        );
-    }
-
-    /**
      * Add a sub album to an album.
      *
      * @throws Exception
@@ -100,75 +73,6 @@ class VirtualAlbum extends Album
     public function addAlbum(Album $album): void
     {
         throw new Exception('Method is not implemented');
-    }
-
-    /**
-     * Returns an associative array representation of this object
-     * including all child objects.
-     *
-     * @return array{
-     *     id: int,
-     *     startDateTime: ?DateTime,
-     *     endDateTime: ?DateTime,
-     *     published: bool,
-     *     name: string,
-     *     parent: null,
-     *     children: array{},
-     *     photos: ImportedPhotoArrayType[],
-     *     coverPath: ?string,
-     *     photoCount: int,
-     *     albumCount: int,
-     * }
-     */
-    #[Override]
-    public function toArrayWithChildren(): array
-    {
-        $array = $this->toArray();
-        foreach ($this->photos as $photo) {
-            $array['photos'][] = $photo->toArray();
-        }
-
-        // TODO: The code below probably never was finished
-        // foreach ($this->children as $album) {
-        //     $array['children'][] = [];
-        // }
-
-        return $array;
-    }
-
-    /**
-     * Returns an associative array representation of this object.
-     *
-     * @return array{
-     *     id: int,
-     *     startDateTime: ?DateTime,
-     *     endDateTime: ?DateTime,
-     *     published: bool,
-     *     name: string,
-     *     parent: null,
-     *     children: array{},
-     *     photos: array{},
-     *     coverPath: ?string,
-     *     photoCount: int,
-     *     albumCount: int,
-     * }
-     */
-    #[Override]
-    public function toArray(): array
-    {
-        return [
-            'id' => $this->getId(),
-            'startDateTime' => $this->getStartDateTime(),
-            'endDateTime' => $this->getEndDateTime(),
-            'published' => $this->isPublished(),
-            'name' => $this->getName(),
-            'parent' => null,
-            'children' => [],
-            'photos' => [],
-            'coverPath' => $this->getCoverPath(),
-            'photoCount' => $this->getPhotoCount(),
-            'albumCount' => $this->getAlbumCount(),
-        ];
     }
 
     /**

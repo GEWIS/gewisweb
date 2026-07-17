@@ -14,6 +14,7 @@ use App\Repository\Photo\PhotoRepository;
 use App\Repository\Photo\WeeklyPhotoRepository;
 use App\Service\Photo\AlbumAdminService;
 use App\Service\Photo\AlbumService;
+use App\Service\Photo\PhotoService;
 use App\Service\Photo\PhotoUploadService;
 use App\Service\Photo\WeeklyPhotoService;
 use DateTime;
@@ -35,6 +36,8 @@ use function array_keys;
 use function array_map;
 use function in_array;
 use function intval;
+use function mb_strlen;
+use function trim;
 
 #[IsGranted(
     attribute: UserRoles::Board->value,
@@ -53,6 +56,7 @@ class AdminController extends AbstractController
         private readonly PhotoRepository $photoRepository,
         private readonly AlbumService $albumService,
         private readonly AlbumAdminService $albumAdminService,
+        private readonly PhotoService $photoService,
         private readonly PhotoUploadService $photoUploadService,
         private readonly WeeklyPhotoRepository $weeklyPhotoRepository,
         private readonly WeeklyPhotoService $weeklyPhotoService,
@@ -270,15 +274,56 @@ class AdminController extends AbstractController
     {
         return $this->render(
             'photo/admin/album.html.twig',
-            [
-                'album' => $album,
-                'photos' => $this->photoRepository->getAlbumPhotos($album),
-                'albums' => $this->albumRepository->findBy(
-                    [],
-                    ['name' => 'ASC'],
-                ),
-            ],
+            ['album' => $album],
         );
+    }
+
+    /**
+     * The viewer manifest for the album manage view. Same shape as the public one but reachable for drafts too, since
+     * the manage view is board-only.
+     */
+    #[Route(
+        path: '/albums/{album}/manifest',
+        name: 'album_manifest',
+        requirements: ['album' => '\d+'],
+        methods: ['GET'],
+    )]
+    public function albumManifest(Album $album): JsonResponse
+    {
+        return new JsonResponse($this->photoService->getAlbumManifest($album));
+    }
+
+    /**
+     * Album name search for the move-photos destination picker. Kept off the album page itself so a set of thousands of
+     * albums is never loaded up front.
+     */
+    #[Route(
+        path: '/albums/search',
+        name: 'albums_search',
+        methods: ['GET'],
+    )]
+    public function searchAlbums(
+        #[MapQueryParameter]
+        string $q = '',
+    ): JsonResponse {
+        $query = trim($q);
+        if (mb_strlen($query) < 2) {
+            return new JsonResponse([]);
+        }
+
+        return new JsonResponse(array_map(
+            static function (Album $album): array {
+                $parent = $album->getParent();
+
+                return [
+                    'id' => $album->getId(),
+                    'label' => null === $parent
+                        ? $album->getName()
+                        : $parent->getName() . ' / ' . $album->getName(),
+                ];
+            },
+            $this->albumRepository->searchForMove($query),
+        ));
     }
 
     #[Route(
@@ -291,9 +336,16 @@ class AdminController extends AbstractController
         id: new Expression('"photo_album_cover-" ~ args["album"].getId()'),
         tokenKey: '_csrf_token',
     )]
-    public function regenerateCover(Album $album): Response
-    {
+    public function regenerateCover(
+        Album $album,
+        Request $request,
+    ): Response {
         $this->albumAdminService->regenerateCover($album);
+
+        // The manage view regenerates in-page and waits for the Mercure push; only the no-JS form submit redirects.
+        if ($request->isXmlHttpRequest()) {
+            return new JsonResponse(['status' => 'queued']);
+        }
 
         $this->addFlash(
             AlertTypes::Success->value,
@@ -321,7 +373,12 @@ class AdminController extends AbstractController
             static fn (mixed $file): bool => $file instanceof UploadedFile,
         );
 
-        return new JsonResponse($this->photoUploadService->upload($album, $files));
+        $result = $this->photoUploadService->upload(
+            $album,
+            $files,
+        );
+
+        return new JsonResponse($result);
     }
 
     #[Route(
@@ -356,10 +413,24 @@ class AdminController extends AbstractController
             );
         }
 
-        $this->albumAdminService->movePhotos(
+        $moved = $this->albumAdminService->movePhotos(
             $photos,
             $destination,
         );
+
+        if (0 === $moved) {
+            // Every selected photo already lives in the destination (e.g. a stale form still pointed at the current
+            // album), so nothing changed — say so rather than claim a move that did not happen.
+            $this->addFlash(
+                AlertTypes::Warning->value,
+                $this->translator->trans('The selected photos are already in that album.'),
+            );
+
+            return $this->redirectToRoute(
+                'admin/photos/album',
+                ['album' => $album->getId()],
+            );
+        }
 
         $this->addFlash(
             AlertTypes::Success->value,
@@ -407,13 +478,11 @@ class AdminController extends AbstractController
      */
     private function selectedPhotos(Request $request): array
     {
-        $ids = array_map(
-            intval(...),
-            $request->request->all('photos'),
+        return $this->photoRepository->findByIds(
+            array_map(
+                intval(...),
+                $request->request->all('photos'),
+            ),
         );
-
-        return [] === $ids
-            ? []
-            : $this->photoRepository->findBy(['id' => $ids]);
     }
 }

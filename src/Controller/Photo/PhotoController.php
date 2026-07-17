@@ -8,26 +8,39 @@ use App\Entity\Photo\Album;
 use App\Entity\Photo\Enums\AlbumType;
 use App\Entity\Photo\MemberAlbum;
 use App\Entity\Photo\OrganAlbum;
+use App\Entity\Photo\Photo;
+use App\Entity\Photo\WeeklyPhoto;
 use App\Entity\User\Enums\UserRoles;
+use App\Entity\User\User;
 use App\Repository\Decision\MemberRepository;
 use App\Repository\Decision\OrganRepository;
+use App\Repository\Photo\MemberTagRepository;
 use App\Repository\Photo\PhotoRepository;
 use App\Repository\Photo\WeeklyPhotoRepository;
 use App\Security\Photo\PhotoVoter;
 use App\Service\Application\FileDownloadHelper;
 use App\Service\Photo\AlbumService;
+use App\Service\Photo\PhotoPrivacyService;
 use App\Service\Photo\PhotoService;
 use App\Service\Photo\WeeklyPhotoService;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\CurrentUser;
+use Symfony\Component\Security\Http\Attribute\IsCsrfTokenValid;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
+use function array_map;
 use function in_array;
+use function intval;
+use function max;
+use function min;
 use function pathinfo;
 use function sprintf;
 
@@ -50,9 +63,11 @@ class PhotoController extends AbstractController
         private readonly WeeklyPhotoRepository $weeklyPhotoRepository,
         private readonly WeeklyPhotoService $weeklyPhotoService,
         private readonly MemberRepository $memberRepository,
+        private readonly MemberTagRepository $memberTagRepository,
         private readonly OrganRepository $organRepository,
         private readonly FileDownloadHelper $fileDownloadHelper,
         private readonly SluggerInterface $slugger,
+        private readonly PhotoPrivacyService $photoPrivacyService,
     ) {
     }
 
@@ -131,6 +146,33 @@ class PhotoController extends AbstractController
     }
 
     /**
+     * The viewer manifest for a member's virtual album, filtered to what the current viewer may see and flagging the
+     * member's own hidden photos. Loaded by the gallery on that member's photo page.
+     */
+    #[Route(
+        path: '/member/{member}/manifest',
+        name: 'member_manifest',
+        requirements: ['member' => '\d+'],
+    )]
+    public function memberManifest(int $member): JsonResponse
+    {
+        $memberEntity = $this->memberRepository->find($member)
+            ?? throw new NotFoundHttpException();
+        $tagged = $this->photoRepository->getAlbumPhotos(new MemberAlbum($member, $memberEntity));
+        $filtered = $this->photoPrivacyService->filterTaggedPhotos(
+            $memberEntity,
+            $tagged,
+        );
+
+        return new JsonResponse(
+            $this->photoService->getMemberManifest(
+                $filtered['visible'],
+                $filtered['hidden'],
+            ),
+        );
+    }
+
+    /**
      * Download a photo's original file, named after the legacy `{album}-{year}-{id}.{ext}` scheme.
      */
     #[Route(
@@ -177,6 +219,92 @@ class PhotoController extends AbstractController
     }
 
     #[Route(
+        path: '/hidden/hide',
+        name: 'hidden_hide',
+        methods: ['POST'],
+    )]
+    #[IsCsrfTokenValid(
+        id: 'photo_hidden',
+        tokenKey: '_csrf_token',
+    )]
+    public function hidePhotos(
+        Request $request,
+        #[CurrentUser]
+        User $user,
+    ): Response {
+        return $this->applyHidden(
+            $request,
+            $user,
+            false,
+        );
+    }
+
+    #[Route(
+        path: '/hidden/unhide',
+        name: 'hidden_unhide',
+        methods: ['POST'],
+    )]
+    #[IsCsrfTokenValid(
+        id: 'photo_hidden',
+        tokenKey: '_csrf_token',
+    )]
+    public function unhidePhotos(
+        Request $request,
+        #[CurrentUser]
+        User $user,
+    ): Response {
+        return $this->applyHidden(
+            $request,
+            $user,
+            true,
+        );
+    }
+
+    private function applyHidden(
+        Request $request,
+        User $user,
+        bool $unhide,
+    ): Response {
+        $member = $user->getMember();
+        $photos = $this->selectedPhotos($request);
+
+        if ([] !== $photos) {
+            if ($unhide) {
+                $this->photoPrivacyService->unhide(
+                    $member,
+                    $photos,
+                );
+            } else {
+                $this->photoPrivacyService->hide(
+                    $member,
+                    $photos,
+                );
+            }
+        }
+
+        return $this->redirectToRoute(
+            'photo/album',
+            [
+                'type' => AlbumType::Member->value,
+                'album' => $member->getLidnr(),
+            ],
+        );
+    }
+
+    /**
+     * @return Photo[]
+     */
+    private function selectedPhotos(Request $request): array
+    {
+        return $this->photoRepository->findByIds(
+            array_map(
+                intval(...),
+                $request->request->all('photos'),
+            ),
+        );
+    }
+
+    #[Route(
         path: '/{type}/{album}',
         name: 'album',
         requirements: [
@@ -211,8 +339,8 @@ class PhotoController extends AbstractController
     }
 
     /**
-     * The photos a member is tagged in, each linking into its real album's viewer. A member is tagged in a bounded set,
-     * so this renders server-side rather than through the windowed manifest the album gallery uses.
+     * The photos a member is tagged in, shown through the same viewer as a real album (opened from this virtual album,
+     * with a button to jump to each photo's real album). The gallery fetches its photos through the member manifest.
      */
     private function memberAlbum(int $lidnr): Response
     {
@@ -223,7 +351,9 @@ class PhotoController extends AbstractController
             'photo/member.html.twig',
             [
                 'member' => $member,
-                'photos' => $this->photoRepository->getAlbumPhotos(new MemberAlbum($lidnr, $member)),
+                // Lets the page tell "never tagged" apart from "tagged, but all hidden from this viewer" in its empty
+                // state, without leaking which or how many photos exist.
+                'memberHasTags' => $this->memberTagRepository->hasTags($lidnr),
             ],
         );
     }
@@ -252,14 +382,24 @@ class PhotoController extends AbstractController
      */
     private function weeklyAlbum(int $year): Response
     {
-        if ([] === $this->weeklyPhotoService->getPhotosInYear($year)) {
+        $weeklyPhotos = $this->weeklyPhotoService->getPhotosByYear()[$year] ?? [];
+        if ([] === $weeklyPhotos) {
             throw new NotFoundHttpException();
         }
+
+        $weeks = array_map(
+            static fn (WeeklyPhoto $weeklyPhoto): DateTime => $weeklyPhoto->getWeek(),
+            $weeklyPhotos,
+        );
 
         // The gallery itself fetches the year's photos through the weekly manifest (route above).
         return $this->render(
             'photo/weekly-album.html.twig',
-            ['year' => $year],
+            [
+                'year' => $year,
+                'startDate' => min($weeks),
+                'endDate' => max($weeks),
+            ],
         );
     }
 

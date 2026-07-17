@@ -7,6 +7,7 @@ namespace App\Service\Photo;
 use App\Entity\Decision\Member;
 use App\Entity\Photo\Photo;
 use App\Entity\Photo\ProfilePhoto;
+use App\Repository\Photo\HiddenPhotoRepository;
 use App\Repository\Photo\MemberTagRepository;
 use App\Repository\Photo\ProfilePhotoRepository;
 use DateInterval;
@@ -22,13 +23,15 @@ final readonly class ProfilePhotoService
     public function __construct(
         private MemberTagRepository $memberTagRepository,
         private ProfilePhotoRepository $profilePhotoRepository,
+        private HiddenPhotoRepository $hiddenPhotoRepository,
         private EntityManagerInterface $entityManager,
     ) {
     }
 
     /**
      * Set the member's profile photo, replacing any existing one. Returns false (and changes nothing) when the member
-     * is not tagged in the photo, so a profile photo can only ever be one the member appears in.
+     * is not tagged in the photo or has hidden it, so a profile photo can only ever be one the member appears in and
+     * has not hidden from their page.
      */
     public function setProfilePhoto(
         Photo $photo,
@@ -38,6 +41,10 @@ final readonly class ProfilePhotoService
             null === $this->memberTagRepository->findTag(
                 (int) $photo->getId(),
                 $member->getLidnr(),
+            )
+            || null !== $this->hiddenPhotoRepository->findByMemberAndPhoto(
+                $member,
+                $photo,
             )
         ) {
             return false;

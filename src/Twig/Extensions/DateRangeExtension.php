@@ -16,12 +16,15 @@ use function sprintf;
 use function ucfirst;
 
 /**
- * Formats an activity's begin/end as a single locale-aware range string, mirroring the previous GEWIS overview:
- *  - single day:   "Thursday 28 May. 12:40 - 13:20"
- *  - multiple days: "Sun. 17 May. (00:00) - Sun. 21 Jun. (23:59)"
- * A side that falls in a different calendar year than today also shows its year (e.g. "... 14 Dec. 2026 ...").
+ * Locale-aware begin/end range formatting shared across the application:
+ *  - single day:    "Saturday 4 July" (no time) or "Thursday 3 Sep. 12:40 - 13:20" (with time)
+ *  - multiple days: "Thu. 3 Sep. - Sat. 5 Sep." (+ " (HH:mm)" per side with time)
+ *
+ * `date_range()` is the general helper (opt into times and years); `activity_date_range()` is the activity preset
+ * (always with times, year shown when it differs from today) and `activity_date_badge()` splits the parts for the
+ * stacked overview badge.
  */
-class ActivityDateRangeExtension extends AbstractExtension
+class DateRangeExtension extends AbstractExtension
 {
     /**
      * @return TwigFunction[]
@@ -31,6 +34,10 @@ class ActivityDateRangeExtension extends AbstractExtension
     {
         return [
             new TwigFunction(
+                'date_range',
+                $this->dateRange(...),
+            ),
+            new TwigFunction(
                 'activity_date_range',
                 $this->activityDateRange(...),
             ),
@@ -39,6 +46,89 @@ class ActivityDateRangeExtension extends AbstractExtension
                 $this->activityDateBadge(...),
             ),
         ];
+    }
+
+    /**
+     * @param string $year 'auto' shows a side's year only when it differs from the current year; 'never' omits it.
+     */
+    public function dateRange(
+        DateTimeInterface $begin,
+        DateTimeInterface $end,
+        bool $time = true,
+        string $year = 'auto',
+    ): string {
+        $locale = Locale::getDefault();
+
+        if ($begin->format('Y-m-d') === $end->format('Y-m-d')) {
+            $pattern = $time
+                ? 'EEEE d MMM.'
+                : 'EEEE d MMMM';
+            if (
+                $this->showYear(
+                    $begin,
+                    $year,
+                )
+            ) {
+                $pattern .= ' yyyy';
+            }
+
+            if ($time) {
+                $pattern .= ' HH:mm';
+            }
+
+            $rendered = $this->format(
+                $begin,
+                $pattern,
+                $locale,
+            );
+            if ($time) {
+                $rendered = sprintf(
+                    '%s - %s',
+                    $rendered,
+                    $this->format(
+                        $end,
+                        'HH:mm',
+                        $locale,
+                    ),
+                );
+            }
+
+            return ucfirst($rendered);
+        }
+
+        return ucfirst(sprintf(
+            '%s - %s',
+            $this->format(
+                $begin,
+                $this->rangeSidePattern(
+                    $begin,
+                    $time,
+                    $year,
+                ),
+                $locale,
+            ),
+            $this->format(
+                $end,
+                $this->rangeSidePattern(
+                    $end,
+                    $time,
+                    $year,
+                ),
+                $locale,
+            ),
+        ));
+    }
+
+    public function activityDateRange(
+        DateTimeInterface $begin,
+        DateTimeInterface $end,
+    ): string {
+        return $this->dateRange(
+            $begin,
+            $end,
+            true,
+            'auto',
+        );
     }
 
     /**
@@ -127,56 +217,37 @@ class ActivityDateRangeExtension extends AbstractExtension
         ];
     }
 
-    public function activityDateRange(
-        DateTimeInterface $begin,
-        DateTimeInterface $end,
+    private function rangeSidePattern(
+        DateTimeInterface $date,
+        bool $time,
+        string $year,
     ): string {
-        $locale = Locale::getDefault();
-        $currentYear = new DateTime()->format('Y');
-        $sameDay = $begin->format('Y-m-d') === $end->format('Y-m-d');
-
-        if ($sameDay) {
-            $beginPattern = $begin->format('Y') === $currentYear
-                ? 'EEEE d MMM. HH:mm'
-                : 'EEEE d MMM. yyyy HH:mm';
-
-            $rendered = sprintf(
-                '%s - %s',
-                $this->format(
-                    $begin,
-                    $beginPattern,
-                    $locale,
-                ),
-                $this->format(
-                    $end,
-                    'HH:mm',
-                    $locale,
-                ),
-            );
-        } else {
-            $beginPattern = $begin->format('Y') === $currentYear
-                ? 'EEE. d MMM. (HH:mm)'
-                : 'EEE. d MMM. yyyy (HH:mm)';
-            $endPattern = $end->format('Y') === $currentYear
-                ? 'EEE. d MMM. (HH:mm)'
-                : 'EEE. d MMM. yyyy (HH:mm)';
-
-            $rendered = sprintf(
-                '%s - %s',
-                $this->format(
-                    $begin,
-                    $beginPattern,
-                    $locale,
-                ),
-                $this->format(
-                    $end,
-                    $endPattern,
-                    $locale,
-                ),
-            );
+        $pattern = 'EEE. d MMM.';
+        if (
+            $this->showYear(
+                $date,
+                $year,
+            )
+        ) {
+            $pattern .= ' yyyy';
         }
 
-        return ucfirst($rendered);
+        if ($time) {
+            $pattern .= ' (HH:mm)';
+        }
+
+        return $pattern;
+    }
+
+    private function showYear(
+        DateTimeInterface $date,
+        string $year,
+    ): bool {
+        return match ($year) {
+            'always' => true,
+            'never' => false,
+            default => $date->format('Y') !== new DateTime()->format('Y'),
+        };
     }
 
     private function format(

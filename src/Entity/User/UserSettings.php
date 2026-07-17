@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity\User;
 
+use App\Entity\User\Enums\PhotoVisibility;
 use App\Repository\User\UserSettingsRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
@@ -23,6 +24,7 @@ use Doctrine\ORM\Mapping\OneToOne;
  * @psalm-type UserSettingsGdprArrayType = array{
  *     disableCosmetics: bool,
  *     photoTaggingOptOut: bool,
+ *     photoVisibility: string,
  *     hideYearOfBirth: bool,
  *     hideBirthdayOnFrontpage: bool,
  * }
@@ -64,6 +66,16 @@ class UserSettings
         options: ['default' => false],
     )]
     private bool $photoTaggingOptOut = false;
+
+    /**
+     * How much of this member's tagged-photo collection is hidden from other members on their photo page.
+     */
+    #[Column(
+        type: Types::STRING,
+        enumType: PhotoVisibility::class,
+        options: ['default' => PhotoVisibility::HideSelected->value],
+    )]
+    private PhotoVisibility $photoVisibility = PhotoVisibility::HideSelected;
 
     /**
      * Whether this member's year of birth (and thus age) is hidden from other members. Reciprocal: a member who hides
@@ -114,6 +126,16 @@ class UserSettings
         $this->photoTaggingOptOut = $photoTaggingOptOut;
     }
 
+    public function getPhotoVisibility(): PhotoVisibility
+    {
+        return $this->photoVisibility;
+    }
+
+    public function setPhotoVisibility(PhotoVisibility $photoVisibility): void
+    {
+        $this->photoVisibility = $photoVisibility;
+    }
+
     public function getHideYearOfBirth(): bool
     {
         return $this->hideYearOfBirth;
@@ -142,6 +164,7 @@ class UserSettings
         return [
             'disableCosmetics' => $this->disableCosmetics,
             'photoTaggingOptOut' => $this->photoTaggingOptOut,
+            'photoVisibility' => $this->photoVisibility->value,
             'hideYearOfBirth' => $this->hideYearOfBirth,
             'hideBirthdayOnFrontpage' => $this->hideBirthdayOnFrontpage,
         ];

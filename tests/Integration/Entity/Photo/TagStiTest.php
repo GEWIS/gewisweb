@@ -30,7 +30,7 @@ final class TagStiTest extends DatabaseTestCase
     {
         $photo = $this->dinnerPhoto();
 
-        $tags = $this->tagRepository()->findByPhoto((int) $photo->getId());
+        $tags = $this->tagRepository()->findBy(['photo' => $photo->getId()]);
         $members = array_filter(
             $tags,
             static fn (Tag $tag): bool => $tag instanceof MemberTag,

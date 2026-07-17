@@ -11,6 +11,7 @@ interface ManifestEntry {
     xlargeUrl: string;
     downloadUrl: string;
     albumUrl: string | null;
+    hidden: boolean;
 }
 
 interface SlideData {
@@ -47,6 +48,7 @@ interface Slot {
 export default class extends Controller<HTMLElement> {
     static values = {
         manifestUrl: String,
+        selectable: Boolean,
         detailsUrl: String,
         tagUrl: String,
         tagRemoveUrl: String,
@@ -59,9 +61,10 @@ export default class extends Controller<HTMLElement> {
         labels: Object,
     };
 
-    static targets = ['grid', 'empty'];
+    static targets = ['grid', 'empty', 'selectToggle', 'bulkBar', 'count', 'selectionForm'];
 
     declare readonly manifestUrlValue: string;
+    declare readonly selectableValue: boolean;
     declare readonly detailsUrlValue: string;
     declare readonly tagUrlValue: string;
     declare readonly tagRemoveUrlValue: string;
@@ -74,6 +77,14 @@ export default class extends Controller<HTMLElement> {
     declare readonly labelsValue: Record<string, string>;
     declare readonly gridTarget: HTMLElement;
     declare readonly emptyTarget: HTMLElement;
+    declare readonly hasSelectToggleTarget: boolean;
+    declare readonly selectToggleTarget: HTMLElement;
+    declare readonly hasBulkBarTarget: boolean;
+    declare readonly bulkBarTarget: HTMLElement;
+    declare readonly hasCountTarget: boolean;
+    declare readonly countTarget: HTMLElement;
+    declare readonly hasSelectionFormTarget: boolean;
+    declare readonly selectionFormTarget: HTMLElement;
 
     // Matches the 0.5rem gap in the stylesheet.
     private readonly gap = 8;
@@ -86,6 +97,10 @@ export default class extends Controller<HTMLElement> {
     // Whether opening the viewer pushed a history entry (an in-page open). A deep link arriving with #pid already in
     // the URL pushes nothing, so closing must strip the hash rather than navigate back off the album page.
     private pushedHistory = false;
+    // Selection mode (only when `selectable`): a click selects rather than opens, and the ids are kept in the form the
+    // page's bulk actions submit.
+    private selecting = false;
+    private readonly selected = new Set<number>();
 
     private readonly onScroll = (): void => this.scheduleRender();
     private readonly onResize = (): void => this.relayout();
@@ -174,9 +189,31 @@ export default class extends Controller<HTMLElement> {
             return;
         }
 
+        // FontAwesome sprite icons for PhotoSwipe's built-in buttons, overridden through its own SVG options (no custom
+        // UI elements). Both arrows use the left chevron because PhotoSwipe mirrors the next arrow horizontally. The
+        // zoom icon carries a plus and a minus <use>; the stylesheet shows the right one for the current zoom state.
+        // The <use> inset (6px padding, 20/32 glyph) matches spriteIcon(), so the close and zoom icons come out the same
+        // size as the other toolbar buttons.
+        const sprite = this.iconSpriteUrlValue;
+        const leftArrowSVG = `<svg aria-hidden="true" class="pswp__icn" viewBox="0 0 50 30" width="50" height="30"><use href="${sprite}#chevron-left"></use></svg>`;
+        const closeSVG = `<svg aria-hidden="true" class="pswp__icn" viewBox="0 0 32 32" width="32" height="32"><use href="${sprite}#xmark" x="6" y="6" width="20" height="20"></use></svg>`;
+        const zoomSVG = `<svg aria-hidden="true" class="pswp__icn" viewBox="0 0 32 32" width="32" height="32"><use class="pswp__icn-zoom-plus" href="${sprite}#magnifying-glass-plus" x="6" y="6" width="20" height="20"></use><use class="pswp__icn-zoom-minus" href="${sprite}#magnifying-glass-minus" x="6" y="6" width="20" height="20"></use></svg>`;
+
         this.lightbox = new PhotoSwipeLightbox({
             dataSource: this.slides,
-            maxZoomLevel: 6,
+            // secondaryZoomLevel is the gentle double-tap / zoom-button target; pinch and the mouse wheel keep zooming
+            // past it, up to maxZoomLevel, for close inspection.
+            secondaryZoomLevel: 1.5,
+            maxZoomLevel: 10,
+            wheelToZoom: true,
+            arrowPrevSVG: leftArrowSVG,
+            arrowNextSVG: leftArrowSVG,
+            closeSVG,
+            zoomSVG,
+            arrowPrevTitle: this.labelsValue.previous ?? '',
+            arrowNextTitle: this.labelsValue.next ?? '',
+            closeTitle: this.labelsValue.close ?? '',
+            zoomTitle: this.labelsValue.zoom ?? '',
             pswpModule: () => import('photoswipe'),
         });
         this.registerToolbarButtons();
@@ -301,9 +338,41 @@ export default class extends Controller<HTMLElement> {
         image.src = slot.entry.thumbUrl;
 
         link.append(image);
+        if (this.selectableValue) {
+            this.decorateSelectable(link, slot.entry);
+        }
+
         slot.element = link;
         this.position(slot);
         this.gridTarget.append(link);
+    }
+
+    private decorateSelectable(
+        link: HTMLElement,
+        entry: ManifestEntry,
+    ): void {
+        if (entry.hidden) {
+            link.classList.add('is-hidden');
+            link.append(this.overlay('photo-masonry__hidden', 'eye-slash'));
+        }
+
+        link.append(this.overlay('photo-masonry__check', 'circle-check'));
+        if (this.selected.has(entry.id)) {
+            link.classList.add('is-selected');
+        }
+    }
+
+    private overlay(
+        className: string,
+        icon: string,
+    ): HTMLElement {
+        const span = document.createElement('span');
+        span.className = className;
+        const marker = document.createElement('i');
+        marker.className = `fa-solid fa-${icon}`;
+        span.append(marker);
+
+        return span;
     }
 
     private unmount(slot: Slot): void {
@@ -331,13 +400,89 @@ export default class extends Controller<HTMLElement> {
             return;
         }
 
-        const index = this.indexByPid.get(Number(tile.dataset.id));
-        if (undefined === index) {
+        event.preventDefault();
+        const pid = Number(tile.dataset.id);
+
+        if (this.selectableValue && this.selecting) {
+            this.toggleSelection(pid, tile);
+
             return;
         }
 
-        event.preventDefault();
-        this.openAt(index);
+        const index = this.indexByPid.get(pid);
+        if (undefined !== index) {
+            this.openAt(index);
+        }
+    }
+
+    toggleSelect(): void {
+        this.selecting = !this.selecting;
+        this.gridTarget.classList.toggle('is-selecting', this.selecting);
+
+        // `d-none` (display:none !important), not the `hidden` attribute, because the bar carries `d-flex` which would
+        // otherwise win and keep the actions visible.
+        if (this.hasBulkBarTarget) {
+            this.bulkBarTarget.classList.toggle('d-none', !this.selecting);
+        }
+
+        if (this.hasSelectToggleTarget) {
+            this.selectToggleTarget.classList.toggle('active', this.selecting);
+            this.selectToggleTarget.setAttribute('aria-pressed', String(this.selecting));
+        }
+
+        if (!this.selecting) {
+            this.selected.clear();
+            for (const slot of this.slots) {
+                slot.element?.classList.remove('is-selected');
+            }
+
+            this.syncSelectionForm();
+        }
+
+        this.updateCount();
+    }
+
+    private toggleSelection(
+        pid: number,
+        tile: HTMLElement,
+    ): void {
+        if (this.selected.has(pid)) {
+            this.selected.delete(pid);
+            tile.classList.remove('is-selected');
+        } else {
+            this.selected.add(pid);
+            tile.classList.add('is-selected');
+        }
+
+        this.syncSelectionForm();
+        this.updateCount();
+    }
+
+    // Keep the page's bulk-action form carrying exactly the selected ids, so its native submit posts them.
+    private syncSelectionForm(): void {
+        if (!this.hasSelectionFormTarget) {
+            return;
+        }
+
+        for (const input of this.selectionFormTarget.querySelectorAll('input[data-selected-photo]')) {
+            input.remove();
+        }
+
+        for (const pid of this.selected) {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'photos[]';
+            input.value = String(pid);
+            input.dataset.selectedPhoto = '';
+            this.selectionFormTarget.append(input);
+        }
+    }
+
+    private updateCount(): void {
+        if (this.hasCountTarget) {
+            const label = this.countTarget.dataset.label ?? '';
+            this.countTarget.textContent = this.selected.size > 0 ? `${this.selected.size} ${label}` : '';
+        }
     }
 
     private openAt(index: number): void {
@@ -427,7 +572,7 @@ export default class extends Controller<HTMLElement> {
 
             this.lightbox.pswp.ui.registerElement({
                 name: 'download-button',
-                order: 11,
+                order: 13,
                 isButton: true,
                 tagName: 'a',
                 html: spriteIcon(this.iconSpriteUrlValue, 'download'),
@@ -450,6 +595,8 @@ export default class extends Controller<HTMLElement> {
                 html: spriteIcon(this.iconSpriteUrlValue, 'images'),
                 onInit: (element: HTMLAnchorElement): void => {
                     element.title = this.labelsValue.goToAlbum ?? '';
+                    // Hidden until a slide with an albumUrl is shown, so it does not flash on open.
+                    element.hidden = true;
                     this.lightbox.pswp.on('change', (): void => {
                         const albumUrl = this.slides[this.lightbox.pswp.currIndex]?.albumUrl ?? null;
                         element.hidden = null === albumUrl;
@@ -459,6 +606,7 @@ export default class extends Controller<HTMLElement> {
                     });
                 },
             });
+
         });
     }
 

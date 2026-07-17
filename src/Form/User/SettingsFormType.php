@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Form\User;
 
+use App\Entity\User\Enums\PhotoVisibility;
 use App\Entity\User\UserSettings;
 use Override;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -31,6 +33,15 @@ class SettingsFormType extends AbstractType
                     'label' => t('Do not allow others to tag me in photos'),
                     'help' => t('Others can no longer tag you. Existing tags stay until you remove them below.'),
                     'required' => false,
+                ],
+            )
+            ->add(
+                'photoVisibility',
+                EnumType::class,
+                [
+                    'class' => PhotoVisibility::class,
+                    'label' => t('Photos I am tagged in on my photo page'),
+                    'help' => t('Others only; hidden photos still show in their own album.'),
                 ],
             )
             ->add(

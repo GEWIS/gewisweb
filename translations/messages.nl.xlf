@@ -25,6 +25,10 @@
         <source>%count% week|%count% weeks</source>
         <target>%count% week|%count% weken</target>
       </trans-unit>
+      <trans-unit id="E9ZBpIE" resname="%name% has hidden their tagged photos.">
+        <source>%name% has hidden their tagged photos.</source>
+        <target state="translated">%name% heeft de getagde foto's verborgen.</target>
+      </trans-unit>
       <trans-unit id="8AYYl7V" resname="%name% has not been tagged in any photos yet.">
         <source>%name% has not been tagged in any photos yet.</source>
         <target state="translated">%name% is nog in geen enkele foto getagd.</target>
@@ -221,6 +225,10 @@
         <source>Agenda</source>
         <target state="translated">Agenda</target>
       </trans-unit>
+      <trans-unit id="TkqTjnS" resname="Album cover">
+        <source>Album cover</source>
+        <target state="translated">Omslagafbeelding</target>
+      </trans-unit>
       <trans-unit id="fYnyoGU" resname="Alcohol Policy">
         <source>Alcohol Policy</source>
         <target>Alcoholbeleid</target>
@@ -396,6 +404,10 @@
       <trans-unit id="oqXX_GF" resname="Bodies">
         <source>Bodies</source>
         <target state="translated">Organen</target>
+      </trans-unit>
+      <trans-unit id="cGXWNw." resname="Body">
+        <source>Body</source>
+        <target>Orgaan</target>
       </trans-unit>
       <trans-unit id="pg8.RVR" resname="Brand Manager">
         <source>Brand Manager</source>
@@ -609,6 +621,10 @@
         <source>Continue</source>
         <target state="translated">Doorgaan</target>
       </trans-unit>
+      <trans-unit id="DlBnS6n" resname="Coordinates">
+        <source>Coordinates</source>
+        <target>Coördinaten</target>
+      </trans-unit>
       <trans-unit id="bCyP.6D" resname="Cosmetics">
         <source>Cosmetics</source>
         <target>Opsmuk</target>
@@ -616,6 +632,10 @@
       <trans-unit id="LTGw.px" resname="Costs">
         <source>Costs</source>
         <target>Kosten</target>
+      </trans-unit>
+      <trans-unit id="w6miiT2" resname="Could not load tags">
+        <source>Could not load tags</source>
+        <target>Kon tags niet laden</target>
       </trans-unit>
       <trans-unit id="lmE8cjL" resname="Courses">
         <source>Courses</source>
@@ -640,10 +660,6 @@
       <trans-unit id="EMb_Fre" resname="Cultural">
         <source>Cultural</source>
         <target>Cultureel</target>
-      </trans-unit>
-      <trans-unit id="jYqICEs" resname="Current">
-        <source>Current</source>
-        <target state="translated">Huidige</target>
       </trans-unit>
       <trans-unit id="ukaFrcB" resname="Current password">
         <source>Current password</source>
@@ -872,6 +888,10 @@
       <trans-unit id="8THsPC2" resname="Enable Dutch and/or English and fill in the fields below. At least one language must be used.">
         <source>Enable Dutch and/or English and fill in the fields below. At least one language must be used.</source>
         <target state="translated">Schakel Nederlands en/of Engels in en vul de velden hieronder in. Er moet minstens één taal worden gebruikt.</target>
+      </trans-unit>
+      <trans-unit id="ghYo3w8" resname="Enable JavaScript to view these photos.">
+        <source>Enable JavaScript to view these photos.</source>
+        <target state="translated">Schakel JavaScript in om deze foto's te bekijken.</target>
       </trans-unit>
       <trans-unit id="PE3U1oD" resname="Enable MFA">
         <source>Enable MFA</source>
@@ -1157,9 +1177,17 @@
         <source>Hidden from anonymous visitors</source>
         <target state="translated">Verborgen voor anonieme bezoekers</target>
       </trans-unit>
+      <trans-unit id="_IgS7tP" resname="Hidden photos are greyed out and only you see them here. Choose what others see under Settings.">
+        <source>Hidden photos are greyed out and only you see them here. Choose what others see under Settings.</source>
+        <target>Verborgen foto's zijn grijs gemaakt en alleen jij ziet ze hier. Kies bij Instellingen wat anderen zien.</target>
+      </trans-unit>
       <trans-unit id="U9GQ_br" resname="Hide">
         <source>Hide</source>
         <target state="translated">Verbergen</target>
+      </trans-unit>
+      <trans-unit id="6ojmI9r" resname="Hide all photos I am tagged in">
+        <source>Hide all photos I am tagged in</source>
+        <target>Verberg alle foto's waarin ik ben getagd</target>
       </trans-unit>
       <trans-unit id=".CR.cKC" resname="Hide from anonymous visitors">
         <source>Hide from anonymous visitors</source>
@@ -1173,9 +1201,17 @@
         <source>Hide my year of birth and age from other members</source>
         <target>Mijn geboortejaar en leeftijd verbergen voor andere leden</target>
       </trans-unit>
+      <trans-unit id="QRLX5ZC" resname="Hide only the photos I select">
+        <source>Hide only the photos I select</source>
+        <target>Verberg alleen de foto's die ik selecteer</target>
+      </trans-unit>
       <trans-unit id="yN3l2eh" resname="Hide photo of the week">
         <source>Hide photo of the week</source>
         <target state="translated">Foto van de week verbergen</target>
+      </trans-unit>
+      <trans-unit id="ddzwXBN" resname="Hide selected">
+        <source>Hide selected</source>
+        <target>Geselecteerde verbergen</target>
       </trans-unit>
       <trans-unit id="ExFLJqx" resname="Home">
         <source>Home</source>
@@ -1392,6 +1428,10 @@
       <trans-unit id="sRyfMnf" resname="Loading an infimum...">
         <source>Loading an infimum...</source>
         <target state="translated">Een infimum aan het laden...</target>
+      </trans-unit>
+      <trans-unit id="l7vSiQN" resname="Loading tags…">
+        <source>Loading tags…</source>
+        <target>Tags laden…</target>
       </trans-unit>
       <trans-unit id="nODxdW." resname="Location">
         <source>Location</source>
@@ -1829,6 +1869,10 @@
         <source>Others can no longer tag you. Existing tags stay until you remove them below.</source>
         <target>Anderen kunnen je niet meer taggen. Bestaande tags blijven staan totdat je ze hieronder verwijdert.</target>
       </trans-unit>
+      <trans-unit id=".5bLoYJ" resname="Others only; hidden photos still show in their own album.">
+        <source>Others only; hidden photos still show in their own album.</source>
+        <target>Alleen voor anderen; verborgen foto's blijven zichtbaar in hun eigen album.</target>
+      </trans-unit>
       <trans-unit id="HmgPmMV" resname="Overview">
         <source>Overview</source>
         <target state="translated">Overzicht</target>
@@ -1885,9 +1929,21 @@
         <source>Photos</source>
         <target>Foto's</target>
       </trans-unit>
+      <trans-unit id="1ex5LkB" resname="Photos I am tagged in on my photo page">
+        <source>Photos I am tagged in on my photo page</source>
+        <target>Foto's waarin ik ben getagd op mijn fotopagina</target>
+      </trans-unit>
+      <trans-unit id="lFmIIy3" resname="Photos of %name%">
+        <source>Photos of %name%</source>
+        <target state="translated">Foto's van %name%</target>
+      </trans-unit>
       <trans-unit id="dLpxDj_" resname="Photos of the Week">
         <source>Photos of the Week</source>
         <target state="translated">Foto's van de week</target>
+      </trans-unit>
+      <trans-unit id="dpobW1." resname="Photos of the Week in">
+        <source>Photos of the Week in</source>
+        <target state="translated">Foto's van de Week in</target>
       </trans-unit>
       <trans-unit id="C_d4kR9" resname="Pick a long, unique password - at least 16 characters and not found in any known data breach.">
         <source>Pick a long, unique password - at least 16 characters and not found in any known data breach.</source>
@@ -1896,6 +1952,10 @@
       <trans-unit id="u7c4pso" resname="Place on photo">
         <source>Place on photo</source>
         <target state="translated">Plaats op foto</target>
+      </trans-unit>
+      <trans-unit id="gX0CV88" resname="Placed on the photo">
+        <source>Placed on the photo</source>
+        <target>Op de foto geplaatst</target>
       </trans-unit>
       <trans-unit id="wo9xY6x" resname="Places are allocated by a draw on %date%.">
         <source>Places are allocated by a draw on %date%.</source>
@@ -2189,6 +2249,10 @@
         <source>Search</source>
         <target state="translated">Zoeken</target>
       </trans-unit>
+      <trans-unit id="y7lUoQr" resname="Search bodies">
+        <source>Search bodies</source>
+        <target>Zoek organen</target>
+      </trans-unit>
       <trans-unit id="ZNQdihj" resname="Search by activity name">
         <source>Search by activity name</source>
         <target>Zoek op naam van activiteit</target>
@@ -2217,6 +2281,10 @@
         <source>Search labels...</source>
         <target state="translated">Zoek labels...</target>
       </trans-unit>
+      <trans-unit id="Zay209t" resname="Search members">
+        <source>Search members</source>
+        <target>Zoek leden</target>
+      </trans-unit>
       <trans-unit id="ABM3Mr2" resname="Secretary">
         <source>Secretary</source>
         <target>Secretaris</target>
@@ -2228,6 +2296,10 @@
       <trans-unit id="h2pX2BJ" resname="Segmentation fault while accessing this page">
         <source>Segmentation fault while accessing this page</source>
         <target state="translated">Segmentatiefout bij het openen van deze pagina</target>
+      </trans-unit>
+      <trans-unit id="l_d5jYJ" resname="Select">
+        <source>Select</source>
+        <target>Selecteren</target>
       </trans-unit>
       <trans-unit id="Hu8.1pz" resname="Select all">
         <source>Select all</source>
@@ -2465,13 +2537,9 @@
         <source>TU/e Guest - Anyone who can access the website from within the TU/e</source>
         <target state="translated">TU/e gast - Iedereen die toegang heeft tot de website vanuit de TU/e</target>
       </trans-unit>
-      <trans-unit id="nnbBydf" resname="Tag a member">
-        <source>Tag a member</source>
-        <target>Een lid taggen</target>
-      </trans-unit>
-      <trans-unit id="otUYLRj" resname="Tag an organ">
-        <source>Tag an organ</source>
-        <target>Een orgaan taggen</target>
+      <trans-unit id="DxuZnkH" resname="Tag">
+        <source>Tag</source>
+        <target>Taggen</target>
       </trans-unit>
       <trans-unit id="6xiB9Va" resname="Take attendance">
         <source>Take attendance</source>
@@ -2561,6 +2629,10 @@
         <source>The changes in this draft will be lost and the activity will return to its live version.</source>
         <target state="translated">De wijzigingen in dit concept gaan verloren en de activiteit keert terug naar de live versie.</target>
       </trans-unit>
+      <trans-unit id="HLXr_Lk" resname="The cover is a mosaic of the album's photos. Regenerate it after adding or removing photos; it updates here automatically once ready.">
+        <source>The cover is a mosaic of the album's photos. Regenerate it after adding or removing photos; it updates here automatically once ready.</source>
+        <target state="translated">De omslag is een mozaïek van de foto's in het album. Genereer deze opnieuw na het toevoegen of verwijderen van foto's; zodra hij klaar is, wordt hij hier automatisch bijgewerkt.</target>
+      </trans-unit>
       <trans-unit id="WTE8eK4" resname="The draw can be run once sign-up has closed.">
         <source>The draw can be run once sign-up has closed.</source>
         <target>De loting kan worden uitgevoerd zodra de inschrijving is gesloten.</target>
@@ -2601,6 +2673,10 @@
         <source>The photos have been moved.</source>
         <target state="translated">De foto's zijn verplaatst.</target>
       </trans-unit>
+      <trans-unit id="0AhMJmQ" resname="The selected photos are already in that album.">
+        <source>The selected photos are already in that album.</source>
+        <target state="translated">De geselecteerde foto's staan al in dat album.</target>
+      </trans-unit>
       <trans-unit id="TUHVFZ1" resname="The selected recipients will receive this email immediately. This cannot be undone.">
         <source>The selected recipients will receive this email immediately. This cannot be undone.</source>
         <target>De geselecteerde ontvangers ontvangen deze e-mail direct. Dit kan niet ongedaan worden gemaakt.</target>
@@ -2632,6 +2708,10 @@
       <trans-unit id="Rosng1Y" resname="There are no albums yet.">
         <source>There are no albums yet.</source>
         <target state="translated">Er zijn nog geen albums.</target>
+      </trans-unit>
+      <trans-unit id="m3ZG2F1" resname="There are no photos to build a cover from.">
+        <source>There are no photos to build a cover from.</source>
+        <target state="translated">Er zijn geen foto's om een omslag van te maken.</target>
       </trans-unit>
       <trans-unit id="MdizzQd" resname="There are no recipients in the selected group.">
         <source>There are no recipients in the selected group.</source>
@@ -2865,6 +2945,10 @@
         <source>Undated</source>
         <target>Zonder datum</target>
       </trans-unit>
+      <trans-unit id="b868abA" resname="Unhide selected">
+        <source>Unhide selected</source>
+        <target>Geselecteerde tonen</target>
+      </trans-unit>
       <trans-unit id="KEhkI6s" resname="Unknown">
         <source>Unknown</source>
         <target>Onbekend</target>
@@ -3012,6 +3096,10 @@
       <trans-unit id="jkUs8v1" resname="We found a pointer to &lt;code&gt;NULL&lt;/code&gt; instead of this page">
         <source>We found a pointer to &lt;code&gt;NULL&lt;/code&gt; instead of this page</source>
         <target state="translated"><![CDATA[We hebben een verwijzing naar <code>NULL</code> gevonden in plaats van deze pagina]]></target>
+      </trans-unit>
+      <trans-unit id="VRNwM24" resname="Week">
+        <source>Week</source>
+        <target>Week</target>
       </trans-unit>
       <trans-unit id="GjKR5wC" resname="Week of">
         <source>Week of</source>
@@ -3181,6 +3269,10 @@
         <source>Zettle</source>
         <target state="translated">Zettle</target>
       </trans-unit>
+      <trans-unit id="cLBL1hg" resname="Zoom">
+        <source>Zoom</source>
+        <target state="translated">Zoomen</target>
+      </trans-unit>
       <trans-unit id="6ylHUuS" resname="[CANCELLED]">
         <source>[CANCELLED]</source>
         <target state="translated">[GEANNULEERD]</target>
@@ -3252,6 +3344,10 @@
       <trans-unit id="iP7D8YD" resname="rev. #%n%">
         <source>rev. #%n%</source>
         <target state="translated">rev. #%n%</target>
+      </trans-unit>
+      <trans-unit id="NdlEWZ3" resname="selected">
+        <source>selected</source>
+        <target>geselecteerd</target>
       </trans-unit>
       <trans-unit id="a8oRoVc" resname="sub-album">
         <source>sub-album</source>

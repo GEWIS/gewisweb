@@ -1,6 +1,6 @@
 {# Renders the activity's sign-up lists (and each list's custom fields) as collapsible panels, reusing the same
    collapse strategy as the read-only accordion on the activity view page (templates/partials/activity/signup-list.html.twig):
-   a `.panel` with a `.panel-heading` collapse toggle button, the rotating `.signup-list-chevron`, and a `.collapse.show`
+   a `.panel` with a `.panel-heading` collapse toggle button, the rotating `.panel-collapse-chevron`, and a `.collapse.show`
    body. Each panel is open by default. Add/remove is driven by the generic `form-collection` Stimulus controller;
    the prototype already contains the whole panel, so adding an entry clones it with its placeholder (`__list__` /
    `__field__`) replaced by a fresh index, keeping the collapse target ids unique. The nested option collection keeps the
@@ -10,11 +10,11 @@
 {% macro signup_list_panel(child, collapse_id, remove_label) %}
     <div class="panel mb-3" data-form-collection-target="entry">
         <button type="button"
-                class="panel-heading signup-list-heading d-flex justify-content-between align-items-center gap-2 w-100 border-0 bg-transparent text-start"
+                class="panel-heading panel-collapse-toggle d-flex justify-content-between align-items-center gap-2 w-100 border-0 bg-transparent text-start"
                 data-bs-toggle="collapse" data-bs-target="#{{ collapse_id }}"
                 aria-expanded="true" aria-controls="{{ collapse_id }}">
             <span class="h6 mb-0">{{ 'Sign-up list'|trans }} <span class="signup-list-number"></span></span>
-            <i class="fas fa-chevron-down signup-list-chevron"></i>
+            <i class="fas fa-chevron-down panel-collapse-chevron"></i>
         </button>
         <div class="collapse show" id="{{ collapse_id }}">
             <div class="panel-body" data-controller="signup-list">
@@ -115,11 +115,11 @@
                 </span>
             {% endif %}
             <button type="button"
-                    class="signup-list-heading d-flex justify-content-between align-items-center gap-2 w-100 border-0 bg-transparent text-start p-0"
+                    class="panel-collapse-toggle d-flex justify-content-between align-items-center gap-2 w-100 border-0 bg-transparent text-start p-0"
                     data-bs-toggle="collapse" data-bs-target="#{{ collapse_id }}"
                     aria-expanded="true" aria-controls="{{ collapse_id }}">
                 <span class="h6 mb-0">{{ 'Question'|trans }} <span class="signup-field-number"></span></span>
-                <i class="fas fa-chevron-down signup-list-chevron"></i>
+                <i class="fas fa-chevron-down panel-collapse-chevron"></i>
             </button>
         </div>
         <div class="collapse show" id="{{ collapse_id }}">

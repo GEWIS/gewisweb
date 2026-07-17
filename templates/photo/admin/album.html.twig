@@ -1,28 +1,33 @@
 {% extends 'layout-admin.html.twig' %}
 
+{% import 'partials/photo/gallery.html.twig' as gallery %}
+
 {% block page_title %}{{ album.name|page_title }}{{ 'Photos'|trans|page_title }}{{ parent() }}{% endblock %}
 
 {% block admin_breadcrumbs %}
-    <li class="breadcrumb-item active" aria-current="page">
+    <li class="breadcrumb-item">
         <a href="{{ path('admin/photos/index') }}">
             {{ 'Photos'|trans }}
         </a>
     </li>
+    {{ gallery.albumTrail(album.parent, true) }}
     <li class="breadcrumb-item active" aria-current="page">
         {{ album.name }}
     </li>
 {% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('vendor/photoswipe/dist/photoswipe.min.css') }}">
+{% endblock %}
+
 {% block contents %}
-    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-2">
         <div>
-            <h1 class="h3 mb-0">
+            <h3 class="mb-0">
                 {{ album.name }}
-                {% if not album.published %}
-                    {# A draft is only visible here in the admin, so mark it clearly while managing it. #}
-                    <span class="badge badge-secondary align-middle ms-2">{{ 'Draft'|trans }}</span>
-                {% endif %}
-            </h1>
+            </h3>
+            {% include 'partials/photo/album-dates.html.twig' with { 'album': album } only %}
             {% if album.parent %}
                 <span class="text-muted small">
                     <i class="fa-solid fa-folder-tree me-1"></i>
@@ -32,12 +37,6 @@
             {% endif %}
         </div>
         <div class="d-flex gap-2">
-            <form method="post" action="{{ path('admin/photos/album_cover', { album: album.id }) }}">
-                <input type="hidden" name="_csrf_token" value="{{ csrf_token('photo_album_cover-' ~ album.id) }}">
-                <button type="submit" class="btn btn-outline-secondary">
-                    <i class="fa-solid fa-arrows-rotate"></i> {{ 'Regenerate cover'|trans }}
-                </button>
-            </form>
             <a href="{{ path('admin/photos/albums_edit', { album: album.id }) }}" class="btn btn-outline-secondary">
                 <i class="fa-solid fa-pencil"></i> {{ 'Edit album'|trans }}
             </a>
@@ -56,7 +55,7 @@
 
     {# Sub-albums, so the tree can be navigated from the manage view as well. #}
     {% if album.children is not empty %}
-        <h2 class="h5 text-muted mb-3">{{ 'Sub-albums'|trans }}</h2>
+        <h5 class="text-muted mb-3">{{ 'Sub-albums'|trans }}</h5>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xxl-6 g-3 mb-4">
             {% for child in album.children %}
                 {% include 'partials/photo/admin/album-card.html.twig' with { 'album': child } only %}
@@ -64,101 +63,150 @@
         </div>
     {% endif %}
 
-    <div class="panel"
-         data-controller="photo-upload"
-         data-photo-upload-upload-url-value="{{ path('admin/photos/album_upload', { album: album.id }) }}">
-        <div class="panel-heading">
-            <h3>{{ 'Upload photos'|trans }}</h3>
-        </div>
-        <div class="panel-body">
-            <div class="photo-dropzone text-center p-5 border border-2 rounded"
-                 role="button" tabindex="0"
-                 data-photo-upload-target="dropzone">
-                <i class="fa-solid fa-cloud-arrow-up fa-2x text-muted mb-2"></i>
-                <p class="mb-0">{{ 'Drag photos here or click to select'|trans }}</p>
-                <p class="text-muted small mb-0">{{ 'JPEG, PNG, WebP, AVIF or HEIC, up to 32 MB each.'|trans }}</p>
+    {% set coverTopic = 'photo/album/' ~ album.id ~ '/cover' %}
+    <div class="row g-3 mb-4 align-items-start">
+        <div class="col-12 col-lg-8">
+            <div class="panel h-100 my-0"
+                 data-controller="photo-upload"
+                 data-photo-upload-upload-url-value="{{ path('admin/photos/album_upload', { album: album.id }) }}">
+                <button type="button"
+                        class="panel-heading panel-collapse-toggle collapsed d-flex justify-content-between align-items-center gap-2 w-100 border-0 bg-transparent text-start"
+                        data-bs-toggle="collapse" data-bs-target="#upload-photos"
+                        aria-expanded="false" aria-controls="upload-photos">
+                    <h3 class="mb-0">{{ 'Upload photos'|trans }}</h3>
+                    <i class="fa-solid fa-chevron-down panel-collapse-chevron"></i>
+                </button>
+                {# pt-0: the .collapse wrapper breaks the `.panel-heading + .panel-body` zero-top-padding rule. #}
+                <div class="collapse" id="upload-photos">
+                    <div class="panel-body pt-0">
+                        <div class="photo-dropzone text-center p-5 border border-2 rounded"
+                             role="button" tabindex="0"
+                             data-photo-upload-target="dropzone">
+                            <i class="fa-solid fa-cloud-arrow-up fa-2x text-muted mb-2"></i>
+                            <p class="mb-0">{{ 'Drag photos here or click to select'|trans }}</p>
+                            <p class="text-muted small mb-0">{{ 'JPEG, PNG, WebP, AVIF or HEIC, up to 32 MB each.'|trans }}</p>
+                        </div>
+                        <input type="file" hidden multiple
+                               accept="image/jpeg,image/png,image/webp,image/avif,image/heic,image/heif"
+                               data-photo-upload-target="input">
+                        <ul class="list-unstyled mt-3 mb-0" data-photo-upload-target="list"></ul>
+                    </div>
+                </div>
             </div>
-            <input type="file" hidden multiple
-                   accept="image/jpeg,image/png,image/webp,image/avif,image/heic,image/heif"
-                   data-photo-upload-target="input">
-            <ul class="list-unstyled mt-3 mb-0" data-photo-upload-target="list"></ul>
+        </div>
+        <div class="col-12 col-lg-4">
+            <div class="panel h-100 my-0"
+                 data-controller="photo-cover"
+                 data-photo-cover-hub-url-value="{{ mercure(coverTopic, { subscribe: [coverTopic] }) }}">
+                <button type="button"
+                        class="panel-heading panel-collapse-toggle collapsed d-flex justify-content-between align-items-center gap-2 w-100 border-0 bg-transparent text-start"
+                        data-bs-toggle="collapse" data-bs-target="#album-cover"
+                        aria-expanded="false" aria-controls="album-cover">
+                    <h3 class="mb-0">{{ 'Album cover'|trans }}</h3>
+                    <i class="fa-solid fa-chevron-down panel-collapse-chevron"></i>
+                </button>
+                <div class="collapse" id="album-cover">
+                    <div class="panel-body pt-0">
+                        <div class="ratio ratio-16x9 bg-body-secondary rounded overflow-hidden mb-3">
+                            <img alt="" style="object-fit: cover;"
+                                 class="w-100 h-100{{ album.coverPath ? '' : ' d-none' }}"
+                                 data-photo-cover-target="image"
+                                 {% if album.coverPath %}src="{{ image_url(album.coverPath, 'cover') }}"{% endif %}>
+                            {% if not album.coverPath %}
+                                <div class="d-flex align-items-center justify-content-center text-muted h-100"
+                                     data-photo-cover-target="placeholder">
+                                    <i class="fa-solid fa-images fa-2x"></i>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <p class="text-muted small">
+                            {{ 'The cover is a mosaic of the album\'s photos. Regenerate it after adding or removing photos; it updates here automatically once ready.'|trans }}
+                        </p>
+                        <form method="post" class="mb-0"
+                              action="{{ path('admin/photos/album_cover', { album: album.id }) }}"
+                              data-action="photo-cover#regenerate">
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('photo_album_cover-' ~ album.id) }}">
+                            <button type="submit" class="btn btn-outline-secondary" data-photo-cover-target="button">
+                                <i class="fa-solid fa-arrows-rotate" data-photo-cover-target="icon"></i>
+                                {{ 'Regenerate cover'|trans }}
+                            </button>
+                        </form>
+                        <p class="text-danger small mb-0 mt-2 d-none" data-photo-cover-target="error">
+                            <i class="fa-solid fa-triangle-exclamation me-1"></i>
+                            {{ 'There are no photos to build a cover from.'|trans }}
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="panel">
+    <div class="panel" {{ gallery.attributes(path('admin/photos/album_manifest', { album: album.id }), true) }}>
         <div class="panel-heading d-flex flex-wrap justify-content-between align-items-center gap-2">
-            <h3 class="mb-0">{{ 'Photos'|trans }} <span class="text-muted">({{ photos|length }})</span></h3>
-            {% if photos is not empty %}
-                <div class="d-flex flex-wrap align-items-center gap-2">
-                    <select name="destination" form="photo-admin-form" class="form-select form-select-sm w-auto">
-                        <option value="">{{ 'Move selected to…'|trans }}</option>
-                        {% for target in albums|filter(target => target.id != album.id) %}
-                            <option value="{{ target.id }}">{{ target.name }}</option>
-                        {% endfor %}
-                    </select>
-                    <button type="submit" form="photo-admin-form" class="btn btn-sm btn-outline-secondary"
-                            formaction="{{ path('admin/photos/photos_move', { album: album.id }) }}">
-                        <i class="fa-solid fa-arrow-right-arrow-left"></i> {{ 'Move'|trans }}
-                    </button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary text-danger"
-                            data-bs-toggle="modal" data-bs-target="#delete-photos">
-                        <i class="fa-solid fa-trash"></i> {{ 'Delete selected'|trans }}
-                    </button>
+            <h3 class="mb-0">{{ 'Photos'|trans }} <span class="text-muted">({{ album.getPhotoCount(false) }})</span></h3>
+            <div class="d-flex flex-wrap gap-2 align-items-center">
+                <div class="d-flex flex-wrap gap-2 align-items-center d-none" data-gallery-target="bulkBar">
+                    <span class="small text-muted" data-gallery-target="count"
+                          data-label="{{ 'selected'|trans }}"></span>
+                    <form method="post" id="photo-admin-form" data-gallery-target="selectionForm"
+                          class="d-flex flex-wrap gap-2 align-items-center mb-0">
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('photo_admin_bulk') }}">
+                        <div class="album-search position-relative" data-controller="album-search"
+                             data-album-search-url-value="{{ path('admin/photos/albums_search') }}"
+                             data-album-search-exclude-value="{{ album.id }}">
+                            <input type="text" class="form-control form-control-sm" autocomplete="off"
+                                   placeholder="{{ 'Move selected to…'|trans }}"
+                                   data-album-search-target="input"
+                                   data-action="input->album-search#search keydown->album-search#keydown blur->album-search#close">
+                            <input type="hidden" name="destination" data-album-search-target="destination">
+                            <div class="dropdown-menu w-100" data-album-search-target="menu"></div>
+                        </div>
+                        <button type="submit" class="btn btn-sm btn-outline-secondary"
+                                formaction="{{ path('admin/photos/photos_move', { album: album.id }) }}">
+                            <i class="fa-solid fa-arrow-right-arrow-left"></i> {{ 'Move'|trans }}
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary text-danger"
+                                data-bs-toggle="modal" data-bs-target="#delete-photos">
+                            <i class="fa-solid fa-trash"></i> {{ 'Delete selected'|trans }}
+                        </button>
+                    </form>
                 </div>
-            {% endif %}
+                <button type="button" class="btn btn-sm btn-outline-secondary" aria-pressed="false"
+                        data-gallery-target="selectToggle" data-action="gallery#toggleSelect">
+                    <i class="fa-solid fa-check-double"></i> {{ 'Select'|trans }}
+                </button>
+            </div>
         </div>
         <div class="panel-body">
-            {% if photos is empty %}
-                <p class="text-muted text-center py-4 mb-0">
-                    {{ 'This album does not contain any photos yet. Upload some above.'|trans }}
-                </p>
-            {% else %}
-                <form method="post" id="photo-admin-form">
-                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('photo_admin_bulk') }}">
-                    <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 row-cols-xxl-8 g-2">
-                        {% for photo in photos %}
-                            <div class="col">
-                                {# Custom selectable tile: the checkbox is visually hidden, selection shows as a tint +
-                                   check overlay instead of a control obscuring the photo. #}
-                                <label class="photo-select rounded overflow-hidden bg-body-secondary">
-                                    <input type="checkbox" name="photos[]" value="{{ photo.id }}"
-                                           class="photo-select__input">
-                                    <img class="photo-select__img" loading="lazy"
-                                         src="{{ image_url(photo.path, 'w320') }}" alt="">
-                                    <span class="photo-select__check"><i class="fa-solid fa-circle-check"></i></span>
-                                </label>
-                            </div>
-                        {% endfor %}
-                    </div>
-                </form>
+            {{ gallery.grid('This album does not contain any photos yet. Upload some above.'|trans) }}
+        </div>
+    </div>
 
-                {# The bulk-delete confirmation posts the selection form above via the button's form + formaction. #}
-                <div class="modal fade" id="delete-photos" tabindex="-1" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">{{ 'Delete photos'|trans }}</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="{{ 'Close'|trans }}"></button>
-                            </div>
-                            <div class="modal-body">
-                                <p class="mb-0">
-                                    {{ 'Are you sure you want to delete the selected photos? This cannot be undone.'|trans }}
-                                </p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-link" data-bs-dismiss="modal">
-                                    {{ 'Cancel'|trans }}
-                                </button>
-                                <button type="submit" form="photo-admin-form" class="btn btn-danger"
-                                        formaction="{{ path('admin/photos/photos_delete', { album: album.id }) }}">
-                                    {{ 'Delete photos'|trans }}
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+    {# Bulk-delete confirmation, kept at page level so the modal is not inside the hidden selection toolbar; it posts
+       the selection form through the button's form + formaction. #}
+    <div class="modal fade" id="delete-photos" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ 'Delete photos'|trans }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="{{ 'Close'|trans }}"></button>
                 </div>
-            {% endif %}
+                <div class="modal-body">
+                    <p class="mb-0">
+                        {{ 'Are you sure you want to delete the selected photos? This cannot be undone.'|trans }}
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-link" data-bs-dismiss="modal">
+                        {{ 'Cancel'|trans }}
+                    </button>
+                    <button type="submit" form="photo-admin-form" class="btn btn-danger"
+                            formaction="{{ path('admin/photos/photos_delete', { album: album.id }) }}">
+                        {{ 'Delete photos'|trans }}
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

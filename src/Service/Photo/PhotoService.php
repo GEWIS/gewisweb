@@ -12,6 +12,7 @@ use App\Service\Application\ImageUrlBuilder;
 use App\ViewModel\Photo\ManifestEntry;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
+use function intval;
 use function round;
 
 /**
@@ -61,22 +62,54 @@ final readonly class PhotoService
         foreach ($photos as $photo) {
             $entries[] = $this->manifestEntry(
                 $photo,
-                $this->urlGenerator->generate(
-                    'photo/album',
-                    [
-                        'type' => 'album',
-                        'album' => (int) $photo->getAlbum()->getId(),
-                    ],
-                ) . '#pid=' . (int) $photo->getId(),
+                $this->albumDeepLink($photo),
             );
         }
 
         return $entries;
     }
 
+    /**
+     * The viewer manifest for a member's virtual album (the photos they are tagged in): each carries a deep link to its
+     * real album, and the ones the member has hidden are flagged so their own view can grey them out. Access and the
+     * hidden set are decided by the caller.
+     *
+     * @param Photo[]          $photos
+     * @param array<int, true> $hidden ids of the member's hidden photos, flagged only in that member's own view
+     *
+     * @return list<ManifestEntry>
+     */
+    public function getMemberManifest(
+        array $photos,
+        array $hidden,
+    ): array {
+        $entries = [];
+        foreach ($photos as $photo) {
+            $entries[] = $this->manifestEntry(
+                $photo,
+                $this->albumDeepLink($photo),
+                isset($hidden[intval($photo->getId())]),
+            );
+        }
+
+        return $entries;
+    }
+
+    private function albumDeepLink(Photo $photo): string
+    {
+        return $this->urlGenerator->generate(
+            'photo/album',
+            [
+                'type' => 'album',
+                'album' => intval($photo->getAlbum()->getId()),
+            ],
+        ) . '#pid=' . intval($photo->getId());
+    }
+
     private function manifestEntry(
         Photo $photo,
         ?string $albumUrl = null,
+        bool $hidden = false,
     ): ManifestEntry {
         $path = $photo->getPath();
         // aspectRatio is height/width; a missing one falls back to square so the viewer still gets usable dimensions.
@@ -108,6 +141,7 @@ final readonly class PhotoService
                 ],
             ),
             albumUrl: $albumUrl,
+            hidden: $hidden,
         );
     }
 }

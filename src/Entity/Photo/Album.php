@@ -9,6 +9,8 @@ use App\Entity\Application\Traits\TimestampableTrait;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Selectable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
@@ -20,21 +22,6 @@ use Doctrine\ORM\Mapping\OrderBy;
 
 /**
  * Album.
- *
- * @psalm-import-type PhotoArrayType from Photo as ImportedPhotoArrayType
- * @psalm-type AlbumArrayType = array{
- *     id: int,
- *     startDateTime: ?DateTime,
- *     endDateTime: ?DateTime,
- *     published: bool,
- *     name: string,
- *     parent: ?array<string, mixed>,
- *     children: array{},
- *     photos: array{},
- *     coverPath: ?string,
- *     photoCount: int,
- *     albumCount: int,
- * }
  */
 #[Entity]
 #[HasLifecycleCallbacks]
@@ -85,7 +72,7 @@ class Album
      * Note: These are fetched extra lazy so we can efficiently retrieve an
      * album count.
      *
-     * @var Collection<array-key, Album>
+     * @var Collection<array-key, Album>&Selectable<array-key, Album>
      */
     #[OneToMany(
         targetEntity: self::class,
@@ -159,87 +146,12 @@ class Album
     }
 
     /**
-     * Add a photo to an album.
-     */
-    public function addPhoto(Photo $photo): void
-    {
-        $photo->setAlbum($this);
-        $this->photos[] = $photo;
-    }
-
-    /**
      * Add a sub album to an album.
      */
     public function addAlbum(Album $album): void
     {
         $album->setParent($this);
         $this->children[] = $album;
-    }
-
-    /**
-     * Remove a subalbum.
-     */
-    public function removeAlbum(Album $album): void
-    {
-        if (!$this->children->contains($album)) {
-            return;
-        }
-
-        $this->children->removeElement($album);
-    }
-
-    /**
-     * Returns an associative array representation of this object
-     * including all child objects.
-     *
-     * @return array{
-     *     id: int,
-     *     startDateTime: ?DateTime,
-     *     endDateTime: ?DateTime,
-     *     published: bool,
-     *     name: string,
-     *     parent: ?array<string, mixed>,
-     *     children: AlbumArrayType[],
-     *     photos: ImportedPhotoArrayType[],
-     *     coverPath: ?string,
-     *     photoCount: int,
-     *     albumCount: int,
-     * }
-     */
-    public function toArrayWithChildren(): array
-    {
-        $array = $this->toArray();
-        foreach ($this->photos as $photo) {
-            $array['photos'][] = $photo->toArray();
-        }
-
-        foreach ($this->children as $album) {
-            $array['children'][] = $album->toArray();
-        }
-
-        return $array;
-    }
-
-    /**
-     * Returns an associative array representation of this object.
-     *
-     * @return AlbumArrayType
-     */
-    public function toArray(): array
-    {
-        return [
-            'id' => $this->getId(),
-            'startDateTime' => $this->getStartDateTime(),
-            'endDateTime' => $this->getEndDateTime(),
-            'published' => $this->isPublished(),
-            'name' => $this->getName(),
-            'parent' => $this->getParent()?->toArray(),
-            'children' => [],
-            'photos' => [],
-            'coverPath' => $this->getCoverPath(),
-            'photoCount' => $this->getPhotoCount(),
-            'albumCount' => $this->getAlbumCount(),
-        ];
     }
 
     /**
@@ -327,14 +239,6 @@ class Album
     }
 
     /**
-     * Get the published state.
-     */
-    public function getPublished(): bool
-    {
-        return $this->published;
-    }
-
-    /**
      * Whether this album is published.
      */
     public function isPublished(): bool
@@ -372,5 +276,16 @@ class Album
     public function getAlbumCount(): int
     {
         return $this->children->count();
+    }
+
+    /**
+     * The number of published sub-albums, for the public card count where drafts must not be counted. Matching on a
+     * Criteria keeps this a COUNT query against the EXTRA_LAZY association rather than hydrating every child.
+     */
+    public function getPublishedAlbumCount(): int
+    {
+        return $this->children->matching(
+            Criteria::create()->where(Criteria::expr()->eq('published', true)),
+        )->count();
     }
 }

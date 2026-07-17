@@ -12,13 +12,19 @@
 
 {% block contents %}
     <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4">
-        <h1 class="mb-0">{{ 'Photos of the Week'|trans }} {{ year }} &ndash; {{ year + 1 }}</h1>
+        <div>
+            <h1 class="mb-0">{{ 'Photos of the Week in'|trans }} {{ year }}/{{ year + 1 }}</h1>
+            {% if startDate is not null and endDate is not null %}
+                <p class="small text-muted mb-1">{{ date_range(startDate, endDate, time = false, year = 'auto') }}</p>
+            {% endif %}
+        </div>
         <a class="btn btn-outline-secondary btn-sm" href="{{ path('photo/weekly') }}">
             <i class="fa-solid fa-arrow-left me-1"></i>{{ 'Back to all years'|trans }}
         </a>
     </div>
 
-    {% include 'partials/photo/gallery.html.twig' with {
-        manifest_url: path('photo/weekly_manifest', { year: year }),
-    } only %}
+    {% import 'partials/photo/gallery.html.twig' as gallery %}
+    <div {{ gallery.attributes(path('photo/weekly_manifest', { year: year }), false) }}>
+        {{ gallery.grid() }}
+    </div>
 {% endblock %}

@@ -120,7 +120,7 @@
     {% import _self as diffmacro %}
     <div class="row">
         <div class="col-md-9">
-            <h1 class="h3 mb-1">{{ revision.name|localise_text }}</h1>
+            <h3 class="mb-1">{{ revision.name|localise_text }}</h3>
             <p class="text-muted">
                 {{ 'Revision #%number% by %author%: %status%'|trans({
                     '%number%': revision.revisionNumber,
@@ -222,7 +222,7 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-6">
-                            <h4 class="h6"><span class="flag-icon flag-icon-nl"></span> {{ 'Dutch'|trans }}</h4>
+                            <h6><span class="flag-icon flag-icon-nl"></span> {{ 'Dutch'|trans }}</h6>
                             <hr class="mt-1 mb-3">
                             {% set dutch %}
                                 {{ diffmacro.field_diff('Name'|trans, previous ? previous.name.valueNL : null, revision.name.valueNL) }}
@@ -237,7 +237,7 @@
                             {% endif %}
                         </div>
                         <div class="col-md-6">
-                            <h4 class="h6"><span class="flag-icon flag-icon-en"></span> {{ 'English'|trans }}</h4>
+                            <h6><span class="flag-icon flag-icon-en"></span> {{ 'English'|trans }}</h6>
                             <hr class="mt-1 mb-3">
                             {% set english %}
                                 {{ diffmacro.field_diff('Name'|trans, previous ? previous.name.valueEN : null, revision.name.valueEN) }}
@@ -290,7 +290,7 @@
 
         <aside class="col-md-3">
             <div class="panel p-3">
-                <h2 class="h5">{{ 'Actions'|trans }}</h2>
+                <h5>{{ 'Actions'|trans }}</h5>
                 {% if activityPassed %}
                     <div class="alert alert-warning small">
                         {% if debutMissed %}
@@ -354,7 +354,7 @@
             </div>
 
             <div class="panel p-3">
-                <h2 class="h5">{{ 'Discussion'|trans }}</h2>
+                <h5>{{ 'Discussion'|trans }}</h5>
                 <p class="text-muted small mb-2">
                     {{ 'Visible to the organisers and the board. Use it to ask a question or leave a note.'|trans }}
                 </p>

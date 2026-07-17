@@ -104,13 +104,25 @@ export default class extends Controller<HTMLElement> {
         }
 
         for (const file of Array.from(files)) {
-            if (file.type.startsWith('image/')) {
+            if (this._isImage(file)) {
                 this.remaining += 1;
                 this.queue.push(file);
             }
         }
 
         this._pump();
+    }
+
+    private _isImage(file: File): boolean {
+        if (file.type.startsWith('image/')) {
+            return true;
+        }
+
+        // Browsers commonly report an empty MIME type for HEIC/HEIF, so fall back to the extension; the server
+        // re-validates the actual content regardless.
+        const extension = file.name.split('.').pop()?.toLowerCase() ?? '';
+
+        return ['heic', 'heif', 'jpg', 'jpeg', 'png', 'webp', 'avif'].includes(extension);
     }
 
     private _pump(): void {

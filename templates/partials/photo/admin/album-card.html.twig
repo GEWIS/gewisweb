@@ -17,10 +17,13 @@
             </div>
         </a>
         <div class="panel-body d-flex flex-column">
-            {% if not album.published %}
-                <span class="badge badge-secondary align-self-start mb-1">{{ 'Draft'|trans }}</span>
-            {% endif %}
-            <h3 class="h6 mb-1 text-body text-truncate" title="{{ album.name }}">{{ album.name }}</h3>
+            <h6 class="mb-1 text-body text-truncate" title="{{ album.name }}">
+                {% if not album.published %}
+                    <span class="badge badge-secondary align-middle me-1">{{ 'Draft'|trans }}</span>
+                {% endif %}
+                {{ album.name }}
+            </h6>
+            {% include 'partials/photo/album-dates.html.twig' with { 'album': album } only %}
             <p class="small text-muted mb-2">
                 {# subAlbumCount/photoCount are batched by the overview; fall back to the lazy counts elsewhere. #}
                 {% set subAlbums = subAlbumCount ?? album.albumCount %}

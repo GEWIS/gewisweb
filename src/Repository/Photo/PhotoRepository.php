@@ -151,6 +151,21 @@ class PhotoRepository extends ServiceEntityRepository
     }
 
     /**
+     * Resolve a set of photo ids to their {@see Photo} entities. Shared by the member and admin bulk actions so the id
+     * resolution (and any future capping or access filtering) lives in one place. An empty id list issues no query.
+     *
+     * @param int[] $ids
+     *
+     * @return Photo[]
+     */
+    public function findByIds(array $ids): array
+    {
+        return [] === $ids
+            ? []
+            : $this->findBy(['id' => $ids]);
+    }
+
+    /**
      * The number of direct photos each of the given albums has, keyed by album id, in a single query — so a grid of
      * album cards does not issue one `COUNT(*) ... WHERE album_id = ?` per card. Albums with no photos are absent.
      *

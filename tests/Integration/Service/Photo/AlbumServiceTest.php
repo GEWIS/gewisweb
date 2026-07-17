@@ -75,7 +75,7 @@ final class AlbumServiceTest extends DatabaseTestCase
         $years = $this->service()->getViewableRootAlbumYears();
 
         self::assertNotEmpty($years);
-        // The list is a descending, contiguous range, so each entry is strictly smaller than the one before it.
+        // The years that have albums, newest first: each entry is strictly smaller than the one before it.
         $previous = null;
         foreach ($years as $year) {
             if (null !== $previous) {
@@ -174,6 +174,40 @@ final class AlbumServiceTest extends DatabaseTestCase
         self::assertCount(
             2,
             $this->service()->getViewableChildren($gala),
+        );
+    }
+
+    public function testCardCountsCountDraftSubAlbumsOnlyForTheAdmin(): void
+    {
+        $gala = $this->albumRepository()->findOneBy(['name' => 'Gala 2024']);
+        self::assertInstanceOf(
+            Album::class,
+            $gala,
+            'The seed is expected to contain the Gala album.',
+        );
+
+        // Gala has two published sub-albums (Dinner, Afterparty) and one draft.
+        $galaId = $gala->getId();
+        self::assertSame(
+            2,
+            $this->service()->getCardCounts(
+                [$gala],
+                true,
+            )['subAlbums'][$galaId],
+            'The public count must omit the draft sub-album.',
+        );
+        self::assertSame(
+            3,
+            $this->service()->getCardCounts([$gala])['subAlbums'][$galaId],
+            'The admin count includes the draft sub-album.',
+        );
+        self::assertSame(
+            2,
+            $gala->getPublishedAlbumCount(),
+        );
+        self::assertSame(
+            3,
+            $gala->getAlbumCount(),
         );
     }
 

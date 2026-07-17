@@ -24,6 +24,9 @@ final readonly class ManifestEntry
         // The deep link to the photo's real album, set only for virtual albums (e.g. the weekly album) so the viewer
         // can offer a "go to the original album" button; null when already viewing that album.
         public ?string $albumUrl = null,
+        // Whether this photo is hidden from the member's own photo page (flagged only in that member's own view, so the
+        // grid can grey it out).
+        public bool $hidden = false,
     ) {
     }
 }

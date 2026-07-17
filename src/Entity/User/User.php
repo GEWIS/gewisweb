@@ -7,6 +7,7 @@ namespace App\Entity\User;
 use Ambta\DoctrineEncryptBundle\Configuration\Encrypted;
 use App\Entity\Decision\Enums\MembershipTypes;
 use App\Entity\Decision\Member as MemberModel;
+use App\Entity\User\Enums\PhotoVisibility;
 use App\Entity\User\Enums\UserRoles;
 use App\Entity\User\Enums\UserTypes;
 use App\Entity\User\Traits\BackupCodeAwareTrait;
@@ -369,5 +370,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     public function hasHiddenYearOfBirth(): bool
     {
         return $this->settings?->getHideYearOfBirth() ?? false;
+    }
+
+    /**
+     * How much of this member's tagged-photo collection is hidden. Defaults to hiding only the photos they select
+     * (nothing, until they pick some) when no settings row exists yet.
+     */
+    public function getPhotoVisibility(): PhotoVisibility
+    {
+        return $this->settings?->getPhotoVisibility() ?? PhotoVisibility::HideSelected;
     }
 }

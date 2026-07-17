@@ -1,55 +1,95 @@
 {#
-    The windowed-masonry gallery plus the PhotoSwipe viewer, both driven by the album's viewer manifest (fetched once).
-    `manifest_url` is that manifest. Every photo has a position immediately (so a #pid deep link scrolls straight to it),
-    but only the tiles near the viewport are mounted; clicking a tile opens the viewer.
+    Helpers for the windowed-masonry gallery plus the PhotoSwipe viewer (the `gallery` controller), driven by an album's
+    viewer manifest fetched once. `attributes()` renders the controller and its config onto the page's own wrapper, so
+    the page controls the surrounding layout (a plain page, or a panel whose heading carries the Select toggle); `grid()`
+    renders the empty message and the tile container.
 
-    The tag, vote and profile endpoints take numeric ids, so their routes cannot be generated with a text placeholder:
-    each URL is generated with a sentinel id which is then swapped for the placeholder the viewer fills in per photo.
+    Pass `selectable` to enable the Select toggle; the page then adds the toggle and its bulk actions, and the controller
+    keeps the form marked `data-gallery-target="selectionForm"` filled with the selected photo ids. The tag/vote/profile
+    endpoints take numeric ids, so each URL is generated with a sentinel id then swapped for the placeholder the viewer
+    fills in per photo.
 #}
-{% set tag_labels = {
-    inThisPhoto: 'In this photo'|trans,
-    noTags: 'No one is tagged in this photo yet'|trans,
-    tagMember: 'Tag a member'|trans,
-    tagOrgan: 'Tag an organ'|trans,
-    removeTag: 'Remove tag'|trans,
-    placeOnPhoto: 'Place on photo'|trans,
-    placeHint: 'Click or tap the photo where the person is'|trans,
-    cancel: 'Cancel'|trans,
-    newTag: 'New tag'|trans,
-    vote: 'Vote for photo of the week'|trans,
-    voted: 'You have voted'|trans,
-    setProfilePhoto: 'Set as profile photo'|trans,
-    photoOfTheWeek: 'Photo of the Week'|trans,
-    goToAlbum: 'Go to the original album'|trans,
-    information: 'Information'|trans,
-    unknown: 'Unknown'|trans,
-    yes: 'Yes'|trans,
-    no: 'No'|trans,
-    artist: 'Artist'|trans,
-    camera: 'Camera'|trans,
-    dateTime: 'Date/time'|trans,
-    flash: 'Flash'|trans,
-    focalLength: 'Focal length'|trans,
-    shutterSpeed: 'Shutter speed'|trans,
-    aperture: 'Aperture'|trans,
-    iso: 'ISO'|trans,
-} %}
-<div data-controller="gallery"
-     data-gallery-manifest-url-value="{{ manifest_url }}"
-     data-gallery-details-url-value="{{ path('photo/details', { photo: 2100000000 })|replace({'2100000000': '__PHOTO__'}) }}"
-     data-gallery-tag-url-value="{{ path('photo/tag', { photo: 2100000000 })|replace({'2100000000': '__PHOTO__'}) }}"
-     data-gallery-tag-remove-url-value="{{ path('photo/tag_remove', { tag: 2100000000 })|replace({'2100000000': '__TAG__'}) }}"
-     data-gallery-vote-url-value="{{ path('photo/vote', { photo: 2100000000 })|replace({'2100000000': '__PHOTO__'}) }}"
-     data-gallery-profile-url-value="{{ path('photo/profile_photo_set', { photo: 2100000000 })|replace({'2100000000': '__PHOTO__'}) }}"
-     data-gallery-member-search-url-value="{{ path('members/search') }}"
-     data-gallery-organs-url-value="{{ path('photo/organs') }}"
-     data-gallery-member-url-value="{{ path('members/view', { member: 99999 })|replace({'99999': '__LIDNR__'}) }}"
-     data-gallery-icon-sprite-url-value="{{ asset('sprites/fontawesome/solid.svg') }}"
-     data-gallery-labels-value="{{ tag_labels|json_encode }}">
+{% macro attributes(manifest_url, selectable) %}
+    {%- set labels = {
+        inThisPhoto: 'In this photo'|trans,
+        noTags: 'No one is tagged in this photo yet'|trans,
+        loadingTags: 'Loading tags…'|trans,
+        tagsError: 'Could not load tags'|trans,
+        member: 'Member'|trans,
+        body: 'Body'|trans,
+        tag: 'Tag'|trans,
+        searchMembers: 'Search members'|trans,
+        searchBodies: 'Search bodies'|trans,
+        placedOnPhoto: 'Placed on the photo'|trans,
+        removeTag: 'Remove tag'|trans,
+        placeOnPhoto: 'Place on photo'|trans,
+        placeHint: 'Click or tap the photo where the person is'|trans,
+        cancel: 'Cancel'|trans,
+        newTag: 'New tag'|trans,
+        vote: 'Vote for photo of the week'|trans,
+        voted: 'You have voted'|trans,
+        setProfilePhoto: 'Set as profile photo'|trans,
+        photoOfTheWeek: 'Photo of the Week'|trans,
+        week: 'Week'|trans,
+        goToAlbum: 'Go to the original album'|trans,
+        zoom: 'Zoom'|trans,
+        close: 'Close'|trans,
+        previous: 'Previous'|trans,
+        next: 'Next'|trans,
+        information: 'Information'|trans,
+        unknown: 'Unknown'|trans,
+        yes: 'Yes'|trans,
+        no: 'No'|trans,
+        artist: 'Artist'|trans,
+        camera: 'Camera'|trans,
+        dateTime: 'Date/time'|trans,
+        flash: 'Flash'|trans,
+        focalLength: 'Focal length'|trans,
+        shutterSpeed: 'Shutter speed'|trans,
+        aperture: 'Aperture'|trans,
+        iso: 'ISO'|trans,
+        coordinates: 'Coordinates'|trans,
+    } -%}
+    data-controller="gallery"
+    data-gallery-manifest-url-value="{{ manifest_url }}"
+    data-gallery-selectable-value="{{ selectable ? 'true' : 'false' }}"
+    data-gallery-details-url-value="{{ path('photo/details', { photo: 2100000000 })|replace({'2100000000': '__PHOTO__'}) }}"
+    data-gallery-tag-url-value="{{ path('photo/tag', { photo: 2100000000 })|replace({'2100000000': '__PHOTO__'}) }}"
+    data-gallery-tag-remove-url-value="{{ path('photo/tag_remove', { tag: 2100000000 })|replace({'2100000000': '__TAG__'}) }}"
+    data-gallery-vote-url-value="{{ path('photo/vote', { photo: 2100000000 })|replace({'2100000000': '__PHOTO__'}) }}"
+    data-gallery-profile-url-value="{{ path('photo/profile_photo_set', { photo: 2100000000 })|replace({'2100000000': '__PHOTO__'}) }}"
+    data-gallery-member-search-url-value="{{ path('members/search') }}"
+    data-gallery-organs-url-value="{{ path('photo/organs') }}"
+    data-gallery-member-url-value="{{ path('members/view', { member: 99999 })|replace({'99999': '__LIDNR__'}) }}"
+    data-gallery-icon-sprite-url-value="{{ asset('sprites/fontawesome/solid.svg') }}"
+    data-gallery-labels-value="{{ labels|json_encode }}"
+{% endmacro %}
+
+{% macro grid(empty_message) %}
+    {# The grid and viewer are built entirely from the manifest by the gallery controller, so without JavaScript the
+       page would otherwise be blank. #}
+    <noscript>
+        <p class="text-muted text-center py-4">{{ 'Enable JavaScript to view these photos.'|trans }}</p>
+    </noscript>
     <p data-gallery-target="empty" class="text-muted text-center py-4" hidden>
-        {{ 'This album does not contain any photos.'|trans }}
+        {{ empty_message ?? 'This album does not contain any photos.'|trans }}
     </p>
     <div class="photo-masonry"
          data-gallery-target="grid"
          data-view-label="{{ 'View photo'|trans }}"></div>
-</div>
+{% endmacro %}
+
+{# Breadcrumb items for an album's ancestor chain (root first), each a link. Pass `album.parent` so the current album
+   is left for the page to render as the active crumb. Public trails skip unpublished ancestors (they 404 anyway). #}
+{% macro albumTrail(album, admin) %}
+    {% if album is not null %}
+        {{ _self.albumTrail(album.parent, admin) }}
+        {% if admin or album.published %}
+            <li class="breadcrumb-item">
+                <a href="{{ admin
+                    ? path('admin/photos/album', { album: album.id })
+                    : path('photo/album', { type: 'album', album: album.id }) }}">{{ album.name }}</a>
+            </li>
+        {% endif %}
+    {% endif %}
+{% endmacro %}
