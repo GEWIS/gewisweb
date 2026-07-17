@@ -29,10 +29,6 @@
         <source>Enter a full name.</source>
         <target>Voer een volledige naam in.</target>
       </trans-unit>
-      <trans-unit id="nlkxwd3" resname="Enter a secret.">
-        <source>Enter a secret.</source>
-        <target>Voer een geheim in.</target>
-      </trans-unit>
       <trans-unit id="HSarwc." resname="Enter a start date and time.">
         <source>Enter a start date and time.</source>
         <target state="translated">Voer een startdatum en -tijd in.</target>

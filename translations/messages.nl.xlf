@@ -549,6 +549,10 @@
         <source>Claims</source>
         <target>Claims</target>
       </trans-unit>
+      <trans-unit id="7RtXvZV" resname="Claims and availability">
+        <source>Claims and availability</source>
+        <target>Claims en beschikbaarheid</target>
+      </trans-unit>
       <trans-unit id="4XOnmWM" resname="Clear selection">
         <source>Clear selection</source>
         <target>Selectie wissen</target>
@@ -961,6 +965,10 @@
         <source>Email the waiting list</source>
         <target>Wachtlijst e-mailen</target>
       </trans-unit>
+      <trans-unit id="EqdQIqu" resname="Email verified?">
+        <source>Email verified?</source>
+        <target>E-mailadres geverifieerd?</target>
+      </trans-unit>
       <trans-unit id="8THsPC2" resname="Enable Dutch and/or English and fill in the fields below. At least one language must be used.">
         <source>Enable Dutch and/or English and fill in the fields below. At least one language must be used.</source>
         <target state="translated">Schakel Nederlands en/of Engels in en vul de velden hieronder in. Er moet minstens één taal worden gebruikt.</target>
@@ -1121,9 +1129,9 @@
         <source>First name</source>
         <target>Voornaam</target>
       </trans-unit>
-      <trans-unit id=".WbQ8Qn" resname="First used">
-        <source>First used</source>
-        <target>Voor het eerst gebruikt</target>
+      <trans-unit id="QJ6wSSG" resname="First used %date%">
+        <source>First used %date%</source>
+        <target>Voor het eerst gebruikt op %date%</target>
       </trans-unit>
       <trans-unit id="TRCTgud" resname="First-come-first-served">
         <source>First-come-first-served</source>
@@ -1269,6 +1277,10 @@
         <source>Guest - Anyone who can access the website</source>
         <target state="translated">Gast - Iedereen die toegang heeft tot de website</target>
       </trans-unit>
+      <trans-unit id="pyDpg0q" resname="HS512 (shared secret, legacy)">
+        <source>HS512 (shared secret, legacy)</source>
+        <target>HS512 (gedeeld geheim, verouderd)</target>
+      </trans-unit>
       <trans-unit id="yTvE6dJ" resname="Have a GEWIS account? Log in to sign up.">
         <source>Have a GEWIS account? Log in to sign up.</source>
         <target>Heb je een GEWIS-account? Log in om je in te schrijven.</target>
@@ -1413,6 +1425,10 @@
         <source>Information Officer</source>
         <target state="translated">Commissaris Kennisbeheer</target>
       </trans-unit>
+      <trans-unit id="1w_F6W_" resname="Information shared with this application:">
+        <source>Information shared with this application:</source>
+        <target>Informatie die met deze applicatie wordt gedeeld:</target>
+      </trans-unit>
       <trans-unit id="zSMYCyF" resname="Initials">
         <source>Initials</source>
         <target>Voorletters</target>
@@ -1460,6 +1476,10 @@
       <trans-unit id="HEXPss6" resname="Is 18+?">
         <source>Is 18+?</source>
         <target state="translated">Is 18+?</target>
+      </trans-unit>
+      <trans-unit id="XErvz2u" resname="Is a member?">
+        <source>Is a member?</source>
+        <target>Is lid?</target>
       </trans-unit>
       <trans-unit id="aNFdXt2" resname="It exists only in the complex plane of wishful thinking.">
         <source>It exists only in the complex plane of wishful thinking.</source>
@@ -1529,9 +1549,9 @@
         <source>Last seen %date%</source>
         <target state="translated">Laatst gezien op %date%</target>
       </trans-unit>
-      <trans-unit id="9Y0tKi0" resname="Last used">
-        <source>Last used</source>
-        <target>Voor het laatst gebruikt</target>
+      <trans-unit id="1Zi3rCU" resname="Last used %date%">
+        <source>Last used %date%</source>
+        <target>Laatst gebruikt op %date%</target>
       </trans-unit>
       <trans-unit id="7GDr10z" resname="Light">
         <source>Light</source>
@@ -1700,6 +1720,14 @@
       <trans-unit id="JObdnqB" resname="Minimum value (number type)">
         <source>Minimum value (number type)</source>
         <target state="translated">Minimumwaarde (getaltype)</target>
+      </trans-unit>
+      <trans-unit id="nFoBwxF" resname="Modern applications require the URL fragment.">
+        <source>Modern applications require the URL fragment.</source>
+        <target>Moderne applicaties vereisen het URL-fragment.</target>
+      </trans-unit>
+      <trans-unit id="NpQ8GYT" resname="Pick the strongest algorithm the application supports. Modern profiles are verified through the JWKS endpoint.">
+        <source>Pick the strongest algorithm the application supports. Modern profiles are verified through the JWKS endpoint.</source>
+        <target>Kies het sterkste algoritme dat de applicatie ondersteunt. Moderne profielen worden geverifieerd via het JWKS-eindpunt.</target>
       </trans-unit>
       <trans-unit id="wHBscUb" resname="More of my photos">
         <source>More of my photos</source>
@@ -1949,6 +1977,10 @@
         <source>On Thursdays, there is a %link_start%social drink%link_end% from 16.30 to 19.00.</source>
         <target state="translated">Donderdags is er een %link_start%borrel%link_end% van 16.30 tot 19.00.</target>
       </trans-unit>
+      <trans-unit id="aGilLiW" resname="Only used by the HS512 shared-secret profile. Share it only with the application, and rotate it yearly.">
+        <source>Only used by the HS512 shared-secret profile. Share it only with the application, and rotate it yearly.</source>
+        <target>Alleen gebruikt door het HS512-profiel met gedeeld geheim. Deel het alleen met de applicatie en vervang het jaarlijks.</target>
+      </trans-unit>
       <trans-unit id="bnfrTZj" resname="Only with open sign-up">
         <source>Only with open sign-up</source>
         <target>Alleen met open inschrijving</target>
@@ -2189,9 +2221,17 @@
         <source>QR code</source>
         <target state="translated">QR-code</target>
       </trans-unit>
+      <trans-unit id="RaWtvYV" resname="Query parameter (?token=)">
+        <source>Query parameter (?token=)</source>
+        <target>Queryparameter (?token=)</target>
+      </trans-unit>
       <trans-unit id="W1WJHfF" resname="Question">
         <source>Question</source>
         <target state="translated">Vraag</target>
+      </trans-unit>
+      <trans-unit id="44LAne5" resname="RS512 (legacy, avoid for new applications)">
+        <source>RS512 (legacy, avoid for new applications)</source>
+        <target>RS512 (verouderd, vermijd voor nieuwe applicaties)</target>
       </trans-unit>
       <trans-unit id="IwCnCLR" resname="Random draw">
         <source>Random draw</source>
@@ -2621,9 +2661,13 @@
         <source>Signed up at</source>
         <target>Aangemeld op</target>
       </trans-unit>
-      <trans-unit id="_bH5pVw" resname="Signs the token. Share it only with the application, and rotate it yearly.">
-        <source>Signs the token. Share it only with the application, and rotate it yearly.</source>
-        <target>Ondertekent het token. Deel het alleen met de applicatie en vernieuw het jaarlijks.</target>
+      <trans-unit id="ScyzQl2" resname="Signing algorithm">
+        <source>Signing algorithm</source>
+        <target>Ondertekeningsalgoritme</target>
+      </trans-unit>
+      <trans-unit id="Tir63nu" resname="Signing and delivery">
+        <source>Signing and delivery</source>
+        <target>Ondertekening en aflevering</target>
       </trans-unit>
       <trans-unit id="e9EhDeS" resname="Social drink">
         <source>Social drink</source>
@@ -3101,6 +3145,10 @@
         <source>Toggle navigation</source>
         <target state="translated">Klap navigatie in/uit</target>
       </trans-unit>
+      <trans-unit id="rjEploT" resname="Token delivery">
+        <source>Token delivery</source>
+        <target>Tokenaflevering</target>
+      </trans-unit>
       <trans-unit id="FnG76JW" resname="Too many requests. Please try again later.">
         <source>Too many requests. Please try again later.</source>
         <target>Te veel verzoeken. Probeer het later opnieuw.</target>
@@ -3132,6 +3180,10 @@
       <trans-unit id="DL_wAnF" resname="Type">
         <source>Type</source>
         <target state="translated">Type</target>
+      </trans-unit>
+      <trans-unit id="uHprCpr" resname="URL fragment (#token=)">
+        <source>URL fragment (#token=)</source>
+        <target>URL-fragment (#token=)</target>
       </trans-unit>
       <trans-unit id="kUwxFg0" resname="Un-cancel">
         <source>Un-cancel</source>
@@ -3421,6 +3473,10 @@
         <source>You have not been tagged in any photos yet.</source>
         <target state="translated">Je bent nog in geen enkele foto getagd.</target>
       </trans-unit>
+      <trans-unit id="tRg6_qx" resname="You have not signed in to any external applications yet.">
+        <source>You have not signed in to any external applications yet.</source>
+        <target>Je hebt nog niet ingelogd bij externe applicaties.</target>
+      </trans-unit>
       <trans-unit id="8yGcQq5" resname="You have sent too many requests in a short period of time. Please wait a few minutes before trying again.">
         <source>You have sent too many requests in a short period of time. Please wait a few minutes before trying again.</source>
         <target state="translated">Je hebt in korte tijd te veel verzoeken verzonden. Wacht een paar minuten voordat je het opnieuw probeert.</target>
@@ -3600,6 +3656,26 @@
       <trans-unit id="AdY3YcR" resname="¹ Fields marked with this symbol are only shared with the board and the organiser of the activity.">
         <source>¹ Fields marked with this symbol are only shared with the board and the organiser of the activity.</source>
         <target>¹ Velden met dit symbool worden alleen gedeeld met het bestuur en de organisator van de activiteit.</target>
+      </trans-unit>
+      <trans-unit id="4h60eT0" resname="Avoid RS512 for new applications.">
+        <source>Avoid RS512 for new applications.</source>
+        <target>Vermijd RS512 voor nieuwe applicaties.</target>
+      </trans-unit>
+      <trans-unit id="SovLeQu" resname="EdDSA (recommended)">
+        <source>EdDSA (recommended)</source>
+        <target>EdDSA (aanbevolen)</target>
+      </trans-unit>
+      <trans-unit id="Q0nHBMn" resname="ES512">
+        <source>ES512</source>
+        <target>ES512</target>
+      </trans-unit>
+      <trans-unit id="7gJgnyX" resname="It signs with PKCS#1 v1.5, kept only for applications that cannot verify anything stronger. Prefer EdDSA, ES512, or PS512 whenever the application supports them.">
+        <source>It signs with PKCS#1 v1.5, kept only for applications that cannot verify anything stronger. Prefer EdDSA, ES512, or PS512 whenever the application supports them.</source>
+        <target>Het ondertekent met PKCS#1 v1.5 en blijft alleen behouden voor applicaties die niets sterkers kunnen verifiëren. Kies bij voorkeur EdDSA, ES512 of PS512 wanneer de applicatie dit ondersteunt.</target>
+      </trans-unit>
+      <trans-unit id="GUcjJPC" resname="PS512">
+        <source>PS512</source>
+        <target>PS512</target>
       </trans-unit>
     </body>
   </file>

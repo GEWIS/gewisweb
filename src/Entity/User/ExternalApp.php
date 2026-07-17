@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Entity\User;
 
 use App\Entity\Application\Traits\IdentifiableTrait;
+use App\Entity\User\Enums\ExternalAppSignature;
+use App\Entity\User\Enums\ExternalAppTokenDelivery;
 use App\Entity\User\Enums\JWTClaims;
 use DateTime;
 use Doctrine\DBAL\Types\Types;
@@ -26,10 +28,34 @@ class ExternalApp
     private string $appId;
 
     /**
-     * Application secret.
+     * Signing algorithm. Modern applications sign with one of the association's keys, published through the JWKS
+     * endpoint, rather than a shared secret.
      */
-    #[Column(type: Types::STRING)]
-    private string $secret;
+    #[Column(
+        type: Types::STRING,
+        enumType: ExternalAppSignature::class,
+        options: ['default' => ExternalAppSignature::EdDSA->value],
+    )]
+    private ExternalAppSignature $signature = ExternalAppSignature::EdDSA;
+
+    /**
+     * How the token is returned to the application.
+     */
+    #[Column(
+        type: Types::STRING,
+        enumType: ExternalAppTokenDelivery::class,
+        options: ['default' => ExternalAppTokenDelivery::Fragment->value],
+    )]
+    private ExternalAppTokenDelivery $tokenDelivery = ExternalAppTokenDelivery::Fragment;
+
+    /**
+     * Shared secret, used only by applications signed with HS512.
+     */
+    #[Column(
+        type: Types::STRING,
+        nullable: true,
+    )]
+    private ?string $secret = null;
 
     /**
      * Callback URL.
@@ -83,14 +109,34 @@ class ExternalApp
         $this->appId = $appId;
     }
 
-    public function getSecret(): string
+    public function getSecret(): ?string
     {
         return $this->secret;
     }
 
-    public function setSecret(string $secret): void
+    public function setSecret(?string $secret): void
     {
         $this->secret = $secret;
+    }
+
+    public function getSignature(): ExternalAppSignature
+    {
+        return $this->signature;
+    }
+
+    public function setSignature(ExternalAppSignature $signature): void
+    {
+        $this->signature = $signature;
+    }
+
+    public function getTokenDelivery(): ExternalAppTokenDelivery
+    {
+        return $this->tokenDelivery;
+    }
+
+    public function setTokenDelivery(ExternalAppTokenDelivery $tokenDelivery): void
+    {
+        $this->tokenDelivery = $tokenDelivery;
     }
 
     public function getCallback(): string

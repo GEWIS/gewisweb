@@ -36,6 +36,12 @@ user_token:
     requirements:
         app: '[a-z][0-9a-z\_\-]{2,31}'
 
+# Public JWKS for verifying RS512 tokens issued to external applications. Locale-less, like user_token, so it is a plain
+# well-known URL an application can be configured with.
+external_app_jwks:
+    path: /.well-known/jwks.json
+    controller: App\Controller\User\JwksController::jwks
+
 # Legacy `/data/{path}` URLs (old bookmarks, caches, markdown embeds). Defined here, like image_serve, so it is not
 # locale-prefixed and its slash-bearing {path} is matched before page_route/catch_all could grab it. Inert while
 # public/data/ still exists (Caddy serves those files statically); the safety net once it is removed.

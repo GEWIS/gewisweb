@@ -41,6 +41,13 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
+    # The external-application signing service uses the bundle-managed JWS builder and the association's key set. Both
+    # are referenced by their bundle service id because several of each exist and autowiring cannot pick by type.
+    App\Service\User\ExternalAppService:
+        arguments:
+            $jwsBuilder: '@jose.jws_builder.external_app'
+            $signingKeySet: '@jose.key_set.external_app_signing'
+
 when@dev:
     parameters:
         app.mfa.enforcement_enabled: '%env(bool:MFA_ENFORCEMENT)%'

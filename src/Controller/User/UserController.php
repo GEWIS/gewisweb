@@ -33,6 +33,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use function assert;
 use function bin2hex;
 use function intval;
+use function mb_substr;
 use function sprintf;
 
 #[Route(
@@ -87,6 +88,17 @@ class UserController extends AbstractSecurityController
             throw $this->createNotFoundException();
         }
 
+        // A modern application supplies a nonce to echo back into the token; it stays on the query string across the
+        // consent POST back to this same URL.
+        $requestNonce = $request->query->getString('nonce');
+        $nonce = '' === $requestNonce
+            ? null
+            : mb_substr(
+                $requestNonce,
+                0,
+                128,
+            );
+
         // If the member authorised this application within the last 90 days, authenticate straight away; if it was
         // longer ago, show a lighter reminder rather than the full prompt.
         $reminder = false;
@@ -101,6 +113,7 @@ class UserController extends AbstractSecurityController
                     $this->externalAppService->callbackWithToken(
                         $externalApp,
                         $user,
+                        $nonce,
                     ),
                 );
             }
@@ -131,6 +144,7 @@ class UserController extends AbstractSecurityController
                 : $this->externalAppService->callbackWithToken(
                     $externalApp,
                     $user,
+                    $nonce,
                 );
 
             return $this->renderTokenRedirect(

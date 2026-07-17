@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Form\User;
 
+use App\Entity\User\Enums\ExternalAppSignature;
+use App\Entity\User\Enums\ExternalAppTokenDelivery;
 use App\Entity\User\Enums\JWTClaims;
 use App\Entity\User\ExternalApp;
 use Override;
@@ -45,12 +47,36 @@ final class ExternalAppType extends AbstractType
                 ],
             )
             ->add(
+                'signature',
+                EnumType::class,
+                [
+                    'class' => ExternalAppSignature::class,
+                    'label' => t('Signing algorithm'),
+                    'help' => t(
+                        'Pick the strongest algorithm the application supports. Modern profiles are verified through the JWKS endpoint.', // phpcs:ignore Generic.Files.LineLength.TooLong -- user-visible strings should not be split
+                    ),
+                    'choice_label' => static fn (ExternalAppSignature $signature) => $signature->label(),
+                ],
+            )
+            ->add(
+                'tokenDelivery',
+                EnumType::class,
+                [
+                    'class' => ExternalAppTokenDelivery::class,
+                    'label' => t('Token delivery'),
+                    'help' => t('Modern applications require the URL fragment.'),
+                    'choice_label' => static fn (ExternalAppTokenDelivery $delivery) => $delivery->label(),
+                ],
+            )
+            ->add(
                 'secret',
                 TextType::class,
                 [
                     'label' => t('Secret'),
-                    'help' => t('Signs the token. Share it only with the application, and rotate it yearly.'),
-                    'constraints' => [new NotBlank(message: 'Enter a secret.')],
+                    'help' => t(
+                        'Only used by the HS512 shared-secret profile. Share it only with the application, and rotate it yearly.', // phpcs:ignore Generic.Files.LineLength.TooLong -- user-visible strings should not be split
+                    ),
+                    'required' => false,
                 ],
             )
             ->add(
