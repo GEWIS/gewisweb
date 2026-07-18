@@ -15,6 +15,7 @@ use App\Form\User\PasswordResetRequestFormType;
 use App\Form\User\SetPasswordFormType;
 use App\Form\User\SudoConfirmFormType;
 use App\Message\User\PasswordResetRequestEmail;
+use App\Repository\User\ExternalAppAuthenticationRepository;
 use App\Repository\User\PasswordResetRepository;
 use App\Security\User\BackupCodeManager;
 use App\Security\User\HandlerRegistry;
@@ -350,10 +351,16 @@ abstract class AbstractSecurityController extends AbstractController
         UserPasswordHasherInterface $hasher,
         EntityManagerInterface $em,
         MfaPolicy $mfaPolicy,
+        ExternalAppAuthenticationRepository $externalAppAuthenticationRepository,
         #[CurrentUser]
         User|CompanyUser $user,
     ): Response {
         $firewall = $this->firewall($request);
+
+        // External applications only authenticate members, so company users never have any.
+        $externalApps = $user instanceof User
+            ? $externalAppAuthenticationRepository->getFirstAndLastAuthenticationPerExternalApp($user->getMember())
+            : [];
 
         $form = $this->createForm(
             ChangePasswordFormType::class,
@@ -407,6 +414,7 @@ abstract class AbstractSecurityController extends AbstractController
                 ),
                 'mfaEnabled' => $user->isTotpAuthenticationEnabled(),
                 'mfaRequired' => $user instanceof User && $mfaPolicy->isRequiredFor($user),
+                'externalApps' => $externalApps,
                 'routePrefix' => $this->routePrefix,
             ],
         );

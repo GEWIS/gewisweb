@@ -1,0 +1,22 @@
+# Signing configuration for external-application tokens. The builder's algorithm manager is assembled by the bundle from
+# the list below, so the algorithms are not wired up by hand. The signing keys are the association's own key set, loaded
+# from the EXTERNAL_APP_JWKSET environment variable: a JWKSet holding one key per asymmetric family (an Ed25519 key for
+# EdDSA, a P-521 key for ES512, and an RSA key shared by PS512 and RS512). There is deliberately no default, so an
+# environment without a configured key set fails loudly rather than signing with an empty set. The HS512 profile signs
+# with the per-application secret instead and does not use this key set.
+jose:
+    key_sets:
+        external_app_signing:
+            jwkset:
+                is_public: true
+                value: '%env(EXTERNAL_APP_JWKSET)%'
+    jws:
+        builders:
+            external_app:
+                is_public: true
+                signature_algorithms:
+                    - 'EdDSA'
+                    - 'ES512'
+                    - 'PS512'
+                    - 'RS512'
+                    - 'HS512'

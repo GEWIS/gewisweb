@@ -18,7 +18,7 @@ use function Symfony\Component\Translation\t;
 /**
  * @extends AbstractType<UserSettings>
  */
-class SettingsFormType extends AbstractType
+class PrivacySettingsType extends AbstractType
 {
     #[Override]
     public function buildForm(
@@ -59,15 +59,6 @@ class SettingsFormType extends AbstractType
                 [
                     'label' => t('Hide my birthday from the home page'),
                     'help' => t('You will no longer appear in the birthday panel on the home page.'),
-                    'required' => false,
-                ],
-            )
-            ->add(
-                'disableCosmetics',
-                CheckboxType::class,
-                [
-                    'label' => t('Disable festive effects'),
-                    'help' => t('Turn off the balloons, snow, and fireworks across the website.'),
                     'required' => false,
                 ],
             );

@@ -90,6 +90,23 @@ $navbar-nav-link-padding-x: 0.75rem;
 
 $navbar-padding-y: 0;
 
+// Sidebar
+$sidebar-bg: $white;
+$sidebar-bg-dark: $background-gray;
+$sidebar-color: $gewis-gray-dark;
+$sidebar-color-dark: $gewis-gray-light;
+$sidebar-hover-bg: $gray-100;
+$sidebar-hover-bg-dark: rgba($white, 0.05);
+$sidebar-active-color: $gewis-red;
+$sidebar-active-bg: rgba($gewis-red, 0.08);
+$sidebar-active-bg-dark: rgba($gewis-red, 0.16);
+$sidebar-border-color: $gray-200;
+$sidebar-border-color-dark: $background-gray-dark;
+$sidebar-toggler-icon-bg: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'><path stroke='#{$sidebar-color}' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/></svg>");
+
+$admin-surface-bg: #f4f5f7;
+$admin-surface-bg-dark: $body-bg-dark;
+
 // Nav
 $nav-padding-x: 1rem;
 $nav-padding-y: 0.625rem;

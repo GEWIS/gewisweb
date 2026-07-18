@@ -12,14 +12,28 @@
     </a>
 </li>
 {% if isSelf %}
-    <li class="nav-item {{ activeRoute == 'security' ? 'active' : '' }}">
-        <a class="nav-link p-3" href="{{ path('user_security_index') }}">
-            {{ 'Security'|trans }}
-        </a>
-    </li>
-    <li class="nav-item {{ activeRoute == 'settings' ? 'active' : '' }}">
-        <a class="nav-link p-3" href="{{ path('user_settings_index') }}">
+    {% set settingsActive = activeRoute in ['general', 'privacy', 'security'] %}
+    <li class="nav-item dropdown dropend {{ settingsActive ? 'active default open' : '' }}">
+        <a class="nav-link p-3 dropdown-toggle"
+           href="#" data-bs-toggle="dropdown" data-bs-offset="0,0" aria-expanded="{{ settingsActive ? 'true' : 'false' }}">
             {{ 'Settings'|trans }}
         </a>
+        <ul class="dropdown-menu">
+            <li>
+                <a class="dropdown-item {{ activeRoute == 'general' ? 'active' : '' }}" href="{{ path('user_settings_general') }}">
+                    {{ 'General'|trans }}
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item {{ activeRoute == 'privacy' ? 'active' : '' }}" href="{{ path('user_settings_index') }}">
+                    {{ 'Privacy'|trans }}
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item {{ activeRoute == 'security' ? 'active' : '' }}" href="{{ path('user_security_index') }}">
+                    {{ 'Security'|trans }}
+                </a>
+            </li>
+        </ul>
     </li>
 {% endif %}

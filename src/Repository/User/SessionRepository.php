@@ -95,6 +95,27 @@ class SessionRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * Every session (active or expired) recorded for a user identifier, used to include them in a data export.
+     *
+     * @return Session[]
+     */
+    public function findAllByUser(string $userIdentifier): array
+    {
+        return $this->createQueryBuilder('s')
+            ->where('s.userIdentifier = :uid')
+            ->setParameter(
+                'uid',
+                $userIdentifier,
+            )
+            ->orderBy(
+                's.lastUsedAt',
+                'DESC',
+            )
+            ->getQuery()
+            ->getResult();
+    }
+
     public function deleteAllForUserOnFirewall(
         string $userIdentifier,
         string $firewallName,

@@ -219,7 +219,7 @@ export class ViewerInteractions {
             onInit: (element: HTMLElement): void => {
                 element.classList.add('pswp__photo-potw');
                 element.hidden = true;
-                element.innerHTML = '<i class="fa-solid fa-star"></i><span class="pswp__photo-potw-text"></span>';
+                element.innerHTML = '<span class="fa-solid fa-star"></span><span class="pswp__photo-potw-text"></span>';
                 this.potwBadge = element;
             },
         });
@@ -705,7 +705,7 @@ export class ViewerInteractions {
         button.type = 'button';
         button.className = 'pswp__photo-tag-remove';
         button.setAttribute('aria-label', this.label('removeTag'));
-        button.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+        button.innerHTML = '<span class="fa-solid fa-xmark"></span>';
         button.addEventListener('click', (): void => void this.removeTag(tagId));
 
         return button;
@@ -834,7 +834,7 @@ export class ViewerInteractions {
         clear.type = 'button';
         clear.className = 'pswp__photo-tag-pending-clear';
         clear.setAttribute('aria-label', this.label('cancel'));
-        clear.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+        clear.innerHTML = '<span class="fa-solid fa-xmark"></span>';
         clear.addEventListener('click', (): void => this.clearPending());
 
         const tag = document.createElement('button');
@@ -846,7 +846,7 @@ export class ViewerInteractions {
         const place = document.createElement('button');
         place.type = 'button';
         place.className = 'pswp__photo-tag-action pswp__photo-tag-action--place';
-        place.innerHTML = '<i class="fa-solid fa-crosshairs"></i>';
+        place.innerHTML = '<span class="fa-solid fa-crosshairs"></span>';
         place.append(document.createTextNode(this.label('placeOnPhoto')));
         place.addEventListener('click', (): void => this.placePending());
 

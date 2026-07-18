@@ -5,11 +5,11 @@
     <strong>{{ label }}</strong>
     {% if currentSort == column %}
         {% if currentDirection == 'asc' %}
-            <i class="fas fa-caret-up"></i>
+            <span class="fas fa-caret-up"></span>
         {% else %}
-            <i class="fas fa-caret-down"></i>
+            <span class="fas fa-caret-down"></span>
         {% endif %}
     {% else %}
-        <i class="fas fa-sort text-muted"></i>
+        <span class="fas fa-sort text-muted"></span>
     {% endif %}
 </button>

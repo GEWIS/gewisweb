@@ -1,8 +1,33 @@
 .container-admin {
-    .navbar-sidebar,
+    --#{$prefix}admin-surface-bg: #{$admin-surface-bg};
+
+    background-color: var(--#{$prefix}admin-surface-bg);
+
+    > aside {
+        align-self: flex-start;
+        position: sticky;
+        top: var(--sticky-offset);
+        height: calc(100vh - var(--sticky-offset));
+        z-index: ($zindex-dropdown - 1);
+    }
+
     .navbar-breadcrumb {
         position: sticky !important;
         top: var(--sticky-offset);
         z-index: ($zindex-dropdown - 1) !important;
+    }
+
+    .panel {
+        --#{$prefix}panel-bg: #{$white};
+    }
+}
+
+@include color-mode(gewis-night) {
+    .container-admin {
+        --#{$prefix}admin-surface-bg: #{$admin-surface-bg-dark};
+
+        .panel {
+            --#{$prefix}panel-bg: #{$panel-bg-dark};
+        }
     }
 }

@@ -10,7 +10,7 @@
             {% include 'partials/filter-toggle.html.twig' with { target: 'activity-filters' } only %}
 
             <a class="btn btn-outline-secondary" href="{{ path('activity/my') }}">
-                <i class="fas fa-chevron-left"></i> {{ 'My upcoming activities'|trans }}
+                <span class="fas fa-chevron-left"></span> {{ 'My upcoming activities'|trans }}
             </a>
 
             {% include 'partials/year-switcher.html.twig' with {

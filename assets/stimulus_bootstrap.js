@@ -17,6 +17,9 @@ import NavDropdownController from './controllers/application/nav_dropdown_contro
 import PrintController from './controllers/application/print_controller.ts';
 import SortableController from './controllers/application/sortable_controller.ts';
 
+// User-specific controllers.
+import ExternalAppSigningController from './controllers/user/external_app_signing_controller.ts';
+
 // Activity-specific controllers.
 import ActivityItemController from './controllers/activity/activity_item_controller.ts';
 import SignupFieldController from './controllers/activity/signup_field_controller.ts';
@@ -48,6 +51,8 @@ app.register('modal-form-target', ModalFormTargetController);
 app.register('nav-dropdown', NavDropdownController);
 app.register('print', PrintController);
 app.register('sortable', SortableController);
+
+app.register('external-app-signing', ExternalAppSigningController);
 
 app.register('activity-item', ActivityItemController);
 app.register('signup-field', SignupFieldController);

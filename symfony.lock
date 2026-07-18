@@ -530,5 +530,8 @@
     },
     "twig/extra-bundle": {
         "version": "v3.22.2"
+    },
+    "web-token/jwt-bundle": {
+        "version": "4.1.7"
     }
 }

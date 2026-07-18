@@ -55,7 +55,7 @@
                                 <td><code class="small">{{ row.representativeEmail }}</code></td>
                                 <td>
                                     {% if row.mfaEnabled %}
-                                        <span class="badge badge-success"><i class="fas fa-shield-halved"></i> {{ 'Enabled'|trans }}</span>
+                                        <span class="badge badge-success"><span class="fas fa-shield-halved"></span> {{ 'Enabled'|trans }}</span>
                                     {% else %}
                                         <span class="badge badge-secondary">{{ 'Disabled'|trans }}</span>
                                     {% endif %}
@@ -64,7 +64,7 @@
                                     <div class="btn-group btn-group-sm" role="group">
                                         <a href="{{ path('admin/users/company-users/sessions', {'id': row.id}) }}"
                                            class="btn btn-outline-secondary">
-                                            <i class="fas fa-display"></i> {{ 'Sessions'|trans }}
+                                            <span class="fas fa-display"></span> {{ 'Sessions'|trans }}
                                         </a>
                                         <button type="button"
                                                 class="btn btn-outline-warning"
@@ -73,7 +73,7 @@
                                                 data-action="{{ path('admin/users/company-users/mfa/reset', {'id': row.id}) }}"
                                                 data-name="{{ row.companyName }}"
                                                 data-csrf-token="{{ csrf_token('admin_mfa_reset-' ~ row.id) }}">
-                                            <i class="fas fa-rotate-left"></i> {{ 'Reset MFA'|trans }}
+                                            <span class="fas fa-rotate-left"></span> {{ 'Reset MFA'|trans }}
                                         </button>
                                     </div>
                                 </td>
@@ -116,7 +116,7 @@
                         <input type="hidden" name="_csrf_token" value="" data-modal-form-target-target="csrfToken">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'Cancel'|trans }}</button>
                         <button type="submit" class="btn btn-warning">
-                            <i class="fas fa-rotate-left"></i> {{ 'Reset MFA'|trans }}
+                            <span class="fas fa-rotate-left"></span> {{ 'Reset MFA'|trans }}
                         </button>
                     </div>
                 </form>

@@ -7,6 +7,7 @@ namespace App\Entity\User;
 use App\Entity\User\Enums\DeviceTypes;
 use App\Repository\User\SessionRepository;
 use DateTimeImmutable;
+use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
@@ -14,6 +15,21 @@ use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\Index;
 
+/**
+ * @psalm-type SessionGdprArrayType = array{
+ *     series: string,
+ *     firewall: string,
+ *     deviceType: string,
+ *     browser: ?string,
+ *     operatingSystem: ?string,
+ *     ipAddress: string,
+ *     userAgent: string,
+ *     createdAt: string,
+ *     lastUsedAt: string,
+ *     expiresAt: string,
+ *     expired: bool,
+ * }
+ */
 #[Entity(repositoryClass: SessionRepository::class)]
 #[Index(fields: ['userIdentifier', 'firewallName'])]
 #[Index(fields: ['series'])]
@@ -271,5 +287,28 @@ class Session
     public function isExpired(): bool
     {
         return $this->expiresAt <= new DateTimeImmutable();
+    }
+
+    /**
+     * The non-secret device and timing details of the session. The token, its hashes, and the PHP session id are
+     * deliberately left out.
+     *
+     * @return SessionGdprArrayType
+     */
+    public function toGdprArray(): array
+    {
+        return [
+            'series' => $this->getSeries(),
+            'firewall' => $this->getFirewallName(),
+            'deviceType' => $this->getDeviceType()->value,
+            'browser' => $this->getBrowser(),
+            'operatingSystem' => $this->getOperatingSystem(),
+            'ipAddress' => $this->getIpAddress(),
+            'userAgent' => $this->getUserAgent(),
+            'createdAt' => $this->getCreatedAt()->format(DateTimeInterface::ATOM),
+            'lastUsedAt' => $this->getLastUsedAt()->format(DateTimeInterface::ATOM),
+            'expiresAt' => $this->getExpiresAt()->format(DateTimeInterface::ATOM),
+            'expired' => $this->isExpired(),
+        ];
     }
 }

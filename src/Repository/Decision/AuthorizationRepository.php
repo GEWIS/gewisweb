@@ -112,15 +112,13 @@ class AuthorizationRepository extends ServiceEntityRepository
             $qb->where('a.authorizer = :authorizer')
                 ->setParameter(
                     'authorizer',
-                    $member,
-                    Member::class,
+                    $member->getLidnr(),
                 );
         } else {
             $qb->where('a.recipient = :recipient')
                 ->setParameter(
                     'recipient',
-                    $member,
-                    Member::class,
+                    $member->getLidnr(),
                 );
         }
 

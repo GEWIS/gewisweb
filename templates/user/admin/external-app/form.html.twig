@@ -1,0 +1,133 @@
+{% extends 'layout-admin.html.twig' %}
+
+{% set is_edit = externalApp is not null %}
+
+{% block page_title %}
+    {{ (is_edit ? 'Edit external application'|trans : 'Create external application'|trans)|page_title }}{{ 'Users'|trans|page_title }}{{ parent() }}
+{% endblock %}
+
+{% block admin_breadcrumbs %}
+    <li class="breadcrumb-item active" aria-current="page">
+        <a href="{{ path('admin/users/apps/index') }}">{{ 'External applications'|trans }}</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">
+        {{ is_edit ? 'Edit external application'|trans : 'Create external application'|trans }}
+    </li>
+{% endblock %}
+
+{% block contents %}
+    <div class="row justify-content-center">
+        <div class="col col-lg-9 col-xl-8">
+            {# novalidate: required fields sit on hidden steps, where native validation would block the submit invisibly. Server-side validation is authoritative and the stepper opens the first errored step. #}
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+            {{ form_errors(form) }}
+
+            {# Every step stays in the DOM (hidden, never disabled) so the single POST carries all fields. #}
+            <div data-controller="form-stepper external-app-signing">
+                <ol class="form-stepper" role="tablist">
+                    <li class="form-stepper__step" role="presentation">
+                        <button type="button" class="form-stepper__btn" role="tab"
+                                data-form-stepper-target="tab"
+                                data-action="form-stepper#goto" data-form-stepper-index-param="0">
+                            <span class="form-stepper__num">1</span>
+                            <span class="form-stepper__label">{{ 'Application'|trans }}</span>
+                        </button>
+                    </li>
+                    <li class="form-stepper__step" role="presentation">
+                        <button type="button" class="form-stepper__btn" role="tab"
+                                data-form-stepper-target="tab"
+                                data-action="form-stepper#goto" data-form-stepper-index-param="1">
+                            <span class="form-stepper__num">2</span>
+                            <span class="form-stepper__label">{{ 'Signing and delivery'|trans }}</span>
+                        </button>
+                    </li>
+                    <li class="form-stepper__step" role="presentation">
+                        <button type="button" class="form-stepper__btn" role="tab"
+                                data-form-stepper-target="tab"
+                                data-action="form-stepper#goto" data-form-stepper-index-param="2">
+                            <span class="form-stepper__num">3</span>
+                            <span class="form-stepper__label">{{ 'Claims and availability'|trans }}</span>
+                        </button>
+                    </li>
+                </ol>
+
+                <div data-form-stepper-target="step">
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <h3>{{ 'Application'|trans }}</h3>
+                        </div>
+                        <div class="panel-body">
+                            {{ form_row(form.appId) }}
+                            {{ form_row(form.callback) }}
+                            {{ form_row(form.url) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div data-form-stepper-target="step">
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <h3>{{ 'Signing and delivery'|trans }}</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {{ form_row(form.signature, {'attr': {
+                                        'data-external-app-signing-target': 'signature',
+                                        'data-action': 'change->external-app-signing#apply',
+                                    }}) }}
+                                </div>
+                                <div class="col-md-6">{{ form_row(form.tokenDelivery) }}</div>
+                            </div>
+                            <div class="alert alert-warning d-none" role="alert"
+                                 data-external-app-signing-target="warning">
+                                <strong>{{ 'Avoid RS512 for new applications.'|trans }}</strong>
+                                {{ 'It signs with PKCS#1 v1.5, kept only for applications that cannot verify anything stronger. Prefer EdDSA, ES512, or PS512 whenever the application supports them.'|trans }}
+                            </div>
+                            <div data-external-app-signing-target="secretField">
+                                {{ form_row(form.secret, {'attr': {'data-external-app-signing-target': 'secret'}}) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div data-form-stepper-target="step">
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <h3>{{ 'Claims and availability'|trans }}</h3>
+                        </div>
+                        <div class="panel-body">
+                            {{ form_label(form.claims) }}
+                            {% if form.claims.vars.help is not empty %}
+                                <p class="form-text text-muted">{{ form.claims.vars.help|trans }}</p>
+                            {% endif %}
+                            {{ form_widget(form.claims) }}
+                            {{ form_errors(form.claims) }}
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-6">{{ form_row(form.enabled) }}</div>
+                                <div class="col-md-6">{{ form_row(form.expiresAt) }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-3 d-flex justify-content-end gap-2">
+                    <a href="{{ path('admin/users/apps/index') }}" class="btn btn-link">{{ 'Cancel'|trans }}</a>
+                    <button type="button" class="btn btn-outline-secondary"
+                            data-form-stepper-target="back" data-action="form-stepper#previous">
+                        {{ 'Back'|trans }}
+                    </button>
+                    <button type="button" class="btn btn-gewis-primary"
+                            data-form-stepper-target="next" data-action="form-stepper#next">
+                        {{ 'Next'|trans }}
+                    </button>
+                    <button type="submit" class="btn btn-gewis-primary" data-form-stepper-target="submit">
+                        {{ 'Save'|trans }}
+                    </button>
+                </div>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

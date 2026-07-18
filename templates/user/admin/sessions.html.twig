@@ -21,11 +21,11 @@
     <div class="col-12">
         <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
             <a href="{{ path(backRoute) }}" class="btn btn-outline-secondary">
-                <i class="fas fa-chevron-left"></i> {{ 'Back to overview'|trans }}
+                <span class="fas fa-chevron-left"></span> {{ 'Back to overview'|trans }}
             </a>
             {% if sessions|length > 0 %}
                 <button type="button" class="btn btn-gewis-primary" data-bs-toggle="modal" data-bs-target="#modal-admin-terminate-all">
-                    <i class="fas fa-power-off"></i> {{ 'Terminate all sessions'|trans }}
+                    <span class="fas fa-power-off"></span> {{ 'Terminate all sessions'|trans }}
                 </button>
             {% endif %}
         </div>
@@ -72,10 +72,10 @@
                                         </div>
                                         <div class="small text-muted mt-1 d-flex flex-wrap gap-3">
                                             {% if session.ipAddress %}
-                                                <span><i class="fas fa-location-dot"></i> <code>{{ session.ipAddress }}</code></span>
+                                                <span><span class="fas fa-location-dot"></span> <code>{{ session.ipAddress }}</code></span>
                                             {% endif %}
-                                            <span><i class="fas fa-clock-rotate-left"></i> {{ 'Last seen %date%'|trans({'%date%': session.lastUsedAt|date('M j, Y H:i')}) }}</span>
-                                            <span><i class="fas fa-calendar-day"></i> {{ 'Signed in %date%'|trans({'%date%': session.createdAt|date('M j, Y H:i')}) }}</span>
+                                            <span><span class="fas fa-clock-rotate-left"></span> {{ 'Last seen %date%'|trans({'%date%': session.lastUsedAt|date('M j, Y H:i')}) }}</span>
+                                            <span><span class="fas fa-calendar-day"></span> {{ 'Signed in %date%'|trans({'%date%': session.createdAt|date('M j, Y H:i')}) }}</span>
                                         </div>
                                         {% if session.userAgent %}
                                             <div class="collapse mt-2" id="ua-{{ session.series }}">
@@ -91,14 +91,14 @@
                                                 data-action="{{ path(terminateRoute, routeParams|merge({'series': session.series})) }}"
                                                 data-csrf-token="{{ csrf_token('admin_session_terminate-' ~ session.series) }}"
                                                 data-name="{{ displayName }}">
-                                            <i class="fas fa-trash"></i> {{ 'Terminate'|trans }}
+                                            <span class="fas fa-trash"></span> {{ 'Terminate'|trans }}
                                         </button>
                                         {% if session.userAgent %}
                                             <button type="button"
                                                     class="btn btn-sm btn-outline-secondary"
                                                     data-bs-toggle="collapse"
                                                     data-bs-target="#ua-{{ session.series }}">
-                                                <i class="fas fa-circle-info"></i> {{ 'Details'|trans }}
+                                                <span class="fas fa-circle-info"></span> {{ 'Details'|trans }}
                                             </button>
                                         {% endif %}
                                     </div>

@@ -7,9 +7,9 @@
 {% elseif enum('App\\Entity\\User\\Enums\\UserTypes').User === app.user.getUserType %}
     {% if is_granted('ROLE_ACTIVE_MEMBER') or is_granted('ROLE_BOARD') %}
         {% set activityActive = is_module_active(['activity']) %}
-        <li class="nav-item dropdown {{ activityActive ? 'active default open' : '' }}">
+        <li class="nav-item dropdown dropend {{ activityActive ? 'active default open' : '' }}">
             <a class="nav-link p-3 dropdown-toggle"
-               href="#" data-bs-toggle="dropdown" aria-expanded="{{ activityActive ? 'true' : 'false' }}">
+               href="#" data-bs-toggle="dropdown" data-bs-offset="0,0" aria-expanded="{{ activityActive ? 'true' : 'false' }}">
                 {{ 'Activities'|trans }}
             </a>
             <ul class="dropdown-menu">
@@ -47,9 +47,9 @@
     {% endif %}
     {% if is_granted('ROLE_COMPANY_ADMIN') or is_granted('ROLE_BOARD') %}
         {% set companyActive = is_module_active(['career']) %}
-        <li class="nav-item dropdown {{ companyActive ? 'active default open' : '' }}">
+        <li class="nav-item dropdown dropend {{ companyActive ? 'active default open' : '' }}">
             <a class="nav-link p-3 dropdown-toggle"
-               href="#" data-bs-toggle="dropdown" aria-expanded="{{ companyActive ? 'true' : 'false' }}">
+               href="#" data-bs-toggle="dropdown" data-bs-offset="0,0" aria-expanded="{{ companyActive ? 'true' : 'false' }}">
                 {{ 'Career'|trans }}
             </a>
             <ul class="dropdown-menu">
@@ -73,8 +73,8 @@
     {% endif %}
     {% if is_granted('ROLE_BOARD') %}
         {% set educationActive = is_module_active(['education']) %}
-        <li class="nav-item dropdown {{ educationActive ? 'active default open' : '' }}">
-            <a class="nav-link p-3 dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="{{ educationActive ? 'true' : 'false' }}">
+        <li class="nav-item dropdown dropend {{ educationActive ? 'active default open' : '' }}">
+            <a class="nav-link p-3 dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-offset="0,0" aria-expanded="{{ educationActive ? 'true' : 'false' }}">
                 {{ 'Education'|trans }}
             </a>
             <ul class="dropdown-menu">
@@ -91,8 +91,8 @@
             </ul>
         </li>
         {% set frontpageActive = is_module_active(['frontpage']) %}
-        <li class="nav-item dropdown {{ frontpageActive ? 'active default open' : '' }}">
-            <a class="nav-link p-3 dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="{{ educationActive ? 'true' : 'false' }}">
+        <li class="nav-item dropdown dropend {{ frontpageActive ? 'active default open' : '' }}">
+            <a class="nav-link p-3 dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-offset="0,0" aria-expanded="{{ educationActive ? 'true' : 'false' }}">
                 {{ 'Frontpage'|trans }}
             </a>
             <ul class="dropdown-menu">
@@ -109,9 +109,9 @@
             </ul>
         </li>
         {% set photoActive = is_module_active(['photo']) %}
-        <li class="nav-item dropdown {{ photoActive ? 'active default open' : '' }}">
+        <li class="nav-item dropdown dropend {{ photoActive ? 'active default open' : '' }}">
             <a class="nav-link p-3 dropdown-toggle"
-               href="#" data-bs-toggle="dropdown" aria-expanded="{{ photoActive ? 'true' : 'false' }}">
+               href="#" data-bs-toggle="dropdown" data-bs-offset="0,0" aria-expanded="{{ photoActive ? 'true' : 'false' }}">
                 {{ 'Photos'|trans }}
             </a>
             <ul class="dropdown-menu">
@@ -130,15 +130,20 @@
     {% endif %}
     {% if is_granted('ROLE_ADMIN') %}
         {% set userActive = is_module_active(['user']) %}
-        <li class="nav-item dropdown {{ userActive ? 'active default open' : '' }}">
+        <li class="nav-item dropdown dropend {{ userActive ? 'active default open' : '' }}">
             <a class="nav-link p-3 dropdown-toggle"
-               href="#" data-bs-toggle="dropdown" aria-expanded="{{ userActive ? 'true' : 'false' }}">
+               href="#" data-bs-toggle="dropdown" data-bs-offset="0,0" aria-expanded="{{ userActive ? 'true' : 'false' }}">
                 {{ 'Users'|trans }}
             </a>
             <ul class="dropdown-menu">
                 <li>
                     <a class="dropdown-item" href="{{ path('admin/users/api/index') }}">
                         {{ 'API Users'|trans }}
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="{{ path('admin/users/apps/index') }}">
+                        {{ 'External Apps'|trans }}
                     </a>
                 </li>
                 <li>
@@ -155,11 +160,11 @@
         </li>
     {% endif %}
 {% endif %}
-<hr class="text-white-50 mt-auto mb-0">
+<hr class="mt-auto mb-0">
 <li class="nav-item">
     {% set commit = app.request.server.get('GIT_COMMIT') %}
     <a class="nav-link p-3" target="_blank"
        href="https://github.com/gewis/gewisweb/commit/{{ commit }}">
-        <small><i class="fab fa-github"></i> {{ commit|slice(0, 7) }}</small>
+        <small><span class="fab fa-github"></span> {{ commit|slice(0, 7) }}</small>
     </a>
 </li>

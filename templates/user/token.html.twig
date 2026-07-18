@@ -1,4 +1,39 @@
 {% extends 'layout.html.twig' %}
 
+{% block page_title %}{{ 'Authorise application'|trans }}{{ parent() }}{% endblock %}
+
 {% block contents %}
+    <div class="row justify-content-center">
+        <div class="col-md-9 col-lg-7 col-xl-6">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3>{{ 'Authorise %app% to use your account?'|trans({'%app%': appId}) }}</h3>
+                </div>
+                <div class="panel-body">
+                    {% if reminder %}
+                        <p class="text-muted">
+                            {{ 'It has been more than 90 days since you last used %app%. As a reminder, it has access to:'|trans({'%app%': appId}) }}
+                        </p>
+                    {% else %}
+                        <p class="text-muted">{{ 'The application will receive the following information:'|trans }}</p>
+                    {% endif %}
+                    <ul>
+                        {% for claim in claims %}
+                            <li>{{ claim.label|trans }}</li>
+                        {% endfor %}
+                    </ul>
+                    {{ form_start(form) }}
+                    <div class="d-flex gap-2">
+                        {% if reminder %}
+                            {{ form_widget(form.continue, {'attr': {'class': 'btn btn-gewis-primary'}}) }}
+                        {% else %}
+                            {{ form_widget(form.cancel, {'attr': {'class': 'btn btn-secondary'}}) }}
+                            {{ form_widget(form.authorise, {'attr': {'class': 'btn btn-gewis-primary'}}) }}
+                        {% endif %}
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

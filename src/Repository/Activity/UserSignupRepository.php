@@ -34,8 +34,7 @@ class UserSignupRepository extends ServiceEntityRepository
         $qb->where('s.user = :member')
             ->setParameter(
                 'member',
-                $member,
-                Member::class,
+                $member->getLidnr(),
             );
 
         return $qb->getQuery()->getResult();

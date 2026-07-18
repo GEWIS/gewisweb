@@ -26,7 +26,7 @@
                 } only %}
             {% endif %}
             <a href="{{ path('admin/photos/albums_create') }}" class="btn btn-gewis-primary">
-                <i class="fas fa-plus"></i> {{ 'Create album'|trans }}
+                <span class="fas fa-plus"></span> {{ 'Create album'|trans }}
             </a>
         </div>
     </div>
@@ -59,7 +59,7 @@
                                 <p class="fw-semibold mb-0">{{ album.name }}</p>
                                 {% if album.albumCount > 0 or album.getPhotoCount(false) > 0 %}
                                     <p class="text-danger small mt-2 mb-0">
-                                        <i class="fa-solid fa-triangle-exclamation me-1"></i>
+                                        <span class="fa-solid fa-triangle-exclamation me-1"></span>
                                         {{ 'Its sub-albums and photos are deleted as well. This cannot be undone.'|trans }}
                                     </p>
                                 {% endif %}

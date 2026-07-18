@@ -1,0 +1,107 @@
+.profile-header {
+    h1 {
+        margin-bottom: 0.5rem;
+    }
+}
+
+.profile-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.profile-details {
+    margin: 0;
+}
+
+.profile-detail {
+    display: grid;
+    grid-template-columns: 10rem 1fr;
+    gap: 0.75rem;
+    padding: 0.6rem 0;
+
+    & + & {
+        border-top: var(--#{$prefix}border-width) solid var(--#{$prefix}border-color);
+    }
+
+    dt {
+        color: var(--#{$prefix}secondary-color);
+        font-weight: 600;
+    }
+
+    dd {
+        margin: 0;
+    }
+
+    @include media-breakpoint-down(sm) {
+        grid-template-columns: 1fr;
+        gap: 0.1rem;
+    }
+}
+
+.profile-note {
+    margin: 1rem 0 0;
+    color: var(--#{$prefix}secondary-color);
+}
+
+.profile-address-tabs {
+    --#{$prefix}nav-pills-link-active-bg: #{$gewis-red};
+    --#{$prefix}nav-link-color: var(--#{$prefix}secondary-color);
+    --#{$prefix}nav-link-hover-color: var(--#{$prefix}body-color);
+
+    gap: 0.25rem;
+    margin-bottom: 0.75rem;
+}
+
+.profile-committee-group + .profile-committee-group {
+    margin-top: 1.25rem;
+}
+
+.profile-committee-label {
+    color: var(--#{$prefix}secondary-color);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 0.25rem;
+}
+
+.profile-committee {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.55rem 0;
+    border-top: var(--#{$prefix}border-width) solid var(--#{$prefix}border-color);
+}
+
+.profile-committee-name {
+    font-weight: 700;
+}
+
+.profile-committee-past {
+    color: var(--#{$prefix}secondary-color);
+}
+
+.profile-photo-panel {
+    overflow: hidden;
+}
+
+.profile-photo-thumb {
+    aspect-ratio: 4 / 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--#{$prefix}secondary-bg);
+    color: var(--#{$prefix}secondary-color);
+    font-size: 3.5rem;
+}
+
+.profile-photo-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.9rem;
+    font-weight: 600;
+    border-top: var(--#{$prefix}border-width) solid var(--#{$prefix}border-color);
+}

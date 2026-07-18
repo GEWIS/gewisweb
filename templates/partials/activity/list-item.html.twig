@@ -57,15 +57,15 @@
                 </div>
 
                 <div class="d-flex flex-wrap align-items-center gap-2 text-muted">
-                    <span class="small"><i class="fas fa-location-dot"></i> {{ activity.getLocation|localise_text }}</span>
-                    <span class="small"><i class="fas fa-tag"></i> {{ activity.getCosts|localise_text }}</span>
+                    <span class="small"><span class="fas fa-location-dot"></span> {{ activity.getLocation|localise_text }}</span>
+                    <span class="small"><span class="fas fa-tag"></span> {{ activity.getCosts|localise_text }}</span>
                     {% set signupList = activity.getRelevantSignupList %}
                     {% if not activity.isCancelled and null !== signupList %}
                         {% if signupList.isOpen %}
                             {% set secondsLeft = signupList.getCloseDate.timestamp - now.timestamp %}
                             {% set tone = secondsLeft < 86400 ? 'badge-danger' : (secondsLeft < 604800 ? 'badge-warning' : 'badge-tag') %}
                             <span class="badge badge-squared text-wrap {{ tone }}">
-                                <i class="fas fa-ticket"></i>
+                                <span class="fas fa-ticket"></span>
                                 {{ 'Sign-up closes:'|trans }}
                                 {{ signupList.getCloseDate|format_datetime(pattern: 'EEE d MMM. HH:mm', locale: app.request.locale) }} ({{ 'in %duration%'|trans({'%duration%': human_time_diff(now, signupList.getCloseDate)}) }})
                                 {% if activity.countPendingSignupLists > 1 %}
@@ -74,7 +74,7 @@
                             </span>
                         {% else %}
                             <span class="badge badge-squared text-wrap badge-tag">
-                                <i class="fas fa-ticket"></i>
+                                <span class="fas fa-ticket"></span>
                                 {{ 'Sign-up opens:'|trans }}
                                 {{ signupList.getOpenDate|format_datetime(pattern: 'EEE d MMM. HH:mm', locale: app.request.locale) }} ({{ 'in %duration%'|trans({'%duration%': human_time_diff(now, signupList.getOpenDate)}) }})
                                 {% if activity.countPendingSignupLists > 1 %}

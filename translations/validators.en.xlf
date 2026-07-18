@@ -17,6 +17,10 @@
         <source>Enter a 6-digit authenticator code or a 16-character lowercase-hex backup code.</source>
         <target state="translated">Enter a 6-digit authenticator code or a 16-character lowercase-hex backup code.</target>
       </trans-unit>
+      <trans-unit id="TLLxnao" resname="Enter a callback URL.">
+        <source>Enter a callback URL.</source>
+        <target>Enter a callback URL.</target>
+      </trans-unit>
       <trans-unit id="iXcFJXc" resname="Enter a closing date and time.">
         <source>Enter a closing date and time.</source>
         <target state="translated">Enter a closing date and time.</target>
@@ -44,6 +48,14 @@
       <trans-unit id="x.FTgH0" resname="Enter an album name.">
         <source>Enter an album name.</source>
         <target state="translated">Enter an album name.</target>
+      </trans-unit>
+      <trans-unit id="aSu4P43" resname="Enter an application URL.">
+        <source>Enter an application URL.</source>
+        <target>Enter an application URL.</target>
+      </trans-unit>
+      <trans-unit id="HcWa7gN" resname="Enter an application identifier.">
+        <source>Enter an application identifier.</source>
+        <target>Enter an application identifier.</target>
       </trans-unit>
       <trans-unit id="IoicRFz" resname="Enter an email address.">
         <source>Enter an email address.</source>

@@ -16,14 +16,14 @@ use Doctrine\ORM\Mapping\ManyToOne;
 /**
  * Log when a member has authenticated for an external app.
  *
- * @psalm-type ApiAppAuthenticationGdprArrayType = array{
+ * @psalm-type ExternalAppAuthenticationGdprArrayType = array{
  *     id: int,
  *     app_id: string,
  *     time: string,
  * }
  */
 #[Entity]
-class ApiAppAuthentication
+class ExternalAppAuthentication
 {
     use IdentifiableTrait;
 
@@ -41,13 +41,13 @@ class ApiAppAuthentication
     /**
      * The application that got the authentication.
      */
-    #[ManyToOne(targetEntity: ApiApp::class)]
+    #[ManyToOne(targetEntity: ExternalApp::class)]
     #[JoinColumn(
         name: 'app_id',
         referencedColumnName: 'id',
         nullable: false,
     )]
-    private ApiApp $apiApp;
+    private ExternalApp $externalApp;
 
     /**
      * Time of authentication.
@@ -65,14 +65,14 @@ class ApiAppAuthentication
         $this->user = $user;
     }
 
-    public function getApiApp(): ApiApp
+    public function getExternalApp(): ExternalApp
     {
-        return $this->apiApp;
+        return $this->externalApp;
     }
 
-    public function setApiApp(ApiApp $apiApp): void
+    public function setExternalApp(ExternalApp $externalApp): void
     {
-        $this->apiApp = $apiApp;
+        $this->externalApp = $externalApp;
     }
 
     public function getTime(): DateTime
@@ -86,13 +86,13 @@ class ApiAppAuthentication
     }
 
     /**
-     * @return ApiAppAuthenticationGdprArrayType
+     * @return ExternalAppAuthenticationGdprArrayType
      */
     public function toGdprArray(): array
     {
         return [
             'id' => $this->getId(),
-            'app_id' => $this->getApiApp()->getAppId(),
+            'app_id' => $this->getExternalApp()->getAppId(),
             'time' => $this->getTime()->format(DateTimeInterface::ATOM),
         ];
     }

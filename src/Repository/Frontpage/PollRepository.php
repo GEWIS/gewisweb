@@ -95,8 +95,7 @@ class PollRepository extends ServiceEntityRepository
         $qb->where('p.creator = :member')
             ->setParameter(
                 'member',
-                $member,
-                Member::class,
+                $member->getLidnr(),
             );
 
         return $qb->getQuery()->getResult();
@@ -113,8 +112,7 @@ class PollRepository extends ServiceEntityRepository
         $qb->where('p.approver = :member')
             ->setParameter(
                 'member',
-                $member,
-                Member::class,
+                $member->getLidnr(),
             );
 
         return $qb->getQuery()->getResult();

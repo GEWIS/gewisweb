@@ -211,28 +211,10 @@ parameters:
 			path: src/Entity/Decision/SubDecision/Reappointment.php
 
 		-
-			message: '#^Property App\\Entity\\User\\ApiApp\:\:\$callback is never written, only read\.$#'
-			identifier: property.onlyRead
-			count: 1
-			path: src/Entity/User/ApiApp.php
-
-		-
-			message: '#^Property App\\Entity\\User\\ApiApp\:\:\$claims is never written, only read\.$#'
-			identifier: property.onlyRead
-			count: 1
-			path: src/Entity/User/ApiApp.php
-
-		-
-			message: '#^Property App\\Entity\\User\\ApiApp\:\:\$claims type mapping mismatch\: database can contain list\<App\\Entity\\User\\Enums\\JWTClaims\>\|null but property expects array\<App\\Entity\\User\\Enums\\JWTClaims\>\.$#'
+			message: '#^Property App\\Entity\\User\\ExternalApp\:\:\$claims type mapping mismatch\: database can contain list\<App\\Entity\\User\\Enums\\JWTClaims\>\|null but property expects array\<App\\Entity\\User\\Enums\\JWTClaims\>\.$#'
 			identifier: doctrine.columnType
 			count: 1
-			path: src/Entity/User/ApiApp.php
-
-		-
-			message: '#^Property App\\Entity\\User\\ApiApp\:\:\$url is never written, only read\.$#'
-			identifier: property.onlyRead
-			count: 1
-			path: src/Entity/User/ApiApp.php
+			path: src/Entity/User/ExternalApp.php
 
 		-
 			message: '#^Property App\\Entity\\User\\CompanyUser\:\:\$company is never written, only read\.$#'

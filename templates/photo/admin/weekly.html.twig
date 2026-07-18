@@ -45,11 +45,11 @@
                         {% elseif canHide %}
                             <button type="button" class="btn btn-outline-secondary text-danger"
                                     data-bs-toggle="modal" data-bs-target="#hide-weekly">
-                                <i class="fa-solid fa-eye-slash"></i> {{ 'Hide from anonymous visitors'|trans }}
+                                <span class="fa-solid fa-eye-slash"></span> {{ 'Hide from anonymous visitors'|trans }}
                             </button>
                         {% else %}
                             <p class="text-muted small mb-0">
-                                <i class="fa-solid fa-circle-info me-1"></i>
+                                <span class="fa-solid fa-circle-info me-1"></span>
                                 {{ 'The photo of the week can only be hidden on Monday morning, before noon.'|trans }}
                             </p>
                         {% endif %}

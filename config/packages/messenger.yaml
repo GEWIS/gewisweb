@@ -56,6 +56,7 @@ framework:
             'App\Message\Activity\ExternalSignupTokenEmail': high_priority
             'App\Message\Activity\ExternalSignupResendVerificationEmail': high_priority
             'App\Message\Activity\OrganiserAnnouncementEmail': bulk
+            'App\Message\User\ExportUserDataMessage': bulk
             'App\Message\Photo\ProcessImageVariantsMessage': images
             'App\Message\Photo\GenerateAlbumCoverMessage': images
 

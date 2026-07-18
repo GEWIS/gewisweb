@@ -1,8 +1,17 @@
 {% extends 'layout-sidebar.html.twig' %}
 
+{% macro detail(label, value) %}
+    <div class="profile-detail">
+        <dt>{{ label }}</dt>
+        <dd>{{ value }}</dd>
+    </div>
+{% endmacro %}
+
 {% block page_title %}{{ member.getFullName|page_title }}{{ parent() }}{% endblock %}
 
 {% set isSelf = is_granted(member.getSelfRole) %}
+{% set isBoard = is_granted('ROLE_BOARD') %}
+{% set showMembership = isSelf or isBoard %}
 
 {% block sidebar_label %}{{ member.getFullName }}{% endblock %}
 {% block sidebar %}
@@ -14,10 +23,165 @@
 {% endblock %}
 
 {% block contents %}
-    <h3>{{ member.getFullName }}</h3>
-    {% if isSelf %}
-        <p>{{ 'We are the same'|trans }}</p>
-    {% else %}
-        <p>{{ 'We are NOT the same'|trans }}</p>
-    {% endif %}
+    <div class="profile">
+        <div class="profile-header mb-0">
+            <h1>{{ member.getFullName }}</h1>
+            <div class="profile-badges">
+                <span class="badge {{ member.getType.badgeClass }}">{{ member.getType.label|trans }}</span>
+                <span class="badge badge-tag">{{ 'Member'|trans }} #{{ member.getLidnr }}</span>
+                <span class="badge badge-tag">{{ 'Generation'|trans }} {{ member.getGeneration }}</span>
+                {% if showMembership %}
+                    {% if member.getType.isStatutoryMember %}
+                        <span class="badge badge-tag">{{ 'Member until %date%'|trans({'%date%': (member.getMembershipEndsOn ?? member.getExpiration)|date('j F Y')}) }}</span>
+                    {% else %}
+                        <span class="badge badge-tag">{{ 'Graduate until %date%'|trans({'%date%': member.getExpiration|date('j F Y')}) }}</span>
+                    {% endif %}
+                    {% if member.isKeyholder %}
+                        <span class="badge badge-success"><span class="fas fa-lock"></span> {{ 'Keycode active'|trans }}</span>
+                    {% else %}
+                        <span class="badge badge-tag"><span class="fas fa-lock-open"></span> {{ 'No keycode'|trans }}</span>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-lg-8">
+                {% if isSelf %}
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <h3>{{ 'Personal information'|trans }}</h3>
+                        </div>
+                        <div class="panel-body">
+                            <dl class="profile-details">
+                                {{ _self.detail('Initials'|trans, member.getInitials) }}
+                                {{ _self.detail('First name'|trans, member.getFirstName) }}
+                                {{ _self.detail('Last name'|trans, member.getLastName) }}
+                                <div class="profile-detail">
+                                    <dt>{{ 'Email'|trans }}</dt>
+                                    <dd>
+                                        {% if member.getEmail %}
+                                            <a href="mailto:{{ member.getEmail }}">{{ member.getEmail }}</a>
+                                        {% else %}
+                                            {{ 'Unknown'|trans }}
+                                        {% endif %}
+                                    </dd>
+                                </div>
+                                {{ _self.detail('Birth date'|trans, member.getBirth|date('l j F Y')) }}
+                            </dl>
+                            {% set secretary %}<a href="mailto:secretary@gewis.nl">{{ 'the secretary of GEWIS'|trans }}</a>{% endset %}
+                            <p class="profile-note">
+                                {{ 'If your information is no longer up to date, contact %secretary% to change it. The same contact also handles data removal requests.'|trans({'%secretary%': secretary})|raw }}
+                            </p>
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if isSelf and not member.getAddresses.isEmpty %}
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <h3>{{ 'Address'|trans }}</h3>
+                        </div>
+                        <div class="panel-body">
+                            <ul class="nav nav-pills profile-address-tabs" role="tablist">
+                                {% for address in member.getAddresses %}
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link {{ loop.first ? 'active' }}" type="button" role="tab"
+                                                data-bs-toggle="pill" data-bs-target="#address-{{ loop.index }}">
+                                            {{ address.getType.label|trans }}
+                                        </button>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            <div class="tab-content">
+                                {% for address in member.getAddresses %}
+                                    <div class="tab-pane {{ loop.first ? 'show active' }}" id="address-{{ loop.index }}" role="tabpanel">
+                                        <dl class="profile-details">
+                                            {{ _self.detail('Street and number'|trans, address.getStreet ~ ' ' ~ address.getNumber) }}
+                                            {{ _self.detail('City and postal code'|trans, address.getPostalCode ~ ' ' ~ address.getCity) }}
+                                            {{ _self.detail('Country'|trans, address.getCountry.value|lower|title) }}
+                                            {% if address.getPhone %}
+                                                {{ _self.detail('Phone number'|trans, address.getPhone) }}
+                                            {% endif %}
+                                        </dl>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h3>{{ 'Memberships of committees and fraternities'|trans }}</h3>
+                    </div>
+                    <div class="panel-body">
+                        {% if committees.current is empty and committees.historical is empty %}
+                            <p class="text-muted mb-0">
+                                {% if isSelf %}
+                                    {{ 'You have not been a member of a committee or fraternity.'|trans }}
+                                {% else %}
+                                    {{ '%name% has never been part of a committee or fraternity.'|trans({'%name%': member.getFirstName}) }}
+                                {% endif %}
+                            </p>
+                        {% endif %}
+                        {% if committees.current is not empty %}
+                            <div class="profile-committee-group">
+                                <div class="profile-committee-label">{{ 'Currently a member of'|trans }}</div>
+                                {% for committee in committees.current %}
+                                    <div class="profile-committee">
+                                        <span class="profile-committee-name" title="{{ committee.organ.getName }}">{{ committee.organ.getAbbr }}</span>
+                                        {% if committee.functions is not empty %}
+                                            <span class="text-muted">{{ committee.functions|join(', ') }}</span>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        {% if committees.historical is not empty %}
+                            <div class="profile-committee-group">
+                                <div class="profile-committee-label">{{ 'Previously a member of'|trans }}</div>
+                                {% for committee in committees.historical %}
+                                    <div class="profile-committee">
+                                        <span class="profile-committee-name profile-committee-past" title="{{ committee.organ.getName }}">{{ committee.organ.getAbbr }}</span>
+                                        {% if committee.functions is not empty %}
+                                            <span class="text-muted">{{ committee.functions|join(', ') }}</span>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="panel profile-photo-panel">
+                    <div class="profile-photo-thumb">
+                        <span class="fas fa-user"></span>
+                    </div>
+                    <a class="profile-photo-link" href="{{ path('photo/album', {'type': 'member', 'album': member.getLidnr}) }}">
+                        <span class="fas fa-image"></span>
+                        {{ isSelf ? 'More of my photos'|trans : 'More of their photos'|trans }}
+                    </a>
+                </div>
+
+                {% if isSelf %}
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <h3>{{ 'Security'|trans }}</h3>
+                        </div>
+                        <div class="panel-body">
+                            <p class="text-muted">
+                                {{ 'Manage your logins and see which external applications have accessed your account.'|trans }}
+                            </p>
+                            <a class="btn btn-outline-secondary" href="{{ path('user_security_index') }}">
+                                {{ 'Go to security'|trans }} <span class="fas fa-arrow-right ms-1"></span>
+                            </a>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 {% endblock %}

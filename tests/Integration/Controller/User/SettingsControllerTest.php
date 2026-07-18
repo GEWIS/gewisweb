@@ -8,6 +8,7 @@ use App\Controller\User\SettingsController;
 use App\Entity\User\Enums\UserRoles;
 use App\Entity\User\User;
 use App\Security\User\SudoMode;
+use App\Service\Application\FileStorage;
 use App\Tests\Integration\DatabaseTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,6 +38,7 @@ final class SettingsControllerTest extends DatabaseTestCase
         $response = self::getContainer()->get(SettingsController::class)->settings(
             $request,
             self::getContainer()->get(SudoMode::class),
+            self::getContainer()->get(FileStorage::class),
             $user,
         );
 

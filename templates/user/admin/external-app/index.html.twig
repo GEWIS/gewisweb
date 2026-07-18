@@ -1,0 +1,64 @@
+{% extends 'layout-admin.html.twig' %}
+
+{% block page_title %}{{ 'External applications'|trans|page_title }}{{ 'Users'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block admin_breadcrumbs %}
+    <li class="breadcrumb-item active" aria-current="page">
+        <a href="{{ path('admin/users/apps/index') }}">{{ 'External applications'|trans }}</a>
+    </li>
+{% endblock %}
+
+{% block contents %}
+    <div class="panel">
+        <div class="panel-heading d-flex flex-wrap align-items-center justify-content-between gap-2">
+            <h3>{{ 'External applications'|trans }}</h3>
+            <a href="{{ path('admin/users/apps/create') }}" class="btn btn-gewis-primary">
+                <span class="fas fa-plus"></span> {{ 'Create external application'|trans }}
+            </a>
+        </div>
+        <div class="panel-body">
+            {% if apps is empty %}
+                <p class="text-muted mb-0">{{ 'No external applications are registered.'|trans }}</p>
+            {% else %}
+                <div class="table-responsive">
+                    <table class="table align-middle">
+                        <thead>
+                            <tr>
+                                <th>{{ 'Application'|trans }}</th>
+                                <th>{{ 'Callback'|trans }}</th>
+                                <th>{{ 'Status'|trans }}</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for app in apps %}
+                                <tr>
+                                    <td><code>{{ app.getAppId }}</code></td>
+                                    <td class="text-break"><small class="text-muted">{{ app.getCallback }}</small></td>
+                                    <td>
+                                        {% if app.isActive %}
+                                            <span class="badge badge-success">{{ 'Active'|trans }}</span>
+                                        {% elseif not app.isEnabled %}
+                                            <span class="badge badge-secondary">{{ 'Disabled'|trans }}</span>
+                                        {% else %}
+                                            <span class="badge badge-warning">{{ 'Expired'|trans }}</span>
+                                        {% endif %}
+                                        {% if app.getExpiresAt %}
+                                            <small class="text-muted d-block">{{ 'Until %date%'|trans({'%date%': app.getExpiresAt|date('Y-m-d')}) }}</small>
+                                        {% endif %}
+                                    </td>
+                                    <td class="text-end">
+                                        <a href="{{ path('admin/users/apps/edit', {externalApp: app.getId}) }}"
+                                           class="btn btn-sm btn-outline-secondary">
+                                            <span class="fas fa-pen"></span> {{ 'Edit'|trans }}
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
