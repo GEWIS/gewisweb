@@ -85,6 +85,33 @@ final class ActivityControllerTest extends DatabaseTestCase
         );
     }
 
+    public function testViewObfuscatesTheBoardContactEmail(): void
+    {
+        $this->pushRequest();
+
+        $career = (string) $this->controller()->view($this->approvedActivityId(true))->getContent();
+        $other = (string) $this->controller()->view($this->approvedActivityId(false))->getContent();
+
+        // Career activities use the external-relations board (ceb), others the internal board (cib); neither renders a
+        // plain, scrapable address.
+        self::assertMatchesRegularExpression(
+            '/ceb \[[^\]]+\] gewis\.nl/',
+            $career,
+        );
+        self::assertMatchesRegularExpression(
+            '/cib \[[^\]]+\] gewis\.nl/',
+            $other,
+        );
+        self::assertStringNotContainsString(
+            '@gewis.nl',
+            $career,
+        );
+        self::assertStringNotContainsString(
+            '@gewis.nl',
+            $other,
+        );
+    }
+
     private function controller(): ActivityController
     {
         return self::getContainer()->get(ActivityController::class);

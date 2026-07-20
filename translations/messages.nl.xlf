@@ -2189,6 +2189,10 @@
         <source>Please contact %organizer% or the board (%email%) with any questions or concerns. Have fun!</source>
         <target>Neem contact op met %organizer% of het bestuur (%email%) bij vragen of opmerkingen. Veel plezier!</target>
       </trans-unit>
+      <trans-unit id="7NVRAYy" resname="Please contact the board (%email%) with any questions or concerns. Have fun!">
+        <source>Please contact the board (%email%) with any questions or concerns. Have fun!</source>
+        <target>Neem contact op met het bestuur (%email%) bij vragen of opmerkingen. Veel plezier!</target>
+      </trans-unit>
       <trans-unit id="lwY.3Bl" resname="Please provide both a subject and a message.">
         <source>Please provide both a subject and a message.</source>
         <target>Geef zowel een onderwerp als een bericht op.</target>
@@ -3617,6 +3621,10 @@
         <source>[CANCELLED]</source>
         <target state="translated">[GEANNULEERD]</target>
       </trans-unit>
+      <trans-unit id="NTb776I" resname="[at]">
+        <source>[at]</source>
+        <target>[apenstaartje]</target>
+      </trans-unit>
       <trans-unit id="mC5UFtS" resname="and">
         <source>and</source>
         <target>en</target>
@@ -3700,10 +3708,6 @@
       <trans-unit id="GzaHa85" resname="sub-albums">
         <source>sub-albums</source>
         <target>subalbums</target>
-      </trans-unit>
-      <trans-unit id="CqfqdkM" resname="the organising party">
-        <source>the organising party</source>
-        <target>de organiserende partij</target>
       </trans-unit>
       <trans-unit id="q7soSeR" resname="the secretary of GEWIS">
         <source>the secretary of GEWIS</source>

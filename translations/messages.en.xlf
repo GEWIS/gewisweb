@@ -2189,6 +2189,10 @@
         <source>Please contact %organizer% or the board (%email%) with any questions or concerns. Have fun!</source>
         <target>Please contact %organizer% or the board (%email%) with any questions or concerns. Have fun!</target>
       </trans-unit>
+      <trans-unit id="7NVRAYy" resname="Please contact the board (%email%) with any questions or concerns. Have fun!">
+        <source>Please contact the board (%email%) with any questions or concerns. Have fun!</source>
+        <target>Please contact the board (%email%) with any questions or concerns. Have fun!</target>
+      </trans-unit>
       <trans-unit id="lwY.3Bl" resname="Please provide both a subject and a message.">
         <source>Please provide both a subject and a message.</source>
         <target>Please provide both a subject and a message.</target>
@@ -3617,6 +3621,10 @@
         <source>[CANCELLED]</source>
         <target>[CANCELLED]</target>
       </trans-unit>
+      <trans-unit id="NTb776I" resname="[at]">
+        <source>[at]</source>
+        <target>[at]</target>
+      </trans-unit>
       <trans-unit id="mC5UFtS" resname="and">
         <source>and</source>
         <target>and</target>
@@ -3700,10 +3708,6 @@
       <trans-unit id="GzaHa85" resname="sub-albums">
         <source>sub-albums</source>
         <target>sub-albums</target>
-      </trans-unit>
-      <trans-unit id="CqfqdkM" resname="the organising party">
-        <source>the organising party</source>
-        <target>the organising party</target>
       </trans-unit>
       <trans-unit id="q7soSeR" resname="the secretary of GEWIS">
         <source>the secretary of GEWIS</source>

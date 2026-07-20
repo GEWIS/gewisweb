@@ -30,6 +30,7 @@
 {% endblock %}
 
 {% block contents %}
+    {% set isCareer = activity.getCategory.value == 'career' %}
     {% if activity.isCancelled %}
         <div class="alert alert-danger" role="alert">
             <strong>{{ 'This activity has been cancelled.'|trans }}</strong>
@@ -93,7 +94,7 @@
                             </p>
                         </div>
                     {% endif %}
-                    {% if activity.getCategory.value == 'career' %}
+                    {% if isCareer %}
                         <a class="list-group-item list-group-item-action" href="https://myfuture.tue.nl/"
                            target="_blank" rel="noopener">
                             <img class="img-fluid" style="max-width: 125px;"
@@ -120,11 +121,26 @@
         </aside>
     </div>
 
+    {% set organ = activity.getOrgan %}
+    {% set organInformation = organ is not null ? organ.getApprovedOrganInformation : null %}
+    {% set organEmail = organInformation is not null ? organInformation.getEmail : null %}
+    {# Obfuscate the @ so the addresses are not trivially scraped from the public page. #}
+    {% set atSeparator = ' ' ~ '[at]'|trans ~ ' ' %}
+    {% set boardEmail = ((isCareer ? 'ceb' : 'cib') ~ '@gewis.nl')|replace({'@': atSeparator}) %}
     <p class="text-muted small mt-3">
-        {{ 'Please contact %organizer% or the board (%email%) with any questions or concerns. Have fun!'|trans({
-            '%organizer%': activity.getOrgan is not null ? activity.getOrgan.getName : 'the organising party'|trans,
-            '%email%': 'cib@gewis.nl',
-        }) }}
+        {% if organ is null %}
+            {{ 'Please contact the board (%email%) with any questions or concerns. Have fun!'|trans({
+                '%email%': boardEmail,
+            }) }}
+        {% else %}
+            {% set organizer = organEmail is not empty
+                ? organ.getAbbr ~ ' (' ~ organEmail|replace({'@': atSeparator}) ~ ')'
+                : organ.getAbbr %}
+            {{ 'Please contact %organizer% or the board (%email%) with any questions or concerns. Have fun!'|trans({
+                '%organizer%': organizer,
+                '%email%': boardEmail,
+            }) }}
+        {% endif %}
     </p>
 
     {% if signupListViews is not empty %}
