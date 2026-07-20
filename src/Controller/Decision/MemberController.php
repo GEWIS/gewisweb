@@ -8,6 +8,7 @@ use App\Entity\Decision\Member;
 use App\Entity\User\Enums\UserRoles;
 use App\Entity\User\User;
 use App\Repository\Decision\MemberRepository;
+use App\Repository\Photo\ProfilePhotoRepository;
 use App\Service\Decision\MemberInfoService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -35,6 +36,7 @@ class MemberController extends AbstractController
     public function __construct(
         private readonly MemberRepository $memberRepository,
         private readonly MemberInfoService $memberInfoService,
+        private readonly ProfilePhotoRepository $profilePhotoRepository,
     ) {
     }
 
@@ -110,11 +112,14 @@ class MemberController extends AbstractController
             }
         }
 
+        $profilePhoto = $this->profilePhotoRepository->getProfilePhotoByLidnr($member->getLidnr());
+
         return $this->render(
             'decision/member.html.twig',
             [
                 'member' => $member,
                 'committees' => $this->memberInfoService->getOrganMemberships($member),
+                'profilePhoto' => $profilePhoto?->getPhoto(),
             ],
         );
     }
