@@ -93,6 +93,13 @@
                             </p>
                         </div>
                     {% endif %}
+                    {% if activity.getCategory.value == 'career' %}
+                        <a class="list-group-item list-group-item-action" href="https://myfuture.tue.nl/"
+                           target="_blank" rel="noopener">
+                            <img class="img-fluid" style="max-width: 125px;"
+                                 src="{{ asset('images/myfuture.png') }}" alt="MyFuture">
+                        </a>
+                    {% endif %}
                 </div>
                 <div class="panel-footer dropdown">
                     <button type="button" class="panel-footer-link btn btn-link p-0 dropdown-toggle"

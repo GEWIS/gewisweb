@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Tests\Integration\Controller\Activity;
 
 use App\Controller\Activity\ActivityController;
+use App\Entity\Activity\Activity;
+use App\Entity\Activity\Enums\ActivityCategories;
 use App\Entity\Decision\AssociationYear;
 use App\Tests\Integration\DatabaseTestCase;
 use DateTime;
@@ -57,9 +59,69 @@ final class ActivityControllerTest extends DatabaseTestCase
         );
     }
 
+    public function testViewShowsTheMyFutureLogoForCareerActivities(): void
+    {
+        $this->pushRequest();
+
+        $response = $this->controller()->view($this->approvedActivityId(true));
+
+        self::assertSame(
+            Response::HTTP_OK,
+            $response->getStatusCode(),
+        );
+        self::assertStringContainsString(
+            'myfuture.tue.nl',
+            (string) $response->getContent(),
+        );
+    }
+
+    public function testViewOmitsTheMyFutureLogoForOtherCategories(): void
+    {
+        $this->pushRequest();
+
+        self::assertStringNotContainsString(
+            'myfuture.tue.nl',
+            (string) $this->controller()->view($this->approvedActivityId(false))->getContent(),
+        );
+    }
+
     private function controller(): ActivityController
     {
         return self::getContainer()->get(ActivityController::class);
+    }
+
+    private function approvedActivityId(bool $career): int
+    {
+        $queryBuilder = $this->entityManager->createQueryBuilder()
+            ->select('a')
+            ->from(
+                Activity::class,
+                'a',
+            )
+            ->join(
+                'a.liveRevision',
+                'lr',
+            )
+            ->andWhere('a.unpublishedAt IS NULL')
+            ->setParameter(
+                'career',
+                ActivityCategories::Career->value,
+            )
+            ->setMaxResults(1);
+
+        $queryBuilder->andWhere(
+            $career
+                ? 'lr.category = :career'
+                : 'lr.category != :career',
+        );
+
+        $activity = $queryBuilder->getQuery()->getOneOrNullResult();
+        self::assertInstanceOf(
+            Activity::class,
+            $activity,
+        );
+
+        return (int) $activity->getId();
     }
 
     private function pushRequest(): void
