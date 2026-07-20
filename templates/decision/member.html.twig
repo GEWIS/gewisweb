@@ -157,9 +157,16 @@
 
             <div class="col-lg-4">
                 <div class="panel profile-photo-panel">
-                    <div class="profile-photo-thumb">
-                        <span class="fas fa-user"></span>
-                    </div>
+                    {% if profilePhoto is not null %}
+                        {% set boxRatio = max(0.6, min(1.5, (1 / (profilePhoto.getAspectRatio ?? 0.75))|round(3))) %}
+                        <div class="profile-photo-thumb" style="aspect-ratio: {{ boxRatio }};">
+                            <img src="{{ image_url(profilePhoto.getPath, 'w640') }}" alt="{{ member.getFullName }}">
+                        </div>
+                    {% else %}
+                        <div class="profile-photo-thumb">
+                            <span class="fas fa-user"></span>
+                        </div>
+                    {% endif %}
                     <a class="profile-photo-link" href="{{ path('photo/album', {'type': 'member', 'album': member.getLidnr}) }}">
                         <span class="fas fa-image"></span>
                         {{ isSelf ? 'More of my photos'|trans : 'More of their photos'|trans }}
