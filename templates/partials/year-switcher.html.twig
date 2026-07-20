@@ -1,5 +1,6 @@
-{# `all_years` (default true) shows the "All years" entry; pass false where a specific year must always be selected. #}
 {% set all_years = all_years ?? true %}
+{% set upcoming = upcoming ?? false %}
+{% set upcoming_route = upcoming_route ?? route %}
 {% if years is not empty %}
     {% set query = app.request.query.all %}
     {% set newer_years = year is not null ? years|filter(y => y > year) : [] %}
@@ -16,10 +17,21 @@
             <button type="button" class="btn btn-outline-secondary dropdown-toggle"
                     data-bs-toggle="dropdown" aria-expanded="false">
                 {# Year 0 is the "undated" bucket (albums without a start date), so it is labelled instead of "0 - 1". #}
-                {{ year is null ? 'All years'|trans : (year > 0 ? (year ~ ' - ' ~ (year + 1)) : 'Undated'|trans) }}
+                {% if year is null %}
+                    {{ upcoming ? 'Upcoming'|trans : 'All years'|trans }}
+                {% else %}
+                    {{ year > 0 ? (year ~ ' - ' ~ (year + 1)) : 'Undated'|trans }}
+                {% endif %}
             </button>
             <ul class="dropdown-menu">
-                {% if all_years %}
+                {% if upcoming %}
+                    <li>
+                        <a class="dropdown-item {{ year is null ? 'active' }}" href="{{ path(upcoming_route, query) }}">
+                            {{ 'Upcoming'|trans }}
+                        </a>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                {% elseif all_years %}
                     <li>
                         <a class="dropdown-item {{ year is null ? 'active' }}" href="{{ path(route, query) }}">
                             {{ 'All years'|trans }}

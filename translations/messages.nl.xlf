@@ -117,10 +117,6 @@
         <source>Activities awaiting review</source>
         <target state="translated">Activiteiten die wachten op beoordeling</target>
       </trans-unit>
-      <trans-unit id="BFqzH5q" resname="Activity Archive">
-        <source>Activity Archive</source>
-        <target state="translated">Activiteitenarchief</target>
-      </trans-unit>
       <trans-unit id="YwgVFXF" resname="Activity Policy">
         <source>Activity Policy</source>
         <target>Activiteitenbeleid</target>
@@ -341,10 +337,6 @@
         <source>Approximate solutions welcome.</source>
         <target state="translated">Benaderende oplossingen zijn welkom.</target>
       </trans-unit>
-      <trans-unit id="YrS2U1U" resname="Archive">
-        <source>Archive</source>
-        <target>Archief</target>
-      </trans-unit>
       <trans-unit id="VTuuaXb" resname="Are you sure you want to delete the selected photos? This cannot be undone.">
         <source>Are you sure you want to delete the selected photos? This cannot be undone.</source>
         <target state="translated">Weet je zeker dat je de geselecteerde foto's wilt verwijderen? Dit kan niet ongedaan worden gemaakt.</target>
@@ -388,6 +380,10 @@
       <trans-unit id="cfsy_RA" resname="Auto">
         <source>Auto</source>
         <target>Auto</target>
+      </trans-unit>
+      <trans-unit id="4h60eT0" resname="Avoid RS512 for new applications.">
+        <source>Avoid RS512 for new applications.</source>
+        <target>Vermijd RS512 voor nieuwe applicaties.</target>
       </trans-unit>
       <trans-unit id="z1eSmfk" resname="BM">
         <source>BM</source>
@@ -909,6 +905,14 @@
         <source>Dutch</source>
         <target>Nederlands</target>
       </trans-unit>
+      <trans-unit id="Q0nHBMn" resname="ES512">
+        <source>ES512</source>
+        <target>ES512</target>
+      </trans-unit>
+      <trans-unit id="SovLeQu" resname="EdDSA (recommended)">
+        <source>EdDSA (recommended)</source>
+        <target>EdDSA (aanbevolen)</target>
+      </trans-unit>
       <trans-unit id="M.l1CPU" resname="Edit">
         <source>Edit</source>
         <target state="translated">Bewerken</target>
@@ -1128,6 +1132,14 @@
       <trans-unit id="LoKQJVt" resname="Financial Audit Committees">
         <source>Financial Audit Committees</source>
         <target state="translated">Kas Controle Commissies</target>
+      </trans-unit>
+      <trans-unit id="wTcft_z" resname="Find any activity across every association year.">
+        <source>Find any activity across every association year.</source>
+        <target>Vind een activiteit uit alle verenigingsjaren.</target>
+      </trans-unit>
+      <trans-unit id="Q_Zc.PZ" resname="Find any album across every association year.">
+        <source>Find any album across every association year.</source>
+        <target>Vind een album uit alle verenigingsjaren.</target>
       </trans-unit>
       <trans-unit id="h6eEHVD" resname="First name">
         <source>First name</source>
@@ -1509,6 +1521,10 @@
         <source>It is pointing somewhere. Just not here.</source>
         <target state="translated">Het verwijst ergens naar. Alleen niet hier.</target>
       </trans-unit>
+      <trans-unit id="7gJgnyX" resname="It signs with PKCS#1 v1.5, kept only for applications that cannot verify anything stronger. Prefer EdDSA, ES512, or PS512 whenever the application supports them.">
+        <source>It signs with PKCS#1 v1.5, kept only for applications that cannot verify anything stronger. Prefer EdDSA, ES512, or PS512 whenever the application supports them.</source>
+        <target>Het ondertekent met PKCS#1 v1.5 en blijft alleen behouden voor applicaties die niets sterkers kunnen verifiëren. Kies bij voorkeur EdDSA, ES512 of PS512 wanneer de applicatie dit ondersteunt.</target>
+      </trans-unit>
       <trans-unit id="ZMKVhSD" resname="It was declared, but never initialised.">
         <source>It was declared, but never initialised.</source>
         <target state="translated">Het werd gedeclareerd, maar nooit geïnitialiseerd.</target>
@@ -1733,10 +1749,6 @@
         <source>Modern applications require the URL fragment.</source>
         <target>Moderne applicaties vereisen het URL-fragment.</target>
       </trans-unit>
-      <trans-unit id="NpQ8GYT" resname="Pick the strongest algorithm the application supports. Modern profiles are verified through the JWKS endpoint.">
-        <source>Pick the strongest algorithm the application supports. Modern profiles are verified through the JWKS endpoint.</source>
-        <target>Kies het sterkste algoritme dat de applicatie ondersteunt. Moderne profielen worden geverifieerd via het JWKS-eindpunt.</target>
-      </trans-unit>
       <trans-unit id="wHBscUb" resname="More of my photos">
         <source>More of my photos</source>
         <target>Meer van mijn foto's</target>
@@ -1792,14 +1804,6 @@
       <trans-unit id="Y4A_lV7" resname="My Photos">
         <source>My Photos</source>
         <target state="translated">Mijn foto's</target>
-      </trans-unit>
-      <trans-unit id="2xos6Ug" resname="My past activities">
-        <source>My past activities</source>
-        <target>Mijn afgelopen activiteiten</target>
-      </trans-unit>
-      <trans-unit id="rbP4ntw" resname="My upcoming activities">
-        <source>My upcoming activities</source>
-        <target>Mijn aankomende activiteiten</target>
       </trans-unit>
       <trans-unit id="btbbZiF" resname="N/A">
         <source>N/A</source>
@@ -2081,6 +2085,10 @@
         <source>PR Officer</source>
         <target state="translated">PR-Functionaris</target>
       </trans-unit>
+      <trans-unit id="GUcjJPC" resname="PS512">
+        <source>PS512</source>
+        <target>PS512</target>
+      </trans-unit>
       <trans-unit id="zvMpy.G" resname="Page %page% of %totalPages% (%totalCount% records)">
         <source>Page %page% of %totalPages% (%totalCount% records)</source>
         <target state="translated">Pagina %page% van %totalPages% (%totalCount% records)</target>
@@ -2156,6 +2164,10 @@
       <trans-unit id="C_d4kR9" resname="Pick a long, unique password - at least 16 characters and not found in any known data breach.">
         <source>Pick a long, unique password - at least 16 characters and not found in any known data breach.</source>
         <target state="translated">Kies een lang, uniek wachtwoord - minimaal 16 tekens lang en niet voorkomend in bekende datalekken.</target>
+      </trans-unit>
+      <trans-unit id="NpQ8GYT" resname="Pick the strongest algorithm the application supports. Modern profiles are verified through the JWKS endpoint.">
+        <source>Pick the strongest algorithm the application supports. Modern profiles are verified through the JWKS endpoint.</source>
+        <target>Kies het sterkste algoritme dat de applicatie ondersteunt. Moderne profielen worden geverifieerd via het JWKS-eindpunt.</target>
       </trans-unit>
       <trans-unit id="u7c4pso" resname="Place on photo">
         <source>Place on photo</source>
@@ -2480,6 +2492,14 @@
       <trans-unit id="SdNWA5t" resname="Search">
         <source>Search</source>
         <target state="translated">Zoeken</target>
+      </trans-unit>
+      <trans-unit id="i.thJTY" resname="Search activities">
+        <source>Search activities</source>
+        <target>Activiteiten zoeken</target>
+      </trans-unit>
+      <trans-unit id=".eUwBmk" resname="Search albums">
+        <source>Search albums</source>
+        <target>Albums zoeken</target>
       </trans-unit>
       <trans-unit id="y7lUoQr" resname="Search bodies">
         <source>Search bodies</source>
@@ -3201,6 +3221,10 @@
         <source>Type</source>
         <target state="translated">Type</target>
       </trans-unit>
+      <trans-unit id="6ZlqFUZ" resname="Type to search for albums across every year.">
+        <source>Type to search for albums across every year.</source>
+        <target>Typ om albums uit alle verenigingsjaren te zoeken.</target>
+      </trans-unit>
       <trans-unit id="uHprCpr" resname="URL fragment (#token=)">
         <source>URL fragment (#token=)</source>
         <target>URL-fragment (#token=)</target>
@@ -3264,6 +3288,10 @@
       <trans-unit id="DoLVTva" resname="Until %date%">
         <source>Until %date%</source>
         <target>Tot %date%</target>
+      </trans-unit>
+      <trans-unit id="itsx4Eu" resname="Upcoming">
+        <source>Upcoming</source>
+        <target>Aankomend</target>
       </trans-unit>
       <trans-unit id="ZOvPU2x" resname="Upload exams">
         <source>Upload exams</source>
@@ -3692,26 +3720,6 @@
       <trans-unit id="AdY3YcR" resname="¹ Fields marked with this symbol are only shared with the board and the organiser of the activity.">
         <source>¹ Fields marked with this symbol are only shared with the board and the organiser of the activity.</source>
         <target>¹ Velden met dit symbool worden alleen gedeeld met het bestuur en de organisator van de activiteit.</target>
-      </trans-unit>
-      <trans-unit id="4h60eT0" resname="Avoid RS512 for new applications.">
-        <source>Avoid RS512 for new applications.</source>
-        <target>Vermijd RS512 voor nieuwe applicaties.</target>
-      </trans-unit>
-      <trans-unit id="SovLeQu" resname="EdDSA (recommended)">
-        <source>EdDSA (recommended)</source>
-        <target>EdDSA (aanbevolen)</target>
-      </trans-unit>
-      <trans-unit id="Q0nHBMn" resname="ES512">
-        <source>ES512</source>
-        <target>ES512</target>
-      </trans-unit>
-      <trans-unit id="7gJgnyX" resname="It signs with PKCS#1 v1.5, kept only for applications that cannot verify anything stronger. Prefer EdDSA, ES512, or PS512 whenever the application supports them.">
-        <source>It signs with PKCS#1 v1.5, kept only for applications that cannot verify anything stronger. Prefer EdDSA, ES512, or PS512 whenever the application supports them.</source>
-        <target>Het ondertekent met PKCS#1 v1.5 en blijft alleen behouden voor applicaties die niets sterkers kunnen verifiëren. Kies bij voorkeur EdDSA, ES512 of PS512 wanneer de applicatie dit ondersteunt.</target>
-      </trans-unit>
-      <trans-unit id="GUcjJPC" resname="PS512">
-        <source>PS512</source>
-        <target>PS512</target>
       </trans-unit>
     </body>
   </file>

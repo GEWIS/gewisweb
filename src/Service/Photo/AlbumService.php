@@ -90,6 +90,41 @@ final readonly class AlbumService
             $associationYear->getEndDate(),
         );
 
+        return $this->bucketViewableAlbumsByMonth(
+            $albums,
+            $search,
+        );
+    }
+
+    /**
+     * The viewable root albums whose name matches the search, across every association year, grouped by month (keyed
+     * 'Y-m', most recent month first) for the cross-year album search page. The repository restricts to published,
+     * dated, root albums; the voter still runs per album for the graduate rule.
+     *
+     * @return array<string, Album[]>
+     */
+    public function searchViewableAlbums(string $search): array
+    {
+        // The name match already ran in SQL, so no further search filter is applied while bucketing.
+        return $this->bucketViewableAlbumsByMonth(
+            $this->albumRepository->searchPublishedAlbums($search),
+            null,
+        );
+    }
+
+    /**
+     * Keep only the albums the current user may view (published, plus the graduate rule via {@see AlbumVoter}),
+     * optionally narrowing to those whose name contains $search, and bucket them by month (keyed 'Y-m') preserving the
+     * given order.
+     *
+     * @param Album[] $albums
+     *
+     * @return array<string, Album[]>
+     */
+    private function bucketViewableAlbumsByMonth(
+        array $albums,
+        ?string $search,
+    ): array {
         $grouped = [];
         foreach ($albums as $album) {
             $start = $album->getStartDateTime();

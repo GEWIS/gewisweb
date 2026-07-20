@@ -4,14 +4,19 @@
 
 {% block contents %}
     <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
-        <h1 class="mb-0">{{ 'My upcoming activities'|trans }}</h1>
+        <h1 class="mb-0">{{ 'My Activities'|trans }}</h1>
 
-        <div class="d-flex flex-wrap gap-2">
+        <div class="d-flex flex-wrap align-items-center gap-2">
             {% include 'partials/filter-toggle.html.twig' with { target: 'activity-filters' } only %}
 
-            <a class="btn btn-outline-secondary" href="{{ path('activity/archive/my') }}">
-                {{ 'My past activities'|trans }} <span class="fas fa-chevron-right"></span>
-            </a>
+            {% include 'partials/year-switcher.html.twig' with {
+                route: 'activity/archive/my',
+                upcoming_route: 'activity/my',
+                upcoming: true,
+                year: null,
+                years: years,
+                all_years: false,
+            } only %}
         </div>
     </div>
 

@@ -6,7 +6,20 @@
     <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
         <h1 class="mb-0">{{ 'Activities'|trans }}</h1>
 
-        {% include 'partials/filter-toggle.html.twig' with { target: 'activity-filters' } only %}
+        <div class="d-flex flex-wrap align-items-center gap-2">
+            {% include 'partials/filter-toggle.html.twig' with { target: 'activity-filters' } only %}
+
+            {% include 'partials/search-toggle.html.twig' with { route: 'activity/search' } only %}
+
+            {% include 'partials/year-switcher.html.twig' with {
+                route: 'activity/archive',
+                upcoming_route: 'activity/index',
+                upcoming: true,
+                year: null,
+                years: years,
+                all_years: false,
+            } only %}
+        </div>
     </div>
 
     {{ component('Activity:ActivityOverview') }}

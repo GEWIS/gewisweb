@@ -10,6 +10,8 @@
             <div class="d-flex flex-wrap align-items-center gap-2">
                 {% include 'partials/filter-toggle.html.twig' with { target: 'photo-filters' } only %}
 
+                {% include 'partials/search-toggle.html.twig' with { route: 'photo/search' } only %}
+
                 {% include 'partials/year-switcher.html.twig' with {
                     route: 'photo/index',
                     year: year,

@@ -1,6 +1,6 @@
 <div {{ attributes }}>
     {# data-live-ignore: keeps the injected label chips intact across re-renders. #}
-    <div class="collapse mb-3" id="activity-filters" data-live-ignore>
+    <div class="collapse mb-3{{ this.crossYear ? ' show' }}" id="activity-filters" data-live-ignore>
         <div class="panel my-0">
             <div class="panel-body">
                 <div class="row g-3 align-items-end">
@@ -9,7 +9,8 @@
                     <input type="search" class="form-control" id="activity-overview-search"
                            placeholder="{{ 'Search by activity name'|trans }}"
                            data-model="debounce(300)|search"
-                           value="{{ this.search }}">
+                           value="{{ this.search }}"
+                           {{ this.crossYear ? 'autofocus' }}>
                 </div>
                 <div class="col-md-4">
                     <label class="form-label" for="activity-overview-category">{{ 'Category'|trans }}</label>
@@ -75,7 +76,7 @@
         </div>
     </div>
 
-    {% if this.past %}
+    {% if this.isGrouped %}
         <div class="mb-2">
             {% for activities in this.activitiesByAssociationYear %}
                 {% set currentMonth = null %}
