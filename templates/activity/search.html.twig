@@ -1,0 +1,19 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}{{ 'Search activities'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block contents %}
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-2">
+        <h1 class="mb-0">{{ 'Search activities'|trans }}</h1>
+
+        <div class="d-flex flex-wrap align-items-center gap-2">
+            {% include 'partials/filter-toggle.html.twig' with { target: 'activity-filters', expanded: true } only %}
+
+            {% include 'partials/search-toggle.html.twig' with { route: 'activity/search', active: true } only %}
+        </div>
+    </div>
+
+    <p class="text-muted">{{ 'Find any activity across every association year.'|trans }}</p>
+
+    {{ component('Activity:ActivityOverview', { crossYear: true }) }}
+{% endblock %}

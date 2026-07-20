@@ -186,8 +186,9 @@ class ActivityRepository extends ServiceEntityRepository
     }
 
     /**
-     * The association years (first calendar year) that have at least one live (approved), past activity, newest first,
-     * for the activity archive year switcher.
+     * The association years (first calendar year) that have at least one live (approved), finished activity, newest
+     * first, for the overview year switcher. Each year links to its archive, which lists that year's finished
+     * activities only, so a year with nothing finished yet (the current year early on) is not offered.
      *
      * @return int[]
      */
@@ -201,7 +202,7 @@ class ActivityRepository extends ServiceEntityRepository
                 'lr',
             )
             ->where('lr.endTime < :now')
-            // Unpublished activities are hidden from the public archive, so they must not contribute a year either.
+            // Unpublished activities are hidden from the public overview, so they must not contribute a year either.
             ->andWhere('a.unpublishedAt IS NULL')
             ->setParameter(
                 'now',
@@ -216,7 +217,7 @@ class ActivityRepository extends ServiceEntityRepository
 
     /**
      * The association years (first calendar year) in which the given member has at least one sign-up for a live
-     * (approved), past activity, newest first, for the "My past activities" year switcher.
+     * (approved), finished activity, newest first, for the "My Activities" year switcher (archive years only).
      *
      * @return int[]
      */
@@ -246,7 +247,7 @@ class ActivityRepository extends ServiceEntityRepository
             ->where('IDENTITY(su.user) = :subscriber')
             ->andWhere('r.endTime < :now')
             ->andWhere('IDENTITY(a.liveRevision) = r.id')
-            // Unpublished activities are hidden from the public/"my" archive, so they must not contribute a year.
+            // Unpublished activities are hidden from the public/"my" overview, so they must not contribute a year.
             ->andWhere('a.unpublishedAt IS NULL')
             ->setParameter(
                 'subscriber',
@@ -290,7 +291,8 @@ class ActivityRepository extends ServiceEntityRepository
      * from that live revision. Correlated EXISTS sub-queries keep the result at one row per activity, so the
      * Paginator counts correctly without a collection fetch-join.
      *
-     * @param bool        $past         false: upcoming (endTime > now, ASC); true: past (endTime < now, DESC)
+     * @param bool|null   $past         false: upcoming (endTime > now, ASC); true: past (endTime < now, DESC);
+     *                                  null: all time (no now filter, newest first) for the cross-year search page
      * @param Member|null $subscribedBy when set, only activities this member has a (user) signup for
      * @param string      $locale       'nl' searches the Dutch name, anything else the English name
      * @param int[]       $labelIds     match activities having ANY of these labels
@@ -299,7 +301,7 @@ class ActivityRepository extends ServiceEntityRepository
      * @return Paginator<Activity>
      */
     public function findForOverview(
-        bool $past,
+        ?bool $past,
         ?Member $subscribedBy,
         string $search,
         string $locale,
@@ -345,25 +347,38 @@ class ActivityRepository extends ServiceEntityRepository
             )
             // An unpublished activity is taken out of public view entirely, listings included. (A cancelled one still
             // shows, with a notice, so it is deliberately not filtered here.)
-            ->andWhere('a.unpublishedAt IS NULL')
-            ->setParameter(
+            ->andWhere('a.unpublishedAt IS NULL');
+
+        // `:now` is referenced by the past/upcoming window and by the open-sign-up filter, but not by the cross-year
+        // (all-time) search, so it is only bound when a clause actually uses it.
+        if (
+            null !== $past
+            || $openSignupOnly
+        ) {
+            $qb->setParameter(
                 'now',
                 new DateTime(),
                 Types::DATETIME_MUTABLE,
             );
+        }
 
-        if ($past) {
+        if (true === $past) {
             $qb->andWhere('lr.endTime < :now')
                 ->orderBy(
                     'lr.beginTime',
                     'DESC',
                 );
-        } else {
+        } elseif (false === $past) {
             $qb->andWhere('lr.endTime > :now')
                 ->orderBy(
                     'lr.beginTime',
                     'ASC',
                 );
+        } else {
+            $qb->orderBy(
+                'lr.beginTime',
+                'DESC',
+            );
         }
 
         $search = trim($search);

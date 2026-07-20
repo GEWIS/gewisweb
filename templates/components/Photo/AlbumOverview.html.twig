@@ -1,19 +1,22 @@
 <div {{ attributes }}>
     {# data-live-ignore keeps the panel (and the focused search field) stable across live re-renders. #}
-    <div class="collapse mb-3" id="photo-filters" data-live-ignore>
+    <div class="collapse mb-3{{ this.crossYear ? ' show' }}" id="photo-filters" data-live-ignore>
         <div class="panel my-0">
             <div class="panel-body">
                 <label class="form-label" for="photo-overview-search">{{ 'Search'|trans }}</label>
                 <input type="search" class="form-control" id="photo-overview-search"
                        placeholder="{{ 'Search by album name'|trans }}"
                        data-model="debounce(300)|search"
-                       value="{{ this.search }}">
+                       value="{{ this.search }}"
+                       {{ this.crossYear ? 'autofocus' }}>
             </div>
         </div>
     </div>
 
     {% set albumsByMonth = this.albumsByMonth %}
-    {% if albumsByMonth is empty %}
+    {% if this.crossYear and this.search is empty %}
+        <p class="text-muted text-center py-4">{{ 'Type to search for albums across every year.'|trans }}</p>
+    {% elseif albumsByMonth is empty %}
         <p class="text-muted text-center py-4">{{ 'There are no albums to show.'|trans }}</p>
     {% else %}
         {% set cardCounts = this.cardCounts %}

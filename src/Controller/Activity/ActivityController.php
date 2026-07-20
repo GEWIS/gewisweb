@@ -37,7 +37,10 @@ class ActivityController extends AbstractController
     )]
     public function index(): Response
     {
-        return $this->render('activity/index.html.twig');
+        return $this->render(
+            'activity/index.html.twig',
+            ['years' => $this->activityRepository->getApprovedActivityYears()],
+        );
     }
 
     #[Route(
@@ -45,18 +48,31 @@ class ActivityController extends AbstractController
         name: 'my',
     )]
     #[IsGranted(UserRoles::User->value)]
-    public function my(): Response
+    public function my(
+        #[CurrentUser]
+        User $user,
+    ): Response {
+        return $this->render(
+            'activity/my.html.twig',
+            ['years' => $this->activityRepository->getSubscribedAssociationYears($user->getMember())],
+        );
+    }
+
+    #[Route(
+        path: '/search',
+        name: 'search',
+    )]
+    public function search(): Response
     {
-        return $this->render('activity/my.html.twig');
+        return $this->render('activity/search.html.twig');
     }
 
     #[Route(
         path: '/archive/{year}',
         name: 'archive',
         requirements: ['year' => '\d{4}'],
-        defaults: ['year' => null],
     )]
-    public function archive(?int $year = null): Response
+    public function archive(int $year): Response
     {
         return $this->render(
             'activity/archive.html.twig',
@@ -71,13 +87,12 @@ class ActivityController extends AbstractController
         path: '/archive/my/{year}',
         name: 'archive/my',
         requirements: ['year' => '\d{4}'],
-        defaults: ['year' => null],
     )]
     #[IsGranted(UserRoles::User->value)]
     public function myArchive(
         #[CurrentUser]
         User $user,
-        ?int $year = null,
+        int $year,
     ): Response {
         return $this->render(
             'activity/archive-my.html.twig',

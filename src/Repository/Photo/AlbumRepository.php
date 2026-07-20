@@ -64,10 +64,43 @@ class AlbumRepository extends ServiceEntityRepository
     }
 
     /**
-     * Albums matching a name fragment, for the admin move-photos picker. Unlike {@see self::search} (the public
-     * gallery) this is not restricted to published, dated, root albums: a photo can be moved into any album, drafts
-     * and sub-albums included. The parent is fetch-joined for a disambiguating label, and the result is capped so the
-     * typeahead stays light.
+     * Root albums whose name matches a fragment, across every association year, for the public cross-year search. Only
+     * published, dated albums are returned (the album voter still runs per result for the graduate rule). Newest first,
+     * and capped so the per-album voter pass stays bounded.
+     *
+     * @return Album[]
+     */
+    public function searchPublishedAlbums(
+        string $query,
+        int $limit = 25,
+    ): array {
+        return $this->createQueryBuilder('a')
+            ->where('a.parent IS NULL')
+            ->andWhere('a.published = TRUE')
+            ->andWhere('a.startDateTime IS NOT NULL')
+            ->andWhere('a.endDateTime IS NOT NULL')
+            ->andWhere('a.name LIKE :query')
+            ->setParameter(
+                'query',
+                '%' . addcslashes(
+                    $query,
+                    '%_',
+                ) . '%',
+            )
+            ->orderBy(
+                'a.startDateTime',
+                'DESC',
+            )
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Albums matching a name fragment, for the admin move-photos picker. Unlike the public cross-year search
+     * ({@see self::searchPublishedAlbums}) this is not restricted to published, dated, root albums: a photo can be
+     * moved into any album, drafts and sub-albums included. The parent is fetch-joined for a disambiguating label, and
+     * the result is capped so the typeahead stays light.
      *
      * @return Album[]
      */

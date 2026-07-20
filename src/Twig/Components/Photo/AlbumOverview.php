@@ -14,8 +14,9 @@ use function array_merge;
 use function array_values;
 
 /**
- * The albums of one association year on the photo landing page, grouped into months. The year is chosen by the page
- * (the year-switcher navigates here with a fresh year), and search filters the albums by name without a page reload.
+ * The albums shown on the photo landing page and the cross-year search page, grouped into months. On the landing page
+ * the year is chosen by the page and search filters within it; on the search page (`crossYear`) the query searches
+ * every year's albums by name. Filtering happens without a page reload.
  */
 #[AsLiveComponent(
     name: 'Photo:AlbumOverview',
@@ -28,6 +29,10 @@ final class AlbumOverview
     #[LiveProp]
     public ?int $year = null;
 
+    #[LiveProp]
+    public bool $crossYear = false;
+
+    // Not URL-synced: on the landing page the year is a query param, and syncing search could drop it on reload.
     #[LiveProp(writable: true)]
     public string $search = '';
 
@@ -46,6 +51,13 @@ final class AlbumOverview
     {
         if (null !== $this->albumsByMonth) {
             return $this->albumsByMonth;
+        }
+
+        if ($this->crossYear) {
+            // Wait for a query before searching: the whole photo archive is too large to list at once.
+            return $this->albumsByMonth = '' === $this->search
+                ? []
+                : $this->albumService->searchViewableAlbums($this->search);
         }
 
         if (null === $this->year) {

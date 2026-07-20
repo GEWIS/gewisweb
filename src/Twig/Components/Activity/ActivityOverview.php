@@ -34,8 +34,9 @@ use function strval;
 use function trim;
 
 /**
- * Backs the four activity overview pages: upcoming/archive × public/subscribed. The page fixes `subscribed` and `past`
- * at mount time; everything else is a live filter. Infinite scroll grows `limit` via the loadMore action.
+ * Backs the activity overview pages: the upcoming overview, a single association-year archive, the cross-year search
+ * page, and their subscribed ("my") variants. The page fixes `subscribed`, `year` and `crossYear` at mount time;
+ * everything else is a live filter. Infinite scroll grows `limit` via the loadMore action.
  */
 #[AsLiveComponent(
     name: 'Activity:ActivityOverview',
@@ -51,7 +52,7 @@ final class ActivityOverview
     public bool $subscribed = false;
 
     #[LiveProp]
-    public bool $past = false;
+    public bool $crossYear = false;
 
     // All the filters mirror themselves into the query string via the History API, so the state survives a reload and
     // the address bar is itself a shareable link (the copy button just yields the same URL in one click).
@@ -196,6 +197,11 @@ final class ActivityOverview
         return $grouped;
     }
 
+    public function isGrouped(): bool
+    {
+        return $this->crossYear || null !== $this->year;
+    }
+
     public function getTotalCount(): int
     {
         if (!$this->canQuery()) {
@@ -251,7 +257,7 @@ final class ActivityOverview
     private function getPaginator(): Paginator
     {
         return $this->paginator ??= $this->activityRepository->findForOverview(
-            past: $this->past,
+            past: $this->timePast(),
             subscribedBy: $this->subscribed ? $this->currentMember() : null,
             search: $this->search,
             locale: $this->requestStack->getCurrentRequest()?->getLocale() ?? 'en',
@@ -296,6 +302,20 @@ final class ActivityOverview
                 static fn (int $id): bool => $id > 0,
             ),
         );
+    }
+
+    /**
+     * The time-window mode for {@see ActivityRepository::findForOverview()}: false on the default upcoming overview
+     * (future only), true on a selected association-year archive (past only, so the current year's archive excludes its
+     * still-upcoming activities), and null on the cross-year search page (past and upcoming, every year).
+     */
+    private function timePast(): ?bool
+    {
+        if ($this->crossYear) {
+            return null;
+        }
+
+        return null !== $this->year;
     }
 
     /**

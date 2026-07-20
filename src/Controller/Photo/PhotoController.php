@@ -100,6 +100,15 @@ class PhotoController extends AbstractController
     }
 
     #[Route(
+        path: '/search',
+        name: 'search',
+    )]
+    public function search(): Response
+    {
+        return $this->render('photo/search.html.twig');
+    }
+
+    #[Route(
         path: '/weekly',
         name: 'weekly',
     )]
