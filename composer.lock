@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "59b60a74cbe9eee603bcd607702bb1ed",
+    "content-hash": "e405e38962c1cb2ce8508dfd387053d0",
     "packages": [
         {
             "name": "altcha-org/altcha",
@@ -15257,16 +15257,16 @@
         },
         {
             "name": "igor-php/igor-php",
-            "version": "v0.6.3",
+            "version": "v0.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/igor-php/igor-php.git",
-                "reference": "9aecff9843f27eb9adb674172abfae7b2d18d295"
+                "reference": "1c333bf55b297b32158349f5961dd12b89007b59"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/igor-php/igor-php/zipball/9aecff9843f27eb9adb674172abfae7b2d18d295",
-                "reference": "9aecff9843f27eb9adb674172abfae7b2d18d295",
+                "url": "https://api.github.com/repos/igor-php/igor-php/zipball/1c333bf55b297b32158349f5961dd12b89007b59",
+                "reference": "1c333bf55b297b32158349f5961dd12b89007b59",
                 "shasum": ""
             },
             "require": {
@@ -15301,9 +15301,9 @@
             ],
             "support": {
                 "issues": "https://github.com/igor-php/igor-php/issues",
-                "source": "https://github.com/igor-php/igor-php/tree/v0.6.3"
+                "source": "https://github.com/igor-php/igor-php/tree/v0.8.1"
             },
-            "time": "2026-05-26T20:17:14+00:00"
+            "time": "2026-07-13T14:45:56+00:00"
         },
         {
             "name": "kelunik/certificate",
