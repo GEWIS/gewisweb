@@ -68,3 +68,22 @@ body {
         margin: 0;
     }
 }
+
+// Sticky announcement banner: sits just below the special notices (via the same offset) and above the page content,
+// which its default stacking order left it behind.
+.announcement-banner {
+    top: var(--sticky-offset, 0);
+    z-index: ($zindex-dropdown - 2);
+}
+
+// On admin pages the sticky breadcrumb bar shares this top edge and stacks above the banner. The banner's toasts are
+// out of flow (absolute), so they land at that same edge and hide behind the bar. Lift the banner above the bar and
+// push its toasts below it by the bar's height (its breadcrumb line plus vertical padding). Offsetting the toasts, not
+// the banner, keeps this working at the top of the page where the banner's sticky top does not yet apply.
+body:has(.navbar-breadcrumb) .announcement-banner {
+    z-index: $zindex-dropdown;
+
+    .toast-container {
+        top: calc((#{$breadcrumb-padding-y} * 2) + 1.5rem);
+    }
+}

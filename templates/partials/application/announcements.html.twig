@@ -1,0 +1,21 @@
+{% set announcements = active_announcements() %}
+<div aria-live="polite" aria-atomic="true" class="position-sticky announcement-banner" data-controller="dismissible">
+    <div class="toast-container top-0 start-50 translate-middle-x p-3">
+        {% for announcement in announcements %}
+            {% set title = announcement.title|localise_text %}
+            {% set body = announcement.body|localise_text %}
+            <div class="toast{{ announcement.level.value ? ' toast-' ~ announcement.level.value : '' }} show" role="alert"
+                 aria-live="assertive" aria-atomic="true"
+                 data-dismissible-target="banner" data-announcement-id="{{ announcement.id }}">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        <strong>{{ title }}</strong>
+                        {% if body %}<span class="d-block">{{ body }}</span>{% endif %}
+                    </div>
+                    <button type="button" class="btn-close me-2 m-auto" aria-label="{{ 'Close'|trans }}"
+                            data-action="dismissible#dismiss"></button>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>

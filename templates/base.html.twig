@@ -59,17 +59,21 @@
     </head>
     <body class="d-flex flex-column min-vh-100">
         {% include 'partials/application/main-nav.html.twig' %}
+        {% include 'partials/application/announcements.html.twig' %}
         {% block body %}{% endblock %}
         {% include 'partials/application/toasts.html.twig' %}
         {# One authorization cookie may be minted per request, so every subscribe topic is gathered into a single
-           mercure() call; pages add private topics through the realtime_extra_topics block. #}
+           realtime_authorize() call; pages add private topics through the realtime_extra_topics block. The shared
+           connection subscribes to the base topics only: a page-specific extra (e.g. an album cover) is authorized by
+           the cookie but subscribed by its own EventSource, so it is not delivered twice. #}
+        {% set realtime_base = realtime_topics() %}
         {% set realtime_extra %}{% block realtime_extra_topics %}{% endblock %}{% endset %}
-        {% set realtime_subscriptions = realtime_topics()|merge(
+        {% set realtime_subscriptions = realtime_base|merge(
             realtime_extra|split(',')|map(topic => topic|trim)|filter(topic => topic is not empty)
         ) %}
         {% do realtime_authorize(realtime_subscriptions) %}
         <div data-controller="notifications"
-             data-notifications-hub-url-value="{{ mercure(realtime_subscriptions) }}"
+             data-notifications-hub-url-value="{{ mercure(realtime_base) }}"
              data-notifications-locale-value="{{ app.request.locale }}"></div>
         {% include 'partials/application/privacy-widget.html.twig' %}
         {# Load non-critical JS #}

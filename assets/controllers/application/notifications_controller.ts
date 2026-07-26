@@ -40,7 +40,6 @@ export default class extends Controller<HTMLElement> {
     declare readonly localeValue: string;
 
     private source: EventSource | null = null;
-    private failures = 0;
 
     connect(): void {
         if ('' === this.hubUrlValue) {
@@ -57,9 +56,6 @@ export default class extends Controller<HTMLElement> {
 
     private open(): void {
         this.source = new EventSource(this.hubUrlValue, { withCredentials: true });
-        this.source.onopen = (): void => {
-            this.failures = 0;
-        };
         this.source.onmessage = (event: MessageEvent): void => {
             this.onMessage(event);
         };
@@ -98,14 +94,10 @@ export default class extends Controller<HTMLElement> {
 
     private onError(): void {
         // CONNECTING means the browser is retrying on its own (and Mercure replays via Last-Event-ID). CLOSED means it
-        // gave up, which for us almost always means the authorization cookie expired; reload to mint a fresh one, at
-        // most once a minute so a hub outage cannot become a reload storm.
+        // gave up, which for us almost always means the authorization cookie expired; reload to mint a fresh one. A
+        // CLOSED EventSource fires this once and never reconnects, so we act on the first one, throttled to at most once
+        // a minute so a hub outage cannot become a reload storm.
         if (this.source?.readyState !== EventSource.CLOSED) {
-            return;
-        }
-
-        this.failures += 1;
-        if (this.failures < 5) {
             return;
         }
 
@@ -119,7 +111,7 @@ export default class extends Controller<HTMLElement> {
     }
 
     private renderToast(data: Envelope): void {
-        const container = document.querySelector('.toast-container');
+        const container = document.querySelector('#flash-toast-container');
         const template = document.querySelector<HTMLTemplateElement>('#realtime-toast-template');
         if (null === container || null === template || undefined === window.bootstrap) {
             return;
@@ -135,7 +127,20 @@ export default class extends Controller<HTMLElement> {
             return;
         }
 
-        toast.classList.add(`toast-${'string' === typeof data.level ? data.level : 'info'}`);
+        // The dot is GEWIS red by default (in the template); only a genuine warning/danger/success level overrides it
+        // with a semantic colour, keeping ordinary notifications on-brand rather than Bootstrap's info blue.
+        const level = 'string' === typeof data.level ? data.level : 'info';
+        const indicator = toast.querySelector('.realtime-toast-indicator');
+        if (indicator instanceof HTMLElement && 'info' !== level) {
+            indicator.classList.add(`bg-${level}`);
+        }
+
+        const title = toast.querySelector('.realtime-toast-title');
+        if (title instanceof HTMLElement) {
+            const heading = data.title === undefined ? '' : this.localise(data.title as LocalisedText);
+            title.textContent = '' !== heading ? heading : 'GEWIS';
+        }
+
         const body = toast.querySelector('.toast-body');
         if (body instanceof HTMLElement) {
             body.textContent = text;

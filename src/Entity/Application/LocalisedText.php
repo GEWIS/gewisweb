@@ -94,6 +94,20 @@ abstract class LocalisedText
     }
 
     /**
+     * This text as a per-language {en, nl} map, for consumers with no translation runtime that pick the language
+     * themselves (e.g. the real-time toast payloads). Empty strings when a value is absent.
+     *
+     * @return array{en: string, nl: string}
+     */
+    public function toArray(): array
+    {
+        return [
+            'en' => $this->getText(Languages::English) ?? '',
+            'nl' => $this->getText(Languages::Dutch) ?? '',
+        ];
+    }
+
+    /**
      * @return string|null the localised text
      *
      * @throws InvalidArgumentException

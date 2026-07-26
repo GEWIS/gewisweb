@@ -55,8 +55,8 @@ final class NotificationPublisher
                 'en' => $this->translate($type->message($name['en']), Languages::English),
                 'nl' => $this->translate($type->message($name['nl']), Languages::Dutch),
             ],
-            $this->link($type, $subjectId),
-            $notification->getId(),
+            link: $this->link($type, $subjectId),
+            notificationId: $notification->getId(),
         ));
     }
 

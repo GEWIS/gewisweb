@@ -5,3 +5,11 @@
         --#{$prefix}toast-border-color: var(--#{$prefix}#{$state}-border-subtle);
     }
 }
+
+// The severity dot in a realtime notification toast's header. GEWIS red by default; a `bg-*` utility from the
+// controller overrides it for genuine warning/danger/success notifications.
+.realtime-toast-indicator {
+    width: 1.1rem;
+    height: 1.1rem;
+    background-color: $gewis-red;
+}
