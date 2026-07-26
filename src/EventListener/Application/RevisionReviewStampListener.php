@@ -35,6 +35,9 @@ final readonly class RevisionReviewStampListener
         'request_changes',
     ];
 
+    /**
+     * @param TransitionEvent<object> $event
+     */
     #[AsEventListener(event: 'workflow.revision.transition')]
     public function onTransition(TransitionEvent $event): void
     {

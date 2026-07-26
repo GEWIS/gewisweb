@@ -28,6 +28,9 @@ final readonly class SpawnNextDraftListener
     ) {
     }
 
+    /**
+     * @param EnteredEvent<object> $event
+     */
     public function __invoke(EnteredEvent $event): void
     {
         $source = $event->getSubject();

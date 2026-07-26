@@ -40,9 +40,17 @@ final class SpawnNextDraftListenerTest extends TestCase
             $registry,
             $entityManager,
         );
-        $listener(new EnteredEvent(
-            $source,
+        $listener($this->enteredEvent($source));
+    }
+
+    /**
+     * @return EnteredEvent<object>
+     */
+    private function enteredEvent(object $subject): EnteredEvent
+    {
+        return new EnteredEvent(
+            $subject,
             new Marking([]),
-        ));
+        );
     }
 }

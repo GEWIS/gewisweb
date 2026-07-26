@@ -28,6 +28,8 @@ final readonly class RevisionGuardListener
      * ({@see RevisionVoter::SUBMIT}); every other transition (`start_review`, `request_changes`, `reject`, `approve`,
      * `close`, and any future board-side transition) requires {@see RevisionVoter::APPROVE}. Guarding generically means
      * a newly added transition is fail-safe (locked to the board) by default rather than silently unguarded.
+     *
+     * @param GuardEvent<object> $event
      */
     #[AsEventListener(event: 'workflow.revision.guard')]
     public function onGuard(GuardEvent $event): void

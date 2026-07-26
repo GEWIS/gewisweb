@@ -89,6 +89,9 @@ final class RevisionReviewStampListenerTest extends TestCase
         self::assertNotNull($revision->getReviewedAt());
     }
 
+    /**
+     * @return TransitionEvent<object>
+     */
     private function transitionEvent(
         object $subject,
         string $transition,

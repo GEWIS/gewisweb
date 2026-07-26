@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Tests\Integration\Command\Activity;
 
-use App\Command\Activity\PruneUnverifiedSignupsCommand;
 use App\Entity\Activity\ExternalSignup;
 use App\Entity\Activity\ExternalSignupVerification;
 use App\Entity\Activity\SignupList;
@@ -13,7 +12,6 @@ use App\Service\Activity\SignupManager;
 use App\Tests\Integration\DatabaseTestCase;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
-use Symfony\Component\Console\Tester\CommandTester;
 
 /**
  * The prune cron must delete exactly the external sign-ups whose double-opt-in window lapsed without confirmation, and
@@ -48,7 +46,7 @@ final class PruneUnverifiedSignupsCommandTest extends DatabaseTestCase
         );
         $pendingId = (int) $pending->getId();
 
-        $this->runCommand();
+        $this->assertCommandIsSuccessful(static::runCommand('app:activity:prune-unverified-signups'));
 
         // Only the expired-unverified sign-up is pruned ...
         self::assertNull(
@@ -65,13 +63,6 @@ final class PruneUnverifiedSignupsCommandTest extends DatabaseTestCase
                 'alex.visitor@example.org',
             ),
         );
-    }
-
-    private function runCommand(): void
-    {
-        $tester = new CommandTester(self::getContainer()->get(PruneUnverifiedSignupsCommand::class));
-        $tester->execute([]);
-        $tester->assertCommandIsSuccessful();
     }
 
     private function signupManager(): SignupManager
