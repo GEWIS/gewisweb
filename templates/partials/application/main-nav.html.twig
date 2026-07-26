@@ -415,6 +415,9 @@
                 <li class="nav-item py-4">
                     <div class="vr d-flex h-100 mx-2 text-white"></div>
                 </li>
+                {% if null !== app.user and enum('App\\Entity\\User\\Enums\\UserTypes').User == app.user.getUserType %}
+                    {{ component('Notification:Bell') }}
+                {% endif %}
                 <li class="nav-item dropdown">
                     <button class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button"
                             aria-haspopup="true" aria-expanded="false" aria-label="{{ 'Settings'|trans }}"

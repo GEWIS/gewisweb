@@ -1,19 +1,22 @@
+{% macro toast(message, label) %}
+    <div class="toast{{ label ? ' toast-' ~ label : '' }} align-items-center fade" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000">
+        <div class="d-flex">
+            <div class="toast-body">{{ message }}</div>
+            <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="{{ 'Close'|trans }}"></button>
+        </div>
+    </div>
+{% endmacro %}
+
 <div aria-live="polite" aria-atomic="true" class="position-sticky bottom-0">
     <div class="toast-container bottom-0 end-0 p-3">
         {% for label, messages in app.flashes %}
             {% for message in messages %}
-                <div class="toast toast-{{ label }} align-items-center fade" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000">
-                    <div class="d-flex">
-                        <div class="toast-body">
-                            {{ message }}
-                        </div>
-                        <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="{{ 'Close'|trans }}"></button>
-                    </div>
-                </div>
+                {{ _self.toast(message, label) }}
             {% endfor %}
         {% endfor %}
     </div>
 </div>
+<template id="realtime-toast-template">{{ _self.toast('', '') }}</template>
 <script nonce="{{ csp_nonce('script') }}">
     document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.toast').forEach((toast, index) => {

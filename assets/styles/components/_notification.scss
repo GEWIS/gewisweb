@@ -1,0 +1,6 @@
+// The call to action under each entry in the notification centre. Bootstrap's `text-primary` is its own blue, which
+// `$primary` is deliberately not overridden away from, so the link colour is used instead: that is the GEWIS red the
+// rest of the site's links already read as, in both themes.
+.notification-link {
+    color: var(--#{$prefix}link-color);
+}

@@ -1,0 +1,46 @@
+<li class="nav-item dropdown" {{ attributes }}>
+    <button class="nav-link dropdown-toggle position-relative" data-bs-toggle="dropdown" role="button"
+            aria-haspopup="true" aria-expanded="false" aria-label="{{ 'Notifications'|trans }}">
+        <span class="fas fa-bell"></span>
+        {% if this.unreadCount > 0 %}
+            <span class="position-absolute translate-middle badge rounded-pill bg-light text-dark">
+                {{ this.unreadCount > 9 ? '9+' : this.unreadCount }}
+                <span class="visually-hidden">{{ 'unread notifications'|trans }}</span>
+            </span>
+        {% endif %}
+    </button>
+    <div class="dropdown-menu dropdown-menu-end p-0" style="min-width: 320px; max-width: 90vw;">
+        <div class="d-flex justify-content-between align-items-center px-3 py-2 border-bottom">
+            <strong>{{ 'Notifications'|trans }}</strong>
+            {% if this.unreadCount > 0 %}
+                <button type="button" class="btn btn-link btn-sm p-0 text-decoration-none"
+                        data-action="live#action" data-live-action-param="markAllRead">
+                    {{ 'Mark all as read'|trans }}
+                </button>
+            {% endif %}
+        </div>
+        <div style="max-height: 60vh; overflow-y: auto;">
+            {% for entry in this.entries %}
+                {% set notification = entry.notification %}
+                {% set unread = this.readAt is null or notification.createdAt > this.readAt %}
+                {# Built here rather than stored, so the link stays in the language this is being read in. #}
+                {% set href = path(notification.type.route, notification.type.routeParameters(notification.subjectId)) %}
+                <a class="dropdown-item d-flex gap-2 py-2 border-bottom text-wrap{{ unread ? ' fw-semibold' : '' }}"
+                   href="{{ href }}">
+                    <span class="fas {{ notification.type.icon }} text-muted mt-1"></span>
+                    <span class="flex-grow-1">
+                        {{ notification.type.message(entry.name)|trans }}
+                        <span class="d-block small notification-link">{{ notification.type.linkLabel|trans }}</span>
+                        <small class="d-block text-muted">
+                            {{ '%duration% ago'|trans({'%duration%': human_time_diff(notification.createdAt, date())}) }}
+                        </small>
+                    </span>
+                </a>
+            {% else %}
+                <div class="dropdown-item-text text-muted small py-3 text-center">
+                    {{ 'You have no notifications yet.'|trans }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</li>

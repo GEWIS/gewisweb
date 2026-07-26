@@ -25,6 +25,10 @@
         <source>%count% week|%count% weeks</source>
         <target>%count% week|%count% weeks</target>
       </trans-unit>
+      <trans-unit id="yRTBNMp" resname="%duration% ago">
+        <source>%duration% ago</source>
+        <target state="translated">%duration% ago</target>
+      </trans-unit>
       <trans-unit id="E9ZBpIE" resname="%name% has hidden their tagged photos.">
         <source>%name% has hidden their tagged photos.</source>
         <target state="translated">%name% has hidden their tagged photos.</target>
@@ -45,9 +49,17 @@
         <source>%name% turns %age% today!</source>
         <target state="translated">%name% turns %age% today!</target>
       </trans-unit>
+      <trans-unit id="cweoWmQ" resname="A new activity &quot;%name%&quot; has been published.">
+        <source>A new activity "%name%" has been published.</source>
+        <target state="translated">A new activity "%name%" has been published.</target>
+      </trans-unit>
       <trans-unit id="THI278F" resname="A new draft was created. Edit it and submit again.">
         <source>A new draft was created. Edit it and submit again.</source>
         <target state="translated">A new draft was created. Edit it and submit again.</target>
+      </trans-unit>
+      <trans-unit id="z8UYICG" resname="A new photo album &quot;%name%&quot; is online.">
+        <source>A new photo album "%name%" is online.</source>
+        <target state="translated">A new photo album "%name%" is online.</target>
       </trans-unit>
       <trans-unit id="G9Mw23h" resname="A sign-up list with existing sign-ups was changed in this revision, so the live sign-ups cannot be carried over and it can no longer be submitted or approved.">
         <source>A sign-up list with existing sign-ups was changed in this revision, so the live sign-ups cannot be carried over and it can no longer be submitted or approved.</source>
@@ -1689,6 +1701,10 @@
         <source>Manage your sign-up</source>
         <target>Manage your sign-up</target>
       </trans-unit>
+      <trans-unit id="Iccspm0" resname="Mark all as read">
+        <source>Mark all as read</source>
+        <target state="translated">Mark all as read</target>
+      </trans-unit>
       <trans-unit id="5LERsNC" resname="Maximum value (number type)">
         <source>Maximum value (number type)</source>
         <target state="translated">Maximum value (number type)</target>
@@ -1968,6 +1984,10 @@
       <trans-unit id="Q7CXr4n" resname="Not yet open">
         <source>Not yet open</source>
         <target>Not yet open</target>
+      </trans-unit>
+      <trans-unit id="gGxnmUA" resname="Notifications">
+        <source>Notifications</source>
+        <target state="translated">Notifications</target>
       </trans-unit>
       <trans-unit id="zZCzfg2" resname="Number">
         <source>Number</source>
@@ -3353,6 +3373,14 @@
         <source>View</source>
         <target state="translated">View</target>
       </trans-unit>
+      <trans-unit id="NrYB9f1" resname="View activity">
+        <source>View activity</source>
+        <target state="translated">View activity</target>
+      </trans-unit>
+      <trans-unit id="f.1nl4O" resname="View album">
+        <source>View album</source>
+        <target state="translated">View album</target>
+      </trans-unit>
       <trans-unit id="1mEp9z3" resname="View attachment">
         <source>View attachment</source>
         <target>View attachment</target>
@@ -3524,6 +3552,10 @@
       <trans-unit id="lAXDq5A" resname="You have been unsubscribed.">
         <source>You have been unsubscribed.</source>
         <target>You have been unsubscribed.</target>
+      </trans-unit>
+      <trans-unit id=".jimGHg" resname="You have no notifications yet.">
+        <source>You have no notifications yet.</source>
+        <target state="translated">You have no notifications yet.</target>
       </trans-unit>
       <trans-unit id="F07ab4W" resname="You have not been a member of a committee or fraternity.">
         <source>You have not been a member of a committee or fraternity.</source>
@@ -3716,6 +3748,10 @@
       <trans-unit id="W3MzJgn" resname="unavailable">
         <source>unavailable</source>
         <target state="translated">unavailable</target>
+      </trans-unit>
+      <trans-unit id="9F.soPI" resname="unread notifications">
+        <source>unread notifications</source>
+        <target state="translated">unread notifications</target>
       </trans-unit>
       <trans-unit id="A0Prwbn" resname="was">
         <source>was</source>

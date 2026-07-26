@@ -61,6 +61,16 @@
         {% include 'partials/application/main-nav.html.twig' %}
         {% block body %}{% endblock %}
         {% include 'partials/application/toasts.html.twig' %}
+        {# One authorization cookie may be minted per request, so every subscribe topic is gathered into a single
+           mercure() call; pages add private topics through the realtime_extra_topics block. #}
+        {% set realtime_extra %}{% block realtime_extra_topics %}{% endblock %}{% endset %}
+        {% set realtime_subscriptions = realtime_topics()|merge(
+            realtime_extra|split(',')|map(topic => topic|trim)|filter(topic => topic is not empty)
+        ) %}
+        {% do realtime_authorize(realtime_subscriptions) %}
+        <div data-controller="notifications"
+             data-notifications-hub-url-value="{{ mercure(realtime_subscriptions) }}"
+             data-notifications-locale-value="{{ app.request.locale }}"></div>
         {% include 'partials/application/privacy-widget.html.twig' %}
         {# Load non-critical JS #}
         {% block body_javascripts %}

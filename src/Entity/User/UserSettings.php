@@ -6,6 +6,7 @@ namespace App\Entity\User;
 
 use App\Entity\User\Enums\PhotoVisibility;
 use App\Repository\User\UserSettingsRepository;
+use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
@@ -96,9 +97,20 @@ class UserSettings
     )]
     private bool $hideBirthdayOnFrontpage = false;
 
+    /**
+     * When this member last marked the notification centre read. Null means they have never opened it, so everything
+     * counts as unread.
+     */
+    #[Column(
+        type: Types::DATETIME_IMMUTABLE,
+        nullable: true,
+    )]
+    private ?DateTimeImmutable $notificationsReadAt = null;
+
     public function __construct(User $user)
     {
         $this->user = $user;
+        $user->setSettings($this);
     }
 
     public function getUser(): User
@@ -154,6 +166,16 @@ class UserSettings
     public function setHideBirthdayOnFrontpage(bool $hideBirthdayOnFrontpage): void
     {
         $this->hideBirthdayOnFrontpage = $hideBirthdayOnFrontpage;
+    }
+
+    public function getNotificationsReadAt(): ?DateTimeImmutable
+    {
+        return $this->notificationsReadAt;
+    }
+
+    public function setNotificationsReadAt(?DateTimeImmutable $notificationsReadAt): void
+    {
+        $this->notificationsReadAt = $notificationsReadAt;
     }
 
     /**
