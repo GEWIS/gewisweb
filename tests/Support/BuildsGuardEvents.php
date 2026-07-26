@@ -15,6 +15,9 @@ use Symfony\Component\Workflow\Transition;
  */
 trait BuildsGuardEvents
 {
+    /**
+     * @return GuardEvent<object>
+     */
     private function guardEvent(
         object $subject,
         string $transition = 'approve',
@@ -34,6 +37,8 @@ trait BuildsGuardEvents
 
     /**
      * The messages of every blocker the listener recorded on the event.
+     *
+     * @param GuardEvent<object> $event
      *
      * @return string[]
      */

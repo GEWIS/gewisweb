@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Tests\Integration\Command\Activity;
 
-use App\Command\Activity\DeleteStaleDraftsCommand;
 use App\Entity\Activity\Activity;
 use App\Entity\Activity\ActivityRevision;
 use App\Entity\Application\Enums\RevisionStatus;
@@ -12,7 +11,6 @@ use App\Service\Activity\ActivityRevisionCloner;
 use App\Tests\Integration\DatabaseTestCase;
 use DateTime;
 use Doctrine\DBAL\Types\Types;
-use Symfony\Component\Console\Tester\CommandTester;
 
 /**
  * The stale-draft cleanup is a GDPR cron, so its branches are pinned end to end against a real database: an abandoned
@@ -48,7 +46,7 @@ final class DeleteStaleDraftsCommandTest extends DatabaseTestCase
             '-40 days',
         );
 
-        $this->runCommand();
+        $this->executeCommand();
 
         // The activity is back on its approved revision and the abandoned draft is gone.
         self::assertSame(
@@ -69,7 +67,7 @@ final class DeleteStaleDraftsCommandTest extends DatabaseTestCase
             '-40 days',
         );
 
-        $this->runCommand();
+        $this->executeCommand();
 
         // With no live revision to fall back to, the whole activity (every revision in its chain) is removed.
         self::assertNull(
@@ -87,7 +85,7 @@ final class DeleteStaleDraftsCommandTest extends DatabaseTestCase
             '-40 days',
         );
 
-        $this->runCommand(['--dry-run' => true]);
+        $this->executeCommand(['--dry-run' => true]);
 
         // The stale draft and its activity are reported but left in place.
         self::assertNotNull(
@@ -101,11 +99,12 @@ final class DeleteStaleDraftsCommandTest extends DatabaseTestCase
     /**
      * @param array<string, bool|string> $input
      */
-    private function runCommand(array $input = []): void
+    private function executeCommand(array $input = []): void
     {
-        $tester = new CommandTester(self::getContainer()->get(DeleteStaleDraftsCommand::class));
-        $tester->execute($input);
-        $tester->assertCommandIsSuccessful();
+        $this->assertCommandIsSuccessful(static::runCommand(
+            'app:activity:delete-stale-drafts',
+            $input,
+        ));
     }
 
     private function cloner(): ActivityRevisionCloner

@@ -27,18 +27,27 @@ use Symfony\Component\Workflow\Event\GuardEvent;
  */
 final readonly class PastActivityGuardListener
 {
+    /**
+     * @param GuardEvent<object> $event
+     */
     #[AsEventListener(event: 'workflow.revision.guard.submit')]
     public function onSubmit(GuardEvent $event): void
     {
         $this->guard($event);
     }
 
+    /**
+     * @param GuardEvent<object> $event
+     */
     #[AsEventListener(event: 'workflow.revision.guard.approve')]
     public function onApprove(GuardEvent $event): void
     {
         $this->guard($event);
     }
 
+    /**
+     * @param GuardEvent<object> $event
+     */
     private function guard(GuardEvent $event): void
     {
         $revision = $event->getSubject();

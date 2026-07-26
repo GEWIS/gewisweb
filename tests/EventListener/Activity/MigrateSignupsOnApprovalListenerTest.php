@@ -133,6 +133,9 @@ final class MigrateSignupsOnApprovalListenerTest extends TestCase
         return $revision;
     }
 
+    /**
+     * @return EnteredEvent<object>
+     */
     private function enteredEvent(object $subject): EnteredEvent
     {
         return new EnteredEvent(

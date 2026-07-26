@@ -94,27 +94,13 @@ ENV FRANKENPHP_WORKER_CONFIG=watch
 
 RUN <<-EOF
     mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
-    apt-get update
-    apt-get install -y --no-install-recommends \
-        aggregate \
-        curl \
-        dnsmasq \
-        dnsutils \
-        inotify-tools \
-        iproute2 \
-        ipset \
-        iptables \
-        jq \
-        sudo
     install-php-extensions xdebug
-    rm -rf /var/lib/apt/lists/*
     # On macOS `id -g` returns 20 (staff), which already exists in the base image; reuse the existing group in that case
     # instead of failing on a duplicate GID.
     if ! getent group "$USER_GID" >/dev/null; then
         groupadd -g "$USER_GID" nonroot
     fi
     useradd -m -u "$USER_UID" -g "$USER_GID" -s /bin/bash nonroot
-    echo "nonroot ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/nonroot
     chown -R "$USER_UID:$USER_GID" /data/caddy /config/caddy
     git config --system --add safe.directory /app
 EOF
@@ -124,19 +110,6 @@ COPY --link docker/web/frankenphp/conf.d/20-gewisweb.dev.ini $PHP_INI_DIR/app.co
 USER nonroot
 
 CMD [ "frankenphp", "run", "--config", "/etc/frankenphp/Caddyfile", "--watch" ]
-
-# GEWISWEB Development Image (remote)
-FROM gewisweb_web_base AS gewisweb_web_test
-
-ENV FRANKENPHP_WORKER_CONFIG=""
-
-COPY --link . ./
-RUN rm -Rf docker/
-
-RUN set -eux; \
-    mkdir -p var/cache var/log; \
-    composer dump-autoload --classmap-authoritative; \
-    chmod +x bin/console; sync;
 
 # GEWISWEB Production Base Image
 FROM gewisweb_web_base AS gewisweb_web_prod_builder
@@ -207,7 +180,7 @@ COPY --from=gewisweb_web_prod_builder /etc/ssl/openssl.cnf /etc/ssl/openssl.cnf
 COPY --from=gewisweb_web_prod_builder /usr/bin/file /usr/bin/file
 COPY --from=gewisweb_web_prod_builder /usr/lib/file/magic.mgc /usr/lib/file/magic.mgc
 
-ENV XDG_CONFIG_HOME=/config XDG_DATA_HOME=/data
+ENV OPENSSL_CONF=/etc/ssl/openssl.cnf XDG_CONFIG_HOME=/config XDG_DATA_HOME=/data SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
 
 RUN <<-EOF
     mkdir -p /data/caddy /config/caddy

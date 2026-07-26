@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Tests\Integration\Command\Activity;
 
-use App\Command\Activity\RunDueDrawsCommand;
 use App\Entity\Activity\Enums\AllocationMethod;
 use App\Entity\Activity\Enums\DrawCutoffRule;
 use App\Entity\Activity\Enums\ExternalSignupVerificationPurpose;
@@ -14,7 +13,6 @@ use App\Entity\Activity\SignupList;
 use App\Service\Activity\SignupManager;
 use App\Tests\Integration\DatabaseTestCase;
 use DateTime;
-use Symfony\Component\Console\Tester\CommandTester;
 
 /**
  * The automated-draw cron must draw exactly the lists whose own draw moment has passed -- close for
@@ -38,7 +36,7 @@ final class RunDueDrawsCommandTest extends DatabaseTestCase
             endTime: '+2 days',
         );
 
-        $this->runCommand();
+        $this->executeCommand();
 
         $list = $this->list(11);
         self::assertNotNull($list->getDrawnAt());
@@ -59,7 +57,7 @@ final class RunDueDrawsCommandTest extends DatabaseTestCase
             endTime: '+8 days',
         );
 
-        $this->runCommand();
+        $this->executeCommand();
 
         self::assertNull($this->list(6)->getDrawnAt());
     }
@@ -74,7 +72,7 @@ final class RunDueDrawsCommandTest extends DatabaseTestCase
             cutoffAt: '-1 hour',
         );
 
-        $this->runCommand();
+        $this->executeCommand();
 
         $list = $this->list(6);
         // Drawn even though the list is open for another week: the cutoff, not close, is the moment.
@@ -98,7 +96,7 @@ final class RunDueDrawsCommandTest extends DatabaseTestCase
             durationHours: 1,
         );
 
-        $this->runCommand();
+        $this->executeCommand();
 
         $list = $this->list(6);
         self::assertTrue($list->isOpen());
@@ -118,7 +116,7 @@ final class RunDueDrawsCommandTest extends DatabaseTestCase
             durationHours: 48,
         );
 
-        $this->runCommand();
+        $this->executeCommand();
 
         self::assertNull($this->list(11)->getDrawnAt());
     }
@@ -133,7 +131,7 @@ final class RunDueDrawsCommandTest extends DatabaseTestCase
             endTime: '-3 days',
         );
 
-        $this->runCommand();
+        $this->executeCommand();
 
         self::assertNull($this->list(11)->getDrawnAt());
     }
@@ -147,7 +145,7 @@ final class RunDueDrawsCommandTest extends DatabaseTestCase
             method: AllocationMethod::FirstComeFirstServed,
         );
 
-        $this->runCommand();
+        $this->executeCommand();
 
         $list = $this->list(11);
         self::assertNotNull($list->getDrawnAt());
@@ -191,7 +189,7 @@ final class RunDueDrawsCommandTest extends DatabaseTestCase
             cutoffAt: '-1 hour',
         );
 
-        $this->runCommand();
+        $this->executeCommand();
 
         $list = $this->list(6);
         self::assertNotNull($list->getDrawnAt());
@@ -240,7 +238,7 @@ final class RunDueDrawsCommandTest extends DatabaseTestCase
             cutoffAt: '-1 hour',
         );
 
-        $this->runCommand();
+        $this->executeCommand();
 
         $list = $this->list(6);
         self::assertNotNull($list->getDrawnAt());
@@ -283,7 +281,7 @@ final class RunDueDrawsCommandTest extends DatabaseTestCase
             cutoffAt: '-1 hour',
         );
 
-        $this->runCommand();
+        $this->executeCommand();
 
         self::assertSame(
             [
@@ -331,7 +329,7 @@ final class RunDueDrawsCommandTest extends DatabaseTestCase
             cutoffAt: '-1 hour',
         );
 
-        $this->runCommand();
+        $this->executeCommand();
 
         self::assertSame(
             [
@@ -365,7 +363,7 @@ final class RunDueDrawsCommandTest extends DatabaseTestCase
             capacity: 6,
         );
 
-        $this->runCommand();
+        $this->executeCommand();
 
         self::assertContains(
             $externalId,
@@ -402,7 +400,7 @@ final class RunDueDrawsCommandTest extends DatabaseTestCase
             method: AllocationMethod::FirstComeFirstServed,
         );
 
-        $this->runCommand();
+        $this->executeCommand();
 
         self::assertSame(
             [
@@ -413,11 +411,9 @@ final class RunDueDrawsCommandTest extends DatabaseTestCase
         );
     }
 
-    private function runCommand(): void
+    private function executeCommand(): void
     {
-        $tester = new CommandTester(self::getContainer()->get(RunDueDrawsCommand::class));
-        $tester->execute([]);
-        $tester->assertCommandIsSuccessful();
+        $this->assertCommandIsSuccessful(static::runCommand('app:activity:run-due-draws'));
     }
 
     private function list(int $listId): SignupList

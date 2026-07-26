@@ -24,6 +24,9 @@ use function assert;
 #[AsEventListener(event: 'workflow.revision.entered.approved')]
 final readonly class PromoteLiveRevisionListener
 {
+    /**
+     * @param EnteredEvent<object> $event
+     */
     public function __invoke(EnteredEvent $event): void
     {
         $revision = $event->getSubject();

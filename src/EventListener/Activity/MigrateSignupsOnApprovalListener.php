@@ -32,6 +32,9 @@ final readonly class MigrateSignupsOnApprovalListener
     {
     }
 
+    /**
+     * @param EnteredEvent<object> $event
+     */
     public function __invoke(EnteredEvent $event): void
     {
         $revision = $event->getSubject();

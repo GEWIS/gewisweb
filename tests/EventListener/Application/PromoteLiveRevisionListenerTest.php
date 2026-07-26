@@ -75,6 +75,9 @@ final class PromoteLiveRevisionListenerTest extends TestCase
         );
     }
 
+    /**
+     * @return EnteredEvent<object>
+     */
     private function enteredEvent(object $subject): EnteredEvent
     {
         return new EnteredEvent(
