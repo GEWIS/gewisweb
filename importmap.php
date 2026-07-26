@@ -22,6 +22,12 @@ return [
     '@symfony/ux-live-component' => [
         'path' => './vendor/symfony/ux-live-component/assets/dist/live_controller.js',
     ],
+    'ckeditor5' => [
+        'path' => './assets/js/ckeditor5/ckeditor5.js',
+    ],
+    'ckeditor5/translations/nl.js' => [
+        'path' => './assets/js/ckeditor5/translations/nl.js',
+    ],
     '@gewis/splash' => [
         'version' => '2.4.0',
     ],
@@ -36,13 +42,7 @@ return [
         'type' => 'css',
     ],
     'altcha/dist/main/altcha.i18n.js' => [
-        'version' => '3.0.11',
-    ],
-    'ckeditor5' => [
-        'path' => './assets/js/ckeditor5/ckeditor5.js',
-    ],
-    'ckeditor5/translations/nl.js' => [
-        'path' => './assets/js/ckeditor5/translations/nl.js',
+        'version' => '3.2.1',
     ],
     'photoswipe/lightbox' => [
         'version' => '5.4.4',
