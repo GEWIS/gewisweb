@@ -90,6 +90,26 @@ final class RealtimeNotifierTest extends TestCase
         self::assertFalse($this->updates[0]->isPrivate());
     }
 
+    public function testReloadPublicTellsEveryoneToReload(): void
+    {
+        $this->notifier()->reloadPublic();
+
+        self::assertSame(
+            ['gewis/public'],
+            $this->updates[0]->getTopics(),
+        );
+        self::assertFalse($this->updates[0]->isPrivate());
+        self::assertSame(
+            ['type' => 'force_reload'],
+            json_decode(
+                $this->updates[0]->getData(),
+                true,
+                512,
+                JSON_THROW_ON_ERROR,
+            ),
+        );
+    }
+
     private function notifier(): RealtimeNotifier
     {
         $hub = self::createStub(HubInterface::class);

@@ -74,6 +74,10 @@ body {
 .announcement-banner {
     top: var(--sticky-offset, 0);
     z-index: ($zindex-dropdown - 2);
+
+    .toast {
+        --#{$prefix}toast-max-width: min(32rem, 92vw);
+    }
 }
 
 // On admin pages the sticky breadcrumb bar shares this top edge and stacks above the banner. The banner's toasts are

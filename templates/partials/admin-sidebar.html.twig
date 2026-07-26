@@ -158,7 +158,7 @@
                 </li>
             </ul>
         </li>
-        {% set applicationActive = (app.current_route ?? '') starts with 'admin/announcement' %}
+        {% set applicationActive = is_module_active(['application']) %}
         <li class="nav-item dropdown dropend {{ applicationActive ? 'active default open' : '' }}">
             <a class="nav-link p-3 dropdown-toggle"
                href="#" data-bs-toggle="dropdown" data-bs-offset="0,0"
@@ -169,6 +169,11 @@
                 <li>
                     <a class="dropdown-item" href="{{ path('admin/announcement') }}">
                         {{ 'Announcement'|trans }}
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="{{ path('admin/maintenance') }}">
+                        {{ 'Maintenance'|trans }}
                     </a>
                 </li>
             </ul>

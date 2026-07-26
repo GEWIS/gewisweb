@@ -1041,6 +1041,10 @@
         <source>End date and time</source>
         <target state="translated">End date and time</target>
       </trans-unit>
+      <trans-unit id="KLjXk98" resname="Ended">
+        <source>Ended</source>
+        <target>Ended</target>
+      </trans-unit>
       <trans-unit id="_ujLe_1" resname="Ends">
         <source>Ends</source>
         <target state="translated">Ends</target>
@@ -1236,6 +1240,10 @@
       <trans-unit id="kCLhNY7" resname="Frontpage">
         <source>Frontpage</source>
         <target state="translated">Frontpage</target>
+      </trans-unit>
+      <trans-unit id="0ooNiTs" resname="Full">
+        <source>Full</source>
+        <target state="translated">Full</target>
       </trans-unit>
       <trans-unit id="i9.ArB8" resname="Full name">
         <source>Full name</source>
@@ -1445,6 +1453,10 @@
         <source>If your information is no longer up to date, contact %secretary% to change it. The same contact also handles data removal requests.</source>
         <target>If your information is no longer up to date, contact %secretary% to change it. The same contact also handles data removal requests.</target>
       </trans-unit>
+      <trans-unit id="0QlUu9B" resname="Immediately">
+        <source>Immediately</source>
+        <target>Immediately</target>
+      </trans-unit>
       <trans-unit id="AZfPAZa" resname="Improve security by signing out of other devices.">
         <source>Improve security by signing out of other devices.</source>
         <target state="translated">Improve security by signing out of other devices.</target>
@@ -1621,6 +1633,18 @@
         <source>Last used %date%</source>
         <target>Last used %date%</target>
       </trans-unit>
+      <trans-unit id="YD75Vls" resname="Leave empty to keep it on until you turn it off.">
+        <source>Leave empty to keep it on until you turn it off.</source>
+        <target state="translated">Leave empty to keep it on until you turn it off.</target>
+      </trans-unit>
+      <trans-unit id="BmqZUtK" resname="Leave empty to start immediately.">
+        <source>Leave empty to start immediately.</source>
+        <target state="translated">Leave empty to start immediately.</target>
+      </trans-unit>
+      <trans-unit id="gsxxdUb" resname="Leave the start empty to begin at once, and the end empty to keep it on until you turn it off. Windows may not overlap.">
+        <source>Leave the start empty to begin at once, and the end empty to keep it on until you turn it off. Windows may not overlap.</source>
+        <target>Leave the start empty to begin at once, and the end empty to keep it on until you turn it off. Windows may not overlap.</target>
+      </trans-unit>
       <trans-unit id="q2_TGUG" resname="Level">
         <source>Level</source>
         <target state="translated">Level</target>
@@ -1725,6 +1749,22 @@
         <source>Mail address</source>
         <target state="translated">Mail address</target>
       </trans-unit>
+      <trans-unit id="BNMLKlt" resname="Maintenance">
+        <source>Maintenance</source>
+        <target state="translated">Maintenance</target>
+      </trans-unit>
+      <trans-unit id="0jTMGbR" resname="Maintenance window removed.">
+        <source>Maintenance window removed.</source>
+        <target>Maintenance window removed.</target>
+      </trans-unit>
+      <trans-unit id="Qiex3LK" resname="Maintenance window scheduled.">
+        <source>Maintenance window scheduled.</source>
+        <target>Maintenance window scheduled.</target>
+      </trans-unit>
+      <trans-unit id="p_KZkqw" resname="Maintenance windows">
+        <source>Maintenance windows</source>
+        <target>Maintenance windows</target>
+      </trans-unit>
       <trans-unit id="WP2lXKC" resname="Manage">
         <source>Manage</source>
         <target state="translated">Manage</target>
@@ -1796,6 +1836,10 @@
       <trans-unit id="JObdnqB" resname="Minimum value (number type)">
         <source>Minimum value (number type)</source>
         <target state="translated">Minimum value (number type)</target>
+      </trans-unit>
+      <trans-unit id="2OVSb4f" resname="Mode">
+        <source>Mode</source>
+        <target state="translated">Mode</target>
       </trans-unit>
       <trans-unit id="nFoBwxF" resname="Modern applications require the URL fragment.">
         <source>Modern applications require the URL fragment.</source>
@@ -1901,6 +1945,10 @@
         <source>New tag</source>
         <target state="translated">New tag</target>
       </trans-unit>
+      <trans-unit id="5dsfyar" resname="New window">
+        <source>New window</source>
+        <target>New window</target>
+      </trans-unit>
       <trans-unit id="VXC5Ldf" resname="Newer">
         <source>Newer</source>
         <target state="translated">Newer</target>
@@ -1956,6 +2004,10 @@
       <trans-unit id="vs1Yzf_" resname="No labels.">
         <source>No labels.</source>
         <target state="translated">No labels.</target>
+      </trans-unit>
+      <trans-unit id="3YWcfhV" resname="No maintenance is planned. The site is fully available.">
+        <source>No maintenance is planned. The site is fully available.</source>
+        <target>No maintenance is planned. The site is fully available.</target>
       </trans-unit>
       <trans-unit id="YeBrgS2" resname="No matching labels">
         <source>No matching labels</source>
@@ -2040,6 +2092,10 @@
       <trans-unit id="ZV7YFQ7" resname="Number of subscriptions: %count%">
         <source>Number of subscriptions: %count%</source>
         <target>Number of subscriptions: %count%</target>
+      </trans-unit>
+      <trans-unit id="wBbSi_k" resname="Off">
+        <source>Off</source>
+        <target state="translated">Off</target>
       </trans-unit>
       <trans-unit id="fm8k4L1" resname="Oh no! Something went wrong :(">
         <source>Oh no! Something went wrong :(</source>
@@ -2333,6 +2389,18 @@
         <source>Re-publish this activity? It becomes publicly visible again and sign-ups reopen where the deadlines still allow.</source>
         <target>Re-publish this activity? It becomes publicly visible again and sign-ups reopen where the deadlines still allow.</target>
       </trans-unit>
+      <trans-unit id="KJPSfn5" resname="Read-only">
+        <source>Read-only</source>
+        <target state="translated">Read-only</target>
+      </trans-unit>
+      <trans-unit id="J7GFgK_" resname="Read-only blocks changes for non-admins; full shows the maintenance page. Admins always keep full access.">
+        <source>Read-only blocks changes for non-admins; full shows the maintenance page. Admins always keep full access.</source>
+        <target>Read-only blocks changes for non-admins; full shows the maintenance page. Admins always keep full access.</target>
+      </trans-unit>
+      <trans-unit id="s0FrgfZ" resname="Read-only mode">
+        <source>Read-only mode</source>
+        <target>Read-only mode</target>
+      </trans-unit>
       <trans-unit id="9Iuz1j8" resname="Reality collapsed. Please go back before the singularity spreads.">
         <source>Reality collapsed. Please go back before the singularity spreads.</source>
         <target state="translated">Reality collapsed. Please go back before the singularity spreads.</target>
@@ -2401,6 +2469,10 @@
         <source>Remove announcement</source>
         <target state="translated">Remove announcement</target>
       </trans-unit>
+      <trans-unit id="vt8joaQ" resname="Remove maintenance window">
+        <source>Remove maintenance window</source>
+        <target>Remove maintenance window</target>
+      </trans-unit>
       <trans-unit id="IR6O8kN" resname="Remove option">
         <source>Remove option</source>
         <target state="translated">Remove option</target>
@@ -2420,6 +2492,10 @@
       <trans-unit id="rCORPR7" resname="Remove this announcement? If it is still active, its banner disappears for everyone.">
         <source>Remove this announcement? If it is still active, its banner disappears for everyone.</source>
         <target state="translated">Remove this announcement? If it is still active, its banner disappears for everyone.</target>
+      </trans-unit>
+      <trans-unit id="KId45Bk" resname="Remove this maintenance window? If it is active, the site returns to normal for everyone.">
+        <source>Remove this maintenance window? If it is active, the site returns to normal for everyone.</source>
+        <target>Remove this maintenance window? If it is active, the site returns to normal for everyone.</target>
       </trans-unit>
       <trans-unit id="Sg9.yIf" resname="Removed field">
         <source>Removed field</source>
@@ -2564,6 +2640,18 @@
       <trans-unit id="ilkQJ_6" resname="Scan the QR code below.">
         <source>Scan the QR code below.</source>
         <target state="translated">Scan the QR code below.</target>
+      </trans-unit>
+      <trans-unit id="VWzuLxq" resname="Schedule">
+        <source>Schedule</source>
+        <target>Schedule</target>
+      </trans-unit>
+      <trans-unit id="vPdIj4g" resname="Schedule maintenance">
+        <source>Schedule maintenance</source>
+        <target>Schedule maintenance</target>
+      </trans-unit>
+      <trans-unit id="63_xW0T" resname="Scheduled">
+        <source>Scheduled</source>
+        <target>Scheduled</target>
       </trans-unit>
       <trans-unit id="SdNWA5t" resname="Search">
         <source>Search</source>
@@ -3025,6 +3113,10 @@
         <source>The end date must be in the future.</source>
         <target state="translated">The end date must be in the future.</target>
       </trans-unit>
+      <trans-unit id="KsW5OxZ" resname="The end must be after the start.">
+        <source>The end must be after the start.</source>
+        <target state="translated">The end must be after the start.</target>
+      </trans-unit>
       <trans-unit id="mTMkPrt" resname="The external application has been created.">
         <source>The external application has been created.</source>
         <target>The external application has been created.</target>
@@ -3076,6 +3168,18 @@
       <trans-unit id=".gFbTa4" resname="The subscriber is added immediately, without email verification.">
         <source>The subscriber is added immediately, without email verification.</source>
         <target>The subscriber is added immediately, without email verification.</target>
+      </trans-unit>
+      <trans-unit id="U7EZEfl" resname="The website is temporarily read-only for maintenance, so your change was not saved.">
+        <source>The website is temporarily read-only for maintenance, so your change was not saved.</source>
+        <target>The website is temporarily read-only for maintenance, so your change was not saved.</target>
+      </trans-unit>
+      <trans-unit id="YgYyeCJ" resname="The website is temporarily read-only for maintenance; changes are disabled.">
+        <source>The website is temporarily read-only for maintenance; changes are disabled.</source>
+        <target>The website is temporarily read-only for maintenance; changes are disabled.</target>
+      </trans-unit>
+      <trans-unit id="I98XGR_" resname="The website is undergoing maintenance. You cannot sign in right now.">
+        <source>The website is undergoing maintenance. You cannot sign in right now.</source>
+        <target>The website is undergoing maintenance. You cannot sign in right now.</target>
       </trans-unit>
       <trans-unit id="tl9akBK" resname="Their TOTP secret and backup codes will be discarded and every active session for the user will be terminated. Use this when a device has been lost or compromised.">
         <source>Their TOTP secret and backup codes will be discarded and every active session for the user will be terminated. Use this when a device has been lost or compromised.</source>
@@ -3273,6 +3377,10 @@
         <source>This sign-up list is not open, so you cannot add a subscriber.</source>
         <target>This sign-up list is not open, so you cannot add a subscriber.</target>
       </trans-unit>
+      <trans-unit id="woCE4nm" resname="This window overlaps an existing maintenance window.">
+        <source>This window overlaps an existing maintenance window.</source>
+        <target>This window overlaps an existing maintenance window.</target>
+      </trans-unit>
       <trans-unit id=".zZzsFp" resname="Title">
         <source>Title</source>
         <target state="translated">Title</target>
@@ -3396,6 +3504,10 @@
       <trans-unit id="DoLVTva" resname="Until %date%">
         <source>Until %date%</source>
         <target>Until %date%</target>
+      </trans-unit>
+      <trans-unit id="xkD9RrB" resname="Until turned off">
+        <source>Until turned off</source>
+        <target>Until turned off</target>
       </trans-unit>
       <trans-unit id="itsx4Eu" resname="Upcoming">
         <source>Upcoming</source>

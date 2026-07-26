@@ -30,6 +30,7 @@ security:
             pattern: '^/(%app.locales%)/company'
             lazy: true
             login_throttling: true
+            user_checker: App\Security\User\UserChecker
             provider: company_user_provider
             form_login:
                 login_path: company_user_login

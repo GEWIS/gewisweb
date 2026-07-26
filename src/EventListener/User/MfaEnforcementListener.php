@@ -7,6 +7,7 @@ namespace App\EventListener\User;
 use App\Entity\Application\Enums\AlertTypes;
 use App\Entity\User\Enums\UserRoles;
 use App\Entity\User\User;
+use App\Security\User\Firewall;
 use App\Security\User\MfaPolicy;
 use Symfony\Bundle\SecurityBundle\Security\FirewallMap;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -39,10 +40,6 @@ use function assert;
 )]
 final class MfaEnforcementListener
 {
-    private const array ENROL_ROUTES = [
-        'main' => 'user_mfa_enable',
-    ];
-
     private const array MFA_GATED_ATTRIBUTES = [
         UserRoles::Admin->value,
         UserRoles::Board->value,
@@ -92,7 +89,7 @@ final class MfaEnforcementListener
             return;
         }
 
-        $enrolRoute = self::ENROL_ROUTES[$firewall] ?? null;
+        $enrolRoute = Firewall::tryFrom($firewall)?->mfaEnableRoute();
         if (null === $enrolRoute) {
             return;
         }

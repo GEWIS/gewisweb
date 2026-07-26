@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\MessageHandler\User;
 
 use App\Message\User\RevokeSessionsRealtimeMessage;
+use App\Security\User\Firewall;
 use App\Service\Application\RealtimeNotifier;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -12,14 +13,6 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 #[AsMessageHandler]
 class RevokeSessionsRealtimeHandler
 {
-    /**
-     * Firewall name -> login route, as in {@see \App\EventListener\User\StaleSessionGuardListener}.
-     */
-    private const array LOGIN_ROUTES = [
-        'main' => 'user_login',
-        'company' => 'company_user_login',
-    ];
-
     public function __construct(
         private readonly RealtimeNotifier $notifier,
         private readonly UrlGeneratorInterface $urlGenerator,
@@ -28,7 +21,7 @@ class RevokeSessionsRealtimeHandler
 
     public function __invoke(RevokeSessionsRealtimeMessage $message): void
     {
-        $loginRoute = self::LOGIN_ROUTES[$message->getFirewallName()] ?? null;
+        $loginRoute = Firewall::tryFrom($message->getFirewallName())?->loginRoute();
         if (null === $loginRoute) {
             return;
         }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\EventListener\User;
 
+use App\Security\User\Firewall;
 use App\Security\User\SudoVoter;
 use Symfony\Bundle\SecurityBundle\Security\FirewallMap;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -31,18 +32,6 @@ use function in_array;
 )]
 final class SudoAccessDeniedListener
 {
-    /**
-     * Firewall name -> sudo confirm route.
-     *
-     * Hardcoded for the same reason as {@see StaleSessionGuardListener}'s LOGIN_ROUTES: Symfony's `FirewallMap` /
-     * `FirewallConfig` does not expose any per-firewall route metadata. We cannot easily obtain the confirm path in
-     * another way, so we have it here for direct lookup.
-     */
-    private const array CONFIRM_ROUTES = [
-        'main' => 'user_sudo_confirm',
-        'company' => 'company_user_sudo_confirm',
-    ];
-
     public function __construct(
         private readonly UrlGeneratorInterface $urlGenerator,
         #[Autowire(service: 'security.firewall.map')]
@@ -73,7 +62,7 @@ final class SudoAccessDeniedListener
             return;
         }
 
-        $confirmRoute = self::CONFIRM_ROUTES[$firewall] ?? null;
+        $confirmRoute = Firewall::tryFrom($firewall)?->sudoConfirmRoute();
         if (null === $confirmRoute) {
             return;
         }

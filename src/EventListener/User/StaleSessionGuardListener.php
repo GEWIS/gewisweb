@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\EventListener\User;
 
 use App\Repository\User\SessionRepository;
+use App\Security\User\Firewall;
 use App\Security\User\HandlerRegistry;
 use App\Security\User\UserAgentParser;
 use DateTimeImmutable;
@@ -46,18 +47,6 @@ use function strtolower;
 #[AsEventListener(event: RequestEvent::class)]
 final class StaleSessionGuardListener
 {
-    /**
-     * Firewall name -> login route.
-     *
-     * Hardcoded for the same reason as {@see SudoAccessDeniedListener}'s CONFIRM_ROUTES: Symfony's `FirewallMap` /
-     * `FirewallConfig` does not expose any per-firewall route metadata. We cannot easily obtain the
-     * form_login.login_path` in another way, so we have it here for direct lookup.
-     */
-    private const array LOGIN_ROUTES = [
-        'main' => 'user_login',
-        'company' => 'company_user_login',
-    ];
-
     /**
      * Do not write lastUsedAt more than once per this many seconds to spare the DB.
      */
@@ -219,7 +208,7 @@ final class StaleSessionGuardListener
         $this->tokenStorage->setToken(null);
         $event->getRequest()->getSession()->invalidate();
 
-        $loginRoute = self::LOGIN_ROUTES[$firewall] ?? null;
+        $loginRoute = Firewall::tryFrom($firewall)?->loginRoute();
         if (null === $loginRoute) {
             return;
         }
