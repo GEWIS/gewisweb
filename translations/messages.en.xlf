@@ -385,6 +385,10 @@
         <source>Artist</source>
         <target>Artist</target>
       </trans-unit>
+      <trans-unit id="_6_FgqT" resname="As they happen">
+        <source>As they happen</source>
+        <target>As they happen</target>
+      </trans-unit>
       <trans-unit id="FzJGBxU" resname="Association">
         <source>Association</source>
         <target state="translated">Association</target>
@@ -769,6 +773,10 @@
         <source>Custom</source>
         <target>Custom</target>
       </trans-unit>
+      <trans-unit id="sDQ5DRC" resname="Daily">
+        <source>Daily</source>
+        <target>Daily</target>
+      </trans-unit>
       <trans-unit id="ts0oBlQ" resname="Danger">
         <source>Danger</source>
         <target state="translated">Danger</target>
@@ -808,6 +816,10 @@
       <trans-unit id="l9KZflr" resname="Deleted">
         <source>Deleted</source>
         <target state="translated">Deleted</target>
+      </trans-unit>
+      <trans-unit id="SEwWJUe" resname="Delivery">
+        <source>Delivery</source>
+        <target>Delivery</target>
       </trans-unit>
       <trans-unit id="3UyRwGq" resname="Describe the allocation method">
         <source>Describe the allocation method</source>
@@ -997,6 +1009,10 @@
         <source>Email admittees</source>
         <target>Email admittees</target>
       </trans-unit>
+      <trans-unit id="EiKzvgW" resname="Email me about %topic%">
+        <source>Email me about %topic%</source>
+        <target>Email me about %topic%</target>
+      </trans-unit>
       <trans-unit id="iWhlH3l" resname="Email sign-ups">
         <source>Email sign-ups</source>
         <target>Email sign-ups</target>
@@ -1084,6 +1100,10 @@
       <trans-unit id="xVvK.Uw" resname="Every input should map to an output. This one got lost.">
         <source>Every input should map to an output. This one got lost.</source>
         <target state="translated">Every input should map to an output. This one got lost.</target>
+      </trans-unit>
+      <trans-unit id="uXA0ARR" resname="Everything shows up on the website. Pick which topics you also want by email, and how often they should reach you.">
+        <source>Everything shows up on the website. Pick which topics you also want by email, and how often they should reach you.</source>
+        <target>Everything shows up on the website. Pick which topics you also want by email, and how often they should reach you.</target>
       </trans-unit>
       <trans-unit id="q6.QUqh" resname="Exceptional Members">
         <source>Exceptional Members</source>
@@ -1409,6 +1429,10 @@
         <source>Honorary</source>
         <target state="translated">Honorary</target>
       </trans-unit>
+      <trans-unit id="HuStJXW" resname="Hourly">
+        <source>Hourly</source>
+        <target>Hourly</target>
+      </trans-unit>
       <trans-unit id="DGNp8kI" resname="Housing">
         <source>Housing</source>
         <target state="translated">Housing</target>
@@ -1604,6 +1628,10 @@
       <trans-unit id="Oaj7VyV" resname="Keep it pinned as a banner at the top of every page">
         <source>Keep it pinned as a banner at the top of every page</source>
         <target state="translated">Keep it pinned as a banner at the top of every page</target>
+      </trans-unit>
+      <trans-unit id="0rhnMex" resname="Keep website notifications only. Nothing is emailed until you turn this back off.">
+        <source>Keep website notifications only. Nothing is emailed until you turn this back off.</source>
+        <target>Keep website notifications only. Nothing is emailed until you turn this back off.</target>
       </trans-unit>
       <trans-unit id="a5V7ouo" resname="Keycode active">
         <source>Keycode active</source>
@@ -1925,6 +1953,14 @@
         <source>New</source>
         <target state="translated">New</target>
       </trans-unit>
+      <trans-unit id="E30GQMW" resname="New activities">
+        <source>New activities</source>
+        <target>New activities</target>
+      </trans-unit>
+      <trans-unit id="cpwrWrv" resname="New activities you can sign up for">
+        <source>New activities you can sign up for</source>
+        <target>New activities you can sign up for</target>
+      </trans-unit>
       <trans-unit id="xQgCPCW" resname="New announcement">
         <source>New announcement</source>
         <target state="translated">New announcement</target>
@@ -1940,6 +1976,10 @@
       <trans-unit id="Zm.jZiK" resname="New password">
         <source>New password</source>
         <target state="translated">New password</target>
+      </trans-unit>
+      <trans-unit id="0IHjoHx" resname="New photo albums">
+        <source>New photo albums</source>
+        <target>New photo albums</target>
       </trans-unit>
       <trans-unit id="zq8_o0a" resname="New tag">
         <source>New tag</source>
@@ -2232,6 +2272,10 @@
       <trans-unit id="LTQgZqV" resname="Password updated successfully.">
         <source>Password updated successfully.</source>
         <target state="translated">Password updated successfully.</target>
+      </trans-unit>
+      <trans-unit id="HG0KlMe" resname="Pause everything">
+        <source>Pause everything</source>
+        <target>Pause everything</target>
       </trans-unit>
       <trans-unit id="AC0RNHY" resname="Payment is collected by the external party">
         <source>Payment is collected by the external party</source>
@@ -3413,6 +3457,10 @@
         <source>Too many sign-up attempts. Please try again later.</source>
         <target>Too many sign-up attempts. Please try again later.</target>
       </trans-unit>
+      <trans-unit id="GSy11o_" resname="Topic">
+        <source>Topic</source>
+        <target>Topic</target>
+      </trans-unit>
       <trans-unit id="m67in_8" resname="Traineeship">
         <source>Traineeship</source>
         <target>Traineeship</target>
@@ -3649,6 +3697,10 @@
         <source>Weekend</source>
         <target>Weekend</target>
       </trans-unit>
+      <trans-unit id="y1POd5z" resname="Weekly">
+        <source>Weekly</source>
+        <target>Weekly</target>
+      </trans-unit>
       <trans-unit id="qLp0Jrc" resname="Welcome to the website of study association GEWIS, the study association of the department of Mathematics &amp; Computer Science at Eindhoven University of Technology.">
         <source>Welcome to the website of study association GEWIS, the study association of the department of Mathematics &amp; Computer Science at Eindhoven University of Technology.</source>
         <target state="translated"><![CDATA[Welcome to the website of study association GEWIS, the study association of the department of Mathematics & Computer Science at Eindhoven University of Technology.]]></target>
@@ -3656,6 +3708,10 @@
       <trans-unit id="qlyBI_b" resname="Well-being">
         <source>Well-being</source>
         <target state="translated">Well-being</target>
+      </trans-unit>
+      <trans-unit id="AS1e.sj" resname="When photos of an event are published">
+        <source>When photos of an event are published</source>
+        <target>When photos of an event are published</target>
       </trans-unit>
       <trans-unit id="B0EtCVs" resname="When this is checked, GEFLITST will be notified that this activity needs a photographer.">
         <source>When this is checked, GEFLITST will be notified that this activity needs a photographer.</source>
@@ -3808,6 +3864,10 @@
       <trans-unit id="Mnrixx." resname="Your message is being sent to %count% recipient(s).">
         <source>Your message is being sent to %count% recipient(s).</source>
         <target>Your message is being sent to %count% recipient(s).</target>
+      </trans-unit>
+      <trans-unit id="S6SysIv" resname="Your notification settings have been saved.">
+        <source>Your notification settings have been saved.</source>
+        <target>Your notification settings have been saved.</target>
       </trans-unit>
       <trans-unit id="23M6ORK" resname="Your password has been reset. You can now sign in with your new password.">
         <source>Your password has been reset. You can now sign in with your new password.</source>

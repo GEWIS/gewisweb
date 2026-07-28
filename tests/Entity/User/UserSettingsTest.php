@@ -27,6 +27,7 @@ final class UserSettingsTest extends TestCase
                 'photoVisibility' => 'selected',
                 'hideYearOfBirth' => true,
                 'hideBirthdayOnFrontpage' => false,
+                'notificationsPaused' => false,
             ],
             $settings->toGdprArray(),
         );

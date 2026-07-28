@@ -1,0 +1,24 @@
+{% extends 'emails/_base.html.twig' %}
+
+{% block emailTitle %}Notifications from GEWIS{% endblock %}
+{% block preheader %}{{ entries|length }} new notification(s){% endblock %}
+{% block heading %}Notifications{% endblock %}
+{% block subheading %}New on the GEWIS website{% endblock %}
+{% block body %}
+    <p>Dear {{ fullName }},</p>
+    {% if entries|length == 1 %}
+        <p>You have a new notification:</p>
+    {% else %}
+        <p>You have {{ entries|length }} new notifications:</p>
+    {% endif %}
+    {% for entry in entries %}
+        {# Built here rather than stored; email is always English, so the link is too. #}
+        {% set href = url(entry.type.route, entry.type.routeParameters(entry.subjectId)|merge({'_locale': 'en'})) %}
+        <p>
+            {{ entry.text }}
+            <br><a href="{{ href }}" style="color: #C40000; text-decoration: none;" target="_blank" rel="noopener nofollow">{{ entry.linkLabel is not empty ? entry.linkLabel : 'View on the website' }}</a>
+        </p>
+    {% endfor %}
+    With kind regards,<br> The GEWIS website
+{% endblock %}
+{% block footerNote %}You receive this email because you enabled email for these notification categories. <a href="{{ settingsUrl }}" style="color: #C40000; text-decoration: none;" target="_blank" rel="noopener nofollow">Manage your notification settings</a>.{% endblock %}

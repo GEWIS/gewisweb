@@ -1,0 +1,113 @@
+{% extends 'layout-sidebar.html.twig' %}
+
+{% block page_title %}{{ 'Notifications'|trans }}{% endblock %}
+
+{% block sidebar_label %}{{ app.user.member.getFullName }}{% endblock %}
+{% block sidebar %}
+    {% include 'partials/member-sidebar.html.twig' with {
+        'member': app.user.member,
+        'isSelf': true,
+        'activeRoute': 'notifications',
+    } %}
+{% endblock %}
+
+{% block contents %}
+    <div class="row">
+        <div class="col-lg-8">
+            <form method="post"
+                  action="{{ path('user_settings_notifications') }}"
+                  data-controller="notification-settings"
+                  data-notification-settings-paused-class="opacity-50">
+                <input type="hidden" name="_token" value="{{ csrf_token('notification_settings') }}">
+
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h3>{{ 'Notifications'|trans }}</h3>
+                    </div>
+                    <div class="panel-body">
+                        <p class="text-muted">
+                            {{ 'Everything shows up on the website. Pick which topics you also want by email, and how often they should reach you.'|trans }}
+                        </p>
+                        <div class="table-responsive">
+                            <table class="table align-middle mb-0">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">{{ 'Topic'|trans }}</th>
+                                        <th scope="col" class="text-center">{{ 'Email'|trans }}</th>
+                                        <th scope="col" class="text-end">{{ 'Delivery'|trans }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody data-notification-settings-target="dim">
+                                    {% for category in categories %}
+                                        {% set current = subscriptions[category.value] ?? null %}
+                                        {% set isOn = current is not null %}
+                                        {% set selectedValue = isOn ? current.value : 'immediately' %}
+                                        <tr>
+                                            <td>
+                                                <div class="fw-semibold">
+                                                    <span class="fas {{ category.icon }} text-muted me-2"></span>{{ category|trans }}
+                                                </div>
+                                                <div class="text-muted small">{{ category.hint|trans }}</div>
+                                            </td>
+                                            <td class="text-center">
+                                                <div class="form-check form-switch d-inline-block mb-0">
+                                                    <input class="form-check-input" type="checkbox" role="switch"
+                                                           name="categories[]" value="{{ category.value }}"
+                                                           id="ns-email-{{ category.value }}"
+                                                           aria-label="{{ 'Email me about %topic%'|trans({'%topic%': category|trans}) }}"
+                                                           data-notification-settings-target="email"
+                                                           data-action="change->notification-settings#sync"
+                                                           {{ isOn ? 'checked' }}>
+                                                </div>
+                                            </td>
+                                            <td class="text-end">
+                                                <select class="form-select form-select-sm w-auto d-inline-block"
+                                                        name="frequency[{{ category.value }}]"
+                                                        aria-label="{{ 'Delivery'|trans }}"
+                                                        data-notification-settings-target="frequency">
+                                                    {% for option in frequencyOptions %}
+                                                        <option value="{{ option.value }}" {{ option.value == selectedValue ? 'selected' }}>
+                                                            {{ option|trans }}
+                                                        </option>
+                                                    {% endfor %}
+                                                </select>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <tbody class="table-group-divider">
+                                    <tr>
+                                        <td colspan="3">
+                                            <div class="d-flex align-items-center gap-3">
+                                                <div class="flex-grow-1">
+                                                    <div class="fw-semibold">
+                                                        <span class="fas fa-moon text-muted me-2"></span>{{ 'Pause everything'|trans }}
+                                                    </div>
+                                                    <div class="text-muted small">
+                                                        {{ 'Keep website notifications only. Nothing is emailed until you turn this back off.'|trans }}
+                                                    </div>
+                                                </div>
+                                                <div class="form-check form-switch d-inline-block mb-0">
+                                                    <input class="form-check-input" type="checkbox" role="switch"
+                                                           name="paused" value="1" id="ns-paused"
+                                                           aria-label="{{ 'Pause everything'|trans }}"
+                                                           data-notification-settings-target="pause"
+                                                           data-action="change->notification-settings#sync"
+                                                           {{ paused ? 'checked' }}>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <button type="submit" class="btn btn-gewis-primary mt-3">
+                            <span class="fas fa-save"></span> {{ 'Save settings'|trans }}
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

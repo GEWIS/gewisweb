@@ -4,14 +4,17 @@ declare(strict_types=1);
 
 namespace App\Entity\Application\Enums;
 
+use Override;
 use Symfony\Component\Translation\TranslatableMessage;
+use Symfony\Contracts\Translation\TranslatableInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * The kind of event a persisted {@see \App\Entity\Application\Notification} records. Drives the icon shown in the
- * notification centre. It also holds everything the notification says: the sentence, where it points and what the
- * link reads, so a notification row only has to record its subject.
+ * notification centre and, as a category, the per-member email opt-in. It also holds everything the notification says:
+ * the sentence, where it points and what the link reads, so a notification row only has to record its subject.
  */
-enum NotificationType: string
+enum NotificationType: string implements TranslatableInterface
 {
     case AlbumPublished = 'album_published';
     case ActivityPublished = 'activity_published';
@@ -74,6 +77,34 @@ enum NotificationType: string
             self::ActivityPublished => new TranslatableMessage(
                 'A new activity "%name%" has been published.',
                 ['%name%' => $name],
+            ),
+        };
+    }
+
+    /**
+     * A short line under the category title on the notification settings page, explaining when it fires.
+     */
+    public function hint(): TranslatableMessage
+    {
+        return match ($this) {
+            self::AlbumPublished => new TranslatableMessage('When photos of an event are published'),
+            self::ActivityPublished => new TranslatableMessage('New activities you can sign up for'),
+        };
+    }
+
+    #[Override]
+    public function trans(
+        TranslatorInterface $translator,
+        ?string $locale = null,
+    ): string {
+        return match ($this) {
+            self::AlbumPublished => $translator->trans(
+                'New photo albums',
+                locale: $locale,
+            ),
+            self::ActivityPublished => $translator->trans(
+                'New activities',
+                locale: $locale,
             ),
         };
     }
