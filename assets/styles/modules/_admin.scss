@@ -1,8 +1,4 @@
 .container-admin {
-    --#{$prefix}admin-surface-bg: #{$admin-surface-bg};
-
-    background-color: var(--#{$prefix}admin-surface-bg);
-
     // The sidebar column stretches to the row, which the flex-column body already grows to fill the screen. Giving the
     // column its own viewport height instead made every page a navbar taller than the screen, so even an empty one
     // scrolled. What sticks is the list of links inside it, which keeps the coloured column full height either way.
@@ -21,19 +17,5 @@
         position: sticky !important;
         top: var(--sticky-offset);
         z-index: ($zindex-dropdown - 1) !important;
-    }
-
-    .panel {
-        --#{$prefix}panel-bg: #{$white};
-    }
-}
-
-@include color-mode(gewis-night) {
-    .container-admin {
-        --#{$prefix}admin-surface-bg: #{$admin-surface-bg-dark};
-
-        .panel {
-            --#{$prefix}panel-bg: #{$panel-bg-dark};
-        }
     }
 }

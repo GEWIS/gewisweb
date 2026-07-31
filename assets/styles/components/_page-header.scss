@@ -1,0 +1,50 @@
+// Page header
+//
+// Full-width band at the top of a page, rendered by `partials/application/page-header.html.twig`
+// from a layout's `pre_body` block.
+
+.page-header {
+    background-color: var(--#{$prefix}body-bg);
+    border-bottom: var(--#{$prefix}border-width) solid var(--#{$prefix}border-color-translucent);
+
+    .breadcrumb {
+        --#{$prefix}breadcrumb-bg: transparent;
+
+        padding: 0;
+    }
+}
+
+.page-header-eyebrow {
+    color: var(--#{$prefix}secondary-color);
+    font-size: $font-size-sm;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.page-header-meta {
+    color: var(--#{$prefix}secondary-color);
+    font-size: $font-size-sm;
+}
+
+.page-header-stats {
+    border-top: var(--#{$prefix}border-width) solid var(--#{$prefix}border-color-translucent);
+}
+
+.page-header-stat {
+    display: flex;
+    flex-direction: column;
+
+    .page-header-stat-value {
+        font-size: 1.25rem;
+        font-weight: 600;
+    }
+
+    .page-header-stat-label {
+        color: var(--#{$prefix}secondary-color);
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+    }
+}

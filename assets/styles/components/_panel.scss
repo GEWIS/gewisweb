@@ -125,6 +125,7 @@
 @include color-mode(gewis-night) {
     .panel {
         --#{$prefix}panel-bg: #{$panel-bg-dark};
+        --#{$prefix}panel-border-color: #{$border-color-translucent-dark};
 
         .panel-footer {
             --#{$prefix}panel-footer-bg: #{$panel-footer-bg-dark};
