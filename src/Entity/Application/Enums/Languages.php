@@ -9,7 +9,6 @@ use Symfony\Component\Translation\TranslatableMessage;
 
 use function array_map;
 use function array_merge;
-use function explode;
 
 /**
  * This enum contains the different languages that are supported by the website.
@@ -65,16 +64,6 @@ enum Languages: string
             'en' => self::English,
             'nl' => self::Dutch,
         };
-    }
-
-    /**
-     * Get the language from a locale ('en_GB', 'nl_NL')
-     *
-     * @param Locale $locale
-     */
-    public static function fromLocale(string $locale): Languages
-    {
-        return self::fromLangParam(explode('_', $locale)[0]);
     }
 
     /**

@@ -130,6 +130,8 @@ class PasswordResetRequestEmailHandler
             $recipientEmail = $member->getEmail();
             $fullName = $member->getFullName();
         } else {
+            // PHPStan narrows $companyUser from the both-null guard above and calls this assert redundant (baselined),
+            // but Psalm does not, so it stays.
             assert($companyUser instanceof CompanyUser);
             $recipientEmail = $companyUser->getCompany()->getRepresentativeEmail();
             $fullName = $companyUser->getCompany()->getRepresentativeName();

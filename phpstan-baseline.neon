@@ -211,10 +211,16 @@ parameters:
 			path: src/Entity/Decision/SubDecision/Reappointment.php
 
 		-
-			message: '#^Property App\\Entity\\User\\ExternalApp\:\:\$claims type mapping mismatch\: database can contain list\<App\\Entity\\User\\Enums\\JWTClaims\>\|null but property expects array\<App\\Entity\\User\\Enums\\JWTClaims\>\.$#'
-			identifier: doctrine.columnType
+			message: '#^Property App\\Entity\\Photo\\MemberTag\:\:\$member type mapping mismatch\: database can contain App\\Entity\\Decision\\Member\|null but property expects App\\Entity\\Decision\\Member\.$#'
+			identifier: doctrine.associationType
 			count: 1
-			path: src/Entity/User/ExternalApp.php
+			path: src/Entity/Photo/MemberTag.php
+
+		-
+			message: '#^Property App\\Entity\\Photo\\OrganTag\:\:\$organ type mapping mismatch\: database can contain App\\Entity\\Decision\\Organ\|null but property expects App\\Entity\\Decision\\Organ\.$#'
+			identifier: doctrine.associationType
+			count: 1
+			path: src/Entity/Photo/OrganTag.php
 
 		-
 			message: '#^Property App\\Entity\\User\\CompanyUser\:\:\$company is never written, only read\.$#'
@@ -229,6 +235,12 @@ parameters:
 			path: src/Entity/User/CompanyUser.php
 
 		-
+			message: '#^Property App\\Entity\\User\\ExternalApp\:\:\$claims type mapping mismatch\: database can contain list\<App\\Entity\\User\\Enums\\JWTClaims\>\|null but property expects array\<App\\Entity\\User\\Enums\\JWTClaims\>\.$#'
+			identifier: doctrine.columnType
+			count: 1
+			path: src/Entity/User/ExternalApp.php
+
+		-
 			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
 			identifier: function.alreadyNarrowedType
 			count: 1
@@ -239,21 +251,3 @@ parameters:
 			identifier: instanceof.alwaysTrue
 			count: 1
 			path: src/MessageHandler/User/PasswordResetRequestEmailHandler.php
-
-		-
-			message: '#^QueryBuilder\: \[Semantical Error\] line 0, col 87 near ''member \= \:me''\: Error\: Class App\\Entity\\Decision\\SubDecision has no field or association named member$#'
-			identifier: doctrine.dql
-			count: 1
-			path: src/Repository/Decision/SubDecisionRepository.php
-
-		-
-			message: '#^Property App\\Entity\\Photo\\MemberTag\:\:\$member type mapping mismatch\: database can contain App\\Entity\\Decision\\Member\|null but property expects App\\Entity\\Decision\\Member\.$#'
-			identifier: doctrine.associationType
-			count: 1
-			path: src/Entity/Photo/MemberTag.php
-
-		-
-			message: '#^Property App\\Entity\\Photo\\OrganTag\:\:\$organ type mapping mismatch\: database can contain App\\Entity\\Decision\\Organ\|null but property expects App\\Entity\\Decision\\Organ\.$#'
-			identifier: doctrine.associationType
-			count: 1
-			path: src/Entity/Photo/OrganTag.php
