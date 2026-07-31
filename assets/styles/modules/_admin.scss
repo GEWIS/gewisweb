@@ -3,12 +3,18 @@
 
     background-color: var(--#{$prefix}admin-surface-bg);
 
+    // The sidebar column stretches to the row, which the flex-column body already grows to fill the screen. Giving the
+    // column its own viewport height instead made every page a navbar taller than the screen, so even an empty one
+    // scrolled. What sticks is the list of links inside it, which keeps the coloured column full height either way.
     > aside {
-        align-self: flex-start;
-        position: sticky;
-        top: var(--sticky-offset);
-        height: calc(100vh - var(--sticky-offset));
-        z-index: ($zindex-dropdown - 1);
+        @include media-breakpoint-up(lg) {
+            // Nothing may clip here: the submenus fly out sideways past the column.
+            .offcanvas-lg {
+                position: sticky;
+                top: var(--sticky-offset);
+                z-index: ($zindex-dropdown - 1);
+            }
+        }
     }
 
     .navbar-breadcrumb {
