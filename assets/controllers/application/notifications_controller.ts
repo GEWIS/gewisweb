@@ -136,12 +136,12 @@ export default class extends Controller<HTMLElement> {
         // The dot is GEWIS red by default (in the template); only a genuine warning/danger/success level overrides it
         // with a semantic colour, keeping ordinary notifications on-brand rather than Bootstrap's info blue.
         const level = 'string' === typeof data.level ? data.level : 'info';
-        const indicator = toast.querySelector('.realtime-toast-indicator');
+        const indicator = toast.querySelector('.toast-indicator');
         if (indicator instanceof HTMLElement && 'info' !== level) {
             indicator.classList.add(`bg-${level}`);
         }
 
-        const title = toast.querySelector('.realtime-toast-title');
+        const title = toast.querySelector('.toast-title');
         if (title instanceof HTMLElement) {
             const heading = data.title === undefined ? '' : this.localise(data.title as LocalisedText);
             title.textContent = '' !== heading ? heading : 'GEWIS';
