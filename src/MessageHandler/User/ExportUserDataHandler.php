@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\MessageHandler\User;
 
 use App\Entity\Application\Enums\NotificationType;
-use App\Entity\Application\Notification;
 use App\Message\User\ExportUserDataMessage;
 use App\Repository\Decision\MemberRepository;
 use App\Repository\User\UserRepository;
@@ -99,15 +98,10 @@ class ExportUserDataHandler
             return;
         }
 
-        $notification = new Notification();
-        $notification->setType(NotificationType::DataExportReady);
-        $notification->setContext([]);
-        $notification->setRecipient(
+        $this->publisher->publishFor(
             $user,
-            null,
+            NotificationType::DataExportReady,
         );
-
-        $this->publisher->publish($notification);
     }
 
     /**

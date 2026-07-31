@@ -10,6 +10,7 @@ use App\Entity\Application\Notification;
 use App\Entity\User\CompanyUser;
 use App\Entity\User\User;
 use App\Repository\Activity\ActivityRepository;
+use App\Repository\Activity\ActivityRevisionRepository;
 use App\Repository\Photo\AlbumRepository;
 use App\Service\Application\DeviceDescription;
 use App\Service\Application\NotificationContextResolver;
@@ -170,6 +171,8 @@ final class RealtimeNotificationChannelTest extends TestCase
         $albums->method('findBy')->willReturn([]);
         $activities = self::createStub(ActivityRepository::class);
         $activities->method('findBy')->willReturn([]);
+        $revisions = self::createStub(ActivityRevisionRepository::class);
+        $revisions->method('findBy')->willReturn([]);
 
         $translator = self::createStub(TranslatorInterface::class);
         $translator->method('trans')->willReturnCallback(
@@ -190,6 +193,7 @@ final class RealtimeNotificationChannelTest extends TestCase
             new NotificationSubjectResolver(
                 $albums,
                 $activities,
+                $revisions,
             ),
             new NotificationContextResolver(new DeviceDescription($translator)),
             $translator,

@@ -49,6 +49,7 @@ final class NotificationRepositoryTest extends DatabaseTestCase
             $this->repository()->findRecentFor(
                 new DateTimeImmutable('-1 week'),
                 $this->member(8025),
+                [],
                 2,
             ),
         );
@@ -155,6 +156,7 @@ final class NotificationRepositoryTest extends DatabaseTestCase
         return $this->repository()->findRecentFor(
             new DateTimeImmutable('-1 week'),
             $this->member($lidnr),
+            [],
             10,
         );
     }

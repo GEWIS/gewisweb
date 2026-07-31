@@ -8,6 +8,7 @@ use App\Entity\Application\Enums\AlertTypes;
 use App\Entity\Application\Enums\NotificationType;
 use App\Entity\Application\Traits\IdentifiableTrait;
 use App\Entity\User\CompanyUser;
+use App\Entity\User\Enums\UserRoles;
 use App\Entity\User\User;
 use App\Repository\Application\NotificationRepository;
 use DateTimeImmutable;
@@ -19,6 +20,9 @@ use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 use InvalidArgumentException;
+
+use function array_filter;
+use function count;
 
 /**
  * A published notification shown in the notification centre. It records only what happened and what it happened to;
@@ -103,6 +107,19 @@ class Notification
     )]
     private ?User $recipientUser = null;
 
+    /**
+     * Addressed to whoever holds a role rather than to one account, for something a group is responsible for. Kept as
+     * the role itself because the roles that matter here are worked out per member rather than stored, so there is
+     * nothing to point a foreign key at.
+     */
+    #[Column(
+        type: Types::STRING,
+        length: 32,
+        nullable: true,
+        enumType: UserRoles::class,
+    )]
+    private ?UserRoles $recipientRole = null;
+
     #[ManyToOne(targetEntity: CompanyUser::class)]
     #[JoinColumn(
         name: 'recipientCompanyUser',
@@ -168,28 +185,42 @@ class Notification
         return $this->recipientCompanyUser;
     }
 
+    public function getRecipientRole(): ?UserRoles
+    {
+        return $this->recipientRole;
+    }
+
     public function hasRecipient(): bool
     {
         return null !== $this->recipientUser
-            || null !== $this->recipientCompanyUser;
+            || null !== $this->recipientCompanyUser
+            || null !== $this->recipientRole;
     }
 
     /**
-     * Set through one call so a notification can never end up addressed to two accounts at once.
+     * Set through one call so a notification can never end up addressed two ways at once.
      */
     public function setRecipient(
         ?User $user,
         ?CompanyUser $companyUser,
+        ?UserRoles $role = null,
     ): void {
-        if (
-            null !== $user
-            && null !== $companyUser
-        ) {
-            throw new InvalidArgumentException('A notification is addressed to one account, not two.');
+        $addressed = array_filter(
+            [
+                $user,
+                $companyUser,
+                $role,
+            ],
+            static fn (User|CompanyUser|UserRoles|null $to): bool => null !== $to,
+        );
+
+        if (count($addressed) > 1) {
+            throw new InvalidArgumentException('A notification is addressed one way, not several.');
         }
 
         $this->recipientUser = $user;
         $this->recipientCompanyUser = $companyUser;
+        $this->recipientRole = $role;
     }
 
     public function getLevel(): AlertTypes

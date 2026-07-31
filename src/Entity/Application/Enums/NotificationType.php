@@ -25,6 +25,7 @@ enum NotificationType: string implements TranslatableInterface
     case MfaDisabled = 'mfa_disabled';
     case BackupCodesRegenerated = 'backup_codes_regenerated';
     case DataExportReady = 'data_export_ready';
+    case ActivityAwaitingReview = 'activity_awaiting_review';
 
     public function icon(): string
     {
@@ -37,19 +38,18 @@ enum NotificationType: string implements TranslatableInterface
             self::MfaDisabled => 'fa-unlock',
             self::BackupCodesRegenerated => 'fa-rotate',
             self::DataExportReady => 'fa-file-arrow-down',
+            self::ActivityAwaitingReview => 'fa-clipboard-check',
         };
     }
 
-    /**
-     * Whether this kind goes out to everyone. The ones that do not are addressed to a single user, which also makes
-     * them no business of the per-category email opt-in.
-     */
-    public function isBroadcast(): bool
+    public function addressing(): NotificationAddressing
     {
         return match ($this) {
-            self::AlbumPublished, self::ActivityPublished => true,
+            self::AlbumPublished, self::ActivityPublished => NotificationAddressing::Everyone,
             self::SignIn, self::PasswordChanged, self::MfaEnabled,
-            self::MfaDisabled, self::BackupCodesRegenerated, self::DataExportReady => false,
+            self::MfaDisabled, self::BackupCodesRegenerated,
+            self::DataExportReady => NotificationAddressing::Account,
+            self::ActivityAwaitingReview => NotificationAddressing::Role,
         };
     }
 
@@ -68,6 +68,7 @@ enum NotificationType: string implements TranslatableInterface
             self::SignIn, self::PasswordChanged, self::MfaEnabled,
             self::MfaDisabled, self::BackupCodesRegenerated => ($recipient ?? Firewall::Main)->securityIndexRoute(),
             self::DataExportReady => 'user_settings_data_export_download',
+            self::ActivityAwaitingReview => 'admin/activities/approvals/review',
         };
     }
 
@@ -87,6 +88,7 @@ enum NotificationType: string implements TranslatableInterface
                 'album' => $subjectId,
             ],
             self::ActivityPublished => ['activity' => $subjectId],
+            self::ActivityAwaitingReview => ['revision' => $subjectId],
             self::SignIn, self::PasswordChanged, self::MfaEnabled,
             self::MfaDisabled, self::BackupCodesRegenerated, self::DataExportReady => [],
         };
@@ -106,6 +108,7 @@ enum NotificationType: string implements TranslatableInterface
                 'Review your account security',
             ),
             self::DataExportReady => new TranslatableMessage('Download your data'),
+            self::ActivityAwaitingReview => new TranslatableMessage('Review it'),
         };
     }
 
@@ -144,6 +147,10 @@ enum NotificationType: string implements TranslatableInterface
                 ['%name%' => $name],
             ),
             self::DataExportReady => new TranslatableMessage('The data export you asked for is ready.'),
+            self::ActivityAwaitingReview => new TranslatableMessage(
+                'The activity "%name%" has been submitted for review.',
+                ['%name%' => $name],
+            ),
         };
     }
 
@@ -161,6 +168,7 @@ enum NotificationType: string implements TranslatableInterface
                 'When the way you sign in changes',
             ),
             self::DataExportReady => new TranslatableMessage('When a data export you asked for is ready'),
+            self::ActivityAwaitingReview => new TranslatableMessage('When an activity is waiting to be reviewed'),
         };
     }
 
@@ -173,7 +181,8 @@ enum NotificationType: string implements TranslatableInterface
     public function emailSubject(): ?string
     {
         return match ($this) {
-            self::AlbumPublished, self::ActivityPublished, self::DataExportReady => null,
+            self::AlbumPublished, self::ActivityPublished, self::DataExportReady,
+            self::ActivityAwaitingReview => null,
             self::SignIn => 'New sign-in to your GEWIS account',
             self::PasswordChanged => 'Your GEWIS password was changed',
             self::MfaEnabled => 'Two-factor authentication enabled on your GEWIS account',
@@ -207,6 +216,10 @@ enum NotificationType: string implements TranslatableInterface
             ),
             self::DataExportReady => $translator->trans(
                 'Data exports',
+                locale: $locale,
+            ),
+            self::ActivityAwaitingReview => $translator->trans(
+                'Activities awaiting review',
                 locale: $locale,
             ),
         };

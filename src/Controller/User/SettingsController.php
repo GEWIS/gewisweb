@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\User;
 
 use App\Entity\Application\Enums\AlertTypes;
+use App\Entity\Application\Enums\NotificationAddressing;
 use App\Entity\Application\Enums\NotificationEmailFrequency;
 use App\Entity\Application\Enums\NotificationType;
 use App\Entity\User\DataExportRequest;
@@ -230,11 +231,27 @@ class SettingsController extends AbstractController
             'user/settings/notifications.html.twig',
             [
                 'categories' => $this->subscribableCategories(),
+                'alwaysOn' => $this->alwaysOnCategories(),
                 'frequencyOptions' => NotificationEmailFrequency::cases(),
                 'subscriptions' => $subscriptions,
                 'paused' => $settings->getNotificationsPaused(),
             ],
         );
+    }
+
+    /**
+     * The kinds a member is always told about, listed so they can see what those are even though there is nothing to
+     * decide about them. What goes to a role is left out: it is not about them.
+     *
+     * @return list<NotificationType>
+     */
+    private function alwaysOnCategories(): array
+    {
+        return array_values(array_filter(
+            NotificationType::cases(),
+            static fn (NotificationType $category): bool => NotificationAddressing::Account
+                === $category->addressing(),
+        ));
     }
 
     /**
@@ -248,7 +265,8 @@ class SettingsController extends AbstractController
     {
         return array_values(array_filter(
             NotificationType::cases(),
-            static fn (NotificationType $category): bool => $category->isBroadcast(),
+            static fn (NotificationType $category): bool => NotificationAddressing::Everyone
+                === $category->addressing(),
         ));
     }
 

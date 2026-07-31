@@ -19,6 +19,7 @@ use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
@@ -64,6 +65,7 @@ class Bell
         private readonly NotificationInteractionRepository $interactionRepository,
         private readonly EntityManagerInterface $entityManager,
         private readonly UrlGeneratorInterface $urlGenerator,
+        private readonly RoleHierarchyInterface $roleHierarchy,
         private readonly Security $security,
     ) {
     }
@@ -92,6 +94,7 @@ class Bell
         $notifications = $this->notificationRepository->findRecentFor(
             $this->windowStart(),
             $user,
+            $this->rolesOf($user),
             self::LIMIT,
         );
 
@@ -253,6 +256,29 @@ class Bell
     private function windowStart(): DateTimeImmutable
     {
         return new DateTimeImmutable(self::WINDOW);
+    }
+
+    /**
+     * Every role the viewer holds, hierarchy included. Security hands these out as names, and the hierarchy holds a
+     * couple that are not roles anything can be addressed to, which drop out here.
+     *
+     * @return list<UserRoles>
+     */
+    private function rolesOf(User $user): array
+    {
+        $roles = [];
+
+        foreach ($this->roleHierarchy->getReachableRoleNames($user->getRoles()) as $name) {
+            $role = UserRoles::tryFrom($name);
+
+            if (null === $role) {
+                continue;
+            }
+
+            $roles[] = $role;
+        }
+
+        return $roles;
     }
 
     private function currentUser(): ?User

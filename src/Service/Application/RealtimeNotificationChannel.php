@@ -48,6 +48,12 @@ final readonly class RealtimeNotificationChannel implements NotificationChannelI
             return;
         }
 
+        // Topics are per account, so there is nowhere to push something addressed to a role. It waits in the
+        // notification centre instead, which is where a queue of work belongs anyway.
+        if (null !== $notification->getRecipientRole()) {
+            return;
+        }
+
         $recipientUser = $notification->getRecipientUser();
         $recipientCompanyUser = $notification->getRecipientCompanyUser();
 

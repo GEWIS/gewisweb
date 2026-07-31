@@ -6,7 +6,6 @@ namespace App\MessageHandler\User;
 
 use App\Entity\Application\Enums\AlertTypes;
 use App\Entity\Application\Enums\Languages;
-use App\Entity\Application\Notification;
 use App\Entity\User\CompanyUser;
 use App\Entity\User\User;
 use App\Message\User\SecurityNotificationMessage;
@@ -72,16 +71,12 @@ class SecurityNotificationHandler
         $type = $message->getType();
         $origin = $message->getOrigin();
 
-        $notification = new Notification();
-        $notification->setType($type);
-        $notification->setLevel(AlertTypes::Warning);
-        $notification->setContext($origin);
-        $notification->setRecipient(
-            $account instanceof User ? $account : null,
-            $account instanceof CompanyUser ? $account : null,
+        $this->publisher->publishFor(
+            $account,
+            $type,
+            $origin,
+            AlertTypes::Warning,
         );
-
-        $this->publisher->publish($notification);
 
         $subject = $type->emailSubject();
         $recipient = self::mailbox($account);

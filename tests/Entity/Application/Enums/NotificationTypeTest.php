@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Entity\Application\Enums;
 
+use App\Entity\Application\Enums\NotificationAddressing;
 use App\Entity\Application\Enums\NotificationType;
 use App\Security\User\Firewall;
 use PHPUnit\Framework\TestCase;
@@ -29,6 +30,40 @@ final class NotificationTypeTest extends TestCase
         NotificationType::MfaDisabled,
         NotificationType::BackupCodesRegenerated,
     ];
+
+    /**
+     * Only what a member can be told about themselves belongs in the always-on list on the settings page; what goes to
+     * a role is somebody's work queue, not their preferences.
+     */
+    public function testEachKindIsAddressedExactlyOneWay(): void
+    {
+        self::assertSame(
+            [
+                NotificationType::AlbumPublished,
+                NotificationType::ActivityPublished,
+            ],
+            $this->addressedTo(NotificationAddressing::Everyone),
+        );
+        self::assertSame(
+            [NotificationType::ActivityAwaitingReview],
+            $this->addressedTo(NotificationAddressing::Role),
+        );
+        self::assertNotContains(
+            NotificationType::ActivityAwaitingReview,
+            $this->addressedTo(NotificationAddressing::Account),
+        );
+    }
+
+    /**
+     * @return list<NotificationType>
+     */
+    private function addressedTo(NotificationAddressing $addressing): array
+    {
+        return array_values(array_filter(
+            NotificationType::cases(),
+            static fn (NotificationType $type): bool => $addressing === $type->addressing(),
+        ));
+    }
 
     public function testOnlyTheKindsMeantForEveryoneAreOfferedAsEmailTopics(): void
     {
@@ -115,7 +150,7 @@ final class NotificationTypeTest extends TestCase
     {
         return array_values(array_filter(
             NotificationType::cases(),
-            static fn (NotificationType $type): bool => $type->isBroadcast(),
+            static fn (NotificationType $type): bool => NotificationAddressing::Everyone === $type->addressing(),
         ));
     }
 }

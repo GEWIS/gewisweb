@@ -51,6 +51,11 @@ class PublishDomainNotificationHandler
         $notification = new Notification();
         $notification->setType($type);
         $notification->setSubjectId($subjectId);
+        $notification->setRecipient(
+            null,
+            null,
+            $message->getRecipientRole(),
+        );
 
         $this->notificationPublisher->publish($notification);
     }

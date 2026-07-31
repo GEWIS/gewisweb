@@ -26,7 +26,7 @@
                     </div>
                     <div class="panel-body">
                         <p class="text-muted">
-                            {{ 'Everything shows up on the website. Pick which topics you also want by email, and how often they should reach you.'|trans }}
+                            {{ 'Everything shows up on the website. Pick which topics you also want by email, and how often they should reach you. Notices about your own account and your privacy are always sent and cannot be turned off.'|trans }}
                         </p>
                         <div class="table-responsive">
                             <table class="table align-middle mb-0">
@@ -76,6 +76,26 @@
                                     {% endfor %}
                                 </tbody>
                                 <tbody class="table-group-divider">
+                                    {% for category in alwaysOn %}
+                                        <tr>
+                                            <td>
+                                                <div class="fw-semibold">
+                                                    <span class="fas {{ category.icon }} text-muted me-2"></span>{{ category|trans }}
+                                                </div>
+                                                <div class="text-muted small">{{ category.hint|trans }}</div>
+                                            </td>
+                                            <td class="text-center">
+                                                <div class="form-check form-switch d-inline-block mb-0">
+                                                    <input class="form-check-input" type="checkbox" role="switch"
+                                                           id="ns-always-{{ category.value }}"
+                                                           aria-label="{{ category|trans }}" checked disabled>
+                                                </div>
+                                            </td>
+                                            <td class="text-end text-muted small">{{ 'Always'|trans }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <tbody class="table-group-divider">
                                     <tr>
                                         <td colspan="3">
                                             <div class="d-flex align-items-center gap-3">
@@ -84,7 +104,7 @@
                                                         <span class="fas fa-moon text-muted me-2"></span>{{ 'Pause everything'|trans }}
                                                     </div>
                                                     <div class="text-muted small">
-                                                        {{ 'Keep website notifications only. Nothing is emailed until you turn this back off.'|trans }}
+                                                        {{ 'Keep website notifications only. Nothing from the topics above is emailed until you turn this back off.'|trans }}
                                                     </div>
                                                 </div>
                                                 <div class="form-check form-switch d-inline-block mb-0">

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Repository\Application;
 
 use App\Entity\Application\Notification;
+use App\Entity\User\Enums\UserRoles;
 use App\Entity\User\NotificationInteraction;
 use App\Entity\User\User;
 use DateTimeImmutable;
@@ -27,7 +28,7 @@ class NotificationRepository extends ServiceEntityRepository
 
     /**
      * The most recent notifications within the window that this user may see, newest first: everything addressed to
-     * nobody in particular, plus everything addressed to them.
+     * nobody in particular, everything addressed to them, and everything addressed to a role they hold.
      *
      * Anything the viewer has cleared away is excluded here rather than afterwards, so the limit counts what they will
      * actually be shown: clearing ten notifications must not leave them with an empty centre while older ones are
@@ -37,16 +38,23 @@ class NotificationRepository extends ServiceEntityRepository
      * per-member the saving is small, and a cached list would keep being handed back after the notification centre has
      * already been told to refresh itself.
      *
+     * @param UserRoles[] $roles every role the viewer holds, hierarchy included
+     *
      * @return Notification[]
      */
     public function findRecentFor(
         DateTimeImmutable $since,
         User $viewer,
+        array $roles,
         int $limit,
     ): array {
         return $this->createQueryBuilder('n')
             ->where('n.createdAt > :since')
-            ->andWhere('n.recipientUser = :viewer OR (n.recipientUser IS NULL AND n.recipientCompanyUser IS NULL)')
+            ->andWhere(
+                'n.recipientUser = :viewer'
+                . ' OR n.recipientRole IN (:roles)'
+                . ' OR (n.recipientUser IS NULL AND n.recipientCompanyUser IS NULL AND n.recipientRole IS NULL)',
+            )
             ->andWhere(
                 'NOT EXISTS ('
                 . 'SELECT 1 FROM ' . NotificationInteraction::class . ' i '
@@ -61,6 +69,10 @@ class NotificationRepository extends ServiceEntityRepository
             ->setParameter(
                 'viewer',
                 $viewer->getLidnr(),
+            )
+            ->setParameter(
+                'roles',
+                $roles,
             )
             ->orderBy(
                 'n.createdAt',

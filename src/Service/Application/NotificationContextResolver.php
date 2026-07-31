@@ -33,7 +33,8 @@ final readonly class NotificationContextResolver
         Languages $language,
     ): ?string {
         return match ($type) {
-            NotificationType::AlbumPublished, NotificationType::ActivityPublished => null,
+            NotificationType::AlbumPublished, NotificationType::ActivityPublished,
+            NotificationType::ActivityAwaitingReview => null,
             // Nothing to fill in: the sentence says all of it on its own.
             NotificationType::DataExportReady => '',
             NotificationType::SignIn, NotificationType::PasswordChanged, NotificationType::MfaEnabled,

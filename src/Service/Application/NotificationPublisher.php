@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace App\Service\Application;
 
+use App\Entity\Application\Enums\AlertTypes;
+use App\Entity\Application\Enums\NotificationType;
 use App\Entity\Application\Notification;
+use App\Entity\User\CompanyUser;
+use App\Entity\User\User;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
@@ -28,6 +32,30 @@ final class NotificationPublisher
         #[AutowireIterator('app.notification_channel')]
         private readonly iterable $channels,
     ) {
+    }
+
+    /**
+     * Publish an account notice: something that happened to one account, which is never opted into and never reaches
+     * anybody else. The one way to raise one, so the callers that do cannot drift apart.
+     *
+     * @param array<string, string> $context
+     */
+    public function publishFor(
+        User|CompanyUser $recipient,
+        NotificationType $type,
+        array $context = [],
+        AlertTypes $level = AlertTypes::Info,
+    ): void {
+        $notification = new Notification();
+        $notification->setType($type);
+        $notification->setLevel($level);
+        $notification->setContext($context);
+        $notification->setRecipient(
+            $recipient instanceof User ? $recipient : null,
+            $recipient instanceof CompanyUser ? $recipient : null,
+        );
+
+        $this->publish($notification);
     }
 
     public function publish(Notification $notification): void

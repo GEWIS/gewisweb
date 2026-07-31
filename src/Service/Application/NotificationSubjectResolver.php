@@ -8,6 +8,7 @@ use App\Entity\Application\Enums\Languages;
 use App\Entity\Application\Enums\NotificationType;
 use App\Entity\Application\Notification;
 use App\Repository\Activity\ActivityRepository;
+use App\Repository\Activity\ActivityRevisionRepository;
 use App\Repository\Photo\AlbumRepository;
 
 use function array_values;
@@ -24,6 +25,7 @@ final readonly class NotificationSubjectResolver
     public function __construct(
         private AlbumRepository $albumRepository,
         private ActivityRepository $activityRepository,
+        private ActivityRevisionRepository $revisionRepository,
     ) {
     }
 
@@ -98,6 +100,7 @@ final readonly class NotificationSubjectResolver
         return match ($type) {
             NotificationType::AlbumPublished => $this->albumNames($subjectIds),
             NotificationType::ActivityPublished => $this->activityNames($subjectIds),
+            NotificationType::ActivityAwaitingReview => $this->revisionNames($subjectIds),
             NotificationType::SignIn,
             NotificationType::PasswordChanged,
             NotificationType::MfaEnabled,
@@ -125,6 +128,32 @@ final readonly class NotificationSubjectResolver
             $names[$id] = [
                 'en' => $name,
                 'nl' => $name,
+            ];
+        }
+
+        return $names;
+    }
+
+    /**
+     * Keyed by revision rather than by activity, since that is what a review points at.
+     *
+     * @param int[] $subjectIds
+     *
+     * @return array<int, array{en: string, nl: string}>
+     */
+    private function revisionNames(array $subjectIds): array
+    {
+        $names = [];
+        foreach ($this->revisionRepository->findBy(['id' => $subjectIds]) as $revision) {
+            $id = $revision->getId();
+            if (null === $id) {
+                continue;
+            }
+
+            $name = $revision->getName();
+            $names[$id] = [
+                'en' => $name->getText(Languages::English) ?? '',
+                'nl' => $name->getText(Languages::Dutch) ?? '',
             ];
         }
 

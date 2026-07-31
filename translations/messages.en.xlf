@@ -297,6 +297,10 @@
         <source>Almost there! Check your email to confirm your sign-up.</source>
         <target state="translated">Almost there! Check your email to confirm your sign-up.</target>
       </trans-unit>
+      <trans-unit id="WuZZUIZ" resname="Always">
+        <source>Always</source>
+        <target state="translated">Always</target>
+      </trans-unit>
       <trans-unit id="3eX.3WJ" resname="Analytics are currently">
         <source>Analytics are currently</source>
         <target state="translated">Analytics are currently</target>
@@ -1121,9 +1125,9 @@
         <source>Every time your account is signed in</source>
         <target state="translated">Every time your account is signed in</target>
       </trans-unit>
-      <trans-unit id="uXA0ARR" resname="Everything shows up on the website. Pick which topics you also want by email, and how often they should reach you.">
-        <source>Everything shows up on the website. Pick which topics you also want by email, and how often they should reach you.</source>
-        <target>Everything shows up on the website. Pick which topics you also want by email, and how often they should reach you.</target>
+      <trans-unit id="09wa3mW" resname="Everything shows up on the website. Pick which topics you also want by email, and how often they should reach you. Notices about your own account and your privacy are always sent and cannot be turned off.">
+        <source>Everything shows up on the website. Pick which topics you also want by email, and how often they should reach you. Notices about your own account and your privacy are always sent and cannot be turned off.</source>
+        <target state="translated">Everything shows up on the website. Pick which topics you also want by email, and how often they should reach you. Notices about your own account and your privacy are always sent and cannot be turned off.</target>
       </trans-unit>
       <trans-unit id="q6.QUqh" resname="Exceptional Members">
         <source>Exceptional Members</source>
@@ -1649,9 +1653,9 @@
         <source>Keep it pinned as a banner at the top of every page</source>
         <target state="translated">Keep it pinned as a banner at the top of every page</target>
       </trans-unit>
-      <trans-unit id="0rhnMex" resname="Keep website notifications only. Nothing is emailed until you turn this back off.">
-        <source>Keep website notifications only. Nothing is emailed until you turn this back off.</source>
-        <target>Keep website notifications only. Nothing is emailed until you turn this back off.</target>
+      <trans-unit id="O09wrH9" resname="Keep website notifications only. Nothing from the topics above is emailed until you turn this back off.">
+        <source>Keep website notifications only. Nothing from the topics above is emailed until you turn this back off.</source>
+        <target state="translated">Keep website notifications only. Nothing from the topics above is emailed until you turn this back off.</target>
       </trans-unit>
       <trans-unit id="a5V7ouo" resname="Keycode active">
         <source>Keycode active</source>
@@ -2645,6 +2649,10 @@
         <source>Review feedback</source>
         <target state="translated">Review feedback</target>
       </trans-unit>
+      <trans-unit id="Yx2O1IL" resname="Review it">
+        <source>Review it</source>
+        <target state="translated">Review it</target>
+      </trans-unit>
       <trans-unit id="Cz4MUCw" resname="Review started.">
         <source>Review started.</source>
         <target state="translated">Review started.</target>
@@ -3128,6 +3136,10 @@
       <trans-unit id="hEahyeO" resname="The GEWIS website is open-source! Check out the repository on &lt;a href=&quot;https://github.com/GEWIS/gewisweb&quot; target=&quot;_blank&quot;&gt;&lt;span class=&quot;fab fa-github&quot;&gt;&lt;/span&gt;&amp;nbsp;GitHub&lt;/a&gt;. Or visit our &lt;a href=&quot;https://github.com/GEWIS&quot; target=&quot;_blank&quot;&gt;organisation&lt;/a&gt; for more of our awesome open-source projects.">
         <source>The GEWIS website is open-source! Check out the repository on &lt;a href="https://github.com/GEWIS/gewisweb" target="_blank"&gt;&lt;span class="fab fa-github"&gt;&lt;/span&gt;&amp;nbsp;GitHub&lt;/a&gt;. Or visit our &lt;a href="https://github.com/GEWIS" target="_blank"&gt;organisation&lt;/a&gt; for more of our awesome open-source projects.</source>
         <target state="translated"><![CDATA[The GEWIS website is open-source! Check out the repository on <a href="https://github.com/GEWIS/gewisweb" target="_blank"><span class="fab fa-github"></span>&nbsp;GitHub</a>. Or visit our <a href="https://github.com/GEWIS" target="_blank">organisation</a> for more of our awesome open-source projects.]]></target>
+      </trans-unit>
+      <trans-unit id="n5Ir.cP" resname="The activity &quot;%name%&quot; has been submitted for review.">
+        <source>The activity "%name%" has been submitted for review.</source>
+        <target state="translated">The activity "%name%" has been submitted for review.</target>
       </trans-unit>
       <trans-unit id="8h3GnHu" resname="The activity has been cancelled.">
         <source>The activity has been cancelled.</source>
@@ -3764,6 +3776,10 @@
       <trans-unit id="kydIpeq" resname="When a data export you asked for is ready">
         <source>When a data export you asked for is ready</source>
         <target state="translated">When a data export you asked for is ready</target>
+      </trans-unit>
+      <trans-unit id="GGlzQ74" resname="When an activity is waiting to be reviewed">
+        <source>When an activity is waiting to be reviewed</source>
+        <target state="translated">When an activity is waiting to be reviewed</target>
       </trans-unit>
       <trans-unit id="AS1e.sj" resname="When photos of an event are published">
         <source>When photos of an event are published</source>
