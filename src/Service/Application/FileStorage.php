@@ -7,6 +7,7 @@ namespace App\Service\Application;
 use App\Entity\Application\Enums\StorageNamespace;
 use League\Flysystem\FilesystemOperator;
 use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
+use Symfony\Component\DependencyInjection\Attribute\Target;
 use Symfony\Component\Mime\MimeTypes;
 
 use function fclose;
@@ -33,6 +34,7 @@ use function sprintf;
 final readonly class FileStorage
 {
     public function __construct(
+        #[Target('defaultStorage')]
         private FilesystemOperator $defaultStorage,
         /** @var iterable<FileReferenceProviderInterface> */
         #[AutowireIterator('app.file_reference_provider')]
