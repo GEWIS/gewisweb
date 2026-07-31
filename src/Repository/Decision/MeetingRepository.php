@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Repository\Decision;
 
+use App\Entity\Decision\Decision;
 use App\Entity\Decision\Enums\MeetingTypes;
 use App\Entity\Decision\Meeting;
+use App\Entity\Decision\MeetingMinutesVersion;
 use DateInterval;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -21,6 +23,7 @@ use function array_slice;
 use function count;
 use function is_int;
 use function min;
+use function sprintf;
 
 /**
  * @extends ServiceEntityRepository<Meeting>
@@ -296,6 +299,85 @@ class MeetingRepository extends ServiceEntityRepository
             );
 
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * One page of the meetings overview: meetings newest first with their decision count and whether minutes have
+     * been uploaded, optionally narrowed to a type and/or an exact meeting number.
+     *
+     * @return array{items: list<array{0: Meeting, 1: int<0, max>, 2: int<0, max>}>, total: int}
+     */
+    public function paginateForOverview(
+        ?MeetingTypes $type,
+        ?int $number,
+        int $page,
+        int $pageSize,
+    ): array {
+        $filter = static function (QueryBuilder $qb) use ($type, $number): void {
+            if (null !== $type) {
+                $qb->andWhere('m.type = :type')
+                    ->setParameter(
+                        ':type',
+                        $type->value,
+                    );
+            }
+
+            if (null === $number) {
+                return;
+            }
+
+            $qb->andWhere('m.number = :number')
+                ->setParameter(
+                    ':number',
+                    $number,
+                );
+        };
+
+        $countQb = $this->createQueryBuilder('m')
+            ->select('COUNT(m.number)');
+        $filter($countQb);
+        $total = (int) $countQb->getQuery()->getSingleScalarResult();
+
+        $itemsQb = $this->createQueryBuilder('m')
+            ->addSelect(sprintf(
+                '(SELECT COUNT(d.number) FROM %s d'
+                . ' WHERE d.meeting_type = m.type AND d.meeting_number = m.number) AS decisionCount',
+                Decision::class,
+            ))
+            ->addSelect(sprintf(
+                '(SELECT COUNT(mv.id) FROM %s mv JOIN mv.minutes mm'
+                . ' WHERE mm.meeting_type = m.type AND mm.meeting_number = m.number) AS minutesVersionCount',
+                MeetingMinutesVersion::class,
+            ))
+            ->orderBy(
+                'm.date',
+                'DESC',
+            )
+            ->addOrderBy(
+                'm.number',
+                'DESC',
+            )
+            ->setFirstResult(($page - 1) * $pageSize)
+            ->setMaxResults($pageSize);
+        $this->selectOneToOneSides($itemsQb);
+        $filter($itemsQb);
+
+        /** @var list<array{0: Meeting, decisionCount: int<0, max>, minutesVersionCount: int<0, max>}> $rows */
+        $rows = $itemsQb->getQuery()->getResult();
+
+        $items = [];
+        foreach ($rows as $row) {
+            $items[] = [
+                $row[0],
+                $row['decisionCount'],
+                $row['minutesVersionCount'],
+            ];
+        }
+
+        return [
+            'items' => $items,
+            'total' => $total,
+        ];
     }
 
     /**

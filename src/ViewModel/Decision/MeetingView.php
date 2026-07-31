@@ -19,7 +19,7 @@ final readonly class MeetingView
     /**
      * @param list<MeetingPointView>          $points
      * @param list<MeetingDocument>           $meetingLevelDocuments documents not filed under an agenda point
-     * @param list<Decision>                  $decisions             all decisions, in point and number order
+     * @param list<DecisionListEntry>         $decisionEntries       all decisions, in point and number order
      * @param list<Decision>                  $unmatchedDecisions    decisions whose point matches no agenda point
      * @param list<MeetingReferenceSelection> $references
      */
@@ -28,7 +28,7 @@ final readonly class MeetingView
         public MeetingStatus $status,
         public array $points,
         public array $meetingLevelDocuments,
-        public array $decisions,
+        public array $decisionEntries,
         public array $unmatchedDecisions,
         public array $references,
         public ?MeetingMinutes $minutes,

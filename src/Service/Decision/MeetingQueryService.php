@@ -9,12 +9,12 @@ use App\Entity\Decision\Meeting;
 use App\Repository\Decision\MeetingDocumentRepository;
 use App\Repository\Decision\MeetingReferenceSelectionRepository;
 use App\Repository\Decision\MeetingRepository;
+use App\ViewModel\Decision\DecisionListEntry;
 use App\ViewModel\Decision\MeetingPointView;
 use App\ViewModel\Decision\MeetingReadiness;
 use App\ViewModel\Decision\MeetingStatus;
 use App\ViewModel\Decision\MeetingView;
 use App\ViewModel\Decision\NearbyMeeting;
-use DateTime;
 
 use function array_count_values;
 use function array_filter;
@@ -22,6 +22,7 @@ use function array_keys;
 use function array_map;
 use function array_values;
 use function count;
+use function spl_object_id;
 use function trim;
 
 /**
@@ -76,11 +77,27 @@ final readonly class MeetingQueryService
         );
 
         $pointViews = [];
+        $pointByDecisionHash = [];
         foreach ($points as $point) {
+            $matchedDecisions = $match->decisionsForPoint($point);
             $pointViews[] = new MeetingPointView(
                 $point,
                 $documentsByPointId[(int) $point->getId()] ?? [],
-                $match->decisionsForPoint($point),
+                $matchedDecisions,
+            );
+
+            foreach ($matchedDecisions as $decision) {
+                $pointByDecisionHash[spl_object_id($decision)] = $point;
+            }
+        }
+
+        $decisionEntries = [];
+        foreach ($decisions as $decision) {
+            $point = $pointByDecisionHash[spl_object_id($decision)] ?? null;
+            $decisionEntries[] = new DecisionListEntry(
+                $decision,
+                $point,
+                null === $point ? 0 : count($documentsByPointId[(int) $point->getId()] ?? []),
             );
         }
 
@@ -89,7 +106,7 @@ final readonly class MeetingQueryService
             $this->getStatus($meeting),
             $pointViews,
             $meetingLevelDocuments,
-            $decisions,
+            $decisionEntries,
             $match->unmatched,
             $references,
             $meeting->getMinutes(),
@@ -104,19 +121,11 @@ final readonly class MeetingQueryService
      */
     public function getStatus(Meeting $meeting): MeetingStatus
     {
-        if ($meeting->getDate() >= new DateTime('today')) {
-            return MeetingStatus::Upcoming;
-        }
-
-        if (!$meeting->getDecisions()->isEmpty()) {
-            return MeetingStatus::Complete;
-        }
-
-        if (null !== $meeting->getMinutes()?->getLatestVersion()) {
-            return MeetingStatus::Complete;
-        }
-
-        return MeetingStatus::HeldProcessing;
+        return MeetingStatus::derive(
+            $meeting->getDate(),
+            !$meeting->getDecisions()->isEmpty(),
+            null !== $meeting->getMinutes()?->getLatestVersion(),
+        );
     }
 
     public function getReadiness(MeetingView $view): MeetingReadiness

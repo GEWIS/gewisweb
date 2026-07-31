@@ -115,8 +115,7 @@ class DecisionRepository extends ServiceEntityRepository
 
             $qb->setParameter(
                 'meeting_type',
-                $meetingType,
-                MeetingTypes::class,
+                $meetingType->value,
             )
                 ->setParameter(
                     'meeting_number',

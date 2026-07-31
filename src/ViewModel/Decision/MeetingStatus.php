@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\ViewModel\Decision;
 
+use DateTime;
 use Symfony\Component\Translation\TranslatableMessage;
 
 /**
@@ -15,6 +16,25 @@ enum MeetingStatus
     case Upcoming;
     case HeldProcessing;
     case Complete;
+
+    public static function derive(
+        DateTime $meetingDate,
+        bool $hasDecisions,
+        bool $hasMinutes,
+    ): self {
+        if ($meetingDate >= new DateTime('today')) {
+            return self::Upcoming;
+        }
+
+        if (
+            $hasDecisions
+            || $hasMinutes
+        ) {
+            return self::Complete;
+        }
+
+        return self::HeldProcessing;
+    }
 
     public function label(): TranslatableMessage
     {
