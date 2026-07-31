@@ -15,7 +15,12 @@ use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
+use function array_merge;
+use function array_reverse;
+use function array_slice;
+use function count;
 use function is_int;
+use function min;
 
 /**
  * @extends ServiceEntityRepository<Meeting>
@@ -68,8 +73,7 @@ class MeetingRepository extends ServiceEntityRepository
             $qb->andWhere('m.type = :type')
                 ->setParameter(
                     ':type',
-                    $type,
-                    MeetingTypes::class,
+                    $type->value,
                 );
         }
 
@@ -93,8 +97,7 @@ class MeetingRepository extends ServiceEntityRepository
             )
             ->setParameter(
                 ':type',
-                $type,
-                MeetingTypes::class,
+                $type->value,
             );
 
         return $qb->getQuery()->getResult();
@@ -128,8 +131,7 @@ class MeetingRepository extends ServiceEntityRepository
             )
             ->setParameter(
                 'type',
-                $type,
-                MeetingTypes::class,
+                $type->value,
             )
             ->setMaxResults($limit);
         $this->selectOneToOneSides($qb);
@@ -185,8 +187,7 @@ class MeetingRepository extends ServiceEntityRepository
 
         $qb->setParameter(
             ':type',
-            $type,
-            MeetingTypes::class,
+            $type->value,
         );
         $qb->setParameter(
             ':number',
@@ -295,5 +296,123 @@ class MeetingRepository extends ServiceEntityRepository
             );
 
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * The meetings of the same type directly before the given one.
+     *
+     * @return list<Meeting>
+     */
+    public function findPrevious(
+        Meeting $meeting,
+        int $limit = 3,
+    ): array {
+        $qb = $this->createQueryBuilder('m');
+        $qb->where('m.type = :type')
+            ->andWhere('m.number < :number')
+            ->orderBy(
+                'm.number',
+                'DESC',
+            )
+            ->setMaxResults($limit);
+        $this->selectOneToOneSides($qb);
+
+        $qb->setParameter(
+            ':type',
+            $meeting->getType(),
+        );
+        $qb->setParameter(
+            ':number',
+            $meeting->getNumber(),
+        );
+
+        /** @var list<Meeting> $meetings */
+        $meetings = $qb->getQuery()->getResult();
+
+        return $meetings;
+    }
+
+    /**
+     * Scalar rows for the nearby-meetings sidebar: ideally two meetings after and two before the given one (of the
+     * same type), either side filling in for the other when it runs short, newest first. Deliberately not entity
+     * hydration; the sidebar only links, and entities drag their one-to-one sides along.
+     *
+     * @return list<array{type: MeetingTypes, number: int, date: DateTime}>
+     */
+    public function findNearby(Meeting $meeting): array
+    {
+        $total = 4;
+        $before = $this->nearbyQuery(
+            $meeting,
+            '<',
+            'DESC',
+            $total,
+        );
+        $after = $this->nearbyQuery(
+            $meeting,
+            '>',
+            'ASC',
+            $total,
+        );
+
+        $takeAfter = min(
+            2,
+            count($after),
+        );
+        $takeBefore = min(
+            $total - $takeAfter,
+            count($before),
+        );
+        $takeAfter = min(
+            $total - $takeBefore,
+            count($after),
+        );
+
+        return array_merge(
+            array_reverse(array_slice(
+                $after,
+                0,
+                $takeAfter,
+            )),
+            array_slice(
+                $before,
+                0,
+                $takeBefore,
+            ),
+        );
+    }
+
+    /**
+     * @return list<array{type: MeetingTypes, number: int, date: DateTime}>
+     */
+    private function nearbyQuery(
+        Meeting $meeting,
+        string $comparison,
+        string $direction,
+        int $limit,
+    ): array {
+        $qb = $this->createQueryBuilder('m');
+        $qb->select('m.type, m.number, m.date')
+            ->where('m.type = :type')
+            ->andWhere('m.number ' . $comparison . ' :number')
+            ->orderBy(
+                'm.number',
+                $direction,
+            )
+            ->setMaxResults($limit);
+
+        $qb->setParameter(
+            ':type',
+            $meeting->getType()->value,
+        );
+        $qb->setParameter(
+            ':number',
+            $meeting->getNumber(),
+        );
+
+        /** @var list<array{type: MeetingTypes, number: int, date: DateTime}> $rows */
+        $rows = $qb->getQuery()->getArrayResult();
+
+        return $rows;
     }
 }
