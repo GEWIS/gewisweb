@@ -3,9 +3,11 @@ import { Controller } from '@hotwired/stimulus';
 const KEY = 'gewis:dismissed-announcements';
 
 /**
- * Remembers which announcement banners a visitor has closed. On connect it hides any banner already dismissed in this
- * browser; closing one records its id so it stays hidden on later visits (until the announcement's own end date removes
- * it server-side).
+ * Remembers which announcement banners a visitor has closed. Closing one records its id so it stays closed on later
+ * visits, until the announcement's own end date removes it server-side.
+ *
+ * Banners arrive hidden and are shown here once they are known not to have been dismissed. The other way around meant
+ * a banner somebody had already closed was painted and then taken away again.
  */
 export default class extends Controller<HTMLElement> {
     static targets = ['banner'];
@@ -18,7 +20,11 @@ export default class extends Controller<HTMLElement> {
             const id = banner.dataset.announcementId;
             if (undefined !== id && dismissed.includes(id)) {
                 banner.remove();
+
+                return;
             }
+
+            banner.classList.add('show');
         });
     }
 

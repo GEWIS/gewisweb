@@ -14,7 +14,7 @@
         {% for announcement in announcements %}
             {% set title = announcement.title|localise_text %}
             {% set body = announcement.body|localise_text %}
-            <div class="toast{{ announcement.level.value ? ' toast-' ~ announcement.level.value : '' }} show" role="alert"
+            <div class="toast{{ announcement.level.value ? ' toast-' ~ announcement.level.value : '' }}" role="alert"
                  aria-live="assertive" aria-atomic="true"
                  data-dismissible-target="banner" data-announcement-id="{{ announcement.id }}">
                 <div class="d-flex">
