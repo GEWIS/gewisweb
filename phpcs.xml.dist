@@ -22,7 +22,10 @@
     <!-- Legacy code that cannot be easily changed, so ignore for now -->
     <rule ref="Squiz.NamingConventions.ValidVariableName.MemberNotCamelCaps">
         <exclude-pattern>src/Entity/Decision/Decision.php</exclude-pattern>
+        <exclude-pattern>src/Entity/Decision/LegacyMeetingDocument.php</exclude-pattern>
+        <exclude-pattern>src/Entity/Decision/LegacyMeetingMinutes.php</exclude-pattern>
         <exclude-pattern>src/Entity/Decision/MailingList.php</exclude-pattern>
+        <exclude-pattern>src/Entity/Decision/MeetingLocalDetails.php</exclude-pattern>
         <exclude-pattern>src/Entity/Decision/MeetingMinutes.php</exclude-pattern>
         <exclude-pattern>src/Entity/Decision/SubDecision.php</exclude-pattern>
         <exclude-pattern>src/Controller/Photo/PhotoController.php</exclude-pattern>

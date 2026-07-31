@@ -67,6 +67,12 @@ parameters:
 			path: src/Entity/Decision/Keyholder.php
 
 		-
+			message: '#^Property App\\Entity\\Decision\\LegacyMeetingDocument\:\:\$meeting type mapping mismatch\: database can contain App\\Entity\\Decision\\Meeting\|null but property expects App\\Entity\\Decision\\Meeting\.$#'
+			identifier: doctrine.associationType
+			count: 1
+			path: src/Entity/Decision/LegacyMeetingDocument.php
+
+		-
 			message: '#^Property App\\Entity\\Decision\\Meeting\:\:\$minutes is never written, only read\.$#'
 			identifier: property.onlyRead
 			count: 1
@@ -77,12 +83,6 @@ parameters:
 			identifier: doctrine.associationType
 			count: 1
 			path: src/Entity/Decision/Meeting.php
-
-		-
-			message: '#^Property App\\Entity\\Decision\\MeetingDocument\:\:\$meeting type mapping mismatch\: database can contain App\\Entity\\Decision\\Meeting\|null but property expects App\\Entity\\Decision\\Meeting\.$#'
-			identifier: doctrine.associationType
-			count: 1
-			path: src/Entity/Decision/MeetingDocument.php
 
 		-
 			message: '#^Property App\\Entity\\Decision\\Organ\:\:\$foundation type mapping mismatch\: database can contain App\\Entity\\Decision\\SubDecision\\Foundation\|null but property expects App\\Entity\\Decision\\SubDecision\\Foundation\.$#'

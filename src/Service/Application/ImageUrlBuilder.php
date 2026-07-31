@@ -17,7 +17,7 @@ final readonly class ImageUrlBuilder
 {
     public function __construct(
         private ImageSigner $imageSigner,
-        private ImagePathResolver $pathResolver,
+        private FilePathResolver $pathResolver,
     ) {
     }
 

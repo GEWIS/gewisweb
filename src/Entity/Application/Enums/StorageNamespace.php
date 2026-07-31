@@ -41,12 +41,21 @@ enum StorageNamespace: string
     /** Images embedded in custom pages/markdown (public). */
     case PageImage = 'page-image';
 
+    /** Meeting document versions (PDFs, members-only). */
+    case MeetingDocument = 'meeting-document';
+
+    /** Meeting minutes versions (PDFs, members-only). */
+    case MeetingMinutes = 'meeting-minutes';
+
+    /** Reference document versions from the association-wide library (PDFs, members-only). */
+    case ReferenceDocument = 'reference-document';
+
     private const int MEGABYTE = 1024 * 1024;
 
     /**
      * The directory prefix (no leading or trailing slash) this namespace stores into, relative to the storage root.
-     * Scoped namespaces (photos per album, company assets per company) require a non-empty $scope; the others reject
-     * one.
+     * Scoped namespaces (photos per album, company assets per company, meeting documents and minutes per meeting)
+     * require a non-empty $scope; the others reject one.
      */
     public function directory(?string $scope = null): string
     {
@@ -79,29 +88,53 @@ enum StorageNamespace: string
                 'career/%s/attachments',
                 $this->requireScope($scope),
             ),
+            self::MeetingDocument => sprintf(
+                'meetings/%s/documents',
+                $this->requireScope($scope),
+            ),
+            self::MeetingMinutes => sprintf(
+                'meetings/%s/minutes',
+                $this->requireScope($scope),
+            ),
+            self::ReferenceDocument => $this->rejectScope(
+                $scope,
+                'meetings/reference',
+            ),
         };
     }
 
     /**
-     * Whether {@see directory()} needs a scope: photos are scoped per album, company assets per company.
+     * Whether {@see directory()} needs a scope: photos are scoped per album, company assets per company, and meeting
+     * documents and minutes per meeting. The reference library is association-wide, so it stays unscoped.
      */
     public function requiresScope(): bool
     {
         return match ($this) {
-            self::PhotoOriginal, self::PhotoCover, self::CompanyImage, self::CompanyAttachment => true,
+            self::PhotoOriginal,
+            self::PhotoCover,
+            self::CompanyImage,
+            self::CompanyAttachment,
+            self::MeetingDocument,
+            self::MeetingMinutes => true,
             default => false,
         };
     }
 
     /**
      * Whether serving a file from this namespace requires an authenticated, signature-validated request. Album photos
-     * and their generated covers are member-only (a cover is a mosaic of members-only photos); the weekly photo copy,
-     * career, organ and page assets are public and immutably cacheable.
+     * and their generated covers are member-only (a cover is a mosaic of members-only photos), as are all meeting
+     * files; the weekly photo copy, career, organ and page assets are public and immutably cacheable.
      */
     public function isPrivate(): bool
     {
-        return self::PhotoOriginal === $this
-            || self::PhotoCover === $this;
+        return match ($this) {
+            self::PhotoOriginal,
+            self::PhotoCover,
+            self::MeetingDocument,
+            self::MeetingMinutes,
+            self::ReferenceDocument => true,
+            default => false,
+        };
     }
 
     /**
@@ -113,7 +146,10 @@ enum StorageNamespace: string
     public function allowedMimeTypes(): array
     {
         return match ($this) {
-            self::CompanyAttachment => ['application/pdf'],
+            self::CompanyAttachment,
+            self::MeetingDocument,
+            self::MeetingMinutes,
+            self::ReferenceDocument => ['application/pdf'],
             default => [
                 'image/jpeg',
                 'image/png',

@@ -18,6 +18,8 @@ use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OneToOne;
 use Doctrine\ORM\Mapping\OrderBy;
 
+use function sprintf;
+
 /**
  * Meeting model.
  */
@@ -62,6 +64,18 @@ class Meeting
     private Minutes $minutes;
 
     /**
+     * Agenda points.
+     *
+     * @var Collection<array-key, MeetingPoint>
+     */
+    #[OneToMany(
+        targetEntity: MeetingPoint::class,
+        mappedBy: 'meeting',
+    )]
+    #[OrderBy(value: ['displayPosition' => 'ASC'])]
+    private Collection $points;
+
+    /**
      * Documents.
      *
      * @var Collection<array-key, MeetingDocument>
@@ -82,9 +96,19 @@ class Meeting
     )]
     private ?MeetingMinutes $meetingMinutes = null;
 
+    /**
+     * The locally-owned details of this meeting.
+     */
+    #[OneToOne(
+        targetEntity: MeetingLocalDetails::class,
+        mappedBy: 'meeting',
+    )]
+    private ?MeetingLocalDetails $localDetails = null;
+
     public function __construct()
     {
         $this->decisions = new ArrayCollection();
+        $this->points = new ArrayCollection();
         $this->documents = new ArrayCollection();
     }
 
@@ -118,6 +142,18 @@ class Meeting
     public function setNumber(int $number): void
     {
         $this->number = $number;
+    }
+
+    /**
+     * The per-meeting segment of the scoped storage namespaces, e.g. `ALV-42`.
+     */
+    public function getStorageScope(): string
+    {
+        return sprintf(
+            '%s-%d',
+            $this->type->value,
+            $this->number,
+        );
     }
 
     /**
@@ -167,6 +203,24 @@ class Meeting
     }
 
     /**
+     * Get the agenda points.
+     *
+     * @return Collection<array-key, MeetingPoint>
+     */
+    public function getPoints(): Collection
+    {
+        return $this->points;
+    }
+
+    /**
+     * Add an agenda point.
+     */
+    public function addPoint(MeetingPoint $point): void
+    {
+        $this->points[] = $point;
+    }
+
+    /**
      * Get the documents.
      *
      * @return Collection<array-key, MeetingDocument>
@@ -199,5 +253,10 @@ class Meeting
     public function getMinutes(): ?MeetingMinutes
     {
         return $this->meetingMinutes;
+    }
+
+    public function getLocalDetails(): ?MeetingLocalDetails
+    {
+        return $this->localDetails;
     }
 }

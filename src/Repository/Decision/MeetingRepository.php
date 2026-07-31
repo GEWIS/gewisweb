@@ -12,6 +12,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 use function is_int;
@@ -131,8 +132,30 @@ class MeetingRepository extends ServiceEntityRepository
                 MeetingTypes::class,
             )
             ->setMaxResults($limit);
+        $this->selectOneToOneSides($qb);
 
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Selects the meeting's one-to-one sides in the same query. Inverse one-to-one associations cannot be lazy
+     * proxies, so without this every hydrated meeting costs three extra queries.
+     */
+    private function selectOneToOneSides(QueryBuilder $qb): void
+    {
+        $qb->addSelect('meetingMinutes, localDetails, decisionMinutes')
+            ->leftJoin(
+                'm.meetingMinutes',
+                'meetingMinutes',
+            )
+            ->leftJoin(
+                'm.localDetails',
+                'localDetails',
+            )
+            ->leftJoin(
+                'm.minutes',
+                'decisionMinutes',
+            );
     }
 
     /**
@@ -158,6 +181,7 @@ class MeetingRepository extends ServiceEntityRepository
             )
             ->orderBy('d.point')
             ->addOrderBy('d.number');
+        $this->selectOneToOneSides($qb);
 
         $qb->setParameter(
             ':type',
@@ -254,6 +278,7 @@ class MeetingRepository extends ServiceEntityRepository
                 'm.date',
                 'ASC',
             );
+        $this->selectOneToOneSides($qb);
 
         $qb->setParameter(
             'gmm',
