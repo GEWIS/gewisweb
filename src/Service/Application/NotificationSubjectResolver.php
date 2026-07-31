@@ -102,7 +102,8 @@ final readonly class NotificationSubjectResolver
             NotificationType::PasswordChanged,
             NotificationType::MfaEnabled,
             NotificationType::MfaDisabled,
-            NotificationType::BackupCodesRegenerated => [],
+            NotificationType::BackupCodesRegenerated,
+            NotificationType::DataExportReady => [],
         };
     }
 

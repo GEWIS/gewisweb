@@ -24,6 +24,7 @@ enum NotificationType: string implements TranslatableInterface
     case MfaEnabled = 'mfa_enabled';
     case MfaDisabled = 'mfa_disabled';
     case BackupCodesRegenerated = 'backup_codes_regenerated';
+    case DataExportReady = 'data_export_ready';
 
     public function icon(): string
     {
@@ -35,6 +36,7 @@ enum NotificationType: string implements TranslatableInterface
             self::MfaEnabled => 'fa-lock',
             self::MfaDisabled => 'fa-unlock',
             self::BackupCodesRegenerated => 'fa-rotate',
+            self::DataExportReady => 'fa-file-arrow-down',
         };
     }
 
@@ -47,7 +49,7 @@ enum NotificationType: string implements TranslatableInterface
         return match ($this) {
             self::AlbumPublished, self::ActivityPublished => true,
             self::SignIn, self::PasswordChanged, self::MfaEnabled,
-            self::MfaDisabled, self::BackupCodesRegenerated => false,
+            self::MfaDisabled, self::BackupCodesRegenerated, self::DataExportReady => false,
         };
     }
 
@@ -65,6 +67,7 @@ enum NotificationType: string implements TranslatableInterface
             self::ActivityPublished => 'activity/view',
             self::SignIn, self::PasswordChanged, self::MfaEnabled,
             self::MfaDisabled, self::BackupCodesRegenerated => ($recipient ?? Firewall::Main)->securityIndexRoute(),
+            self::DataExportReady => 'user_settings_data_export_download',
         };
     }
 
@@ -85,7 +88,7 @@ enum NotificationType: string implements TranslatableInterface
             ],
             self::ActivityPublished => ['activity' => $subjectId],
             self::SignIn, self::PasswordChanged, self::MfaEnabled,
-            self::MfaDisabled, self::BackupCodesRegenerated => [],
+            self::MfaDisabled, self::BackupCodesRegenerated, self::DataExportReady => [],
         };
     }
 
@@ -102,6 +105,7 @@ enum NotificationType: string implements TranslatableInterface
             self::MfaDisabled, self::BackupCodesRegenerated => new TranslatableMessage(
                 'Review your account security',
             ),
+            self::DataExportReady => new TranslatableMessage('Download your data'),
         };
     }
 
@@ -139,6 +143,7 @@ enum NotificationType: string implements TranslatableInterface
                 'New backup codes were generated for your account from %name%.',
                 ['%name%' => $name],
             ),
+            self::DataExportReady => new TranslatableMessage('The data export you asked for is ready.'),
         };
     }
 
@@ -155,19 +160,20 @@ enum NotificationType: string implements TranslatableInterface
             self::MfaDisabled, self::BackupCodesRegenerated => new TranslatableMessage(
                 'When the way you sign in changes',
             ),
+            self::DataExportReady => new TranslatableMessage('When a data export you asked for is ready'),
         };
     }
 
     /**
-     * The subject line when this kind is emailed on its own, or null for one that only ever goes out in a digest and
-     * takes its subject from whatever else is in that digest.
+     * The subject line when a security notice of this kind is emailed, or null for a kind that is not emailed from
+     * there: one that goes out in a digest, or one whose own handler already writes to the member.
      *
      * Plain English rather than a translatable message, because outgoing mail is always English.
      */
     public function emailSubject(): ?string
     {
         return match ($this) {
-            self::AlbumPublished, self::ActivityPublished => null,
+            self::AlbumPublished, self::ActivityPublished, self::DataExportReady => null,
             self::SignIn => 'New sign-in to your GEWIS account',
             self::PasswordChanged => 'Your GEWIS password was changed',
             self::MfaEnabled => 'Two-factor authentication enabled on your GEWIS account',
@@ -197,6 +203,10 @@ enum NotificationType: string implements TranslatableInterface
             self::PasswordChanged, self::MfaEnabled,
             self::MfaDisabled, self::BackupCodesRegenerated => $translator->trans(
                 'Account security',
+                locale: $locale,
+            ),
+            self::DataExportReady => $translator->trans(
+                'Data exports',
                 locale: $locale,
             ),
         };

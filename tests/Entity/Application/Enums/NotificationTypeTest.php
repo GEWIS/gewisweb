@@ -10,6 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 use function array_filter;
 use function array_values;
+use function in_array;
 
 /**
  * The enum holds everything a notification says, so a kind that is wired up wrongly is only noticed once somebody is
@@ -17,6 +18,18 @@ use function array_values;
  */
 final class NotificationTypeTest extends TestCase
 {
+    /**
+     * The kinds that report something happening to an account. Listed rather than derived, so adding a kind is a
+     * decision about which of these rules it belongs to instead of quietly inheriting them.
+     */
+    private const array SECURITY = [
+        NotificationType::SignIn,
+        NotificationType::PasswordChanged,
+        NotificationType::MfaEnabled,
+        NotificationType::MfaDisabled,
+        NotificationType::BackupCodesRegenerated,
+    ];
+
     public function testOnlyTheKindsMeantForEveryoneAreOfferedAsEmailTopics(): void
     {
         self::assertSame(
@@ -29,14 +42,20 @@ final class NotificationTypeTest extends TestCase
     }
 
     /**
-     * A kind addressed to one person must never appear on the settings page, and must never be emailed as part of a
-     * digest that other members receive.
+     * A security notice is mailed from its own handler, so it needs a subject line. Anything that goes out in a digest
+     * takes its subject from whatever else is in that digest, and must not carry one.
      */
-    public function testEveryKindAddressedToOnePersonIsEmailedOnItsOwn(): void
+    public function testOnlySecurityNoticesAreEmailedOnTheirOwn(): void
     {
         foreach (NotificationType::cases() as $type) {
-            if ($type->isBroadcast()) {
-                self::assertNull(
+            if (
+                in_array(
+                    $type,
+                    self::SECURITY,
+                    true,
+                )
+            ) {
+                self::assertNotNull(
                     $type->emailSubject(),
                     $type->value,
                 );
@@ -44,7 +63,7 @@ final class NotificationTypeTest extends TestCase
                 continue;
             }
 
-            self::assertNotNull(
+            self::assertNull(
                 $type->emailSubject(),
                 $type->value,
             );
@@ -56,11 +75,7 @@ final class NotificationTypeTest extends TestCase
      */
     public function testAccountNoticesFollowTheRecipientToTheirOwnSecurityPage(): void
     {
-        foreach (NotificationType::cases() as $type) {
-            if ($type->isBroadcast()) {
-                continue;
-            }
-
+        foreach (self::SECURITY as $type) {
             self::assertSame(
                 'user_security_index',
                 $type->route(Firewall::Main),
@@ -84,11 +99,7 @@ final class NotificationTypeTest extends TestCase
      */
     public function testAccountNoticesSayWhereTheyCameFrom(): void
     {
-        foreach (NotificationType::cases() as $type) {
-            if ($type->isBroadcast()) {
-                continue;
-            }
-
+        foreach (self::SECURITY as $type) {
             self::assertStringContainsString(
                 '%name%',
                 $type->message('Chrome 124 · Windows 11')->getMessage(),

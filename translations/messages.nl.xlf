@@ -797,6 +797,10 @@
         <source>Data export</source>
         <target>Gegevensexport</target>
       </trans-unit>
+      <trans-unit id="_0b32_R" resname="Data exports">
+        <source>Data exports</source>
+        <target state="translated">Gegevensexports</target>
+      </trans-unit>
       <trans-unit id="IMJISl1" resname="Date and time">
         <source>Date and time</source>
         <target state="translated">Datum en tijd</target>
@@ -912,6 +916,10 @@
       <trans-unit id="CkUUOdc" resname="Download my latest export">
         <source>Download my latest export</source>
         <target>Download mijn laatste export</target>
+      </trans-unit>
+      <trans-unit id="bl67OwS" resname="Download your data">
+        <source>Download your data</source>
+        <target state="translated">Download je gegevens</target>
       </trans-unit>
       <trans-unit id="dwUtS3b" resname="Draft">
         <source>Draft</source>
@@ -3169,6 +3177,10 @@
         <source>The cover is a mosaic of the album's photos. Regenerate it after adding or removing photos; it updates here automatically once ready.</source>
         <target state="translated">De omslag is een mozaïek van de foto's in het album. Genereer deze opnieuw na het toevoegen of verwijderen van foto's; zodra hij klaar is, wordt hij hier automatisch bijgewerkt.</target>
       </trans-unit>
+      <trans-unit id="A6uQCCE" resname="The data export you asked for is ready.">
+        <source>The data export you asked for is ready.</source>
+        <target state="translated">De gegevensexport die je hebt aangevraagd staat klaar.</target>
+      </trans-unit>
       <trans-unit id="WTE8eK4" resname="The draw can be run once sign-up has closed.">
         <source>The draw can be run once sign-up has closed.</source>
         <target>De loting kan worden uitgevoerd zodra de inschrijving is gesloten.</target>
@@ -3748,6 +3760,10 @@
       <trans-unit id="qlyBI_b" resname="Well-being">
         <source>Well-being</source>
         <target state="translated">Welzijn</target>
+      </trans-unit>
+      <trans-unit id="kydIpeq" resname="When a data export you asked for is ready">
+        <source>When a data export you asked for is ready</source>
+        <target state="translated">Wanneer een door jou aangevraagde gegevensexport klaarstaat</target>
       </trans-unit>
       <trans-unit id="AS1e.sj" resname="When photos of an event are published">
         <source>When photos of an event are published</source>
