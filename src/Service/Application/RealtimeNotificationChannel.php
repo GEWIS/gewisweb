@@ -79,6 +79,7 @@ final readonly class RealtimeNotificationChannel implements NotificationChannelI
                 $type,
                 $subjectId,
                 $recipient,
+                $notification->getContext() ?? [],
             ),
             notificationId: $notification->getId(),
         );
@@ -144,12 +145,15 @@ final readonly class RealtimeNotificationChannel implements NotificationChannelI
     }
 
     /**
+     * @param array<string, string> $context
+     *
      * @return array{href: array{en: string, nl: string}, label: array{en: string, nl: string}}
      */
     private function link(
         NotificationType $type,
         ?int $subjectId,
         ?Firewall $recipient,
+        array $context,
     ): array {
         return [
             'href' => [
@@ -157,12 +161,14 @@ final readonly class RealtimeNotificationChannel implements NotificationChannelI
                     $type,
                     $subjectId,
                     $recipient,
+                    $context,
                     Languages::English,
                 ),
                 'nl' => $this->url(
                     $type,
                     $subjectId,
                     $recipient,
+                    $context,
                     Languages::Dutch,
                 ),
             ],
@@ -189,15 +195,22 @@ final readonly class RealtimeNotificationChannel implements NotificationChannelI
         );
     }
 
+    /**
+     * @param array<string, string> $context
+     */
     private function url(
         NotificationType $type,
         ?int $subjectId,
         ?Firewall $recipient,
+        array $context,
         Languages $language,
     ): string {
         return $this->urlGenerator->generate(
             $type->route($recipient),
-            $type->routeParameters($subjectId) + ['_locale' => $language->getLangParam()],
+            $type->routeParameters(
+                $subjectId,
+                $context,
+            ) + ['_locale' => $language->getLangParam()],
             UrlGeneratorInterface::ABSOLUTE_URL,
         );
     }

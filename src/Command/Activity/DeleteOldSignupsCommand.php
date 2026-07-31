@@ -23,7 +23,8 @@ use function sprintf;
     description: 'Delete sign-ups for activities older than 5 years.',
 )]
 #[AsCronTask(
-    expression: '0 3 * * *',
+    expression: '0 4 * * *',
+    jitter: 900,
     schedule: 'gdpr',
 )]
 final class DeleteOldSignupsCommand extends Command

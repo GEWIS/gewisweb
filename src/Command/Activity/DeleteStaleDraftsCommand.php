@@ -38,6 +38,7 @@ use function sprintf;
 )]
 #[AsCronTask(
     expression: '15 3 * * *',
+    jitter: 900,
     schedule: 'gdpr',
 )]
 final class DeleteStaleDraftsCommand extends Command

@@ -36,7 +36,10 @@ use function sprintf;
     name: 'app:photo:weekly',
     description: 'Choose and store the photo of the week from a week\'s votes.',
 )]
-#[AsCronTask(expression: '0 3 * * 1')]
+#[AsCronTask(
+    expression: '0 3 * * 1',
+    jitter: 900,
+)]
 final class GenerateWeeklyPhotoCommand extends Command
 {
     public function __construct(

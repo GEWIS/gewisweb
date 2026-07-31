@@ -23,6 +23,7 @@ enum NotificationCategory implements TranslatableInterface
     case AccountSecurity;
     case DataExports;
     case ActivityReviews;
+    case SignupReminders;
 
     public function icon(): string
     {
@@ -33,6 +34,20 @@ enum NotificationCategory implements TranslatableInterface
             self::AccountSecurity => 'fa-shield-halved',
             self::DataExports => 'fa-file-arrow-down',
             self::ActivityReviews => 'fa-clipboard-check',
+            self::SignupReminders => 'fa-hourglass-half',
+        };
+    }
+
+    /**
+     * How a topic that cannot be turned off reaches a member, so the settings page does not imply an email that never
+     * comes.
+     */
+    public function delivery(): TranslatableMessage
+    {
+        return match ($this) {
+            self::SignIns, self::AccountSecurity, self::DataExports => new TranslatableMessage('Website and email'),
+            self::SignupReminders => new TranslatableMessage('Website only'),
+            self::Albums, self::Activities, self::ActivityReviews => new TranslatableMessage('Website'),
         };
     }
 
@@ -48,6 +63,7 @@ enum NotificationCategory implements TranslatableInterface
             self::AccountSecurity => new TranslatableMessage('When the way you sign in changes'),
             self::DataExports => new TranslatableMessage('When a data export you asked for is ready'),
             self::ActivityReviews => new TranslatableMessage('When an activity is waiting to be reviewed'),
+            self::SignupReminders => new TranslatableMessage('Shortly before a sign-up you are on closes'),
         };
     }
 
@@ -79,6 +95,10 @@ enum NotificationCategory implements TranslatableInterface
             ),
             self::ActivityReviews => $translator->trans(
                 'Activities awaiting review',
+                locale: $locale,
+            ),
+            self::SignupReminders => $translator->trans(
+                'Sign-up reminders',
                 locale: $locale,
             ),
         };

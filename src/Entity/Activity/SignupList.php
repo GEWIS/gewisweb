@@ -11,6 +11,7 @@ use App\Entity\Application\Traits\IdentifiableTrait;
 use App\Entity\Decision\Member as MemberModel;
 use App\Repository\Activity\SignupListRepository;
 use DateTime;
+use DateTimeImmutable;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -142,6 +143,16 @@ class SignupList
      */
     #[Column(type: Types::DATETIME_MUTABLE)]
     private DateTime $closeDate;
+
+    /**
+     * When subscribers were told this was about to close, so they are told once rather than every time the reminder
+     * job runs.
+     */
+    #[Column(
+        type: Types::DATETIME_IMMUTABLE,
+        nullable: true,
+    )]
+    private ?DateTimeImmutable $remindedAt = null;
 
     /**
      * Determines if people outside of GEWIS can sign up.
@@ -419,6 +430,16 @@ class SignupList
     /**
      * Returns the closing DateTime of this SignupList.
      */
+    public function getRemindedAt(): ?DateTimeImmutable
+    {
+        return $this->remindedAt;
+    }
+
+    public function setRemindedAt(?DateTimeImmutable $remindedAt): void
+    {
+        $this->remindedAt = $remindedAt;
+    }
+
     public function getCloseDate(): DateTime
     {
         return $this->closeDate;

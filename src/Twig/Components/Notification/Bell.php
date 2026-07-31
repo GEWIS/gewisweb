@@ -181,7 +181,10 @@ class Bell
                 'name' => $name,
                 'href' => $this->urlGenerator->generate(
                     $type->route(Firewall::Main),
-                    $type->routeParameters($notification->getSubjectId()),
+                    $type->routeParameters(
+                        $notification->getSubjectId(),
+                        $context ?? [],
+                    ),
                 ),
                 'unread' => $unread ? 1 : 0,
                 'ids' => [$id],

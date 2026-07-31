@@ -27,7 +27,10 @@ use function sprintf;
     name: 'app:public-archive:sync',
     description: 'Mirror the remote public archive over SFTP into data/public-archive/.',
 )]
-#[AsCronTask(expression: '0 * * * *')]
+#[AsCronTask(
+    expression: '7 * * * *',
+    jitter: 300,
+)]
 final class SyncPublicArchiveCommand extends Command
 {
     use LockableTrait;

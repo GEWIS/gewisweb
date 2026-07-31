@@ -27,6 +27,46 @@ class SignupListRepository extends ServiceEntityRepository
     }
 
     /**
+     * Open sign-up lists on a live activity that close within the window and have not been reminded about yet.
+     *
+     * @return SignupList[]
+     */
+    public function findClosingSoon(
+        DateTime $now,
+        DateTime $until,
+    ): array {
+        return $this->createQueryBuilder('sl')
+            ->innerJoin(
+                'sl.revision',
+                'r',
+            )
+            ->innerJoin(
+                'r.activity',
+                'a',
+                Join::WITH,
+                'a.liveRevision = r',
+            )
+            ->where('sl.remindedAt IS NULL')
+            ->andWhere('a.cancelledAt IS NULL')
+            ->andWhere('a.unpublishedAt IS NULL')
+            ->andWhere('sl.openDate <= :now')
+            ->andWhere('sl.closeDate > :now')
+            ->andWhere('sl.closeDate <= :until')
+            ->setParameter(
+                'now',
+                $now,
+                Types::DATETIME_MUTABLE,
+            )
+            ->setParameter(
+                'until',
+                $until,
+                Types::DATETIME_MUTABLE,
+            )
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
      * The live-revision sign-up lists whose automated draw moment ({@see SignupList::getAutoDrawAt()}) has passed but
      * that have not been drawn yet, still inside the admission window (until a day after the activity ends, mirroring
      * {@see \App\Util\Activity\SignupAdminWindow::canChangeAdmission()}). A coarse SQL pre-filter only:

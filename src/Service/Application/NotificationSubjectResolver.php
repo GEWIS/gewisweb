@@ -106,7 +106,9 @@ final readonly class NotificationSubjectResolver
             NotificationType::MfaEnabled,
             NotificationType::MfaDisabled,
             NotificationType::BackupCodesRegenerated,
-            NotificationType::DataExportReady => [],
+            NotificationType::DataExportReady,
+            NotificationType::SignupClosing,
+            NotificationType::SignupClosingWithFields => [],
         };
     }
 

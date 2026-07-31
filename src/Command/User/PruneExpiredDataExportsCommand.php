@@ -23,6 +23,7 @@ use function sprintf;
 )]
 #[AsCronTask(
     expression: '36 * * * *',
+    jitter: 300,
     schedule: 'gdpr',
 )]
 final class PruneExpiredDataExportsCommand extends Command

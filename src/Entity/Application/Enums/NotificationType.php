@@ -23,6 +23,8 @@ enum NotificationType: string
     case BackupCodesRegenerated = 'backup_codes_regenerated';
     case DataExportReady = 'data_export_ready';
     case ActivityAwaitingReview = 'activity_awaiting_review';
+    case SignupClosing = 'signup_closing';
+    case SignupClosingWithFields = 'signup_closing_with_fields';
 
     public function icon(): string
     {
@@ -36,6 +38,7 @@ enum NotificationType: string
             self::BackupCodesRegenerated => 'fa-rotate',
             self::DataExportReady => 'fa-file-arrow-down',
             self::ActivityAwaitingReview => 'fa-clipboard-check',
+            self::SignupClosing, self::SignupClosingWithFields => 'fa-hourglass-half',
         };
     }
 
@@ -52,6 +55,7 @@ enum NotificationType: string
             self::MfaDisabled, self::BackupCodesRegenerated => NotificationCategory::AccountSecurity,
             self::DataExportReady => NotificationCategory::DataExports,
             self::ActivityAwaitingReview => NotificationCategory::ActivityReviews,
+            self::SignupClosing, self::SignupClosingWithFields => NotificationCategory::SignupReminders,
         };
     }
 
@@ -63,6 +67,7 @@ enum NotificationType: string
             self::MfaDisabled, self::BackupCodesRegenerated,
             self::DataExportReady => NotificationAddressing::Account,
             self::ActivityAwaitingReview => NotificationAddressing::Role,
+            self::SignupClosing, self::SignupClosingWithFields => NotificationAddressing::Account,
         };
     }
 
@@ -82,6 +87,7 @@ enum NotificationType: string
             self::MfaDisabled, self::BackupCodesRegenerated => ($recipient ?? Firewall::Main)->securityIndexRoute(),
             self::DataExportReady => 'user_settings_data_export_download',
             self::ActivityAwaitingReview => 'admin/activities/approvals/review',
+            self::SignupClosing, self::SignupClosingWithFields => 'activity/view',
         };
     }
 
@@ -95,6 +101,7 @@ enum NotificationType: string
             self::AlbumPublished => 'photo/index',
             self::ActivityPublished => 'activity/index',
             self::ActivityAwaitingReview => 'admin/activities/approvals/index',
+            self::SignupClosing, self::SignupClosingWithFields => 'activity/index',
             self::SignIn, self::PasswordChanged, self::MfaEnabled,
             self::MfaDisabled, self::BackupCodesRegenerated => ($recipient ?? Firewall::Main)->securityIndexRoute(),
             self::DataExportReady => 'user_settings_data_export_download',
@@ -132,14 +139,33 @@ enum NotificationType: string
                 '%count% data exports you asked for are ready.',
                 ['%count%' => $count],
             ),
+            self::SignupClosing, self::SignupClosingWithFields => new TranslatableMessage(
+                '%count% sign-ups you are on are closing soon.',
+                ['%count%' => $count],
+            ),
         };
     }
 
     /**
+     * @param array<string, string> $context
+     *
      * @return array<string, int|string>
      */
-    public function routeParameters(?int $subjectId): array
-    {
+    public function routeParameters(
+        ?int $subjectId,
+        array $context = [],
+    ): array {
+        // Several reminders are about the same activity, so they cannot key on a subject the way an announcement
+        // does. What they point at travels with them instead.
+        if (
+            self::SignupClosing === $this
+            || self::SignupClosingWithFields === $this
+        ) {
+            return isset($context['activity'])
+                ? ['activity' => $context['activity']]
+                : [];
+        }
+
         // A notification that stands on its own points at a page that needs no parameters.
         if (null === $subjectId) {
             return [];
@@ -171,6 +197,7 @@ enum NotificationType: string
                 'Review your account security',
             ),
             self::DataExportReady => new TranslatableMessage('Download your data'),
+            self::SignupClosing, self::SignupClosingWithFields => new TranslatableMessage('View the activity'),
             self::ActivityAwaitingReview => new TranslatableMessage('Review it'),
         };
     }
@@ -210,6 +237,15 @@ enum NotificationType: string
                 ['%name%' => $name],
             ),
             self::DataExportReady => new TranslatableMessage('The data export you asked for is ready.'),
+            self::SignupClosing => new TranslatableMessage(
+                'Sign-ups for "%name%" close soon. You will not be able to withdraw after that.',
+                ['%name%' => $name],
+            ),
+            self::SignupClosingWithFields => new TranslatableMessage(
+                'Sign-ups for "%name%" close soon. You will not be able to withdraw or change your answers after '
+                . 'that.',
+                ['%name%' => $name],
+            ),
             self::ActivityAwaitingReview => new TranslatableMessage(
                 'The activity "%name%" has been submitted for review.',
                 ['%name%' => $name],
@@ -227,7 +263,7 @@ enum NotificationType: string
     {
         return match ($this) {
             self::AlbumPublished, self::ActivityPublished, self::DataExportReady,
-            self::ActivityAwaitingReview => null,
+            self::ActivityAwaitingReview, self::SignupClosing, self::SignupClosingWithFields => null,
             self::SignIn => 'New sign-in to your GEWIS account',
             self::PasswordChanged => 'Your GEWIS password was changed',
             self::MfaEnabled => 'Two-factor authentication enabled on your GEWIS account',

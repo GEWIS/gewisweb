@@ -37,6 +37,8 @@ final readonly class NotificationContextResolver
             NotificationType::ActivityAwaitingReview => null,
             // Nothing to fill in: the sentence says all of it on its own.
             NotificationType::DataExportReady => '',
+            NotificationType::SignupClosing,
+            NotificationType::SignupClosingWithFields => $context['list'] ?? null,
             NotificationType::SignIn, NotificationType::PasswordChanged, NotificationType::MfaEnabled,
             NotificationType::MfaDisabled, NotificationType::BackupCodesRegenerated => $this->deviceDescription->render(
                 $context['browser'] ?? null,

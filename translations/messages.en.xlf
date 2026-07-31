@@ -41,6 +41,10 @@
         <source>%count% session(s) terminated.</source>
         <target state="translated">%count% session(s) terminated.</target>
       </trans-unit>
+      <trans-unit id="j2HLdTO" resname="%count% sign-ups you are on are closing soon.">
+        <source>%count% sign-ups you are on are closing soon.</source>
+        <target state="translated">%count% sign-ups you are on are closing soon.</target>
+      </trans-unit>
       <trans-unit id="KJO8tlf" resname="%count% week|%count% weeks">
         <source>%count% week|%count% weeks</source>
         <target>%count% week|%count% weeks</target>
@@ -312,10 +316,6 @@
       <trans-unit id="q6XvAor" resname="Almost there! Check your email to confirm your sign-up.">
         <source>Almost there! Check your email to confirm your sign-up.</source>
         <target state="translated">Almost there! Check your email to confirm your sign-up.</target>
-      </trans-unit>
-      <trans-unit id="WuZZUIZ" resname="Always">
-        <source>Always</source>
-        <target state="translated">Always</target>
       </trans-unit>
       <trans-unit id="3eX.3WJ" resname="Analytics are currently">
         <source>Analytics are currently</source>
@@ -2885,6 +2885,10 @@
         <source>Settings</source>
         <target state="translated">Settings</target>
       </trans-unit>
+      <trans-unit id="qVigwtg" resname="Shortly before a sign-up you are on closes">
+        <source>Shortly before a sign-up you are on closes</source>
+        <target state="translated">Shortly before a sign-up you are on closes</target>
+      </trans-unit>
       <trans-unit id="ePTa8qb" resname="Show all activities">
         <source>Show all activities</source>
         <target state="translated">Show all activities</target>
@@ -2957,6 +2961,10 @@
         <source>Sign-up opens:</source>
         <target>Sign-up opens:</target>
       </trans-unit>
+      <trans-unit id="EwBIv_j" resname="Sign-up reminders">
+        <source>Sign-up reminders</source>
+        <target state="translated">Sign-up reminders</target>
+      </trans-unit>
       <trans-unit id="dZ41QIu" resname="Sign-up window">
         <source>Sign-up window</source>
         <target>Sign-up window</target>
@@ -2976,6 +2984,14 @@
       <trans-unit id="ia8cBnF" resname="Sign-ups are frozen for this activity, so you cannot add a subscriber.">
         <source>Sign-ups are frozen for this activity, so you cannot add a subscriber.</source>
         <target>Sign-ups are frozen for this activity, so you cannot add a subscriber.</target>
+      </trans-unit>
+      <trans-unit id="tCgPQWl" resname="Sign-ups for &quot;%name%&quot; close soon. You will not be able to withdraw after that.">
+        <source>Sign-ups for "%name%" close soon. You will not be able to withdraw after that.</source>
+        <target state="translated">Sign-ups for &quot;%name%&quot; close soon. You will not be able to withdraw after that.</target>
+      </trans-unit>
+      <trans-unit id="HqlKK3f" resname="Sign-ups for &quot;%name%&quot; close soon. You will not be able to withdraw or change your answers after that.">
+        <source>Sign-ups for "%name%" close soon. You will not be able to withdraw or change your answers after that.</source>
+        <target state="translated">Sign-ups for &quot;%name%&quot; close soon. You will not be able to withdraw or change your answers after that.</target>
       </trans-unit>
       <trans-unit id="VCNBYQu" resname="Sign-ups: %count%">
         <source>Sign-ups: %count%</source>
@@ -3721,6 +3737,10 @@
         <source>View photo</source>
         <target>View photo</target>
       </trans-unit>
+      <trans-unit id="X8rVv5O" resname="View the activity">
+        <source>View the activity</source>
+        <target state="translated">View the activity</target>
+      </trans-unit>
       <trans-unit id="kPrgwUx" resname="Virtual Meeting">
         <source>Virtual Meeting</source>
         <target state="translated">Virtual Meeting</target>
@@ -3768,6 +3788,18 @@
       <trans-unit id="jkUs8v1" resname="We found a pointer to &lt;code&gt;NULL&lt;/code&gt; instead of this page">
         <source>We found a pointer to &lt;code&gt;NULL&lt;/code&gt; instead of this page</source>
         <target state="translated"><![CDATA[We found a pointer to <code>NULL</code> instead of this page]]></target>
+      </trans-unit>
+      <trans-unit id="fFRCfz_" resname="Website">
+        <source>Website</source>
+        <target state="translated">Website</target>
+      </trans-unit>
+      <trans-unit id="UAnikZ8" resname="Website and email">
+        <source>Website and email</source>
+        <target state="translated">Website and email</target>
+      </trans-unit>
+      <trans-unit id="JCJj8nZ" resname="Website only">
+        <source>Website only</source>
+        <target state="translated">Website only</target>
       </trans-unit>
       <trans-unit id="VRNwM24" resname="Week">
         <source>Week</source>
