@@ -46,7 +46,6 @@ class UserSettings
     #[JoinColumn(
         name: 'lidnr',
         referencedColumnName: 'lidnr',
-        nullable: false,
         onDelete: 'CASCADE',
     )]
     private User $user;

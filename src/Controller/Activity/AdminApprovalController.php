@@ -22,6 +22,7 @@ use App\Service\Application\EditLockService;
 use App\Util\Activity\PastActivityRule;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\Attribute\Target;
 use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormInterface;
@@ -58,6 +59,7 @@ class AdminApprovalController extends AbstractController
         private readonly ActivityRevisionCommentRepository $commentRepository,
         private readonly EntityManagerInterface $entityManager,
         private readonly TranslatorInterface $translator,
+        #[Target('revisionStateMachine')]
         private readonly WorkflowInterface $revisionStateMachine,
         private readonly SignupListMigrator $signupListMigrator,
         private readonly DraftDiscarder $draftDiscarder,
