@@ -5,6 +5,18 @@
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
+      <trans-unit id="Rq5XstT" resname="%browser% on %system%">
+        <source>%browser% on %system%</source>
+        <target state="translated">%browser% on %system%</target>
+      </trans-unit>
+      <trans-unit id="k0WzEbS" resname="%count% activities have been submitted for review.">
+        <source>%count% activities have been submitted for review.</source>
+        <target state="translated">%count% activities have been submitted for review.</target>
+      </trans-unit>
+      <trans-unit id="KGUn7gt" resname="%count% data exports you asked for are ready.">
+        <source>%count% data exports you asked for are ready.</source>
+        <target state="translated">%count% data exports you asked for are ready.</target>
+      </trans-unit>
       <trans-unit id="E69bPZ6" resname="%count% day|%count% days">
         <source>%count% day|%count% days</source>
         <target>%count% day|%count% days</target>
@@ -17,13 +29,29 @@
         <source>%count% minute|%count% minutes</source>
         <target>%count% minute|%count% minutes</target>
       </trans-unit>
+      <trans-unit id="WZaz3Ow" resname="%count% new activities have been published.">
+        <source>%count% new activities have been published.</source>
+        <target state="translated">%count% new activities have been published.</target>
+      </trans-unit>
+      <trans-unit id="VLcbnTs" resname="%count% new photo albums are online.">
+        <source>%count% new photo albums are online.</source>
+        <target state="translated">%count% new photo albums are online.</target>
+      </trans-unit>
       <trans-unit id="Bp.9tYU" resname="%count% session(s) terminated.">
         <source>%count% session(s) terminated.</source>
         <target state="translated">%count% session(s) terminated.</target>
       </trans-unit>
+      <trans-unit id="j2HLdTO" resname="%count% sign-ups you are on are closing soon.">
+        <source>%count% sign-ups you are on are closing soon.</source>
+        <target state="translated">%count% sign-ups you are on are closing soon.</target>
+      </trans-unit>
       <trans-unit id="KJO8tlf" resname="%count% week|%count% weeks">
         <source>%count% week|%count% weeks</source>
         <target>%count% week|%count% weeks</target>
+      </trans-unit>
+      <trans-unit id="yRTBNMp" resname="%duration% ago">
+        <source>%duration% ago</source>
+        <target state="translated">%duration% ago</target>
       </trans-unit>
       <trans-unit id="E9ZBpIE" resname="%name% has hidden their tagged photos.">
         <source>%name% has hidden their tagged photos.</source>
@@ -45,9 +73,21 @@
         <source>%name% turns %age% today!</source>
         <target state="translated">%name% turns %age% today!</target>
       </trans-unit>
+      <trans-unit id="cweoWmQ" resname="A new activity &quot;%name%&quot; has been published.">
+        <source>A new activity "%name%" has been published.</source>
+        <target state="translated">A new activity "%name%" has been published.</target>
+      </trans-unit>
       <trans-unit id="THI278F" resname="A new draft was created. Edit it and submit again.">
         <source>A new draft was created. Edit it and submit again.</source>
         <target state="translated">A new draft was created. Edit it and submit again.</target>
+      </trans-unit>
+      <trans-unit id="z8UYICG" resname="A new photo album &quot;%name%&quot; is online.">
+        <source>A new photo album "%name%" is online.</source>
+        <target state="translated">A new photo album "%name%" is online.</target>
+      </trans-unit>
+      <trans-unit id="gtNLrrR" resname="A pinned announcement needs an end date.">
+        <source>A pinned announcement needs an end date.</source>
+        <target state="translated">A pinned announcement needs an end date.</target>
       </trans-unit>
       <trans-unit id="G9Mw23h" resname="A sign-up list with existing sign-ups was changed in this revision, so the live sign-ups cannot be carried over and it can no longer be submitted or approved.">
         <source>A sign-up list with existing sign-ups was changed in this revision, so the live sign-ups cannot be carried over and it can no longer be submitted or approved.</source>
@@ -76,6 +116,10 @@
       <trans-unit id="5DOuCi7" resname="Access Denied">
         <source>Access Denied</source>
         <target state="translated">Access Denied</target>
+      </trans-unit>
+      <trans-unit id="8vZ6CB1" resname="Account security">
+        <source>Account security</source>
+        <target state="translated">Account security</target>
       </trans-unit>
       <trans-unit id="1_MZEgP" resname="Actions">
         <source>Actions</source>
@@ -281,6 +325,18 @@
         <source>Announcement</source>
         <target>Announcement</target>
       </trans-unit>
+      <trans-unit id="q_RmiOA" resname="Announcement removed.">
+        <source>Announcement removed.</source>
+        <target state="translated">Announcement removed.</target>
+      </trans-unit>
+      <trans-unit id="zWbFn1D" resname="Announcement sent.">
+        <source>Announcement sent.</source>
+        <target state="translated">Announcement sent.</target>
+      </trans-unit>
+      <trans-unit id="5Aycjkm" resname="Announcements">
+        <source>Announcements</source>
+        <target state="translated">Announcements</target>
+      </trans-unit>
       <trans-unit id="TawktAK" resname="Anonymous visitors will no longer see this photo on the front page. Logged-in members still see it.">
         <source>Anonymous visitors will no longer see this photo on the front page. Logged-in members still see it.</source>
         <target state="translated">Anonymous visitors will no longer see this photo on the front page. Logged-in members still see it.</target>
@@ -356,6 +412,10 @@
       <trans-unit id="rXDM9BS" resname="Artist">
         <source>Artist</source>
         <target>Artist</target>
+      </trans-unit>
+      <trans-unit id="_6_FgqT" resname="As they happen">
+        <source>As they happen</source>
+        <target>As they happen</target>
       </trans-unit>
       <trans-unit id="FzJGBxU" resname="Association">
         <source>Association</source>
@@ -741,6 +801,14 @@
         <source>Custom</source>
         <target>Custom</target>
       </trans-unit>
+      <trans-unit id="sDQ5DRC" resname="Daily">
+        <source>Daily</source>
+        <target>Daily</target>
+      </trans-unit>
+      <trans-unit id="ts0oBlQ" resname="Danger">
+        <source>Danger</source>
+        <target state="translated">Danger</target>
+      </trans-unit>
       <trans-unit id="jGZfEE1" resname="Dark">
         <source>Dark</source>
         <target state="translated">Dark</target>
@@ -748,6 +816,10 @@
       <trans-unit id="oICd88D" resname="Data export">
         <source>Data export</source>
         <target>Data export</target>
+      </trans-unit>
+      <trans-unit id="_0b32_R" resname="Data exports">
+        <source>Data exports</source>
+        <target state="translated">Data exports</target>
       </trans-unit>
       <trans-unit id="IMJISl1" resname="Date and time">
         <source>Date and time</source>
@@ -776,6 +848,10 @@
       <trans-unit id="l9KZflr" resname="Deleted">
         <source>Deleted</source>
         <target state="translated">Deleted</target>
+      </trans-unit>
+      <trans-unit id="SEwWJUe" resname="Delivery">
+        <source>Delivery</source>
+        <target>Delivery</target>
       </trans-unit>
       <trans-unit id="3UyRwGq" resname="Describe the allocation method">
         <source>Describe the allocation method</source>
@@ -860,6 +936,10 @@
       <trans-unit id="CkUUOdc" resname="Download my latest export">
         <source>Download my latest export</source>
         <target>Download my latest export</target>
+      </trans-unit>
+      <trans-unit id="bl67OwS" resname="Download your data">
+        <source>Download your data</source>
+        <target state="translated">Download your data</target>
       </trans-unit>
       <trans-unit id="dwUtS3b" resname="Draft">
         <source>Draft</source>
@@ -965,6 +1045,10 @@
         <source>Email admittees</source>
         <target>Email admittees</target>
       </trans-unit>
+      <trans-unit id="EiKzvgW" resname="Email me about %topic%">
+        <source>Email me about %topic%</source>
+        <target>Email me about %topic%</target>
+      </trans-unit>
       <trans-unit id="iWhlH3l" resname="Email sign-ups">
         <source>Email sign-ups</source>
         <target>Email sign-ups</target>
@@ -1009,6 +1093,10 @@
         <source>End date and time</source>
         <target state="translated">End date and time</target>
       </trans-unit>
+      <trans-unit id="KLjXk98" resname="Ended">
+        <source>Ended</source>
+        <target>Ended</target>
+      </trans-unit>
       <trans-unit id="_ujLe_1" resname="Ends">
         <source>Ends</source>
         <target state="translated">Ends</target>
@@ -1020,6 +1108,14 @@
       <trans-unit id="t.WZn.q" resname="Enter a 6-digit authenticator code or a 16-character lowercase-hex backup code.">
         <source>Enter a 6-digit authenticator code or a 16-character lowercase-hex backup code.</source>
         <target state="translated">Enter a 6-digit authenticator code or a 16-character lowercase-hex backup code.</target>
+      </trans-unit>
+      <trans-unit id="Hhkop2d" resname="Enter an English message.">
+        <source>Enter an English message.</source>
+        <target>Enter an English message.</target>
+      </trans-unit>
+      <trans-unit id="buChLT5" resname="Enter an English title.">
+        <source>Enter an English title.</source>
+        <target>Enter an English title.</target>
       </trans-unit>
       <trans-unit id="GbzeuAe" resname="Enter the 6-digit code from your authenticator app, or one of your saved backup codes.">
         <source>Enter the 6-digit code from your authenticator app, or one of your saved backup codes.</source>
@@ -1040,6 +1136,14 @@
       <trans-unit id="xVvK.Uw" resname="Every input should map to an output. This one got lost.">
         <source>Every input should map to an output. This one got lost.</source>
         <target state="translated">Every input should map to an output. This one got lost.</target>
+      </trans-unit>
+      <trans-unit id="4ADZXUU" resname="Every time your account is signed in">
+        <source>Every time your account is signed in</source>
+        <target state="translated">Every time your account is signed in</target>
+      </trans-unit>
+      <trans-unit id="09wa3mW" resname="Everything shows up on the website. Pick which topics you also want by email, and how often they should reach you. Notices about your own account and your privacy are always sent and cannot be turned off.">
+        <source>Everything shows up on the website. Pick which topics you also want by email, and how often they should reach you. Notices about your own account and your privacy are always sent and cannot be turned off.</source>
+        <target state="translated">Everything shows up on the website. Pick which topics you also want by email, and how often they should reach you. Notices about your own account and your privacy are always sent and cannot be turned off.</target>
       </trans-unit>
       <trans-unit id="q6.QUqh" resname="Exceptional Members">
         <source>Exceptional Members</source>
@@ -1196,6 +1300,10 @@
       <trans-unit id="kCLhNY7" resname="Frontpage">
         <source>Frontpage</source>
         <target state="translated">Frontpage</target>
+      </trans-unit>
+      <trans-unit id="0ooNiTs" resname="Full">
+        <source>Full</source>
+        <target state="translated">Full</target>
       </trans-unit>
       <trans-unit id="i9.ArB8" resname="Full name">
         <source>Full name</source>
@@ -1361,6 +1469,10 @@
         <source>Honorary</source>
         <target state="translated">Honorary</target>
       </trans-unit>
+      <trans-unit id="HuStJXW" resname="Hourly">
+        <source>Hourly</source>
+        <target>Hourly</target>
+      </trans-unit>
       <trans-unit id="DGNp8kI" resname="Housing">
         <source>Housing</source>
         <target state="translated">Housing</target>
@@ -1404,6 +1516,10 @@
       <trans-unit id="0q4Brp5" resname="If your information is no longer up to date, contact %secretary% to change it. The same contact also handles data removal requests.">
         <source>If your information is no longer up to date, contact %secretary% to change it. The same contact also handles data removal requests.</source>
         <target>If your information is no longer up to date, contact %secretary% to change it. The same contact also handles data removal requests.</target>
+      </trans-unit>
+      <trans-unit id="0QlUu9B" resname="Immediately">
+        <source>Immediately</source>
+        <target>Immediately</target>
       </trans-unit>
       <trans-unit id="AZfPAZa" resname="Improve security by signing out of other devices.">
         <source>Improve security by signing out of other devices.</source>
@@ -1549,6 +1665,14 @@
         <source>Jobs</source>
         <target>Jobs</target>
       </trans-unit>
+      <trans-unit id="Oaj7VyV" resname="Keep it pinned as a banner at the top of every page">
+        <source>Keep it pinned as a banner at the top of every page</source>
+        <target state="translated">Keep it pinned as a banner at the top of every page</target>
+      </trans-unit>
+      <trans-unit id="h1ReSXF" resname="Keep website notifications only for the topics you chose above. The topics marked as always sent are not affected and keep arriving by email.">
+        <source>Keep website notifications only for the topics you chose above. The topics marked as always sent are not affected and keep arriving by email.</source>
+        <target state="translated">Keep website notifications only for the topics you chose above. The topics marked as always sent are not affected and keep arriving by email.</target>
+      </trans-unit>
       <trans-unit id="a5V7ouo" resname="Keycode active">
         <source>Keycode active</source>
         <target>Keycode active</target>
@@ -1576,6 +1700,22 @@
       <trans-unit id="1Zi3rCU" resname="Last used %date%">
         <source>Last used %date%</source>
         <target>Last used %date%</target>
+      </trans-unit>
+      <trans-unit id="YD75Vls" resname="Leave empty to keep it on until you turn it off.">
+        <source>Leave empty to keep it on until you turn it off.</source>
+        <target state="translated">Leave empty to keep it on until you turn it off.</target>
+      </trans-unit>
+      <trans-unit id="BmqZUtK" resname="Leave empty to start immediately.">
+        <source>Leave empty to start immediately.</source>
+        <target state="translated">Leave empty to start immediately.</target>
+      </trans-unit>
+      <trans-unit id="gsxxdUb" resname="Leave the start empty to begin at once, and the end empty to keep it on until you turn it off. Windows may not overlap.">
+        <source>Leave the start empty to begin at once, and the end empty to keep it on until you turn it off. Windows may not overlap.</source>
+        <target>Leave the start empty to begin at once, and the end empty to keep it on until you turn it off. Windows may not overlap.</target>
+      </trans-unit>
+      <trans-unit id="q2_TGUG" resname="Level">
+        <source>Level</source>
+        <target state="translated">Level</target>
       </trans-unit>
       <trans-unit id="7GDr10z" resname="Light">
         <source>Light</source>
@@ -1677,6 +1817,22 @@
         <source>Mail address</source>
         <target state="translated">Mail address</target>
       </trans-unit>
+      <trans-unit id="BNMLKlt" resname="Maintenance">
+        <source>Maintenance</source>
+        <target state="translated">Maintenance</target>
+      </trans-unit>
+      <trans-unit id="0jTMGbR" resname="Maintenance window removed.">
+        <source>Maintenance window removed.</source>
+        <target>Maintenance window removed.</target>
+      </trans-unit>
+      <trans-unit id="Qiex3LK" resname="Maintenance window scheduled.">
+        <source>Maintenance window scheduled.</source>
+        <target>Maintenance window scheduled.</target>
+      </trans-unit>
+      <trans-unit id="p_KZkqw" resname="Maintenance windows">
+        <source>Maintenance windows</source>
+        <target>Maintenance windows</target>
+      </trans-unit>
       <trans-unit id="WP2lXKC" resname="Manage">
         <source>Manage</source>
         <target state="translated">Manage</target>
@@ -1688,6 +1844,14 @@
       <trans-unit id="xDpozAE" resname="Manage your sign-up">
         <source>Manage your sign-up</source>
         <target>Manage your sign-up</target>
+      </trans-unit>
+      <trans-unit id="Iccspm0" resname="Mark all as read">
+        <source>Mark all as read</source>
+        <target state="translated">Mark all as read</target>
+      </trans-unit>
+      <trans-unit id="B86OjbY" resname="Mark as read">
+        <source>Mark as read</source>
+        <target state="translated">Mark as read</target>
       </trans-unit>
       <trans-unit id="5LERsNC" resname="Maximum value (number type)">
         <source>Maximum value (number type)</source>
@@ -1744,6 +1908,10 @@
       <trans-unit id="JObdnqB" resname="Minimum value (number type)">
         <source>Minimum value (number type)</source>
         <target state="translated">Minimum value (number type)</target>
+      </trans-unit>
+      <trans-unit id="2OVSb4f" resname="Mode">
+        <source>Mode</source>
+        <target state="translated">Mode</target>
       </trans-unit>
       <trans-unit id="nFoBwxF" resname="Modern applications require the URL fragment.">
         <source>Modern applications require the URL fragment.</source>
@@ -1829,6 +1997,22 @@
         <source>New</source>
         <target state="translated">New</target>
       </trans-unit>
+      <trans-unit id="E30GQMW" resname="New activities">
+        <source>New activities</source>
+        <target>New activities</target>
+      </trans-unit>
+      <trans-unit id="cpwrWrv" resname="New activities you can sign up for">
+        <source>New activities you can sign up for</source>
+        <target>New activities you can sign up for</target>
+      </trans-unit>
+      <trans-unit id="xQgCPCW" resname="New announcement">
+        <source>New announcement</source>
+        <target state="translated">New announcement</target>
+      </trans-unit>
+      <trans-unit id="uYbxb6i" resname="New backup codes were generated for your account from %name%.">
+        <source>New backup codes were generated for your account from %name%.</source>
+        <target state="translated">New backup codes were generated for your account from %name%.</target>
+      </trans-unit>
       <trans-unit id="pSP333t" resname="New field">
         <source>New field</source>
         <target state="translated">New field</target>
@@ -1841,9 +2025,17 @@
         <source>New password</source>
         <target state="translated">New password</target>
       </trans-unit>
+      <trans-unit id="0IHjoHx" resname="New photo albums">
+        <source>New photo albums</source>
+        <target>New photo albums</target>
+      </trans-unit>
       <trans-unit id="zq8_o0a" resname="New tag">
         <source>New tag</source>
         <target state="translated">New tag</target>
+      </trans-unit>
+      <trans-unit id="5dsfyar" resname="New window">
+        <source>New window</source>
+        <target>New window</target>
       </trans-unit>
       <trans-unit id="VXC5Ldf" resname="Newer">
         <source>Newer</source>
@@ -1868,6 +2060,10 @@
       <trans-unit id="FeP0dTL" resname="No activities match the current filters.">
         <source>No activities match the current filters.</source>
         <target>No activities match the current filters.</target>
+      </trans-unit>
+      <trans-unit id="GnSjgKv" resname="No announcements are pinned. A one-off announcement is only a toast and is not kept here.">
+        <source>No announcements are pinned. A one-off announcement is only a toast and is not kept here.</source>
+        <target state="translated">No announcements are pinned. A one-off announcement is only a toast and is not kept here.</target>
       </trans-unit>
       <trans-unit id="03_d16S" resname="No approved activities.">
         <source>No approved activities.</source>
@@ -1896,6 +2092,10 @@
       <trans-unit id="vs1Yzf_" resname="No labels.">
         <source>No labels.</source>
         <target state="translated">No labels.</target>
+      </trans-unit>
+      <trans-unit id="3YWcfhV" resname="No maintenance is planned. The site is fully available.">
+        <source>No maintenance is planned. The site is fully available.</source>
+        <target>No maintenance is planned. The site is fully available.</target>
       </trans-unit>
       <trans-unit id="YeBrgS2" resname="No matching labels">
         <source>No matching labels</source>
@@ -1969,6 +2169,10 @@
         <source>Not yet open</source>
         <target>Not yet open</target>
       </trans-unit>
+      <trans-unit id="gGxnmUA" resname="Notifications">
+        <source>Notifications</source>
+        <target state="translated">Notifications</target>
+      </trans-unit>
       <trans-unit id="zZCzfg2" resname="Number">
         <source>Number</source>
         <target state="translated">Number</target>
@@ -1976,6 +2180,10 @@
       <trans-unit id="ZV7YFQ7" resname="Number of subscriptions: %count%">
         <source>Number of subscriptions: %count%</source>
         <target>Number of subscriptions: %count%</target>
+      </trans-unit>
+      <trans-unit id="wBbSi_k" resname="Off">
+        <source>Off</source>
+        <target state="translated">Off</target>
       </trans-unit>
       <trans-unit id="fm8k4L1" resname="Oh no! Something went wrong :(">
         <source>Oh no! Something went wrong :(</source>
@@ -2112,6 +2320,10 @@
       <trans-unit id="LTQgZqV" resname="Password updated successfully.">
         <source>Password updated successfully.</source>
         <target state="translated">Password updated successfully.</target>
+      </trans-unit>
+      <trans-unit id="HG0KlMe" resname="Pause everything">
+        <source>Pause everything</source>
+        <target>Pause everything</target>
       </trans-unit>
       <trans-unit id="AC0RNHY" resname="Payment is collected by the external party">
         <source>Payment is collected by the external party</source>
@@ -2269,6 +2481,18 @@
         <source>Re-publish this activity? It becomes publicly visible again and sign-ups reopen where the deadlines still allow.</source>
         <target>Re-publish this activity? It becomes publicly visible again and sign-ups reopen where the deadlines still allow.</target>
       </trans-unit>
+      <trans-unit id="KJPSfn5" resname="Read-only">
+        <source>Read-only</source>
+        <target state="translated">Read-only</target>
+      </trans-unit>
+      <trans-unit id="J7GFgK_" resname="Read-only blocks changes for non-admins; full shows the maintenance page. Admins always keep full access.">
+        <source>Read-only blocks changes for non-admins; full shows the maintenance page. Admins always keep full access.</source>
+        <target>Read-only blocks changes for non-admins; full shows the maintenance page. Admins always keep full access.</target>
+      </trans-unit>
+      <trans-unit id="s0FrgfZ" resname="Read-only mode">
+        <source>Read-only mode</source>
+        <target>Read-only mode</target>
+      </trans-unit>
       <trans-unit id="9Iuz1j8" resname="Reality collapsed. Please go back before the singularity spreads.">
         <source>Reality collapsed. Please go back before the singularity spreads.</source>
         <target state="translated">Reality collapsed. Please go back before the singularity spreads.</target>
@@ -2333,6 +2557,14 @@
         <source>Remove all tags of me</source>
         <target>Remove all tags of me</target>
       </trans-unit>
+      <trans-unit id="V5yVUKO" resname="Remove announcement">
+        <source>Remove announcement</source>
+        <target state="translated">Remove announcement</target>
+      </trans-unit>
+      <trans-unit id="vt8joaQ" resname="Remove maintenance window">
+        <source>Remove maintenance window</source>
+        <target>Remove maintenance window</target>
+      </trans-unit>
       <trans-unit id="IR6O8kN" resname="Remove option">
         <source>Remove option</source>
         <target state="translated">Remove option</target>
@@ -2348,6 +2580,14 @@
       <trans-unit id="GwibQdh" resname="Remove tag">
         <source>Remove tag</source>
         <target>Remove tag</target>
+      </trans-unit>
+      <trans-unit id="rCORPR7" resname="Remove this announcement? If it is still active, its banner disappears for everyone.">
+        <source>Remove this announcement? If it is still active, its banner disappears for everyone.</source>
+        <target state="translated">Remove this announcement? If it is still active, its banner disappears for everyone.</target>
+      </trans-unit>
+      <trans-unit id="KId45Bk" resname="Remove this maintenance window? If it is active, the site returns to normal for everyone.">
+        <source>Remove this maintenance window? If it is active, the site returns to normal for everyone.</source>
+        <target>Remove this maintenance window? If it is active, the site returns to normal for everyone.</target>
       </trans-unit>
       <trans-unit id="Sg9.yIf" resname="Removed field">
         <source>Removed field</source>
@@ -2425,9 +2665,21 @@
         <source>Review feedback</source>
         <target state="translated">Review feedback</target>
       </trans-unit>
+      <trans-unit id="Yx2O1IL" resname="Review it">
+        <source>Review it</source>
+        <target state="translated">Review it</target>
+      </trans-unit>
       <trans-unit id="Cz4MUCw" resname="Review started.">
         <source>Review started.</source>
         <target state="translated">Review started.</target>
+      </trans-unit>
+      <trans-unit id="1pgRckD" resname="Review your account security">
+        <source>Review your account security</source>
+        <target state="translated">Review your account security</target>
+      </trans-unit>
+      <trans-unit id="De0FP1s" resname="Review your sessions">
+        <source>Review your sessions</source>
+        <target state="translated">Review your sessions</target>
       </trans-unit>
       <trans-unit id="GO3YEDC" resname="Revise">
         <source>Revise</source>
@@ -2492,6 +2744,18 @@
       <trans-unit id="ilkQJ_6" resname="Scan the QR code below.">
         <source>Scan the QR code below.</source>
         <target state="translated">Scan the QR code below.</target>
+      </trans-unit>
+      <trans-unit id="VWzuLxq" resname="Schedule">
+        <source>Schedule</source>
+        <target>Schedule</target>
+      </trans-unit>
+      <trans-unit id="vPdIj4g" resname="Schedule maintenance">
+        <source>Schedule maintenance</source>
+        <target>Schedule maintenance</target>
+      </trans-unit>
+      <trans-unit id="63_xW0T" resname="Scheduled">
+        <source>Scheduled</source>
+        <target>Scheduled</target>
       </trans-unit>
       <trans-unit id="SdNWA5t" resname="Search">
         <source>Search</source>
@@ -2577,6 +2841,14 @@
         <source>Send</source>
         <target>Send</target>
       </trans-unit>
+      <trans-unit id="pmPuP5X" resname="Send an announcement">
+        <source>Send an announcement</source>
+        <target state="translated">Send an announcement</target>
+      </trans-unit>
+      <trans-unit id="ghAfHX4" resname="Send announcement">
+        <source>Send announcement</source>
+        <target state="translated">Send announcement</target>
+      </trans-unit>
       <trans-unit id="5XiCCZa" resname="Send password reset email">
         <source>Send password reset email</source>
         <target state="translated">Send password reset email</target>
@@ -2613,6 +2885,10 @@
         <source>Settings</source>
         <target state="translated">Settings</target>
       </trans-unit>
+      <trans-unit id="qVigwtg" resname="Shortly before a sign-up you are on closes">
+        <source>Shortly before a sign-up you are on closes</source>
+        <target state="translated">Shortly before a sign-up you are on closes</target>
+      </trans-unit>
       <trans-unit id="ePTa8qb" resname="Show all activities">
         <source>Show all activities</source>
         <target state="translated">Show all activities</target>
@@ -2632,6 +2908,18 @@
       <trans-unit id="_Aj9SKA" resname="Show the number of sign-ups to logged-out visitors">
         <source>Show the number of sign-ups to logged-out visitors</source>
         <target state="translated">Show the number of sign-ups to logged-out visitors</target>
+      </trans-unit>
+      <trans-unit id="8YTW31f" resname="Show until">
+        <source>Show until</source>
+        <target state="translated">Show until</target>
+      </trans-unit>
+      <trans-unit id="SRkcmW5" resname="Shown until">
+        <source>Shown until</source>
+        <target state="translated">Shown until</target>
+      </trans-unit>
+      <trans-unit id="Zvvd4Iw" resname="Shows a toast to everyone on the website right now, including visitors who are not logged in. Pin it to also keep it as a banner at the top of every page until an end date.">
+        <source>Shows a toast to everyone on the website right now, including visitors who are not logged in. Pin it to also keep it as a banner at the top of every page until an end date.</source>
+        <target state="translated">Shows a toast to everyone on the website right now, including visitors who are not logged in. Pin it to also keep it as a banner at the top of every page until an end date.</target>
       </trans-unit>
       <trans-unit id="8v4YDBU" resname="Shutter speed">
         <source>Shutter speed</source>
@@ -2653,6 +2941,10 @@
         <source>Sign up for '%name%'</source>
         <target>Sign up for '%name%'</target>
       </trans-unit>
+      <trans-unit id="HYxhyIL" resname="Sign-ins">
+        <source>Sign-ins</source>
+        <target state="translated">Sign-ins</target>
+      </trans-unit>
       <trans-unit id="4ufAWYB" resname="Sign-up closes:">
         <source>Sign-up closes:</source>
         <target>Sign-up closes:</target>
@@ -2668,6 +2960,10 @@
       <trans-unit id="C3eGQtZ" resname="Sign-up opens:">
         <source>Sign-up opens:</source>
         <target>Sign-up opens:</target>
+      </trans-unit>
+      <trans-unit id="EwBIv_j" resname="Sign-up reminders">
+        <source>Sign-up reminders</source>
+        <target state="translated">Sign-up reminders</target>
       </trans-unit>
       <trans-unit id="dZ41QIu" resname="Sign-up window">
         <source>Sign-up window</source>
@@ -2688,6 +2984,14 @@
       <trans-unit id="ia8cBnF" resname="Sign-ups are frozen for this activity, so you cannot add a subscriber.">
         <source>Sign-ups are frozen for this activity, so you cannot add a subscriber.</source>
         <target>Sign-ups are frozen for this activity, so you cannot add a subscriber.</target>
+      </trans-unit>
+      <trans-unit id="tCgPQWl" resname="Sign-ups for &quot;%name%&quot; close soon. You will not be able to withdraw after that.">
+        <source>Sign-ups for "%name%" close soon. You will not be able to withdraw after that.</source>
+        <target state="translated">Sign-ups for &quot;%name%&quot; close soon. You will not be able to withdraw after that.</target>
+      </trans-unit>
+      <trans-unit id="HqlKK3f" resname="Sign-ups for &quot;%name%&quot; close soon. You will not be able to withdraw or change your answers after that.">
+        <source>Sign-ups for "%name%" close soon. You will not be able to withdraw or change your answers after that.</source>
+        <target state="translated">Sign-ups for &quot;%name%&quot; close soon. You will not be able to withdraw or change your answers after that.</target>
       </trans-unit>
       <trans-unit id="VCNBYQu" resname="Sign-ups: %count%">
         <source>Sign-ups: %count%</source>
@@ -2793,6 +3097,10 @@
         <source>Subscriber count shown publicly</source>
         <target>Subscriber count shown publicly</target>
       </trans-unit>
+      <trans-unit id="jLYkHhI" resname="Success">
+        <source>Success</source>
+        <target state="translated">Success</target>
+      </trans-unit>
       <trans-unit id="vTZphTn" resname="SudoSOS">
         <source>SudoSOS</source>
         <target state="translated">SudoSOS</target>
@@ -2861,6 +3169,10 @@
         <source>The GEWIS website is open-source! Check out the repository on &lt;a href="https://github.com/GEWIS/gewisweb" target="_blank"&gt;&lt;span class="fab fa-github"&gt;&lt;/span&gt;&amp;nbsp;GitHub&lt;/a&gt;. Or visit our &lt;a href="https://github.com/GEWIS" target="_blank"&gt;organisation&lt;/a&gt; for more of our awesome open-source projects.</source>
         <target state="translated"><![CDATA[The GEWIS website is open-source! Check out the repository on <a href="https://github.com/GEWIS/gewisweb" target="_blank"><span class="fab fa-github"></span>&nbsp;GitHub</a>. Or visit our <a href="https://github.com/GEWIS" target="_blank">organisation</a> for more of our awesome open-source projects.]]></target>
       </trans-unit>
+      <trans-unit id="n5Ir.cP" resname="The activity &quot;%name%&quot; has been submitted for review.">
+        <source>The activity "%name%" has been submitted for review.</source>
+        <target state="translated">The activity "%name%" has been submitted for review.</target>
+      </trans-unit>
       <trans-unit id="8h3GnHu" resname="The activity has been cancelled.">
         <source>The activity has been cancelled.</source>
         <target>The activity has been cancelled.</target>
@@ -2909,6 +3221,10 @@
         <source>The cover is a mosaic of the album's photos. Regenerate it after adding or removing photos; it updates here automatically once ready.</source>
         <target state="translated">The cover is a mosaic of the album's photos. Regenerate it after adding or removing photos; it updates here automatically once ready.</target>
       </trans-unit>
+      <trans-unit id="A6uQCCE" resname="The data export you asked for is ready.">
+        <source>The data export you asked for is ready.</source>
+        <target state="translated">The data export you asked for is ready.</target>
+      </trans-unit>
       <trans-unit id="WTE8eK4" resname="The draw can be run once sign-up has closed.">
         <source>The draw can be run once sign-up has closed.</source>
         <target>The draw can be run once sign-up has closed.</target>
@@ -2924,6 +3240,14 @@
       <trans-unit id="W6wPisp" resname="The draw will be performed automatically within a few minutes.">
         <source>The draw will be performed automatically within a few minutes.</source>
         <target>The draw will be performed automatically within a few minutes.</target>
+      </trans-unit>
+      <trans-unit id=".3unaf7" resname="The end date must be in the future.">
+        <source>The end date must be in the future.</source>
+        <target state="translated">The end date must be in the future.</target>
+      </trans-unit>
+      <trans-unit id="KsW5OxZ" resname="The end must be after the start.">
+        <source>The end must be after the start.</source>
+        <target state="translated">The end must be after the start.</target>
       </trans-unit>
       <trans-unit id="mTMkPrt" resname="The external application has been created.">
         <source>The external application has been created.</source>
@@ -2976,6 +3300,22 @@
       <trans-unit id=".gFbTa4" resname="The subscriber is added immediately, without email verification.">
         <source>The subscriber is added immediately, without email verification.</source>
         <target>The subscriber is added immediately, without email verification.</target>
+      </trans-unit>
+      <trans-unit id="zyECu48" resname="The way you sign in changed %count% times.">
+        <source>The way you sign in changed %count% times.</source>
+        <target state="translated">The way you sign in changed %count% times.</target>
+      </trans-unit>
+      <trans-unit id="U7EZEfl" resname="The website is temporarily read-only for maintenance, so your change was not saved.">
+        <source>The website is temporarily read-only for maintenance, so your change was not saved.</source>
+        <target>The website is temporarily read-only for maintenance, so your change was not saved.</target>
+      </trans-unit>
+      <trans-unit id="YgYyeCJ" resname="The website is temporarily read-only for maintenance; changes are disabled.">
+        <source>The website is temporarily read-only for maintenance; changes are disabled.</source>
+        <target>The website is temporarily read-only for maintenance; changes are disabled.</target>
+      </trans-unit>
+      <trans-unit id="I98XGR_" resname="The website is undergoing maintenance. You cannot sign in right now.">
+        <source>The website is undergoing maintenance. You cannot sign in right now.</source>
+        <target>The website is undergoing maintenance. You cannot sign in right now.</target>
       </trans-unit>
       <trans-unit id="tl9akBK" resname="Their TOTP secret and backup codes will be discarded and every active session for the user will be terminated. Use this when a device has been lost or compromised.">
         <source>Their TOTP secret and backup codes will be discarded and every active session for the user will be terminated. Use this when a device has been lost or compromised.</source>
@@ -3173,6 +3513,14 @@
         <source>This sign-up list is not open, so you cannot add a subscriber.</source>
         <target>This sign-up list is not open, so you cannot add a subscriber.</target>
       </trans-unit>
+      <trans-unit id="woCE4nm" resname="This window overlaps an existing maintenance window.">
+        <source>This window overlaps an existing maintenance window.</source>
+        <target>This window overlaps an existing maintenance window.</target>
+      </trans-unit>
+      <trans-unit id=".zZzsFp" resname="Title">
+        <source>Title</source>
+        <target state="translated">Title</target>
+      </trans-unit>
       <trans-unit id="5DLr8E1" resname="Toggle company menu">
         <source>Toggle company menu</source>
         <target state="translated">Toggle company menu</target>
@@ -3201,6 +3549,10 @@
         <source>Too many sign-up attempts. Please try again later.</source>
         <target>Too many sign-up attempts. Please try again later.</target>
       </trans-unit>
+      <trans-unit id="GSy11o_" resname="Topic">
+        <source>Topic</source>
+        <target>Topic</target>
+      </trans-unit>
       <trans-unit id="m67in_8" resname="Traineeship">
         <source>Traineeship</source>
         <target>Traineeship</target>
@@ -3220,6 +3572,14 @@
       <trans-unit id="m9I6BGv" resname="Turn off the balloons, snow, and fireworks across the website.">
         <source>Turn off the balloons, snow, and fireworks across the website.</source>
         <target>Turn off the balloons, snow, and fireworks across the website.</target>
+      </trans-unit>
+      <trans-unit id="_UPQM5u" resname="Two-factor authentication was disabled on your account from %name%.">
+        <source>Two-factor authentication was disabled on your account from %name%.</source>
+        <target state="translated">Two-factor authentication was disabled on your account from %name%.</target>
+      </trans-unit>
+      <trans-unit id="Y5v9x1E" resname="Two-factor authentication was enabled on your account from %name%.">
+        <source>Two-factor authentication was enabled on your account from %name%.</source>
+        <target state="translated">Two-factor authentication was enabled on your account from %name%.</target>
       </trans-unit>
       <trans-unit id="DL_wAnF" resname="Type">
         <source>Type</source>
@@ -3293,6 +3653,10 @@
         <source>Until %date%</source>
         <target>Until %date%</target>
       </trans-unit>
+      <trans-unit id="xkD9RrB" resname="Until turned off">
+        <source>Until turned off</source>
+        <target>Until turned off</target>
+      </trans-unit>
       <trans-unit id="itsx4Eu" resname="Upcoming">
         <source>Upcoming</source>
         <target>Upcoming</target>
@@ -3353,6 +3717,14 @@
         <source>View</source>
         <target state="translated">View</target>
       </trans-unit>
+      <trans-unit id="NrYB9f1" resname="View activity">
+        <source>View activity</source>
+        <target state="translated">View activity</target>
+      </trans-unit>
+      <trans-unit id="f.1nl4O" resname="View album">
+        <source>View album</source>
+        <target state="translated">View album</target>
+      </trans-unit>
       <trans-unit id="1mEp9z3" resname="View attachment">
         <source>View attachment</source>
         <target>View attachment</target>
@@ -3364,6 +3736,10 @@
       <trans-unit id="WJ3Xs8r" resname="View photo">
         <source>View photo</source>
         <target>View photo</target>
+      </trans-unit>
+      <trans-unit id="X8rVv5O" resname="View the activity">
+        <source>View the activity</source>
+        <target state="translated">View the activity</target>
       </trans-unit>
       <trans-unit id="kPrgwUx" resname="Virtual Meeting">
         <source>Virtual Meeting</source>
@@ -3397,6 +3773,10 @@
         <source>Waiting list</source>
         <target>Waiting list</target>
       </trans-unit>
+      <trans-unit id="V9XnrRt" resname="Warning">
+        <source>Warning</source>
+        <target state="translated">Warning</target>
+      </trans-unit>
       <trans-unit id="yLrgGa8" resname="Was:">
         <source>Was:</source>
         <target state="translated">Was:</target>
@@ -3408,6 +3788,18 @@
       <trans-unit id="jkUs8v1" resname="We found a pointer to &lt;code&gt;NULL&lt;/code&gt; instead of this page">
         <source>We found a pointer to &lt;code&gt;NULL&lt;/code&gt; instead of this page</source>
         <target state="translated"><![CDATA[We found a pointer to <code>NULL</code> instead of this page]]></target>
+      </trans-unit>
+      <trans-unit id="fFRCfz_" resname="Website">
+        <source>Website</source>
+        <target state="translated">Website</target>
+      </trans-unit>
+      <trans-unit id="UAnikZ8" resname="Website and email">
+        <source>Website and email</source>
+        <target state="translated">Website and email</target>
+      </trans-unit>
+      <trans-unit id="JCJj8nZ" resname="Website only">
+        <source>Website only</source>
+        <target state="translated">Website only</target>
       </trans-unit>
       <trans-unit id="VRNwM24" resname="Week">
         <source>Week</source>
@@ -3421,6 +3813,10 @@
         <source>Weekend</source>
         <target>Weekend</target>
       </trans-unit>
+      <trans-unit id="y1POd5z" resname="Weekly">
+        <source>Weekly</source>
+        <target>Weekly</target>
+      </trans-unit>
       <trans-unit id="qLp0Jrc" resname="Welcome to the website of study association GEWIS, the study association of the department of Mathematics &amp; Computer Science at Eindhoven University of Technology.">
         <source>Welcome to the website of study association GEWIS, the study association of the department of Mathematics &amp; Computer Science at Eindhoven University of Technology.</source>
         <target state="translated"><![CDATA[Welcome to the website of study association GEWIS, the study association of the department of Mathematics & Computer Science at Eindhoven University of Technology.]]></target>
@@ -3428,6 +3824,22 @@
       <trans-unit id="qlyBI_b" resname="Well-being">
         <source>Well-being</source>
         <target state="translated">Well-being</target>
+      </trans-unit>
+      <trans-unit id="kydIpeq" resname="When a data export you asked for is ready">
+        <source>When a data export you asked for is ready</source>
+        <target state="translated">When a data export you asked for is ready</target>
+      </trans-unit>
+      <trans-unit id="GGlzQ74" resname="When an activity is waiting to be reviewed">
+        <source>When an activity is waiting to be reviewed</source>
+        <target state="translated">When an activity is waiting to be reviewed</target>
+      </trans-unit>
+      <trans-unit id="AS1e.sj" resname="When photos of an event are published">
+        <source>When photos of an event are published</source>
+        <target>When photos of an event are published</target>
+      </trans-unit>
+      <trans-unit id="yj5zJ0V" resname="When the way you sign in changes">
+        <source>When the way you sign in changes</source>
+        <target state="translated">When the way you sign in changes</target>
       </trans-unit>
       <trans-unit id="B0EtCVs" resname="When this is checked, GEFLITST will be notified that this activity needs a photographer.">
         <source>When this is checked, GEFLITST will be notified that this activity needs a photographer.</source>
@@ -3525,6 +3937,10 @@
         <source>You have been unsubscribed.</source>
         <target>You have been unsubscribed.</target>
       </trans-unit>
+      <trans-unit id=".jimGHg" resname="You have no notifications yet.">
+        <source>You have no notifications yet.</source>
+        <target state="translated">You have no notifications yet.</target>
+      </trans-unit>
       <trans-unit id="F07ab4W" resname="You have not been a member of a committee or fraternity.">
         <source>You have not been a member of a committee or fraternity.</source>
         <target>You have not been a member of a committee or fraternity.</target>
@@ -3561,6 +3977,14 @@
         <source>Your Company</source>
         <target state="translated">Your Company</target>
       </trans-unit>
+      <trans-unit id="FSsHSES" resname="Your account was signed in %count% times.">
+        <source>Your account was signed in %count% times.</source>
+        <target state="translated">Your account was signed in %count% times.</target>
+      </trans-unit>
+      <trans-unit id="1rTGsTd" resname="Your account was signed in from %name%.">
+        <source>Your account was signed in from %name%.</source>
+        <target state="translated">Your account was signed in from %name%.</target>
+      </trans-unit>
       <trans-unit id="Lst7dJY" resname="Your data export is already being prepared.">
         <source>Your data export is already being prepared.</source>
         <target>Your data export is already being prepared.</target>
@@ -3577,9 +4001,17 @@
         <source>Your message is being sent to %count% recipient(s).</source>
         <target>Your message is being sent to %count% recipient(s).</target>
       </trans-unit>
+      <trans-unit id="S6SysIv" resname="Your notification settings have been saved.">
+        <source>Your notification settings have been saved.</source>
+        <target>Your notification settings have been saved.</target>
+      </trans-unit>
       <trans-unit id="23M6ORK" resname="Your password has been reset. You can now sign in with your new password.">
         <source>Your password has been reset. You can now sign in with your new password.</source>
         <target state="translated">Your password has been reset. You can now sign in with your new password.</target>
+      </trans-unit>
+      <trans-unit id="Z2J9XyJ" resname="Your password was changed from %name%.">
+        <source>Your password was changed from %name%.</source>
+        <target state="translated">Your password was changed from %name%.</target>
       </trans-unit>
       <trans-unit id="n0u0qZf" resname="Your password-reset link has expired or has already been used. Please request a new one.">
         <source>Your password-reset link has expired or has already been used. Please request a new one.</source>
@@ -3665,6 +4097,10 @@
         <source>jane.doe@example.com</source>
         <target state="translated">jane.doe@example.com</target>
       </trans-unit>
+      <trans-unit id="sxaP9KU" resname="just now">
+        <source>just now</source>
+        <target>just now</target>
+      </trans-unit>
       <trans-unit id="huWr6j7" resname="less than a minute">
         <source>less than a minute</source>
         <target>less than a minute</target>
@@ -3676,10 +4112,6 @@
       <trans-unit id="nNhr74f" resname="none">
         <source>none</source>
         <target state="translated">none</target>
-      </trans-unit>
-      <trans-unit id="edSu_p6" resname="on">
-        <source>on</source>
-        <target state="translated">on</target>
       </trans-unit>
       <trans-unit id="NpnxF2Z" resname="ongoing for %duration%">
         <source>ongoing for %duration%</source>
@@ -3716,6 +4148,10 @@
       <trans-unit id="W3MzJgn" resname="unavailable">
         <source>unavailable</source>
         <target state="translated">unavailable</target>
+      </trans-unit>
+      <trans-unit id="9F.soPI" resname="unread notifications">
+        <source>unread notifications</source>
+        <target state="translated">unread notifications</target>
       </trans-unit>
       <trans-unit id="A0Prwbn" resname="was">
         <source>was</source>

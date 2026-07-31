@@ -12,7 +12,7 @@
     </a>
 </li>
 {% if isSelf %}
-    {% set settingsActive = activeRoute in ['general', 'privacy', 'security'] %}
+    {% set settingsActive = activeRoute in ['general', 'privacy', 'notifications', 'security'] %}
     <li class="nav-item dropdown dropend {{ settingsActive ? 'active default open' : '' }}">
         <a class="nav-link p-3 dropdown-toggle"
            href="#" data-bs-toggle="dropdown" data-bs-offset="0,0" aria-expanded="{{ settingsActive ? 'true' : 'false' }}">
@@ -22,6 +22,11 @@
             <li>
                 <a class="dropdown-item {{ activeRoute == 'general' ? 'active' : '' }}" href="{{ path('user_settings_general') }}">
                     {{ 'General'|trans }}
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item {{ activeRoute == 'notifications' ? 'active' : '' }}" href="{{ path('user_settings_notifications') }}">
+                    {{ 'Notifications'|trans }}
                 </a>
             </li>
             <li>

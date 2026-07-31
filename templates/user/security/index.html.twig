@@ -115,17 +115,7 @@
                 </p>
                 <div class="d-flex flex-column gap-2 mb-4">
                     {% for session in sessions %}
-                        {% set displayName %}
-                            {%- if session.browser and session.operatingSystem -%}
-                                {{ session.browser }} {{ 'on'|trans }} {{ session.operatingSystem }}
-                            {%- elseif session.browser -%}
-                                {{ session.browser }}
-                            {%- elseif session.operatingSystem -%}
-                                {{ session.operatingSystem }}
-                            {%- else -%}
-                                {{ 'Unknown device'|trans }}
-                            {%- endif -%}
-                        {% endset %}
+                        {% set displayName = device_description(session.browser, session.operatingSystem) %}
                         <div class="card{% if session.series == currentSeries %} border-primary{% endif %}" data-series="{{ session.series }}">
                             <div class="card-body d-flex flex-wrap align-items-center gap-3">
                                 <div class="fs-3 flex-shrink-0">

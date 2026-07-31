@@ -14,6 +14,7 @@ use App\Entity\User\Enums\UserRoles;
 use App\Entity\User\User;
 use App\Form\Application\LocalisedTextType;
 use App\Form\DisablesFieldsTrait;
+use App\Repository\Activity\ActivityLabelRepository;
 use App\Repository\Decision\OrganRepository;
 use DateTime;
 use Override;
@@ -64,6 +65,7 @@ class ActivityRevisionType extends AbstractType
     public function __construct(
         private readonly Security $security,
         private readonly OrganRepository $organRepository,
+        private readonly ActivityLabelRepository $activityLabelRepository,
         private readonly TranslatorInterface $translator,
     ) {
     }
@@ -177,6 +179,8 @@ class ActivityRevisionType extends AbstractType
                 [
                     'label' => t('Labels'),
                     'class' => ActivityLabel::class,
+                    // Names are fetch-joined so rendering the checkboxes does not lazy-load one name per label.
+                    'choices' => $this->activityLabelRepository->findAllWithName(),
                     'choice_label' => static function (ActivityLabel $label) use ($language): string {
                         return $label->getName()->getText($language) ?? '';
                     },

@@ -1,0 +1,97 @@
+{% extends 'layout-admin.html.twig' %}
+
+{% block page_title %}{{ 'Announcements'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block admin_breadcrumbs %}
+    <li class="breadcrumb-item active" aria-current="page">
+        {{ 'Announcements'|trans }}
+    </li>
+{% endblock %}
+
+{% block contents %}
+    <div class="panel">
+        <div class="panel-heading d-flex flex-wrap align-items-center justify-content-between gap-2">
+            <h3 class="mb-0">{{ 'Announcements'|trans }}</h3>
+            <a href="{{ path('admin/announcement/create') }}" class="btn btn-gewis-primary">
+                <span class="fas fa-plus"></span> {{ 'New announcement'|trans }}
+            </a>
+        </div>
+        <div class="panel-body">
+            {% if announcements is empty %}
+                <p class="text-muted mb-0">
+                    {{ 'No announcements are pinned. A one-off announcement is only a toast and is not kept here.'|trans }}
+                </p>
+            {% else %}
+                <div class="table-responsive">
+                    <table class="table align-middle">
+                        <thead>
+                            <tr>
+                                <th>{{ 'Level'|trans }}</th>
+                                <th>{{ 'Title'|trans }}</th>
+                                <th>{{ 'Status'|trans }}</th>
+                                <th>{{ 'Shown until'|trans }}</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for announcement in announcements %}
+                                <tr>
+                                    <td>
+                                        <span class="badge text-bg-{{ announcement.level.value }}">
+                                            {{ announcement.level|trans }}
+                                        </span>
+                                    </td>
+                                    <td>{{ announcement.title|localise_text }}</td>
+                                    <td>
+                                        {% if announcement.endsAt > date() %}
+                                            <span class="badge text-bg-success">{{ 'Active'|trans }}</span>
+                                        {% else %}
+                                            <span class="badge text-bg-secondary">{{ 'Expired'|trans }}</span>
+                                        {% endif %}
+                                    </td>
+                                    <td><small class="text-muted">{{ announcement.endsAt|date('Y-m-d H:i') }}</small></td>
+                                    <td class="text-end">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary text-danger"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#delete-announcement-{{ announcement.id }}">
+                                            <span class="fas fa-trash"></span> {{ 'Remove'|trans }}
+                                        </button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                {% for announcement in announcements %}
+                    <div class="modal fade" id="delete-announcement-{{ announcement.id }}" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">{{ 'Remove announcement'|trans }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="{{ 'Close'|trans }}"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="mb-0">
+                                        {{ 'Remove this announcement? If it is still active, its banner disappears for everyone.'|trans }}
+                                    </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-link" data-bs-dismiss="modal">
+                                        {{ 'Cancel'|trans }}
+                                    </button>
+                                    <form method="post" class="mb-0"
+                                          action="{{ path('admin/announcement/delete', {id: announcement.id}) }}">
+                                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('announcement_delete') }}">
+                                        <button type="submit" class="btn btn-danger">{{ 'Remove'|trans }}</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

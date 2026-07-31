@@ -4,6 +4,7 @@ import { startStimulusApp } from '@symfony/stimulus-bundle';
 import ConfirmModalController from './controllers/application/confirm_modal_controller.ts';
 import CosmeticsToggleController from './controllers/application/cosmetics_toggle_controller.ts';
 import DescriptionToggleController from './controllers/application/description_toggle_controller.ts';
+import DismissibleController from './controllers/application/dismissible_controller.ts';
 import EditLockController from './controllers/application/edit_lock_controller.ts';
 import FormCollectionController from './controllers/application/form_collection_controller.ts';
 import FormStepperController from './controllers/application/form_stepper_controller.ts';
@@ -14,6 +15,8 @@ import MarkdownEditorController from './controllers/application/markdown_editor_
 import ModalCloseController from './controllers/application/modal_close_controller.ts';
 import ModalFormTargetController from './controllers/application/modal_form_target_controller.ts';
 import NavDropdownController from './controllers/application/nav_dropdown_controller.ts';
+import NotificationSettingsController from './controllers/application/notification_settings_controller.ts';
+import NotificationsController from './controllers/application/notifications_controller.ts';
 import PrintController from './controllers/application/print_controller.ts';
 import SortableController from './controllers/application/sortable_controller.ts';
 
@@ -39,6 +42,7 @@ const app = startStimulusApp();
 app.register('confirm-modal', ConfirmModalController);
 app.register('cosmetics-toggle', CosmeticsToggleController);
 app.register('description-toggle', DescriptionToggleController);
+app.register('dismissible', DismissibleController);
 app.register('edit-lock', EditLockController);
 app.register('form-collection', FormCollectionController);
 app.register('form-stepper', FormStepperController);
@@ -49,6 +53,8 @@ app.register('markdown-editor', MarkdownEditorController);
 app.register('modal-close', ModalCloseController);
 app.register('modal-form-target', ModalFormTargetController);
 app.register('nav-dropdown', NavDropdownController);
+app.register('notification-settings', NotificationSettingsController);
+app.register('notifications', NotificationsController);
 app.register('print', PrintController);
 app.register('sortable', SortableController);
 

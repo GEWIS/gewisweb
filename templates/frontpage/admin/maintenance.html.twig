@@ -1,0 +1,111 @@
+{% extends 'layout-admin.html.twig' %}
+
+{% block page_title %}{{ 'Maintenance'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block admin_breadcrumbs %}
+    <li class="breadcrumb-item active" aria-current="page">
+        {{ 'Maintenance'|trans }}
+    </li>
+{% endblock %}
+
+{% block contents %}
+    <div class="panel">
+        <div class="panel-heading d-flex flex-wrap align-items-center justify-content-between gap-2">
+            <h3 class="mb-0">{{ 'Maintenance windows'|trans }}</h3>
+            <a href="{{ path('admin/maintenance/create') }}" class="btn btn-gewis-primary">
+                <span class="fas fa-plus"></span> {{ 'New window'|trans }}
+            </a>
+        </div>
+        <div class="panel-body">
+            {% if windows is empty %}
+                <p class="text-muted mb-0">
+                    {{ 'No maintenance is planned. The site is fully available.'|trans }}
+                </p>
+            {% else %}
+                <div class="table-responsive">
+                    <table class="table align-middle">
+                        <thead>
+                            <tr>
+                                <th>{{ 'Mode'|trans }}</th>
+                                <th>{{ 'From'|trans }}</th>
+                                <th>{{ 'Until'|trans }}</th>
+                                <th>{{ 'Status'|trans }}</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for window in windows %}
+                                <tr>
+                                    <td>
+                                        <span class="badge {{ window.status == enum('App\\Entity\\Application\\Enums\\MaintenanceStatus').Full ? 'text-bg-danger' : 'text-bg-warning' }}">
+                                            {{ window.status|trans }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        {% if window.startsAt %}
+                                            <small class="text-muted">{{ window.startsAt|date('Y-m-d H:i') }}</small>
+                                        {% else %}
+                                            <small class="text-muted">{{ 'Immediately'|trans }}</small>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if window.endsAt %}
+                                            <small class="text-muted">{{ window.endsAt|date('Y-m-d H:i') }}</small>
+                                        {% else %}
+                                            <small class="text-muted">{{ 'Until turned off'|trans }}</small>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if window.isActiveAt(now) %}
+                                            <span class="badge text-bg-success">{{ 'Active'|trans }}</span>
+                                        {% elseif window.startsAt and window.startsAt > now %}
+                                            <span class="badge text-bg-info">{{ 'Scheduled'|trans }}</span>
+                                        {% else %}
+                                            <span class="badge text-bg-secondary">{{ 'Ended'|trans }}</span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="text-end">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary text-danger"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#delete-window-{{ window.id }}">
+                                            <span class="fas fa-trash"></span> {{ 'Remove'|trans }}
+                                        </button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                {% for window in windows %}
+                    <div class="modal fade" id="delete-window-{{ window.id }}" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">{{ 'Remove maintenance window'|trans }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="{{ 'Close'|trans }}"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="mb-0">
+                                        {{ 'Remove this maintenance window? If it is active, the site returns to normal for everyone.'|trans }}
+                                    </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-link" data-bs-dismiss="modal">
+                                        {{ 'Cancel'|trans }}
+                                    </button>
+                                    <form method="post" class="mb-0"
+                                          action="{{ path('admin/maintenance/delete', {id: window.id}) }}">
+                                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('maintenance_window_delete') }}">
+                                        <button type="submit" class="btn btn-danger">{{ 'Remove'|trans }}</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

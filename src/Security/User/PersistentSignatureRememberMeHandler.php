@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Security\User;
 
+use App\Entity\Application\Enums\NotificationType;
 use App\Entity\User\Session;
 use App\Repository\User\SessionRepository;
+use App\Service\User\SecurityNotifier;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Override;
@@ -71,6 +73,7 @@ class PersistentSignatureRememberMeHandler extends AbstractRememberMeHandler
         private readonly EntityManagerInterface $entityManager,
         private readonly SessionRepository $repository,
         private readonly UserAgentParser $userAgentParser,
+        private readonly SecurityNotifier $securityNotifier,
         #[Autowire(param: 'kernel.secret')]
         #[SensitiveParameter]
         private readonly string $secret,
@@ -377,7 +380,7 @@ class PersistentSignatureRememberMeHandler extends AbstractRememberMeHandler
             'User-Agent',
             '',
         );
-        $meta = $this->userAgentParser->parse($userAgent);
+        $meta = $this->userAgentParser->parseRequest($request);
 
         $session = new Session();
         $session->setSeries($series);
@@ -399,11 +402,42 @@ class PersistentSignatureRememberMeHandler extends AbstractRememberMeHandler
         $this->entityManager->persist($session);
         $this->entityManager->flush();
 
+        $this->announceSignIn(
+            $user->getUserIdentifier(),
+            $request,
+        );
+
         return [
             $series,
             $rawToken,
             $expiresAt,
         ];
+    }
+
+    /**
+     * Every persistent sign-in is announced, with no attempt to work out whether this browser is one we have seen.
+     *
+     * That is deliberate. Recognising a device means either a user-agent fingerprint, which cannot tell two identical
+     * machines apart and so stays quiet on exactly the case worth warning about, or a cookie compared against session
+     * rows that are deleted on sign-out. Both get it wrong often enough to be worth less than saying plainly what
+     * happened, which is that somebody signed in.
+     */
+    private function announceSignIn(
+        string $userIdentifier,
+        Request $request,
+    ): void {
+        $firewall = Firewall::tryFrom($this->firewallName);
+
+        if (null === $firewall) {
+            return;
+        }
+
+        $this->securityNotifier->notify(
+            $firewall,
+            $userIdentifier,
+            NotificationType::SignIn,
+            $request,
+        );
     }
 
     /**

@@ -1,0 +1,55 @@
+{% extends 'layout-admin.html.twig' %}
+
+{% block page_title %}{{ 'New announcement'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block admin_breadcrumbs %}
+    <li class="breadcrumb-item">
+        <a href="{{ path('admin/announcement') }}">{{ 'Announcements'|trans }}</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">
+        {{ 'New announcement'|trans }}
+    </li>
+{% endblock %}
+
+{% block contents %}
+    <div class="row justify-content-center">
+        <div class="col col-lg-10 col-xl-9">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="mb-0">{{ 'Send an announcement'|trans }}</h3>
+                    <p class="text-muted small mb-0">
+                        {{ 'Shows a toast to everyone on the website right now, including visitors who are not logged in. Pin it to also keep it as a banner at the top of every page until an end date.'|trans }}
+                    </p>
+                </div>
+                <div class="panel-body">
+                    {{ form_start(form) }}
+                    {{ form_errors(form) }}
+                    {{ form_row(form.level) }}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="mb-2"><span class="flag-icon flag-icon-nl"></span> {{ 'Dutch'|trans }}</p>
+                            <hr class="mt-0">
+                            {{ form_row(form.title.valueNL, {'label': 'Title'|trans}) }}
+                            {{ form_row(form.body.valueNL, {'label': 'Message'|trans}) }}
+                        </div>
+                        <div class="col-md-6">
+                            <p class="mb-2"><span class="flag-icon flag-icon-en"></span> {{ 'English'|trans }}</p>
+                            <hr class="mt-0">
+                            {{ form_row(form.title.valueEN, {'label': 'Title'|trans}) }}
+                            {{ form_row(form.body.valueEN, {'label': 'Message'|trans}) }}
+                        </div>
+                    </div>
+                    <hr>
+                    {{ form_row(form.sticky) }}
+                    {{ form_row(form.endsAt) }}
+                    <div class="mt-3 d-flex justify-content-end">
+                        <button type="submit" class="btn btn-gewis-primary">
+                            {{ 'Send announcement'|trans }}
+                        </button>
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

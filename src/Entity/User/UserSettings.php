@@ -6,6 +6,7 @@ namespace App\Entity\User;
 
 use App\Entity\User\Enums\PhotoVisibility;
 use App\Repository\User\UserSettingsRepository;
+use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
@@ -27,6 +28,7 @@ use Doctrine\ORM\Mapping\OneToOne;
  *     photoVisibility: string,
  *     hideYearOfBirth: bool,
  *     hideBirthdayOnFrontpage: bool,
+ *     notificationsPaused: bool,
  * }
  */
 #[Entity(repositoryClass: UserSettingsRepository::class)]
@@ -96,9 +98,30 @@ class UserSettings
     )]
     private bool $hideBirthdayOnFrontpage = false;
 
+    /**
+     * When this member last marked the notification centre read. Null means they have never opened it, so everything
+     * counts as unread.
+     */
+    #[Column(
+        type: Types::DATETIME_IMMUTABLE,
+        nullable: true,
+    )]
+    private ?DateTimeImmutable $notificationsReadAt = null;
+
+    /**
+     * Whether the member has paused all outgoing notification email. Website notifications keep working; nothing is
+     * mailed until they turn this off. A blunt mute on top of the per-category email opt-ins.
+     */
+    #[Column(
+        type: Types::BOOLEAN,
+        options: ['default' => false],
+    )]
+    private bool $notificationsPaused = false;
+
     public function __construct(User $user)
     {
         $this->user = $user;
+        $user->setSettings($this);
     }
 
     public function getUser(): User
@@ -156,6 +179,26 @@ class UserSettings
         $this->hideBirthdayOnFrontpage = $hideBirthdayOnFrontpage;
     }
 
+    public function getNotificationsReadAt(): ?DateTimeImmutable
+    {
+        return $this->notificationsReadAt;
+    }
+
+    public function setNotificationsReadAt(?DateTimeImmutable $notificationsReadAt): void
+    {
+        $this->notificationsReadAt = $notificationsReadAt;
+    }
+
+    public function getNotificationsPaused(): bool
+    {
+        return $this->notificationsPaused;
+    }
+
+    public function setNotificationsPaused(bool $notificationsPaused): void
+    {
+        $this->notificationsPaused = $notificationsPaused;
+    }
+
     /**
      * @return UserSettingsGdprArrayType
      */
@@ -167,6 +210,7 @@ class UserSettings
             'photoVisibility' => $this->photoVisibility->value,
             'hideYearOfBirth' => $this->hideYearOfBirth,
             'hideBirthdayOnFrontpage' => $this->hideBirthdayOnFrontpage,
+            'notificationsPaused' => $this->notificationsPaused,
         ];
     }
 }

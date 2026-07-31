@@ -93,3 +93,34 @@
         color: var(--#{$prefix}form-stepper-accent);
     }
 }
+
+// Brand the selection controls (checkboxes, radios, switches) with the GEWIS red instead of Bootstrap's primary blue,
+// and keep the switch legible on the night theme -- there its off-state thumb, a near-black circle, disappears against
+// the dark track. Bootstrap exposes that thumb as the `--#{$prefix}form-switch-bg` custom property (an inline SVG), so
+// the night fix is a var override in the same vein as the other components; the checked fill is a compiled colour, so
+// that one stays a plain rule.
+$form-switch-bg-image-night: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#{rgba($white, 0.5)}'/></svg>");
+
+.form-check-input {
+    &:checked {
+        background-color: $gewis-red;
+        border-color: $gewis-red;
+    }
+
+    &:focus {
+        border-color: #{tint-color($gewis-red, 25%)};
+        box-shadow: 0 0 0 0.25rem #{rgba($gewis-red, 0.25)};
+    }
+}
+
+// A focused off-switch keeps its neutral thumb instead of Bootstrap's blue focus circle; the red focus ring above is
+// signal enough. The night theme's own light thumb (below) still wins there.
+.form-switch .form-check-input:focus:not(:checked) {
+    --#{$prefix}form-switch-bg: #{escape-svg($form-switch-bg-image)};
+}
+
+@include color-mode(gewis-night) {
+    .form-switch .form-check-input:not(:checked) {
+        --#{$prefix}form-switch-bg: #{escape-svg($form-switch-bg-image-night)};
+    }
+}

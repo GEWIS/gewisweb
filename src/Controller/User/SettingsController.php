@@ -5,6 +5,10 @@ declare(strict_types=1);
 namespace App\Controller\User;
 
 use App\Entity\Application\Enums\AlertTypes;
+use App\Entity\Application\Enums\NotificationAddressing;
+use App\Entity\Application\Enums\NotificationCategory;
+use App\Entity\Application\Enums\NotificationEmailFrequency;
+use App\Entity\Application\Enums\NotificationType;
 use App\Entity\User\DataExportRequest;
 use App\Entity\User\Enums\UserRoles;
 use App\Entity\User\User;
@@ -13,6 +17,7 @@ use App\Form\User\PrivacySettingsType;
 use App\Message\User\ExportUserDataMessage;
 use App\MessageHandler\User\ExportUserDataHandler;
 use App\Repository\User\DataExportRequestRepository;
+use App\Repository\User\NotificationEmailSubscriptionRepository;
 use App\Repository\User\UserSettingsRepository;
 use App\Security\User\SudoMode;
 use App\Service\Application\FileDownloadHelper;
@@ -29,6 +34,10 @@ use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\Security\Http\Attribute\IsCsrfTokenValid;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
+
+use function array_filter;
+use function array_values;
+use function in_array;
 
 /**
  * The member-facing settings/privacy page. Member-only, so it does not share the
@@ -49,6 +58,7 @@ class SettingsController extends AbstractController
         private readonly TranslatorInterface $translator,
         private readonly UserSettingsRepository $settingsRepository,
         private readonly DataExportRequestRepository $dataExportRequestRepository,
+        private readonly NotificationEmailSubscriptionRepository $notificationSubscriptions,
         private readonly EntityManagerInterface $entityManager,
     ) {
     }
@@ -154,6 +164,118 @@ class SettingsController extends AbstractController
             'user/settings/general.html.twig',
             ['form' => $form],
         );
+    }
+
+    #[Route(
+        path: '/notifications',
+        name: 'notifications',
+        methods: [
+            'GET',
+            'POST',
+        ],
+    )]
+    public function notifications(
+        Request $request,
+        #[CurrentUser]
+        User $user,
+    ): Response {
+        $settings = $this->settingsRepository->getOrCreateForUser($user);
+
+        if (
+            $request->isMethod('POST')
+            && $this->isCsrfTokenValid(
+                'notification_settings',
+                (string) $request->request->get('_token'),
+            )
+        ) {
+            $enabled = $request->request->all('categories');
+            $submittedFrequencies = $request->request->all('frequency');
+
+            $frequencies = [];
+            foreach ($this->subscribableCategories() as $category) {
+                if (
+                    !in_array(
+                        $category->value,
+                        $enabled,
+                        true,
+                    )
+                ) {
+                    continue;
+                }
+
+                $frequencies[$category->value] = NotificationEmailFrequency::tryFrom(
+                    (string) ($submittedFrequencies[$category->value] ?? ''),
+                ) ?? NotificationEmailFrequency::Immediately;
+            }
+
+            $this->notificationSubscriptions->setForUser(
+                $user,
+                $frequencies,
+            );
+            $settings->setNotificationsPaused($request->request->getBoolean('paused'));
+            $this->entityManager->flush();
+
+            $this->addFlash(
+                AlertTypes::Success->value,
+                $this->translator->trans('Your notification settings have been saved.'),
+            );
+
+            return $this->redirectToRoute('user_settings_notifications');
+        }
+
+        $subscriptions = [];
+        foreach ($this->notificationSubscriptions->findForUser($user) as $subscription) {
+            $subscriptions[$subscription->getCategory()->value] = $subscription->getFrequency();
+        }
+
+        return $this->render(
+            'user/settings/notifications.html.twig',
+            [
+                'categories' => $this->subscribableCategories(),
+                'alwaysOn' => $this->alwaysOnCategories(),
+                'frequencyOptions' => NotificationEmailFrequency::cases(),
+                'subscriptions' => $subscriptions,
+                'paused' => $settings->getNotificationsPaused(),
+            ],
+        );
+    }
+
+    /**
+     * The topics a member is always told about, listed so they can see what those are even though there is nothing to
+     * decide about them. Grouped, because several kinds under one topic are one thing to whoever reads them, and what
+     * goes to a role is left out: it is not about them.
+     *
+     * @return list<NotificationCategory>
+     */
+    private function alwaysOnCategories(): array
+    {
+        $categories = [];
+        foreach (NotificationType::cases() as $type) {
+            if (NotificationAddressing::Account !== $type->addressing()) {
+                continue;
+            }
+
+            $category = $type->category();
+            $categories[$category->name] = $category;
+        }
+
+        return array_values($categories);
+    }
+
+    /**
+     * The categories a member can ask to be emailed about. A kind that is addressed to one user is not something to
+     * subscribe to, and is filtered out of the form as well as the submission so that posting one by hand cannot leave
+     * behind a subscription the page can never show or remove.
+     *
+     * @return list<NotificationType>
+     */
+    private function subscribableCategories(): array
+    {
+        return array_values(array_filter(
+            NotificationType::cases(),
+            static fn (NotificationType $category): bool => NotificationAddressing::Everyone
+                === $category->addressing(),
+        ));
     }
 
     /**

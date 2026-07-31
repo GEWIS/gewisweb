@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\User;
 
 use App\Entity\Application\Enums\AlertTypes;
+use App\Entity\Application\Enums\NotificationType;
 use App\Entity\User\CompanyUser;
 use App\Entity\User\Enums\UserTypes;
 use App\Entity\User\PasswordReset;
@@ -18,10 +19,12 @@ use App\Message\User\PasswordResetRequestEmail;
 use App\Repository\User\ExternalAppAuthenticationRepository;
 use App\Repository\User\PasswordResetRepository;
 use App\Security\User\BackupCodeManager;
+use App\Security\User\Firewall;
 use App\Security\User\HandlerRegistry;
 use App\Security\User\MfaPolicy;
 use App\Security\User\SudoMode;
 use App\Service\Application\AltchaSolutionGuard;
+use App\Service\User\SecurityNotifier;
 use App\Service\User\SessionManager;
 use App\Util\Application\SplitToken;
 use DateInterval;
@@ -352,6 +355,7 @@ abstract class AbstractSecurityController extends AbstractController
         EntityManagerInterface $em,
         MfaPolicy $mfaPolicy,
         ExternalAppAuthenticationRepository $externalAppAuthenticationRepository,
+        SecurityNotifier $securityNotifier,
         #[CurrentUser]
         User|CompanyUser $user,
     ): Response {
@@ -386,6 +390,13 @@ abstract class AbstractSecurityController extends AbstractController
                 ));
                 $user->setPasswordChangedOn(new DateTime());
                 $em->flush();
+
+                $this->raiseSecurityNotice(
+                    $securityNotifier,
+                    $user,
+                    NotificationType::PasswordChanged,
+                    $request,
+                );
 
                 $this->addFlash(
                     AlertTypes::Success->value,
@@ -673,6 +684,7 @@ abstract class AbstractSecurityController extends AbstractController
         Request $request,
         EntityManagerInterface $em,
         BackupCodeManager $backupCodeManager,
+        SecurityNotifier $securityNotifier,
         #[CurrentUser]
         User|CompanyUser $user,
     ): Response {
@@ -725,6 +737,13 @@ abstract class AbstractSecurityController extends AbstractController
                 $session->set(
                     '_mfa_pending_backup_codes',
                     $plaintext,
+                );
+
+                $this->raiseSecurityNotice(
+                    $securityNotifier,
+                    $user,
+                    NotificationType::MfaEnabled,
+                    $request,
                 );
 
                 $this->addFlash(
@@ -809,6 +828,7 @@ abstract class AbstractSecurityController extends AbstractController
         Request $request,
         EntityManagerInterface $em,
         BackupCodeManager $backupCodeManager,
+        SecurityNotifier $securityNotifier,
         #[CurrentUser]
         User|CompanyUser $user,
     ): Response {
@@ -823,6 +843,13 @@ abstract class AbstractSecurityController extends AbstractController
         $request->getSession()->set(
             '_mfa_pending_backup_codes',
             $plaintext,
+        );
+
+        $this->raiseSecurityNotice(
+            $securityNotifier,
+            $user,
+            NotificationType::BackupCodesRegenerated,
+            $request,
         );
 
         $this->addFlash(
@@ -844,8 +871,10 @@ abstract class AbstractSecurityController extends AbstractController
         methods: ['POST'],
     )]
     public function mfaDisable(
+        Request $request,
         EntityManagerInterface $em,
         MfaPolicy $mfaPolicy,
+        SecurityNotifier $securityNotifier,
         #[CurrentUser]
         User|CompanyUser $user,
     ): Response {
@@ -866,6 +895,13 @@ abstract class AbstractSecurityController extends AbstractController
         $user->setTotpSecret(null);
         $user->setBackupCodeSlots(null);
         $em->flush();
+
+        $this->raiseSecurityNotice(
+            $securityNotifier,
+            $user,
+            NotificationType::MfaDisabled,
+            $request,
+        );
 
         $this->addFlash(
             AlertTypes::Success->value,
@@ -1013,6 +1049,30 @@ abstract class AbstractSecurityController extends AbstractController
         }
 
         return $next;
+    }
+
+    /**
+     * Tell whoever owns the account that the way they sign in has changed. Not something they asked for and not
+     * something they can turn off, which is rather the point of a security notice.
+     */
+    private function raiseSecurityNotice(
+        SecurityNotifier $securityNotifier,
+        User|CompanyUser $user,
+        NotificationType $type,
+        Request $request,
+    ): void {
+        $firewall = Firewall::tryFrom($this->firewall($request));
+
+        if (null === $firewall) {
+            return;
+        }
+
+        $securityNotifier->notify(
+            $firewall,
+            $user->getUserIdentifier(),
+            $type,
+            $request,
+        );
     }
 
     private function firewall(Request $request): string

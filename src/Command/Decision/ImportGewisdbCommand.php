@@ -35,7 +35,10 @@ use function strval;
     name: 'app:decision:import-gewisdb',
     description: 'Sync the GEWIS Report Database (GEWISDB) into the website database.',
 )]
-#[AsCronTask(expression: '28,58 * * * *')]
+#[AsCronTask(
+    expression: '28,58 * * * *',
+    jitter: 120,
+)]
 final class ImportGewisdbCommand extends Command
 {
     use LockableTrait;

@@ -4,6 +4,8 @@
 
 {% block page_title %}{{ album.name|page_title }}{{ 'Photos'|trans|page_title }}{{ parent() }}{% endblock %}
 
+{% block realtime_extra_topics %}photo/album/{{ album.id }}/cover{% endblock %}
+
 {% block admin_breadcrumbs %}
     <li class="breadcrumb-item">
         <a href="{{ path('admin/photos/index') }}">
@@ -97,7 +99,7 @@
         <div class="col-12 col-lg-4">
             <div class="panel h-100 my-0"
                  data-controller="photo-cover"
-                 data-photo-cover-hub-url-value="{{ mercure(coverTopic, { subscribe: [coverTopic] }) }}">
+                 data-photo-cover-hub-url-value="{{ mercure(coverTopic) }}">
                 <button type="button"
                         class="panel-heading panel-collapse-toggle collapsed d-flex justify-content-between align-items-center gap-2 w-100 border-0 bg-transparent text-start"
                         data-bs-toggle="collapse" data-bs-target="#album-cover"

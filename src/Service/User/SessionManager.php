@@ -5,15 +5,20 @@ declare(strict_types=1);
 namespace App\Service\User;
 
 use App\Entity\User\Session;
+use App\Message\User\RevokeSessionsRealtimeMessage;
 use App\Repository\User\SessionRepository;
 use App\Security\User\HandlerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Redis;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Throwable;
 
 use function array_filter;
+use function array_map;
 use function array_values;
 use function count;
 
@@ -21,8 +26,8 @@ use function count;
  * High-level facade for managing a user's active sessions.
  *
  * Every method is scoped to a specific firewall. So terminating all `main` sessions never touches `company` sessions,
- * and vice versa. When a row is removed the matching PHP session is also destroyed in Valkey, so the device is logged
- * out on its next request.
+ * and vice versa. When a row is removed the matching PHP session is also destroyed in Valkey; an online device is then
+ * signed out at once by a real-time revocation, any other on its next request.
  */
 final class SessionManager
 {
@@ -30,6 +35,8 @@ final class SessionManager
         private readonly SessionRepository $repository,
         private readonly HandlerRegistry $registry,
         private readonly EntityManagerInterface $em,
+        private readonly MessageBusInterface $messageBus,
+        private readonly LoggerInterface $logger,
         #[Autowire(service: 'Redis')]
         private readonly Redis $redis,
         #[Autowire(param: 'app.session_prefix')]
@@ -100,7 +107,8 @@ final class SessionManager
         // Same guard as terminateAllExceptCurrent(): if a zombie row points at the live PHP session ID, destroying it
         // would wipe the caller's session in Valkey and silently log them out (and, via remember-me, drop them back at
         // the sudo-confirm prompt because _sudo_granted_at lived on the wiped session). So, we must drop the DB row but
-        // skip the destroy().
+        // skip the destroy(). No real-time revocation either: this is the caller's own device and the controller
+        // already logs it out.
         if ($session->getPhpSessionId() === $request->getSession()->getId()) {
             $this->em->remove($session);
             $this->em->flush();
@@ -109,6 +117,10 @@ final class SessionManager
         }
 
         $this->destroyAndRemove($session);
+        $this->dispatchRevocation(
+            $firewallName,
+            [$series],
+        );
 
         return true;
     }
@@ -147,6 +159,14 @@ final class SessionManager
             $this->destroyAndRemove($session);
         }
 
+        $this->dispatchRevocation(
+            $firewallName,
+            array_map(
+                static fn (Session $s): string => $s->getSeries(),
+                $sessions,
+            ),
+        );
+
         return count($sessions);
     }
 
@@ -162,6 +182,14 @@ final class SessionManager
         foreach ($sessions as $session) {
             $this->destroyAndRemove($session);
         }
+
+        $this->dispatchRevocation(
+            $firewallName,
+            array_map(
+                static fn (Session $s): string => $s->getSeries(),
+                $sessions,
+            ),
+        );
 
         return count($sessions);
     }
@@ -189,5 +217,34 @@ final class SessionManager
 
         $this->em->remove($session);
         $this->em->flush();
+    }
+
+    /**
+     * Pushes an out-of-band command so any online device whose session was just revoked is signed out immediately
+     * rather than on its next request. Dispatched after the flush so a hub hiccup can never fail the revocation itself.
+     *
+     * @param string[] $series
+     */
+    private function dispatchRevocation(
+        string $firewallName,
+        array $series,
+    ): void {
+        if ([] === $series) {
+            return;
+        }
+
+        try {
+            $this->messageBus->dispatch(new RevokeSessionsRealtimeMessage(
+                $firewallName,
+                $series,
+            ));
+        } catch (Throwable $e) {
+            // The sessions are already revoked; the real-time sign-out is best-effort. A transport outage must not fail
+            // the revocation, so it is logged and the device falls back to being signed out on its next request.
+            $this->logger->warning(
+                'Failed to dispatch real-time session revocation.',
+                ['exception' => $e],
+            );
+        }
     }
 }

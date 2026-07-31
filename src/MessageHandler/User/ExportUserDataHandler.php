@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace App\MessageHandler\User;
 
+use App\Entity\Application\Enums\NotificationType;
 use App\Message\User\ExportUserDataMessage;
 use App\Repository\Decision\MemberRepository;
+use App\Repository\User\UserRepository;
 use App\Service\Application\FileStorage;
+use App\Service\Application\NotificationPublisher;
 use App\Service\User\GdprService;
 use DateTimeImmutable;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -41,6 +44,8 @@ class ExportUserDataHandler
         private readonly FileStorage $fileStorage,
         private readonly MailerInterface $mailer,
         private readonly UrlGeneratorInterface $urlGenerator,
+        private readonly UserRepository $userRepository,
+        private readonly NotificationPublisher $publisher,
     ) {
     }
 
@@ -58,6 +63,8 @@ class ExportUserDataHandler
                 JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR,
             ),
         );
+
+        $this->announce($member->getLidnr());
 
         $email = $member->getEmail();
         if (null === $email) {
@@ -77,6 +84,23 @@ class ExportUserDataHandler
                         UrlGeneratorInterface::ABSOLUTE_URL,
                     ),
                 ]),
+        );
+    }
+
+    /**
+     * The export is only downloadable for a few days, so it is worth saying somewhere the member will see it even if
+     * the email goes unread. A member synced from GEWISDB who never activated an account has nowhere to show it.
+     */
+    private function announce(int $lidnr): void
+    {
+        $user = $this->userRepository->find($lidnr);
+        if (null === $user) {
+            return;
+        }
+
+        $this->publisher->publishFor(
+            $user,
+            NotificationType::DataExportReady,
         );
     }
 

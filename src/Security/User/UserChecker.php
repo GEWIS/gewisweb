@@ -4,18 +4,26 @@ declare(strict_types=1);
 
 namespace App\Security\User;
 
+use App\Entity\User\Enums\UserRoles;
 use App\Entity\User\User;
+use App\Service\Application\MaintenanceStatusProvider;
 use Override;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAccountStatusException;
+use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+use function in_array;
+
 readonly class UserChecker implements UserCheckerInterface
 {
-    public function __construct(private TranslatorInterface $translator)
-    {
+    public function __construct(
+        private TranslatorInterface $translator,
+        private MaintenanceStatusProvider $maintenanceStatus,
+        private RoleHierarchyInterface $roleHierarchy,
+    ) {
     }
 
     #[Override]
@@ -40,10 +48,31 @@ readonly class UserChecker implements UserCheckerInterface
         }
     }
 
+    /**
+     * While maintenance is in effect, only admins may sign in. This runs during authentication, ahead of the
+     * {@see \App\EventListener\Application\MaintenanceListener}, which the firewall would otherwise bypass for a login.
+     */
     #[Override]
     public function checkPostAuth(
         UserInterface $user,
         ?TokenInterface $token = null,
     ): void {
+        if (null === $this->maintenanceStatus->activeWindow()) {
+            return;
+        }
+
+        if (
+            in_array(
+                UserRoles::Admin->value,
+                $this->roleHierarchy->getReachableRoleNames($user->getRoles()),
+                true,
+            )
+        ) {
+            return;
+        }
+
+        throw new CustomUserMessageAccountStatusException(
+            $this->translator->trans('The website is undergoing maintenance. You cannot sign in right now.'),
+        );
     }
 }

@@ -415,6 +415,15 @@
                 <li class="nav-item py-4">
                     <div class="vr d-flex h-100 mx-2 text-white"></div>
                 </li>
+                {# A sign-in still waiting on its second factor already has the member on the token, so the bell has to
+                   ask whether that sign-in finished rather than whether there is a user. #}
+                {% if
+                    is_granted('IS_AUTHENTICATED_REMEMBERED') and
+                    null !== app.user and
+                    enum('App\\Entity\\User\\Enums\\UserTypes').User == app.user.getUserType
+                %}
+                    {{ component('Notification:Bell') }}
+                {% endif %}
                 <li class="nav-item dropdown">
                     <button class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button"
                             aria-haspopup="true" aria-expanded="false" aria-label="{{ 'Settings'|trans }}"

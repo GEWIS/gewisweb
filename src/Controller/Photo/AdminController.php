@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace App\Controller\Photo;
 
 use App\Entity\Application\Enums\AlertTypes;
+use App\Entity\Application\Enums\NotificationType;
 use App\Entity\Photo\Album;
 use App\Entity\Photo\Photo;
 use App\Entity\User\Enums\UserRoles;
 use App\Form\Photo\AlbumType;
+use App\Message\Application\PublishDomainNotificationMessage;
 use App\Repository\Photo\AlbumRepository;
 use App\Repository\Photo\PhotoRepository;
 use App\Repository\Photo\WeeklyPhotoRepository;
@@ -26,6 +28,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsCsrfTokenValid;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -60,6 +63,7 @@ class AdminController extends AbstractController
         private readonly PhotoUploadService $photoUploadService,
         private readonly WeeklyPhotoRepository $weeklyPhotoRepository,
         private readonly WeeklyPhotoService $weeklyPhotoService,
+        private readonly MessageBusInterface $messageBus,
     ) {
     }
 
@@ -190,6 +194,10 @@ class AdminController extends AbstractController
         $this->entityManager->persist($album);
         $this->entityManager->flush();
 
+        if ($album->isPublished()) {
+            $this->announceAlbumPublished($album);
+        }
+
         $this->addFlash(
             AlertTypes::Success->value,
             $this->translator->trans('The album has been created.'),
@@ -214,6 +222,7 @@ class AdminController extends AbstractController
         Album $album,
         Request $request,
     ): Response {
+        $wasPublished = $album->isPublished();
         $form = $this->createForm(AlbumType::class, $album)->handleRequest($request);
 
         if (
@@ -231,6 +240,13 @@ class AdminController extends AbstractController
 
         $this->entityManager->flush();
 
+        if (
+            !$wasPublished
+            && $album->isPublished()
+        ) {
+            $this->announceAlbumPublished($album);
+        }
+
         $this->addFlash(
             AlertTypes::Success->value,
             $this->translator->trans('The album has been updated.'),
@@ -240,6 +256,19 @@ class AdminController extends AbstractController
             'admin/photos/album',
             ['album' => $album->getId()],
         );
+    }
+
+    private function announceAlbumPublished(Album $album): void
+    {
+        $id = $album->getId();
+        if (null === $id) {
+            return;
+        }
+
+        $this->messageBus->dispatch(new PublishDomainNotificationMessage(
+            NotificationType::AlbumPublished,
+            $id,
+        ));
     }
 
     #[Route(

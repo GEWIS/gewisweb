@@ -1,0 +1,40 @@
+// Not `text-primary`: `$primary` is deliberately Bootstrap's blue, and so is `text-primary-emphasis`.
+.notification-link {
+    color: var(--#{$prefix}link-color);
+}
+
+.notification-entry {
+    .dropdown-item {
+        flex: 1 1 auto;
+        min-width: 0;
+    }
+
+    .notification-actions .btn {
+        opacity: 0.5;
+
+        &:hover,
+        &:focus-visible {
+            opacity: 1;
+        }
+    }
+}
+
+.notification-menu {
+    min-width: 20rem;
+    max-width: 90vw;
+
+    // The bell sits at the right edge on a phone, where a menu anchored to it runs off the screen. Pinning it to the
+    // viewport instead keeps it in view whatever the toggle is next to.
+    @include media-breakpoint-down(sm) {
+        position: fixed;
+        inset-inline: 0.5rem;
+        width: auto;
+        min-width: 0;
+        max-width: none;
+    }
+}
+
+.notification-list {
+    max-height: 60vh;
+    overflow-y: auto;
+}

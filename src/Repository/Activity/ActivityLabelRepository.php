@@ -20,4 +20,29 @@ class ActivityLabelRepository extends ServiceEntityRepository
             ActivityLabel::class,
         );
     }
+
+    /**
+     * Every label with its localised name fetch-joined, so rendering the label checkboxes on the activity form does not
+     * lazy-load one name per label.
+     *
+     * @return ActivityLabel[]
+     */
+    public function findAllWithName(): array
+    {
+        return $this->createQueryBuilder('l')
+            ->select(
+                'l',
+                'n',
+            )
+            ->leftJoin(
+                'l.name',
+                'n',
+            )
+            ->orderBy(
+                'l.id',
+                'ASC',
+            )
+            ->getQuery()
+            ->getResult();
+    }
 }

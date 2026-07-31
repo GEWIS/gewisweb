@@ -28,7 +28,8 @@ use function sprintf;
     description: 'Delete external sign-ups whose email verification window has expired.',
 )]
 #[AsCronTask(
-    expression: '30 3 * * *',
+    expression: '50 3 * * *',
+    jitter: 900,
     schedule: 'gdpr',
 )]
 final class PruneUnverifiedSignupsCommand extends Command

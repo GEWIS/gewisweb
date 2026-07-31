@@ -158,6 +158,26 @@
                 </li>
             </ul>
         </li>
+        {% set applicationActive = is_module_active(['application']) %}
+        <li class="nav-item dropdown dropend {{ applicationActive ? 'active default open' : '' }}">
+            <a class="nav-link p-3 dropdown-toggle"
+               href="#" data-bs-toggle="dropdown" data-bs-offset="0,0"
+               aria-expanded="{{ applicationActive ? 'true' : 'false' }}">
+                {{ 'Application'|trans }}
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <a class="dropdown-item" href="{{ path('admin/announcement') }}">
+                        {{ 'Announcement'|trans }}
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="{{ path('admin/maintenance') }}">
+                        {{ 'Maintenance'|trans }}
+                    </a>
+                </li>
+            </ul>
+        </li>
     {% endif %}
 {% endif %}
 <hr class="mt-auto mb-0">

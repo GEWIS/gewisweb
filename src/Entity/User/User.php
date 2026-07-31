@@ -357,6 +357,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
         return $this->settings;
     }
 
+    public function setSettings(?UserSettings $settings): void
+    {
+        $this->settings = $settings;
+    }
+
     /**
      * Whether this member has turned off the festive cosmetics. Defaults to false when no settings row exists yet.
      */

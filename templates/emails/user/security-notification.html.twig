@@ -1,0 +1,16 @@
+{% extends 'emails/_base.html.twig' %}
+
+{% block emailTitle %}{{ headline }}{% endblock %}
+{% block preheader %}{{ headline|replace({' ': '&nbsp;'})|raw }}{% endblock %}
+{% block heading %}{{ headline }}{% endblock %}
+{% block subheading %}A security notice about your GEWIS account{% endblock %}
+{% block body %}
+    <p>Dear {{ fullName }},</p>
+    <p>{{ summary }}</p>
+    <p>When: {{ occurredAt }}</p>
+    <p>If this was you, there is nothing to do.</p>
+    <p>If not, request a new password:<br><a href="{{ resetUrl }}" style="color: #C40000; text-decoration: none;" target="_blank" rel="noopener nofollow">{{ resetUrl }}</a></p>
+    <p>If that does not get you back into your account, write to <a href="mailto:gewisweb@gewis.nl" style="color: #C40000; text-decoration: none;">gewisweb@gewis.nl</a>.</p>
+    With kind regards,<br> The ApplicatieBeheerCommissie
+{% endblock %}
+{% block footerNote %}You receive this email because it is a security notice about your account. It cannot be turned off.{% endblock %}

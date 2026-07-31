@@ -1,0 +1,66 @@
+<li class="nav-item dropdown" {{ attributes.defaults({'data-action': 'gewis:notification@document->live#$render'}) }}>
+    <button class="nav-link dropdown-toggle position-relative" data-bs-toggle="dropdown" data-bs-auto-close="outside"
+            role="button"
+            aria-haspopup="true" aria-expanded="false" aria-label="{{ 'Notifications'|trans }}">
+        <span class="fas fa-bell"></span>
+        {% if this.unreadCount > 0 %}
+            <span class="position-absolute translate-middle badge rounded-pill bg-light text-dark">
+                {{ this.unreadCount > 9 ? '9+' : this.unreadCount }}
+                <span class="visually-hidden">{{ 'unread notifications'|trans }}</span>
+            </span>
+        {% endif %}
+    </button>
+    <div class="dropdown-menu dropdown-menu-end p-0 notification-menu">
+        <div class="d-flex justify-content-between align-items-center px-3 py-2 border-bottom">
+            <strong>{{ 'Notifications'|trans }}</strong>
+            {% if this.unreadCount > 0 %}
+                <button type="button" class="btn btn-link btn-sm p-0 text-decoration-none"
+                        data-action="live#action" data-live-action-param="markAllRead">
+                    {{ 'Mark all as read'|trans }}
+                </button>
+            {% endif %}
+        </div>
+        <div class="notification-list">
+            {% for entry in this.entries %}
+                {% set notification = entry.notification %}
+                <div class="notification-entry d-flex align-items-start border-bottom">
+                    <a class="dropdown-item d-flex gap-2 py-2 text-wrap{{ entry.unread > 0 ? ' fw-semibold' : '' }}"
+                       href="{{ entry.href }}">
+                        <span class="fas {{ notification.type.icon }} text-muted mt-1"></span>
+                        <span class="flex-grow-1">
+                            {% if entry.ids|length > 1 %}
+                                {{ notification.type.manyMessage(entry.ids|length)|trans }}
+                            {% else %}
+                                {{ notification.type.message(entry.name)|trans }}
+                            {% endif %}
+                            <span class="d-block small notification-link">{{ notification.type.linkLabel|trans }}</span>
+                            <small class="d-block text-muted">
+                                {{ '%duration% ago'|trans({'%duration%': human_time_diff(notification.createdAt, date())}) }}
+                            </small>
+                        </span>
+                    </a>
+                    <span class="notification-actions d-flex flex-column gap-1 pe-2 py-2">
+                        {% if entry.unread > 0 %}
+                            <button type="button" class="btn btn-link btn-sm p-0 text-muted lh-1"
+                                    title="{{ 'Mark as read'|trans }}" aria-label="{{ 'Mark as read'|trans }}"
+                                    data-action="live#action" data-live-action-param="markRead"
+                                    data-live-notifications-param="{{ entry.ids|join(',') }}">
+                                <span class="fas fa-circle-check" aria-hidden="true"></span>
+                            </button>
+                        {% endif %}
+                        <button type="button" class="btn btn-link btn-sm p-0 text-muted lh-1"
+                                title="{{ 'Remove'|trans }}" aria-label="{{ 'Remove'|trans }}"
+                                data-action="live#action" data-live-action-param="dismiss"
+                                data-live-notifications-param="{{ entry.ids|join(',') }}">
+                            <span class="fas fa-xmark" aria-hidden="true"></span>
+                        </button>
+                    </span>
+                </div>
+            {% else %}
+                <div class="dropdown-item-text text-muted small py-3 text-center">
+                    {{ 'You have no notifications yet.'|trans }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</li>

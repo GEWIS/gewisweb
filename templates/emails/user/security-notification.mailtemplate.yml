@@ -1,0 +1,39 @@
+# This is a GEWIS mailings template
+# Security notice about an account
+---
+# All mailings require some settings. These can be set here. Don't forget to set the title ("Algemene mededeling; tekst zelf invoeren")
+version: 1.1
+settings:
+    title: "Security notice about your account"
+    email: "gewisweb@gewis.nl"
+    lang: en-UK
+    follow: false
+
+# A mailing consists of a series of messageblocks, each with their own type
+# The available types are "header", "topblock", "activities", "activityfooter", "extramessage" and "tinyfooter"
+messageblocks:
+
+    # Each mailing must have a header to make the template shine! It contains the title and the date.
+    - type: "header"
+      title: "{{HEADLINE}}"
+      date: 2026-07-31 # Note that this date needs to be updated
+
+    # This is the first block which is shown on top of the message. Recommended for most messages
+    - type: topblock
+      title: "A security notice about your GEWIS account"
+      contentHTML: "</p>
+
+      <p>Dear {{FULL_NAME}},</p>
+
+      <p>{{SUMMARY}}</p>
+
+      <p>When: {{OCCURRED_AT}}</p>
+
+      <p>If this was you, there is nothing to do.</p>
+
+      <p>If not, request a new password:<br><a href='{{RESET_URL}}'>{{RESET_URL}}</a></p>
+
+      <p>If that does not get you back into your account, write to <a href='mailto:gewisweb@gewis.nl'>gewisweb@gewis.nl</a>.</p>
+
+      With kind regards,<br/>
+      The ApplicatieBeheerCommissie"
