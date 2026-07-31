@@ -138,7 +138,7 @@ final class StaleSessionGuardListener
         // stored at login. Versions are intentionally ignored so legit updates (Firefox 124 -> 140) do not trip the
         // gate. A mismatch on either side suggests the cookie pair has been replayed from a different device -> tear
         // down.
-        $currentMeta = $this->userAgentParser->parse($request->headers->get('User-Agent', ''));
+        $currentMeta = $this->userAgentParser->parseRequest($request);
         $storedBrowser = self::extractName($managedSession->getBrowser());
         $currentBrowser = self::extractName($currentMeta['browser']);
         $storedOs = self::extractName($managedSession->getOperatingSystem());

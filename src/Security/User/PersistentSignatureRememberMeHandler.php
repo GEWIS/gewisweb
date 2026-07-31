@@ -377,7 +377,7 @@ class PersistentSignatureRememberMeHandler extends AbstractRememberMeHandler
             'User-Agent',
             '',
         );
-        $meta = $this->userAgentParser->parse($userAgent);
+        $meta = $this->userAgentParser->parseRequest($request);
 
         $session = new Session();
         $session->setSeries($series);
