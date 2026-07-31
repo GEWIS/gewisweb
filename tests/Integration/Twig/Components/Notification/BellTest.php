@@ -13,6 +13,7 @@ use DateTimeImmutable;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 use function array_column;
+use function implode;
 
 /**
  * The notification centre now shows a mix of what went out to everyone and what was addressed to the member reading
@@ -85,6 +86,92 @@ final class BellTest extends DatabaseTestCase
         self::assertSame(
             'Chrome 124',
             $entries[0]['name'],
+        );
+    }
+
+    /**
+     * Ten lines each saying an account was signed in is a worse answer to "what happened" than one saying it was
+     * signed in ten times.
+     */
+    public function testARunOfOneKindIsShownAsOneLine(): void
+    {
+        $this->signIn('Chrome 124');
+        $this->signIn('Firefox 153');
+        $this->signIn('Safari 18');
+        $this->entityManager->flush();
+
+        $entries = $this->bellFor(8025)->getEntries();
+
+        self::assertCount(
+            1,
+            $entries,
+        );
+        self::assertCount(
+            3,
+            $entries[0]['ids'],
+        );
+    }
+
+    /**
+     * The badge counts notifications, not lines: a line standing for three unread ones is three.
+     */
+    public function testTheBadgeCountsWhatIsBehindTheLines(): void
+    {
+        $this->signIn('Chrome 124');
+        $this->signIn('Firefox 153');
+        $this->entityManager->flush();
+
+        self::assertSame(
+            2,
+            $this->bellFor(8025)->getUnreadCount(),
+        );
+    }
+
+    public function testActingOnALineCoversEverythingBehindIt(): void
+    {
+        $this->signIn('Chrome 124');
+        $this->signIn('Firefox 153');
+        $this->entityManager->flush();
+
+        $bell = $this->bellFor(8025);
+        $bell->markRead(implode(
+            ',',
+            $bell->getEntries()[0]['ids'],
+        ));
+
+        self::assertSame(
+            0,
+            $bell->getUnreadCount(),
+        );
+    }
+
+    /**
+     * No single one of them is what the reader is after, so a line standing for several points at the list.
+     */
+    public function testALineStandingForSeveralPointsAtTheList(): void
+    {
+        $this->signIn('Chrome 124');
+        $this->signIn('Firefox 153');
+        $this->entityManager->flush();
+
+        self::assertStringContainsString(
+            'security',
+            $this->bellFor(8025)->getEntries()[0]['href'],
+        );
+    }
+
+    /**
+     * Different kinds next to each other stay apart, however close together they arrived.
+     */
+    public function testDifferentKindsAreNotFoldedTogether(): void
+    {
+        $this->signIn('Chrome 124');
+        $this->broadcast();
+        $this->entityManager->flush();
+
+        self::assertCount(
+            2,
+            $this->bellFor(8025)->getEntries(),
         );
     }
 

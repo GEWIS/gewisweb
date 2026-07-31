@@ -26,8 +26,14 @@ use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveArg;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 
-use function array_filter;
+use function array_column;
+use function array_map;
+use function array_slice;
+use function array_sum;
 use function count;
+use function explode;
+use function in_array;
+use function intval;
 
 /**
  * The navbar notification centre for members: a bell with an unread badge and a dropdown of the most recent
@@ -43,14 +49,24 @@ class Bell
 {
     use DefaultActionTrait;
 
+    /**
+     * How many lines the dropdown shows. A run of the same kind counts as one, so more rows than this are read to
+     * fill it.
+     */
     private const int LIMIT = 10;
+
+    /**
+     * How many notifications are read to build those lines. Anything beyond this is out of reach until the ones in
+     * front of it are cleared away, which is what the limit already meant.
+     */
+    private const int FETCH = 50;
 
     /**
      * Notifications older than this are never shown or counted, however long ago the member last read the centre.
      */
     private const string WINDOW = '-30 days';
 
-    /** @var list<array{notification: Notification, name: string, href: string, read: bool}>|null */
+    /** @var list<array{notification: Notification, name: string, href: string, unread: int, ids: list<int>}>|null */
     private ?array $entries = null;
 
     private bool $readAtLoaded = false;
@@ -78,7 +94,10 @@ class Bell
      * The link is built here rather than in the template, so it can be told which firewall the reader is on. The
      * component only ever renders for members, so that is always the main one.
      *
-     * @return list<array{notification: Notification, name: string, href: string, read: bool}>
+     * A run of the same kind is shown as one line, since ten separate lines saying an activity was submitted is a
+     * worse answer to "what happened" than one saying ten were.
+     *
+     * @return list<array{notification: Notification, name: string, href: string, unread: int, ids: list<int>}>
      */
     public function getEntries(): array
     {
@@ -95,7 +114,7 @@ class Bell
             $this->windowStart(),
             $user,
             $this->rolesOf($user),
-            self::LIMIT,
+            self::FETCH,
         );
 
         $names = $this->subjectResolver->resolveNames($notifications);
@@ -107,8 +126,15 @@ class Bell
         $language = Languages::current();
 
         $entries = [];
+        $current = null;
+        $currentType = null;
+
         foreach ($notifications as $notification) {
             $id = $notification->getId();
+            if (null === $id) {
+                continue;
+            }
+
             $context = $notification->getContext();
             $name = null === $context
                 ? null
@@ -119,10 +145,7 @@ class Bell
                 );
 
             if (null === $name) {
-                if (
-                    null === $id
-                    || !isset($names[$id])
-                ) {
+                if (!isset($names[$id])) {
                     continue;
                 }
 
@@ -132,34 +155,85 @@ class Bell
                 };
             }
 
+            $unread = (null === $readAt || $notification->getCreatedAt() > $readAt)
+                && null === ($interactions[$id] ?? null)?->getReadAt();
             $type = $notification->getType();
 
-            $entries[] = [
+            if (
+                null !== $current
+                && $type === $currentType
+            ) {
+                $current['ids'][] = $id;
+                $current['unread'] += $unread
+                    ? 1
+                    : 0;
+
+                continue;
+            }
+
+            if (null !== $current) {
+                $entries[] = $current;
+            }
+
+            $currentType = $type;
+            $current = [
                 'notification' => $notification,
                 'name' => $name,
                 'href' => $this->urlGenerator->generate(
                     $type->route(Firewall::Main),
                     $type->routeParameters($notification->getSubjectId()),
                 ),
-                'read' => (null !== $readAt && $notification->getCreatedAt() <= $readAt)
-                    || (null !== $id && null !== ($interactions[$id] ?? null)?->getReadAt()),
+                'unread' => $unread ? 1 : 0,
+                'ids' => [$id],
             ];
         }
 
-        return $this->entries = $entries;
+        if (null !== $current) {
+            $entries[] = $current;
+        }
+
+        return $this->entries = $this->withGroupLinks(array_slice(
+            $entries,
+            0,
+            self::LIMIT,
+        ));
     }
 
     /**
-     * The unread count is derived from the notifications already loaded rather than a second query. The badge only
-     * distinguishes the exact numbers up to nine, so counting the recent window (which never returns more than
-     * {@see LIMIT}) is enough: ten or more simply reads as "9+".
+     * Counted from what is already loaded rather than with a second query, and counting notifications rather than
+     * lines: a line standing for three unread ones is three. The badge only distinguishes numbers up to nine, so what
+     * is in the window is enough.
      */
     public function getUnreadCount(): int
     {
-        return count(array_filter(
+        return array_sum(array_column(
             $this->getEntries(),
-            static fn (array $entry): bool => !$entry['read'],
+            'unread',
         ));
+    }
+
+    /**
+     * A line standing for several points at the list they all belong to, since no single one of them is what the
+     * reader is after.
+     *
+     * @param list<array{notification: Notification, name: string, href: string, unread: int, ids: list<int>}> $entries
+     *
+     * @return list<array{notification: Notification, name: string, href: string, unread: int, ids: list<int>}>
+     */
+    private function withGroupLinks(array $entries): array
+    {
+        $linked = [];
+        foreach ($entries as $entry) {
+            if (count($entry['ids']) > 1) {
+                $entry['href'] = $this->urlGenerator->generate(
+                    $entry['notification']->getType()->manyRoute(Firewall::Main),
+                );
+            }
+
+            $linked[] = $entry;
+        }
+
+        return $linked;
     }
 
     public function getReadAt(): ?DateTimeImmutable
@@ -173,14 +247,14 @@ class Bell
     }
 
     /**
-     * Read one notification without touching the rest.
+     * Read what is behind one line without touching the rest.
      */
     #[LiveAction]
     public function markRead(#[LiveArg]
-    int $notification,): void
+    string $notifications,): void
     {
         $this->interact(
-            $notification,
+            $notifications,
             static function (NotificationInteraction $interaction): void {
                 $interaction->setReadAt(new DateTimeImmutable());
             },
@@ -188,15 +262,15 @@ class Bell
     }
 
     /**
-     * Clear one notification away. The notification itself stays put, because most of them belong to everybody; it is
+     * Clear a line away. The notifications themselves stay put, because most of them belong to everybody; they are
      * only hidden from this member.
      */
     #[LiveAction]
     public function dismiss(#[LiveArg]
-    int $notification,): void
+    string $notifications,): void
     {
         $this->interact(
-            $notification,
+            $notifications,
             static function (NotificationInteraction $interaction): void {
                 $now = new DateTimeImmutable();
                 $interaction->setDismissedAt($now);
@@ -221,15 +295,14 @@ class Bell
     }
 
     /**
-     * Apply a change to what this member has done with one notification.
+     * Apply a change to everything behind one line, which is several notifications when they are shown as a run.
      *
-     * Only notifications currently on show can be acted on, so a crafted id cannot reach one that was never theirs to
-     * see.
+     * Only what is currently on show can be acted on, so an id that was never theirs to see reaches nothing.
      *
      * @param callable(NotificationInteraction): void $change
      */
     private function interact(
-        int $notificationId,
+        string $notificationIds,
         callable $change,
     ): void {
         $user = $this->currentUser();
@@ -237,20 +310,46 @@ class Bell
             return;
         }
 
+        $wanted = array_map(
+            intval(...),
+            explode(
+                ',',
+                $notificationIds,
+            ),
+        );
+
+        $touched = false;
         foreach ($this->getEntries() as $entry) {
-            if ($entry['notification']->getId() !== $notificationId) {
-                continue;
+            foreach (null === $entry['notification']->getId() ? [] : $entry['ids'] as $id) {
+                if (
+                    !in_array(
+                        $id,
+                        $wanted,
+                        true,
+                    )
+                ) {
+                    continue;
+                }
+
+                $notification = $this->notificationRepository->find($id);
+                if (null === $notification) {
+                    continue;
+                }
+
+                $change($this->interactionRepository->getOrCreate(
+                    $user,
+                    $notification,
+                ));
+                $touched = true;
             }
+        }
 
-            $change($this->interactionRepository->getOrCreate(
-                $user,
-                $entry['notification'],
-            ));
-            $this->entityManager->flush();
-            $this->entries = null;
-
+        if (!$touched) {
             return;
         }
+
+        $this->entityManager->flush();
+        $this->entries = null;
     }
 
     private function windowStart(): DateTimeImmutable

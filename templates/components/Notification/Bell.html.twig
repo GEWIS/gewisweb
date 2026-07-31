@@ -24,11 +24,15 @@
             {% for entry in this.entries %}
                 {% set notification = entry.notification %}
                 <div class="notification-entry d-flex align-items-start border-bottom">
-                    <a class="dropdown-item d-flex gap-2 py-2 text-wrap{{ entry.read ? '' : ' fw-semibold' }}"
+                    <a class="dropdown-item d-flex gap-2 py-2 text-wrap{{ entry.unread > 0 ? ' fw-semibold' : '' }}"
                        href="{{ entry.href }}">
                         <span class="fas {{ notification.type.icon }} text-muted mt-1"></span>
                         <span class="flex-grow-1">
-                            {{ notification.type.message(entry.name)|trans }}
+                            {% if entry.ids|length > 1 %}
+                                {{ notification.type.manyMessage(entry.ids|length)|trans }}
+                            {% else %}
+                                {{ notification.type.message(entry.name)|trans }}
+                            {% endif %}
                             <span class="d-block small notification-link">{{ notification.type.linkLabel|trans }}</span>
                             <small class="d-block text-muted">
                                 {{ '%duration% ago'|trans({'%duration%': human_time_diff(notification.createdAt, date())}) }}
@@ -36,18 +40,18 @@
                         </span>
                     </a>
                     <span class="notification-actions d-flex flex-column gap-1 pe-2 py-2">
-                        {% if not entry.read %}
+                        {% if entry.unread > 0 %}
                             <button type="button" class="btn btn-link btn-sm p-0 text-muted lh-1"
                                     title="{{ 'Mark as read'|trans }}" aria-label="{{ 'Mark as read'|trans }}"
                                     data-action="live#action" data-live-action-param="markRead"
-                                    data-live-notification-param="{{ notification.id }}">
+                                    data-live-notifications-param="{{ entry.ids|join(',') }}">
                                 <span class="fas fa-circle-check" aria-hidden="true"></span>
                             </button>
                         {% endif %}
                         <button type="button" class="btn btn-link btn-sm p-0 text-muted lh-1"
                                 title="{{ 'Remove'|trans }}" aria-label="{{ 'Remove'|trans }}"
                                 data-action="live#action" data-live-action-param="dismiss"
-                                data-live-notification-param="{{ notification.id }}">
+                                data-live-notifications-param="{{ entry.ids|join(',') }}">
                             <span class="fas fa-xmark" aria-hidden="true"></span>
                         </button>
                     </span>

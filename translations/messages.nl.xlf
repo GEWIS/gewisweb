@@ -9,6 +9,14 @@
         <source>%browser% on %system%</source>
         <target state="translated">%browser% op %system%</target>
       </trans-unit>
+      <trans-unit id="k0WzEbS" resname="%count% activities have been submitted for review.">
+        <source>%count% activities have been submitted for review.</source>
+        <target state="translated">Er zijn %count% activiteiten ingediend ter beoordeling.</target>
+      </trans-unit>
+      <trans-unit id="KGUn7gt" resname="%count% data exports you asked for are ready.">
+        <source>%count% data exports you asked for are ready.</source>
+        <target state="translated">Er staan %count% door jou aangevraagde gegevensexports klaar.</target>
+      </trans-unit>
       <trans-unit id="E69bPZ6" resname="%count% day|%count% days">
         <source>%count% day|%count% days</source>
         <target>%count% dag|%count% dagen</target>
@@ -20,6 +28,14 @@
       <trans-unit id="30tji6_" resname="%count% minute|%count% minutes">
         <source>%count% minute|%count% minutes</source>
         <target>%count% minuut|%count% minuten</target>
+      </trans-unit>
+      <trans-unit id="WZaz3Ow" resname="%count% new activities have been published.">
+        <source>%count% new activities have been published.</source>
+        <target state="translated">Er zijn %count% nieuwe activiteiten gepubliceerd.</target>
+      </trans-unit>
+      <trans-unit id="VLcbnTs" resname="%count% new photo albums are online.">
+        <source>%count% new photo albums are online.</source>
+        <target state="translated">Er staan %count% nieuwe fotoalbums online.</target>
       </trans-unit>
       <trans-unit id="Bp.9tYU" resname="%count% session(s) terminated.">
         <source>%count% session(s) terminated.</source>
@@ -3269,6 +3285,10 @@
         <source>The subscriber is added immediately, without email verification.</source>
         <target>De inschrijver wordt direct toegevoegd, zonder e-mailverificatie.</target>
       </trans-unit>
+      <trans-unit id="zyECu48" resname="The way you sign in changed %count% times.">
+        <source>The way you sign in changed %count% times.</source>
+        <target state="translated">De manier waarop je inlogt is %count% keer gewijzigd.</target>
+      </trans-unit>
       <trans-unit id="U7EZEfl" resname="The website is temporarily read-only for maintenance, so your change was not saved.">
         <source>The website is temporarily read-only for maintenance, so your change was not saved.</source>
         <target>De website is tijdelijk alleen-lezen vanwege onderhoud, dus je wijziging is niet opgeslagen.</target>
@@ -3924,6 +3944,10 @@
       <trans-unit id="jtm1hRo" resname="Your Company">
         <source>Your Company</source>
         <target state="translated">Jouw bedrijf</target>
+      </trans-unit>
+      <trans-unit id="FSsHSES" resname="Your account was signed in %count% times.">
+        <source>Your account was signed in %count% times.</source>
+        <target state="translated">Er is %count% keer op je account ingelogd.</target>
       </trans-unit>
       <trans-unit id="1rTGsTd" resname="Your account was signed in from %name%.">
         <source>Your account was signed in from %name%.</source>

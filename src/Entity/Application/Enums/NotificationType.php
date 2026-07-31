@@ -86,6 +86,56 @@ enum NotificationType: string
     }
 
     /**
+     * Where a run of these points when they are shown as one line: the list they all belong to, since no single one of
+     * them is the thing the reader wants.
+     */
+    public function manyRoute(?Firewall $recipient = null): string
+    {
+        return match ($this) {
+            self::AlbumPublished => 'photo/index',
+            self::ActivityPublished => 'activity/index',
+            self::ActivityAwaitingReview => 'admin/activities/approvals/index',
+            self::SignIn, self::PasswordChanged, self::MfaEnabled,
+            self::MfaDisabled, self::BackupCodesRegenerated => ($recipient ?? Firewall::Main)->securityIndexRoute(),
+            self::DataExportReady => 'user_settings_data_export_download',
+        };
+    }
+
+    /**
+     * What a run of these reads as when they are shown as one line.
+     */
+    public function manyMessage(int $count): TranslatableMessage
+    {
+        return match ($this) {
+            self::AlbumPublished => new TranslatableMessage(
+                '%count% new photo albums are online.',
+                ['%count%' => $count],
+            ),
+            self::ActivityPublished => new TranslatableMessage(
+                '%count% new activities have been published.',
+                ['%count%' => $count],
+            ),
+            self::ActivityAwaitingReview => new TranslatableMessage(
+                '%count% activities have been submitted for review.',
+                ['%count%' => $count],
+            ),
+            self::SignIn => new TranslatableMessage(
+                'Your account was signed in %count% times.',
+                ['%count%' => $count],
+            ),
+            self::PasswordChanged, self::MfaEnabled,
+            self::MfaDisabled, self::BackupCodesRegenerated => new TranslatableMessage(
+                'The way you sign in changed %count% times.',
+                ['%count%' => $count],
+            ),
+            self::DataExportReady => new TranslatableMessage(
+                '%count% data exports you asked for are ready.',
+                ['%count%' => $count],
+            ),
+        };
+    }
+
+    /**
      * @return array<string, int|string>
      */
     public function routeParameters(?int $subjectId): array
