@@ -42,6 +42,28 @@ final class NotificationEmailChannelTest extends TestCase
         new NotificationEmailChannel($subscriptions, $entityManager)->deliver($this->notification());
     }
 
+    /**
+     * A notification addressed to one user is nobody else's to receive. Were it to reach the subscriber fan-out, it
+     * would be mailed to every member who opted into its category.
+     */
+    public function testANotificationAddressedToSomeoneIsNeverQueued(): void
+    {
+        $subscriptions = self::createMock(NotificationEmailSubscriptionRepository::class);
+        $subscriptions->expects(self::never())->method('findSubscribedUsers');
+
+        $entityManager = self::createMock(EntityManagerInterface::class);
+        $entityManager->expects(self::never())->method('persist');
+        $entityManager->expects(self::never())->method('flush');
+
+        $notification = $this->notification();
+        $notification->setRecipient(
+            self::createStub(User::class),
+            null,
+        );
+
+        new NotificationEmailChannel($subscriptions, $entityManager)->deliver($notification);
+    }
+
     private function subscriber(string $email): User
     {
         $member = self::createStub(Member::class);

@@ -7,14 +7,18 @@ namespace App\Service\Application;
 use App\Entity\Application\Enums\Languages;
 use App\Entity\Application\Enums\NotificationType;
 use App\Entity\Application\Notification;
+use App\Security\User\Firewall;
 use Override;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Translation\TranslatableMessage;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+use function strval;
+
 /**
- * The website channel: pushes the notification as a real-time toast to everyone online. It reaches every member and is
- * always on; the persisted row is what the notification centre shows to anyone who was offline.
+ * The website channel: pushes the notification as a real-time toast to whoever it concerns, which for most kinds is
+ * everyone online and otherwise is the one user it is addressed to. It is always on; the persisted row is what the
+ * notification centre shows to anyone who was offline.
  *
  * The toast carries its text and its link in both languages, because the browser has no translation runtime and picks
  * whichever matches its locale.
@@ -24,6 +28,7 @@ final readonly class RealtimeNotificationChannel implements NotificationChannelI
     public function __construct(
         private RealtimeNotifier $realtimeNotifier,
         private NotificationSubjectResolver $subjectResolver,
+        private NotificationContextResolver $contextResolver,
         private TranslatorInterface $translator,
         private UrlGeneratorInterface $urlGenerator,
     ) {
@@ -34,19 +39,25 @@ final readonly class RealtimeNotificationChannel implements NotificationChannelI
     {
         $type = $notification->getType();
         $subjectId = $notification->getSubjectId();
-        if (null === $subjectId) {
-            return;
-        }
-
-        $name = $this->subjectResolver->nameFor(
+        $name = $this->name(
             $type,
             $subjectId,
+            $notification->getContext(),
         );
         if (null === $name) {
             return;
         }
 
-        $this->realtimeNotifier->toPublic(new RealtimePayload(
+        $recipientUser = $notification->getRecipientUser();
+        $recipientCompanyUser = $notification->getRecipientCompanyUser();
+
+        $recipient = match (true) {
+            null !== $recipientUser => Firewall::Main,
+            null !== $recipientCompanyUser => Firewall::Company,
+            default => null,
+        };
+
+        $payload = new RealtimePayload(
             $notification->getLevel(),
             [
                 'en' => $this->translate(
@@ -61,9 +72,69 @@ final readonly class RealtimeNotificationChannel implements NotificationChannelI
             link: $this->link(
                 $type,
                 $subjectId,
+                $recipient,
             ),
             notificationId: $notification->getId(),
-        ));
+        );
+
+        if (null !== $recipient) {
+            $this->realtimeNotifier->toUser(
+                $recipient->value,
+                strval($recipientUser?->getUserIdentifier() ?? $recipientCompanyUser?->getUserIdentifier()),
+                $payload,
+            );
+
+            return;
+        }
+
+        $this->realtimeNotifier->toPublic($payload);
+    }
+
+    /**
+     * What the notification reads by, in both languages. A subject that has since gone leaves nothing to announce.
+     *
+     * @param array<string, string>|null $context
+     *
+     * @return array{en: string, nl: string}|null
+     */
+    private function name(
+        NotificationType $type,
+        ?int $subjectId,
+        ?array $context,
+    ): ?array {
+        if (null !== $context) {
+            $english = $this->contextResolver->resolve(
+                $type,
+                $context,
+                Languages::English,
+            );
+            $dutch = $this->contextResolver->resolve(
+                $type,
+                $context,
+                Languages::Dutch,
+            );
+
+            if (
+                null === $english
+                || null === $dutch
+            ) {
+                return null;
+            }
+
+            return [
+                'en' => $english,
+                'nl' => $dutch,
+            ];
+        }
+
+        if (null === $subjectId) {
+            return null;
+        }
+
+        return $this->subjectResolver->nameFor(
+            $type,
+            $subjectId,
+        );
     }
 
     /**
@@ -71,18 +142,21 @@ final readonly class RealtimeNotificationChannel implements NotificationChannelI
      */
     private function link(
         NotificationType $type,
-        int $subjectId,
+        ?int $subjectId,
+        ?Firewall $recipient,
     ): array {
         return [
             'href' => [
                 'en' => $this->url(
                     $type,
                     $subjectId,
+                    $recipient,
                     Languages::English,
                 ),
                 'nl' => $this->url(
                     $type,
                     $subjectId,
+                    $recipient,
                     Languages::Dutch,
                 ),
             ],
@@ -111,11 +185,12 @@ final readonly class RealtimeNotificationChannel implements NotificationChannelI
 
     private function url(
         NotificationType $type,
-        int $subjectId,
+        ?int $subjectId,
+        ?Firewall $recipient,
         Languages $language,
     ): string {
         return $this->urlGenerator->generate(
-            $type->route(),
+            $type->route($recipient),
             $type->routeParameters($subjectId) + ['_locale' => $language->getLangParam()],
             UrlGeneratorInterface::ABSOLUTE_URL,
         );

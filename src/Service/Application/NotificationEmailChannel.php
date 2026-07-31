@@ -14,6 +14,9 @@ use Override;
  * The email channel: queues the notification for the members who opted into email for its category. Queuing (rather
  * than mailing here) lets the digest job batch a member's notifications and mail them at their chosen frequency, which
  * keeps a busy day from becoming a flood of separate emails.
+ *
+ * Only notifications that go out to everyone pass through here; one addressed to a single user is nobody else's to
+ * receive, and whatever raised it is responsible for reaching them.
  */
 final readonly class NotificationEmailChannel implements NotificationChannelInterface
 {
@@ -26,6 +29,12 @@ final readonly class NotificationEmailChannel implements NotificationChannelInte
     #[Override]
     public function deliver(Notification $notification): void
     {
+        // Addressed to one person, so it is not a category anyone subscribes to. Fanning it out here would mail
+        // someone else's notification to every member who opted into its type.
+        if ($notification->hasRecipient()) {
+            return;
+        }
+
         $queued = false;
         foreach ($this->subscriptions->findSubscribedUsers($notification->getType()) as $user) {
             $member = $user->getMember();

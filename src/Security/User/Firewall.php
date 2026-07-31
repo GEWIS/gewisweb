@@ -31,6 +31,28 @@ enum Firewall: string
     }
 
     /**
+     * Where somebody who cannot sign in asks for a password reset.
+     */
+    public function forgotPasswordRoute(): string
+    {
+        return match ($this) {
+            self::Main => 'user_forgot_password',
+            self::Company => 'company_user_forgot_password',
+        };
+    }
+
+    /**
+     * Where a user reviews their own sessions and security settings.
+     */
+    public function securityIndexRoute(): string
+    {
+        return match ($this) {
+            self::Main => 'user_security_index',
+            self::Company => 'company_user_security_index',
+        };
+    }
+
+    /**
      * The multi-factor enrolment route, or null for a firewall that has none (only main members enrol here).
      */
     public function mfaEnableRoute(): ?string

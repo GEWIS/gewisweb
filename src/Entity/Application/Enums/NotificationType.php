@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity\Application\Enums;
 
+use App\Security\User\Firewall;
 use Override;
 use Symfony\Component\Translation\TranslatableMessage;
 use Symfony\Contracts\Translation\TranslatableInterface;
@@ -18,38 +19,73 @@ enum NotificationType: string implements TranslatableInterface
 {
     case AlbumPublished = 'album_published';
     case ActivityPublished = 'activity_published';
+    case SignIn = 'sign_in';
+    case PasswordChanged = 'password_changed';
+    case MfaEnabled = 'mfa_enabled';
+    case MfaDisabled = 'mfa_disabled';
+    case BackupCodesRegenerated = 'backup_codes_regenerated';
 
     public function icon(): string
     {
         return match ($this) {
             self::AlbumPublished => 'fa-images',
             self::ActivityPublished => 'fa-calendar-day',
+            self::SignIn => 'fa-right-to-bracket',
+            self::PasswordChanged => 'fa-key',
+            self::MfaEnabled => 'fa-lock',
+            self::MfaDisabled => 'fa-unlock',
+            self::BackupCodesRegenerated => 'fa-rotate',
+        };
+    }
+
+    /**
+     * Whether this kind goes out to everyone. The ones that do not are addressed to a single user, which also makes
+     * them no business of the per-category email opt-in.
+     */
+    public function isBroadcast(): bool
+    {
+        return match ($this) {
+            self::AlbumPublished, self::ActivityPublished => true,
+            self::SignIn, self::PasswordChanged, self::MfaEnabled,
+            self::MfaDisabled, self::BackupCodesRegenerated => false,
         };
     }
 
     /**
      * The route a notification of this kind points at. Callers build the URL themselves, so the notification centre
      * links within the language being read instead of a language frozen when the notification was created.
+     *
+     * A kind that points at a page belonging to the recipient needs to know which firewall they are on, since the two
+     * have separate routes for it.
      */
-    public function route(): string
+    public function route(?Firewall $recipient = null): string
     {
         return match ($this) {
             self::AlbumPublished => 'photo/album',
             self::ActivityPublished => 'activity/view',
+            self::SignIn, self::PasswordChanged, self::MfaEnabled,
+            self::MfaDisabled, self::BackupCodesRegenerated => ($recipient ?? Firewall::Main)->securityIndexRoute(),
         };
     }
 
     /**
      * @return array<string, int|string>
      */
-    public function routeParameters(int $subjectId): array
+    public function routeParameters(?int $subjectId): array
     {
+        // A notification that stands on its own points at a page that needs no parameters.
+        if (null === $subjectId) {
+            return [];
+        }
+
         return match ($this) {
             self::AlbumPublished => [
                 'type' => 'album',
                 'album' => $subjectId,
             ],
             self::ActivityPublished => ['activity' => $subjectId],
+            self::SignIn, self::PasswordChanged, self::MfaEnabled,
+            self::MfaDisabled, self::BackupCodesRegenerated => [],
         };
     }
 
@@ -61,6 +97,11 @@ enum NotificationType: string implements TranslatableInterface
         return match ($this) {
             self::AlbumPublished => new TranslatableMessage('View album'),
             self::ActivityPublished => new TranslatableMessage('View activity'),
+            self::SignIn => new TranslatableMessage('Review your sessions'),
+            self::PasswordChanged, self::MfaEnabled,
+            self::MfaDisabled, self::BackupCodesRegenerated => new TranslatableMessage(
+                'Review your account security',
+            ),
         };
     }
 
@@ -78,6 +119,26 @@ enum NotificationType: string implements TranslatableInterface
                 'A new activity "%name%" has been published.',
                 ['%name%' => $name],
             ),
+            self::SignIn => new TranslatableMessage(
+                'Your account was signed in from %name%.',
+                ['%name%' => $name],
+            ),
+            self::PasswordChanged => new TranslatableMessage(
+                'Your password was changed from %name%.',
+                ['%name%' => $name],
+            ),
+            self::MfaEnabled => new TranslatableMessage(
+                'Two-factor authentication was enabled on your account from %name%.',
+                ['%name%' => $name],
+            ),
+            self::MfaDisabled => new TranslatableMessage(
+                'Two-factor authentication was disabled on your account from %name%.',
+                ['%name%' => $name],
+            ),
+            self::BackupCodesRegenerated => new TranslatableMessage(
+                'New backup codes were generated for your account from %name%.',
+                ['%name%' => $name],
+            ),
         };
     }
 
@@ -89,6 +150,29 @@ enum NotificationType: string implements TranslatableInterface
         return match ($this) {
             self::AlbumPublished => new TranslatableMessage('When photos of an event are published'),
             self::ActivityPublished => new TranslatableMessage('New activities you can sign up for'),
+            self::SignIn => new TranslatableMessage('Every time your account is signed in'),
+            self::PasswordChanged, self::MfaEnabled,
+            self::MfaDisabled, self::BackupCodesRegenerated => new TranslatableMessage(
+                'When the way you sign in changes',
+            ),
+        };
+    }
+
+    /**
+     * The subject line when this kind is emailed on its own, or null for one that only ever goes out in a digest and
+     * takes its subject from whatever else is in that digest.
+     *
+     * Plain English rather than a translatable message, because outgoing mail is always English.
+     */
+    public function emailSubject(): ?string
+    {
+        return match ($this) {
+            self::AlbumPublished, self::ActivityPublished => null,
+            self::SignIn => 'New sign-in to your GEWIS account',
+            self::PasswordChanged => 'Your GEWIS password was changed',
+            self::MfaEnabled => 'Two-factor authentication enabled on your GEWIS account',
+            self::MfaDisabled => 'Two-factor authentication disabled on your GEWIS account',
+            self::BackupCodesRegenerated => 'New backup codes for your GEWIS account',
         };
     }
 
@@ -104,6 +188,15 @@ enum NotificationType: string implements TranslatableInterface
             ),
             self::ActivityPublished => $translator->trans(
                 'New activities',
+                locale: $locale,
+            ),
+            self::SignIn => $translator->trans(
+                'Sign-ins',
+                locale: $locale,
+            ),
+            self::PasswordChanged, self::MfaEnabled,
+            self::MfaDisabled, self::BackupCodesRegenerated => $translator->trans(
+                'Account security',
                 locale: $locale,
             ),
         };

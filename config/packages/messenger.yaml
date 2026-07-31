@@ -62,6 +62,8 @@ framework:
             'App\Message\Photo\GenerateAlbumCoverMessage': images
             'App\Message\User\ExportUserDataMessage': bulk
             'App\Message\User\RevokeSessionsRealtimeMessage': high_priority
+            # A security notice is worth little late, and it must not hold up whatever raised it.
+            'App\Message\User\SecurityNotificationMessage': high_priority
 
 when@test:
     framework:

@@ -5,6 +5,10 @@
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
+      <trans-unit id="Rq5XstT" resname="%browser% on %system%">
+        <source>%browser% on %system%</source>
+        <target state="translated">%browser% on %system%</target>
+      </trans-unit>
       <trans-unit id="E69bPZ6" resname="%count% day|%count% days">
         <source>%count% day|%count% days</source>
         <target>%count% day|%count% days</target>
@@ -92,6 +96,10 @@
       <trans-unit id="5DOuCi7" resname="Access Denied">
         <source>Access Denied</source>
         <target state="translated">Access Denied</target>
+      </trans-unit>
+      <trans-unit id="8vZ6CB1" resname="Account security">
+        <source>Account security</source>
+        <target state="translated">Account security</target>
       </trans-unit>
       <trans-unit id="1_MZEgP" resname="Actions">
         <source>Actions</source>
@@ -1101,6 +1109,10 @@
         <source>Every input should map to an output. This one got lost.</source>
         <target state="translated">Every input should map to an output. This one got lost.</target>
       </trans-unit>
+      <trans-unit id="4ADZXUU" resname="Every time your account is signed in">
+        <source>Every time your account is signed in</source>
+        <target state="translated">Every time your account is signed in</target>
+      </trans-unit>
       <trans-unit id="uXA0ARR" resname="Everything shows up on the website. Pick which topics you also want by email, and how often they should reach you.">
         <source>Everything shows up on the website. Pick which topics you also want by email, and how often they should reach you.</source>
         <target>Everything shows up on the website. Pick which topics you also want by email, and how often they should reach you.</target>
@@ -1809,6 +1821,10 @@
         <source>Mark all as read</source>
         <target state="translated">Mark all as read</target>
       </trans-unit>
+      <trans-unit id="B86OjbY" resname="Mark as read">
+        <source>Mark as read</source>
+        <target state="translated">Mark as read</target>
+      </trans-unit>
       <trans-unit id="5LERsNC" resname="Maximum value (number type)">
         <source>Maximum value (number type)</source>
         <target state="translated">Maximum value (number type)</target>
@@ -1964,6 +1980,10 @@
       <trans-unit id="xQgCPCW" resname="New announcement">
         <source>New announcement</source>
         <target state="translated">New announcement</target>
+      </trans-unit>
+      <trans-unit id="uYbxb6i" resname="New backup codes were generated for your account from %name%.">
+        <source>New backup codes were generated for your account from %name%.</source>
+        <target state="translated">New backup codes were generated for your account from %name%.</target>
       </trans-unit>
       <trans-unit id="pSP333t" resname="New field">
         <source>New field</source>
@@ -2621,6 +2641,14 @@
         <source>Review started.</source>
         <target state="translated">Review started.</target>
       </trans-unit>
+      <trans-unit id="1pgRckD" resname="Review your account security">
+        <source>Review your account security</source>
+        <target state="translated">Review your account security</target>
+      </trans-unit>
+      <trans-unit id="De0FP1s" resname="Review your sessions">
+        <source>Review your sessions</source>
+        <target state="translated">Review your sessions</target>
+      </trans-unit>
       <trans-unit id="GO3YEDC" resname="Revise">
         <source>Revise</source>
         <target state="translated">Revise</target>
@@ -2876,6 +2904,10 @@
       <trans-unit id="q1glo44" resname="Sign up for '%name%'">
         <source>Sign up for '%name%'</source>
         <target>Sign up for '%name%'</target>
+      </trans-unit>
+      <trans-unit id="HYxhyIL" resname="Sign-ins">
+        <source>Sign-ins</source>
+        <target state="translated">Sign-ins</target>
       </trans-unit>
       <trans-unit id="4ufAWYB" resname="Sign-up closes:">
         <source>Sign-up closes:</source>
@@ -3481,6 +3513,14 @@
         <source>Turn off the balloons, snow, and fireworks across the website.</source>
         <target>Turn off the balloons, snow, and fireworks across the website.</target>
       </trans-unit>
+      <trans-unit id="_UPQM5u" resname="Two-factor authentication was disabled on your account from %name%.">
+        <source>Two-factor authentication was disabled on your account from %name%.</source>
+        <target state="translated">Two-factor authentication was disabled on your account from %name%.</target>
+      </trans-unit>
+      <trans-unit id="Y5v9x1E" resname="Two-factor authentication was enabled on your account from %name%.">
+        <source>Two-factor authentication was enabled on your account from %name%.</source>
+        <target state="translated">Two-factor authentication was enabled on your account from %name%.</target>
+      </trans-unit>
       <trans-unit id="DL_wAnF" resname="Type">
         <source>Type</source>
         <target state="translated">Type</target>
@@ -3713,6 +3753,10 @@
         <source>When photos of an event are published</source>
         <target>When photos of an event are published</target>
       </trans-unit>
+      <trans-unit id="yj5zJ0V" resname="When the way you sign in changes">
+        <source>When the way you sign in changes</source>
+        <target state="translated">When the way you sign in changes</target>
+      </trans-unit>
       <trans-unit id="B0EtCVs" resname="When this is checked, GEFLITST will be notified that this activity needs a photographer.">
         <source>When this is checked, GEFLITST will be notified that this activity needs a photographer.</source>
         <target state="translated">When this is checked, GEFLITST will be notified that this activity needs a photographer.</target>
@@ -3849,6 +3893,10 @@
         <source>Your Company</source>
         <target state="translated">Your Company</target>
       </trans-unit>
+      <trans-unit id="1rTGsTd" resname="Your account was signed in from %name%.">
+        <source>Your account was signed in from %name%.</source>
+        <target state="translated">Your account was signed in from %name%.</target>
+      </trans-unit>
       <trans-unit id="Lst7dJY" resname="Your data export is already being prepared.">
         <source>Your data export is already being prepared.</source>
         <target>Your data export is already being prepared.</target>
@@ -3872,6 +3920,10 @@
       <trans-unit id="23M6ORK" resname="Your password has been reset. You can now sign in with your new password.">
         <source>Your password has been reset. You can now sign in with your new password.</source>
         <target state="translated">Your password has been reset. You can now sign in with your new password.</target>
+      </trans-unit>
+      <trans-unit id="Z2J9XyJ" resname="Your password was changed from %name%.">
+        <source>Your password was changed from %name%.</source>
+        <target state="translated">Your password was changed from %name%.</target>
       </trans-unit>
       <trans-unit id="n0u0qZf" resname="Your password-reset link has expired or has already been used. Please request a new one.">
         <source>Your password-reset link has expired or has already been used. Please request a new one.</source>
@@ -3972,10 +4024,6 @@
       <trans-unit id="nNhr74f" resname="none">
         <source>none</source>
         <target state="translated">none</target>
-      </trans-unit>
-      <trans-unit id="edSu_p6" resname="on">
-        <source>on</source>
-        <target state="translated">on</target>
       </trans-unit>
       <trans-unit id="NpnxF2Z" resname="ongoing for %duration%">
         <source>ongoing for %duration%</source>

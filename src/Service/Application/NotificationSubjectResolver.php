@@ -98,6 +98,11 @@ final readonly class NotificationSubjectResolver
         return match ($type) {
             NotificationType::AlbumPublished => $this->albumNames($subjectIds),
             NotificationType::ActivityPublished => $this->activityNames($subjectIds),
+            NotificationType::SignIn,
+            NotificationType::PasswordChanged,
+            NotificationType::MfaEnabled,
+            NotificationType::MfaDisabled,
+            NotificationType::BackupCodesRegenerated => [],
         };
     }
 

@@ -33,6 +33,8 @@ use Symfony\Component\Security\Http\Attribute\IsCsrfTokenValid;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+use function array_filter;
+use function array_values;
 use function in_array;
 
 /**
@@ -188,7 +190,7 @@ class SettingsController extends AbstractController
             $submittedFrequencies = $request->request->all('frequency');
 
             $frequencies = [];
-            foreach (NotificationType::cases() as $category) {
+            foreach ($this->subscribableCategories() as $category) {
                 if (
                     !in_array(
                         $category->value,
@@ -227,12 +229,27 @@ class SettingsController extends AbstractController
         return $this->render(
             'user/settings/notifications.html.twig',
             [
-                'categories' => NotificationType::cases(),
+                'categories' => $this->subscribableCategories(),
                 'frequencyOptions' => NotificationEmailFrequency::cases(),
                 'subscriptions' => $subscriptions,
                 'paused' => $settings->getNotificationsPaused(),
             ],
         );
+    }
+
+    /**
+     * The categories a member can ask to be emailed about. A kind that is addressed to one user is not something to
+     * subscribe to, and is filtered out of the form as well as the submission so that posting one by hand cannot leave
+     * behind a subscription the page can never show or remove.
+     *
+     * @return list<NotificationType>
+     */
+    private function subscribableCategories(): array
+    {
+        return array_values(array_filter(
+            NotificationType::cases(),
+            static fn (NotificationType $category): bool => $category->isBroadcast(),
+        ));
     }
 
     /**

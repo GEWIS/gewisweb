@@ -86,6 +86,12 @@ export default class extends Controller<HTMLElement> {
             case 'toast':
                 this.renderToast(data);
 
+                // A toast that came from a persisted notification also belongs in the notification centre, which
+                // otherwise would not catch up until the next page load.
+                if (undefined !== data.notificationId) {
+                    document.dispatchEvent(new CustomEvent('gewis:notification'));
+                }
+
                 return;
             default:
                 document.dispatchEvent(new CustomEvent(`gewis:realtime:${data.type}`, { detail: data }));

@@ -7,16 +7,22 @@ namespace App\Twig\Components\Notification;
 use App\Entity\Application\Enums\Languages;
 use App\Entity\Application\Notification;
 use App\Entity\User\Enums\UserRoles;
+use App\Entity\User\NotificationInteraction;
 use App\Entity\User\User;
 use App\Repository\Application\NotificationRepository;
+use App\Repository\User\NotificationInteractionRepository;
 use App\Repository\User\UserSettingsRepository;
+use App\Security\User\Firewall;
+use App\Service\Application\NotificationContextResolver;
 use App\Service\Application\NotificationSubjectResolver;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
+use Symfony\UX\LiveComponent\Attribute\LiveArg;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 
 use function array_filter;
@@ -43,13 +49,7 @@ class Bell
      */
     private const string WINDOW = '-30 days';
 
-    /**
-     * The recent-notifications query is the same for every member, so it is result-cached for this long. The bell is
-     * eventually consistent within this window; a brand-new notification still toasts in real time over SSE.
-     */
-    private const int RESULT_CACHE_TTL = 60;
-
-    /** @var list<array{notification: Notification, name: string}>|null */
+    /** @var list<array{notification: Notification, name: string, href: string, read: bool}>|null */
     private ?array $entries = null;
 
     private bool $readAtLoaded = false;
@@ -59,18 +59,24 @@ class Bell
     public function __construct(
         private readonly NotificationRepository $notificationRepository,
         private readonly NotificationSubjectResolver $subjectResolver,
+        private readonly NotificationContextResolver $contextResolver,
         private readonly UserSettingsRepository $settingsRepository,
+        private readonly NotificationInteractionRepository $interactionRepository,
         private readonly EntityManagerInterface $entityManager,
+        private readonly UrlGeneratorInterface $urlGenerator,
         private readonly Security $security,
     ) {
     }
 
     /**
-     * The notifications to show, each paired with its subject's name in the language being read. A notification whose
+     * The notifications to show, each paired with the name it reads by and the link it points at. A notification whose
      * subject has since been removed has nothing left to say and is dropped here, so the badge can never count more
-     * than the dropdown lists.
+     * than the dropdown lists. One carrying its own frozen label is never dropped, having no subject to lose.
      *
-     * @return list<array{notification: Notification, name: string}>
+     * The link is built here rather than in the template, so it can be told which firewall the reader is on. The
+     * component only ever renders for members, so that is always the main one.
+     *
+     * @return list<array{notification: Notification, name: string, href: string, read: bool}>
      */
     public function getEntries(): array
     {
@@ -78,31 +84,62 @@ class Bell
             return $this->entries;
         }
 
-        $notifications = $this->notificationRepository->findRecent(
+        $user = $this->currentUser();
+        if (null === $user) {
+            return $this->entries = [];
+        }
+
+        $notifications = $this->notificationRepository->findRecentFor(
             $this->windowStart(),
+            $user,
             self::LIMIT,
-            self::RESULT_CACHE_TTL,
         );
 
         $names = $this->subjectResolver->resolveNames($notifications);
+        $interactions = $this->interactionRepository->findForNotifications(
+            $user,
+            $notifications,
+        );
+        $readAt = $this->getReadAt();
         $language = Languages::current();
 
         $entries = [];
         foreach ($notifications as $notification) {
             $id = $notification->getId();
-            if (
-                null === $id
-                || !isset($names[$id])
-            ) {
-                continue;
+            $context = $notification->getContext();
+            $name = null === $context
+                ? null
+                : $this->contextResolver->resolve(
+                    $notification->getType(),
+                    $context,
+                    $language,
+                );
+
+            if (null === $name) {
+                if (
+                    null === $id
+                    || !isset($names[$id])
+                ) {
+                    continue;
+                }
+
+                $name = match ($language) {
+                    Languages::English => $names[$id]['en'],
+                    Languages::Dutch => $names[$id]['nl'],
+                };
             }
+
+            $type = $notification->getType();
 
             $entries[] = [
                 'notification' => $notification,
-                'name' => match ($language) {
-                    Languages::English => $names[$id]['en'],
-                    Languages::Dutch => $names[$id]['nl'],
-                },
+                'name' => $name,
+                'href' => $this->urlGenerator->generate(
+                    $type->route(Firewall::Main),
+                    $type->routeParameters($notification->getSubjectId()),
+                ),
+                'read' => (null !== $readAt && $notification->getCreatedAt() <= $readAt)
+                    || (null !== $id && null !== ($interactions[$id] ?? null)?->getReadAt()),
             ];
         }
 
@@ -116,12 +153,9 @@ class Bell
      */
     public function getUnreadCount(): int
     {
-        $readAt = $this->getReadAt();
-
         return count(array_filter(
             $this->getEntries(),
-            static fn (array $entry): bool => null === $readAt
-                || $entry['notification']->getCreatedAt() > $readAt,
+            static fn (array $entry): bool => !$entry['read'],
         ));
     }
 
@@ -133,6 +167,39 @@ class Bell
         }
 
         return $this->readAt;
+    }
+
+    /**
+     * Read one notification without touching the rest.
+     */
+    #[LiveAction]
+    public function markRead(#[LiveArg]
+    int $notification,): void
+    {
+        $this->interact(
+            $notification,
+            static function (NotificationInteraction $interaction): void {
+                $interaction->setReadAt(new DateTimeImmutable());
+            },
+        );
+    }
+
+    /**
+     * Clear one notification away. The notification itself stays put, because most of them belong to everybody; it is
+     * only hidden from this member.
+     */
+    #[LiveAction]
+    public function dismiss(#[LiveArg]
+    int $notification,): void
+    {
+        $this->interact(
+            $notification,
+            static function (NotificationInteraction $interaction): void {
+                $now = new DateTimeImmutable();
+                $interaction->setDismissedAt($now);
+                $interaction->setReadAt($interaction->getReadAt() ?? $now);
+            },
+        );
     }
 
     #[LiveAction]
@@ -151,16 +218,41 @@ class Bell
     }
 
     /**
-     * Floored to the hour so the same result-cache entry serves every request within it.
+     * Apply a change to what this member has done with one notification.
+     *
+     * Only notifications currently on show can be acted on, so a crafted id cannot reach one that was never theirs to
+     * see.
+     *
+     * @param callable(NotificationInteraction): void $change
      */
+    private function interact(
+        int $notificationId,
+        callable $change,
+    ): void {
+        $user = $this->currentUser();
+        if (null === $user) {
+            return;
+        }
+
+        foreach ($this->getEntries() as $entry) {
+            if ($entry['notification']->getId() !== $notificationId) {
+                continue;
+            }
+
+            $change($this->interactionRepository->getOrCreate(
+                $user,
+                $entry['notification'],
+            ));
+            $this->entityManager->flush();
+            $this->entries = null;
+
+            return;
+        }
+    }
+
     private function windowStart(): DateTimeImmutable
     {
-        $cutoff = new DateTimeImmutable(self::WINDOW);
-
-        return $cutoff->setTime(
-            (int) $cutoff->format('H'),
-            0,
-        );
+        return new DateTimeImmutable(self::WINDOW);
     }
 
     private function currentUser(): ?User
