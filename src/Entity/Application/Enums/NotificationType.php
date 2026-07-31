@@ -5,17 +5,14 @@ declare(strict_types=1);
 namespace App\Entity\Application\Enums;
 
 use App\Security\User\Firewall;
-use Override;
 use Symfony\Component\Translation\TranslatableMessage;
-use Symfony\Contracts\Translation\TranslatableInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * The kind of event a persisted {@see \App\Entity\Application\Notification} records. Drives the icon shown in the
  * notification centre and, as a category, the per-member email opt-in. It also holds everything the notification says:
  * the sentence, where it points and what the link reads, so a notification row only has to record its subject.
  */
-enum NotificationType: string implements TranslatableInterface
+enum NotificationType: string
 {
     case AlbumPublished = 'album_published';
     case ActivityPublished = 'activity_published';
@@ -39,6 +36,22 @@ enum NotificationType: string implements TranslatableInterface
             self::BackupCodesRegenerated => 'fa-rotate',
             self::DataExportReady => 'fa-file-arrow-down',
             self::ActivityAwaitingReview => 'fa-clipboard-check',
+        };
+    }
+
+    /**
+     * The topic a member sees this under. Several kinds share one where they are one thing to whoever reads them.
+     */
+    public function category(): NotificationCategory
+    {
+        return match ($this) {
+            self::AlbumPublished => NotificationCategory::Albums,
+            self::ActivityPublished => NotificationCategory::Activities,
+            self::SignIn => NotificationCategory::SignIns,
+            self::PasswordChanged, self::MfaEnabled,
+            self::MfaDisabled, self::BackupCodesRegenerated => NotificationCategory::AccountSecurity,
+            self::DataExportReady => NotificationCategory::DataExports,
+            self::ActivityAwaitingReview => NotificationCategory::ActivityReviews,
         };
     }
 
@@ -155,24 +168,6 @@ enum NotificationType: string implements TranslatableInterface
     }
 
     /**
-     * A short line under the category title on the notification settings page, explaining when it fires.
-     */
-    public function hint(): TranslatableMessage
-    {
-        return match ($this) {
-            self::AlbumPublished => new TranslatableMessage('When photos of an event are published'),
-            self::ActivityPublished => new TranslatableMessage('New activities you can sign up for'),
-            self::SignIn => new TranslatableMessage('Every time your account is signed in'),
-            self::PasswordChanged, self::MfaEnabled,
-            self::MfaDisabled, self::BackupCodesRegenerated => new TranslatableMessage(
-                'When the way you sign in changes',
-            ),
-            self::DataExportReady => new TranslatableMessage('When a data export you asked for is ready'),
-            self::ActivityAwaitingReview => new TranslatableMessage('When an activity is waiting to be reviewed'),
-        };
-    }
-
-    /**
      * The subject line when a security notice of this kind is emailed, or null for a kind that is not emailed from
      * there: one that goes out in a digest, or one whose own handler already writes to the member.
      *
@@ -188,40 +183,6 @@ enum NotificationType: string implements TranslatableInterface
             self::MfaEnabled => 'Two-factor authentication enabled on your GEWIS account',
             self::MfaDisabled => 'Two-factor authentication disabled on your GEWIS account',
             self::BackupCodesRegenerated => 'New backup codes for your GEWIS account',
-        };
-    }
-
-    #[Override]
-    public function trans(
-        TranslatorInterface $translator,
-        ?string $locale = null,
-    ): string {
-        return match ($this) {
-            self::AlbumPublished => $translator->trans(
-                'New photo albums',
-                locale: $locale,
-            ),
-            self::ActivityPublished => $translator->trans(
-                'New activities',
-                locale: $locale,
-            ),
-            self::SignIn => $translator->trans(
-                'Sign-ins',
-                locale: $locale,
-            ),
-            self::PasswordChanged, self::MfaEnabled,
-            self::MfaDisabled, self::BackupCodesRegenerated => $translator->trans(
-                'Account security',
-                locale: $locale,
-            ),
-            self::DataExportReady => $translator->trans(
-                'Data exports',
-                locale: $locale,
-            ),
-            self::ActivityAwaitingReview => $translator->trans(
-                'Activities awaiting review',
-                locale: $locale,
-            ),
         };
     }
 }

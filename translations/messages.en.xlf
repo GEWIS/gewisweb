@@ -1653,9 +1653,9 @@
         <source>Keep it pinned as a banner at the top of every page</source>
         <target state="translated">Keep it pinned as a banner at the top of every page</target>
       </trans-unit>
-      <trans-unit id="O09wrH9" resname="Keep website notifications only. Nothing from the topics above is emailed until you turn this back off.">
-        <source>Keep website notifications only. Nothing from the topics above is emailed until you turn this back off.</source>
-        <target state="translated">Keep website notifications only. Nothing from the topics above is emailed until you turn this back off.</target>
+      <trans-unit id="h1ReSXF" resname="Keep website notifications only for the topics you chose above. The topics marked as always sent are not affected and keep arriving by email.">
+        <source>Keep website notifications only for the topics you chose above. The topics marked as always sent are not affected and keep arriving by email.</source>
+        <target state="translated">Keep website notifications only for the topics you chose above. The topics marked as always sent are not affected and keep arriving by email.</target>
       </trans-unit>
       <trans-unit id="a5V7ouo" resname="Keycode active">
         <source>Keycode active</source>

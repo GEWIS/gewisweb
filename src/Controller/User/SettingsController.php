@@ -6,6 +6,7 @@ namespace App\Controller\User;
 
 use App\Entity\Application\Enums\AlertTypes;
 use App\Entity\Application\Enums\NotificationAddressing;
+use App\Entity\Application\Enums\NotificationCategory;
 use App\Entity\Application\Enums\NotificationEmailFrequency;
 use App\Entity\Application\Enums\NotificationType;
 use App\Entity\User\DataExportRequest;
@@ -240,18 +241,25 @@ class SettingsController extends AbstractController
     }
 
     /**
-     * The kinds a member is always told about, listed so they can see what those are even though there is nothing to
-     * decide about them. What goes to a role is left out: it is not about them.
+     * The topics a member is always told about, listed so they can see what those are even though there is nothing to
+     * decide about them. Grouped, because several kinds under one topic are one thing to whoever reads them, and what
+     * goes to a role is left out: it is not about them.
      *
-     * @return list<NotificationType>
+     * @return list<NotificationCategory>
      */
     private function alwaysOnCategories(): array
     {
-        return array_values(array_filter(
-            NotificationType::cases(),
-            static fn (NotificationType $category): bool => NotificationAddressing::Account
-                === $category->addressing(),
-        ));
+        $categories = [];
+        foreach (NotificationType::cases() as $type) {
+            if (NotificationAddressing::Account !== $type->addressing()) {
+                continue;
+            }
+
+            $category = $type->category();
+            $categories[$category->name] = $category;
+        }
+
+        return array_values($categories);
     }
 
     /**

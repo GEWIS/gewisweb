@@ -38,23 +38,23 @@
                                     </tr>
                                 </thead>
                                 <tbody data-notification-settings-target="dim">
-                                    {% for category in categories %}
-                                        {% set current = subscriptions[category.value] ?? null %}
+                                    {% for topic in categories %}
+                                        {% set current = subscriptions[topic.value] ?? null %}
                                         {% set isOn = current is not null %}
                                         {% set selectedValue = isOn ? current.value : 'immediately' %}
                                         <tr>
                                             <td>
                                                 <div class="fw-semibold">
-                                                    <span class="fas {{ category.icon }} text-muted me-2"></span>{{ category|trans }}
+                                                    <span class="fas {{ topic.category.icon }} text-muted me-2"></span>{{ topic.category|trans }}
                                                 </div>
-                                                <div class="text-muted small">{{ category.hint|trans }}</div>
+                                                <div class="text-muted small">{{ topic.category.hint|trans }}</div>
                                             </td>
                                             <td class="text-center">
                                                 <div class="form-check form-switch d-inline-block mb-0">
                                                     <input class="form-check-input" type="checkbox" role="switch"
-                                                           name="categories[]" value="{{ category.value }}"
-                                                           id="ns-email-{{ category.value }}"
-                                                           aria-label="{{ 'Email me about %topic%'|trans({'%topic%': category|trans}) }}"
+                                                           name="categories[]" value="{{ topic.value }}"
+                                                           id="ns-email-{{ topic.value }}"
+                                                           aria-label="{{ 'Email me about %topic%'|trans({'%topic%': topic.category|trans}) }}"
                                                            data-notification-settings-target="email"
                                                            data-action="change->notification-settings#sync"
                                                            {{ isOn ? 'checked' }}>
@@ -62,7 +62,7 @@
                                             </td>
                                             <td class="text-end">
                                                 <select class="form-select form-select-sm w-auto d-inline-block"
-                                                        name="frequency[{{ category.value }}]"
+                                                        name="frequency[{{ topic.value }}]"
                                                         aria-label="{{ 'Delivery'|trans }}"
                                                         data-notification-settings-target="frequency">
                                                     {% for option in frequencyOptions %}
@@ -87,7 +87,7 @@
                                             <td class="text-center">
                                                 <div class="form-check form-switch d-inline-block mb-0">
                                                     <input class="form-check-input" type="checkbox" role="switch"
-                                                           id="ns-always-{{ category.value }}"
+                                                           id="ns-always-{{ category.name }}"
                                                            aria-label="{{ category|trans }}" checked disabled>
                                                 </div>
                                             </td>
@@ -104,7 +104,7 @@
                                                         <span class="fas fa-moon text-muted me-2"></span>{{ 'Pause everything'|trans }}
                                                     </div>
                                                     <div class="text-muted small">
-                                                        {{ 'Keep website notifications only. Nothing from the topics above is emailed until you turn this back off.'|trans }}
+                                                        {{ 'Keep website notifications only for the topics you chose above. The topics marked as always sent are not affected and keep arriving by email.'|trans }}
                                                     </div>
                                                 </div>
                                                 <div class="form-check form-switch d-inline-block mb-0">
