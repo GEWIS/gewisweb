@@ -383,8 +383,18 @@ class Bell
         return $roles;
     }
 
+    /**
+     * The member reading the centre, or null when nobody has finished signing in. The role above is only checked when
+     * a live action comes back over HTTP; the first render happens inside a template, where nothing checks it. That
+     * makes this the one place both paths pass through, and a sign-in waiting on its second factor already carries the
+     * member on the token, so asking for the user alone would hand their notifications to whoever holds the password.
+     */
     private function currentUser(): ?User
     {
+        if (!$this->security->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return null;
+        }
+
         $user = $this->security->getUser();
 
         return $user instanceof User

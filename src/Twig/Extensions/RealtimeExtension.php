@@ -6,12 +6,12 @@ namespace App\Twig\Extensions;
 
 use App\Service\User\SessionManager;
 use Override;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Bundle\SecurityBundle\Security\FirewallMap;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Mercure\Authorization;
 use Symfony\Component\Mercure\Exception\RuntimeException as MercureRuntimeException;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -20,14 +20,14 @@ use function sprintf;
 
 /**
  * Exposes `realtime_topics()`: the Mercure topics the current request may subscribe to. Everyone gets the broadcast
- * topic; a principal also gets their per-user topic and, when the device carries a managed-session cookie, its
- * per-session topic. Resolving the firewall and (secret) series in PHP keeps it testable and out of the template.
- * `realtime_authorize()` mints the single subscribe cookie for those topics.
+ * topic; someone who has finished signing in also gets their per-user topic and, when the device carries a
+ * managed-session cookie, its per-session topic. Resolving the firewall and (secret) series in PHP keeps it testable
+ * and out of the template. `realtime_authorize()` mints the single subscribe cookie for those topics.
  */
 class RealtimeExtension extends AbstractExtension
 {
     public function __construct(
-        private readonly TokenStorageInterface $tokenStorage,
+        private readonly Security $security,
         private readonly RequestStack $requestStack,
         private readonly SessionManager $sessionManager,
         #[Autowire(service: 'security.firewall.map')]
@@ -82,7 +82,14 @@ class RealtimeExtension extends AbstractExtension
     {
         $topics = ['gewis/public'];
 
-        $user = $this->tokenStorage->getToken()?->getUser();
+        // Someone who still has a second factor to clear has a user on the token but has not signed in yet, so they
+        // get no more than a passer-by does. Anything else would push their notifications to whoever holds the
+        // password.
+        if (!$this->security->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $topics;
+        }
+
+        $user = $this->security->getUser();
         $request = $this->requestStack->getMainRequest();
         if (
             !$user instanceof UserInterface

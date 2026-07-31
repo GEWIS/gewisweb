@@ -10,6 +10,7 @@ use App\Entity\User\User;
 use App\Tests\Integration\DatabaseTestCase;
 use App\Twig\Components\Notification\Bell;
 use DateTimeImmutable;
+use Scheb\TwoFactorBundle\Security\Authentication\Token\TwoFactorToken;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 use function array_column;
@@ -161,6 +162,34 @@ final class BellTest extends DatabaseTestCase
     }
 
     /**
+     * A sign-in waiting on its second factor already carries the member on the token, so the centre has to ask whether
+     * that sign-in finished. Otherwise the password on its own is enough to read what the account has been told.
+     */
+    public function testASignInWaitingOnItsSecondFactorIsShownNothing(): void
+    {
+        $this->signIn('Chrome 124');
+        $this->entityManager->flush();
+
+        self::assertSame(
+            [],
+            $this->bellMidTwoFactorFor(8025)->getEntries(),
+        );
+    }
+
+    /**
+     * Nor can it clear away what it is not allowed to read.
+     */
+    public function testASignInWaitingOnItsSecondFactorCannotMarkAnythingRead(): void
+    {
+        $this->signIn('Chrome 124');
+        $this->entityManager->flush();
+
+        $this->bellMidTwoFactorFor(8025)->markAllRead();
+
+        self::assertNull($this->member(8025)->getSettings()?->getNotificationsReadAt());
+    }
+
+    /**
      * Different kinds next to each other stay apart, however close together they arrived.
      */
     public function testDifferentKindsAreNotFoldedTogether(): void
@@ -227,16 +256,29 @@ final class BellTest extends DatabaseTestCase
 
     private function bellFor(int $lidnr): Bell
     {
-        $user = $this->entityManager->getRepository(User::class)->find($lidnr);
-        self::assertInstanceOf(
-            User::class,
-            $user,
-        );
-
         self::getContainer()->get('security.token_storage')->setToken(new UsernamePasswordToken(
-            $user,
+            $this->member($lidnr),
             'main',
             ['ROLE_USER'],
+        ));
+
+        return self::getContainer()->get(Bell::class);
+    }
+
+    /**
+     * The same bell, read by a sign-in that has cleared its password but not yet its second factor.
+     */
+    private function bellMidTwoFactorFor(int $lidnr): Bell
+    {
+        self::getContainer()->get('security.token_storage')->setToken(new TwoFactorToken(
+            new UsernamePasswordToken(
+                $this->member($lidnr),
+                'main',
+                ['ROLE_USER'],
+            ),
+            null,
+            'main',
+            ['totp'],
         ));
 
         return self::getContainer()->get(Bell::class);
