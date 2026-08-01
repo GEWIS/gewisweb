@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace App\Tests\Integration\Repository\Decision;
 
 use App\Entity\Decision\Enums\MeetingTypes;
+use App\Entity\Decision\MeetingMinutes;
 use App\Repository\Decision\MeetingRepository;
 use App\Tests\Integration\DatabaseTestCase;
 use Override;
+
+use function count;
 
 final class MeetingRepositoryTest extends DatabaseTestCase
 {
@@ -27,7 +30,7 @@ final class MeetingRepositoryTest extends DatabaseTestCase
             null,
             null,
             1,
-            50,
+            100,
         );
 
         self::assertNotEmpty($result['items']);
@@ -44,25 +47,28 @@ final class MeetingRepositoryTest extends DatabaseTestCase
             ];
         }
 
-        self::assertGreaterThan(
-            0,
-            $byMeeting['BV 0'][0],
+        // The oldest BM founded two committees; the complete GMM has its revised minutes, the one after has none.
+        $completeNumber = $this->completeGmmNumber();
+        self::assertGreaterThanOrEqual(
+            2,
+            $byMeeting['BV 1800'][0],
         );
-        self::assertGreaterThan(
-            0,
-            $byMeeting['ALV 0'][1],
+        self::assertSame(
+            2,
+            $byMeeting['ALV ' . $completeNumber][1],
         );
         self::assertSame(
             0,
-            $byMeeting['ALV 1'][1],
+            $byMeeting['ALV ' . ($completeNumber + 1)][1],
         );
     }
 
     public function testPaginateForOverviewFiltersByTypeAndNumber(): void
     {
+        $completeNumber = $this->completeGmmNumber();
         $result = $this->repository->paginateForOverview(
             MeetingTypes::ALV,
-            1,
+            $completeNumber,
             1,
             50,
         );
@@ -72,29 +78,35 @@ final class MeetingRepositoryTest extends DatabaseTestCase
             $result['total'],
         );
         self::assertSame(
-            1,
+            $completeNumber,
             $result['items'][0][0]->getNumber(),
         );
     }
 
     public function testFindUpcomingALVsListsSoonestFirst(): void
     {
-        $numbers = [];
-        foreach ($this->repository->findUpcomingALVs() as $meeting) {
+        $previousDate = null;
+        $meetings = $this->repository->findUpcomingALVs();
+
+        self::assertGreaterThanOrEqual(
+            2,
+            count($meetings),
+        );
+        foreach ($meetings as $meeting) {
             self::assertSame(
                 MeetingTypes::ALV,
                 $meeting->getType(),
             );
-            $numbers[] = $meeting->getNumber();
-        }
 
-        self::assertSame(
-            [
-                2,
-                3,
-            ],
-            $numbers,
-        );
+            if (null !== $previousDate) {
+                self::assertGreaterThan(
+                    $previousDate,
+                    $meeting->getDate(),
+                );
+            }
+
+            $previousDate = $meeting->getDate();
+        }
     }
 
     public function testPaginateForOverviewClampsToThePage(): void
@@ -114,5 +126,16 @@ final class MeetingRepositoryTest extends DatabaseTestCase
             2,
             $result['total'],
         );
+    }
+
+    private function completeGmmNumber(): int
+    {
+        $minutes = $this->entityManager->getRepository(MeetingMinutes::class)->findAll();
+        self::assertCount(
+            1,
+            $minutes,
+        );
+
+        return $minutes[0]->getMeeting()->getNumber();
     }
 }

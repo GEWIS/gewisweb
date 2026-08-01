@@ -132,14 +132,17 @@ final class AuthorizationServiceTest extends DatabaseTestCase
     }
 
     /**
-     * The furthest planned GMM, which the seeded authorizations target.
+     * The second-soonest upcoming GMM, which the seeded authorizations target.
      */
     private function upcomingGMM(): Meeting
     {
         $meetings = $this->service->getUpcomingALVs();
-        self::assertNotEmpty($meetings);
+        self::assertGreaterThanOrEqual(
+            2,
+            count($meetings),
+        );
 
-        return $meetings[count($meetings) - 1];
+        return $meetings[1];
     }
 
     private function member(int $lidnr): Member

@@ -6,6 +6,7 @@ namespace App\Tests\Integration\Service\Decision;
 
 use App\Entity\Decision\Enums\MeetingTypes;
 use App\Entity\Decision\Meeting;
+use App\Entity\Decision\MeetingMinutes;
 use App\Repository\Decision\MeetingDocumentRepository;
 use App\Service\Application\FileStorage;
 use App\Service\Decision\MeetingDocumentZipBuilder;
@@ -20,7 +21,7 @@ final class MeetingDocumentZipBuilderTest extends DatabaseTestCase
 {
     public function testBundlesTheLatestVersionOfEveryDocument(): void
     {
-        $meeting = $this->meeting(0);
+        $meeting = $this->completeGmm();
 
         // The test storage adapter is in-memory and empty per process; recreate the seeded documents' bytes.
         $storage = self::getContainer()->get(FileStorage::class);
@@ -52,6 +53,7 @@ final class MeetingDocumentZipBuilderTest extends DatabaseTestCase
             [
                 '2. Agenda (v1.1).pdf',
                 '3. Decision list (v1.0).pdf',
+                '7a. Budget (v2.1).pdf',
                 'Letter to the GMM (v1).pdf',
             ],
             $entries,
@@ -63,7 +65,16 @@ final class MeetingDocumentZipBuilderTest extends DatabaseTestCase
 
     public function testMeetingWithoutDocumentsYieldsNothing(): void
     {
-        self::assertNull($this->builder()->build($this->meeting(2)));
+        $meeting = $this->entityManager->find(
+            Meeting::class,
+            [
+                'type' => MeetingTypes::BV,
+                'number' => 1800,
+            ],
+        );
+        self::assertNotNull($meeting);
+
+        self::assertNull($this->builder()->build($meeting));
     }
 
     private function builder(): MeetingDocumentZipBuilder
@@ -71,17 +82,14 @@ final class MeetingDocumentZipBuilderTest extends DatabaseTestCase
         return self::getContainer()->get(MeetingDocumentZipBuilder::class);
     }
 
-    private function meeting(int $number): Meeting
+    private function completeGmm(): Meeting
     {
-        $meeting = $this->entityManager->find(
-            Meeting::class,
-            [
-                'type' => MeetingTypes::ALV,
-                'number' => $number,
-            ],
+        $minutes = $this->entityManager->getRepository(MeetingMinutes::class)->findAll();
+        self::assertCount(
+            1,
+            $minutes,
         );
-        self::assertNotNull($meeting);
 
-        return $meeting;
+        return $minutes[0]->getMeeting();
     }
 }

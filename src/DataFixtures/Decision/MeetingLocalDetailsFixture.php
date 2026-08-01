@@ -22,7 +22,7 @@ class MeetingLocalDetailsFixture extends Fixture implements DependentFixtureInte
     {
         $details = new MeetingLocalDetails();
         $details->setMeeting($this->getReference(
-            'meeting-ALV-3',
+            'meeting-gmm-upcoming',
             Meeting::class,
         ));
         $details->setStartTime(new DateTime('20:00'));

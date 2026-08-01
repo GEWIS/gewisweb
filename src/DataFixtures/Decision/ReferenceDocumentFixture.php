@@ -26,8 +26,8 @@ use function tempnam;
 use function unlink;
 
 /**
- * A small reference library: a twice-revised document that ALV-0 keeps pinned to its original version while ALV-1 and
- * the upcoming ALV-3 pin the newest one, and a single-version document selected for the upcoming ALV only.
+ * A small reference library: a twice-revised document that the complete GMM keeps pinned to its original version
+ * while the newer GMMs pin the newest one, and a single-version document selected for the upcoming GMM only.
  */
 class ReferenceDocumentFixture extends Fixture implements DependentFixtureInterface
 {
@@ -86,28 +86,28 @@ class ReferenceDocumentFixture extends Fixture implements DependentFixtureInterf
             $definitions,
         );
 
-        // ALV-0 shipped the original version and stays pinned to it; the newer meetings pin the newest one.
+        // The complete GMM shipped the original version and stays pinned to it; the newer ones pin the newest.
         $this->createSelection(
             $manager,
-            'meeting-ALV-0',
+            'meeting-gmm-complete',
             $scenarios,
             $scenariosVersions[0],
         );
         $this->createSelection(
             $manager,
-            'meeting-ALV-1',
+            'meeting-gmm-processing',
             $scenarios,
             $scenariosVersions[1],
         );
         $this->createSelection(
             $manager,
-            'meeting-ALV-3',
+            'meeting-gmm-upcoming',
             $scenarios,
             $scenariosVersions[1],
         );
         $this->createSelection(
             $manager,
-            'meeting-ALV-3',
+            'meeting-gmm-upcoming',
             $definitions,
             $definitionsVersion,
         );

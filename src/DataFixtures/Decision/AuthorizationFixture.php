@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\DataFixtures\Decision;
 
 use App\Entity\Decision\Authorization;
+use App\Entity\Decision\Meeting;
 use App\Entity\Decision\Member;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -13,16 +14,19 @@ use Doctrine\Persistence\ObjectManager;
 use Override;
 
 /**
- * A valid and a revoked authorization for the upcoming GMM (ALV-3), so the member page, the received count, and the
+ * A valid and a revoked authorization for the furthest upcoming GMM, so the member page, the received count, and the
  * admin tables have data.
  */
 class AuthorizationFixture extends Fixture implements DependentFixtureInterface
 {
-    private const int UPCOMING_GMM_NUMBER = 3;
-
     #[Override]
     public function load(ObjectManager $manager): void
     {
+        $gmmNumber = $this->getReference(
+            'meeting-gmm-upcoming-2',
+            Meeting::class,
+        )->getNumber();
+
         $valid = new Authorization();
         $valid->setAuthorizer($this->getReference(
             'member-8010',
@@ -32,7 +36,7 @@ class AuthorizationFixture extends Fixture implements DependentFixtureInterface
             'member-8005',
             Member::class,
         ));
-        $valid->setMeetingNumber(self::UPCOMING_GMM_NUMBER);
+        $valid->setMeetingNumber($gmmNumber);
         $valid->setCreatedAt(new DateTime('-3 days'));
 
         $manager->persist($valid);
@@ -46,7 +50,7 @@ class AuthorizationFixture extends Fixture implements DependentFixtureInterface
             'member-8005',
             Member::class,
         ));
-        $revoked->setMeetingNumber(self::UPCOMING_GMM_NUMBER);
+        $revoked->setMeetingNumber($gmmNumber);
         $revoked->setCreatedAt(new DateTime('-2 days'));
         $revoked->setRevokedAt(new DateTime('-1 day'));
 

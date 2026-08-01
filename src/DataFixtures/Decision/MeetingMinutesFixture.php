@@ -25,8 +25,8 @@ use function tempnam;
 use function unlink;
 
 /**
- * Minutes on ALV-0 with a revision, so the oldest past ALV shows as complete while ALV-1 (no minutes, no decisions)
- * shows as still being processed.
+ * Minutes on the complete GMM with a revision; the newest past GMM has neither minutes nor decisions and shows as
+ * still being processed.
  */
 class MeetingMinutesFixture extends Fixture implements DependentFixtureInterface
 {
@@ -43,7 +43,7 @@ class MeetingMinutesFixture extends Fixture implements DependentFixtureInterface
         );
 
         $meeting = $this->getReference(
-            'meeting-ALV-0',
+            'meeting-gmm-complete',
             Meeting::class,
         );
 
@@ -57,7 +57,7 @@ class MeetingMinutesFixture extends Fixture implements DependentFixtureInterface
             $version->setMinutes($minutes);
             $version->setVersionLabel($label);
             $version->setPath($this->storePdf(
-                'Minutes ALV-0 ' . $label,
+                'Minutes GMM ' . $label,
                 $meeting,
             ));
             $version->setUploadedBy($uploader);

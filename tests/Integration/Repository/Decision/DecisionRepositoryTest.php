@@ -39,7 +39,7 @@ final class DecisionRepositoryTest extends DatabaseTestCase
      */
     public function testSearchByMeetingReferenceFindsTheMeetingsDecisions(): void
     {
-        $results = $this->search('BV 0');
+        $results = $this->search('BM 1800');
 
         self::assertNotEmpty($results);
         foreach ($results as $decision) {
@@ -48,7 +48,7 @@ final class DecisionRepositoryTest extends DatabaseTestCase
                 $decision->getMeeting()->getType(),
             );
             self::assertSame(
-                0,
+                1800,
                 $decision->getMeeting()->getNumber(),
             );
         }
@@ -56,7 +56,7 @@ final class DecisionRepositoryTest extends DatabaseTestCase
 
     public function testSearchByPointReferenceNarrowsToThePoint(): void
     {
-        $results = $this->search('BV 0.2');
+        $results = $this->search('BM 1800.2');
 
         self::assertNotEmpty($results);
         foreach ($results as $decision) {
@@ -105,7 +105,7 @@ final class DecisionRepositoryTest extends DatabaseTestCase
             );
         }
 
-        self::assertEmpty($this->search('type:gmm wordt'));
+        self::assertEmpty($this->search('type:cm wordt'));
     }
 
     public function testAllBareWordsMustMatch(): void

@@ -11,6 +11,7 @@ use App\Entity\Decision\Meeting;
 use App\Entity\Decision\Member;
 use App\Entity\Decision\Organ;
 use App\Entity\Decision\OrganMember;
+use App\Entity\Decision\SubDecision\Annulment;
 use App\Entity\Decision\SubDecision\Discharge;
 use App\Entity\Decision\SubDecision\Foundation;
 use App\Entity\Decision\SubDecision\Installation;
@@ -19,6 +20,7 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Override;
 
+use function assert;
 use function implode;
 use function range;
 use function sprintf;
@@ -29,9 +31,9 @@ class DecisionFixture extends Fixture implements DependentFixtureInterface
     #[Override]
     public function load(ObjectManager $manager): void
     {
-        // Installment of GETÉST.
+        // Installment of GETÉST, at the oldest BM.
         $decision = new Decision();
-        $decision->setMeeting($this->getReference('meeting-BV-0', Meeting::class));
+        $decision->setMeeting($this->getReference('meeting-BV-1800', Meeting::class));
         $decision->setPoint(1);
         $decision->setNumber(1);
         $decision->setContentEN('');
@@ -39,7 +41,7 @@ class DecisionFixture extends Fixture implements DependentFixtureInterface
 
         $manager->persist($decision);
         $this->addReference(
-            'decision-BV-0-' . $decision->getPoint() . '-' . $decision->getNumber(),
+            'decision-BV-1800-' . $decision->getPoint() . '-' . $decision->getNumber(),
             $decision,
         );
 
@@ -135,9 +137,9 @@ class DecisionFixture extends Fixture implements DependentFixtureInterface
 
         $manager->flush();
 
-        // Discharge of members of GETEST
+        // Discharge of members of GETEST, a few weeks later.
         $decision = new Decision();
-        $decision->setMeeting($this->getReference('meeting-BV-1', Meeting::class));
+        $decision->setMeeting($this->getReference('meeting-BV-1806', Meeting::class));
         $decision->setPoint(1);
         $decision->setNumber(1);
         $decision->setContentEN('');
@@ -145,7 +147,7 @@ class DecisionFixture extends Fixture implements DependentFixtureInterface
 
         $manager->persist($decision);
         $this->addReference(
-            'decision-BV-1-' . $decision->getPoint() . '-' . $decision->getNumber(),
+            'decision-BV-1806-' . $decision->getPoint() . '-' . $decision->getNumber(),
             $decision,
         );
 
@@ -243,6 +245,8 @@ class DecisionFixture extends Fixture implements DependentFixtureInterface
         $manager->flush();
 
         $this->loadSecondOrgan($manager);
+        $this->loadBoardDecisions($manager);
+        $this->loadMeetingTextDecisions($manager);
     }
 
     /**
@@ -252,7 +256,7 @@ class DecisionFixture extends Fixture implements DependentFixtureInterface
     private function loadSecondOrgan(ObjectManager $manager): void
     {
         $decision = new Decision();
-        $decision->setMeeting($this->getReference('meeting-BV-0', Meeting::class));
+        $decision->setMeeting($this->getReference('meeting-BV-1800', Meeting::class));
         $decision->setPoint(2);
         $decision->setNumber(1);
         $decision->setContentEN('');
@@ -341,6 +345,192 @@ class DecisionFixture extends Fixture implements DependentFixtureInterface
             'organ-keur',
             $organ,
         );
+    }
+
+    /**
+     * The day-to-day board decisions: budgets, grants, and confirmations spread over the past BMs, plus one BM
+     * decision that annuls an earlier budget.
+     */
+    private function loadBoardDecisions(ObjectManager $manager): void
+    {
+        $keyGrantee = $this->getReference(
+            'member-8010',
+            Member::class,
+        );
+
+        $texts = [
+            [
+                'meeting-BV-1801',
+                1,
+                1,
+                'Het bestuur besluit de begroting van de wisselactiviteit van GETÉST ter hoogte van € 250,00 goed'
+                . ' te keuren.',
+            ],
+            [
+                'meeting-BV-1802',
+                1,
+                1,
+                sprintf(
+                    'Het bestuur besluit %s sleutelrechten toe te kennen tot het einde van het verenigingsjaar.',
+                    $keyGrantee->getFullName(),
+                ),
+            ],
+            [
+                'meeting-BV-1803',
+                1,
+                1,
+                'Het bestuur besluit de notulen van de vorige bestuursvergadering vast te stellen.',
+            ],
+            [
+                'meeting-BV-1803',
+                1,
+                2,
+                'Het bestuur besluit het activiteitenbeleid ter instemming voor te leggen aan de ALV.',
+            ],
+            [
+                'meeting-BV-1805',
+                1,
+                1,
+                'Het bestuur besluit de begroting van het introductieweekend ter hoogte van € 1.250,00 goed te keuren.',
+            ],
+            [
+                'meeting-BV-1807',
+                2,
+                1,
+                'Het bestuur besluit de samenwerkingsovereenkomst met de faculteit te bekrachtigen.',
+            ],
+            [
+                'meeting-BV-1808',
+                1,
+                1,
+                'Het bestuur besluit een bijdrage van € 75,00 toe te kennen aan de constitutieborrel van KEUR.',
+            ],
+            [
+                'meeting-BV-1810',
+                1,
+                1,
+                'Het bestuur besluit de declaratierichtlijn per direct te actualiseren.',
+            ],
+            [
+                'meeting-BV-1811',
+                1,
+                1,
+                'Het bestuur besluit de jaarplanning van GETÉST vast te stellen.',
+            ],
+        ];
+
+        $annulmentTarget = null;
+        foreach ($texts as [$meetingReference, $point, $number, $content]) {
+            $decision = $this->createTextDecision(
+                $manager,
+                $meetingReference,
+                $point,
+                $number,
+                $content,
+            );
+
+            if ('meeting-BV-1801' !== $meetingReference) {
+                continue;
+            }
+
+            $annulmentTarget = $decision;
+        }
+
+        $decision = new Decision();
+        $decision->setMeeting($this->getReference('meeting-BV-1804', Meeting::class));
+        $decision->setPoint(1);
+        $decision->setNumber(1);
+        $decision->setContentEN('');
+        $decision->setContentNL('');
+        $manager->persist($decision);
+
+        assert($annulmentTarget instanceof Decision);
+
+        $annulment = new Annulment();
+        $annulment->setTarget($annulmentTarget);
+        $annulment->setSequence(1);
+        $annulment->setDecision($decision);
+        $annulment->setContentEN('');
+        $annulment->setContentNL('Besluit BV 1801.1.1 wordt nietig verklaard.');
+        $manager->persist($annulment);
+
+        $decision->setContentNL($annulment->getContentNL());
+        $manager->persist($decision);
+
+        $manager->flush();
+    }
+
+    /**
+     * Decisions of the complete GMM, lined up with (and deliberately once without) its agenda points, plus a
+     * correction recorded in a virtual meeting. CMs take no decisions.
+     */
+    private function loadMeetingTextDecisions(ObjectManager $manager): void
+    {
+        $gmmTexts = [
+            [
+                2,
+                1,
+                'De agenda van de vergadering wordt vastgesteld.',
+            ],
+            [
+                3,
+                1,
+                'De notulen van de vorige ALV worden goedgekeurd.',
+            ],
+            [
+                5,
+                1,
+                'De motie van orde over de vergaderduur wordt aangenomen.',
+            ],
+            [
+                7,
+                1,
+                'De begroting voor het komende verenigingsjaar wordt vastgesteld.',
+            ],
+        ];
+
+        foreach ($gmmTexts as [$point, $number, $content]) {
+            $this->createTextDecision(
+                $manager,
+                'meeting-gmm-complete',
+                $point,
+                $number,
+                $content,
+            );
+        }
+
+        $this->createTextDecision(
+            $manager,
+            'meeting-Virt-2',
+            1,
+            1,
+            'Rectificatie: de in BV 1805.1.1 genoemde begroting betreft het introductieweekend van het komende'
+            . ' verenigingsjaar.',
+        );
+
+        $manager->flush();
+    }
+
+    private function createTextDecision(
+        ObjectManager $manager,
+        string $meetingReference,
+        int $point,
+        int $number,
+        string $contentNL,
+    ): Decision {
+        $decision = new Decision();
+        $decision->setMeeting($this->getReference(
+            $meetingReference,
+            Meeting::class,
+        ));
+        $decision->setPoint($point);
+        $decision->setNumber($number);
+        $decision->setContentEN('');
+        $decision->setContentNL($contentNL);
+
+        $manager->persist($decision);
+
+        return $decision;
     }
 
     private function createInstallation(

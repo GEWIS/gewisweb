@@ -14,31 +14,21 @@ use Override;
 use function sprintf;
 
 /**
- * Agenda points on the past meetings. BV-0 carries an exact-numbered point plus a lettered "2a"/"2b" pair and BV-1 a
- * point that matches none of its decisions, so the decision matching (exact wins, first lettered variant wins,
- * unmatched decisions) can be exercised against the decisions seeded by {@see DecisionFixture}.
+ * Agenda points on the GMMs and CMs; BMs never have them. The complete GMM carries an exact-numbered point plus a
+ * lettered "7a"/"7b" pair and misses a point for one of its decisions, so the decision matching (exact wins, first
+ * lettered variant wins, unmatched decisions) can be exercised against the decisions seeded by {@see DecisionFixture}.
  */
 class MeetingPointFixture extends Fixture implements DependentFixtureInterface
 {
     private const array POINTS = [
-        'ALV-0' => [
+        'meeting-gmm-complete' => [
             [
                 '2',
                 'Agenda',
             ],
             [
                 '3',
-                'Decision list',
-            ],
-            [
-                '4',
-                'Minutes GMM',
-            ],
-        ],
-        'ALV-1' => [
-            [
-                '2',
-                'Agenda',
+                'Minutes previous GMM',
             ],
             [
                 '7a',
@@ -49,24 +39,28 @@ class MeetingPointFixture extends Fixture implements DependentFixtureInterface
                 'Budget explanation',
             ],
         ],
-        'BV-0' => [
+        'meeting-gmm-upcoming' => [
             [
                 '1',
                 'Opening',
             ],
             [
-                '2a',
-                'Committee foundations',
+                '2',
+                'Agenda',
             ],
-            [
-                '2b',
-                'Committee foundations (continued)',
-            ],
-        ],
-        'BV-1' => [
             [
                 '3',
-                'Any other business',
+                'Committee updates',
+            ],
+        ],
+        'meeting-cm-past' => [
+            [
+                '1',
+                'Opening',
+            ],
+            [
+                '2',
+                'Quarterly report',
             ],
         ],
     ];
@@ -76,7 +70,7 @@ class MeetingPointFixture extends Fixture implements DependentFixtureInterface
     {
         foreach (self::POINTS as $meetingReference => $points) {
             $meeting = $this->getReference(
-                'meeting-' . $meetingReference,
+                $meetingReference,
                 Meeting::class,
             );
 
@@ -90,7 +84,7 @@ class MeetingPointFixture extends Fixture implements DependentFixtureInterface
                 $manager->persist($point);
                 $this->addReference(
                     sprintf(
-                        'meeting-point-%s-%s',
+                        '%s-point-%s',
                         $meetingReference,
                         $number,
                     ),

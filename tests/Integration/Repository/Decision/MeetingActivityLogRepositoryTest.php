@@ -7,6 +7,7 @@ namespace App\Tests\Integration\Repository\Decision;
 use App\Entity\Decision\Enums\MeetingTypes;
 use App\Entity\Decision\Meeting;
 use App\Entity\Decision\MeetingActivityLog;
+use App\Entity\Decision\MeetingMinutes;
 use App\Repository\Decision\MeetingActivityLogRepository;
 use App\Tests\Integration\DatabaseTestCase;
 use Override;
@@ -27,11 +28,16 @@ final class MeetingActivityLogRepositoryTest extends DatabaseTestCase
 
     public function testMeetingFeedListsNewestFirst(): void
     {
+        $minutes = $this->entityManager->getRepository(MeetingMinutes::class)->findAll();
+        self::assertCount(
+            1,
+            $minutes,
+        );
         $meeting = $this->entityManager->find(
             Meeting::class,
             [
                 'type' => MeetingTypes::ALV,
-                'number' => 1,
+                'number' => $minutes[0]->getMeeting()->getNumber() + 2,
             ],
         );
         self::assertNotNull($meeting);

@@ -16,7 +16,7 @@ use Doctrine\Persistence\ObjectManager;
 use Override;
 
 /**
- * A small activity feed for ALV-1 plus one library entry that belongs to no meeting.
+ * A small activity feed for the upcoming GMM plus one library entry that belongs to no meeting.
  */
 class MeetingActivityLogFixture extends Fixture implements DependentFixtureInterface
 {
@@ -28,7 +28,7 @@ class MeetingActivityLogFixture extends Fixture implements DependentFixtureInter
             User::class,
         );
         $meeting = $this->getReference(
-            'meeting-ALV-1',
+            'meeting-gmm-upcoming',
             Meeting::class,
         );
 

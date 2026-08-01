@@ -7,6 +7,7 @@ namespace App\Tests\Integration\LiveComponent\Decision\Admin;
 use App\Entity\Decision\Enums\MeetingTypes;
 use App\Entity\Decision\Meeting;
 use App\Entity\Decision\MeetingDocument;
+use App\Entity\Decision\MeetingMinutes;
 use App\Entity\Decision\MeetingPoint;
 use App\Entity\Decision\ReferenceDocument;
 use App\Entity\User\User;
@@ -106,7 +107,7 @@ final class MeetingManageTest extends DatabaseTestCase
             $names,
         );
         self::assertCount(
-            2,
+            3,
             $view->points,
         );
     }
@@ -196,7 +197,7 @@ final class MeetingManageTest extends DatabaseTestCase
     public function testCarryOverCopiesTheSelectionOfThePreviousMeeting(): void
     {
         $this->authenticate();
-        $component = $this->manageFor(2);
+        $component = $this->manageFor(3);
 
         self::assertSame(
             [],
@@ -207,12 +208,20 @@ final class MeetingManageTest extends DatabaseTestCase
 
         $references = $component->getView()->references;
         self::assertCount(
-            1,
+            2,
             $references,
         );
-        self::assertSame(
+        $names = array_map(
+            static fn ($selection) => $selection->getReferenceDocument()->getName(),
+            $references,
+        );
+        self::assertContains(
             'Scenarios and Procedures',
-            $references[0]->getReferenceDocument()->getName(),
+            $names,
+        );
+        self::assertContains(
+            'Financial Definition List',
+            $names,
         );
     }
 
@@ -317,13 +326,28 @@ final class MeetingManageTest extends DatabaseTestCase
         self::getContainer()->get(SudoMode::class)->grant();
     }
 
-    private function manageFor(int $number = 0): MeetingManage
+    /**
+     * The complete GMM by default; positive offsets walk forward through the sequentially numbered GMMs (+1 the
+     * processing one, +2 the soonest upcoming, +3 the one after).
+     */
+    private function manageFor(int $offset = 0): MeetingManage
     {
         $component = self::getContainer()->get(MeetingManage::class);
         $component->type = 'gmm';
-        $component->number = $number;
+        $component->number = $this->completeGmmNumber() + $offset;
 
         return $component;
+    }
+
+    private function completeGmmNumber(): int
+    {
+        $minutes = $this->entityManager->getRepository(MeetingMinutes::class)->findAll();
+        self::assertCount(
+            1,
+            $minutes,
+        );
+
+        return $minutes[0]->getMeeting()->getNumber();
     }
 
     private function referenceDocument(string $name): ReferenceDocument
@@ -343,7 +367,7 @@ final class MeetingManageTest extends DatabaseTestCase
             Meeting::class,
             [
                 'type' => MeetingTypes::ALV,
-                'number' => 0,
+                'number' => $this->completeGmmNumber(),
             ],
         );
         self::assertNotNull($meeting);

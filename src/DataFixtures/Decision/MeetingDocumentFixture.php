@@ -26,8 +26,9 @@ use function tempnam;
 use function unlink;
 
 /**
- * Documents on the past ALVs: versioned documents under agenda points, one document that migrated from the legacy
- * flat model (no agenda point, no uploader, unknown upload date), and version history on the agenda.
+ * Documents on the complete GMM and the upcoming one: versioned documents under agenda points, one document that
+ * migrated from the legacy flat model (no agenda point, no uploader, unknown upload date), and version history on
+ * the agenda.
  */
 class MeetingDocumentFixture extends Fixture implements DependentFixtureInterface
 {
@@ -43,11 +44,11 @@ class MeetingDocumentFixture extends Fixture implements DependentFixtureInterfac
             User::class,
         );
 
-        // The agenda of ALV-0 was revised once; members see v1.1.
+        // The agenda of the complete GMM was revised once; members see v1.1.
         $agenda = $this->createDocument(
             $manager,
-            'meeting-ALV-0',
-            'meeting-point-ALV-0-2',
+            'meeting-gmm-complete',
+            'meeting-gmm-complete-point-2',
             'Agenda',
             0,
         );
@@ -68,8 +69,8 @@ class MeetingDocumentFixture extends Fixture implements DependentFixtureInterfac
 
         $decisionList = $this->createDocument(
             $manager,
-            'meeting-ALV-0',
-            'meeting-point-ALV-0-3',
+            'meeting-gmm-complete',
+            'meeting-gmm-complete-point-3',
             'Decision list',
             0,
         );
@@ -84,7 +85,7 @@ class MeetingDocumentFixture extends Fixture implements DependentFixtureInterfac
         // Carried over from the legacy flat model: no agenda point, no uploader, unknown upload date.
         $legacyDocument = $this->createDocument(
             $manager,
-            'meeting-ALV-0',
+            'meeting-gmm-complete',
             null,
             'Letter to the GMM',
             0,
@@ -99,8 +100,8 @@ class MeetingDocumentFixture extends Fixture implements DependentFixtureInterfac
 
         $budget = $this->createDocument(
             $manager,
-            'meeting-ALV-1',
-            'meeting-point-ALV-1-7a',
+            'meeting-gmm-complete',
+            'meeting-gmm-complete-point-7a',
             'Budget',
             0,
         );
@@ -110,6 +111,21 @@ class MeetingDocumentFixture extends Fixture implements DependentFixtureInterfac
             'v2.1',
             $uploader,
             new DateTime('-1 week'),
+        );
+
+        $upcomingAgenda = $this->createDocument(
+            $manager,
+            'meeting-gmm-upcoming',
+            'meeting-gmm-upcoming-point-2',
+            'Agenda',
+            0,
+        );
+        $this->createVersion(
+            $manager,
+            $upcomingAgenda,
+            'v1.0',
+            $uploader,
+            new DateTime('-2 days'),
         );
 
         $manager->flush();

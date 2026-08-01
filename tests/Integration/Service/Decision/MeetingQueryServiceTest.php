@@ -7,6 +7,7 @@ namespace App\Tests\Integration\Service\Decision;
 use App\Entity\Decision\Enums\MeetingTypes;
 use App\Entity\Decision\Meeting;
 use App\Entity\Decision\MeetingDocument;
+use App\Entity\Decision\MeetingMinutes;
 use App\Entity\Decision\MeetingReferenceSelection;
 use App\Service\Decision\MeetingPointDecisionMatcher;
 use App\Service\Decision\MeetingQueryService;
@@ -21,9 +22,10 @@ use function array_map;
 use function count;
 
 /**
- * Pins the assembled meeting view against the seed: ALV-0 is complete through its minutes and pins a reference
- * version, ALV-1 is still being processed, BV-0 exercises the decision matching against real seeded decisions, and
- * BV-1 has a decision that matches no agenda point.
+ * Pins the assembled meeting view against the seed. The GMM with minutes ("complete") carries the documents, the
+ * pinned reference, and the decisions that exercise the matching: exact points, the lettered "7a"/"7b" pair, and one
+ * decision without an agenda point. The GMM after it is still being processed, and the soonest upcoming GMM has the
+ * local time and place. GMM numbers are sequential in date order, so neighbours resolve by offset.
  */
 final class MeetingQueryServiceTest extends DatabaseTestCase
 {
@@ -45,17 +47,14 @@ final class MeetingQueryServiceTest extends DatabaseTestCase
 
     public function testCompletedMeetingViewCarriesDocumentsMinutesAndPinnedReference(): void
     {
-        $view = $this->view(
-            MeetingTypes::ALV,
-            0,
-        );
+        $view = $this->view($this->completeGmmNumber());
 
         self::assertSame(
             MeetingStatus::Complete,
             $view->status,
         );
         self::assertCount(
-            3,
+            4,
             $view->points,
         );
 
@@ -97,19 +96,16 @@ final class MeetingQueryServiceTest extends DatabaseTestCase
             $view->minutes?->getLatestVersion()?->getVersionLabel(),
         );
 
-        // Three documents plus one reference selection.
+        // Four documents plus one reference selection.
         self::assertSame(
-            4,
+            5,
             $view->documentCount,
         );
     }
 
     public function testMeetingWithoutDecisionsOrMinutesIsStillBeingProcessed(): void
     {
-        $view = $this->view(
-            MeetingTypes::ALV,
-            1,
-        );
+        $view = $this->view($this->completeGmmNumber() + 1);
 
         self::assertSame(
             MeetingStatus::HeldProcessing,
@@ -125,23 +121,13 @@ final class MeetingQueryServiceTest extends DatabaseTestCase
 
     public function testSeededDecisionsAttachToExactAndFirstLetteredPoints(): void
     {
-        $view = $this->view(
-            MeetingTypes::BV,
-            0,
-        );
+        $view = $this->view($this->completeGmmNumber());
 
-        self::assertSame(
-            MeetingStatus::Complete,
-            $view->status,
-        );
-        self::assertSame(
-            [],
-            $view->unmatchedDecisions,
-        );
-
-        // The exact "1" gets its decision, the first lettered variant "2a" gets the point 2 decision, "2b" nothing.
+        // Points "2" and "3" get their decisions, the first lettered variant "7a" gets the point 7 decision,
+        // "7b" nothing, and the point 5 decision matches no agenda point at all.
         self::assertSame(
             [
+                1,
                 1,
                 1,
                 0,
@@ -151,15 +137,6 @@ final class MeetingQueryServiceTest extends DatabaseTestCase
                 $view->points,
             ),
         );
-    }
-
-    public function testDecisionMatchingNoPointCountsTowardsTheReadinessWarning(): void
-    {
-        $view = $this->view(
-            MeetingTypes::BV,
-            1,
-        );
-
         self::assertCount(
             1,
             $view->unmatchedDecisions,
@@ -174,15 +151,13 @@ final class MeetingQueryServiceTest extends DatabaseTestCase
             [],
             $readiness->duplicatePointNumbers,
         );
-        self::assertFalse($readiness->minutesUploaded);
+        self::assertTrue($readiness->minutesUploaded);
     }
 
     public function testUpcomingMeetingStatusAndNearbyMeetings(): void
     {
-        $view = $this->view(
-            MeetingTypes::ALV,
-            3,
-        );
+        $upcomingNumber = $this->completeGmmNumber() + 2;
+        $view = $this->view($upcomingNumber);
 
         self::assertSame(
             MeetingStatus::Upcoming,
@@ -193,33 +168,35 @@ final class MeetingQueryServiceTest extends DatabaseTestCase
             $view->localDetails?->getLocation(),
         );
 
-        $nearby = $this->queryService->getNearbyMeetings($view->meeting);
-        self::assertSame(
-            [
-                2,
-                1,
-                0,
-            ],
-            array_map(
-                static fn (NearbyMeeting $row) => $row->number,
-                $nearby,
-            ),
+        $nearby = array_map(
+            static fn (NearbyMeeting $row) => $row->number,
+            $this->queryService->getNearbyMeetings($view->meeting),
+        );
+        self::assertCount(
+            4,
+            $nearby,
+        );
+        self::assertGreaterThan(
+            $upcomingNumber,
+            $nearby[0],
+        );
+        self::assertLessThan(
+            $upcomingNumber,
+            $nearby[3],
         );
     }
 
-    public function testNearbyMeetingsAlwaysIncludeFollowingOnes(): void
+    public function testNearbyMeetingsShowTwoAfterAndTwoBefore(): void
     {
-        $view = $this->view(
-            MeetingTypes::ALV,
-            1,
-        );
+        $completeNumber = $this->completeGmmNumber();
+        $view = $this->view($completeNumber);
 
-        // Two after and two before where available; ALV-1 only has ALV-0 before it, so a third later one fills in.
         self::assertSame(
             [
-                3,
-                2,
-                0,
+                $completeNumber + 2,
+                $completeNumber + 1,
+                $completeNumber - 1,
+                $completeNumber - 2,
             ],
             array_map(
                 static fn (NearbyMeeting $row) => $row->number,
@@ -228,16 +205,29 @@ final class MeetingQueryServiceTest extends DatabaseTestCase
         );
     }
 
-    private function view(
-        MeetingTypes $type,
-        int $number,
-    ): MeetingView {
+    private function view(int $number): MeetingView
+    {
         $view = $this->queryService->getMeetingView(
-            $type,
+            MeetingTypes::ALV,
             $number,
         );
         self::assertNotNull($view);
 
         return $view;
+    }
+
+    /**
+     * The number of the one GMM that has minutes; the calendar is seeded around "today", so it moves with the run
+     * date.
+     */
+    private function completeGmmNumber(): int
+    {
+        $minutes = $this->entityManager->getRepository(MeetingMinutes::class)->findAll();
+        self::assertCount(
+            1,
+            $minutes,
+        );
+
+        return $minutes[0]->getMeeting()->getNumber();
     }
 }
