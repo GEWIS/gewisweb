@@ -73,6 +73,7 @@
                 <div class="panel-body">
                     <div class="row row-cols-2 row-cols-md-3 g-2">
                         {{ _self.tile(path('meetings/index'), 'fa-gavel', 'Meetings'|trans, 'Documents, minutes, and decisions'|trans) }}
+                        {{ _self.tile(path('members/archive'), 'fa-box-archive', 'Public archive'|trans, 'Documents of the association'|trans) }}
                         {% if is_granted('ROLE_MEMBER') %}
                             {{ _self.tile(path('members/find'), 'fa-user-group', 'Find a member'|trans, 'Search the register'|trans) }}
                         {% endif %}

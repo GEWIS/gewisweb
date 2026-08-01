@@ -14,6 +14,7 @@ use App\Repository\Photo\ProfilePhotoRepository;
 use App\Service\Application\FileDownloadHelper;
 use App\Service\Application\FileStorage;
 use App\Service\Decision\MemberInfoService;
+use App\Service\Decision\PublicArchiveBrowser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -26,6 +27,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use function array_map;
 use function assert;
 use function basename;
+use function explode;
 use function mb_strlen;
 use function trim;
 
@@ -50,6 +52,7 @@ class MemberController extends AbstractController
         private readonly ProfilePhotoRepository $profilePhotoRepository,
         private readonly FileStorage $fileStorage,
         private readonly FileDownloadHelper $fileDownloadHelper,
+        private readonly PublicArchiveBrowser $publicArchiveBrowser,
         #[Autowire('%app.regulations%')]
         private readonly array $regulations,
         #[Autowire('%app.members_area_links%')]
@@ -169,6 +172,57 @@ class MemberController extends AbstractController
             $storedPath,
             basename($archivePath) . '.pdf',
             'application/pdf',
+        );
+    }
+
+    /**
+     * Browses the SFTP-mirrored public archive: a directory path renders its listing, a file path downloads the file.
+     */
+    #[Route(
+        path: '/archive/{path}',
+        name: 'archive',
+        requirements: ['path' => '.*'],
+        defaults: ['path' => ''],
+        methods: ['GET'],
+    )]
+    public function archive(string $path): Response
+    {
+        if ($this->publicArchiveBrowser->isFile($path)) {
+            return $this->fileDownloadHelper->download(
+                'public-archive/' . $path,
+                basename($path),
+            );
+        }
+
+        $listing = $this->publicArchiveBrowser->listDirectory($path);
+        if (null === $listing) {
+            throw $this->createNotFoundException();
+        }
+
+        $segments = [];
+        $partial = '';
+        foreach (
+            '' === $path ? [] : explode(
+                '/',
+                $path,
+            ) as $segment
+        ) {
+            $partial = '' === $partial
+                ? $segment
+                : $partial . '/' . $segment;
+            $segments[] = [
+                'name' => $segment,
+                'path' => $partial,
+            ];
+        }
+
+        return $this->render(
+            'decision/archive/browse.html.twig',
+            [
+                'path' => $path,
+                'segments' => $segments,
+                'entries' => $listing,
+            ],
         );
     }
 

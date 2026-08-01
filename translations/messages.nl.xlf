@@ -1181,6 +1181,14 @@
         <source>Documents not filed under an agenda point, including everything carried over from before agenda points existed.</source>
         <target state="translated">Documenten die niet onder een agendapunt zijn ingediend, inclusief alles van voordat agendapunten bestonden.</target>
       </trans-unit>
+      <trans-unit id="MtPVEh0" resname="Documents of the association">
+        <source>Documents of the association</source>
+        <target state="translated">Documenten van de vereniging</target>
+      </trans-unit>
+      <trans-unit id="VSl4kMA" resname="Documents of the association, mirrored from the board archive.">
+        <source>Documents of the association, mirrored from the board archive.</source>
+        <target state="translated">Documenten van de vereniging, gespiegeld vanuit het bestuursarchief.</target>
+      </trans-unit>
       <trans-unit id="vXDVxcC" resname="Documents under this agenda point are kept and move to the meeting-level group.">
         <source>Documents under this agenda point are kept and move to the meeting-level group.</source>
         <target state="translated">Documenten onder dit agendapunt blijven bewaard en verhuizen naar de groep op vergaderniveau.</target>
@@ -2965,6 +2973,10 @@
         <source>Proxy votes for the GMM</source>
         <target state="translated">Machtigingen voor de ALV</target>
       </trans-unit>
+      <trans-unit id="FOA7YHu" resname="Public archive">
+        <source>Public archive</source>
+        <target state="translated">Publiek archief</target>
+      </trans-unit>
       <trans-unit id="hqFA34r" resname="Published">
         <source>Published</source>
         <target state="translated">Gepubliceerd</target>
@@ -4140,6 +4152,10 @@
       <trans-unit id="2sJ6LMc" resname="This export covers the GEWIS website only. For any other personal data GEWIS holds, contact the privacy officers.">
         <source>This export covers the GEWIS website only. For any other personal data GEWIS holds, contact the privacy officers.</source>
         <target>Deze export bevat alleen gegevens van de GEWIS-website. Neem voor andere persoonsgegevens die GEWIS bewaart contact op met de privacyverantwoordelijken.</target>
+      </trans-unit>
+      <trans-unit id="Oy4F9J." resname="This folder is empty.">
+        <source>This folder is empty.</source>
+        <target state="translated">Deze map is leeg.</target>
       </trans-unit>
       <trans-unit id="Kw6uR1y" resname="This is the first revision; nothing to compare against.">
         <source>This is the first revision; nothing to compare against.</source>

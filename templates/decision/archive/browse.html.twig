@@ -1,0 +1,97 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}{{ 'Public archive'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block breadcrumbs %}
+    <li class="breadcrumb-item"><a href="{{ path('members/index') }}">{{ 'Members'|trans }}</a></li>
+    {% if segments is empty %}
+        <li class="breadcrumb-item active" aria-current="page">{{ 'Public archive'|trans }}</li>
+    {% else %}
+        <li class="breadcrumb-item"><a href="{{ path('members/archive') }}">{{ 'Public archive'|trans }}</a></li>
+        {% for segment in segments %}
+            {% if loop.last %}
+                <li class="breadcrumb-item active" aria-current="page">{{ segment.name }}</li>
+            {% else %}
+                <li class="breadcrumb-item"><a href="{{ path('members/archive', {'path': segment.path}) }}">{{ segment.name }}</a></li>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endblock %}
+
+{% block pre_body %}
+    {% embed 'partials/application/page-header.html.twig' %}
+        {% block header_title %}{{ segments is empty ? 'Public archive'|trans : segments|last.name }}{% endblock %}
+        {% block header_subtitle %}
+            <p class="page-header-meta mb-0">
+                {{ 'Documents of the association, mirrored from the board archive.'|trans }}
+            </p>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% macro file_icon(name) %}
+    {%- set extension = name|split('.')|last|lower -%}
+    {%- set icons = {
+        'pdf': 'far fa-file-pdf',
+        'doc': 'far fa-file-word',
+        'docx': 'far fa-file-word',
+        'odt': 'far fa-file-word',
+        'xls': 'far fa-file-excel',
+        'xlsx': 'far fa-file-excel',
+        'ods': 'far fa-file-excel',
+        'csv': 'far fa-file-excel',
+        'ppt': 'far fa-file-powerpoint',
+        'pptx': 'far fa-file-powerpoint',
+        'odp': 'far fa-file-powerpoint',
+        'png': 'far fa-file-image',
+        'jpg': 'far fa-file-image',
+        'jpeg': 'far fa-file-image',
+        'gif': 'far fa-file-image',
+        'svg': 'far fa-file-image',
+        'webp': 'far fa-file-image',
+        'zip': 'far fa-file-zipper',
+        'rar': 'far fa-file-zipper',
+        '7z': 'far fa-file-zipper',
+        'gz': 'far fa-file-zipper',
+        'mp4': 'far fa-file-video',
+        'mov': 'far fa-file-video',
+        'mp3': 'far fa-file-audio',
+        'wav': 'far fa-file-audio',
+        'txt': 'far fa-file-lines',
+        'md': 'far fa-file-lines',
+    } -%}
+    {{- icons[extension] ?? 'far fa-file' -}}
+{% endmacro %}
+
+{% block contents %}
+    <div class="panel mt-0">
+        <div class="panel-body">
+            {% if path != '' %}
+                {% set parent = segments|length > 1 ? segments[segments|length - 2].path : '' %}
+                <a href="{{ '' == parent ? path('members/archive') : path('members/archive', {'path': parent}) }}"
+                   class="d-flex align-items-center gap-3 py-2 text-body">
+                    <span class="fas fa-arrow-turn-up text-muted" aria-hidden="true"></span>
+                    <span class="fw-semibold flex-grow-1">..</span>
+                </a>
+            {% endif %}
+            {% if entries is empty and path == '' %}
+                <p class="text-center text-muted py-5 mb-0">{{ 'This folder is empty.'|trans }}</p>
+            {% else %}
+                {% for entry in entries %}
+                    <a href="{{ path('members/archive', {'path': entry.path}) }}"
+                       class="d-flex align-items-center gap-3 py-2 text-body {% if not loop.first or path != '' %}border-top{% endif %}">
+                        {% if entry.isDirectory %}
+                            <span class="fas fa-folder text-warning" aria-hidden="true"></span>
+                        {% else %}
+                            <span class="{{ _self.file_icon(entry.name) }} text-muted" aria-hidden="true"></span>
+                        {% endif %}
+                        <span class="fw-semibold flex-grow-1">{{ entry.name }}</span>
+                        {% if not entry.isDirectory %}
+                            <span class="fas fa-download text-muted" aria-hidden="true"></span>
+                        {% endif %}
+                    </a>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
