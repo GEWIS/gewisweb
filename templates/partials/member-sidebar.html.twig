@@ -20,7 +20,7 @@
         </a>
         <ul class="dropdown-menu">
             <li>
-                <a class="dropdown-item {{ activeRoute == 'general' ? 'active' : '' }}" href="{{ path('user_settings_general') }}">
+                <a class="dropdown-item {{ activeRoute == 'general' ? 'active' : '' }}" href="{{ path('user_settings_index') }}">
                     {{ 'General'|trans }}
                 </a>
             </li>
@@ -30,7 +30,7 @@
                 </a>
             </li>
             <li>
-                <a class="dropdown-item {{ activeRoute == 'privacy' ? 'active' : '' }}" href="{{ path('user_settings_index') }}">
+                <a class="dropdown-item {{ activeRoute == 'privacy' ? 'active' : '' }}" href="{{ path('user_settings_privacy') }}">
                     {{ 'Privacy'|trans }}
                 </a>
             </li>

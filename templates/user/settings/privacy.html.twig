@@ -15,7 +15,7 @@
     <div class="row">
         <div class="col-lg-6">
             {{ form_start(form, {
-                'action': path('user_settings_index'),
+                'action': path('user_settings_privacy'),
                 'method': 'POST',
             }) }}
             <div class="panel">
@@ -73,7 +73,7 @@
                     {% else %}
                         {# Requesting the export needs sudo; re-authenticate first and return here. #}
                         <a class="btn btn-outline-gewis-primary"
-                           href="{{ path('user_sudo_confirm', {'next': path('user_settings_index')}) }}">
+                           href="{{ path('user_sudo_confirm', {'next': path('user_settings_privacy')}) }}">
                             <span class="fas fa-file-export"></span> {{ 'Request my data export'|trans }}
                         </a>
                     {% endif %}
@@ -102,7 +102,7 @@
                     {% else %}
                         {# Removing tags needs sudo; re-authenticate first and return here to confirm. #}
                         <a class="btn btn-outline-danger"
-                           href="{{ path('user_sudo_confirm', {'next': path('user_settings_index')}) }}">
+                           href="{{ path('user_sudo_confirm', {'next': path('user_settings_privacy')}) }}">
                             <span class="fas fa-trash"></span> {{ 'Remove all tags of me'|trans }}
                         </a>
                     {% endif %}
