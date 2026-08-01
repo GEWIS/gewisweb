@@ -2501,6 +2501,10 @@
         <source>No decisions have been published for this meeting. They may still be processed from the minutes, or this meeting simply took none.</source>
         <target state="translated">Er zijn geen besluiten gepubliceerd voor deze vergadering. Mogelijk worden ze nog verwerkt uit de notulen, of heeft deze vergadering er simpelweg geen genomen.</target>
       </trans-unit>
+      <trans-unit id="TXnDSAq" resname="No decisions have been recorded for this virtual meeting yet.">
+        <source>No decisions have been recorded for this virtual meeting yet.</source>
+        <target state="translated">Er zijn nog geen besluiten vastgelegd voor deze virtuele vergadering.</target>
+      </trans-unit>
       <trans-unit id="tAkDmLP" resname="No decisions match your search.">
         <source>No decisions match your search.</source>
         <target state="translated">Geen besluiten gevonden voor je zoekopdracht.</target>

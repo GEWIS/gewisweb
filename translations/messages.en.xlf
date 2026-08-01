@@ -2501,6 +2501,10 @@
         <source>No decisions have been published for this meeting. They may still be processed from the minutes, or this meeting simply took none.</source>
         <target state="translated">No decisions have been published for this meeting. They may still be processed from the minutes, or this meeting simply took none.</target>
       </trans-unit>
+      <trans-unit id="TXnDSAq" resname="No decisions have been recorded for this virtual meeting yet.">
+        <source>No decisions have been recorded for this virtual meeting yet.</source>
+        <target state="translated">No decisions have been recorded for this virtual meeting yet.</target>
+      </trans-unit>
       <trans-unit id="tAkDmLP" resname="No decisions match your search.">
         <source>No decisions match your search.</source>
         <target state="translated">No decisions match your search.</target>

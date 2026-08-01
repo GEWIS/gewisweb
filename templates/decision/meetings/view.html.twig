@@ -3,11 +3,13 @@
 {% set meeting = view.meeting %}
 {% set abbr = meeting.type.abbreviation|trans %}
 {% set statuses = enum('App\\ViewModel\\Decision\\MeetingStatus') %}
-{% set isUpcoming = view.status is same as(statuses.Upcoming) %}
-{% set isProcessing = view.status is same as(statuses.HeldProcessing) %}
+{# Virtual meetings repair the record: no documents, no minutes, no lifecycle — just their decisions. #}
+{% set isVirtual = meeting.type is same as(enum('App\\Entity\\Decision\\Enums\\MeetingTypes').VIRT) %}
+{% set isUpcoming = not isVirtual and view.status is same as(statuses.Upcoming) %}
+{% set isProcessing = not isVirtual and view.status is same as(statuses.HeldProcessing) %}
 {% set decisionCount = view.decisionEntries|length %}
 {% set minutesLatest = view.minutes ? view.minutes.latestVersion : null %}
-{% set showDecisionsFirst = decisionCount > 0 %}
+{% set showDecisionsFirst = isVirtual or decisionCount > 0 %}
 
 {% block page_title %}{{ abbr ~ ' ' ~ meeting.number }}{{ ' - ' }}{{ 'Meetings'|trans|page_title }}{{ parent() }}{% endblock %}
 
@@ -21,9 +23,11 @@
     {% embed 'partials/application/page-header.html.twig' %}
         {% block header_status %}
             <div class="d-flex flex-wrap align-items-center gap-2 mb-1">
-                {% include 'partials/decision/meeting-status-badge.html.twig' with {
-                    'status': view.status,
-                } only %}
+                {% if not isVirtual %}
+                    {% include 'partials/decision/meeting-status-badge.html.twig' with {
+                        'status': view.status,
+                    } only %}
+                {% endif %}
                 <span class="page-header-meta">{{ meeting.date|format_date('full') }}</span>
                 {% if isUpcoming and view.localDetails and (view.localDetails.startTime or view.localDetails.location) %}
                     <span class="page-header-meta">
@@ -53,18 +57,20 @@
             {% endif %}
         {% endblock %}
         {% block header_stats %}
-            <div class="page-header-stat">
-                <span class="page-header-stat-value">{{ view.documentCount }}</span>
-                <span class="page-header-stat-label">{{ 'Documents'|trans }}</span>
-            </div>
-            <div class="page-header-stat">
-                <span class="page-header-stat-value">{{ decisionCount > 0 ? decisionCount : '–' }}</span>
-                <span class="page-header-stat-label">{{ 'Decisions'|trans }}</span>
-            </div>
-            <div class="page-header-stat">
-                <span class="page-header-stat-value">{{ minutesLatest ? 'Available'|trans : '–' }}</span>
-                <span class="page-header-stat-label">{{ 'Minutes'|trans }}</span>
-            </div>
+            {% if not isVirtual %}
+                <div class="page-header-stat">
+                    <span class="page-header-stat-value">{{ view.documentCount }}</span>
+                    <span class="page-header-stat-label">{{ 'Documents'|trans }}</span>
+                </div>
+                <div class="page-header-stat">
+                    <span class="page-header-stat-value">{{ decisionCount > 0 ? decisionCount : '–' }}</span>
+                    <span class="page-header-stat-label">{{ 'Decisions'|trans }}</span>
+                </div>
+                <div class="page-header-stat">
+                    <span class="page-header-stat-value">{{ minutesLatest ? 'Available'|trans : '–' }}</span>
+                    <span class="page-header-stat-label">{{ 'Minutes'|trans }}</span>
+                </div>
+            {% endif %}
         {% endblock %}
     {% endembed %}
 {% endblock %}
@@ -124,7 +130,7 @@
                 {{ 'Publishing the outcome of a meeting can take a few weeks, and some meetings take no decisions at all. Documents from the meeting are already available.'|trans }}
             </div>
         </div>
-    {% elseif not minutesLatest %}
+    {% elseif not isVirtual and not minutesLatest %}
         <div class="alert alert-warning d-flex gap-3" role="alert">
             <span class="fas fa-clock" aria-hidden="true"></span>
             <div>
@@ -136,6 +142,7 @@
 
     <div class="row g-4">
         <div class="col-lg-8" data-controller="revision-filter">
+            {% if not isVirtual %}
             <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3 meeting-view-tabs">
                 <ul class="nav nav-pills" role="tablist">
                     <li class="nav-item" role="presentation">
@@ -170,8 +177,10 @@
                     </div>
                 {% endif %}
             </div>
+            {% endif %}
 
             <div class="tab-content">
+                {% if not isVirtual %}
                 <div class="tab-pane fade {% if not showDecisionsFirst %}show active{% endif %} meeting-documents"
                      id="meeting-documents-pane" role="tabpanel" aria-labelledby="meeting-documents-tab" tabindex="0">
                     {% if view.points is not empty or view.meetingLevelDocuments is not empty %}
@@ -244,9 +253,10 @@
                         </div>
                     {% endif %}
                 </div>
+                {% endif %}
 
                 <div class="tab-pane fade {% if showDecisionsFirst %}show active{% endif %}" id="meeting-decisions-pane"
-                     role="tabpanel" aria-labelledby="meeting-decisions-tab" tabindex="0">
+                     {% if not isVirtual %}role="tabpanel" aria-labelledby="meeting-decisions-tab" tabindex="0"{% endif %}>
                     {% if decisionCount > 0 %}
                         <div class="panel" data-controller="copy" data-copy-done-value="{{ 'Copied!'|trans }}">
                             <div class="panel-heading d-flex flex-wrap justify-content-between align-items-baseline gap-2">
@@ -280,6 +290,8 @@
                             <div class="panel-body text-center text-muted py-5">
                                 {% if isUpcoming %}
                                     {{ 'The meeting takes place on %date%; any decisions taken will be listed here afterwards.'|trans({'%date%': meeting.date|format_date('full')}) }}
+                                {% elseif isVirtual %}
+                                    {{ 'No decisions have been recorded for this virtual meeting yet.'|trans }}
                                 {% else %}
                                     {{ 'No decisions have been published for this meeting. They may still be processed from the minutes, or this meeting simply took none.'|trans }}
                                 {% endif %}

@@ -42,11 +42,11 @@ final class MeetingOverview
         'gmm',
         'bm',
         'cm',
-        'virt',
     ];
 
     /**
-     * The member-facing type token (gmm/bm/cm/virt); null shows every type.
+     * The member-facing type token (gmm/bm/cm); null shows every regular type. Virtual meetings exist to repair the
+     * record and are reachable by direct link or an explicit "VIRT 123" search, never through the tabs.
      */
     #[LiveProp(
         writable: true,
@@ -169,6 +169,7 @@ final class MeetingOverview
                 $this->page,
             ),
             self::PAGE_SIZE,
+            excludeVirtual: true,
         );
     }
 
