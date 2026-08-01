@@ -19,6 +19,24 @@ parameters:
     # Fallback contact for board/committee correspondence with no more specific sender/reply-to (e.g. a bulk email to
     # an activity's sign-ups when the organising organ has no public email).
     app.email.internal_affairs: 'cib@gewis.nl'
+    # Regulations on the members-area dashboard: slug (used in the URL) to the document's path inside the
+    # SFTP-mirrored public archive (`data/public-archive/`), without the `.pdf` extension.
+    app.regulations:
+        activity-policy: 'Policies & Regulations/Activity Policy'
+        alcohol-policy: 'Policies & Regulations/Alcohol Policy'
+        board-policies: 'Policies & Regulations/Board Policies'
+        borrel-policy: 'Policies & Regulations/Borrel Policy'
+        house-rules: 'Policies & Regulations/House rules'
+        ict-policy: 'Policies & Regulations/ICT Policy'
+        key-policy: 'Policies & Regulations/Key Policy'
+        poster-policy: 'Policies & Regulations/Poster Policy'
+        privacy-policy: 'Policies & Regulations/Privacy Policy'
+    # External tools linked from the members-area dashboard.
+    app.members_area_links:
+        webmail: '/webmail'
+        gewiki: 'https://wiki.gewis.nl'
+        supremum: 'https://supremum.gewis.nl/'
+        corporate_identity: '/corporateidentity'
 
 services:
     # default configuration for services in *this* file

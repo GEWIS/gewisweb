@@ -1,6 +1,195 @@
 {% extends 'layout.html.twig' %}
 
-{% block page_title %}{{ 'Members'|trans|page_title }}{{ parent() }}{% endblock %}
+{% block page_title %}{{ 'Members area'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block pre_body %}
+    {% embed 'partials/application/page-header.html.twig' %}
+        {% block header_top %}
+            <span class="page-header-eyebrow">{{ 'Members area'|trans }}</span>
+        {% endblock %}
+        {% block header_title %}{{ 'Welcome back, %name%'|trans({'%name%': member.firstName}) }}{% endblock %}
+        {% block header_subtitle %}
+            <p class="page-header-meta mb-0">
+                {{ 'Everything for members in one place: your account, association resources, meeting decisions, and regulations.'|trans }}
+            </p>
+        {% endblock %}
+        {% block header_actions %}
+            <div class="d-flex flex-column gap-2">
+                {% if is_granted('ROLE_MEMBER') %}
+                    <a href="{{ path('members/find') }}" class="btn btn-sm btn-outline-gewis-primary text-start">
+                        <span class="fas fa-user-group" aria-hidden="true"></span>
+                        {{ 'Find a member'|trans }}
+                    </a>
+                {% endif %}
+                <a href="{{ path('meetings/search') }}" class="btn btn-sm btn-outline-gewis-primary text-start">
+                    <span class="fas fa-gavel" aria-hidden="true"></span>
+                    {{ 'Search meeting decisions'|trans }}
+                </a>
+                <a href="{{ path('members/me') }}" class="btn btn-sm btn-outline-gewis-primary text-start">
+                    <span class="fas fa-user" aria-hidden="true"></span>
+                    {{ 'My profile'|trans }}
+                </a>
+            </div>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% macro tile(href, icon, label, description) %}
+    <div class="col">
+        <a href="{{ href }}" class="d-flex flex-column gap-2 border rounded p-3 text-body text-decoration-none h-100">
+            <span class="fas {{ icon }}" aria-hidden="true"></span>
+            <span>
+                <span class="fw-semibold d-block">{{ label }}</span>
+                <span class="small text-muted">{{ description }}</span>
+            </span>
+        </a>
+    </div>
+{% endmacro %}
 
 {% block contents %}
+    <div class="row g-4">
+        <div class="col-lg-7">
+            <div class="panel mt-0">
+                <div class="panel-heading">
+                    <h3>{{ 'Personal'|trans }}</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row row-cols-2 row-cols-md-3 g-2">
+                        {{ _self.tile(path('members/me'), 'fa-user', 'Profile'|trans, 'Details and committees'|trans) }}
+                        {{ _self.tile(path('user_settings_index'), 'fa-lock', 'Settings'|trans, 'Account and security'|trans) }}
+                        {{ _self.tile(path('photo/album', {'type': 'member', 'album': member.lidnr}), 'fa-image', 'My photos'|trans, 'Photos you are tagged in'|trans) }}
+                        {{ _self.tile(path('user_token', {'app': 'sudosos'}), 'fa-beer-mug-empty', 'SudoSOS', 'Balance and orders'|trans) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3>{{ 'Association'|trans }}</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row row-cols-2 row-cols-md-3 g-2">
+                        {{ _self.tile(path('meetings/index'), 'fa-gavel', 'Meetings'|trans, 'Documents, minutes, and decisions'|trans) }}
+                        {% if is_granted('ROLE_MEMBER') %}
+                            {{ _self.tile(path('members/find'), 'fa-user-group', 'Find a member'|trans, 'Search the register'|trans) }}
+                        {% endif %}
+                        {{ _self.tile(links.supremum, 'fa-book', 'Supremum', 'Association magazine'|trans) }}
+                    </div>
+                </div>
+            </div>
+
+            {% if is_granted('ROLE_ACTIVE_MEMBER') %}
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h3>{{ 'Active members'|trans }}</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row row-cols-2 row-cols-md-3 g-2">
+                            {{ _self.tile(links.webmail, 'fa-envelope-open-text', 'Webmail'|trans, 'GEWIS mailboxes'|trans) }}
+                            {{ _self.tile(path('admin/activities/index'), 'fa-tree', 'Activities'|trans, 'Organise and manage'|trans) }}
+                            {{ _self.tile(path('admin/activities/calendar/index'), 'fa-calendar-days', 'Option calendar'|trans, 'Reserve a date'|trans) }}
+                            {{ _self.tile(links.gewiki, 'fa-globe', 'GEWIKI', 'Internal knowledge base'|trans) }}
+                            {{ _self.tile(links.corporate_identity, 'fa-palette', 'Corporate identity'|trans, 'Logos and templates'|trans) }}
+                            {% if is_granted('ROLE_ADMIN') %}
+                                {{ _self.tile(path('admin/index'), 'fa-gear', 'Administrator'|trans, 'Site administration'|trans) }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="col-lg-5">
+            {% if upcomingMeetings is not empty %}
+                <div class="panel mt-0">
+                    <div class="panel-heading">
+                        <h3>{{ 'Upcoming meetings'|trans }}</h3>
+                    </div>
+                    <div class="panel-body">
+                        {% for upcoming in upcomingMeetings %}
+                            <a href="{{ path('meetings/view', {'type': upcoming.type.urlToken, 'number': upcoming.number}) }}"
+                               class="d-flex align-items-center gap-3 py-2 text-body {% if not loop.first %}border-top{% endif %}">
+                                <span class="fas fa-calendar text-muted" aria-hidden="true"></span>
+                                <span class="fw-semibold text-nowrap">{{ upcoming.type.abbreviation|trans }} {{ upcoming.number }}</span>
+                                <span class="flex-grow-1 small text-muted">{{ upcoming.date|format_date('full') }}</span>
+                                <span class="fas fa-chevron-right text-muted small" aria-hidden="true"></span>
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="panel {% if upcomingMeetings is empty %}mt-0{% endif %}">
+                <div class="panel-heading d-flex flex-wrap justify-content-between align-items-center gap-2">
+                    <h3>{{ 'Meetings'|trans }}</h3>
+                    <ul class="nav nav-pills" role="tablist">
+                        {% for typeValue, meetings in recentMeetings %}
+                            {% set meetingType = enum('App\\Entity\\Decision\\Enums\\MeetingTypes').from(typeValue) %}
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link {% if loop.first %}active{% endif %}" id="dashboard-meetings-{{ meetingType.urlToken }}-tab"
+                                        data-bs-toggle="pill" data-bs-target="#dashboard-meetings-{{ meetingType.urlToken }}" type="button"
+                                        role="tab" aria-controls="dashboard-meetings-{{ meetingType.urlToken }}"
+                                        aria-selected="{{ loop.first ? 'true' : 'false' }}">
+                                    {{ meetingType.abbreviation|trans }}
+                                </button>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="panel-body">
+                    <div class="tab-content">
+                        {% for typeValue, meetings in recentMeetings %}
+                            {% set meetingType = enum('App\\Entity\\Decision\\Enums\\MeetingTypes').from(typeValue) %}
+                            <div class="tab-pane fade {% if loop.first %}show active{% endif %}" id="dashboard-meetings-{{ meetingType.urlToken }}"
+                                 role="tabpanel" aria-labelledby="dashboard-meetings-{{ meetingType.urlToken }}-tab" tabindex="0">
+                                {% for meeting in meetings %}
+                                    <a href="{{ path('meetings/view', {'type': meeting.type.urlToken, 'number': meeting.number}) }}"
+                                       class="d-flex align-items-center gap-3 py-2 text-body {% if not loop.first %}border-top{% endif %}">
+                                        <span class="fw-semibold text-nowrap">{{ meeting.type.abbreviation|trans }} {{ meeting.number }}</span>
+                                        <span class="flex-grow-1 small text-muted">{{ meeting.date|format_date('full') }}</span>
+                                        <span class="fas fa-chevron-right text-muted small" aria-hidden="true"></span>
+                                    </a>
+                                {% else %}
+                                    <span class="text-muted small">{{ 'No meetings of this type have taken place yet.'|trans }}</span>
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <a href="{{ path('meetings/index') }}" class="d-inline-flex align-items-center gap-2 fw-semibold mt-2">
+                        {{ 'View all meetings'|trans }}
+                        <span class="fas fa-arrow-right small" aria-hidden="true"></span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3>{{ 'Regulations'|trans }}</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row row-cols-1 row-cols-md-2 g-1">
+                        {% for slug, label in {
+                            'activity-policy': 'Activity Policy'|trans,
+                            'alcohol-policy': 'Alcohol Policy'|trans,
+                            'board-policies': 'Board Policies'|trans,
+                            'borrel-policy': 'Borrel Policy'|trans,
+                            'house-rules': 'House Rules'|trans,
+                            'ict-policy': 'ICT Policy'|trans,
+                            'key-policy': 'Key Policy'|trans,
+                            'poster-policy': 'Poster Policy'|trans,
+                            'privacy-policy': 'Privacy Policy'|trans,
+                        } %}
+                            <div class="col">
+                                <a href="{{ path('members/regulations', {'regulation': slug}) }}"
+                                   class="d-flex align-items-center gap-2 py-1 text-body fw-semibold">
+                                    <span class="far fa-file-lines text-muted" aria-hidden="true"></span>
+                                    {{ label }}
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
