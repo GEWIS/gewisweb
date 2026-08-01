@@ -1,3 +1,26 @@
+{#
+    Numbered pagination with a small window around the current page. Inside a live component
+    (the default) every control calls the component's `gotoPage` action. Pass `route` (and
+    optionally `routeParams`) to render plain links with the page as a query parameter instead.
+#}
+{% macro control(label, targetPage, disabled, active, route, routeParams) %}
+    <li class="page-item{% if disabled %} disabled{% endif %}{% if active %} active{% endif %}">
+        {% if route %}
+            <a class="page-link" href="{{ path(route, routeParams|merge({'page': targetPage})) }}"
+               {% if disabled %}aria-disabled="true" tabindex="-1"{% endif %}>{{ label }}</a>
+        {% else %}
+            <button type="button" class="page-link"
+                    data-action="live#action"
+                    data-live-action-param="gotoPage"
+                    data-live-page-param="{{ targetPage }}"
+                    {% if disabled %}disabled{% endif %}>{{ label }}</button>
+        {% endif %}
+    </li>
+{% endmacro %}
+
+{% set route = route|default(null) %}
+{% set routeParams = routeParams|default({}) %}
+
 {% if totalPages > 1 %}
     {% set windowStart = max(1, page - 2) %}
     {% set windowEnd = min(totalPages, page + 2) %}
@@ -6,54 +29,23 @@
             {{ 'Page %page% of %totalPages% (%totalCount% records)'|trans({'%page%': page, '%totalPages%': totalPages, '%totalCount%': totalCount}) }}
         </p>
         <ul class="pagination pagination-sm mb-0">
-            <li class="page-item {% if page <= 1 %}disabled{% endif %}">
-                <button type="button" class="page-link"
-                        data-action="live#action"
-                        data-live-action-param="gotoPage"
-                        data-live-page-param="{{ page - 1 }}"
-                        {% if page <= 1 %}disabled{% endif %}>
-                    {{ 'Previous'|trans }}
-                </button>
-            </li>
+            {{ _self.control('Previous'|trans, page - 1, page <= 1, false, route, routeParams) }}
             {% if windowStart > 1 %}
-                <li class="page-item">
-                    <button type="button" class="page-link"
-                            data-action="live#action"
-                            data-live-action-param="gotoPage"
-                            data-live-page-param="1">1</button>
-                </li>
+                {{ _self.control(1, 1, false, false, route, routeParams) }}
                 {% if windowStart > 2 %}
                     <li class="page-item disabled"><span class="page-link">&hellip;</span></li>
                 {% endif %}
             {% endif %}
             {% for p in windowStart..windowEnd %}
-                <li class="page-item {% if p == page %}active{% endif %}">
-                    <button type="button" class="page-link"
-                            data-action="live#action"
-                            data-live-action-param="gotoPage"
-                            data-live-page-param="{{ p }}">{{ p }}</button>
-                </li>
+                {{ _self.control(p, p, false, p == page, route, routeParams) }}
             {% endfor %}
             {% if windowEnd < totalPages %}
                 {% if windowEnd < totalPages - 1 %}
                     <li class="page-item disabled"><span class="page-link">&hellip;</span></li>
                 {% endif %}
-                <li class="page-item">
-                    <button type="button" class="page-link"
-                            data-action="live#action"
-                            data-live-action-param="gotoPage"
-                            data-live-page-param="{{ totalPages }}">{{ totalPages }}</button>
-                </li>
+                {{ _self.control(totalPages, totalPages, false, false, route, routeParams) }}
             {% endif %}
-            <li class="page-item {% if page >= totalPages %}disabled{% endif %}">
-                <button type="button" class="page-link"
-                        data-action="live#action"
-                        data-live-action-param="gotoPage"
-                        data-live-page-param="{{ page + 1 }}"
-                        {% if page >= totalPages %}disabled{% endif %}>
-                    {{ 'Next'|trans }}
-                </button>
-            </li>
+            {{ _self.control('Next'|trans, page + 1, page >= totalPages, false, route, routeParams) }}
         </ul>
     </nav>
 {% endif %}

@@ -255,8 +255,26 @@ class Meeting
         return $this->meetingMinutes;
     }
 
+    /**
+     * Keeps the inverse side in sync, so a change is visible within the same request (a live component re-renders
+     * without a fresh entity load).
+     */
+    public function setMeetingMinutes(?MeetingMinutes $meetingMinutes): void
+    {
+        $this->meetingMinutes = $meetingMinutes;
+    }
+
     public function getLocalDetails(): ?MeetingLocalDetails
     {
         return $this->localDetails;
+    }
+
+    /**
+     * Keeps the inverse side in sync, so a change is visible within the same request (a live component re-renders
+     * without a fresh entity load).
+     */
+    public function setLocalDetails(?MeetingLocalDetails $localDetails): void
+    {
+        $this->localDetails = $localDetails;
     }
 }

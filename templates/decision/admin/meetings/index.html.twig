@@ -1,0 +1,94 @@
+{% extends 'layout-admin.html.twig' %}
+
+{% block page_title %}{{ 'Meetings'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block admin_breadcrumbs %}
+    <li class="breadcrumb-item active" aria-current="page">{{ 'Meetings'|trans }}</li>
+{% endblock %}
+
+{% block contents %}
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+        <h1 class="mb-0">{{ 'Meetings'|trans }}</h1>
+    </div>
+    <p class="text-muted">
+        {{ 'Meetings are synced from GEWISDB; pick one to manage its agenda, documents, and minutes.'|trans }}
+    </p>
+
+    <ul class="nav nav-pills mb-3">
+        <li class="nav-item">
+            <a class="nav-link {% if type is null %}active{% endif %}" href="{{ path('admin/meetings/index') }}">
+                {{ 'All'|trans }}
+            </a>
+        </li>
+        {% for token in typeTokens %}
+            <li class="nav-item">
+                <a class="nav-link {% if type == token %}active{% endif %}" href="{{ path('admin/meetings/index', {'type': token}) }}">
+                    {{ token|upper }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <div class="panel">
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>{{ 'Meeting'|trans }}</th>
+                            <th>{{ 'Date'|trans }}</th>
+                            <th class="text-end">{{ 'Decisions'|trans }}</th>
+                            <th class="text-end">{{ 'Minutes'|trans }}</th>
+                            <th class="text-end">{{ 'Status'|trans }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in rows %}
+                            <tr>
+                                <td>
+                                    <a href="{{ path('admin/meetings/view', {'type': row.meeting.type.urlToken, 'number': row.meeting.number}) }}" class="fw-semibold">
+                                        {{ row.meeting.type.abbreviation|trans }} {{ row.meeting.number }}
+                                    </a>
+                                    <div class="text-muted small">{{ row.meeting.type.label|trans }}</div>
+                                </td>
+                                <td>{{ row.meeting.date|format_date('full') }}</td>
+                                <td class="text-end">
+                                    {% if row.decisionCount > 0 %}
+                                        {{ row.decisionCount }}
+                                    {% else %}
+                                        <span class="text-muted">&ndash;</span>
+                                    {% endif %}
+                                </td>
+                                <td class="text-end">
+                                    {% if row.hasMinutes %}
+                                        <span class="fas fa-check text-success" aria-hidden="true"></span>
+                                        <span class="visually-hidden">{{ 'Available'|trans }}</span>
+                                    {% else %}
+                                        <span class="text-muted">&ndash;</span>
+                                    {% endif %}
+                                </td>
+                                <td class="text-end">
+                                    {% include 'partials/decision/meeting-status-badge.html.twig' with {
+                                        'status': row.status,
+                                    } only %}
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="5" class="text-center text-muted py-4">{{ 'No meetings match the current filters.'|trans }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            {% include 'partials/application/pagination.html.twig' with {
+                'page': currentPage,
+                'totalPages': totalPages,
+                'totalCount': totalCount,
+                'route': 'admin/meetings/index',
+                'routeParams': {'type': type},
+            } only %}
+        </div>
+    </div>
+{% endblock %}

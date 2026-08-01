@@ -30,6 +30,8 @@ import SignupFieldController from './controllers/activity/signup_field_controlle
 import SignupListController from './controllers/activity/signup_list_controller.ts';
 
 // Decision-specific controllers.
+import DocumentUploadController from './controllers/decision/document_upload_controller.ts';
+import LiveSortableController from './controllers/decision/live_sortable_controller.ts';
 import RevisionFilterController from './controllers/decision/revision_filter_controller.ts';
 
 // Photo-specific controllers.
@@ -60,6 +62,8 @@ app.register('modal-form-target', ModalFormTargetController);
 app.register('nav-dropdown', NavDropdownController);
 app.register('notification-settings', NotificationSettingsController);
 app.register('notifications', NotificationsController);
+app.register('document-upload', DocumentUploadController);
+app.register('live-sortable', LiveSortableController);
 app.register('print', PrintController);
 app.register('revision-filter', RevisionFilterController);
 app.register('sortable', SortableController);

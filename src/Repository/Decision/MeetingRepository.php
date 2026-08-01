@@ -312,13 +312,20 @@ class MeetingRepository extends ServiceEntityRepository
         ?int $number,
         int $page,
         int $pageSize,
+        bool $excludeVirtual = false,
     ): array {
-        $filter = static function (QueryBuilder $qb) use ($type, $number): void {
+        $filter = static function (QueryBuilder $qb) use ($type, $number, $excludeVirtual): void {
             if (null !== $type) {
                 $qb->andWhere('m.type = :type')
                     ->setParameter(
                         ':type',
                         $type->value,
+                    );
+            } elseif ($excludeVirtual) {
+                $qb->andWhere('m.type != :virtual')
+                    ->setParameter(
+                        ':virtual',
+                        MeetingTypes::VIRT->value,
                     );
             }
 

@@ -26,6 +26,13 @@
                     'status': view.status,
                 } only %}
                 <span class="page-header-meta">{{ meeting.date|format_date('full') }}</span>
+                {% if isUpcoming and view.localDetails and (view.localDetails.startTime or view.localDetails.location) %}
+                    <span class="page-header-meta">
+                        {%- if view.localDetails.startTime %}{{ 'Starts %time%'|trans({'%time%': view.localDetails.startTime|date('H:i')}) }}{% endif %}
+                        {%- if view.localDetails.startTime and view.localDetails.location %} &middot; {% endif %}
+                        {%- if view.localDetails.location %}{{ view.localDetails.location }}{% endif %}
+                    </span>
+                {% endif %}
             </div>
         {% endblock %}
         {% block header_title %}{{ ordinalNumber }} {{ meeting.type.label|trans }}{% endblock %}
@@ -293,7 +300,7 @@
                     <div class="panel-body">
                         <p class="text-muted small mb-2">{{ 'Not tied to an agenda point; these apply to the meeting as a whole.'|trans }}</p>
                         {% for selection in view.references %}
-                            {% set effective = selection.effectiveVersion %}
+                            {% set effective = selection.pinnedVersion %}
                             {% if effective %}
                                 <a href="{{ path('meetings/reference_download', {'version': effective.id}) }}"
                                    class="d-flex align-items-center gap-2 py-2 text-body {% if not loop.first %}border-top{% endif %}">

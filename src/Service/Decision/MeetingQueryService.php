@@ -6,6 +6,7 @@ namespace App\Service\Decision;
 
 use App\Entity\Decision\Enums\MeetingTypes;
 use App\Entity\Decision\Meeting;
+use App\Entity\Decision\MeetingPoint;
 use App\Repository\Decision\MeetingDocumentRepository;
 use App\Repository\Decision\MeetingReferenceSelectionRepository;
 use App\Repository\Decision\MeetingRepository;
@@ -24,6 +25,7 @@ use function array_values;
 use function count;
 use function spl_object_id;
 use function trim;
+use function usort;
 
 /**
  * Assembles the read side of the meeting pages: the member view, the management readiness checklist, and the derived
@@ -52,7 +54,21 @@ final readonly class MeetingQueryService
             return null;
         }
 
+        // Sort in PHP rather than trusting the collection's load-time order: a live action can have changed positions
+        // in the same request, and the already-initialised collection would still be in its old order.
         $points = array_values($meeting->getPoints()->toArray());
+        usort(
+            $points,
+            static fn (MeetingPoint $a, MeetingPoint $b): int => [
+                $a->getDisplayPosition(),
+                $a->getId(),
+            ]
+                <=> [
+                    $b->getDisplayPosition(),
+                    $b->getId(),
+                ],
+        );
+
         $decisions = array_values($meeting->getDecisions()->toArray());
         $references = $this->meetingReferenceSelectionRepository->findForMeeting($meeting);
 

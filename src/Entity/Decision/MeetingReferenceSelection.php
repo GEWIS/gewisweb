@@ -14,8 +14,8 @@ use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 
 /**
- * The selection of a {@see ReferenceDocument} for one meeting. Without a pinned version the meeting follows the latest
- * version of the document, so a library update rolls out to it automatically; pinning freezes what members see.
+ * The selection of a {@see ReferenceDocument} for one meeting, always pinned to the exact version members see for
+ * that meeting. Library updates never change a meeting's selection implicitly; the board repins on purpose.
  */
 #[Entity(repositoryClass: MeetingReferenceSelectionRepository::class)]
 #[HasLifecycleCallbacks]
@@ -53,14 +53,14 @@ class MeetingReferenceSelection
     private ReferenceDocument $referenceDocument;
 
     /**
-     * The version members see for this meeting; `null` follows the latest version of the document.
+     * The version members see for this meeting.
      */
     #[ManyToOne(targetEntity: ReferenceDocumentVersion::class)]
     #[JoinColumn(
         name: 'pinnedVersion_id',
-        nullable: true,
+        nullable: false,
     )]
-    private ?ReferenceDocumentVersion $pinnedVersion = null;
+    private ReferenceDocumentVersion $pinnedVersion;
 
     public function getMeeting(): Meeting
     {
@@ -82,21 +82,13 @@ class MeetingReferenceSelection
         $this->referenceDocument = $referenceDocument;
     }
 
-    public function getPinnedVersion(): ?ReferenceDocumentVersion
+    public function getPinnedVersion(): ReferenceDocumentVersion
     {
         return $this->pinnedVersion;
     }
 
-    public function setPinnedVersion(?ReferenceDocumentVersion $pinnedVersion): void
+    public function setPinnedVersion(ReferenceDocumentVersion $pinnedVersion): void
     {
         $this->pinnedVersion = $pinnedVersion;
-    }
-
-    /**
-     * The version members effectively see: the pinned one, or the latest version of the document.
-     */
-    public function getEffectiveVersion(): ?ReferenceDocumentVersion
-    {
-        return $this->pinnedVersion ?? $this->referenceDocument->getLatestVersion();
     }
 }

@@ -1,0 +1,181 @@
+<div {{ attributes }}>
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-2">
+        <p class="text-muted small mb-0">
+            {{ 'The association-wide library. Each meeting selects which of these apply and pins the exact version its members see; updating a document here never changes an existing selection.'|trans }}
+        </p>
+        {% if this.savedAt %}
+            <span class="small text-muted">{{ 'All changes saved'|trans }} &middot; {{ this.savedAt }}</span>
+        {% endif %}
+    </div>
+
+    {% if this.feedback %}
+        <div class="alert alert-warning" role="alert">{{ this.feedback }}</div>
+    {% endif %}
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="d-flex flex-column gap-2">
+                {% for row in this.documents %}
+                    {% set document = row[0] %}
+                    {% set usage = row[1] %}
+                    {% set latest = document.latestVersion %}
+                    {% set versionCount = document.versions|length %}
+                    <div class="border rounded p-2 bg-body">
+                        <div class="d-flex align-items-center gap-2 flex-wrap">
+                            <span class="fas fa-file-pdf" aria-hidden="true"></span>
+                            <div class="flex-grow-1" style="min-width: 12rem;">
+                                <label class="visually-hidden" for="reference-name-{{ document.id }}">{{ 'Document name'|trans }}</label>
+                                <input type="text" class="form-control form-control-sm fw-semibold" id="reference-name-{{ document.id }}"
+                                       data-model="on(change)|nameEdits.{{ document.id }}.name"
+                                       value="{{ document.name }}">
+                                <span class="small text-muted">
+                                    {% if latest %}
+                                        {{ 'Latest'|trans }} {{ latest.versionLabel }}
+                                        {%- if latest.uploadedAt %} &middot; {{ latest.uploadedAt|format_date('medium') }}{% endif %}
+                                        {%- if latest.uploadedBy %} &middot; {{ latest.uploadedBy.member.fullName }}{% endif %}
+                                    {% endif %}
+                                </span>
+                            </div>
+                            <span class="badge {{ usage > 0 ? 'text-bg-light' : 'text-bg-warning' }}">
+                                {% if usage > 0 %}
+                                    {{ 'Used by %count% meeting|Used by %count% meetings'|trans({'%count%': usage}) }}
+                                {% else %}
+                                    {{ 'Not used yet'|trans }}
+                                {% endif %}
+                            </span>
+                            <div class="d-flex align-items-center gap-1">
+                                {% if versionCount > 1 %}
+                                    <button type="button" class="btn btn-sm btn-outline-secondary collapsed"
+                                            data-bs-toggle="collapse" data-bs-target="#reference-history-{{ document.id }}"
+                                            aria-expanded="false" aria-controls="reference-history-{{ document.id }}">
+                                        {{ 'History'|trans }}
+                                    </button>
+                                {% endif %}
+                                {% if latest %}
+                                    <a href="{{ path('meetings/reference_download', {'version': latest.id}) }}"
+                                       class="btn btn-sm btn-outline-secondary" aria-label="{{ 'Download'|trans }}">
+                                        <span class="fas fa-download" aria-hidden="true"></span>
+                                    </a>
+                                {% endif %}
+                                <div class="d-inline-block" data-controller="document-upload"
+                                     data-document-upload-url-value="{{ path('admin/meetings/reference/version_upload', {'document': document.id}) }}"
+                                     data-document-upload-suggested-label-value="{{ this.suggestLabel(latest ? latest.versionLabel : null) }}"
+                                     data-action="decision-upload:success->live#$render">
+                                    <input type="file" accept="application/pdf" class="d-none"
+                                           data-document-upload-target="input" data-action="document-upload#picked">
+                                    <button type="button" class="btn btn-sm btn-outline-secondary" data-document-upload-target="picker"
+                                            data-action="document-upload#browse">
+                                        {{ 'New version'|trans }}
+                                    </button>
+                                    <div class="d-none position-absolute bg-body border rounded shadow-sm p-2 mt-1 z-3" data-document-upload-target="form">
+                                        <div class="small mb-1" data-document-upload-target="filename"></div>
+                                        <div class="d-flex align-items-center gap-1">
+                                            <label class="visually-hidden" for="reference-version-label-{{ document.id }}">{{ 'Version label'|trans }}</label>
+                                            <input type="text" class="form-control form-control-sm" id="reference-version-label-{{ document.id }}"
+                                                   data-document-upload-target="label" placeholder="{{ 'Version label'|trans }}">
+                                            <button type="button" class="btn btn-sm btn-gewis-primary" data-action="document-upload#submit">
+                                                {{ 'Upload'|trans }}
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary" data-action="document-upload#cancel">
+                                                {{ 'Cancel'|trans }}
+                                            </button>
+                                        </div>
+                                        <div class="d-none small text-danger mt-1" data-document-upload-target="error"></div>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-sm btn-outline-danger"
+                                        data-bs-toggle="modal" data-bs-target="#confirm-modal"
+                                        data-confirm-title="{{ 'Remove library document?'|trans }}"
+                                        data-confirm-message="{{ 'This removes “%name%” with all its versions from the library. It only works when no meeting uses it.'|trans({'%name%': document.name}) }}"
+                                        data-confirm-label="{{ 'Remove'|trans }}"
+                                        data-confirm-live-action="deleteDocument"
+                                        data-confirm-live-args='{"id": {{ document.id }}}'
+                                        aria-label="{{ 'Remove'|trans }}">
+                                    <span class="far fa-trash-can" aria-hidden="true"></span>
+                                </button>
+                            </div>
+                        </div>
+                        {% if versionCount > 1 %}
+                            {% include 'partials/decision/version-history.html.twig' with {
+                                'versions': document.versions,
+                                'route': 'meetings/reference_download',
+                                'collapseId': 'reference-history-' ~ document.id,
+                                'showUploader': true,
+                            } only %}
+                        {% endif %}
+                    </div>
+                {% else %}
+                    <p class="text-muted">{{ 'The library is still empty.'|trans }}</p>
+                {% endfor %}
+
+                <div class="upload-dropzone p-4 text-center text-muted" data-controller="document-upload"
+                     data-document-upload-url-value="{{ path('admin/meetings/reference/upload') }}"
+                     data-document-upload-suggested-label-value="{{ this.suggestLabel(null) }}"
+                     data-action="dragover->document-upload#dragOver dragleave->document-upload#dragLeave drop->document-upload#dropped decision-upload:success->live#$render">
+                    <input type="file" accept="application/pdf" class="d-none"
+                           data-document-upload-target="input" data-action="document-upload#picked">
+                    <button type="button" class="btn btn-link text-decoration-none text-muted p-0" data-document-upload-target="picker"
+                            data-action="document-upload#browse">
+                        <span class="fas fa-arrow-up-from-bracket" aria-hidden="true"></span>
+                        {{ 'Upload a new reference document'|trans }}
+                    </button>
+                    <div class="d-none text-start" data-document-upload-target="form">
+                        <div class="small mb-2 text-body" data-document-upload-target="filename"></div>
+                        <div class="row g-2 align-items-center">
+                            <div class="col-md-6">
+                                <label class="visually-hidden" for="reference-upload-name">{{ 'Document name'|trans }}</label>
+                                <input type="text" class="form-control form-control-sm" id="reference-upload-name"
+                                       data-document-upload-target="name" placeholder="{{ 'Document name'|trans }}">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="visually-hidden" for="reference-upload-label">{{ 'Version label'|trans }}</label>
+                                <input type="text" class="form-control form-control-sm" id="reference-upload-label"
+                                       data-document-upload-target="label" placeholder="{{ 'Version label'|trans }}">
+                            </div>
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-sm btn-gewis-primary" data-action="document-upload#submit">
+                                    {{ 'Upload'|trans }}
+                                </button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary" data-action="document-upload#cancel">
+                                    {{ 'Cancel'|trans }}
+                                </button>
+                            </div>
+                        </div>
+                        <div class="d-none small text-danger mt-1" data-document-upload-target="error"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="panel mt-0">
+                <div class="panel-heading">
+                    <h3>{{ 'How versions work'|trans }}</h3>
+                </div>
+                <div class="panel-body">
+                    <p class="small text-muted mb-0">
+                        {{ 'Every meeting is pinned to the exact version it selected, so uploading a new version never rewrites history. Select the new version on the meetings that should show it.'|trans }}
+                    </p>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3>{{ 'Recent activity'|trans }}</h3>
+                </div>
+                <div class="panel-body">
+                    {% for entry in this.activity %}
+                        <div class="py-1 {% if not loop.first %}border-top{% endif %}">
+                            <span class="small d-block">
+                                {{ entry.verb.message(entry.actor ? entry.actor.member.fullName : 'System'|trans, entry.subject)|trans }}
+                            </span>
+                            <span class="small text-muted">{{ entry.createdAt|format_datetime('medium', 'short') }}</span>
+                        </div>
+                    {% else %}
+                        <span class="text-muted small">{{ 'Nothing has happened here yet.'|trans }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

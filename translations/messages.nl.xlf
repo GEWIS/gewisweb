@@ -89,6 +89,10 @@
         <source>%count% activities have been submitted for review.</source>
         <target state="translated">Er zijn %count% activiteiten ingediend ter beoordeling.</target>
       </trans-unit>
+      <trans-unit id="aaoWlT3" resname="%count% agenda point|%count% agenda points">
+        <source>%count% agenda point|%count% agenda points</source>
+        <target state="translated">%count% agendapunt|%count% agendapunten</target>
+      </trans-unit>
       <trans-unit id="KGUn7gt" resname="%count% data exports you asked for are ready.">
         <source>%count% data exports you asked for are ready.</source>
         <target state="translated">Er staan %count% door jou aangevraagde gegevensexports klaar.</target>
@@ -97,9 +101,17 @@
         <source>%count% day|%count% days</source>
         <target>%count% dag|%count% dagen</target>
       </trans-unit>
+      <trans-unit id="0QCTjPd" resname="%count% decision does not line up with your agenda points. If the agenda shifted during the meeting, renumber the points to match.|%count% decisions do not line up with your agenda points. If the agenda shifted during the meeting, renumber the points to match.">
+        <source>%count% decision does not line up with your agenda points. If the agenda shifted during the meeting, renumber the points to match.|%count% decisions do not line up with your agenda points. If the agenda shifted during the meeting, renumber the points to match.</source>
+        <target state="translated">%count% besluit past niet bij je agendapunten. Als de agenda tijdens de vergadering is verschoven, hernummer dan de punten.|%count% besluiten passen niet bij je agendapunten. Als de agenda tijdens de vergadering is verschoven, hernummer dan de punten.</target>
+      </trans-unit>
       <trans-unit id="ihMzdnQ" resname="%count% decision|%count% decisions">
         <source>%count% decision|%count% decisions</source>
         <target state="translated">%count% besluit|%count% besluiten</target>
+      </trans-unit>
+      <trans-unit id="B0OTjfC" resname="%count% document filed|%count% documents filed">
+        <source>%count% document filed|%count% documents filed</source>
+        <target state="translated">%count% document ingediend|%count% documenten ingediend</target>
       </trans-unit>
       <trans-unit id="8kS8sgv" resname="%count% document|%count% documents">
         <source>%count% document|%count% documents</source>
@@ -121,6 +133,10 @@
         <source>%count% new photo albums are online.</source>
         <target state="translated">Er staan %count% nieuwe fotoalbums online.</target>
       </trans-unit>
+      <trans-unit id="JaLYS7G" resname="%count% reference document selected|%count% reference documents selected">
+        <source>%count% reference document selected|%count% reference documents selected</source>
+        <target state="translated">%count% referentiedocument geselecteerd|%count% referentiedocumenten geselecteerd</target>
+      </trans-unit>
       <trans-unit id="Bp.9tYU" resname="%count% session(s) terminated.">
         <source>%count% session(s) terminated.</source>
         <target state="translated">%count% sessie(s) beëindigd.</target>
@@ -128,6 +144,10 @@
       <trans-unit id="j2HLdTO" resname="%count% sign-ups you are on are closing soon.">
         <source>%count% sign-ups you are on are closing soon.</source>
         <target state="translated">Er sluiten binnenkort %count% inschrijvingen waarop je staat.</target>
+      </trans-unit>
+      <trans-unit id="9uM3STA" resname="%count% version|%count% versions">
+        <source>%count% version|%count% versions</source>
+        <target state="translated">%count% versie|%count% versies</target>
       </trans-unit>
       <trans-unit id="KJO8tlf" resname="%count% week|%count% weeks">
         <source>%count% week|%count% weeks</source>
@@ -277,6 +297,10 @@
         <source>Add a sign-up list</source>
         <target state="translated">Inschrijflijst toevoegen</target>
       </trans-unit>
+      <trans-unit id="UAVz.YN" resname="Add agenda point">
+        <source>Add agenda point</source>
+        <target state="translated">Agendapunt toevoegen</target>
+      </trans-unit>
       <trans-unit id="Cvck82d" resname="Add external subscriber">
         <source>Add external subscriber</source>
         <target>Externe inschrijver toevoegen</target>
@@ -361,6 +385,22 @@
         <source>Agenda</source>
         <target state="translated">Agenda</target>
       </trans-unit>
+      <trans-unit id="BJ0uGfn" resname="Agenda &amp; documents">
+        <source>Agenda &amp; documents</source>
+        <target state="translated"><![CDATA[Agenda & documenten]]></target>
+      </trans-unit>
+      <trans-unit id="NEF8Jyx" resname="Agenda point number">
+        <source>Agenda point number</source>
+        <target state="translated">Agendapuntnummer</target>
+      </trans-unit>
+      <trans-unit id="N5OsMFz" resname="Agenda point title">
+        <source>Agenda point title</source>
+        <target state="translated">Titel agendapunt</target>
+      </trans-unit>
+      <trans-unit id="o.3LIqA" resname="Agenda points and the documents filed under them. Numbers are free-form, so gaps and suffixes like 7a are fine. Drag the handles to reorder.">
+        <source>Agenda points and the documents filed under them. Numbers are free-form, so gaps and suffixes like 7a are fine. Drag the handles to reorder.</source>
+        <target state="translated">Agendapunten en de documenten die eronder zijn ingediend. Nummers zijn vrije invoer, dus gaten en toevoegingen zoals 7a zijn prima. Sleep de grepen om te herschikken.</target>
+      </trans-unit>
       <trans-unit id="TkqTjnS" resname="Album cover">
         <source>Album cover</source>
         <target state="translated">Omslagafbeelding</target>
@@ -372,6 +412,10 @@
       <trans-unit id="tHdA52O" resname="All">
         <source>All</source>
         <target state="translated">Alle</target>
+      </trans-unit>
+      <trans-unit id="7V_949d" resname="All changes saved">
+        <source>All changes saved</source>
+        <target state="translated">Alle wijzigingen opgeslagen</target>
       </trans-unit>
       <trans-unit id="SEP_hKS" resname="All decisions of %meeting%">
         <source>All decisions of %meeting%</source>
@@ -853,6 +897,10 @@
         <source>Copy list</source>
         <target state="translated">Kopieer lijst</target>
       </trans-unit>
+      <trans-unit id="cmhL9hM" resname="Copy the selection from the previous meeting">
+        <source>Copy the selection from the previous meeting</source>
+        <target state="translated">Neem de selectie van de vorige vergadering over</target>
+      </trans-unit>
       <trans-unit id="bCyP.6D" resname="Cosmetics">
         <source>Cosmetics</source>
         <target>Opsmuk</target>
@@ -940,6 +988,10 @@
       <trans-unit id="IMJISl1" resname="Date and time">
         <source>Date and time</source>
         <target state="translated">Datum en tijd</target>
+      </trans-unit>
+      <trans-unit id="sZxc4.j" resname="Date synced from GEWISDB">
+        <source>Date synced from GEWISDB</source>
+        <target state="translated">Datum gesynchroniseerd vanuit GEWISDB</target>
       </trans-unit>
       <trans-unit id="6zDmoQV" resname="Date/time">
         <source>Date/time</source>
@@ -1053,6 +1105,10 @@
         <source>Do you have a GEWIS account?</source>
         <target>Heb je een GEWIS-account?</target>
       </trans-unit>
+      <trans-unit id="fjXNWuV" resname="Document name">
+        <source>Document name</source>
+        <target state="translated">Documentnaam</target>
+      </trans-unit>
       <trans-unit id="Ahtz04L" resname="Documents">
         <source>Documents</source>
         <target state="translated">Documenten</target>
@@ -1060,6 +1116,14 @@
       <trans-unit id="waGxcEX" resname="Documents are added as they are published, so check back before the meeting. Decisions appear here afterwards.">
         <source>Documents are added as they are published, so check back before the meeting. Decisions appear here afterwards.</source>
         <target state="translated">Documenten worden toegevoegd zodra ze gepubliceerd zijn, kom dus voor de vergadering nog eens terug. Besluiten verschijnen hier achteraf.</target>
+      </trans-unit>
+      <trans-unit id="EbIa5wu" resname="Documents not filed under an agenda point, including everything carried over from before agenda points existed.">
+        <source>Documents not filed under an agenda point, including everything carried over from before agenda points existed.</source>
+        <target state="translated">Documenten die niet onder een agendapunt zijn ingediend, inclusief alles van voordat agendapunten bestonden.</target>
+      </trans-unit>
+      <trans-unit id="vXDVxcC" resname="Documents under this agenda point are kept and move to the meeting-level group.">
+        <source>Documents under this agenda point are kept and move to the meeting-level group.</source>
+        <target state="translated">Documenten onder dit agendapunt blijven bewaard en verhuizen naar de groep op vergaderniveau.</target>
       </trans-unit>
       <trans-unit id="fZqz0Um" resname="Done">
         <source>Done</source>
@@ -1124,6 +1188,10 @@
       <trans-unit id="2zbCYPE" resname="Drawn by %name% on %date%.">
         <source>Drawn by %name% on %date%.</source>
         <target>Geloot door %name% op %date%.</target>
+      </trans-unit>
+      <trans-unit id="oto0t_4" resname="Drop a PDF here or browse">
+        <source>Drop a PDF here or browse</source>
+        <target state="translated">Sleep een PDF hierheen of blader</target>
       </trans-unit>
       <trans-unit id="AdxkL_L" resname="Dutch">
         <source>Dutch</source>
@@ -1280,6 +1348,10 @@
       <trans-unit id="xVvK.Uw" resname="Every input should map to an output. This one got lost.">
         <source>Every input should map to an output. This one got lost.</source>
         <target state="translated">Elke invoer moet een uitvoer als beeld hebben. Deze is verloren gegaan.</target>
+      </trans-unit>
+      <trans-unit id="qUPSFSF" resname="Every meeting is pinned to the exact version it selected, so uploading a new version never rewrites history. Select the new version on the meetings that should show it.">
+        <source>Every meeting is pinned to the exact version it selected, so uploading a new version never rewrites history. Select the new version on the meetings that should show it.</source>
+        <target state="translated">Elke vergadering is vastgezet op de exacte versie die is geselecteerd, dus het uploaden van een nieuwe versie herschrijft nooit de geschiedenis. Selecteer de nieuwe versie bij de vergaderingen die deze moeten tonen.</target>
       </trans-unit>
       <trans-unit id="CyothwT" resname="Every meeting of the association with its documents, minutes, and decisions.">
         <source>Every meeting of the association with its documents, minutes, and decisions.</source>
@@ -1637,6 +1709,10 @@
         <source>Housing</source>
         <target state="translated">Huisvesting</target>
       </trans-unit>
+      <trans-unit id="B1iWLEu" resname="How versions work">
+        <source>How versions work</source>
+        <target state="translated">Hoe versies werken</target>
+      </trans-unit>
       <trans-unit id="a7nK6J2" resname="I agree to the">
         <source>I agree to the</source>
         <target>Ik ga akkoord met het</target>
@@ -1865,6 +1941,10 @@
         <source>Last used %date%</source>
         <target>Laatst gebruikt op %date%</target>
       </trans-unit>
+      <trans-unit id="EpKmd9_" resname="Latest">
+        <source>Latest</source>
+        <target state="translated">Nieuwste</target>
+      </trans-unit>
       <trans-unit id="YD75Vls" resname="Leave empty to keep it on until you turn it off.">
         <source>Leave empty to keep it on until you turn it off.</source>
         <target state="translated">Laat leeg om het aan te houden tot je het uitzet.</target>
@@ -2001,6 +2081,10 @@
         <source>Manage</source>
         <target state="translated">Beheren</target>
       </trans-unit>
+      <trans-unit id="Zqc1Y9t" resname="Manage library">
+        <source>Manage library</source>
+        <target state="translated">Bibliotheek beheren</target>
+      </trans-unit>
       <trans-unit id="wjgXjio" resname="Manage your logins and see which external applications have accessed your account.">
         <source>Manage your logins and see which external applications have accessed your account.</source>
         <target>Beheer je aanmeldingen en bekijk welke externe applicaties toegang tot je account hebben gehad.</target>
@@ -2017,6 +2101,10 @@
         <source>Mark as read</source>
         <target state="translated">Markeer als gelezen</target>
       </trans-unit>
+      <trans-unit id="6e1OOF0" resname="Matched decisions:">
+        <source>Matched decisions:</source>
+        <target state="translated">Gekoppelde besluiten:</target>
+      </trans-unit>
       <trans-unit id="5LERsNC" resname="Maximum value (number type)">
         <source>Maximum value (number type)</source>
         <target state="translated">Maximumwaarde (getaltype)</target>
@@ -2025,13 +2113,25 @@
         <source>Meeting</source>
         <target>Vergadering</target>
       </trans-unit>
+      <trans-unit id="XUbLhn2" resname="Meeting date">
+        <source>Meeting date</source>
+        <target state="translated">Vergaderdatum</target>
+      </trans-unit>
       <trans-unit id="9EpNpeD" resname="Meeting number, for example “214” or “GMM 214”">
         <source>Meeting number, for example “214” or “GMM 214”</source>
         <target state="translated">Vergadernummer, bijvoorbeeld “214” of “ALV 214”</target>
       </trans-unit>
+      <trans-unit id="ZAeAl4m" resname="Meeting-level documents">
+        <source>Meeting-level documents</source>
+        <target state="translated">Documenten op vergaderniveau</target>
+      </trans-unit>
       <trans-unit id="lpupbIO" resname="Meetings">
         <source>Meetings</source>
         <target state="translated">Vergaderingen</target>
+      </trans-unit>
+      <trans-unit id="yV5_I0M" resname="Meetings are synced from GEWISDB; pick one to manage its agenda, documents, and minutes.">
+        <source>Meetings are synced from GEWISDB; pick one to manage its agenda, documents, and minutes.</source>
+        <target state="translated">Vergaderingen worden gesynchroniseerd vanuit GEWISDB; kies er een om de agenda, documenten en notulen te beheren.</target>
       </trans-unit>
       <trans-unit id="Cg3S2oo" resname="Member">
         <source>Member</source>
@@ -2089,6 +2189,10 @@
         <source>Minutes</source>
         <target state="translated">Notulen</target>
       </trans-unit>
+      <trans-unit id="K7KXZAf" resname="Minutes %meeting%">
+        <source>Minutes %meeting%</source>
+        <target state="translated">Notulen %meeting%</target>
+      </trans-unit>
       <trans-unit id="mArrjkd" resname="Minutes and decisions have not been published yet">
         <source>Minutes and decisions have not been published yet</source>
         <target state="translated">Notulen en besluiten zijn nog niet gepubliceerd</target>
@@ -2096,6 +2200,14 @@
       <trans-unit id="ooJDkQe" resname="Minutes have not been uploaded yet">
         <source>Minutes have not been uploaded yet</source>
         <target state="translated">Notulen zijn nog niet geüpload</target>
+      </trans-unit>
+      <trans-unit id="Lwy4x_d" resname="Minutes pending">
+        <source>Minutes pending</source>
+        <target state="translated">Notulen ontbreken nog</target>
+      </trans-unit>
+      <trans-unit id="ivO638E" resname="Minutes uploaded">
+        <source>Minutes uploaded</source>
+        <target state="translated">Notulen geüpload</target>
       </trans-unit>
       <trans-unit id="2OVSb4f" resname="Mode">
         <source>Mode</source>
@@ -2144,6 +2256,10 @@
       <trans-unit id="IRYW7Yk" resname="Multi-factor authentication setup required">
         <source>Multi-factor authentication setup required</source>
         <target state="translated">Tweestapsverificatie instellen vereist</target>
+      </trans-unit>
+      <trans-unit id="yD48ZTm" resname="Multiple agenda points share the number %numbers%; decisions attach to the first one.">
+        <source>Multiple agenda points share the number %numbers%; decisions attach to the first one.</source>
+        <target state="translated">Meerdere agendapunten delen het nummer %numbers%; besluiten worden aan het eerste gekoppeld.</target>
       </trans-unit>
       <trans-unit id="eV413P5" resname="My Activities">
         <source>My Activities</source>
@@ -2221,6 +2337,10 @@
         <source>New tag</source>
         <target state="translated">Nieuwe tag</target>
       </trans-unit>
+      <trans-unit id="26mfrNw" resname="New version">
+        <source>New version</source>
+        <target state="translated">Nieuwe versie</target>
+      </trans-unit>
       <trans-unit id="5dsfyar" resname="New window">
         <source>New window</source>
         <target>Nieuw venster</target>
@@ -2289,9 +2409,17 @@
         <source>No documents were uploaded under this agenda point.</source>
         <target state="translated">Er zijn geen documenten geüpload onder dit agendapunt.</target>
       </trans-unit>
+      <trans-unit id="AxexkU1" resname="No end time; meetings run until closed.">
+        <source>No end time; meetings run until closed.</source>
+        <target state="translated">Geen eindtijd; vergaderingen duren tot ze gesloten worden.</target>
+      </trans-unit>
       <trans-unit id="mKUQ6K5" resname="No external applications are registered.">
         <source>No external applications are registered.</source>
         <target>Er zijn geen externe applicaties geregistreerd.</target>
+      </trans-unit>
+      <trans-unit id="qUKi9W_" resname="No file was uploaded.">
+        <source>No file was uploaded.</source>
+        <target state="translated">Er is geen bestand geüpload.</target>
       </trans-unit>
       <trans-unit id="JEo_6ok" resname="No keycode">
         <source>No keycode</source>
@@ -2361,6 +2489,10 @@
         <source>No vacancies match the current filters.</source>
         <target>Geen vacatures voldoen aan de huidige filters.</target>
       </trans-unit>
+      <trans-unit id="IdMwH59" resname="No.">
+        <source>No.</source>
+        <target state="translated">Nr.</target>
+      </trans-unit>
       <trans-unit id="nUNPJ8C" resname="Non-member">
         <source>Non-member</source>
         <target>Niet-lid</target>
@@ -2381,9 +2513,17 @@
         <source>Not used in this revision.</source>
         <target state="translated">Niet gebruikt in deze revisie.</target>
       </trans-unit>
+      <trans-unit id="Z458ldp" resname="Not used yet">
+        <source>Not used yet</source>
+        <target state="translated">Nog niet gebruikt</target>
+      </trans-unit>
       <trans-unit id="Q7CXr4n" resname="Not yet open">
         <source>Not yet open</source>
         <target>Nog niet open</target>
+      </trans-unit>
+      <trans-unit id="DSKucbX" resname="Nothing has happened here yet.">
+        <source>Nothing has happened here yet.</source>
+        <target state="translated">Hier is nog niets gebeurd.</target>
       </trans-unit>
       <trans-unit id="gGxnmUA" resname="Notifications">
         <source>Notifications</source>
@@ -2609,6 +2749,10 @@
         <source>Pick the strongest algorithm the application supports. Modern profiles are verified through the JWKS endpoint.</source>
         <target>Kies het sterkste algoritme dat de applicatie ondersteunt. Moderne profielen worden geverifieerd via het JWKS-eindpunt.</target>
       </trans-unit>
+      <trans-unit id="eDa9FPg" resname="Pick which library documents apply to this meeting and exactly which version members see. Uploading and versioning happens in the library.">
+        <source>Pick which library documents apply to this meeting and exactly which version members see. Uploading and versioning happens in the library.</source>
+        <target state="translated">Kies welke bibliotheekdocumenten bij deze vergadering horen en exact welke versie leden zien. Uploaden en versiebeheer gebeurt in de bibliotheek.</target>
+      </trans-unit>
       <trans-unit id="u7c4pso" resname="Place on photo">
         <source>Place on photo</source>
         <target state="translated">Plaats op foto</target>
@@ -2729,9 +2873,17 @@
         <source>Read-only mode</source>
         <target>Alleen-lezenmodus</target>
       </trans-unit>
+      <trans-unit id="H3orQIK" resname="Readiness">
+        <source>Readiness</source>
+        <target state="translated">Gereedheid</target>
+      </trans-unit>
       <trans-unit id="9Iuz1j8" resname="Reality collapsed. Please go back before the singularity spreads.">
         <source>Reality collapsed. Please go back before the singularity spreads.</source>
         <target state="translated">De werkelijkheid stortte in. Ga alsjeblieft terug voordat de singulariteit zich verspreidt.</target>
+      </trans-unit>
+      <trans-unit id="1bukOBF" resname="Recent activity">
+        <source>Recent activity</source>
+        <target state="translated">Recente activiteit</target>
       </trans-unit>
       <trans-unit id="u7Ln3jf" resname="Recipients">
         <source>Recipients</source>
@@ -2748,6 +2900,10 @@
       <trans-unit id="8vNu6fy" resname="Reference documents">
         <source>Reference documents</source>
         <target state="translated">Referentiedocumenten</target>
+      </trans-unit>
+      <trans-unit id="Y2Swv4b" resname="Reference selection">
+        <source>Reference selection</source>
+        <target state="translated">Referentieselectie</target>
       </trans-unit>
       <trans-unit id="wtanMIv" resname="Regenerate backup codes">
         <source>Regenerate backup codes</source>
@@ -2789,6 +2945,10 @@
         <source>Remove</source>
         <target state="translated">Verwijderen</target>
       </trans-unit>
+      <trans-unit id="ht8iqBJ" resname="Remove agenda point?">
+        <source>Remove agenda point?</source>
+        <target state="translated">Agendapunt verwijderen?</target>
+      </trans-unit>
       <trans-unit id="tL7owQq" resname="Remove all tags">
         <source>Remove all tags</source>
         <target>Alle tags verwijderen</target>
@@ -2801,9 +2961,21 @@
         <source>Remove announcement</source>
         <target state="translated">Aankondiging verwijderen</target>
       </trans-unit>
+      <trans-unit id="IUQt2TH" resname="Remove document?">
+        <source>Remove document?</source>
+        <target state="translated">Document verwijderen?</target>
+      </trans-unit>
+      <trans-unit id="qFDZa.U" resname="Remove library document?">
+        <source>Remove library document?</source>
+        <target state="translated">Bibliotheekdocument verwijderen?</target>
+      </trans-unit>
       <trans-unit id="vt8joaQ" resname="Remove maintenance window">
         <source>Remove maintenance window</source>
         <target>Onderhoudsvenster verwijderen</target>
+      </trans-unit>
+      <trans-unit id="S5rlHjB" resname="Remove minutes?">
+        <source>Remove minutes?</source>
+        <target state="translated">Notulen verwijderen?</target>
       </trans-unit>
       <trans-unit id="IR6O8kN" resname="Remove option">
         <source>Remove option</source>
@@ -2944,6 +3116,10 @@
       <trans-unit id="aq2eM8Q" resname="Roles">
         <source>Roles</source>
         <target state="translated">Rollen</target>
+      </trans-unit>
+      <trans-unit id="3ob7EB6" resname="Room or building">
+        <source>Room or building</source>
+        <target state="translated">Zaal of gebouw</target>
       </trans-unit>
       <trans-unit id="qqo9Q7f" resname="Run the draw">
         <source>Run the draw</source>
@@ -3169,6 +3345,10 @@
         <source>Show until</source>
         <target state="translated">Tonen tot</target>
       </trans-unit>
+      <trans-unit id="9NDKecJ" resname="Shown on the member page while the meeting is upcoming.">
+        <source>Shown on the member page while the meeting is upcoming.</source>
+        <target state="translated">Wordt op de ledenpagina getoond zolang de vergadering aankomend is.</target>
+      </trans-unit>
       <trans-unit id="SRkcmW5" resname="Shown until">
         <source>Shown until</source>
         <target state="translated">Getoond tot</target>
@@ -3301,9 +3481,17 @@
         <source>Start review</source>
         <target state="translated">Beoordeling starten</target>
       </trans-unit>
+      <trans-unit id="0Do.um4" resname="Start time">
+        <source>Start time</source>
+        <target state="translated">Starttijd</target>
+      </trans-unit>
       <trans-unit id="ch8_.AN" resname="Start typing to search all decisions ever taken.">
         <source>Start typing to search all decisions ever taken.</source>
         <target state="translated">Begin met typen om alle ooit genomen besluiten te doorzoeken.</target>
+      </trans-unit>
+      <trans-unit id="vDovnvW" resname="Starts %time%">
+        <source>Starts %time%</source>
+        <target state="translated">Begint om %time%</target>
       </trans-unit>
       <trans-unit id="6xCSWiZ" resname="Status">
         <source>Status</source>
@@ -3364,6 +3552,18 @@
       <trans-unit id="vTZphTn" resname="SudoSOS">
         <source>SudoSOS</source>
         <target>SudoSOS</target>
+      </trans-unit>
+      <trans-unit id="L2_cH0m" resname="Synced after the meeting">
+        <source>Synced after the meeting</source>
+        <target state="translated">Gesynchroniseerd na de vergadering</target>
+      </trans-unit>
+      <trans-unit id="A8Qm99J" resname="Synced, not editable here">
+        <source>Synced, not editable here</source>
+        <target state="translated">Gesynchroniseerd, hier niet aanpasbaar</target>
+      </trans-unit>
+      <trans-unit id="6C92oaM" resname="System">
+        <source>System</source>
+        <target state="translated">Systeem</target>
       </trans-unit>
       <trans-unit id="eSYZ1Ph" resname="TOTP-based MFA is active on your account.">
         <source>TOTP-based MFA is active on your account.</source>
@@ -3453,6 +3653,10 @@
         <source>The activity revision was updated.</source>
         <target state="translated">De activiteitsrevisie is bijgewerkt.</target>
       </trans-unit>
+      <trans-unit id="ZFgdipg" resname="The agenda point does not belong to this meeting.">
+        <source>The agenda point does not belong to this meeting.</source>
+        <target state="translated">Het agendapunt hoort niet bij deze vergadering.</target>
+      </trans-unit>
       <trans-unit id="dIJchis" resname="The album cover is being regenerated.">
         <source>The album cover is being regenerated.</source>
         <target state="translated">De albumomslag wordt opnieuw gegenereerd.</target>
@@ -3473,6 +3677,10 @@
         <source>The application will receive the following information:</source>
         <target>De applicatie ontvangt de volgende informatie:</target>
       </trans-unit>
+      <trans-unit id="StkJda7" resname="The association-wide library. Each meeting selects which of these apply and pins the exact version its members see; updating a document here never changes an existing selection.">
+        <source>The association-wide library. Each meeting selects which of these apply and pins the exact version its members see; updating a document here never changes an existing selection.</source>
+        <target state="translated">De verenigingsbrede bibliotheek. Elke vergadering selecteert welke hiervan van toepassing zijn en zet de exacte versie vast die leden zien; een document hier bijwerken verandert nooit een bestaande selectie.</target>
+      </trans-unit>
       <trans-unit id="q5YrQGY" resname="The changes in this draft will be lost and the activity will return to its live version.">
         <source>The changes in this draft will be lost and the activity will return to its live version.</source>
         <target state="translated">De wijzigingen in dit concept gaan verloren en de activiteit keert terug naar de live versie.</target>
@@ -3488,6 +3696,10 @@
       <trans-unit id="FZgEW0R" resname="The decisions below are final; the full minutes follow once they have been written and approved.">
         <source>The decisions below are final; the full minutes follow once they have been written and approved.</source>
         <target state="translated">Onderstaande besluiten zijn definitief; de volledige notulen volgen zodra ze geschreven en goedgekeurd zijn.</target>
+      </trans-unit>
+      <trans-unit id="wspoomP" resname="The document name must be between 2 and 128 characters long.">
+        <source>The document name must be between 2 and 128 characters long.</source>
+        <target state="translated">De documentnaam moet tussen de 2 en 128 tekens lang zijn.</target>
       </trans-unit>
       <trans-unit id="WTE8eK4" resname="The draw can be run once sign-up has closed.">
         <source>The draw can be run once sign-up has closed.</source>
@@ -3533,9 +3745,17 @@
         <source>The information the token carries about the member.</source>
         <target>De informatie die het token over het lid bevat.</target>
       </trans-unit>
+      <trans-unit id="q7pqMIL" resname="The library is still empty.">
+        <source>The library is still empty.</source>
+        <target state="translated">De bibliotheek is nog leeg.</target>
+      </trans-unit>
       <trans-unit id="WJeXZCu" resname="The meeting takes place on %date%; any decisions taken will be listed here afterwards.">
         <source>The meeting takes place on %date%; any decisions taken will be listed here afterwards.</source>
         <target state="translated">De vergadering vindt plaats op %date%; eventueel genomen besluiten verschijnen hier achteraf.</target>
+      </trans-unit>
+      <trans-unit id="miIqAD3" resname="The minutes of this meeting. Uploading them marks the meeting complete for members, even if no decisions were taken.">
+        <source>The minutes of this meeting. Uploading them marks the meeting complete for members, even if no decisions were taken.</source>
+        <target state="translated">De notulen van deze vergadering. Door ze te uploaden wordt de vergadering voor leden als afgerond gemarkeerd, ook als er geen besluiten zijn genomen.</target>
       </trans-unit>
       <trans-unit id="sbbDOd." resname="The photo of the week can only be hidden on Monday morning, before noon.">
         <source>The photo of the week can only be hidden on Monday morning, before noon.</source>
@@ -3713,6 +3933,10 @@
         <source>This device</source>
         <target state="translated">Dit apparaat</target>
       </trans-unit>
+      <trans-unit id="bwRrl65" resname="This document is used by %count% meetings; remove it from their selections first.">
+        <source>This document is used by %count% meetings; remove it from their selections first.</source>
+        <target state="translated">Dit document wordt door %count% vergaderingen gebruikt; verwijder het eerst uit hun selecties.</target>
+      </trans-unit>
       <trans-unit id="MT5lcZ." resname="This draft cannot be discarded.">
         <source>This draft cannot be discarded.</source>
         <target state="translated">Dit concept kan niet worden weggegooid.</target>
@@ -3773,6 +3997,18 @@
         <source>This removes every photo tag of you across all albums, and clears your profile photo. This cannot be undone.</source>
         <target>Dit verwijdert elke fototag van jou in alle albums en wist je profielfoto. Dit kan niet ongedaan worden gemaakt.</target>
       </trans-unit>
+      <trans-unit id="22vanDX" resname="This removes the minutes with all their versions.">
+        <source>This removes the minutes with all their versions.</source>
+        <target state="translated">Dit verwijdert de notulen met al hun versies.</target>
+      </trans-unit>
+      <trans-unit id="Y9jTs96" resname="This removes “%name%” with all its versions from the library. It only works when no meeting uses it.">
+        <source>This removes “%name%” with all its versions from the library. It only works when no meeting uses it.</source>
+        <target state="translated">Dit verwijdert “%name%” met al zijn versies uit de bibliotheek. Dit kan alleen als geen enkele vergadering het gebruikt.</target>
+      </trans-unit>
+      <trans-unit id="PP7T0XQ" resname="This removes “%name%” with all its versions.">
+        <source>This removes “%name%” with all its versions.</source>
+        <target state="translated">Dit verwijdert “%name%” met al zijn versies.</target>
+      </trans-unit>
       <trans-unit id="YXcXf9u" resname="This revision was changed elsewhere; reload the page and try again.">
         <source>This revision was changed elsewhere; reload the page and try again.</source>
         <target state="translated">Deze revisie is elders gewijzigd; herlaad de pagina en probeer het opnieuw.</target>
@@ -3792,6 +4028,22 @@
       <trans-unit id="woCE4nm" resname="This window overlaps an existing maintenance window.">
         <source>This window overlaps an existing maintenance window.</source>
         <target>Dit venster overlapt een bestaand onderhoudsvenster.</target>
+      </trans-unit>
+      <trans-unit id="OmjSafb" resname="Time &amp; place">
+        <source>Time &amp; place</source>
+        <target state="translated">Tijd &amp; locatie</target>
+      </trans-unit>
+      <trans-unit id="LcgvNxg" resname="Time and place">
+        <source>Time and place</source>
+        <target state="translated">Tijd en locatie</target>
+      </trans-unit>
+      <trans-unit id="92HDKSX" resname="Time and place pending">
+        <source>Time and place pending</source>
+        <target state="translated">Tijd en locatie ontbreken nog</target>
+      </trans-unit>
+      <trans-unit id="xy2ZlUR" resname="Time and place set">
+        <source>Time and place set</source>
+        <target state="translated">Tijd en locatie ingesteld</target>
       </trans-unit>
       <trans-unit id=".zZzsFp" resname="Title">
         <source>Title</source>
@@ -3937,6 +4189,14 @@
         <source>Upcoming</source>
         <target>Aankomend</target>
       </trans-unit>
+      <trans-unit id="4oyaNcE" resname="Upload">
+        <source>Upload</source>
+        <target state="translated">Uploaden</target>
+      </trans-unit>
+      <trans-unit id="dDwI1qW" resname="Upload a new reference document">
+        <source>Upload a new reference document</source>
+        <target state="translated">Upload een nieuw referentiedocument</target>
+      </trans-unit>
       <trans-unit id="ZOvPU2x" resname="Upload exams">
         <source>Upload exams</source>
         <target state="translated">Upload tentamens</target>
@@ -3944,6 +4204,10 @@
       <trans-unit id="TM1QKf." resname="Upload photos">
         <source>Upload photos</source>
         <target state="translated">Foto's uploaden</target>
+      </trans-unit>
+      <trans-unit id="iZjhacb" resname="Used by %count% meeting|Used by %count% meetings">
+        <source>Used by %count% meeting|Used by %count% meetings</source>
+        <target state="translated">Gebruikt door %count% vergadering|Gebruikt door %count% vergaderingen</target>
       </trans-unit>
       <trans-unit id="ltDXomd" resname="Used in the authentication URL (/user/token/{identifier}).">
         <source>Used in the authentication URL (/user/token/{identifier}).</source>
@@ -3985,6 +4249,14 @@
         <source>Verify and enable</source>
         <target state="translated">Controleer en schakel in</target>
       </trans-unit>
+      <trans-unit id="sn6ELnZ" resname="Version">
+        <source>Version</source>
+        <target state="translated">Versie</target>
+      </trans-unit>
+      <trans-unit id="nkkTXdS" resname="Version label">
+        <source>Version label</source>
+        <target state="translated">Versielabel</target>
+      </trans-unit>
       <trans-unit id="VPGL.d2" resname="Vice-Chair">
         <source>Vice-Chair</source>
         <target>Vice-Voorzitter</target>
@@ -4000,6 +4272,10 @@
       <trans-unit id="f.1nl4O" resname="View album">
         <source>View album</source>
         <target state="translated">Bekijk album</target>
+      </trans-unit>
+      <trans-unit id="2Yhisx3" resname="View as member">
+        <source>View as member</source>
+        <target state="translated">Bekijk als lid</target>
       </trans-unit>
       <trans-unit id="1mEp9z3" resname="View attachment">
         <source>View attachment</source>
@@ -4333,6 +4609,10 @@
         <source>[at]</source>
         <target>[apenstaartje]</target>
       </trans-unit>
+      <trans-unit id="quYa4T8" resname="a newer version exists (%label%)">
+        <source>a newer version exists (%label%)</source>
+        <target state="translated">er is een nieuwere versie (%label%)</target>
+      </trans-unit>
       <trans-unit id="mC5UFtS" resname="and">
         <source>and</source>
         <target>en</target>
@@ -4432,6 +4712,10 @@
       <trans-unit id="9F.soPI" resname="unread notifications">
         <source>unread notifications</source>
         <target state="translated">ongelezen meldingen</target>
+      </trans-unit>
+      <trans-unit id="71eIhB7" resname="uploaded %date%">
+        <source>uploaded %date%</source>
+        <target state="translated">geüpload op %date%</target>
       </trans-unit>
       <trans-unit id="A0Prwbn" resname="was">
         <source>was</source>

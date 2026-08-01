@@ -77,6 +77,7 @@ class MeetingLocalDetails
 
     public function setMeeting(Meeting $meeting): void
     {
+        $meeting->setLocalDetails($this);
         $this->meeting = $meeting;
         $this->meeting_type = $meeting->getType();
         $this->meeting_number = $meeting->getNumber();

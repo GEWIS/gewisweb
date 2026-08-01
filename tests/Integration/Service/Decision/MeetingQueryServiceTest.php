@@ -87,10 +87,9 @@ final class MeetingQueryServiceTest extends DatabaseTestCase
             $view->references,
         );
         $reference = $view->references[0];
-        self::assertNotNull($reference->getPinnedVersion());
         self::assertSame(
             'v3.0',
-            $reference->getEffectiveVersion()?->getVersionLabel(),
+            $reference->getPinnedVersion()->getVersionLabel(),
         );
 
         self::assertSame(
@@ -118,10 +117,9 @@ final class MeetingQueryServiceTest extends DatabaseTestCase
         );
 
         $reference = $view->references[0];
-        self::assertNull($reference->getPinnedVersion());
         self::assertSame(
             'v3.1',
-            $reference->getEffectiveVersion()?->getVersionLabel(),
+            $reference->getPinnedVersion()->getVersionLabel(),
         );
     }
 

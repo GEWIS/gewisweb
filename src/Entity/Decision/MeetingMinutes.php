@@ -86,6 +86,7 @@ class MeetingMinutes
 
     public function setMeeting(Meeting $meeting): void
     {
+        $meeting->setMeetingMinutes($this);
         $this->meeting = $meeting;
         $this->meeting_type = $meeting->getType();
         $this->meeting_number = $meeting->getNumber();
