@@ -102,6 +102,7 @@ class MeetingRepository extends ServiceEntityRepository
                 ':type',
                 $type->value,
             );
+        $this->selectOneToOneSides($qb);
 
         return $qb->getQuery()->getResult();
     }
@@ -264,6 +265,38 @@ class MeetingRepository extends ServiceEntityRepository
             ->setMaxResults(1);
 
         return $qb->getQuery()->getOneOrNullResult();
+    }
+
+    /**
+     * All upcoming ALVs, soonest first.
+     *
+     * @return Meeting[]
+     */
+    public function findUpcomingALVs(): array
+    {
+        $qb = $this->createQueryBuilder('m');
+
+        $today = new DateTime();
+        $maxDate = $today->sub(new DateInterval('P1D'));
+
+        $qb->where('m.type = :gmm')
+            ->andWhere('m.date >= :date')
+            ->orderBy(
+                'm.date',
+                'ASC',
+            )
+            ->setParameter(
+                'gmm',
+                MeetingTypes::ALV,
+            )
+            ->setParameter(
+                'date',
+                $maxDate,
+                Types::DATETIME_MUTABLE,
+            );
+        $this->selectOneToOneSides($qb);
+
+        return $qb->getQuery()->getResult();
     }
 
     /**

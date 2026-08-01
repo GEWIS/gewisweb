@@ -59,6 +59,9 @@
                         {{ _self.tile(path('user_settings_index'), 'fa-lock', 'Settings'|trans, 'Account and security'|trans) }}
                         {{ _self.tile(path('photo/album', {'type': 'member', 'album': member.lidnr}), 'fa-image', 'My photos'|trans, 'Photos you are tagged in'|trans) }}
                         {{ _self.tile(path('user_token', {'app': 'sudosos'}), 'fa-beer-mug-empty', 'SudoSOS', 'Balance and orders'|trans) }}
+                        {% if is_granted('ROLE_MEMBER') %}
+                            {{ _self.tile(path('members/authorizations/index'), 'fa-file-signature', 'Authorizations'|trans, 'Proxy votes for the GMM'|trans) }}
+                        {% endif %}
                     </div>
                 </div>
             </div>

@@ -89,6 +89,10 @@
         <source>Only one option can be preselected as the default.</source>
         <target state="translated">Only one option can be preselected as the default.</target>
       </trans-unit>
+      <trans-unit id="RoGveoO" resname="Pick the member you want to authorize.">
+        <source>Pick the member you want to authorize.</source>
+        <target state="translated">Pick the member you want to authorize.</target>
+      </trans-unit>
       <trans-unit id="0wZ1438" resname="Please enter a password.">
         <source>Please enter a password.</source>
         <target state="translated">Please enter a password.</target>
@@ -140,6 +144,10 @@
       <trans-unit id="z.p0Rex" resname="This field is required.">
         <source>This field is required.</source>
         <target>This field is required.</target>
+      </trans-unit>
+      <trans-unit id="vZye7vY" resname="You have to agree to the authorization statement.">
+        <source>You have to agree to the authorization statement.</source>
+        <target state="translated">You have to agree to the authorization statement.</target>
       </trans-unit>
       <trans-unit id="7IsK8li" resname="You may only assign an organising organ that you are installed in.">
         <source>You may only assign an organising organ that you are installed in.</source>

@@ -77,6 +77,26 @@ final class MeetingRepositoryTest extends DatabaseTestCase
         );
     }
 
+    public function testFindUpcomingALVsListsSoonestFirst(): void
+    {
+        $numbers = [];
+        foreach ($this->repository->findUpcomingALVs() as $meeting) {
+            self::assertSame(
+                MeetingTypes::ALV,
+                $meeting->getType(),
+            );
+            $numbers[] = $meeting->getNumber();
+        }
+
+        self::assertSame(
+            [
+                2,
+                3,
+            ],
+            $numbers,
+        );
+    }
+
     public function testPaginateForOverviewClampsToThePage(): void
     {
         $result = $this->repository->paginateForOverview(

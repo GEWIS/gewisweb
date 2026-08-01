@@ -9,6 +9,7 @@ use App\Entity\Decision\Meeting;
 use App\Entity\Decision\MeetingDocument;
 use App\Entity\User\Enums\UserRoles;
 use App\Entity\User\User;
+use App\Repository\Decision\AuthorizationRepository;
 use App\Repository\Decision\MeetingPointRepository;
 use App\Repository\Decision\MeetingRepository;
 use App\Security\User\SudoVoter;
@@ -63,6 +64,7 @@ class AdminMeetingController extends AbstractController
 
     public function __construct(
         private readonly MeetingRepository $meetingRepository,
+        private readonly AuthorizationRepository $authorizationRepository,
         private readonly MeetingPointRepository $meetingPointRepository,
         private readonly MeetingDocumentService $meetingDocumentService,
         private readonly MeetingMinutesService $meetingMinutesService,
@@ -131,6 +133,42 @@ class AdminMeetingController extends AbstractController
                 ),
                 'totalCount' => $result['total'],
                 'typeTokens' => self::MANAGEABLE_TYPE_TOKENS,
+            ],
+        );
+    }
+
+    /**
+     * The valid and revoked GMM authorizations, defaulting to the newest GMM.
+     */
+    #[Route(
+        path: '/authorizations/{number}',
+        name: 'authorizations',
+        requirements: ['number' => '\d+'],
+        defaults: ['number' => null],
+    )]
+    public function authorizations(?int $number = null): Response
+    {
+        $meetings = $this->meetingRepository->findByType(MeetingTypes::ALV);
+
+        if ([] === $meetings) {
+            throw $this->createNotFoundException();
+        }
+
+        $number ??= $meetings[0]->getNumber();
+
+        return $this->render(
+            'decision/admin/meetings/authorizations.html.twig',
+            [
+                'meetings' => $meetings,
+                'number' => $number,
+                'valid' => $this->authorizationRepository->findAllByType(
+                    $number,
+                    false,
+                ),
+                'revoked' => $this->authorizationRepository->findAllByType(
+                    $number,
+                    true,
+                ),
             ],
         );
     }

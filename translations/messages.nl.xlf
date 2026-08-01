@@ -177,6 +177,10 @@
         <source>%name% turns %age% today!</source>
         <target state="translated">%name% wordt vandaag %age%!</target>
       </trans-unit>
+      <trans-unit id="roaijuC" resname="%name% will no longer be allowed to vote on your behalf and will be notified by email.">
+        <source>%name% will no longer be allowed to vote on your behalf and will be notified by email.</source>
+        <target state="translated">%name% mag niet langer namens jou stemmen en wordt per e-mail op de hoogte gebracht.</target>
+      </trans-unit>
       <trans-unit id="cweoWmQ" resname="A new activity &quot;%name%&quot; has been published.">
         <source>A new activity "%name%" has been published.</source>
         <target state="translated">Een nieuwe activiteit "%name%" is gepubliceerd.</target>
@@ -597,6 +601,18 @@
         <source>Authorise application</source>
         <target>Applicatie autoriseren</target>
       </trans-unit>
+      <trans-unit id="nBAPAAa" resname="Authorizations">
+        <source>Authorizations</source>
+        <target state="translated">Machtigingen</target>
+      </trans-unit>
+      <trans-unit id="1Adfnhu" resname="Authorize">
+        <source>Authorize</source>
+        <target state="translated">Machtigen</target>
+      </trans-unit>
+      <trans-unit id="8Z2Hx3d" resname="Authorizer">
+        <source>Authorizer</source>
+        <target state="translated">Machtiger</target>
+      </trans-unit>
       <trans-unit id="cfsy_RA" resname="Auto">
         <source>Auto</source>
         <target>Auto</target>
@@ -720,6 +736,10 @@
       <trans-unit id="uULlIlE" resname="Cancelled">
         <source>Cancelled</source>
         <target state="translated">Geannuleerd</target>
+      </trans-unit>
+      <trans-unit id="2B4cIGb" resname="Cannot attend the upcoming GMM? Authorize another member to vote on your behalf.">
+        <source>Cannot attend the upcoming GMM? Authorize another member to vote on your behalf.</source>
+        <target state="translated">Kun je niet bij de aankomende ALV zijn? Machtig een ander lid om namens jou te stemmen.</target>
       </trans-unit>
       <trans-unit id="7xfj503" resname="Capacity">
         <source>Capacity</source>
@@ -972,6 +992,10 @@
       <trans-unit id="_GnaonF" resname="Create external application">
         <source>Create external application</source>
         <target>Externe applicatie aanmaken</target>
+      </trans-unit>
+      <trans-unit id="QizowMq" resname="Created">
+        <source>Created</source>
+        <target state="translated">Aangemaakt</target>
       </trans-unit>
       <trans-unit id="EMb_Fre" resname="Cultural">
         <source>Cultural</source>
@@ -1772,6 +1796,10 @@
       <trans-unit id="a7nK6J2" resname="I agree to the">
         <source>I agree to the</source>
         <target>Ik ga akkoord met het</target>
+      </trans-unit>
+      <trans-unit id="ZuVCtO5" resname="I authorize the selected member to vote on my behalf during the upcoming GMM.">
+        <source>I authorize the selected member to vote on my behalf during the upcoming GMM.</source>
+        <target state="translated">Ik machtig het geselecteerde lid om namens mij te stemmen tijdens de aankomende ALV.</target>
       </trans-unit>
       <trans-unit id="ryOBxJh" resname="I saved them">
         <source>I saved them</source>
@@ -2929,6 +2957,10 @@
         <source>Promoted</source>
         <target>Uitgelicht</target>
       </trans-unit>
+      <trans-unit id="VUPGptv" resname="Proxy votes for the GMM">
+        <source>Proxy votes for the GMM</source>
+        <target state="translated">Machtigingen voor de ALV</target>
+      </trans-unit>
       <trans-unit id="hqFA34r" resname="Published">
         <source>Published</source>
         <target state="translated">Gepubliceerd</target>
@@ -2992,6 +3024,10 @@
       <trans-unit id="1bukOBF" resname="Recent activity">
         <source>Recent activity</source>
         <target state="translated">Recente activiteit</target>
+      </trans-unit>
+      <trans-unit id="f1Le9J0" resname="Recipient">
+        <source>Recipient</source>
+        <target state="translated">Gemachtigde</target>
       </trans-unit>
       <trans-unit id="u7Ln3jf" resname="Recipients">
         <source>Recipients</source>
@@ -3228,6 +3264,18 @@
       <trans-unit id="w9m_6PJ" resname="Revision %number%: %status%">
         <source>Revision %number%: %status%</source>
         <target state="translated">Revisie %number%: %status%</target>
+      </trans-unit>
+      <trans-unit id="5EpkYOj" resname="Revoke authorization">
+        <source>Revoke authorization</source>
+        <target state="translated">Machtiging intrekken</target>
+      </trans-unit>
+      <trans-unit id="2vnNgUP" resname="Revoke authorization?">
+        <source>Revoke authorization?</source>
+        <target state="translated">Machtiging intrekken?</target>
+      </trans-unit>
+      <trans-unit id="ZaB0t0a" resname="Revoked">
+        <source>Revoked</source>
+        <target state="translated">Ingetrokken</target>
       </trans-unit>
       <trans-unit id="aq2eM8Q" resname="Roles">
         <source>Roles</source>
@@ -3973,6 +4021,10 @@
         <source>There are no recipients in the selected group.</source>
         <target>Er zijn geen ontvangers in de geselecteerde groep.</target>
       </trans-unit>
+      <trans-unit id="JBLe5Ny" resname="There is no upcoming GMM planned to authorize someone for.">
+        <source>There is no upcoming GMM planned to authorize someone for.</source>
+        <target state="translated">Er is geen aankomende ALV gepland om iemand voor te machtigen.</target>
+      </trans-unit>
       <trans-unit id="ENSM6jA" resname="There is nothing to review right now.">
         <source>There is nothing to review right now.</source>
         <target state="translated">Er is op dit moment niets om te beoordelen.</target>
@@ -4096,6 +4148,14 @@
       <trans-unit id="VCJ2Vk7" resname="This meeting has not taken place yet">
         <source>This meeting has not taken place yet</source>
         <target state="translated">Deze vergadering heeft nog niet plaatsgevonden</target>
+      </trans-unit>
+      <trans-unit id="fhYpN1b" resname="This member already represents the maximum number of other members.">
+        <source>This member already represents the maximum number of other members.</source>
+        <target state="translated">Dit lid vertegenwoordigt al het maximale aantal andere leden.</target>
+      </trans-unit>
+      <trans-unit id="oQO3Nvr" resname="This member cannot receive authorizations.">
+        <source>This member cannot receive authorizations.</source>
+        <target state="translated">Dit lid kan geen machtigingen ontvangen.</target>
       </trans-unit>
       <trans-unit id="V.Ye_4R" resname="This page does not exist">
         <source>This page does not exist</source>
@@ -4389,6 +4449,10 @@
         <source>Vacancies</source>
         <target state="translated">Vacatures</target>
       </trans-unit>
+      <trans-unit id="28qOmF2" resname="Valid">
+        <source>Valid</source>
+        <target state="translated">Geldig</target>
+      </trans-unit>
       <trans-unit id="cxaAFw2" resname="Verify">
         <source>Verify</source>
         <target state="translated">Controleer</target>
@@ -4577,6 +4641,10 @@
         <source>Which is basically the same thing.</source>
         <target state="translated">Wat in feite hetzelfde is.</target>
       </trans-unit>
+      <trans-unit id="GEsIPLP" resname="Who do you want to authorize?">
+        <source>Who do you want to authorize?</source>
+        <target state="translated">Wie wil je machtigen?</target>
+      </trans-unit>
       <trans-unit id="4EUNMUa" resname="Workshop">
         <source>Workshop</source>
         <target>Workshop</target>
@@ -4633,6 +4701,10 @@
         <source>You can still admit from the waiting list or remove a no-show until shortly after the activity.</source>
         <target>Je kunt nog mensen van de wachtlijst toelaten of een no-show verwijderen tot kort na de activiteit.</target>
       </trans-unit>
+      <trans-unit id="lYm3sZp" resname="You cannot authorize yourself.">
+        <source>You cannot authorize yourself.</source>
+        <target state="translated">Je kunt jezelf niet machtigen.</target>
+      </trans-unit>
       <trans-unit id="ewDvGAp" resname="You cannot sign in to this account at this moment. Contact the board for more information.">
         <source>You cannot sign in to this account at this moment. Contact the board for more information.</source>
         <target state="translated">Je kunt je op dit moment niet aanmelden met dit account. Neem contact op met het bestuur voor meer informatie.</target>
@@ -4644,6 +4716,10 @@
       <trans-unit id="OWPRxny" resname="You do not have the required privileges to perform this action.">
         <source>You do not have the required privileges to perform this action.</source>
         <target state="translated">Je hebt niet de vereiste rechten om deze actie uit te voeren.</target>
+      </trans-unit>
+      <trans-unit id="AiU8lXV" resname="You have authorized %name% to vote on your behalf during this GMM.">
+        <source>You have authorized %name% to vote on your behalf during this GMM.</source>
+        <target state="translated">Je hebt %name% gemachtigd om namens jou te stemmen tijdens deze ALV.</target>
       </trans-unit>
       <trans-unit id="lAXDq5A" resname="You have been unsubscribed.">
         <source>You have been unsubscribed.</source>
@@ -4677,6 +4753,10 @@
         <source>You no longer hold the edit lock; it was taken over or expired. Reload the page to continue editing.</source>
         <target state="translated">Je hebt de bewerkingsvergrendeling niet meer; deze is overgenomen of verlopen. Herlaad de pagina om verder te bewerken.</target>
       </trans-unit>
+      <trans-unit id="4JZP6Yv" resname="You represent %count% other member during this GMM.|You represent %count% other members during this GMM.">
+        <source>You represent %count% other member during this GMM.|You represent %count% other members during this GMM.</source>
+        <target state="translated">Je vertegenwoordigt %count% ander lid tijdens deze ALV.|Je vertegenwoordigt %count% andere leden tijdens deze ALV.</target>
+      </trans-unit>
       <trans-unit id="1enhohb" resname="You tried to access memory outside the bounds of reality.">
         <source>You tried to access memory outside the bounds of reality.</source>
         <target state="translated">Je hebt geprobeerd om geheugen buiten de grenzen van de werkelijkheid te benaderen.</target>
@@ -4696,6 +4776,14 @@
       <trans-unit id="1rTGsTd" resname="Your account was signed in from %name%.">
         <source>Your account was signed in from %name%.</source>
         <target state="translated">Er is op je account ingelogd vanaf %name%.</target>
+      </trans-unit>
+      <trans-unit id="KtaAABL" resname="Your authorization has been registered.">
+        <source>Your authorization has been registered.</source>
+        <target state="translated">Je machtiging is geregistreerd.</target>
+      </trans-unit>
+      <trans-unit id="yqDSBBw" resname="Your authorization has been revoked.">
+        <source>Your authorization has been revoked.</source>
+        <target state="translated">Je machtiging is ingetrokken.</target>
       </trans-unit>
       <trans-unit id="Lst7dJY" resname="Your data export is already being prepared.">
         <source>Your data export is already being prepared.</source>
