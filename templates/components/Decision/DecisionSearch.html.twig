@@ -8,6 +8,7 @@
                    value="{{ this.q }}">
             <div class="form-text">
                 {{ 'Searches the decision texts and understands meeting references such as “GMM 214” or “BM 1805.3.1”.'|trans }}
+                {{ 'Use “quotes” for exact phrases, -word to exclude, and type:bm to limit to one meeting type.'|trans }}
             </div>
         </div>
     </div>
@@ -37,7 +38,7 @@
                             </div>
                             <div>
                                 <span {% if decision.isAnnulled %}class="text-decoration-line-through text-muted"{% endif %}>
-                                    {{ decision.getLocalisedContent(app.request.locale) }}
+                                    {{ decision.getLocalisedContent(app.request.locale)|highlight_search(this.highlightTerms) }}
                                 </span>
                                 {% if decision.isAnnulled %}
                                     <span class="badge text-bg-danger ms-1">{{ 'Annulled'|trans }}</span>

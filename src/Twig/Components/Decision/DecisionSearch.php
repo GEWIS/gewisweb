@@ -8,6 +8,8 @@ use App\Entity\Decision\Decision;
 use App\Entity\Decision\Meeting;
 use App\Entity\User\Enums\UserRoles;
 use App\Repository\Decision\DecisionRepository;
+use App\Service\Decision\DecisionSearchQuery;
+use App\Service\Decision\DecisionSearchQueryParser;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
@@ -44,8 +46,12 @@ final class DecisionSearch
     /** @var list<Decision>|null */
     private ?array $results = null;
 
-    public function __construct(private readonly DecisionRepository $decisionRepository)
-    {
+    private ?DecisionSearchQuery $parsedQuery = null;
+
+    public function __construct(
+        private readonly DecisionRepository $decisionRepository,
+        private readonly DecisionSearchQueryParser $queryParser,
+    ) {
     }
 
     public function hasQuery(): bool
@@ -86,6 +92,16 @@ final class DecisionSearch
     }
 
     /**
+     * The terms to mark in the rendered results: everything that must appear in the text.
+     *
+     * @return list<string>
+     */
+    public function getHighlightTerms(): array
+    {
+        return $this->getParsedQuery()->includeTerms;
+    }
+
+    /**
      * @return list<Decision>
      */
     private function getResults(): array
@@ -94,6 +110,11 @@ final class DecisionSearch
             return [];
         }
 
-        return $this->results ??= array_values($this->decisionRepository->search(trim($this->q)));
+        return $this->results ??= array_values($this->decisionRepository->search($this->getParsedQuery()));
+    }
+
+    private function getParsedQuery(): DecisionSearchQuery
+    {
+        return $this->parsedQuery ??= $this->queryParser->parse(trim($this->q));
     }
 }

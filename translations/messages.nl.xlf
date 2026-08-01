@@ -4433,6 +4433,10 @@
         <source>Upload photos</source>
         <target state="translated">Foto's uploaden</target>
       </trans-unit>
+      <trans-unit id="qsAU93m" resname="Use “quotes” for exact phrases, -word to exclude, and type:bm to limit to one meeting type.">
+        <source>Use “quotes” for exact phrases, -word to exclude, and type:bm to limit to one meeting type.</source>
+        <target state="translated">Gebruik “aanhalingstekens” voor exacte zinnen, -woord om uit te sluiten en type:bm om te beperken tot een vergadertype.</target>
+      </trans-unit>
       <trans-unit id="iZjhacb" resname="Used by %count% meeting|Used by %count% meetings">
         <source>Used by %count% meeting|Used by %count% meetings</source>
         <target state="translated">Gebruikt door %count% vergadering|Gebruikt door %count% vergaderingen</target>

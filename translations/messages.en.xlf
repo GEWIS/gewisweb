@@ -4433,6 +4433,10 @@
         <source>Upload photos</source>
         <target state="translated">Upload photos</target>
       </trans-unit>
+      <trans-unit id="qsAU93m" resname="Use “quotes” for exact phrases, -word to exclude, and type:bm to limit to one meeting type.">
+        <source>Use “quotes” for exact phrases, -word to exclude, and type:bm to limit to one meeting type.</source>
+        <target state="translated">Use “quotes” for exact phrases, -word to exclude, and type:bm to limit to one meeting type.</target>
+      </trans-unit>
       <trans-unit id="iZjhacb" resname="Used by %count% meeting|Used by %count% meetings">
         <source>Used by %count% meeting|Used by %count% meetings</source>
         <target state="translated">Used by %count% meeting|Used by %count% meetings</target>
