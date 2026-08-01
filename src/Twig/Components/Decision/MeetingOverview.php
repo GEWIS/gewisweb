@@ -8,6 +8,7 @@ use App\Entity\Decision\Enums\MeetingTypes;
 use App\Entity\Decision\Meeting;
 use App\Entity\User\Enums\UserRoles;
 use App\Repository\Decision\MeetingRepository;
+use App\Twig\Components\Concerns\PageSizeTrait;
 use App\ViewModel\Decision\MeetingOverviewRow;
 use App\ViewModel\Decision\MeetingStatus;
 use InvalidArgumentException;
@@ -35,8 +36,7 @@ use function trim;
 final class MeetingOverview
 {
     use DefaultActionTrait;
-
-    public const int PAGE_SIZE = 25;
+    use PageSizeTrait;
 
     private const array TYPE_TOKENS = [
         'gmm',
@@ -104,7 +104,7 @@ final class MeetingOverview
     {
         return max(
             1,
-            (int) ceil($this->getTotalCount() / self::PAGE_SIZE),
+            (int) ceil($this->getTotalCount() / $this->pageSize()),
         );
     }
 
@@ -168,7 +168,7 @@ final class MeetingOverview
                 1,
                 $this->page,
             ),
-            self::PAGE_SIZE,
+            $this->pageSize(),
             excludeVirtual: true,
         );
     }

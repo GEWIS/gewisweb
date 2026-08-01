@@ -10,6 +10,7 @@ use App\Entity\User\Enums\UserRoles;
 use App\Entity\User\User;
 use App\Repository\Decision\MemberRepository;
 use App\Repository\User\UserRepository;
+use App\Twig\Components\Concerns\PageSizeTrait;
 use App\ViewModel\User\Admin\MemberRow;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -35,8 +36,7 @@ use function min;
 final class UsersOverview
 {
     use DefaultActionTrait;
-
-    public const int PAGE_SIZE = 25;
+    use PageSizeTrait;
 
     private const array ALLOWED_SORTS = [
         'lidnr',
@@ -143,7 +143,7 @@ final class UsersOverview
                 1,
                 $this->page,
             ),
-            pageSize: self::PAGE_SIZE,
+            pageSize: $this->pageSize(),
         );
     }
 
@@ -151,7 +151,7 @@ final class UsersOverview
     {
         return max(
             1,
-            (int) ceil($this->getTotalCount() / self::PAGE_SIZE),
+            (int) ceil($this->getTotalCount() / $this->pageSize()),
         );
     }
 

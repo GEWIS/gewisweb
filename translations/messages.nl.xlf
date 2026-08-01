@@ -2837,6 +2837,10 @@
         <source>Pending</source>
         <target state="translated">Openstaand</target>
       </trans-unit>
+      <trans-unit id="hPqPyLn" resname="Per page">
+        <source>Per page</source>
+        <target state="translated">Per pagina</target>
+      </trans-unit>
       <trans-unit id="QMRXgkm" resname="Personal">
         <source>Personal</source>
         <target state="translated">Persoonlijk</target>

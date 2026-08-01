@@ -7,6 +7,7 @@ namespace App\Twig\Components\User\Admin;
 use App\Entity\User\CompanyUser;
 use App\Entity\User\Enums\UserRoles;
 use App\Repository\User\CompanyUserRepository;
+use App\Twig\Components\Concerns\PageSizeTrait;
 use App\ViewModel\User\Admin\CompanyUserRow;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -32,8 +33,7 @@ use function min;
 final class CompanyUsersOverview
 {
     use DefaultActionTrait;
-
-    public const int PAGE_SIZE = 25;
+    use PageSizeTrait;
 
     private const array ALLOWED_SORTS = [
         'company',
@@ -93,7 +93,7 @@ final class CompanyUsersOverview
                 1,
                 $this->page,
             ),
-            pageSize: self::PAGE_SIZE,
+            pageSize: $this->pageSize(),
         );
     }
 
@@ -101,7 +101,7 @@ final class CompanyUsersOverview
     {
         return max(
             1,
-            (int) ceil($this->getTotalCount() / self::PAGE_SIZE),
+            (int) ceil($this->getTotalCount() / $this->pageSize()),
         );
     }
 

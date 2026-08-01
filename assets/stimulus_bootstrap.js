@@ -16,6 +16,7 @@ import MarkdownEditorController from './controllers/application/markdown_editor_
 import ModalCloseController from './controllers/application/modal_close_controller.ts';
 import ModalFormTargetController from './controllers/application/modal_form_target_controller.ts';
 import NavDropdownController from './controllers/application/nav_dropdown_controller.ts';
+import NavigateSelectController from './controllers/application/navigate_select_controller.ts';
 import NotificationSettingsController from './controllers/application/notification_settings_controller.ts';
 import NotificationsController from './controllers/application/notifications_controller.ts';
 import PrintController from './controllers/application/print_controller.ts';
@@ -61,6 +62,7 @@ app.register('markdown-editor', MarkdownEditorController);
 app.register('modal-close', ModalCloseController);
 app.register('modal-form-target', ModalFormTargetController);
 app.register('nav-dropdown', NavDropdownController);
+app.register('navigate-select', NavigateSelectController);
 app.register('notification-settings', NotificationSettingsController);
 app.register('notifications', NotificationsController);
 app.register('document-upload', DocumentUploadController);

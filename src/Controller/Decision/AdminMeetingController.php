@@ -54,8 +54,6 @@ use function trim;
 )]
 class AdminMeetingController extends AbstractController
 {
-    private const int PAGE_SIZE = 25;
-
     private const array MANAGEABLE_TYPE_TOKENS = [
         'gmm',
         'bm',
@@ -82,7 +80,24 @@ class AdminMeetingController extends AbstractController
         ?string $type = null,
         #[MapQueryParameter]
         int $page = 1,
+        #[MapQueryParameter]
+        int $pageSize = 10,
     ): Response {
+        if (
+            !in_array(
+                $pageSize,
+                [
+                    10,
+                    25,
+                    50,
+                    100,
+                ],
+                true,
+            )
+        ) {
+            $pageSize = 10;
+        }
+
         $typeFilter = null;
         if (
             null !== $type
@@ -103,7 +118,7 @@ class AdminMeetingController extends AbstractController
             $typeFilter,
             null,
             $page,
-            self::PAGE_SIZE,
+            $pageSize,
             excludeVirtual: true,
         );
 
@@ -127,9 +142,10 @@ class AdminMeetingController extends AbstractController
                 'rows' => $rows,
                 'type' => $typeFilter?->urlToken(),
                 'currentPage' => $page,
+                'pageSize' => $pageSize,
                 'totalPages' => max(
                     1,
-                    (int) ceil($result['total'] / self::PAGE_SIZE),
+                    (int) ceil($result['total'] / $pageSize),
                 ),
                 'totalCount' => $result['total'],
                 'typeTokens' => self::MANAGEABLE_TYPE_TOKENS,

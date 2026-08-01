@@ -9,6 +9,7 @@ use App\Entity\Decision\Member;
 use App\Entity\User\Enums\UserRoles;
 use App\Entity\User\User;
 use App\Repository\Activity\ActivityRepository;
+use App\Twig\Components\Concerns\PageSizeTrait;
 use App\ViewModel\Activity\Admin\ActivityAdminRow;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -40,8 +41,7 @@ use function min;
 final class ActivityOverview
 {
     use DefaultActionTrait;
-
-    public const int PAGE_SIZE = 25;
+    use PageSizeTrait;
 
     #[LiveProp(writable: true)]
     public bool $showAll = false;
@@ -106,7 +106,7 @@ final class ActivityOverview
     {
         return max(
             1,
-            (int) ceil($this->getApprovedTotalCount() / self::PAGE_SIZE),
+            (int) ceil($this->getApprovedTotalCount() / $this->pageSize()),
         );
     }
 
@@ -142,7 +142,7 @@ final class ActivityOverview
                 1,
                 $this->page,
             ),
-            self::PAGE_SIZE,
+            $this->pageSize(),
         );
     }
 
